@@ -1,0 +1,15 @@
+.form-group.form-group-lg
+  = form.label(:kifu_body, class: "col-sm-2 control-label")
+  .col-sm-10
+    = form.text_area(:kifu_body, rows: 12, class: "form-control", placeholder: "KIF または KI2 の内容を記述してください\n適当な入力でも自動的に解釈するので「７６歩 34歩 ▲２六歩 八四歩」のような指し手の羅列だけでもかまいません")
+
+.form-group.form-group-lg
+  = form.label(:kifu_url, class: "col-sm-2 control-label")
+  .col-sm-10
+    = form.url_field(:kifu_url, class: "form-control", placeholder: "別のサイトにある場合は URL で指定します")
+
+.form-group.form-group-lg
+  = form.label(:kifu_file, class: "col-sm-2 control-label")
+  .col-sm-10
+    = form.hidden_field(:kifu_file_cache)
+    = form.file_field(:kifu_file, class: "form-control")

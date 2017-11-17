@@ -1,0 +1,4 @@
+div
+  = record.attributes
+  =<> link_to("詳細", [:name_space1, record])
+  =<> link_to("削除", [:name_space1, record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})

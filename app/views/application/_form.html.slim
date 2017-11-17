@@ -1,0 +1,9 @@
+- form.object.class.columns.each do |column|
+  - next if column.name.in?(["id", "created_at", "updated_at"])
+  .form-group
+    = form.label(column.name, class: "col-md-2 control-label")
+    .col-md-10
+      - if column.type == :text
+        = form.text_area(column.name, class: "form-control", rows: 8)
+      - else
+        = form.text_field(column.name, class: "form-control")

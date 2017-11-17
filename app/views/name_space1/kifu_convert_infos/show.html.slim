@@ -1,0 +1,28 @@
+.page-header
+  h2= "変換結果"
+
+.row
+  .col-md-12
+    p
+      = "ダウンロード"
+    p
+      =<> link_to("KI2", [:name_space1, current_record, format: "ki2"], class: "btn btn-info")
+      =<> link_to("KIF", [:name_space1, current_record, format: "kif"], class: "btn btn-info")
+
+    h3= "KI2"
+    pre
+      = current_record.converted_ki2
+
+    h3= "KIF"
+    pre
+      = current_record.converted_kif
+
+- if Rails.env.development?
+  p
+    .panel.panel-default
+      .panel-body
+        =<> link_to("一覧", [:name_space1, current_plural_key], class: "btn btn-default")
+        - if controller.respond_to?(:edit)
+          =<> link_to("編集", [:edit, :name_space1, current_record], class: "btn btn-success")
+        - if controller.respond_to_destroy?
+          =<> link_to("削除", [:name_space1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")

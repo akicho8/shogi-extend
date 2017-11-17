@@ -1,0 +1,18 @@
+- if form.object.errors.full_messages.present?
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      / エラーがあったときJavaScriptでここまでスクロールさせる
+      = content_tag(:a, "&nbsp;".html_safe, name: "form_errors")
+      - if false
+        .alert.alert-danger
+          ul.list-unstyled
+            - form.object.errors.full_messages.each do |full_message|
+              li= full_message
+      - else
+        .panel.panel-danger
+          .panel-heading
+            = "入力内容を見直してください"
+          .panel-body
+            ul.list-unstyled
+              - form.object.errors.full_messages.each do |full_message|
+                li= full_message

@@ -1,0 +1,3 @@
+#!/bin/sh
+git push -f heroku master
+heroku run rake db:migrate:reset db:seed

@@ -1,0 +1,8 @@
+- if false
+  = current_record.attributes.to_html
+- else
+  - (current_record.attribute_names - ["id", "created_at", "updated_at"]).each do |key|
+    .form-group
+      = form.label(key, class: "col-sm-2 control-label")
+      .col-sm-10
+        p.form-control-static= current_record.public_send(key)

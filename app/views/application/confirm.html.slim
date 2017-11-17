@@ -1,0 +1,11 @@
+.page-header
+  h2= (current_record.new_record? ? "登録" : "更新") + "の確認"
+
+= form_with(model: [:name_space1, current_record], class: "form-horizontal") do |form|
+  = render partial: "confirm", locals: {form: form}
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      =<> form.submit("この内容で送信する", class: "btn btn-primary", name: "_submit_from_confirm")
+      =<> form.submit("入力内容を修正する", name: "_back_to_edit", class: "btn btn-default")
+
+= render partial: "crud_debug"

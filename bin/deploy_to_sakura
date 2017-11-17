@@ -1,0 +1,2 @@
+#!/bin/sh
+cap production deploy deploy:db_seed

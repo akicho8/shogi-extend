@@ -1,0 +1,44 @@
+doctype 5
+html lang="ja"
+  head
+    meta charset="UTF-8"
+    meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
+    = favicon_link_tag
+    = csrf_meta_tag
+    meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    title= content_for?(:title) ? yield(:title) : "ShogiWeb"
+    = action_cable_meta_tag
+
+    = stylesheet_pack_tag "application"
+    = javascript_pack_tag "application"
+
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
+
+    / = action_cable_meta_tag if ENV["RAILS_RELATIVE_URL_ROOT"]
+  body
+    - if false
+      = image_tag("application_header.png", class: "center-block", alt: AppConfig[:app_name])
+    - else
+      nav.navbar.navbar-inverse.navbar-static-top
+        .container-fluid
+          .navbar-header
+            button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
+          #navbar.navbar-collapse.collapse
+            .navbar-left
+              = link_to("棋譜変換", [:new, :name_space1, :kifu_convert_info], class: "btn btn-primary navbar-btn")
+
+    .container-fluid
+      = bootstrap_flash
+      = yield
+    footer
+      .container-fluid
+        p= link_to("Github", "https://github.com/akicho8/shogi_web")
+        - if Rails.env.development?
+          p= link_to("TOP", :root)
+          p= "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"

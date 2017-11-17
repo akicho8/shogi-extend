@@ -1,0 +1,5 @@
+#!/bin/bash
+# bundle exec puma -p 28080 cable/config.ru
+bundle exec puma -C cable/puma.rb cable/config.ru
+
+bundle exec puma -C cable/puma.rb 

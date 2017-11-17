@@ -1,0 +1,23 @@
+/* bootstrap のイケてないところを微調整
+
+/* 横並びフィールドをスマホ用横幅になっても維持する
+.form-inline
+  input
+    width: auto
+    /* display: inline でも動く
+    display: inline-block
+
+/* fieldset間が狭いので開ける    
+fieldset:not(:first-child)
+  margin-top: 3em
+
+/* 確認画面で項目名と値をずらす
+@media screen and (max-width: 768px - 1px)
+  .form-control-static
+    text-indent: 2em
+
+/* 480px以内ならsubmitボタンの並びをセンタリング
+@media screen and (max-width: 480px)
+  form > .form-group:last-child
+    /* background-color: black ! important
+    text-align: center
