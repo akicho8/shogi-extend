@@ -50,6 +50,7 @@ module NameSpace1
         format.html
         format.kif { kifu_send_data }
         format.ki2 { kifu_send_data }
+        format.csa { kifu_send_data }
       end
     end
 

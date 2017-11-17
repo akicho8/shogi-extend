@@ -5,6 +5,7 @@
 p
   =<> link_to("KI2", [:name_space1, current_record, format: "ki2"], class: "btn btn-info")
   =<> link_to("KIF", [:name_space1, current_record, format: "kif"], class: "btn btn-info")
+  =<> link_to("CSA", [:name_space1, current_record, format: "csa"], class: "btn btn-info")
 
 br
 
@@ -15,6 +16,10 @@ pre
 = "KIF"
 pre
   = current_record.converted_kif
+
+= "CSA"
+pre
+  = current_record.converted_csa
 
 - if Rails.env.development?
   = current_record.kifu_header&.to_html

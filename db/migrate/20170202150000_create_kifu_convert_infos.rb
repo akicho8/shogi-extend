@@ -28,6 +28,7 @@ class CreateKifuConvertInfos < ActiveRecord::Migration[5.1]
       t.text :kifu_body
       t.text :converted_ki2
       t.text :converted_kif
+      t.text :converted_csa
       t.integer :turn_max
       t.text :kifu_header
       t.timestamps null: false

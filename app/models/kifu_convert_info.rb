@@ -50,6 +50,7 @@ class KifuConvertInfo < ApplicationRecord
         info = Bushido::Parser.parse(kifu_body)
         self.converted_ki2 = info.to_ki2
         self.converted_kif = info.to_kif
+        self.converted_csa = info.to_csa
         self.turn_max = info.mediator.turn_max
         self.kifu_header = info.header
       end
