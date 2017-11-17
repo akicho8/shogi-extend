@@ -13,6 +13,8 @@
 # | kifu_body     | 棋譜内容           | text     |             |      |       |
 # | converted_ki2 | 変換後KI2          | text     |             |      |       |
 # | converted_kif | 変換後KIF          | text     |             |      |       |
+# | turn_max      | 手数               | integer  |             |      |       |
+# | meta_info     | メタ情報           | text     |             |      |       |
 # | created_at    | 作成日時           | datetime | NOT NULL    |      |       |
 # | updated_at    | 更新日時           | datetime | NOT NULL    |      |       |
 # |---------------+--------------------+----------+-------------+------+-------|
@@ -26,6 +28,8 @@ class CreateKifuConvertInfos < ActiveRecord::Migration[5.1]
       t.text :kifu_body
       t.text :converted_ki2
       t.text :converted_kif
+      t.integer :turn_max
+      t.text :meta_info
       t.timestamps null: false
     end
   end

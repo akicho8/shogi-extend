@@ -13,6 +13,8 @@
 # | kifu_body     | 棋譜内容           | text     |             |      |       |
 # | converted_ki2 | 変換後KI2          | text     |             |      |       |
 # | converted_kif | 変換後KIF          | text     |             |      |       |
+# | turn_max      | 手数               | integer  |             |      |       |
+# | meta_info     | メタ情報           | text     |             |      |       |
 # | created_at    | 作成日時           | datetime | NOT NULL    |      |       |
 # | updated_at    | 更新日時           | datetime | NOT NULL    |      |       |
 # |---------------+--------------------+----------+-------------+------+-------|
@@ -21,18 +23,11 @@ module NameSpace1
   class KifuConvertInfosController < ApplicationController
     if Rails.env.production?
       if v = ENV["HTTP_BASIC_AUTHENTICATE"].presence
-        http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: "index")
+        http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: [:index, :edit, :update, :destroy])
       end
     end
 
-    include PluggableCrud::Base
-    include PluggableCrud::IndexMethods
-    include PluggableCrud::ShowMethods
-    include PluggableCrud::NewEditShareMethods
-    include PluggableCrud::NewMethods
-    # include PluggableCrud::EditMethods
-    # include PluggableCrud::DestroyMethods
-    include PluggableCrud::ViewHelperMethods
+    include PluggableCrud::All
 
     # def page_header_show_title
     #   current_record.kifu_url
@@ -82,7 +77,7 @@ module NameSpace1
     end
 
     def kifu_send_data
-      filename = Time.current.strftime("#{current_filename}_%Y%m%d_%H%M%S.#{params[:format]}").encode(current_encode)
+      filename = Time.current.strftime("#{current_filename}_%Y_%m_%d_%H%M%S.#{params[:format]}").encode(current_encode)
       send_data(current_record.send("converted_#{params[:format]}"), type: Mime[params[:format]], filename: filename, disposition: false ? "inline" : "attachment")
     end
 
