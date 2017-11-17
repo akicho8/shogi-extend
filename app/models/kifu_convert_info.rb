@@ -28,6 +28,8 @@ class KifuConvertInfo < ApplicationRecord
 
   before_validation do
     self.unique_key ||= SecureRandom.hex
+    self.kifu_header ||= {}
+    self.turn_max ||= 0
 
     if changes[:kifu_file]
       if kifu_file.present?

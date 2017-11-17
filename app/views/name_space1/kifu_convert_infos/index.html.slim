@@ -9,8 +9,8 @@ ruby:
   rows = current_records.collect {|e|
     {
       "ID" => link_to(e.id, [:name_space1, e]),
-      "先手" => e.header["先手"],
-      "後手" => e.header["後手"],
+      "先手" => e.kifu_header["先手"],
+      "後手" => e.kifu_header["後手"],
       "手数" => e.turn_max,
       "変換日時" => time_ago_in_words(e.created_at) + "前",
       "操作" => [
