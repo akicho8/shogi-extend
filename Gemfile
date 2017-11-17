@@ -79,6 +79,7 @@ end
 
 group :test do
   gem 'chromedriver-helper'     # for SystemTestCase
+  gem 'screenshot_opener'
 end
 
 gem 'font-awesome-sass'
