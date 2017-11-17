@@ -17,7 +17,7 @@ pre
   = current_record.converted_kif
 
 - if Rails.env.development?
-  = current_record.header&.to_html
+  = current_record.kifu_header&.to_html
 
   p
     .panel.panel-default

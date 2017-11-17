@@ -14,7 +14,7 @@
 # | converted_ki2 | 変換後KI2          | text     |             |      |       |
 # | converted_kif | 変換後KIF          | text     |             |      |       |
 # | turn_max      | 手数               | integer  |             |      |       |
-# | meta_info     | メタ情報           | text     |             |      |       |
+# | kifu_header   | 棋譜ヘッダー       | text     |             |      |       |
 # | created_at    | 作成日時           | datetime | NOT NULL    |      |       |
 # | updated_at    | 更新日時           | datetime | NOT NULL    |      |       |
 # |---------------+--------------------+----------+-------------+------+-------|
@@ -24,7 +24,7 @@ require "open-uri"
 class KifuConvertInfo < ApplicationRecord
   mount_uploader :kifu_file, AttachmentUploader
 
-  store :meta_info, accessors: [:header]
+  serialize :kifu_header
 
   before_validation do
     self.unique_key ||= SecureRandom.hex
@@ -51,7 +51,7 @@ class KifuConvertInfo < ApplicationRecord
         self.converted_ki2 = info.to_ki2
         self.converted_kif = info.to_kif
         self.turn_max = info.mediator.turn_max
-        self.header = info.header
+        self.kifu_header = info.header
       end
     end
   end

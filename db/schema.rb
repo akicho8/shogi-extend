@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20170202150000) do
     t.text "converted_ki2"
     t.text "converted_kif"
     t.integer "turn_max"
-    t.text "meta_info"
+    t.text "kifu_header"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -23,7 +23,7 @@
           converted_kif: "変換後KIF",
           converted_ki2: "変換後KI2",
           turn_max: "手数",
-          meta_info: "メタ情報",
+          kifu_header: "棋譜ヘッダー",
           remove_kifu_file: "アップロード済みファイルの削除",
         },
       },
