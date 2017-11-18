@@ -1,8 +1,6 @@
 .page-header
   h2
     = current_record.new_record? ? "棋譜変換" : "編集"
-    small
-      =<> "KIF, KI2 を相互変換します"
 
 = form_with(model: [:name_space1, current_record], class: "form-horizontal") do |form|
   = render partial: "error_messages", locals: {form: form}
