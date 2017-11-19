@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: dbe95fde0cded244b542c8dd1fed6faa3bcdeb74
+  revision: 4c3f5fe3dc737ddb248cdee9ef1e0e8cdfcf7af0
   specs:
     bushido (0.0.1)
       actionview
@@ -200,7 +200,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
-    memory_record (0.0.6)
+    memory_record (0.0.7)
       activemodel
       activesupport
     method_source (0.9.0)
@@ -229,7 +229,7 @@ GEM
     rack (2.0.3)
     rack-proxy (0.6.2)
       rack
-    rack-test (0.7.0)
+    rack-test (0.7.1)
       rack (>= 1.0, < 3)
     rails (5.1.4)
       actioncable (= 5.1.4)
@@ -321,7 +321,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
-    sshkit (1.15.0)
+    sshkit (1.15.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     tapp (1.5.1)
