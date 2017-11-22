@@ -8,9 +8,9 @@
 # Configuration details:
 # https://github.com/airbrake/airbrake-ruby#configuration
 Airbrake.configure do |c|
-  c.host = 'http://tk2-221-20341.vs.sakura.ne.jp/errbit/' # 最後のスラッシュ超重要！
+  c.host = "http://tk2-221-20341.vs.sakura.ne.jp/errbit/" # 最後のスラッシュ超重要！
   c.project_id = 1
-  c.project_key = 'ed72aad8c364bad00e3e937a9796a104'
+  c.project_key = "ed72aad8c364bad00e3e937a9796a104"
 
   # # You must set both project_id & project_key. To find your project_id and
   # # project_key navigate to your project's General Settings and copy the values

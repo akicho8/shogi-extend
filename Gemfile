@@ -92,7 +92,8 @@ gem 'slim-rails'
 gem 'rails_autolink'
 gem 'kaminari'
 gem 'carrierwave'
-gem 'airbrake'
+
+gem 'airbrake', "~> 5.0"        # バージョン重要
 gem 'airbrake-ruby'
 
 gem 'memory_record'
