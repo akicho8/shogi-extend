@@ -29,22 +29,6 @@ module NameSpace1
 
     include PluggableCrud::All
 
-    # def page_header_show_title
-    #   current_record.kifu_url
-    # end
-
-    # # 確認画面に行く直前にセッションに保存しておく値たち
-    # def current_session_attributes
-    #   attrs = current_record_params.except(:kifu_file) # kifu_fileはオブジェクトは巨大なので退ける
-    #
-    #   # すでにアップロード済みの状態ならそのキーをセッションに保存
-    #   if v = current_record.kifu_file_cache
-    #     attrs[:kifu_file_cache] = v
-    #   end
-    #
-    #   attrs
-    # end
-
     def show
       respond_to do |format|
         format.html
