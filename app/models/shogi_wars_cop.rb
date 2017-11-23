@@ -1,13 +1,23 @@
 class ShogiWarsCop
+  def initialize(**options)
+    @options = {
+      mock_use: Rails.env.development? || Rails.env.test?
+    }.merge(options)
+  end
+
   def battle_list_get(**params)
     params = {
       gtype: "",    # 空:10分 sb:3分 s1:10秒
       user_key: "hanairobiyori",
     }.merge(params)
 
-    url = "https://shogiwars.heroz.jp/users/history/#{params[:user_key]}?gtype=#{params[:gtype]}&locale=ja"
-    page = current_agent.get(url)
-    js_str = page.body
+    if @options[:mock_use]
+      js_str = Rails.root.join("config/https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja.html").read
+    else
+      url = "https://shogiwars.heroz.jp/users/history/#{params[:user_key]}?gtype=#{params[:gtype]}&locale=ja"
+      page = current_agent.get(url)
+      js_str = page.body
+    end
 
     # js = Pathname("~/src/bushido/examples/shogiwars_history_raw.html").expand_path.read
 
@@ -45,7 +55,11 @@ class ShogiWarsCop
       url: "http://kif-pona.heroz.jp/games/#{battle_key}",
     }
 
-    str = current_agent.get(info[:url]).body
+    if @options[:mock_use]
+      str = Rails.root.join("config/http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja.html").read
+    else
+      str = current_agent.get(info[:url]).body
+    end
 
     # 級位が文字化けするため
     str = str.toutf8

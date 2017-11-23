@@ -71,6 +71,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'test-unit'
   gem 'factory_bot_rails'
+  # gem 'webmock' # rack-proxy と干渉するため外す
 end
 
 group :development do

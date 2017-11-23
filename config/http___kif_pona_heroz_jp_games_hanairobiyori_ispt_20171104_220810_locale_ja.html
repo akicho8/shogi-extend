@@ -1,0 +1,485 @@
+<!DOCTYPE HTML>
+<html>
+
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+    <title>将棋ウォーズ棋譜(hanairobiyori27級対ispt3級)</title>
+    <link rel="stylesheet" href="/stylesheets/games.css" />
+    <link rel="stylesheet" href="/stylesheets/games-pc-s.css" />
+    <link rel="stylesheet" href="/stylesheets/games-pc-375.css" media="only screen and (min-width: 375px) and (min-height: 447px)" />
+    <link rel="stylesheet" href="/stylesheets/games-pc-414.css" media="only screen and (min-width: 414px) and (min-height: 494px)" />
+    <link rel="stylesheet" href="/stylesheets/games-pc.css" media="only screen and (min-width: 480px) and (min-height: 573px)" />
+    <link rel="stylesheet" href="/stylesheets/games-pc-600.css" media="only screen and (min-width: 600px) and (min-height: 716px)" />
+    <link rel="stylesheet" href="/stylesheets/games-pc-768.css" media="only screen and (min-width: 768px) and (min-height: 916px)" />
+    <link rel="stylesheet" href="/stylesheets/games-pc-800.css" media="only screen and (min-width: 800px) and (min-height: 955px)" />
+  </head>
+ <script src="/javascripts/localize.js"></script>
+ <script>
+     
+     Localize.setLocale("ja");
+     Localize.setImgURL("//image-pona.heroz.jp");
+ </script>
+<body>
+  <div id="header">
+    <span id="logo_area">
+      <img src="//image-pona.heroz.jp/kif/icon64.png" width="22" height="22" alt="将棋ウォーズ" style="float:left;">
+    </span>
+    <div id="audience">
+    </div>
+    <div id="tweetbutton">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-url="https://kif-pona.heroz.jp/games/hanairobiyori-ispt-20171104_220810?tw=1" data-hashtags="shogiwars">ツイート</a>
+    </div>
+    <br clear="all">
+  </div>
+  <div id="chance_bar" class="hidden">
+    <span id="score_gote">後手</span>
+    <span style="width:70%;display:inline-block;"><div id="chance_gote">&nbsp;
+        <span></span></div><div id="chance_sente">&nbsp;
+        <span></span></div></span>
+    <span id="score_sente">先手</span>
+  </div>
+
+  <div id="shogi" style="position:relative;">
+    <table id="display-table">
+      <tbody>
+        <tr>
+          <td>
+            <!-- 後手情報 -->
+            <div id="area_gote"></div>
+          </td>
+        </tr>
+        <tr>
+          <td id="area-main">
+            <table id="area-board">
+              <tbody>
+                <tr>
+                  <!-- 盤面左 -->
+                  <td id="white-stand-board">
+                    <table class="stand-table">
+                      <tbody>
+                        <tr>
+                          <td id="avatar-gote" class="stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <!-- 盤面 -->
+                  <td id="main-board">
+                    <table id="board-table">
+                      <tbody>
+                        <tr>
+                          <th class="board-side"></th>
+                          <th class="koma-header">9</th>
+                          <th class="koma-header">8</th>
+                          <th class="koma-header">7</th>
+                          <th class="koma-header">6</th>
+                          <th class="koma-header">5</th>
+                          <th class="koma-header">4</th>
+                          <th class="koma-header">3</th>
+                          <th class="koma-header">2</th>
+                          <th class="koma-header">1</th>
+                          <th class="board-side"></th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">一</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">二</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">三</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">四</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">五</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">六</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">七</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">八</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <td class="koma board-koma"></td>
+                          <th class="board-side">九</th>
+                        </tr>
+                        <tr>
+                          <th class="board-side"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="koma-footer"></th>
+                          <th class="board-side"></th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <!-- 盤面右 -->
+                  <td id="black-stand-board">
+                    <table class="stand-table">
+                      <tbody>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td class="koma stand-koma"></td>
+                        </tr>
+                        <tr>
+                          <td id="avatar-sente" class="stand-koma"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+           <div id="loading">読み込み中…</div>
+            <ul id="touch-area">
+              <li class="nav touch forward">
+                <img class="nav touch button forward">
+              </li>
+              <li class="nav touch backward">
+                <img class="nav touch button backward">
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <!-- 先手情報 -->
+            <div id="area_sente"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="navigation">
+    <input class="nav button first" type="button">
+    <input class="nav button backward" type="button">
+    <input class="nav button forward" type="button">
+    <input class="nav button last" type="button">
+    <select id="moveBox"></select>
+    <img id="reverse_button">
+  </div>
+  <form id="send-message">
+    <input type="text" id="messageBox" />
+    <input type="submit" id="chatsubmit" value="chat"/>
+    <img src="//image-pona.heroz.jp/kif/chat_on.png" id="commentoffbutton" />
+    <input type="hidden" id="chatUser" value="" />
+  </form>
+
+  <div align="center" style="padding-top: 20px">
+    
+    
+      
+          
+        <a href="//shogiwars.heroz.jp/topics/59f7f610b671d13aec00257b" onclick="javascript:_gaq.push(['_trackPageview', '/_click/300million_purchase/s/kansen']);">
+          <img src="//shogiwars.heroz.jp/images/banner/300million_purchase.png"
+               width="320" height="64">
+        </a>
+      
+
+  </div>
+  
+  <div align="center" style="padding-top: 10px">
+    <a href="http://bit.ly/KjoPx6" target="_blank"><img src="//shogiwars.heroz.jp/images/top/btn_download2.png" alt="Available on the App Store" width="115" /></a>
+    <a href="http://bit.ly/LzmUFh" target="_blank"><img src="//shogiwars.heroz.jp/images/top/btn_download.png" alt="Availale on the Google Play" width="115" /></a>
+    <a href="//shogiwars.heroz.jp">
+    <img src="//image-pona.heroz.jp/kif/icon64.png" width="33" height="33" alt="将棋ウォーズ" >
+    </a>
+  </div>
+  
+  <div align="center">
+    <span style="font-size: 12px;">©HEROZ, Inc. All Rights Reserved.</span>
+  </div>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-23457028-68']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();    
+  </script>
+    <script>
+      function getRequest(){
+        if(location.search.length > 1) {
+          var get = new Object();
+          var ret = location.search.substr(1).split("&");
+          for(var i = 0; i < ret.length; i++) {
+            var r = ret[i].split("=");
+            get[r[0]] = r[1];
+          }
+          return get;
+        } else {
+          return false;
+        }
+      }
+
+      var dispMessage = true;
+      var ponanzaMessage = true;
+      var enableEffect = true;
+      var enableEffectSound = false;
+      var fromTweet = false;
+      var get = getRequest();
+      if(get){
+        if(get['p'] == 0)
+        {
+          //ポナのメッセージをオフ
+          ponanzaMessage = false;
+        }
+        if(get['e'] == 0)
+        {
+          //エフェクトオフ(作成中)
+          enableEffect = false;
+        }
+        if(get['s'] == 1)
+        {
+          enableEffectSound = true;
+        }
+        //tweet buttonから
+        if(get['tw']){
+          fromTweet=true;
+        }
+      }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/shogi-common.js"></script>
+    <script src="/javascripts/kifu.js" charset="UTF-8"></script>
+    <script src="/javascripts/query-parse.js" charset="UTF-8"></script>
+    <script src="/javascripts/socket_main.js" charset="UTF-8"></script>
+    <script>
+	  var chatUser = "";
+	  if(chatUser == ""){
+	   $("#messageBox").css("visibility", "hidden");
+	   $("#chatsubmit").css("visibility", "hidden");
+	  }
+    
+      /**
+       * サーバから将棋盤初期化時に呼び出す
+       */
+      function initializeBoard(black, white) {
+          // 対戦者の設定
+          var bPlayer = $("#area_sente");
+          bPlayer.append($("<span>").attr("id", "black-time"));
+          bPlayer.append($("<span>").addClass("sign").append("▲"));
+          bPlayer.append($("<a>").attr("href", "//shogiwars.heroz.jp/users/" + black.split(" ")[0] + "?game=hanairobiyori-ispt-20171104_220810&locale=ja").text(black));
+
+          var wPlayer = $("#area_gote");
+          wPlayer.append($("<span>").addClass("sign").append("△"));
+          wPlayer.append($("<a>").attr("href", "//shogiwars.heroz.jp/users/" + white.split(" ")[0] + "?game=hanairobiyori-ispt-20171104_220810&locale=ja").text(white));
+          wPlayer.append($("<span>").attr("id", "white-time"));
+
+          var csa_text = "N+" + black + "\n" + "N-" + white + "\n";
+          makeBoardHandler("shogi", 0, csa_text, true);
+
+          setNavigation();
+      }
+      // avatarsを見て画像を表示する
+      function displayAvatar(reverse){
+          var img_sente = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[reverse?1:0]+'-r.png').addClass("avatar");
+          var img_gote = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[reverse?0:1]+'-l.png').addClass("avatar");
+          $("#avatar-sente").empty().append(img_sente);
+          $("#avatar-gote").empty().append(img_gote);
+      }
+    </script>
+    <script>
+    var gtype;
+    $(function() {
+       /**
+        * get display size
+        */
+        //$("body").append("<div>w: " + screen.width + " h: " + screen.height + "</div>");
+        //$("body").append("<div>dpr: " + devicePixelRatio + "</div>");
+        //$("body").append("<div>user-agent: " + navigator.userAgent + "</div>");
+
+	var gamedata = {
+		name: "hanairobiyori-ispt-20171104_220810",
+		avatar0: "_e1708s4c",
+		avatar1: "mc8",
+		dan0: "27級",
+		dan1: "3級",
+		gtype: "sb"
+	};
+        gtype = gamedata.gtype;
+	if (gamedata.name.match(/(\w+)-(\w+)-(\w+)/)) {
+            initializeBoard(RegExp.$1 + " "+gamedata.dan0, RegExp.$2 + " "+gamedata.dan1)
+            setAvatarName(gamedata.avatar0, gamedata.avatar1);
+	}
+	if(fromTweet){
+		$("#logo_area .wars_logo").wrap("<a href=\"http://shogiwars.heroz.jp\" target=\"_top\"></a>")
+	}
+
+        $("#loading").remove();
+        $("#send-message").remove();
+        receiveMove("+7968GI,L179	-3334FU,L180	+5756FU,L178	-4132KI,L177	+6857GI,L177	-1314FU,L176	+1716FU,L175	-8384FU,L175	+8879KA,L174	-8485FU,L174	+6978KI,L173	-3142GI,L173	+3948GI,L171	-4233GI,L172	+2726FU,L170	-5152OU,L171	+2625FU,L169	-2231KA,L170	+5969OU,L168	-3142KA,L170	+3736FU,L167	-7162GI,L169	+5746GI,L166	-6172KI,L166	+3635FU,L162	-3435FU,L164	+4635GI,L161	-0034FU,L163	+2524FU,L160	-2324FU,L162	+3524GI,L159	-3324GI,L162	+7924KA,L158	-4224KA,L161	+2824HI,L156	-0023FU,L155	+2428HI,L154	-8586FU,L149	+8786FU,L153	-8286HI,L147	+0087FU,L147	-8656HI,L146	+0057GI,L145	-5636HI,L141	+0037FU,L142	-3635HI,L139	+5746GI,L132	-3585HI,L135	+3736FU,L128	-0033GI,L130	+0068KA,L124	-5354FU,L125	+3635FU,L121	-3435FU,L124	+4635GI,L121	-0034FU,L120	+0024FU,L119	-2324FU,L117	+3524GI,L118	-3324GI,L116	+6824KA,L117	-0023FU,L113	+2468KA,L114	-0033GI,L109	+4958KI,L113	-9394FU,L107	+9796FU,L111	-6253GI,L100	+6979OU,L108	-5344GI,L99	+4857GI,L104	-4435GI,L97	+5746GI,L102	-3546GI,L95	+6846KA,L101	-0039KA,L93	+2818HI,L92	-3975UM,L83	+0076GI,L89	-7576UM,L81	+7776FU,L89	-0055GI,L78	+4668KA,L86	-8582HI,L72	+7988OU,L82	-0027GI,L70	+1848HI,L80	-2736NG,L66	+0037FU,L78	-3627NG,L64	+4849HI,L77	-2738NG,L61	+4979HI,L75	-5556GI,L57	+0057FU,L73	-5645GI,L56	+0077GI,L67	-3435FU,L54	+6766FU,L66	-3536FU,L53	+3736FU,L64	-4536GI,L52	+0037FU,L62	-3627NG,L50	+5756FU,L61	-2728NG,L48	+5867KI,L60	-3829NG,L47	+3736FU,L59	-2919NG,L46	+6846KA,L59	-0044KY,L42	+4628KA,L57	-1918NG,L40	+2839KA,L53	-4447NY,L38	+7949HI,L47	-4737NY,L35	+0048GI,L44	-3738NY,L34	+4959HI,L40	-3839NY,L33	+4839GI,L39	-0037KA,L31	+5979HI,L37	-3726UM,L29	+7768GI,L34	-1817NG,L28	+3938GI,L32	-2636UM,L27	+3849GI,L31	-0037FU,L25	+0048KY,L28	-1727NG,L24	+0047KA,L26	-3635UM,L22	+4758KA,L25	-3738TO,L20	+4847KY,L24	-3849TO,L18	+5849KA,L23	-2737NG,L18	+4958KA,L22	-0038FU,L17	+5869KA,L21	-3839TO,L16	+6857GI,L20	-3536UM,L13	+5746GI,L19	-3747NG,L12	+4657GI,L18	-3949TO,L9	+5768GI,L16	-4948TO,L7	+6877GI,L14	-0046KE,L6	+6947KA,L13	-3647UM,L5	+7919HI,L12	-4858TO,L4	+0079GI,L10	-5857TO,L3	+8898OU,L9	-5767TO,L2	+7867KI,L8	-4658NK,L1	+7788GI,L7	SENTE_WIN_TIMEOUT");
+
+        $("#reverse_button").on("click", function(){manager.reverse()});
+        
+        $("#reverse_button").attr("src", Localize.getImgURL("reverse.png"));
+        $("#chatsubmit").attr("value", Localize.t("chat"));
+    });
+    </script>
+
+    <script type="text/javascript">
+      function keyCode(e){
+        if(document.all)
+          return e.keyCode;
+        else if(document.getElementById)
+          return (e.keyCode)? e.keyCode: e.charCode;
+        else if(document.layers)
+          return e.which;
+      }
+
+      document.onkeyup = function(e) { keyNavigation(keyCode(e)); };
+    </script>
+
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</body>
+
+</html>
