@@ -1,0 +1,14 @@
+.page-header
+  h3= "TOP2"
+
+= form_with(url: [:tops, :show2], class: "form-horizontal", method: :get) do |form|
+  .form-group.form-group-lg
+    = form.label(:user_key, class: "col-sm-2 control-label")
+    .col-sm-10
+      = form.text_field(:user_key, class: "form-control")
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      =<> form.submit(name: :_submit, class: "btn btn-primary btn-lg")
+
+= BattleUser.to_html
+= BattleRecord.to_html

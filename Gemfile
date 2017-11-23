@@ -109,3 +109,5 @@ gem 'bushido',       github: 'akicho8/bushido'
 # for ShogiWarsCop
 gem 'nokogiri'
 gem 'mechanize'
+
+gem 'acts_as_list'

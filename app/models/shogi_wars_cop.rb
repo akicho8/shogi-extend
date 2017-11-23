@@ -51,7 +51,7 @@ class ShogiWarsCop
     str = str.toutf8
 
     # var gamedaata = {...} の内容を拝借
-    info[:meta] = str.scan(/^\s*(\w+):\s*"(.*)"/).to_h
+    info[:meta] = str.scan(/^\s*(\w+):\s*"(.*)"/).to_h.symbolize_keys
 
     info[:csa_hands] = str.scan(/([+-]\d{4}[A-Z]{2}),L\d+/).flatten.join(",")
 

@@ -10,7 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202150000) do
+ActiveRecord::Schema.define(version: 20171123115400) do
+
+  create_table "battle_records", force: :cascade do |t|
+    t.string "unique_key", null: false
+    t.string "battle_key", null: false
+    t.string "game_type_key", null: false
+    t.text "csa_hands", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "battle_ships", force: :cascade do |t|
+    t.integer "battle_user_id"
+    t.integer "battle_record_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_record_id"], name: "index_battle_ships_on_battle_record_id"
+    t.index ["battle_user_id"], name: "index_battle_ships_on_battle_user_id"
+  end
+
+  create_table "battle_users", force: :cascade do |t|
+    t.string "unique_key", null: false
+    t.string "user_key", null: false
+    t.string "user_rank"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "kifu_convert_infos", force: :cascade do |t|
     t.string "unique_key", null: false
