@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   end
 
   get "tops/show"
-  get "tops/show2"
+  get "swars_tops/show"
   root "name_space1/kifu_convert_infos#new"
 end

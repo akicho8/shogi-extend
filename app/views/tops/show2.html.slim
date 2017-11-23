@@ -10,5 +10,21 @@
     .col-sm-offset-2.col-sm-10
       =<> form.submit(name: :_submit, class: "btn btn-primary btn-lg")
 
-= BattleUser.to_html
-= BattleRecord.to_html
+- if @battle_user
+  ruby:
+    rows = @battle_user.battle_records.collect do |battle_record|
+      {
+        "先手" => battle_record.battle_users.first.user_key,
+        "後手" => battle_record.battle_users.second.user_key,
+        "日時" => time_ago_in_words(battle_record.battled_at) + "前",
+        "手数" => battle_record.turn_max,
+        "操作" => [
+           link_to("詳細", [:name_space1, battle_record]),
+        ].compact.join(" ").html_safe,
+      }
+    end
+  = rows.to_html
+
+- if Rails.env.development?
+  = BattleUser.to_html
+  = BattleRecord.to_html

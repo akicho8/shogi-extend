@@ -1,10 +1,7 @@
-class TopsController < ApplicationController
+class SwarsTopsController < ApplicationController
   def show
-  end
-
-  def show2
-    BattleUser.destroy_all
-    BattleRecord.destroy_all
+    # BattleUser.destroy_all
+    # BattleRecord.destroy_all
 
     if current_user_key
       unless BattleUser.find_by(user_key: current_user_key)

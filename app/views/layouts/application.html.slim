@@ -3,9 +3,10 @@ html lang="ja"
   head
     meta charset="UTF-8"
     meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
+    meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     = favicon_link_tag
     = csrf_meta_tag
-    meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    = yield :head
     title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
     = action_cable_meta_tag
     = stylesheet_pack_tag "application"
@@ -26,8 +27,8 @@ html lang="ja"
         #navbar.navbar-collapse.collapse
           .navbar-left
             =<> link_to("棋譜変換", [:new, :name_space1, :kifu_convert_info], class: "btn btn-primary navbar-btn")
-            =<> link_to("将棋ウォーズ", [:new, :name_space1, :battle_user], class: "btn btn-primary navbar-btn")
-            =<> link_to("将棋ウォーズ", [:tops, :show2], class: "btn btn-primary navbar-btn")
+            / =<> link_to("将棋ウォーズ", [:new, :name_space1, :battle_user], class: "btn btn-primary navbar-btn")
+            =<> link_to("将棋ウォーズ棋譜検索", [:swars_tops, :show], class: "btn btn-primary navbar-btn")
     .container
       = bootstrap_flash
       = yield

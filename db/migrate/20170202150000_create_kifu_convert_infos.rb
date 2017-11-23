@@ -13,6 +13,7 @@
 # | kifu_body     | 棋譜内容           | text     |             |      |       |
 # | converted_ki2 | 変換後KI2          | text     |             |      |       |
 # | converted_kif | 変換後KIF          | text     |             |      |       |
+# | converted_csa | 変換後CSA          | text     |             |      |       |
 # | turn_max      | 手数               | integer  |             |      |       |
 # | kifu_header   | 棋譜ヘッダー       | text     |             |      |       |
 # | created_at    | 作成日時           | datetime | NOT NULL    |      |       |
