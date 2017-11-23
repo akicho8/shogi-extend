@@ -27,13 +27,14 @@
 
 ruby:
   if @battle_user
-    battle_records = @battle_user.battle_records.order(battled_at: :desc).reverse_order.page(params[:page])
+    battle_records = @battle_user.battle_records.order(battled_at: :desc).page(params[:page])
     rows = battle_records.collect do |battle_record|
       aite_user_ship = battle_record.aite_user_ship(@battle_user)
       {
         "対戦相手" => link_to(aite_user_ship.battle_user.user_key, [:swars_tops, :show, user_key: aite_user_ship.battle_user.user_key]),
         "段級" => aite_user_ship.battle_user_rank.name,
         "手数" => battle_record.turn_max,
+        "種類" => battle_record.game_type_info.name,
         "日時" => time_ago_in_words(battle_record.battled_at) + "前",
         "" => [
            link_to("詳細", [:name_space1, battle_record]),
@@ -47,6 +48,7 @@ ruby:
         "先手" => link_to(battle_record.battle_ships.first.name_with_rank, [:swars_tops, :show, user_key: battle_record.battle_users.first.user_key]),
         "後手" => link_to(battle_record.battle_ships.second.name_with_rank, [:swars_tops, :show, user_key: battle_record.battle_users.second.user_key]),
         "手数" => battle_record.turn_max,
+        "種類" => battle_record.game_type_info.name,
         "日時" => time_ago_in_words(battle_record.battled_at) + "前",
         "" => [
            link_to("詳細", [:name_space1, battle_record]),

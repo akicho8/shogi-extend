@@ -35,6 +35,7 @@ class BattleRecord < ApplicationRecord
   before_validation do
     self.unique_key ||= SecureRandom.hex
 
+    # "" から ten_min への変換
     if game_type_key
       self.game_type_key = GameTypeInfo.fetch(game_type_key).key
     end
@@ -61,7 +62,7 @@ class BattleRecord < ApplicationRecord
   end
 
   def game_type_info
-    GameTypeInfo.fetch_if(game_type_key)
+    GameTypeInfo.fetch(game_type_key)
   end
 
   concerning :HenkanMethods do
