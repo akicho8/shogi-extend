@@ -93,6 +93,7 @@ gem 'rails_autolink'
 gem 'kaminari'
 gem 'carrierwave'
 
+
 gem 'airbrake', "~> 5.0"        # バージョン重要
 gem 'airbrake-ruby'
 
@@ -104,3 +105,7 @@ gem 'aam',           github: 'akicho8/aam'
 gem 'uzoumuzou',     github: 'akicho8/uzoumuzou'
 gem 'normalizer',    github: 'akicho8/normalizer'
 gem 'bushido',       github: 'akicho8/bushido'
+
+# for ShogiWarsCop
+gem 'nokogiri'
+gem 'mechanize'
