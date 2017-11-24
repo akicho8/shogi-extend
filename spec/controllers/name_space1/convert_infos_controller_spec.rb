@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (kifu_convert_infos as KifuConvertInfo)
+# 棋譜変換テーブル (convert_infos as ConvertInfo)
 #
 # |---------------+--------------------+----------+-------------+------+-------|
 # | カラム名      | 意味               | タイプ   | 属性        | 参照 | INDEX |
@@ -22,14 +22,14 @@
 
 require 'rails_helper'
 
-RSpec.describe NameSpace1::KifuConvertInfosController, type: :controller do
+RSpec.describe NameSpace1::ConvertInfosController, type: :controller do
   it "index" do
-    KifuConvertInfo.create!
+    ConvertInfo.create!
     get :index, params: {}
   end
 
   it "show" do
-    @kifu_convert_info = KifuConvertInfo.create!
-    get :show, params: {id: @kifu_convert_info.to_param}
+    @convert_info = ConvertInfo.create!
+    get :show, params: {id: @convert_info.to_param}
   end
 end

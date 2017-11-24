@@ -1,10 +1,10 @@
-unless KifuConvertInfo.exists?
-  60.times { KifuConvertInfo.create!(kifu_body: "") }
+unless ConvertInfo.exists?
+  60.times { ConvertInfo.create!(kifu_body: "") }
 end
 
-unless BattleUserRank.exists?
-  StaticBattleUserRankInfo.each do |e|
-    BattleUserRank.create!(unique_key: e.key, priority: e.priority)
+unless WarsRank.exists?
+  StaticWarsRankInfo.each do |e|
+    WarsRank.create!(unique_key: e.key, priority: e.priority)
   end
-  tp BattleUserRank
+  tp WarsRank
 end

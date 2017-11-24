@@ -8,9 +8,6 @@ require 'rspec/rails'
 # eshell が大変なことになるのを防ぐ
 # ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
-# screenshot_opener を rspec の方にも対応させる
-RSpec::Rails::SystemExampleGroup.include(ScreenshotOpener)
-
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -63,5 +60,7 @@ RSpec.configure do |config|
       driven_by :selenium_chrome_headless, screen_size: [1400, 1400]
     end
   end
-end
 
+  # screenshot_opener を rspec の方にも対応させる
+  config.include ScreenshotOpener, type: :system
+end

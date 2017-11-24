@@ -1,49 +1,26 @@
 class SwarsTopsController < ApplicationController
   def show
-    # BattleUser.destroy_all
-    # BattleRecord.destroy_all
+    # WarsUser.destroy_all
+    # WarsRecord.destroy_all
+    # WarsRecord.destroy_all
 
     if current_user_key
-      GameTypeInfo.each do |e|
-        torikomu(gtype: e.swars_key)
+      before_count = 0
+      if wars_user = WarsUser.find_by(user_key: current_user_key)
+        before_count = wars_user.wars_records.count
       end
-      @battle_user = BattleUser.find_by(user_key: current_user_key)
-    end
-  end
 
-  def torikomu(**params)
-    shogi_wars_cop = ShogiWarsCop.new
-    list = shogi_wars_cop.battle_list_get({user_key: current_user_key}.merge(params))
-    list.each do |history|
-      unless BattleRecord.where(battle_key: history[:battle_key]).exists?
-        info = shogi_wars_cop.battle_one_info_get(history[:battle_key])
+      WarsRecord.import_all(user_key: current_user_key)
 
-        # 対局中だった場合
-        unless info[:battle_done]
-          next
+      @wars_user = WarsUser.find_by(user_key: current_user_key)
+      if @wars_user
+        count_diff = @wars_user.wars_records.count - before_count
+        if count_diff.zero?
+        else
+          flash.now[:info] = "#{count_diff}件新しく取り込みました"
         end
-
-        battle_users = history[:users].collect do |e|
-          battle_user = BattleUser.find_or_initialize_by(user_key: e[:user_key])
-          battle_user_rank = BattleUserRank.find_by!(unique_key: e[:rank])
-          battle_user.update!(battle_user_rank: battle_user_rank) # 常にランクを更新する
-          battle_user
-        end
-
-        battle_record = BattleRecord.new
-        battle_record.attributes = {
-          battle_key: history[:battle_key],
-          game_type_key: info.dig(:meta, :gtype),
-          csa_hands: info[:csa_hands],
-        }
-
-        history[:users].each do |e|
-          battle_user = BattleUser.find_by!(user_key: e[:user_key])
-          battle_user_rank = BattleUserRank.find_by!(unique_key: e[:rank])
-          battle_record.battle_ships.build(battle_user:  battle_user, battle_user_rank: battle_user_rank)
-        end
-
-        battle_record.save!
+      else
+        flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
       end
     end
   end
@@ -57,7 +34,10 @@ class SwarsTopsController < ApplicationController
 
   rescue_from "Mechanize::ResponseCodeError" do |exception|
     notify_airbrake(exception)
-    flash.now[:alert] = "#{exception.class.name}: #{exception.message}"
+    flash.now[:warning] = "該当のユーザーが見つかりません"
+    if Rails.env.development?
+      flash.now[:alert] = "#{exception.class.name}: #{exception.message}"
+    end
     render :show
   end
 end

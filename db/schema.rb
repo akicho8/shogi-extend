@@ -12,50 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20171123115400) do
 
-  create_table "battle_records", force: :cascade do |t|
-    t.string "unique_key", null: false
-    t.string "battle_key", null: false
-    t.datetime "battled_at", null: false
-    t.string "game_type_key", null: false
-    t.text "csa_hands", null: false
-    t.text "converted_ki2"
-    t.text "converted_kif"
-    t.text "converted_csa"
-    t.integer "turn_max"
-    t.text "kifu_header"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "battle_ships", force: :cascade do |t|
-    t.integer "battle_record_id"
-    t.integer "battle_user_id"
-    t.integer "battle_user_rank_id"
-    t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_record_id"], name: "index_battle_ships_on_battle_record_id"
-    t.index ["battle_user_id"], name: "index_battle_ships_on_battle_user_id"
-    t.index ["battle_user_rank_id"], name: "index_battle_ships_on_battle_user_rank_id"
-  end
-
-  create_table "battle_user_ranks", force: :cascade do |t|
-    t.string "unique_key", null: false
-    t.integer "priority", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "battle_users", force: :cascade do |t|
-    t.string "unique_key", null: false
-    t.string "user_key", null: false
-    t.integer "battle_user_rank_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_user_rank_id"], name: "index_battle_users_on_battle_user_rank_id"
-  end
-
-  create_table "kifu_convert_infos", force: :cascade do |t|
+  create_table "convert_infos", force: :cascade do |t|
     t.string "unique_key", null: false
     t.string "kifu_file"
     t.string "kifu_url"
@@ -67,6 +24,53 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.text "kifu_header"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "wars_ranks", force: :cascade do |t|
+    t.string "unique_key", null: false
+    t.integer "priority", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wars_records", force: :cascade do |t|
+    t.string "unique_key", null: false
+    t.string "battle_key", null: false
+    t.datetime "battled_at", null: false
+    t.string "game_type_key", null: false
+    t.text "csa_hands", null: false
+    t.string "reason_key", null: false
+    t.integer "win_wars_user_id"
+    t.text "converted_ki2"
+    t.text "converted_kif"
+    t.text "converted_csa"
+    t.integer "turn_max"
+    t.text "kifu_header"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["win_wars_user_id"], name: "index_wars_records_on_win_wars_user_id"
+  end
+
+  create_table "wars_ships", force: :cascade do |t|
+    t.integer "wars_record_id"
+    t.integer "wars_user_id"
+    t.integer "wars_rank_id"
+    t.boolean "win_flag", null: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["wars_rank_id"], name: "index_wars_ships_on_wars_rank_id"
+    t.index ["wars_record_id"], name: "index_wars_ships_on_wars_record_id"
+    t.index ["wars_user_id"], name: "index_wars_ships_on_wars_user_id"
+  end
+
+  create_table "wars_users", force: :cascade do |t|
+    t.string "unique_key", null: false
+    t.string "user_key", null: false
+    t.integer "wars_rank_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["wars_rank_id"], name: "index_wars_users_on_wars_rank_id"
   end
 
 end

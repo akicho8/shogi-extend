@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (kifu_convert_infos as KifuConvertInfo)
+# 棋譜変換テーブル (convert_infos as ConvertInfo)
 #
 # |---------------+--------------------+----------+-------------+------+-------|
 # | カラム名      | 意味               | タイプ   | 属性        | 参照 | INDEX |
@@ -22,8 +22,8 @@
 
 require 'rails_helper'
 
-RSpec.describe KifuConvertInfo, type: :model do
+RSpec.describe ConvertInfo, type: :model do
   it do
-    KifuConvertInfo.create!(kifu_body: "▲７六歩")
+    ConvertInfo.create!(kifu_body: "▲７六歩")
   end
 end

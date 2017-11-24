@@ -1,4 +1,4 @@
-class StaticBattleUserRankInfo
+class StaticWarsRankInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: "九段"},

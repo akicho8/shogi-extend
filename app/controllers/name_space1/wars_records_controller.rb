@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (kifu_convert_infos as KifuConvertInfo)
+# 将棋ウォーズ対戦情報テーブル (wars_records as WarsRecord)
 #
 # |---------------+--------------------+----------+-------------+------+-------|
 # | カラム名      | 意味               | タイプ   | 属性        | 参照 | INDEX |
 # |---------------+--------------------+----------+-------------+------+-------|
 # | id            | ID                 | integer  | NOT NULL PK |      |       |
 # | unique_key    | ユニークなハッシュ | string   | NOT NULL    |      |       |
-# | kifu_file     | 棋譜ファイル       | string   |             |      |       |
-# | kifu_url      | 棋譜URL            | string   |             |      |       |
-# | kifu_body     | 棋譜内容           | text     |             |      |       |
+# | battle_key    | Battle key         | string   | NOT NULL    |      |       |
+# | battled_at    | Battled at         | datetime | NOT NULL    |      |       |
+# | game_type_key | Game type key      | string   | NOT NULL    |      |       |
+# | csa_hands     | Csa hands          | text     | NOT NULL    |      |       |
 # | converted_ki2 | 変換後KI2          | text     |             |      |       |
 # | converted_kif | 変換後KIF          | text     |             |      |       |
 # | converted_csa | 変換後CSA          | text     |             |      |       |
@@ -21,7 +22,7 @@
 # |---------------+--------------------+----------+-------------+------+-------|
 
 module NameSpace1
-  class KifuConvertInfosController < ApplicationController
+  class WarsRecordsController < ApplicationController
     if Rails.env.production?
       if v = ENV["HTTP_BASIC_AUTHENTICATE"].presence
         http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: [:index, :edit, :update, :destroy])
@@ -43,20 +44,15 @@ module NameSpace1
 
     def raw_current_record
       if v = params[:id].presence
-        current_scope.find_by!(unique_key: v)
+        current_scope.find_by!(battle_key: v)
       else
         current_scope.new
       end
-      # if Rails.env.development?
-      # e.kifu_url ||= "#{current_model.maximum(:id).to_i.next}つめ"
-      # e.kifu_body ||= "▲2六歩 ▽3四歩 ▲2五歩 ▽3三角 ▲7六歩 ▽4二銀 ▲4八銀 ▽5四歩 ▲6八玉 ▽5五歩"
     end
 
-    # 更新後の移動先
-    def redirect_to_where
-      current_record
-      # [self.class.parent_name.underscore, current_record]
-    end
+    # def redirect_to_where
+    #   [self.class.parent_name.underscore, current_record]
+    # end
 
     def notice_message
       "変換完了！"

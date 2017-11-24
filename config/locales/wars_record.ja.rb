@@ -4,18 +4,20 @@
     },
     helpers: {
       submit: {
-        kifu_convert_info: {
-          create: "変換",
-          update: nil,
+        wars_record: {
+          # create: "変換",
+          # update: nil,
         },
       },
     },
     activerecord: {
       models: {
-        kifu_convert_info: "棋譜変換",
+        wars_record: "将棋ウォーズ対戦情報",
+        wars_user: "将棋ウォーズユーザー",
+        wars_ship: "対局と対局者の対応",
       },
       attributes: {
-        kifu_convert_info: {
+        wars_record: {
           unique_key: "ユニークなハッシュ",
           kifu_file: "棋譜ファイル",
           kifu_url: "棋譜URL",

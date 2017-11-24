@@ -4,7 +4,7 @@
     },
     helpers: {
       submit: {
-        battle_record: {
+        convert_info: {
           create: "変換",
           update: nil,
         },
@@ -12,10 +12,10 @@
     },
     activerecord: {
       models: {
-        battle_record: "棋譜変換",
+        convert_info: "棋譜変換",
       },
       attributes: {
-        battle_record: {
+        convert_info: {
           unique_key: "ユニークなハッシュ",
           kifu_file: "棋譜ファイル",
           kifu_url: "棋譜URL",
