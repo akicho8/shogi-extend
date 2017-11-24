@@ -28,7 +28,7 @@ module NameSpace1
       end
     end
 
-    include PluggableCrud::All
+    include ModulableCrud::All
 
     def show
       respond_to do |format|

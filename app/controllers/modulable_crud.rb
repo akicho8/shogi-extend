@@ -1,4 +1,4 @@
-module PluggableCrud
+module ModulableCrud
   concern :Base do
     included do
       if Rails.env.development?
@@ -101,7 +101,7 @@ module PluggableCrud
     end
 
     def page_header_show_title
-      "詳細: ##{current_record.id}"
+      "詳細: ##{current_record.to_param}"
     end
   end
 
@@ -125,7 +125,11 @@ module PluggableCrud
     end
 
     def redirect_to_where
-      [self.class.parent_name.underscore, current_plural_key]
+      if false
+        [self.class.parent_name.underscore, current_record]
+      else
+        [self.class.parent_name.underscore, current_plural_key]
+      end
     end
 
     def redirect_to_after_create_or_update
@@ -147,7 +151,6 @@ module PluggableCrud
 
     def current_record_save
       current_record.save
-      # current_record.saved_changes.transform_values(&:first)
     end
 
     def current_record_params
@@ -185,7 +188,8 @@ module PluggableCrud
           render :edit
           return
         end
-        # 確認画面から戻ったとき用の属性を作っておく(ファイルアップロードしたときなどは current_session_attributes のなかで、そのキーを抜いておくこと)
+        # 確認画面から戻ったとき用の属性を作っておく
+        # ファイルアップロードしたときなどは current_session_attributes のなかで、そのキーを抜いておくこと
         session[current_single_key] = current_session_attributes
         render :confirm
       when _submit_from_confirm?

@@ -12,7 +12,7 @@ console.log('Hello World from Webpacker')
 import "bootstrap-honoka/dist/css/bootstrap.min.css"
 import "bootstrap-honoka/dist/js/bootstrap.min.js"
 
-import "./pluggable_crud.coffee"
+import "./modulable_crud.coffee"
 
 import "./basic.sass"
 import "./bootstrap_tuning.sass"
