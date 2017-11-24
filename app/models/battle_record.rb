@@ -50,7 +50,6 @@ class BattleRecord < ApplicationRecord
     validates :battle_key
     validates :battled_at
     validates :game_type_key
-    validates :csa_hands
   end
 
   with_options allow_blank: true do

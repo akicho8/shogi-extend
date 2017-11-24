@@ -3,6 +3,8 @@ class ShogiWarsCop
     @options = {
       mock_use: Rails.env.development? || Rails.env.test?
     }.merge(options)
+
+    @options[:mock_use] = false
   end
 
   def battle_list_get(**params)
@@ -58,11 +60,15 @@ class ShogiWarsCop
     if @options[:mock_use]
       str = Rails.root.join("config/http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja.html").read
     else
-      str = current_agent.get(info[:url]).body
+      page = current_agent.get(info[:url])
+      str = page.body
     end
 
     # 級位が文字化けするため
     str = str.toutf8
+
+    # 対局完了？
+    info[:battle_done] = str.match?(/\b(receiveMove)\b/)
 
     # var gamedaata = {...} の内容を拝借
     info[:meta] = str.scan(/^\s*(\w+):\s*"(.*)"/).to_h.symbolize_keys
@@ -84,8 +90,68 @@ class ShogiWarsCop
 end
 
 if $0 == __FILE__
-  tp ShogiWarsCop.new.battle_list_get(gtype: "s1",  user_key: "hanairobiyori")
-  tp ShogiWarsCop.new.battle_one_info_get("hanairobiyori-ispt-20171104_220810")
+  tp ShogiWarsCop.new.battle_list_get(gtype: "",  user_key: "Apery8")
+  # tp ShogiWarsCop.new.battle_list_get(gtype: "sb",  user_key: "Apery8")
+  # tp ShogiWarsCop.new.battle_list_get(gtype: "s1",  user_key: "Apery8")
+  # tp ShogiWarsCop.new.battle_one_info_get("hanairobiyori-ispt-20171104_220810")
+
+  # |--------------------------------------+-------------------------------------------------------------------------------------|
+  # | battle_key                           | users                                                                               |
+  # |--------------------------------------+-------------------------------------------------------------------------------------|
+  # | Vermee81-Apery8-20171123_225052      | [{:user_key=>"Vermee81", :rank=>"初段"}, {:user_key=>"Apery8", :rank=>"二段"}]      |
+  # | Apery8-hothanabi-20171123_222727     | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"hothanabi", :rank=>"1級"}]      |
+  # | Hot_springs-Apery8-20171123_221657   | [{:user_key=>"Hot_springs", :rank=>"二段"}, {:user_key=>"Apery8", :rank=>"二段"}]   |
+  # | Apery8-keikakufukyuu-20171123_220407 | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"keikakufukyuu", :rank=>"二段"}] |
+  # | Apery8-RKT_-20171123_215739          | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"RKT_", :rank=>"三段"}]          |
+  # | Apery8-yukitakutff-20171123_214915   | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"yukitakutff", :rank=>"初段"}]   |
+  # | sunnyislands-Apery8-20171123_212430  | [{:user_key=>"sunnyislands", :rank=>"二段"}, {:user_key=>"Apery8", :rank=>"二段"}]  |
+  # | dezineko-Apery8-20171123_210612      | [{:user_key=>"dezineko", :rank=>"二段"}, {:user_key=>"Apery8", :rank=>"二段"}]      |
+  # | Apery8-DDP_SelfHigh5-20171123_210100 | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"DDP_SelfHigh5", :rank=>"初段"}] |
+  # | Apery8-logh3920-20171123_205402      | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"logh3920", :rank=>"初段"}]      |
+  # |--------------------------------------+-------------------------------------------------------------------------------------|
+  # |-------------------------------------+------------------------------------------------------------------------------------|
+  # | battle_key                          | users                                                                              |
+  # |-------------------------------------+------------------------------------------------------------------------------------|
+  # | Sokutenkyosi-Apery8-20171123_224710 | [{:user_key=>"Sokutenkyosi", :rank=>"二段"}, {:user_key=>"Apery8", :rank=>"三段"}] |
+  # | Apery8-sasashu1-20171123_224309     | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"sasashu1", :rank=>"四段"}]     |
+  # | souma8souta9-Apery8-20171123_223721 | [{:user_key=>"souma8souta9", :rank=>"初段"}, {:user_key=>"Apery8", :rank=>"三段"}] |
+  # | Apery8-harunozo5483-20171123_214012 | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"harunozo5483", :rank=>"三段"}] |
+  # | Apery8-yukiko0116-20171123_213128   | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"yukiko0116", :rank=>"三段"}]   |
+  # | Apery8-Zakki0411-20171123_211727    | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"Zakki0411", :rank=>"三段"}]    |
+  # | Apery8-sawada1-20171123_210336      | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"sawada1", :rank=>"四段"}]      |
+  # | Apery8-ysk2121-20171123_203936      | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"ysk2121", :rank=>"二段"}]      |
+  # | Apery8-ninjakun-20171123_200552     | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"ninjakun", :rank=>"三段"}]     |
+  # | Apery8-houbou3-20171123_185715      | [{:user_key=>"Apery8", :rank=>"三段"}, {:user_key=>"houbou3", :rank=>"三段"}]      |
+  # |-------------------------------------+------------------------------------------------------------------------------------|
+  # |----------------------------------+---------------------------------------------------------------------------------|
+  # | battle_key                       | users                                                                           |
+  # |----------------------------------+---------------------------------------------------------------------------------|
+  # | Apery8-x12345k-20171123_214639   | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"x12345k", :rank=>"三段"}]   |
+  # | Apery8-kazama7-20171123_194317   | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"kazama7", :rank=>"二段"}]   |
+  # | Apery8-osyo-20171123_175808      | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"osyo", :rank=>"初段"}]      |
+  # | Apery8-urawara-20171123_175150   | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"urawara", :rank=>"三段"}]   |
+  # | Apery8-kazu55-20171123_174538    | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"kazu55", :rank=>"四段"}]    |
+  # | Apery8-KHFUGJFGS-20171123_173529 | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"KHFUGJFGS", :rank=>"10級"}] |
+  # | Apery8-F_sys-20171123_170850     | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"F_sys", :rank=>"二段"}]     |
+  # | Hidama-Apery8-20171123_165138    | [{:user_key=>"Hidama", :rank=>"三段"}, {:user_key=>"Apery8", :rank=>"二段"}]    |
+  # | Apery8-osyo-20171123_162735      | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"osyo", :rank=>"初段"}]      |
+  # | hackake-Apery8-20171123_155604   | [{:user_key=>"hackake", :rank=>"二段"}, {:user_key=>"Apery8", :rank=>"二段"}]   |
+  # |----------------------------------+---------------------------------------------------------------------------------|
+
+  # |----------------------------------+---------------------------------------------------------------------------------|
+  # | battle_key                       | users                                                                           |
+  # |----------------------------------+---------------------------------------------------------------------------------|
+  # | Apery8-x12345k-20171123_214639   | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"x12345k", :rank=>"三段"}]   |
+  # | Apery8-kazama7-20171123_194317   | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"kazama7", :rank=>"二段"}]   |
+  # | Apery8-osyo-20171123_175808      | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"osyo", :rank=>"初段"}]      |
+  # | Apery8-urawara-20171123_175150   | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"urawara", :rank=>"三段"}]   |
+  # | Apery8-kazu55-20171123_174538    | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"kazu55", :rank=>"四段"}]    |
+  # | Apery8-KHFUGJFGS-20171123_173529 | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"KHFUGJFGS", :rank=>"10級"}] |
+  # | Apery8-F_sys-20171123_170850     | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"F_sys", :rank=>"二段"}]     |
+  # | Hidama-Apery8-20171123_165138    | [{:user_key=>"Hidama", :rank=>"三段"}, {:user_key=>"Apery8", :rank=>"二段"}]    |
+  # | Apery8-osyo-20171123_162735      | [{:user_key=>"Apery8", :rank=>"二段"}, {:user_key=>"osyo", :rank=>"初段"}]      |
+  # | hackake-Apery8-20171123_155604   | [{:user_key=>"hackake", :rank=>"二段"}, {:user_key=>"Apery8", :rank=>"二段"}]   |
+  # |----------------------------------+---------------------------------------------------------------------------------|
 
   # |---------------------------------------------+-----------------------------------------------------------------------------------|
   # | battle_key                                  | users                                                                             |
