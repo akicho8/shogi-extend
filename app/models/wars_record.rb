@@ -166,7 +166,7 @@ class WarsRecord < ApplicationRecord
     end
 
     def reason_info
-      ReasonInfo.fetch(reason_key)
+      ReasonInfo[reason_key]
     end
 
     def winner_desuka?(wars_user)

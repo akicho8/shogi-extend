@@ -34,7 +34,7 @@ ruby:
         "結果" => wars_record.kekka_emoji(@wars_user).html_safe,
         "対戦相手" => link_to(aite_user_ship.wars_user.user_key, aite_user_ship.wars_user),
         "段級" => aite_user_ship.wars_rank.name,
-        "理由" => wars_record.reason_info.name,
+        "理由" => wars_record.reason_info&.name || wars_record.reason_key,
         "手数" => wars_record.turn_max,
         "種類" => wars_record.game_type_info.name,
         "日時" => time_ago_in_words(wars_record.battled_at) + "前",
