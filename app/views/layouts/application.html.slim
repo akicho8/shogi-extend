@@ -26,9 +26,9 @@ html lang="ja"
           = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
         #navbar.navbar-collapse.collapse
           .navbar-left
-            =<> link_to("棋譜変換", [:new, :name_space1, :kifu_convert_info], class: "btn btn-primary navbar-btn")
+            =<> link_to("将棋ウォーズ棋譜検索", :s, class: "btn btn-primary navbar-btn")
+            =<> link_to("棋譜変換", :x, class: "btn btn-primary navbar-btn")
             / =<> link_to("将棋ウォーズ", [:new, :name_space1, :battle_user], class: "btn btn-primary navbar-btn")
-            =<> link_to("将棋ウォーズ棋譜検索", [:swars_tops, :show], class: "btn btn-primary navbar-btn")
     .container
       = bootstrap_flash
       = yield
