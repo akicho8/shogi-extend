@@ -109,12 +109,13 @@ class WarsRecord < ApplicationRecord
     end
 
     def kifu_body
+      n_part = -> e { "#{e.wars_user.user_key} #{e.wars_rank.name}" }
+
       out = ""
-      wars_ship = wars_ships.first
-      out << "N+#{wars_ship.wars_user.user_key} #{wars_ship.wars_rank.name}\n"
-      wars_ship = wars_ships.second
-      out << "N-#{wars_ship.wars_user.user_key} #{wars_ship.wars_rank.name}\n"
+      out << "N+#{n_part[wars_ships.black]}\n"
+      out << "N-#{n_part[wars_ships.white]}\n"
       out << csa_hands + "\n"
+      out << "%#{reason_info.csa_key}\n"
       out
     end
   end

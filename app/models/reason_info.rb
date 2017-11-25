@@ -1,17 +1,9 @@
 class ReasonInfo
   include ApplicationMemoryRecord
   memory_record [
-    {key: "TORYO",         name: "投了",                           },
-    {key: "DISCONNECT",    name: "切断",                           },
-    {key: "TIMEOUT",       name: "時間切れ",                       },
-    {key: "CHECKMATE",     name: "詰み",                           },
-    # {key: "ENTERINGKING",  name: "先手が入玉宣言して勝ち?",                      },
-    # {key: "OUTE_SENNICHI", name: "後手連続王手の千日手による反則負け", },
+    {key: "TORYO",      name: "投了",     label_key: :danger, csa_key: "TORYO",   },
+    {key: "DISCONNECT", name: "切断",     label_key: :danger, csa_key: "CHUDAN",  },
+    {key: "TIMEOUT",    name: "時間切れ", label_key: :danger, csa_key: "TIMEOUT", },
+    {key: "CHECKMATE",  name: "詰み",     label_key: :danger, csa_key: "TSUMI",   },
   ]
-
-  # class << self
-  #   def kekka_key_to_record(str)
-  #     str.match?(/^SENTE_WIN_/)
-  #   end
-  # end
 end
