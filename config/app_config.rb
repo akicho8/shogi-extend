@@ -1,3 +1,3 @@
 AppConfig = {
-  app_name: "将棋の小道具（仮）",
+  app_name: "将棋のツール（仮）",
 }

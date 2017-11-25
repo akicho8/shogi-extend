@@ -22,15 +22,33 @@
 # |---------------+--------------------+----------+-------------+------+-------|
 
 class WarsRecord < ApplicationRecord
-  has_many :wars_ships, dependent: :destroy
-  has_many :wars_users, through: :wars_ships
-  belongs_to :win_wars_user, class_name: "WarsUser", optional: true
+  has_one :wars_ship_black, -> { where(position: 0) }, class_name: "WarsShip"
+  has_one :wars_ship_white, -> { where(position: 1) }, class_name: "WarsShip"
 
-  # with_options(class_name: "Type010File", dependent: :destroy, inverse_of: :type010_article) do
-  #   has_one :type010_file_a, -> { order(created_at: :desc).where(position: 0) }
-  #   has_one :type010_file_b, -> { order(created_at: :desc).where(position: 1) }
-  #   has_one :type010_file_c, -> { order(created_at: :desc).where(position: 2) }
-  # end
+  has_one :wars_ship_win,  -> { where(win_flag: true) }, class_name: "WarsShip"
+  has_one :wars_ship_lose, -> { where(win_flag: false) }, class_name: "WarsShip"
+
+  has_many :wars_ships, dependent: :destroy do
+    def black
+      first
+    end
+
+    def white
+      second
+    end
+  end
+
+  has_many :wars_users, through: :wars_ships do
+    def black
+      first
+    end
+
+    def white
+      second
+    end
+  end
+
+  belongs_to :win_wars_user, class_name: "WarsUser", optional: true
 
   before_validation do
     self.unique_key ||= SecureRandom.hex
@@ -124,6 +142,11 @@ class WarsRecord < ApplicationRecord
 
             # 対局中だった場合
             unless info[:battle_done]
+              next
+            end
+
+            # 引き分けを考慮すると急激に煩雑になるため取り込まない
+            unless info[:kekka_key].match?(/(SENTE|GOTE)_WIN/)
               next
             end
 

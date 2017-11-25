@@ -25,49 +25,13 @@
         .text-center
           = form.submit("検索", name: nil, class: "btn btn-primary btn-lg")
 
-ruby:
-  if @wars_user
-    wars_records = @wars_user.wars_records.order(battled_at: :desc).page(params[:page])
-    rows = wars_records.collect do |wars_record|
-      aite_user_ship = wars_record.aite_user_ship(@wars_user)
-      {
-        "結果" => wars_record.kekka_emoji(@wars_user).html_safe,
-        "対戦相手" => link_to(aite_user_ship.wars_user.user_key, aite_user_ship.wars_user),
-        "段級" => aite_user_ship.wars_rank.name,
-        "理由" => wars_record.reason_info&.name || wars_record.reason_key,
-        "手数" => wars_record.turn_max,
-        "種類" => wars_record.game_type_info.name,
-        "日時" => time_ago_in_words(wars_record.battled_at) + "前",
-        "" => [
-           link_to("詳細", [:name_space1, wars_record]),
-           link_to("KIF", [:name_space1, wars_record, format: "kif"]),
-           link_to("盤上", swars_board_url(wars_record)),
-        ].compact.join(" ").html_safe,
-      }
-    end
-  else
-    wars_records = WarsRecord.order(battled_at: :desc).page(params[:page])
-    rows = wars_records.collect do |wars_record|
-      {
-        "先手" => link_to(wars_record.wars_ships.first.name_with_rank, wars_record.wars_users.first) + (wars_record.wars_ships.first.win_flag? ? "&#128522;".html_safe : ""),
-        "後手" => link_to(wars_record.wars_ships.second.name_with_rank, wars_record.wars_users.second) + (wars_record.wars_ships.second.win_flag? ? "&#128522;".html_safe : ""),
-        "手数" => wars_record.turn_max,
-        "種類" => wars_record.game_type_info.name,
-        "日時" => time_ago_in_words(wars_record.battled_at) + "前",
-        "" => [
-           link_to("詳細", [:name_space1, wars_record]),
-        ].compact.join(" ").html_safe,
-      }
-    end
-  end
-
-= rows.to_html
+= @rows.to_html
 
 .text-center
-  = paginate wars_records
+  = paginate @wars_records
 
 - content_for :head do
-  = rel_next_prev_link_tags wars_records
+  = rel_next_prev_link_tags @wars_records
 
 - if Rails.env.development? && false
   = WarsUser.to_html

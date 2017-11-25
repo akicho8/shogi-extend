@@ -29,6 +29,8 @@ class WarsShip < ApplicationRecord
   acts_as_list top_of_list: 0, scope: :wars_record
   default_scope { order(:position) }
 
+  scope :win_flag_is, -> e { where(win_flag: e) }
+
   before_validation do
     if wars_user
       self.wars_rank ||= wars_user.wars_rank

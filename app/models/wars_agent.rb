@@ -69,9 +69,6 @@ class WarsAgent
       end
 
       if md = str.match(/\b(?:receiveMove)\("(?<csa_data>.*)"\)/)
-        # 対局完了？
-        info[:battle_done] = true
-
         # 級位が文字化けするので
         str = str.toutf8
 
@@ -85,6 +82,9 @@ class WarsAgent
         # 開始直後に切断している場合は空文字列になる
         # だから空ではないチェックをしてはいけない
         info[:csa_hands] = md[:csa_data].scan(/([+-]\d{4}[A-Z]{2}),L\d+/).flatten.join(",")
+
+        # 対局完了？
+        info[:battle_done] = true
       end
 
       info
