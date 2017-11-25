@@ -16,13 +16,13 @@ Rails.application.routes.draw do
   end
 
   resolve "WarsUser" do |wars_user, options|
-    "/s/#{wars_user.to_param}"
+    search_by_user_path(user_key: wars_user.to_param)
   end
 
   get "tops/show"
   get "swars_tops/show"
 
-  get "s/:user_key", to: "swars_tops#show"
+  get "s/:user_key", to: "swars_tops#show", as: :search_by_user
   get "s", to: "swars_tops#show"
 
   # get "x/new", to: "name_space1/convert_infos#new"
