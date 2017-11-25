@@ -28,7 +28,7 @@ class WarsRecord < ApplicationRecord
   has_one :wars_ship_win,  -> { where(win_flag: true) }, class_name: "WarsShip"
   has_one :wars_ship_lose, -> { where(win_flag: false) }, class_name: "WarsShip"
 
-  has_many :wars_ships, dependent: :destroy do
+  has_many :wars_ships, dependent: :destroy, inverse_of: :wars_record do
     def black
       first
     end
