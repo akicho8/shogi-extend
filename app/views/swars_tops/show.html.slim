@@ -18,7 +18,11 @@
     .form-group.form-group-lg
       .col-sm-3
       .col-sm-6
-        = form.search_field(:user_key, class: "form-control", value: controller.current_user_key, placeholder: "ユーザー名")
+        = form.search_field(:user_key, class: "form-control", value: controller.current_user_key, placeholder: "ユーザー名", list: "user_key_list")
+        = tag.datalist(id: "user_key_list") do
+          - WarsUser.order(updated_at: :desc).limit(128).pluck(:user_key).each do |user_key|
+            = tag.option(value: user_key)
+
       .col-sm-3
     .form-group
       .col-sm-12
@@ -32,6 +36,13 @@
 
 - content_for :head do
   = rel_next_prev_link_tags @wars_records
+
+- if controller.current_user_key
+  - if v = Rails.cache.read("import_all_#{controller.current_user_key}")
+    small
+      .text-center
+        .text-muted
+          = "Last Imported: #{v.to_s(:ymdhm)}"
 
 - if Rails.env.development? && false
   = WarsUser.to_html

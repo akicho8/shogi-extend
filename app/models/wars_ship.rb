@@ -23,11 +23,10 @@
 
 class WarsShip < ApplicationRecord
   belongs_to :wars_record
-  belongs_to :wars_user
+  belongs_to :wars_user, touch: true
   belongs_to :wars_rank  # 対局したときの段位
 
   acts_as_list top_of_list: 0, scope: :wars_record
-  default_scope { order(:position) }
 
   scope :win_flag_is, -> e { where(win_flag: e) }
 

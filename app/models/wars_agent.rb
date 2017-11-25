@@ -81,7 +81,7 @@ class WarsAgent
         # CSA形式の棋譜
         # 開始直後に切断している場合は空文字列になる
         # だから空ではないチェックをしてはいけない
-        info[:csa_hands] = md[:csa_data].scan(/([+-]\d{4}[A-Z]{2}),L\d+/).flatten.join(",")
+        info[:csa_hands] = md[:csa_data].scan(/([+-]\d{4}[A-Z]{2}),L(\d+)/).collect{|a, b|[a, b.to_i]}
 
         # 対局完了？
         info[:battle_done] = true

@@ -1,9 +1,9 @@
 class GameTypeInfo
   include ApplicationMemoryRecord
   memory_record [
-    {key: :ten_min,   name: "10分", swars_key: "",   },
-    {key: :three_min, name: "3分",  swars_key: "sb", },
-    {key: :ten_sec,   name: "10秒", swars_key: "s1", },
+    {key: :ten_min,   name: "10分", swars_key: "",   csa_time_limit: "00:10+00", real_mochi_jikan: 60 * 10},
+    {key: :three_min, name: "3分",  swars_key: "sb", csa_time_limit: "00:03+00", real_mochi_jikan: 60 * 3},
+    {key: :ten_sec,   name: "10秒", swars_key: "s1", csa_time_limit: "00:00+10", real_mochi_jikan: 60 * 60}, # 実際は1時間設定になっている
   ]
 
   class << self

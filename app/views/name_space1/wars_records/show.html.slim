@@ -20,7 +20,13 @@ pre
 pre
   = current_record.converted_csa
 
-- if Rails.env.development?
+- if !Rails.env.production? || params[:debug].present?
+  = current_record.kaiseki_kekka_hash(:black).to_html
+  = current_record.kaiseki_kekka_hash(:white).to_html
+
+  pre
+    = current_record.kifu_body
+
   = current_record.kifu_header&.to_html
 
   p

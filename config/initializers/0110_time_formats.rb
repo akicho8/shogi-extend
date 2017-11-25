@@ -4,4 +4,5 @@ Time::DATE_FORMATS.update({
     ymd: "%F",
 
     swars_ymd: "%F %H:%M",
+    csa_ymdhms: "%Y/%m/%d %H:%M:%S",
   })
