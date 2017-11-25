@@ -62,6 +62,7 @@ class SwarsTopsController < ApplicationController
         row["日時"] = nichiji(wars_record)
         row[""] = [
           h.link_to("詳細", [:name_space1, wars_record]),
+          h.link_to("コピー", "#", :class => "botan", data: {battle_key: wars_record.battle_key}),
         ].compact.join(" ").html_safe
         row
       end
@@ -72,7 +73,7 @@ class SwarsTopsController < ApplicationController
     wars_ship = wars_record.wars_ships.win_flag_is(win_flag).first
     s = h.link_to(wars_ship.name_with_rank, wars_ship.wars_user)
     if !Rails.env.production? || params[:debug].present?
-      if wars_record.kishin_tsukatta?(wars_ship.position)
+      if wars_record.kishin_tsukatta?(wars_ship)
         s << "&#x2757;".html_safe
       end
     end
