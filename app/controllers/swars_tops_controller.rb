@@ -62,7 +62,7 @@ class SwarsTopsController < ApplicationController
         row["日時"] = nichiji(wars_record)
         row[""] = [
           h.link_to("詳細", [:name_space1, wars_record]),
-          h.link_to("コピー", "#", :class => "botan", data: {battle_key: wars_record.battle_key}),
+          h.link_to("コピー", "#", :class => "kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, wars_record, format: "kif"])}),
         ].compact.join(" ").html_safe
         row
       end
