@@ -31,7 +31,7 @@ import copy from 'copy-to-clipboard'
 //   copy('This is some cool text')
 // })
 
-import axios from 'axios';
+// import axios from 'axios';
 
 // const copy = require('clipboard-copy');
 
