@@ -2,9 +2,9 @@ unless ConvertSourceInfo.exists?
   60.times { ConvertSourceInfo.create!(kifu_body: "") }
 end
 
-unless WarsRank.exists?
-  StaticWarsRankInfo.each do |e|
-    WarsRank.create!(unique_key: e.key, priority: e.priority)
+unless WarRank.exists?
+  StaticWarRankInfo.each do |e|
+    WarRank.create!(unique_key: e.key, priority: e.priority)
   end
-  tp WarsRank
+  tp WarRank
 end

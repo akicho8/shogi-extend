@@ -30,6 +30,7 @@ class ConvertSourceInfo < ApplicationRecord
     self.unique_key ||= SecureRandom.hex
     self.kifu_header ||= {}
     self.turn_max ||= 0
+    self.kifu_body ||= ""
 
     if changes[:kifu_file]
       if kifu_file.present?
@@ -42,8 +43,6 @@ class ConvertSourceInfo < ApplicationRecord
         self.kifu_body = open(kifu_url, &:read).toutf8
       end
     end
-
-    true
   end
 
   before_save do

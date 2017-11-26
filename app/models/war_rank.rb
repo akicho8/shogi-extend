@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Wars rankテーブル (wars_ranks as WarsRank)
+# Wars rankテーブル (war_ranks as WarRank)
 #
 # |------------+------------+-------------+-------------+------+-------|
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
@@ -13,8 +13,8 @@
 # | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
 # |------------+------------+-------------+-------------+------+-------|
 
-class WarsRank < ApplicationRecord
-  has_many :wars_users, dependent: :destroy
+class WarRank < ApplicationRecord
+  has_many :war_users, dependent: :destroy
 
   default_scope { order(:priority) }
 
@@ -23,12 +23,12 @@ class WarsRank < ApplicationRecord
   end
 
   with_options allow_blank: true do
-    validates :unique_key, inclusion: StaticWarsRankInfo.collect(&:name)
+    validates :unique_key, inclusion: StaticWarRankInfo.collect(&:name)
   end
 
-  def static_wars_rank_info
-    StaticWarsRankInfo.fetch(unique_key)
+  def static_war_rank_info
+    StaticWarRankInfo.fetch(unique_key)
   end
 
-  delegate :name, to: :static_wars_rank_info
+  delegate :name, to: :static_war_rank_info
 end

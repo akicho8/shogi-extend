@@ -20,13 +20,15 @@
 require 'rails_helper'
 
 RSpec.describe NameSpace1::ConvertSourceInfosController, type: :controller do
+  before do
+    @convert_source_info = ConvertSourceInfo.create!
+  end
+
   it "index" do
-    ConvertSourceInfo.create!
     get :index, params: {}
   end
 
   it "show" do
-    @convert_source_info = ConvertSourceInfo.create!
     get :show, params: {id: @convert_source_info.to_param}
   end
 end

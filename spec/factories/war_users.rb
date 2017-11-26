@@ -1,4 +1,4 @@
 FactoryBot.define do
-  factory :wars_record do
+  factory :war_user do
   end
 end

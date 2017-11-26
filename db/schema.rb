@@ -33,48 +33,48 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
   end
 
-  create_table "wars_ranks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+  create_table "war_ranks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
     t.integer "priority", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "wars_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+  create_table "war_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
     t.string "battle_key", null: false
     t.datetime "battled_at", null: false
     t.string "game_type_key", null: false
     t.text "csa_hands", null: false
     t.string "reason_key", null: false
-    t.bigint "win_wars_user_id"
+    t.bigint "win_war_user_id"
     t.integer "turn_max"
     t.text "kifu_header"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["win_wars_user_id"], name: "index_wars_records_on_win_wars_user_id"
+    t.index ["win_war_user_id"], name: "index_war_records_on_win_war_user_id"
   end
 
-  create_table "wars_ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "wars_record_id"
-    t.bigint "wars_user_id"
-    t.bigint "wars_rank_id"
+  create_table "war_ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "war_record_id"
+    t.bigint "war_user_id"
+    t.bigint "war_rank_id"
     t.boolean "win_flag", null: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["wars_rank_id"], name: "index_wars_ships_on_wars_rank_id"
-    t.index ["wars_record_id"], name: "index_wars_ships_on_wars_record_id"
-    t.index ["wars_user_id"], name: "index_wars_ships_on_wars_user_id"
+    t.index ["war_rank_id"], name: "index_war_ships_on_war_rank_id"
+    t.index ["war_record_id"], name: "index_war_ships_on_war_record_id"
+    t.index ["war_user_id"], name: "index_war_ships_on_war_user_id"
   end
 
-  create_table "wars_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+  create_table "war_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
     t.string "user_key", null: false
-    t.bigint "wars_rank_id"
+    t.bigint "war_rank_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["wars_rank_id"], name: "index_wars_users_on_wars_rank_id"
+    t.index ["war_rank_id"], name: "index_war_users_on_war_rank_id"
   end
 
 end

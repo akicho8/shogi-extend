@@ -21,6 +21,6 @@ require 'rails_helper'
 
 RSpec.describe ConvertSourceInfo, type: :model do
   it do
-    ConvertSourceInfo.create!(kifu_body: "▲７六歩")
+    ConvertSourceInfo.create!
   end
 end

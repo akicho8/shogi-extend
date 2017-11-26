@@ -1,24 +1,24 @@
 class SwarsTopsController < ApplicationController
   def show
     if Rails.env.development?
-      # WarsUser.destroy_all
-      # WarsRecord.destroy_all
+      # WarUser.destroy_all
+      # WarRecord.destroy_all
     end
 
     if current_user_key
       before_count = 0
-      if wars_user = WarsUser.find_by(user_key: current_user_key)
-        before_count = wars_user.wars_records.count
+      if war_user = WarUser.find_by(user_key: current_user_key)
+        before_count = war_user.war_records.count
       end
 
       Rails.cache.fetch("import_all_#{current_user_key}", expires_in: Rails.env.production? ? 30.seconds : 5.seconds) do
-        WarsRecord.import_all(user_key: current_user_key)
+        WarRecord.import_all(user_key: current_user_key)
         Time.current
       end
 
-      @wars_user = WarsUser.find_by(user_key: current_user_key)
-      if @wars_user
-        count_diff = @wars_user.wars_records.count - before_count
+      @war_user = WarUser.find_by(user_key: current_user_key)
+      if @war_user
+        count_diff = @war_user.war_records.count - before_count
         if count_diff.zero?
         else
           flash.now[:info] = "#{count_diff}件新しく見つかりました"
@@ -28,77 +28,77 @@ class SwarsTopsController < ApplicationController
       end
     end
 
-    if @wars_user
-      @wars_records = @wars_user.wars_records.order(battled_at: :desc).page(params[:page])
+    if @war_user
+      @war_records = @war_user.war_records.order(battled_at: :desc).page(params[:page])
     else
-      @wars_records = WarsRecord.order(battled_at: :desc).page(params[:page])
+      @war_records = WarRecord.order(battled_at: :desc).page(params[:page])
     end
 
-    @rows = @wars_records.collect do |wars_record|
+    @rows = @war_records.collect do |war_record|
       row = {}
-      if @wars_user
-        aite_user_ship = wars_record.aite_user_ship(@wars_user)
-        row["結果"] = wars_record.kekka_emoji(@wars_user).html_safe
-        row["対戦相手"] = h.link_to(aite_user_ship.wars_user.user_key, aite_user_ship.wars_user)
+      if @war_user
+        aite_user_ship = war_record.aite_user_ship(@war_user)
+        row["結果"] = war_record.kekka_emoji(@war_user).html_safe
+        row["対戦相手"] = h.link_to(aite_user_ship.war_user.user_key, aite_user_ship.war_user)
         if !Rails.env.production? || params[:debug].present?
-          row["棋神"] = wars_record.kishin_tsukatta?(aite_user_ship) ? "降臨" : ""
+          row["棋神"] = war_record.kishin_tsukatta?(aite_user_ship) ? "降臨" : ""
         end
-        row["段級"] = aite_user_ship.wars_rank.name
+        row["段級"] = aite_user_ship.war_rank.name
       else
-        row["勝者"] = user_link(wars_record, true)
-        row["敗者"] = user_link(wars_record, false)
+        row["勝者"] = user_link(war_record, true)
+        row["敗者"] = user_link(war_record, false)
       end
-      row["判定"] = wars_record_reason_info_name(wars_record)
-      row["手数"] = wars_record.turn_max
-      row["種類"] = wars_record.game_type_info.name
-      row["日時"] = nichiji(wars_record)
-      row[""] = row_saigonotokoro_build(wars_record)
+      row["判定"] = war_record_reason_info_name(war_record)
+      row["手数"] = war_record.turn_max
+      row["種類"] = war_record.game_type_info.name
+      row["日時"] = nichiji(war_record)
+      row[""] = row_saigonotokoro_build(war_record)
       row
     end
   end
 
-  def row_saigonotokoro_build(wars_record)
+  def row_saigonotokoro_build(war_record)
     list = []
-    list << h.link_to("詳細", [:name_space1, wars_record], :class => "btn btn-default btn-sm")
-    list << h.link_to("KIF", [:name_space1, wars_record, format: "kif"], :class => "btn btn-default btn-sm")
-    list << h.link_to("KI2", [:name_space1, wars_record, format: "ki2"], :class => "btn btn-default btn-sm")
-    list << h.link_to("CSA", [:name_space1, wars_record, format: "csa"], :class => "btn btn-default btn-sm")
-    list << h.link_to("ウォ", swars_board_url(wars_record), :class => "btn btn-default btn-sm")
-    list << h.link_to("コピー", "#", :class => "btn btn-default btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, wars_record, format: "kif"])})
+    list << h.link_to("詳細", [:name_space1, war_record], :class => "btn btn-default btn-sm")
+    list << h.link_to("KIF", [:name_space1, war_record, format: "kif"], :class => "btn btn-default btn-sm")
+    list << h.link_to("KI2", [:name_space1, war_record, format: "ki2"], :class => "btn btn-default btn-sm")
+    list << h.link_to("CSA", [:name_space1, war_record, format: "csa"], :class => "btn btn-default btn-sm")
+    list << h.link_to("ウォ", swars_board_url(war_record), :class => "btn btn-default btn-sm")
+    list << h.link_to("コピー", "#", :class => "btn btn-default btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, war_record, format: "kif"])})
     list.compact.join(" ").html_safe
   end
 
-  def user_link(wars_record, win_flag)
-    wars_ship = wars_record.wars_ships.win_flag_is(win_flag).first
-    s = h.link_to(wars_ship.name_with_rank, wars_ship.wars_user)
+  def user_link(war_record, win_flag)
+    war_ship = war_record.war_ships.win_flag_is(win_flag).first
+    s = h.link_to(war_ship.name_with_rank, war_ship.war_user)
     if !Rails.env.production? || params[:debug].present?
-      if wars_record.kishin_tsukatta?(wars_ship)
+      if war_record.kishin_tsukatta?(war_ship)
         s << "&#x2757;".html_safe
       end
     end
     s
   end
 
-  def nichiji(wars_record)
-    if wars_record.battled_at < 1.months.ago
-      h.time_ago_in_words(wars_record.battled_at) + "前"
+  def nichiji(war_record)
+    if war_record.battled_at < 1.months.ago
+      h.time_ago_in_words(war_record.battled_at) + "前"
     else
-      wars_record.battled_at.to_s(:swars_ymd)
+      war_record.battled_at.to_s(:swars_ymd)
     end
   end
 
-  def wars_record_reason_info_name(wars_record)
-    if v = wars_record.reason_info.label_key
-      h.tag.span(wars_record.reason_info.name, :class => "label label-#{v}")
+  def war_record_reason_info_name(war_record)
+    if v = war_record.reason_info.label_key
+      h.tag.span(war_record.reason_info.name, :class => "label label-#{v}")
     else
-      wars_record.reason_info.name
+      war_record.reason_info.name
     end
   end
 
-  # def user_link(wars_record, win_flag)
-  #   wars_ship = wars_record.wars_ships.win_flag_is(win_flag).first
-  #   s = h.link_to(wars_record.wars_ships.send(location).name_with_rank, wars_record.wars_users.send(location))
-  #   if wars_record.wars_ships.send(location).win_flag?
+  # def user_link(war_record, win_flag)
+  #   war_ship = war_record.war_ships.win_flag_is(win_flag).first
+  #   s = h.link_to(war_record.war_ships.send(location).name_with_rank, war_record.war_users.send(location))
+  #   if war_record.war_ships.send(location).win_flag?
   #     s += "&#128522;".html_safe
   #   end
   #   s

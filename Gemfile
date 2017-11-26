@@ -107,7 +107,7 @@ gem 'uzoumuzou',     github: 'akicho8/uzoumuzou'
 gem 'normalizer',    github: 'akicho8/normalizer'
 gem 'bushido',       github: 'akicho8/bushido'
 
-# for WarsAgent
+# for WarAgent
 gem 'nokogiri'
 gem 'mechanize'
 

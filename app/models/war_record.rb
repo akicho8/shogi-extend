@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報テーブル (wars_records as WarsRecord)
+# 将棋ウォーズ対戦情報テーブル (war_records as WarRecord)
 #
 # |------------------+--------------------+-------------+-------------+----------------+-------|
 # | カラム名         | 意味               | タイプ      | 属性        | 参照           | INDEX |
@@ -13,7 +13,7 @@
 # | game_type_key    | Game type key      | string(255) | NOT NULL    |                |       |
 # | csa_hands        | Csa hands          | text(65535) | NOT NULL    |                |       |
 # | reason_key       | Reason key         | string(255) | NOT NULL    |                |       |
-# | win_wars_user_id | Win wars user      | integer(8)  |             | => WarsUser#id | A     |
+# | win_war_user_id | Win wars user      | integer(8)  |             | => WarUser#id | A     |
 # | turn_max         | 手数               | integer(4)  |             |                |       |
 # | kifu_header      | 棋譜ヘッダー       | text(65535) |             |                |       |
 # | created_at       | 作成日時           | datetime    | NOT NULL    |                |       |
@@ -21,17 +21,17 @@
 # |------------------+--------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】WarsUserモデルで has_many :wars_records されていません
+# ・【警告:リレーション欠如】WarUserモデルで has_many :war_records されていません
 #--------------------------------------------------------------------------------
 
-class WarsRecord < ApplicationRecord
-  has_one :wars_ship_black, -> { where(position: 0) }, class_name: "WarsShip"
-  has_one :wars_ship_white, -> { where(position: 1) }, class_name: "WarsShip"
+class WarRecord < ApplicationRecord
+  has_one :war_ship_black, -> { where(position: 0) }, class_name: "WarShip"
+  has_one :war_ship_white, -> { where(position: 1) }, class_name: "WarShip"
 
-  has_one :wars_ship_win,  -> { where(win_flag: true) }, class_name: "WarsShip"
-  has_one :wars_ship_lose, -> { where(win_flag: false) }, class_name: "WarsShip"
+  has_one :war_ship_win,  -> { where(win_flag: true) }, class_name: "WarShip"
+  has_one :war_ship_lose, -> { where(win_flag: false) }, class_name: "WarShip"
 
-  has_many :wars_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :wars_record do
+  has_many :war_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :war_record do
     def black
       first
     end
@@ -41,7 +41,7 @@ class WarsRecord < ApplicationRecord
     end
   end
 
-  has_many :wars_users, through: :wars_ships do
+  has_many :war_users, through: :war_ships do
     def black
       first
     end
@@ -51,7 +51,7 @@ class WarsRecord < ApplicationRecord
     end
   end
 
-  belongs_to :win_wars_user, class_name: "WarsUser", optional: true
+  belongs_to :win_war_user, class_name: "WarUser", optional: true
 
   before_validation do
     self.unique_key ||= SecureRandom.hex
@@ -101,7 +101,7 @@ class WarsRecord < ApplicationRecord
       before_save do
         if changes[:csa_hands]
           if csa_hands
-            if wars_ships.second # 最初のときは、まだ保存されていないレコード
+            if war_ships.second # 最初のときは、まだ保存されていないレコード
               info = Bushido::Parser.parse(kifu_body)
               converted_infos.destroy_all
               KifuFormatInfo.each do |e|
@@ -117,8 +117,8 @@ class WarsRecord < ApplicationRecord
 
     def kifu_body
       out = []
-      out << "N+#{wars_ships.black.name_with_rank}"
-      out << "N-#{wars_ships.white.name_with_rank}"
+      out << "N+#{war_ships.black.name_with_rank}"
+      out << "N-#{war_ships.white.name_with_rank}"
       out << "$START_TIME:#{battled_at.to_s(:csa_ymdhms)}"
       out << "$EVENT:将棋ウォーズ(#{game_type_info.long_name})"
       out << "$TIME_LIMIT:#{game_type_info.csa_time_limit}"
@@ -141,24 +141,24 @@ class WarsRecord < ApplicationRecord
   end
 
   concerning :HelperMethods do
-    def aite_user_ship(wars_user)
-      wars_ships.find {|e| e.wars_user != wars_user } # FIXME: wars_ships 下にメソッドとする
+    def aite_user_ship(war_user)
+      war_ships.find {|e| e.war_user != war_user } # FIXME: war_ships 下にメソッドとする
     end
 
-    def winner_desuka?(wars_user)
-      if win_wars_user
-        win_wars_user == wars_user
+    def winner_desuka?(war_user)
+      if win_war_user
+        win_war_user == war_user
       end
     end
 
-    def lose_desuka?(wars_user)
-      if win_wars_user
-        win_wars_user != wars_user
+    def lose_desuka?(war_user)
+      if win_war_user
+        win_war_user != war_user
       end
     end
 
-    def kekka_emoji(wars_user)
-      if winner_desuka?(wars_user)
+    def kekka_emoji(war_user)
+      if winner_desuka?(war_user)
         # "&#x1f604;"
         # "&#x1F4AE;"             # たいへんよくできました
         "&#x1f601;"             # にっこり
@@ -171,8 +171,8 @@ class WarsRecord < ApplicationRecord
 
   concerning :ImportMethods do
     class_methods do
-      def wars_agent
-        @wars_agent ||= WarsAgent.new
+      def war_agent
+        @war_agent ||= WarAgent.new
       end
 
       def import_all(**params)
@@ -182,7 +182,7 @@ class WarsRecord < ApplicationRecord
       end
 
       def import_one(**params)
-        list = wars_agent.battle_list_get(params)
+        list = war_agent.battle_list_get(params)
         list.each do |history|
           import_by_battle_key(history[:battle_key])
         end
@@ -190,11 +190,11 @@ class WarsRecord < ApplicationRecord
 
       def import_by_battle_key(battle_key)
         # 登録済みなのでスキップ
-        if WarsRecord.where(battle_key: battle_key).exists?
+        if WarRecord.where(battle_key: battle_key).exists?
           return
         end
 
-        info = wars_agent.battle_page_get(battle_key)
+        info = war_agent.battle_page_get(battle_key)
 
         # 対局中や引き分けのときは棋譜がないのでスキップ
         unless info[:battle_done]
@@ -206,15 +206,15 @@ class WarsRecord < ApplicationRecord
         #   next
         # end
 
-        wars_users = info[:wars_user_infos].collect do |e|
-          WarsUser.find_or_initialize_by(user_key: e[:user_key]).tap do |wars_user|
-            wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
-            wars_user.update!(wars_rank: wars_rank) # 常にランクを更新する
+        war_users = info[:war_user_infos].collect do |e|
+          WarUser.find_or_initialize_by(user_key: e[:user_key]).tap do |war_user|
+            war_rank = WarRank.find_by!(unique_key: e[:war_rank])
+            war_user.update!(war_rank: war_rank) # 常にランクを更新する
           end
         end
 
-        wars_record = WarsRecord.new
-        wars_record.attributes = {
+        war_record = WarRecord.new
+        war_record.attributes = {
           battle_key: info[:battle_key],
           game_type_key: info.dig(:gamedata, :gtype),
           csa_hands: info[:csa_hands],
@@ -222,26 +222,26 @@ class WarsRecord < ApplicationRecord
 
         if md = info[:src_reason_key].match(/(?<location>SENTE|GOTE)_WIN_(?<reason_key>\w+)/)
           winner_index = md[:location] == "SENTE" ? 0 : 1
-          wars_record.reason_key = md[:reason_key]
+          war_record.reason_key = md[:reason_key]
         else
           raise "must not happen"
           winner_index = nil
-          wars_record.reason_key = info[:src_reason_key]
+          war_record.reason_key = info[:src_reason_key]
         end
 
-        info[:wars_user_infos].each.with_index do |e, i|
-          wars_user = WarsUser.find_by!(user_key: e[:user_key])
-          wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
-          wars_record.wars_ships.build(wars_user:  wars_user, wars_rank: wars_rank, win_flag: i == winner_index)
+        info[:war_user_infos].each.with_index do |e, i|
+          war_user = WarUser.find_by!(user_key: e[:user_key])
+          war_rank = WarRank.find_by!(unique_key: e[:war_rank])
+          war_record.war_ships.build(war_user:  war_user, war_rank: war_rank, win_flag: i == winner_index)
         end
 
-        # SQLをシンプルにするために勝者だけ、所有者的な意味で、WarsRecord 自体に入れとく
+        # SQLをシンプルにするために勝者だけ、所有者的な意味で、WarRecord 自体に入れとく
         # いらんかったらあとでとる
         if winner_index
-          wars_record.win_wars_user = wars_record.wars_ships[winner_index].wars_user
+          war_record.win_war_user = war_record.war_ships[winner_index].war_user
         end
 
-        wars_record.save!
+        war_record.save!
       end
     end
 

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "ConvertSourceInfos", type: :system do
   before do
-    @convert_source_info = ConvertSourceInfo.create!(kifu_body: "７六歩")
+    @convert_source_info = ConvertSourceInfo.create!
   end
 
   it "トップ" do

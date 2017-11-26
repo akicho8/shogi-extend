@@ -2,14 +2,14 @@ require "rails_helper"
 
 RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   before do
-    unless WarsRank.exists?
-      StaticWarsRankInfo.each do |e|
-        WarsRank.create!(unique_key: e.key, priority: e.priority)
+    unless WarRank.exists?
+      StaticWarRankInfo.each do |e|
+        WarRank.create!(unique_key: e.key, priority: e.priority)
       end
     end
 
-    WarsRecord.import_all(user_key: "hanairobiyori")
-    @wars_record = WarsRecord.first
+    WarRecord.import_all(user_key: "hanairobiyori")
+    @war_record = WarRecord.first
   end
 
   it "フォーム表示→入力→実行→結果" do

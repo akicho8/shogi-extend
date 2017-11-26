@@ -22,7 +22,7 @@
       .col-sm-6
         = form.search_field(:user_key, class: "form-control", value: controller.current_user_key, placeholder: "ユーザー名", list: "user_key_list", autofocus: true)
         = tag.datalist(id: "user_key_list") do
-          - WarsUser.order(updated_at: :desc).limit(128).pluck(:user_key).each do |user_key|
+          - WarUser.order(updated_at: :desc).limit(128).pluck(:user_key).each do |user_key|
             = tag.option(value: user_key)
 
       .col-sm-3
@@ -34,10 +34,10 @@
 = @rows.to_html
 
 .text-center
-  = paginate @wars_records
+  = paginate @war_records
 
 - content_for :head do
-  = rel_next_prev_link_tags @wars_records
+  = rel_next_prev_link_tags @war_records
 
 - if controller.current_user_key
   - if v = Rails.cache.read("import_all_#{controller.current_user_key}")
@@ -47,5 +47,5 @@
           = "Last Imported: #{v.to_s(:ymdhm)}"
 
 - if Rails.env.development? && false
-  = WarsUser.to_html
-  = WarsRecord.to_html
+  = WarUser.to_html
+  = WarRecord.to_html
