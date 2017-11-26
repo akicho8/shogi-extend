@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :convert_infos, path: "x"
 
     resources :wars_users
-    resources :wars_records
+    resources :wars_records, path: "r"
     resources :wars_ships
   end
 
@@ -12,7 +12,6 @@ Rails.application.routes.draw do
 
   resolve "ConvertInfo" do |convert_info, options|
     [:name_space1, convert_info, options]
-    # "/x/#{convert_info.to_param}"
   end
 
   resolve "WarsUser" do |wars_user, options|
