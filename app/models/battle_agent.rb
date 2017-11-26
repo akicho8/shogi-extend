@@ -108,14 +108,10 @@ class BattleAgent
   private
 
   def agent
-    @agent || __agent
-  end
-
-  def __agent
-    agent = Mechanize.new
-    agent.log = Rails.logger
-    agent.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
-    agent
+    @agent ||= Mechanize.new.tap do |e|
+      d.log = Rails.logger
+      d.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
+    end
   end
 
   # http://kif-pona.heroz.jp/games/xxx?locale=ja -> xxx
