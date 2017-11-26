@@ -44,6 +44,7 @@ module NameSpace1
 
     def raw_current_record
       if v = params[:id].presence
+        WarsRecord.import_by_battle_key(v)
         current_scope.find_by!(battle_key: v)
       else
         current_scope.new
