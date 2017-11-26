@@ -109,8 +109,8 @@ class BattleAgent
 
   def agent
     @agent ||= Mechanize.new.tap do |e|
-      d.log = Rails.logger
-      d.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
+      e.log = Rails.logger
+      e.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
     end
   end
 
