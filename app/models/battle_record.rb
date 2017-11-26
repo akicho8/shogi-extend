@@ -10,9 +10,9 @@
 # | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  |       |
 # | battle_key         | Battle key         | string(255) | NOT NULL    |                  |       |
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | game_type_key      | Game type key      | string(255) | NOT NULL    |                  |       |
-# | csa_hands          | Csa hands          | text(65535) | NOT NULL    |                  |       |
-# | reason_key         | Reason key         | string(255) | NOT NULL    |                  |       |
+# | battle_group_key      | Game type key      | string(255) | NOT NULL    |                  |       |
+# | csa_seq          | Csa hands          | text(65535) | NOT NULL    |                  |       |
+# | battle_result_key         | Reason key         | string(255) | NOT NULL    |                  |       |
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
@@ -57,8 +57,8 @@ class BattleRecord < ApplicationRecord
     self.unique_key ||= SecureRandom.hex
 
     # "" から ten_min への変換
-    if game_type_key
-      self.game_type_key = GameTypeInfo.fetch(game_type_key).key
+    if battle_group_key
+      self.battle_group_key = BattleGroupInfo.fetch(battle_group_key).key
     end
 
     if battle_key
@@ -70,8 +70,8 @@ class BattleRecord < ApplicationRecord
     validates :unique_key
     validates :battle_key
     validates :battled_at
-    validates :game_type_key
-    validates :reason_key
+    validates :battle_group_key
+    validates :battle_result_key
   end
 
   with_options allow_blank: true do
@@ -82,8 +82,8 @@ class BattleRecord < ApplicationRecord
     battle_key
   end
 
-  def game_type_info
-    GameTypeInfo.fetch(game_type_key)
+  def battle_group_info
+    BattleGroupInfo.fetch(battle_group_key)
   end
 
   concerning :HenkanMethods do
@@ -91,7 +91,7 @@ class BattleRecord < ApplicationRecord
       has_many :converted_infos, as: :convertable, dependent: :destroy
 
       serialize :kifu_header
-      serialize :csa_hands
+      serialize :csa_seq
 
       before_validation do
         self.kifu_header ||= {}
@@ -99,8 +99,8 @@ class BattleRecord < ApplicationRecord
       end
 
       before_save do
-        if changes[:csa_hands]
-          if csa_hands
+        if changes[:csa_seq]
+          if csa_seq
             if battle_ships.second # 最初のときは、まだ保存されていないレコード
               info = Bushido::Parser.parse(kifu_body)
               converted_infos.destroy_all
@@ -120,13 +120,13 @@ class BattleRecord < ApplicationRecord
       out << "N+#{battle_ships.black.name_with_rank}"
       out << "N-#{battle_ships.white.name_with_rank}"
       out << "$START_TIME:#{battled_at.to_s(:csa_ymdhms)}"
-      out << "$EVENT:将棋ウォーズ(#{game_type_info.long_name})"
-      out << "$TIME_LIMIT:#{game_type_info.csa_time_limit}"
+      out << "$EVENT:将棋ウォーズ(#{battle_group_info.long_name})"
+      out << "$TIME_LIMIT:#{battle_group_info.csa_time_limit}"
       # out << "$OPENING:不明"
       out << "+"
 
-      nokori = [game_type_info.real_mochi_jikan] * 2
-      csa_hands.each.with_index { |(a, b), i|
+      nokori = [battle_group_info.life_time] * 2
+      csa_seq.each.with_index { |(a, b), i|
         i = i.modulo(nokori.size)
         tsukatta = nokori[i] - b
         nokori[i] = b
@@ -135,7 +135,7 @@ class BattleRecord < ApplicationRecord
         out << "T#{tsukatta}"
       }
 
-      out << "%#{reason_info.csa_key}"
+      out << "%#{battle_result_info.csa_key}"
       out.join("\n") + "\n"
     end
   end
@@ -176,8 +176,8 @@ class BattleRecord < ApplicationRecord
       end
 
       def import_all(**params)
-        GameTypeInfo.each do |e|
-          import_one(params.merge(gtype: e.swars_key))
+        BattleGroupInfo.each do |e|
+          import_one(params.merge(gtype: e.swars_real_key))
         end
       end
 
@@ -202,7 +202,7 @@ class BattleRecord < ApplicationRecord
         end
 
         # # 引き分けを考慮すると急激に煩雑になるため取り込まない (そもそも引き分けには棋譜がない)
-        # unless info[:src_reason_key].match?(/(SENTE|GOTE)_WIN/)
+        # unless info[:__battle_result_key].match?(/(SENTE|GOTE)_WIN/)
         #   next
         # end
 
@@ -216,17 +216,17 @@ class BattleRecord < ApplicationRecord
         battle_record = BattleRecord.new
         battle_record.attributes = {
           battle_key: info[:battle_key],
-          game_type_key: info.dig(:gamedata, :gtype),
-          csa_hands: info[:csa_hands],
+          battle_group_key: info.dig(:gamedata, :gtype),
+          csa_seq: info[:csa_seq],
         }
 
-        if md = info[:src_reason_key].match(/(?<location>SENTE|GOTE)_WIN_(?<reason_key>\w+)/)
-          winner_index = md[:location] == "SENTE" ? 0 : 1
-          battle_record.reason_key = md[:reason_key]
+        if md = info[:__battle_result_key].match(/\A(?<prefix>\w+)_WIN_(?<battle_result_key>\w+)/)
+          winner_index = md[:prefix] == "SENTE" ? 0 : 1
+          battle_record.battle_result_key = md[:battle_result_key]
         else
           raise "must not happen"
           winner_index = nil
-          battle_record.reason_key = info[:src_reason_key]
+          battle_record.battle_result_key = info[:__battle_result_key]
         end
 
         info[:battle_user_infos].each.with_index do |e, i|
@@ -245,23 +245,17 @@ class BattleRecord < ApplicationRecord
       end
     end
 
-    def reason_info
-      ReasonInfo[reason_key]
+    def battle_result_info
+      BattleResultInfo.fetch(battle_result_key)
     end
   end
 
   concerning :KaisekiMethoes do
-    included do
-    end
-
-    class_methods do
-    end
-
     def kaiseki_kekka_hash(location)
       kishin_count = 5
 
       location = Bushido::Location[location]
-      list = csa_hands.find_all.with_index { |e, i| i.modulo(2) == location.code }
+      list = csa_seq.find_all.with_index { |e, i| i.modulo(2) == location.code }
       v1 = list.collect { |a, b| b }
 
       v2 = v1.chunk_while { |a, b| (a - b) <= 2 }.to_a              # => [[136], [121], [101], [28], [18, 17, 16, 15, 14, 12], [7, 136], [121], [101], [28], [18, 17, 16, 15, 14, 12, 11]]
@@ -281,7 +275,7 @@ class BattleRecord < ApplicationRecord
     end
 
     def kishin_tsukatta?(user_ship)
-      if game_type_info.key == :ten_min || !Rails.env.production?
+      if battle_group_info.key == :ten_min || !Rails.env.production?
         kaiseki_kekka_hash(user_ship.position).values.last
       end
     end

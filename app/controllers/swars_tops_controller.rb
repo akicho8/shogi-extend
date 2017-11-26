@@ -50,7 +50,7 @@ class SwarsTopsController < ApplicationController
       end
       row["判定"] = battle_record_reason_info_name(battle_record)
       row["手数"] = battle_record.turn_max
-      row["種類"] = battle_record.game_type_info.name
+      row["種類"] = battle_record.battle_group_info.name
       row["日時"] = nichiji(battle_record)
       row[""] = row_saigonotokoro_build(battle_record)
       row
@@ -83,15 +83,15 @@ class SwarsTopsController < ApplicationController
     if battle_record.battled_at < 1.months.ago
       h.time_ago_in_words(battle_record.battled_at) + "前"
     else
-      battle_record.battled_at.to_s(:swars_ymd)
+      battle_record.battled_at.to_s(:battle_ymd)
     end
   end
 
   def battle_record_reason_info_name(battle_record)
-    if v = battle_record.reason_info.label_key
-      h.tag.span(battle_record.reason_info.name, :class => "label label-#{v}")
+    if v = battle_record.battle_result_info.label_key
+      h.tag.span(battle_record.battle_result_info.name, :class => "label label-#{v}")
     else
-      battle_record.reason_info.name
+      battle_record.battle_result_info.name
     end
   end
 

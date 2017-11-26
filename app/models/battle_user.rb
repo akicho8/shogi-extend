@@ -18,17 +18,6 @@
 # ・BattleUser モデルは BattleRank モデルから has_many :battle_users されています。
 #--------------------------------------------------------------------------------
 
-# | key   | Unique key | string(255) | NOT NULL    |                |       |
-# | user_key     | User key   | string(255) | NOT NULL    |                |       |
-# | battle_rank_id | Wars rank  | integer(8)  |             | => BattleRank#id | A     |
-# | created_at   | 作成日時   | datetime    | NOT NULL    |                |       |
-# | updated_at   | 更新日時   | datetime    | NOT NULL    |                |       |
-# |--------------+------------+-------------+-------------+----------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・BattleUser モデルは BattleRank モデルから has_many :battle_users されています。
-#--------------------------------------------------------------------------------
-
 class BattleUser < ApplicationRecord
   has_many :battle_ships, dependent: :destroy
   has_many :battle_records, through: :battle_ships

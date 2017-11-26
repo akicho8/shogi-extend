@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.string "unique_key", null: false
     t.string "battle_key", null: false
     t.datetime "battled_at", null: false
-    t.string "game_type_key", null: false
-    t.text "csa_hands", null: false
-    t.string "reason_key", null: false
+    t.string "battle_group_key", null: false
+    t.text "csa_seq", null: false
+    t.string "battle_result_key", null: false
     t.bigint "win_battle_user_id"
     t.integer "turn_max"
     t.text "kifu_header"

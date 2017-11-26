@@ -29,7 +29,7 @@ class BattleShip < ApplicationRecord
 
   acts_as_list top_of_list: 0, scope: :battle_record
 
-  scope :win_flag_is, -> e { where(win_flag: e) }
+  scope :win_flag_is, -> v { where(win_flag: v) }
 
   before_validation do
     if battle_user

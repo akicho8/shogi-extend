@@ -1,4 +1,4 @@
-class ReasonInfo
+class BattleResultInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: "TORYO",      name: "投了",     label_key: nil,     csa_key: "TORYO",   },

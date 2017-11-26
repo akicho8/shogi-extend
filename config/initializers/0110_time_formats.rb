@@ -3,6 +3,6 @@ Time::DATE_FORMATS.update({
     ymdhms: "%F %T",
     ymd: "%F",
 
-    swars_ymd: "%F %H:%M",
+    battle_ymd: "%F %H:%M",
     csa_ymdhms: "%Y/%m/%d %H:%M:%S",
   })
