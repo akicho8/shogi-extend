@@ -20,7 +20,7 @@
     .form-group.form-group-lg
       .col-sm-3
       .col-sm-6
-        = form.search_field(:user_key, class: "form-control", value: controller.current_user_key, placeholder: "ユーザー名", list: "user_key_list")
+        = form.search_field(:user_key, class: "form-control", value: controller.current_user_key, placeholder: "ユーザー名", list: "user_key_list", autofocus: true)
         = tag.datalist(id: "user_key_list") do
           - WarsUser.order(updated_at: :desc).limit(128).pluck(:user_key).each do |user_key|
             = tag.option(value: user_key)
