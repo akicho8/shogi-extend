@@ -21,7 +21,7 @@
 # | updated_at    | 更新日時           | datetime | NOT NULL    |      |       |
 # |---------------+--------------------+----------+-------------+------+-------|
 
-class WarsRecord < ApplicationRecord
+uclass WarsRecord < ApplicationRecord
   has_one :wars_ship_black, -> { where(position: 0) }, class_name: "WarsShip"
   has_one :wars_ship_white, -> { where(position: 1) }, class_name: "WarsShip"
 
@@ -59,7 +59,7 @@ class WarsRecord < ApplicationRecord
     end
 
     if battle_key
-      self.battled_at = Time.zone.parse(battle_key.split("-").last)
+      self.battled_at ||= Time.zone.parse(battle_key.split("-").last)
     end
   end
 
@@ -142,6 +142,10 @@ class WarsRecord < ApplicationRecord
 
   concerning :ImportMethods do
     class_methods do
+      def wars_agent
+        @wars_agent ||= WarsAgent.new
+      end
+
       def import_all(**params)
         GameTypeInfo.each do |e|
           import_one(params.merge(gtype: e.swars_key))
@@ -149,58 +153,64 @@ class WarsRecord < ApplicationRecord
       end
 
       def import_one(**params)
-        wars_agent = WarsAgent.new
         list = wars_agent.battle_list_get(params)
         list.each do |history|
-          unless WarsRecord.where(battle_key: history[:battle_key]).exists?
-            info = wars_agent.battle_page_get(history[:battle_key])
-
-            # 対局中や引き分けのときは棋譜がないので飛ばす
-            unless info[:battle_done]
-              next
-            end
-
-            # # 引き分けを考慮すると急激に煩雑になるため取り込まない (そもそも引き分けには棋譜がない)
-            # unless info[:kekka_key].match?(/(SENTE|GOTE)_WIN/)
-            #   next
-            # end
-
-            wars_users = history[:wars_user_infos].collect do |e|
-              wars_user = WarsUser.find_or_initialize_by(user_key: e[:user_key])
-              wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
-              wars_user.update!(wars_rank: wars_rank) # 常にランクを更新する
-              wars_user
-            end
-
-            wars_record = WarsRecord.new
-            wars_record.attributes = {
-              battle_key: history[:battle_key],
-              game_type_key: info.dig(:gamedata, :gtype),
-              csa_hands: info[:csa_hands],
-            }
-
-            if md = info[:kekka_key].match(/(?<location>SENTE|GOTE)_WIN_(?<reason_key>\w+)/)
-              winner_index = md[:location] == "SENTE" ? 0 : 1
-              wars_record.reason_key = md[:reason_key]
-            else
-              raise "must not happen"
-              winner_index = nil
-              wars_record.reason_key = info[:kekka_key]
-            end
-
-            history[:wars_user_infos].each.with_index do |e, i|
-              wars_user = WarsUser.find_by!(user_key: e[:user_key])
-              wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
-              wars_record.wars_ships.build(wars_user:  wars_user, wars_rank: wars_rank, win_flag: i == winner_index)
-            end
-
-            if winner_index
-              wars_record.win_wars_user = wars_record.wars_ships[winner_index].wars_user
-            end
-
-            wars_record.save!
-          end
+          import_by_battle_key(history[:battle_key])
         end
+      end
+
+      def import_by_battle_key(battle_key)
+        # 登録済みなのでスキップ
+        if WarsRecord.where(battle_key: battle_key).exists?
+          return
+        end
+
+        info = wars_agent.battle_page_get(battle_key)
+
+        # 対局中や引き分けのときは棋譜がないのでスキップ
+        unless info[:battle_done]
+          return
+        end
+
+        # # 引き分けを考慮すると急激に煩雑になるため取り込まない (そもそも引き分けには棋譜がない)
+        # unless info[:src_reason_key].match?(/(SENTE|GOTE)_WIN/)
+        #   next
+        # end
+
+        wars_users = info[:wars_user_infos].collect do |e|
+          wars_user = WarsUser.find_or_initialize_by(user_key: e[:user_key])
+          wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
+          wars_user.update!(wars_rank: wars_rank) # 常にランクを更新する
+          wars_user
+        end
+
+        wars_record = WarsRecord.new
+        wars_record.attributes = {
+          battle_key: info[:battle_key],
+          game_type_key: info.dig(:gamedata, :gtype),
+          csa_hands: info[:csa_hands],
+        }
+
+        if md = info[:src_reason_key].match(/(?<location>SENTE|GOTE)_WIN_(?<reason_key>\w+)/)
+          winner_index = md[:location] == "SENTE" ? 0 : 1
+          wars_record.reason_key = md[:reason_key]
+        else
+          raise "must not happen"
+          winner_index = nil
+          wars_record.reason_key = info[:src_reason_key]
+        end
+
+        info[:wars_user_infos].each.with_index do |e, i|
+          wars_user = WarsUser.find_by!(user_key: e[:user_key])
+          wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
+          wars_record.wars_ships.build(wars_user:  wars_user, wars_rank: wars_rank, win_flag: i == winner_index)
+        end
+
+        if winner_index
+          wars_record.win_wars_user = wars_record.wars_ships[winner_index].wars_user
+        end
+
+        wars_record.save!
       end
     end
 
