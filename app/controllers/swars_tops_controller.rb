@@ -1,8 +1,8 @@
 class SwarsTopsController < ApplicationController
   def show
     if Rails.env.development?
-      # WarsUser.destroy_all
-      # WarsRecord.destroy_all
+      WarsUser.destroy_all
+      WarsRecord.destroy_all
     end
 
     if current_user_key

@@ -114,7 +114,7 @@ class WarsRecord < ApplicationRecord
       out << "N+#{wars_ships.black.name_with_rank}"
       out << "N-#{wars_ships.white.name_with_rank}"
       out << "$START_TIME:#{battled_at.to_s(:csa_ymdhms)}"
-      out << "$EVENT:将棋ウォーズ(#{game_type_info.name})"
+      out << "$EVENT:将棋ウォーズ(#{game_type_info.long_name})"
       out << "$TIME_LIMIT:#{game_type_info.csa_time_limit}"
       # out << "$OPENING:不明"
       out << "+"

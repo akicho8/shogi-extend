@@ -21,11 +21,22 @@
 class WarsUser < ApplicationRecord
   has_many :wars_ships, dependent: :destroy
   has_many :wars_records, through: :wars_ships
-  belongs_to :wars_rank
+  belongs_to :wars_rank         # すべてのモードの一番よい段位を指す
 
   before_validation do
     self.unique_key ||= SecureRandom.hex
     self.wars_rank ||= WarsRank.last
+
+    # WarsRank が下がらないようにする
+    # 例えば10分メインの人が3分を1回やっただけで30級に戻らないようにする
+    if changes[:wars_rank_id]
+      ov, nv = changes[:wars_rank_id]
+      if ov && nv
+        if WarsRank.find(ov).priority < WarsRank.find(nv).priority
+          self.wars_rank_id = ov
+        end
+      end
+    end
   end
 
   with_options presence: true do
