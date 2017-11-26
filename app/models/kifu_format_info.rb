@@ -1,12 +1,12 @@
 class KifuFormatInfo
   include ApplicationMemoryRecord
   memory_record [
-    {key: "csa", },
     {key: "kif", },
+    {key: "csa", },
     {key: "ki2", },
   ]
 
   def name
-    key.to_s
+    @name ||= key.to_s.upcase
   end
 end

@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   namespace :name_space1, path: "" do
     resources :convert_source_infos, path: "x"
 
-    resources :war_users
-    resources :war_records, path: "r"
-    resources :war_ships
+    resources :battle_users
+    resources :battle_records, path: "r"
+    resources :battle_ships
   end
 
   # match 'r/:unique_key', to: 'name_space1/convert_source_infos#show', via: :get
@@ -14,8 +14,8 @@ Rails.application.routes.draw do
     [:name_space1, convert_source_info, options]
   end
 
-  resolve "WarUser" do |war_user, options|
-    search_by_user_path(user_key: war_user.to_param)
+  resolve "BattleUser" do |battle_user, options|
+    search_by_user_path(user_key: battle_user.to_param)
   end
 
   get "tops/show"
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   # root "swars_tops#show"
   root "swars_tops#show"
 
-  direct :swars_board do |war_record|
-    "http://kif-pona.heroz.jp/games/#{war_record.battle_key}?locale=ja"
+  direct :swars_board do |battle_record|
+    "http://kif-pona.heroz.jp/games/#{battle_record.battle_key}?locale=ja"
   end
 end

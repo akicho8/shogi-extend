@@ -3,12 +3,12 @@
 
 p
   - KifuFormatInfo.each do |e|
-    =<> link_to(e.name.upcase, [:name_space1, current_record, format: e.key], class: "btn btn-info")
+    =<> link_to(e.name, [:name_space1, current_record, format: e.key], class: "btn btn-info")
 
 br
 
 - KifuFormatInfo.each do |e|
-  = e.name.upcase
+  = e.name
   pre
     = current_record.converted_infos.format_eq(e.key).take!.converted_body
 

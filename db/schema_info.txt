@@ -2,6 +2,87 @@
 
 # == Schema Information ==
 #
+# Battle rankテーブル (battle_ranks as BattleRank)
+#
+# |------------+------------+-------------+-------------+------+-------|
+# | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
+# |------------+------------+-------------+-------------+------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |      |       |
+# | unique_key | Unique key | string(255) | NOT NULL    |      |       |
+# | priority   | Priority   | integer(4)  | NOT NULL    |      |       |
+# | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
+# |------------+------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 将棋ウォーズ対戦情報テーブル (battle_records as BattleRecord)
+#
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
+# | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  |       |
+# | battle_key         | Battle key         | string(255) | NOT NULL    |                  |       |
+# | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
+# | game_type_key      | Game type key      | string(255) | NOT NULL    |                  |       |
+# | csa_hands          | Csa hands          | text(65535) | NOT NULL    |                  |       |
+# | reason_key         | Reason key         | string(255) | NOT NULL    |                  |       |
+# | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
+# | turn_max           | 手数               | integer(4)  |             |                  |       |
+# | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
+# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
+# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・【警告:リレーション欠如】BattleUserモデルで has_many :battle_records されていません
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# 対局と対局者の対応テーブル (battle_ships as BattleShip)
+#
+# |------------------+---------------+------------+-------------+--------------------+-------|
+# | カラム名         | 意味          | タイプ     | 属性        | 参照               | INDEX |
+# |------------------+---------------+------------+-------------+--------------------+-------|
+# | id               | ID            | integer(8) | NOT NULL PK |                    |       |
+# | battle_record_id | Battle record | integer(8) |             | => BattleRecord#id | A     |
+# | battle_user_id   | Battle user   | integer(8) |             | => BattleUser#id   | B     |
+# | battle_rank_id   | Battle rank   | integer(8) |             | => BattleRank#id   | C     |
+# | win_flag         | Win flag      | boolean    | NOT NULL    |                    |       |
+# | position         | 順序          | integer(4) |             |                    |       |
+# | created_at       | 作成日時      | datetime   | NOT NULL    |                    |       |
+# | updated_at       | 更新日時      | datetime   | NOT NULL    |                    |       |
+# |------------------+---------------+------------+-------------+--------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・BattleShip モデルは BattleRecord モデルから has_one :battle_ship_black されています。
+# ・BattleShip モデルは BattleUser モデルから has_many :battle_ships されています。
+# ・BattleShip モデルは BattleRank モデルから has_many :battle_users されています。
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# 将棋ウォーズユーザーテーブル (battle_users as BattleUser)
+#
+# |----------------+-------------+-------------+-------------+------------------+-------|
+# | カラム名       | 意味        | タイプ      | 属性        | 参照             | INDEX |
+# |----------------+-------------+-------------+-------------+------------------+-------|
+# | id             | ID          | integer(8)  | NOT NULL PK |                  |       |
+# | unique_key     | Unique key  | string(255) | NOT NULL    |                  |       |
+# | user_key       | User key    | string(255) | NOT NULL    |                  |       |
+# | battle_rank_id | Battle rank | integer(8)  |             | => BattleRank#id | A     |
+# | created_at     | 作成日時    | datetime    | NOT NULL    |                  |       |
+# | updated_at     | 更新日時    | datetime    | NOT NULL    |                  |       |
+# |----------------+-------------+-------------+-------------+------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・BattleUser モデルは BattleRank モデルから has_many :battle_users されています。
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
 # 棋譜変換テーブル (convert_source_infos as ConvertSourceInfo)
 #
 # |-------------+--------------------+-------------+-------------+------+-------|
@@ -33,85 +114,4 @@
 # | created_at       | 作成日時         | datetime    | NOT NULL    |                          |       |
 # | updated_at       | 更新日時         | datetime    | NOT NULL    |                          |       |
 # |------------------+------------------+-------------+-------------+--------------------------+-------|
-
-# == Schema Information ==
-#
-# Wars rankテーブル (war_ranks as WarRank)
-#
-# |------------+------------+-------------+-------------+------+-------|
-# | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
-# |------------+------------+-------------+-------------+------+-------|
-# | id         | ID         | integer(8)  | NOT NULL PK |      |       |
-# | unique_key | Unique key | string(255) | NOT NULL    |      |       |
-# | priority   | Priority   | integer(4)  | NOT NULL    |      |       |
-# | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
-# |------------+------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# 将棋ウォーズ対戦情報テーブル (war_records as WarRecord)
-#
-# |------------------+--------------------+-------------+-------------+----------------+-------|
-# | カラム名         | 意味               | タイプ      | 属性        | 参照           | INDEX |
-# |------------------+--------------------+-------------+-------------+----------------+-------|
-# | id               | ID                 | integer(8)  | NOT NULL PK |                |       |
-# | unique_key       | ユニークなハッシュ | string(255) | NOT NULL    |                |       |
-# | battle_key       | Battle key         | string(255) | NOT NULL    |                |       |
-# | battled_at       | Battled at         | datetime    | NOT NULL    |                |       |
-# | game_type_key    | Game type key      | string(255) | NOT NULL    |                |       |
-# | csa_hands        | Csa hands          | text(65535) | NOT NULL    |                |       |
-# | reason_key       | Reason key         | string(255) | NOT NULL    |                |       |
-# | win_war_user_id | Win wars user      | integer(8)  |             | => WarUser#id | A     |
-# | turn_max         | 手数               | integer(4)  |             |                |       |
-# | kifu_header      | 棋譜ヘッダー       | text(65535) |             |                |       |
-# | created_at       | 作成日時           | datetime    | NOT NULL    |                |       |
-# | updated_at       | 更新日時           | datetime    | NOT NULL    |                |       |
-# |------------------+--------------------+-------------+-------------+----------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】WarUserモデルで has_many :war_records されていません
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# 対局と対局者の対応テーブル (war_ships as WarShip)
-#
-# |----------------+-------------+------------+-------------+------------------+-------|
-# | カラム名       | 意味        | タイプ     | 属性        | 参照             | INDEX |
-# |----------------+-------------+------------+-------------+------------------+-------|
-# | id             | ID          | integer(8) | NOT NULL PK |                  |       |
-# | war_record_id | Wars record | integer(8) |             | => WarRecord#id | A     |
-# | war_user_id   | Wars user   | integer(8) |             | => WarUser#id   | B     |
-# | war_rank_id   | Wars rank   | integer(8) |             | => WarRank#id   | C     |
-# | win_flag       | Win flag    | boolean    | NOT NULL    |                  |       |
-# | position       | 順序        | integer(4) |             |                  |       |
-# | created_at     | 作成日時    | datetime   | NOT NULL    |                  |       |
-# | updated_at     | 更新日時    | datetime   | NOT NULL    |                  |       |
-# |----------------+-------------+------------+-------------+------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・WarShip モデルは WarRecord モデルから has_one :war_ship_black されています。
-# ・WarShip モデルは WarUser モデルから has_many :war_ships されています。
-# ・WarShip モデルは WarRank モデルから has_many :war_users されています。
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# 将棋ウォーズユーザーテーブル (war_users as WarUser)
-#
-# |--------------+------------+-------------+-------------+----------------+-------|
-# | カラム名     | 意味       | タイプ      | 属性        | 参照           | INDEX |
-# |--------------+------------+-------------+-------------+----------------+-------|
-# | id           | ID         | integer(8)  | NOT NULL PK |                |       |
-# | unique_key   | Unique key | string(255) | NOT NULL    |                |       |
-# | user_key     | User key   | string(255) | NOT NULL    |                |       |
-# | war_rank_id | Wars rank  | integer(8)  |             | => WarRank#id | A     |
-# | created_at   | 作成日時   | datetime    | NOT NULL    |                |       |
-# | updated_at   | 更新日時   | datetime    | NOT NULL    |                |       |
-# |--------------+------------+-------------+-------------+----------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・WarUser モデルは WarRank モデルから has_many :war_users されています。
-#--------------------------------------------------------------------------------
 
