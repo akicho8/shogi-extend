@@ -21,7 +21,7 @@
 # | updated_at    | 更新日時           | datetime | NOT NULL    |      |       |
 # |---------------+--------------------+----------+-------------+------+-------|
 
-uclass WarsRecord < ApplicationRecord
+class WarsRecord < ApplicationRecord
   has_one :wars_ship_black, -> { where(position: 0) }, class_name: "WarsShip"
   has_one :wars_ship_white, -> { where(position: 1) }, class_name: "WarsShip"
 
@@ -114,9 +114,9 @@ uclass WarsRecord < ApplicationRecord
       out << "N+#{wars_ships.black.name_with_rank}"
       out << "N-#{wars_ships.white.name_with_rank}"
       out << "$START_TIME:#{battled_at.to_s(:csa_ymdhms)}"
-      out << "$SITE:将棋ウォーズ(#{game_type_info.name})"
+      out << "$EVENT:将棋ウォーズ(#{game_type_info.name})"
       out << "$TIME_LIMIT:#{game_type_info.csa_time_limit}"
-      out << "$OPENING:不明"
+      # out << "$OPENING:不明"
       out << "+"
 
       nokori = [game_type_info.real_mochi_jikan] * 2
@@ -137,6 +137,29 @@ uclass WarsRecord < ApplicationRecord
   concerning :HelperMethods do
     def aite_user_ship(wars_user)
       wars_ships.find {|e| e.wars_user != wars_user } # FIXME: wars_ships 下にメソッドとする
+    end
+
+    def winner_desuka?(wars_user)
+      if win_wars_user
+        win_wars_user == wars_user
+      end
+    end
+
+    def lose_desuka?(wars_user)
+      if win_wars_user
+        win_wars_user != wars_user
+      end
+    end
+
+    def kekka_emoji(wars_user)
+      if winner_desuka?(wars_user)
+        # "&#x1f604;"
+        # "&#x1F4AE;"             # たいへんよくできました
+        "&#x1f601;"             # にっこり
+      else
+        # "&#128552;"
+        "&#x274c;"              # 赤い×
+      end
     end
   end
 
@@ -178,10 +201,10 @@ uclass WarsRecord < ApplicationRecord
         # end
 
         wars_users = info[:wars_user_infos].collect do |e|
-          wars_user = WarsUser.find_or_initialize_by(user_key: e[:user_key])
-          wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
-          wars_user.update!(wars_rank: wars_rank) # 常にランクを更新する
-          wars_user
+          WarsUser.find_or_initialize_by(user_key: e[:user_key]).tap do |wars_user|
+            wars_rank = WarsRank.find_by!(unique_key: e[:wars_rank])
+            wars_user.update!(wars_rank: wars_rank) # 常にランクを更新する
+          end
         end
 
         wars_record = WarsRecord.new
@@ -206,6 +229,8 @@ uclass WarsRecord < ApplicationRecord
           wars_record.wars_ships.build(wars_user:  wars_user, wars_rank: wars_rank, win_flag: i == winner_index)
         end
 
+        # SQLをシンプルにするために勝者だけ、所有者的な意味で、WarsRecord 自体に入れとく
+        # いらんかったらあとでとる
         if winner_index
           wars_record.win_wars_user = wars_record.wars_ships[winner_index].wars_user
         end
@@ -216,28 +241,6 @@ uclass WarsRecord < ApplicationRecord
 
     def reason_info
       ReasonInfo[reason_key]
-    end
-
-    def winner_desuka?(wars_user)
-      if win_wars_user
-        win_wars_user == wars_user
-      end
-    end
-
-    def lose_desuka?(wars_user)
-      if win_wars_user
-        win_wars_user != wars_user
-      end
-    end
-
-    def kekka_emoji(wars_user)
-      if winner_desuka?(wars_user)
-        # "&#x1f604;"
-        "&#x1F4AE;"
-      else
-        # "&#128552;"
-        "&#x274c;"
-      end
     end
   end
 
