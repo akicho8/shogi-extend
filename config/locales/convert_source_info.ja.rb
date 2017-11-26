@@ -4,7 +4,7 @@
     },
     helpers: {
       submit: {
-        convert_info: {
+        convert_source_info: {
           create: "変換",
           update: nil,
         },
@@ -12,10 +12,10 @@
     },
     activerecord: {
       models: {
-        convert_info: "棋譜変換",
+        convert_source_info: "棋譜変換",
       },
       attributes: {
-        convert_info: {
+        convert_source_info: {
           unique_key: "ユニークなハッシュ",
           kifu_file: "棋譜ファイル",
           kifu_url: "棋譜URL",

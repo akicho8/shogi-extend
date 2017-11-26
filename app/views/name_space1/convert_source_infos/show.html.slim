@@ -1,5 +1,5 @@
 .page-header
-  h2= current_record.battle_key
+  h2= "変換結果"
 
 p
   - KifuFormatInfo.each do |e|
@@ -12,14 +12,8 @@ br
   pre
     = current_record.converted_infos.format_eq(e.key).take!.converted_body
 
-- if !Rails.env.production? || params[:debug].present?
+- if Rails.env.development?
   .well
-    = current_record.kaiseki_kekka_hash(:black).to_html
-    = current_record.kaiseki_kekka_hash(:white).to_html
-
-    pre
-      = current_record.kifu_body
-
     = current_record.kifu_header&.to_html
 
     p

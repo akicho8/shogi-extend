@@ -12,18 +12,25 @@
 
 ActiveRecord::Schema.define(version: 20171123115400) do
 
-  create_table "convert_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+  create_table "convert_source_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
     t.string "kifu_file"
     t.string "kifu_url"
     t.text "kifu_body"
-    t.text "converted_ki2"
-    t.text "converted_kif"
-    t.text "converted_csa"
     t.integer "turn_max"
     t.text "kifu_header"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.string "convertable_type"
+    t.bigint "convertable_id"
+    t.text "converted_body", null: false
+    t.string "converted_format", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
   end
 
   create_table "wars_ranks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -41,9 +48,6 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.text "csa_hands", null: false
     t.string "reason_key", null: false
     t.bigint "win_wars_user_id"
-    t.text "converted_ki2"
-    t.text "converted_kif"
-    t.text "converted_csa"
     t.integer "turn_max"
     t.text "kifu_header"
     t.datetime "created_at", null: false

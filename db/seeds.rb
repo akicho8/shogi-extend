@@ -1,5 +1,5 @@
-unless ConvertInfo.exists?
-  60.times { ConvertInfo.create!(kifu_body: "") }
+unless ConvertSourceInfo.exists?
+  60.times { ConvertSourceInfo.create!(kifu_body: "") }
 end
 
 unless WarsRank.exists?

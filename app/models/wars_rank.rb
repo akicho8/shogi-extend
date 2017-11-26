@@ -3,15 +3,15 @@
 #
 # Wars rankテーブル (wars_ranks as WarsRank)
 #
-# |------------+------------+----------+-------------+------+-------|
-# | カラム名   | 意味       | タイプ   | 属性        | 参照 | INDEX |
-# |------------+------------+----------+-------------+------+-------|
-# | id         | ID         | integer  | NOT NULL PK |      |       |
-# | unique_key | Unique key | string   | NOT NULL    |      |       |
-# | priority   | Priority   | integer  | NOT NULL    |      |       |
-# | created_at | 作成日時   | datetime | NOT NULL    |      |       |
-# | updated_at | 更新日時   | datetime | NOT NULL    |      |       |
-# |------------+------------+----------+-------------+------+-------|
+# |------------+------------+-------------+-------------+------+-------|
+# | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
+# |------------+------------+-------------+-------------+------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |      |       |
+# | unique_key | Unique key | string(255) | NOT NULL    |      |       |
+# | priority   | Priority   | integer(4)  | NOT NULL    |      |       |
+# | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
+# |------------+------------+-------------+-------------+------+-------|
 
 class WarsRank < ApplicationRecord
   has_many :wars_users, dependent: :destroy

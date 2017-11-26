@@ -1,27 +1,24 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (convert_infos as ConvertInfo)
+# 棋譜変換テーブル (convert_source_infos as ConvertSourceInfo)
 #
-# |---------------+--------------------+----------+-------------+------+-------|
-# | カラム名      | 意味               | タイプ   | 属性        | 参照 | INDEX |
-# |---------------+--------------------+----------+-------------+------+-------|
-# | id            | ID                 | integer  | NOT NULL PK |      |       |
-# | unique_key    | ユニークなハッシュ | string   | NOT NULL    |      |       |
-# | kifu_file     | 棋譜ファイル       | string   |             |      |       |
-# | kifu_url      | 棋譜URL            | string   |             |      |       |
-# | kifu_body     | 棋譜内容           | text     |             |      |       |
-# | converted_ki2 | 変換後KI2          | text     |             |      |       |
-# | converted_kif | 変換後KIF          | text     |             |      |       |
-# | converted_csa | 変換後CSA          | text     |             |      |       |
-# | turn_max      | 手数               | integer  |             |      |       |
-# | kifu_header   | 棋譜ヘッダー       | text     |             |      |       |
-# | created_at    | 作成日時           | datetime | NOT NULL    |      |       |
-# | updated_at    | 更新日時           | datetime | NOT NULL    |      |       |
-# |---------------+--------------------+----------+-------------+------+-------|
+# |-------------+--------------------+-------------+-------------+------+-------|
+# | カラム名    | 意味               | タイプ      | 属性        | 参照 | INDEX |
+# |-------------+--------------------+-------------+-------------+------+-------|
+# | id          | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | unique_key  | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | kifu_file   | 棋譜ファイル       | string(255) |             |      |       |
+# | kifu_url    | 棋譜URL            | string(255) |             |      |       |
+# | kifu_body   | 棋譜内容           | text(65535) |             |      |       |
+# | turn_max    | 手数               | integer(4)  |             |      |       |
+# | kifu_header | 棋譜ヘッダー       | text(65535) |             |      |       |
+# | created_at  | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時           | datetime    | NOT NULL    |      |       |
+# |-------------+--------------------+-------------+-------------+------+-------|
 
 module NameSpace1
-  class ConvertInfosController < ApplicationController
+  class ConvertSourceInfosController < ApplicationController
     if Rails.env.production?
       if v = ENV["HTTP_BASIC_AUTHENTICATE"].presence
         http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: [:index, :edit, :update, :destroy])
@@ -64,7 +61,8 @@ module NameSpace1
 
     def kifu_send_data
       filename = Time.current.strftime("#{current_filename}_%Y_%m_%d_%H%M%S.#{params[:format]}").encode(current_encode)
-      send_data(current_record.send("converted_#{params[:format]}"), type: Mime[params[:format]], filename: filename, disposition: true ? "inline" : "attachment")
+      converted_info = current_record.converted_infos.find_by!(converted_format: params[:format])
+      send_data(converted_info.converted_body, type: Mime[params[:format]], filename: filename, disposition: true ? "inline" : "attachment")
     end
 
     def current_filename

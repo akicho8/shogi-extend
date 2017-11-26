@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe "ConvertInfos", type: :system do
+RSpec.describe "ConvertSourceInfos", type: :system do
   before do
-    @convert_info = ConvertInfo.create!
+    @convert_source_info = ConvertSourceInfo.create!(kifu_body: "７六歩")
   end
 
   it "トップ" do
@@ -18,11 +18,11 @@ RSpec.describe "ConvertInfos", type: :system do
   it "入力→変換→完了" do
     visit "/x/new"
 
-    expect(page).to have_field "convert_info[kifu_body]"
-    expect(page).to have_field "convert_info[kifu_url]"
-    expect(page).to have_field "convert_info[kifu_file]"
+    expect(page).to have_field "convert_source_info[kifu_body]"
+    expect(page).to have_field "convert_source_info[kifu_url]"
+    expect(page).to have_field "convert_source_info[kifu_file]"
 
-    fill_in "convert_info[kifu_body]", with: "76歩"
+    fill_in "convert_source_info[kifu_body]", with: "76歩"
     click_button "変換"
 
     expect(page).to have_content "変換完了"

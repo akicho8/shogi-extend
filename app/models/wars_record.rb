@@ -3,23 +3,26 @@
 #
 # 将棋ウォーズ対戦情報テーブル (wars_records as WarsRecord)
 #
-# |---------------+--------------------+----------+-------------+------+-------|
-# | カラム名      | 意味               | タイプ   | 属性        | 参照 | INDEX |
-# |---------------+--------------------+----------+-------------+------+-------|
-# | id            | ID                 | integer  | NOT NULL PK |      |       |
-# | unique_key    | ユニークなハッシュ | string   | NOT NULL    |      |       |
-# | battle_key    | Battle key         | string   | NOT NULL    |      |       |
-# | battled_at    | Battled at         | datetime | NOT NULL    |      |       |
-# | game_type_key | Game type key      | string   | NOT NULL    |      |       |
-# | csa_hands     | Csa hands          | text     | NOT NULL    |      |       |
-# | converted_ki2 | 変換後KI2          | text     |             |      |       |
-# | converted_kif | 変換後KIF          | text     |             |      |       |
-# | converted_csa | 変換後CSA          | text     |             |      |       |
-# | turn_max      | 手数               | integer  |             |      |       |
-# | kifu_header   | 棋譜ヘッダー       | text     |             |      |       |
-# | created_at    | 作成日時           | datetime | NOT NULL    |      |       |
-# | updated_at    | 更新日時           | datetime | NOT NULL    |      |       |
-# |---------------+--------------------+----------+-------------+------+-------|
+# |------------------+--------------------+-------------+-------------+----------------+-------|
+# | カラム名         | 意味               | タイプ      | 属性        | 参照           | INDEX |
+# |------------------+--------------------+-------------+-------------+----------------+-------|
+# | id               | ID                 | integer(8)  | NOT NULL PK |                |       |
+# | unique_key       | ユニークなハッシュ | string(255) | NOT NULL    |                |       |
+# | battle_key       | Battle key         | string(255) | NOT NULL    |                |       |
+# | battled_at       | Battled at         | datetime    | NOT NULL    |                |       |
+# | game_type_key    | Game type key      | string(255) | NOT NULL    |                |       |
+# | csa_hands        | Csa hands          | text(65535) | NOT NULL    |                |       |
+# | reason_key       | Reason key         | string(255) | NOT NULL    |                |       |
+# | win_wars_user_id | Win wars user      | integer(8)  |             | => WarsUser#id | A     |
+# | turn_max         | 手数               | integer(4)  |             |                |       |
+# | kifu_header      | 棋譜ヘッダー       | text(65535) |             |                |       |
+# | created_at       | 作成日時           | datetime    | NOT NULL    |                |       |
+# | updated_at       | 更新日時           | datetime    | NOT NULL    |                |       |
+# |------------------+--------------------+-------------+-------------+----------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・【警告:リレーション欠如】WarsUserモデルで has_many :wars_records されていません
+#--------------------------------------------------------------------------------
 
 class WarsRecord < ApplicationRecord
   has_one :wars_ship_black, -> { where(position: 0) }, class_name: "WarsShip"
@@ -85,6 +88,8 @@ class WarsRecord < ApplicationRecord
 
   concerning :HenkanMethods do
     included do
+      has_many :converted_infos, as: :convertable, dependent: :destroy
+
       serialize :kifu_header
       serialize :csa_hands
 
@@ -98,9 +103,10 @@ class WarsRecord < ApplicationRecord
           if csa_hands
             if wars_ships.second # 最初のときは、まだ保存されていないレコード
               info = Bushido::Parser.parse(kifu_body)
-              self.converted_ki2 = info.to_ki2
-              self.converted_kif = info.to_kif
-              self.converted_csa = info.to_csa
+              converted_infos.destroy_all
+              KifuFormatInfo.each do |e|
+                converted_infos.build(converted_body: info.public_send("to_#{e.key}"), converted_format: e.key)
+              end
               self.turn_max = info.mediator.turn_max
               self.kifu_header = info.header
             end
