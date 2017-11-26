@@ -24,26 +24,36 @@ import "./bootstrap_tuning.sass"
 console.log(`jQuery ${typeof(jQuery)}`)
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".kif_clipboard_copy_button").addEventListener("click", function (e) { // FIXME: なんと最初の一つしか登録できてない → Vue をつかう
-    const url = e.target.dataset.kifDirectAccessPath // kif_direct_access_path
+  const buttons = document.querySelectorAll(".kif_clipboard_copy_button")
+  for (var i = 0, len = buttons.length; i < len; i++) {
+    buttons[i].addEventListener("click", function(e) {
 
-    if (!url) {
-      alert("URLが取得できません")
-    }
+      const url = e.target.dataset.kifDirectAccessPath // kif_direct_access_path
 
-    // ユーザーがクリックしたタイミングでないとクリップボードにコピーできないため同期している
-    const kifu_text = $.ajax({type: "GET", url: url, async: false}).responseText
+      if (!url) {
+        alert("URLが取得できません")
+      }
 
-    const text_area = document.createElement("textarea")
-    text_area.value = kifu_text
-    document.body.appendChild(text_area)
-    text_area.select()
-    const result = document.execCommand("copy")
-    document.body.removeChild(text_area)
-    if (result) {
-      alert("クリップボードにコピーしました")
-    } else {
-      alert("クリップボードへのコピーに失敗しました")
-    }
-  })
+      // ユーザーがクリックしたタイミングでないとクリップボードにコピーできないため同期している
+      const kifu_text = $.ajax({type: "GET", url: url, async: false}).responseText
+
+      const text_area = document.createElement("textarea")
+      text_area.value = kifu_text
+      document.body.appendChild(text_area)
+      text_area.select()
+      const result = document.execCommand("copy")
+      document.body.removeChild(text_area)
+      if (result) {
+        alert("クリップボードにコピーしました")
+      } else {
+        alert("クリップボードへのコピーに失敗しました")
+      }
+
+      e.preventDefault()
+
+    })
+  }
+
+  // $(".kif_clipboard_copy_button").click()
+
 })
