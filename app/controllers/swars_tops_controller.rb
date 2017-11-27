@@ -103,12 +103,25 @@ class SwarsTopsController < ApplicationController
   #   end
   #   s
   # end
+  def current_battle_user_key
+    # if Rails.env.development?
+    #   params[:battle_user_key] = "hanairobiyori"
+    # end
 
-  def current_user_key
-    if Rails.env.development?
-      # params[:user_key] = "hanairobiyori"
+    if e = [:battle_user_key, :key, :player].find { |e| params[e].present? }
+      s = params[e].to_s.gsub(/\p{blank}/, " ").strip
+
+      # https://shogiwars.heroz.jp/users/history/xxx?gtype=&locale=ja -> xxx
+      if true
+        if url = URI::Parser.new.extract(s).first
+          if md = URI(url).path.match(%r{history/(.*)})
+            s = md.captures.first
+          end
+        end
+      end
+
+      s.presence
     end
-    params[:user_key].to_s.gsub(/\p{blank}/, " ").strip.presence
   end
 
   def h
