@@ -8,7 +8,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       end
     end
 
-    BattleRecord.import_all(user_key: "hanairobiyori")
+    BattleRecord.import_all(battle_user_key: "hanairobiyori")
     @battle_record = BattleRecord.first
   end
 
@@ -16,9 +16,9 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     visit "/s"
     expect(page).to have_content "将棋ウォーズ棋譜検索"
 
-    expect(page).to have_field "user_key"
+    expect(page).to have_field "battle_user_key"
 
-    fill_in "user_key", with: "hanairobiyori"
+    fill_in "battle_user_key", with: "hanairobiyori"
     click_button "検索"
 
     expect(page).to have_content "対戦相手"

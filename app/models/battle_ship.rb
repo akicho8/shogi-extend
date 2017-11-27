@@ -29,7 +29,7 @@ class BattleShip < ApplicationRecord
 
   acts_as_list top_of_list: 0, scope: :battle_record
 
-  scope :win_flag_is, -> v { where(win_flag: v) }
+  scope :win_flag_eq, -> v { where(win_flag: v) }
 
   before_validation do
     if battle_user
@@ -38,6 +38,6 @@ class BattleShip < ApplicationRecord
   end
 
   def name_with_rank
-    "#{battle_user.user_key} #{battle_rank.name}"
+    "#{battle_user.battle_user_key} #{battle_rank.name}"
   end
 end

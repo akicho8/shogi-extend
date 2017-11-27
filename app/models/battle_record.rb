@@ -10,9 +10,9 @@
 # | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  |       |
 # | battle_key         | Battle key         | string(255) | NOT NULL    |                  |       |
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | battle_group_key      | Game type key      | string(255) | NOT NULL    |                  |       |
-# | csa_seq          | Csa hands          | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key         | Reason key         | string(255) | NOT NULL    |                  |       |
+# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  |       |
+# | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
+# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  |       |
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
@@ -141,7 +141,7 @@ class BattleRecord < ApplicationRecord
   end
 
   concerning :HelperMethods do
-    def aite_user_ship(battle_user)
+    def reverse_user_ship(battle_user)
       battle_ships.find {|e| e.battle_user != battle_user } # FIXME: battle_ships 下にメソッドとする
     end
 
@@ -207,7 +207,7 @@ class BattleRecord < ApplicationRecord
         # end
 
         battle_users = info[:battle_user_infos].collect do |e|
-          BattleUser.find_or_initialize_by(user_key: e[:user_key]).tap do |battle_user|
+          BattleUser.find_or_initialize_by(battle_user_key: e[:battle_user_key]).tap do |battle_user|
             battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
             battle_user.update!(battle_rank: battle_rank) # 常にランクを更新する
           end
@@ -230,7 +230,7 @@ class BattleRecord < ApplicationRecord
         end
 
         info[:battle_user_infos].each.with_index do |e, i|
-          battle_user = BattleUser.find_by!(user_key: e[:user_key])
+          battle_user = BattleUser.find_by!(battle_user_key: e[:battle_user_key])
           battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
           battle_record.battle_ships.build(battle_user:  battle_user, battle_rank: battle_rank, win_flag: i == winner_index)
         end

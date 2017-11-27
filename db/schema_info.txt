@@ -25,9 +25,9 @@
 # | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  |       |
 # | battle_key         | Battle key         | string(255) | NOT NULL    |                  |       |
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | battle_group_key      | Game type key      | string(255) | NOT NULL    |                  |       |
-# | csa_seq          | Csa hands          | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key         | Reason key         | string(255) | NOT NULL    |                  |       |
+# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  |       |
+# | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
+# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  |       |
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
@@ -66,16 +66,16 @@
 #
 # 将棋ウォーズユーザーテーブル (battle_users as BattleUser)
 #
-# |----------------+-------------+-------------+-------------+------------------+-------|
-# | カラム名       | 意味        | タイプ      | 属性        | 参照             | INDEX |
-# |----------------+-------------+-------------+-------------+------------------+-------|
-# | id             | ID          | integer(8)  | NOT NULL PK |                  |       |
-# | unique_key     | Unique key  | string(255) | NOT NULL    |                  |       |
-# | user_key       | User key    | string(255) | NOT NULL    |                  |       |
-# | battle_rank_id | Battle rank | integer(8)  |             | => BattleRank#id | A     |
-# | created_at     | 作成日時    | datetime    | NOT NULL    |                  |       |
-# | updated_at     | 更新日時    | datetime    | NOT NULL    |                  |       |
-# |----------------+-------------+-------------+-------------+------------------+-------|
+# |-----------------+-----------------+-------------+-------------+------------------+-------|
+# | カラム名        | 意味            | タイプ      | 属性        | 参照             | INDEX |
+# |-----------------+-----------------+-------------+-------------+------------------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |                  |       |
+# | unique_key      | Unique key      | string(255) | NOT NULL    |                  |       |
+# | battle_user_key | Battle user key | string(255) | NOT NULL    |                  |       |
+# | battle_rank_id  | Battle rank     | integer(8)  |             | => BattleRank#id | A     |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |                  |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |                  |       |
+# |-----------------+-----------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・BattleUser モデルは BattleRank モデルから has_many :battle_users されています。

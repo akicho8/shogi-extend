@@ -33,6 +33,7 @@ html lang="ja"
       = yield
     footer
       .container
-        p= link_to("将棋ウォーズ", "https://shogiwars.heroz.jp/")
-        p= link_to("Github", "https://github.com/akicho8/shogi_web")
+        ul.list-inline
+          li= link_to("Github", "https://github.com/akicho8/shogi_web")
+          li= link_to("将棋ウォーズ", "https://shogiwars.heroz.jp/")
         p= "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"

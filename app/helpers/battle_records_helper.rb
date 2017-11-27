@@ -10,9 +10,9 @@
 # | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  |       |
 # | battle_key         | Battle key         | string(255) | NOT NULL    |                  |       |
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | battle_group_key      | Game type key      | string(255) | NOT NULL    |                  |       |
-# | csa_seq          | Csa hands          | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key         | Reason key         | string(255) | NOT NULL    |                  |       |
+# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  |       |
+# | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
+# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  |       |
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |

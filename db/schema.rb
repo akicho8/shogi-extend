@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
 
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
-    t.string "user_key", null: false
+    t.string "battle_user_key", null: false
     t.bigint "battle_rank_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
