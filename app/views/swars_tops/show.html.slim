@@ -1,3 +1,6 @@
+- content_for :head do
+  = rel_next_prev_link_tags @battle_records
+
 / = link_to("リンク1", "#", class: "kif_clipboard_copy_button", "data-clipboard-text" => "これは使われない")
 
 .text-center
@@ -29,15 +32,12 @@
     .form-group
       .col-sm-12
         .text-center
-          = form.submit("検索", name: nil, class: "btn btn-primary btn-lg")
+          = form.submit("検索", name: nil, class: "btn btn-primary btn-lg", data: {disable_with: "検索中"})
 
 = @rows.to_html
 
 .text-center
   = paginate @battle_records
-
-- content_for :head do
-  = rel_next_prev_link_tags @battle_records
 
 - if controller.current_battle_user_key
   - if v = Rails.cache.read("import_all_#{controller.current_battle_user_key}")

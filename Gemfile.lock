@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: 63629bc2b9f2dc987ad6c769bb7347456954079b
+  revision: 30ecc85d2295d3f44615824fa9a2b67fa3a9af06
   specs:
     bushido (0.0.1)
       actionview

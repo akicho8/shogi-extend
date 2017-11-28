@@ -16,9 +16,9 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     visit "/s"
     expect(page).to have_content "将棋ウォーズ棋譜検索"
 
-    expect(page).to have_field "battle_user_key"
+    expect(page).to have_field "player"
 
-    fill_in "battle_user_key", with: "hanairobiyori"
+    fill_in "player", with: "hanairobiyori"
     click_button "検索"
 
     expect(page).to have_content "対戦相手"
