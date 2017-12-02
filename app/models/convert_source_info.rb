@@ -48,7 +48,7 @@ class ConvertSourceInfo < ApplicationRecord
   before_save do
     if changes[:kifu_body]
       if kifu_body
-        info = Bushido::Parser.parse(kifu_body, double_pawn_case: :embed)
+        info = Bushido::Parser.parse(kifu_body, typical_error_case: :embed)
         converted_infos.destroy_all
         KifuFormatInfo.each do |e|
           converted_infos.build(converted_body: info.public_send("to_#{e.key}"), converted_format: e.key)
