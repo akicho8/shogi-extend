@@ -1,0 +1,498 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>Kifu for Flash</TITLE>
+<STYLE type="text/css">
+<!--
+H2{
+    
+    
+    
+    
+    
+    
+    
+    
+				
+				
+  background-color : #ffff80;
+border-color : green yellow green yellow;
+  border-top-width : 1px;
+  border-top-style : solid;
+  border-bottom-width : 1px;
+  border-bottom-style : solid;
+  font-size : 14pt;
+}
+BLOCKQUOTE{
+    
+    
+    
+    
+    
+    
+    
+    
+				
+				
+  background-color : #f5f5f5;
+border-width : 1px 1px 1px 1px;border-style : solid solid solid solid;
+  
+  
+  
+  
+  padding-top : 5px;
+  padding-left : 5px;
+  padding-right : 5px;
+  padding-bottom : 5px;
+}
+H1{
+    
+    
+    
+    
+    
+    
+    
+    
+				
+				
+  font-size : 18pt;
+}
+
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="center">将棋棋譜中継・再現 Flash アプリケーション &quot;<FONT color="#008000">Kifu for Flash</FONT>&quot;</H1>
+<P align="right">2017/4/4 柿木　義一</P>
+<H2>１．ソフトの概要</H2>
+<P>Web上で将棋の棋譜を再現する Flash アプリケーションです。</P>
+<H3>特徴：</H3>
+<UL>
+  <LI>柿木形式の棋譜ファイル(*.kif, *.kifu)を直接再現します。
+  <LI>平手、駒落ち、詰将棋の棋譜に対応しています。
+  <LI>各指し手のコメントを表示します（オプションで表示なし可）。
+  <LI>変化手順を再現できます。
+  <LI>棋譜の指し手をクリックすることで、その局面の表示ができます。
+  <LI>棋譜ファイルを保存できます。
+  <LI>自動更新が可能で、対局の中継ができます。
+  <LI>棋戦名、場所、持ち時間を表示できます。
+  <LI>将棋盤は、木目・無地の切り替え可能。
+  <LI>コメント欄の大きさ・有無を指定可能。
+  <LI>玉を持つ対局者を指定可能。
+</UL>
+<H3>Java アプレットにない機能</H3>
+<UL>
+  <LI>再現ボタンにマウスカーソルを合わせると、説明を表示
+  <LI>棋譜にマウスカーソルを合わせると、消費時間を表示（棋譜に分岐がなく、消費時間が記録されているとき）
+  <LI>盤面をクリックすると、キーボードで再現可能（→,←,Home,End）
+</UL>
+<H3>Java アプレットとの違い</H3>
+<UL>
+  <LI>起動パラメータの指定法が一部異なります。
+  <LI>棋譜の最大手数は、800手です。
+</UL>
+<H2>２．制限</H2>
+<UL>
+  <LI>KI2形式には対応していません。
+  <LI>ジオシティーズ等、棋譜ファイルをサーバへ転送できないプロバイダでは、拡張子を txt に変えて下さい。
+  <LI>棋譜ファイルは、SHIFT-JIS、または、UTF-8の文字コードになっている必要があります。<BR>
+  Kifu for Windows や柿木将棋が出力するのは、SHIFT-JIS、または、UTF-8コードです。
+  <LI>棋譜の最大手数は、変化を含め、800手です。
+  <LI>対局者名は、８文字まで表示されます。
+  
+</UL>
+<H2>３．動作環境</H2>
+<P><FONT color="#ff0000"><B>Flash Player 9</B></FONT></P>
+<H3>動作確認ブラウザ：</H3>
+<H4>Windows:</H4>
+<UL>
+  <LI>Internet Explorer 6, 7
+  <LI>Firefox
+</UL>
+<H4>Macintosh (OS X):</H4>
+<UL>
+  <LI>Safari
+  <LI>Firefox
+</UL>
+
+<H2>４．ファイルの構成</H2>
+<H3>動作に必要なファイル</H3>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD>Kifu.swf</TD>
+      <TD>Flash アプリケーション</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H3>データ等</H3>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD>example.html</TD>
+      <TD>使用例</TD>
+    </TR>
+    <TR>
+      <TD>example2.html</TD>
+      <TD>使用例(2)</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;resize.html</TD>
+      <TD>コメント欄可変の例&nbsp;(Unicode の棋譜)</TD>
+    </TR>
+    <TR>
+      <TD>swfobject.js</TD>
+      <TD>example2で使用するJavaScript</TD>
+    </TR>
+    <TR>
+      <TD>kifuf_help.html</TD>
+      <TD>HELPファイル</TD>
+    </TR>
+    <TR>
+      <TD>henka.kif</TD>
+      <TD>変化手順のある棋譜の例</TD>
+    </TR>
+    <TR>
+      <TD>no_henka.kif</TD>
+      <TD>変化手順のない棋譜の例</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;no_henka.kifu</TD>
+      <TD>&nbsp;Unicode の棋譜の例</TD>
+    </TR>
+    <TR>
+      <TD>tume.kif</TD>
+      <TD>詰将棋の例</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>５．設置法</H2>
+<H3>(1) ファイル</H3>
+<UL>
+  <LI>サーバ上で、Kifu for Flash を使用するディレクトリを作成します。
+  <LI>ここに、Kifu.swf をバイナリモードで転送します。
+  <LI>棋譜ファイルは、そのディレクトリ、または、サブディレクトリ等に転送します。<BR clear="">
+  （位置はパラメータで指定）
+</UL>
+<H3>(2) HTMLファイル</H3>
+<P>添付の example.html を元に、以下のように記述します。</P>
+
+<BLOCKQUOTE>&lt;object classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot;<BR>
+id=&quot;Kifu&quot; width=&quot;580&quot; height=&quot;<B><FONT color="#ff0000">500</FONT></B>&quot;<BR>
+	codebase=&quot;http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab&quot;&gt;<BR>
+&lt;param name=&quot;movie&quot; value=&quot;Kifu.swf&quot; /&gt;<BR>
+<FONT color="#0000ff">&lt;!-- パラメータを記述する --&gt;</FONT><BR>
+&lt;param name=&quot;FlashVars&quot; value=&quot;<FONT color="#ff0000"><B>kifu=henka.kif&amp;no_mokume=1</B></FONT>&quot; /&gt;<BR>
+&lt;param name=&quot;quality&quot; value=&quot;high&quot; /&gt;<BR>
+	&lt;param name=&quot;bgcolor&quot; value=&quot;#f0f0f0&quot; /&gt;<BR>
+	&lt;param name=&quot;allowScriptAccess&quot; value=&quot;sameDomain&quot; /&gt;<BR>
+<FONT color="#0000ff">&lt;!-- パラメータを記述する --&gt;</FONT><BR>
+&lt;embed src=&quot;Kifu.swf&quot; <BR>
+FlashVars=&quot;<B><FONT color="#ff0000">kifu=henka.kif&amp;no_mokume=1</FONT></B>&quot;<BR>
+		quality=&quot;high&quot; bgcolor=&quot;#f0f0f0&quot;<BR>
+width=&quot;580&quot; height=&quot;<B><FONT color="#ff0000">500</FONT></B>&quot; name=&quot;Kifu&quot; align=&quot;middle&quot;<BR>
+		play=&quot;true&quot;<BR>
+		loop=&quot;false&quot;<BR>
+		quality=&quot;high&quot;<BR>
+		allowScriptAccess=&quot;sameDomain&quot;<BR>
+		type=&quot;application/x-shockwave-flash&quot;<BR>
+		pluginspage=&quot;http://www.adobe.com/go/getflashplayer&quot;&gt;<BR>
+	&lt;/embed&gt;<BR>
+&lt;/object&gt;</BLOCKQUOTE>
+<UL>
+  <LI>赤字の部分を書き換えます。
+  <LI>２か所でパラメータを記述します。
+  <LI>パラメータは、<B><FONT color="#ff0000">パラメータ1=値&amp;パラメータ2=値&amp;</FONT></B> ・・・という&amp;で区切る形式で記述します。
+  <LI>ファイル名は、HTMLファイルのあるディレクトリからの相対表現とします。
+  <LI>HELPファイルは、ファイル名を変え、任意のHTMLファイルにすることができます。
+  <LI>ファイル名に日本語を使ってはいけません。
+  <LI>ファイル名の大文字と小文字の違いがあってはいけません。
+  <LI>パラメータ名はすべて小文字です。
+  <LI>コメントの行数によって、&quot;height&quot;（高さ）の値を変えて下さい。
+  <LI>HTMLファイルとSWFファイルが異なるサーバにある場合、SFWファイルと棋譜ファイルをフルパスで指定する必要があります。
+</UL>
+<BLOCKQUOTE>例：<BR>
+&lt;param name=&quot;movie&quot; value=&quot;http://ホスト名・・・ /Kifu.swf&quot;
+/&gt;<BR>
+&lt;param name=&quot;FlashVars&quot; value=&quot;kifu=http://ホスト名・・・ /kifu.kif&amp;auto_update=3&amp;・・・</BLOCKQUOTE>
+<P>※Flash アプリケーションの設置法は、これ以外にも様々な方法があります。</P>
+<H3>(3) 起動パラメータ</H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR bgcolor="#e4fec9">
+      <TH>機能</TH>
+      <TH>パラメータ</TH>
+      <TH>説明</TH>
+    </TR>
+    <TR>
+      <TD>棋譜ファイル名</TD>
+      <TD><B>kifu</B>=（棋譜ファイル名）</TD>
+      <TD>棋譜ファイル名<BR>
+      HTMLファイルのあるディレクトリからの相対表現とします。<BR>
+      棋譜ファイルとSWFファイルは同じサーバにある必要があります。<BR>
+      拡張子が .kifu なら UFT-8 の文字コードとします。</TD>
+    </TR>
+    <TR>
+      <TD>開始手数</TD>
+      <TD><B>start_tesuu</B>=<FONT color="#000099">（手数）</FONT></TD>
+      <TD>ページを開いたとき、指定手数の局面を表示します。<BR>
+  （手数）は半角数字、&quot;<FONT color="#000000"><FONT color="#000000"><B>last</B></FONT></FONT>&quot;で最終局面<BR>
+      指定しないとき、<B>auto_update</B>が記述されていれば最終局面、それ以外では初期局面を表示します。</TD>
+    </TR>
+    <TR>
+      <TD>自動更新</TD>
+      <TD><B>auto_update</B>=1 30秒毎に自動更新する<BR clear="">
+  <B>auto_update</B>=2 60秒毎に自動更新する<BR>
+  <B>auto_update</B>=3 ３分毎に自動更新する<BR>
+      <B>auto_update</B>=0 自動更新メニューを表示しますが、自動更新はしません。</TD>
+      <TD>一定時間毎に棋譜ファイルを読み込み、最新の棋譜を表示する自動更新機能です。<BR>
+      対局の中継等で使用します。<BR>
+      <FONT color="#ff0000">※<B>auto_update</B>を記述すると、自動更新設定のメニューを表示します。また、<B>start_tesuu</B>の指定がないとき、自動更新時、最終局面を表示します。</FONT></TD>
+    </TR>
+    <TR>
+      <TD>コメント行数</TD>
+      <TD><B>comment_line</B>=(行数) <BR>(行数) は半角数字</TD>
+      <TD>コメント行数を指定します。<BR>
+      0だと、コメントを表示しません。<BR>
+      指定なしは、6行となります。<BR>
+      ※環境によって、実際に表示される行数は異なる場合があります。</TD>
+    </TR>
+    <TR>
+      <TD>ヘルプファイル名</TD>
+      <TD><B>help</B>=(ヘルプファイル名)</TD>
+      <TD>ヘルプファイル名の指定。指定しないとき、&quot;kifu_help.html&quot;となります。</TD>
+    </TR>
+    <TR>
+      <TD>ヘルプボタン非表示</TD>
+      <TD><B>no_help</B>=1</TD>
+      <TD>ヘルプボタンを表示しません。</TD>
+    </TR>
+    <TR>
+      <TD>玉の指定</TD>
+      <TD><B>gyoku</B>=0 先手が玉、ただし、名人・王将・竜王・棋王は王<BR>
+      <B>gyoku</B>=1 後手が玉<BR>
+      <B>gyoku</B>=2 先手が玉<BR>
+      <B>gyoku</B>=3 双玉</TD>
+      <TD>指定なしは、0 の動作となります。</TD>
+    </TR>
+    <TR>
+      <TD>棋譜を表示しない</TD>
+      <TD><B>no_kifu</B>=1 棋譜を表示しない、棋譜表示ボタンあり、再現不可<BR>
+      <B>no_kifu</B>=2 棋譜を表示しない、棋譜表示ボタンなし、再現不可<BR>
+      <B>no_kifu</B>=3 棋譜を表示しない、棋譜表示ボタンなし、再現可能</TD>
+      <TD>棋譜と再現ボタンを消します。<BR>
+      棋譜表示しない設定のページを棋譜表示ボタンで表示した場合、ブラウザの更新で棋譜は消えます。</TD>
+    </TR>
+    <TR>
+      <TD>分単位</TD>
+      <TD><B>minute=1</B></TD>
+      <TD>この指定をすると、棋譜の消費時間を分単位で処理します。秒の単位は切り捨てられ、消費時間・残り時間は分単位で表示します。<BR>
+      この指定がない場合、秒単位で表示します。</TD>
+    </TR>
+    <TR>
+      <TD>コメント欄可変</TD>
+      <TD><B>resize=1</B></TD>
+      <TD>&nbsp;ウィンドゥに連動して、コメント欄の大きさを変えます。このとき、height を &quot;90%&quot; のように、ウィンドゥの高さに対する割合とします。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<UL>
+  <LI><FONT color="#ff0000">自動更新時の特殊な動作について<BR clear="">
+  </FONT><FONT color="#000000">自動更新ありで、Kifu for Flash 起動時に棋譜を読み込んだとき、終局していたら、開始局面を表示し、自動更新もなしにします。</FONT>
+  <LI><FONT color="#000000">変化手順の表示<BR>
+  棋譜に変化手順があるとき、変化選択のボタン[+&lt;] [&gt;+] と変化の選択メニューを表示します。</FONT>
+</UL>
+<H3>(4) 対局中継例：</H3>
+<P>自動更新あり（最終局面表示、自動更新設定メニュー表示）</P>
+<BLOCKQUOTE>
+<P>
+&lt;param name=&quot;FlashVars&quot; value=&quot;<FONT color="#ff0000"><B>kifu=henka.kif&amp;auto_update=1</B></FONT>&quot; /&gt;</P>
+</BLOCKQUOTE>
+<H2>６．棋譜ファイル</H2>
+<P>棋譜ファイルは、フリーソフトの Kifu for Windows, Kifu for Macintosh 、または、柿木将棋シリーズで作成できます。</P>
+<H2>７．情報の表示</H2>
+<P>右上の欄には、次の情報を表示します。</P>
+<BLOCKQUOTE>
+<P>開始日時 　<BR>
+棋戦名　　　　　<BR>
+場所　　　　　　<BR>
+持ち時間<BR>
+消費時間<BR>
+　▲先手の消費時間<BR>
+　△後手の消費時間<BR>
+残り時間 *手まで<BR>
+　▲先手の残り時間<BR>
+　△後手の残り時間<BR>
+手合割　<FONT color="#0000ff">（駒落ちの場合）</FONT></P>
+</BLOCKQUOTE>
+<H2>８．詰将棋情報の表示</H2>
+<P>棋譜に詰将棋情報の「作者」が設定されているとき、次の情報を表示します。</P>
+<BLOCKQUOTE>作者<BR>
+作品名<BR>
+出典 or 発表誌<BR>
+発表年月<BR>
+<FONT color="#ff0000">持ち駒制限</FONT>（持ち駒制限時）</BLOCKQUOTE>
+<H2>９．残り時間の表示</H2>
+<P>
+  残り時間を表示するためには、棋譜ファイルの棋譜情報で、「持ち時間」を設定する必要があります。<BR clear="">
+持ち時間は、全角（または半角で）で「Ｎ時間」と記述します。分がある場合は、半角２桁で「NN分」と記述します。分だけの記述も可能です。</P>
+<OL>
+  <LI>棋譜の指し手に消費時間が記録されているとき、各指し手の消費時間から残り時間を計算し、表示します。<BR clear="">
+  <LI>棋譜の指し手に消費時間が記録されていないとき（すべての指し手の時間が０の場合）、棋譜情報の「消費時間」の情報から、手数と残り時間を表示します。この場合、消費時間と残り時間は分単位で表示されます。<BR>
+  消費時間は、次の形式で記述します。
+</OL>
+<BLOCKQUOTE><FONT color="#000099">手数▲先手の消費時間（分）△後手の消費時間（分）</FONT><BR clear="">
+※いずれも半角の数字を使います。</BLOCKQUOTE>
+<BLOCKQUOTE>例１：<BR>
+---------- 棋譜ファイル --------------<BR>
+消費時間：159▲347△359<BR>
+持ち時間：４時間06分<BR>
+-----------------------------------<BR>
+例２：<BR>
+---------- 棋譜ファイル --------------<BR>
+持ち時間：30分<BR>-----------------------------------</BLOCKQUOTE>
+<H2>10．コメント</H2>
+<P>コメントで、http で始まり、半角空白で終わるURLはリンクとして表示します。<BR>コメントに HTML のサブセットが使えます。例えば、次が使えます</P>
+<BLOCKQUOTE>&lt;FONT color=&quot;#ff0000&quot;&gt;赤&lt;/FONT&gt;<BR>
+&lt;B&gt;ボールド&lt;/B&gt;</BLOCKQUOTE>
+<H2>11．うまくいかないとき</H2>
+<H3>確認項目</H3>
+<UL>
+  <LI>ファイル名の大文字と小文字の違いがないか？
+  <LI>棋譜ファイルは、SHIFT-JISコードになっているか？
+</UL>
+<H3>バージョンアップしたとき</H3>
+<P>本Flashアプリケーションをバージョンアップし、サーバ上のSWFを更新したとき、ブラウザのキャッシュを削除しないと、それが反映されない場合があります。<BR>
+FireFox3.0なら、次の操作でキャッシュを削除できます。</P>
+<OL>
+  <LI>ツールメニューのオプションを実行
+  <LI>詳細タブを表示
+  <LI>オフラインデータの今すぐ消去を実行
+</OL>
+<H3>棋譜保存ボタンを押しても保存できない場合</H3>
+<UL>
+  <LI>ツール等でポップアップを抑制しているときは、解除して下さい。
+  <LI>Internet Explorer では、「インターネットオプション」の「セキュリティの設定」で、「ファイルのダウンロード時に自動的にダイアログを表示」を「有効にする」としてみて下さい。
+  <LI>Ctrlキーを押しながら、棋譜保存ボタンを押してみて下さい。
+</UL>
+<H2>12. 著作権等</H2>
+<UL>
+  <LI>本ソフトウェアは、フリー・ソフトウェアとします。
+  <LI>本ソフトウェアや本ソフトウェアの画面をWeb上（ホームページ）で自由に使って構いません。<BR>
+  ただし、本ソフトウェアの著作権は、柿木義一にあります。
+  <LI>インターネット上でプロやアマチュアの対局を中継する場合、本アプリケーションを自由に使って頂いて構いません。
+  <LI>本アプリケーションを使って対局を再現・中継する場合、携帯情報端末等で再現可能になることをご了承下さい。
+  <LI>本アプリケーションを使って対局を再現・中継する場合、個人のブログ等、他のWebページから本アプリケーションを実行し、棋譜やコメントを表示可能となることをご了承下さい。
+  <LI>使い方についてのご質問にはある程度回答しますが、コンピュータやインターネット等に関する基本的な事はご自身でお調べ下さい。
+</UL>
+  <H2>13．履歴</H2>
+<H3>2008/2/20 V0.80</H3>
+<UL>
+  <LI>β版として公開
+</UL>
+<H3>2008/5/22 V1.00</H3>
+<UL>
+  <LI>自動更新で棋譜が更新されない場合があった問題を修正。
+  <LI>盤面を反転したときのY座標が逆だったバグの修正。
+  <LI>前の分岐を実行したとき、盤面の表示が更新されなかったバグの修正。
+</UL>
+<H3>2008/6/15 V1.01</H3>
+<UL>
+  <LI>終局時の特殊処理が動作しない場合があった問題の修正。
+  <LI>自動更新の場合、起動時に駒音を鳴らしたバグの修正。
+  <LI>消費時間が正しく読めなかったバグの修正。
+  <LI>Macでの表示を改善。
+  <LI>起動時の自動更新間隔が指定に関わらず30秒になったバグの修正。
+  <LI>棋譜の表記が正しくない場合があったバグの修正。
+  <LI>Windows98で自動更新の文字が化けた問題の修正。
+</UL>
+<H3>2008/7/10 V1.02</H3>
+<UL>
+  <LI>サーバの負荷が大きいとき、自動更新で、棋譜の開始局面が選択される場合があった問題の修正。
+</UL>
+<H3>2008/7/14 V1.03</H3>
+<UL>
+  <LI>サーバの負荷が大きいとき、自動更新で、棋譜の開始局面が選択される場合があった問題の修正（V1.02の修正が不完全だった）。
+</UL>
+<H3>2008/7/18 V1.04</H3>
+<UL>
+  <LI>棋譜に消費時間が記録されているとき、消費時間を表示するようにした。
+  <LI>消費時間を秒単位で処理するようにした。<BR clear="">
+  <FONT color="#ff0000">従来のように、分単位で処理する場合は、minute=1 の指定をする必要があります。</FONT>
+  <LI>将棋倶楽部24の棋譜を読めるようにした。
+  <LI>分だけの持ち時間を認識できるようにした。
+</UL>
+<H3>2008/7/23 V1.05</H3>
+<UL>
+  <LI>棋譜情報の「消費時間」で消費時間が設定されているとき、消費時間を表示するように。
+  <LI>棋譜情報の「消費時間」で消費時間が設定されているとき、分単位とするように。
+</UL>
+<H3>2008/8/1 V1.06</H3>
+<UL>
+  <LI>玉の指定を変更
+  <LI>持ち駒が完全に表示されない場合があったバグの修正。
+</UL>
+<H3>2008/10/7 V1.10</H3>
+<UL>
+  <LI><B>日本語以外の環境では、英語で表示する。</B>
+  <LI>持ち時間：&quot;各&quot;*の表記に対応
+</UL>
+<H3>2008/12/10 V1.11</H3>
+<UL>
+  <LI>棋譜の変化手順は青く表示する。
+  <LI>変化手順のコメントは青く表示する。
+</UL>
+<H3>2009/2/9 V1.20</H3>
+<UL>
+  <LI>駒音の有無を設定可能に<BR clear="">右上の Kifu for Flash の部分をクリックすると、設定画面が表示されます。
+  <LI>終局時、残り時間の手数を「終局」と表記
+  <LI>中国語の環境では、日本語で表示するように。
+</UL>
+<H3>2009/3/27 V1.21</H3>
+<UL>
+  <LI>コメント文字の拡大を可能に
+  <LI>棋譜の変化手順は青く表示する、を中止（棋譜にマウスを重ねたとき、消費時間が表示されなくなるため）
+  <LI>棋譜に消費時間が記録されていて、マウスを重ねたとき、消費時間が0でも表示するように
+</UL>
+<H3>2009/6/17 V1.22</H3>
+<UL>
+  <LI><B>自動更新機能の動作を変更</B><BR clear="none">
+  表示が最終でないとき、棋譜を更新しても、表示局面は変えず、駒音を鳴らし、棋譜の背景の色を変える。
+  <LI>棋譜の変化手順は青く表示する（再度）。
+</UL>
+<H3>2009/12/1 V1.23</H3>
+<UL>
+  <LI>自動更新で、開始局面に戻していたとき、棋譜が更新されたとき、最終局面になったバグの修正。
+  <LI>最終駒の色を設定可能に
+  <LI>設定ボタンを追加
+  <LI><B>一文字駒を追加</B>
+  <LI>ウィンドゥに連動して、コメント欄の大きさを変える機能を追加（パラメータ resize=1）
+</UL>
+<H3>2010/1/20 V1.24</H3>
+<UL>
+  <LI><B>UTF-8 の文字コードの棋譜に対応した（棋譜ファイルの拡張子が .kifu なら、UTF-8とする）。</B>
+  <LI>投了したとき、前の手のコメントを表示する。
+  <LI>木目の有無は、ユーザが設定するようにした（パラメータ no_mokume は中止）。
+</UL>
+<H3>2010/7/11 V1.25</H3>
+<UL>
+  <LI><B>コメントに http: で始まり、半角空白で終わる URL+半角空白 があるとき、リンクを開くことを可能にした。</B>
+  <LI><B>コメントにHTMLのサブセットを使用可能とした。</B>
+</UL>
+<H3>2011/11/29 V1.30</H3>
+<UL>
+  <LI><B>二文字駒を新しくした。従来の駒も選択可能。</B>
+</UL>
+<H3>2014/2/7 V1.31</H3>
+<UL>
+  <LI>棋譜を表示しないオプションで起動したとき、分岐も表示しないようにした。
+</UL>
+<H3>2017/4/4 V1.32</H3>
+<UL>
+  <LI>備考の表記によって、棋譜を正しく読めない場合があったバグの修正
+</UL>
+</BODY>
+</HTML>
