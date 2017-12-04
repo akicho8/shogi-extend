@@ -37,9 +37,10 @@ module NameSpace1
     def show
       respond_to do |format|
         format.html
-        format.kif { kifu_send_data }
-        format.ki2 { kifu_send_data }
-        format.csa { kifu_send_data }
+        format.kif  { kifu_send_data }
+        format.kifu { kifu_send_data }
+        format.ki2  { kifu_send_data }
+        format.csa  { kifu_send_data }
       end
     end
 
@@ -63,9 +64,33 @@ module NameSpace1
     end
 
     def kifu_send_data
-      filename = Time.current.strftime("#{current_filename}_%Y_%m_%d_%H%M%S.#{params[:format]}").encode(current_encode)
-      converted_info = current_record.converted_infos.find_by!(converted_format: params[:format])
-      send_data(converted_info.converted_body, type: Mime[params[:format]], filename: filename, disposition: true ? "inline" : "attachment")
+      if false
+        filename = Time.current.strftime("#{current_filename}_%Y_%m_%d_%H%M%S.#{params[:format]}").encode(current_encode)
+      else
+        filename = "#{current_record.battle_key}.#{params[:format]}"
+      end
+
+      converted_info = current_record.converted_infos.find_by!(converted_format: params[:format].sub("kifu", "kif"))
+      converted_body = converted_info.converted_body
+
+      if access_from_swf_kifu_player?
+        response.headers["Content-Type"] = 'text/plain; charset=shift_jis' # 指定しないと utf-8 で返してしまう(が、なくてもよい)
+        logger.info response.headers.to_t
+        render plain: converted_body.tosjis
+        return
+      end
+
+      if params[:shift_jis].present? || params[:sjis].present?
+        converted_body = converted_body.tosjis
+      end
+
+      send_data(converted_body, type: Mime[params[:format]], filename: filename, disposition: true ? "inline" : "attachment")
+    end
+
+    # Kifu.swf から呼ばれたときは日付のキーが含まれている
+    # Started GET "/r/hanairobiyori-ispt-20171104_220810.kif?20171205090818"
+    def access_from_swf_kifu_player?
+      params.to_unsafe_h.any? { |k, v| v.blank? && (Date.parse(k) rescue nil) }
     end
 
     def current_filename

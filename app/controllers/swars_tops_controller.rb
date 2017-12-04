@@ -38,16 +38,17 @@ class SwarsTopsController < ApplicationController
     @rows = @battle_records.collect do |battle_record|
       {}.tap do |row|
         if @battle_user
+          current_user_ship = battle_record.current_user_ship(@battle_user)
           reverse_user_ship = battle_record.reverse_user_ship(@battle_user)
-          row["結果"] = battle_record.kekka_emoji(@battle_user).html_safe
-          row["対戦相手"] = h.link_to(reverse_user_ship.battle_user.battle_user_key, reverse_user_ship.battle_user)
-          if !Rails.env.production? || params[:debug].present?
-            row["棋神"] = battle_record.kishin_tsukatta?(reverse_user_ship) ? "降臨" : ""
-          end
-          row["段級"] = reverse_user_ship.battle_rank.name
+          row["対象プレイヤー"] = battle_record.kekka_emoji(current_user_ship.battle_user).html_safe + " " + h.link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
+          row["対戦相手"]       = battle_record.kekka_emoji(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
+          # if !Rails.env.production? || params[:debug].present?
+          #   row["棋神"] = battle_record.kishin_tsukatta?(reverse_user_ship) ? "降臨" : ""
+          # end
+          # row["段級"] = reverse_user_ship.battle_rank.name
         else
-          row["勝者"] = battle_user_link(battle_record, true)
-          row["敗者"] = battle_user_link(battle_record, false)
+          row["勝ち"] = "○".html_safe + " " + battle_user_link(battle_record, true)
+          row["負け"] = "●".html_safe + " " + battle_user_link(battle_record, false)
         end
         row["判定"] = battle_result_info_decorate(battle_record)
         row["手数"] = battle_record.turn_max
@@ -60,34 +61,35 @@ class SwarsTopsController < ApplicationController
 
   def row_links(battle_record)
     list = []
+    list << h.link_to("コピー", "#", "class": "btn btn-primary btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, battle_record, format: "kif"])})
     list << h.link_to("詳細", [:name_space1, battle_record], "class": "btn btn-default btn-sm")
 
-    list << h.link_to("KIF", [:name_space1, battle_record, format: "kif"], "class": "btn btn-default btn-sm")
-    list << h.link_to("KI2", [:name_space1, battle_record, format: "ki2"], "class": "btn btn-default btn-sm")
-    list << h.link_to("CSA", [:name_space1, battle_record, format: "csa"], "class": "btn btn-default btn-sm")
+    # list << h.link_to("KIF", [:name_space1, battle_record, format: "kif"], "class": "btn btn-default btn-sm")
+    # list << h.link_to("KI2", [:name_space1, battle_record, format: "ki2"], "class": "btn btn-default btn-sm")
+    # list << h.link_to("CSA", [:name_space1, battle_record, format: "csa"], "class": "btn btn-default btn-sm")
 
-    list << h.link_to("ウォ", swars_board_url(battle_record), "class": "btn btn-default btn-sm")
-    list << h.link_to("コピー", "#", "class": "btn btn-default btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, battle_record, format: "kif"])})
+    # list << h.link_to("ウォ", swars_board_url(battle_record), "class": "btn btn-default btn-sm")
+
     list.compact.join(" ").html_safe
   end
 
   def battle_user_link(battle_record, win_flag)
     battle_ship = battle_record.battle_ships.win_flag_eq(win_flag).take!
     s = h.link_to(battle_ship.name_with_rank, battle_ship.battle_user)
-    if !Rails.env.production? || params[:debug].present?
-      if battle_record.kishin_tsukatta?(battle_ship)
-        s += "&#x2757;".html_safe
-      end
-    end
+    # if !Rails.env.production? || params[:debug].present?
+    #   if battle_record.kishin_tsukatta?(battle_ship)
+    #     s += "&#x2757;".html_safe
+    #   end
+    # end
     s
   end
 
   def battled_at_decorate(battle_record)
-    if battle_record.battled_at < 1.months.ago
-      h.time_ago_in_words(battle_record.battled_at) + "前"
-    else
-      battle_record.battled_at.to_s(:battle_ymd)
-    end
+    # if battle_record.battled_at < 1.months.ago
+    #   h.time_ago_in_words(battle_record.battled_at) + "前"
+    # else
+    # end
+    battle_record.battled_at.to_s(:battle_ymd)
   end
 
   def battle_result_info_decorate(battle_record)

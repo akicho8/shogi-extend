@@ -145,6 +145,10 @@ class BattleRecord < ApplicationRecord
       battle_ships.find {|e| e.battle_user != battle_user } # FIXME: battle_ships 下にメソッドとする
     end
 
+    def current_user_ship(battle_user)
+      battle_ships.find {|e| e.battle_user == battle_user } # FIXME: battle_ships 下にメソッドとする
+    end
+
     def winner_desuka?(battle_user)
       if win_battle_user
         win_battle_user == battle_user
@@ -159,12 +163,14 @@ class BattleRecord < ApplicationRecord
 
     def kekka_emoji(battle_user)
       if winner_desuka?(battle_user)
-        # "&#x1f604;"
-        # "&#x1F4AE;"             # たいへんよくできました
-        "&#x1f601;"             # にっこり
+        # # "&#x1f604;"
+        # # "&#x1F4AE;"             # たいへんよくできました
+        # "&#x1f601;"             # にっこり
+        "○"
       else
         # "&#128552;"
-        "&#x274c;"              # 赤い×
+        # "&#x274c;"              # 赤い×
+        "●"
       end
     end
   end

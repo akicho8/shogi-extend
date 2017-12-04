@@ -1,0 +1,12 @@
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" id="Kifu" width="580" height="500" codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+  <embed src="<%= asset_path("Kifu.swf") %>"
+         FlashVars="kifu=<%= url_for([:name_space1, current_record, format: "kif"]) %>&minute=1"
+         width="580" height="500" name="Kifu" align="middle"
+         quality="high" bgcolor="#f0f0f0"
+         play="true"
+         loop="false"
+         allowScriptAccess="sameDomain"
+         type="application/x-shockwave-flash"
+         pluginspage="http://www.adobe.com/go/getflashplayer">
+  </embed>
+</object>

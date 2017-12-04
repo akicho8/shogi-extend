@@ -8,6 +8,10 @@
     h1
       = "将棋ウォーズ棋譜検索"
 
+/ <span class="glyphicon glyphicon-asterisk"></span>
+
+/ = link_to("あ", "#", :title => "内容", :data => {toggle: "tooltip", trigger: "manual"})
+
 - if false
   = form_with(url: :s, class: "form-horizontal", method: :get, enforce_utf8: false) do |form|
     .form-group.form-group-lg

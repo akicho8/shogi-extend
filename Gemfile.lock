@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: 679c6784f158d9b205aa442257f36407543281e8
+  revision: 8621371bf70f53af3c113d5dcbfbf4508982605d
   specs:
     bushido (0.0.1)
       actionview
@@ -314,7 +314,7 @@ GEM
     screenshot_opener (0.1.0)
       actionpack (>= 5.1.0)
       activesupport (>= 5.1.0)
-    selenium-webdriver (3.7.0)
+    selenium-webdriver (3.8.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
     slim (3.0.9)
@@ -352,7 +352,7 @@ GEM
     tilt (2.0.8)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    uglifier (3.2.0)
+    uglifier (4.0.1)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext

@@ -10,6 +10,8 @@
 
 console.log('Hello World from Webpacker')
 
+// import SWFObject from "./swfobject.js"
+
 import "bootstrap-honoka/dist/css/bootstrap.min.css"
 import "bootstrap-honoka/dist/js/bootstrap.min.js"
 
@@ -44,7 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = document.execCommand("copy")
       document.body.removeChild(text_area)
       if (result) {
-        alert("クリップボードにコピーしました")
+        if (false) {
+          alert("クリップボードにコピーしました")
+        } else {
+          $(e.target).tooltip({title: "クリップボードにコピーしました", trigger: "manual"})
+          $(e.target).tooltip("show")
+          setTimeout(() => $(e.target).tooltip("destroy"), 500)
+        }
       } else {
         alert("クリップボードへのコピーに失敗しました")
       }
@@ -55,5 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // $(".kif_clipboard_copy_button").click()
+
+  $('[data-toggle="tooltip"]').tooltip()
+
+  // # animation: true          # フェイドイン・アウトするか？
+  // # placement: "bottom"      # 表示場所
+  // # title: "代替テキスト"    # title属性がない場合の代替テキスト
+  // # trigger: "hover"         # 表示するタイミング
+  // # delay: show:0, hide:100  # 表示までのディレイと消えるまでディレイ
 
 })

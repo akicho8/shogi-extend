@@ -5,6 +5,24 @@ p
   - KifuFormatInfo.each do |e|
     =<> link_to(e.name, [:name_space1, current_record, format: e.key], class: "btn btn-info")
 
+= current_record.kifu_header&.to_html
+
+/ = asset_path("Kifu.swf")
+/ = asset_path("rails.png")
+  
+= render partial: "a"    
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 br
 
 - KifuFormatInfo.each do |e|
@@ -20,7 +38,6 @@ br
     pre
       = current_record.kifu_body
 
-    = current_record.kifu_header&.to_html
 
     p
       .panel.panel-default
