@@ -29,10 +29,13 @@ pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
       /* 大きさ
       padding: 0.72em 1.3em
 
-      /* 前後は押しやすいように大きくする(重要)
+      /* 「prev」は押せる利点より邪魔なデメリットの方がでかいので消す
       &.prev_link
-        padding-left: 0.6em
-        padding-right: 0.6em
+        /* padding-left: 0.6em
+        /* padding-right: 0.6em
+        display: none
+        
+      /* いちばん使われる next は大きく
       &.next_link
         padding-left: 4em
         padding-right: 4em
@@ -44,8 +47,11 @@ pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
   /* 「…」の部分は
   .page-item.disabled
     /* 消すのもありかもしれない→消す
-    display: none
+    /* display: none
 
     /* デフォルトでは '#' が押せてしまうので押せないようにする
-    /* .page-link
-    /*   pointer-events: none
+    .page-link
+      pointer-events: none
+
+.btn
+  border-radius: 3px
