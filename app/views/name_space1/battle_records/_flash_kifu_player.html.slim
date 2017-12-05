@@ -1,0 +1,39 @@
+ruby:
+  object = tag.object({
+    :classid  => "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
+    :id       => "Kifu",
+    :width    => "580",
+    :height   => "480",
+    :codebase => "http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab",
+  }) do
+    tag.embed({
+      :src               => asset_path("Kifu.swf"),
+      :width             => "580",
+      :height            => "420",
+      :name              => "Kifu",
+      :align             => "middle",
+      :quality           => "high",
+      :bgcolor           => "#f0f0f0",
+      :play              => "true",
+      :loop              => "false",
+      :allowScriptAccess => "sameDomain",
+      :type              => "application/x-shockwave-flash",
+      :pluginspage       => "http://www.adobe.com/go/getflashplayer",
+      :FlashVars => {
+        :kifu        => url_for([:name_space1, current_record, format: "kif"]),
+        :komaoto     => 0,      # 駒音なし
+        :start_tesuu => "last", # 投了図を最初に表示
+        :mokume      => 0,      # 木目なし
+        :resize      => 1,      # コメントの縦幅はDOMに合わせる
+        :no_help     => 1,      # ヘルプなし
+      }.to_query.html_safe,
+    })
+  end
+
+.text-center
+  = object
+  p.text-muted
+    small
+      = "キーボードの"
+      kbd=<> "→"
+      = "でも進められます"
