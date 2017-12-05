@@ -207,10 +207,11 @@ class BattleRecord < ApplicationRecord
           return
         end
 
-        # # 引き分けを考慮すると急激に煩雑になるため取り込まない (そもそも引き分けには棋譜がない)
-        # unless info[:__battle_result_key].match?(/(SENTE|GOTE)_WIN/)
-        #   next
-        # end
+        # 引き分けを考慮すると急激に煩雑になるため取り込まない
+        # ここで DRAW_SENNICHI も弾く
+        unless info[:__battle_result_key].match?(/(SENTE|GOTE)_WIN/)
+          return
+        end
 
         battle_users = info[:battle_user_infos].collect do |e|
           BattleUser.find_or_initialize_by(battle_user_key: e[:battle_user_key]).tap do |battle_user|
@@ -230,7 +231,7 @@ class BattleRecord < ApplicationRecord
           winner_index = md[:prefix] == "SENTE" ? 0 : 1
           battle_record.battle_result_key = md[:battle_result_key]
         else
-          raise "must not happen"
+          raise "must not happen: #{info.inspect}"
           winner_index = nil
           battle_record.battle_result_key = info[:__battle_result_key]
         end

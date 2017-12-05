@@ -4,9 +4,9 @@ class BattleAgent
       mock_use: Rails.env.development? || Rails.env.test?
     }.merge(options)
 
-    # if Rails.env.development?
-    #   @options[:mock_use] = false
-    # end
+    if Rails.env.development?
+      @options[:mock_use] = false
+    end
   end
 
   concerning :HistoryGetMethods do
