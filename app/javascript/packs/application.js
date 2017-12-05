@@ -12,11 +12,8 @@ console.log('Hello World from Webpacker')
 
 // import SWFObject from "./swfobject.js"
 
-// import "bootstrap-honoka/dist/css/bootstrap.min.css"
-// import "bootstrap-honoka/dist/js/bootstrap.min.js"
-import "./bootstrap_import.scss"
-// import "bootstrap-sass/assets/javascripts/bootstrap.js"
-import "bootstrap-sass"
+import "bootstrap-honoka/dist/css/bootstrap.min.css"
+import "bootstrap-honoka/dist/js/bootstrap.min.js"
 
 import "./modulable_crud.coffee"
 
