@@ -37,10 +37,7 @@ module NameSpace1
     def show
       respond_to do |format|
         format.html
-        format.kif  { kifu_send_data }
-        format.kifu { kifu_send_data }
-        format.ki2  { kifu_send_data }
-        format.csa  { kifu_send_data }
+        format.any { kifu_send_data }
       end
     end
 
@@ -70,7 +67,7 @@ module NameSpace1
         filename = "#{current_record.battle_key}.#{params[:format]}"
       end
 
-      converted_info = current_record.converted_infos.find_by!(converted_format: params[:format].sub("kifu", "kif"))
+      converted_info = current_record.converted_infos.find_by!(converted_format: params[:format])
       converted_body = converted_info.converted_body
 
       if access_from_swf_kifu_player?

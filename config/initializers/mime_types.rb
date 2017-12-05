@@ -4,6 +4,5 @@
 # Mime::Type.register "text/richtext", :rtf
 
 Mime::Type.register_alias "text/plain", :kif
-Mime::Type.register_alias "text/plain", :kifu # Kifu.swf で kif を utf8 として読むための専用拡張子
 Mime::Type.register_alias "text/plain", :ki2
 Mime::Type.register_alias "text/plain", :csa
