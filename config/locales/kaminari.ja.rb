@@ -2,10 +2,10 @@
   ja: {
     views: {
       pagination: {
-        :first    => "<span class='glyphicon glyphicon-step-backward'></span>",
-        :last     => "<span class='glyphicon glyphicon-step-forward'></span>",
-        :previous => "<span class='glyphicon glyphicon-chevron-left'></span>",
-        :next     => "<span class='glyphicon glyphicon-chevron-right'></span>",
+        :first    => %(<i class="fa fa-step-backward"></i>),
+        :last     => %(<i class="fa fa-step-forward"></i>),
+        :previous => %(<i class="fa fa-play fa-rotate-180"></i>),
+        :next     => %(<i class="fa fa-play"></i>),
         :truncate => "...",
       },
     },

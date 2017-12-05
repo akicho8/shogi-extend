@@ -167,10 +167,12 @@ class BattleRecord < ApplicationRecord
         # # "&#x1F4AE;"             # たいへんよくできました
         # "&#x1f601;"             # にっこり
         "○"
+        '<i class="fa fa-circle-o" aria-hidden="true"></i>'
       else
         # "&#128552;"
         # "&#x274c;"              # 赤い×
         "●"
+        '<i class="fa fa-circle" aria-hidden="true"></i>'
       end
     end
   end

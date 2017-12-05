@@ -47,8 +47,10 @@ class SwarsTopsController < ApplicationController
           # end
           # row["段級"] = reverse_user_ship.battle_rank.name
         else
-          row["勝ち"] = "○".html_safe + " " + battle_user_link(battle_record, true)
-          row["負け"] = "●".html_safe + " " + battle_user_link(battle_record, false)
+          # row["勝ち"] = "○".html_safe + " " + battle_user_link(battle_record, true)
+          # row["負け"] = "●".html_safe + " " + battle_user_link(battle_record, false)
+          row["勝ち"] = "<i class='fa fa-circle-o'></i>".html_safe + " " + battle_user_link(battle_record, true)
+          row["負け"] = "<i class='fa fa-circle'></i>".html_safe + " " + battle_user_link(battle_record, false)
         end
         row["判定"] = battle_result_info_decorate(battle_record)
         row["手数"] = battle_record.turn_max
@@ -62,7 +64,10 @@ class SwarsTopsController < ApplicationController
   def row_links(battle_record)
     list = []
     list << h.link_to("詳細", [:name_space1, battle_record], "class": "btn btn-default btn-sm")
-    list << h.link_to("コピー", "#", "class": "btn btn-primary btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, battle_record, format: "kif"])})
+    list << h.link_to("コピー".html_safe, "#", "class": "btn btn-primary btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, battle_record, format: "kif"])})
+
+    
+    
 
     # list << h.link_to("KIF", [:name_space1, battle_record, format: "kif"], "class": "btn btn-default btn-sm")
     # list << h.link_to("KI2", [:name_space1, battle_record, format: "ki2"], "class": "btn btn-default btn-sm")
