@@ -37,10 +37,10 @@
 
 = @rows.to_html
 
-.text-center
-  = paginate @battle_records
-
 - if @battle_records
+  .text-center
+    = paginate @battle_records
+
   - content_for :head do
     = rel_next_prev_link_tags @battle_records
 
