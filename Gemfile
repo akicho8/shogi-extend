@@ -83,7 +83,7 @@ group :test do
   gem 'screenshot_opener'
 end
 
-# gem 'font-awesome-sass'
+gem 'font-awesome-sass'
 
 # gem 'activerecord-session_store'
 
