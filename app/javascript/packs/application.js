@@ -20,6 +20,8 @@ import "./modulable_crud.coffee"
 import "./basic.sass"
 import "./bootstrap_tuning.sass"
 
+import "font-awesome/css/font-awesome"
+
 // require("bootstrap/dist/css/bootstrap")
 // require("bootstrap/dist/css/bootstrap-theme")
 
