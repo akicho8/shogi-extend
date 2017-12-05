@@ -73,7 +73,8 @@ module NameSpace1
       if access_from_swf_kifu_player?
         response.headers["Content-Type"] = 'text/plain; charset=shift_jis' # 指定しないと utf-8 で返してしまう(が、なくてもよい)
         logger.info response.headers.to_t
-        render plain: converted_body.tosjis
+        converted_body = converted_body.tosjis
+        render plain: converted_body
         return
       end
 

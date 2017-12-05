@@ -1,47 +1,48 @@
-.page-header
-  h2= current_record.battle_key
+.text-center
+  .page-header
+    h2
 
-p
-  - KifuFormatInfo.each do |e|
-    =<> link_to(e.name, [:name_space1, current_record, format: e.key], class: "btn btn-info")
+      strong= current_record.battle_ships.black.name_with_rank
+      span.text-muted=<> "vs"
+      strong= current_record.battle_ships.white.name_with_rank
 
-= current_record.kifu_header&.to_html
+= render partial: "kifu_swf_player"
 
-/ = asset_path("Kifu.swf")
-/ = asset_path("rails.png")
-  
-= render partial: "a"    
+.text-center
+  br
+  = current_record.kifu_header.to_html
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-br
-
-- KifuFormatInfo.each do |e|
-  = e.name
-  pre
-    = current_record.converted_infos.format_eq(e.key).take!.converted_body
+.row
+  .col-md-4
+  .col-md-4
+    .text-center
+      .panel.panel-info
+        .panel-body
+          p
+            small= "棋譜保存"
+          p
+            - KifuFormatInfo.each do |e|
+              =<> link_to(e.name, [:name_space1, current_record, format: e.key], class: "btn btn-info")
+  .col-md-4
 
 - if !Rails.env.production? || params[:debug].present?
+  br
+
+  - KifuFormatInfo.each do |e|
+    = e.name
+    pre
+      = current_record.converted_infos.format_eq(e.key).take!.converted_body
+
   .well
     = current_record.kaiseki_kekka_hash(:black).to_html
     = current_record.kaiseki_kekka_hash(:white).to_html
 
-    pre
-      = current_record.kifu_body
+  pre
+    = current_record.kifu_body
 
-
-    p
-      .panel.panel-default
-        .panel-body
-          =<> link_to("一覧", [:name_space1, current_plural_key], class: "btn btn-default")
-          =<> link_to("編集", [:edit, :name_space1, current_record], class: "btn btn-success")
-          =<> link_to("削除", [:name_space1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")
+  p
+    .panel.panel-default
+      .panel-body
+        =<> link_to("一覧", [:name_space1, current_plural_key], class: "btn btn-default")
+        =<> link_to("編集", [:edit, :name_space1, current_record], class: "btn btn-success")
+        =<> link_to("削除", [:name_space1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")

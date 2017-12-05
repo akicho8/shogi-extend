@@ -174,7 +174,7 @@ GEM
     fssm (0.2.10)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    html_format (0.0.4)
+    html_format (0.0.5)
       rails
       sass-rails
     http-cookie (1.0.3)
