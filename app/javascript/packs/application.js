@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (false) {
           alert("クリップボードにコピーしました")
         } else {
-          $(e.target).tooltip({title: "クリップボードにコピーしました", trigger: "manual"})
+          $(e.target).tooltip({title: "棋譜をクリップボードにコピーしました", trigger: "manual"})
           $(e.target).tooltip("show")
           setTimeout(() => $(e.target).tooltip("destroy"), 500)
         }
