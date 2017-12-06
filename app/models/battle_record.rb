@@ -302,7 +302,7 @@ class BattleRecord < ApplicationRecord
       url = Rails.application.routes.url_helpers.sanmyaku_upload_text_url
       kif = converted_infos.format_eq(:kif).take!.converted_body
 
-      if Rails.env.test?
+      if AppConfig[:mock_enable]
         v = "http://shogi-s.com/result/5a274d10px"
       else
         response = Faraday.post(url, kif: kif)
