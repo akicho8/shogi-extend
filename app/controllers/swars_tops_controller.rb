@@ -40,8 +40,8 @@ class SwarsTopsController < ApplicationController
         if @battle_user
           current_user_ship = battle_record.current_user_ship(@battle_user)
           reverse_user_ship = battle_record.reverse_user_ship(@battle_user)
-          row["対象プレイヤー"] = battle_record.kekka_emoji(current_user_ship.battle_user).html_safe + " " + h.link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
-          row["対戦相手"]       = battle_record.kekka_emoji(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
+          row["対象プレイヤー"] = battle_record.win_lose_str(current_user_ship.battle_user).html_safe + " " + h.link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
+          row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
           # if !Rails.env.production? || params[:debug].present?
           #   row["棋神"] = battle_record.kishin_tsukatta?(reverse_user_ship) ? "降臨" : ""
           # end
@@ -49,8 +49,8 @@ class SwarsTopsController < ApplicationController
         else
           # row["勝ち"] = "○".html_safe + " " + battle_user_link(battle_record, true)
           # row["負け"] = "●".html_safe + " " + battle_user_link(battle_record, false)
-          row["勝ち"] = "<i class='fa fa-circle-o'></i>".html_safe + " " + battle_user_link(battle_record, true)
-          row["負け"] = "<i class='fa fa-circle'></i>".html_safe + " " + battle_user_link(battle_record, false)
+          row["勝ち"] = Fa.fa_i(:circle_o) + battle_user_link(battle_record, true)
+          row["負け"] = Fa.fa_i(:circle) + battle_user_link(battle_record, false)
         end
         row["判定"] = battle_result_info_decorate(battle_record)
         row["手数"] = battle_record.turn_max

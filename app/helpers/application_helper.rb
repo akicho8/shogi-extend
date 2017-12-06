@@ -12,4 +12,8 @@ module ApplicationHelper
       end
     }.flatten.compact.join("\n").html_safe
   end
+
+  def fa_i(*args)
+    Fa.fa_i(*args)
+  end
 end

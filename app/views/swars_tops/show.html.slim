@@ -1,13 +1,7 @@
-/ = link_to("リンク1", "#", class: "kif_clipboard_copy_button", "data-clipboard-text" => "これは使われない")
-
 .text-center
   .page-header
     h1
       = "将棋ウォーズ棋譜検索"
-
-/ <span class="glyphicon glyphicon-asterisk"></span>
-
-/ = link_to("あ", "#", :title => "内容", :data => {toggle: "tooltip", trigger: "manual"})
 
 - if false
   = form_with(url: :s, class: "form-horizontal", method: :get, enforce_utf8: false) do |form|
@@ -28,15 +22,13 @@
         = tag.datalist(id: "battle_user_key_list") do
           - BattleUser.order(updated_at: :desc).limit(128).pluck(:battle_user_key).each do |battle_user_key|
             = tag.option(value: battle_user_key)
-
       .col-sm-3
     .form-group
       .col-sm-12
         .text-center
           = form.submit("検索", name: nil, class: "btn btn-primary btn-lg", data: {disable_with: "検索中"})
 
-.search_index
-  = @rows.to_html
+= @rows.to_html
 
 - if @battle_records
   .text-center

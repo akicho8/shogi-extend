@@ -26,6 +26,7 @@ class CreateConvertSourceInfos < ActiveRecord::Migration[5.1]
       t.text :kifu_body
       t.integer :turn_max
       t.text :kifu_header
+      t.string :sanmyaku_view_url
       t.timestamps null: false
     end
 

@@ -36,3 +36,45 @@ ruby:
       = "キーボードの"
       kbd=<> "→"
       = "でも進められます"
+
+br
+.text-center
+  p
+    =<> link_to("将棋山脈で見る", [:name_space1, current_record, sanmyaku: true], remote: true, class: "btn btn-primary")
+    =<> link_to("KIF形式の棋譜をクリップボードにコピーする", "#", "class": "btn btn-primary kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, current_record, format: "kif"])})
+br
+
+.row
+  .col-md-4
+  .col-md-4
+    .text-center
+      .panel.panel-info
+        .panel-body
+          small
+            = tag.p "#{fa_i(:file_text_o)}棋譜保存".html_safe, data: {toggle: :tooltip}, title: "option (alt) キーを押しながらクリックすると直接ダウンロードできます"
+          p
+            - KifuFormatInfo.each do |e|
+              =<> link_to(e.name, [:name_space1, current_record, format: e.key], class: "btn btn-info")
+  .col-md-4
+
+.text-center
+  br
+  = current_record.kifu_header.to_html
+
+- if !Rails.env.production? || params[:debug].present?
+  br
+
+  - KifuFormatInfo.each do |e|
+    = e.name
+    pre
+      = current_record.converted_infos.format_eq(e.key).take!.converted_body
+
+  pre
+    = current_record.kifu_body
+
+  p
+    .panel.panel-default
+      .panel-body
+        =<> link_to("一覧", [:name_space1, current_plural_key], class: "btn btn-default")
+        =<> link_to("編集", [:edit, :name_space1, current_record], class: "btn btn-success")
+        =<> link_to("削除", [:name_space1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")

@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20171123115400) do
   end
 
   create_table "battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "unique_key", null: false
     t.string "battle_key", null: false
     t.datetime "battled_at", null: false
     t.string "battle_group_key", null: false
@@ -37,7 +36,6 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.index ["battle_group_key"], name: "index_battle_records_on_battle_group_key"
     t.index ["battle_key"], name: "index_battle_records_on_battle_key"
     t.index ["battle_result_key"], name: "index_battle_records_on_battle_result_key"
-    t.index ["unique_key"], name: "index_battle_records_on_unique_key"
     t.index ["win_battle_user_id"], name: "index_battle_records_on_win_battle_user_id"
   end
 
@@ -74,6 +72,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.text "kifu_body"
     t.integer "turn_max"
     t.text "kifu_header"
+    t.string "sanmyaku_view_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_key"], name: "index_convert_source_infos_on_unique_key"

@@ -1,11 +1,11 @@
 class BattleAgent
   def initialize(**options)
     @options = {
-      mock_enable: AppConfig[:mock_enable]
+      run_localy: AppConfig[:run_localy]
     }.merge(options)
 
     # if Rails.env.development?
-    #   @options[:mock_enable] = false
+    #   @options[:run_localy] = false
     # end
   end
 
@@ -16,7 +16,7 @@ class BattleAgent
         battle_user_key: nil,
       }.merge(params)
 
-      if @options[:mock_enable]
+      if @options[:run_localy]
         js_str = Rails.root.join("app/models/https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja.html").read
       else
         url = "https://shogiwars.heroz.jp/users/history/#{params[:battle_user_key]}?gtype=#{params[:gtype]}&locale=ja"
@@ -67,7 +67,7 @@ class BattleAgent
       url_info = [:black, :white, :battled_at].zip(battle_key.split("-")).to_h
       info[:battled_at] = url_info[:battled_at]
 
-      if @options[:mock_enable]
+      if @options[:run_localy]
         str = Rails.root.join("app/models/http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja.html").read
       else
         page = agent.get(info[:url])

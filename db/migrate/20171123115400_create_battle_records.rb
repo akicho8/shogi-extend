@@ -35,7 +35,6 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
     end
 
     create_table :battle_records, force: true do |t|
-      t.string :unique_key, null: false, index: true
       t.string :battle_key, null: false, index: true
       t.datetime :battled_at, null: false
       t.string :battle_group_key, null: false, index: true

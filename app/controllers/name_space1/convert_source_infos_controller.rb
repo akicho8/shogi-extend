@@ -19,24 +19,18 @@
 
 module NameSpace1
   class ConvertSourceInfosController < ApplicationController
-    if Rails.env.production?
-      if v = ENV["HTTP_BASIC_AUTHENTICATE"].presence
-        http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: [:index, :edit, :update, :destroy])
-      end
-    end
-
     include ModulableCrud::All
-
-    def show
-      respond_to do |format|
-        format.html
-        format.kif { kifu_send_data }
-        format.ki2 { kifu_send_data }
-        format.csa { kifu_send_data }
-      end
-    end
+    include BattleRecordsController::SharedMethods
 
     private
+
+    def current_filename
+      Time.current.strftime("#{current_basename}_%Y_%m_%d_%H%M%S.#{params[:format]}")
+    end
+
+    def current_basename
+      params[:basename].presence || "棋譜データ"
+    end
 
     def raw_current_record
       if v = params[:id].presence
@@ -44,56 +38,16 @@ module NameSpace1
       else
         current_scope.new
       end
-      # if Rails.env.development?
-      # e.kifu_url ||= "#{current_model.maximum(:id).to_i.next}つめ"
-      # e.kifu_body ||= "▲2六歩 ▽3四歩 ▲2五歩 ▽3三角 ▲7六歩 ▽4二銀 ▲4八銀 ▽5四歩 ▲6八玉 ▽5五歩"
     end
 
-    # 更新後の移動先
     def redirect_to_where
       current_record
-      # [self.class.parent_name.underscore, current_record]
     end
 
     def notice_message
-      "変換完了！"
     end
 
-    def kifu_send_data
-      filename = Time.current.strftime("#{current_filename}_%Y_%m_%d_%H%M%S.#{params[:format]}").encode(current_encode)
-      converted_info = current_record.converted_infos.find_by!(converted_format: params[:format])
-      send_data(converted_info.converted_body, type: Mime[params[:format]], filename: filename, disposition: true ? "inline" : "attachment")
-    end
-
-    def current_filename
-      params[:filename].presence || "棋譜データ"
-    end
-
-    def current_encode
-      params[:encode].presence || current_encode_default
-    end
-
-    def current_encode_default
-      if request.user_agent.to_s.match(/Windows/i)
-        "Shift_JIS"
-      else
-        "UTF-8"
-      end
-    end
-
-    rescue_from "Bushido::BushidoError" do |exception|
-      h = ApplicationController.helpers
-      lines = exception.message.lines
-      message = lines.first.strip.html_safe
-      if field = lines.drop(1).join.presence
-        message += "<br>".html_safe
-        message += h.content_tag(:pre, field).html_safe
-      end
-      unless Rails.env.production?
-        if exception.backtrace
-          message += h.content_tag(:pre, exception.backtrace.first(8).join("\n").html_safe).html_safe
-        end
-      end
+    def behavior_after_rescue(message)
       flash.now[:alert] = message
       render :edit
     end

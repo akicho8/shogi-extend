@@ -55,8 +55,6 @@ class BattleRecord < ApplicationRecord
   belongs_to :win_battle_user, class_name: "BattleUser", optional: true
 
   before_validation do
-    self.unique_key ||= SecureRandom.hex
-
     # "" から ten_min への変換
     if battle_group_key
       self.battle_group_key = BattleGroupInfo.fetch(battle_group_key).key
@@ -68,7 +66,6 @@ class BattleRecord < ApplicationRecord
   end
 
   with_options presence: true do
-    validates :unique_key
     validates :battle_key
     validates :battled_at
     validates :battle_group_key
@@ -89,27 +86,16 @@ class BattleRecord < ApplicationRecord
 
   concerning :HenkanMethods do
     included do
-      has_many :converted_infos, as: :convertable, dependent: :destroy
-
-      serialize :kifu_header
       serialize :csa_seq
 
       before_validation do
-        self.kifu_header ||= {}
-        self.turn_max ||= 0
       end
 
       before_save do
         if changes[:csa_seq]
           if csa_seq
             if battle_ships.second # 最初のときは、まだ保存されていないレコード
-              info = Bushido::Parser.parse(kifu_body)
-              converted_infos.destroy_all
-              KifuFormatInfo.each do |e|
-                converted_infos.build(converted_body: info.public_send("to_#{e.key}"), converted_format: e.key)
-              end
-              self.turn_max = info.mediator.turn_max
-              self.kifu_header = info.header
+              parser_run
             end
           end
         end
@@ -162,19 +148,13 @@ class BattleRecord < ApplicationRecord
       end
     end
 
-    def kekka_emoji(battle_user)
+    def win_lose_str(battle_user)
       if winner_desuka?(battle_user)
-        # # "&#x1f604;"
-        # # "&#x1F4AE;"             # たいへんよくできました
-        # "&#x1f601;"             # にっこり
-        "○"
-        '<i class="fa fa-circle-o" aria-hidden="true"></i>'
+        v = :circle_o
       else
-        # "&#128552;"
-        # "&#x274c;"              # 赤い×
-        "●"
-        '<i class="fa fa-circle" aria-hidden="true"></i>'
+        v = :circle
       end
+      Fa.fa_i(v)
     end
   end
 
@@ -292,17 +272,38 @@ class BattleRecord < ApplicationRecord
   end
 
   concerning :SanmyakuMethods do
-    def sanmyaku_post_try
-      unless sanmyaku_view_url
-        sanmyaku_post_force
+    included do
+      has_many :converted_infos, as: :convertable, dependent: :destroy
+
+      serialize :kifu_header
+
+      before_validation do
+        self.kifu_header ||= {}
+        self.turn_max ||= 0
       end
     end
 
-    def sanmyaku_post_force
+    def parser_run
+      info = Bushido::Parser.parse(kifu_body, typical_error_case: :embed)
+      converted_infos.destroy_all
+      KifuFormatInfo.each do |e|
+        converted_infos.build(converted_body: info.public_send("to_#{e.key}"), converted_format: e.key)
+      end
+      self.turn_max = info.mediator.turn_max
+      self.kifu_header = info.header
+    end
+
+    def sanmyaku_post_onece
+      unless sanmyaku_view_url
+        sanmyaku_post
+      end
+    end
+
+    def sanmyaku_post
       url = Rails.application.routes.url_helpers.sanmyaku_upload_text_url
       kif = converted_infos.format_eq(:kif).take!.converted_body
 
-      if AppConfig[:mock_enable]
+      if AppConfig[:run_localy]
         v = "http://shogi-s.com/result/5a274d10px"
       else
         response = Faraday.post(url, kif: kif)

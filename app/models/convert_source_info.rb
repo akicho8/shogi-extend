@@ -20,16 +20,12 @@
 require "open-uri"
 
 class ConvertSourceInfo < ApplicationRecord
+  include BattleRecord::SanmyakuMethods
+
   mount_uploader :kifu_file, AttachmentUploader
-
-  has_many :converted_infos, as: :convertable, dependent: :destroy
-
-  serialize :kifu_header
 
   before_validation do
     self.unique_key ||= SecureRandom.hex
-    self.kifu_header ||= {}
-    self.turn_max ||= 0
     self.kifu_body ||= ""
 
     if changes[:kifu_file]
@@ -48,13 +44,7 @@ class ConvertSourceInfo < ApplicationRecord
   before_save do
     if changes[:kifu_body]
       if kifu_body
-        info = Bushido::Parser.parse(kifu_body, typical_error_case: :embed)
-        converted_infos.destroy_all
-        KifuFormatInfo.each do |e|
-          converted_infos.build(converted_body: info.public_send("to_#{e.key}"), converted_format: e.key)
-        end
-        self.turn_max = info.mediator.turn_max
-        self.kifu_header = info.header
+        parser_run
       end
     end
   end

@@ -1,24 +1,5 @@
-.page-header
-  h2= "変換結果"
+.text-center
+  .page-header
+    h2= "変換結果"
 
-p
-  - KifuFormatInfo.each do |e|
-    =<> link_to(e.name, [:name_space1, current_record, format: e.key], class: "btn btn-info")
-
-br
-
-- KifuFormatInfo.each do |e|
-  = e.name
-  pre
-    = current_record.converted_infos.format_eq(e.key).take!.converted_body
-
-- if Rails.env.development?
-  .well
-    = current_record.kifu_header&.to_html
-
-    p
-      .panel.panel-default
-        .panel-body
-          =<> link_to("一覧", [:name_space1, current_plural_key], class: "btn btn-default")
-          =<> link_to("編集", [:edit, :name_space1, current_record], class: "btn btn-success")
-          =<> link_to("削除", [:name_space1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")
+= render partial: "name_space1/battle_records/flash_kifu_player"
