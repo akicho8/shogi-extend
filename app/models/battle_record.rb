@@ -149,12 +149,15 @@ class BattleRecord < ApplicationRecord
     end
 
     def win_lose_str(battle_user)
-      if winner_desuka?(battle_user)
-        v = :circle_o
+      if win_battle_user
+        if winner_desuka?(battle_user)
+          Fa.fa_i(:circle_o)
+        else
+          Fa.fa_i(:circle)
+        end
       else
-        v = :circle
+        Fa.fa_i(:minus, :class => "icon_hidden")
       end
-      Fa.fa_i(v)
     end
   end
 
