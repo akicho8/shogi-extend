@@ -7,16 +7,16 @@
 # | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  |       |
-# | battle_key         | Battle key         | string(255) | NOT NULL    |                  |       |
+# | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  | A     |
+# | battle_key         | Battle key         | string(255) | NOT NULL    |                  | B     |
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  |       |
+# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  | C     |
 # | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  |       |
-# | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
+# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
+# | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | E     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
-# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  | B     |
+# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  |       |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
@@ -294,21 +294,25 @@ class BattleRecord < ApplicationRecord
   concerning :SanmyakuMethods do
     def sanmyaku_post_try
       unless sanmyaku_view_url
-        url = Rails.application.routes.url_helpers.sanmyaku_upload_text_url
-        kif = converted_infos.format_eq(:kif).take!.converted_body
+        sanmyaku_post_force
+      end
+    end
 
-        if Rails.env.test?
-          v = "http://shogi-s.com/result/5a274d10px"
-        else
-          response = Faraday.post(url, kif: kif)
-          logger.info(response.status.to_t)
-          logger.info(response.headers.to_t)
-          v = response.headers["location"].presence
-        end
+    def sanmyaku_post_force
+      url = Rails.application.routes.url_helpers.sanmyaku_upload_text_url
+      kif = converted_infos.format_eq(:kif).take!.converted_body
 
-        if v
-          update!(sanmyaku_view_url: v)
-        end
+      if Rails.env.test?
+        v = "http://shogi-s.com/result/5a274d10px"
+      else
+        response = Faraday.post(url, kif: kif)
+        logger.info(response.status.to_t)
+        logger.info(response.headers.to_t)
+        v = response.headers["location"].presence
+      end
+
+      if v
+        update!(sanmyaku_view_url: v)
       end
     end
   end

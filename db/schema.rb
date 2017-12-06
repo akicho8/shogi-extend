@@ -17,6 +17,8 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.integer "priority", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["priority"], name: "index_battle_ranks_on_priority"
+    t.index ["unique_key"], name: "index_battle_ranks_on_unique_key"
   end
 
   create_table "battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -32,7 +34,10 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.string "sanmyaku_view_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["sanmyaku_view_url"], name: "index_battle_records_on_sanmyaku_view_url"
+    t.index ["battle_group_key"], name: "index_battle_records_on_battle_group_key"
+    t.index ["battle_key"], name: "index_battle_records_on_battle_key"
+    t.index ["battle_result_key"], name: "index_battle_records_on_battle_result_key"
+    t.index ["unique_key"], name: "index_battle_records_on_unique_key"
     t.index ["win_battle_user_id"], name: "index_battle_records_on_win_battle_user_id"
   end
 
@@ -47,6 +52,8 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.index ["battle_rank_id"], name: "index_battle_ships_on_battle_rank_id"
     t.index ["battle_record_id"], name: "index_battle_ships_on_battle_record_id"
     t.index ["battle_user_id"], name: "index_battle_ships_on_battle_user_id"
+    t.index ["position"], name: "index_battle_ships_on_position"
+    t.index ["win_flag"], name: "index_battle_ships_on_win_flag"
   end
 
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -56,6 +63,8 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_rank_id"], name: "index_battle_users_on_battle_rank_id"
+    t.index ["battle_user_key"], name: "index_battle_users_on_battle_user_key"
+    t.index ["unique_key"], name: "index_battle_users_on_unique_key"
   end
 
   create_table "convert_source_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -67,6 +76,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.text "kifu_header"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["unique_key"], name: "index_convert_source_infos_on_unique_key"
   end
 
   create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -77,6 +87,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
+    t.index ["converted_format"], name: "index_converted_infos_on_converted_format"
   end
 
 end

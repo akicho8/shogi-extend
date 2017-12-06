@@ -8,8 +8,8 @@
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
 # |------------+------------+-------------+-------------+------+-------|
 # | id         | ID         | integer(8)  | NOT NULL PK |      |       |
-# | unique_key | Unique key | string(255) | NOT NULL    |      |       |
-# | priority   | Priority   | integer(4)  | NOT NULL    |      |       |
+# | unique_key | Unique key | string(255) | NOT NULL    |      | A     |
+# | priority   | Priority   | integer(4)  | NOT NULL    |      | B     |
 # | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
 # |------------+------------+-------------+-------------+------+-------|
@@ -22,16 +22,16 @@
 # | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  |       |
-# | battle_key         | Battle key         | string(255) | NOT NULL    |                  |       |
+# | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  | A     |
+# | battle_key         | Battle key         | string(255) | NOT NULL    |                  | B     |
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  |       |
+# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  | C     |
 # | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  |       |
-# | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
+# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
+# | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | E     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
-# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  | B     |
+# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  |       |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
@@ -51,8 +51,8 @@
 # | battle_record_id | Battle record | integer(8) |             | => BattleRecord#id | A     |
 # | battle_user_id   | Battle user   | integer(8) |             | => BattleUser#id   | B     |
 # | battle_rank_id   | Battle rank   | integer(8) |             | => BattleRank#id   | C     |
-# | win_flag         | Win flag      | boolean    | NOT NULL    |                    |       |
-# | position         | 順序          | integer(4) |             |                    |       |
+# | win_flag         | Win flag      | boolean    | NOT NULL    |                    | D     |
+# | position         | 順序          | integer(4) |             |                    | E     |
 # | created_at       | 作成日時      | datetime   | NOT NULL    |                    |       |
 # | updated_at       | 更新日時      | datetime   | NOT NULL    |                    |       |
 # |------------------+---------------+------------+-------------+--------------------+-------|
@@ -71,9 +71,9 @@
 # | カラム名        | 意味            | タイプ      | 属性        | 参照             | INDEX |
 # |-----------------+-----------------+-------------+-------------+------------------+-------|
 # | id              | ID              | integer(8)  | NOT NULL PK |                  |       |
-# | unique_key      | Unique key      | string(255) | NOT NULL    |                  |       |
-# | battle_user_key | Battle user key | string(255) | NOT NULL    |                  |       |
-# | battle_rank_id  | Battle rank     | integer(8)  |             | => BattleRank#id | A     |
+# | unique_key      | Unique key      | string(255) | NOT NULL    |                  | A     |
+# | battle_user_key | Battle user key | string(255) | NOT NULL    |                  | B     |
+# | battle_rank_id  | Battle rank     | integer(8)  |             | => BattleRank#id | C     |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |                  |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |                  |       |
 # |-----------------+-----------------+-------------+-------------+------------------+-------|
@@ -90,7 +90,7 @@
 # | カラム名    | 意味               | タイプ      | 属性        | 参照 | INDEX |
 # |-------------+--------------------+-------------+-------------+------+-------|
 # | id          | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | unique_key  | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | unique_key  | ユニークなハッシュ | string(255) | NOT NULL    |      | A     |
 # | kifu_file   | 棋譜ファイル       | string(255) |             |      |       |
 # | kifu_url    | 棋譜URL            | string(255) |             |      |       |
 # | kifu_body   | 棋譜内容           | text(65535) |             |      |       |
@@ -111,7 +111,7 @@
 # | convertable_type | Convertable type | string(255) |             | モデル名(polymorphic)    | A     |
 # | convertable_id   | Convertable      | integer(8)  |             | => (convertable_type)#id | A     |
 # | converted_body   | Converted body   | text(65535) | NOT NULL    |                          |       |
-# | converted_format | Converted format | string(255) | NOT NULL    |                          |       |
+# | converted_format | Converted format | string(255) | NOT NULL    |                          | B     |
 # | created_at       | 作成日時         | datetime    | NOT NULL    |                          |       |
 # | updated_at       | 更新日時         | datetime    | NOT NULL    |                          |       |
 # |------------------+------------------+-------------+-------------+--------------------------+-------|

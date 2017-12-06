@@ -7,7 +7,7 @@
 # | カラム名    | 意味               | タイプ      | 属性        | 参照 | INDEX |
 # |-------------+--------------------+-------------+-------------+------+-------|
 # | id          | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | unique_key  | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | unique_key  | ユニークなハッシュ | string(255) | NOT NULL    |      | A     |
 # | kifu_file   | 棋譜ファイル       | string(255) |             |      |       |
 # | kifu_url    | 棋譜URL            | string(255) |             |      |       |
 # | kifu_body   | 棋譜内容           | text(65535) |             |      |       |
@@ -20,7 +20,7 @@
 class CreateConvertSourceInfos < ActiveRecord::Migration[5.1]
   def up
     create_table :convert_source_infos, force: true do |t|
-      t.string :unique_key, null: false
+      t.string :unique_key, null: false, index: true
       t.string :kifu_file
       t.string :kifu_url
       t.text :kifu_body
@@ -32,7 +32,7 @@ class CreateConvertSourceInfos < ActiveRecord::Migration[5.1]
     create_table :converted_infos, force: true do |t|
       t.belongs_to :convertable, polymorphic: true
       t.text :converted_body, null: false
-      t.string :converted_format, null: false
+      t.string :converted_format, null: false, index: true
       t.timestamps null: false
     end
   end

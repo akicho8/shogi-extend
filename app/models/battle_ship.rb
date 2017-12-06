@@ -10,8 +10,8 @@
 # | battle_record_id | Battle record | integer(8) |             | => BattleRecord#id | A     |
 # | battle_user_id   | Battle user   | integer(8) |             | => BattleUser#id   | B     |
 # | battle_rank_id   | Battle rank   | integer(8) |             | => BattleRank#id   | C     |
-# | win_flag         | Win flag      | boolean    | NOT NULL    |                    |       |
-# | position         | 順序          | integer(4) |             |                    |       |
+# | win_flag         | Win flag      | boolean    | NOT NULL    |                    | D     |
+# | position         | 順序          | integer(4) |             |                    | E     |
 # | created_at       | 作成日時      | datetime   | NOT NULL    |                    |       |
 # | updated_at       | 更新日時      | datetime   | NOT NULL    |                    |       |
 # |------------------+---------------+------------+-------------+--------------------+-------|

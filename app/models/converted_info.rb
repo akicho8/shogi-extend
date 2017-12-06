@@ -10,7 +10,7 @@
 # | convertable_type | Convertable type | string(255) |             | モデル名(polymorphic)    | A     |
 # | convertable_id   | Convertable      | integer(8)  |             | => (convertable_type)#id | A     |
 # | converted_body   | Converted body   | text(65535) | NOT NULL    |                          |       |
-# | converted_format | Converted format | string(255) | NOT NULL    |                          |       |
+# | converted_format | Converted format | string(255) | NOT NULL    |                          | B     |
 # | created_at       | 作成日時         | datetime    | NOT NULL    |                          |       |
 # | updated_at       | 更新日時         | datetime    | NOT NULL    |                          |       |
 # |------------------+------------------+-------------+-------------+--------------------------+-------|
