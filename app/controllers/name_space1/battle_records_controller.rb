@@ -16,6 +16,7 @@
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
+# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  | B     |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
@@ -35,6 +36,30 @@ module NameSpace1
     include ModulableCrud::All
 
     def show
+      if params[:sanmyaku]
+        current_record.sanmyaku_post_try
+
+        # @sanmyaku_upload_text_url = current_record.sanmyaku_upload_text_url
+
+        # 基本使わないけど remote: false の場合
+        if true
+          if request.format.html?
+            if current_record.sanmyaku_view_url
+              redirect_to current_record.sanmyaku_view_url
+            else
+              # 無限ループしないように fallback_location に sanmyaku を含めないこと
+              # redirect_back を使うと referer に sanmyaku に含まれていて無限ループするはずなので注意
+              raise MustNotHappen if params[:fallback_location].to_s.include?("sanmyaku")
+              redirect_to params[:fallback_location], notice: "混み合っているようです"
+            end
+            return
+          end
+        end
+
+        render :show
+        return
+      end
+
       respond_to do |format|
         format.html
         format.any { kifu_send_data }

@@ -29,8 +29,10 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.bigint "win_battle_user_id"
     t.integer "turn_max"
     t.text "kifu_header"
+    t.string "sanmyaku_view_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["sanmyaku_view_url"], name: "index_battle_records_on_sanmyaku_view_url"
     t.index ["win_battle_user_id"], name: "index_battle_records_on_win_battle_user_id"
   end
 

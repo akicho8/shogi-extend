@@ -34,4 +34,8 @@ Rails.application.routes.draw do
   direct :swars_board do |battle_record|
     "http://kif-pona.heroz.jp/games/#{battle_record.battle_key}?locale=ja"
   end
+
+  direct :sanmyaku_upload_text do
+    "http://shogi-s.com/upload-text"
+  end
 end

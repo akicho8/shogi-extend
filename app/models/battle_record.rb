@@ -16,6 +16,7 @@
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
+# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  | B     |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
@@ -286,6 +287,28 @@ class BattleRecord < ApplicationRecord
     def kishin_tsukatta?(user_ship)
       if battle_group_info.key == :ten_min || !Rails.env.production?
         kaiseki_kekka_hash(user_ship.position).values.last
+      end
+    end
+  end
+
+  concerning :SanmyakuMethods do
+    def sanmyaku_post_try
+      unless sanmyaku_view_url
+        url = Rails.application.routes.url_helpers.sanmyaku_upload_text_url
+        kif = converted_infos.format_eq(:kif).take!.converted_body
+
+        if Rails.env.test?
+          v = "http://shogi-s.com/result/5a274d10px"
+        else
+          response = Faraday.post(url, kif: kif)
+          logger.info(response.status.to_t)
+          logger.info(response.headers.to_t)
+          v = response.headers["location"].presence
+        end
+
+        if v
+          update!(sanmyaku_view_url: v)
+        end
       end
     end
   end

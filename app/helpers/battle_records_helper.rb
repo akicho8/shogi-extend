@@ -16,6 +16,7 @@
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | A     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
+# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  | B     |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
