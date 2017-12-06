@@ -12,7 +12,7 @@ module Fa
   #
   def fa_i(*names)
     options = {
-      :size        => 2,
+      :size        => 1,
       :fixed_width => true,
     }.merge(names.extract_options!)
 
