@@ -38,4 +38,8 @@ Rails.application.routes.draw do
   direct :sanmyaku_upload_text do
     "http://shogi-s.com/upload-text"
   end
+
+  direct :piyo_link do |url|
+    "piyoshogi://?url=#{url}"
+  end
 end

@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const buttons = document.querySelectorAll(".kif_clipboard_copy_button")
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", (e) => {
+      // $(e.target).tooltip({title: "xx"})
+      $(e.target).tooltip("hide")
 
       const url = e.target.dataset.kifDirectAccessPath // kif_direct_access_path
 
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (false) {
           alert("クリップボードにコピーしました")
         } else {
-          $(e.target).tooltip({title: "棋譜をクリップボードにコピーしました", trigger: "manual"})
+          $(e.target).tooltip({title: "クリップボードにコピーしました", trigger: "manual"})
           $(e.target).tooltip("show")
           setTimeout(() => $(e.target).tooltip("destroy"), 1000)
         }

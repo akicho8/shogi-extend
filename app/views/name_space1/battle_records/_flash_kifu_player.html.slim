@@ -40,8 +40,9 @@ ruby:
 br
 .text-center
   p
-    =<> link_to("将棋山脈で見る", [:name_space1, current_record, sanmyaku: true], remote: true, class: "btn btn-primary")
+    =<> link_to("将棋山脈で見る", [:name_space1, current_record, sanmyaku: true], remote: true, class: "btn btn-primary", data: {toggle: :tooltip}, title: "プロのように解説してくれます")
     =<> link_to("KIF形式の棋譜をクリップボードにコピーする", "#", "class": "btn btn-primary kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, current_record, format: "kif"])})
+    =<> link_to(image_tag("piyo_link.png", class: "show_piyo_link", data: {toggle: :tooltip}, title: "ぴよ将棋で開きます"), piyo_link_url(full_url_for([:name_space1, current_record, format: "kif"])))
 br
 
 .row
