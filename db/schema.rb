@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.datetime "battled_at", null: false
     t.string "battle_group_key", null: false
     t.text "csa_seq", null: false
-    t.string "battle_result_key", null: false
+    t.string "battle_state_key", null: false
     t.bigint "win_battle_user_id"
     t.integer "turn_max"
     t.text "kifu_header"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.datetime "updated_at", null: false
     t.index ["battle_group_key"], name: "index_battle_records_on_battle_group_key"
     t.index ["battle_key"], name: "index_battle_records_on_battle_key"
-    t.index ["battle_result_key"], name: "index_battle_records_on_battle_result_key"
+    t.index ["battle_state_key"], name: "index_battle_records_on_battle_state_key"
     t.index ["win_battle_user_id"], name: "index_battle_records_on_win_battle_user_id"
   end
 
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.bigint "battle_record_id"
     t.bigint "battle_user_id"
     t.bigint "battle_rank_id"
-    t.boolean "win_flag", null: false
+    t.string "win_lose_key", null: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20171123115400) do
     t.index ["battle_record_id"], name: "index_battle_ships_on_battle_record_id"
     t.index ["battle_user_id"], name: "index_battle_ships_on_battle_user_id"
     t.index ["position"], name: "index_battle_ships_on_position"
-    t.index ["win_flag"], name: "index_battle_ships_on_win_flag"
+    t.index ["win_lose_key"], name: "index_battle_ships_on_win_lose_key"
   end
 
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|

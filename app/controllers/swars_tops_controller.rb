@@ -33,7 +33,7 @@ class SwarsTopsController < ApplicationController
     else
       @battle_records = BattleRecord.all
     end
-    @battle_records = @battle_records.order(battled_at: :desc).page(params[:page])
+    @battle_records = @battle_records.order(battled_at: :desc).page(params[:page]).per(params[:per])
 
     @rows = @battle_records.collect do |battle_record|
       {}.tap do |row|
@@ -49,10 +49,16 @@ class SwarsTopsController < ApplicationController
         else
           # row["勝ち"] = "○".html_safe + " " + battle_user_link(battle_record, true)
           # row["負け"] = "●".html_safe + " " + battle_user_link(battle_record, false)
-          row["勝ち"] = Fa.fa_i(:circle_o) + battle_user_link(battle_record, true)
-          row["負け"] = Fa.fa_i(:circle) + battle_user_link(battle_record, false)
+
+          if battle_record.win_battle_user
+            row["勝ち"] = Fa.fa_i(:circle_o) + battle_user_link(battle_record, :win)
+            row["負け"] = Fa.fa_i(:circle) + battle_user_link(battle_record, :lose)
+          else
+            row["勝ち"] = Fa.fa_i(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.black)
+            row["負け"] = Fa.fa_i(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.white)
+          end
         end
-        row["判定"] = battle_result_info_decorate(battle_record)
+        row["判定"] = battle_state_info_decorate(battle_record)
         row["手数"] = battle_record.turn_max
         row["種類"] = battle_record.battle_group_info.name
         row["日時"] = battled_at_decorate(battle_record)
@@ -80,15 +86,19 @@ class SwarsTopsController < ApplicationController
     list.compact.join(" ").html_safe
   end
 
-  def battle_user_link(battle_record, win_flag)
-    battle_ship = battle_record.battle_ships.win_flag_eq(win_flag).take!
-    s = h.link_to(battle_ship.name_with_rank, battle_ship.battle_user)
-    # if !Rails.env.production? || params[:debug].present?
-    #   if battle_record.kishin_tsukatta?(battle_ship)
-    #     s += "&#x2757;".html_safe
-    #   end
-    # end
-    s
+  def battle_user_link(battle_record, win_lose_key)
+    if battle_ship = battle_record.battle_ships.win_lose_key_eq(win_lose_key).take
+      battle_user_link2(battle_ship)
+      # if !Rails.env.production? || params[:debug].present?
+      #   if battle_record.kishin_tsukatta?(battle_ship)
+      #     s += "&#x2757;".html_safe
+      #   end
+      # end
+    end
+  end
+
+  def battle_user_link2(battle_ship)
+    h.link_to(battle_ship.name_with_rank, battle_ship.battle_user)
   end
 
   def battled_at_decorate(battle_record)
@@ -99,12 +109,16 @@ class SwarsTopsController < ApplicationController
     battle_record.battled_at.to_s(:battle_ymd)
   end
 
-  def battle_result_info_decorate(battle_record)
-    if v = battle_record.battle_result_info.label_key
-      h.tag.span(battle_record.battle_result_info.name, "class": "label label-#{v}")
-    else
-      battle_record.battle_result_info.name
+  def battle_state_info_decorate(battle_record)
+    str = battle_record.battle_state_info.name
+    battle_state_info = battle_record.battle_state_info
+    if v = battle_state_info.label_key
+      str = h.tag.span(str, "class": "label label-#{v}")
     end
+    if v = battle_state_info.icon_key
+      str = h.fa_i(v) + str
+    end
+    str
   end
 
   def current_battle_user_key

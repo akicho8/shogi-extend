@@ -12,7 +12,7 @@
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
 # | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  | C     |
 # | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
+# | battle_state_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | E     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |

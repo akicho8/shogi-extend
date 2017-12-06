@@ -12,7 +12,7 @@
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
 # | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  | C     |
 # | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
+# | battle_state_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | E     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
@@ -29,8 +29,8 @@ class BattleRecord < ApplicationRecord
   has_one :battle_ship_black, -> { where(position: 0) }, class_name: "BattleShip"
   has_one :battle_ship_white, -> { where(position: 1) }, class_name: "BattleShip"
 
-  has_one :battle_ship_win,  -> { where(win_flag: true) }, class_name: "BattleShip"
-  has_one :battle_ship_lose, -> { where(win_flag: false) }, class_name: "BattleShip"
+  has_one :battle_ship_win,  -> { where(win_lose_key: :win) }, class_name: "BattleShip"
+  has_one :battle_ship_lose, -> { where(win_lose_key: :lose) }, class_name: "BattleShip"
 
   has_many :battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle_record do
     def black
@@ -69,7 +69,7 @@ class BattleRecord < ApplicationRecord
     validates :battle_key
     validates :battled_at
     validates :battle_group_key
-    validates :battle_result_key
+    validates :battle_state_key
   end
 
   with_options allow_blank: true do
@@ -122,7 +122,7 @@ class BattleRecord < ApplicationRecord
         out << "T#{tsukatta}"
       }
 
-      out << "%#{battle_result_info.csa_key}"
+      out << "%#{battle_state_info.csa_key}"
       out.join("\n") + "\n"
     end
   end
@@ -190,11 +190,11 @@ class BattleRecord < ApplicationRecord
           return
         end
 
-        # 引き分けを考慮すると急激に煩雑になるため取り込まない
-        # ここで DRAW_SENNICHI も弾く
-        unless info[:__battle_result_key].match?(/(SENTE|GOTE)_WIN/)
-          return
-        end
+        # # 引き分けを考慮すると急激に煩雑になるため取り込まない
+        # # ここで DRAW_SENNICHI も弾く
+        # unless info[:__battle_state_key].match?(/(SENTE|GOTE)_WIN/)
+        #   return
+        # end
 
         battle_users = info[:battle_user_infos].collect do |e|
           BattleUser.find_or_initialize_by(battle_user_key: e[:battle_user_key]).tap do |battle_user|
@@ -203,26 +203,31 @@ class BattleRecord < ApplicationRecord
           end
         end
 
-        battle_record = BattleRecord.new
-        battle_record.attributes = {
-          battle_key: info[:battle_key],
-          battle_group_key: info.dig(:gamedata, :gtype),
-          csa_seq: info[:csa_seq],
-        }
+        battle_record = BattleRecord.new({
+            battle_key: info[:battle_key],
+            battle_group_key: info.dig(:gamedata, :gtype),
+            csa_seq: info[:csa_seq],
+          })
 
-        if md = info[:__battle_result_key].match(/\A(?<prefix>\w+)_WIN_(?<battle_result_key>\w+)/)
+        if md = info[:__battle_state_key].match(/\A(?<prefix>\w+)_WIN_(?<battle_state_key>\w+)/)
           winner_index = md[:prefix] == "SENTE" ? 0 : 1
-          battle_record.battle_result_key = md[:battle_result_key]
+          battle_record.battle_state_key = md[:battle_state_key]
         else
-          raise "must not happen: #{info.inspect}"
           winner_index = nil
-          battle_record.battle_result_key = info[:__battle_result_key]
+          battle_record.battle_state_key = info[:__battle_state_key]
         end
 
         info[:battle_user_infos].each.with_index do |e, i|
           battle_user = BattleUser.find_by!(battle_user_key: e[:battle_user_key])
           battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
-          battle_record.battle_ships.build(battle_user:  battle_user, battle_rank: battle_rank, win_flag: i == winner_index)
+
+          if winner_index
+            win_lose_key = (i == winner_index) ? :win : :lose
+          else
+            win_lose_key = :draw
+          end
+
+          battle_record.battle_ships.build(battle_user:  battle_user, battle_rank: battle_rank, win_lose_key: win_lose_key)
         end
 
         # SQLをシンプルにするために勝者だけ、所有者的な意味で、BattleRecord 自体に入れとく
@@ -235,8 +240,8 @@ class BattleRecord < ApplicationRecord
       end
     end
 
-    def battle_result_info
-      BattleResultInfo.fetch(battle_result_key)
+    def battle_state_info
+      BattleStateInfo.fetch(battle_state_key)
     end
   end
 

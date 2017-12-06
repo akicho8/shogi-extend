@@ -12,7 +12,7 @@
 # | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
 # | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  | C     |
 # | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
-# | battle_result_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
+# | battle_state_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
 # | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | E     |
 # | turn_max           | 手数               | integer(4)  |             |                  |       |
 # | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
@@ -39,7 +39,7 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
       t.datetime :battled_at, null: false
       t.string :battle_group_key, null: false, index: true
       t.text :csa_seq, null: false
-      t.string :battle_result_key, null: false, index: true
+      t.string :battle_state_key, null: false, index: true
       t.belongs_to :win_battle_user
 
       t.integer :turn_max
@@ -54,7 +54,7 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
       t.belongs_to :battle_record
       t.belongs_to :battle_user
       t.belongs_to :battle_rank # そのときの段位
-      t.boolean :win_flag, null: false, index: true
+      t.string :win_lose_key, null: false, index: true
       t.integer :position, index: true
       t.timestamps null: false
     end
