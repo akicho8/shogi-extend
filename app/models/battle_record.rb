@@ -13,8 +13,8 @@
 # | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
 # | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
 # | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
-# | turn_max           | 手数             | integer(4)  |             |                  |       |
-# | kifu_header        | 棋譜ヘッダー     | text(65535) |             |                  |       |
+# | turn_max           | 手数             | integer(4)  | NOT NULL    |                  |       |
+# | kifu_header        | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
 # | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
 # | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |
@@ -213,7 +213,7 @@ class BattleRecord < ApplicationRecord
         # end
 
         battle_users = info[:battle_user_infos].collect do |e|
-          BattleUser.find_or_initialize_by(battle_user_key: e[:battle_user_key]).tap do |battle_user|
+          BattleUser.find_or_initialize_by(uid: e[:uid]).tap do |battle_user|
             battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
             battle_user.update!(battle_rank: battle_rank) # 常にランクを更新する
           end
@@ -234,7 +234,7 @@ class BattleRecord < ApplicationRecord
         end
 
         info[:battle_user_infos].each.with_index do |e, i|
-          battle_user = BattleUser.find_by!(battle_user_key: e[:battle_user_key])
+          battle_user = BattleUser.find_by!(uid: e[:uid])
           battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
 
           if winner_index

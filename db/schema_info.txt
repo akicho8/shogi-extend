@@ -28,8 +28,8 @@
 # | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
 # | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
 # | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
-# | turn_max           | 手数             | integer(4)  |             |                  |       |
-# | kifu_header        | 棋譜ヘッダー     | text(65535) |             |                  |       |
+# | turn_max           | 手数             | integer(4)  | NOT NULL    |                  |       |
+# | kifu_header        | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
 # | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
 # | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |
@@ -47,9 +47,9 @@
 # | カラム名         | 意味          | タイプ      | 属性        | 参照               | INDEX |
 # |------------------+---------------+-------------+-------------+--------------------+-------|
 # | id               | ID            | integer(8)  | NOT NULL PK |                    |       |
-# | battle_record_id | Battle record | integer(8)  |             | => BattleRecord#id | A     |
-# | battle_user_id   | Battle user   | integer(8)  |             | => BattleUser#id   | B     |
-# | battle_rank_id   | Battle rank   | integer(8)  |             | => BattleRank#id   | C     |
+# | battle_record_id | Battle record | integer(8)  | NOT NULL    | => BattleRecord#id | A     |
+# | battle_user_id   | Battle user   | integer(8)  | NOT NULL    | => BattleUser#id   | B     |
+# | battle_rank_id   | Battle rank   | integer(8)  | NOT NULL    | => BattleRank#id   | C     |
 # | win_lose_key     | Win lose key  | string(255) | NOT NULL    |                    | D     |
 # | position         | 順序          | integer(4)  |             |                    | E     |
 # | created_at       | 作成日時      | datetime    | NOT NULL    |                    |       |
@@ -66,16 +66,15 @@
 #
 # 将棋ウォーズユーザーテーブル (battle_users as BattleUser)
 #
-# |-----------------+-----------------+-------------+-------------+------------------+-------|
-# | カラム名        | 意味            | タイプ      | 属性        | 参照             | INDEX |
-# |-----------------+-----------------+-------------+-------------+------------------+-------|
-# | id              | ID              | integer(8)  | NOT NULL PK |                  |       |
-# | unique_key      | Unique key      | string(255) | NOT NULL    |                  | A     |
-# | battle_user_key | Battle user key | string(255) | NOT NULL    |                  | B     |
-# | battle_rank_id  | Battle rank     | integer(8)  |             | => BattleRank#id | C     |
-# | created_at      | 作成日時        | datetime    | NOT NULL    |                  |       |
-# | updated_at      | 更新日時        | datetime    | NOT NULL    |                  |       |
-# |-----------------+-----------------+-------------+-------------+------------------+-------|
+# |----------------+-------------+-------------+-------------+------------------+-------|
+# | カラム名       | 意味        | タイプ      | 属性        | 参照             | INDEX |
+# |----------------+-------------+-------------+-------------+------------------+-------|
+# | id             | ID          | integer(8)  | NOT NULL PK |                  |       |
+# | uid            | Uid         | string(255) | NOT NULL    |                  | A     |
+# | battle_rank_id | Battle rank | integer(8)  | NOT NULL    | => BattleRank#id | B     |
+# | created_at     | 作成日時    | datetime    | NOT NULL    |                  |       |
+# | updated_at     | 更新日時    | datetime    | NOT NULL    |                  |       |
+# |----------------+-------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・BattleUser モデルは BattleRank モデルから has_many :battle_users されています。
@@ -89,8 +88,8 @@
 # | カラム名         | 意味              | タイプ      | 属性        | 参照                     | INDEX |
 # |------------------+-------------------+-------------+-------------+--------------------------+-------|
 # | id               | ID                | integer(8)  | NOT NULL PK |                          |       |
-# | convertable_type | Convertable type  | string(255) |             | モデル名(polymorphic)    | A     |
-# | convertable_id   | Convertable       | integer(8)  |             | => (convertable_type)#id | A     |
+# | convertable_type | Convertable type  | string(255) | NOT NULL    | モデル名(polymorphic)    | A     |
+# | convertable_id   | Convertable       | integer(8)  | NOT NULL    | => (convertable_type)#id | A     |
 # | text_body        | 本体              | text(65535) | NOT NULL    |                          |       |
 # | text_format      | 種類(kif/ki2/csa) | string(255) | NOT NULL    |                          | B     |
 # | created_at       | 作成日時          | datetime    | NOT NULL    |                          |       |
@@ -108,9 +107,9 @@
 # | unique_key   | ユニークなハッシュ | string(255) | NOT NULL    |      | A     |
 # | kifu_file    | 棋譜ファイル       | string(255) |             |      |       |
 # | kifu_url     | 棋譜URL            | string(255) |             |      |       |
-# | kifu_body    | 棋譜内容           | text(65535) |             |      |       |
-# | turn_max     | 手数               | integer(4)  |             |      |       |
-# | kifu_header  | 棋譜ヘッダー       | text(65535) |             |      |       |
+# | kifu_body    | 棋譜内容           | text(65535) | NOT NULL    |      |       |
+# | turn_max     | 手数               | integer(4)  | NOT NULL    |      |       |
+# | kifu_header  | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
 # | mountain_url | 将棋山脈URL        | string(255) |             |      |       |
 # | created_at   | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |

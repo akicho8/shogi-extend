@@ -7,9 +7,9 @@
 # | カラム名         | 意味          | タイプ      | 属性        | 参照               | INDEX |
 # |------------------+---------------+-------------+-------------+--------------------+-------|
 # | id               | ID            | integer(8)  | NOT NULL PK |                    |       |
-# | battle_record_id | Battle record | integer(8)  |             | => BattleRecord#id | A     |
-# | battle_user_id   | Battle user   | integer(8)  |             | => BattleUser#id   | B     |
-# | battle_rank_id   | Battle rank   | integer(8)  |             | => BattleRank#id   | C     |
+# | battle_record_id | Battle record | integer(8)  | NOT NULL    | => BattleRecord#id | A     |
+# | battle_user_id   | Battle user   | integer(8)  | NOT NULL    | => BattleUser#id   | B     |
+# | battle_rank_id   | Battle rank   | integer(8)  | NOT NULL    | => BattleRank#id   | C     |
 # | win_lose_key     | Win lose key  | string(255) | NOT NULL    |                    | D     |
 # | position         | 順序          | integer(4)  |             |                    | E     |
 # | created_at       | 作成日時      | datetime    | NOT NULL    |                    |       |
@@ -49,6 +49,6 @@ class BattleShip < ApplicationRecord
   end
 
   def name_with_rank
-    "#{battle_user.battle_user_key} #{battle_rank.name}"
+    "#{battle_user.uid} #{battle_rank.name}"
   end
 end

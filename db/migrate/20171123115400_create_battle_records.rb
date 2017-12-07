@@ -13,8 +13,8 @@
 # | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
 # | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
 # | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
-# | turn_max           | 手数             | integer(4)  |             |                  |       |
-# | kifu_header        | 棋譜ヘッダー     | text(65535) |             |                  |       |
+# | turn_max           | 手数             | integer(4)  | NOT NULL    |                  |       |
+# | kifu_header        | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
 # | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
 # | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |
@@ -27,9 +27,8 @@
 class CreateBattleRecords < ActiveRecord::Migration[5.1]
   def up
     create_table :battle_users, force: true do |t|
-      t.string :unique_key, null: false, index: true
-      t.string :battle_user_key, null: false, index: true
-      t.belongs_to :battle_rank
+      t.string :uid, null: false, index: true
+      t.belongs_to :battle_rank, null: false
       t.timestamps null: false
     end
 
@@ -41,8 +40,8 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
       t.string :battle_state_key, null: false, index: true
       t.belongs_to :win_battle_user
 
-      t.integer :turn_max
-      t.text :kifu_header
+      t.integer :turn_max, null: false
+      t.text :kifu_header, null: false
 
       t.string :mountain_url
 
@@ -50,9 +49,9 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
     end
 
     create_table :battle_ships, force: true do |t|
-      t.belongs_to :battle_record
-      t.belongs_to :battle_user
-      t.belongs_to :battle_rank # そのときの段位
+      t.belongs_to :battle_record, null: false
+      t.belongs_to :battle_user, null: false
+      t.belongs_to :battle_rank, null: false # そのときの段位
       t.string :win_lose_key, null: false, index: true
       t.integer :position, index: true
       t.timestamps null: false

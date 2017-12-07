@@ -13,8 +13,8 @@
 # | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
 # | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
 # | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
-# | turn_max           | 手数             | integer(4)  |             |                  |       |
-# | kifu_header        | 棋譜ヘッダー     | text(65535) |             |                  |       |
+# | turn_max           | 手数             | integer(4)  | NOT NULL    |                  |       |
+# | kifu_header        | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
 # | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
 # | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |

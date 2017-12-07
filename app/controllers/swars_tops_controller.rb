@@ -5,18 +5,18 @@ class SwarsTopsController < ApplicationController
       # BattleRecord.destroy_all
     end
 
-    if current_battle_user_key
+    if current_uid
       before_count = 0
-      if battle_user = BattleUser.find_by(battle_user_key: current_battle_user_key)
+      if battle_user = BattleUser.find_by(uid: current_uid)
         before_count = battle_user.battle_records.count
       end
 
-      Rails.cache.fetch("import_all_#{current_battle_user_key}", expires_in: Rails.env.production? ? 30.seconds : 5.seconds) do
-        BattleRecord.import_all(battle_user_key: current_battle_user_key)
+      Rails.cache.fetch("import_all_#{current_uid}", expires_in: Rails.env.production? ? 30.seconds : 5.seconds) do
+        BattleRecord.import_all(uid: current_uid)
         Time.current
       end
 
-      @battle_user = BattleUser.find_by(battle_user_key: current_battle_user_key)
+      @battle_user = BattleUser.find_by(uid: current_uid)
       if @battle_user
         count_diff = @battle_user.battle_records.count - before_count
         if count_diff.zero?
@@ -24,7 +24,7 @@ class SwarsTopsController < ApplicationController
           flash.now[:info] = "#{count_diff}件新しく見つかりました"
         end
       else
-        flash.now[:warning] = "#{current_battle_user_key} さんのデータは見つかりませんでした"
+        flash.now[:warning] = "#{current_uid} さんのデータは見つかりませんでした"
       end
     end
 
@@ -160,7 +160,7 @@ class SwarsTopsController < ApplicationController
   end
 
   def current_query_hash
-    if e = [:battle_user_key, :key, :player, :query, :user].find { |e| params[e].present? }
+    if e = [:key, :player, :query, :user].find { |e| params[e].present? }
       acc = {}
       params[e].to_s.gsub(/\p{blank}/, " ").strip.split(/\s+/).each do |s|
         if s.match?(/\A(tag):/i) || query_nihongo?(s)
@@ -175,8 +175,8 @@ class SwarsTopsController < ApplicationController
               end
             end
           end
-          acc[:battle_user_key] ||= []
-          acc[:battle_user_key] << s
+          acc[:uid] ||= []
+          acc[:uid] << s
         end
       end
       acc
@@ -189,9 +189,9 @@ class SwarsTopsController < ApplicationController
     end
   end
 
-  def current_battle_user_key
+  def current_uid
     if v = current_query_hash
-      if v = v[:battle_user_key]
+      if v = v[:uid]
         v.first
       end
     end
@@ -215,7 +215,7 @@ class SwarsTopsController < ApplicationController
   #   end
   # end
   #
-  # def current_battle_user_key extract
+  # def current_uid extract
   #   if current_query_hash
   #     unless query_nihongo?
   #       s = current_query_hash # TODO: yield_self

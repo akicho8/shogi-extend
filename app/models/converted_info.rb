@@ -7,8 +7,8 @@
 # | カラム名         | 意味              | タイプ      | 属性        | 参照                     | INDEX |
 # |------------------+-------------------+-------------+-------------+--------------------------+-------|
 # | id               | ID                | integer(8)  | NOT NULL PK |                          |       |
-# | convertable_type | Convertable type  | string(255) |             | モデル名(polymorphic)    | A     |
-# | convertable_id   | Convertable       | integer(8)  |             | => (convertable_type)#id | A     |
+# | convertable_type | Convertable type  | string(255) | NOT NULL    | モデル名(polymorphic)    | A     |
+# | convertable_id   | Convertable       | integer(8)  | NOT NULL    | => (convertable_type)#id | A     |
 # | text_body        | 本体              | text(65535) | NOT NULL    |                          |       |
 # | text_format      | 種類(kif/ki2/csa) | string(255) | NOT NULL    |                          | B     |
 # | created_at       | 作成日時          | datetime    | NOT NULL    |                          |       |

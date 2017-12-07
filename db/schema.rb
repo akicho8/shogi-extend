@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20171206160056) do
     t.text "csa_seq", null: false
     t.string "battle_state_key", null: false
     t.bigint "win_battle_user_id"
-    t.integer "turn_max"
-    t.text "kifu_header"
+    t.integer "turn_max", null: false
+    t.text "kifu_header", null: false
     t.string "mountain_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(version: 20171206160056) do
   end
 
   create_table "battle_ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "battle_record_id"
-    t.bigint "battle_user_id"
-    t.bigint "battle_rank_id"
+    t.bigint "battle_record_id", null: false
+    t.bigint "battle_user_id", null: false
+    t.bigint "battle_rank_id", null: false
     t.string "win_lose_key", null: false
     t.integer "position"
     t.datetime "created_at", null: false
@@ -55,19 +55,17 @@ ActiveRecord::Schema.define(version: 20171206160056) do
   end
 
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "unique_key", null: false
-    t.string "battle_user_key", null: false
-    t.bigint "battle_rank_id"
+    t.string "uid", null: false
+    t.bigint "battle_rank_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_rank_id"], name: "index_battle_users_on_battle_rank_id"
-    t.index ["battle_user_key"], name: "index_battle_users_on_battle_user_key"
-    t.index ["unique_key"], name: "index_battle_users_on_unique_key"
+    t.index ["uid"], name: "index_battle_users_on_uid"
   end
 
   create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "convertable_type"
-    t.bigint "convertable_id"
+    t.string "convertable_type", null: false
+    t.bigint "convertable_id", null: false
     t.text "text_body", null: false
     t.string "text_format", null: false
     t.datetime "created_at", null: false
@@ -80,9 +78,9 @@ ActiveRecord::Schema.define(version: 20171206160056) do
     t.string "unique_key", null: false
     t.string "kifu_file"
     t.string "kifu_url"
-    t.text "kifu_body"
-    t.integer "turn_max"
-    t.text "kifu_header"
+    t.text "kifu_body", null: false
+    t.integer "turn_max", null: false
+    t.text "kifu_header", null: false
     t.string "mountain_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -76,7 +76,7 @@ RSpec.configure do |config|
 
     def battle_record_setup
       battle_rank_setup
-      BattleRecord.import_all(battle_user_key: "hanairobiyori")
+      BattleRecord.import_all(uid: "hanairobiyori")
     end
   }
 end
