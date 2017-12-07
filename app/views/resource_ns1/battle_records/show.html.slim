@@ -9,5 +9,5 @@
 
 - if !Rails.env.production? || params[:debug].present?
   .well
-    = current_record.kaiseki_kekka_hash(:black).to_html
-    = current_record.kaiseki_kekka_hash(:white).to_html
+    = current_record.kishin_analyze_result_hask(:black).to_html
+    = current_record.kishin_analyze_result_hask(:white).to_html

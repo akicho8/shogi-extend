@@ -3,23 +3,22 @@
 #
 # 将棋ウォーズ対戦情報テーブル (battle_records as BattleRecord)
 #
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  | A     |
-# | battle_key         | Battle key         | string(255) | NOT NULL    |                  | B     |
-# | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  | C     |
-# | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
-# | battle_state_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
-# | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | E     |
-# | turn_max           | 手数               | integer(4)  |             |                  |       |
-# | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
-# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# |--------------------+------------------+-------------+-------------+------------------+-------|
+# | カラム名           | 意味             | タイプ      | 属性        | 参照             | INDEX |
+# |--------------------+------------------+-------------+-------------+------------------+-------|
+# | id                 | ID               | integer(8)  | NOT NULL PK |                  |       |
+# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A     |
+# | battled_at         | Battled at       | datetime    | NOT NULL    |                  |       |
+# | battle_rule_key    | Battle rule key  | string(255) | NOT NULL    |                  | B     |
+# | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
+# | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
+# | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
+# | turn_max           | 手数             | integer(4)  |             |                  |       |
+# | kifu_header        | 棋譜ヘッダー     | text(65535) |             |                  |       |
+# | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
+# | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
+# | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |
+# |--------------------+------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・【警告:リレーション欠如】BattleUserモデルで has_many :battle_records されていません
@@ -40,6 +39,14 @@ class BattleRecord < ApplicationRecord
     def white
       second
     end
+
+    def win
+      win_lose_key_eq(:win)
+    end
+
+    def lose
+      win_lose_key_eq(:lose)
+    end
   end
 
   has_many :battle_users, through: :battle_ships do
@@ -56,10 +63,11 @@ class BattleRecord < ApplicationRecord
 
   before_validation do
     # "" から ten_min への変換
-    if battle_group_key
-      self.battle_group_key = BattleGroupInfo.fetch(battle_group_key).key
+    if battle_rule_key
+      self.battle_rule_key = BattleRuleInfo.fetch(battle_rule_key).key
     end
 
+    # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
     if battle_key
       self.battled_at ||= Time.zone.parse(battle_key.split("-").last)
     end
@@ -68,7 +76,7 @@ class BattleRecord < ApplicationRecord
   with_options presence: true do
     validates :battle_key
     validates :battled_at
-    validates :battle_group_key
+    validates :battle_rule_key
     validates :battle_state_key
   end
 
@@ -80,8 +88,8 @@ class BattleRecord < ApplicationRecord
     battle_key
   end
 
-  def battle_group_info
-    BattleGroupInfo.fetch(battle_group_key)
+  def battle_rule_info
+    BattleRuleInfo.fetch(battle_rule_key)
   end
 
   concerning :HenkanMethods do
@@ -94,7 +102,7 @@ class BattleRecord < ApplicationRecord
       before_save do
         if changes[:csa_seq]
           if csa_seq
-            if battle_ships.second # 最初のときは、まだ保存されていないレコード
+            if battle_ships.white # 最初のときは、まだ保存されていないレコード
               parser_run
             end
           end
@@ -107,19 +115,24 @@ class BattleRecord < ApplicationRecord
       out << "N+#{battle_ships.black.name_with_rank}"
       out << "N-#{battle_ships.white.name_with_rank}"
       out << "$START_TIME:#{battled_at.to_s(:csa_ymdhms)}"
-      out << "$EVENT:将棋ウォーズ(#{battle_group_info.long_name})"
-      out << "$TIME_LIMIT:#{battle_group_info.csa_time_limit}"
+      out << "$EVENT:将棋ウォーズ(#{battle_rule_info.long_name})"
+      out << "$TIME_LIMIT:#{battle_rule_info.csa_time_limit}"
+
+      # $OPENING は 戦型 のことで、これが判明するのはパースの後なのでいまはわからない。
+      # それに自動的にあとから埋められるのでここは指定しなくてよい
       # out << "$OPENING:不明"
+
+      # 平手なので先手から
       out << "+"
 
-      nokori = [battle_group_info.life_time] * 2
-      csa_seq.each.with_index { |(a, b), i|
-        i = i.modulo(nokori.size)
-        tsukatta = nokori[i] - b
-        nokori[i] = b
+      life_times = [battle_rule_info.life_time] * 2
+      csa_seq.each.with_index { |(t1, t2), i|
+        i = i.modulo(life_times.size)
+        used = life_times[i] - t2
+        life_times[i] = t2
 
-        out << "#{a}"
-        out << "T#{tsukatta}"
+        out << "#{t1}"
+        out << "T#{used}"
       }
 
       out << "%#{battle_state_info.csa_key}"
@@ -168,7 +181,7 @@ class BattleRecord < ApplicationRecord
       end
 
       def import_all(**params)
-        BattleGroupInfo.each do |e|
+        BattleRuleInfo.each do |e|
           import_one(params.merge(gtype: e.swars_real_key))
         end
       end
@@ -208,7 +221,7 @@ class BattleRecord < ApplicationRecord
 
         battle_record = BattleRecord.new({
             battle_key: info[:battle_key],
-            battle_group_key: info.dig(:gamedata, :gtype),
+            battle_rule_key: info.dig(:gamedata, :gtype),
             csa_seq: info[:csa_seq],
           })
 
@@ -249,7 +262,7 @@ class BattleRecord < ApplicationRecord
   end
 
   concerning :KaisekiMethoes do
-    def kaiseki_kekka_hash(location)
+    def kishin_analyze_result_hask(location)
       kishin_count = 5
 
       location = Bushido::Location[location]
@@ -273,13 +286,13 @@ class BattleRecord < ApplicationRecord
     end
 
     def kishin_tsukatta?(user_ship)
-      if battle_group_info.key == :ten_min || !Rails.env.production?
-        kaiseki_kekka_hash(user_ship.position).values.last
+      if battle_rule_info.key == :ten_min || !Rails.env.production?
+        kishin_analyze_result_hask(user_ship.position).values.last
       end
     end
   end
 
-  concerning :SanmyakuMethods do
+  concerning :MountainMethods do
     included do
       has_many :converted_infos, as: :convertable, dependent: :destroy
 
@@ -295,7 +308,7 @@ class BattleRecord < ApplicationRecord
       info = Bushido::Parser.parse(kifu_body, typical_error_case: :embed)
       converted_infos.destroy_all
       KifuFormatInfo.each do |e|
-        converted_infos.build(converted_body: info.public_send("to_#{e.key}"), converted_format: e.key)
+        converted_infos.build(text_body: info.public_send("to_#{e.key}"), text_format: e.key)
       end
       self.turn_max = info.mediator.turn_max
       self.kifu_header = info.header
@@ -304,10 +317,10 @@ class BattleRecord < ApplicationRecord
       self.defense_tag_list = info.mediator.players.flat_map { |e| e.defense_infos }.collect(&:key)
       self.attack_tag_list = info.mediator.players.flat_map { |e| e.attack_infos }.collect(&:key)
 
-      tag_list_set_func(info)
+      after_parser_run(info)
     end
 
-    def tag_list_set_func(info)
+    def after_parser_run(info)
       # 両者にタグを作らんと意味ないじゃん
       info.mediator.players.each.with_index do |player, i|
         battle_ship = battle_ships[i]
@@ -316,15 +329,15 @@ class BattleRecord < ApplicationRecord
       end
     end
 
-    def sanmyaku_post_onece
-      unless sanmyaku_view_url
-        sanmyaku_post
+    def mountain_post_onece
+      unless mountain_url
+        mountain_post
       end
     end
 
-    def sanmyaku_post
-      url = Rails.application.routes.url_helpers.sanmyaku_upload_text_url
-      kif = converted_infos.format_eq(:kif).take!.converted_body
+    def mountain_post
+      url = Rails.application.routes.url_helpers.mountain_upload_url
+      kif = converted_infos.text_format_eq(:kif).take!.text_body
 
       if AppConfig[:run_localy]
         v = "http://shogi-s.com/result/5a274d10px"
@@ -336,7 +349,7 @@ class BattleRecord < ApplicationRecord
       end
 
       if v
-        update!(sanmyaku_view_url: v)
+        update!(mountain_url: v)
       end
     end
   end

@@ -89,7 +89,7 @@ class SwarsTopsController < ApplicationController
           ].join(vs).html_safe
         end
         row["手数"] = battle_record.turn_max
-        row["種類"] = battle_record.battle_group_info.name
+        row["種類"] = battle_record.battle_rule_info.name
         row["日時"] = battled_at_decorate(battle_record)
         row[""] = row_links(battle_record)
       end
@@ -107,17 +107,17 @@ class SwarsTopsController < ApplicationController
 
   def row_links(current_record)
     list = []
-    list << h.link_to("詳細", [:name_space1, current_record], "class": "btn btn-default btn-sm")
+    list << h.link_to("詳細", [:resource_ns1, current_record], "class": "btn btn-default btn-sm")
     if Rails.env.development?
-      list << h.link_to("山脈(remote:false)", [:name_space1, current_record, sanmyaku: true, fallback_location: url_for([:s])], "class": "btn btn-default btn-sm", remote: false)
+      list << h.link_to("山脈(remote:false)", [:resource_ns1, current_record, mountain: true, fallback_location: url_for([:s])], "class": "btn btn-default btn-sm", remote: false)
     end
-    list << h.link_to("山脈", [:name_space1, current_record, sanmyaku: true], "class": "btn btn-default btn-sm", remote: true)
-    list << h.link_to("コピー".html_safe, "#", "class": "btn btn-primary btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:name_space1, current_record, format: "kif"])})
-    list << h.link_to(h.image_tag("piyo_link.png", "class": "row_piyo_link"), piyo_link_url(full_url_for([:name_space1, current_record, format: "kif"])))
+    list << h.link_to("山脈", [:resource_ns1, current_record, mountain: true], "class": "btn btn-default btn-sm", remote: true)
+    list << h.link_to("コピー".html_safe, "#", "class": "btn btn-primary btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+    list << h.link_to(h.image_tag("piyo_link.png", "class": "row_piyo_link"), piyo_link_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
 
-    # list << h.link_to("KIF", [:name_space1, current_record, format: "kif"], "class": "btn btn-default btn-sm")
-    # list << h.link_to("KI2", [:name_space1, current_record, format: "ki2"], "class": "btn btn-default btn-sm")
-    # list << h.link_to("CSA", [:name_space1, current_record, format: "csa"], "class": "btn btn-default btn-sm")
+    # list << h.link_to("KIF", [:resource_ns1, current_record, format: "kif"], "class": "btn btn-default btn-sm")
+    # list << h.link_to("KI2", [:resource_ns1, current_record, format: "ki2"], "class": "btn btn-default btn-sm")
+    # list << h.link_to("CSA", [:resource_ns1, current_record, format: "csa"], "class": "btn btn-default btn-sm")
 
     # list << h.link_to("ウォ", swars_board_url(current_record), "class": "btn btn-default btn-sm")
 

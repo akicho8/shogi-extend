@@ -2,13 +2,7 @@ require "rails_helper"
 
 RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   before do
-    unless BattleRank.exists?
-      StaticBattleRankInfo.each do |e|
-        BattleRank.create!(unique_key: e.key, priority: e.priority)
-      end
-    end
-
-    BattleRecord.import_all(battle_user_key: "hanairobiyori")
+    battle_record_setup
     @battle_record = BattleRecord.first
   end
 

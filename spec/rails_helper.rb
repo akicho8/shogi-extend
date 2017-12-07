@@ -63,4 +63,20 @@ RSpec.configure do |config|
 
   # screenshot_opener を rspec の方にも対応させる
   config.include ScreenshotOpener, type: :system
+
+  # テストの中で使う便利メソッド
+  config.include Module.new {
+    def battle_rank_setup
+      unless BattleRank.exists?
+        StaticBattleRankInfo.each do |e|
+          BattleRank.create!(unique_key: e.key, priority: e.priority)
+        end
+      end
+    end
+
+    def battle_record_setup
+      battle_rank_setup
+      BattleRecord.import_all(battle_user_key: "hanairobiyori")
+    end
+  }
 end

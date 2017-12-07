@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe "ConvertSourceInfos", type: :system do
+RSpec.describe "FreeBattleRecords", type: :system do
   before do
-    @convert_source_info = ConvertSourceInfo.create!
+    @free_battle_record = FreeBattleRecord.create!
   end
 
   it "トップ" do
@@ -18,11 +18,11 @@ RSpec.describe "ConvertSourceInfos", type: :system do
   it "入力→変換→完了" do
     visit "/x/new"
 
-    expect(page).to have_field "convert_source_info[kifu_body]"
-    expect(page).to have_field "convert_source_info[kifu_url]"
-    expect(page).to have_field "convert_source_info[kifu_file]"
+    expect(page).to have_field "free_battle_record[kifu_body]"
+    expect(page).to have_field "free_battle_record[kifu_url]"
+    expect(page).to have_field "free_battle_record[kifu_file]"
 
-    fill_in "convert_source_info[kifu_body]", with: "76歩"
+    fill_in "free_battle_record[kifu_body]", with: "76歩"
     click_button "変換"
 
     expect(page).to have_content "結果"

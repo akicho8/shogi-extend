@@ -24,44 +24,15 @@
 # ・【警告:リレーション欠如】BattleUserモデルで has_many :battle_records されていません
 #--------------------------------------------------------------------------------
 
-class CreateBattleRecords < ActiveRecord::Migration[5.1]
-  def up
-    create_table :battle_users, force: true do |t|
-      t.string :unique_key, null: false, index: true
-      t.string :battle_user_key, null: false, index: true
-      t.belongs_to :battle_rank
-      t.timestamps null: false
-    end
+require 'rails_helper'
 
-    create_table :battle_records, force: true do |t|
-      t.string :battle_key, null: false, index: true
-      t.datetime :battled_at, null: false
-      t.string :battle_rule_key, null: false, index: true
-      t.text :csa_seq, null: false
-      t.string :battle_state_key, null: false, index: true
-      t.belongs_to :win_battle_user
+RSpec.describe ResourceNs1::BattleRecordsController, type: :controller do
+  before do
+    battle_record_setup
+    @battle_record = BattleRecord.first
+  end
 
-      t.integer :turn_max
-      t.text :kifu_header
-
-      t.string :mountain_url
-
-      t.timestamps null: false
-    end
-
-    create_table :battle_ships, force: true do |t|
-      t.belongs_to :battle_record
-      t.belongs_to :battle_user
-      t.belongs_to :battle_rank # そのときの段位
-      t.string :win_lose_key, null: false, index: true
-      t.integer :position, index: true
-      t.timestamps null: false
-    end
-
-    create_table :battle_ranks, force: true do |t|
-      t.string :unique_key, null: false, index: true
-      t.integer :priority, null: false, index: true
-      t.timestamps null: false
-    end
+  it "show" do
+    get :show, params: {id: @battle_record.to_param}
   end
 end

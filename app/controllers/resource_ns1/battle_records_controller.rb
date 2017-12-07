@@ -3,29 +3,28 @@
 #
 # 将棋ウォーズ対戦情報テーブル (battle_records as BattleRecord)
 #
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | unique_key         | ユニークなハッシュ | string(255) | NOT NULL    |                  | A     |
-# | battle_key         | Battle key         | string(255) | NOT NULL    |                  | B     |
-# | battled_at         | Battled at         | datetime    | NOT NULL    |                  |       |
-# | battle_group_key   | Battle group key   | string(255) | NOT NULL    |                  | C     |
-# | csa_seq            | Csa seq            | text(65535) | NOT NULL    |                  |       |
-# | battle_state_key  | Battle result key  | string(255) | NOT NULL    |                  | D     |
-# | win_battle_user_id | Win battle user    | integer(8)  |             | => BattleUser#id | E     |
-# | turn_max           | 手数               | integer(4)  |             |                  |       |
-# | kifu_header        | 棋譜ヘッダー       | text(65535) |             |                  |       |
-# | sanmyaku_view_url  | Sanmyaku view url  | string(255) |             |                  |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# |--------------------+------------------+-------------+-------------+------------------+-------|
+# | カラム名           | 意味             | タイプ      | 属性        | 参照             | INDEX |
+# |--------------------+------------------+-------------+-------------+------------------+-------|
+# | id                 | ID               | integer(8)  | NOT NULL PK |                  |       |
+# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A     |
+# | battled_at         | Battled at       | datetime    | NOT NULL    |                  |       |
+# | battle_rule_key    | Battle rule key  | string(255) | NOT NULL    |                  | B     |
+# | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
+# | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
+# | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
+# | turn_max           | 手数             | integer(4)  |             |                  |       |
+# | kifu_header        | 棋譜ヘッダー     | text(65535) |             |                  |       |
+# | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
+# | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
+# | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |
+# |--------------------+------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・【警告:リレーション欠如】BattleUserモデルで has_many :battle_records されていません
 #--------------------------------------------------------------------------------
 
-module NameSpace1
+module ResourceNs1
   class BattleRecordsController < ApplicationController
     include ModulableCrud::All
 
@@ -66,26 +65,26 @@ module NameSpace1
       end
 
       def show
-        if params[:sanmyaku]
-          current_record.sanmyaku_post_onece
+        if params[:mountain]
+          current_record.mountain_post_onece
 
           # 通常リンク(remote: false)の場合
           if true
             if request.format.html?
-              if current_record.sanmyaku_view_url
-                redirect_to current_record.sanmyaku_view_url
+              if current_record.mountain_url
+                redirect_to current_record.mountain_url
               else
-                # 無限ループしないように fallback_location に sanmyaku を含めないこと
-                # redirect_back を使うと referer に sanmyaku に含まれていて無限ループするはずなので注意
-                raise MustNotHappen if params[:fallback_location].to_s.include?("sanmyaku")
+                # 無限ループしないように fallback_location に mountain を含めないこと
+                # redirect_back を使うと referer に mountain に含まれていて無限ループするはずなので注意
+                raise MustNotHappen if params[:fallback_location].to_s.include?("mountain")
                 redirect_to params[:fallback_location], notice: "混み合っているようです"
               end
               return
             end
           end
 
-          logger.info({sanmyaku_view_url: current_record.sanmyaku_view_url}.to_t)
-          render "name_space1/battle_records/show"
+          logger.info({mountain_url: current_record.mountain_url}.to_t)
+          render "resource_ns1/battle_records/show"
           return
         end
 
@@ -102,21 +101,21 @@ module NameSpace1
       end
 
       def kifu_send_data
-        converted_info = current_record.converted_infos.find_by!(converted_format: params[:format])
-        converted_body = converted_info.converted_body
+        converted_info = current_record.converted_infos.find_by!(text_format: params[:format])
+        text_body = converted_info.text_body
 
         if access_from_swf_kifu_player?
           response.headers["Content-Type"] = 'text/plain; charset=shift_jis' # 指定しないと utf-8 で返してしまう(が、なくてもよい)
           logger.info response.headers.to_t
-          render plain: converted_body.tosjis
+          render plain: text_body.tosjis
           return
         end
 
         if params[:shift_jis].present? || params[:sjis].present?
-          converted_body = converted_body.tosjis
+          text_body = text_body.tosjis
         end
 
-        send_data(converted_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: true ? "inline" : "attachment")
+        send_data(text_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: true ? "inline" : "attachment")
       end
 
       # Kifu.swf から呼ばれたときは日付のキーが含まれている

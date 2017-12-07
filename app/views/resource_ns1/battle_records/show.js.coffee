@@ -1,4 +1,4 @@
-url = "<%= current_record.sanmyaku_view_url %>"
+url = "<%= current_record.mountain_url %>"
 if url == ""
   alert("混み合っているようです")
 else

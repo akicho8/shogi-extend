@@ -1,5 +1,5 @@
-unless ConvertSourceInfo.exists?
-  30.times { ConvertSourceInfo.create!(kifu_body: "") }
+unless FreeBattleRecord.exists?
+  30.times { FreeBattleRecord.create!(kifu_body: "") }
 end
 
 unless BattleRank.exists?

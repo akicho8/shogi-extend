@@ -8,8 +8,8 @@
 p
   .panel.panel-default
     .panel-body
-      =<> link_to("一覧", [:name_space1, current_plural_key], class: "btn btn-default")
+      =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "btn btn-default")
       - if controller.respond_to?(:edit)
-        =<> link_to("編集", [:edit, :name_space1, current_record], class: "btn btn-success")
+        =<> link_to("編集", [:edit, :resource_ns1, current_record], class: "btn btn-success")
       - if controller.respond_to_destroy?
-        =<> link_to("削除", [:name_space1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")
+        =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")

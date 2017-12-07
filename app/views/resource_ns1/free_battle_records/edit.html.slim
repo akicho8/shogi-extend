@@ -2,7 +2,7 @@
   h2
     = current_record.new_record? ? "棋譜変換" : "編集"
 
-= form_with(model: [:name_space1, current_record], class: "form-horizontal") do |form|
+= form_with(model: [:resource_ns1, current_record], class: "form-horizontal") do |form|
   = render partial: "error_messages", locals: {form: form}
   = render partial: "form", locals: {form: form}
   .form-group

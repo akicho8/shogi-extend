@@ -18,7 +18,7 @@
     .form-group.form-group-lg
       .col-sm-3
       .col-sm-6
-        = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 囲い・戦型名", list: "battle_user_key_list", autofocus: true)
+        = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 囲い・戦型名", list: "battle_user_key_list", autofocus: controller.current_query_hash.blank?)
         = tag.datalist(id: "battle_user_key_list") do
           - BattleUser.order(updated_at: :desc).limit(128).pluck(:battle_user_key).each do |battle_user_key|
             = tag.option(value: battle_user_key)
@@ -42,7 +42,7 @@
     small
       .text-center
         .text-muted
-          = "Last Imported: #{v.to_s(:ymdhm)}"
+          = "Last imported at #{v.to_s(:ymdhm)}"
 
 - if Rails.env.development? && false
   = BattleUser.to_html

@@ -18,7 +18,7 @@
 # ・BattleUser モデルは BattleRank モデルから has_many :battle_users されています。
 #--------------------------------------------------------------------------------
 
-module NameSpace1
+module ResourceNs1
   class BattleUsersController < ApplicationController
   end
 end

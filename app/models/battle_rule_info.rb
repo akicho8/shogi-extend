@@ -1,4 +1,4 @@
-class BattleGroupInfo
+class BattleRuleInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: :ten_min,   name: "10分", long_name: "10分切れ負け", swars_real_key: "",   csa_time_limit: "00:10+00", life_time: 10.minutes, },
@@ -24,7 +24,7 @@ class BattleGroupInfo
 end
 
 if $0 == __FILE__
-  tp BattleGroupInfo[""]
+  tp BattleRuleInfo[""]
   # |------|
   # | 10分 |
   # |------|

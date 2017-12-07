@@ -3,18 +3,18 @@
 #
 # 対局と対局者の対応テーブル (battle_ships as BattleShip)
 #
-# |------------------+---------------+------------+-------------+--------------------+-------|
-# | カラム名         | 意味          | タイプ     | 属性        | 参照               | INDEX |
-# |------------------+---------------+------------+-------------+--------------------+-------|
-# | id               | ID            | integer(8) | NOT NULL PK |                    |       |
-# | battle_record_id | Battle record | integer(8) |             | => BattleRecord#id | A     |
-# | battle_user_id   | Battle user   | integer(8) |             | => BattleUser#id   | B     |
-# | battle_rank_id   | Battle rank   | integer(8) |             | => BattleRank#id   | C     |
-# | win_lose_key         | Win flag      | boolean    | NOT NULL    |                    | D     |
-# | position         | 順序          | integer(4) |             |                    | E     |
-# | created_at       | 作成日時      | datetime   | NOT NULL    |                    |       |
-# | updated_at       | 更新日時      | datetime   | NOT NULL    |                    |       |
-# |------------------+---------------+------------+-------------+--------------------+-------|
+# |------------------+---------------+-------------+-------------+--------------------+-------|
+# | カラム名         | 意味          | タイプ      | 属性        | 参照               | INDEX |
+# |------------------+---------------+-------------+-------------+--------------------+-------|
+# | id               | ID            | integer(8)  | NOT NULL PK |                    |       |
+# | battle_record_id | Battle record | integer(8)  |             | => BattleRecord#id | A     |
+# | battle_user_id   | Battle user   | integer(8)  |             | => BattleUser#id   | B     |
+# | battle_rank_id   | Battle rank   | integer(8)  |             | => BattleRank#id   | C     |
+# | win_lose_key     | Win lose key  | string(255) | NOT NULL    |                    | D     |
+# | position         | 順序          | integer(4)  |             |                    | E     |
+# | created_at       | 作成日時      | datetime    | NOT NULL    |                    |       |
+# | updated_at       | 更新日時      | datetime    | NOT NULL    |                    |       |
+# |------------------+---------------+-------------+-------------+--------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・BattleShip モデルは BattleRecord モデルから has_one :battle_ship_black されています。

@@ -24,17 +24,17 @@ ActiveRecord::Schema.define(version: 20171206160056) do
   create_table "battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "battle_key", null: false
     t.datetime "battled_at", null: false
-    t.string "battle_group_key", null: false
+    t.string "battle_rule_key", null: false
     t.text "csa_seq", null: false
     t.string "battle_state_key", null: false
     t.bigint "win_battle_user_id"
     t.integer "turn_max"
     t.text "kifu_header"
-    t.string "sanmyaku_view_url"
+    t.string "mountain_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_group_key"], name: "index_battle_records_on_battle_group_key"
     t.index ["battle_key"], name: "index_battle_records_on_battle_key"
+    t.index ["battle_rule_key"], name: "index_battle_records_on_battle_rule_key"
     t.index ["battle_state_key"], name: "index_battle_records_on_battle_state_key"
     t.index ["win_battle_user_id"], name: "index_battle_records_on_win_battle_user_id"
   end
@@ -65,28 +65,28 @@ ActiveRecord::Schema.define(version: 20171206160056) do
     t.index ["unique_key"], name: "index_battle_users_on_unique_key"
   end
 
-  create_table "convert_source_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+  create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.string "convertable_type"
+    t.bigint "convertable_id"
+    t.text "text_body", null: false
+    t.string "text_format", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
+    t.index ["text_format"], name: "index_converted_infos_on_text_format"
+  end
+
+  create_table "free_battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
     t.string "kifu_file"
     t.string "kifu_url"
     t.text "kifu_body"
     t.integer "turn_max"
     t.text "kifu_header"
-    t.string "sanmyaku_view_url"
+    t.string "mountain_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["unique_key"], name: "index_convert_source_infos_on_unique_key"
-  end
-
-  create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "convertable_type"
-    t.bigint "convertable_id"
-    t.text "converted_body", null: false
-    t.string "converted_format", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
-    t.index ["converted_format"], name: "index_converted_infos_on_converted_format"
+    t.index ["unique_key"], name: "index_free_battle_records_on_unique_key"
   end
 
   create_table "taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
