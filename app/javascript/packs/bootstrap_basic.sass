@@ -16,9 +16,9 @@ footer
 
 ////////////////////////////////////////////////////////////////////////////// pre のなかなのに等幅にならない対策
 
-pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
-  font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace
-  line-height: 1.2
+/* pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
+/*   font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace
+/*   line-height: 1.2
 
 ////////////////////////////////////////////////////////////////////////////// kaminari
 
@@ -110,18 +110,9 @@ pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
 /*   font-family: ロゴたいぷゴシック;
 /*   src: url(https://cldup.com/_aPmnKgOGH.woff2)
 
-@font-face
-  font-family: "うつくし明朝"
-  /* asset_data_url
-  src: font-url("02UtsukushiMincho.ttf")
-  /* src: font-url("UtsukushiFONT.otf") format("truetype")
-  
 .tag_cloud
-  font-family: うつくし明朝, serif ! important
-
   a
     margin: 0em 4px
     vertical-align: middle
     white-space: nowrap
-    /* color: inherit
-    text-decoration: none
+    text-decoration: none ! important

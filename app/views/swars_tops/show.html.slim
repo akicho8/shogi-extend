@@ -44,9 +44,6 @@
         .text-muted
           = "Last imported at #{v.to_s(:ymdhm)}"
 
-.text-center
-  = link_to("戦型クラウド", :cloud, class: "btn btn-default")
-
 - if Rails.env.development? && false
   = BattleUser.to_html
   = BattleRecord.to_html
