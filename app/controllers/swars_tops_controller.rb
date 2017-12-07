@@ -65,15 +65,8 @@ class SwarsTopsController < ApplicationController
             r_ship = battle_record.battle_ships.white
           end
 
-          row["戦型対決"] = [
-            tag_links(l_ship.attack_tag_list),
-            tag_links(r_ship.attack_tag_list),
-          ].join(vs).html_safe
-
-          row["囲い対決"] = [
-            tag_links(l_ship.defense_tag_list),
-            tag_links(r_ship.defense_tag_list),
-          ].join(vs).html_safe
+          row[pc_only("戦型対決")] = pc_only([tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list)].join(vs).html_safe)
+          row[pc_only("囲い対決")] = pc_only([tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list)].join(vs).html_safe)
         end
         row["手数"] = battle_record.turn_max
         row["種類"] = battle_record.battle_rule_info.name
@@ -81,6 +74,10 @@ class SwarsTopsController < ApplicationController
         row[""] = row_links(battle_record)
       end
     end
+  end
+
+  def pc_only(v)
+    h.tag.span(v, :class => "visible-lg")
   end
 
   def tag_links(tag_list)
