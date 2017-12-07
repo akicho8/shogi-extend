@@ -1,10 +1,5 @@
 class SwarsTopsController < ApplicationController
   def show
-    if Rails.env.development?
-      # BattleUser.destroy_all
-      # BattleRecord.destroy_all
-    end
-
     if current_uid
       before_count = 0
       if battle_user = BattleUser.find_by(uid: current_uid)
@@ -45,17 +40,9 @@ class SwarsTopsController < ApplicationController
         if @battle_user
           current_user_ship = battle_record.current_user_ship(@battle_user)
           reverse_user_ship = battle_record.reverse_user_ship(@battle_user)
-
           row["対象プレイヤー"] = battle_record.win_lose_str(current_user_ship.battle_user).html_safe + " " + h.link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
           row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
-          # if !Rails.env.production? || params[:debug].present?
-          #   row["棋神"] = battle_record.kishin_tsukatta?(reverse_user_ship) ? "降臨" : ""
-          # end
-          # row["段級"] = reverse_user_ship.battle_rank.name
         else
-          # row["勝ち"] = "○".html_safe + " " + battle_user_link(battle_record, true)
-          # row["負け"] = "●".html_safe + " " + battle_user_link(battle_record, false)
-
           if battle_record.win_battle_user
             row["勝ち"] = Fa.fa_i(:circle_o) + battle_user_link(battle_record, :win)
             row["負け"] = Fa.fa_i(:circle) + battle_user_link(battle_record, :lose)
@@ -90,7 +77,7 @@ class SwarsTopsController < ApplicationController
         end
         row["手数"] = battle_record.turn_max
         row["種類"] = battle_record.battle_rule_info.name
-        row["日時"] = battled_at_decorate(battle_record)
+        row["日時"] = battle_record.battled_at.to_s(:battle_ymd)
         row[""] = row_links(battle_record)
       end
     end
@@ -98,7 +85,6 @@ class SwarsTopsController < ApplicationController
 
   def tag_links(tag_list)
     if tag_list.blank?
-      # h.fa_i(:question, :class => "text-muted")
       "不明"
     else
       tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
@@ -113,38 +99,19 @@ class SwarsTopsController < ApplicationController
     end
     list << h.link_to("山脈", [:resource_ns1, current_record, mountain: true], "class": "btn btn-default btn-sm", remote: true)
     list << h.link_to("コピー".html_safe, "#", "class": "btn btn-primary btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+    list << h.link_to("戦", swars_board_url(current_record), "class": "btn btn-default btn-sm")
     list << h.link_to(h.image_tag("piyo_link.png", "class": "row_piyo_link"), piyo_link_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
-
-    # list << h.link_to("KIF", [:resource_ns1, current_record, format: "kif"], "class": "btn btn-default btn-sm")
-    # list << h.link_to("KI2", [:resource_ns1, current_record, format: "ki2"], "class": "btn btn-default btn-sm")
-    # list << h.link_to("CSA", [:resource_ns1, current_record, format: "csa"], "class": "btn btn-default btn-sm")
-
-    # list << h.link_to("ウォ", swars_board_url(current_record), "class": "btn btn-default btn-sm")
-
     list.compact.join(" ").html_safe
   end
 
   def battle_user_link(battle_record, win_lose_key)
     if battle_ship = battle_record.battle_ships.win_lose_key_eq(win_lose_key).take
       battle_user_link2(battle_ship)
-      # if !Rails.env.production? || params[:debug].present?
-      #   if battle_record.kishin_tsukatta?(battle_ship)
-      #     s += "&#x2757;".html_safe
-      #   end
-      # end
     end
   end
 
   def battle_user_link2(battle_ship)
     h.link_to(battle_ship.name_with_rank, battle_ship.battle_user)
-  end
-
-  def battled_at_decorate(battle_record)
-    # if battle_record.battled_at < 1.months.ago
-    #   h.time_ago_in_words(battle_record.battled_at) + "前"
-    # else
-    # end
-    battle_record.battled_at.to_s(:battle_ymd)
   end
 
   def battle_state_info_decorate(battle_record)
@@ -206,24 +173,6 @@ class SwarsTopsController < ApplicationController
       current_query_hash.values.join(" ")
     end
   end
-
-  # def current_tags
-  #   if current_query_hash
-  #     if query_nihongo?
-  #       current_query_hash.split(/[\s,]+/)
-  #     end
-  #   end
-  # end
-  #
-  # def current_uid extract
-  #   if current_query_hash
-  #     unless query_nihongo?
-  #       s = current_query_hash # TODO: yield_self
-  #
-  #       s
-  #     end
-  #   end
-  # end
 
   def h
     @h ||= view_context
