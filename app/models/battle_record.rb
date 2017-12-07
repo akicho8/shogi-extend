@@ -299,7 +299,21 @@ class BattleRecord < ApplicationRecord
       end
       self.turn_max = info.mediator.turn_max
       self.kifu_header = info.header
-      self.tag_list = info.mediator.players.flat_map{|e|e.attack_infos + e.defense_infos}.collect(&:key)
+
+      # BattleRecord.tagged_with(...) とするため。on をつけないと集約できる
+      self.defense_tag_list = info.mediator.players.flat_map { |e| e.defense_infos }.collect(&:key)
+      self.attack_tag_list = info.mediator.players.flat_map { |e| e.attack_infos }.collect(&:key)
+
+      tag_list_set_func(info)
+    end
+
+    def tag_list_set_func(info)
+      # 両者にタグを作らんと意味ないじゃん
+      info.mediator.players.each.with_index do |player, i|
+        battle_ship = battle_ships[i]
+        battle_ship.defense_tag_list = player.defense_infos.collect(&:key)
+        battle_ship.attack_tag_list = player.attack_infos.collect(&:key)
+      end
     end
 
     def sanmyaku_post_onece
@@ -329,7 +343,8 @@ class BattleRecord < ApplicationRecord
 
   concerning :TagMethods do
     included do
-      acts_as_taggable
+      acts_as_ordered_taggable_on :defense_tags
+      acts_as_ordered_taggable_on :attack_tags
     end
   end
 end

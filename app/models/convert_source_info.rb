@@ -55,7 +55,11 @@ class ConvertSourceInfo < ApplicationRecord
 
   concerning :TagMethods do
     included do
-      acts_as_taggable
+      acts_as_ordered_taggable_on :defense_tags
+      acts_as_ordered_taggable_on :attack_tags
+    end
+
+    def tag_list_set_func(*)
     end
   end
 end

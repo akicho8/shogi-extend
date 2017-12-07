@@ -31,6 +31,9 @@ class BattleShip < ApplicationRecord
 
   scope :win_lose_key_eq, -> v { where(win_lose_key: v) }
 
+  acts_as_ordered_taggable_on :defense_tags
+  acts_as_ordered_taggable_on :attack_tags
+
   before_validation do
     if battle_user
       self.battle_rank ||= battle_user.battle_rank

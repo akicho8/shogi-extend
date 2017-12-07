@@ -45,6 +45,7 @@ class SwarsTopsController < ApplicationController
         if @battle_user
           current_user_ship = battle_record.current_user_ship(@battle_user)
           reverse_user_ship = battle_record.reverse_user_ship(@battle_user)
+
           row["対象プレイヤー"] = battle_record.win_lose_str(current_user_ship.battle_user).html_safe + " " + h.link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
           row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
           # if !Rails.env.production? || params[:debug].present?
@@ -64,12 +65,41 @@ class SwarsTopsController < ApplicationController
           end
         end
         row["判定"] = battle_state_info_decorate(battle_record)
-        row["囲い・戦型"] = battle_record.tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
+        if false
+          row["囲い・戦型"] = battle_record.tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
+        else
+          vs = h.tag.span(" vs ", class: "text-muted")
+
+          if @battle_user
+            l_ship = battle_record.current_user_ship(@battle_user)
+            r_ship = battle_record.reverse_user_ship(@battle_user)
+          else
+            l_ship = battle_record.battle_ships.black
+            r_ship = battle_record.battle_ships.white
+          end
+          row["戦型対決"] = [
+            tag_links(l_ship.attack_tag_list),
+            tag_links(r_ship.attack_tag_list),
+          ].join(vs).html_safe
+
+          row["囲い対決"] = [
+            tag_links(l_ship.defense_tag_list),
+            tag_links(r_ship.defense_tag_list),
+            ].join(vs).html_safe
+        end
         row["手数"] = battle_record.turn_max
         row["種類"] = battle_record.battle_group_info.name
         row["日時"] = battled_at_decorate(battle_record)
         row[""] = row_links(battle_record)
       end
+    end
+  end
+
+  def tag_links(tag_list)
+    if tag_list.blank?
+      "？"
+    else
+      tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
     end
   end
 
