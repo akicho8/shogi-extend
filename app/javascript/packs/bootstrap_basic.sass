@@ -11,7 +11,7 @@ footer
 
 ////////////////////////////////////////////////////////////////////////////// コンテンツがないと上下が狭い対策
 
-body > .container
+.main_container
   min-height: 70vh
 
 ////////////////////////////////////////////////////////////////////////////// pre のなかなのに等幅にならない対策
@@ -21,7 +21,7 @@ pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
   line-height: 1.2
 
 ////////////////////////////////////////////////////////////////////////////// kaminari
-  
+
 .pagination
   .page-item
     .page-link
@@ -42,7 +42,7 @@ pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
         /* padding-left: 0.6em
         /* padding-right: 0.6em
         display: none
-        
+
       /* いちばん使われる next は大きく
       &.next_link
         padding-left: 4em
@@ -62,25 +62,66 @@ pre, code, var, samp, kbd, .mono, textarea, .font_fixed_width
       pointer-events: none
 
 ////////////////////////////////////////////////////////////////////////////// ボタン調整
-  
+
 .btn
   border-radius: 3px
 
 ////////////////////////////////////////////////////////////////////////////// ぴよ将棋の画像調整
-  
+
 .show_piyo_link
   height: 39px
 
 .row_piyo_link
   height: 26px
-  
+
 ////////////////////////////////////////////////////////////////////////////// プレースホルダーを中央へ
-  
-/* カーソルまで中央になってしまうのでいったんやめ  
+
+/* カーソルまで中央になってしまうのでいったんやめ
 /* input[type=search]:placeholder-shown
 /*   text-align: center
 
 ////////////////////////////////////////////////////////////////////////////// アイコンを消すために
-  
+
 .icon_hidden
   visibility:hidden ! important
+
+////////////////////////////////////////////////////////////////////////////// タグクラウド
+
+/* Font by 街角A */
+/* http://uranai.nosv.org/u.php/novel/font01/
+
+/* @font-face
+/*   font-family: ニコモジタイプぷらす
+/*   src: url(https://cldup.com/-j9Jm1N4yx.woff2)
+/* 
+/* @font-face
+/*   font-family: みかちゃん-PS
+/*   src: url(https://cdn.leafscape.be/mikachan/mikachan_PS_web.woff2)
+/* 
+/* @font-face
+/*   font-family: うつくし明朝
+/*   src: url(http://cldup.com/Cy5o0ZEEIS.woff)
+/* 
+/* @font-face
+/*   font-family: 春夏秋冬
+/*   src: url(https://cldup.com/w1RN3kocds.woff2)
+/* 
+/* @font-face
+/*   font-family: ロゴたいぷゴシック;
+/*   src: url(https://cldup.com/_aPmnKgOGH.woff2)
+
+@font-face
+  font-family: "うつくし明朝"
+  /* asset_data_url
+  src: font-url("02UtsukushiMincho.ttf")
+  /* src: font-url("UtsukushiFONT.otf") format("truetype")
+  
+.tag_cloud
+  font-family: うつくし明朝, serif ! important
+
+  a
+    margin: 0em 4px
+    vertical-align: middle
+    white-space: nowrap
+    /* color: inherit
+    text-decoration: none

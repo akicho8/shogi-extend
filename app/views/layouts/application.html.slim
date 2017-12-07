@@ -26,15 +26,17 @@ html lang="ja"
           = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
         #navbar.navbar-collapse.collapse
           .navbar-left
-            =<> link_to("将棋ウォーズ棋譜検索", :s, class: "btn btn-primary navbar-btn")
             =<> link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record], class: "btn btn-primary navbar-btn")
+            =<> link_to("将棋ウォーズ棋譜検索", :s, class: "btn btn-primary navbar-btn")
+            =<> link_to("戦型クラウド", :cloud, class: "btn btn-primary navbar-btn")
     .container-fluid
       = bootstrap_flash
-      = yield
+      .main_container
+        = yield
     footer
       .container
         ul.list-inline
-          li= link_to("Github", "https://github.com/akicho8/shogi_web")
+          li= link_to(fa_i(:github, size: 3), "https://github.com/akicho8/shogi_web")
           - if false
             li= link_to("将棋ウォーズ", "https://shogiwars.heroz.jp/")
         p= "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
