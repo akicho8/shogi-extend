@@ -299,6 +299,7 @@ class BattleRecord < ApplicationRecord
       end
       self.turn_max = info.mediator.turn_max
       self.kifu_header = info.header
+      self.tag_list = info.mediator.players.flat_map{|e|e.attack_infos + e.defense_infos}.collect(&:key)
     end
 
     def sanmyaku_post_onece
@@ -323,6 +324,12 @@ class BattleRecord < ApplicationRecord
       if v
         update!(sanmyaku_view_url: v)
       end
+    end
+  end
+
+  concerning :TagMethods do
+    included do
+      acts_as_taggable
     end
   end
 end

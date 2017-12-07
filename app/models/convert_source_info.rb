@@ -52,4 +52,10 @@ class ConvertSourceInfo < ApplicationRecord
   def to_param
     unique_key
   end
+
+  concerning :TagMethods do
+    included do
+      acts_as_taggable
+    end
+  end
 end

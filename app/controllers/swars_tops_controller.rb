@@ -33,6 +33,11 @@ class SwarsTopsController < ApplicationController
     else
       @battle_records = BattleRecord.all
     end
+
+    if current_tags
+      @battle_records = @battle_records.tagged_with(current_tags)
+    end
+
     @battle_records = @battle_records.order(battled_at: :desc).page(params[:page]).per(params[:per])
 
     @rows = @battle_records.collect do |battle_record|
@@ -59,6 +64,7 @@ class SwarsTopsController < ApplicationController
           end
         end
         row["判定"] = battle_state_info_decorate(battle_record)
+        row["囲い・戦型"] = battle_record.tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
         row["手数"] = battle_record.turn_max
         row["種類"] = battle_record.battle_group_info.name
         row["日時"] = battled_at_decorate(battle_record)
@@ -121,26 +127,71 @@ class SwarsTopsController < ApplicationController
     str
   end
 
-  def current_battle_user_key
-    # if Rails.env.development?
-    #   params[:battle_user_key] = "hanairobiyori"
-    # end
-
-    if e = [:battle_user_key, :key, :player, :user].find { |e| params[e].present? }
-      s = params[e].to_s.gsub(/\p{blank}/, " ").strip
-
-      # https://shogiwars.heroz.jp/users/history/xxx?gtype=&locale=ja -> xxx
-      if true
-        if url = URI::Parser.new.extract(s).first
-          if md = URI(url).path.match(%r{history/(.*)})
-            s = md.captures.first
+  def current_query_hash
+    if e = [:battle_user_key, :key, :player, :query, :user].find { |e| params[e].present? }
+      acc = {}
+      params[e].to_s.gsub(/\p{blank}/, " ").strip.split(/\s+/).each do |s|
+        if s.match?(/\A(tag):/i) || query_nihongo?(s)
+          acc[:tags] ||= []
+          acc[:tags] << s.remove("tag:")
+        else
+          # https://shogiwars.heroz.jp/users/history/xxx?gtype=&locale=ja -> xxx
+          if true
+            if url = URI::Parser.new.extract(s).first
+              if md = URI(url).path.match(%r{history/(.*)})
+                s = md.captures.first
+              end
+            end
           end
+          acc[:battle_user_key] ||= []
+          acc[:battle_user_key] << s
         end
       end
-
-      s.presence
+      acc
     end
   end
+
+  def current_tags
+    if v = current_query_hash
+      v[:tags]
+    end
+  end
+
+  def current_battle_user_key
+    if v = current_query_hash
+      if v = v[:battle_user_key]
+        v.first
+      end
+    end
+  end
+
+  def query_nihongo?(s)
+    s.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) # 長音符は無視
+  end
+
+  def current_form_search_value
+    if current_query_hash
+      current_query_hash.values.join(" ")
+    end
+  end
+
+  # def current_tags
+  #   if current_query_hash
+  #     if query_nihongo?
+  #       current_query_hash.split(/[\s,]+/)
+  #     end
+  #   end
+  # end
+  #
+  # def current_battle_user_key extract
+  #   if current_query_hash
+  #     unless query_nihongo?
+  #       s = current_query_hash # TODO: yield_self
+  #
+  #       s
+  #     end
+  #   end
+  # end
 
   def h
     @h ||= view_context

@@ -28,7 +28,7 @@ html lang="ja"
           .navbar-left
             =<> link_to("将棋ウォーズ棋譜検索", :s, class: "btn btn-primary navbar-btn")
             =<> link_to("棋譜変換", [:new, :name_space1, :convert_source_info], class: "btn btn-primary navbar-btn")
-    .container
+    .container-fluid
       = bootstrap_flash
       = yield
     footer
