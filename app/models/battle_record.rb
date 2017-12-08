@@ -314,8 +314,8 @@ class BattleRecord < ApplicationRecord
       self.kifu_header = info.header
 
       # BattleRecord.tagged_with(...) とするため。on をつけないと集約できる
-      self.defense_tag_list = info.mediator.players.flat_map { |e| e.defense_infos }.collect(&:key)
-      self.attack_tag_list = info.mediator.players.flat_map { |e| e.attack_infos }.collect(&:key)
+      self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
+      self.attack_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos }.collect(&:key)
 
       after_parser_run(info)
     end
@@ -324,8 +324,8 @@ class BattleRecord < ApplicationRecord
       # 両者にタグを作らんと意味ないじゃん
       info.mediator.players.each.with_index do |player, i|
         battle_ship = battle_ships[i]
-        battle_ship.defense_tag_list = player.defense_infos.collect(&:key)
-        battle_ship.attack_tag_list = player.attack_infos.collect(&:key)
+        battle_ship.defense_tag_list = player.skill_set.normalized_defense_infos.collect(&:key)
+        battle_ship.attack_tag_list = player.skill_set.normalized_attack_infos.collect(&:key)
       end
     end
 

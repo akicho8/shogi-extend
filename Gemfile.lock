@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: 25ec76b45af5698599dcd75aa1a5dc23af92cf23
+  revision: 783c7bc594cd230222548d5a9527701295df9765
   specs:
     bushido (0.0.1)
       actionview
@@ -19,6 +19,7 @@ GIT
       org_tp
       pry
       tapp
+      tree_support
 
 GIT
   remote: https://github.com/akicho8/daiku.git
@@ -37,6 +38,13 @@ GIT
       activerecord
       activesupport
       rails-deprecated_sanitizer
+
+GIT
+  remote: https://github.com/akicho8/tree_support.git
+  revision: 3145c34d32a6c97fe3ae4a67dd4a0daafdc812ea
+  specs:
+    tree_support (0.0.28)
+      activesupport
 
 GIT
   remote: https://github.com/akicho8/uzoumuzou.git
@@ -250,7 +258,7 @@ GEM
     public_suffix (3.0.1)
     puma (3.11.0)
     rack (2.0.3)
-    rack-proxy (0.6.2)
+    rack-proxy (0.6.3)
       rack
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
@@ -424,6 +432,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3
   test-unit
+  tree_support!
   tzinfo-data
   uglifier (>= 1.3.0)
   uzoumuzou!
