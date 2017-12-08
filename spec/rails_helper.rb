@@ -6,7 +6,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # eshell が大変なことになるのを防ぐ
-# ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
+ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
