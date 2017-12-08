@@ -21,7 +21,7 @@ ruby:
       :pluginspage       => "http://www.adobe.com/go/getflashplayer",
       :FlashVars => {
         :kifu        => url_for([:resource_ns1, current_record, format: "kif"]),
-        :start_tesuu => "last", # 投了図を最初に表示
+        :start_tesuu => 0,      # last:投了図を最初に表示
         :mokume      => 0,      # 木目なし
         :resize      => 1,      # コメントの縦幅はDOMに合わせる
         :no_help     => 1,      # ヘルプなし
@@ -40,12 +40,12 @@ ruby:
 br
 .text-center
   p
-    =<> link_to("将棋山脈で見る", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-primary kif_clipboard_copy_button2", data: {toggle: :tooltip, title: "プロのように解説してくれます"})
-    =<> link_to("KIF形式の棋譜をクリップボードにコピーする", "#", "class": "btn btn-primary kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+    =<> link_to("KIF形式の棋譜をクリップボードにコピーする", "#", "class": "btn btn-default kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+    - if current_record.kind_of?(BattleRecord)
+      =<> link_to("戦", swars_real_battle_url(current_record), "class": "btn btn-default", data: {toggle: :tooltip, title: "将棋ウォーズに移動します"})
+    =<> link_to("将棋山脈で見る", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :tooltip, title: "プロのように解説してくれます"})
     =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link", data: {toggle: :tooltip, title: "ぴよ将棋で開きます"}), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
 br
-    - if current_record.kind_of?(BattleRecord)
-      =<> link_to("戦", swars_real_battle_url(current_record), "class": "btn btn-primary", data: {toggle: :tooltip, title: "将棋ウォーズに移動します"})
 
 .row
   .col-md-4
