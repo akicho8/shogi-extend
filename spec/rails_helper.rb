@@ -61,9 +61,6 @@ RSpec.configure do |config|
     end
   end
 
-  # screenshot_opener を rspec の方にも対応させる
-  config.include ScreenshotOpener, type: :system
-
   # テストの中で使う便利メソッド
   config.include Module.new {
     def battle_rank_setup
