@@ -1,4 +1,4 @@
-class WinLoseInfo
+class JudgeInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: :win,  name: "勝ち",     },
@@ -7,6 +7,6 @@ class WinLoseInfo
   ]
 
   def battle_ships
-    BattleShip.where(win_lose_key: key)
+    BattleShip.where(judge_key: key)
   end
 end

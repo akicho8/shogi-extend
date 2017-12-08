@@ -21,20 +21,20 @@
 class CreateFreeBattleRecords < ActiveRecord::Migration[5.1]
   def up
     create_table :free_battle_records, force: true do |t|
-      t.string :unique_key, null: false, index: true
-      t.string :kifu_file
-      t.string :kifu_url
-      t.text :kifu_body, null: false
-      t.integer :turn_max, null: false
-      t.text :kifu_header, null: false
-      t.string :mountain_url
+      t.string :unique_key, null: false, index: true, comment: "URL識別子"
+      t.string :kifu_file, comment: "アップロードした棋譜ファイル"
+      t.string :kifu_url, comment: "入力した棋譜URL"
+      t.text :kifu_body, null: false, comment: "棋譜本文"
+      t.integer :turn_max, null: false, comment: "手数"
+      t.text :kifu_header, null: false, comment: "棋譜メタ情報"
+      t.string :mountain_url, comment: "将棋山脈の変換後URL"
       t.timestamps null: false
     end
 
     create_table :converted_infos, force: true do |t|
-      t.belongs_to :convertable, polymorphic: true, null: false
-      t.text :text_body, null: false
-      t.string :text_format, null: false, index: true
+      t.belongs_to :convertable, polymorphic: true, null: false, comment: "親"
+      t.text :text_body, null: false, comment: "棋譜内容"
+      t.string :text_format, null: false, index: true, comment: "棋譜形式"
       t.timestamps null: false
     end
   end

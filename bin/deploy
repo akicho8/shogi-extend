@@ -1,3 +1,0 @@
-#!/bin/sh
-deploy_to_heroku
-deploy_to_sakura

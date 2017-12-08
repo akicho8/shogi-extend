@@ -15,7 +15,5 @@ module ApplicationHelper
     }.flatten.compact.join("\n").html_safe
   end
 
-  def fa_i(*args)
-    Fa.fa_i(*args)
-  end
+  delegate :icon_tag, to: Fa
 end

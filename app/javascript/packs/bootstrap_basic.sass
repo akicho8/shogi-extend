@@ -16,44 +16,42 @@ footer
 
 ////////////////////////////////////////////////////////////////////////////// kaminari
 
-.pagination
-  .page-item
+.page-item
+  .page-link
+    /* 隙間
+    margin: 0.2em
+
+    /* 角丸め
+    border-radius: 8px ! important
+
+    /* 数字の大きさ
+    font-size: 1.2em
+
+    /* 大きさ
+    padding: 0.68em 1.2em
+
+    /* 「prev」は押せる利点より邪魔なデメリットの方がでかいので消す
+    &.prev_link
+      display: none
+
+    /* いちばん使われる next は大きく
+    &.next_link
+      padding-left: 4em
+      padding-right: 4em
+
+    /* 端に移動するリンクは
+    &.first_or_last
+      display: none
+
+  /* 「…」の部分
+  &.disabled        
     .page-link
-      /* 隙間
-      margin: 0.2em
-
-      /* 角丸め
-      border-radius: 8px ! important
-
-      /* 数字の大きさ
-      font-size: 1.2em
-
-      /* 大きさ
-      padding: 0.72em 1.3em
-
-      /* 「prev」は押せる利点より邪魔なデメリットの方がでかいので消す
-      &.prev_link
-        /* padding-left: 0.6em
-        /* padding-right: 0.6em
-        display: none
-
-      /* いちばん使われる next は大きく
-      &.next_link
-        padding-left: 4em
-        padding-right: 4em
-
-      /* 端に移動するリンクは
-      &.first_or_last
-        display: none
-
-  /* 「…」の部分は
-  .page-item.disabled
-    /* 消すのもありかもしれない→消す
-    /* display: none
-
-    /* デフォルトでは '#' が押せてしまうので押せないようにする
-    .page-link
+      /* デフォルトでは '#' が押せてしまうので押せないようにする
       pointer-events: none
+      /* 少し小さくする
+      padding-left: 0.7em
+      padding-right: 0.7em
+      
 
 ////////////////////////////////////////////////////////////////////////////// ボタン調整
 

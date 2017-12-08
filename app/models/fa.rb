@@ -4,13 +4,13 @@ module Fa
 
   # アイコン指定
   #
-  #   fa_i()                                #=> nil
-  #   fa_i(:clock_o, :fixed_width => false) #=> ' <i class="fa fa-clock-o"></i> '
-  #   fa_i(:clock_o)                        #=> ' <i class="fa fa-clock-o fa-fw"></i> '
-  #   fa_i(:clock_o, :size => 1)            #=> ' <i class="fa fa-clock-o fa-fw"></i> '
-  #   fa_i(:clock_o, :size => 2)            #=> ' <i class="fa fa-clock-o fa-fw fa-lg"></i> '
+  #   icon_tag()                                #=> nil
+  #   icon_tag(:clock_o, :fixed_width => false) #=> ' <i class="fa fa-clock-o"></i> '
+  #   icon_tag(:clock_o)                        #=> ' <i class="fa fa-clock-o fa-fw"></i> '
+  #   icon_tag(:clock_o, :size => 1)            #=> ' <i class="fa fa-clock-o fa-fw"></i> '
+  #   icon_tag(:clock_o, :size => 2)            #=> ' <i class="fa fa-clock-o fa-fw fa-lg"></i> '
   #
-  def fa_i(*names)
+  def icon_tag(*names)
     options = {
       :size        => 1,
       :fixed_width => true,

@@ -7,7 +7,7 @@ RSpec.describe "FreeBattleRecords", type: :system do
 
   it "トップ" do
     visit "/"
-    expect(page).to have_content "Github"
+    expect(page).to have_content "Rails"
   end
 
   it "一覧" do

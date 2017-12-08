@@ -3,14 +3,10 @@ class BattleAgent
     @options = {
       run_localy: AppConfig[:run_localy]
     }.merge(options)
-
-    # if Rails.env.development?
-    #   @options[:run_localy] = false
-    # end
   end
 
   concerning :HistoryGetMethods do
-    def history_get(**params)
+    def index_get(**params)
       params = {
         gtype: "",    # 空:10分 sb:3分 s1:10秒
         uid: nil,
@@ -54,6 +50,11 @@ class BattleAgent
       html = html.gsub("\\\"", '"')
       html = html.gsub("\\/", '/')
       html = html.gsub(/>\s*</m, '><')
+    end
+
+    # http://kif-pona.heroz.jp/games/xxx?locale=ja -> xxx
+    def battle_key_from_url(url)
+      url.remove(/.*games\//, /\?.*/)
     end
   end
 
@@ -114,11 +115,6 @@ class BattleAgent
     end
   end
 
-  # http://kif-pona.heroz.jp/games/xxx?locale=ja -> xxx
-  def battle_key_from_url(url)
-    url.remove(/.*games\//, /\?.*/)
-  end
-
   # xxx -> http://kif-pona.heroz.jp/games/xxx?locale=ja
   def battle_key_to_url(battle_key)
     "http://kif-pona.heroz.jp/games/#{battle_key}?locale=ja"
@@ -126,9 +122,9 @@ class BattleAgent
 end
 
 if $0 == __FILE__
-  tp BattleAgent.new.history_get(gtype: "",  uid: "Apery8")
-  # tp BattleAgent.new.history_get(gtype: "sb",  uid: "Apery8")
-  # tp BattleAgent.new.history_get(gtype: "s1",  uid: "Apery8")
+  tp BattleAgent.new.index_get(gtype: "",  uid: "Apery8")
+  # tp BattleAgent.new.index_get(gtype: "sb",  uid: "Apery8")
+  # tp BattleAgent.new.index_get(gtype: "s1",  uid: "Apery8")
   tp BattleAgent.new.record_get("hanairobiyori-ispt-20171104_220810")
 
   # |--------------------------------------------+----------------------------------------------------------------------------------------------------|

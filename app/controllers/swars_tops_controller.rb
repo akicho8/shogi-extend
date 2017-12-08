@@ -44,11 +44,11 @@ class SwarsTopsController < ApplicationController
           row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
         else
           if battle_record.win_battle_user
-            row["勝ち"] = Fa.fa_i(:circle_o) + battle_user_link(battle_record, :win)
-            row["負け"] = Fa.fa_i(:circle) + battle_user_link(battle_record, :lose)
+            row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link(battle_record, :win)
+            row["負け"] = Fa.icon_tag(:circle) + battle_user_link(battle_record, :lose)
           else
-            row["勝ち"] = Fa.fa_i(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.black)
-            row["負け"] = Fa.fa_i(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.white)
+            row["勝ち"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.black)
+            row["負け"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.white)
           end
         end
         row["判定"] = battle_state_info_decorate(battle_record)
@@ -96,13 +96,13 @@ class SwarsTopsController < ApplicationController
     end
     list << h.link_to("山脈", [:resource_ns1, current_record, mountain: true], "class": "btn btn-default btn-sm", remote: true)
     list << h.link_to("コピー".html_safe, "#", "class": "btn btn-primary btn-sm kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
-    list << h.link_to("戦", swars_board_url(current_record), "class": "btn btn-default btn-sm")
-    list << h.link_to(h.image_tag("piyo_link.png", "class": "row_piyo_link"), piyo_link_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
+    list << h.link_to("戦", swars_real_battle_url(current_record), "class": "btn btn-default btn-sm")
+    list << h.link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
     list.compact.join(" ").html_safe
   end
 
-  def battle_user_link(battle_record, win_lose_key)
-    if battle_ship = battle_record.battle_ships.win_lose_key_eq(win_lose_key).take
+  def battle_user_link(battle_record, judge_key)
+    if battle_ship = battle_record.battle_ships.judge_key_eq(judge_key).take
       battle_user_link2(battle_ship)
     end
   end
@@ -118,7 +118,7 @@ class SwarsTopsController < ApplicationController
       str = h.tag.span(str, "class": "label label-#{v}")
     end
     if v = battle_state_info.icon_key
-      str = h.fa_i(v) + str
+      str = h.icon_tag(v) + str
     end
     str
   end

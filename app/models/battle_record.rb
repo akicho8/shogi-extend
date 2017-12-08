@@ -28,8 +28,8 @@ class BattleRecord < ApplicationRecord
   has_one :battle_ship_black, -> { where(position: 0) }, class_name: "BattleShip"
   has_one :battle_ship_white, -> { where(position: 1) }, class_name: "BattleShip"
 
-  has_one :battle_ship_win,  -> { where(win_lose_key: :win) }, class_name: "BattleShip"
-  has_one :battle_ship_lose, -> { where(win_lose_key: :lose) }, class_name: "BattleShip"
+  has_one :battle_ship_win,  -> { where(judge_key: :win) }, class_name: "BattleShip"
+  has_one :battle_ship_lose, -> { where(judge_key: :lose) }, class_name: "BattleShip"
 
   has_many :battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle_record do
     def black
@@ -41,11 +41,11 @@ class BattleRecord < ApplicationRecord
     end
 
     def win
-      win_lose_key_eq(:win)
+      judge_key_eq(:win)
     end
 
     def lose
-      win_lose_key_eq(:lose)
+      judge_key_eq(:lose)
     end
   end
 
@@ -164,12 +164,12 @@ class BattleRecord < ApplicationRecord
     def win_lose_str(battle_user)
       if win_battle_user
         if winner_desuka?(battle_user)
-          Fa.fa_i(:circle_o)
+          Fa.icon_tag(:circle_o)
         else
-          Fa.fa_i(:circle)
+          Fa.icon_tag(:circle)
         end
       else
-        Fa.fa_i(:minus, :class => "icon_hidden")
+        Fa.icon_tag(:minus, :class => "icon_hidden")
       end
     end
   end
@@ -187,7 +187,7 @@ class BattleRecord < ApplicationRecord
       end
 
       def import_one(**params)
-        list = battle_agent.history_get(params)
+        list = battle_agent.index_get(params)
         list.each do |history|
           import_by_battle_key(history[:battle_key])
         end
@@ -238,12 +238,12 @@ class BattleRecord < ApplicationRecord
           battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
 
           if winner_index
-            win_lose_key = (i == winner_index) ? :win : :lose
+            judge_key = (i == winner_index) ? :win : :lose
           else
-            win_lose_key = :draw
+            judge_key = :draw
           end
 
-          battle_record.battle_ships.build(battle_user:  battle_user, battle_rank: battle_rank, win_lose_key: win_lose_key)
+          battle_record.battle_ships.build(battle_user:  battle_user, battle_rank: battle_rank, judge_key: judge_key)
         end
 
         # SQLをシンプルにするために勝者だけ、所有者的な意味で、BattleRecord 自体に入れとく
