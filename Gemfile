@@ -98,6 +98,7 @@ gem 'airbrake', "~> 5.0"        # バージョン重要
 gem 'airbrake-ruby'
 
 gem 'memory_record'
+gem 'tree_support'
 gem 'org_tp'
 gem 'html_format'
 gem 'daiku',         github: 'akicho8/daiku'
@@ -105,7 +106,6 @@ gem 'aam',           github: 'akicho8/aam'
 gem 'uzoumuzou',     github: 'akicho8/uzoumuzou'
 gem 'normalizer',    github: 'akicho8/normalizer'
 gem 'bushido',       github: 'akicho8/bushido'
-gem 'tree_support',  github: 'akicho8/tree_support'
 
 # for BattleAgent
 gem 'nokogiri'

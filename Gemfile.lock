@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: 927c487a98d0cc5e510ad1dcb7ac2a1d6e39bcfe
+  revision: 6ab7c0d02b9027ca958947960e09600956a3adac
   specs:
     bushido (0.0.1)
       actionview
@@ -38,13 +38,6 @@ GIT
       activerecord
       activesupport
       rails-deprecated_sanitizer
-
-GIT
-  remote: https://github.com/akicho8/tree_support.git
-  revision: 3145c34d32a6c97fe3ae4a67dd4a0daafdc812ea
-  specs:
-    tree_support (0.0.28)
-      activesupport
 
 GIT
   remote: https://github.com/akicho8/uzoumuzou.git
@@ -360,6 +353,8 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    tree_support (0.1.2)
+      activesupport
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
     uglifier (4.0.1)
@@ -432,7 +427,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3
   test-unit
-  tree_support!
+  tree_support
   tzinfo-data
   uglifier (>= 1.3.0)
   uzoumuzou!

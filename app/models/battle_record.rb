@@ -126,16 +126,16 @@ class BattleRecord < ApplicationRecord
       out << "+"
 
       life_times = [battle_rule_info.life_time] * 2
-      csa_seq.each.with_index { |(t1, t2), i|
+      csa_seq.each.with_index do |(t1, t2), i|
         i = i.modulo(life_times.size)
         used = life_times[i] - t2
         life_times[i] = t2
 
         out << "#{t1}"
         out << "T#{used}"
-      }
+      end
 
-      out << "%#{battle_state_info.csa_key}"
+      out << "%#{battle_state_info.last_action_key}"
       out.join("\n") + "\n"
     end
   end
