@@ -1,57 +1,5 @@
 .tag_cloud
   .text-center
     .container
-      - tag_cloud(BattleRecord.all_tag_counts(order: "count desc", limit: 1000).shuffle, [*10..64]) do |tag, size|
+      - tag_cloud(BattleRecord.all_tag_counts(order: "count desc", limit: 1000).shuffle, [*8..32]) do |tag, size|
         =<> link_to(tag.name, query_search_path(tag.name), style: "font-size: #{size}px")
-
-
-
-/ .text-center
-/   .page-header
-/     h1
-/       = "将棋ウォーズ棋譜検索"
-/ 
-/ - if false
-/   = form_with(url: :s, class: "form-horizontal", method: :get, enforce_utf8: false) do |form|
-/     .form-group.form-group-lg
-/       = form.label(:uid, class: "col-sm-2 control-label")
-/       .col-sm-10
-/         = form.text_field(:uid, class: "form-control", value: controller.current_uid)
-/     .form-group
-/       .col-sm-offset-2.col-sm-10
-/         =<> form.submit("検索", name: nil, class: "btn btn-primary btn-lg")
-/ 
-/ - if true
-/   = form_with(url: :s, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
-/     .form-group.form-group-lg
-/       .col-sm-3
-/       .col-sm-6
-/         = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 囲い・戦型名", list: "uid_list", autofocus: controller.current_query_hash.blank?)
-/         = tag.datalist(id: "uid_list") do
-/           - BattleUser.order(updated_at: :desc).limit(128).pluck(:uid).each do |uid|
-/             = tag.option(value: uid)
-/       .col-sm-3
-/     .form-group
-/       .col-sm-12
-/         .text-center
-/           = form.submit("検索", name: nil, class: "btn btn-primary btn-lg", data: {disable_with: "検索中"})
-/ 
-/ = @rows.to_html
-/ 
-/ - if @battle_records
-/   .text-center
-/     = paginate @battle_records
-/ 
-/   - content_for :head do
-/     = rel_next_prev_link_tags @battle_records
-/ 
-/ - if controller.current_uid
-/   - if v = Rails.cache.read("import_all_#{controller.current_uid}")
-/     small
-/       .text-center
-/         .text-muted
-/           = "Last imported at #{v.to_s(:ymdhm)}"
-/ 
-/ - if Rails.env.development? && false
-/   = BattleUser.to_html
-/   = BattleRecord.to_html
