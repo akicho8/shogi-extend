@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: 6ab7c0d02b9027ca958947960e09600956a3adac
+  revision: 7e35210a490b9680fd3097d74047787c36454fa4
   specs:
     bushido (0.0.1)
       actionview
@@ -220,7 +220,7 @@ GEM
       nokogiri (~> 1.6)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
-    memory_record (0.0.7)
+    memory_record (0.0.8)
       activemodel
       activesupport
     method_source (0.9.0)
@@ -357,7 +357,7 @@ GEM
       activesupport
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    uglifier (4.0.1)
+    uglifier (4.0.2)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
