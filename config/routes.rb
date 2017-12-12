@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "s/:query", to: "swars_tops#show", as: :query_search
   get "s", to: "swars_tops#show"
   get "cloud", to: "swars_tops#tag_cloud"
+  get "xy", to: "swars_tops#coordinates_sign_enter_game"
 
   get "swars_tops/show"
   root "swars_tops#show"

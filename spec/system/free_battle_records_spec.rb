@@ -5,11 +5,6 @@ RSpec.describe "FreeBattleRecords", type: :system do
     @free_battle_record = FreeBattleRecord.create!
   end
 
-  it "トップ" do
-    visit "/"
-    expect(page).to have_content "Rails"
-  end
-
   it "一覧" do
     visit "/x"
     expect(page).to have_content "一覧"
