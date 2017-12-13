@@ -1,5 +1,5 @@
 .tag_cloud
   .text-center
     .container
-      - tag_cloud(BattleRecord.all_tag_counts(order: "count desc", limit: 1000).shuffle, [*8..32]) do |tag, size|
+      - tag_cloud(BattleRecord.all_tag_counts(order: "count desc", limit: 1000).shuffle, [*10..40]) do |tag, size|
         =<> link_to(tag.name, query_search_path(tag.name), style: "font-size: #{size}px")
