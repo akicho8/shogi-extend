@@ -55,7 +55,6 @@ class SwarsTopsController < ApplicationController
         if false
           row["囲い・戦型"] = battle_record.tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
         else
-          vs = h.tag.span(" vs ", :class => "text-muted")
 
           if @battle_user
             l_ship = battle_record.current_user_ship(@battle_user)
@@ -65,8 +64,8 @@ class SwarsTopsController < ApplicationController
             r_ship = battle_record.battle_ships.white
           end
 
-          row[pc_only("戦型対決")] = pc_only([tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list)].join(vs).html_safe)
-          row[pc_only("囲い対決")] = pc_only([tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list)].join(vs).html_safe)
+          row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
+          row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
         row["手数"] = battle_record.turn_max
         row["種類"] = battle_record.battle_rule_info.name
@@ -80,9 +79,17 @@ class SwarsTopsController < ApplicationController
     h.tag.span(v, :class => "visible-lg")
   end
 
+  def versus_tag(*list)
+    if list.compact.empty?
+    else
+      vs = h.tag.span(" vs ", :class => "text-muted")
+      str = list.collect { |e| e || "不明" }.join(vs).html_safe
+      pc_only(str)
+    end
+  end
+
   def tag_links(tag_list)
     if tag_list.blank?
-      "不明"
     else
       tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
     end

@@ -25,11 +25,11 @@ class BattleStateInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: "TORYO",         name: "投了",     label_key: nil,      last_action_key: "TORYO",      icon_key: nil, },
-    {key: "DISCONNECT",    name: "切断",     label_key: :danger,  last_action_key: "CHUDAN",     icon_key: nil, },
+    {key: "DISCONNECT",    name: "切断",     label_key: :warning, last_action_key: "CHUDAN",     icon_key: nil, },
     {key: "TIMEOUT",       name: "時間切れ", label_key: nil,      last_action_key: "TIME_UP",    icon_key: nil, },
     {key: "CHECKMATE",     name: "詰み",     label_key: nil,      last_action_key: "TSUMI",      icon_key: nil, },
-    {key: "ENTERINGKING",  name: "入玉",     label_key: :warning, last_action_key: "KACHI",      icon_key: nil, },
-    {key: "DRAW_SENNICHI", name: "千日手",   label_key: :info,    last_action_key: "SENNICHITE", icon_key: nil, }, # これだけは (SENTE|GOTE)_WIN の型で来てない
+    {key: "ENTERINGKING",  name: "入玉",     label_key: :info,    last_action_key: "KACHI",      icon_key: nil, },
+    {key: "DRAW_SENNICHI", name: "千日手",   label_key: :danger,  last_action_key: "SENNICHITE", icon_key: nil, }, # これだけは (SENTE|GOTE)_WIN の型で来てない
   ]
 
   def csa_key

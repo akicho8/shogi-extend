@@ -20,7 +20,9 @@ $tooltip-bg: #2c2c2c
 // 英語フォントを前に書く(英語とまざってめちゃくちゃなのでやめ)
 /* $font-family-serif: Georgia, "Times New Roman", Times, "YuMincho", "Yu Mincho", serif !default
 /* $font-family-base: $font-family-serif
-
+$table-cell-padding: 12px
+$table-bg:           darken($gray-darker, 6%)
+$table-bg-accent:    darken($table-bg, 2%)
 
 // Then bootstrap itself
 @import "bootstrap"
@@ -57,3 +59,9 @@ footer
   text-shadow: 0 1px 0 black
   background: linear-gradient($body-bg, lighten($body-bg, 12%))
 
+.table
+  th
+    padding-top:    4px ! important
+    padding-bottom: 4px ! important
+  td
+    border-top: 0px ! important
