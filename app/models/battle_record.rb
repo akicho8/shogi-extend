@@ -166,7 +166,7 @@ class BattleRecord < ApplicationRecord
         if winner_desuka?(battle_user)
           Fa.icon_tag(:circle_o)
         else
-          Fa.icon_tag(:circle)
+          Fa.icon_tag(:times)
         end
       else
         Fa.icon_tag(:minus, :class => "icon_hidden")
