@@ -17,7 +17,8 @@
       .text-center
         = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
 
-= @rows.to_html
+.search_result
+  = @rows.to_html
 
 - if @battle_records
   .text-center
