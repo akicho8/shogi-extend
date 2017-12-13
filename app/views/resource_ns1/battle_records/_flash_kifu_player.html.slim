@@ -31,48 +31,64 @@ ruby:
 
 .text-center
   = object
+
+  ////////////////////////////////////////////////////////////////////////////////
+
   p.text-muted
     small
       = "キーボードの"
       kbd
         =<> icon_tag(:arrow_right, fixed_width: false)
       = "でも進められます"
+  br
 
-br
-.text-center
+  ////////////////////////////////////////////////////////////////////////////////
+
   p
     =<> link_to("コピー", "#", "class": "btn btn-default kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
     - if current_record.kind_of?(BattleRecord)
       =<> link_to("戦", swars_real_battle_url(current_record), "class": "btn btn-default", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
     =<> link_to("山", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :tooltip, title: "将棋山脈"})
     =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
-br
+  br
 
-.row
-  .col-md-4
-  .col-md-4
-    .text-center
-      .panel.panel-info
-        .panel-body
-          small
-            = tag.p "#{icon_tag(:file_text_o)}棋譜保存".html_safe, data: {toggle: :tooltip}, title: "option (alt) キーを押しながらクリックすると直接ダウンロードできます"
-          p
-            - KifuFormatInfo.each do |e|
-              =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-info")
-  .col-md-4
+  ////////////////////////////////////////////////////////////////////////////////
 
-.text-center
+  .well
+    / = tag.p "棋譜保存".html_safe, data: {toggle: :tooltip, title: "option (alt) キーを押しながらクリックすると直接ダウンロードできます"}
+    = tag.p "ダウンロード"
+    p
+      - KifuFormatInfo.each do |e|
+        =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-primary btn-xs")
+
+  ////////////////////////////////////////////////////////////////////////////////
+
   br
   = current_record.kifu_header.to_html
 
-- if !Rails.env.production?
+  ////////////////////////////////////////////////////////////////////////////////
+
+  .container
+    / タブの href="#(ここ)" と tag.div(id: "ここ") を合わせる
+    ul.nav.nav-tabs
+      - KifuFormatInfo.each.with_index do |e, i|
+        li class=("active" if i.zero?)
+          a data-toggle="tab" href="##{e.key}" = e.name
+    #myTabContent.tab-content
+      - KifuFormatInfo.each.with_index do |e, i|
+        = tag.div(id: e.key, class: "tab-pane #{'active' if i.zero?}") do
+          pre.text-left
+            = current_record.converted_infos.text_format_eq(e.key).take!.text_body
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+- if !Rails.env.production? && false
   br
 
   - KifuFormatInfo.each do |e|
     = e.name
     pre
       = current_record.converted_infos.text_format_eq(e.key).take!.text_body
-
   pre
     = current_record.kifu_body
 

@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////// テーブルの中の文字が眩しいため (bootswatch で即値指定されているため変数でカスタマイズできない)
+
+table
+  color: #999 ! important
+  a
+    color: inherit
+    text-decoration: none ! important
+    
+
 ////////////////////////////////////////////////////////////////////////////// bootstrap 1 のころのテーマに使われていたフッター
 
 $my_color_h: 0
@@ -99,3 +108,19 @@ footer
 kbd
   display: inline-block
   border-radius: 3px ! important
+
+////////////////////////////////////////////////////////////////////////////// 棋譜を表示する pre
+
+pre
+  font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace ! important
+  font-size: 10px ! important
+  line-height: 1.2 ! important
+  background: #bbb ! important
+
+////////////////////////////////////////////////////////////////////////////// 綺麗な明朝体
+
+.yumincho
+  font-family: "YuMincho", "Yu Mincho", serif
+
+/* body
+/*   font-family: "YuMincho", "Yu Mincho", serif

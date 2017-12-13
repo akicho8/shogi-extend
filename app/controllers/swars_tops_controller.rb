@@ -45,7 +45,7 @@ class SwarsTopsController < ApplicationController
         else
           if battle_record.win_battle_user
             row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link(battle_record, :win)
-            row["負け"] = Fa.icon_tag(:circle) + battle_user_link(battle_record, :lose)
+            row["負け"] = Fa.icon_tag(:times) + battle_user_link(battle_record, :lose)
           else
             row["勝ち"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.black)
             row["負け"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.white)
@@ -115,7 +115,7 @@ class SwarsTopsController < ApplicationController
     str = battle_record.battle_state_info.name
     battle_state_info = battle_record.battle_state_info
     if v = battle_state_info.label_key
-      str = h.tag.span(str, "class": "label label-#{v}")
+      str = h.tag.span(str, "class": "text-#{v}")
     end
     if v = battle_state_info.icon_key
       str = h.icon_tag(v) + str

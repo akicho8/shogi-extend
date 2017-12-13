@@ -10,13 +10,13 @@ html lang="ja"
     title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
     = action_cable_meta_tag
 
-    / webpack
-    = stylesheet_pack_tag "application"
-    = javascript_pack_tag "application"
-
     / sprockets
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
+
+    / webpack
+    = stylesheet_pack_tag "application"
+    = javascript_pack_tag "application"
 
     = render "google_analytics" if Rails.env.production?
   body

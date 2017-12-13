@@ -115,7 +115,7 @@ module ResourceNs1
           text_body = text_body.tosjis
         end
 
-        send_data(text_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: true ? "inline" : "attachment")
+        send_data(text_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: false ? "inline" : "attachment")
       end
 
       # Kifu.swf から呼ばれたときは日付のキーが含まれている
