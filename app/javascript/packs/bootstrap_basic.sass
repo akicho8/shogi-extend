@@ -3,28 +3,28 @@
 $my_color_h: 0
   
 footer
-  margin-top: 30px
-  padding: 30px 0
+  margin-top: 5vmin
+  padding: 5vmin 0
   text-shadow: 0 1px 0 black
   background: linear-gradient(black, hsl($my_color_h, 0%, 12%))
 
 ////////////////////////////////////////////////////////////////////////////// コンテンツがないと上下が狭い対策
 
 .main_container
-  min-height: 70vh
+  min-height: 50vmin
 
 ////////////////////////////////////////////////////////////////////////////// kaminari
 
 .page-item
   .page-link
     /* 隙間
-    margin: 0.2em
+    margin: 0.3rem
 
     /* 角丸め
     border-radius: 8px ! important
 
     /* 数字の大きさ
-    font-size: 1.2em
+    font-size: 1.5rem
 
     /* 大きさ
     padding: 0.68em 1.2em
@@ -35,8 +35,8 @@ footer
 
     /* いちばん使われる next は大きく
     &.next_link
-      padding-left: 4em
-      padding-right: 4em
+      padding-left: 4rem
+      padding-right: 4rem
 
     /* 端に移動するリンクは
     &.first_or_last
@@ -48,18 +48,18 @@ footer
       /* デフォルトでは '#' が押せてしまうので押せないようにする
       pointer-events: none
       /* 少し小さくする
-      padding-left: 0.7em
-      padding-right: 0.7em
+      padding-left: 0.7rem
+      padding-right: 0.7rem
 
 ////////////////////////////////////////////////////////////////////////////// ボタン調整
 
-.btn
-  border-radius: 3px
+/* .btn
+/*   border-radius: 3px
 
 ////////////////////////////////////////////////////////////////////////////// ぴよ将棋の画像調整
 
 .show_piyo_link
-  height: 39px
+  height: 2rem
 
 .row_piyo_link
   height: 2rem
@@ -77,9 +77,19 @@ footer
 
 ////////////////////////////////////////////////////////////////////////////// タグクラウド
 
+/* ▼テキストの縦方向の中央揃えについて - Qiita
+/* https://qiita.com/Shinji-m/items/69a392685699f3ba95fb
+.my-flexiblebox
+  display: flex
+  justify-content: center
+  align-items: center
+  
 .tag_cloud
+  text-align: center
+  min-height: 80vmin
+  /* border: 1px solid blue
   a
-    margin: 0em 4px
+    margin: 0em 1rem
     vertical-align: middle
     white-space: nowrap
     text-decoration: none ! important

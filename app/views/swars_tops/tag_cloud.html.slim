@@ -1,5 +1,7 @@
-.tag_cloud
-  .text-center
-    .container
+.tag_cloud.my-flexiblebox
+  .row
+    .col-lg-2
+    .col-lg-8
       - tag_cloud(BattleRecord.all_tag_counts(order: "count desc", limit: 1000).shuffle, [*10..40]) do |tag, size|
         =<> link_to(tag.name, query_search_path(tag.name), style: "font-size: #{size}px")
+    .col-lg-2
