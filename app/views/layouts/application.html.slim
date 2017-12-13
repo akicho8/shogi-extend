@@ -9,10 +9,15 @@ html lang="ja"
     = yield :head
     title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
     = action_cable_meta_tag
+
+    / webpack
     = stylesheet_pack_tag "application"
     = javascript_pack_tag "application"
+
+    / sprockets
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
+
     = render "google_analytics" if Rails.env.production?
   body
     nav.navbar.navbar-inverse.navbar-static-top

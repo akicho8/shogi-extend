@@ -101,7 +101,14 @@ GEM
     archive-zip (0.7.0)
       io-like (~> 0.3.0)
     arel (8.0.0)
+    autoprefixer-rails (7.2.2)
+      execjs
     bindex (0.5.0)
+    bootstrap-sass (3.3.7)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
+    bootswatch-rails (3.3.5)
+      railties (>= 3.1)
     builder (3.2.3)
     byebug (9.1.0)
     capistrano (3.6.1)
@@ -387,6 +394,8 @@ DEPENDENCIES
   acts_as_list
   airbrake (~> 5.0)
   airbrake-ruby
+  bootstrap-sass
+  bootswatch-rails
   bushido!
   byebug
   capistrano (= 3.6.1)

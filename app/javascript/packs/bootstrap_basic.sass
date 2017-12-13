@@ -1,13 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////// bootstrap 1 のころのテーマに使われていたフッター
 
+$my_color_h: 0
+  
 footer
   margin-top: 30px
-  background-color: #eee
   padding: 30px 0
-  text-shadow: 0 1px 0 #fff
-  border-top: 1px solid #e5e5e5
-  p
-    color: #555
+  text-shadow: 0 1px 0 black
+  background: linear-gradient(black, hsl($my_color_h, 0%, 12%))
 
 ////////////////////////////////////////////////////////////////////////////// コンテンツがないと上下が狭い対策
 
@@ -44,14 +43,13 @@ footer
       display: none
 
   /* 「…」の部分
-  &.disabled        
+  &.disabled
     .page-link
       /* デフォルトでは '#' が押せてしまうので押せないようにする
       pointer-events: none
       /* 少し小さくする
       padding-left: 0.7em
       padding-right: 0.7em
-      
 
 ////////////////////////////////////////////////////////////////////////////// ボタン調整
 
@@ -64,7 +62,7 @@ footer
   height: 39px
 
 .row_piyo_link
-  height: 26px
+  height: 2rem
 
 ////////////////////////////////////////////////////////////////////////////// プレースホルダーを中央へ
 
@@ -91,4 +89,3 @@ footer
 kbd
   display: inline-block
   border-radius: 3px ! important
-    

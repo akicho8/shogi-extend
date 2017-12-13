@@ -82,7 +82,6 @@ group :test do
   gem 'chromedriver-helper'     # for SystemTestCase
 end
 
-gem 'font-awesome-sass'
 
 # gem 'activerecord-session_store'
 
@@ -116,3 +115,7 @@ gem 'acts_as_list'
 gem 'faraday'
 
 gem 'acts-as-taggable-on'
+
+gem 'bootstrap-sass'
+gem 'bootswatch-rails'
+gem 'font-awesome-sass'
