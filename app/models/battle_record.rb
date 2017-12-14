@@ -164,7 +164,7 @@ class BattleRecord < ApplicationRecord
     def win_lose_str(battle_user)
       if win_battle_user
         if winner_desuka?(battle_user)
-          Fa.icon_tag(:circle)
+          Fa.icon_tag(:circle_o)
         else
           Fa.icon_tag(:times)
         end
@@ -304,7 +304,8 @@ class BattleRecord < ApplicationRecord
       end
     end
 
-    # BattleRecord.find_each{|e|e.parser_run}
+    # 更新方法
+    # BattleRecord.find_each{|e|e.parser_run; e.save!}
     def parser_run(**options)
       options = {
         destroy_all: false,

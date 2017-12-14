@@ -80,7 +80,7 @@ ul.nav.nav-tabs
   - KifuFormatInfo.each.with_index do |e, i|
     li class=("active" if i.zero?)
       a data-toggle="tab" href="##{e.key}" = e.name
-#myTabContent.tab-content
+.tab-content
   - KifuFormatInfo.each.with_index do |e, i|
     = tag.div(id: e.key, class: "tab-pane #{'active' if i.zero?}") do
       pre.text-left

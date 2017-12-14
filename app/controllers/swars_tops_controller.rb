@@ -77,7 +77,7 @@ class SwarsTopsController < ApplicationController
           row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
         else
           if battle_record.win_battle_user
-            row["勝ち"] = Fa.icon_tag(:circle) + battle_user_link(battle_record, :win)
+            row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link(battle_record, :win)
             row["負け"] = Fa.icon_tag(:times) + battle_user_link(battle_record, :lose)
           else
             row["勝ち"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.black)
