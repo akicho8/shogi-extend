@@ -28,10 +28,9 @@
   - content_for :head do
     = rel_next_prev_link_tags @battle_records
 
-- if @battle_records
+- if controller.current_query_hash
   .text-center
-    = link_to("ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
-    br
+    = link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
 
 - if controller.current_uid
   - if v = Rails.cache.read("import_all_#{controller.current_uid}")
