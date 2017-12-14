@@ -1,13 +1,16 @@
-.text-center
-  .page-header
-    h2
-      strong= current_record.battle_ships.black.name_with_rank
-      span.text-muted=<> "vs"
-      strong= current_record.battle_ships.white.name_with_rank
+.container
+  .text-center
+    .page-header
+      h2
+        strong= current_record.battle_ships.black.name_with_rank
+        span.text-muted=<> "vs"
+        strong= current_record.battle_ships.white.name_with_rank
 
-= render partial: "flash_kifu_player"
+    = render partial: "flash_kifu_player"
 
-- if !Rails.env.production? || params[:debug].present?
-  .well
-    = current_record.kishin_analyze_result_hask(:black).to_html
-    = current_record.kishin_analyze_result_hask(:white).to_html
+    .page-header
+      h2
+        = "棋神判定(仮)"
+    small
+      = current_record.kishin_analyze_result_hask(:black).to_html
+      = current_record.kishin_analyze_result_hask(:white).to_html
