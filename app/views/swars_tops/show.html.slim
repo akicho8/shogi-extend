@@ -1,23 +1,24 @@
-.text-center
-  .page-header
-    h2.yumincho
-      = "将棋ウォーズ棋譜検索"
+.search_form
+  .text-center
+    .page-header
+      h2.yumincho
+        = "将棋ウォーズ棋譜検索"
 
-= form_with(url: :s, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
-  .form-group
-    .col-sm-4
-    .col-sm-4
-      = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 囲い・戦型名", list: "uid_list", autofocus: controller.current_query_hash.blank?)
-      = tag.datalist(id: "uid_list") do
-        - BattleUser.order(updated_at: :desc).limit(128).pluck(:uid).each do |uid|
-          = tag.option(value: uid)
-    .col-sm-4
-  .form-group
-    .col-sm-12
-      .text-center
-        = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
+    = form_with(url: :s, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+      .form-group
+        .col-sm-4
+        .col-sm-4
+          = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 囲い・戦型名", list: "uid_list", autofocus: controller.current_query_hash.blank?)
+          = tag.datalist(id: "uid_list") do
+            - BattleUser.order(updated_at: :desc).limit(128).pluck(:uid).each do |uid|
+              = tag.option(value: uid)
+        .col-sm-4
+      .form-group
+        .col-sm-12
+          .text-center
+            = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
 
-.search_result
+.search_rows
   = @rows.to_html
 
 - if @battle_records
