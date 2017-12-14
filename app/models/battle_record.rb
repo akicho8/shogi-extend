@@ -164,7 +164,7 @@ class BattleRecord < ApplicationRecord
     def win_lose_str(battle_user)
       if win_battle_user
         if winner_desuka?(battle_user)
-          Fa.icon_tag(:circle_o)
+          Fa.icon_tag(:circle)
         else
           Fa.icon_tag(:times)
         end
