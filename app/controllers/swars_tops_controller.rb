@@ -138,12 +138,15 @@ class SwarsTopsController < ApplicationController
           acc[:tags] ||= []
           acc[:tags] << s.remove("tag:")
         else
-          # https://shogiwars.heroz.jp/users/history/xxx?gtype=&locale=ja -> xxx
+          # https://shogiwars.heroz.jp/users/history/yuuki_130?gtype=&locale=ja -> yuuki_130
+          # https://shogiwars.heroz.jp/users/yuuki_130                          -> yuuki_130
           if true
             if url = URI::Parser.new.extract(s).first
-              if md = URI(url).path.match(%r{history/(.*)})
-                s = md.captures.first
+              uri = URI(url)
+              if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
+                s = md.captures.compact.first
               end
+              logger.info([url, s].to_t)
             end
           end
           acc[:uid] ||= []
