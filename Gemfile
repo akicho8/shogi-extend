@@ -120,4 +120,4 @@ gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 gem 'font-awesome-sass'
 
-gem 'rubyzip'
+gem 'rubyzip', require: "zip"
