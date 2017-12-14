@@ -428,6 +428,7 @@ DEPENDENCIES
   rails_autolink
   redis (~> 3.0)
   rspec-rails
+  rubyzip
   sass-rails (~> 5.0)
   selenium-webdriver
   slim-rails

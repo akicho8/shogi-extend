@@ -35,6 +35,36 @@ class SwarsTopsController < ApplicationController
 
     @battle_records = @battle_records.order(battled_at: :desc).page(params[:page]).per(params[:per])
 
+    if true
+      if request.format.zip?
+        filename = -> {
+          parts = []
+          parts << "shogiwars"
+          if @battle_user
+            parts << @battle_user.uid
+          end
+          parts << Time.current.strftime("%Y%m%d%H%M%S")
+          if current_tags
+            parts.concat(current_tags)
+          end
+          parts.compact.join("_") + ".zip"
+        }
+
+        zip_buffer = Zip::OutputStream.write_buffer do |zos|
+          @battle_records.each do |battle_record|
+            KifuFormatInfo.each.with_index do |e|
+              battle_record.converted_infos.text_format_eq(e.key).take!.text_body
+              zos.put_next_entry("#{e.key}/#{battle_record.battle_key}.#{e.key}")
+              zos.write battle_record.converted_infos.text_format_eq(e.key).take!.text_body
+            end
+          end
+        end
+
+        send_data(zip_buffer.string, type: Mime[params[:format]], filename: filename.call, disposition: "attachment")
+        return
+      end
+    end
+
     @rows = @battle_records.collect do |battle_record|
       {}.tap do |row|
         if @battle_user

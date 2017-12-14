@@ -28,11 +28,17 @@
   - content_for :head do
     = rel_next_prev_link_tags @battle_records
 
+- if @battle_records
+  .text-center
+    = link_to("ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
+    br
+
 - if controller.current_uid
   - if v = Rails.cache.read("import_all_#{controller.current_uid}")
-    small
-      .text-center
+    .text-center
+      small
         .text-muted
+          br
           = "#{controller.current_uid} last imported at #{v.to_s(:ymdhm)}"
 
 - if Rails.env.development? && false
