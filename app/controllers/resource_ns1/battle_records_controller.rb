@@ -101,8 +101,10 @@ module ResourceNs1
       end
 
       def kifu_send_data
-        converted_info = current_record.converted_infos.find_by!(text_format: params[:format])
-        text_body = converted_info.text_body
+        text_body = nil
+        if converted_info = current_record.converted_infos.find_by(text_format: params[:format])
+          text_body = converted_info.text_body
+        end
 
         if access_from_swf_kifu_player?
           response.headers["Content-Type"] = 'text/plain; charset=shift_jis' # 指定しないと utf-8 で返してしまう(が、なくてもよい)

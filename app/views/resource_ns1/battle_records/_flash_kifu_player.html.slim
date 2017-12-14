@@ -84,20 +84,12 @@ ul.nav.nav-tabs
   - KifuFormatInfo.each.with_index do |e, i|
     = tag.div(id: e.key, class: "tab-pane #{'active' if i.zero?}") do
       pre.text-left
-        = current_record.converted_infos.text_format_eq(e.key).take!.text_body
+        - if converted_info = current_record.converted_infos.text_format_eq(e.key).take
+          = converted_info.text_body
 
 ////////////////////////////////////////////////////////////////////////////////
 
 - if !Rails.env.production? && false
-  br
-
-  - KifuFormatInfo.each do |e|
-    = e.name
-    pre
-      = current_record.converted_infos.text_format_eq(e.key).take!.text_body
-  pre
-    = current_record.kifu_body
-
   p
     .panel.panel-default
       .panel-body

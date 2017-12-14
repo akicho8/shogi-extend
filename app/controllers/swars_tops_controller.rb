@@ -53,8 +53,10 @@ class SwarsTopsController < ApplicationController
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           @battle_records.limit(params[:limit] || 512).each do |battle_record|
             KifuFormatInfo.each.with_index do |e|
-              zos.put_next_entry("#{e.key}/#{battle_record.battle_key}.#{e.key}")
-              zos.write battle_record.converted_infos.text_format_eq(e.key).take!.text_body
+              if converted_info = battle_record.converted_infos.text_format_eq(e.key).take
+                zos.put_next_entry("#{e.key}/#{battle_record.battle_key}.#{e.key}")
+                zos.write converted_info.text_body
+              end
             end
           end
         end

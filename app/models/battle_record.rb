@@ -304,11 +304,18 @@ class BattleRecord < ApplicationRecord
       end
     end
 
-    def parser_run
+    # BattleRecord.find_each{|e|e.parser_run}
+    def parser_run(**options)
+      options = {
+        destroy_all: false,
+      }.merge(options)
+
       info = Bushido::Parser.parse(kifu_body, typical_error_case: :embed)
-      converted_infos.destroy_all
+      converted_infos.destroy_all if options[:destroy_all]
       KifuFormatInfo.each do |e|
-        converted_infos.build(text_body: info.public_send("to_#{e.key}"), text_format: e.key)
+        converted_info = converted_infos.text_format_eq(e.key).take
+        converted_info ||= converted_infos.build
+        converted_info.attributes = {text_body: info.public_send("to_#{e.key}"), text_format: e.key}
       end
       self.turn_max = info.mediator.turn_max
       self.kifu_header = info.header
@@ -337,19 +344,21 @@ class BattleRecord < ApplicationRecord
 
     def mountain_post
       url = Rails.application.routes.url_helpers.mountain_upload_url
-      kif = converted_infos.text_format_eq(:kif).take!.text_body
+      if converted_info = converted_infos.text_format_eq(:kif).take
+        kif = converted_info.text_body
 
-      if AppConfig[:run_localy]
-        v = "http://shogi-s.com/result/5a274d10px"
-      else
-        response = Faraday.post(url, kif: kif)
-        logger.info(response.status.to_t)
-        logger.info(response.headers.to_t)
-        v = response.headers["location"].presence
-      end
+        if AppConfig[:run_localy]
+          v = "http://shogi-s.com/result/5a274d10px"
+        else
+          response = Faraday.post(url, kif: kif)
+          logger.info(response.status.to_t)
+          logger.info(response.headers.to_t)
+          v = response.headers["location"].presence
+        end
 
-      if v
-        update!(mountain_url: v)
+        if v
+          update!(mountain_url: v)
+        end
       end
     end
   end

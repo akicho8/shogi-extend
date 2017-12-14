@@ -4,6 +4,7 @@ class KifuFormatInfo
     {key: "ki2", },
     {key: "kif", },
     {key: "csa", },
+    {key: "sfen", },
   ]
 
   def name

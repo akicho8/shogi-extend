@@ -6,3 +6,4 @@
 Mime::Type.register_alias "text/plain", :kif
 Mime::Type.register_alias "text/plain", :ki2
 Mime::Type.register_alias "text/plain", :csa
+Mime::Type.register_alias "text/plain", :sfen
