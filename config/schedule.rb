@@ -20,7 +20,8 @@ job_type :runner, "cd :path && bundle exec bin/rails runner -e :environment ':ta
 #   rake "environment"
 # end
 
-every 1.hours do
+# "*/15 * 31 3 *"
+every "22 * * * *" do
   # runner %(BattleRecord.import_batch(sleep: 5))
   runner %(BattleRecord.import_batch(sleep: 5))
 end

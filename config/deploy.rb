@@ -60,8 +60,10 @@ set :rbenv_type, :system # or :system, depends on your rbenv setup
 # set :rbenv_ruby, File.read('.ruby-version').strip
 # set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} /usr/local/bin/rbenv exec"
 
-set :bundle_path, nil
+# set :bundle_path, nil
 set :bundle_flags, '--deployment'
+set :bundle_binstubs, -> { shared_path.join('bin') }
+
 
 # capistrano/yarn
 # set :yarn_target_path, -> { release_path.join('subdir') } # default not set
@@ -173,6 +175,15 @@ end
 ################################################################################ Whenever
 
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+# set :whenever_command,    -> { "cd #{current_path} && whenever" }
+# set :whenever_command,    -> { [:cd, current_path, "&&", :whenever] }
+# set :whenever_command,    -> { [:bundle, :exec, :whenever] }
+# set :whenever_command,    -> { [:whenever] }
+# set :whenever_command,    -> { [:bundle, ] }
+# set :whenever_command,    -> { "cd #{current_path} && whenever" }
+set :whenever_path,       -> { release_path || current_path }
+
+
 
 ################################################################################
 
@@ -192,8 +203,7 @@ task :r do
     code = ENV["CODE"]
     nohup = ENV["NOHUP"] == "1"
     command = "rails runner"
-    # execute :env
-    execute "cd #{current_path} && #{nohup ? 'nohup' : ''} bundle exec #{command} '#{code}' #{nohup ? '&' : ''}"
+    execute "cd #{current_path} && #{nohup ? 'nohup' : ''} RAILS_ENV=#{fetch(:rails_env)} #{command} '#{code}' #{nohup ? '&' : ''}"
   end
 end
 
@@ -209,6 +219,14 @@ namespace :deploy do
         {"転送元" => file, "転送先" => server_file}
       end
       tp rows
+    end
+  end
+end
+
+task :t do
+  on roles :all do
+    within "/tmp" do
+      execute [:pwd]
     end
   end
 end
