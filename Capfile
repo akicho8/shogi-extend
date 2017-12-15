@@ -23,5 +23,8 @@ require 'capistrano/passenger'
 require 'capistrano/withrsync'
 require 'capistrano/yarn'
 
+require "whenever/capistrano"
+require "org_tp"
+
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

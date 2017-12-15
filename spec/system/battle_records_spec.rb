@@ -27,7 +27,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     # click_link "詳細"
   end
 
-  it "戦型クラウド" do
+  it "戦法クラウド" do
     visit "/cloud"
   end
 end

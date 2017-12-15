@@ -180,6 +180,18 @@ class BattleRecord < ApplicationRecord
         @battle_agent ||= BattleAgent.new
       end
 
+      # BattleRecord.import_batch(sleep: 5)
+      def import_batch(**params)
+        battle_user_ids = BattleShip.order(:created_at => :desc).limit(3).collect(&:battle_user_id).uniq
+        battle_users = BattleUser.find(battle_user_ids)
+
+        battle_users.each do |battle_user|
+          import_all(params.merge(uid: battle_user.uid, page_max: 2))
+        end
+      end
+
+      # BattleRecord.import_all(uid: "micro77")
+      # BattleRecord.import_all(uid: "micro77", page_max: 3)
       def import_all(**params)
         BattleRuleInfo.each do |e|
           import_one(params.merge(gtype: e.swars_real_key))
@@ -187,9 +199,19 @@ class BattleRecord < ApplicationRecord
       end
 
       def import_one(**params)
-        list = battle_agent.index_get(params)
-        list.each do |history|
-          import_by_battle_key(history[:battle_key])
+        (0...(params[:page_max] || 1)).each do |i|
+          list = battle_agent.index_get(params.merge(page_index: i))
+          if list.empty?
+            break
+          end
+          list.each do |history|
+            battle_key = history[:battle_key]
+            if BattleRecord.where(battle_key: battle_key).exists?
+            else
+              import_by_battle_key(battle_key)
+              sleep(params[:sleep].to_i)
+            end
+          end
         end
       end
 

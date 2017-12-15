@@ -10,12 +10,20 @@ class BattleAgent
       params = {
         gtype: "",    # 空:10分 sb:3分 s1:10秒
         uid: nil,
+        page_index: 0,
       }.merge(params)
 
       if @options[:run_localy]
         js_str = Rails.root.join("app/models/https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja.html").read
       else
-        url = "https://shogiwars.heroz.jp/users/history/#{params[:uid]}?gtype=#{params[:gtype]}&locale=ja"
+        q = {
+          gtype: params[:gtype],
+          locale: "ja",
+        }
+        if params[:page_index].nonzero?
+          q[:start] = params[:page_index] * 10
+        end
+        url = "https://shogiwars.heroz.jp/users/history/#{params[:uid]}?#{q.to_query}"
         page = agent.get(url)
         js_str = page.body
       end
@@ -44,7 +52,7 @@ class BattleAgent
 
     private
 
-    # エスケープされまくった謎のHTMLを復元
+    # 二重にエスケープされているJSのコンテンツとしてのHTMLを復元
     def too_escaped_html_normalize(html)
       html = html.remove("\\n")
       html = html.gsub("\\\"", '"')
@@ -123,6 +131,8 @@ end
 
 if $0 == __FILE__
   tp BattleAgent.new.index_get(gtype: "",  uid: "Apery8")
+  tp BattleAgent.new.index_get(gtype: "",  uid: "Apery8", page_index: 1)
+
   # tp BattleAgent.new.index_get(gtype: "sb",  uid: "Apery8")
   # tp BattleAgent.new.index_get(gtype: "s1",  uid: "Apery8")
   tp BattleAgent.new.record_get("hanairobiyori-ispt-20171104_220810")

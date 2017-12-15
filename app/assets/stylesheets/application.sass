@@ -12,7 +12,8 @@
 // Import cyborg variables
 @import "bootswatch/cyborg/variables"
 
-// カスタマイズ
+//////////////////////////////////////////////////////////////////////////////// 変数
+
 // 変数確認用
 // /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/bootswatch-rails-3.3.5/vendor/assets/stylesheets/bootswatch/cyborg/_variables.scss
 // /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/bootswatch-rails-3.3.5/vendor/assets/stylesheets/bootswatch/cyborg/_bootswatch.scss
@@ -23,11 +24,18 @@ $tooltip-bg: #2c2c2c
 $table-cell-padding: 12px
 $table-bg:           darken($gray-darker, 6%)
 $table-bg-accent:    darken($table-bg, 2%)
+$table-bg-hover:     darken($gray-darker, 1%)
+
+$link-hover-color:      lighten($link-color, 20%)
+$link-hover-decoration: none
+
+//////////////////////////////////////////////////////////////////////////////// 適用
 
 // Then bootstrap itself
 @import "bootstrap"
 
 // Bootstrap body padding for fixed navbar
+
 body
   padding-top: 60px
 
@@ -48,18 +56,27 @@ body
 
 // Then the rest as shown above...
 
+////////////////////////////////////////////////////////////////////////////// font-awesome
+    
 @import "font-awesome-sprockets"
 @import "font-awesome"
 
-////////////////////////////////////////////////////////////////////////////// footer
-
+//////////////////////////////////////////////////////////////////////////////// bootswatch/cyborg/bootswatch 適用後の調整
+  
+table, .table
+  a:not(.btn)
+    color: $link-color ! important
+    text-decoration: $link-hover-decoration ! important
+    &:hover
+      color: $link-hover-color ! important
+  
 footer
   margin-top: 5vmin
   padding: 5vmin 0
   text-shadow: 0 1px 0 black
   background: linear-gradient($body-bg, lighten($body-bg, 12%))
 
-.search_rows  
+.search_rows
   .table
     th
       padding-top:    4px ! important

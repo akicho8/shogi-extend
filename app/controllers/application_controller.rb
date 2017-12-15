@@ -4,4 +4,12 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :submitted?
+
+  private
+
+  def h
+    @h ||= view_context
+  end
+
+  delegate :tag, :link_to, to: :h
 end

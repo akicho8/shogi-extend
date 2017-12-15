@@ -10,6 +10,8 @@ if ENV["DB_RESET"] == "1"
   before 'deploy:migrate', 'deploy:db_reset'
 end
 
+set :rails_env, 'production'    # 必要
+
 # config/database.production.yml を使う設定
 set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 before 'deploy:check:linked_files', 'deploy:upload_shared_config_database_yml'

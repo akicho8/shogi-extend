@@ -29,6 +29,14 @@ Rails.application.routes.draw do
     query_search_path(query: battle_user.to_param)
   end
 
+  ################################################################################ 辞典
+
+  resources :formation_articles, path: "d"
+
+  ################################################################################ 今日の戦法占い
+
+  resource :random_articles, path: "random"
+
   ################################################################################ その他
 
   get "tops/show"

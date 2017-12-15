@@ -73,8 +73,8 @@ class SwarsTopsController < ApplicationController
         if @battle_user
           current_user_ship = battle_record.current_user_ship(@battle_user)
           reverse_user_ship = battle_record.reverse_user_ship(@battle_user)
-          row["対象プレイヤー"] = battle_record.win_lose_str(current_user_ship.battle_user).html_safe + " " + h.link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
-          row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + h.link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
+          row["対象プレイヤー"] = battle_record.win_lose_str(current_user_ship.battle_user).html_safe + " " + link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
+          row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
         else
           if battle_record.win_battle_user
             row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link(battle_record, :win)
@@ -86,7 +86,7 @@ class SwarsTopsController < ApplicationController
         end
         row["判定"] = battle_state_info_decorate(battle_record)
         if false
-          row["囲い・戦型"] = battle_record.tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
+          row["戦法"] = battle_record.tag_list.collect { |e| link_to(e, query_search_path(e)) }.join(" ").html_safe
         else
 
           if @battle_user
@@ -109,13 +109,13 @@ class SwarsTopsController < ApplicationController
   end
 
   def pc_only(v)
-    h.tag.span(v, :class => "visible-lg")
+    tag.span(v, :class => "visible-lg")
   end
 
   def versus_tag(*list)
     if list.compact.empty?
     else
-      vs = h.tag.span(" vs ", :class => "text-muted")
+      vs = tag.span(" vs ", :class => "text-muted")
       str = list.collect { |e| e || "不明" }.join(vs).html_safe
       pc_only(str)
     end
@@ -124,20 +124,20 @@ class SwarsTopsController < ApplicationController
   def tag_links(tag_list)
     if tag_list.blank?
     else
-      tag_list.collect { |e| h.link_to(e, query_search_path(e)) }.join(" ").html_safe
+      tag_list.collect { |e| link_to(e, query_search_path(e)) }.join(" ").html_safe
     end
   end
 
   def row_links(current_record)
     list = []
-    list << h.link_to("詳細", [:resource_ns1, current_record], "class": "btn btn-default btn-xs")
-    list << h.link_to("コピー".html_safe, "#", "class": "btn btn-default btn-xs kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
-    list << h.link_to("戦", swars_real_battle_url(current_record), "class": "btn btn-default btn-xs", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
+    list << link_to("詳細", [:resource_ns1, current_record], "class": "btn btn-default btn-xs")
+    list << link_to("コピー".html_safe, "#", "class": "btn btn-default btn-xs kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+    list << link_to("戦", swars_real_battle_url(current_record), "class": "btn btn-default btn-xs", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
     if Rails.env.development? && false
-      list << h.link_to("山脈(remote:false)", [:resource_ns1, current_record, mountain: true, fallback_location: url_for([:s])], "class": "btn btn-default btn-xs", remote: false)
+      list << link_to("山脈(remote:false)", [:resource_ns1, current_record, mountain: true, fallback_location: url_for([:s])], "class": "btn btn-default btn-xs", remote: false)
     end
-    list << h.link_to("山", [:resource_ns1, current_record, mountain: true], "class": "btn btn-default btn-xs", remote: true, data: {toggle: :tooltip, title: "将棋山脈"})
-    list << h.link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
+    list << link_to("山", [:resource_ns1, current_record, mountain: true], "class": "btn btn-default btn-xs", remote: true, data: {toggle: :tooltip, title: "将棋山脈"})
+    list << link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
     list.compact.join(" ").html_safe
   end
 
@@ -148,14 +148,14 @@ class SwarsTopsController < ApplicationController
   end
 
   def battle_user_link2(battle_ship)
-    h.link_to(battle_ship.name_with_rank, battle_ship.battle_user)
+    link_to(battle_ship.name_with_rank, battle_ship.battle_user)
   end
 
   def battle_state_info_decorate(battle_record)
     str = battle_record.battle_state_info.name
     battle_state_info = battle_record.battle_state_info
     if v = battle_state_info.label_key
-      str = h.tag.span(str, "class": "text-#{v}")
+      str = tag.span(str, "class": "text-#{v}")
     end
     if v = battle_state_info.icon_key
       str = h.icon_tag(v) + str
@@ -212,10 +212,6 @@ class SwarsTopsController < ApplicationController
     if current_query_hash
       current_query_hash.values.join(" ")
     end
-  end
-
-  def h
-    @h ||= view_context
   end
 
   rescue_from "Mechanize::ResponseCodeError" do |exception|

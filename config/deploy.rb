@@ -39,7 +39,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :default_env, { path: "/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH" }
-set :default_env, { "DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1" }
+set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", "RAILS_ENV" => fetch(:rails_env)} }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
@@ -60,9 +60,6 @@ set :rbenv_type, :system # or :system, depends on your rbenv setup
 # set :rbenv_ruby, File.read('.ruby-version').strip
 # set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} /usr/local/bin/rbenv exec"
 
-
-
-
 set :bundle_path, nil
 set :bundle_flags, '--deployment'
 
@@ -73,18 +70,6 @@ set :bundle_flags, '--deployment'
 # set :yarn_env_variables, {}                               # default
 
 set :print_config_variables, true # デプロイ前に設定した変数値を確認
-
-namespace :deploy do
-  namespace :check do
-    desc "環境変数の確認"
-    task :env do
-      on roles(:all) do
-        execute :env
-      end
-    end
-  end
-  before "deploy:check", "deploy:check:env"
-end
 
 namespace :deploy do
   # desc 'Restart application'
@@ -181,6 +166,49 @@ namespace :deploy do
         upload! File.open(local_file), server_file.to_s
         # end
       end
+    end
+  end
+end
+
+################################################################################ Whenever
+
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+
+################################################################################
+
+set :stage, -> { :production }
+
+desc "cap production env"
+task :env do
+  on roles(:all) do
+    execute :env
+  end
+end
+# before "deploy:check", "deploy:check:env"
+
+desc "cap production r CODE='Time.current.display'"
+task :r do
+  on roles :all do
+    code = ENV["CODE"]
+    nohup = ENV["NOHUP"] == "1"
+    command = "rails runner"
+    # execute :env
+    execute "cd #{current_path} && #{nohup ? 'nohup' : ''} bundle exec #{command} '#{code}' #{nohup ? '&' : ''}"
+  end
+end
+
+desc "cap production deploy:upload FILES=config/schedule.rb"
+namespace :deploy do
+  task :upload do
+    on roles :all do
+      files = ENV["FILES"].split(/[,\s]+/).collect { |e| Pathname(e) }
+      rows = files.collect do |file|
+        raise "ファイルが見つかりません : #{file}" unless file.exist?
+        server_file = current_path.join(file)
+        upload! file.open, server_file.to_s
+        {"転送元" => file, "転送先" => server_file}
+      end
+      tp rows
     end
   end
 end

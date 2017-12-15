@@ -8,7 +8,7 @@
       .form-group
         .col-sm-4
         .col-sm-4
-          = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 囲い・戦型名", list: "uid_list", autofocus: controller.current_query_hash.blank?)
+          = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 戦法名", list: "uid_list", autofocus: controller.current_query_hash.blank?)
           = tag.datalist(id: "uid_list") do
             - BattleUser.order(updated_at: :desc).limit(128).pluck(:uid).each do |uid|
               = tag.option(value: uid)
