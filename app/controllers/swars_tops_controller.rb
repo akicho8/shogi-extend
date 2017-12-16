@@ -102,7 +102,13 @@ class SwarsTopsController < ApplicationController
         end
         row["手数"] = battle_record.turn_max
         row["種類"] = battle_record.battle_rule_info.name
-        row["日時"] = battle_record.battled_at.to_s(:battle_ymd)
+
+        key = :battle_long
+        if battle_record.battled_at >= Time.current.midnight
+          key = :battle_short
+        end
+        row["日時"] = battle_record.battled_at.to_s(key)
+
         row[""] = row_links(battle_record)
       end
     end
