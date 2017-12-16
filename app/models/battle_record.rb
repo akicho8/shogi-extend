@@ -180,13 +180,18 @@ class BattleRecord < ApplicationRecord
         @battle_agent ||= BattleAgent.new
       end
 
-      # BattleRecord.import_batch(sleep: 5)
+      # BattleRecord.import_batch(limit: 10, page_max: 3, sleep: 5) # (10 * (3*10) * 5) / 60 = 25 min
       def import_batch(**params)
-        battle_user_ids = BattleShip.order(:created_at => :desc).limit(3).collect(&:battle_user_id).uniq
+        # 最近対局したプレイヤー limit 人取得
+        battle_user_ids = BattleShip.joins(:battle_record).group(:battle_user_id).select(:battle_user_id).order("max(battle_records.battled_at) desc").limit(params[:limit] || 1).pluck(:battle_user_id)
+
+        # 最近取り込んだプレイヤー limit 人取得
+        # battle_user_ids = BattleShip.group(:battle_user_id).select(:battle_user_id).order("max(created_at) desc").limit(params[:limit] || 1).pluck(:battle_user_id)
+
         battle_users = BattleUser.find(battle_user_ids)
 
         battle_users.each do |battle_user|
-          import_all(params.merge(uid: battle_user.uid, page_max: 2))
+          import_all(params.merge(uid: battle_user.uid))
         end
       end
 
@@ -199,18 +204,21 @@ class BattleRecord < ApplicationRecord
       end
 
       def import_one(**params)
-        (0...(params[:page_max] || 1)).each do |i|
+        (params[:page_max] || 1).times do |i|
           list = battle_agent.index_get(params.merge(page_index: i))
+
+          # もうプレイしていない人のページは履歴が空なのでクロールを完全にやめる (もしくは過去のページに行きすぎたので中断)
           if list.empty?
             break
           end
+
           list.each do |history|
             battle_key = history[:battle_key]
             if BattleRecord.where(battle_key: battle_key).exists?
-            else
-              import_by_battle_key(battle_key)
-              sleep(params[:sleep].to_i)
+              next
             end
+            import_by_battle_key(battle_key)
+            sleep(params[:sleep].to_i)
           end
         end
       end

@@ -2,26 +2,16 @@
 
 # http://github.com/javan/whenever
 
-# set :output, "log/cron.log"                    # > cron.log 2>&1
-# set :output, {:standard => "cron.log"}         # > cron.log
-# set :output, {:standard => nil}                # なし
-
 set :output, {standard: "log/cron.log"}
 
-# コマンドも Rails.root から実行するようする
 job_type :command, "cd :path && :task :output"
-job_type :runner, "cd :path && bundle exec bin/rails runner -e :environment ':task' :output"
+job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
-# every 5.minutes do
-#   command "time"
-#   command "pwd"
-#   command "env"
-#   runner "p Rails.env"
-#   rake "environment"
-# end
+every "*/5 * * * *" do
+  command "date"
+  runner  "Time.current.display"
+end
 
-# "*/15 * 31 3 *"
-every "22 * * * *" do
-  # runner %(BattleRecord.import_batch(sleep: 5))
-  runner %(BattleRecord.import_batch(sleep: 5))
+every "0,30 * * * *" do
+  runner %(BattleRecord.import_batch(limit: 10, page_max: 3, sleep: 5))
 end
