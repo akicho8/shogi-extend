@@ -204,7 +204,7 @@ class BattleRecord < ApplicationRecord
         end
       end
 
-      # BattleRecord.import_one(uid: "DarkPonamin9", gtype: "")
+      # BattleRecord.import_one(uid: "chrono_", gtype: "", battle_grade_key_gteq: "初段")
       def import_one(**params)
         (params[:page_max] || 1).times do |i|
           list = battle_agent.index_get(params.merge(page_index: i))
@@ -216,9 +216,28 @@ class BattleRecord < ApplicationRecord
 
           list.each do |history|
             battle_key = history[:battle_key]
+
+            # すでに取り込んでいるならスキップ
             if BattleRecord.where(battle_key: battle_key).exists?
               next
             end
+
+            # フィルタ機能
+            if true
+              # 初段以上の指定がある場合
+              if v = params[:battle_grade_key_gteq]
+                v = StaticBattleGradeInfo.fetch(v)
+                # 取得してないときもあるため
+                if battle_user_infos = history[:battle_user_infos]
+                  # 両方初段以上ならOK
+                  if battle_user_infos.all? { |e| StaticBattleGradeInfo.fetch(e[:battle_grade_key]).priority <= v.priority }
+                  else
+                    next
+                  end
+                end
+              end
+            end
+
             import_by_battle_key(battle_key)
             sleep(params[:sleep].to_i)
           end

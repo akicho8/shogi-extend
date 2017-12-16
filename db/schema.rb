@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171216200201) do
+ActiveRecord::Schema.define(version: 20171216200202) do
 
   create_table "battle_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20171216200201) do
   create_table "battle_ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "battle_record_id", null: false, comment: "対局"
     t.bigint "battle_user_id", null: false, comment: "対局者"
-    t.bigint "battle_grade_id", null: false, comment: "対局時の段級"
+    t.bigint "battle_grade_id", null: false
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.integer "position", comment: "手番の順序"
     t.datetime "created_at", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20171216200201) do
 
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "uid", null: false, comment: "対局者名"
-    t.bigint "battle_grade_id", null: false, comment: "最高段級"
+    t.bigint "battle_grade_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_grade_id"], name: "index_battle_users_on_battle_grade_id"
