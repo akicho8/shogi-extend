@@ -1,4 +1,4 @@
-class AddIndexForBattleRecords < ActiveRecord::Migration[5.1]
+class Fix1 < ActiveRecord::Migration[5.1]
   def up
     # BattleUser.group(:uid).having("count(*) >= 2").each(&:destroy_all)
     #
