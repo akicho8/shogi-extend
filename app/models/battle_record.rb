@@ -180,10 +180,22 @@ class BattleRecord < ApplicationRecord
         @battle_agent ||= BattleAgent.new
       end
 
-      # BattleRecord.import_batch(limit: 10, page_max: 3, sleep: 5) # (10 * (3*10) * 5) / 60 = 25 min
+      # BattleRecord.import_batch(limit: 10, page_max: 3, sleep: 5, battle_grade_key_gteq: "初段") # (10 * (3*10) * 5) / 60 = 25 min
       def import_batch(**params)
-        # 最近対局したプレイヤー limit 人取得
-        battle_user_ids = BattleShip.joins(:battle_record).group(:battle_user_id).select(:battle_user_id).order("max(battle_records.battled_at) desc").limit(params[:limit] || 1).pluck(:battle_user_id)
+        # 最近対局した初段以上のプレイヤー limit 人取得
+        s = BattleShip.all
+        # 初段以上の場合
+        if true
+          if v = params[:battle_grade_key_gteq]
+            priority = StaticBattleGradeInfo.fetch(v).priority
+            s = s.joins(battle_user: :battle_grade).where(BattleGrade.arel_table[:priority].lteq(priority))
+          end
+        end
+        s = s.group(:battle_user_id).select(:battle_user_id)
+        s = s.joins(:battle_record).order("max(battle_records.battled_at) desc")
+        s = s.limit(params[:limit] || 1)
+        # SELECT  `battle_ships`.`battle_user_id` FROM `battle_ships` INNER JOIN `battle_users` ON `battle_users`.`id` = `battle_ships`.`battle_user_id` INNER JOIN `battle_grades` ON `battle_grades`.`id` = `battle_users`.`battle_grade_id` INNER JOIN `battle_records` ON `battle_records`.`id` = `battle_ships`.`battle_record_id` WHERE (`battle_grades`.`priority` <= 8) GROUP BY `battle_ships`.`battle_user_id` ORDER BY max(battle_records.battled_at) desc LIMIT 1
+        battle_user_ids = s.pluck(:battle_user_id)
 
         # 最近取り込んだプレイヤー limit 人取得
         # battle_user_ids = BattleShip.group(:battle_user_id).select(:battle_user_id).order("max(created_at) desc").limit(params[:limit] || 1).pluck(:battle_user_id)
@@ -204,7 +216,7 @@ class BattleRecord < ApplicationRecord
         end
       end
 
-      # BattleRecord.import_one(uid: "chrono_", gtype: "", battle_grade_key_gteq: "初段")
+      # BattleRecord.import_one(uid: "chrono_", gtype: "")
       def import_one(**params)
         (params[:page_max] || 1).times do |i|
           list = battle_agent.index_get(params.merge(page_index: i))
@@ -222,21 +234,21 @@ class BattleRecord < ApplicationRecord
               next
             end
 
-            # フィルタ機能
-            if true
-              # 初段以上の指定がある場合
-              if v = params[:battle_grade_key_gteq]
-                v = StaticBattleGradeInfo.fetch(v)
-                # 取得してないときもあるため
-                if battle_user_infos = history[:battle_user_infos]
-                  # 両方初段以上ならOK
-                  if battle_user_infos.all? { |e| StaticBattleGradeInfo.fetch(e[:battle_grade_key]).priority <= v.priority }
-                  else
-                    next
-                  end
-                end
-              end
-            end
+            # # フィルタ機能
+            # if true
+            #   # 初段以上の指定がある場合
+            #   if v = params[:battle_grade_key_gteq]
+            #     v = StaticBattleGradeInfo.fetch(v)
+            #     # 取得してないときもあるため
+            #     if battle_user_infos = history[:battle_user_infos]
+            #       # 両方初段以上ならOK
+            #       if battle_user_infos.all? { |e| StaticBattleGradeInfo.fetch(e[:battle_grade_key]).priority <= v.priority }
+            #       else
+            #         next
+            #       end
+            #     end
+            #   end
+            # end
 
             import_by_battle_key(battle_key)
             sleep(params[:sleep].to_i)
