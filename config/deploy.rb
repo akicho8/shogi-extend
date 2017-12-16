@@ -2,7 +2,7 @@
 lock "~> 3.10.1"
 
 set :application, 'shogi_web'
-set :repo_url, "git@github.com:akicho8/#{Pathname(__dir__).dirname}.git"
+set :repo_url, "git@github.com:akicho8/#{Pathname(__dir__).dirname.basename}.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

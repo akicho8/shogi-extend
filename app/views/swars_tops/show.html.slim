@@ -32,14 +32,6 @@
   .text-center
     = link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
 
-- if controller.current_uid
-  - if v = Rails.cache.read("import_all_#{controller.current_uid}")
-    .text-center
-      small
-        .text-muted
-          br
-          = "#{controller.current_uid} last imported at #{v.to_s(:ymdhm)}"
-
 - if Rails.env.development? && false
   = BattleUser.to_html
   = BattleRecord.to_html

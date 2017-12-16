@@ -6,9 +6,9 @@ class SwarsTopsController < ApplicationController
         before_count = battle_user.battle_records.count
       end
 
-      Rails.cache.fetch("import_all_#{current_uid}", expires_in: Rails.env.production? ? 30.seconds : 5.seconds) do
+      Rails.cache.fetch("import_all_#{current_uid}", expires_in: Rails.env.production? ? 30.seconds : 0) do
         BattleRecord.import_all(uid: current_uid)
-        Time.current
+        nil
       end
 
       @battle_user = BattleUser.find_by(uid: current_uid)
