@@ -122,6 +122,41 @@ end
 
 ################################################################################ 独自タスク
 
+desc "cap production crontab"
+task :crontab do
+  on roles :all do
+    execute "crontab -l"
+  end
+end
+
+desc "cap production error_log"
+task :error_log do
+  on roles :all do
+    execute "sudo tailf /var/log/httpd/error_log"
+  end
+end
+
+desc "cap production access_log"
+task :access_log do
+  on roles :all do
+    execute "sudo tailf /var/log/httpd/access_log"
+  end
+end
+
+desc "cap production cron_log"
+task :cron_log do
+  on roles :all do
+    execute "sudo tailf /var/log/cron"
+  end
+end
+
+desc "cap production mail_log"
+task :mail_log do
+  on roles :all do
+    execute "sudo tailf /var/log/maillog"
+  end
+end
+
 namespace :deploy do
   # desc 'Restart application'
   # task :restart do
@@ -249,3 +284,4 @@ task :v do
       })
   end
 end
+# ~> -:2:in `<main>': undefined method `lock' for main:Object (NoMethodError)
