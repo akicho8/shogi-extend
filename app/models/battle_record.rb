@@ -195,6 +195,7 @@ class BattleRecord < ApplicationRecord
         end
       end
 
+      # BattleRecord.import_all(uid: "DarkPonamin9")
       # BattleRecord.import_all(uid: "micro77")
       # BattleRecord.import_all(uid: "micro77", page_max: 3)
       def import_all(**params)
@@ -203,6 +204,7 @@ class BattleRecord < ApplicationRecord
         end
       end
 
+      # BattleRecord.import_one(uid: "DarkPonamin9", gtype: "")
       def import_one(**params)
         (params[:page_max] || 1).times do |i|
           list = battle_agent.index_get(params.merge(page_index: i))

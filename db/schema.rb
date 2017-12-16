@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206160056) do
+ActiveRecord::Schema.define(version: 20171216200201) do
 
   create_table "battle_ranks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20171206160056) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["priority"], name: "index_battle_ranks_on_priority"
-    t.index ["unique_key"], name: "index_battle_ranks_on_unique_key"
+    t.index ["unique_key"], name: "index_battle_ranks_on_unique_key", unique: true
   end
 
   create_table "battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20171206160056) do
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_key"], name: "index_battle_records_on_battle_key"
+    t.index ["battle_key"], name: "index_battle_records_on_battle_key", unique: true
     t.index ["battle_rule_key"], name: "index_battle_records_on_battle_rule_key"
     t.index ["battle_state_key"], name: "index_battle_records_on_battle_state_key"
     t.index ["win_battle_user_id"], name: "index_battle_records_on_win_battle_user_id"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20171206160056) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_rank_id"], name: "index_battle_users_on_battle_rank_id"
-    t.index ["uid"], name: "index_battle_users_on_uid"
+    t.index ["uid"], name: "index_battle_users_on_uid", unique: true
   end
 
   create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
