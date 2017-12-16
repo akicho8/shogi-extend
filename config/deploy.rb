@@ -68,6 +68,58 @@ set :bundle_binstubs, -> { shared_path.join('bin') }
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 set :whenever_path,       -> { release_path } # FIXME: whenever (0.10.0) 以下の場合のみ
 
+################################################################################ rails: シリーズ
+
+# gem より
+# cap production rails:console sandbox=1
+# cap production rails:db
+#
+# 自作
+# cap production rails:log
+# cap production rails:cron_log
+# cap production rails:runner CODE='Time.current.display'
+namespace :rails do
+  desc "cap production rails:log"
+  task :log do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/#{fetch(:rails_env)}.log"
+    end
+  end
+  desc "cap production rails:cron_log"
+  task :cron_log do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/#{fetch(:rails_env)}_cron.log"
+    end
+  end
+  desc "cap production rails:runner CODE='Time.current.display'"
+  task :runner do
+    on roles :all do
+      code = ENV["CODE"]
+      nohup = ENV["NOHUP"] == "1"
+      command = "rails runner"
+      execute "cd #{current_path} && #{nohup ? 'nohup' : ''} RAILS_ENV=#{fetch(:rails_env)} #{command} '#{code}' #{nohup ? '&' : ''}"
+    end
+  end
+end
+
+################################################################################ deploy:upload
+
+desc "cap production deploy:upload FILES=config/schedule.rb"
+namespace :deploy do
+  task :upload do
+    on roles :all do |host|
+      files = ENV["FILES"].split(/[,\s]+/).collect { |e| Pathname(e) }
+      rows = files.collect do |file|
+        raise "ファイルが見つかりません : #{file}" unless file.exist?
+        server_file = current_path.join(file)
+        upload! file.open, server_file.to_s
+        {"Host" => host.hostname, "転送元" => file, "転送先" => server_file}
+      end
+      tp rows
+    end
+  end
+end
+
 ################################################################################ 独自タスク
 
 namespace :deploy do
@@ -169,7 +221,7 @@ namespace :deploy do
   end
 end
 
-################################################################################
+################################################################################ 実験
 
 desc "cap production env"
 task :env do
@@ -178,32 +230,6 @@ task :env do
   end
 end
 # before "deploy:check", "deploy:check:env"
-
-desc "cap production r CODE='Time.current.display'"
-task :r do
-  on roles :all do
-    code = ENV["CODE"]
-    nohup = ENV["NOHUP"] == "1"
-    command = "rails runner"
-    execute "cd #{current_path} && #{nohup ? 'nohup' : ''} RAILS_ENV=#{fetch(:rails_env)} #{command} '#{code}' #{nohup ? '&' : ''}"
-  end
-end
-
-desc "cap production deploy:upload FILES=config/schedule.rb"
-namespace :deploy do
-  task :upload do
-    on roles :all do |host|
-      files = ENV["FILES"].split(/[,\s]+/).collect { |e| Pathname(e) }
-      rows = files.collect do |file|
-        raise "ファイルが見つかりません : #{file}" unless file.exist?
-        server_file = current_path.join(file)
-        upload! file.open, server_file.to_s
-        {"Host" => host.hostname, "転送元" => file, "転送先" => server_file}
-      end
-      tp rows
-    end
-  end
-end
 
 task :t do
   on roles :all do
@@ -220,6 +246,6 @@ task :v do
         release_path: release_path,
         'fetch(:current_path)': fetch(:current_path),
         'fetch(:release_path)': fetch(:release_path),
-    })
+      })
   end
 end

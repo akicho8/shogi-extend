@@ -66,6 +66,7 @@ group :development, :test do
   gem 'capistrano-passenger'
   gem 'capistrano-rbenv'
   gem 'capistrano-yarn'
+  gem "capistrano-rails-console"
 
   gem 'rspec-rails'
   gem 'test-unit'
