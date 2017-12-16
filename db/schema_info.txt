@@ -2,13 +2,13 @@
 
 # == Schema Information ==
 #
-# Battle rankテーブル (battle_ranks as BattleRank)
+# Battle gradeテーブル (battle_grades as BattleGrade)
 #
 # |------------+------------+-------------+-------------+------+-------|
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
 # |------------+------------+-------------+-------------+------+-------|
 # | id         | ID         | integer(8)  | NOT NULL PK |      |       |
-# | unique_key | Unique key | string(255) | NOT NULL    |      | A     |
+# | unique_key | Unique key | string(255) | NOT NULL    |      | A!    |
 # | priority   | Priority   | integer(4)  | NOT NULL    |      | B     |
 # | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
@@ -22,7 +22,7 @@
 # | カラム名           | 意味             | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+------------------+-------------+-------------+------------------+-------|
 # | id                 | ID               | integer(8)  | NOT NULL PK |                  |       |
-# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A     |
+# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A!    |
 # | battled_at         | Battled at       | datetime    | NOT NULL    |                  |       |
 # | battle_rule_key    | Battle rule key  | string(255) | NOT NULL    |                  | B     |
 # | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
@@ -49,7 +49,7 @@
 # | id               | ID            | integer(8)  | NOT NULL PK |                    |       |
 # | battle_record_id | Battle record | integer(8)  | NOT NULL    | => BattleRecord#id | A     |
 # | battle_user_id   | Battle user   | integer(8)  | NOT NULL    | => BattleUser#id   | B     |
-# | battle_rank_id   | Battle rank   | integer(8)  | NOT NULL    | => BattleRank#id   | C     |
+# | battle_grade_id  | Battle grade  | integer(8)  | NOT NULL    | => BattleGrade#id  | C     |
 # | judge_key        | Judge key     | string(255) | NOT NULL    |                    | D     |
 # | position         | 順序          | integer(4)  |             |                    | E     |
 # | created_at       | 作成日時      | datetime    | NOT NULL    |                    |       |
@@ -59,25 +59,25 @@
 #- 備考 -------------------------------------------------------------------------
 # ・BattleShip モデルは BattleRecord モデルから has_one :battle_ship_black されています。
 # ・BattleShip モデルは BattleUser モデルから has_many :battle_ships されています。
-# ・BattleShip モデルは BattleRank モデルから has_many :battle_users されています。
+# ・BattleShip モデルは BattleGrade モデルから has_many :battle_users されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
 # 将棋ウォーズユーザーテーブル (battle_users as BattleUser)
 #
-# |----------------+-------------+-------------+-------------+------------------+-------|
-# | カラム名       | 意味        | タイプ      | 属性        | 参照             | INDEX |
-# |----------------+-------------+-------------+-------------+------------------+-------|
-# | id             | ID          | integer(8)  | NOT NULL PK |                  |       |
-# | uid            | Uid         | string(255) | NOT NULL    |                  | A     |
-# | battle_rank_id | Battle rank | integer(8)  | NOT NULL    | => BattleRank#id | B     |
-# | created_at     | 作成日時    | datetime    | NOT NULL    |                  |       |
-# | updated_at     | 更新日時    | datetime    | NOT NULL    |                  |       |
-# |----------------+-------------+-------------+-------------+------------------+-------|
+# |-----------------+--------------+-------------+-------------+-------------------+-------|
+# | カラム名        | 意味         | タイプ      | 属性        | 参照              | INDEX |
+# |-----------------+--------------+-------------+-------------+-------------------+-------|
+# | id              | ID           | integer(8)  | NOT NULL PK |                   |       |
+# | uid             | Uid          | string(255) | NOT NULL    |                   | A!    |
+# | battle_grade_id | Battle grade | integer(8)  | NOT NULL    | => BattleGrade#id | B     |
+# | created_at      | 作成日時     | datetime    | NOT NULL    |                   |       |
+# | updated_at      | 更新日時     | datetime    | NOT NULL    |                   |       |
+# |-----------------+--------------+-------------+-------------+-------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・BattleUser モデルは BattleRank モデルから has_many :battle_users されています。
+# ・BattleUser モデルは BattleGrade モデルから has_many :battle_users されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==

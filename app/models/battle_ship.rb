@@ -9,7 +9,7 @@
 # | id               | ID            | integer(8)  | NOT NULL PK |                    |       |
 # | battle_record_id | Battle record | integer(8)  | NOT NULL    | => BattleRecord#id | A     |
 # | battle_user_id   | Battle user   | integer(8)  | NOT NULL    | => BattleUser#id   | B     |
-# | battle_rank_id   | Battle rank   | integer(8)  | NOT NULL    | => BattleRank#id   | C     |
+# | battle_grade_id  | Battle grade  | integer(8)  | NOT NULL    | => BattleGrade#id  | C     |
 # | judge_key        | Judge key     | string(255) | NOT NULL    |                    | D     |
 # | position         | 順序          | integer(4)  |             |                    | E     |
 # | created_at       | 作成日時      | datetime    | NOT NULL    |                    |       |
@@ -19,13 +19,13 @@
 #- 備考 -------------------------------------------------------------------------
 # ・BattleShip モデルは BattleRecord モデルから has_one :battle_ship_black されています。
 # ・BattleShip モデルは BattleUser モデルから has_many :battle_ships されています。
-# ・BattleShip モデルは BattleRank モデルから has_many :battle_users されています。
+# ・BattleShip モデルは BattleGrade モデルから has_many :battle_users されています。
 #--------------------------------------------------------------------------------
 
 class BattleShip < ApplicationRecord
   belongs_to :battle_record
   belongs_to :battle_user, touch: true
-  belongs_to :battle_rank  # 対局したときの段位
+  belongs_to :battle_grade  # 対局したときの段位
 
   acts_as_list top_of_list: 0, scope: :battle_record
 
@@ -36,7 +36,7 @@ class BattleShip < ApplicationRecord
 
   before_validation do
     if battle_user
-      self.battle_rank ||= battle_user.battle_rank
+      self.battle_grade ||= battle_user.battle_grade
     end
   end
 
@@ -49,6 +49,6 @@ class BattleShip < ApplicationRecord
   end
 
   def name_with_rank
-    "#{battle_user.uid} #{battle_rank.name}"
+    "#{battle_user.uid} #{battle_grade.name}"
   end
 end

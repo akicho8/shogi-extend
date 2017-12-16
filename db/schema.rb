@@ -12,13 +12,13 @@
 
 ActiveRecord::Schema.define(version: 20171216200201) do
 
-  create_table "battle_ranks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+  create_table "battle_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
     t.integer "priority", null: false, comment: "優劣"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["priority"], name: "index_battle_ranks_on_priority"
-    t.index ["unique_key"], name: "index_battle_ranks_on_unique_key", unique: true
+    t.index ["priority"], name: "index_battle_grades_on_priority"
+    t.index ["unique_key"], name: "index_battle_grades_on_unique_key", unique: true
   end
 
   create_table "battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -42,12 +42,12 @@ ActiveRecord::Schema.define(version: 20171216200201) do
   create_table "battle_ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "battle_record_id", null: false, comment: "対局"
     t.bigint "battle_user_id", null: false, comment: "対局者"
-    t.bigint "battle_rank_id", null: false, comment: "対局時の段級"
+    t.bigint "battle_grade_id", null: false, comment: "対局時の段級"
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.integer "position", comment: "手番の順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_rank_id"], name: "index_battle_ships_on_battle_rank_id"
+    t.index ["battle_grade_id"], name: "index_battle_ships_on_battle_grade_id"
     t.index ["battle_record_id"], name: "index_battle_ships_on_battle_record_id"
     t.index ["battle_user_id"], name: "index_battle_ships_on_battle_user_id"
     t.index ["judge_key"], name: "index_battle_ships_on_judge_key"
@@ -56,10 +56,10 @@ ActiveRecord::Schema.define(version: 20171216200201) do
 
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "uid", null: false, comment: "対局者名"
-    t.bigint "battle_rank_id", null: false, comment: "最高段級"
+    t.bigint "battle_grade_id", null: false, comment: "最高段級"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_rank_id"], name: "index_battle_users_on_battle_rank_id"
+    t.index ["battle_grade_id"], name: "index_battle_users_on_battle_grade_id"
     t.index ["uid"], name: "index_battle_users_on_uid", unique: true
   end
 

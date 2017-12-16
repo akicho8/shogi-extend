@@ -63,16 +63,16 @@ RSpec.configure do |config|
 
   # テストの中で使う便利メソッド
   config.include Module.new {
-    def battle_rank_setup
-      unless BattleRank.exists?
-        StaticBattleRankInfo.each do |e|
-          BattleRank.create!(unique_key: e.key, priority: e.priority)
+    def battle_grade_setup
+      unless BattleGrade.exists?
+        StaticBattleGradeInfo.each do |e|
+          BattleGrade.create!(unique_key: e.key, priority: e.priority)
         end
       end
     end
 
     def battle_record_setup
-      battle_rank_setup
+      battle_grade_setup
       BattleRecord.import_all(uid: "hanairobiyori")
     end
   }

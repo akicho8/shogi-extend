@@ -7,7 +7,7 @@
 # | カラム名           | 意味             | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+------------------+-------------+-------------+------------------+-------|
 # | id                 | ID               | integer(8)  | NOT NULL PK |                  |       |
-# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A     |
+# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A!    |
 # | battled_at         | Battled at       | datetime    | NOT NULL    |                  |       |
 # | battle_rule_key    | Battle rule key  | string(255) | NOT NULL    |                  | B     |
 # | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
@@ -246,8 +246,8 @@ class BattleRecord < ApplicationRecord
 
         battle_users = info[:battle_user_infos].collect do |e|
           BattleUser.find_or_initialize_by(uid: e[:uid]).tap do |battle_user|
-            battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
-            battle_user.update!(battle_rank: battle_rank) # 常にランクを更新する
+            battle_grade = BattleGrade.find_by!(unique_key: e[:battle_grade_key])
+            battle_user.update!(battle_grade: battle_grade) # 常にランクを更新する
           end
         end
 
@@ -267,7 +267,7 @@ class BattleRecord < ApplicationRecord
 
         info[:battle_user_infos].each.with_index do |e, i|
           battle_user = BattleUser.find_by!(uid: e[:uid])
-          battle_rank = BattleRank.find_by!(unique_key: e[:battle_rank])
+          battle_grade = BattleGrade.find_by!(unique_key: e[:battle_grade_key])
 
           if winner_index
             judge_key = (i == winner_index) ? :win : :lose
@@ -275,7 +275,7 @@ class BattleRecord < ApplicationRecord
             judge_key = :draw
           end
 
-          battle_record.battle_ships.build(battle_user:  battle_user, battle_rank: battle_rank, judge_key: judge_key)
+          battle_record.battle_ships.build(battle_user:  battle_user, battle_grade: battle_grade, judge_key: judge_key)
         end
 
         # SQLをシンプルにするために勝者だけ、所有者的な意味で、BattleRecord 自体に入れとく

@@ -7,7 +7,7 @@
 # | カラム名           | 意味             | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+------------------+-------------+-------------+------------------+-------|
 # | id                 | ID               | integer(8)  | NOT NULL PK |                  |       |
-# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A     |
+# | battle_key         | Battle key       | string(255) | NOT NULL    |                  | A!    |
 # | battled_at         | Battled at       | datetime    | NOT NULL    |                  |       |
 # | battle_rule_key    | Battle rule key  | string(255) | NOT NULL    |                  | B     |
 # | csa_seq            | Csa seq          | text(65535) | NOT NULL    |                  |       |
@@ -28,7 +28,7 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
   def up
     create_table :battle_users, force: true do |t|
       t.string :uid, null: false, index: {unique: true}, comment: "対局者名"
-      t.belongs_to :battle_rank, null: false, comment: "最高段級"
+      t.belongs_to :battle_grade, null: false, comment: "最高段級"
       t.timestamps null: false
     end
 
@@ -51,13 +51,13 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
     create_table :battle_ships, force: true do |t|
       t.belongs_to :battle_record, null: false, comment: "対局"
       t.belongs_to :battle_user, null: false, comment: "対局者"
-      t.belongs_to :battle_rank, null: false, comment: "対局時の段級"
+      t.belongs_to :battle_grade, null: false, comment: "対局時の段級"
       t.string :judge_key, null: false, index: true, comment: "勝・敗・引き分け"
       t.integer :position, index: true, comment: "手番の順序"
       t.timestamps null: false
     end
 
-    create_table :battle_ranks, force: true do |t|
+    create_table :battle_grades, force: true do |t|
       t.string :unique_key, null: false, index: {unique: true}
       t.integer :priority, null: false, index: true, comment: "優劣"
       t.timestamps null: false

@@ -1,4 +1,4 @@
-class StaticBattleRankInfo
+class StaticBattleGradeInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: "九段", },
@@ -44,9 +44,5 @@ class StaticBattleRankInfo
 
   def priority
     code
-  end
-
-  def name
-    key.to_s
   end
 end

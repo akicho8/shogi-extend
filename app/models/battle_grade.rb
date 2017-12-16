@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Battle rankテーブル (battle_ranks as BattleRank)
+# Battle gradeテーブル (battle_grades as BattleGrade)
 #
 # |------------+------------+-------------+-------------+------+-------|
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
 # |------------+------------+-------------+-------------+------+-------|
 # | id         | ID         | integer(8)  | NOT NULL PK |      |       |
-# | unique_key | Unique key | string(255) | NOT NULL    |      | A     |
+# | unique_key | Unique key | string(255) | NOT NULL    |      | A!    |
 # | priority   | Priority   | integer(4)  | NOT NULL    |      | B     |
 # | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
 # |------------+------------+-------------+-------------+------+-------|
 
-class BattleRank < ApplicationRecord
+class BattleGrade < ApplicationRecord
   has_many :battle_users, dependent: :destroy
 
   default_scope { order(:priority) }
@@ -23,12 +23,12 @@ class BattleRank < ApplicationRecord
   end
 
   with_options allow_blank: true do
-    validates :unique_key, inclusion: StaticBattleRankInfo.collect(&:name)
+    validates :unique_key, inclusion: StaticBattleGradeInfo.collect(&:name)
   end
 
-  def static_battle_rank_info
-    StaticBattleRankInfo.fetch(unique_key)
+  def static_battle_grade_info
+    StaticBattleGradeInfo.fetch(unique_key)
   end
 
-  delegate :name, to: :static_battle_rank_info
+  delegate :name, to: :static_battle_grade_info
 end
