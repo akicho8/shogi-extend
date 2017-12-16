@@ -94,11 +94,12 @@ html lang="ja"
         = bootstrap_flash
         .main_container
           = yield
-        .row
-          .col-md-12
-            .text-center
-              .amazon_book
-                = render partial: "amazon_book"
+        - if false
+          .row
+            .col-md-12
+              .text-center
+                .amazon_book
+                  = render partial: "amazon_book"
     footer
       .container
         ul.list-inline
