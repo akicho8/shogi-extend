@@ -1,77 +1,74 @@
-# config valid only for current version of Capistrano
-lock '3.6.1'
+# config valid for current version and patch releases of Capistrano
+lock "~> 3.10.1"
 
 set :application, 'shogi_web'
-
-set :repo_url, "file://#{Pathname(__dir__).dirname}"
-# set :repo_url, "git@github.com:akicho8/shogi_web.git"
+set :repo_url, "git@github.com:akicho8/#{Pathname(__dir__).dirname}.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-# set :branch, :master
 
 # Default deploy_to directory is /var/www/my_app_name
-# set :deploy_to, '/var/www/my_app_name'
-set :deploy_to, proc { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
+# set :deploy_to, "/var/www/my_app_name"
+set :deploy_to, -> { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 
-# Default value for :scm is :git
-# set :scm, :git
+# Default value for :format is :airbrussh.
+# set :format, :airbrussh
 
-# Default value for :format is :pretty
-# set :format, :pretty
-
-# Default value for :log_level is :debug
-# set :log_level, :debug
+# You can configure the Airbrussh format using :format_options.
+# These are the defaults.
+# set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
 # Default value for :pty is false
 # set :pty, true
 
 # Default value for :linked_files is []
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
-# set :linked_files, fetch(:linked_files, []).push('config/secrets.yml', '.env')
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml')
-set :linked_files, fetch(:linked_files, []).push('config/secrets.yml.key')
+# append :linked_files, "config/database.yml", "config/secrets.yml"
+append :linked_files, "config/secrets.yml.key"
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-# set :default_env, { path: "/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH" }
 set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", "RAILS_ENV" => fetch(:rails_env)} }
+
+# Default value for local_user is ENV['USER']
+# set :local_user, -> { `git config user.name`.chomp }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-# for capistrano/rbenv
+# Uncomment the following to require manually verifying the host key before first deploy.
+# set :ssh_options, verify_host_key: :secure
 
-# set :rbenv_path, "/usr/local/var/rbenv"
-# set :rbenv_type, :system # or :system, depends on your rbenv setup
-# set :rbenv_ruby, File.read('.ruby-version').strip
-# set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} /usr/local/bin/rbenv exec"
+################################################################################ rbenv
 
-# set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-# set :rbenv_map_bins, %w{rake gem bundle ruby rails}
-# set :rbenv_roles, :all # default value
-
-# set :rbenv_path, "/usr/local/var/rbenv"
 set :rbenv_type, :system # or :system, depends on your rbenv setup
-# set :rbenv_ruby, File.read('.ruby-version').strip
-# set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} /usr/local/bin/rbenv exec"
+
+################################################################################ bundler
 
 # set :bundle_path, nil
 set :bundle_flags, '--deployment'
 set :bundle_binstubs, -> { shared_path.join('bin') }
 
+################################################################################ yarn
 
-# capistrano/yarn
 # set :yarn_target_path, -> { release_path.join('subdir') } # default not set
 # set :yarn_flags, '--production --silent --no-progress'    # default
 # set :yarn_roles, :all                                     # default
 # set :yarn_env_variables, {}                               # default
 
-set :print_config_variables, true # デプロイ前に設定した変数値を確認
+################################################################################ その他
+
+# set :print_config_variables, true # デプロイ前に設定した変数値を確認
+
+################################################################################ Whenever
+
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_path,       -> { release_path } # FIXME: whenever (0.10.0) 以下の場合のみ
+
+################################################################################ 独自タスク
 
 namespace :deploy do
   # desc 'Restart application'
@@ -172,22 +169,7 @@ namespace :deploy do
   end
 end
 
-################################################################################ Whenever
-
-set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
-# set :whenever_command,    -> { "cd #{current_path} && whenever" }
-# set :whenever_command,    -> { [:cd, current_path, "&&", :whenever] }
-# set :whenever_command,    -> { [:bundle, :exec, :whenever] }
-# set :whenever_command,    -> { [:whenever] }
-# set :whenever_command,    -> { [:bundle, ] }
-# set :whenever_command,    -> { "cd #{current_path} && whenever" }
-set :whenever_path,       -> { release_path || current_path }
-
-
-
 ################################################################################
-
-set :stage, -> { :production }
 
 desc "cap production env"
 task :env do
@@ -226,7 +208,18 @@ end
 task :t do
   on roles :all do
     within "/tmp" do
-      execute [:pwd]
+      execute "pwd"
     end
+  end
+end
+
+task :v do
+  on roles :all do
+    tp({
+        current_path: current_path,
+        release_path: release_path,
+        'fetch(:current_path)': fetch(:current_path),
+        'fetch(:release_path)': fetch(:release_path),
+    })
   end
 end

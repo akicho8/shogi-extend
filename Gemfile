@@ -61,12 +61,11 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring-commands-rspec'
 
-  gem 'capistrano', '3.6.1',  require: false
-  gem 'capistrano-rails',     require: false        # capistrano + capistrano-bundler
-  gem 'capistrano-passenger', require: false
-  gem 'capistrano-rbenv',     require: false
-  gem 'capistrano-withrsync', require: false
-  gem 'capistrano-yarn',      require: false
+  gem 'capistrano'
+  gem 'capistrano-rails'        # capistrano + capistrano-bundler
+  gem 'capistrano-passenger'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-yarn'
 
   gem 'rspec-rails'
   gem 'test-unit'
