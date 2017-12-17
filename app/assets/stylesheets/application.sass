@@ -1,5 +1,5 @@
 //= require html_format/control
-//= require_tree .
+//  require_tree .
 //= require_self
 
 // 参照 /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/bootswatch-rails-3.3.5/README.md:34
@@ -10,14 +10,32 @@
 @import "bootstrap-sprockets"
 
 // Import cyborg variables
-@import "bootswatch/cyborg/variables"
+// @import "bootswatch/cyborg/variables"
+$white-base: #fff !default
+@import "cyborg/variables"
 
 //////////////////////////////////////////////////////////////////////////////// 変数
 
 // 変数確認用
 // /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/bootswatch-rails-3.3.5/vendor/assets/stylesheets/bootswatch/cyborg/_variables.scss
 // /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/bootswatch-rails-3.3.5/vendor/assets/stylesheets/bootswatch/cyborg/_bootswatch.scss
+
+$gray-base:    hsl(0,0%,0%)
+$gray-darker:  lighten($gray-base, 10%)
+$gray-dark:    lighten($gray-base, 20%)
+$gray:         lighten($gray-base, 30%)
+$gray-light:   lighten($gray-base, 40%)
+$gray-lighter: lighten($gray-base, 50%)
+
+$white-base:   lighten($gray-base, 40%)
+$white-light:  lighten($gray-base, 60%)
+
+$headings-color:             $white-base
+$navbar-default-link-color:  $white-light
+$navbar-default-brand-color: $white-light
+
 $tooltip-bg: #2c2c2c
+$font-size-base: 12px
 // 英語フォントを前に書く(英語とまざってめちゃくちゃなのでやめ)
 /* $font-family-serif: Georgia, "Times New Roman", Times, "YuMincho", "Yu Mincho", serif !default
 /* $font-family-base: $font-family-serif
@@ -26,8 +44,10 @@ $table-bg:           darken($gray-darker, 6%)
 $table-bg-accent:    darken($table-bg, 2%)
 $table-bg-hover:     darken($gray-darker, 1%)
 
-$link-hover-color:      lighten($link-color, 20%)
+$link-hover-color:      lighten($link-color, 15%)
 $link-hover-decoration: none
+
+$input-bg: $gray-darker
 
 //////////////////////////////////////////////////////////////////////////////// 適用
 
@@ -40,7 +60,8 @@ body
   padding-top: 60px
 
 // And finally bootswatch style itself
-@import "bootswatch/cyborg/bootswatch"
+// @import "bootswatch/cyborg/bootswatch"
+@import "cyborg/bootswatch"
 
 // Whatever application styles you have go last
 // @import "base"
@@ -57,19 +78,19 @@ body
 // Then the rest as shown above...
 
 ////////////////////////////////////////////////////////////////////////////// font-awesome
-    
+
 @import "font-awesome-sprockets"
 @import "font-awesome"
 
 //////////////////////////////////////////////////////////////////////////////// bootswatch/cyborg/bootswatch 適用後の調整
-  
+
 table, .table
   a:not(.btn)
     color: $link-color ! important
     text-decoration: $link-hover-decoration ! important
     &:hover
       color: $link-hover-color ! important
-  
+
 footer
   margin-top: 5vmin
   padding: 5vmin 0
@@ -81,6 +102,11 @@ footer
     th
       padding-top:    4px ! important
       padding-bottom: 4px ! important
-.table
+table, .table
   th, td
     border-top: 0px ! important
+
+.tab-content  
+  pre
+    color: $white-base
+    
