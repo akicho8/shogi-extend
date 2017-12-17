@@ -9,7 +9,7 @@ class RandomArticlesController < ApplicationController
       out << tag.div(:class => "page-header") do
         tag.h2("今日の戦法占い", :class => "yumincho")
       end
-      out << tag.div(:class => "") do |;out|
+      out << tag.div do |;out|
         out = []
         out << tag.p do
           link_to(attack_info.name, [:formation_article, id: attack_info.key], :class => "yumincho")

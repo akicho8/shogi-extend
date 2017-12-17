@@ -28,14 +28,14 @@ $gray-light:   lighten($gray-base, 40%)
 $gray-lighter: lighten($gray-base, 50%)
 
 $white-base:   lighten($gray-base, 40%)
-$white-light:  lighten($gray-base, 60%)
+$white-light:  lighten($gray-base, 70%)
 
-$headings-color:             $white-base
+$headings-color:             $white-light
 $navbar-default-link-color:  $white-light
 $navbar-default-brand-color: $white-light
 
 $tooltip-bg: #2c2c2c
-$font-size-base: 12px
+$font-size-base: 14px
 // 英語フォントを前に書く(英語とまざってめちゃくちゃなのでやめ)
 /* $font-family-serif: Georgia, "Times New Roman", Times, "YuMincho", "Yu Mincho", serif !default
 /* $font-family-base: $font-family-serif
@@ -109,4 +109,8 @@ table, .table
 .tab-content  
   pre
     color: $white-base
-    
+   
+.pagination, .pager
+  a
+    &:hover
+      color: white

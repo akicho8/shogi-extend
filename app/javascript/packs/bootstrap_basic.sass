@@ -12,44 +12,41 @@
 .main_container
   min-height: 50vmin
 
+////////////////////////////////////////////////////////////////////////////// 
+
+input::-webkit-calendar-picker-indicator
+  display: none
+  
+/* input[list]
+/*   background: red
+  
+
 ////////////////////////////////////////////////////////////////////////////// kaminari
 
 .page-item
   .page-link
-    /* 隙間
-    margin: 0.3rem
-
-    /* 角丸め
-    border-radius: 8px ! important
-
-    /* 数字の大きさ
-    font-size: 1.5rem
-
-    /* 大きさ
-    padding: 0.68em 1.2em
-
-    /* 「prev」は押せる利点より邪魔なデメリットの方がでかいので消す
-    &.prev_link
+    margin: 0.3rem                   // 隙間
+    border-radius: 8px ! important   // 角丸め
+    font-size: 1.5rem                // 数字の大きさ
+    padding: 0.68em 1.2em            // 大きさ
+    &.prev_link                      // prevは押せる利点より邪魔なデメリットの方がでかいので消す
       display: none
-
-    /* いちばん使われる next は大きく
-    &.next_link
+    &.next_link                      // いちばん使われる next は大きく
       padding-left: 4rem
       padding-right: 4rem
-
-    /* 端に移動するリンクは
-    &.first_or_last
+    &.first_or_last                  // 端に移動するリンクは不要
       display: none
-
-  /* 「…」の部分
-  &.disabled
+  &.disabled                         // 「…」の部分
     .page-link
-      /* デフォルトでは '#' が押せてしまうので押せないようにする
-      pointer-events: none
-      /* 少し小さくする
-      padding-left: 0.7rem
+      pointer-events: none           //  デフォルトでは '#' が押せてしまうので押せないようにする
+      padding-left: 0.7rem           // 少し小さくする
       padding-right: 0.7rem
 
+.pager
+  a
+    padding: 0.5rem 4rem ! important
+    font-size: 2rem
+      
 ////////////////////////////////////////////////////////////////////////////// ボタン調整
 
 /* .btn
@@ -82,7 +79,7 @@
   display: flex
   justify-content: center
   align-items: center
-  
+
 .tag_cloud
   text-align: center
   min-height: 80vmin
@@ -101,7 +98,7 @@ kbd
 
 ////////////////////////////////////////////////////////////////////////////// 棋譜を表示する pre
 
-.tab-content  
+.tab-content
   pre
     font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace ! important
     font-size: 1.2rem ! important
@@ -130,8 +127,61 @@ kbd
   margin-bottom: 8rem
 
 ////////////////////////////////////////////////////////////////////////////// 今日の戦法占い
-  
+
 .random_articles
   a
     font-size: 16vmin
     text-decoration: none
+
+////////////////////////////////////////////////////////////////////////////// 囲い
+
+$base-color:            hsl(200, 50%, 50%)
+$board-bg-color:        darken($base-color, 43%)
+$line-color:            darken($base-color,  0%)
+$piece-color:           darken($base-color,  0%)
+$piece-bg-color:        darken($base-color, 38%)
+$font-color:            darken($base-color,  0%)
+$blank-bg-color:        darken($base-color, 50%)
+$something-exist-color: lighten($base-color, 20%)
+
+$trigger-color:         darken($base-color,  0%)
+$trigger-bg-color:      darken($base-color, 37%)
+
+$cell-size: 7vmin
+
+.kakoi_table
+  font-family: "YuMincho", "Yu Mincho", serif
+  margin: 0 auto
+  padding: 0
+  background: $line-color
+  border-collapse: separate
+  border-spacing: 1px
+  border: 1px solid $line-color
+  box-shadow: 0 0 24vmin rgba($line-color, 0.5)
+  td
+    font-size: 4.4vmin
+    width: $cell-size
+    height: $cell-size
+    padding: 0
+    color: $piece-color
+    background: $board-bg-color
+    text-align: center
+    &.active
+      background: $piece-bg-color
+    &.cell_blank
+      background: $blank-bg-color
+    &.something-exist-color
+      background: $something-exist-color
+    &.location_white
+      transform: rotate(180deg)
+    &.trigger
+      color: $trigger-color
+      background: $trigger-bg-color
+    &.any_from_point
+      background: $trigger-bg-color
+      
+////////////////////////////////////////////////////////////////////////////////      
+      
+/* .input-group-btn
+/*   button
+/*     border: 2px solid #424242 ! important

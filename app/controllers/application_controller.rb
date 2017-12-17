@@ -11,5 +11,5 @@ class ApplicationController < ActionController::Base
     @h ||= view_context
   end
 
-  delegate :tag, :link_to, to: :h
+  delegate :tag, :link_to, :icon_tag, to: :h
 end
