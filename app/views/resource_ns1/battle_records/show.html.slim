@@ -2,9 +2,9 @@
   .text-center
     .page-header
       h2
-        strong= current_record.battle_ships.black.name_with_rank
+        strong= current_record.battle_ships.black.name_with_grade
         span.text-muted=<> "vs"
-        strong= current_record.battle_ships.white.name_with_rank
+        strong= current_record.battle_ships.white.name_with_grade
 
     = render partial: "flash_kifu_player"
 

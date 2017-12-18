@@ -87,20 +87,22 @@ class BattleRecord < ApplicationRecord
       end
 
       before_save do
-        if changes[:csa_seq]
-          if csa_seq
-            if battle_ships.white # 最初のときは、まだ保存されていないレコード
-              parser_exec
-            end
-          end
+        if changes[:csa_seq] && csa_seq
+          parser_exec
         end
       end
     end
 
     def kifu_body
+      if persisted?
+        players = battle_ships.order(:position)
+      else
+        players = battle_ships
+      end
+
       s = []
-      s << ["N+", battle_ships.black.name_with_rank].join
-      s << ["N-", battle_ships.white.name_with_rank].join
+      s << ["N+", players.first.name_with_grade].join
+      s << ["N-", players.second.name_with_grade].join
       s << ["$START_TIME", battled_at.to_s(:csa_ymdhms)] * ":"
       s << ["$EVENT", "将棋ウォーズ(#{battle_rule_info.long_name})"] * ":"
       s << ["$TIME_LIMIT", battle_rule_info.csa_time_limit] * ":"
@@ -289,7 +291,7 @@ class BattleRecord < ApplicationRecord
             judge_key = :draw
           end
 
-          battle_record.battle_ships.build(battle_user:  battle_user, battle_grade: battle_grade, judge_key: judge_key)
+          battle_record.battle_ships.build(battle_user:  battle_user, battle_grade: battle_grade, judge_key: judge_key, location_key: Bushido::Location.fetch(i).key)
         end
 
         # SQLをシンプルにするために勝者だけ、所有者的な意味で、BattleRecord 自体に入れとく

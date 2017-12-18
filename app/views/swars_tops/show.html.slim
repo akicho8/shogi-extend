@@ -16,7 +16,7 @@
             span.input-group-btn
               = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
         .col-sm-4
-      - if false
+      - if Rails.env.test?
         .form-group
           .col-sm-12
             .text-center

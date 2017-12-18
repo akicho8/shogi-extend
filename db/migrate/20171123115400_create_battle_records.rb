@@ -53,9 +53,12 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
       t.belongs_to :battle_user, null: false, comment: "対局者"
       t.belongs_to :battle_grade, null: false, comment: "対局時の段級"
       t.string :judge_key, null: false, index: true, comment: "勝・敗・引き分け"
+      t.string :location_key, null: false, index: true, comment: "▲△"
       t.integer :position, index: true, comment: "手番の順序"
       t.timestamps null: false
     end
+    add_index :battle_ships, [:battle_record_id, :location_key], unique: true
+    add_index :battle_ships, [:battle_record_id, :battle_user_id], unique: true
 
     create_table :battle_grades, force: true do |t|
       t.string :unique_key, null: false, index: {unique: true}

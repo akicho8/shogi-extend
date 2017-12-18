@@ -29,15 +29,15 @@ class BattleShip < ApplicationRecord
 
   acts_as_list top_of_list: 0, scope: :battle_record
 
-  scope :judge_key_eq, -> v { where(judge_key: v) }
+  scope :judge_key_eq, -> v { where(judge_key: v).take }
 
   # 先手/後手側の対局時の情報
-  scope :black, -> { first  }
-  scope :white, -> { second }
+  scope :black, -> { where(location_key: "black").take! }
+  scope :white, -> { where(location_key: "white").take! }
 
-  # 勝者/敗者側の対局時の情報(引き分けの場合ない)
-  scope :win,  -> { judge_key_eq(:win) }
-  scope :lose, -> { judge_key_eq(:lose) }
+  # # 勝者/敗者側の対局時の情報(引き分けの場合ない)
+  # scope :win,  -> { judge_key_eq(:win)  }
+  # scope :lose, -> { judge_key_eq(:lose) }
 
   # battle_user に対する自分/相手
   scope :myself, -> battle_user { where(battle_user_id: battle_user.id).take!     }
@@ -47,6 +47,7 @@ class BattleShip < ApplicationRecord
   acts_as_ordered_taggable_on :attack_tags
 
   before_validation do
+    # 無かったときだけ入れる(絶対あるんだけど)
     if battle_user
       self.battle_grade ||= battle_user.battle_grade
     end
@@ -54,13 +55,21 @@ class BattleShip < ApplicationRecord
 
   with_options presence: true do
     validates :judge_key
+    validates :location_key
   end
 
   with_options allow_blank: true do
     validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
+    validates :battle_user_id, uniqueness: {scope: :battle_record_id}
+    validates :location_key, uniqueness: {scope: :battle_record_id}
+    validates :location_key, inclusion: Bushido::Location.keys.collect(&:to_s)
   end
 
-  def name_with_rank
+  def name_with_grade
     "#{battle_user.uid} #{battle_grade.name}"
+  end
+
+  def location
+    Bushido::Location.fetch(location_key)
   end
 end

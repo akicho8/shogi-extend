@@ -73,8 +73,8 @@ class SwarsTopsController < ApplicationController
         if @battle_user
           myself = battle_record.myself(@battle_user)
           rival = battle_record.rival(@battle_user)
-          row["対象プレイヤー"] = battle_record.win_lose_str(myself.battle_user).html_safe + " " + link_to(myself.name_with_rank, myself.battle_user)
-          row["対戦相手"]       = battle_record.win_lose_str(rival.battle_user).html_safe + " " + link_to(rival.name_with_rank, rival.battle_user)
+          row["対象プレイヤー"] = battle_record.win_lose_str(myself.battle_user).html_safe + " " + link_to(myself.name_with_grade, myself.battle_user)
+          row["対戦相手"]       = battle_record.win_lose_str(rival.battle_user).html_safe + " " + link_to(rival.name_with_grade, rival.battle_user)
         else
           if battle_record.win_battle_user
             row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link(battle_record, :win)
@@ -148,13 +148,13 @@ class SwarsTopsController < ApplicationController
   end
 
   def battle_user_link(battle_record, judge_key)
-    if battle_ship = battle_record.battle_ships.judge_key_eq(judge_key).take
+    if battle_ship = battle_record.battle_ships.judge_key_eq(judge_key)
       battle_user_link2(battle_ship)
     end
   end
 
   def battle_user_link2(battle_ship)
-    link_to(battle_ship.name_with_rank, battle_ship.battle_user)
+    link_to(battle_ship.name_with_grade, battle_ship.battle_user)
   end
 
   def battle_state_info_decorate(battle_record)
