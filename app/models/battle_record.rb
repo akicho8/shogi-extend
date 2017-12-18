@@ -27,35 +27,7 @@
 class BattleRecord < ApplicationRecord
   belongs_to :win_battle_user, class_name: "BattleUser", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。battle_ships.win.battle_user と同じ
 
-  has_many :battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle_record do
-    # 先手/後手側の対局時の情報
-    def black
-      first
-    end
-
-    def white
-      second
-    end
-
-    # 勝者/敗者側の対局時の情報(引き分けの場合ない)
-    def win
-      judge_key_eq(:win)
-    end
-
-    def lose
-      judge_key_eq(:lose)
-    end
-
-    # battle_user に対する自分/相手
-    def myself(battle_user)
-      where(battle_user_id: battle_user.id).take!
-    end
-
-    def rival(battle_user)
-      where.not(battle_user_id: battle_user.id).take!
-    end
-  end
-
+  has_many :battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle_record
   delegate :rival, :myself, to: :battle_ships
 
   has_many :battle_users, through: :battle_ships do

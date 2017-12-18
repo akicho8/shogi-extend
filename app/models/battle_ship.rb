@@ -31,6 +31,18 @@ class BattleShip < ApplicationRecord
 
   scope :judge_key_eq, -> v { where(judge_key: v) }
 
+  # 先手/後手側の対局時の情報
+  scope :black, -> { first  }
+  scope :white, -> { second }
+
+  # 勝者/敗者側の対局時の情報(引き分けの場合ない)
+  scope :win,  -> { judge_key_eq(:win) }
+  scope :lose, -> { judge_key_eq(:lose) }
+
+  # battle_user に対する自分/相手
+  scope :myself, -> battle_user { where(battle_user_id: battle_user.id).take!     }
+  scope :rival,  -> battle_user { where.not(battle_user_id: battle_user.id).take! }
+
   acts_as_ordered_taggable_on :defense_tags
   acts_as_ordered_taggable_on :attack_tags
 
