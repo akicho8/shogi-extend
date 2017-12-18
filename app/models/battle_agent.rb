@@ -123,6 +123,7 @@ class BattleAgent
   end
 
   concerning :LegendBattleUserKeysMethods do
+    # 騎士団フェスのときは何もとれない
     def legend_battle_user_keys(**params)
       if @options[:run_localy]
         str = Rails.root.join("app/models/https_shogiwars_heroz_jp_locale_en.html").read
