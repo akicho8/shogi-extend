@@ -103,9 +103,9 @@ class BattleAgent
         # CSA形式の棋譜
         # 開始直後に切断している場合は空文字列になる
         # だから空ではないチェックをしてはいけない
-        info[:csa_seq] = md[:__csa_data].scan(/([+-]\d{4}[A-Z]{2}),L(\d+)/).collect { |v, rest_seconds|
+        info[:csa_seq] = md[:__csa_data].scan(/([+-]\d{4}[A-Z]{2}),L(\d+)/).collect do |v, rest_seconds|
           [v, rest_seconds.to_i]
-        }
+        end
 
         # 対局完了？
         info[:battle_done] = true
@@ -113,9 +113,25 @@ class BattleAgent
 
       info
     end
+
+    private
+
+    # xxx -> http://kif-pona.heroz.jp/games/xxx?locale=ja
+    def battle_key_to_url(battle_key)
+      "http://kif-pona.heroz.jp/games/#{battle_key}?locale=ja"
+    end
   end
 
-  private
+  concerning :LegendBattleUserKeysMethods do
+    def legend_battle_user_keys(**params)
+      if @options[:run_localy]
+        str = Rails.root.join("app/models/https_shogiwars_heroz_jp_locale_en.html").read
+      else
+        str = agent.get("https://shogiwars.heroz.jp/?locale=en").body
+      end
+      str.scan(%r{shogiwars.heroz.jp/users/(\w+)}).flatten.uniq
+    end
+  end
 
   def agent
     @agent ||= Mechanize.new.tap do |e|
@@ -123,14 +139,28 @@ class BattleAgent
       e.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
     end
   end
-
-  # xxx -> http://kif-pona.heroz.jp/games/xxx?locale=ja
-  def battle_key_to_url(battle_key)
-    "http://kif-pona.heroz.jp/games/#{battle_key}?locale=ja"
-  end
 end
 
 if $0 == __FILE__
+  tp BattleAgent.new.legend_battle_user_keys
+  # |-----------------|
+  # | adventstart     |
+  # | shu_chan        |
+  # | syougi8         |
+  # | miya_with_r     |
+  # | yuuki_130       |
+  # | kiriyama_reikun |
+  # | kensirou0727    |
+  # | liquidendu      |
+  # | wolf73          |
+  # | syunhoh         |
+  # | sniper_take     |
+  # | shigetoshikun   |
+  # | hagashin724     |
+  # | kiyopooon       |
+  # | shogi_9_dan     |
+  # |-----------------|
+
   tp BattleAgent.new.index_get(gtype: "",  uid: "Apery8")
   tp BattleAgent.new.index_get(gtype: "",  uid: "Apery8", page_index: 1)
 

@@ -317,25 +317,26 @@ class BattleRecord < ApplicationRecord
 
         battle_record.save!
       end
-    end
 
-    def battle_state_info
-      BattleStateInfo.fetch(battle_state_key)
+      private
+
+      def battle_agent
+        @battle_agent ||= BattleAgent.new
+      end
     end
   end
 
-  concerning :KaisekiMethoes do
+  concerning :KishinKaisekiMethoes do
     def kishin_analyze_result_hask(location)
       kishin_count = 5
 
       location = Bushido::Location[location]
       list = csa_seq.find_all.with_index { |e, i| i.modulo(2) == location.code }
-      v1 = list.collect { |a, b| b }
-
-      v2 = v1.chunk_while { |a, b| (a - b) <= 2 }.to_a              # => [[136], [121], [101], [28], [18, 17, 16, 15, 14, 12], [7, 136], [121], [101], [28], [18, 17, 16, 15, 14, 12, 11]]
-      v3 = v2.collect(&:size)                                      # => [1, 1, 1, 1, 6, 2, 1, 1, 1, 7]
-      v4 = v3.group_by(&:itself).transform_values(&:size)          # => {1=>7, 6=>1, 2=>1, 7=>1}
-      v5 = v4.count { |k, v| k > kishin_count }                              # => 2
+      v1 = list.collect(&:last)
+      v2 = v1.chunk_while { |a, b| (a - b) <= 2 }.to_a    # => [[136], [121], [101], [28], [18, 17, 16, 15, 14, 12], [7, 136], [121], [101], [28], [18, 17, 16, 15, 14, 12, 11]]
+      v3 = v2.collect(&:size)                             # => [1, 1, 1, 1, 6, 2, 1, 1, 1, 7]
+      v4 = v3.group_by(&:itself).transform_values(&:size) # => {1=>7, 6=>1, 2=>1, 7=>1}
+      v5 = v4.count { |k, v| k > kishin_count }           # => 2
       v6 = v5 >= 1
 
       {
