@@ -3,9 +3,14 @@ class Fix3 < ActiveRecord::Migration[5.1]
     # ActiveRecord::Schema.define do
     #   add_column :battle_ships, :location_key, :string, default: "black"
     #   BattleShip.reset_column_information
+    #   BattleShip.find_each { |e| e.update!(location_key: Bushido::Location[e.position].key) }
+    # 
     #   BattleShip.find_each { |e|
-    #     e.update!(location_key: Bushido::Location[e.position].key)
+    #     if e.battle_record.blank?
+    #       e.battle_user.destroy!
+    #     end
     #   }
+    # 
     #   change_column :battle_ships, :location_key, :string, null: true, default: nil
     #   change_column :battle_ships, :location_key, :string, null: false
     #   add_index :battle_ships, :location_key
