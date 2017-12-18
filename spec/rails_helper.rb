@@ -73,7 +73,7 @@ RSpec.configure do |config|
 
     def battle_record_setup
       battle_grade_setup
-      BattleRecord.import_all(uid: "hanairobiyori")
+      BattleRecord.basic_import(uid: "hanairobiyori")
     end
   }
 end

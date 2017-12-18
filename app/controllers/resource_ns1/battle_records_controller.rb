@@ -32,7 +32,7 @@ module ResourceNs1
 
     def raw_current_record
       if v = params[:id].presence
-        BattleRecord.import_by_battle_key(v)
+        BattleRecord.single_battle_import(v)
         current_scope.find_by!(battle_key: v)
       else
         current_scope.new
@@ -66,7 +66,7 @@ module ResourceNs1
 
       def show
         if params[:mountain]
-          current_record.mountain_post_onece
+          current_record.mountain_post_once
 
           # 通常リンク(remote: false)の場合
           if true

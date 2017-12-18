@@ -6,8 +6,8 @@ class SwarsTopsController < ApplicationController
         before_count = battle_user.battle_records.count
       end
 
-      Rails.cache.fetch("import_all_#{current_uid}", expires_in: Rails.env.production? ? 30.seconds : 0) do
-        BattleRecord.import_all(uid: current_uid)
+      Rails.cache.fetch("basic_import_#{current_uid}", expires_in: Rails.env.production? ? 30.seconds : 0) do
+        BattleRecord.basic_import(uid: current_uid)
         nil
       end
 
@@ -71,10 +71,10 @@ class SwarsTopsController < ApplicationController
     @rows = @battle_records.collect do |battle_record|
       {}.tap do |row|
         if @battle_user
-          current_user_ship = battle_record.current_user_ship(@battle_user)
-          reverse_user_ship = battle_record.reverse_user_ship(@battle_user)
-          row["対象プレイヤー"] = battle_record.win_lose_str(current_user_ship.battle_user).html_safe + " " + link_to(current_user_ship.name_with_rank, current_user_ship.battle_user)
-          row["対戦相手"]       = battle_record.win_lose_str(reverse_user_ship.battle_user).html_safe + " " + link_to(reverse_user_ship.name_with_rank, reverse_user_ship.battle_user)
+          myself = battle_record.myself(@battle_user)
+          rival = battle_record.rival(@battle_user)
+          row["対象プレイヤー"] = battle_record.win_lose_str(myself.battle_user).html_safe + " " + link_to(myself.name_with_rank, myself.battle_user)
+          row["対戦相手"]       = battle_record.win_lose_str(rival.battle_user).html_safe + " " + link_to(rival.name_with_rank, rival.battle_user)
         else
           if battle_record.win_battle_user
             row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link(battle_record, :win)
@@ -90,8 +90,8 @@ class SwarsTopsController < ApplicationController
         else
 
           if @battle_user
-            l_ship = battle_record.current_user_ship(@battle_user)
-            r_ship = battle_record.reverse_user_ship(@battle_user)
+            l_ship = battle_record.myself(@battle_user)
+            r_ship = battle_record.rival(@battle_user)
           else
             l_ship = battle_record.battle_ships.black
             r_ship = battle_record.battle_ships.white

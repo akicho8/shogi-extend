@@ -138,8 +138,8 @@ class FormationArticlesController < ApplicationController
     row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
     row["種類"] = e.skill_group_info.name
 
-    row["手数制限"] = e.turn_limit
-    row["手数限定"] = e.turn_eq
+    row["手数制限"] = e.turn_limit ? "#{e.turn_limit}手以内" : nil
+    row["手数限定"] = e.turn_eq ? "#{e.turn_eq}手目" : nil
 
     str = nil
     if e.teban_eq

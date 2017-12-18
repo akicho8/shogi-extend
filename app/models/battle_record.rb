@@ -25,13 +25,10 @@
 #--------------------------------------------------------------------------------
 
 class BattleRecord < ApplicationRecord
-  has_one :battle_ship_black, -> { where(position: 0) }, class_name: "BattleShip"
-  has_one :battle_ship_white, -> { where(position: 1) }, class_name: "BattleShip"
-
-  has_one :battle_ship_win,  -> { where(judge_key: :win) }, class_name: "BattleShip"
-  has_one :battle_ship_lose, -> { where(judge_key: :lose) }, class_name: "BattleShip"
+  belongs_to :win_battle_user, class_name: "BattleUser", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。battle_ships.win.battle_user と同じ
 
   has_many :battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle_record do
+    # 先手/後手側の対局時の情報
     def black
       first
     end
@@ -40,6 +37,7 @@ class BattleRecord < ApplicationRecord
       second
     end
 
+    # 勝者/敗者側の対局時の情報(引き分けの場合ない)
     def win
       judge_key_eq(:win)
     end
@@ -47,9 +45,21 @@ class BattleRecord < ApplicationRecord
     def lose
       judge_key_eq(:lose)
     end
+
+    # battle_user に対する自分/相手
+    def myself(battle_user)
+      where(battle_user_id: battle_user.id).take!
+    end
+
+    def rival(battle_user)
+      where.not(battle_user_id: battle_user.id).take!
+    end
   end
 
+  delegate :rival, :myself, to: :battle_ships
+
   has_many :battle_users, through: :battle_ships do
+    # 先手/後手プレイヤー
     def black
       first
     end
@@ -59,7 +69,8 @@ class BattleRecord < ApplicationRecord
     end
   end
 
-  belongs_to :win_battle_user, class_name: "BattleUser", optional: true
+  acts_as_ordered_taggable_on :defense_tags
+  acts_as_ordered_taggable_on :attack_tags
 
   before_validation do
     # "" から ten_min への変換
@@ -92,7 +103,11 @@ class BattleRecord < ApplicationRecord
     BattleRuleInfo.fetch(battle_rule_key)
   end
 
-  concerning :HenkanMethods do
+  def battle_state_info
+    BattleStateInfo.fetch(battle_state_key)
+  end
+
+  concerning :ConvertHookMethos do
     included do
       serialize :csa_seq
 
@@ -103,7 +118,7 @@ class BattleRecord < ApplicationRecord
         if changes[:csa_seq]
           if csa_seq
             if battle_ships.white # 最初のときは、まだ保存されていないレコード
-              parser_run
+              parser_exec
             end
           end
         end
@@ -111,44 +126,36 @@ class BattleRecord < ApplicationRecord
     end
 
     def kifu_body
-      out = []
-      out << "N+#{battle_ships.black.name_with_rank}"
-      out << "N-#{battle_ships.white.name_with_rank}"
-      out << "$START_TIME:#{battled_at.to_s(:csa_ymdhms)}"
-      out << "$EVENT:将棋ウォーズ(#{battle_rule_info.long_name})"
-      out << "$TIME_LIMIT:#{battle_rule_info.csa_time_limit}"
+      s = []
+      s << ["N+", battle_ships.black.name_with_rank].join
+      s << ["N-", battle_ships.white.name_with_rank].join
+      s << ["$START_TIME", battled_at.to_s(:csa_ymdhms)] * ":"
+      s << ["$EVENT", "将棋ウォーズ(#{battle_rule_info.long_name})"] * ":"
+      s << ["$TIME_LIMIT", battle_rule_info.csa_time_limit] * ":"
 
       # $OPENING は 戦型 のことで、これが判明するのはパースの後なのでいまはわからない。
       # それに自動的にあとから埋められるのでここは指定しなくてよい
-      # out << "$OPENING:不明"
+      # s << "$OPENING:不明"
 
       # 平手なので先手から
-      out << "+"
+      s << "+"
 
-      life_times = [battle_rule_info.life_time] * 2
-      csa_seq.each.with_index do |(t1, t2), i|
-        i = i.modulo(life_times.size)
-        used = life_times[i] - t2
-        life_times[i] = t2
-
-        out << "#{t1}"
-        out << "T#{used}"
+      # 残り時間の並びから使用時間を求めつつ指し手と一緒に並べていく
+      life = [battle_rule_info.life_time] * battle_ships.size
+      csa_seq.each.with_index do |(op, t), i|
+        i = i.modulo(life.size)
+        used = life[i] - t
+        life[i] = t
+        s << "#{op}"
+        s << "T#{used}"
       end
 
-      out << "%#{battle_state_info.last_action_key}"
-      out.join("\n") + "\n"
+      s << "%#{battle_state_info.last_action_key}"
+      s.join("\n") + "\n"
     end
   end
 
   concerning :HelperMethods do
-    def reverse_user_ship(battle_user)
-      battle_ships.find {|e| e.battle_user != battle_user } # FIXME: battle_ships 下にメソッドとする
-    end
-
-    def current_user_ship(battle_user)
-      battle_ships.find {|e| e.battle_user == battle_user } # FIXME: battle_ships 下にメソッドとする
-    end
-
     def winner_desuka?(battle_user)
       if win_battle_user
         win_battle_user == battle_user
@@ -176,12 +183,16 @@ class BattleRecord < ApplicationRecord
 
   concerning :ImportMethods do
     class_methods do
-      def battle_agent
-        @battle_agent ||= BattleAgent.new
+      # BattleRecord.expert_import
+      # BattleRecord.expert_import(page_max: 3)
+      def expert_import(**params)
+        battle_agent.legend_battle_user_keys.each do |battle_user_key|
+          basic_import(params.merge(uid: battle_user_key))
+        end
       end
 
-      # BattleRecord.import_batch(limit: 10, page_max: 3, sleep: 5, battle_grade_key_gteq: "初段") # (10 * (3*10) * 5) / 60 = 25 min
-      def import_batch(**params)
+      # BattleRecord.conditional_import(limit: 10, page_max: 3, sleep: 5, battle_grade_key_gteq: "初段") # (10 * (3*10) * 5) / 60 = 25 min
+      def conditional_import(**params)
         # 最近対局した初段以上のプレイヤー limit 人取得
         s = BattleShip.all
         # 初段以上の場合
@@ -203,21 +214,21 @@ class BattleRecord < ApplicationRecord
         battle_users = BattleUser.find(battle_user_ids)
 
         battle_users.each do |battle_user|
-          import_all(params.merge(uid: battle_user.uid))
+          basic_import(params.merge(uid: battle_user.uid))
         end
       end
 
-      # BattleRecord.import_all(uid: "DarkPonamin9")
-      # BattleRecord.import_all(uid: "micro77")
-      # BattleRecord.import_all(uid: "micro77", page_max: 3)
-      def import_all(**params)
+      # BattleRecord.basic_import(uid: "DarkPonamin9")
+      # BattleRecord.basic_import(uid: "micro77")
+      # BattleRecord.basic_import(uid: "micro77", page_max: 3)
+      def basic_import(**params)
         BattleRuleInfo.each do |e|
-          import_one(params.merge(gtype: e.swars_real_key))
+          multiple_battle_import(params.merge(gtype: e.swars_real_key))
         end
       end
 
-      # BattleRecord.import_one(uid: "chrono_", gtype: "")
-      def import_one(**params)
+      # BattleRecord.multiple_battle_import(uid: "chrono_", gtype: "")
+      def multiple_battle_import(**params)
         (params[:page_max] || 1).times do |i|
           list = battle_agent.index_get(params.merge(page_index: i))
 
@@ -250,13 +261,13 @@ class BattleRecord < ApplicationRecord
             #   end
             # end
 
-            import_by_battle_key(battle_key)
+            single_battle_import(battle_key)
             sleep(params[:sleep].to_i)
           end
         end
       end
 
-      def import_by_battle_key(battle_key)
+      def single_battle_import(battle_key)
         # 登録済みなのでスキップ
         if BattleRecord.where(battle_key: battle_key).exists?
           return
@@ -356,7 +367,7 @@ class BattleRecord < ApplicationRecord
     end
   end
 
-  concerning :MountainMethods do
+  concerning :ConvertMethods do
     included do
       has_many :converted_infos, as: :convertable, dependent: :destroy
 
@@ -369,8 +380,8 @@ class BattleRecord < ApplicationRecord
     end
 
     # 更新方法
-    # BattleRecord.find_each{|e|e.parser_run; e.save!}
-    def parser_run(**options)
+    # BattleRecord.find_each { |e| e.tap(&:parser_exec).save! }
+    def parser_exec(**options)
       options = {
         destroy_all: false,
       }.merge(options)
@@ -387,21 +398,21 @@ class BattleRecord < ApplicationRecord
 
       # BattleRecord.tagged_with(...) とするため。on をつけないと集約できる
       self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
-      self.attack_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos }.collect(&:key)
+      self.attack_tag_list  = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
 
-      after_parser_run(info)
+      after_parser_exec(info)
     end
 
-    def after_parser_run(info)
+    def after_parser_exec(info)
       # 両者にタグを作らんと意味ないじゃん
       info.mediator.players.each.with_index do |player, i|
         battle_ship = battle_ships[i]
         battle_ship.defense_tag_list = player.skill_set.normalized_defense_infos.collect(&:key)
-        battle_ship.attack_tag_list = player.skill_set.normalized_attack_infos.collect(&:key)
+        battle_ship.attack_tag_list  = player.skill_set.normalized_attack_infos.collect(&:key)
       end
     end
 
-    def mountain_post_onece
+    def mountain_post_once
       unless mountain_url
         mountain_post
       end
@@ -413,25 +424,18 @@ class BattleRecord < ApplicationRecord
         kif = converted_info.text_body
 
         if AppConfig[:run_localy]
-          v = "http://shogi-s.com/result/5a274d10px"
+          url = "http://shogi-s.com/result/5a274d10px"
         else
           response = Faraday.post(url, kif: kif)
           logger.info(response.status.to_t)
           logger.info(response.headers.to_t)
-          v = response.headers["location"].presence
+          url = response.headers["location"].presence
         end
 
-        if v
-          update!(mountain_url: v)
+        if url
+          update!(mountain_url: url)
         end
       end
-    end
-  end
-
-  concerning :TagMethods do
-    included do
-      acts_as_ordered_taggable_on :defense_tags
-      acts_as_ordered_taggable_on :attack_tags
     end
   end
 end
