@@ -18,6 +18,7 @@ class SwarsTopsController < ApplicationController
         else
           flash.now[:info] = "#{count_diff}件新しく見つかりました"
         end
+        @battle_user.user_receptions.create!
       else
         flash.now[:warning] = "#{current_uid} さんのデータは見つかりませんでした"
       end

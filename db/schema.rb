@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171216200203) do
+ActiveRecord::Schema.define(version: 20171216200204) do
 
   create_table "battle_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 20171216200203) do
     t.bigint "battle_grade_id", null: false, comment: "最高段級"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_receptions_count", default: 0
+    t.datetime "last_reception_at"
     t.index ["battle_grade_id"], name: "index_battle_users_on_battle_grade_id"
     t.index ["uid"], name: "index_battle_users_on_uid", unique: true
   end
@@ -114,6 +116,13 @@ ActiveRecord::Schema.define(version: 20171216200203) do
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "user_receptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "battle_user_id", null: false, comment: "プレイヤー"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_user_id"], name: "index_user_receptions_on_battle_user_id"
   end
 
 end

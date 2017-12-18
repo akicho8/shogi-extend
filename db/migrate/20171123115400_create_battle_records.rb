@@ -29,6 +29,8 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
     create_table :battle_users, force: true do |t|
       t.string :uid, null: false, index: {unique: true}, comment: "対局者名"
       t.belongs_to :battle_grade, null: false, comment: "最高段級"
+      t.datetime :last_reception_at, null: true, comment: "受容日時"
+      t.integer :user_receptions_count, default: 0
       t.timestamps null: false
     end
 
@@ -63,6 +65,11 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
     create_table :battle_grades, force: true do |t|
       t.string :unique_key, null: false, index: {unique: true}
       t.integer :priority, null: false, index: true, comment: "優劣"
+      t.timestamps null: false
+    end
+
+    create_table :user_receptions, force: true do |t|
+      t.belongs_to :battle_user, null: false, comment: "プレイヤー"
       t.timestamps null: false
     end
   end
