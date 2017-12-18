@@ -157,8 +157,26 @@ class BattleRecord < ApplicationRecord
 
   concerning :ImportMethods do
     class_methods do
+      def run(key, &block)
+        begin
+          p [key, Time.current.to_s, 'begin', BattleUser.count, BattleRecord.count]
+          instance_eval(&block)
+        rescue => error
+          raise error
+        ensure
+          p [key, Time.current.to_s, 'end__', BattleUser.count, BattleRecord.count, error]
+        end
+      end
+
+      # BattleRecord.reception_import(limit: 10, sleep: 5)
+      def reception_import(**params)
+        BattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(params[:limit] || 1).each do |battle_user|
+          basic_import(params.merge(uid: battle_user.uid))
+        end
+      end
+
       # BattleRecord.expert_import
-      # BattleRecord.expert_import(page_max: 3)
+      # BattleRecord.expert_import(page_max: 3, sleep: 5)
       def expert_import(**params)
         battle_agent.legend_battle_user_keys.each do |battle_user_key|
           basic_import(params.merge(uid: battle_user_key))

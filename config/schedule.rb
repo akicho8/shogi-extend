@@ -6,18 +6,14 @@ set :output, {standard: "log/#{@environment}_cron.log"}
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
-every "*/30 * * * *" do
-  runner [
-    %(p [Time.current.to_s, 'begin', BattleUser.count, BattleRecord.count]),
-    %(BattleRecord.conditional_import(limit: 3, page_max: 3, sleep: 5, battle_grade_key_gteq: '三段')),
-    %(p [Time.current.to_s, 'end__', BattleUser.count, BattleRecord.count]),
-  ].join(";")
+every "30 5 * * *" do
+  runner "BattleRecord.run(:reception) { reception_import(limit: 50, page_max: 3, sleep: 5) }"
 end
 
-every "43 14 * * *" do
-  runner [
-    %(p [:expert_import, Time.current.to_s, 'begin', BattleUser.count, BattleRecord.count]),
-    %(BattleRecord.expert_import(sleep: 5)),
-    %(p [:expert_import, Time.current.to_s, 'end__', BattleUser.count, BattleRecord.count]),
-  ].join(";")
+every "30 6 * * *" do
+  runner "BattleRecord.run(:expert) { expert_import(sleep: 5) }"
+end
+
+every "*/30 * * * *" do
+  runner "BattleRecord.run(:conditional) { conditional_import(limit: 3, page_max: 3, sleep: 5, battle_grade_key_gteq: '三段') }"
 end

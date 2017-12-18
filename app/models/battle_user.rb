@@ -21,6 +21,7 @@ class BattleUser < ApplicationRecord
   has_many :battle_ships, dependent: :destroy
   has_many :battle_records, through: :battle_ships
   belongs_to :battle_grade       # すべてのモードの一番よい段位を指す
+  has_many :user_receptions, dependent: :destroy
 
   before_validation do
     self.battle_grade ||= BattleGrade.last
