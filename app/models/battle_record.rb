@@ -24,6 +24,8 @@
 # ・【警告:リレーション欠如】BattleUserモデルで has_many :battle_records されていません
 #--------------------------------------------------------------------------------
 
+require "matrix"
+
 class BattleRecord < ApplicationRecord
   belongs_to :win_battle_user, class_name: "BattleUser", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。battle_ships.win.battle_user と同じ
 
@@ -157,14 +159,20 @@ class BattleRecord < ApplicationRecord
 
   concerning :ImportMethods do
     class_methods do
-      def run(key, &block)
+      def import(key, **params)
+        counts = -> { Vector[BattleUser.count, BattleRecord.count] }
+        old = counts.call
         begin
-          p [key, Time.current.to_s, 'begin', BattleUser.count, BattleRecord.count]
-          instance_eval(&block)
+          p [Time.current.to_s(:ymdhms), key, 'begin', *old]
+          if block_given?
+            yield
+          else
+            public_send("#{key}_import", params)
+          end
         rescue => error
           raise error
         ensure
-          p [key, Time.current.to_s, 'end__', BattleUser.count, BattleRecord.count, error]
+          p [Time.current.to_s(:ymdhms), key, 'end__', *(counts.call - old), error]
         end
       end
 
