@@ -18,10 +18,10 @@
 #--------------------------------------------------------------------------------
 
 class BattleUser < ApplicationRecord
-  has_many :battle_ships, dependent: :destroy
-  has_many :battle_records, through: :battle_ships
-  belongs_to :battle_grade       # すべてのモードの一番よい段位を指す
-  has_many :user_receptions, dependent: :destroy
+  has_many :battle_ships, dependent: :destroy      # 対局時の情報(複数)
+  has_many :battle_records, through: :battle_ships # 対局(複数)
+  belongs_to :battle_grade                         # すべてのモードのなかで一番よい段級位
+  has_many :user_receptions, dependent: :destroy   # 明示的に取り込んだ日時の記録
 
   before_validation do
     self.battle_grade ||= BattleGrade.last

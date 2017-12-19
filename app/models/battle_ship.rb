@@ -23,9 +23,9 @@
 #--------------------------------------------------------------------------------
 
 class BattleShip < ApplicationRecord
-  belongs_to :battle_record
-  belongs_to :battle_user, touch: true
-  belongs_to :battle_grade  # 対局したときの段位
+  belongs_to :battle_record            # 対局
+  belongs_to :battle_user, touch: true # 対局者
+  belongs_to :battle_grade             # 対局したときの段位
 
   acts_as_list top_of_list: 0, scope: :battle_record
 
