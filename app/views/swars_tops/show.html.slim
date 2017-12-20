@@ -32,7 +32,7 @@
   - content_for :head do
     = rel_next_prev_link_tags @battle_records
 
-- if controller.current_query_hash
+- if controller.current_query_hash && @battle_records.exists?
   br
   .text-center
     = link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")

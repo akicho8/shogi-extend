@@ -1,14 +1,32 @@
 class FormationArticlesController < ApplicationController
   def index
-    rows = Bushido::SkillGroupInfo.flat_map do |group|
-      group.model.collect { |e| row_build(e) }
-    end
-
     out = []
     out << tag.div(:class => "page-header") do
       tag.h2("戦法トリガー辞典", :class => "yumincho")
     end
-    out << rows.to_html
+
+    out << tag.ul(:class => "nav nav-pills") do
+      tag.li(:class => ("active" if !params["tree"])) { link_to("一覧", :formation_articles, :class => "btn btn-default") } +
+        tag.li(:class => ("active" if params["tree"])) { link_to("ツリー", :tree, :class => "btn btn-default") }
+    end
+
+    if params[:tree]
+      out << tag.pre(:class => "tree") do
+        rows = Bushido::SkillGroupInfo.flat_map { |group|
+          roots = group.model.find_all(&:root?)
+          roots.collect { |root|
+            root.to_s_tree { |e|
+              link_to(e.name, [:formation_article, id: e.key])
+            }
+          }.join
+        }.join.html_safe
+      end
+    else
+      rows = Bushido::SkillGroupInfo.flat_map do |group|
+        group.model.collect { |e| row_build(e) }
+      end
+      out << rows.to_html
+    end
 
     render html: out.join.html_safe, layout: true
   end
@@ -93,12 +111,30 @@ class FormationArticlesController < ApplicationController
       out.join.html_safe
     end
 
+    out << tag.br
+    out << tag.p(:class => "text-center") do
+      link_to("棋譜検索", query_search_path(current_record.key), :class => "btn btn-link")
+    end
+
     out << tag.p do
       info = row_build(current_record)
       if v = group0["☆"]
         info["移動元制限"] = v.collect { |e| e[:point].name }.join("、").html_safe + "が移動元ではない"
       end
       info.transform_values(&:presence).compact.to_html
+    end
+
+    root = current_record.root
+    unless root.children.empty?
+      out << tag.pre(:class => "tree") do
+        root.to_s_tree { |e|
+          if current_record.key == e.key
+            e.name
+          else
+            link_to(e.name, [:formation_article, id: e.key])
+          end
+        }.html_safe
+      end
     end
 
     out << tag.p do
@@ -124,11 +160,11 @@ class FormationArticlesController < ApplicationController
   def row_build(e)
     row = {}
 
-    row["種類"] = e.skill_group_info.name
     if detail?
     else
       row["名前"] = link_to(e.key, [:formation_article, id: e.key])
     end
+    row["種類"] = e.skill_group_info.name
     row["親"] = e.parent ? link_to(e.parent.name, [:formation_article, id: e.parent.key]) : nil
     row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
     row["派生"] = e.children.collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
@@ -153,10 +189,6 @@ class FormationArticlesController < ApplicationController
     row["持駒一致"] = Array(e.hold_piece_eq).collect(&:name).join(", ")
     row["歩以外不所持"] = e.fu_igai_mottetara_dame ? checked : nil
 
-    if detail?
-      row["棋譜検索"] = link_to("将棋ウォーズ棋譜検索", query_search_path(e.key))
-    end
-
     # if e.compare_condition
     #   row["比較"] = e.compare_condition == :include ? "含まれる" : "完全一致"
     # end
@@ -164,7 +196,7 @@ class FormationArticlesController < ApplicationController
     if true
       urls = [:sankou_url, :siratama_url, :wikipedia_url].collect { |key|
         e.public_send(key)
-      }.compact
+      }.compact.sort
 
       if detail?
         str = urls.collect { |e|
@@ -172,7 +204,7 @@ class FormationArticlesController < ApplicationController
         }.join(tag.br).html_safe
       else
         str = urls.collect.with_index { |e, i|
-          link_to("URL#{i.next}", e, target: "_blank")
+          link_to(("A".ord + i).chr, e, target: "_blank")
         }.join(" ").html_safe
       end
       row["参考URL"] = str

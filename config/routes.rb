@@ -31,7 +31,8 @@ Rails.application.routes.draw do
 
   ################################################################################ 辞典
 
-  resources :formation_articles, path: "d"
+  resources :formation_articles, path: "tactics"
+  get "tactics-tree", to: "formation_articles#index", defaults: {tree: "true"}, as: :tree
 
   ################################################################################ 今日の戦法占い
 
