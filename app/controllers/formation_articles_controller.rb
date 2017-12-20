@@ -162,8 +162,8 @@ class FormationArticlesController < ApplicationController
     # end
 
     if true
-      urls = [:sankou_url, :siratama_url, :wikipedia_url].collect { |e|
-        e.public_send(e)
+      urls = [:sankou_url, :siratama_url, :wikipedia_url].collect { |key|
+        e.public_send(key)
       }.compact
 
       if detail?
