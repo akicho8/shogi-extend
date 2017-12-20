@@ -162,13 +162,10 @@ class FormationArticlesController < ApplicationController
     # end
 
     if true
-      urls = []
-      if e.sankou_url
-        urls << e.sankou_url
-      end
-      if e.respond_to?(:siratama_url) && e.siratama_url
-        urls << e.siratama_url
-      end
+      urls = [:sankou_url, :siratama_url, :wikipedia_url].collect { |e|
+        e.public_send(e)
+      }.compact
+
       if detail?
         str = urls.collect { |e|
           link_to(e, e, target: "_blank")
