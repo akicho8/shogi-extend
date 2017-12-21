@@ -11,8 +11,17 @@
           .input-group
             = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 戦法名", list: "uid_list", autofocus: controller.current_query_hash.blank?)
             = tag.datalist(id: "uid_list") do
-              - BattleUser.order(updated_at: :desc).limit(128).pluck(:uid).each do |uid|
-                = tag.option(value: uid)
+              - Bushido::TacticInfo.all_elements.each do |e|
+                = tag.option(value: e.name)
+              - uids = []
+              / 利用者
+              - uids.concat BattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:uid)
+              / 最近取り込んだ人たち
+              - uids.concat BattleUser.order(updated_at: :desc).limit(32).pluck(:uid)
+              / すごい人たち
+              - uids.concat BattleUser.joins(:battle_grade).order("battle_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:uid)
+              - uids.uniq.each do |e|
+                = tag.option(value: e)
             span.input-group-btn
               = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
         .col-sm-4
