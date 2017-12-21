@@ -46,6 +46,12 @@
   .text-center
     = link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
 
+- if controller.current_query_hash
+  - if tags = controller.current_query_hash[:tags]
+    br
+      .text-center
+        = link_to("#{tags.first}について調べる", [:formation_article, id: tags.first])
+
 - if Rails.env.development? && false
   = BattleUser.to_html
   = BattleRecord.to_html

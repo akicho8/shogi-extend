@@ -9,10 +9,10 @@
 # | id                    | ID                    | integer(8)  | NOT NULL PK |                   |       |
 # | uid                   | Uid                   | string(255) | NOT NULL    |                   | A!    |
 # | battle_grade_id       | Battle grade          | integer(8)  | NOT NULL    | => BattleGrade#id | B     |
+# | last_reception_at     | Last reception at     | datetime    |             |                   |       |
+# | user_receptions_count | User receptions count | integer(4)  | DEFAULT(0)  |                   |       |
 # | created_at            | 作成日時              | datetime    | NOT NULL    |                   |       |
 # | updated_at            | 更新日時              | datetime    | NOT NULL    |                   |       |
-# | user_receptions_count | User receptions count | integer(4)  | DEFAULT(0)  |                   |       |
-# | last_reception_at     | Last reception at     | datetime    |             |                   |       |
 # |-----------------------+-----------------------+-------------+-------------+-------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------

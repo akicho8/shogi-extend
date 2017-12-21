@@ -61,10 +61,10 @@ ActiveRecord::Schema.define(version: 20171216200205) do
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "uid", null: false, comment: "対局者名"
     t.bigint "battle_grade_id", null: false, comment: "最高段級"
+    t.datetime "last_reception_at", comment: "受容日時"
+    t.integer "user_receptions_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_receptions_count", default: 0
-    t.datetime "last_reception_at"
     t.index ["battle_grade_id"], name: "index_battle_users_on_battle_grade_id"
     t.index ["uid"], name: "index_battle_users_on_uid", unique: true
   end
