@@ -12,7 +12,7 @@ class FormationArticlesController < ApplicationController
 
     if params[:tree]
       out << tag.pre(:class => "tree") do
-        rows = Bushido::SkillGroupInfo.flat_map { |group|
+        rows = Bushido::TacticInfo.flat_map { |group|
           roots = group.model.find_all(&:root?)
           roots.collect { |root|
             root.to_s_tree { |e|
@@ -22,7 +22,7 @@ class FormationArticlesController < ApplicationController
         }.join.html_safe
       end
     else
-      rows = Bushido::SkillGroupInfo.flat_map do |group|
+      rows = Bushido::TacticInfo.flat_map do |group|
         group.model.collect { |e| row_build(e) }
       end
       out << rows.to_html
@@ -31,15 +31,12 @@ class FormationArticlesController < ApplicationController
     render html: out.join.html_safe, layout: true
   end
 
-  def show
-    soldiers_hash = current_record.board_parser.soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
-    trigger_soldiers_hash = current_record.board_parser.trigger_soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
+  delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :to => "current_record.board_parser"
 
+  def show
     # ○ 何もない
     # ● 何かある
     # ☆ 移動元ではない
-    group0 = current_record.board_parser.other_objects.group_by { |e| e[:something] }
-    group1 = group0.transform_values { |v| v.inject({}) {|a, e| a.merge(e[:point] => e) } }
 
     out = []
     out << tag.div(:class => "page-header") do
@@ -72,28 +69,28 @@ class FormationArticlesController < ApplicationController
                 end
 
                 # 何もない
-                if v = group1["○"]
+                if v = other_objects_hash["○"]
                   if v[point]
                     td_class << "cell_blank"
                   end
                 end
 
                 # 何かある
-                if v = group1["●"]
+                if v = other_objects_hash["●"]
                   if v[point]
                     td_class << "something_exist"
                   end
                 end
 
                 # 移動元
-                if v = group1["★"]
+                if v = other_objects_hash["★"]
                   if v[point]
                     td_class << "any_from_point"
                   end
                 end
 
                 # 移動元ではない
-                if v = group1["☆"]
+                if v = other_objects_hash["☆"]
                   if v[point]
                     td_class << "not_any_from_point"
                     str = icon_tag(:times)
@@ -118,27 +115,27 @@ class FormationArticlesController < ApplicationController
 
     out << tag.p do
       info = row_build(current_record)
-      if v = group0["☆"]
+      if v = other_objects_hash_ary["☆"]
         info["移動元制限"] = v.collect { |e| e[:point].name }.join("、").html_safe + "が移動元ではない"
       end
       info.transform_values(&:presence).compact.to_html
     end
 
-    root = current_record.root
-    unless root.children.empty?
-      out << tag.pre(:class => "tree") do
-        root.to_s_tree { |e|
-          if current_record.key == e.key
-            e.name
-          else
-            link_to(e.name, [:formation_article, id: e.key])
-          end
-        }.html_safe
-      end
-    end
+    # root = current_record.root
+    # unless root.children.empty?
+    #   out << tag.pre(:class => "tree") do
+    #     root.to_s_tree { |e|
+    #       if current_record.key == e.key
+    #         e.name
+    #       else
+    #         link_to(e.name, [:formation_article, id: e.key])
+    #       end
+    #     }.html_safe
+    #   end
+    # end
 
     out << tag.p do
-      all_records = Bushido::SkillGroupInfo.flat_map {|e|e.model.to_a}
+      all_records = Bushido::TacticInfo.flat_map {|e|e.model.to_a}
       if index = all_records.find_index(current_record)
         tag.ul(:class => "pager") do
           [
@@ -164,10 +161,27 @@ class FormationArticlesController < ApplicationController
     else
       row["名前"] = link_to(e.key, [:formation_article, id: e.key])
     end
-    row["種類"] = e.skill_group_info.name
-    row["親"] = e.parent ? link_to(e.parent.name, [:formation_article, id: e.parent.key]) : nil
+    row["種類"] = e.tactic_info.name
+
+    if detail?
+      root = e.root
+      unless root.children.empty?
+        row["系図"] = tag.pre(:class => "tree") do
+          root.to_s_tree { |o|
+            if o.key == e.key
+              o.name
+            else
+              link_to(o.name, [:formation_article, id: o.key])
+            end
+          }.html_safe
+        end
+      end
+    else
+      row["親"] = e.parent ? link_to(e.parent.name, [:formation_article, id: e.parent.key]) : nil
+      row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
+      row["派生"] = e.children.collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
+    end
     row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
-    row["派生"] = e.children.collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
 
     row["手数制限"] = e.turn_limit ? "#{e.turn_limit}手以内" : nil
     row["手数限定"] = e.turn_eq ? "#{e.turn_eq}手目" : nil
@@ -224,7 +238,7 @@ class FormationArticlesController < ApplicationController
   def current_record
     @current_record ||= -> {
       v = nil
-      Bushido::SkillGroupInfo.each do |e|
+      Bushido::TacticInfo.each do |e|
         if v = e.model.lookup(params[:id])
           break
         end

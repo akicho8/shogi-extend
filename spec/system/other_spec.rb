@@ -20,4 +20,14 @@ RSpec.describe "その他", type: :system do
     visit "/random"
     expect(page).to have_content "Rails"
   end
+
+  it "戦法一覧" do
+    visit "/tactics"
+    expect(page).to have_content "Rails"
+  end
+
+  it "戦法ツリー" do
+    visit "/tactics-tree"
+    expect(page).to have_content "Rails"
+  end
 end
