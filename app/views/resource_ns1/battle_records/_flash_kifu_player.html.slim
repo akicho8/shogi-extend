@@ -69,7 +69,14 @@ br
 
 .page-header
   h2= "対局情報"
-= current_record.kifu_header.to_html
+ruby:
+  row = current_record.kifu_header.dup
+  row.each do |k, v|
+    if k.match?(/の(囲い|戦型)$/)
+      row[k] = v.to_s.split(/,\s+/).collect { |e| link_to(e, [:formation_article, id: e]) }.join(" ").html_safe
+    end
+  end
+= row.to_html
 
 ////////////////////////////////////////////////////////////////////////////////
 
