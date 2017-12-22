@@ -69,6 +69,11 @@ class BattleRecord < ApplicationRecord
     validates :battle_key, uniqueness: true
   end
 
+  validate do
+    if battle_ships.size != 2
+      errors.add(:base, "対局者が2人いません : #{battle_ships.size}")
+    end
+  end
   def to_param
     battle_key
   end
