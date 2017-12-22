@@ -82,13 +82,13 @@ namespace :rails do
   desc "cap production rails:log"
   task :log do
     on roles(:app) do
-      execute "tail -f #{shared_path}/log/#{fetch(:rails_env)}.log"
+      execute "tailf #{shared_path}/log/#{fetch(:rails_env)}.log"
     end
   end
   desc "cap production rails:cron_log"
   task :cron_log do
     on roles(:app) do
-      execute "tail -f #{shared_path}/log/#{fetch(:rails_env)}_cron.log"
+      execute "tailf -1000 #{shared_path}/log/#{fetch(:rails_env)}_cron.log"
     end
   end
   desc "cap production rails:runner CODE='Time.current.display'"
