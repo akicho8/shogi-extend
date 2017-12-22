@@ -74,6 +74,7 @@ class BattleRecord < ApplicationRecord
       errors.add(:base, "対局者が2人いません : #{battle_ships.size}")
     end
   end
+
   def to_param
     battle_key
   end
@@ -164,7 +165,11 @@ class BattleRecord < ApplicationRecord
 
   concerning :ImportMethods do
     class_methods do
-      def import(key, **params)
+      def run(*args, **params, &block)
+        import(*args, params, &block)
+      end
+
+      def import(key, **params, &block)
         counts = -> { Vector[BattleUser.count, BattleRecord.count] }
         old = counts.call
         begin
@@ -177,7 +182,7 @@ class BattleRecord < ApplicationRecord
         rescue => error
           raise error
         ensure
-          p [Time.current.to_s(:ymdhms), key, 'end__', *(counts.call - old), error]
+          p [Time.current.to_s(:ymdhms), key, 'end__', *(counts.call - old), error].compact
         end
       end
 
@@ -385,7 +390,9 @@ class BattleRecord < ApplicationRecord
     end
 
     # 更新方法
+    # ActiveRecord::Base.logger = nil
     # BattleRecord.find_each { |e| e.tap(&:parser_exec).save! }
+    # BattleRecord.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
     def parser_exec(**options)
       options = {
         destroy_all: false,
