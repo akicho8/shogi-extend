@@ -100,6 +100,13 @@ namespace :rails do
       execute "cd #{current_path} && #{nohup ? 'nohup' : ''} RAILS_ENV=#{fetch(:rails_env)} #{command} '#{code}' #{nohup ? '&' : ''}"
     end
   end
+  desc "cap production rails:index"
+  task :index do
+    on roles :all do
+      command = 'ActiveRecord::Base.connection.tables.sort.each { |e| tp ActiveRecord::Base.connection.indexes(e).collect(&:to_h) }'
+      execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} rails runner '#{command}'"
+    end
+  end
 end
 
 ################################################################################ deploy:upload
