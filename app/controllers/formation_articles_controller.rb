@@ -187,21 +187,21 @@ class FormationArticlesController < ApplicationController
     row["手数限定"] = e.turn_eq ? "#{e.turn_eq}手目" : nil
 
     str = nil
-    if e.teban_eq
-      str = e.teban_eq == :senteban ? "▲" : "△"
+    if e.order_key
+      str = (e.order_key == :sente) ? "▲" : "△"
       str = "#{str}限定"
     end
     row["手番"] = str
 
-    row["歩がない"] = e.fuganai ? checked : nil
+    row["歩がない"] = e.not_have_pawn ? checked : nil
     row["打時"] = e.stroke_only ? checked : nil
     row["キル時"] = e.kill_only ? checked : nil
-    row["開戦前"] = e.kaisenmae ? checked : nil
+    row["開戦前"] = e.cold_war ? checked : nil
     row["所持あり"] = Array(e.hold_piece_in).collect(&:name).join(", ")
     row["所持なし"] = Array(e.hold_piece_not_in).collect(&:name).join(", ")
     row["持駒数"] = e.hold_piece_count_eq
     row["持駒一致"] = Array(e.hold_piece_eq).collect(&:name).join(", ")
-    row["歩以外不所持"] = e.fu_igai_mottetara_dame ? checked : nil
+    row["歩以外不所持"] = e.not_have_anything_except_pawn ? checked : nil
 
     # if e.compare_condition
     #   row["比較"] = e.compare_condition == :include ? "含まれる" : "完全一致"
