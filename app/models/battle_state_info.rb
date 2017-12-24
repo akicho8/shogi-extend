@@ -30,6 +30,7 @@ class BattleStateInfo
     {key: "CHECKMATE",     name: "詰み",     label_key: nil,      last_action_key: "TSUMI",      icon_key: nil, },
     {key: "ENTERINGKING",  name: "入玉",     label_key: :info,    last_action_key: "KACHI",      icon_key: nil, },
     {key: "DRAW_SENNICHI", name: "千日手",   label_key: :danger,  last_action_key: "SENNICHITE", icon_key: nil, }, # これだけは (SENTE|GOTE)_WIN の型で来てない
+    {key: "OUTE_SENNICHI", name: "千日手",   label_key: :danger,  last_action_key: "SENNICHITE", icon_key: nil, }, # 連続王手の千日手 https://ja.wikipedia.org/wiki/%E5%8D%83%E6%97%A5%E6%89%8B#%E9%80%A3%E7%B6%9A%E7%8E%8B%E6%89%8B%E3%81%AE%E5%8D%83%E6%97%A5%E6%89%8B
   ]
 
   def csa_key
