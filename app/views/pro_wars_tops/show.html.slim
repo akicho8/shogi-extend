@@ -2,24 +2,24 @@
   .text-center
     .page-header
       h2.yumincho
-        = "将棋ウォーズ棋譜検索"
+        = "2ch棋譜検索"
 
     = form_with(url: :s, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
       .form-group
         .col-sm-4
         .col-sm-4
           .input-group
-            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_query_hash.blank?)
+            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.present?)
             = tag.datalist(id: "uid_list") do
               - Bushido::TacticInfo.all_elements.each do |e|
                 = tag.option(value: e.name)
               - uids = []
               / 利用者
-              - uids.concat BattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:uid)
+              - uids.concat Battle2User.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:uid)
               / 最近取り込んだ人たち
-              - uids.concat BattleUser.order(updated_at: :desc).limit(32).pluck(:uid)
+              - uids.concat Battle2User.order(updated_at: :desc).limit(32).pluck(:uid)
               / すごい人たち
-              - uids.concat BattleUser.joins(:battle_grade).order("battle_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:uid)
+              - uids.concat Battle2User.joins(:battle2_grade).order("battle2_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:uid)
               - uids.uniq.each do |e|
                 = tag.option(value: e)
             span.input-group-btn
@@ -34,24 +34,26 @@
 .search_rows
   = @rows.to_html
 
-- if @battle_records
+- if @battle2_records
   .text-center
-    = paginate @battle_records
+    = paginate @battle2_records
 
   - content_for :head do
-    = rel_next_prev_link_tags @battle_records
+    = rel_next_prev_link_tags @battle2_records
 
-- if controller.current_query_hash && @battle_records.exists?
+- if controller.current_tags.present? && @battle2_records.exists?
   br
   .text-center
     = link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
 
-- if controller.current_query_hash
-  - if tags = controller.current_query_hash[:tags]
-    br
-      .text-center
-        = link_to("#{tags.first}について調べる", [:formation_article, id: tags.first])
+- if controller.current_tactics.present?
+  br
+  .text-center
+    p
+      div= "戦法検索"
+      - controller.current_tactics.each do |e|
+        = link_to(e, [:formation_article, id: e], :class => "btn btn-default")
 
-- if Rails.env.development? && false
-  = BattleUser.to_html
-  = BattleRecord.to_html
+p
+  .text-center
+    = link_to("タグクラウド", :cloud2)

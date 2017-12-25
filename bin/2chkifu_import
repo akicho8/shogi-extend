@@ -1,0 +1,11 @@
+#!rails runner
+
+Battle2User.destroy_all
+Battle2Record.destroy_all
+# ConvertedInfo.destroy_all
+
+Battle2Record.all_import
+
+tp Battle2User
+tp Battle2Ship
+tp Battle2Record

@@ -8,3 +8,10 @@ unless BattleGrade.exists?
   end
   tp BattleGrade
 end
+
+unless Battle2Grade.exists?
+  StaticBattle2GradeInfo.each do |e|
+    Battle2Grade.create!(unique_key: e.key, priority: e.priority)
+  end
+  tp Battle2Grade
+end

@@ -377,9 +377,11 @@ class BattleRecord < ApplicationRecord
     end
   end
 
+  # has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :battle_record
+
   concerning :ConvertMethods do
     included do
-      has_many :converted_infos, as: :convertable, dependent: :destroy
+      has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :convertable
 
       serialize :kifu_header
 
@@ -406,11 +408,64 @@ class BattleRecord < ApplicationRecord
         converted_info.attributes = {text_body: info.public_send("to_#{e.key}"), text_format: e.key}
       end
       self.turn_max = info.mediator.turn_max
-      self.kifu_header = info.header
+
+      # tp info.header.to_h
+      # tp info.header.to_names_h
+      # tp info.header.meta_info
+      # tp info.header.to_meta_h
+      # tp info.header.to_kisen_a
+      # tp info.header.to_simple_names_h
+      # # >> |----------+------------------|
+      # # >> | 開始日時 | 2004/05/29       |
+      # # >> | 棋戦詳細 | プロアマ指導対局 |
+      # # >> |     棋戦 | その他の棋戦     |
+      # # >> |     戦型 | 中飛車           |
+      # # >> |   手合割 | 角落ち           |
+      # # >> |     下手 | 今井進           |
+      # # >> |     上手 | 古河彩子         |
+      # # >> |----------+------------------|
+      # # >> |----------+----------------------------------------------------------|
+      # # >> | 下手詳細 | ["今井進", "ミステリマガジン", "編集長", "自称", "四段"] |
+      # # >> | 上手詳細 | ["古河彩子", "女流", "二段"]                             |
+      # # >> |----------+----------------------------------------------------------|
+      # # >> |----------+------------------------------------------|
+      # # >> | 下手詳細 | 今井進ミステリマガジン編集長（自称四段） |
+      # # >> | 上手詳細 | 古河彩子女流二段                         |
+      # # >> |----------+------------------------------------------|
+      # # >> |----------+----------------------------------------------------------|
+      # # >> | 開始日時 | 2004/05/29                                               |
+      # # >> | 棋戦詳細 | ["プロ", "アマ", "指導対局"]                             |
+      # # >> |     棋戦 | その他の棋戦                                             |
+      # # >> |     戦型 | 中飛車                                                   |
+      # # >> |   手合割 | 角落ち                                                   |
+      # # >> |     下手 | 今井進                                                   |
+      # # >> |     上手 | 古河彩子                                                 |
+      # # >> | 下手詳細 | ["今井進", "ミステリマガジン", "編集長", "自称", "四段"] |
+      # # >> | 上手詳細 | ["古河彩子", "女流", "二段"]                             |
+      # # >> |----------+----------------------------------------------------------|
+      # # >> |----------|
+      # # >> | プロ     |
+      # # >> | アマ     |
+      # # >> | 指導対局 |
+      # # >> |----------|
+      # # >> |------+--------------|
+      # # >> | 下手 | ["今井進"]   |
+      # # >> | 上手 | ["古河彩子"] |
+      # # >> |------+--------------|
+
+      self.kifu_header = {
+        :to_h              => info.header.to_h,
+        :to_names_h        => info.header.to_names_h,
+        :meta_info         => info.header.meta_info,
+        :to_meta_h         => info.header.to_meta_h.merge(info.skill_set_hash).merge("棋戦詳細" => info.header.to_kisen_a).merge(info.header.to_simple_names_h),
+        :to_kisen_a        => info.header.to_kisen_a,
+        :to_simple_names_h => info.header.to_simple_names_h,
+        :skill_set_hash    => info.skill_set_hash,
+      }
 
       # BattleRecord.tagged_with(...) とするため。on をつけないと集約できる
-      self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
-      self.attack_tag_list  = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
+      # self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
+      # self.attack_tag_list  = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
 
       after_parser_exec(info)
     end
@@ -418,7 +473,14 @@ class BattleRecord < ApplicationRecord
     def after_parser_exec(info)
       # 両者にタグを作らんと意味ないじゃん
       info.mediator.players.each.with_index do |player, i|
-        battle_ship = battle_ships[i]
+
+        if persisted?
+          players = battle_ships.order(:position)
+        else
+          players = battle_ships
+        end
+
+        battle_ship = players[i]
         battle_ship.defense_tag_list = player.skill_set.normalized_defense_infos.collect(&:key)
         battle_ship.attack_tag_list  = player.skill_set.normalized_attack_infos.collect(&:key)
       end

@@ -1,0 +1,17 @@
+p
+  ruby:
+    list = []
+    list += current_record.attack_tag_list
+    list += current_record.defense_tag_list
+    list += current_record.other_tag_list
+  - list.each do |e|
+    = link_to(e, pro_query_search_path(e), :class => "btn btn-default")
+
+.text-center
+  .page-header
+    h2
+      = battle2_user_link2(current_record.battle2_ships.black)
+      span.text-muted=<> "vs"
+      = battle2_user_link2(current_record.battle2_ships.white)
+
+  = render partial: "resource_ns1/battle_records/flash_kifu_player"

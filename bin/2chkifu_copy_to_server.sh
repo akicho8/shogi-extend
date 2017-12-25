@@ -1,6 +1,8 @@
 #!/bin/sh
-rsync -avz --delete ~/src/shogi_web/README.org s:/tmp
-ssh s ls -al /tmp
+rsync -avzq --exclude=".git" --delete ~/src/shogi_web/README.org s:/tmp
+ssh s ls -al /tmp/README.org
 
-rsync -avz --delete ~/src/2chkifu s:~/
-ssh s ls -al
+rsync -avzq --exclude=".git" --delete ~/src/2chkifu s:~/
+ssh s ls -al "~/2chkifu"
+
+echo "done"

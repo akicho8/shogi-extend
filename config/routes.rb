@@ -7,6 +7,11 @@ Rails.application.routes.draw do
     resources :battle_users
     resources :battle_records, path: "r"
     resources :battle_ships
+
+    # 検索系
+    resources :battle2_users
+    resources :battle2_records, path: "p2"
+    resources :battle2_ships
   end
 
   ################################################################################ 棋譜変換
@@ -37,6 +42,18 @@ Rails.application.routes.draw do
   ################################################################################ 今日の戦法占い
 
   resource :random_articles, path: "random"
+
+  ################################################################################ プロの棋譜
+
+  get "p/:query", to: "pro_wars_tops#show", as: :pro_query_search
+  get "p", to: "pro_wars_tops#show"
+
+  get "pro_wars_tops/show"
+  get "cloud2", to: "pro_wars_tops#tag_cloud"
+
+  resolve "Battle2User" do |battle2_user, options|
+    pro_query_search_path(query: battle2_user.to_param)
+  end
 
   ################################################################################ その他
 

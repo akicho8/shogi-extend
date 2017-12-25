@@ -110,7 +110,8 @@ class FormationArticlesController < ApplicationController
 
     out << tag.br
     out << tag.p(:class => "text-center") do
-      link_to("棋譜検索", query_search_path(current_record.key), :class => "btn btn-link")
+      link_to("将棋ウォーズ棋譜検索", query_search_path(current_record.key), :class => "btn btn-link") + " " +
+        link_to("2ch棋譜検索", pro_query_search_path(current_record.key), :class => "btn btn-link")
     end
 
     out << tag.p do
