@@ -12,21 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20171222200100) do
 
-  create_table "battle2_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "unique_key", null: false
-    t.integer "priority", null: false, comment: "優劣"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["priority"], name: "index_battle2_grades_on_priority"
-    t.index ["unique_key"], name: "index_battle2_grades_on_unique_key", unique: true
-  end
-
   create_table "battle2_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "battle_key", null: false, comment: "対局識別子"
-    t.datetime "battled_at", null: false, comment: "対局開始日時"
+    t.datetime "battled_at", comment: "対局開始日時"
     t.text "kifu_body", null: false, comment: "棋譜の断片"
     t.string "battle2_state_key", null: false, comment: "結果詳細"
-    t.bigint "win_battle2_user_id", comment: "勝者(ショートカット用)"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "kifu_header", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
@@ -34,44 +24,27 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.datetime "updated_at", null: false
     t.index ["battle2_state_key"], name: "index_battle2_records_on_battle2_state_key"
     t.index ["battle_key"], name: "index_battle2_records_on_battle_key", unique: true
-    t.index ["win_battle2_user_id"], name: "index_battle2_records_on_win_battle2_user_id"
   end
 
   create_table "battle2_ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "battle2_record_id", null: false, comment: "対局"
-    t.bigint "battle2_user_id", null: false, comment: "対局者"
-    t.bigint "battle2_grade_id", null: false, comment: "対局時の段級"
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "手番の順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle2_grade_id"], name: "index_battle2_ships_on_battle2_grade_id"
-    t.index ["battle2_record_id", "battle2_user_id"], name: "index_battle2_ships_on_battle2_record_id_and_battle2_user_id", unique: true
     t.index ["battle2_record_id", "location_key"], name: "index_battle2_ships_on_battle2_record_id_and_location_key", unique: true
     t.index ["battle2_record_id"], name: "index_battle2_ships_on_battle2_record_id"
-    t.index ["battle2_user_id"], name: "index_battle2_ships_on_battle2_user_id"
     t.index ["judge_key"], name: "index_battle2_ships_on_judge_key"
     t.index ["location_key"], name: "index_battle2_ships_on_location_key"
     t.index ["position"], name: "index_battle2_ships_on_position"
   end
 
-  create_table "battle2_user_receptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "battle2_user_id", null: false, comment: "プレイヤー"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle2_user_id"], name: "index_battle2_user_receptions_on_battle2_user_id"
-  end
-
   create_table "battle2_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "uid", null: false, comment: "対局者名"
-    t.bigint "battle2_grade_id", null: false, comment: "最高段級"
-    t.datetime "last_reception_at", comment: "受容日時"
-    t.integer "battle2_user_receptions_count", default: 0
+    t.string "name", null: false, comment: "対局者名"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle2_grade_id"], name: "index_battle2_users_on_battle2_grade_id"
-    t.index ["uid"], name: "index_battle2_users_on_uid", unique: true
+    t.index ["name"], name: "index_battle2_users_on_name", unique: true
   end
 
   create_table "battle_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -120,11 +93,18 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.index ["position"], name: "index_battle_ships_on_position"
   end
 
+  create_table "battle_user_receptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "battle_user_id", null: false, comment: "プレイヤー"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_user_id"], name: "index_battle_user_receptions_on_battle_user_id"
+  end
+
   create_table "battle_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "uid", null: false, comment: "対局者名"
     t.bigint "battle_grade_id", null: false, comment: "最高段級"
     t.datetime "last_reception_at", comment: "受容日時"
-    t.integer "user_receptions_count", default: 0
+    t.integer "battle_user_receptions_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_grade_id"], name: "index_battle_users_on_battle_grade_id"
@@ -178,13 +158,6 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
-  end
-
-  create_table "user_receptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "battle_user_id", null: false, comment: "プレイヤー"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_user_id"], name: "index_user_receptions_on_battle_user_id"
   end
 
 end

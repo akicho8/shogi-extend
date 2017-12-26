@@ -27,6 +27,8 @@
 require "matrix"
 
 class BattleRecord < ApplicationRecord
+  include ConvertMethods
+
   belongs_to :win_battle_user, class_name: "BattleUser", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。battle_ships.win.battle_user と同じ
 
   has_many :battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle_record
@@ -208,7 +210,7 @@ class BattleRecord < ApplicationRecord
         # 初段以上の場合
         if true
           if v = params[:battle_grade_key_gteq]
-            priority = StaticBattleGradeInfo.fetch(v).priority
+            priority = BattleGradeInfo.fetch(v).priority
             s = s.joins(battle_user: :battle_grade).where(BattleGrade.arel_table[:priority].lteq(priority))
           end
         end
@@ -259,11 +261,11 @@ class BattleRecord < ApplicationRecord
             # if true
             #   # 初段以上の指定がある場合
             #   if v = params[:battle_grade_key_gteq]
-            #     v = StaticBattleGradeInfo.fetch(v)
+            #     v = BattleGradeInfo.fetch(v)
             #     # 取得してないときもあるため
             #     if battle_user_infos = history[:battle_user_infos]
             #       # 両方初段以上ならOK
-            #       if battle_user_infos.all? { |e| StaticBattleGradeInfo.fetch(e[:battle_grade_key]).priority <= v.priority }
+            #       if battle_user_infos.all? { |e| BattleGradeInfo.fetch(e[:battle_grade_key]).priority <= v.priority }
             #       else
             #         next
             #       end
@@ -347,169 +349,41 @@ class BattleRecord < ApplicationRecord
     end
   end
 
-  concerning :KishinKaisekiMethoes do
-    def kishin_analyze_result_hask(location)
-      kishin_count = 5
-
-      location = Bushido::Location[location]
-      list = csa_seq.find_all.with_index { |e, i| i.modulo(2) == location.code }
-      v1 = list.collect(&:last)
-      v2 = v1.chunk_while { |a, b| (a - b) <= 2 }.to_a    # => [[136], [121], [101], [28], [18, 17, 16, 15, 14, 12], [7, 136], [121], [101], [28], [18, 17, 16, 15, 14, 12, 11]]
-      v3 = v2.collect(&:size)                             # => [1, 1, 1, 1, 6, 2, 1, 1, 1, 7]
-      v4 = v3.group_by(&:itself).transform_values(&:size) # => {1=>7, 6=>1, 2=>1, 7=>1}
-      v5 = v4.count { |k, v| k > kishin_count }           # => 2
-      v6 = v5 >= 1
-
-      {
-        v1: v1,
-        v2: v2,
-        v3: v3,
-        v4: v4,
-        v5: v5,
-        v6: v6,
-      }
-    end
-
-    def kishin_tsukatta?(user_ship)
-      if battle_rule_info.key == :ten_min || !Rails.env.production?
-        kishin_analyze_result_hask(user_ship.position).values.last
-      end
-    end
-  end
-
   # has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :battle_record
 
-  concerning :ConvertMethods do
-    included do
-      has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :convertable
-
-      serialize :kifu_header
-
-      before_validation do
-        self.kifu_header ||= {}
-        self.turn_max ||= 0
-      end
-    end
-
-    # 更新方法
-    # ActiveRecord::Base.logger = nil
-    # BattleRecord.find_each { |e| e.tap(&:parser_exec).save! }
-    # BattleRecord.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
-    def parser_exec(**options)
-      options = {
-        destroy_all: false,
-      }.merge(options)
-
-      info = Bushido::Parser.parse(kifu_body, typical_error_case: :embed)
-      converted_infos.destroy_all if options[:destroy_all]
-      KifuFormatInfo.each do |e|
-        converted_info = converted_infos.text_format_eq(e.key).take
-        converted_info ||= converted_infos.build
-        converted_info.attributes = {text_body: info.public_send("to_#{e.key}"), text_format: e.key}
-      end
-      self.turn_max = info.mediator.turn_max
-
-      # tp info.header.to_h
-      # tp info.header.to_names_h
-      # tp info.header.meta_info
-      # tp info.header.to_meta_h
-      # tp info.header.to_kisen_a
-      # tp info.header.to_simple_names_h
-      # # >> |----------+------------------|
-      # # >> | 開始日時 | 2004/05/29       |
-      # # >> | 棋戦詳細 | プロアマ指導対局 |
-      # # >> |     棋戦 | その他の棋戦     |
-      # # >> |     戦型 | 中飛車           |
-      # # >> |   手合割 | 角落ち           |
-      # # >> |     下手 | 今井進           |
-      # # >> |     上手 | 古河彩子         |
-      # # >> |----------+------------------|
-      # # >> |----------+----------------------------------------------------------|
-      # # >> | 下手詳細 | ["今井進", "ミステリマガジン", "編集長", "自称", "四段"] |
-      # # >> | 上手詳細 | ["古河彩子", "女流", "二段"]                             |
-      # # >> |----------+----------------------------------------------------------|
-      # # >> |----------+------------------------------------------|
-      # # >> | 下手詳細 | 今井進ミステリマガジン編集長（自称四段） |
-      # # >> | 上手詳細 | 古河彩子女流二段                         |
-      # # >> |----------+------------------------------------------|
-      # # >> |----------+----------------------------------------------------------|
-      # # >> | 開始日時 | 2004/05/29                                               |
-      # # >> | 棋戦詳細 | ["プロ", "アマ", "指導対局"]                             |
-      # # >> |     棋戦 | その他の棋戦                                             |
-      # # >> |     戦型 | 中飛車                                                   |
-      # # >> |   手合割 | 角落ち                                                   |
-      # # >> |     下手 | 今井進                                                   |
-      # # >> |     上手 | 古河彩子                                                 |
-      # # >> | 下手詳細 | ["今井進", "ミステリマガジン", "編集長", "自称", "四段"] |
-      # # >> | 上手詳細 | ["古河彩子", "女流", "二段"]                             |
-      # # >> |----------+----------------------------------------------------------|
-      # # >> |----------|
-      # # >> | プロ     |
-      # # >> | アマ     |
-      # # >> | 指導対局 |
-      # # >> |----------|
-      # # >> |------+--------------|
-      # # >> | 下手 | ["今井進"]   |
-      # # >> | 上手 | ["古河彩子"] |
-      # # >> |------+--------------|
-
-      self.kifu_header = {
-        :to_h              => info.header.to_h,
-        :to_names_h        => info.header.to_names_h,
-        :meta_info         => info.header.meta_info,
-        :to_meta_h         => info.header.to_meta_h.merge(info.skill_set_hash).merge("棋戦詳細" => info.header.to_kisen_a).merge(info.header.to_simple_names_h),
-        :to_kisen_a        => info.header.to_kisen_a,
-        :to_simple_names_h => info.header.to_simple_names_h,
-        :skill_set_hash    => info.skill_set_hash,
-      }
-
-      # BattleRecord.tagged_with(...) とするため。on をつけないと集約できる
-      # self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
-      # self.attack_tag_list  = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
-
-      after_parser_exec(info)
-    end
-
-    def after_parser_exec(info)
-      # 両者にタグを作らんと意味ないじゃん
-      info.mediator.players.each.with_index do |player, i|
-
-        if persisted?
-          players = battle_ships.order(:position)
-        else
-          players = battle_ships
+  def header_detail(h)
+    row = kifu_header[:to_meta_h].dup
+    row.each do |k, v|
+      case k
+      when /の(囲い|戦型)$/
+        # row[k] = v.collect { |e| h.link_to(e, [:formation_article, id: e]) }.join(" ").html_safe
+        row[k] = v.collect { |e| h.link_to(e, h.wars_query_search_path(e)) }.join(" ").html_safe
+      when "棋戦詳細"
+        # row[k] = kifu_header[:to_kisen_a].collect { |e| h.link_to(e, h.wars_query_search_path(e)) }.join(" ").html_safe
+        row[k] = v.collect { |e| h.link_to(e, h.wars_query_search_path(e)) }.join(" ").html_safe
+      when "場所"
+        if md = v.match(/(.*)「(.*?)」/)
+          v = md.captures
         end
-
-        battle_ship = players[i]
-        battle_ship.defense_tag_list = player.skill_set.normalized_defense_infos.collect(&:key)
-        battle_ship.attack_tag_list  = player.skill_set.normalized_attack_infos.collect(&:key)
+        row[k] = v.collect { |e| h.link_to(e, h.wars_query_search_path(e)) }.join(" ").html_safe
+      when "掲載"
+        row[k] = h.link_to(v, h.wars_query_search_path(v))
+      # when "持ち時間"
+      #   row[k] = h.link_to(v, h.wars_query_search_path(v))
+      # when "手合割"
+      #   row[k] = h.link_to(v, h.wars_query_search_path(v))
+      when /.手\z/
+        row[k] = v.collect { |e| h.link_to(e, h.wars_query_search_path(e.slice(/\w+/))) }.join(" ").html_safe
+      # when "棋戦"
+      #   row[k] = h.link_to(v, h.wars_query_search_path(v))
+      when "戦型"
+        row[k] = h.link_to(v, h.wars_query_search_path(v))
+      # when /日時?\z/
+      #   if v = (Time.zone.parse(v) rescue nil)
+      #     row[k] = date_link(h, v)
+      #   end
       end
     end
-
-    def mountain_post_once
-      unless mountain_url
-        mountain_post
-      end
-    end
-
-    def mountain_post
-      url = Rails.application.routes.url_helpers.mountain_upload_url
-      if converted_info = converted_infos.text_format_eq(:kif).take
-        kif = converted_info.text_body
-
-        if AppConfig[:run_localy]
-          url = "http://shogi-s.com/result/5a274d10px"
-        else
-          response = Faraday.post(url, kif: kif)
-          logger.info(response.status.to_t)
-          logger.info(response.headers.to_t)
-          url = response.headers["location"].presence
-        end
-
-        if url
-          update!(mountain_url: url)
-        end
-      end
-    end
+    row
   end
 end

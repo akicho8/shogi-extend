@@ -3,7 +3,12 @@ class ProWarsTopsController < ApplicationController
     @battle2_records = Battle2Record.all
 
     if current_tags.present?
-      @battle2_records = @battle2_records.tagged_with(current_tags)
+      if v = current_plus_tags.presence
+        @battle2_records = @battle2_records.tagged_with(v)
+      end
+      if v = current_minus_tags.presence
+        @battle2_records = @battle2_records.tagged_with(v, exclude: true)
+      end
     end
 
     @battle2_records = @battle2_records.order(battled_at: :desc)
@@ -14,7 +19,7 @@ class ProWarsTopsController < ApplicationController
           parts = []
           parts << "2chkifu"
           if current_user
-            parts << current_user.uid
+            parts << current_user.name
           end
           parts << Time.current.strftime("%Y%m%d%H%M%S")
           parts.concat(current_tags)
@@ -41,50 +46,45 @@ class ProWarsTopsController < ApplicationController
 
     @rows = @battle2_records.collect do |battle2_record|
       {}.tap do |row|
+
         if current_user
-          myself = battle2_record.myself(current_user)
-          rival = battle2_record.rival(current_user)
-          row["対象プレイヤー"] = battle2_record.win_lose_str(myself.battle2_user).html_safe + " " + h.battle2_user_link2(myself)
-          row["対戦相手"] = battle2_record.win_lose_str(rival.battle2_user).html_safe + " " + h.battle2_user_link2(rival)
+          l_ship = battle2_record.myself(current_user)
+          r_ship = battle2_record.rival(current_user)
         else
-          if battle2_record.win_battle2_user
-            row["勝ち"] = Fa.icon_tag(:circle_o) + battle2_user_link(battle2_record, :win)
-            row["負け"] = Fa.icon_tag(:times) + battle2_user_link(battle2_record, :lose)
-          else
-            row["勝ち"] = Fa.icon_tag(:minus, :class => "icon_hidden") + h.battle2_user_link2(battle2_record.battle2_ships.black)
-            row["負け"] = Fa.icon_tag(:minus, :class => "icon_hidden") + h.battle2_user_link2(battle2_record.battle2_ships.white)
-          end
-        end
-        row["判定"] = battle2_state_info_decorate(battle2_record)
-
-        if false
-          row["戦法"] = battle2_record.tag_list.collect { |e| link_to(e, pro_query_search_path(e)) }.join(" ").html_safe
-        else
-
-          if current_user
-            l_ship = battle2_record.myself(current_user)
-            r_ship = battle2_record.rival(current_user)
-          else
+          if battle2_record.battle2_state_info.draw
             l_ship = battle2_record.battle2_ships.black
             r_ship = battle2_record.battle2_ships.white
+          else
+            l_ship = battle2_record.battle2_ships.judge_key_eq(:win)
+            r_ship = battle2_record.battle2_ships.judge_key_eq(:lose)
           end
-
-          row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-          row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
 
-        row["手数"] = link_to(battle2_record.turn_max, pro_query_search_path(battle2_record.turn_max))
+        if current_user
+          row["対象棋士"] = battle2_record.win_lose_str(l_ship).html_safe + " " + h.battle2_user_link2(l_ship)
+          row["対戦相手"]       = battle2_record.win_lose_str(r_ship).html_safe + " " + h.battle2_user_link2(r_ship)
+        else
+          if battle2_record.battle2_state_info.draw
+            row["勝ち"] = Fa.icon_tag(:minus, :class => "icon_hidden") + h.battle2_user_link2(l_ship)
+            row["負け"] = Fa.icon_tag(:minus, :class => "icon_hidden") + h.battle2_user_link2(r_ship)
+          else
+            row["勝ち"] = Fa.icon_tag(:circle_o) + h.battle2_user_link2(l_ship)
+            row["負け"] = Fa.icon_tag(:times)    + h.battle2_user_link2(r_ship)
+          end
+        end
 
-        name = battle2_record.kifu_header[:to_h]["手合割"]
-        row["種類"] = link_to(name, pro_query_search_path(name))
+        row["判定"] = battle2_state_info_decorate(battle2_record)
 
-        t = battle2_record.battled_at
-        list = []
-        list << link_to(t.strftime("%Y"), pro_query_search_path(t.strftime("%Y")))
-        list << link_to(t.strftime("%m"), pro_query_search_path(t.strftime("%Y/%m")))
-        list << link_to(t.strftime("%d"), pro_query_search_path(t.strftime("%Y/%m/%d")))
-        str = list.join("/").html_safe
-        row["日時"] = str
+        row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
+        row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
+
+        row["手数"] = link_to(battle2_record.turn_max, kifu_query_search_path(battle2_record.turn_max))
+
+        if true
+          row["手合割"] = battle2_record.teaiwari_link(h, battle2_record.kifu_header[:to_h]["手合割"])
+        end
+
+        row["日時"] = battle2_record.date_link(h, battle2_record.kifu_header[:to_h]["開始日時"])
 
         row[""] = row_links(battle2_record)
       end
@@ -107,7 +107,7 @@ class ProWarsTopsController < ApplicationController
   def tag_links(tag_list)
     if tag_list.blank?
     else
-      tag_list.collect { |e| link_to(e, pro_query_search_path(e)) }.join(" ").html_safe
+      tag_list.collect { |e| link_to(e, kifu_query_search_path(e)) }.join(" ").html_safe
     end
   end
 
@@ -133,11 +133,27 @@ class ProWarsTopsController < ApplicationController
     if v = battle2_state_info.label_key
       str = tag.span(str, "class": "text-#{v}")
     end
-    link_to(str, pro_query_search_path(name))
+    link_to(str, kifu_query_search_path(name))
   end
 
   def current_tags
-    @current_tags ||= params[:query].to_s.gsub(/\p{blank}/, " ").strip.split(/\s+/).uniq
+    @current_tags ||= -> {
+      s = params[:query].to_s.gsub(/\p{blank}/, " ").strip
+      s = s.split(/\s+/)
+      s.uniq
+    }.call
+  end
+
+  def current_plus_tags
+    @current_plus_tags ||= current_tags.find_all { |e| !e.start_with?("-") }
+  end
+
+  def current_minus_tags
+    @current_minus_tags ||= current_tags.collect { |e|
+      if e.start_with?("-")
+        e.remove(/^-/)
+      end
+    }.compact
   end
 
   def current_form_search_value
@@ -152,7 +168,7 @@ class ProWarsTopsController < ApplicationController
     @current_user ||= -> {
       v = nil
       current_tags.each do |e|
-        if v = Battle2User.find_by(uid: e)
+        if v = Battle2User.find_by(name: e)
           break
         end
       end

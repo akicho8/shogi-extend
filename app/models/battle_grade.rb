@@ -23,12 +23,12 @@ class BattleGrade < ApplicationRecord
   end
 
   with_options allow_blank: true do
-    validates :unique_key, inclusion: StaticBattleGradeInfo.collect(&:name)
+    validates :unique_key, inclusion: BattleGradeInfo.collect(&:name)
   end
 
-  def static_battle_grade_info
-    StaticBattleGradeInfo.fetch(unique_key)
+  def battle_grade_info
+    BattleGradeInfo.fetch(unique_key)
   end
 
-  delegate :name, to: :static_battle_grade_info
+  delegate :name, to: :battle_grade_info
 end

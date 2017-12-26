@@ -2,6 +2,58 @@
 
 # == Schema Information ==
 #
+# 将棋ウォーズ対戦情報テーブル (battle2_records as Battle2Record)
+#
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
+# | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
+# | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
+# | kifu_body         | 棋譜内容          | text(65535) | NOT NULL    |      |       |
+# | battle2_state_key | Battle2 state key | string(255) | NOT NULL    |      | B     |
+# | turn_max          | 手数              | integer(4)  | NOT NULL    |      |       |
+# | kifu_header       | 棋譜ヘッダー      | text(65535) | NOT NULL    |      |       |
+# | mountain_url      | 将棋山脈URL       | string(255) |             |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 対局と対局者の対応テーブル (battle2_ships as Battle2Ship)
+#
+# |-------------------+----------------+-------------+-------------+---------------------+-------|
+# | カラム名          | 意味           | タイプ      | 属性        | 参照                | INDEX |
+# |-------------------+----------------+-------------+-------------+---------------------+-------|
+# | id                | ID             | integer(8)  | NOT NULL PK |                     |       |
+# | battle2_record_id | Battle2 record | integer(8)  | NOT NULL    | => Battle2Record#id | A! B  |
+# | judge_key         | Judge key      | string(255) | NOT NULL    |                     | C     |
+# | location_key      | Location key   | string(255) | NOT NULL    |                     | A! D  |
+# | position          | 順序           | integer(4)  |             |                     | E     |
+# | created_at        | 作成日時       | datetime    | NOT NULL    |                     |       |
+# | updated_at        | 更新日時       | datetime    | NOT NULL    |                     |       |
+# |-------------------+----------------+-------------+-------------+---------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・Battle2Ship モデルは Battle2Record モデルから has_many :battle2_ships されています。
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# 将棋ウォーズユーザーテーブル (battle2_users as Battle2User)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | name       | Name     | string(255) | NOT NULL    |      | A!    |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Battle gradeテーブル (battle_grades as BattleGrade)
 #
 # |------------+------------+-------------+-------------+------+-------|
@@ -67,20 +119,37 @@
 #
 # 将棋ウォーズユーザーテーブル (battle_users as BattleUser)
 #
-# |-----------------------+-----------------------+-------------+-------------+-------------------+-------|
-# | カラム名              | 意味                  | タイプ      | 属性        | 参照              | INDEX |
-# |-----------------------+-----------------------+-------------+-------------+-------------------+-------|
-# | id                    | ID                    | integer(8)  | NOT NULL PK |                   |       |
-# | uid                   | Uid                   | string(255) | NOT NULL    |                   | A!    |
-# | battle_grade_id       | Battle grade          | integer(8)  | NOT NULL    | => BattleGrade#id | B     |
-# | last_reception_at     | Last reception at     | datetime    |             |                   |       |
-# | user_receptions_count | User receptions count | integer(4)  | DEFAULT(0)  |                   |       |
-# | created_at            | 作成日時              | datetime    | NOT NULL    |                   |       |
-# | updated_at            | 更新日時              | datetime    | NOT NULL    |                   |       |
-# |-----------------------+-----------------------+-------------+-------------+-------------------+-------|
+# |------------------------------+------------------------------+-------------+-------------+-------------------+-------|
+# | カラム名                     | 意味                         | タイプ      | 属性        | 参照              | INDEX |
+# |------------------------------+------------------------------+-------------+-------------+-------------------+-------|
+# | id                           | ID                           | integer(8)  | NOT NULL PK |                   |       |
+# | uid                          | Uid                          | string(255) | NOT NULL    |                   | A!    |
+# | battle_grade_id              | Battle grade                 | integer(8)  | NOT NULL    | => BattleGrade#id | B     |
+# | last_reception_at            | Last reception at            | datetime    |             |                   |       |
+# | battle_user_receptions_count | Battle user receptions count | integer(4)  | DEFAULT(0)  |                   |       |
+# | created_at                   | 作成日時                     | datetime    | NOT NULL    |                   |       |
+# | updated_at                   | 更新日時                     | datetime    | NOT NULL    |                   |       |
+# |------------------------------+------------------------------+-------------+-------------+-------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・BattleUser モデルは BattleGrade モデルから has_many :battle_users されています。
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Battle user receptionテーブル (battle_user_receptions as BattleUserReception)
+#
+# |----------------+-------------+------------+-------------+------------------+-------|
+# | カラム名       | 意味        | タイプ     | 属性        | 参照             | INDEX |
+# |----------------+-------------+------------+-------------+------------------+-------|
+# | id             | ID          | integer(8) | NOT NULL PK |                  |       |
+# | battle_user_id | Battle user | integer(8) | NOT NULL    | => BattleUser#id | A     |
+# | created_at     | 作成日時    | datetime   | NOT NULL    |                  |       |
+# | updated_at     | 更新日時    | datetime   | NOT NULL    |                  |       |
+# |----------------+-------------+------------+-------------+------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・BattleUserReception モデルは BattleUser モデルから has_many :battle_ships されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -117,21 +186,4 @@
 # | created_at   | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |
 # |--------------+--------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# User receptionテーブル (user_receptions as UserReception)
-#
-# |----------------+-------------+------------+-------------+------------------+-------|
-# | カラム名       | 意味        | タイプ     | 属性        | 参照             | INDEX |
-# |----------------+-------------+------------+-------------+------------------+-------|
-# | id             | ID          | integer(8) | NOT NULL PK |                  |       |
-# | battle_user_id | Battle user | integer(8) | NOT NULL    | => BattleUser#id | A     |
-# | created_at     | 作成日時    | datetime   | NOT NULL    |                  |       |
-# | updated_at     | 更新日時    | datetime   | NOT NULL    |                  |       |
-# |----------------+-------------+------------+-------------+------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・UserReception モデルは BattleUser モデルから has_many :battle_ships されています。
-#--------------------------------------------------------------------------------
 

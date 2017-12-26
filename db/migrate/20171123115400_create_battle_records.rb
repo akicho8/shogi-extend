@@ -30,7 +30,7 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
       t.string :uid, null: false, index: {unique: true}, comment: "対局者名"
       t.belongs_to :battle_grade, null: false, comment: "最高段級"
       t.datetime :last_reception_at, null: true, comment: "受容日時"
-      t.integer :user_receptions_count, default: 0
+      t.integer :battle_user_receptions_count, default: 0
       t.timestamps null: false
     end
 
@@ -68,7 +68,7 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
 
-    create_table :user_receptions, force: true do |t|
+    create_table :battle_user_receptions, force: true do |t|
       t.belongs_to :battle_user, null: false, comment: "プレイヤー"
       t.timestamps null: false
     end

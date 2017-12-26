@@ -13,15 +13,6 @@
             = tag.datalist(id: "uid_list") do
               - Bushido::TacticInfo.all_elements.each do |e|
                 = tag.option(value: e.name)
-              - uids = []
-              / 利用者
-              - uids.concat Battle2User.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:uid)
-              / 最近取り込んだ人たち
-              - uids.concat Battle2User.order(updated_at: :desc).limit(32).pluck(:uid)
-              / すごい人たち
-              - uids.concat Battle2User.joins(:battle2_grade).order("battle2_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:uid)
-              - uids.uniq.each do |e|
-                = tag.option(value: e)
             span.input-group-btn
               = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
         .col-sm-4
@@ -30,6 +21,15 @@
           .col-sm-12
             .text-center
               = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
+
+    = link_to("タグクラウド", :general_cloud, :class => "btn btn-link")
+
+    - if controller.current_tactics.present?
+      - controller.current_tactics.each do |e|
+        =<> link_to(e, [:formation_article, id: e], :class => "btn btn-link")
+
+    - if controller.current_tags.present? && @battle2_records.exists?
+      =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
 
 .search_rows
   = @rows.to_html
@@ -40,20 +40,3 @@
 
   - content_for :head do
     = rel_next_prev_link_tags @battle2_records
-
-- if controller.current_tags.present? && @battle2_records.exists?
-  br
-  .text-center
-    = link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
-
-- if controller.current_tactics.present?
-  br
-  .text-center
-    p
-      div= "戦法検索"
-      - controller.current_tactics.each do |e|
-        = link_to(e, [:formation_article, id: e], :class => "btn btn-default")
-
-p
-  .text-center
-    = link_to("タグクラウド", :cloud2)

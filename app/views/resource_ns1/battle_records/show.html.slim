@@ -7,10 +7,3 @@
         strong= current_record.battle_ships.white.name_with_grade
 
     = render partial: "flash_kifu_player"
-
-    .page-header
-      h2
-        = "棋神判定(仮)"
-    small
-      = current_record.kishin_analyze_result_hask(:black).to_html
-      = current_record.kishin_analyze_result_hask(:white).to_html

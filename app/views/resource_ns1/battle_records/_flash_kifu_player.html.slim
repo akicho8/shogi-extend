@@ -57,11 +57,10 @@ br
 ////////////////////////////////////////////////////////////////////////////////
 
 .well
-  / = tag.p "棋譜保存".html_safe, data: {toggle: :tooltip, title: "option (alt) キーを押しながらクリックすると直接ダウンロードできます"}
   = tag.p "ダウンロード"
   p
     - KifuFormatInfo.each do |e|
-      =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-primary btn-xs")
+      =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-primary")
 
 ////////////////////////////////////////////////////////////////////////////////
 

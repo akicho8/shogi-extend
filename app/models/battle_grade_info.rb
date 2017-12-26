@@ -1,37 +1,6 @@
-class StaticBattle2GradeInfo
+class BattleGradeInfo
   include ApplicationMemoryRecord
   memory_record [
-    {key: "永世竜王", },
-    {key: "永世名人", },
-    {key: "永世王位", },
-    {key: "永世王座", },
-    {key: "永世棋王", },
-    {key: "永世王将", },
-    {key: "永世棋聖", },
-
-    {key: "竜王", },
-    {key: "名人", },
-    {key: "王位", },
-    {key: "王座", },
-    {key: "棋王", },
-    {key: "王将", },
-    {key: "棋聖", },
-
-    {key: "永世十段", },
-    {key: "朝日", },
-
-    {key: "女流四冠", },
-    {key: "女流三冠", },
-    {key: "女流二冠", },
-
-    {key: "女流四段", },
-    {key: "女流三段", },
-    {key: "女流二段", },
-    {key: "女流初段", },
-    {key: "女流1級",  },
-    {key: "女流2級",  },
-    {key: "女流3級",  },
-
     {key: "九段", },
     {key: "八段", },
     {key: "七段", },
@@ -71,10 +40,6 @@ class StaticBattle2GradeInfo
     {key: "28級", },
     {key: "29級", },
     {key: "30級", },
-
-    {key: "アマ", },
-
-    {key: "不明", },
   ]
 
   def priority
