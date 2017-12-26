@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.integer "turn_max", null: false, comment: "手数"
     t.text "kifu_header", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
+    t.datetime "battled_at", null: false, comment: "対局開始日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_key"], name: "index_free_battle_records_on_unique_key"

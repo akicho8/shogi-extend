@@ -45,9 +45,6 @@ class BattleRecord < ApplicationRecord
     end
   end
 
-  acts_as_ordered_taggable_on :defense_tags
-  acts_as_ordered_taggable_on :attack_tags
-
   before_validation do
     # "" から ten_min への変換
     if battle_rule_key

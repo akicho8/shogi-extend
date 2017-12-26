@@ -2,6 +2,10 @@ module ConvertMethods
   extend ActiveSupport::Concern
 
   included do
+    acts_as_ordered_taggable_on :defense_tags
+    acts_as_ordered_taggable_on :attack_tags
+    acts_as_ordered_taggable_on :other_tags
+
     has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :convertable
 
     serialize :kifu_header
@@ -40,9 +44,47 @@ module ConvertMethods
       :skill_set_hash    => info.skill_set_hash,
     }
 
-    # BattleRecord.tagged_with(...) とするため。on をつけないと集約できる
-    # self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
-    # self.attack_tag_list  = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
+    self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
+    self.attack_tag_list  = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
+    self.other_tag_list   = []
+
+    other_tag_list << info.header["棋戦"]
+    other_tag_list << info.header.to_kisen_a
+    other_tag_list << info.header["持ち時間"]
+    other_tag_list << info.header["掲載"]
+    other_tag_list << info.header["備考"]
+    other_tag_list << info.header.to_names_h.values.flatten
+    other_tag_list << info.header.to_simple_names_h.values.flatten
+
+    if v = info.header["場所"]
+      if md = v.match(/(.*)「(.*?)」/)
+        other_tag_list << md.captures
+      else
+        other_tag_list << v
+      end
+    end
+
+    if v = info.header["開始日時"].presence
+      other_tag_list << date_to_tags(v)
+
+      if t = (Time.zone.parse(v) rescue nil)
+        self.battled_at = t
+      else
+        values = v.scan(/\d+/).collect { |e|
+          e = e.to_i
+          if e.zero?
+            e = 1
+          end
+          e
+        }
+        self.battled_at = Time.zone.local(*values)
+      end
+    else
+      self.battled_at = Time.zone.parse("0001/01/01")
+    end
+
+    other_tag_list << turn_max
+    other_tag_list << info.header["手合割"]
 
     parser_exec_after(info)
   end

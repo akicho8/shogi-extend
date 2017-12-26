@@ -104,7 +104,7 @@ class SwarsTopsController < ApplicationController
           row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
         row["手数"] = battle_record.turn_max
-        row["種類"] = battle_record.battle_rule_info.name
+        row["種類"] = link_to(battle_record.battle_rule_info.name, wars_query_search_path(battle_record.battle_rule_info.name))
 
         key = :battle_long
         if battle_record.battled_at >= Time.current.midnight

@@ -58,6 +58,7 @@ class FreeBattleRecord < ApplicationRecord
     included do
       acts_as_ordered_taggable_on :defense_tags
       acts_as_ordered_taggable_on :attack_tags
+      acts_as_ordered_taggable_on :other_tags
     end
 
     def parser_exec_after(*)
