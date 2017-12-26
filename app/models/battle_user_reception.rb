@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# User receptionテーブル (user_receptions as UserReception)
+# Battle user receptionテーブル (battle_user_receptions as BattleUserReception)
 #
 # |----------------+-------------+------------+-------------+------------------+-------|
 # | カラム名       | 意味        | タイプ     | 属性        | 参照             | INDEX |
@@ -13,9 +13,9 @@
 # |----------------+-------------+------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・UserReception モデルは BattleUser モデルから has_many :battle_ships されています。
+# ・BattleUserReception モデルは BattleUser モデルから has_many :battle_ships されています。
 #--------------------------------------------------------------------------------
 
-class UserReception < ApplicationRecord
+class BattleUserReception < ApplicationRecord
   belongs_to :battle_user, counter_cache: true, touch: :last_reception_at
 end

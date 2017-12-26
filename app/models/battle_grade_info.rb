@@ -1,4 +1,4 @@
-class StaticBattleGradeInfo
+class BattleGradeInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: "九段", },

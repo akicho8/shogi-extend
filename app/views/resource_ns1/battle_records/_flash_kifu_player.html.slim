@@ -57,11 +57,10 @@ br
 ////////////////////////////////////////////////////////////////////////////////
 
 .well
-  / = tag.p "棋譜保存".html_safe, data: {toggle: :tooltip, title: "option (alt) キーを押しながらクリックすると直接ダウンロードできます"}
   = tag.p "ダウンロード"
   p
     - KifuFormatInfo.each do |e|
-      =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-primary btn-xs")
+      =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-primary")
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -69,14 +68,10 @@ br
 
 .page-header
   h2= "対局情報"
-ruby:
-  row = current_record.kifu_header.dup
-  row.each do |k, v|
-    if k.match?(/の(囲い|戦型)$/)
-      row[k] = v.to_s.split(/,\s+/).collect { |e| link_to(e, [:formation_article, id: e]) }.join(" ").html_safe
-    end
-  end
-= row.to_html
+  = current_record.header_detail(self).to_html
+  - if Rails.env.development?
+    h2= "to_meta_h"
+    = current_record.kifu_header[:to_meta_h].to_html
 
 ////////////////////////////////////////////////////////////////////////////////
 

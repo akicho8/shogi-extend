@@ -5,8 +5,13 @@ Rails.application.routes.draw do
 
     # 検索系
     resources :battle_users
-    resources :battle_records, path: "r"
+    resources :battle_records, path: "wr"
     resources :battle_ships
+
+    # 検索系
+    resources :battle2_users
+    resources :battle2_records, path: "or"
+    resources :battle2_ships
   end
 
   ################################################################################ 棋譜変換
@@ -15,21 +20,24 @@ Rails.application.routes.draw do
     [:resource_ns1, free_battle_record, options]
   end
 
-  ################################################################################ 検索
+  ################################################################################ 符号入力ゲーム
 
-  get "s/:query", to: "swars_tops#show", as: :query_search
-  get "s", to: "swars_tops#show"
-  get "cloud", to: "swars_tops#tag_cloud"
   get "xy", to: "swars_tops#coordinates_sign_enter_game"
+
+  ################################################################################ 将棋ウォーズ棋譜検索
+
+  get "w/:query", to: "swars_tops#show", as: :wars_query_search
+  get "w", to: "swars_tops#show"
+  get "w-cloud", to: "swars_tops#tag_cloud", as: :wars_cloud
 
   get "swars_tops/show"
   root "swars_tops#show"
 
   resolve "BattleUser" do |battle_user, options|
-    query_search_path(query: battle_user.to_param)
+    wars_query_search_path(query: battle_user.to_param)
   end
 
-  ################################################################################ 辞典
+  ################################################################################ 
 
   resources :formation_articles, path: "tactics"
   get "tactics-tree", to: "formation_articles#index", defaults: {tree: "true"}, as: :tree
@@ -37,6 +45,18 @@ Rails.application.routes.draw do
   ################################################################################ 今日の戦法占い
 
   resource :random_articles, path: "random"
+
+  ################################################################################ 2ch棋譜検索
+
+  get "s/:query", to: "pro_wars_tops#show", as: :kifu_query_search
+  get "s", to: "pro_wars_tops#show"
+
+  get "pro_wars_tops/show"
+  get "s-cloud", to: "pro_wars_tops#tag_cloud", as: :general_cloud
+
+  resolve "Battle2User" do |battle2_user, options|
+    kifu_query_search_path(query: battle2_user.to_param)
+  end
 
   ################################################################################ その他
 

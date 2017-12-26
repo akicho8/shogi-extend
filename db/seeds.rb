@@ -3,7 +3,7 @@ unless FreeBattleRecord.exists?
 end
 
 unless BattleGrade.exists?
-  StaticBattleGradeInfo.each do |e|
+  BattleGradeInfo.each do |e|
     BattleGrade.create!(unique_key: e.key, priority: e.priority)
   end
   tp BattleGrade

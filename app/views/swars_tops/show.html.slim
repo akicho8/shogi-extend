@@ -4,12 +4,12 @@
       h2.yumincho
         = "将棋ウォーズ棋譜検索"
 
-    = form_with(url: :s, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+    = form_with(url: :w, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
       .form-group
         .col-sm-4
         .col-sm-4
           .input-group
-            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "プレイヤー名 or プレイヤーURL or 戦法名", list: "uid_list", autofocus: controller.current_query_hash.blank?)
+            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_query_hash.blank?)
             = tag.datalist(id: "uid_list") do
               - Bushido::TacticInfo.all_elements.each do |e|
                 = tag.option(value: e.name)
@@ -31,6 +31,16 @@
             .text-center
               = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
 
+    =<> link_to("戦法クラウド", :wars_cloud, :class => "btn btn-link")
+
+    - if controller.current_query_hash && @battle_records.exists?
+      =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
+
+    - if controller.current_query_hash
+      - if tags = controller.current_query_hash[:tags]
+        - tags.each do |e|
+          = link_to(e, [:formation_article, id: e])
+
 .search_rows
   = @rows.to_html
 
@@ -40,17 +50,6 @@
 
   - content_for :head do
     = rel_next_prev_link_tags @battle_records
-
-- if controller.current_query_hash && @battle_records.exists?
-  br
-  .text-center
-    = link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-primary btn-xs")
-
-- if controller.current_query_hash
-  - if tags = controller.current_query_hash[:tags]
-    br
-      .text-center
-        = link_to("#{tags.first}について調べる", [:formation_article, id: tags.first])
 
 - if Rails.env.development? && false
   = BattleUser.to_html

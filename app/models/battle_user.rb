@@ -3,17 +3,17 @@
 #
 # 将棋ウォーズユーザーテーブル (battle_users as BattleUser)
 #
-# |-----------------------+-----------------------+-------------+-------------+-------------------+-------|
-# | カラム名              | 意味                  | タイプ      | 属性        | 参照              | INDEX |
-# |-----------------------+-----------------------+-------------+-------------+-------------------+-------|
-# | id                    | ID                    | integer(8)  | NOT NULL PK |                   |       |
-# | uid                   | Uid                   | string(255) | NOT NULL    |                   | A!    |
-# | battle_grade_id       | Battle grade          | integer(8)  | NOT NULL    | => BattleGrade#id | B     |
-# | last_reception_at     | Last reception at     | datetime    |             |                   |       |
-# | user_receptions_count | User receptions count | integer(4)  | DEFAULT(0)  |                   |       |
-# | created_at            | 作成日時              | datetime    | NOT NULL    |                   |       |
-# | updated_at            | 更新日時              | datetime    | NOT NULL    |                   |       |
-# |-----------------------+-----------------------+-------------+-------------+-------------------+-------|
+# |------------------------------+------------------------------+-------------+-------------+-------------------+-------|
+# | カラム名                     | 意味                         | タイプ      | 属性        | 参照              | INDEX |
+# |------------------------------+------------------------------+-------------+-------------+-------------------+-------|
+# | id                           | ID                           | integer(8)  | NOT NULL PK |                   |       |
+# | uid                          | Uid                          | string(255) | NOT NULL    |                   | A!    |
+# | battle_grade_id              | Battle grade                 | integer(8)  | NOT NULL    | => BattleGrade#id | B     |
+# | last_reception_at            | Last reception at            | datetime    |             |                   |       |
+# | battle_user_receptions_count | Battle user receptions count | integer(4)  | DEFAULT(0)  |                   |       |
+# | created_at                   | 作成日時                     | datetime    | NOT NULL    |                   |       |
+# | updated_at                   | 更新日時                     | datetime    | NOT NULL    |                   |       |
+# |------------------------------+------------------------------+-------------+-------------+-------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・BattleUser モデルは BattleGrade モデルから has_many :battle_users されています。
@@ -23,7 +23,7 @@ class BattleUser < ApplicationRecord
   has_many :battle_ships, dependent: :destroy      # 対局時の情報(複数)
   has_many :battle_records, through: :battle_ships # 対局(複数)
   belongs_to :battle_grade                         # すべてのモードのなかで一番よい段級位
-  has_many :user_receptions, dependent: :destroy   # 明示的に取り込んだ日時の記録
+  has_many :battle_user_receptions, dependent: :destroy   # 明示的に取り込んだ日時の記録
 
   before_validation do
     self.battle_grade ||= BattleGrade.last

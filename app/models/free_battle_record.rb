@@ -21,7 +21,7 @@
 require "open-uri"
 
 class FreeBattleRecord < ApplicationRecord
-  include BattleRecord::ConvertMethods
+  include ConvertMethods
 
   mount_uploader :kifu_file, AttachmentUploader
 
@@ -60,7 +60,7 @@ class FreeBattleRecord < ApplicationRecord
       acts_as_ordered_taggable_on :attack_tags
     end
 
-    def after_parser_exec(*)
+    def parser_exec_after(*)
     end
   end
 end

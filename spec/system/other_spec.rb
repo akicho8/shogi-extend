@@ -11,11 +11,6 @@ RSpec.describe "その他", type: :system do
     expect(page).to have_content "Rails"
   end
 
-  it "戦法クラウド" do
-    visit "/cloud"
-    expect(page).to have_content "Rails"
-  end
-
   it "今日の戦法占い" do
     visit "/random"
     expect(page).to have_content "Rails"

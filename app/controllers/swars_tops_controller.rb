@@ -18,7 +18,7 @@ class SwarsTopsController < ApplicationController
         else
           flash.now[:info] = "#{count_diff}件新しく見つかりました"
         end
-        @battle_user.user_receptions.create!
+        @battle_user.battle_user_receptions.create!
       else
         flash.now[:warning] = "#{current_uid} さんのデータは見つかりませんでした"
       end
@@ -72,32 +72,34 @@ class SwarsTopsController < ApplicationController
     @rows = @battle_records.collect do |battle_record|
       {}.tap do |row|
         if @battle_user
-          myself = battle_record.myself(@battle_user)
-          rival = battle_record.rival(@battle_user)
-          row["対象プレイヤー"] = battle_record.win_lose_str(myself.battle_user).html_safe + " " + link_to(myself.name_with_grade, myself.battle_user)
-          row["対戦相手"]       = battle_record.win_lose_str(rival.battle_user).html_safe + " " + link_to(rival.name_with_grade, rival.battle_user)
+          l_ship = battle_record.myself(@battle_user)
+          r_ship = battle_record.rival(@battle_user)
         else
           if battle_record.win_battle_user
-            row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link(battle_record, :win)
-            row["負け"] = Fa.icon_tag(:times) + battle_user_link(battle_record, :lose)
-          else
-            row["勝ち"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.black)
-            row["負け"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(battle_record.battle_ships.white)
-          end
-        end
-        row["判定"] = battle_state_info_decorate(battle_record)
-        if false
-          row["戦法"] = battle_record.tag_list.collect { |e| link_to(e, query_search_path(e)) }.join(" ").html_safe
-        else
-
-          if @battle_user
-            l_ship = battle_record.myself(@battle_user)
-            r_ship = battle_record.rival(@battle_user)
+            l_ship = battle_record.battle_ships.judge_key_eq(:win)
+            r_ship = battle_record.battle_ships.judge_key_eq(:lose)
           else
             l_ship = battle_record.battle_ships.black
             r_ship = battle_record.battle_ships.white
           end
+        end
 
+        if @battle_user
+          row["対象プレイヤー"] = battle_record.win_lose_str(l_ship.battle_user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.battle_user)
+          row["対戦相手"]       = battle_record.win_lose_str(r_ship.battle_user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.battle_user)
+        else
+          if battle_record.win_battle_user
+            row["勝ち"] = Fa.icon_tag(:circle_o) + battle_user_link2(l_ship)
+            row["負け"] = Fa.icon_tag(:times)    + battle_user_link2(r_ship)
+          else
+            row["勝ち"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(l_ship)
+            row["負け"] = Fa.icon_tag(:minus, :class => "icon_hidden") + battle_user_link2(r_ship)
+          end
+        end
+        row["判定"] = battle_state_info_decorate(battle_record)
+        if false
+          row["戦法"] = battle_record.tag_list.collect { |e| link_to(e, wars_query_search_path(e)) }.join(" ").html_safe
+        else
           row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
           row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
@@ -131,7 +133,7 @@ class SwarsTopsController < ApplicationController
   def tag_links(tag_list)
     if tag_list.blank?
     else
-      tag_list.collect { |e| link_to(e, query_search_path(e)) }.join(" ").html_safe
+      tag_list.collect { |e| link_to(e, wars_query_search_path(e)) }.join(" ").html_safe
     end
   end
 

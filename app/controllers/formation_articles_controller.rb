@@ -109,8 +109,12 @@ class FormationArticlesController < ApplicationController
     end
 
     out << tag.br
+
     out << tag.p(:class => "text-center") do
-      link_to("棋譜検索", query_search_path(current_record.key), :class => "btn btn-link")
+      [
+        link_to("2ch棋譜検索", kifu_query_search_path(current_record.key), :class => "btn btn-link"),
+        link_to("将棋ウォーズ棋譜検索", wars_query_search_path(current_record.key), :class => "btn btn-link"),
+      ].join(" ").html_safe
     end
 
     out << tag.p do

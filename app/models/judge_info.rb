@@ -9,4 +9,8 @@ class JudgeInfo
   def battle_ships
     BattleShip.where(judge_key: key)
   end
+
+  def battle2_ships
+    Battle2Ship.where(judge_key: key)
+  end
 end

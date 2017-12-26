@@ -1,0 +1,42 @@
+.search_form
+  .text-center
+    .page-header
+      h2.yumincho
+        = "2ch棋譜検索"
+
+    = form_with(url: :s, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+      .form-group
+        .col-sm-4
+        .col-sm-4
+          .input-group
+            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.present?)
+            = tag.datalist(id: "uid_list") do
+              - Bushido::TacticInfo.all_elements.each do |e|
+                = tag.option(value: e.name)
+            span.input-group-btn
+              = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
+        .col-sm-4
+      - if Rails.env.test?
+        .form-group
+          .col-sm-12
+            .text-center
+              = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
+
+    = link_to("タグクラウド", :general_cloud, :class => "btn btn-link")
+
+    - if controller.current_tactics.present?
+      - controller.current_tactics.each do |e|
+        =<> link_to(e, [:formation_article, id: e], :class => "btn btn-link")
+
+    - if controller.current_tags.present? && @battle2_records.exists?
+      =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
+
+.search_rows
+  = @rows.to_html
+
+- if @battle2_records
+  .text-center
+    = paginate @battle2_records
+
+  - content_for :head do
+    = rel_next_prev_link_tags @battle2_records
