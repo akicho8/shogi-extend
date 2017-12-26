@@ -80,26 +80,26 @@ class Battle2Record < ApplicationRecord
       end
 
       # rails r 'Battle2Record.destroy_all; Battle2Record.all_import'
+      # capp rails:runner CODE='Battle2Record.all_import'
       def all_import(**params)
-        files = kifu_files
-        if v = params[:range]
-          file = files[v]
-        end
-        files.each do |file|
-          begin
-            basic_import(params.merge(file: file))
-          rescue => error
-            puts file
-            raise error
+        begin
+          files = kifu_files
+          if v = params[:range]
+            file = files[v]
           end
-          if Rails.env.test?
-          else
-            print "."
+          p [Time.current.to_s(:ymdhms), "begin", Battle2User.count, Battle2Record.count] unless Rails.env.test?
+          files.each do |file|
+            basic_import(params.merge(file: file))
             STDOUT.flush
           end
-        end
-        unless Rails.env.test?
-          puts
+        rescue => error
+          puts file
+          raise error
+        ensure
+          unless Rails.env.test?
+            puts
+            p [Time.current.to_s(:ymdhms), "end__", Battle2User.count, Battle2Record.count, error].compact
+          end
         end
       end
 
@@ -108,6 +108,18 @@ class Battle2Record < ApplicationRecord
         record = find_or_initialize_by(battle_key: battle_key)
         record.kifu_body = params[:file].read.toutf8
         record.parser_exec
+        if record.new_record?
+          mark = "C"
+        else
+          if record.changed?
+            mark = "U"
+          else
+            mark = "."
+          end
+        end
+        unless Rails.env.test?
+          print mark
+        end
         record.save!
       end
     end

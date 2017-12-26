@@ -9,7 +9,7 @@
         .col-sm-4
         .col-sm-4
           .input-group
-            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.present?)
+            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?)
             = tag.datalist(id: "uid_list") do
               - Bushido::TacticInfo.all_elements.each do |e|
                 = tag.option(value: e.name)
