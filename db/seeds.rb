@@ -8,3 +8,7 @@ unless BattleGrade.exists?
   end
   tp BattleGrade
 end
+
+if Rails.env.development?
+  Battle2Record.all_import
+end

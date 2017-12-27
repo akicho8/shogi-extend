@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: f9be8aee8f3d5881d34ff8f462351fc4e06bb241
+  revision: 4826996e797ed0f320b0123e805597ed44804651
   specs:
     bushido (0.0.1)
       actionview
@@ -28,24 +28,6 @@ GIT
     daiku (0.0.2)
       compass-rails
       rails
-
-GIT
-  remote: https://github.com/akicho8/normalizer.git
-  revision: 11549cdfda18f3032c077dc5984a2a66bd6ff75a
-  specs:
-    normalizer (0.0.1)
-      activemodel
-      activerecord
-      activesupport
-      rails-deprecated_sanitizer
-
-GIT
-  remote: https://github.com/akicho8/uzoumuzou.git
-  revision: 46f56df33c2f051e3505cf072cb0c967c4969af2
-  specs:
-    uzoumuzou (0.0.1)
-      activesupport
-      rails-html-sanitizer
 
 GEM
   remote: https://rubygems.org/
@@ -274,8 +256,6 @@ GEM
       bundler (>= 1.3.0)
       railties (= 5.1.4)
       sprockets-rails (>= 2.0.0)
-    rails-deprecated_sanitizer (1.0.3)
-      activesupport (>= 4.2.0.alpha)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -362,7 +342,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    tree_support (0.1.2)
+    tree_support (0.1.3)
       activesupport
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
@@ -425,7 +405,6 @@ DEPENDENCIES
   memory_record
   mysql2
   nokogiri
-  normalizer!
   org_tp
   puma (~> 3.7)
   rails (~> 5.1.3)
@@ -444,10 +423,9 @@ DEPENDENCIES
   tree_support
   tzinfo-data
   uglifier (>= 1.3.0)
-  uzoumuzou!
   web-console (>= 3.3.0)
   webpacker
   whenever
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

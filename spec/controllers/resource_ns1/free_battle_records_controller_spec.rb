@@ -12,8 +12,9 @@
 # | kifu_url     | 棋譜URL            | string(255) |             |      |       |
 # | kifu_body    | 棋譜内容           | text(65535) | NOT NULL    |      |       |
 # | turn_max     | 手数               | integer(4)  | NOT NULL    |      |       |
-# | kifu_header  | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
+# | meta_info    | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
 # | mountain_url | 将棋山脈URL        | string(255) |             |      |       |
+# | battled_at   | Battled at         | datetime    | NOT NULL    |      |       |
 # | created_at   | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |
 # |--------------+--------------------+-------------+-------------+------+-------|

@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.text "kifu_body", null: false, comment: "棋譜の断片"
     t.string "battle2_state_key", null: false, comment: "結果詳細"
     t.integer "turn_max", null: false, comment: "手数"
-    t.text "kifu_header", null: false, comment: "棋譜メタ情報"
+    t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "battle_state_key", null: false, comment: "結果詳細"
     t.bigint "win_battle_user_id", comment: "勝者(ショートカット用)"
     t.integer "turn_max", null: false, comment: "手数"
-    t.text "kifu_header", null: false, comment: "棋譜メタ情報"
+    t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "kifu_url", comment: "入力した棋譜URL"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"
-    t.text "kifu_header", null: false, comment: "棋譜メタ情報"
+    t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
     t.datetime "created_at", null: false

@@ -8,11 +8,11 @@
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
 # | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
-# | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
+# | battled_at        | Battled at        | datetime    |             |      |       |
 # | kifu_body         | 棋譜内容          | text(65535) | NOT NULL    |      |       |
 # | battle2_state_key | Battle2 state key | string(255) | NOT NULL    |      | B     |
 # | turn_max          | 手数              | integer(4)  | NOT NULL    |      |       |
-# | kifu_header       | 棋譜ヘッダー      | text(65535) | NOT NULL    |      |       |
+# | meta_info         | 棋譜ヘッダー      | text(65535) | NOT NULL    |      |       |
 # | mountain_url      | 将棋山脈URL       | string(255) |             |      |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
@@ -28,6 +28,10 @@ class Battle2Record < ApplicationRecord
   before_validation do
     self.battle_key ||= SecureRandom.hex
     self.kifu_body ||= ""
+
+    if changes[:kifu_body]
+      parser_exec
+    end
   end
 
   with_options presence: true do
@@ -55,14 +59,6 @@ class Battle2Record < ApplicationRecord
   end
 
   concerning :ConvertHookMethos do
-    included do
-      # before_validation do
-      #   if changes[:kifu_body]
-      #     parser_exec
-      #   end
-      # end
-    end
-
     class_methods do
       def kifu_dir
         if Rails.env.test?
@@ -85,7 +81,14 @@ class Battle2Record < ApplicationRecord
         begin
           files = kifu_files
           if v = params[:range]
-            file = files[v]
+            files = files[v]
+          end
+          if v = params[:limit]
+            files = files.take(v)
+          end
+          if v = params[:reset]
+            Battle2User.destroy_all
+            Battle2Record.destroy_all
           end
           p [Time.current.to_s(:ymdhms), "begin", Battle2User.count, Battle2Record.count] unless Rails.env.test?
           files.each do |file|
@@ -93,7 +96,6 @@ class Battle2Record < ApplicationRecord
             STDOUT.flush
           end
         rescue => error
-          puts file
           raise error
         ensure
           unless Rails.env.test?
@@ -130,8 +132,10 @@ class Battle2Record < ApplicationRecord
 
       other_tag_list << battle_key
 
-      info.header.to_simple_names_h.values.flatten.each do |name|
-        Battle2User.find_or_create_by(name: name)
+      meta_info[:simple_names].each do |pair|
+        pair.each do |names|
+          Battle2User.find_or_create_by(name: names.first)
+        end
       end
 
       if persisted?
@@ -153,7 +157,6 @@ class Battle2Record < ApplicationRecord
           defense_tag_list: player.skill_set.normalized_defense_infos.collect(&:key),
           attack_tag_list: player.skill_set.normalized_attack_infos.collect(&:key),
         }
-
       end
     end
   end
@@ -174,23 +177,13 @@ class Battle2Record < ApplicationRecord
     end
 
     def myself(user)
-      index = kifu_header[:to_simple_names_h].values.index { |e| e.include?(user.name) }
+      index = meta_info[:simple_names].index { |e| e.flatten.include?(user.name) }
       battle2_ships[index]
     end
 
     def rival(user)
-      index = kifu_header[:to_simple_names_h].values.index { |e| e.include?(user.name) }
-      battle2_ships.reverse[index]
-    end
-  end
-
-  concerning :ImportMethods do
-    class_methods do
-    end
-  end
-
-  concerning :TagMethods do
-    included do
+      index = meta_info[:simple_names].index { |e| !e.flatten.include?(user.name) }
+      battle2_ships[index]
     end
   end
 end

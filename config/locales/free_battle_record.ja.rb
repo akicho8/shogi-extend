@@ -25,7 +25,7 @@
           kifu_url: "棋譜URL",
           kifu_body: "棋譜内容",
           turn_max: "手数",
-          kifu_header: "棋譜ヘッダー",
+          meta_info: "棋譜ヘッダー",
         },
         converted_info: {
           text_body: "本体",

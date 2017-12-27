@@ -14,7 +14,7 @@
 # | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
 # | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
 # | turn_max           | 手数             | integer(4)  | NOT NULL    |                  |       |
-# | kifu_header        | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
+# | meta_info          | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
 # | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
 # | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |
@@ -349,14 +349,15 @@ class BattleRecord < ApplicationRecord
   # has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :battle_record
 
   def header_detail(h)
-    row = kifu_header[:to_meta_h].dup
+    return meta_info[:header]
+
+    row = meta_info[:to_meta_h].dup
     row.each do |k, v|
       case k
       when /の(囲い|戦型)$/
         # row[k] = v.collect { |e| h.link_to(e, [:formation_article, id: e]) }.join(" ").html_safe
         row[k] = v.collect { |e| h.link_to(e, h.wars_query_search_path(e)) }.join(" ").html_safe
       when "棋戦詳細"
-        # row[k] = kifu_header[:to_kisen_a].collect { |e| h.link_to(e, h.wars_query_search_path(e)) }.join(" ").html_safe
         row[k] = v.collect { |e| h.link_to(e, h.wars_query_search_path(e)) }.join(" ").html_safe
       when "場所"
         if md = v.match(/(.*)「(.*?)」/)

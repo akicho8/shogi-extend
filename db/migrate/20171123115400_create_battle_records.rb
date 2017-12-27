@@ -14,7 +14,7 @@
 # | battle_state_key   | Battle state key | string(255) | NOT NULL    |                  | C     |
 # | win_battle_user_id | Win battle user  | integer(8)  |             | => BattleUser#id | D     |
 # | turn_max           | 手数             | integer(4)  | NOT NULL    |                  |       |
-# | kifu_header        | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
+# | meta_info          | 棋譜ヘッダー     | text(65535) | NOT NULL    |                  |       |
 # | mountain_url       | 将棋山脈URL      | string(255) |             |                  |       |
 # | created_at         | 作成日時         | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時         | datetime    | NOT NULL    |                  |       |
@@ -43,7 +43,7 @@ class CreateBattleRecords < ActiveRecord::Migration[5.1]
       t.belongs_to :win_battle_user, comment: "勝者(ショートカット用)"
 
       t.integer :turn_max, null: false, comment: "手数"
-      t.text :kifu_header, null: false, comment: "棋譜メタ情報"
+      t.text :meta_info, null: false, comment: "棋譜メタ情報"
 
       t.string :mountain_url, comment: "将棋山脈の変換後URL"
 

@@ -8,10 +8,10 @@ module ConvertMethods
 
     has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :convertable
 
-    serialize :kifu_header
+    serialize :meta_info
 
     before_validation do
-      self.kifu_header ||= {}
+      self.meta_info ||= {}
       self.turn_max ||= 0
     end
   end
@@ -21,6 +21,8 @@ module ConvertMethods
   # BattleRecord.find_each { |e| e.tap(&:parser_exec).save! }
   # BattleRecord.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
   def parser_exec(**options)
+    return if @parser_executed
+
     options = {
       destroy_all: false,
     }.merge(options)
@@ -34,14 +36,11 @@ module ConvertMethods
     end
     self.turn_max = info.mediator.turn_max
 
-    self.kifu_header = {
-      :to_h              => info.header.to_h,
-      :to_names_h        => info.header.to_names_h,
-      :meta_info         => info.header.meta_info,
-      :to_meta_h         => info.header.to_meta_h.merge(info.skill_set_hash),
-      :to_kisen_a        => info.header.to_kisen_a,
-      :to_simple_names_h => info.header.to_simple_names_h,
-      :skill_set_hash    => info.skill_set_hash,
+    self.meta_info = {
+      :header          => info.header.to_h,
+      :detail_names    => info.header.sente_gote.collect { |e| Splitter.split(info.header["#{e}詳細"]) },
+      :simple_names    => info.header.sente_gote.collect { |e| Splitter.pair_split(info.header[e]) },
+      :skill_set_hash  => info.skill_set_hash,
     }
 
     self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
@@ -49,12 +48,12 @@ module ConvertMethods
     self.other_tag_list   = []
 
     other_tag_list << info.header["棋戦"]
-    other_tag_list << info.header.to_kisen_a
     other_tag_list << info.header["持ち時間"]
-    other_tag_list << info.header["掲載"]
-    other_tag_list << info.header["備考"]
-    other_tag_list << info.header.to_names_h.values.flatten
-    other_tag_list << info.header.to_simple_names_h.values.flatten
+    other_tag_list << Splitter.split(info.header["棋戦詳細"].to_s)
+    other_tag_list << Splitter.split(info.header["掲載"].to_s)
+    other_tag_list << Splitter.split(info.header["備考"].to_s)
+    other_tag_list << info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
+    other_tag_list << info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}"])     }
 
     if v = info.header["場所"]
       if md = v.match(/(.*)「(.*?)」/)
@@ -87,6 +86,7 @@ module ConvertMethods
     other_tag_list << info.header["手合割"]
 
     parser_exec_after(info)
+    @parser_executed = true
   end
 
   def parser_exec_after(info)
@@ -105,15 +105,15 @@ module ConvertMethods
   end
 
   def header_detail(h)
-    row = kifu_header[:to_meta_h].dup
+    return meta_info[:header]
+
+    row = meta_info[:to_meta_h].dup
     row.each do |k, v|
       if v
         case k
         when /の(囲い|戦型)$/
-          # row[k] = v.collect { |e| h.link_to(e, [:formation_article, id: e]) }.join(" ").html_safe
           row[k] = v.collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
         when "棋戦詳細"
-          # row[k] = kifu_header[:to_kisen_a].collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
           row[k] = v.collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
         when "場所"
           if md = v.match(/(.*)「(.*?)」/)

@@ -8,11 +8,11 @@
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
 # | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
-# | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
+# | battled_at        | Battled at        | datetime    |             |      |       |
 # | kifu_body         | 棋譜内容          | text(65535) | NOT NULL    |      |       |
 # | battle2_state_key | Battle2 state key | string(255) | NOT NULL    |      | B     |
 # | turn_max          | 手数              | integer(4)  | NOT NULL    |      |       |
-# | kifu_header       | 棋譜ヘッダー      | text(65535) | NOT NULL    |      |       |
+# | meta_info         | 棋譜ヘッダー      | text(65535) | NOT NULL    |      |       |
 # | mountain_url      | 将棋山脈URL       | string(255) |             |      |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |

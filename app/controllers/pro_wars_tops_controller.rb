@@ -78,13 +78,9 @@ class ProWarsTopsController < ApplicationController
         row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
         row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
 
-        row["手数"] = link_to(battle2_record.turn_max, kifu_query_search_path(battle2_record.turn_max))
-
-        if true
-          row["手合割"] = battle2_record.teaiwari_link(h, battle2_record.kifu_header[:to_h]["手合割"])
-        end
-
-        row["日時"] = battle2_record.date_link(h, battle2_record.kifu_header[:to_h]["開始日時"])
+        row["手数"]   = link_to(battle2_record.turn_max, kifu_query_search_path(battle2_record.turn_max))
+        row["手合割"] = battle2_record.teaiwari_link(h, battle2_record.meta_info[:header]["手合割"])
+        row["日時"]   = battle2_record.date_link(h, battle2_record.meta_info[:header]["開始日時"])
 
         row[""] = row_links(battle2_record)
       end
