@@ -6,9 +6,9 @@ tp ActiveRecord::Base.connection.tables.collect { |table|
 }.to_h
 # >> |------------------------+-----|
 # >> |   ar_internal_metadata | 1   |
-# >> |        battle2_records | 5   |
-# >> |          battle2_ships | 10  |
-# >> |          battle2_users | 12  |
+# >> |        general_battle_records | 5   |
+# >> |          general_battle_ships | 10  |
+# >> |          general_battle_users | 12  |
 # >> |          battle_grades | 39  |
 # >> |         battle_records | 0   |
 # >> |           battle_ships | 0   |

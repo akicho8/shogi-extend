@@ -1,11 +1,11 @@
 #!rails runner
 
-Battle2User.destroy_all
-Battle2Record.destroy_all
+GeneralBattleUser.destroy_all
+GeneralBattleRecord.destroy_all
 # ConvertedInfo.destroy_all
 
-Battle2Record.all_import
+GeneralBattleRecord.all_import
 
-tp Battle2User.count
-tp Battle2Record.count
-tp Battle2Ship.count
+tp GeneralBattleUser.count
+tp GeneralBattleRecord.count
+tp GeneralBattleShip.count

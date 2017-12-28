@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報テーブル (battle2_records as Battle2Record)
+# 将棋ウォーズ対戦情報テーブル (general_battle_records as GeneralBattleRecord)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
@@ -18,21 +18,15 @@
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 
-module Battle2RecordsHelper
-  def battle2_user_link2(battle2_ship)
-    meta_info = battle2_ship.battle2_record.meta_info
-    names = meta_info[:detail_names][battle2_ship.location.code]
+require 'rails_helper'
 
-    # 詳細になかったら「先手」「後手」のところから探す
-    if names.blank?
-      names = meta_info[:simple_names][battle2_ship.location.code].flatten
-    end
+RSpec.describe ResourceNs1::GeneralBattleRecordsController, type: :controller do
+  before do
+    general_battle_record_setup
+    @general_battle_record = GeneralBattleRecord.first
+  end
 
-    if names.blank?
-      return "不明"
-    end
-    names.collect {|e|
-      link_to(e, resource_ns1_general_search_path(e))
-    }.join(" ").html_safe
+  it "show" do
+    get :show, params: {id: @general_battle_record.to_param}
   end
 end

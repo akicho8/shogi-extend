@@ -4,19 +4,19 @@ Rails.application.routes.draw do
   ################################################################################ 2ch棋譜検索
 
   namespace :resource_ns1, path: "" do
-    resources :battle2_users
-    resources :battle2_records, path: "sr" do
-      resources :tag_cloud, :only => :index, :module => :battle2_records
+    resources :general_battle_users
+    resources :general_battle_records, path: "sr" do
+      resources :tag_cloud, :only => :index, :module => :general_battle_records
     end
-    resources :battle2_ships
+    resources :general_battle_ships
 
-    get "s/:query", to: "battle2_records#index", as: :general_search
-    get "s",        to: "battle2_records#index"
-    get "s-cloud",  to: "battle2_records/tag_cloud#index", as: :general_cloud
+    get "s/:query", to: "general_battle_records#index", as: :general_search
+    get "s",        to: "general_battle_records#index"
+    get "s-cloud",  to: "general_battle_records/tag_cloud#index", as: :general_cloud
   end
 
-  resolve "Battle2User" do |battle2_user, options|
-    resource_ns1_general_search_path(query: battle2_user.to_param)
+  resolve "GeneralBattleUser" do |general_battle_user, options|
+    resource_ns1_general_search_path(query: general_battle_user.to_param)
   end
 
   ################################################################################ 将棋ウォーズ棋譜検索

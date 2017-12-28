@@ -2,7 +2,7 @@
 
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報テーブル (battle2_records as Battle2Record)
+# 将棋ウォーズ対戦情報テーブル (general_battle_records as GeneralBattleRecord)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
@@ -21,13 +21,13 @@
 
 # == Schema Information ==
 #
-# 対局と対局者の対応テーブル (battle2_ships as Battle2Ship)
+# 対局と対局者の対応テーブル (general_battle_ships as GeneralBattleShip)
 #
 # |-------------------+----------------+-------------+-------------+---------------------+-------|
 # | カラム名          | 意味           | タイプ      | 属性        | 参照                | INDEX |
 # |-------------------+----------------+-------------+-------------+---------------------+-------|
 # | id                | ID             | integer(8)  | NOT NULL PK |                     |       |
-# | battle2_record_id | Battle2 record | integer(8)  | NOT NULL    | => Battle2Record#id | A! B  |
+# | general_battle_record_id | Battle2 record | integer(8)  | NOT NULL    | => GeneralBattleRecord#id | A! B  |
 # | judge_key         | Judge key      | string(255) | NOT NULL    |                     | C     |
 # | location_key      | Location key   | string(255) | NOT NULL    |                     | A! D  |
 # | position          | 順序           | integer(4)  |             |                     | E     |
@@ -36,12 +36,12 @@
 # |-------------------+----------------+-------------+-------------+---------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Battle2Ship モデルは Battle2Record モデルから has_many :battle2_ships されています。
+# ・GeneralBattleShip モデルは GeneralBattleRecord モデルから has_many :general_battle_ships されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# 将棋ウォーズユーザーテーブル (battle2_users as Battle2User)
+# 将棋ウォーズユーザーテーブル (general_battle_users as GeneralBattleUser)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |

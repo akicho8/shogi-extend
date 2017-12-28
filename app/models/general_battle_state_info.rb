@@ -1,4 +1,4 @@
-class Battle2StateInfo
+class GeneralBattleStateInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: "ILLEGAL_MOVE",  name: "反則",   label_key: :warning, draw: false, },

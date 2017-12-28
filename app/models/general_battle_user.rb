@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズユーザーテーブル (battle2_users as Battle2User)
+# 将棋ウォーズユーザーテーブル (general_battle_users as GeneralBattleUser)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
@@ -12,7 +12,7 @@
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
 
-class Battle2User < ApplicationRecord
+class GeneralBattleUser < ApplicationRecord
   with_options presence: true do
     validates :name
   end

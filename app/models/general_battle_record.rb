@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報テーブル (battle2_records as Battle2Record)
+# 将棋ウォーズ対戦情報テーブル (general_battle_records as GeneralBattleRecord)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
@@ -20,10 +20,10 @@
 
 require "matrix"
 
-class Battle2Record < ApplicationRecord
+class GeneralBattleRecord < ApplicationRecord
   include ConvertMethods
 
-  has_many :battle2_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle2_record
+  has_many :general_battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :general_battle_record
 
   before_validation do
     self.battle_key ||= SecureRandom.hex
@@ -45,8 +45,8 @@ class Battle2Record < ApplicationRecord
   end
 
   validate do
-    if battle2_ships.size != 2
-      errors.add(:base, "対局者が2人いません : #{battle2_ships.size}")
+    if general_battle_ships.size != 2
+      errors.add(:base, "対局者が2人いません : #{general_battle_ships.size}")
     end
   end
 
@@ -54,8 +54,8 @@ class Battle2Record < ApplicationRecord
     battle_key
   end
 
-  def battle2_state_info
-    Battle2StateInfo.fetch(battle2_state_key)
+  def general_battle_state_info
+    GeneralBattleStateInfo.fetch(battle2_state_key)
   end
 
   concerning :ConvertHookMethos do
@@ -71,9 +71,9 @@ class Battle2Record < ApplicationRecord
         end
       end
 
-      # rails r 'Battle2Record.destroy_all; Battle2Record.all_import'
-      # capp rails:runner CODE='Battle2Record.all_import'
-      # rails r 'Battle2Record.all_import(kifu_dir: "..")'
+      # rails r 'GeneralBattleRecord.destroy_all; GeneralBattleRecord.all_import'
+      # capp rails:runner CODE='GeneralBattleRecord.all_import'
+      # rails r 'GeneralBattleRecord.all_import(kifu_dir: "..")'
       def all_import(**params)
         params = {
           kifu_dir: kifu_dir_default,
@@ -87,12 +87,12 @@ class Battle2Record < ApplicationRecord
           files = files.take(v)
         end
         if params[:reset]
-          Battle2User.destroy_all
-          Battle2Record.destroy_all
+          GeneralBattleUser.destroy_all
+          GeneralBattleRecord.destroy_all
         end
 
         begin
-          p [Time.current.to_s(:ymdhms), "begin", Battle2User.count, Battle2Record.count] unless Rails.env.test?
+          p [Time.current.to_s(:ymdhms), "begin", GeneralBattleUser.count, GeneralBattleRecord.count] unless Rails.env.test?
           files.each do |file|
             basic_import(params.merge(file: file))
             STDOUT.flush
@@ -102,7 +102,7 @@ class Battle2Record < ApplicationRecord
         ensure
           unless Rails.env.test?
             puts
-            p [Time.current.to_s(:ymdhms), "end__", Battle2User.count, Battle2Record.count, error].compact
+            p [Time.current.to_s(:ymdhms), "end__", GeneralBattleUser.count, GeneralBattleRecord.count, error].compact
           end
         end
       end
@@ -130,30 +130,30 @@ class Battle2Record < ApplicationRecord
 
     def parser_exec_after(info)
       self.battle2_state_key = info.last_action_info.key
-      other_tag_list << battle2_state_info.name
+      other_tag_list << general_battle_state_info.name
 
       other_tag_list << battle_key
 
       meta_info[:simple_names].each do |pair|
         pair.each do |names|
-          Battle2User.find_or_create_by(name: names.first)
+          GeneralBattleUser.find_or_create_by(name: names.first)
         end
       end
 
       if persisted?
-        ships = battle2_ships.order(:position)
+        ships = general_battle_ships.order(:position)
       else
-        ships = info.mediator.players.count.times.collect { battle2_ships.build }
+        ships = info.mediator.players.count.times.collect { general_battle_ships.build }
       end
 
       info.mediator.players.each.with_index do |player, i|
         judge_key = :draw
-        unless battle2_state_info.draw
+        unless general_battle_state_info.draw
           judge_key = player.judge_key
         end
 
-        battle2_ship = ships[i]
-        battle2_ship.attributes = {
+        general_battle_ship = ships[i]
+        general_battle_ship.attributes = {
           judge_key: judge_key,
           location_key: player.location.key,
           defense_tag_list: player.skill_set.normalized_defense_infos.collect(&:key),
@@ -164,13 +164,13 @@ class Battle2Record < ApplicationRecord
   end
 
   concerning :HelperMethods do
-    def win_lose_str(battle2_ship)
-      if battle2_state_info.draw
+    def win_lose_str(general_battle_ship)
+      if general_battle_state_info.draw
         Fa.icon_tag(:minus, :class => "icon_hidden")
       else
-        if battle2_ship.judge_key == "win"
+        if general_battle_ship.judge_key == "win"
           Fa.icon_tag(:circle_o)
-        elsif battle2_ship.judge_key == "lose"
+        elsif general_battle_ship.judge_key == "lose"
           Fa.icon_tag(:times)
         else
           raise "must not happen"
@@ -180,12 +180,12 @@ class Battle2Record < ApplicationRecord
 
     def myself(user)
       index = meta_info[:simple_names].index { |e| e.flatten.include?(user.name) }
-      battle2_ships[index]
+      general_battle_ships[index]
     end
 
     def rival(user)
       index = meta_info[:simple_names].index { |e| !e.flatten.include?(user.name) }
-      battle2_ships[index]
+      general_battle_ships[index]
     end
   end
 end

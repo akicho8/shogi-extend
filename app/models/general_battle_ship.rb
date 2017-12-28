@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対局と対局者の対応テーブル (battle2_ships as Battle2Ship)
+# 対局と対局者の対応テーブル (general_battle_ships as GeneralBattleShip)
 #
 # |-------------------+----------------+-------------+-------------+---------------------+-------|
 # | カラム名          | 意味           | タイプ      | 属性        | 参照                | INDEX |
 # |-------------------+----------------+-------------+-------------+---------------------+-------|
 # | id                | ID             | integer(8)  | NOT NULL PK |                     |       |
-# | battle2_record_id | Battle2 record | integer(8)  | NOT NULL    | => Battle2Record#id | A! B  |
+# | general_battle_record_id | Battle2 record | integer(8)  | NOT NULL    | => GeneralBattleRecord#id | A! B  |
 # | judge_key         | Judge key      | string(255) | NOT NULL    |                     | C     |
 # | location_key      | Location key   | string(255) | NOT NULL    |                     | A! D  |
 # | position          | 順序           | integer(4)  |             |                     | E     |
@@ -16,13 +16,13 @@
 # |-------------------+----------------+-------------+-------------+---------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Battle2Ship モデルは Battle2Record モデルから has_many :battle2_ships されています。
+# ・GeneralBattleShip モデルは GeneralBattleRecord モデルから has_many :general_battle_ships されています。
 #--------------------------------------------------------------------------------
 
-class Battle2Ship < ApplicationRecord
-  belongs_to :battle2_record            # 対局
+class GeneralBattleShip < ApplicationRecord
+  belongs_to :general_battle_record            # 対局
 
-  acts_as_list top_of_list: 0, scope: :battle2_record
+  acts_as_list top_of_list: 0, scope: :general_battle_record
 
   scope :judge_key_eq, -> v { where(judge_key: v).take }
 
@@ -40,7 +40,7 @@ class Battle2Ship < ApplicationRecord
 
   with_options allow_blank: true do
     validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-    validates :location_key, uniqueness: {scope: :battle2_record_id}
+    validates :location_key, uniqueness: {scope: :general_battle_record_id}
     validates :location_key, inclusion: Bushido::Location.keys.collect(&:to_s)
   end
 

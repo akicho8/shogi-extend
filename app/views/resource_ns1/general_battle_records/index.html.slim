@@ -28,15 +28,15 @@
       - controller.current_tactics.each do |e|
         =<> link_to(e, [:formation_article, id: e], :class => "btn btn-link")
 
-    - if controller.current_tags.present? && @battle2_records.exists?
+    - if controller.current_tags.present? && @general_battle_records.exists?
       =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
 
 .search_rows
   = @rows.to_html
 
-- if @battle2_records
+- if @general_battle_records
   .text-center
-    = paginate @battle2_records
+    = paginate @general_battle_records
 
   - content_for :head do
-    = rel_next_prev_link_tags @battle2_records
+    = rel_next_prev_link_tags @general_battle_records

@@ -9,30 +9,30 @@ end
 # >> 
 # >> ar_internal_metadata
 # >> 
-# >> battle2_records
+# >> general_battle_records
 # >> |-----------------+--------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
 # >> | table           | name                                       | unique | columns               | lengths | orders | where | type | using | comment |
 # >> |-----------------+--------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
-# >> | battle2_records | index_battle2_records_on_battle_key        | true   | ["battle_key"]        | {}      |        |       |      | btree |         |
-# >> | battle2_records | index_battle2_records_on_battle2_state_key | false  | ["battle2_state_key"] | {}      |        |       |      | btree |         |
+# >> | general_battle_records | index_general_battle_records_on_battle_key        | true   | ["battle_key"]        | {}      |        |       |      | btree |         |
+# >> | general_battle_records | index_general_battle_records_on_battle2_state_key | false  | ["battle2_state_key"] | {}      |        |       |      | btree |         |
 # >> |-----------------+--------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> battle2_ships
+# >> general_battle_ships
 # >> |---------------+-----------------------------------------------------------+--------+---------------------------------------+---------+--------+-------+------+-------+---------|
 # >> | table         | name                                                      | unique | columns                               | lengths | orders | where | type | using | comment |
 # >> |---------------+-----------------------------------------------------------+--------+---------------------------------------+---------+--------+-------+------+-------+---------|
-# >> | battle2_ships | index_battle2_ships_on_battle2_record_id_and_location_key | true   | ["battle2_record_id", "location_key"] | {}      |        |       |      | btree |         |
-# >> | battle2_ships | index_battle2_ships_on_battle2_record_id                  | false  | ["battle2_record_id"]                 | {}      |        |       |      | btree |         |
-# >> | battle2_ships | index_battle2_ships_on_judge_key                          | false  | ["judge_key"]                         | {}      |        |       |      | btree |         |
-# >> | battle2_ships | index_battle2_ships_on_location_key                       | false  | ["location_key"]                      | {}      |        |       |      | btree |         |
-# >> | battle2_ships | index_battle2_ships_on_position                           | false  | ["position"]                          | {}      |        |       |      | btree |         |
+# >> | general_battle_ships | index_general_battle_ships_on_general_battle_record_id_and_location_key | true   | ["general_battle_record_id", "location_key"] | {}      |        |       |      | btree |         |
+# >> | general_battle_ships | index_general_battle_ships_on_general_battle_record_id                  | false  | ["general_battle_record_id"]                 | {}      |        |       |      | btree |         |
+# >> | general_battle_ships | index_general_battle_ships_on_judge_key                          | false  | ["judge_key"]                         | {}      |        |       |      | btree |         |
+# >> | general_battle_ships | index_general_battle_ships_on_location_key                       | false  | ["location_key"]                      | {}      |        |       |      | btree |         |
+# >> | general_battle_ships | index_general_battle_ships_on_position                           | false  | ["position"]                          | {}      |        |       |      | btree |         |
 # >> |---------------+-----------------------------------------------------------+--------+---------------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> battle2_users
+# >> general_battle_users
 # >> |---------------+-----------------------------+--------+----------+---------+--------+-------+------+-------+---------|
 # >> | table         | name                        | unique | columns  | lengths | orders | where | type | using | comment |
 # >> |---------------+-----------------------------+--------+----------+---------+--------+-------+------+-------+---------|
-# >> | battle2_users | index_battle2_users_on_name | true   | ["name"] | {}      |        |       |      | btree |         |
+# >> | general_battle_users | index_general_battle_users_on_name | true   | ["name"] | {}      |        |       |      | btree |         |
 # >> |---------------+-----------------------------+--------+----------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> battle_grades

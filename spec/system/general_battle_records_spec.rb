@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe "2ch棋譜検索", type: :system do
   before do
-    battle2_record_setup
-    @battle2_record = Battle2Record.first
+    general_battle_record_setup
+    @general_battle_record = GeneralBattleRecord.first
   end
 
   it "フォーム表示→入力→実行→結果" do

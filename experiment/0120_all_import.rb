@@ -3,11 +3,11 @@ require File.expand_path('../../config/environment', __FILE__)
 
 ActsAsTaggableOn::Tag.destroy_all
 ActsAsTaggableOn::Tagging.destroy_all
-Battle2Record.all_import(limit: 10, reset: true)
+GeneralBattleRecord.all_import(limit: 10, reset: true)
 
-tp Battle2User
+tp GeneralBattleUser
 
-tp Battle2Record.all.collect {|e| e.other_tag_list.join(",") }
+tp GeneralBattleRecord.all.collect {|e| e.other_tag_list.join(",") }
 # >> ["2017-12-27 20:19:39", "begin", 0, 0]
 # >> CCCCC
 # >> ["2017-12-27 20:19:41", "end__", 12, 5]

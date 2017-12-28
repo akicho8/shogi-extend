@@ -4,7 +4,7 @@
     },
     helpers: {
       submit: {
-        battle2_record: {
+        general_battle_record: {
           # create: "変換",
           # update: nil,
         },
@@ -12,12 +12,12 @@
     },
     activerecord: {
       models: {
-        battle2_record: "将棋ウォーズ対戦情報",
-        battle2_user: "将棋ウォーズユーザー",
-        battle2_ship: "対局と対局者の対応",
+        general_battle_record: "将棋ウォーズ対戦情報",
+        general_battle_user: "将棋ウォーズユーザー",
+        general_battle_ship: "対局と対局者の対応",
       },
       attributes: {
-        battle2_record: {
+        general_battle_record: {
           unique_key: "ユニークなハッシュ",
           kifu_file: "棋譜ファイル",
           kifu_url: "棋譜URL",

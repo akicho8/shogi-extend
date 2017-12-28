@@ -19,5 +19,5 @@ if Rails.env.development?
 end
 
 if Rails.env.development?
-  Battle2Record.all_import
+  GeneralBattleRecord.all_import
 end

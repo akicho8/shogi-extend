@@ -1,9 +1,9 @@
 .text-center
   .page-header
     h2
-      = battle2_user_link2(current_record.battle2_ships.black)
+      = general_battle_user_link2(current_record.general_battle_ships.black)
       span.text-muted=<> "vs"
-      = battle2_user_link2(current_record.battle2_ships.white)
+      = general_battle_user_link2(current_record.general_battle_ships.white)
 
   ul.list-inline
     - current_record.all_tag_list.each do |e|

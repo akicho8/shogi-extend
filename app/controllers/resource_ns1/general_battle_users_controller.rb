@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズユーザーテーブル (battle2_users as Battle2User)
+# 将棋ウォーズユーザーテーブル (general_battle_users as GeneralBattleUser)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
@@ -13,6 +13,6 @@
 # |------------+----------+-------------+-------------+------+-------|
 
 module ResourceNs1
-  class Battle2UsersController < ApplicationController
+  class GeneralBattleUsersController < ApplicationController
   end
 end

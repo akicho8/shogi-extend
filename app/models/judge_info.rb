@@ -10,7 +10,7 @@ class JudgeInfo
     BattleShip.where(judge_key: key)
   end
 
-  def battle2_ships
-    Battle2Ship.where(judge_key: key)
+  def general_battle_ships
+    GeneralBattleShip.where(judge_key: key)
   end
 end

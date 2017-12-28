@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報テーブル (battle2_records as Battle2Record)
+# 将棋ウォーズ対戦情報テーブル (general_battle_records as GeneralBattleRecord)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
@@ -18,14 +18,14 @@
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 
-class CreateBattle2Records < ActiveRecord::Migration[5.1]
+class CreateGeneralBattleRecords < ActiveRecord::Migration[5.1]
   def up
-    create_table :battle2_users, force: true do |t|
+    create_table :general_battle_users, force: true do |t|
       t.string :name, null: false, index: {unique: true}, comment: "対局者名"
       t.timestamps null: false
     end
 
-    create_table :battle2_records, force: true do |t|
+    create_table :general_battle_records, force: true do |t|
       t.string :battle_key, null: false, index: {unique: true}, comment: "対局識別子"
       t.datetime :battled_at, null: true, comment: "対局開始日時"
 
@@ -41,13 +41,13 @@ class CreateBattle2Records < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
 
-    create_table :battle2_ships, force: true do |t|
-      t.belongs_to :battle2_record, null: false, comment: "対局"
+    create_table :general_battle_ships, force: true do |t|
+      t.belongs_to :general_battle_record, null: false, comment: "対局"
       t.string :judge_key, null: false, index: true, comment: "勝・敗・引き分け"
       t.string :location_key, null: false, index: true, comment: "▲△"
       t.integer :position, index: true, comment: "手番の順序"
       t.timestamps null: false
     end
-    add_index :battle2_ships, [:battle2_record_id, :location_key], unique: true
+    add_index :general_battle_ships, [:general_battle_record_id, :location_key], unique: true, name: :general_battle_ships_gbri_lk
   end
 end

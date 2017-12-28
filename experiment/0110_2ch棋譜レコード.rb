@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-battle2_record = Battle2Record.create!
-tp battle2_record
-tp battle2_record.meta_info[:header]
+general_battle_record = GeneralBattleRecord.create!
+tp general_battle_record
+tp general_battle_record.meta_info[:header]
 
-battle2_record = Battle2Record.create!(kifu_body: "６八銀")
-tp battle2_record
-tp battle2_record.meta_info[:header]
+general_battle_record = GeneralBattleRecord.create!(kifu_body: "６八銀")
+tp general_battle_record
+tp general_battle_record.meta_info[:header]
 
-# ~> /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activemodel-5.1.4/lib/active_model/attribute_methods.rb:432:in `method_missing': undefined method `meta_info' for #<Battle2Record:0x00007ff0e3c52c00> (NoMethodError)
+# ~> /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activemodel-5.1.4/lib/active_model/attribute_methods.rb:432:in `method_missing': undefined method `meta_info' for #<GeneralBattleRecord:0x00007ff0e3c52c00> (NoMethodError)
 # ~> 	from /Users/ikeda/src/shogi_web/app/models/convert_methods.rb:14:in `block (2 levels) in <module:ConvertMethods>'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.4/lib/active_support/callbacks.rb:413:in `instance_exec'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.4/lib/active_support/callbacks.rb:413:in `block in make_lambda'

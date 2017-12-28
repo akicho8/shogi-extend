@@ -76,9 +76,9 @@ RSpec.configure do |config|
       BattleRecord.basic_import(uid: "hanairobiyori")
     end
 
-    def battle2_record_setup
-      if Battle2Record.count.zero?
-        Battle2Record.all_import
+    def general_battle_record_setup
+      if GeneralBattleRecord.count.zero?
+        GeneralBattleRecord.all_import
       end
     end
   }

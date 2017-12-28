@@ -1,5 +1,5 @@
 module ResourceNs1
-  module Battle2Records
+  module GeneralBattleRecords
     class TagCloudController < ApplicationController
     end
   end
