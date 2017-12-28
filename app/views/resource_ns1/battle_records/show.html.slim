@@ -1,9 +1,3 @@
-ruby:
-  list = []
-  list += current_record.attack_tag_list
-  list += current_record.defense_tag_list
-  list += current_record.other_tag_list
-
 .container
   .text-center
     .page-header
@@ -13,7 +7,7 @@ ruby:
         strong= current_record.battle_ships.white.name_with_grade
 
     ul.list-inline
-      - list.each do |e|
-        li= link_to(e, swars_search_path(e))
+      - current_record.all_tag_list.each do |e|
+        li= link_to(e, resource_ns1_swars_search_path(e))
 
     = render partial: "flash_kifu_player"

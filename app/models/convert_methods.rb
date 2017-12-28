@@ -222,18 +222,22 @@ module ConvertMethods
     if converted_info = converted_infos.text_format_eq(:kif).take
       kif = converted_info.text_body
 
-      if AppConfig[:run_localy]
-        url = "http://shogi-s.com/result/5a274d10px"
-      else
+      if ENV["RUN_REMOTE"] == "1"
         response = Faraday.post(url, kif: kif)
         logger.info(response.status.to_t)
         logger.info(response.headers.to_t)
         url = response.headers["location"].presence
+      else
+        url = "http://shogi-s.com/result/5a274d10px"
       end
 
       if url
         update!(mountain_url: url)
       end
     end
+  end
+
+  def all_tag_list
+    attack_tag_list + defense_tag_list + other_tag_list
   end
 end

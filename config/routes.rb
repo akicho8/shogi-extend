@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  root "swars_tops#show"
+  root "resource_ns1/battle_records#index"
 
   ################################################################################ 2ch棋譜検索
 
   namespace :resource_ns1, path: "" do
     resources :battle2_users
-    resources :battle2_records, path: "or" do
+    resources :battle2_records, path: "sr" do
       resources :tag_cloud, :only => :index, :module => :battle2_records
     end
     resources :battle2_ships
@@ -23,18 +23,18 @@ Rails.application.routes.draw do
 
   namespace :resource_ns1, path: "" do
     resources :battle_users
-    resources :battle_records, path: "wr"
+    resources :battle_records, path: "wr" do
+      resources :tag_cloud, :only => :index, :module => :battle_records
+    end
     resources :battle_ships
+
+    get "w/:query", to: "battle_records#index", as: :swars_search
+    get "w",        to: "battle_records#index"
+    get "w-cloud",  to: "battle_records/tag_cloud#index", as: :swars_cloud
   end
 
-  get "w/:query", to: "swars_tops#show", as: :swars_search
-  get "w", to: "swars_tops#show"
-  get "w-cloud", to: "swars_tops#tag_cloud", as: :swars_cloud
-
-  get "swars_tops/show"
-
   resolve "BattleUser" do |battle_user, options|
-    swars_search_path(query: battle_user.to_param)
+    resource_ns1_swars_search_path(query: battle_user.to_param)
   end
 
   ################################################################################ 棋譜変換
@@ -51,11 +51,8 @@ Rails.application.routes.draw do
 
   resources :formation_articles, path: "tactics"
 
-  get "tactics-tree", to: "formation_articles#index", defaults: {tree: "true"}, as: :tree
-
-  ################################################################################ 今日の戦法占い
-
-  resource :random_articles, path: "random"
+  get "tactics-tree",   to: "formation_articles#index", defaults: {mode: "tree"}, as: :tree
+  get "tactics-fortune", to: "formation_articles#index", defaults: {mode: "fortune"}, as: :fortune
 
   ################################################################################ 符号入力ゲーム
 

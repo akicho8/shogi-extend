@@ -10,5 +10,14 @@ unless BattleGrade.exists?
 end
 
 if Rails.env.development?
+  BattleRecord.basic_import(uid: "hanairobiyori")
+  BattleRecord.reception_import
+  BattleRecord.expert_import
+  BattleRecord.conditional_import(battle_grade_key_gteq: '三段')
+  BattleRecord.find_each { |e| e.parser_exec; e.save! }
+  p BattleRecord.count
+end
+
+if Rails.env.development?
   Battle2Record.all_import
 end

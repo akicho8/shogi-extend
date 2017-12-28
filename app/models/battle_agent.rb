@@ -1,7 +1,7 @@
 class BattleAgent
   def initialize(**options)
     @options = {
-      run_localy: AppConfig[:run_localy]
+      run_remote: (ENV["RUN_REMOTE"] == "1") || Rails.env.production?,
     }.merge(options)
   end
 
@@ -13,9 +13,7 @@ class BattleAgent
         page_index: 0,
       }.merge(params)
 
-      if @options[:run_localy]
-        js_str = Rails.root.join("app/models/https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja.html").read
-      else
+      if @options[:run_remote]
         q = {
           gtype: params[:gtype],
           locale: "ja",
@@ -26,6 +24,8 @@ class BattleAgent
         url = "https://shogiwars.heroz.jp/users/history/#{params[:uid]}?#{q.to_query}"
         page = agent.get(url)
         js_str = page.body
+      else
+        js_str = Rails.root.join("app/models/https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja.html").read
       end
 
       # $().html("xxx") となっているので xxx の部分を取り出して Nokogiri が解釈できる程度に整える
@@ -77,11 +77,11 @@ class BattleAgent
       url_info = [:black, :white, :battled_at].zip(battle_key.split("-")).to_h
       info[:battled_at] = url_info[:battled_at]
 
-      if @options[:run_localy]
-        str = Rails.root.join("app/models/http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja.html").read
-      else
+      if @options[:run_remote]
         page = agent.get(info[:url])
         str = page.body
+      else
+        str = Rails.root.join("app/models/http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja.html").read
       end
 
       if md = str.match(/\b(?:receiveMove)\("(?<__csa_data>.*)"\)/)
@@ -125,10 +125,10 @@ class BattleAgent
   concerning :LegendBattleUserKeysMethods do
     # 騎士団フェスのときは何もとれない
     def legend_battle_user_keys(**params)
-      if @options[:run_localy]
-        str = Rails.root.join("app/models/https_shogiwars_heroz_jp_locale_en.html").read
-      else
+      if @options[:run_remote]
         str = agent.get("https://shogiwars.heroz.jp/?locale=en").body
+      else
+        str = Rails.root.join("app/models/https_shogiwars_heroz_jp_locale_en.html").read
       end
       str.scan(%r{shogiwars.heroz.jp/users/(\w+)}).flatten.uniq
     end

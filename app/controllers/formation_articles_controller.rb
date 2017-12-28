@@ -1,34 +1,25 @@
 class FormationArticlesController < ApplicationController
   def index
-    out = []
-    out << tag.div(:class => "page-header") do
-      tag.h2("戦法トリガー辞典", :class => "yumincho")
-    end
+    params[:mode] ||= "list"
 
-    out << tag.ul(:class => "nav nav-pills") do
-      tag.li(:class => ("active" if !params["tree"])) { link_to("一覧", :formation_articles, :class => "btn btn-default") } +
-        tag.li(:class => ("active" if params["tree"])) { link_to("ツリー", :tree, :class => "btn btn-default") }
-    end
-
-    if params[:tree]
-      out << tag.pre(:class => "tree") do
-        rows = Bushido::TacticInfo.flat_map { |group|
-          roots = group.model.find_all(&:root?)
-          roots.collect { |root|
-            root.to_s_tree { |e|
-              link_to(e.name, [:formation_article, id: e.key])
-            }
-          }.join
-        }.join.html_safe
-      end
-    else
-      rows = Bushido::TacticInfo.flat_map do |group|
+    case params[:mode]
+    when "list"
+      @rows = Bushido::TacticInfo.flat_map do |group|
         group.model.collect { |e| row_build(e) }
       end
-      out << rows.to_html
+    when "tree"
+      @tree = Bushido::TacticInfo.flat_map do |group|
+        roots = group.model.find_all(&:root?)
+        roots.collect { |root|
+          root.to_s_tree { |e|
+            link_to(e.name, [:formation_article, id: e.key])
+          }
+        }.join
+      end
+    when "fortune"
+      @attack_info = Bushido::AttackInfo.to_a.sample
+      @defense_info = Bushido::DefenseInfo.to_a.sample
     end
-
-    render html: out.join.html_safe, layout: true
   end
 
   delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :to => "current_record.board_parser"
@@ -112,8 +103,8 @@ class FormationArticlesController < ApplicationController
 
     out << tag.p(:class => "text-center") do
       [
-        link_to("2ch棋譜検索", resource_ns1_general_search_path(current_record.key), :class => "btn btn-link"),
-        link_to("将棋ウォーズ棋譜検索", swars_search_path(current_record.key), :class => "btn btn-link"),
+        link_to("2ch棋譜検索",          [:resource_ns1, :general_search, query: current_record.key], :class => "btn btn-link"),
+        link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :swars_search, query: current_record.key],   :class => "btn btn-link"),
       ].join(" ").html_safe
     end
 
