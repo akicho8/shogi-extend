@@ -18,8 +18,8 @@ module ConvertMethods
 
   # 更新方法
   # ActiveRecord::Base.logger = nil
-  # BattleRecord.find_each { |e| e.tap(&:parser_exec).save! }
-  # BattleRecord.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
+  # SwarsBattleRecord.find_each { |e| e.tap(&:parser_exec).save! }
+  # SwarsBattleRecord.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
   def parser_exec(**options)
     return if @parser_executed
 
@@ -91,16 +91,16 @@ module ConvertMethods
 
   def parser_exec_after(info)
     if persisted?
-      ships = battle_ships.order(:position)
+      ships = swars_battle_ships.order(:position)
     else
-      ships = battle_ships
+      ships = swars_battle_ships
     end
 
     # 両者にタグを作らんと意味ないじゃん
     info.mediator.players.each.with_index do |player, i|
-      battle_ship = ships[i]
-      battle_ship.defense_tag_list = player.skill_set.normalized_defense_infos.collect(&:key)
-      battle_ship.attack_tag_list  = player.skill_set.normalized_attack_infos.collect(&:key)
+      swars_battle_ship = ships[i]
+      swars_battle_ship.defense_tag_list = player.skill_set.normalized_defense_infos.collect(&:key)
+      swars_battle_ship.attack_tag_list  = player.skill_set.normalized_attack_infos.collect(&:key)
     end
   end
 

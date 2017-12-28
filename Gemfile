@@ -104,7 +104,7 @@ gem 'daiku',         github: 'akicho8/daiku'
 gem 'aam',           github: 'akicho8/aam'
 gem 'bushido',       github: 'akicho8/bushido'
 
-# for BattleAgent
+# for SwarsBattleAgent
 gem 'nokogiri'
 gem 'mechanize'
 

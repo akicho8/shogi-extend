@@ -1,0 +1,56 @@
+.search_form
+  .text-center
+    .page-header
+      h2.yumincho
+        = "将棋ウォーズ棋譜検索"
+
+    = form_with(url: [:resource_ns1, :w], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+      .form-group
+        .col-sm-4
+        .col-sm-4
+          .input-group
+            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_query_hash.blank?)
+            = tag.datalist(id: "uid_list") do
+              - Bushido::TacticInfo.all_elements.each do |e|
+                = tag.option(value: e.name)
+              - uids = []
+              / 利用者
+              - uids.concat SwarsBattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:uid)
+              / 最近取り込んだ人たち
+              - uids.concat SwarsBattleUser.order(updated_at: :desc).limit(32).pluck(:uid)
+              / すごい人たち
+              - uids.concat SwarsBattleUser.joins(:swars_battle_grade).order("swars_battle_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:uid)
+              - uids.uniq.each do |e|
+                = tag.option(value: e)
+            span.input-group-btn
+              = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
+        .col-sm-4
+      - if Rails.env.test?
+        .form-group
+          .col-sm-12
+            .text-center
+              = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
+
+    =<> link_to("戦法クラウド", [:resource_ns1, :swars_cloud], :class => "btn btn-link")
+
+    - if controller.current_query_hash && @swars_battle_records.exists?
+      =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
+
+    - if controller.current_query_hash
+      - if tags = controller.current_query_hash[:tags]
+        - tags.each do |e|
+          = link_to(e, [:formation_article, id: e])
+
+.search_rows
+  = @rows.to_html
+
+- if @swars_battle_records
+  .text-center
+    = paginate @swars_battle_records
+
+  - content_for :head do
+    = rel_next_prev_link_tags @swars_battle_records
+
+- if Rails.env.development? && false
+  = SwarsBattleUser.to_html
+  = SwarsBattleRecord.to_html

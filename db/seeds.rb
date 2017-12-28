@@ -1,21 +1,21 @@
-unless FreeBattleRecord.exists?
-  30.times { FreeBattleRecord.create!(kifu_body: "") }
+unless FreeSwarsBattleRecord.exists?
+  30.times { FreeSwarsBattleRecord.create!(kifu_body: "") }
 end
 
-unless BattleGrade.exists?
-  BattleGradeInfo.each do |e|
-    BattleGrade.create!(unique_key: e.key, priority: e.priority)
+unless SwarsBattleGrade.exists?
+  SwarsSwarsBattleGradeInfo.each do |e|
+    SwarsBattleGrade.create!(unique_key: e.key, priority: e.priority)
   end
-  tp BattleGrade
+  tp SwarsBattleGrade
 end
 
 if Rails.env.development?
-  BattleRecord.basic_import(uid: "hanairobiyori")
-  BattleRecord.reception_import
-  BattleRecord.expert_import
-  BattleRecord.conditional_import(battle_grade_key_gteq: '三段')
-  BattleRecord.find_each { |e| e.parser_exec; e.save! }
-  p BattleRecord.count
+  SwarsBattleRecord.basic_import(uid: "hanairobiyori")
+  SwarsBattleRecord.reception_import
+  SwarsBattleRecord.expert_import
+  SwarsBattleRecord.conditional_import(swars_battle_grade_key_gteq: '三段')
+  SwarsBattleRecord.find_each { |e| e.parser_exec; e.save! }
+  p SwarsBattleRecord.count
 end
 
 if Rails.env.development?

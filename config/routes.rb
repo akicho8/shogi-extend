@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "resource_ns1/battle_records#index"
+  root "resource_ns1/swars_battle_records#index"
 
   ################################################################################ 2ch棋譜検索
 
@@ -22,29 +22,29 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :resource_ns1, path: "" do
-    resources :battle_users
-    resources :battle_records, path: "wr" do
-      resources :tag_cloud, :only => :index, :module => :battle_records
+    resources :swars_battle_users
+    resources :swars_battle_records, path: "wr" do
+      resources :tag_cloud, :only => :index, :module => :swars_battle_records
     end
-    resources :battle_ships
+    resources :swars_battle_ships
 
-    get "w/:query", to: "battle_records#index", as: :swars_search
-    get "w",        to: "battle_records#index"
-    get "w-cloud",  to: "battle_records/tag_cloud#index", as: :swars_cloud
+    get "w/:query", to: "swars_battle_records#index", as: :swars_search
+    get "w",        to: "swars_battle_records#index"
+    get "w-cloud",  to: "swars_battle_records/tag_cloud#index", as: :swars_cloud
   end
 
-  resolve "BattleUser" do |battle_user, options|
-    resource_ns1_swars_search_path(query: battle_user.to_param)
+  resolve "SwarsBattleUser" do |swars_battle_user, options|
+    resource_ns1_swars_search_path(query: swars_battle_user.to_param)
   end
 
   ################################################################################ 棋譜変換
 
   namespace :resource_ns1, path: "" do
-    resources :free_battle_records, path: "x"
+    resources :free_swars_battle_records, path: "x"
   end
 
-  resolve "FreeBattleRecord" do |free_battle_record, options|
-    [:resource_ns1, free_battle_record, options]
+  resolve "FreeSwarsBattleRecord" do |free_swars_battle_record, options|
+    [:resource_ns1, free_swars_battle_record, options]
   end
 
   ################################################################################ 戦法トリガー辞典
@@ -60,8 +60,8 @@ Rails.application.routes.draw do
 
   ################################################################################ 外部リンク
 
-  direct :swars_real_battle do |battle_record|
-    "http://kif-pona.heroz.jp/games/#{battle_record.battle_key}?locale=ja"
+  direct :swars_real_battle do |swars_battle_record|
+    "http://kif-pona.heroz.jp/games/#{swars_battle_record.battle_key}?locale=ja"
   end
 
   direct :mountain_upload do
