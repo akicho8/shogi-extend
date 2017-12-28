@@ -276,7 +276,7 @@ module ResourceNs1
       included do
         if Rails.env.production?
           if v = ENV["HTTP_BASIC_AUTHENTICATE"].presence
-            http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: [:index, :edit, :update, :destroy])
+            http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: [:edit, :update, :destroy])
           end
         end
 
