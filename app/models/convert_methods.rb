@@ -54,14 +54,7 @@ module ConvertMethods
     other_tag_list << Splitter.split(info.header["備考"].to_s)
     other_tag_list << info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
     other_tag_list << info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}"])     }
-
-    if v = info.header["場所"]
-      if md = v.match(/(.*)「(.*?)」/)
-        other_tag_list << md.captures
-      else
-        other_tag_list << v
-      end
-    end
+    other_tag_list << place_list
 
     if v = info.header["開始日時"].presence
       other_tag_list << date_to_tags(v)
@@ -205,5 +198,14 @@ module ConvertMethods
 
   def all_tag_list
     attack_tag_list + defense_tag_list + other_tag_list
+  end
+
+  def place_list
+    v = meta_info[:header]["場所"].to_s
+    if md = v.match(/(.*)「(.*?)」/)
+      v = md.captures
+    else
+      [v]
+    end
   end
 end
