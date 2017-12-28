@@ -112,28 +112,28 @@ module ConvertMethods
       if v
         case k
         when /の(囲い|戦型)$/
-          row[k] = v.collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
+          row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_general_search_path(e)) }.join(" ").html_safe
         when "棋戦詳細"
-          row[k] = v.collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
+          row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_general_search_path(e)) }.join(" ").html_safe
         when "場所"
           if md = v.match(/(.*)「(.*?)」/)
             v = md.captures
           end
-          row[k] = Array(v).collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
+          row[k] = Array(v).collect { |e| h.link_to(e, h.resource_ns1_general_search_path(e)) }.join(" ").html_safe
         when "掲載"
-          row[k] = h.link_to(v, h.kifu_query_search_path(v))
+          row[k] = h.link_to(v, h.resource_ns1_general_search_path(v))
         when "持ち時間"
-          row[k] = h.link_to(v, h.kifu_query_search_path(v))
+          row[k] = h.link_to(v, h.resource_ns1_general_search_path(v))
         when "手合割"
           row[k] = teaiwari_link(h, v)
         when /.手\z/
-          row[k] = v.collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
+          row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_general_search_path(e)) }.join(" ").html_safe
         when /.手詳細/
-          row[k] = v.collect { |e| h.link_to(e, h.kifu_query_search_path(e)) }.join(" ").html_safe
+          row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_general_search_path(e)) }.join(" ").html_safe
         when "棋戦"
-          row[k] = h.link_to(v, h.kifu_query_search_path(v))
+          row[k] = h.link_to(v, h.resource_ns1_general_search_path(v))
         when "戦型"
-          row[k] = h.link_to(v, h.kifu_query_search_path(v))
+          row[k] = h.link_to(v, h.resource_ns1_general_search_path(v))
         when /日時?\z/
           row[k] = date_link(h, v)
         end
@@ -156,19 +156,19 @@ module ConvertMethods
     end
 
     if y.nonzero?
-      list << h.link_to(("%04d" % y), h.kifu_query_search_path("%04d" % y))
+      list << h.link_to(("%04d" % y), h.resource_ns1_general_search_path("%04d" % y))
     else
       list << "????"
     end
 
     if m.nonzero?
-      list << h.link_to(("%02d" % m), h.kifu_query_search_path("%04d/%02d" % [y, m]))
+      list << h.link_to(("%02d" % m), h.resource_ns1_general_search_path("%04d/%02d" % [y, m]))
     else
       list << "??"
     end
 
     if d.nonzero?
-      list << h.link_to(("%02d" % d), h.kifu_query_search_path("%04d/%02d/%02d" % [y, m, d]))
+      list << h.link_to(("%02d" % d), h.resource_ns1_general_search_path("%04d/%02d/%02d" % [y, m, d]))
     else
       list << "??"
     end
@@ -208,7 +208,7 @@ module ConvertMethods
     if label != "平手"
       label = h.tag.span(label, :class => "text-danger")
     end
-    h.link_to(label, h.kifu_query_search_path(name))
+    h.link_to(label, h.resource_ns1_general_search_path(name))
   end
 
   def mountain_post_once

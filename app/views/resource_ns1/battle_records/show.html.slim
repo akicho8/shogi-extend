@@ -14,6 +14,6 @@ ruby:
 
     ul.list-inline
       - list.each do |e|
-        li= link_to(e, wars_query_search_path(e))
+        li= link_to(e, swars_search_path(e))
 
     = render partial: "flash_kifu_player"

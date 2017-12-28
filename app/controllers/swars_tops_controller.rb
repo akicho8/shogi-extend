@@ -98,13 +98,13 @@ class SwarsTopsController < ApplicationController
         end
         row["判定"] = battle_state_info_decorate(battle_record)
         if false
-          row["戦法"] = battle_record.tag_list.collect { |e| link_to(e, wars_query_search_path(e)) }.join(" ").html_safe
+          row["戦法"] = battle_record.tag_list.collect { |e| link_to(e, swars_search_path(e)) }.join(" ").html_safe
         else
           row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
           row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
         row["手数"] = battle_record.turn_max
-        row["種類"] = link_to(battle_record.battle_rule_info.name, wars_query_search_path(battle_record.battle_rule_info.name))
+        row["種類"] = link_to(battle_record.battle_rule_info.name, swars_search_path(battle_record.battle_rule_info.name))
 
         key = :battle_long
         if battle_record.battled_at >= Time.current.midnight
@@ -133,7 +133,7 @@ class SwarsTopsController < ApplicationController
   def tag_links(tag_list)
     if tag_list.blank?
     else
-      tag_list.collect { |e| link_to(e, wars_query_search_path(e)) }.join(" ").html_safe
+      tag_list.collect { |e| link_to(e, swars_search_path(e)) }.join(" ").html_safe
     end
   end
 

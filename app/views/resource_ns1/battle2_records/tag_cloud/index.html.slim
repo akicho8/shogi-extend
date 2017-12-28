@@ -2,4 +2,4 @@
   .row
     .col-lg-12
       - tag_cloud(Battle2Record.all_tag_counts(order: "count desc", limit: 1000, at_least: Rails.env.production? ? 7 : 0).shuffle, [*10..40]) do |tag, size|
-        =<> link_to(tag.name, kifu_query_search_path(tag.name), style: "font-size: #{size}px")
+        =<> link_to(tag.name, resource_ns1_general_search_path(tag.name), style: "font-size: #{size}px")

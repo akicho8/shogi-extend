@@ -31,7 +31,7 @@ html lang="ja"
           = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav
-            li= link_to("2ch棋譜検索", :s)
+            li= link_to("2ch棋譜検索", [:resource_ns1, :s])
             li= link_to("将棋ウォーズ棋譜検索", :w)
             li= link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
             li= link_to("戦法トリガー辞典", :formation_articles)
@@ -107,6 +107,8 @@ html lang="ja"
                 li= link_to("将棋山脈", "http://shogi-s.com/", target: "_blank")
                 li= link_to("ぴよ将棋", "https://www.studiok-i.net/ios/piyo_shogi.html", target: "_blank")
                 li= link_to("2ch名人", "http://i2chmeijin.blog.fc2.com/", target: "_blank")
+                li= link_to("将棋DB2", "https://shogidb2.com/", target: "_blank")
+                li= link_to("5ちゃんねる将棋板", "https://mevius.5ch.net/bgame/", target: "_blank")
                 li= link_to("AbemaTV将棋チャンネル", "https://abema.tv/now-on-air/shogi", target: "_blank")
                 li= link_to("ニコ生将棋チャンネル", "http://ch.nicovideo.jp/shogi", target: "_blank")
               p

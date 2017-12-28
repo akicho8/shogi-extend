@@ -112,8 +112,8 @@ class FormationArticlesController < ApplicationController
 
     out << tag.p(:class => "text-center") do
       [
-        link_to("2ch棋譜検索", kifu_query_search_path(current_record.key), :class => "btn btn-link"),
-        link_to("将棋ウォーズ棋譜検索", wars_query_search_path(current_record.key), :class => "btn btn-link"),
+        link_to("2ch棋譜検索", resource_ns1_general_search_path(current_record.key), :class => "btn btn-link"),
+        link_to("将棋ウォーズ棋譜検索", swars_search_path(current_record.key), :class => "btn btn-link"),
       ].join(" ").html_safe
     end
 

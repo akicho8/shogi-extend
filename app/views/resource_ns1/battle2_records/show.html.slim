@@ -13,6 +13,6 @@ ruby:
 
   ul.list-inline
     - list.each do |e|
-      li= link_to(e, kifu_query_search_path(e))
+      li= link_to(e, resource_ns1_general_search_path(e))
 
   = render partial: "resource_ns1/battle_records/flash_kifu_player"

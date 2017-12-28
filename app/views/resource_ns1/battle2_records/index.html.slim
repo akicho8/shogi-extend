@@ -4,7 +4,7 @@
       h2.yumincho
         = "2ch棋譜検索"
 
-    = form_with(url: :s, class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+    = form_with(url: [:resource_ns1, :s], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
       .form-group
         .col-sm-4
         .col-sm-4
@@ -22,7 +22,7 @@
             .text-center
               = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
 
-    = link_to("タグクラウド", :general_cloud, :class => "btn btn-link")
+    = link_to("タグクラウド", [:resource_ns1, :general_cloud], :class => "btn btn-link")
 
     - if controller.current_tactics.present?
       - controller.current_tactics.each do |e|

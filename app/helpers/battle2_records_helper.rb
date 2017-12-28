@@ -32,7 +32,7 @@ module Battle2RecordsHelper
       return "不明"
     end
     names.collect {|e|
-      link_to(e, kifu_query_search_path(e))
+      link_to(e, resource_ns1_general_search_path(e))
     }.join(" ").html_safe
   end
 end
