@@ -27,9 +27,9 @@ module Splitter
 
   def regexp
     @regexp ||= Regexp.union([
-        /[元前](?=#{kisen_list.join("|")})/,
-        /(#{kisen_list.join("|")})戦?/,
-        /#{keyword.join("|")}/,
+        /[元前](?=#{tournament_list.join("|")})/,
+        /(#{tournament_list.join("|")})戦?/,
+        /#{split_keyword.join("|")}/,
         /[一二三四五六七八九十]+[世冠]/,
         /[一二三四五六七八九十]+代目?/,
         /[初二三四五六七八九十]段/,
@@ -42,40 +42,14 @@ module Splitter
       ])
   end
 
-  def keyword
-    @keyword ||= -> {
-      list = Pathname("#{__dir__}/keyword.txt").read.scan(/\S+/)
-      # list += nichan_names_hash.keys
+  def split_keyword
+    @split_keyword ||= -> {
+      list = Pathname("#{__dir__}/split_keyword.txt").read.scan(/\S+/)
       list.sort_by { |e| -e.length }
     }.call
   end
 
-  def kisen_list
-    [
-      "竜王",
-      "名人",
-      "棋王",
-      "棋聖",
-      "王位",
-      "王将",
-      "王座",
-      "叡王",
-      "銀河",
-      "NHK杯",
-      "新人王",
-      "倉敷藤花",
-      "朝日",
-      "赤旗",
-    ]
+  def tournament_list
+    ["竜王", "名人", "棋王", "棋聖", "王位", "王将", "王座", "叡王", "銀河", "NHK杯", "新人王", "倉敷藤花", "朝日", "赤旗"]
   end
-
-  # def nichan_names_hash
-  #   @nichan_names_hash ||= Pathname("#{__dir__}/2ch棋譜_名前.txt").readlines.each_with_object({}) {|e, m|
-  #     e = e.strip
-  #     next if e.empty?
-  #     next if e.start_with?("#")
-  #     yomi, kanji = e.split
-  #     m.merge(kanji => yomi)
-  #   }
-  # end
 end
