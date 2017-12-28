@@ -3,17 +3,17 @@
 #
 # 対局と対局者の対応テーブル (general_battle_ships as GeneralBattleShip)
 #
-# |-------------------+----------------+-------------+-------------+---------------------+-------|
-# | カラム名          | 意味           | タイプ      | 属性        | 参照                | INDEX |
-# |-------------------+----------------+-------------+-------------+---------------------+-------|
-# | id                | ID             | integer(8)  | NOT NULL PK |                     |       |
-# | general_battle_record_id | Battle2 record | integer(8)  | NOT NULL    | => GeneralBattleRecord#id | A! B  |
-# | judge_key         | Judge key      | string(255) | NOT NULL    |                     | C     |
-# | location_key      | Location key   | string(255) | NOT NULL    |                     | A! D  |
-# | position          | 順序           | integer(4)  |             |                     | E     |
-# | created_at        | 作成日時       | datetime    | NOT NULL    |                     |       |
-# | updated_at        | 更新日時       | datetime    | NOT NULL    |                     |       |
-# |-------------------+----------------+-------------+-------------+---------------------+-------|
+# |--------------------------+-----------------------+-------------+-------------+---------------------------+-------|
+# | カラム名                 | 意味                  | タイプ      | 属性        | 参照                      | INDEX |
+# |--------------------------+-----------------------+-------------+-------------+---------------------------+-------|
+# | id                       | ID                    | integer(8)  | NOT NULL PK |                           |       |
+# | general_battle_record_id | General battle record | integer(8)  | NOT NULL    | => GeneralBattleRecord#id | A! B  |
+# | judge_key                | Judge key             | string(255) | NOT NULL    |                           | C     |
+# | location_key             | Location key          | string(255) | NOT NULL    |                           | A! D  |
+# | position                 | 順序                  | integer(4)  |             |                           | E     |
+# | created_at               | 作成日時              | datetime    | NOT NULL    |                           |       |
+# | updated_at               | 更新日時              | datetime    | NOT NULL    |                           |       |
+# |--------------------------+-----------------------+-------------+-------------+---------------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・GeneralBattleShip モデルは GeneralBattleRecord モデルから has_many :general_battle_ships されています。

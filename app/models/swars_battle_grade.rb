@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Battle gradeテーブル (swars_battle_grades as SwarsBattleGrade)
+# Swars battle gradeテーブル (swars_battle_grades as SwarsBattleGrade)
 #
 # |------------+------------+-------------+-------------+------+-------|
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |

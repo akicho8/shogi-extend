@@ -3,19 +3,19 @@
 #
 # 対局と対局者の対応テーブル (swars_battle_ships as SwarsBattleShip)
 #
-# |------------------+---------------+-------------+-------------+--------------------+---------|
-# | カラム名         | 意味          | タイプ      | 属性        | 参照               | INDEX   |
-# |------------------+---------------+-------------+-------------+--------------------+---------|
-# | id               | ID            | integer(8)  | NOT NULL PK |                    |         |
-# | swars_battle_record_id | Battle record | integer(8)  | NOT NULL    | => SwarsBattleRecord#id | A! B! C |
-# | swars_battle_user_id   | Battle user   | integer(8)  | NOT NULL    | => SwarsBattleUser#id   | B! D    |
-# | swars_battle_grade_id  | Battle grade  | integer(8)  | NOT NULL    | => SwarsBattleGrade#id  | E       |
-# | judge_key        | Judge key     | string(255) | NOT NULL    |                    | F       |
-# | location_key     | Location key  | string(255) | NOT NULL    |                    | A! G    |
-# | position         | 順序          | integer(4)  |             |                    | H       |
-# | created_at       | 作成日時      | datetime    | NOT NULL    |                    |         |
-# | updated_at       | 更新日時      | datetime    | NOT NULL    |                    |         |
-# |------------------+---------------+-------------+-------------+--------------------+---------|
+# |------------------------+---------------------+-------------+-------------+-------------------------+---------|
+# | カラム名               | 意味                | タイプ      | 属性        | 参照                    | INDEX   |
+# |------------------------+---------------------+-------------+-------------+-------------------------+---------|
+# | id                     | ID                  | integer(8)  | NOT NULL PK |                         |         |
+# | swars_battle_record_id | Swars battle record | integer(8)  | NOT NULL    | => SwarsBattleRecord#id | A! B! C |
+# | swars_battle_user_id   | Swars battle user   | integer(8)  | NOT NULL    | => SwarsBattleUser#id   | B! D    |
+# | swars_battle_grade_id  | Swars battle grade  | integer(8)  | NOT NULL    | => SwarsBattleGrade#id  | E       |
+# | judge_key              | Judge key           | string(255) | NOT NULL    |                         | F       |
+# | location_key           | Location key        | string(255) | NOT NULL    |                         | A! G    |
+# | position               | 順序                | integer(4)  |             |                         | H       |
+# | created_at             | 作成日時            | datetime    | NOT NULL    |                         |         |
+# | updated_at             | 更新日時            | datetime    | NOT NULL    |                         |         |
+# |------------------------+---------------------+-------------+-------------+-------------------------+---------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・SwarsBattleShip モデルは SwarsBattleRecord モデルから has_many :swars_battle_ships されています。
