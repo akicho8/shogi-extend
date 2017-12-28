@@ -49,7 +49,7 @@ module ConvertMethods
 
     other_tag_list << info.header["棋戦"]
     other_tag_list << info.header["持ち時間"]
-    other_tag_list << Splitter.split(info.header["棋戦詳細"].to_s)
+    other_tag_list << tournament_list
     other_tag_list << Splitter.split(info.header["掲載"].to_s)
     other_tag_list << Splitter.split(info.header["備考"].to_s)
     other_tag_list << info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
@@ -207,5 +207,9 @@ module ConvertMethods
     else
       [v]
     end
+  end
+
+  def tournament_list
+    Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
   end
 end

@@ -96,15 +96,13 @@ module ResourceNs1
           end
 
           row["判定"] = general_battle_state_info_decorate(general_battle_record)
-
+          # row["手合割"] = general_battle_record.teaiwari_link(h, general_battle_record.meta_info[:header]["手合割"])
+          row["棋戦"] = general_battle_record.tournament_list.collect { |e| link_to(e, resource_ns1_general_search_path(e)) }.join(" ").html_safe
           row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
           row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
-
-          row["手数"]   = link_to(general_battle_record.turn_max, resource_ns1_general_search_path(general_battle_record.turn_max))
-          # row["手合割"] = general_battle_record.teaiwari_link(h, general_battle_record.meta_info[:header]["手合割"])
           row["場所"] = general_battle_record.place_list.collect { |e| link_to(e, resource_ns1_general_search_path(e)) }.join(" ").html_safe
+          row["手数"]   = link_to(general_battle_record.turn_max, resource_ns1_general_search_path(general_battle_record.turn_max))
           row["日時"] = general_battle_record.date_link(h, general_battle_record.meta_info[:header]["開始日時"])
-
           row[""] = row_links(general_battle_record)
         end
       end
