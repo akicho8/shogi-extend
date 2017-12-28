@@ -4,11 +4,9 @@ Rails.application.routes.draw do
   ################################################################################ 2ch棋譜検索
 
   namespace :resource_ns1, path: "" do
-    resources :general_battle_users
-    resources :general_battle_records, path: "sr" do
+    resources :general_battle_records, path: "sr", only: [:index, :show] do
       resources :tag_cloud, :only => :index, :module => :general_battle_records
     end
-    resources :general_battle_ships
 
     get "s/:query", to: "general_battle_records#index", as: :general_search
     get "s",        to: "general_battle_records#index"
@@ -22,11 +20,9 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :resource_ns1, path: "" do
-    resources :swars_battle_users
-    resources :swars_battle_records, path: "wr" do
+    resources :swars_battle_records, path: "wr", only: [:index, :show] do
       resources :tag_cloud, :only => :index, :module => :swars_battle_records
     end
-    resources :swars_battle_ships
 
     get "w/:query", to: "swars_battle_records#index", as: :swars_search
     get "w",        to: "swars_battle_records#index"
@@ -49,10 +45,10 @@ Rails.application.routes.draw do
 
   ################################################################################ 戦法トリガー辞典
 
-  resources :formation_articles, path: "tactics"
+  resources :tactic_articles, path: "tactics", only: [:index, :show]
 
-  get "tactics-tree",   to: "formation_articles#index", defaults: {mode: "tree"}, as: :tree
-  get "tactics-fortune", to: "formation_articles#index", defaults: {mode: "fortune"}, as: :fortune
+  get "tactics-tree",   to: "tactic_articles#index", defaults: {mode: "tree"}, as: :tree
+  get "tactics-fortune", to: "tactic_articles#index", defaults: {mode: "fortune"}, as: :fortune
 
   ################################################################################ 符号入力ゲーム
 

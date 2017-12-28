@@ -1,4 +1,4 @@
-class FormationArticlesController < ApplicationController
+class TacticArticlesController < ApplicationController
   def index
     params[:mode] ||= "list"
 
@@ -12,7 +12,7 @@ class FormationArticlesController < ApplicationController
         roots = group.model.find_all(&:root?)
         roots.collect { |root|
           root.to_s_tree { |e|
-            link_to(e.name, [:formation_article, id: e.key])
+            link_to(e.name, [:tactic_article, id: e.key])
           }
         }.join
       end
@@ -123,7 +123,7 @@ class FormationArticlesController < ApplicationController
     #       if current_record.key == e.key
     #         e.name
     #       else
-    #         link_to(e.name, [:formation_article, id: e.key])
+    #         link_to(e.name, [:tactic_article, id: e.key])
     #       end
     #     }.html_safe
     #   end
@@ -138,7 +138,7 @@ class FormationArticlesController < ApplicationController
             [+1, [:play]],
           ].collect { |s, icon|
             r = all_records[(index + s).modulo(all_records.size)]
-            tag.li { link_to(icon_tag(*icon), [:formation_article, id: r.key]) }
+            tag.li { link_to(icon_tag(*icon), [:tactic_article, id: r.key]) }
           }.join(" ").html_safe
         end
       end
@@ -154,7 +154,7 @@ class FormationArticlesController < ApplicationController
 
     if detail?
     else
-      row["名前"] = link_to(e.key, [:formation_article, id: e.key])
+      row["名前"] = link_to(e.key, [:tactic_article, id: e.key])
     end
     row["種類"] = e.tactic_info.name
 
@@ -166,17 +166,17 @@ class FormationArticlesController < ApplicationController
             if o.key == e.key
               o.name
             else
-              link_to(o.name, [:formation_article, id: o.key])
+              link_to(o.name, [:tactic_article, id: o.key])
             end
           }.html_safe
         end
       end
     else
-      row["親"] = e.parent ? link_to(e.parent.name, [:formation_article, id: e.parent.key]) : nil
-      row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
-      row["派生"] = e.children.collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
+      row["親"] = e.parent ? link_to(e.parent.name, [:tactic_article, id: e.parent.key]) : nil
+      row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:tactic_article, id: e.key]) }.join(" ").html_safe
+      row["派生"] = e.children.collect {|e| link_to(e.key, [:tactic_article, id: e.key]) }.join(" ").html_safe
     end
-    row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:formation_article, id: e.key]) }.join(" ").html_safe
+    row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:tactic_article, id: e.key]) }.join(" ").html_safe
 
     row["手数制限"] = e.turn_limit ? "#{e.turn_limit}手以内" : nil
     row["手数限定"] = e.turn_eq ? "#{e.turn_eq}手目" : nil

@@ -26,7 +26,7 @@
 
     - if controller.current_tactics.present?
       - controller.current_tactics.each do |e|
-        =<> link_to(e, [:formation_article, id: e], :class => "btn btn-link")
+        =<> link_to(e, [:tactic_article, id: e], :class => "btn btn-link")
 
     - if controller.current_tags.present? && @general_battle_records.exists?
       =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")

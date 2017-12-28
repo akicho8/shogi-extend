@@ -39,7 +39,7 @@
     - if controller.current_query_hash
       - if tags = controller.current_query_hash[:tags]
         - tags.each do |e|
-          = link_to(e, [:formation_article, id: e])
+          = link_to(e, [:tactic_article, id: e])
 
 .search_rows
   = @rows.to_html
