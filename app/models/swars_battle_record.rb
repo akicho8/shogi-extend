@@ -350,43 +350,4 @@ class SwarsBattleRecord < ApplicationRecord
       end
     end
   end
-
-  # has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :swars_battle_record
-
-  def header_detail(h)
-    return meta_info[:header]
-
-    row = meta_info[:to_meta_h].dup
-    row.each do |k, v|
-      case k
-      when /の(囲い|戦型)$/
-        # row[k] = v.collect { |e| h.link_to(e, [:formation_article, id: e]) }.join(" ").html_safe
-        row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_swars_search_path(e)) }.join(" ").html_safe
-      when "棋戦詳細"
-        row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_swars_search_path(e)) }.join(" ").html_safe
-      when "場所"
-        if md = v.match(/(.*)「(.*?)」/)
-          v = md.captures
-        end
-        row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_swars_search_path(e)) }.join(" ").html_safe
-      when "掲載"
-        row[k] = h.link_to(v, h.resource_ns1_swars_search_path(v))
-      # when "持ち時間"
-      #   row[k] = h.link_to(v, h.resource_ns1_swars_search_path(v))
-      # when "手合割"
-      #   row[k] = h.link_to(v, h.resource_ns1_swars_search_path(v))
-      when /.手\z/
-        row[k] = v.collect { |e| h.link_to(e, h.resource_ns1_swars_search_path(e.slice(/\w+/))) }.join(" ").html_safe
-      # when "棋戦"
-      #   row[k] = h.link_to(v, h.resource_ns1_swars_search_path(v))
-      when "戦型"
-        row[k] = h.link_to(v, h.resource_ns1_swars_search_path(v))
-      # when /日時?\z/
-      #   if v = (Time.zone.parse(v) rescue nil)
-      #     row[k] = date_link(h, v)
-      #   end
-      end
-    end
-    row
-  end
 end
