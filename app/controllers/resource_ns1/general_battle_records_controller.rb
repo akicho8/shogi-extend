@@ -101,7 +101,7 @@ module ResourceNs1
           row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
 
           row["手数"]   = link_to(general_battle_record.turn_max, resource_ns1_general_search_path(general_battle_record.turn_max))
-          row["手合割"] = general_battle_record.teaiwari_link(h, general_battle_record.meta_info[:header]["手合割"])
+          # row["手合割"] = general_battle_record.teaiwari_link(h, general_battle_record.meta_info[:header]["手合割"])
           row["日時"]   = general_battle_record.date_link(h, general_battle_record.meta_info[:header]["開始日時"])
 
           row[""] = row_links(general_battle_record)
