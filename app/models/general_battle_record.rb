@@ -86,6 +86,9 @@ class GeneralBattleRecord < ApplicationRecord
         if v = params[:limit]
           files = files.take(v)
         end
+        if v = params[:sample]
+          files = files.sample(v)
+        end
         if params[:reset]
           GeneralBattleUser.destroy_all
           GeneralBattleRecord.destroy_all
