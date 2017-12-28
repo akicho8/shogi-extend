@@ -134,6 +134,11 @@ class BattleRecord < ApplicationRecord
       s << "%#{battle_state_info.last_action_key}"
       s.join("\n") + "\n"
     end
+
+    def parser_exec_after(info)
+      super
+      other_tag_list << battle_rule_info.name
+    end
   end
 
   concerning :HelperMethods do
