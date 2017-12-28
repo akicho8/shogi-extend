@@ -11,4 +11,3 @@ every("30 6 * * *")   { runner "BattleRecord.import(:expert,      sleep: 5)"    
 every("*/30 * * * *") { runner "BattleRecord.import(:conditional, sleep: 5, limit: 3, page_max: 3, battle_grade_key_gteq: '三段')"                          }
 every("0 3 * * *")    { runner "BattleRecord.import(:parser_exec) { c = Hash.new(0); BattleRecord.limit(100_0000).find_each { |e| e.parser_exec; c[e.changed?] += 1; print(e.changed? ? 'U' : '.'); e.save! }; p c}" }
 every("0 0 1 * *")    { runner "Battle2Record.all_import" }
-

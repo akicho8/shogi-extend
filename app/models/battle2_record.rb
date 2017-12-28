@@ -60,7 +60,7 @@ class Battle2Record < ApplicationRecord
 
   concerning :ConvertHookMethos do
     class_methods do
-      def kifu_dir
+      def kifu_dir_default
         if Rails.env.test?
           "."
         elsif Rails.env.development?
@@ -71,25 +71,27 @@ class Battle2Record < ApplicationRecord
         end
       end
 
-      def kifu_files
-        Pathname.glob(Rails.root.join("#{kifu_dir}/2chkifu/**/*.{ki2,KI2}")).sort
-      end
-
       # rails r 'Battle2Record.destroy_all; Battle2Record.all_import'
       # capp rails:runner CODE='Battle2Record.all_import'
+      # rails r 'Battle2Record.all_import(kifu_dir: "..")'
       def all_import(**params)
+        params = {
+          kifu_dir: kifu_dir_default,
+        }.merge(params)
+
+        files = Pathname.glob(Rails.root.join("#{params[:kifu_dir]}/2chkifu/**/*.{ki2,KI2}")).sort
+        if v = params[:range]
+          files = files[v]
+        end
+        if v = params[:limit]
+          files = files.take(v)
+        end
+        if params[:reset]
+          Battle2User.destroy_all
+          Battle2Record.destroy_all
+        end
+
         begin
-          files = kifu_files
-          if v = params[:range]
-            files = files[v]
-          end
-          if v = params[:limit]
-            files = files.take(v)
-          end
-          if v = params[:reset]
-            Battle2User.destroy_all
-            Battle2Record.destroy_all
-          end
           p [Time.current.to_s(:ymdhms), "begin", Battle2User.count, Battle2Record.count] unless Rails.env.test?
           files.each do |file|
             basic_import(params.merge(file: file))
