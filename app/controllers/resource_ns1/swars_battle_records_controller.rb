@@ -199,7 +199,6 @@ module ResourceNs1
     end
 
     rescue_from "Mechanize::ResponseCodeError" do |exception|
-      notify_airbrake(exception)
       flash.now[:warning] = "該当のユーザーが見つからないか、混み合っています。"
       if Rails.env.development?
         flash.now[:alert] = "#{exception.class.name}: #{exception.message}"
