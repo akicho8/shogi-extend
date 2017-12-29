@@ -204,9 +204,8 @@ module ConvertMethods
     v = meta_info[:header]["場所"].to_s
     if md = v.match(/(.*)「(.*?)」/)
       v = md.captures
-    else
-      [v]
     end
+    Array(v).reject(&:blank?)
   end
 
   def tournament_list
