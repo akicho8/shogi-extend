@@ -1,42 +1,101 @@
-.search_form
-  .text-center
-    .page-header
-      h2.yumincho
-        = "2ch棋譜検索"
+#app
+  .search_form
+    .text-center
+      .page-header
+        h2.yumincho
+          = "2ch棋譜検索"
 
-    = form_with(url: [:resource_ns1, :s], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
-      .form-group
-        .col-sm-4
-        .col-sm-4
-          .input-group
-            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?)
-            = tag.datalist(id: "uid_list") do
-              - Bushido::TacticInfo.all_elements.each do |e|
-                = tag.option(value: e.name)
-            span.input-group-btn
-              = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
-        .col-sm-4
-      - if Rails.env.test?
+      = form_with(url: [:resource_ns1, :s], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
         .form-group
-          .col-sm-12
-            .text-center
-              = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
+          .col-lg-4
+          .col-lg-4
+            .input-group
+              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?, "v-model" => "query")
+              = tag.datalist(id: "uid_list") do
+                - Bushido::TacticInfo.all_elements.each do |e|
+                  = tag.option(value: e.name)
+              span.input-group-btn
+                = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
+          .col-lg-4
+        - if Rails.env.test?
+          .form-group
+            .col-lg-12
+              .text-center
+                = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
 
-    = link_to("タグクラウド", [:resource_ns1, :general_cloud], :class => "btn btn-link")
+        .form-group
+          .col-lg-12
+            = link_to("タグクラウド", [:resource_ns1, :general_cloud], :class => "btn btn-link")
+            - if controller.current_tactics.present?
+              - controller.current_tactics.each do |e|
+                =<> link_to(e, [:tactic_article, id: e], :class => "btn btn-link")
+            - if controller.current_tags.present? && @general_battle_records.exists?
+              =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
+            = link_to("詳細検索", "#", :class => "btn btn-link", "@click.stop" => "detail_search = !detail_search")
 
-    - if controller.current_tactics.present?
-      - controller.current_tactics.each do |e|
-        =<> link_to(e, [:tactic_article, id: e], :class => "btn btn-link")
+        template v-if="detail_search"
+          .text-left
+            .form-group
+              label.col-lg-4.control-label[for="plus_tag"]= "タグ"
+              .col-lg-4
+                input#plus_tag.form-control type="text" v-model="plus_tag"
+            .form-group
+              label.col-lg-4.control-label[for="minus_tag"]= "含まないタグ"
+              .col-lg-4
+                input#minus_tag.form-control type="text" v-model="minus_tag"
+            .form-group
+              label.col-lg-4.control-label[for="turn_max"]= "手数"
+              .col-lg-4
+                label.radio-inline
+                  input type="radio" v-model="turn_max" value="手数<50" 50手未満
+                label.radio-inline
+                  input type="radio" v-model="turn_max" value="手数>=150" 150手以上
+                label.radio-inline
+                  input type="radio" v-model="turn_max" value="手数>=200" 200手以上
 
-    - if controller.current_tags.present? && @general_battle_records.exists?
-      =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
+  .search_rows
+    = @rows.to_html
 
-.search_rows
-  = @rows.to_html
+  - if @general_battle_records
+    .text-center
+      = paginate @general_battle_records
 
-- if @general_battle_records
-  .text-center
-    = paginate @general_battle_records
+    - content_for :head do
+      = rel_next_prev_link_tags @general_battle_records
 
-  - content_for :head do
-    = rel_next_prev_link_tags @general_battle_records
+javascript:
+  new Vue({
+    el: "#app",
+    data: {
+      detail_search: false,
+      turn_max: "",
+      plus_tag: "",
+      minus_tag: "",
+    },
+    created: function() {
+      const dom = document.querySelector("input[type=search]")
+      this.plus_tag = dom.value
+    },
+    computed: {
+      query: {
+        get: function () {
+          let list = []
+          if (this.plus_tag.length >= 1) {
+            list.push(this.plus_tag)
+          }
+          if (this.minus_tag.length >= 1) {
+            list.push(`-${this.minus_tag}`)
+          }
+          if (this.turn_max.length >= 1) {
+            list.push(this.turn_max)
+          }
+          return list.join(" ")
+        },
+        set: function (v) {
+          this.plus_tag = v
+          this.minus_tag = ""
+          this.turn_max = ""
+        },
+      },
+    }
+  })

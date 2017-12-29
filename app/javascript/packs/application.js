@@ -12,20 +12,30 @@ import "./bootstrap_tuning.sass"
 
 import "./modulable_crud.coffee"
 
+//////////////////////////////////////////////////////////////////////////////// Vue
+
+import Vue from 'vue/dist/vue.esm'
+window.Vue = Vue
+
 ////////////////////////////////////////////////////////////////////////////////
 if (typeof(jQuery) != "undefined") {
-  console.log('[Webpack]jQuery: OK')
+  console.log('[Webpack] jQuery: OK')
   if (typeof($) != "undefined") {
-    console.log('[Webpack]$: OK')
+    console.log('[Webpack] $: OK')
     if (typeof($().tooltip) != "undefined") {
-      console.log('[Webpack]Bootstrap JS: OK')
+      console.log('[Webpack] Bootstrap JS: OK')
     } else {
-      console.log('[Webpack]Bootstrap JS: Missing')
+      console.log('[Webpack] Bootstrap JS: Missing')
     }
   } else {
-    console.log('[Webpack]$: Missing')
+    console.log('[Webpack] $: Missing')
   }
 } else {
-  console.log('[Webpack]jQuery: Missing')
+  console.log('[Webpack] jQuery: Missing')
+}
+if (typeof(Vue) != "undefined") {
+  console.log('[Webpack] Vue: OK')
+} else {
+  console.log('[Webpack] Vue: Missing')
 }
 ////////////////////////////////////////////////////////////////////////////////

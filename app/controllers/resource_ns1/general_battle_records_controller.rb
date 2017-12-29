@@ -32,6 +32,11 @@ module ResourceNs1
       if v = current_minus_tags.presence
         @general_battle_records = @general_battle_records.tagged_with(v, exclude: true)
       end
+      if v = current_turn_max.presence
+        v.each do |v|
+          @general_battle_records = @general_battle_records.where("turn_max #{v[:op]} #{v[:number]}")
+        end
+      end
 
       @general_battle_records = @general_battle_records.order(battled_at: :desc)
 
@@ -117,13 +122,23 @@ module ResourceNs1
     end
 
     def current_plus_tags
-      @current_plus_tags ||= current_tags.find_all { |e| !e.start_with?("-") }
+      @current_plus_tags ||= current_tags.find_all do |e|
+        !e.start_with?("-") && !e.match?(/[<>]/)
+      end
     end
 
     def current_minus_tags
       @current_minus_tags ||= current_tags.collect { |e|
         if e.start_with?("-")
           e.remove(/^-/)
+        end
+      }.compact
+    end
+
+    def current_turn_max
+      @current_turn_max ||= current_tags.collect { |e|
+        if md = e.match(/手数(?<op>[<>]=?)(?<number>\d+)/)
+          md.named_captures.symbolize_keys
         end
       }.compact
     end
