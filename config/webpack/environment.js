@@ -1,6 +1,6 @@
 const { environment } = require('@rails/webpacker')
+const coffee =  require('./loaders/coffee')
 const vue =  require('./loaders/vue')
-
 const webpack = require('webpack')
 
 environment.plugins.set(
@@ -14,4 +14,5 @@ environment.plugins.set(
 )
 
 environment.loaders.append('vue', vue)
+environment.loaders.append('coffee', coffee)
 module.exports = environment
