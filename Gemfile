@@ -117,3 +117,5 @@ gem 'font-awesome-sass'
 gem 'rubyzip', require: "zip"
 
 gem 'whenever', require: false
+
+gem 'exception_notification'

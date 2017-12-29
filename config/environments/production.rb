@@ -115,4 +115,14 @@ Rails.application.configure do
   #   # config.action_cable.mount_path = "/cable123"
   # end
   config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28080"
+
+  # ################################################################################ エラーメール
+
+  Rails.application.config.middleware.use(ExceptionNotification::Rack,
+    :email => {
+      # :deliver_with => :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
+      :email_prefix => "[PREFIX] ",
+      :sender_address => %{"notifier" <pinpon.ikeda@gmail.com>},
+      :exception_recipients => %w{pinpon.ikeda@gmail.com},
+    })
 end
