@@ -65,7 +65,7 @@ RSpec.configure do |config|
   config.include Module.new {
     def swars_battle_grade_setup
       unless SwarsBattleGrade.exists?
-        SwarsSwarsBattleGradeInfo.each do |e|
+        SwarsBattleGradeInfo.each do |e|
           SwarsBattleGrade.create!(unique_key: e.key, priority: e.priority)
         end
       end

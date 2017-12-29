@@ -22,7 +22,7 @@
 module ResourceNs1
   class FreeBattleRecordsController < ApplicationController
     include ModulableCrud::All
-    include SwarsBattleRecordsController::SharedMethods
+    include SharedMethods
 
     private
 

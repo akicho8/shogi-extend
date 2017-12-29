@@ -212,7 +212,7 @@ class SwarsBattleRecord < ApplicationRecord
         # 初段以上の場合
         if true
           if v = params[:swars_battle_grade_key_gteq]
-            priority = SwarsSwarsBattleGradeInfo.fetch(v).priority
+            priority = SwarsBattleGradeInfo.fetch(v).priority
             s = s.joins(swars_battle_user: :swars_battle_grade).where(SwarsBattleGrade.arel_table[:priority].lteq(priority))
           end
         end
@@ -263,11 +263,11 @@ class SwarsBattleRecord < ApplicationRecord
             # if true
             #   # 初段以上の指定がある場合
             #   if v = params[:swars_battle_grade_key_gteq]
-            #     v = SwarsSwarsBattleGradeInfo.fetch(v)
+            #     v = SwarsBattleGradeInfo.fetch(v)
             #     # 取得してないときもあるため
             #     if swars_battle_user_infos = history[:swars_battle_user_infos]
             #       # 両方初段以上ならOK
-            #       if swars_battle_user_infos.all? { |e| SwarsSwarsBattleGradeInfo.fetch(e[:swars_battle_grade_key]).priority <= v.priority }
+            #       if swars_battle_user_infos.all? { |e| SwarsBattleGradeInfo.fetch(e[:swars_battle_grade_key]).priority <= v.priority }
             #       else
             #         next
             #       end

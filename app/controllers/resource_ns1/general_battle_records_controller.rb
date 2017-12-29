@@ -21,7 +21,7 @@
 module ResourceNs1
   class GeneralBattleRecordsController < ApplicationController
     include ModulableCrud::All
-    include SwarsBattleRecordsController::SharedMethods
+    include SharedMethods
 
     def index
       @general_battle_records = GeneralBattleRecord.all

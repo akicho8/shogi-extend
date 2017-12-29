@@ -3,7 +3,7 @@ unless FreeBattleRecord.exists?
 end
 
 unless SwarsBattleGrade.exists?
-  SwarsSwarsBattleGradeInfo.each do |e|
+  SwarsBattleGradeInfo.each do |e|
     SwarsBattleGrade.create!(unique_key: e.key, priority: e.priority)
   end
   tp SwarsBattleGrade

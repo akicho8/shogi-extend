@@ -23,12 +23,12 @@ class SwarsBattleGrade < ApplicationRecord
   end
 
   with_options allow_blank: true do
-    validates :unique_key, inclusion: SwarsSwarsBattleGradeInfo.collect(&:name)
+    validates :unique_key, inclusion: SwarsBattleGradeInfo.collect(&:name)
   end
 
-  def swars_swars_battle_grade_info
-    SwarsSwarsBattleGradeInfo.fetch(unique_key)
+  def swars_battle_grade_info
+    SwarsBattleGradeInfo.fetch(unique_key)
   end
 
-  delegate :name, to: :swars_swars_battle_grade_info
+  delegate :name, to: :swars_battle_grade_info
 end

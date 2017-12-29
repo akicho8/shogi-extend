@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Swars swars battle user receptionテーブル (swars_swars_battle_user_receptions as SwarsSwarsBattleUserReception)
+# Swars battle user receptionテーブル (swars_battle_user_receptions as SwarsBattleUserReception)
 #
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 # | カラム名             | 意味              | タイプ     | 属性        | 参照                  | INDEX |
@@ -13,9 +13,9 @@
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・SwarsSwarsBattleUserReception モデルは SwarsBattleUser モデルから has_many :swars_battle_ships されています。
+# ・SwarsBattleUserReception モデルは SwarsBattleUser モデルから has_many :swars_battle_ships されています。
 #--------------------------------------------------------------------------------
 
-class SwarsSwarsBattleUserReception < ApplicationRecord
+class SwarsBattleUserReception < ApplicationRecord
   belongs_to :swars_battle_user, counter_cache: true, touch: :last_reception_at
 end

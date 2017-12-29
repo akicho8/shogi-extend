@@ -1,4 +1,4 @@
-class SwarsSwarsBattleGradeInfo
+class SwarsBattleGradeInfo
   include ApplicationMemoryRecord
   memory_record [
     {key: "九段", },
