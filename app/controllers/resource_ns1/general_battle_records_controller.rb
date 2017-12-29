@@ -115,8 +115,8 @@ module ResourceNs1
 
     def current_tags
       @current_tags ||= -> {
-        s = params[:query].to_s.gsub(/\p{blank}/, " ").strip
-        s = s.split(/\s+/)
+        s = params[:query].to_s.gsub(/[,\p{blank}]/, " ").strip
+        s = s.split
         s.uniq
       }.call
     end
