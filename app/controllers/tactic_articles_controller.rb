@@ -1,4 +1,6 @@
 class TacticArticlesController < ApplicationController
+  delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :to => "current_record.board_parser"
+
   def index
     params[:mode] ||= "list"
 
@@ -9,11 +11,10 @@ class TacticArticlesController < ApplicationController
       end
     when "tree"
       @tree = Bushido::TacticInfo.flat_map do |group|
-        roots = group.model.find_all(&:root?)
-        roots.collect { |root|
-          root.to_s_tree { |e|
+        group.model.find_all(&:root?).collect { |root|
+          root.to_s_tree do |e|
             link_to(e.name, [:tactic_article, id: e.key])
-          }
+          end
         }.join
       end
     when "fortune"
@@ -21,8 +22,6 @@ class TacticArticlesController < ApplicationController
       @defense_info = Bushido::DefenseInfo.to_a.sample
     end
   end
-
-  delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :to => "current_record.board_parser"
 
   def show
     # ○ 何もない

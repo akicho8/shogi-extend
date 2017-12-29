@@ -36,11 +36,11 @@ Rails.application.routes.draw do
   ################################################################################ 棋譜変換
 
   namespace :resource_ns1, path: "" do
-    resources :free_swars_battle_records, path: "x"
+    resources :free_battle_records, path: "x"
   end
 
-  resolve "FreeSwarsBattleRecord" do |free_swars_battle_record, options|
-    [:resource_ns1, free_swars_battle_record, options]
+  resolve "FreeBattleRecord" do |free_battle_record, options|
+    [:resource_ns1, free_battle_record, options]
   end
 
   ################################################################################ 戦法トリガー辞典

@@ -5,7 +5,7 @@
     },
     helpers: {
       submit: {
-        free_swars_battle_record: {
+        free_battle_record: {
           create: "変換",
           update: nil,
         },
@@ -15,11 +15,11 @@
     },
     activerecord: {
       models: {
-        free_swars_battle_record: "棋譜変換",
+        free_battle_record: "棋譜変換",
         converted_info: "各種棋譜ファイル内容",
       },
       attributes: {
-        free_swars_battle_record: {
+        free_battle_record: {
           unique_key: "ユニークなハッシュ",
           kifu_file: "棋譜ファイル",
           kifu_url: "棋譜URL",

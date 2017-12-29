@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_swars_battle_records as FreeSwarsBattleRecord)
+# 棋譜変換テーブル (free_battle_records as FreeBattleRecord)
 #
 # |--------------+--------------------+-------------+-------------+------+-------|
 # | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
@@ -19,18 +19,50 @@
 # | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |
 # |--------------+--------------------+-------------+-------------+------+-------|
 
-require 'rails_helper'
+require "open-uri"
 
-RSpec.describe ResourceNs1::FreeSwarsBattleRecordsController, type: :controller do
-  before do
-    @free_swars_battle_record = FreeSwarsBattleRecord.create!
+class FreeBattleRecord < ApplicationRecord
+  include ConvertMethods
+
+  mount_uploader :kifu_file, AttachmentUploader
+
+  before_validation do
+    self.unique_key ||= SecureRandom.hex
+    self.kifu_body ||= ""
+
+    if changes[:kifu_file]
+      if kifu_file.present?
+        self.kifu_body = kifu_file.read.toutf8
+      end
+    end
+
+    if changes[:kifu_url]
+      if kifu_url.present?
+        self.kifu_body = open(kifu_url, &:read).toutf8
+      end
+    end
   end
 
-  it "index" do
-    get :index, params: {}
+  before_save do
+    if changes[:kifu_body]
+      if kifu_body
+        parser_exec
+      end
+    end
   end
 
-  it "show" do
-    get :show, params: {id: @free_swars_battle_record.to_param}
+  def to_param
+    unique_key
+  end
+
+  concerning :TagMethods do
+    included do
+      acts_as_ordered_taggable_on :defense_tags
+      acts_as_ordered_taggable_on :attack_tags
+      acts_as_ordered_taggable_on :other_tags
+    end
+
+    def parser_exec_after(*)
+    end
   end
 end

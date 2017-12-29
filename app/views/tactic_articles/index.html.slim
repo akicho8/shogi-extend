@@ -2,8 +2,8 @@
   h2.yumincho 戦法トリガー辞典
 
 ul.nav.nav-pills
-  li class=("active" if params["mode"] == "list")    = link_to("一覧", :tactic_articles, :class => "btn btn-default")
-  li class=("active" if params["mode"] == "tree")    = link_to("ツリー", :tree, :class => "btn btn-default")
+  li class=("active" if params["mode"] == "list")    = link_to("一覧", :tactic_articles,   :class => "btn btn-default")
+  li class=("active" if params["mode"] == "tree")    = link_to("ツリー", :tree,            :class => "btn btn-default")
   li class=("active" if params["mode"] == "fortune") = link_to("今日の戦法占い", :fortune, :class => "btn btn-default")
 
 - if params[:mode] == "list"

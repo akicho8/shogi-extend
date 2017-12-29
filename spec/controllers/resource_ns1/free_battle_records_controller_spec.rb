@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_swars_battle_records as FreeSwarsBattleRecord)
+# 棋譜変換テーブル (free_battle_records as FreeBattleRecord)
 #
 # |--------------+--------------------+-------------+-------------+------+-------|
 # | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
@@ -19,5 +19,18 @@
 # | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |
 # |--------------+--------------------+-------------+-------------+------+-------|
 
-module FreeSwarsBattleRecordsHelper
+require 'rails_helper'
+
+RSpec.describe ResourceNs1::FreeBattleRecordsController, type: :controller do
+  before do
+    @free_battle_record = FreeBattleRecord.create!
+  end
+
+  it "index" do
+    get :index, params: {}
+  end
+
+  it "show" do
+    get :show, params: {id: @free_battle_record.to_param}
+  end
 end

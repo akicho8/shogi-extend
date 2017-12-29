@@ -15,7 +15,7 @@ tp ActiveRecord::Base.connection.tables.collect { |table|
 # >> | swars_swars_battle_user_receptions | 0   |
 # >> |           swars_battle_users | 0   |
 # >> |        converted_infos | 140 |
-# >> |    free_swars_battle_records | 30  |
+# >> |    free_battle_records | 30  |
 # >> |      schema_migrations | 14  |
 # >> |               taggings | 167 |
 # >> |                   tags | 86  |

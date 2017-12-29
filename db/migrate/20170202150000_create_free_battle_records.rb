@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_swars_battle_records as FreeSwarsBattleRecord)
+# 棋譜変換テーブル (free_battle_records as FreeBattleRecord)
 #
 # |--------------+--------------------+-------------+-------------+------+-------|
 # | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
@@ -19,9 +19,9 @@
 # | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |
 # |--------------+--------------------+-------------+-------------+------+-------|
 
-class CreateFreeSwarsBattleRecords < ActiveRecord::Migration[5.1]
+class CreateFreeBattleRecords < ActiveRecord::Migration[5.1]
   def up
-    create_table :free_swars_battle_records, force: true do |t|
+    create_table :free_battle_records, force: true do |t|
       t.string :unique_key, null: false, index: true, comment: "URL識別子"
       t.string :kifu_file, comment: "アップロードした棋譜ファイル"
       t.string :kifu_url, comment: "入力した棋譜URL"

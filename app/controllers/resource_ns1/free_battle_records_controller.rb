@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_swars_battle_records as FreeSwarsBattleRecord)
+# 棋譜変換テーブル (free_battle_records as FreeBattleRecord)
 #
 # |--------------+--------------------+-------------+-------------+------+-------|
 # | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
@@ -20,7 +20,7 @@
 # |--------------+--------------------+-------------+-------------+------+-------|
 
 module ResourceNs1
-  class FreeSwarsBattleRecordsController < ApplicationController
+  class FreeBattleRecordsController < ApplicationController
     include ModulableCrud::All
     include SwarsBattleRecordsController::SharedMethods
 

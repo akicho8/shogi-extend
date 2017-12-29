@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_swars_battle_records as FreeSwarsBattleRecord)
+# 棋譜変換テーブル (free_battle_records as FreeBattleRecord)
 #
 # |--------------+--------------------+-------------+-------------+------+-------|
 # | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
@@ -21,8 +21,8 @@
 
 require 'rails_helper'
 
-RSpec.describe FreeSwarsBattleRecord, type: :model do
+RSpec.describe FreeBattleRecord, type: :model do
   it do
-    FreeSwarsBattleRecord.create!
+    FreeBattleRecord.create!
   end
 end

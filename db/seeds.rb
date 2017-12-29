@@ -1,5 +1,5 @@
-unless FreeSwarsBattleRecord.exists?
-  30.times { FreeSwarsBattleRecord.create!(kifu_body: "") }
+unless FreeBattleRecord.exists?
+  30.times { FreeBattleRecord.create!(kifu_body: "") }
 end
 
 unless SwarsBattleGrade.exists?
