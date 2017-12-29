@@ -118,11 +118,10 @@ Rails.application.configure do
 
   # ################################################################################ エラーメール
 
-  Rails.application.config.middleware.use(ExceptionNotification::Rack,
+  config.middleware.use(ExceptionNotification::Rack,
     :email => {
-      # :deliver_with => :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
-      :email_prefix => "[PREFIX] ",
-      :sender_address => %{"notifier" <pinpon.ikeda@gmail.com>},
+      :email_prefix         => "[shogi_web] ",
+      :sender_address       => "pinpon.ikeda@gmail.com",
       :exception_recipients => %w{pinpon.ikeda@gmail.com},
     })
 end
