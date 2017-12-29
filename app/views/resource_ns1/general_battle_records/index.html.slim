@@ -52,6 +52,10 @@
                   input type="radio" v-model="turn_max" value="手数>=150" 150手以上
                 label.radio-inline
                   input type="radio" v-model="turn_max" value="手数>=200" 200手以上
+            .form-group
+              .col-lg-4
+              .col-lg-4
+                = form.submit("検索", name: nil, class: "btn btn-primary btn-block", data: {disable_with: "検索中"})
 
   .search_rows
     = @rows.to_html
