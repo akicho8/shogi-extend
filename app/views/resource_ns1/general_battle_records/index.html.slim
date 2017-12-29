@@ -10,7 +10,7 @@
           .col-lg-4
           .col-lg-4
             .input-group
-              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?, "v-model" => "query")
+              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "search_field")
               = tag.datalist(id: "uid_list") do
                 - Bushido::TacticInfo.all_elements.each do |e|
                   = tag.option(value: e.name)
@@ -75,6 +75,8 @@ javascript:
     created: function() {
       const dom = document.querySelector("input[type=search]")
       this.plus_tag = dom.value
+      // Vue のスコープに入ると autofocus 属性が無視されるようなので自力で設定する
+      this.$nextTick(() => this.$refs.search_field.focus())
     },
     computed: {
       query: {
