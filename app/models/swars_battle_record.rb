@@ -136,7 +136,19 @@ class SwarsBattleRecord < ApplicationRecord
     end
 
     def parser_exec_after(info)
-      super
+      if persisted?
+        ships = swars_battle_ships.order(:position)
+      else
+        ships = swars_battle_ships
+      end
+
+      # 両者にタグを作らんと意味ないじゃん
+      info.mediator.players.each.with_index do |player, i|
+        swars_battle_ship = ships[i]
+        swars_battle_ship.defense_tag_list = player.skill_set.normalized_defense_infos.collect(&:key)
+        swars_battle_ship.attack_tag_list  = player.skill_set.normalized_attack_infos.collect(&:key)
+      end
+
       other_tag_list << swars_battle_rule_info.name
     end
   end
