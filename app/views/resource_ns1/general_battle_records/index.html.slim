@@ -44,6 +44,18 @@
               .col-lg-4
                 input#minus_tag.form-control type="text" v-model="minus_tag"
             .form-group
+              label.col-lg-4.control-label[for="attack_key"]= "戦型"
+              .col-lg-4
+                select#attack_key.form-control v-model="attack_key"
+                  - Bushido::AttackInfo.each do |e|
+                    option= e.name
+            .form-group
+              label.col-lg-4.control-label[for="defense_key"]= "囲い"
+              .col-lg-4
+                select#defense_key.form-control v-model="defense_key"
+                  - Bushido::DefenseInfo.each do |e|
+                    option= e.name
+            .form-group
               label.col-lg-4.control-label[for="turn_max"]= "手数"
               .col-lg-4
                 label.radio-inline
@@ -75,6 +87,8 @@ javascript:
       turn_max: "",
       plus_tag: "",
       minus_tag: "",
+      defense_key: "",
+      attack_key: "",
     },
     created: function() {
       const dom = document.querySelector("input[type=search]")
@@ -104,12 +118,20 @@ javascript:
           if (this.turn_max.length >= 1) {
             list.push(this.turn_max)
           }
+          if (this.attack_key.length >= 1) {
+            list.push(this.attack_key)
+          }
+          if (this.defense_key.length >= 1) {
+            list.push(this.defense_key)
+          }
           return list.join(" ")
         },
         set: function (v) {
           this.plus_tag = v
           this.minus_tag = ""
           this.turn_max = ""
+          this.attack_key = ""
+          this.defense_key = ""
         },
       },
     }
