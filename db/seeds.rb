@@ -10,7 +10,7 @@ unless SwarsBattleGrade.exists?
 end
 
 if Rails.env.development?
-  SwarsBattleRecord.basic_import(uid: "hanairobiyori")
+  SwarsBattleRecord.basic_import(user_key: "hanairobiyori")
   SwarsBattleRecord.reception_import
   SwarsBattleRecord.expert_import
   SwarsBattleRecord.conditional_import(swars_battle_grade_key_gteq: '三段')

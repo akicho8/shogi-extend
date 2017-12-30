@@ -69,7 +69,7 @@ html lang="ja"
           /   p.navbar-text= "右テ2"
 
     - if false
-      .container-fluid
+      .container-fluser_key
         .row
           .col-md-1
             .text-center
@@ -84,7 +84,7 @@ html lang="ja"
             .text-center
               = render partial: "amazon_book"
     - else
-      .container-fluid
+      .container-fluser_key
         = bootstrap_flash
         .main_container
           = yield
@@ -95,7 +95,7 @@ html lang="ja"
                 .amazon_book
                   = render partial: "amazon_book"
     footer
-      .container-fluid
+      .container-fluser_key
         .row
           .col-md-lg
             .text-center

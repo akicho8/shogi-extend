@@ -7,7 +7,7 @@
 # | カラム名                           | 意味                               | タイプ      | 属性        | 参照                   | INDEX |
 # |------------------------------------+------------------------------------+-------------+-------------+------------------------+-------|
 # | id                                 | ID                                 | integer(8)  | NOT NULL PK |                        |       |
-# | uid                                | Uid                                | string(255) | NOT NULL    |                        | A!    |
+# | user_key                           | User key                           | string(255) | NOT NULL    |                        | A!    |
 # | swars_battle_grade_id              | Swars battle grade                 | integer(8)  | NOT NULL    | => SwarsBattleGrade#id | B     |
 # | last_reception_at                  | Last reception at                  | datetime    |             |                        |       |
 # | swars_battle_user_receptions_count | Swars battle user receptions count | integer(4)  | DEFAULT(0)  |                        |       |
@@ -41,14 +41,14 @@ class SwarsBattleUser < ApplicationRecord
   end
 
   with_options presence: true do
-    validates :uid
+    validates :user_key
   end
 
   with_options allow_blank: true do
-    validates :uid, uniqueness: true
+    validates :user_key, uniqueness: true
   end
 
   def to_param
-    uid
+    user_key
   end
 end

@@ -26,8 +26,8 @@
 # en:
 #   'true': 'foo'
 #
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
+# To learn more, please read the Rails Internationalization guser_keye
+# available at http://guser_keyes.rubyonrails.org/i18n.html.
 
 en:
   hello: "Hello world"

@@ -10,8 +10,8 @@
           .col-lg-4
           .col-lg-4
             .input-group
-              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
-              = tag.datalist(id: "uid_list") do
+              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
+              = tag.datalist(id: "user_key_list") do
                 - Bushido::TacticInfo.all_elements.each do |e|
                   = tag.option(value: e.name)
               span.input-group-btn

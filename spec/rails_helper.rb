@@ -73,7 +73,7 @@ RSpec.configure do |config|
 
     def swars_battle_record_setup
       swars_battle_grade_setup
-      SwarsBattleRecord.basic_import(uid: "hanairobiyori")
+      SwarsBattleRecord.basic_import(user_key: "hanairobiyori")
     end
 
     def general_battle_record_setup

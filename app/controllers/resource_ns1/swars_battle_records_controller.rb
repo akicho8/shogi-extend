@@ -30,18 +30,18 @@ module ResourceNs1
     include SharedMethods
 
     def index
-      if current_uid
+      if current_user_key
         before_count = 0
-        if swars_battle_user = SwarsBattleUser.find_by(uid: current_uid)
+        if swars_battle_user = SwarsBattleUser.find_by(user_key: current_user_key)
           before_count = swars_battle_user.swars_battle_records.count
         end
 
-        Rails.cache.fetch("basic_import_#{current_uid}", expires_in: Rails.env.production? ? 30.seconds : 0) do
-          SwarsBattleRecord.basic_import(uid: current_uid)
+        Rails.cache.fetch("basic_import_#{current_user_key}", expires_in: Rails.env.production? ? 30.seconds : 0) do
+          SwarsBattleRecord.basic_import(user_key: current_user_key)
           nil
         end
 
-        @swars_battle_user = SwarsBattleUser.find_by(uid: current_uid)
+        @swars_battle_user = SwarsBattleUser.find_by(user_key: current_user_key)
         if @swars_battle_user
           count_diff = @swars_battle_user.swars_battle_records.count - before_count
           if count_diff.zero?
@@ -50,7 +50,7 @@ module ResourceNs1
           end
           @swars_battle_user.swars_battle_user_receptions.create!
         else
-          flash.now[:warning] = "#{current_uid} さんのデータは見つかりませんでした"
+          flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
         end
       end
 
@@ -72,7 +72,7 @@ module ResourceNs1
             parts = []
             parts << "shogiwars"
             if @swars_battle_user
-              parts << @swars_battle_user.uid
+              parts << @swars_battle_user.user_key
             end
             parts << Time.current.strftime("%Y%m%d%H%M%S")
             if current_tags
@@ -166,8 +166,8 @@ module ResourceNs1
                 logger.info([url, s].to_t)
               end
             end
-            acc[:uid] ||= []
-            acc[:uid] << s
+            acc[:user_key] ||= []
+            acc[:user_key] << s
           end
         end
         acc
@@ -180,9 +180,9 @@ module ResourceNs1
       end
     end
 
-    def current_uid
+    def current_user_key
       if v = current_query_hash
-        if v = v[:uid]
+        if v = v[:user_key]
           v.first
         end
       end

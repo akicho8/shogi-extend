@@ -27,7 +27,7 @@
 class CreateSwarsBattleRecords < ActiveRecord::Migration[5.1]
   def up
     create_table :swars_battle_users, force: true do |t|
-      t.string :uid, null: false, index: {unique: true}, comment: "対局者名"
+      t.string :user_key, null: false, index: {unique: true}, comment: "対局者名"
       t.belongs_to :swars_battle_grade, null: false, comment: "最高段級"
       t.datetime :last_reception_at, null: true, comment: "受容日時"
       t.integer :swars_battle_user_receptions_count, default: 0

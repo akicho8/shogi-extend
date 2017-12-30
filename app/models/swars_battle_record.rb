@@ -205,7 +205,7 @@ class SwarsBattleRecord < ApplicationRecord
       # SwarsBattleRecord.reception_import(limit: 10, sleep: 5)
       def reception_import(**params)
         SwarsBattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(params[:limit] || 1).each do |swars_battle_user|
-          basic_import(params.merge(uid: swars_battle_user.uid))
+          basic_import(params.merge(user_key: swars_battle_user.user_key))
         end
       end
 
@@ -213,7 +213,7 @@ class SwarsBattleRecord < ApplicationRecord
       # SwarsBattleRecord.expert_import(page_max: 3, sleep: 5)
       def expert_import(**params)
         swars_battle_agent.legend_swars_battle_user_keys.each do |swars_battle_user_key|
-          basic_import(params.merge(uid: swars_battle_user_key))
+          basic_import(params.merge(user_key: swars_battle_user_key))
         end
       end
 
@@ -240,20 +240,20 @@ class SwarsBattleRecord < ApplicationRecord
         swars_battle_users = SwarsBattleUser.find(swars_battle_user_ids)
 
         swars_battle_users.each do |swars_battle_user|
-          basic_import(params.merge(uid: swars_battle_user.uid))
+          basic_import(params.merge(user_key: swars_battle_user.user_key))
         end
       end
 
-      # SwarsBattleRecord.basic_import(uid: "DarkPonamin9")
-      # SwarsBattleRecord.basic_import(uid: "micro77")
-      # SwarsBattleRecord.basic_import(uid: "micro77", page_max: 3)
+      # SwarsBattleRecord.basic_import(user_key: "DarkPonamin9")
+      # SwarsBattleRecord.basic_import(user_key: "micro77")
+      # SwarsBattleRecord.basic_import(user_key: "micro77", page_max: 3)
       def basic_import(**params)
         SwarsBattleRuleInfo.each do |e|
           multiple_battle_import(params.merge(gtype: e.swars_real_key))
         end
       end
 
-      # SwarsBattleRecord.multiple_battle_import(uid: "chrono_", gtype: "")
+      # SwarsBattleRecord.multiple_battle_import(user_key: "chrono_", gtype: "")
       def multiple_battle_import(**params)
         (params[:page_max] || 1).times do |i|
           list = swars_battle_agent.index_get(params.merge(page_index: i))
@@ -313,7 +313,7 @@ class SwarsBattleRecord < ApplicationRecord
         # end
 
         swars_battle_users = info[:swars_battle_user_infos].collect do |e|
-          SwarsBattleUser.find_or_initialize_by(uid: e[:uid]).tap do |swars_battle_user|
+          SwarsBattleUser.find_or_initialize_by(user_key: e[:user_key]).tap do |swars_battle_user|
             swars_battle_grade = SwarsBattleGrade.find_by!(unique_key: e[:swars_battle_grade_key])
             swars_battle_user.update!(swars_battle_grade: swars_battle_grade) # 常にランクを更新する
           end
@@ -334,7 +334,7 @@ class SwarsBattleRecord < ApplicationRecord
         end
 
         info[:swars_battle_user_infos].each.with_index do |e, i|
-          swars_battle_user = SwarsBattleUser.find_by!(uid: e[:uid])
+          swars_battle_user = SwarsBattleUser.find_by!(user_key: e[:user_key])
           swars_battle_grade = SwarsBattleGrade.find_by!(unique_key: e[:swars_battle_grade_key])
 
           if winner_index

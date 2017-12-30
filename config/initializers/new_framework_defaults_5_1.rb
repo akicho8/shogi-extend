@@ -4,7 +4,7 @@
 #
 # Once upgraded flip defaults one by one to migrate to the new default.
 #
-# Read the Guide for Upgrading Ruby on Rails for more info on each option.
+# Read the Guser_keye for Upgrading Ruby on Rails for more info on each option.
 
 # Make `form_with` generate non-remote forms.
 Rails.application.config.action_view.form_with_generates_remote_forms = false

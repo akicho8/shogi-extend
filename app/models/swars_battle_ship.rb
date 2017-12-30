@@ -67,7 +67,7 @@ class SwarsBattleShip < ApplicationRecord
   end
 
   def name_with_grade
-    "#{swars_battle_user.uid} #{swars_battle_grade.name}"
+    "#{swars_battle_user.user_key} #{swars_battle_grade.name}"
   end
 
   def location
