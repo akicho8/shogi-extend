@@ -89,6 +89,9 @@ GEM
     bootswatch-rails (3.3.5)
       railties (>= 3.1)
     builder (3.2.3)
+    bullet (5.7.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.1.0)
     capistrano (3.10.1)
       airbrussh (>= 1.0.0)
@@ -351,6 +354,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
+    uniform_notifier (1.10.0)
     web-console (3.5.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -378,6 +382,7 @@ DEPENDENCIES
   acts_as_list
   bootstrap-sass
   bootswatch-rails
+  bullet
   bushido!
   byebug
   capistrano
