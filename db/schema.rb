@@ -41,14 +41,14 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "battle_key", null: false, comment: "対局識別子"
     t.datetime "battled_at", comment: "対局開始日時"
     t.text "kifu_body", null: false, comment: "棋譜の断片"
-    t.string "battle2_state_key", null: false, comment: "結果詳細"
+    t.string "general_battle_state_key", null: false, comment: "結果詳細"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle2_state_key"], name: "index_general_battle_records_on_battle2_state_key"
     t.index ["battle_key"], name: "index_general_battle_records_on_battle_key", unique: true
+    t.index ["general_battle_state_key"], name: "index_general_battle_records_on_general_battle_state_key"
   end
 
   create_table "general_battle_ships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|

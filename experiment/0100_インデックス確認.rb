@@ -29,7 +29,7 @@ end
 # >> | table                  | name                                              | unique | columns               | lengths | orders | where | type | using | comment |
 # >> |------------------------+---------------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
 # >> | general_battle_records | index_general_battle_records_on_battle_key        | true   | ["battle_key"]        | {}      |        |       |      | btree |         |
-# >> | general_battle_records | index_general_battle_records_on_battle2_state_key | false  | ["battle2_state_key"] | {}      |        |       |      | btree |         |
+# >> | general_battle_records | index_general_battle_records_on_general_battle_state_key | false  | ["general_battle_state_key"] | {}      |        |       |      | btree |         |
 # >> |------------------------+---------------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> general_battle_ships

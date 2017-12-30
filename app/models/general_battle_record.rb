@@ -3,20 +3,20 @@
 #
 # 将棋ウォーズ対戦情報テーブル (general_battle_records as GeneralBattleRecord)
 #
-# |-------------------+-------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
-# |-------------------+-------------------+-------------+-------------+------+-------|
-# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
-# | battled_at        | Battled at        | datetime    |             |      |       |
-# | kifu_body         | 棋譜内容          | text(65535) | NOT NULL    |      |       |
-# | battle2_state_key | Battle2 state key | string(255) | NOT NULL    |      | B     |
-# | turn_max          | 手数              | integer(4)  | NOT NULL    |      |       |
-# | meta_info         | 棋譜ヘッダー      | text(65535) | NOT NULL    |      |       |
-# | mountain_url      | 将棋山脈URL       | string(255) |             |      |       |
-# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
-# |-------------------+-------------------+-------------+-------------+------+-------|
+# |--------------------------+--------------------------+-------------+-------------+------+-------|
+# | カラム名                 | 意味                     | タイプ      | 属性        | 参照 | INDEX |
+# |--------------------------+--------------------------+-------------+-------------+------+-------|
+# | id                       | ID                       | integer(8)  | NOT NULL PK |      |       |
+# | battle_key               | Battle key               | string(255) | NOT NULL    |      | A!    |
+# | battled_at               | Battled at               | datetime    |             |      |       |
+# | kifu_body                | 棋譜内容                 | text(65535) | NOT NULL    |      |       |
+# | general_battle_state_key | General battle state key | string(255) | NOT NULL    |      | B     |
+# | turn_max                 | 手数                     | integer(4)  | NOT NULL    |      |       |
+# | meta_info                | 棋譜ヘッダー             | text(65535) | NOT NULL    |      |       |
+# | mountain_url             | 将棋山脈URL              | string(255) |             |      |       |
+# | created_at               | 作成日時                 | datetime    | NOT NULL    |      |       |
+# | updated_at               | 更新日時                 | datetime    | NOT NULL    |      |       |
+# |--------------------------+--------------------------+-------------+-------------+------+-------|
 
 require "matrix"
 
@@ -37,7 +37,7 @@ class GeneralBattleRecord < ApplicationRecord
   with_options presence: true do
     validates :battle_key
     validates :battled_at
-    validates :battle2_state_key
+    validates :general_battle_state_key
   end
 
   with_options allow_blank: true do
@@ -55,7 +55,7 @@ class GeneralBattleRecord < ApplicationRecord
   end
 
   def general_battle_state_info
-    GeneralBattleStateInfo.fetch(battle2_state_key)
+    GeneralBattleStateInfo.fetch(general_battle_state_key)
   end
 
   concerning :ConvertHookMethos do
@@ -127,12 +127,13 @@ class GeneralBattleRecord < ApplicationRecord
         unless Rails.env.test?
           print mark
         end
+
         record.save!
       end
     end
 
     def parser_exec_after(info)
-      self.battle2_state_key = info.last_action_info.key
+      self.general_battle_state_key = info.last_action_info.key
       other_tag_list << general_battle_state_info.name
 
       other_tag_list << battle_key
