@@ -43,9 +43,12 @@ module ConvertMethods
       :skill_set_hash  => info.skill_set_hash,
     }
 
-    self.defense_tag_list = info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
-    self.attack_tag_list  = info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
-    self.other_tag_list   = []
+    self.defense_tags.clear
+    self.attack_tags.clear
+    self.other_tags.clear
+
+    defense_tag_list << info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
+    attack_tag_list  << info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
 
     other_tag_list << info.header["棋戦"]
     other_tag_list << info.header["持ち時間"]
