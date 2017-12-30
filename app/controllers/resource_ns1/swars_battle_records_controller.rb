@@ -54,12 +54,12 @@ module ResourceNs1
         end
       end
 
+      @swars_battle_records = SwarsBattleRecord.all
+      @swars_battle_records = @swars_battle_records.joins(:swars_battle_ships => :swars_battle_user)
+      @swars_battle_records = @swars_battle_records.includes(:win_swars_battle_user)
       if @swars_battle_user
-        @swars_battle_records = @swars_battle_user.swars_battle_records
-      else
-        @swars_battle_records = SwarsBattleRecord.all
+        @swars_battle_records = @swars_battle_records.where(SwarsBattleUser.arel_table[:id].eq(@swars_battle_user.id))
       end
-
       if current_tags
         @swars_battle_records = @swars_battle_records.tagged_with(current_tags)
       end
