@@ -19,5 +19,6 @@ if Rails.env.development?
 end
 
 if Rails.env.development?
+  GeneralBattleRecord.all_import(limit: 2)
   GeneralBattleRecord.all_import
 end
