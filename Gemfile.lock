@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: 4826996e797ed0f320b0123e805597ed44804651
+  revision: 77fa564c61cbe437925a06d8cd9f6f1ddb29c1ff
   specs:
     bushido (0.0.1)
       actionview
@@ -230,7 +230,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.2.0)
-    nio4r (2.1.0)
+    nio4r (2.2.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     ntlm-http (0.1.1)
@@ -349,7 +349,7 @@ GEM
       activesupport
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    uglifier (4.0.2)
+    uglifier (4.1.1)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
