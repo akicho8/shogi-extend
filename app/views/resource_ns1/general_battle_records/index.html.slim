@@ -10,7 +10,7 @@
           .col-lg-4
           .col-lg-4
             .input-group
-              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "search_field")
+              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "uid_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
               = tag.datalist(id: "uid_list") do
                 - Bushido::TacticInfo.all_elements.each do |e|
                   = tag.option(value: e.name)
@@ -31,14 +31,14 @@
                 =<> link_to(e, [:tactic_article, id: e], :class => "btn btn-link")
             - if controller.current_tags.present? && @general_battle_records.exists?
               =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
-            = link_to("詳細検索", "#", :class => "btn btn-link", "@click.stop" => "detail_search = !detail_search")
+            = link_to("詳細検索", "#", "@click.stop" => "open = !open", ":class" => "['btn', {'btn-default active': open}, {'btn-link': !open}]")
 
-        template v-if="detail_search"
+        template v-if="open"
           .text-left
             .form-group
               label.col-lg-4.control-label[for="plus_tag"]= "タグ"
               .col-lg-4
-                input#plus_tag.form-control type="text" v-model="plus_tag"
+                input#plus_tag.form-control type="text" v-model="plus_tag" ref="plus_tag"
             .form-group
               label.col-lg-4.control-label[for="minus_tag"]= "含まないタグ"
               .col-lg-4
@@ -71,7 +71,7 @@ javascript:
   new Vue({
     el: "#app",
     data: {
-      detail_search: false,
+      open: false,
       turn_max: "",
       plus_tag: "",
       minus_tag: "",
@@ -80,7 +80,16 @@ javascript:
       const dom = document.querySelector("input[type=search]")
       this.plus_tag = dom.value
       // Vue のスコープに入ると autofocus 属性が無視されるようなので自力で設定する
-      this.$nextTick(() => this.$refs.search_field.focus())
+      this.$nextTick(() => this.$refs.main_field.focus())
+    },
+    watch: {
+      open: function (v) {
+        if (v) {
+          this.$nextTick(() => this.$refs.plus_tag.focus())
+        } else {
+          this.$nextTick(() => this.$refs.main_field.focus())
+        }
+      },
     },
     computed: {
       query: {
