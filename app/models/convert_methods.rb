@@ -47,8 +47,8 @@ module ConvertMethods
     self.attack_tags.clear
     self.other_tags.clear
 
-    defense_tag_list << info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos }.collect(&:key)
-    attack_tag_list  << info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos  }.collect(&:key)
+    defense_tag_list << info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos.flat_map { |e| [e.name, *e.alias_names] } }
+    attack_tag_list  << info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos.flat_map  { |e| [e.name, *e.alias_names] } }
 
     other_tag_list << info.header["棋戦"]
     other_tag_list << info.header["持ち時間"]
