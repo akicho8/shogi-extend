@@ -16,4 +16,14 @@ module ApplicationHelper
   end
 
   delegate :icon_tag, to: Fa
+
+  def skill_option_create(e)
+    str = e.name
+    if v = e.alias_names.presence
+      v = v.join("・")
+      v = "（#{v}）"
+      str = "#{str}#{v}"
+    end
+    {str => e.name}
+  end
 end

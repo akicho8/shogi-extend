@@ -1,3 +1,6 @@
+ruby:
+  select_func = -> (model, key) { select_tag(key, options_for_select(model.sort_by(&:name).inject({}) { |a, e| a.merge(skill_option_create(e)) }), class: "form-control", "v-model" => key, name: "", include_blank: true) }
+
 #app
   .search_form
     .text-center
@@ -46,15 +49,11 @@
             .form-group
               label.col-lg-4.control-label[for="attack_key"]= "戦型"
               .col-lg-4
-                select#attack_key.form-control v-model="attack_key"
-                  - Bushido::AttackInfo.each do |e|
-                    option= e.name
+                = select_func[Bushido::AttackInfo, :attack_key]
             .form-group
               label.col-lg-4.control-label[for="defense_key"]= "囲い"
               .col-lg-4
-                select#defense_key.form-control v-model="defense_key"
-                  - Bushido::DefenseInfo.each do |e|
-                    option= e.name
+                = select_func[Bushido::DefenseInfo, :defense_key]
             .form-group
               label.col-lg-4.control-label[for="turn_max"]= "手数"
               .col-lg-4
@@ -115,14 +114,14 @@ javascript:
           if (this.minus_tag.length >= 1) {
             list.push(`-${this.minus_tag}`)
           }
-          if (this.turn_max.length >= 1) {
-            list.push(this.turn_max)
-          }
           if (this.attack_key.length >= 1) {
             list.push(this.attack_key)
           }
           if (this.defense_key.length >= 1) {
             list.push(this.defense_key)
+          }
+          if (this.turn_max.length >= 1) {
+            list.push(this.turn_max)
           }
           return list.join(" ")
         },
