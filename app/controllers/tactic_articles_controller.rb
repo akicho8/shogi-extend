@@ -202,9 +202,7 @@ class TacticArticlesController < ApplicationController
     # end
 
     if true
-      urls = [:sankou_url, :siratama_url, :wikipedia_url].collect { |key|
-        e.public_send(key)
-      }.compact.sort
+      urls = e.urls.sort
 
       if detail?
         urls << "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&q=#{e.name}"
