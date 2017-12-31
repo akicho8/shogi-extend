@@ -25,6 +25,7 @@ module ResourceNs1
 
     def index
       @general_battle_records = GeneralBattleRecord.all
+      @general_battle_records = @general_battle_records.includes(:general_battle_ships => :taggings)
 
       if v = current_plus_tags.presence
         @general_battle_records = @general_battle_records.tagged_with(v)
