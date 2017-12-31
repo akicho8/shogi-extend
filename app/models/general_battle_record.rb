@@ -79,7 +79,7 @@ class GeneralBattleRecord < ApplicationRecord
           kifu_dir: kifu_dir_default,
         }.merge(params)
 
-        files = Pathname.glob(Rails.root.join("#{params[:kifu_dir]}/2chkifu/**/*.{ki2,KI2}")).sort
+        files = Rails.root.join(params[:kifu_dir]).glob("2chkifu/**/*.{ki2,KI2}").sort
         if v = params[:range]
           files = files[v]
         end
