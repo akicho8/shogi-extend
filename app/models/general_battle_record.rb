@@ -184,12 +184,16 @@ class GeneralBattleRecord < ApplicationRecord
 
     def myself(user)
       index = meta_info[:simple_names].index { |e| e.flatten.include?(user.name) }
-      general_battle_ships[index]
+      general_battle_ships_of_index(index)
     end
 
     def rival(user)
       index = meta_info[:simple_names].index { |e| !e.flatten.include?(user.name) }
-      general_battle_ships[index]
+      general_battle_ships_of_index(index)
+    end
+
+    def general_battle_ships_of_index(index)
+      general_battle_ships.includes(:taggings)[index]
     end
   end
 end

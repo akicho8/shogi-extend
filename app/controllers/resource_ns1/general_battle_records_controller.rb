@@ -24,22 +24,6 @@ module ResourceNs1
     include SharedMethods
 
     def index
-      @general_battle_records = GeneralBattleRecord.all
-      @general_battle_records = @general_battle_records.includes(:general_battle_ships => :taggings)
-
-      if v = current_plus_tags.presence
-        @general_battle_records = @general_battle_records.tagged_with(v)
-      end
-      if v = current_minus_tags.presence
-        @general_battle_records = @general_battle_records.tagged_with(v, exclude: true)
-      end
-      if v = current_turn_max.presence
-        v.each do |v|
-          @general_battle_records = @general_battle_records.where("turn_max #{v[:op]} #{v[:number]}")
-        end
-      end
-
-      @general_battle_records = @general_battle_records.order(battled_at: :desc)
 
       if true
         if request.format.zip?
@@ -55,7 +39,7 @@ module ResourceNs1
           }
 
           zip_buffer = Zip::OutputStream.write_buffer do |zos|
-            @general_battle_records.limit(params[:limit] || 512).each do |general_battle_record|
+            current_scope.limit(params[:limit] || 512).each do |general_battle_record|
               KifuFormatInfo.each.with_index do |e|
                 if converted_info = general_battle_record.converted_infos.text_format_eq(e.key).take
                   zos.put_next_entry("#{e.key}/#{general_battle_record.battle_key}.#{e.key}")
@@ -70,9 +54,9 @@ module ResourceNs1
         end
       end
 
-      @general_battle_records = @general_battle_records.page(params[:page]).per(params[:per])
+      self.current_records = current_scope.page(params[:page]).per(params[:per])
 
-      @rows = @general_battle_records.collect do |general_battle_record|
+      @rows = current_records.collect do |general_battle_record|
         {}.tap do |row|
 
           if current_user
@@ -165,6 +149,26 @@ module ResourceNs1
     end
 
     private
+
+    def current_scope
+      s = current_model.all
+
+      if v = current_plus_tags.presence
+        s = s.tagged_with(v)
+      end
+
+      if v = current_minus_tags.presence
+        s = s.tagged_with(v, exclude: true)
+      end
+
+      if v = current_turn_max.presence
+        v.each do |v|
+          s = s.where("turn_max #{v[:op]} #{v[:number]}")
+        end
+      end
+
+      s = s.order(battled_at: :desc)
+    end
 
     def raw_current_record
       if v = params[:id].presence
