@@ -207,8 +207,29 @@ class TacticArticlesController < ApplicationController
       }.compact.sort
 
       if detail?
+        urls << "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&q=#{e.name}"
+        urls << "https://www.youtube.com/results?search_query=#{e.name}&search=Search"
+
         str = urls.collect { |e|
-          link_to(e, e, target: "_blank")
+          case e
+          when /mijinko83/
+            name = "続・裏小屋日記 完結編"
+          when /wikipedia/
+            name = "Wikipedia"
+          when /siratama/
+            name = "しらたまの甘味所"
+          when /google/
+            name = "Google 検索"
+          when /youtube.*watch/
+            name = "動画"
+          when /youtube/
+            name = "Youtube 検索"
+          when /mudasure/
+            name = "ムダスレ無き改革"
+          else
+            name = e
+          end
+          link_to(name, e, target: "_blank")
         }.join(tag.br).html_safe
       else
         str = urls.collect.with_index { |e, i|
