@@ -40,7 +40,8 @@ $table-bg:           darken($gray-darker, 6%)
 $table-bg-accent:    darken($table-bg, 2%)
 $table-bg-hover:     darken($gray-darker, 1%)
 
-$link-hover-color:      lighten($link-color, 15%)
+$link-color:            desaturate(darken($brand-primary, 10%), 30%)
+$link-hover-color:      adjust-color($brand-primary, $saturation: 30%, $lightness: 10%)
 $link-hover-decoration: none
 
 $input-bg: $gray-darker
