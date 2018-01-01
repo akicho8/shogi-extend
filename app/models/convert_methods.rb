@@ -153,7 +153,7 @@ module ConvertMethods
     list
   end
 
-  def teaiwari_link(h, name)
+  def handicap_link(h, name)
     label = name
     if label != "平手"
       label = h.tag.span(label, :class => "text-danger")
