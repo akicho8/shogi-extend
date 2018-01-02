@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: dbd7cd8d1f8bee62f852914cb6d6aee43f9145dd
+  revision: 6311c481da8b32a4d36a41bad0e31fdbd12d6bda
   specs:
     bushido (0.0.1)
       actionview
@@ -220,7 +220,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.10.3)
+    minitest (5.11.0)
     multi_json (1.12.2)
     multipart-post (2.0.0)
     mysql2 (0.4.10)
