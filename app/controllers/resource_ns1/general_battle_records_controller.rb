@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報テーブル (general_battle_records as GeneralBattleRecord)
+# 対局情報テーブル (general_battle_records as GeneralBattleRecord)
 #
-# |--------------------------+--------------------------+-------------+-------------+------+-------|
-# | カラム名                 | 意味                     | タイプ      | 属性        | 参照 | INDEX |
-# |--------------------------+--------------------------+-------------+-------------+------+-------|
-# | id                       | ID                       | integer(8)  | NOT NULL PK |      |       |
-# | battle_key               | Battle key               | string(255) | NOT NULL    |      | A!    |
-# | battled_at               | Battled at               | datetime    |             |      |       |
-# | kifu_body                | 棋譜内容                 | text(65535) | NOT NULL    |      |       |
-# | general_battle_state_key | General battle state key | string(255) | NOT NULL    |      | B     |
-# | turn_max                 | 手数                     | integer(4)  | NOT NULL    |      |       |
-# | meta_info                | 棋譜ヘッダー             | text(65535) | NOT NULL    |      |       |
-# | mountain_url             | 将棋山脈URL              | string(255) |             |      |       |
-# | created_at               | 作成日時                 | datetime    | NOT NULL    |      |       |
-# | updated_at               | 更新日時                 | datetime    | NOT NULL    |      |       |
-# |--------------------------+--------------------------+-------------+-------------+------+-------|
+# |--------------------------+--------------+-------------+-------------+------+-------|
+# | カラム名                 | 意味         | タイプ      | 属性        | 参照 | INDEX |
+# |--------------------------+--------------+-------------+-------------+------+-------|
+# | id                       | ID           | integer(8)  | NOT NULL PK |      |       |
+# | battle_key               | 対局キー     | string(255) | NOT NULL    |      | A!    |
+# | battled_at               | 対局日       | datetime    |             |      |       |
+# | kifu_body                | 棋譜内容     | text(65535) | NOT NULL    |      |       |
+# | general_battle_state_key | 結果         | string(255) | NOT NULL    |      | B     |
+# | turn_max                 | 手数         | integer(4)  | NOT NULL    |      |       |
+# | meta_info                | 棋譜ヘッダー | text(65535) | NOT NULL    |      |       |
+# | mountain_url             | 将棋山脈URL  | string(255) |             |      |       |
+# | created_at               | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at               | 更新日時     | datetime    | NOT NULL    |      |       |
+# |--------------------------+--------------+-------------+-------------+------+-------|
 
 module ResourceNs1
   class GeneralBattleRecordsController < ApplicationController
@@ -137,37 +137,36 @@ module ResourceNs1
     end
 
     def current_user
-      @current_user ||= -> {
-        v = nil
+      @current_user ||= nil.yield_self { |v|
         current_tags.each do |e|
           if v = GeneralBattleUser.find_by(name: e)
-            break
+            break v
           end
         end
         v
-      }.call
+      }
     end
 
     private
 
     def current_scope
-      s = current_model.all
-
-      if v = current_plus_tags.presence
-        s = s.tagged_with(v)
-      end
-
-      if v = current_minus_tags.presence
-        s = s.tagged_with(v, exclude: true)
-      end
-
-      if v = current_turn_max.presence
-        v.each do |v|
-          s = s.where("turn_max #{v[:op]} #{v[:number]}")
+      super.yield_self do |s|
+        if v = current_plus_tags.presence
+          s = s.tagged_with(v)
         end
-      end
 
-      s = s.order(battled_at: :desc)
+        if v = current_minus_tags.presence
+          s = s.tagged_with(v, exclude: true)
+        end
+
+        if v = current_turn_max.presence
+          v.each do |v|
+            s = s.where("turn_max #{v[:op]} #{v[:number]}")
+          end
+        end
+
+        s.order(battled_at: :desc)
+      end
     end
 
     def raw_current_record

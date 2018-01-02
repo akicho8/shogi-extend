@@ -37,7 +37,7 @@ module ResourceNs1
         end
 
         Rails.cache.fetch("basic_import_#{current_user_key}", expires_in: Rails.env.production? ? 30.seconds : 0) do
-          SwarsBattleRecord.basic_import(user_key: current_user_key)
+          current_model.basic_import(user_key: current_user_key)
           nil
         end
 
@@ -53,18 +53,6 @@ module ResourceNs1
           flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
         end
       end
-
-      @swars_battle_records = SwarsBattleRecord.all
-      @swars_battle_records = @swars_battle_records.joins(:swars_battle_ships => :swars_battle_user)
-      @swars_battle_records = @swars_battle_records.includes(:win_swars_battle_user)
-      if @swars_battle_user
-        @swars_battle_records = @swars_battle_records.where(SwarsBattleUser.arel_table[:id].eq(@swars_battle_user.id))
-      end
-      if current_tags
-        @swars_battle_records = @swars_battle_records.tagged_with(current_tags)
-      end
-
-      @swars_battle_records = @swars_battle_records.order(battled_at: :desc)
 
       if true
         if request.format.zip?
@@ -82,7 +70,7 @@ module ResourceNs1
           }
 
           zip_buffer = Zip::OutputStream.write_buffer do |zos|
-            @swars_battle_records.limit(params[:limit] || 512).each do |swars_battle_record|
+            current_records.limit(params[:limit] || 512).each do |swars_battle_record|
               KifuFormatInfo.each.with_index do |e|
                 if converted_info = swars_battle_record.converted_infos.text_format_eq(e.key).take
                   zos.put_next_entry("#{e.key}/#{swars_battle_record.battle_key}.#{e.key}")
@@ -97,9 +85,9 @@ module ResourceNs1
         end
       end
 
-      @swars_battle_records = @swars_battle_records.page(params[:page]).per(params[:per])
+      self.current_records = current_scope.page(params[:page]).per(params[:per])
 
-      @rows = @swars_battle_records.collect do |swars_battle_record|
+      @rows = current_records.collect do |swars_battle_record|
         {}.tap do |row|
           if @swars_battle_user
             l_ship = swars_battle_record.myself(@swars_battle_user)
@@ -148,7 +136,7 @@ module ResourceNs1
     end
 
     def current_query_hash
-      if e = [:key, :player, :query, :user].find { |e| params[e].present? }
+      if e = [:query].find { |e| params[e].present? }
         acc = {}
         params[e].to_s.gsub(/\p{blank}/, " ").strip.split(/\s+/).each do |s|
           if s.match?(/\A(tag):/i) || query_nihongo?(s)
@@ -208,9 +196,26 @@ module ResourceNs1
 
     private
 
+    def current_scope
+      super.yield_self do |s|
+        s = s.joins(:swars_battle_ships => :swars_battle_user)
+        s = s.includes(:win_swars_battle_user)
+
+        if @swars_battle_user
+          s = s.where(:swars_battle_users => {:id => @swars_battle_user.id})
+        end
+
+        if current_tags
+          s = s.tagged_with(current_tags)
+        end
+
+        s.order(battled_at: :desc)
+      end
+    end
+
     def raw_current_record
       if v = params[:id].presence
-        SwarsBattleRecord.single_battle_import(v)
+        current_model.single_battle_import(v)
         current_scope.find_by!(battle_key: v)
       else
         current_scope.new
@@ -222,8 +227,7 @@ module ResourceNs1
     end
 
     def versus_tag(*list)
-      if list.compact.empty?
-      else
+      if !list.compact.empty?
         vs = tag.span(" vs ", :class => "text-muted")
         str = list.collect { |e| e || "不明" }.join(vs).html_safe
         pc_only(str)
@@ -231,8 +235,7 @@ module ResourceNs1
     end
 
     def tag_links(tag_list)
-      if tag_list.blank?
-      else
+      if tag_list.present?
         tag_list.collect { |e| link_to(e, resource_ns1_swars_search_path(e)) }.join(" ").html_safe
       end
     end
@@ -271,6 +274,5 @@ module ResourceNs1
       end
       str
     end
-
   end
 end

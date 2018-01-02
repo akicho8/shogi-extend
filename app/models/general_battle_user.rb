@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 将棋ウォーズユーザーテーブル (general_battle_users as GeneralBattleUser)
+# 対局者テーブル (general_battle_users as GeneralBattleUser)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |

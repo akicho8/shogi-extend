@@ -33,7 +33,7 @@
 
     =<> link_to("戦法クラウド", [:resource_ns1, :swars_cloud], :class => "btn btn-link")
 
-    - if controller.current_query_hash && @swars_battle_records.exists?
+    - if controller.current_query_hash && current_records.exists?
       =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
 
     - if controller.current_query_hash
@@ -44,12 +44,12 @@
 .search_rows
   = @rows.to_html
 
-- if @swars_battle_records
+- if current_records
   .text-center
-    = paginate @swars_battle_records
+    = paginate current_records
 
   - content_for :head do
-    = rel_next_prev_link_tags @swars_battle_records
+    = rel_next_prev_link_tags current_records
 
 - if Rails.env.development? && false
   = SwarsBattleUser.to_html

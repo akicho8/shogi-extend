@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対局と対局者の対応テーブル (general_battle_ships as GeneralBattleShip)
+# 対局時の両者テーブル (general_battle_ships as GeneralBattleShip)
 #
 # |--------------------------+-----------------------+-------------+-------------+---------------------------+-------|
 # | カラム名                 | 意味                  | タイプ      | 属性        | 参照                      | INDEX |
