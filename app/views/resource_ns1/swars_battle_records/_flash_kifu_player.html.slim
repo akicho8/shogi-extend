@@ -46,21 +46,21 @@ ruby:
 br
 br
 p
-  =<> link_to("コピー", "#", "class": "btn btn-default kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+  =<> link_to("棋譜コピー", "#", "class": "btn btn-default kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
   - if current_record.kind_of?(SwarsBattleRecord)
-    =<> link_to("戦", swars_real_battle_url(current_record), "class": "btn btn-default", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
-  =<> link_to("山", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :tooltip, title: "将棋山脈"})
+    =<> link_to("将棋ウォーズ", swars_real_battle_url(current_record), "class": "btn btn-default", target: "_blank", data: {toggle: :__tooltip, title: "将棋ウォーズ"})
+  =<> link_to("将棋山脈", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :__tooltip, title: "将棋山脈"})
 p
   =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
 br
 
 ////////////////////////////////////////////////////////////////////////////////
 
-.well
-  = tag.p "ダウンロード"
-  p
-    - KifuFormatInfo.each do |e|
-      =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-primary")
+.page-header
+  h2= "ダウンロード"
+p
+  - KifuFormatInfo.each do |e|
+    =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-primary")
 
 ////////////////////////////////////////////////////////////////////////////////
 
