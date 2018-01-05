@@ -31,7 +31,7 @@
             .text-center
               = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
 
-    =<> link_to("戦法クラウド", [:resource_ns1, :swars_cloud], :class => "btn btn-link")
+    =<> link_to("タグクラウド", [:resource_ns1, :swars_cloud], :class => "btn btn-link")
 
     - if controller.current_query_hash && current_records.exists?
       =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
