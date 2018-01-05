@@ -1,13 +1,12 @@
-.container-fluser_key
-  .text-center
-    .page-header
-      h2
-        strong= current_record.swars_battle_ships.black.name_with_grade
-        span.text-muted=<> "vs"
-        strong= current_record.swars_battle_ships.white.name_with_grade
+.text-center
+  .page-header
+    h2
+      strong= current_record.swars_battle_ships.black.name_with_grade
+      span.text-muted=<> "vs"
+      strong= current_record.swars_battle_ships.white.name_with_grade
 
-    ul.list-inline
-      - current_record.showable_tag_list.each do |e|
-        li= link_to(e, resource_ns1_swars_search_path(e))
+  ul.list-inline
+    - current_record.showable_tag_list.each do |e|
+      li= link_to(e, resource_ns1_swars_search_path(e))
 
-    = render partial: "flash_kifu_player"
+  = render partial: "flash_kifu_player"
