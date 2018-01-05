@@ -93,8 +93,10 @@ module ResourceNs1
 
           place_list = general_battle_record.place_list
           str = "".html_safe
-          str += link_to(Fa.icon_tag(:map_marker), h.google_maps_url(place_list.join(" ")))
-          str += place_list.collect { |e| link_to(e, resource_ns1_general_search_path(e)) }.join(" ").html_safe
+          if place_list.present?
+            str += link_to(Fa.icon_tag(:map_marker), h.google_maps_url(place_list.join(" ")))
+            str += place_list.collect { |e| link_to(e, resource_ns1_general_search_path(e)) }.join(" ").html_safe
+          end
           row["場所"] = str
 
           turn_max = general_battle_record.turn_max
