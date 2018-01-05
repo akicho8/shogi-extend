@@ -201,7 +201,9 @@ module ResourceNs1
     def current_scope
       super.yield_self do |s|
         s = s.joins(:swars_battle_ships => :swars_battle_user)
-        s = s.includes(:win_swars_battle_user)
+        if action_name == "index"
+          s = s.includes(:win_swars_battle_user)
+        end
 
         if @swars_battle_user
           s = s.where(:swars_battle_users => {:id => @swars_battle_user.id})
