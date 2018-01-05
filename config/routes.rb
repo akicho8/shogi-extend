@@ -75,4 +75,8 @@ Rails.application.routes.draw do
   direct :google_maps do |query|
     "https://www.google.co.jp/maps/search/#{query}"
   end
+
+  direct :youtube_search do |query|
+    "https://www.youtube.com/results?search_query=#{query}&search=Search"
+  end
 end
