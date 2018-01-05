@@ -97,7 +97,9 @@ module ResourceNs1
           str += place_list.collect { |e| link_to(e, resource_ns1_general_search_path(e)) }.join(" ").html_safe
           row["場所"] = str
 
-          row["手数"]   = link_to(general_battle_record.turn_max, resource_ns1_general_search_path(general_battle_record.turn_max))
+          turn_max = general_battle_record.turn_max
+          row["手数"] = link_to(turn_max, resource_ns1_general_search_path("手数>=#{(turn_max - 5).clamp(0, Float::INFINITY)} 手数<=#{turn_max + 5}"))
+
           row["日時"] = general_battle_record.date_link(h, general_battle_record.meta_info[:header]["開始日時"])
           row[""] = row_links(general_battle_record)
         end
