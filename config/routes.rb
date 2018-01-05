@@ -67,4 +67,12 @@ Rails.application.routes.draw do
   direct :piyo_shogi_app do |url|
     "piyoshogi://?url=#{url}"
   end
+
+  direct :google_search do |query|
+    "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&q=#{query}"
+  end
+
+  direct :google_maps do |query|
+    "https://www.google.co.jp/maps/search/#{query}"
+  end
 end
