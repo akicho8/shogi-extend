@@ -6,7 +6,7 @@
       = general_battle_user_link2(current_record.general_battle_ships.white)
 
   ul.list-inline
-    - current_record.all_tag_list.each do |e|
+    - current_record.showable_tag_list.each do |e|
       li= link_to(e, resource_ns1_general_search_path(e))
 
   = render partial: "resource_ns1/swars_battle_records/flash_kifu_player"

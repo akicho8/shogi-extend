@@ -5,6 +5,7 @@ module ConvertMethods
     acts_as_ordered_taggable_on :defense_tags
     acts_as_ordered_taggable_on :attack_tags
     acts_as_ordered_taggable_on :other_tags
+    acts_as_ordered_taggable_on :secret_tags
 
     has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :convertable
 
@@ -46,6 +47,7 @@ module ConvertMethods
     self.defense_tags.clear
     self.attack_tags.clear
     self.other_tags.clear
+    self.secret_tags.clear
 
     defense_tag_list << info.mediator.players.flat_map { |e| e.skill_set.normalized_defense_infos.flat_map { |e| [e.name, *e.alias_names] } }
     attack_tag_list  << info.mediator.players.flat_map { |e| e.skill_set.normalized_attack_infos.flat_map  { |e| [e.name, *e.alias_names] } }
@@ -187,7 +189,7 @@ module ConvertMethods
     end
   end
 
-  def all_tag_list
+  def showable_tag_list
     attack_tag_list + defense_tag_list + other_tag_list
   end
 
