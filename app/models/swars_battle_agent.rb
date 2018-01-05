@@ -97,7 +97,7 @@ class SwarsBattleAgent
           {user_key: url_info[:white], swars_battle_grade_key: info[:gamedata][:dan1]},
         ]
 
-        # 詰み・投了・切断などの判定がわかるキー
+        # 詰み・投了・切断などの結果がわかるキー
         info[:__battle_state_key] = md[:__csa_data].slice(/\w+$/)
 
         # CSA形式の棋譜

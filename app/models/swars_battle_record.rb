@@ -150,6 +150,7 @@ class SwarsBattleRecord < ApplicationRecord
       end
 
       other_tag_list << swars_battle_rule_info.name
+      other_tag_list << swars_battle_state_info.name
     end
   end
 

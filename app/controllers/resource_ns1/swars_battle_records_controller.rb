@@ -87,26 +87,26 @@ module ResourceNs1
 
       self.current_records = current_scope.page(params[:page]).per(params[:per])
 
-      @rows = current_records.collect do |swars_battle_record|
+      @rows = current_records.collect do |record|
         {}.tap do |row|
           if @swars_battle_user
-            l_ship = swars_battle_record.myself(@swars_battle_user)
-            r_ship = swars_battle_record.rival(@swars_battle_user)
+            l_ship = record.myself(@swars_battle_user)
+            r_ship = record.rival(@swars_battle_user)
           else
-            if swars_battle_record.win_swars_battle_user
-              l_ship = swars_battle_record.swars_battle_ships.judge_key_eq(:win)
-              r_ship = swars_battle_record.swars_battle_ships.judge_key_eq(:lose)
+            if record.win_swars_battle_user
+              l_ship = record.swars_battle_ships.judge_key_eq(:win)
+              r_ship = record.swars_battle_ships.judge_key_eq(:lose)
             else
-              l_ship = swars_battle_record.swars_battle_ships.black
-              r_ship = swars_battle_record.swars_battle_ships.white
+              l_ship = record.swars_battle_ships.black
+              r_ship = record.swars_battle_ships.white
             end
           end
 
           if @swars_battle_user
-            row["対象プレイヤー"] = swars_battle_record.win_lose_str(l_ship.swars_battle_user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.swars_battle_user)
-            row["対戦相手"]       = swars_battle_record.win_lose_str(r_ship.swars_battle_user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.swars_battle_user)
+            row["対象プレイヤー"] = record.win_lose_str(l_ship.swars_battle_user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.swars_battle_user)
+            row["対戦相手"]       = record.win_lose_str(r_ship.swars_battle_user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.swars_battle_user)
           else
-            if swars_battle_record.win_swars_battle_user
+            if record.win_swars_battle_user
               row["勝ち"] = Fa.icon_tag(:circle_o) + swars_battle_user_link2(l_ship)
               row["負け"] = Fa.icon_tag(:times)    + swars_battle_user_link2(r_ship)
             else
@@ -114,23 +114,25 @@ module ResourceNs1
               row["負け"] = Fa.icon_tag(:minus, :class => "icon_hidden") + swars_battle_user_link2(r_ship)
             end
           end
-          row["判定"] = swars_battle_state_info_decorate(swars_battle_record)
+
+          row["結果"] = link_to(swars_battle_state_info_decorate(record), resource_ns1_swars_search_path(record.swars_battle_state_info.name))
+
           if false
-            row["戦法"] = swars_battle_record.tag_list.collect { |e| link_to(e, resource_ns1_swars_search_path(e)) }.join(" ").html_safe
+            row["戦法"] = record.tag_list.collect { |e| link_to(e, resource_ns1_swars_search_path(e)) }.join(" ").html_safe
           else
             row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
             row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
           end
-          row["手数"] = swars_battle_record.turn_max
-          row["種類"] = link_to(swars_battle_record.swars_battle_rule_info.name, resource_ns1_swars_search_path(swars_battle_record.swars_battle_rule_info.name))
+          row["手数"] = record.turn_max
+          row["種類"] = link_to(record.swars_battle_rule_info.name, resource_ns1_swars_search_path(record.swars_battle_rule_info.name))
 
           key = :battle_long
-          if swars_battle_record.battled_at >= Time.current.midnight
+          if record.battled_at >= Time.current.midnight
             key = :battle_short
           end
-          row["日時"] = swars_battle_record.battled_at.to_s(key)
+          row["日時"] = record.battled_at.to_s(key)
 
-          row[""] = row_links(swars_battle_record)
+          row[""] = row_links(record)
         end
       end
     end
@@ -253,8 +255,8 @@ module ResourceNs1
       list.compact.join(" ").html_safe
     end
 
-    def swars_battle_user_link(swars_battle_record, judge_key)
-      if swars_battle_ship = swars_battle_record.swars_battle_ships.judge_key_eq(judge_key)
+    def swars_battle_user_link(record, judge_key)
+      if swars_battle_ship = record.swars_battle_ships.judge_key_eq(judge_key)
         swars_battle_user_link2(swars_battle_ship)
       end
     end
@@ -263,14 +265,11 @@ module ResourceNs1
       link_to(swars_battle_ship.name_with_grade, swars_battle_ship.swars_battle_user)
     end
 
-    def swars_battle_state_info_decorate(swars_battle_record)
-      str = swars_battle_record.swars_battle_state_info.name
-      swars_battle_state_info = swars_battle_record.swars_battle_state_info
-      if v = swars_battle_state_info.label_key
+    def swars_battle_state_info_decorate(record)
+      e = record.swars_battle_state_info
+      str = e.name
+      if v = e.label_key
         str = tag.span(str, "class": "text-#{v}")
-      end
-      if v = swars_battle_state_info.icon_key
-        str = h.icon_tag(v) + str
       end
       str
     end
