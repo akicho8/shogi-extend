@@ -9,3 +9,4 @@ config/secrets.yml.key
 /public/packs
 /public/packs-test
 /node_modules
+/experiment/_*
