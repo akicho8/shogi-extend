@@ -24,6 +24,18 @@ module ResourceNs1
     include ModulableCrud::All
     include SharedMethods
 
+    def create
+      if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
+        url
+        if url.match?(%r{https?://kif-pona.heroz.jp/games/})
+          battle_key = URI(url).path.split("/").last
+          redirect_to [:resource_ns1, :swars_battle_record, id: battle_key]
+          return
+        end
+      end
+      super
+    end
+
     private
 
     def current_filename
