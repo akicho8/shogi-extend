@@ -30,6 +30,14 @@ module ResourceNs1
     include SharedMethods
 
     def index
+      if query = params[:query].presence
+        if query.match?(%r{https?://kif-pona.heroz.jp/games/})
+          battle_key = URI(query).path.split("/").last
+          redirect_to [:resource_ns1, :swars_battle_record, id: battle_key]
+          return
+        end
+      end
+
       if current_user_key
         before_count = 0
         if swars_battle_user = SwarsBattleUser.find_by(user_key: current_user_key)
