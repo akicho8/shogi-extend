@@ -1,6 +1,8 @@
 class TacticArticlesController < ApplicationController
   delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :to => "current_record.board_parser"
 
+  helper_method :current_record
+
   def index
     params[:mode] ||= "list"
 
@@ -28,107 +30,70 @@ class TacticArticlesController < ApplicationController
     # ● 何かある
     # ☆ 移動元ではない
 
-    out = []
-    out << tag.div(:class => "page-header") do
-      tag.h2(current_record, :class => "yumincho text-center")
-    end
-    out << tag.div(:class => "row") do |;out|
-      out = []
-      out << tag.div(:class => "col-md-12") do |;out|
-        out = []
-        out << tag.table(:class => "kakoi_table") do
-          Bushido::Position::Vpos.board_size.times.collect { |y|
-            tag.tr {
-              Bushido::Position::Hpos.board_size.times.collect { |x|
-                td_class = []
+    @board_table = tag.table(:class => "tactic_board_table") do
+      Bushido::Position::Vpos.board_size.times.collect { |y|
+        tag.tr {
+          Bushido::Position::Hpos.board_size.times.collect { |x|
+            td_class = []
 
-                point = Bushido::Point.fetch([x, y])
-                str = nil
+            point = Bushido::Point.fetch([x, y])
+            str = nil
 
-                # トリガー駒
-                if soldier = trigger_soldiers_hash[point]
-                  td_class << "location_#{soldier[:location].key}"
-                  td_class << "trigger"
-                  str = soldier.any_name
-                else
-                  # トリガーではない駒
-                  if soldier = soldiers_hash[point]
-                    td_class << "location_#{soldier[:location].key}"
-                    str = soldier.any_name
-                  end
-                end
+            # トリガー駒
+            if soldier = trigger_soldiers_hash[point]
+              td_class << "location_#{soldier[:location].key}"
+              td_class << "trigger"
+              str = soldier.any_name
+            else
+              # トリガーではない駒
+              if soldier = soldiers_hash[point]
+                td_class << "location_#{soldier[:location].key}"
+                str = soldier.any_name
+              end
+            end
 
-                # 何もない
-                if v = other_objects_hash["○"]
-                  if v[point]
-                    td_class << "cell_blank"
-                  end
-                end
+            # 何もない
+            if v = other_objects_hash["○"]
+              if v[point]
+                td_class << "cell_blank"
+              end
+            end
 
-                # 何かある
-                if v = other_objects_hash["●"]
-                  if v[point]
-                    td_class << "something_exist"
-                  end
-                end
+            # 何かある
+            if v = other_objects_hash["●"]
+              if v[point]
+                td_class << "something_exist"
+              end
+            end
 
-                # 移動元
-                if v = other_objects_hash["★"]
-                  if v[point]
-                    td_class << "any_from_point"
-                  end
-                end
+            # 移動元
+            if v = other_objects_hash["★"]
+              if v[point]
+                td_class << "any_from_point"
+              end
+            end
 
-                # 移動元ではない
-                if v = other_objects_hash["☆"]
-                  if v[point]
-                    td_class << "not_any_from_point"
-                    str = icon_tag(:times)
-                  end
-                end
+            # 移動元ではない
+            if v = other_objects_hash["☆"]
+              if v[point]
+                td_class << "not_any_from_point"
+                str = icon_tag(:times)
+              end
+            end
 
-                tag.td(str, :class => td_class)
-              }.join.html_safe
-            }
+            tag.td(str, :class => td_class)
           }.join.html_safe
-        end
-
-        out.join.html_safe
-      end
-      out.join.html_safe
+        }
+      }.join.html_safe
     end
 
-    out << tag.br
-
-    out << tag.p(:class => "text-center") do
-      [
-        link_to("2ch棋譜検索",          [:resource_ns1, :general_search, query: current_record.key], :class => "btn btn-link"),
-        link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :swars_search, query: current_record.key],   :class => "btn btn-link"),
-      ].join(" ").html_safe
+    row = row_build(current_record)
+    if v = other_objects_hash_ary["☆"]
+      row["移動元制限"] = v.collect { |e| e[:point].name }.join("、").html_safe + "が移動元ではない"
     end
+    @detail_hash = row.transform_values(&:presence).compact
 
-    out << tag.p do
-      info = row_build(current_record)
-      if v = other_objects_hash_ary["☆"]
-        info["移動元制限"] = v.collect { |e| e[:point].name }.join("、").html_safe + "が移動元ではない"
-      end
-      info.transform_values(&:presence).compact.to_html
-    end
-
-    # root = current_record.root
-    # unless root.children.empty?
-    #   out << tag.pre(:class => "tree") do
-    #     root.to_s_tree { |e|
-    #       if current_record.key == e.key
-    #         e.name
-    #       else
-    #         link_to(e.name, [:tactic_article, id: e.key])
-    #       end
-    #     }.html_safe
-    #   end
-    # end
-
-    out << tag.p do
+    @left_right_link = tag.p do
       all_records = Bushido::TacticInfo.flat_map {|e|e.model.to_a}
       if index = all_records.find_index(current_record)
         tag.ul(:class => "pager") do
@@ -142,8 +107,18 @@ class TacticArticlesController < ApplicationController
         end
       end
     end
+  end
 
-    render html: out.join.html_safe, layout: true
+  def current_record
+    @current_record ||= -> {
+      v = nil
+      Bushido::TacticInfo.each do |e|
+        if v = e.model.lookup(params[:id])
+          break
+        end
+      end
+      v
+    }.call
   end
 
   private
@@ -246,17 +221,5 @@ class TacticArticlesController < ApplicationController
 
   def detail?
     params[:action] == "show"
-  end
-
-  def current_record
-    @current_record ||= -> {
-      v = nil
-      Bushido::TacticInfo.each do |e|
-        if v = e.model.lookup(params[:id])
-          break
-        end
-      end
-      v
-    }.call
   end
 end
