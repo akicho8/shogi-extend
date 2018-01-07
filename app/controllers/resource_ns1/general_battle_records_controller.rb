@@ -86,7 +86,7 @@ module ResourceNs1
           end
 
           row["結果"] = general_battle_state_info_decorate(general_battle_record)
-          # row["手合割"] = general_battle_record.handicap_link(h, general_battle_record.meta_info[:header]["手合割"])
+          # row["手合割"] = general_battle_record.preset_link(h, general_battle_record.meta_info[:header]["手合割"])
           row["棋戦"] = general_battle_record.tournament_list.collect { |e| link_to(e.truncate(8), resource_ns1_general_search_path(e)) }.join(" ").html_safe
           row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
           row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
