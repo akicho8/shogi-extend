@@ -160,8 +160,8 @@ class GeneralBattleRecord < ApplicationRecord
         general_battle_ship.attributes = {
           judge_key: judge_key,
           location_key: player.location.key,
-          defense_tag_list: player.skill_set.normalized_defense_infos.collect(&:key),
-          attack_tag_list: player.skill_set.normalized_attack_infos.collect(&:key),
+          defense_tag_list: player.skill_set.defense_infos.normalize.collect(&:key),
+          attack_tag_list: player.skill_set.attack_infos.normalize.collect(&:key),
         }
       end
     end
