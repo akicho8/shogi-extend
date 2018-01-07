@@ -52,10 +52,10 @@ p
   =<> link_to("将棋山脈", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :__tooltip, title: "将棋山脈"})
 p
   =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
-br
 
 ////////////////////////////////////////////////////////////////////////////////
 
+br
 .page-header
   h2= "ダウンロード"
 p
@@ -65,13 +65,23 @@ p
 ////////////////////////////////////////////////////////////////////////////////
 
 br
-
 .page-header
   h2= "対局情報"
   = current_record.header_detail(self).to_html
 
 ////////////////////////////////////////////////////////////////////////////////
 
+br
+.page-header
+  h2= "パーマリンク"
+p
+  .text-center
+    - url = polymorphic_url([:resource_ns1, current_record])
+    = text_field_tag("", url, class: "form-control", readonly: true)
+
+////////////////////////////////////////////////////////////////////////////////
+
+br
 .page-header
   h2= "棋譜"
   / タブの href="#(ここ)" と tag.div(id: "ここ") を合わせる
