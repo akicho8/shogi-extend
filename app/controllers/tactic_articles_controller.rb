@@ -131,6 +131,7 @@ class TacticArticlesController < ApplicationController
       row["名前"] = link_to(e.key, [:tactic_article, id: e.key])
     end
     row["種類"] = e.tactic_info.name
+    row["別名"] = e.alias_names.join(", ")
 
     if detail?
       root = e.root
