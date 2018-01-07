@@ -31,14 +31,22 @@ class FreeBattleRecord < ApplicationRecord
     self.kifu_body ||= ""
 
     if changes[:kifu_file]
-      if kifu_file.present?
-        self.kifu_body = kifu_file.read.toutf8
+      if v = kifu_file.presence
+        self.kifu_body = v.read.toutf8
       end
     end
 
     if changes[:kifu_url]
-      if kifu_url.present?
-        self.kifu_body = open(kifu_url, &:read).toutf8
+      if v = kifu_url.presence
+        self.kifu_body = open(v, &:read).toutf8
+      end
+    end
+
+    if changes[:kifu_body]
+      if v = kifu_body.to_s.strip.presence
+        if v.match?("http")
+          self.kifu_body = open(v, &:read).toutf8
+        end
       end
     end
   end
