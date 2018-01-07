@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/bushido.git
-  revision: db11f1b083f89d40cd61ff73ce7793860737f300
+  revision: 7e45db895d390aa2a4c7ccffb54b4d2a837a3412
   specs:
     bushido (0.0.1)
       actionview
@@ -89,9 +89,9 @@ GEM
     bootswatch-rails (3.3.5)
       railties (>= 3.1)
     builder (3.2.3)
-    bullet (5.7.0)
+    bullet (5.7.1)
       activesupport (>= 3.0.0)
-      uniform_notifier (~> 1.10.0)
+      uniform_notifier (~> 1.11.0)
     byebug (9.1.0)
     capistrano (3.10.1)
       airbrussh (>= 1.0.0)
@@ -353,7 +353,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
-    uniform_notifier (1.10.0)
+    uniform_notifier (1.11.0)
     web-console (3.5.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
