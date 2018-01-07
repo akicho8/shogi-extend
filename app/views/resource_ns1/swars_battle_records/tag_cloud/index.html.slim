@@ -1,5 +1,5 @@
 .tag_cloud.my-flexiblebox.yumincho
   .row
     .col-lg-12
-      - tag_cloud(SwarsBattleRecord.all_tag_counts(order: "count desc", limit: 512, at_least: Rails.env.production? ? 8 : 0).shuffle, [*12..64]) do |tag, size|
+      - tag_cloud(SwarsBattleRecord.all_tag_counts(order: "count desc", limit: 512, at_least: Rails.env.production? ? 8 : 0), [*12..64]) do |tag, size|
         =<> link_to(tag.name, resource_ns1_swars_search_path(tag.name), style: "font-size: #{size}px")
