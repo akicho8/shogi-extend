@@ -201,7 +201,7 @@ class TacticArticlesController < ApplicationController
           when /mudasure/
             name = "ムダスレ無き改革"
           else
-            name = e
+            name = e.truncate(32)
           end
           link_to(name, e, target: "_blank")
         }.join(tag.br).html_safe
