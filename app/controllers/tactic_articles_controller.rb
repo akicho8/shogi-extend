@@ -1,5 +1,5 @@
 class TacticArticlesController < ApplicationController
-  delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :to => "current_record.board_parser"
+  delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, :to => "current_record.board_parser"
 
   helper_method :current_record
 
@@ -79,6 +79,12 @@ class TacticArticlesController < ApplicationController
                 td_class << "not_any_from_point"
                 str = icon_tag(:times)
               end
+            end
+
+            if soldier = any_exist_soldiers.find {|e| e[:point] == point }
+              td_class << "location_#{soldier[:location].key}"
+              td_class << "any_exist_soldiers"
+              str = soldier.any_name
             end
 
             tag.td(str, :class => td_class)

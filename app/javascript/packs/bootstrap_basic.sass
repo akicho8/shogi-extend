@@ -135,14 +135,15 @@ kbd
 
 ////////////////////////////////////////////////////////////////////////////// 囲い
 
-$base-color:            hsl(200, 50%, 50%)
-$board-bg-color:        darken($base-color, 43%)
-$line-color:            darken($base-color,  0%)
-$piece-color:           darken($base-color,  0%)
-$piece-bg-color:        darken($base-color, 38%)
-$font-color:            darken($base-color,  0%)
-$blank-bg-color:        darken($base-color, 50%)
-$something-exist-color: lighten($base-color, 20%)
+$base-color:                hsl(200, 50%, 50%)
+$board-bg-color:            darken($base-color, 43%)
+$line-color:                darken($base-color,  0%)
+$piece-color:               darken($base-color,  0%)
+$piece-bg-color:            darken($base-color, 38%)
+$font-color:                darken($base-color,  0%)
+$blank-bg-color:            darken($base-color, 46%)
+$something-exist-color:     lighten($base-color, 20%)
+$any_exist_soldiers_color:  darken($base-color, 20%)
 
 $trigger-color:         darken($base-color,  0%)
 $trigger-bg-color:      darken($base-color, 37%)
@@ -158,7 +159,7 @@ $font-size: 3.2vmin
   border-collapse: separate
   border-spacing: 1px
   border: 1px solid $line-color
-  box-shadow: 0 0 24vmin rgba($line-color, 0.5)
+  /* box-shadow: 0 0 24vmin rgba($line-color, 0.5)
   td
     font-size: $font-size
     width: $cell-size
@@ -180,6 +181,9 @@ $font-size: 3.2vmin
       background: $trigger-bg-color
     &.any_from_point
       background: $trigger-bg-color
+    &.any_exist_soldiers
+      color: $any_exist_soldiers_color
+      /* font-size: $font-size * 0.75
       
 ////////////////////////////////////////////////////////////////////////////////      
 
