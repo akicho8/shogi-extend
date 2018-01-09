@@ -6,7 +6,6 @@ html lang="ja"
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     = favicon_link_tag
     = csrf_meta_tag
-    = yield :head
     title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
     = action_cable_meta_tag
 
@@ -19,6 +18,7 @@ html lang="ja"
     = javascript_pack_tag "application"
 
     = render "google_analytics" if Rails.env.production?
+    = yield :head
   body
     nav.navbar.navbar-default.navbar-fixed-top
       .container
