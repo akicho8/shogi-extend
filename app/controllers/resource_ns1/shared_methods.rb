@@ -66,24 +66,11 @@ module ResourceNs1
         text_body = converted_info.text_body
       end
 
-      if access_from_swf_kifu_player?
-        response.headers["Content-Type"] = 'text/plain; charset=shift_jis' # 指定しないと utf-8 で返してしまう(が、なくてもよい)
-        logger.info response.headers.to_t
-        render plain: text_body.tosjis
-        return
-      end
-
       if params[:shift_jis].present? || params[:sjis].present?
         text_body = text_body.tosjis
       end
 
       send_data(text_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: false ? "inline" : "attachment")
-    end
-
-    # Kifu.swf から呼ばれたときは日付のキーが含まれている
-    # Started GET "/r/hanairobiyori-ispt-20171104_220810.kif?20171205090818"
-    def access_from_swf_kifu_player?
-      params.to_unsafe_h.any? { |k, v| v.blank? && (Date.parse(k) rescue nil) }
     end
 
     def current_encode

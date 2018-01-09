@@ -6,39 +6,6 @@
   - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
     shogi_player v-bind:kifu_body="'#{converted_info.text_body}'"
 
-ruby:
-  object = tag.object({
-    :classid  => "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
-    :id       => "Kifu",
-    :width    => "580",
-    :height   => "480",
-    :codebase => "http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab",
-  }) do
-    tag.embed({
-      :src               => asset_path("Kifu.swf"),
-      :width             => "580",
-      :height            => "420",
-      :name              => "Kifu",
-      :align             => "middle",
-      :quality           => "high",
-      :bgcolor           => "#f0f0f0",
-      :play              => "true",
-      :loop              => "false",
-      :allowScriptAccess => "sameDomain",
-      :type              => "application/x-shockwave-flash",
-      :pluginspage       => "http://www.adobe.com/go/getflashplayer",
-      :FlashVars => {
-        :kifu        => url_for([:resource_ns1, current_record, format: "kif"]),
-        :start_tesuu => 0,      # last:投了図を最初に表示
-        :mokume      => 0,      # 木目なし
-        :resize      => 1,      # コメントの縦幅はDOMに合わせる
-        :no_help     => 1,      # ヘルプなし
-      }.to_query.html_safe,
-    })
-  end
-
-= object
-
 ////////////////////////////////////////////////////////////////////////////////
 
 / p.text-muted
