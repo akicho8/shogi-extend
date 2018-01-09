@@ -3,7 +3,8 @@
   = stylesheet_pack_tag("my_player")
 
 #shogi_player_area
-  shogi_player
+  - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
+    shogi_player v-bind:kifu_body="'#{converted_info.text_body}'"
 
 ruby:
   object = tag.object({
