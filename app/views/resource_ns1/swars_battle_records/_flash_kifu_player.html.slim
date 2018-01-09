@@ -53,12 +53,20 @@ ruby:
 br
 br
 p
-  =<> link_to("棋譜コピー", "#", "class": "btn btn-default kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
   - if current_record.kind_of?(SwarsBattleRecord)
     =<> link_to("将棋ウォーズ", swars_real_battle_url(current_record), "class": "btn btn-default", target: "_blank", data: {toggle: :__tooltip, title: "将棋ウォーズ"})
   =<> link_to("将棋山脈", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :__tooltip, title: "将棋山脈"})
 p
   =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
+
+////////////////////////////////////////////////////////////////////////////////
+
+br
+.page-header
+  h2= "棋譜コピー"
+p
+  - KifuFormatInfo.each do |e|
+    =<> link_to(e.name, "#", "class": "btn btn-primary kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: e.key])})
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -80,16 +88,6 @@ br
 
 br
 .page-header
-  h2= "パーマリンク"
-p
-  .text-center
-    - url = polymorphic_url([:resource_ns1, current_record])
-    = text_field_tag("", url, class: "form-control", readonly: true)
-
-////////////////////////////////////////////////////////////////////////////////
-
-br
-.page-header
   h2= "棋譜"
   / タブの href="#(ここ)" と tag.div(id: "ここ") を合わせる
 ul.nav.nav-tabs
@@ -102,6 +100,17 @@ ul.nav.nav-tabs
       pre.text-left
         - if converted_info = current_record.converted_infos.text_format_eq(e.key).take
           = converted_info.text_body
+
+////////////////////////////////////////////////////////////////////////////////
+
+br
+.page-header
+  h2= "パーマリンク"
+p
+  .text-center
+    - url = polymorphic_url([:resource_ns1, current_record])
+    / = text_field_tag("", url, class: "form-control", readonly: true)
+    = url
 
 ////////////////////////////////////////////////////////////////////////////////
 
