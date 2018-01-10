@@ -3,7 +3,7 @@ const coffee =  require('./loaders/coffee')
 const vue =  require('./loaders/vue')
 const webpack = require('webpack')
 
-environment.plugins.set(
+environment.plugins.append(
   'Provide',
   new webpack.ProvidePlugin({
     $: "jquery",
