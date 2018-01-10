@@ -3,7 +3,7 @@ import Add1 from 'shogi_player/src/components/HelloPlayer.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
-    el: '#shogi_player_area',
+    el: '#shogi_player_app',
     components: { "shogi_player": Add1 }
   })
 })
