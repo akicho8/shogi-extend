@@ -11,8 +11,8 @@ bundler_args: "--without development --deployment"
 cache: bundler
 
 before_script:
-  - bundle exec rails db:create
-  - bundle exec rails db:migrate
+  - bundle exec bin/rails db:create
+  - bundle exec bin/rails db:migrate
 
 script:
-  bundle exec rails spec
+  bundle exec bin/rails spec
