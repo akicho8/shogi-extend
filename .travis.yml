@@ -4,10 +4,10 @@ services:
   - mysql
 bundler_args: --without production --deployment
 cache: bundler
+before_install:
+  - cp -av config/database.travis.yml config/database.yml
 before_script:
   - env
-  - which rake
-  - which rails
   - bundle exec rake db:create
   - bundle exec rake db:migrate
 script:

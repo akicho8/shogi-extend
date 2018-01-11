@@ -1,19 +1,5 @@
-defaults: &defaults
-  adapter: mysql2
-  username: root
-  password:
-  encoding: utf8
-  host: 127.0.0.1
-  reconnect: true
-
-development:
-  <<: *defaults
-  database: shogi_web_development
-
-production:
-  <<: *defaults
-  database: shogi_web_production
-
 test:
-  <<: *defaults
-  database: shogi_web_test
+  adapter: mysql2
+  database: myapp_test
+  username: travis
+  encoding: utf8
