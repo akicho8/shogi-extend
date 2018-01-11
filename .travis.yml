@@ -1,4 +1,4 @@
 language: ruby
 rvm:
   - 2.5.0
-cript: bundle exec rake db:create db:migrate test
+script: bundle exec rake db:create db:migrate test
