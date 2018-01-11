@@ -5,6 +5,8 @@ services:
 bundler_args: --without production --deployment
 cache: bundler
 before_install:
+  # https://github.com/travis-ci/travis-ci/issues/8978
+  - gem update --system
   - cp -av config/database.travis.yml config/database.yml
 before_script:
   - env
