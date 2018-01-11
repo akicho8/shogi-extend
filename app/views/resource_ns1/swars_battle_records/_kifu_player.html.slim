@@ -11,12 +11,6 @@
       - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
         #shogi_player_app
           shogi_player v-bind:kifu_body="'#{converted_info.text_body}'"
-        p
-          - if current_record.kind_of?(SwarsBattleRecord)
-            =<> link_to("将棋ウォーズ", swars_real_battle_url(current_record), "class": "btn btn-default", target: "_blank", data: {toggle: :__tooltip, title: "将棋ウォーズ"})
-          =<> link_to("将棋山脈", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :__tooltip, title: "将棋山脈"})
-        p
-          =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
   .col-lg-3
     .row
       .col-lg-12
@@ -32,6 +26,15 @@
         p
           - KifuFormatInfo.each do |e|
             =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-default")
+    .row
+      .col-lg-12
+        .page-header
+          h4= "リンク"
+        p
+          - if current_record.kind_of?(SwarsBattleRecord)
+            =<> link_to("将棋ウォーズ", swars_real_battle_url(current_record), "class": "btn btn-default", target: "_blank", data: {toggle: :__tooltip, title: "将棋ウォーズ"})
+          =<> link_to("将棋山脈", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :__tooltip, title: "将棋山脈"})
+          =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
 
 
 ////////////////////////////////////////////////////////////////////////////////
