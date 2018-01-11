@@ -1,18 +1,14 @@
 language: ruby
-
-rvm:
-  - 2.5.0
-
+rvm: 2.5.0
 services:
   - mysql
-
-bundler_args: "--without development --deployment"
-
+bundler_args: --without production --deployment
 cache: bundler
-
 before_script:
+  - env
+  - which rake
+  - which rails
   - bundle exec rake db:create
   - bundle exec rake db:migrate
-
 script:
   bundle exec rake spec
