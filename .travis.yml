@@ -6,6 +6,8 @@ rvm:
 services:
   - mysql
 
+bundler_args: "--without development --deployment"
+
 cache: bundler
 
 before_script:
