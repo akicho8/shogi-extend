@@ -40,4 +40,4 @@ before_script:
   - bundle exec rake db:migrate
 
 script:
-  bundle exec rspec --formatf documentation
+  bundle exec rspec --format documentation
