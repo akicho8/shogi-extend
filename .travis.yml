@@ -1,12 +1,12 @@
 sudo: required
 dist: trusty
 
-# addons:
-#   apt:
-#     sources:
-#       - google-chrome
-#     packages:
-#       - google-chrome-stable
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
 
 language: ruby
 
@@ -29,13 +29,13 @@ before_install:
   # https://github.com/travis-ci/travis-ci/issues/8978
   - gem update --system
 
-  # Install latest Chrome
-  # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
-  - sudo apt-get update
-  - sudo apt-get install -y libappindicator1 fonts-liberation
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i google-chrome*.deb
+  # # Install latest Chrome
+  # # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
+  # - sudo apt-get update
+  # - sudo apt-get install -y libappindicator1 fonts-liberation
+  # - export CHROME_BIN=/usr/bin/google-chrome
+  # - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  # - sudo dpkg -i google-chrome*.deb
 
   # Other
   - cp -av config/database.travis.yml config/database.yml
