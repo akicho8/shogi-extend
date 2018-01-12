@@ -12,6 +12,7 @@ language: ruby
 
 rvm: 2.5.0
 
+# なくても動いている
 # services:
 #   - mysql
 
@@ -33,11 +34,14 @@ before_install:
 bundler_args: --without production --deployment
 
 before_script:
+  # E2Eテスト用
+  # https://github.com/travis-ci/travis-ci/issues/7650#issuecomment-306909354
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+
   - bin/yarn
   - bundle exec rake db:create
   - bundle exec rake db:migrate
 
 script:
-  bundle exec rspec --format documentation
+  bundle exec rspec -f d
