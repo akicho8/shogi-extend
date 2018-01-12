@@ -55,4 +55,3 @@ script:
 
 after_success:
   - env
-  - bundle exec codeclimate-test-reporter

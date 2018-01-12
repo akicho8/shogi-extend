@@ -5,24 +5,20 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
-# eshell が大変なことになるのを防ぐ
+# スクリーンショット画像がコンソールに吐かれるのを停止
 ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
-require 'simplecov'
-SimpleCov.start
+if true
+  require 'simplecov'
+  SimpleCov.start
 
-# ENV["CODECOV_TOKEN"] ||= "4df92e33-f3b2-483d-8675-1f82a6809553"
-# require 'codecov'
-# SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  if ENV['CI']
+    ENV['CODECOV_TOKEN'] ||= '4df92e33-f3b2-483d-8675-1f82a6809553'
 
-# # ▼Ruby のテストカバレッジを Travis CI から Code Climate へ POST する方法が変わっていた - blog.kymmt.com
-# # http://blog.kymmt.com/entry/ruby-test-reporter-1.0
-# require "simplecov"
-# SimpleCov.start
-# # SimpleCov.start do
-# #   add_filter "/vendor/"
-# #   add_filter "/spec/"
-# # end
+    require 'codecov'
+    SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  end
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
