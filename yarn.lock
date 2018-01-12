@@ -5538,9 +5538,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi_player@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/shogi_player/-/shogi_player-0.0.8.tgz#461a4f514dc2815f4f9a0cf1920bb58034dbf85a"
+shogi_player@0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/shogi_player/-/shogi_player-0.0.9.tgz#432a29eb5d2b1e735c862764676d80af74480416"
   dependencies:
     autoprefixer "^7.1.2"
     babel-cli "^6.26.0"
@@ -5560,6 +5560,7 @@ shogi_player@0.0.8:
     babel-register "^6.22.0"
     bootstrap "4.0.0-beta.2"
     bootstrap-vue "^1.4.0"
+    lodash "^4.17.4"
     node-sass "^4.7.2"
     sass-loader "^6.0.6"
     underscore "^1.8.3"
