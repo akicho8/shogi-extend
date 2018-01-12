@@ -7,19 +7,16 @@
 
 http://tk2-221-20341.vs.sakura.ne.jp/shogi
 
-## 開発環境セットアップ手順
+## セットアップ
 
 ```shell
-bin/setup
+setup
 foreman s
 open http://localhost:3000/
 ```
 
-## テスト方法
+## テスト
 
 ```shell
 rake
 ```
-
-
-
