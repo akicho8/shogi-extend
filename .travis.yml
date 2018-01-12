@@ -12,33 +12,25 @@ language: ruby
 
 rvm: 2.5.0
 
-services:
-  - mysql
-
-bundler_args: --without production --deployment
+# services:
+#   - mysql
 
 cache:
   directories:
     - vendor/bundle
     - node_modules
-    - "$HOME/.npm"
-    - "$HOME/.cache"
+    - $HOME/.npm
+    - $HOME/.cache
 
 before_install:
   # LoadError: cannot load such file -- bundler/dep_proxy 対策
   # https://github.com/travis-ci/travis-ci/issues/8978
   - gem update --system
 
-  # # Install latest Chrome
-  # # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
-  # - sudo apt-get update
-  # - sudo apt-get install -y libappindicator1 fonts-liberation
-  # - export CHROME_BIN=/usr/bin/google-chrome
-  # - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  # - sudo dpkg -i google-chrome*.deb
-
   # Other
   - cp -av config/database.travis.yml config/database.yml
+
+bundler_args: --without production --deployment
 
 before_script:
   - export DISPLAY=:99.0
@@ -48,4 +40,4 @@ before_script:
   - bundle exec rake db:migrate
 
 script:
-  bundle exec rspec -f d
+  bundle exec rspec --formatf documentation
