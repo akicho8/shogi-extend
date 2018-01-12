@@ -8,6 +8,22 @@ require 'rspec/rails'
 # eshell が大変なことになるのを防ぐ
 ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
+require 'simplecov'
+SimpleCov.start
+
+# ENV["CODECOV_TOKEN"] ||= "4df92e33-f3b2-483d-8675-1f82a6809553"
+# require 'codecov'
+# SimpleCov.formatter = SimpleCov::Formatter::Codecov
+
+# # ▼Ruby のテストカバレッジを Travis CI から Code Climate へ POST する方法が変わっていた - blog.kymmt.com
+# # http://blog.kymmt.com/entry/ruby-test-reporter-1.0
+# require "simplecov"
+# SimpleCov.start
+# # SimpleCov.start do
+# #   add_filter "/vendor/"
+# #   add_filter "/spec/"
+# # end
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

@@ -2,6 +2,8 @@ sudo: required
 dist: trusty
 
 addons:
+  code_climate:
+    repo_token: 9d29c9321ce417d4527021094652f5fe47ccc2ab3e099ff201bf3fab507a2031
   apt:
     sources:
       - google-chrome
@@ -24,6 +26,11 @@ cache:
     - $HOME/.cache
 
 before_install:
+  - pwd
+  - whoami
+  - ls -al
+  - env
+
   # LoadError: cannot load such file -- bundler/dep_proxy 対策
   # https://github.com/travis-ci/travis-ci/issues/8978
   - gem update --system
@@ -45,3 +52,7 @@ before_script:
 
 script:
   bundle exec rspec -f d
+
+after_success:
+  - env
+  - bundle exec codeclimate-test-reporter
