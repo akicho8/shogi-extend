@@ -5538,9 +5538,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi_player@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/shogi_player/-/shogi_player-0.0.9.tgz#432a29eb5d2b1e735c862764676d80af74480416"
+shogi_player@0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/shogi_player/-/shogi_player-0.0.13.tgz#df08ec782b71b0fa6c0846cd604a131a8a5527b5"
   dependencies:
     autoprefixer "^7.1.2"
     babel-cli "^6.26.0"
