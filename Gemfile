@@ -124,4 +124,4 @@ gem 'exception_notification'
 
 gem 'codecov', :require => false, :group => :test
 
-gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
