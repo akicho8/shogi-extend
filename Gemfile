@@ -123,3 +123,5 @@ gem 'whenever', require: false
 gem 'exception_notification'
 
 gem 'codecov', :require => false, :group => :test
+
+gem 'rack-cors'
