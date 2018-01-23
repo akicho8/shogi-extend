@@ -70,13 +70,16 @@ module ResourceNs1
         text_body = text_body.tosjis
       end
 
-      if params[:inline].present?
-        disposition = "inline"
+      if params[:plain].present?
+        render plain: text_body
       else
-        disposition = "attachment"
+        if params[:inline].present?
+          disposition = "inline"
+        else
+          disposition = "attachment"
+        end
+        send_data(text_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: disposition)
       end
-
-      send_data(text_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: disposition)
     end
 
     def current_encode
