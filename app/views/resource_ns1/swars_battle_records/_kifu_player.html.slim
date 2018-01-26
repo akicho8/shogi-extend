@@ -10,7 +10,7 @@
   .col-lg-6
       - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
         #shogi_player_app
-          shogi_player v-bind:kifu_body="'#{converted_info.text_body}'" v-bind:keyboard_operation_flag='true'
+          shogi_player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true"
   .col-lg-3
     .row
       .col-lg-12
