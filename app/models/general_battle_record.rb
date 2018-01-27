@@ -170,12 +170,12 @@ class GeneralBattleRecord < ApplicationRecord
   concerning :HelperMethods do
     def win_lose_str(general_battle_ship)
       if general_battle_state_info.draw
-        Fa.icon_tag(:minus, :class => "icon_hidden")
+        Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
       else
         if general_battle_ship.judge_key == "win"
-          Fa.icon_tag(:circle_o)
+          Fa.icon_tag(:fab, :circle)
         elsif general_battle_ship.judge_key == "lose"
-          Fa.icon_tag(:times)
+          Fa.icon_tag(:fab, :times)
         else
           raise "must not happen"
         end

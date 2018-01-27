@@ -8,11 +8,6 @@ if (typeof(jQuery) != "undefined") {
   console.log('[Sprockets]jQuery: OK')
   if (typeof($) != "undefined") {
     console.log('[Sprockets]$: OK')
-    if (typeof($().tooltip) != "undefined") {
-      console.log('[Sprockets]Bootstrap JS: OK')
-    } else {
-      console.log('[Sprockets]Bootstrap JS: Missing')
-    }
   } else {
     console.log('[Sprockets]$: Missing')
   }
@@ -23,10 +18,6 @@ if (typeof(jQuery) != "undefined") {
 
 document.addEventListener("DOMContentLoaded", () => {
   ////////////////////////////////////////////////////////////////////////////////
-
-  // bootstrap-sprockets は sprockets 側にしか入っていないためこちらで書くこと
-  $('[data-toggle="tooltip"]').tooltip()
-
   ////////////////////////////////////////////////////////////////////////////////
 
   const buttons = document.querySelectorAll(".kif_clipboard_copy_button")
@@ -50,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.removeChild(text_area)
 
       if (result) {
-        if (false) {
+        if (true) {
           alert("クリップボードにコピーしました")
         } else {
           $(e.target).tooltip({title: "クリップボードにコピーしました", trigger: "manual"})

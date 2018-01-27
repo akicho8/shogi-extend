@@ -4,6 +4,9 @@ html lang="ja"
     meta charset="UTF-8"
     meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
+    link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css"
+
     = favicon_link_tag
     = csrf_meta_tag
     title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
@@ -20,98 +23,67 @@ html lang="ja"
     = render "google_analytics" if Rails.env.production?
     = yield :head
   body
-    nav.navbar.navbar-default.navbar-fixed-top
-      .container
-        .navbar-header
-          button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
-        #navbar.navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li= link_to("2ch棋譜検索", [:resource_ns1, :s])
-            li= link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
-            li= link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
-            li= link_to("戦法トリガー辞典", :tactic_articles)
-            li= link_to("符号入力ゲーム", :xy)
-
-          / / プルダウンの例(コピペで増やせる)
-          / ul.nav.navbar-nav
-          /   li.dropdown
-          /     = link_to("テンプレート#{content_tag(:span, '', class: 'caret')}".html_safe, "#", class: "dropdown-toggle", data: {toggle: "dropdown"}, role: "button", "aria-expanded" => "false")
-          /     ul.dropdown-menu role="menu"
-          /       li= link_to("A")
-          /       li.active= link_to("B")
-          /       li= link_to("C")
-          /
-          / / ボタンの配置
-          / .navbar-right
-          /   = link_to("ボタン", "#", class: "btn btn-info navbar-btn")
-          /
-          / / 各テキストやリンクの配置例
-          / p.navbar-text= "左テ1"
-          / p.navbar-text= "左テ2"
-          / ul.nav.navbar-nav
-          /   li= link_to("左1")
-          /   li= link_to("左2")
-          / p.navbar-text= "左テ3"
-          / p.navbar-text= "左テ4"
-          / .navbar-right
-          /   p.navbar-text= "右テ3"
-          /   p.navbar-text= "右テ4"
-          / ul.nav.navbar-nav.navbar-right
-          /     li= link_to("右1")
-          /     li= link_to("右2")
-          / .navbar-right
-          /   p.navbar-text= "右テ1"
-          /   p.navbar-text= "右テ2"
-
-    - if false
-      .container-fluid
-        .row
-          .col-md-1
-            .text-center
-              = render partial: "amazon_book"
-          .col-md-10
-            .container
-              .row
-                = bootstrap_flash
-                .main_container
-                  = yield
-          .col-md-1
-            .text-center
-              = render partial: "amazon_book"
-    - else
-      .container-fluid
-        = bootstrap_flash
-        .main_container
-          = yield
-        - if false
-          .row
-            .col-md-12
-              .text-center
-                .amazon_book
-                  = render partial: "amazon_book"
-    footer
-      .container-fluid
-        .row
-          .col-md-lg
-            .text-center
-              ul.list-inline
-                li= link_to(icon_tag(:github, size: 2), "https://github.com/akicho8/shogi_web", target: "_blank")
+    section.hero.is-primary.is-small
+      .hero-head
+        nav.navbar
+          .container
+            .navbar-brand
+              / a.navbar-item
+              /   = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
+              span.navbar-burger.burger[data-target="navbarMenuHeroA"]
+                span
+                span
+                span
+            / #navbarMenuHeroA.navbar-menu
+            /   .navbar-end
+            /     a.navbar-item.is-active
+            /       |  Home
+            /     a.navbar-item
+            /       |  Examples
+            /     a.navbar-item
+            /       |  Documentation
+            /     span.navbar-item
+            /       a.button.is-primary.is-inverted
+            /         span.icon
+            /           i.fab.fa-github
+            /         span
+            /           | Download
+      .hero-body
+        .container.has-text-centered
+          h1.title
+            = link_to(AppConfig[:app_name], :root)
+          h2.subtitle
+      .hero-foot
+        nav.tabs
+          .container
+            ul
+              li= link_to("2ch棋譜検索", [:resource_ns1, :s])
+              li= link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
+              li= link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
+              li= link_to("戦法トリガー辞典", :tactic_articles)
+              li= link_to("符号入力ゲーム", :xy)
+    section.section
+      .container.is-fluid
+        = yield
+    footer.footer
+      .container.is-fluid
+        .columns
+          .column.has-text-centered
+            = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
+            .breadcrumb.is-centered.has-dot-separator
+              ul
+                li= link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
+                li= link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
                 li= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
                 li= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
-                li= link_to("将棋ウォーズ", "https://shogiwars.heroz.jp/", target: "_blank")
-                li= link_to("将棋山脈", "http://shogi-s.com/", target: "_blank")
-                li= link_to("ぴよ将棋", "https://www.studiok-i.net/ios/piyo_shogi.html", target: "_blank")
-                li= link_to("2ch名人", "http://i2chmeijin.blog.fc2.com/", target: "_blank")
-                li= link_to("5ちゃんねる将棋板", "https://mevius.5ch.net/bgame/", target: "_blank")
-                li= link_to("AbemaTV将棋チャンネル", "https://abema.tv/now-on-air/shogi", target: "_blank")
-                li= link_to("ニコ生将棋チャンネル", "http://ch.nicovideo.jp/shogi", target: "_blank")
-                li= link_to("将棋DB2", "https://shogidb2.com/", target: "_blank")
-                li= link_to("日本将棋連盟", "https://www.shogi.or.jp/", target: "_blank")
-                li= link_to("81道場", "http://81dojo.com/jp/", target: "_blank")
-              p
-                = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
+              / span.tag= link_to("将棋ウォーズ", "https://shogiwars.heroz.jp/", target: "_blank")
+              / span.tag= link_to("将棋山脈", "http://shogi-s.com/", target: "_blank")
+              / span.tag= link_to("ぴよ将棋", "https://www.studiok-i.net/ios/piyo_shogi.html", target: "_blank")
+              / span.tag= link_to("2ch名人", "http://i2chmeijin.blog.fc2.com/", target: "_blank")
+              / span.tag= link_to("5ちゃんねる将棋板", "https://mevius.5ch.net/bgame/", target: "_blank")
+              / span.tag= link_to("AbemaTV将棋チャンネル", "https://abema.tv/now-on-air/shogi", target: "_blank")
+              / span.tag= link_to("ニコ生将棋チャンネル", "http://ch.nicovideo.jp/shogi", target: "_blank")
+              / span.tag= link_to("将棋DB2", "https://shogidb2.com/", target: "_blank")
+              / span.tag= link_to("日本将棋連盟", "https://www.shogi.or.jp/", target: "_blank")
+              / span.tag= link_to("81道場", "http://81dojo.com/jp/", target: "_blank")
+            = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"

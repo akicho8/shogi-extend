@@ -1,5 +1,4 @@
-.tag_cloud.my-flexiblebox.yumincho
-  .row
-    .col-lg-12
-      - tag_cloud(GeneralBattleRecord.all_tag_counts(order: "count desc", limit: 512, at_least: Rails.env.production? ? 8 : 0), [*12..64]) do |tag, size|
-        =<> link_to(tag.name, resource_ns1_general_search_path(tag.name), style: "font-size: #{size}px")
+.tags.yumincho.has-text-centered
+  - tag_cloud(GeneralBattleRecord.all_tag_counts(order: "count desc", limit: 512, at_least: Rails.env.production? ? 8 : 0), ["", "is-medium", "is-large"]) do |tag, klass|
+    span.tag class=klass
+      = link_to(tag.name, resource_ns1_general_search_path(tag.name))

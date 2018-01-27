@@ -1,10 +1,12 @@
-.page-header
-  h2
-    = current_record.new_record? ? "棋譜変換" : "編集"
+p.title.is-2.is-spaced.yumincho
+  = current_record.new_record? ? "棋譜変換" : "編集"
+/ p.subtitle.is-4
+/   | Subtitle 4
+hr
 
 = form_with(model: [:resource_ns1, current_record], class: "form-horizontal") do |form|
   = render partial: "error_messages", locals: {form: form}
   = render partial: "form", locals: {form: form}
-  .form-group
-    .col-sm-offset-2.col-sm-10
-      =<> form.submit(name: :_submit, class: "btn btn-primary btn-lg")
+  .field
+    p.control
+      =<> form.submit(name: :_submit, class: "button is-primary")

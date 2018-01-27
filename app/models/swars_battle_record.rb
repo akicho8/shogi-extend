@@ -171,12 +171,12 @@ class SwarsBattleRecord < ApplicationRecord
     def win_lose_str(swars_battle_user)
       if win_swars_battle_user
         if winner_desuka?(swars_battle_user)
-          Fa.icon_tag(:circle_o)
+          Fa.icon_tag(:far, :circle)
         else
-          Fa.icon_tag(:times)
+          Fa.icon_tag(:fas, :times)
         end
       else
-        Fa.icon_tag(:minus, :class => "icon_hidden")
+        Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
       end
     end
   end

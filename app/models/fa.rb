@@ -4,11 +4,11 @@ module Fa
 
   # アイコン指定
   #
-  #   icon_tag()                                #=> nil
-  #   icon_tag(:clock_o, :fixed_width => false) #=> ' <i class="fa fa-clock-o"></i> '
-  #   icon_tag(:clock_o)                        #=> ' <i class="fa fa-clock-o fa-fw"></i> '
-  #   icon_tag(:clock_o, :size => 1)            #=> ' <i class="fa fa-clock-o fa-fw"></i> '
-  #   icon_tag(:clock_o, :size => 2)            #=> ' <i class="fa fa-clock-o fa-fw fa-lg"></i> '
+  #   icon_tag(:fab, )                                #=> nil
+  #   icon_tag(:fab, :clock_o, :fixed_width => false) #=> ' <i class="fa fa-clock-o"></i> '
+  #   icon_tag(:fab, :clock_o)                        #=> ' <i class="fa fa-clock-o fa-fw"></i> '
+  #   icon_tag(:fab, :clock_o, :size => 1)            #=> ' <i class="fa fa-clock-o fa-fw"></i> '
+  #   icon_tag(:fab, :clock_o, :size => 2)            #=> ' <i class="fa fa-clock-o fa-fw fa-lg"></i> '
   #
   def icon_tag(*names)
     options = {
@@ -27,11 +27,11 @@ module Fa
 
     fixed_width = options.delete(:fixed_width) ? "fa-fw" : ""
 
-    klass = names.join(" ").gsub("_", "-").split(/\s+/).collect do |e|
+    klass = names.drop(1).join(" ").gsub("_", "-").split(/\s+/).collect do |e|
       "fa-#{e}"
     end
     if klass.present?
-      options[:class] = [:fa, *klass, size, fixed_width, options[:class]].join(" ").squish
+      options[:class] = [names.first, *klass, size, fixed_width, options[:class]].join(" ").squish
       (" " + tag.i(options) + " ").html_safe
     end
   end

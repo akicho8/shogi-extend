@@ -77,7 +77,7 @@ class TacticArticlesController < ApplicationController
             if v = other_objects_hash["☆"]
               if v[point]
                 td_class << "not_any_from_point"
-                str = icon_tag(:times)
+                str = icon_tag(:fab, :times)
               end
             end
 
@@ -108,7 +108,7 @@ class TacticArticlesController < ApplicationController
             [+1, [:play]],
           ].collect { |s, icon|
             r = all_records[(index + s).modulo(all_records.size)]
-            tag.li { link_to(icon_tag(*icon), [:tactic_article, id: r.key]) }
+            tag.li { link_to(icon_tag(:fab, *icon), [:tactic_article, id: r.key]) }
           }.join(" ").html_safe
         end
       end
@@ -223,7 +223,7 @@ class TacticArticlesController < ApplicationController
   end
 
   def checked
-    Fa.icon_tag(:check)
+    Fa.icon_tag(:fas, :check)
   end
 
   def detail?

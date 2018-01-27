@@ -1,78 +1,60 @@
 ruby:
-  select_func = -> (model, key) { select_tag(key, options_for_select(model.sort_by(&:name).inject({}) { |a, e| a.merge(skill_option_create(e)) }), class: "form-control", "v-model" => key, name: "", include_blank: true) }
+  select_func = -> (model, key) { select_tag(key, options_for_select(model.sort_by(&:name).inject({}) { |a, e| a.merge(skill_option_create(e)) }), class: "input", "v-model" => key, name: "", include_blank: true) }
 
 #app
-  .search_form
-    .text-center
-      .page-header
-        h2.yumincho
-          = "2ch棋譜検索"
+  p.title.is-2.is-spaced.yumincho= "2ch棋譜検索"
+  hr
 
-      = form_with(url: [:resource_ns1, :s], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
-        .form-group
-          .col-lg-4
-          .col-lg-4
-            .input-group
-              = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
-              = tag.datalist(id: "user_key_list") do
-                - Bushido::TacticInfo.all_elements.each do |e|
-                  = tag.option(value: e.name)
-              span.input-group-btn
-                = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
-          .col-lg-4
-        - if Rails.env.test?
-          .form-group
-            .col-lg-12
-              .text-center
-                = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
+  = form_with(url: [:resource_ns1, :s], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+    .field.has-addons
+      .control.is-expanded
+        = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
+        = tag.datalist(id: "user_key_list") do
+          - Bushido::TacticInfo.all_elements.each do |e|
+            = tag.option(value: e.name)
+      .control
+        = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
+    .field
+      = link_to("タグクラウド", [:resource_ns1, :general_cloud], :class => "button is-text")
+      - if controller.current_tactics.present?
+        - controller.current_tactics.each do |e|
+          =<> link_to(e, [:tactic_article, id: e], :class => "button is-text")
+      - if controller.current_tags.present? && current_records.exists?
+        =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-text")
+      = link_to("詳細検索", "#", "@click.stop" => "open = !open", ":class" => "['button', 'is-text', {'is-active': open}, {'button-link': !open}]")
 
-        .form-group
-          .col-lg-12
-            = link_to("タグクラウド", [:resource_ns1, :general_cloud], :class => "btn btn-link")
-            - if controller.current_tactics.present?
-              - controller.current_tactics.each do |e|
-                =<> link_to(e, [:tactic_article, id: e], :class => "btn btn-link")
-            - if controller.current_tags.present? && current_records.exists?
-              =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
-            = link_to("詳細検索", "#", "@click.stop" => "open = !open", ":class" => "['btn', {'btn-default active': open}, {'btn-link': !open}]")
-
-        template v-if="open"
-          .text-left
-            .form-group
-              label.col-lg-4.control-label[for="plus_tag"]= "タグ"
-              .col-lg-4
-                input#plus_tag.form-control type="text" v-model="plus_tag" ref="plus_tag"
-            .form-group
-              label.col-lg-4.control-label[for="minus_tag"]= "含まないタグ"
-              .col-lg-4
-                input#minus_tag.form-control type="text" v-model="minus_tag"
-            .form-group
-              label.col-lg-4.control-label[for="attack_key"]= "戦型"
-              .col-lg-4
-                = select_func[Bushido::AttackInfo, :attack_key]
-            .form-group
-              label.col-lg-4.control-label[for="defense_key"]= "囲い"
-              .col-lg-4
-                = select_func[Bushido::DefenseInfo, :defense_key]
-            .form-group
-              label.col-lg-4.control-label[for="turn_max"]= "手数"
-              .col-lg-4
-                label.radio-inline
-                  input type="radio" v-model="turn_max" value="手数<50" 50手未満
-                label.radio-inline
-                  input type="radio" v-model="turn_max" value="手数>=150" 150手以上
-                label.radio-inline
-                  input type="radio" v-model="turn_max" value="手数>=200" 200手以上
-            .form-group
-              .col-lg-4
-              .col-lg-4
-                = form.submit("検索", name: nil, class: "btn btn-primary btn-block", data: {disable_with: "検索中"})
+    template v-if="open"
+      .has-text-left
+        .field
+          label.label[for="plus_tag"]= "タグ"
+          input#plus_tag.input type="text" v-model="plus_tag" ref="plus_tag"
+        .field
+          label.label[for="minus_tag"]= "含まないタグ"
+          input#minus_tag.input type="text" v-model="minus_tag"
+        .field
+          label.label[for="attack_key"]= "戦型"
+          = select_func[Bushido::AttackInfo, :attack_key]
+        .field
+          label.label[for="defense_key"]= "囲い"
+          = select_func[Bushido::DefenseInfo, :defense_key]
+        .field
+          label.label[for="turn_max"]= "手数"
+          .control
+            label.radio
+              input type="radio" v-model="turn_max" value="手数<50" = " " + "50手未満"
+            label.radio
+              input type="radio" v-model="turn_max" value="手数>=150" = " " + "150手以上"
+            label.radio
+              input type="radio" v-model="turn_max" value="手数>=200" = " " + "200手以上"
+        .field
+          p.control
+            = form.submit("検索", name: nil, class: "button is-primary", data: {disable_with: "検索中"})
 
   .search_rows
     = @rows.to_html
 
   - if current_records
-    .text-center
+    .has-text-centered
       = paginate current_records
 
     - content_for :head do

@@ -1,12 +1,12 @@
-.text-center
-  .page-header
-    h2
-      = general_battle_user_link2(current_record.general_battle_ships.black)
-      span.text-muted=<> "vs"
-      = general_battle_user_link2(current_record.general_battle_ships.white)
+.has-text-centered
+  p.title.is-2.is-spaced.yumincho
+    = general_battle_user_link2(current_record.general_battle_ships.black)
+    span.has-text-grey =<> "vs"
+    = general_battle_user_link2(current_record.general_battle_ships.white)
+hr
 
-  ul.list-inline
-    - current_record.showable_tag_list.each do |e|
-      li= link_to(e, resource_ns1_general_search_path(e))
+.tags
+  - current_record.showable_tag_list.each do |e|
+    span.tag= link_to(e, resource_ns1_general_search_path(e))
 
-  = render partial: "resource_ns1/swars_battle_records/kifu_player"
+= render partial: "resource_ns1/swars_battle_records/kifu_player"

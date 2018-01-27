@@ -8,17 +8,17 @@
     = hidden_field_tag(:_goto_confirm, "true")
   = render partial: "form", locals: {form: form}
 
-  .form-group
-    .col-sm-offset-2.col-sm-10
-      =<> form.submit(name: :_submit, class: "btn btn-primary")
+  .field
+    .col-sm-offset-2.control
+      =<> form.submit(name: :_submit, class: "button is-primary")
       - if controller.respond_to_confirm?
-        =<> form.submit("確認", name: :_goto_confirm, class: "btn btn-default")
+        =<> form.submit("確認", name: :_goto_confirm, class: "button")
 
 hr
-=<> link_to("一覧", [:resource_ns1, current_plural_key], class: "btn btn-default")
+=<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
 - if current_record.persisted?
-  =<> link_to("詳細", [:resource_ns1, current_record], class: "btn btn-info")
+  =<> link_to("詳細", [:resource_ns1, current_record], class: "button button-info")
 - if controller.respond_to_destroy? && current_record.persisted?
-  =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")
+  =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
 
 = render partial: "crud_debug"

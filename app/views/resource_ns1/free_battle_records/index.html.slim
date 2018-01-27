@@ -1,7 +1,7 @@
 .page-header
   h2= "#{current_model.model_name.human}一覧"
 
-p= link_to("新規", [:new, :resource_ns1, current_single_key], class: "btn btn-primary")
+p= link_to("新規", [:new, :resource_ns1, current_single_key], class: "button is-primary")
 
 = page_entries_info current_records
 

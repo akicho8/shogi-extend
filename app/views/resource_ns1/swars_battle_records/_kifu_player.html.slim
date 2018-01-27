@@ -2,75 +2,71 @@
   = javascript_pack_tag("my_player")
   = stylesheet_pack_tag("my_player")
 
-.row
-  .col-lg-3
-    .page-header
-      h4= "対局情報"
-    = current_record.header_detail(self).to_html
-  .col-lg-6
+#kifu_player
+  ////////////////////////////////////////////////////////////////////////////////
+  .columns
+    .column
+      = current_record.header_detail(self).to_html
+    .column
       - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
         #shogi_player_app
           shogi_player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true"
-  .col-lg-3
-    .row
-      .col-lg-12
-        .page-header
-          h4= "棋譜コピー"
-        p
-          - KifuFormatInfo.each do |e|
-            =<> link_to(e.name, "#", "class": "btn btn-default kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: e.key])})
-    .row
-      .col-lg-12
-        .page-header
-          h4= "ダウンロード"
-        p
-          - KifuFormatInfo.each do |e|
-            =<> link_to(e.name, [:resource_ns1, current_record, format: e.key], class: "btn btn-default")
-    .row
-      .col-lg-12
-        .page-header
-          h4= "リンク"
-        p
-          - if current_record.kind_of?(SwarsBattleRecord)
-            =<> link_to("将棋ウォーズ", swars_real_battle_url(current_record), "class": "btn btn-default", target: "_blank", data: {toggle: :__tooltip, title: "将棋ウォーズ"})
-          =<> link_to("将棋山脈", [:resource_ns1, current_record, mountain: true], remote: true, class: "btn btn-default kif_clipboard_copy_button2", data: {toggle: :__tooltip, title: "将棋山脈"})
-          =<> link_to(image_tag("piyo_shogi_app.png", class: "show_piyo_link"), piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])))
+    .column.has-text-left
+      b-dropdown hoverable="true"
+        button class="button" slot="trigger"
+          span 棋譜コピー
+          b-icon icon="menu-down"
+        - KifuFormatInfo.each do |e|
+          = content_tag("b-dropdown-item", e.name, :href => "#", "class": "kif_clipboard_copy_button", foo: 1, data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: e.key])})
+      b-dropdown hoverable="true"
+        button class="button" slot="trigger"
+          span ダウンロード
+          b-icon icon="menu-down"
+        - KifuFormatInfo.each do |e|
+          = link_to([:resource_ns1, current_record, format: e.key]) do
+            b-dropdown-item= e.name
+      b-dropdown hoverable="true"
+        button class="button" slot="trigger"
+          span リンク
+          b-icon icon="menu-down"
+        - if current_record.kind_of?(SwarsBattleRecord)
+          = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
+        = content_tag("b-dropdown-item", "将棋山脈", :href => url_for([:resource_ns1, current_record, mountain: true]), "data-remote": true, class: "kif_clipboard_copy_button2")
+        b-dropdown-item href=piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])) ぴよ将棋
 
-
-////////////////////////////////////////////////////////////////////////////////
-
-.row
-  .col-lg-6
-    .page-header
-      h4= "棋譜"
-      / タブの href="#(ここ)" と tag.div(id: "ここ") を合わせる
-    ul.nav.nav-tabs
-      - KifuFormatInfo.each.with_index do |e, i|
-        li class=("active" if i.zero?)
-          a data-toggle="tab" href="##{e.key}" = e.name
-    .tab-content
-      - KifuFormatInfo.each.with_index do |e, i|
-        = tag.div(id: e.key, class: "tab-pane #{'active' if i.zero?}") do
-          pre.text-left
+  ////////////////////////////////////////////////////////////////////////////////
+  .columns
+    .column.has-text-left
+      labe.label 棋譜
+      b-tabs v-model="kifuActiveTab"
+        - KifuFormatInfo.each do |e|
+          b-tab-item label=e.name
             - if converted_info = current_record.converted_infos.text_format_eq(e.key).take
-              = converted_info.text_body
-  .col-lg-6
-    .page-header
-      h4= "パーマリンク"
-    p
-    .text-center
-      - url = polymorphic_url([:resource_ns1, current_record])
-      = text_field_tag("", url, class: "form-control")
-      / = current_record.header_detail(self).to_html
-
+              pre style="white-space: pre-wrap"
+                = converted_info.text_body
+  ////////////////////////////////////////////////////////////////////////////////
+  .columns
+    .column.column.has-text-left
+      .field
+        label.label= "パーマリンク"
+      .control
+        input.input type="text" readonly="true" value=polymorphic_url([:resource_ns1, current_record])
 
 ////////////////////////////////////////////////////////////////////////////////
 
 - if !Rails.env.production? && false
-  .row
+  .columns
     .col-lg-16
       .panel.panel-default
         .panel-body
-          =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "btn btn-default")
-          =<> link_to("編集", [:edit, :resource_ns1, current_record], class: "btn btn-success")
-          =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn btn-danger")
+          =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
+          =<> link_to("編集", [:edit, :resource_ns1, current_record], class: "button button-success")
+          =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
+
+javascript:
+  new Vue({
+    el: "#kifu_player",
+    data: {
+      kifuActiveTab: 0,
+    }
+  })

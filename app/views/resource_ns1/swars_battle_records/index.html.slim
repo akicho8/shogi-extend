@@ -1,56 +1,42 @@
-.search_form
-  .text-center
-    .page-header
-      h2.yumincho
-        = "将棋ウォーズ棋譜検索"
+p.title.is-2.is-spaced.yumincho= "将棋ウォーズ棋譜検索"
+hr
 
-    = form_with(url: [:resource_ns1, :w], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
-      .form-group
-        .col-sm-4
-        .col-sm-4
-          .input-group
-            = form.search_field(:query, class: "form-control", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_query_hash.blank?)
-            = tag.datalist(id: "user_key_list") do
-              - Bushido::TacticInfo.all_elements.each do |e|
-                = tag.option(value: e.name)
-              - user_keys = []
-              / 利用者
-              - user_keys.concat SwarsBattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:user_key)
-              / 最近取り込んだ人たち
-              - user_keys.concat SwarsBattleUser.order(updated_at: :desc).limit(32).pluck(:user_key)
-              / すごい人たち
-              - user_keys.concat SwarsBattleUser.joins(:swars_battle_grade).order("swars_battle_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:user_key)
-              - user_keys.uniq.each do |e|
-                = tag.option(value: e)
-            span.input-group-btn
-              = form.button(icon_tag(:search), name: nil, class: "btn btn-default", data: {disable_with: icon_tag(:refresh, :spin)})
-        .col-sm-4
-      - if Rails.env.test?
-        .form-group
-          .col-sm-12
-            .text-center
-              = form.submit("検索", name: nil, class: "btn btn-primary", data: {disable_with: "検索中"})
-
-    =<> link_to("タグクラウド", [:resource_ns1, :swars_cloud], :class => "btn btn-link")
-
+= form_with(url: [:resource_ns1, :w], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+  .field.has-addons
+    .control.is-expanded
+      = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_query_hash.blank?)
+      = tag.datalist(id: "user_key_list") do
+        - Bushido::TacticInfo.all_elements.each do |e|
+          = tag.option(value: e.name)
+        - user_keys = []
+        / 利用者
+        - user_keys.concat SwarsBattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:user_key)
+        / 最近取り込んだ人たち
+        - user_keys.concat SwarsBattleUser.order(updated_at: :desc).limit(32).pluck(:user_key)
+        / すごい人たち
+        - user_keys.concat SwarsBattleUser.joins(:swars_battle_grade).order("swars_battle_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:user_key)
+        - user_keys.uniq.each do |e|
+          = tag.option(value: e)
+    .control
+      = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
+  .field
+    = link_to("タグクラウド", [:resource_ns1, :swars_cloud], :class => "button is-text")
     - if controller.current_query_hash && current_records.exists?
-      =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "btn btn-link")
-
+      =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-text")
     - if controller.current_query_hash
       - if tags = controller.current_query_hash[:tags]
         - tags.each do |e|
-          = link_to(e, [:tactic_article, id: e])
+          = link_to(e, [:tactic_article, id: e], class: "button is-text")
 
 .search_rows
   = @rows.to_html
 
 - if current_records
-  .text-center
+  .has-text-centered
     = paginate current_records
 
   - content_for :head do
     = rel_next_prev_link_tags current_records
-
 - if Rails.env.development? && false
   = SwarsBattleUser.to_html
   = SwarsBattleRecord.to_html

@@ -7,8 +7,9 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+// import "bulma"
 import "./bootstrap_basic.sass"
-import "./bootstrap_tuning.sass"
+// import "./bootstrap_tuning.sass"
 
 import "./modulable_crud.coffee"
 
@@ -16,6 +17,19 @@ import "./modulable_crud.coffee"
 
 import Vue from 'vue/dist/vue.esm'
 window.Vue = Vue
+
+//////////////////////////////////////////////////////////////////////////////// Buefy
+
+// import Vue from 'vue'
+import Buefy from 'buefy'
+import 'buefy/lib/buefy.css'
+Vue.use(Buefy)
+
+// // OR
+// 
+// Vue.component(Buefy.Checkbox.name, Buefy.Checkbox);
+// Vue.component(Buefy.Table.name, Buefy.Table);
+// Vue.component(Buefy.Switch.name, Buefy.Switch);
 
 ////////////////////////////////////////////////////////////////////////////////
 if (typeof(jQuery) != "undefined") {

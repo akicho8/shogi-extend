@@ -1,6 +1,5 @@
-- if page.current?
-  li.page-item.active
-    = content_tag :a, page, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link'
-- else
-  li.page-item
-    = link_to page, url, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link'
+li
+  - if page.current?
+    = content_tag :a, page, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: ['pagination-link', "is-current"]
+  - else
+    = link_to page, url, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'pagination-link'

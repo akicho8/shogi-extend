@@ -1,15 +1,33 @@
-.form-group.form-group-lg
-  = form.label(:kifu_body, class: "col-sm-2 control-label")
-  .col-sm-10
-    = form.text_area(:kifu_body, rows: 12, class: "form-control", autofocus: true, placeholder: "#{KifuFormatInfo.collect(&:name).join(', ')} に対応しています\n\n68銀 ３四歩 ▲７九角 八四歩\n\nのような指し手の羅列だけでもかまいません")
+.field
+  = form.label(:kifu_body, class: "label")
+  .control
+    = form.text_area(:kifu_body, rows: 12, class: "textarea", autofocus: true, placeholder: "#{KifuFormatInfo.collect(&:name).join(', ')} に対応しています\n\n68銀 ３四歩 ▲７九角 八四歩\n\nのような指し手の羅列だけでもかまいません")
 
-.form-group.form-group-lg
-  = form.label(:kifu_url, class: "col-sm-2 control-label")
-  .col-sm-10
-    = form.url_field(:kifu_url, class: "form-control", placeholder: "別のサイトにある場合は URL で指定できます")
+.field
+  = form.label(:kifu_url, class: "label")
+  .control
+    = form.url_field(:kifu_url, class: "input", placeholder: "別のサイトにある場合は URL で指定できます")
 
-.form-group.form-group-lg
-  = form.label(:kifu_file, class: "col-sm-2 control-label")
-  .col-sm-10
-    = form.hidden_field(:kifu_file_cache)
-    = form.file_field(:kifu_file, class: "form-control")
+.field
+  = form.label(:kifu_file, class: "label")
+  .control
+    .file
+      label.file-label
+        = form.file_field(:kifu_file, class: "file-input")
+        span class="file-cta"
+          span class="file-icon"
+            i class="fas fa-upload"
+          span class="file-label"
+            | ファイル選択
+/ .field
+/   .control
+/     .file.has-name.is-fullwidth
+/       label.file-label
+/         input class="file-input" type="file" name="resume"
+/         span class="file-cta"
+/           span class="file-icon"
+/             i class="fas fa-upload"
+/           span class="file-label"
+/             Choose a file…
+/         span class="file-name"
+/           Screen Shot 2017-07-29 at 15.54.25.png

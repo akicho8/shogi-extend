@@ -11,6 +11,8 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "buefy": "^0.6.2",
+    "bulma": "^0.6.2",
     "coffee-loader": "^0.9.0",
     "coffee-script": "^1.12.7",
     "coffeescript": "1.12.7",

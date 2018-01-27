@@ -1,6 +1,6 @@
 - if form.object.errors.full_messages.present?
-  .form-group
-    .col-sm-offset-2.col-sm-10
+  .field
+    .col-sm-offset-2.control
       / エラーがあったときJavaScriptでここまでスクロールさせる
       = content_tag(:a, "&nbsp;".html_safe, name: "form_errors")
       - if false

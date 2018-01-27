@@ -1296,6 +1296,13 @@ browserslist@^2.1.2:
     caniuse-lite "^1.0.30000784"
     electron-to-chromium "^1.3.30"
 
+buefy@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.6.2.tgz#990e501c2a609e12913abb014c42f6fe72522112"
+  dependencies:
+    bulma "^0.6.1"
+    vue "^2.5.2"
+
 buffer-indexof@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/buffer-indexof/-/buffer-indexof-1.1.1.tgz#52fabcc6a606d1a00302802648ef68f639da268c"
@@ -1320,7 +1327,7 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-bulma@^0.6.2:
+bulma@^0.6.1, bulma@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.6.2.tgz#f4b1d11d5acc51a79644eb0a2b0b10649d3d71f5"
 
