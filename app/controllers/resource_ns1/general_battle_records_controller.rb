@@ -74,7 +74,7 @@ module ResourceNs1
 
           if current_user
             row["対象棋士"] = general_battle_record.win_lose_str(l_ship).html_safe + " " + h.general_battle_user_link2(l_ship)
-            row["対戦相手"]       = general_battle_record.win_lose_str(r_ship).html_safe + " " + h.general_battle_user_link2(r_ship)
+            row["対戦相手"] = general_battle_record.win_lose_str(r_ship).html_safe + " " + h.general_battle_user_link2(r_ship)
           else
             if general_battle_record.general_battle_state_info.draw
               row["勝ち"] = Fa.icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_battle_user_link2(l_ship)
