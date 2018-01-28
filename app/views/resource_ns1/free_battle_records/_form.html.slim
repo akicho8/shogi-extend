@@ -11,14 +11,47 @@
 .field
   = form.label(:kifu_file, class: "label")
   .control
-    .file
-      label.file-label
-        = form.file_field(:kifu_file, class: "file-input")
-        span class="file-cta"
-          span class="file-icon"
-            i class="fas fa-upload"
-          span class="file-label"
-            | ファイル選択
+    = form.file_field(:kifu_file, class: "input")
+
+/ .field
+/   = form.label(:kifu_file, class: "label")
+/   .control
+/     .file
+/       label.file-label
+/         = form.file_field(:kifu_file, class: "file-input")
+/         span class="file-cta"
+/           span class="file-icon"
+/             i class="fas fa-upload"
+/           span class="file-label"
+/             | ファイル選択
+
+/ #file_upload_dom
+/   .b-field
+/     = form.file_field(:kifu_file, class: "b-upload", "v-model": "dropFiles", "drag-drop": "true")
+/       section.section
+/         .content.has-text-centered
+/           p
+/             b-icon icon="upload" size="is-large"
+/           p
+/             | Drop your files here or click to upload
+/   .tags
+/     span.tag.is-primary v-for="(file, index) in dropFiles" :key="index"
+/       = "{{file.name}}"
+/       button class="delete is-small" type="button" @click="deleteDropFile(index)"
+/
+/ javascript:
+/   new Vue({
+/     el: "#file_upload_dom",
+/     data: {
+/       dropFiles: [],
+/     },
+/     methods: {
+/       deleteDropFile(index) {
+/         this.dropFiles.splice(index, 1)
+/       }
+/     }
+/   })
+
 / .field
 /   .control
 /     .file.has-name.is-fullwidth
