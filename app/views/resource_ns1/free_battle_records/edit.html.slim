@@ -1,7 +1,5 @@
-p.title.is-2.is-spaced.yumincho
+p.title.is-2.yumincho
   = current_record.new_record? ? "棋譜変換" : "編集"
-/ p.subtitle.is-4
-/   | Subtitle 4
 hr
 
 = form_with(model: [:resource_ns1, current_record], class: "form-horizontal") do |form|

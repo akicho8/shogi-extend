@@ -2,7 +2,7 @@ ruby:
   select_func = -> (model, key) { select_tag(key, options_for_select(model.sort_by(&:name).inject({}) { |a, e| a.merge(skill_option_create(e)) }), class: "input", "v-model" => key, name: "", include_blank: true) }
 
 #app
-  p.title.is-2.is-spaced.yumincho= "2ch棋譜検索"
+  p.title.is-2.yumincho= "2ch棋譜検索"
   hr
 
   = form_with(url: [:resource_ns1, :s], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
