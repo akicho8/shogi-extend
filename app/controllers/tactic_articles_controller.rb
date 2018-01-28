@@ -99,18 +99,16 @@ class TacticArticlesController < ApplicationController
     end
     @detail_hash = row.transform_values(&:presence).compact
 
-    @left_right_link = tag.p do
-      all_records = Bushido::TacticInfo.flat_map {|e|e.model.to_a}
-      if index = all_records.find_index(current_record)
-        tag.ul(:class => "pager") do
-          [
-            [-1, [:play, :rotate_180]],
-            [+1, [:play]],
-          ].collect { |s, icon|
-            r = all_records[(index + s).modulo(all_records.size)]
-            tag.li { link_to(icon_tag(:fab, *icon), [:tactic_article, id: r.key]) }
-          }.join(" ").html_safe
-        end
+    all_records = Bushido::TacticInfo.all_elements
+    if index = all_records.find_index(current_record)
+      @left_right_link = tag.navi(:class => "pagination is-right", role: "navigation", "aria-label": "pagination") do
+        [
+          [-1, [:play, :rotate_180], "pagination-previous"],
+          [+1, [:play],              "pagination-next"],
+        ].collect { |s, icon, klass|
+          r = all_records[(index + s).modulo(all_records.size)]
+          link_to(icon_tag(:fas, *icon), [:tactic_article, id: r.key], :class => klass)
+        }.join(" ").html_safe + tag.ul("class": "pagination-list")
       end
     end
   end
