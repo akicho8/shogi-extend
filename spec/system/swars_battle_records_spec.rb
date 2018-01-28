@@ -17,11 +17,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
     expect(page).to have_content "対戦相手"
 
-    expect(page).to have_content "詳細"
-    expect(page).to have_content "コピー"
-
-    fill_in "query", with: "美濃囲い"
-    click_button "検索"
+    # expect(page).to have_content "詳細"
+    # expect(page).to have_content "コピー"
+    # 
+    # fill_in "query", with: "美濃囲い"
+    # click_button "検索"
 
     # うごかん
     # click_link "詳細"

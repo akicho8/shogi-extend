@@ -13,15 +13,15 @@ RSpec.describe "2ch棋譜検索", type: :system do
     expect(page).to have_field "query"
 
     fill_in "query", with: "一太郎"
-    click_button "検索"
+    click_on("検索")
 
-    expect(page).to have_content "対戦相手"
+    expect(page).to have_content "結果"
 
-    expect(page).to have_content "詳細"
-    expect(page).to have_content "コピー"
+    # expect(page).to have_content "詳細"
+    # expect(page).to have_content "コピー"
 
     fill_in "query", with: "女流"
-    click_button "検索"
+    click_on("検索")
 
     # うごかん
     # click_link "詳細"
