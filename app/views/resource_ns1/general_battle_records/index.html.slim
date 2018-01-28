@@ -6,7 +6,7 @@ ruby:
 
   .columns
     .column
-      = form_with(url: [:resource_ns1, :s], class: "form-horizontal", method: :get, skip_enforcing_utf8: true) do |form|
+      = form_with(url: [:resource_ns1, :s], method: :get, skip_enforcing_utf8: true) do |form|
         .field.has-addons
           .control.is-expanded
             = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")

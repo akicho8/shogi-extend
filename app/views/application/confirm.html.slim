@@ -1,7 +1,7 @@
 .page-header
   h2= (current_record.new_record? ? "登録" : "更新") + "の確認"
 
-= form_with(model: [:resource_ns1, current_record], class: "form-horizontal") do |form|
+= form_with(model: [:resource_ns1, current_record]) do |form|
   = render partial: "confirm", locals: {form: form}
   .field
     .col-sm-offset-2.control

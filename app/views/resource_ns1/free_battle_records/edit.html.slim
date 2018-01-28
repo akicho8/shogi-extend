@@ -2,7 +2,7 @@ p.title.is-2.yumincho
   = current_record.new_record? ? "棋譜変換" : "編集"
 hr
 
-= form_with(model: [:resource_ns1, current_record], class: "form-horizontal") do |form|
+= form_with(model: [:resource_ns1, current_record]) do |form|
   = render partial: "error_messages", locals: {form: form}
   = render partial: "form", locals: {form: form}
   .field
