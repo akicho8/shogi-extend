@@ -23,7 +23,7 @@ html lang="ja"
     = render "google_analytics" if Rails.env.production?
     = yield :head
   body
-    section.hero.is-primary.is-small
+    section.hero.is-primary
       .hero-head
         nav.navbar
           .container
@@ -54,14 +54,14 @@ html lang="ja"
             = link_to(AppConfig[:app_name], :root)
           h2.subtitle
       .hero-foot
-        nav.tabs
+        .tabs.is-boxed.is-centered
           .container
             ul
-              li= link_to("2ch棋譜検索", [:resource_ns1, :s])
-              li= link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
-              li= link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
-              li= link_to("戦法トリガー辞典", :tactic_articles)
-              li= link_to("符号入力ゲーム", :xy)
+              li class=("is-active" if params[:controller] == "resource_ns1/general_battle_records") = link_to("2ch棋譜検索", [:resource_ns1, :s])
+              li class=("is-active" if params[:controller] == "resource_ns1/swars_battle_records")   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
+              li class=("is-active" if params[:controller] == "resource_ns1/free_battle_records")    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
+              li class=("is-active" if params[:controller] == "tactic_articles")                     = link_to("戦法トリガー辞典", :tactic_articles)
+              li class=("is-active" if params[:controller] == "xy_game")                             = link_to("符号入力ゲーム", :xy)
     section.section
       .container.is-fluid
         = yield

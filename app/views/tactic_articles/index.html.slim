@@ -1,10 +1,10 @@
 p.title.is-2.is-spaced.yumincho= "戦法トリガー辞典"
 
-.tabs.is-boxed
+.tabs
   ul
-    li class=("is-active" if params["mode"] == "list")    = link_to("一覧", :tactic_articles,   :class => "")
-    li class=("is-active" if params["mode"] == "tree")    = link_to("ツリー", :tree,            :class => "")
-    li class=("is-active" if params["mode"] == "fortune") = link_to("今日の戦法占い", :fortune, :class => "")
+    li class=("is-active" if params["mode"] == "list")    = link_to("一覧", :tactic_articles)
+    li class=("is-active" if params["mode"] == "tree")    = link_to("ツリー", :tree)
+    li class=("is-active" if params["mode"] == "fortune") = link_to("今日の戦法占い", :fortune)
 
 - if params[:mode] == "list"
   == @rows.to_html(table_class: "table is-hoverable is-striped is-fullwidth is-bordered is-narrow")
@@ -14,6 +14,6 @@ p.title.is-2.is-spaced.yumincho= "戦法トリガー辞典"
     == @tree.join
 
 - if params[:mode] == "fortune"
-  .has-text-centered
-    p= link_to(@attack_info.name, [:tactic_article, id: @attack_info.key],   :class => ["yumincho", "is-size-1"])
-    p= link_to(@defense_info.name, [:tactic_article, id: @defense_info.key], :class => ["yumincho", "is-size-1"])
+  .has-text-centered.yumincho.is-size-1
+    p= link_to(@attack_info.name, [:tactic_article, id: @attack_info.key])
+    p= link_to(@defense_info.name, [:tactic_article, id: @defense_info.key])
