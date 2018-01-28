@@ -1,0 +1,54 @@
+[v-cloak]
+  display: none
+
+// Chromeでdatalistを利用するとhoverで表示される三角を非表示にする方法
+input::-webkit-calendar-picker-indicator
+  display: none
+
+pre
+  font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace ! important
+  
+.main_container
+  min-height: 70vmin
+
+////////////////////////////////////////////////////////////////////////////// ぴよ将棋の画像調整
+
+.show_piyo_link
+  height: 2rem
+
+.row_piyo_link
+  height: 2rem
+
+////////////////////////////////////////////////////////////////////////////// アイコンを消すために
+
+.icon_hidden
+  visibility:hidden ! important
+
+////////////////////////////////////////////////////////////////////////////// 綺麗な明朝体
+
+.yumincho
+  font-family: "YuMincho", "Yu Mincho", serif
+
+////////////////////////////////////////////////////////////////////////////// amazon_book
+
+.amazon_book
+  margin-top: 4vmin
+
+////////////////////////////////////////////////////////////////////////////// 囲い
+  
+@import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
+@import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"
+@import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
+  
+$cell_blank_bg:       $grey
+$something_exist_bg:  $green
+$any_exist_soldiers:  $grey-light
+
+.shogi-player
+  td
+    &.cell_blank
+      background: $cell_blank_bg
+    &.something_exist
+      background: $something_exist_bg
+    &.any_exist_soldiers
+      color: $any_exist_soldiers

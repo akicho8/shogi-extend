@@ -8,7 +8,7 @@
 // layout file, like app/views/layouts/application.html.erb
 
 // import "bulma"
-import "./bootstrap_basic.sass"
+import "./application_style.sass"
 // import "./bootstrap_tuning.sass"
 
 import "./modulable_crud.coffee"

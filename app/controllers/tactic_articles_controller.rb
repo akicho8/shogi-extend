@@ -42,7 +42,7 @@ class TacticArticlesController < ApplicationController
             # トリガー駒
             if soldier = trigger_soldiers_hash[point]
               td_class << "location_#{soldier[:location].key}"
-              td_class << "trigger"
+              td_class << "current"
               str = soldier.any_name
             else
               # トリガーではない駒
@@ -69,7 +69,7 @@ class TacticArticlesController < ApplicationController
             # 移動元
             if v = other_objects_hash["★"]
               if v[point]
-                td_class << "any_from_point"
+                td_class << "origin_point"
               end
             end
 
@@ -81,6 +81,7 @@ class TacticArticlesController < ApplicationController
               end
             end
 
+            # どれかの駒がある
             if soldier = any_exist_soldiers.find {|e| e[:point] == point }
               td_class << "location_#{soldier[:location].key}"
               td_class << "any_exist_soldiers"
