@@ -1,0 +1,6 @@
+p.title.is-2.yumincho= "将棋ウォーズ棋譜検索"
+
+.tabs
+  ul
+    li class=("is-active" if params["controller"] == "resource_ns1/swars_battle_records")           = link_to("検索", [:resource_ns1, :w])
+    li class=("is-active" if params["controller"] == "resource_ns1/swars_battle_records/tag_cloud") = link_to("タグクラウド", [:resource_ns1, :swars_cloud])

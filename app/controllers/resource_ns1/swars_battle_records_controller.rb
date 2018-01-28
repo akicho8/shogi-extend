@@ -78,7 +78,7 @@ module ResourceNs1
           }
 
           zip_buffer = Zip::OutputStream.write_buffer do |zos|
-            current_records.limit(params[:limit] || 512).each do |swars_battle_record|
+            current_scope.limit(params[:limit] || 512).each do |swars_battle_record|
               KifuFormatInfo.each.with_index do |e|
                 if converted_info = swars_battle_record.converted_infos.text_format_eq(e.key).take
                   zos.put_next_entry("#{e.key}/#{swars_battle_record.battle_key}.#{e.key}")
