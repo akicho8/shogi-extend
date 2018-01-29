@@ -10,7 +10,7 @@
         = javascript_pack_tag("shogi_player_app")
         = stylesheet_pack_tag("shogi_player_app")
   .column.has-text-left
-    #drop_down_div
+    #drop_down_div v-cloak="true"
       b-dropdown :hoverable="true"
         button class="button" slot="trigger"
           span 棋譜コピー
