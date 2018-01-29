@@ -20,8 +20,8 @@ ruby:
             - controller.current_tactics.each do |e|
               =<> link_to(e, [:tactic_article, id: e], :class => "button is-text")
           - if controller.current_tags.present? && current_records.exists?
-            =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-text")
-          = link_to("詳細検索", "#", "@click.stop" => "open = !open", ":class" => "['button', 'is-text', {'is-active': open}, {'button-link': !open}]")
+            =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-info")
+          = link_to("詳細検索", "#", "@click.stop" => "open = !open", ":class" => "['button', 'is-text', {'is-active': open}]")
 
         template v-if="open"
           .has-text-left

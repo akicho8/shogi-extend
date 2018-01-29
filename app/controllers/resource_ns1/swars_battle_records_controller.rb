@@ -115,11 +115,11 @@ module ResourceNs1
             row["対戦相手"]       = record.win_lose_str(r_ship.swars_battle_user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.swars_battle_user)
           else
             if record.win_swars_battle_user
-              row["勝ち"] = Fa.icon_tag(:far, :circle) + swars_battle_user_link2(l_ship)
-              row["負け"] = Fa.icon_tag(:fas, :times)    + swars_battle_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:far, :circle) + swars_battle_user_link2(l_ship)
+              row["負け"] = icon_tag(:fas, :times)    + swars_battle_user_link2(r_ship)
             else
-              row["勝ち"] = Fa.icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(l_ship)
-              row["負け"] = Fa.icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(l_ship)
+              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(r_ship)
             end
           end
 

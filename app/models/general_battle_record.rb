@@ -173,9 +173,9 @@ class GeneralBattleRecord < ApplicationRecord
         Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
       else
         if general_battle_ship.judge_key == "win"
-          Fa.icon_tag(:fab, :circle)
+          Fa.icon_tag(:far, :circle)
         elsif general_battle_ship.judge_key == "lose"
-          Fa.icon_tag(:fab, :times)
+          Fa.icon_tag(:fas, :times)
         else
           raise "must not happen"
         end

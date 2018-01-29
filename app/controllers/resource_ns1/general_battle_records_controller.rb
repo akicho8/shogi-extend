@@ -77,11 +77,11 @@ module ResourceNs1
             row["対戦相手"] = general_battle_record.win_lose_str(r_ship).html_safe + " " + h.general_battle_user_link2(r_ship)
           else
             if general_battle_record.general_battle_state_info.draw
-              row["勝ち"] = Fa.icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_battle_user_link2(l_ship)
-              row["負け"] = Fa.icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_battle_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_battle_user_link2(l_ship)
+              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_battle_user_link2(r_ship)
             else
-              row["勝ち"] = Fa.icon_tag(:far, :circle) + h.general_battle_user_link2(l_ship)
-              row["負け"] = Fa.icon_tag(:fas, :times)    + h.general_battle_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:far, :circle) + h.general_battle_user_link2(l_ship)
+              row["負け"] = icon_tag(:fas, :times)    + h.general_battle_user_link2(r_ship)
             end
           end
 
@@ -96,7 +96,7 @@ module ResourceNs1
             place_list = general_battle_record.place_list
             str = "".html_safe
             if place_list.present?
-              str += link_to(Fa.icon_tag(:fas, :map_marker), h.google_maps_url(place_list.join(" ")), target: "_blank")
+              str += link_to(icon_tag(:fas, :map_marker), h.google_maps_url(place_list.join(" ")), target: "_blank")
               str += place_list.collect { |e| link_to(e, resource_ns1_general_search_path(e)) }.join(" ").html_safe
             end
             row["場所"] = str
