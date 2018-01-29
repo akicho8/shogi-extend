@@ -1,31 +1,30 @@
-- content_for :head do
-  = javascript_pack_tag("my_player")
-  = stylesheet_pack_tag("my_player")
-
-#kifu_player
-  ////////////////////////////////////////////////////////////////////////////////
-  .columns
-    .column
-      = current_record.header_detail(self).to_html
-    .column
-      - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
-        #shogi_player_app
-          shogi_player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true"
-    .column.has-text-left
-      b-dropdown hoverable="true"
+////////////////////////////////////////////////////////////////////////////////
+.columns
+  .column
+    = current_record.header_detail(self).to_html(table_class: "table is-fullwidth")
+  .column
+    - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
+      #shogi_player_app
+        shogi-player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true"
+      - content_for :head do
+        = javascript_pack_tag("shogi_player_app")
+        = stylesheet_pack_tag("shogi_player_app")
+  .column.has-text-left
+    #drop_down_div
+      b-dropdown :hoverable="true"
         button class="button" slot="trigger"
           span 棋譜コピー
           b-icon icon="menu-down"
         - KifuFormatInfo.each do |e|
           = content_tag("b-dropdown-item", e.name, :href => "#", "class": "kif_clipboard_copy_button", foo: 1, data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: e.key])})
-      b-dropdown hoverable="true"
+      b-dropdown :hoverable="true"
         button class="button" slot="trigger"
           span ダウンロード
           b-icon icon="menu-down"
         - KifuFormatInfo.each do |e|
           = link_to([:resource_ns1, current_record, format: e.key]) do
             b-dropdown-item= e.name
-      b-dropdown hoverable="true"
+      b-dropdown :hoverable="true"
         button class="button" slot="trigger"
           span リンク
           b-icon icon="menu-down"
@@ -33,24 +32,36 @@
           = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
         = content_tag("b-dropdown-item", "将棋山脈", :href => url_for([:resource_ns1, current_record, mountain: true]), "data-remote": true, class: "kif_clipboard_copy_button2")
         b-dropdown-item href=piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])) ぴよ将棋
+    javascript:
+      new Vue({
+        el: "#drop_down_div",
+      })
 
-  ////////////////////////////////////////////////////////////////////////////////
-  .columns
-    .column.has-text-left
-      labe.label 棋譜
+////////////////////////////////////////////////////////////////////////////////
+.columns
+  .column.has-text-left
+    #kifu_player_tabs_div
+      label.label 棋譜
       b-tabs v-model="kifuActiveTab"
         - KifuFormatInfo.each do |e|
           b-tab-item label=e.name
             - if converted_info = current_record.converted_infos.text_format_eq(e.key).take
-              pre style="white-space: pre-wrap"
-                = converted_info.text_body
-  ////////////////////////////////////////////////////////////////////////////////
-  .columns
-    .column.column.has-text-left
-      .field
-        label.label= "パーマリンク"
-      .control
-        input.input type="text" readonly="true" value=polymorphic_url([:resource_ns1, current_record])
+              pre.pre-wrap= converted_info.text_body
+    javascript:
+      new Vue({
+        el: "#kifu_player_tabs_div",
+        data: {
+          kifuActiveTab: 0,
+        }
+      })
+
+////////////////////////////////////////////////////////////////////////////////
+.columns
+  .column.column.has-text-left
+    .field
+      label.label= "パーマリンク"
+    .control
+      input.input type="text" readonly="true" value=polymorphic_url([:resource_ns1, current_record])
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -62,11 +73,3 @@
           =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
           =<> link_to("編集", [:edit, :resource_ns1, current_record], class: "button button-success")
           =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
-
-javascript:
-  new Vue({
-    el: "#kifu_player",
-    data: {
-      kifuActiveTab: 0,
-    }
-  })

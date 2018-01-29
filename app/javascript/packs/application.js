@@ -8,7 +8,7 @@
 // layout file, like app/views/layouts/application.html.erb
 
 // import "bulma"
-import "./application_style.sass"
+import "./application_css.sass"
 // import "./bootstrap_tuning.sass"
 
 import "./modulable_crud.coffee"
@@ -26,12 +26,29 @@ import 'buefy/lib/buefy.css'
 Vue.use(Buefy)
 
 // // OR
-// 
+//
 // Vue.component(Buefy.Checkbox.name, Buefy.Checkbox);
 // Vue.component(Buefy.Table.name, Buefy.Table);
 // Vue.component(Buefy.Switch.name, Buefy.Switch);
 
 ////////////////////////////////////////////////////////////////////////////////
+
+// import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
+// 
+// import _ from "lodash"
+// Object.defineProperty(Vue.prototype, '_', {value: _})
+// 
+// Vue.component('shogi-player', ShogiPlayer)
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   new Vue({
+//     el: '#shogi_player_app',
+//     components: { ShogiPlayer },
+//   })
+// })
+
+////////////////////////////////////////////////////////////////////////////////
+
 if (typeof(jQuery) != "undefined") {
   console.log('[Webpack] jQuery: OK')
   if (typeof($) != "undefined") {
