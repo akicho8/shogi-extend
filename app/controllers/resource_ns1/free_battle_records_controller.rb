@@ -62,7 +62,7 @@ module ResourceNs1
     end
 
     def behavior_after_rescue(message)
-      flash.now[:alert] = message
+      flash.now[:danger] = message
       render :edit
     end
   end
