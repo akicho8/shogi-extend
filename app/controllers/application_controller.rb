@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  add_flash_types :success, :info, :warning, :danger
+
   def submitted?(name)
     [name, "#{name}.x", "#{name}.y"].any? {|e| params.key?(e) }
   end

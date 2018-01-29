@@ -64,6 +64,7 @@ html lang="ja"
               li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
     section.section
       .container.is-fluid.main_container
+        == app_notification_tag
         = yield
     footer.footer
       .container.is-fluid

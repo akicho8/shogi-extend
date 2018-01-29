@@ -53,3 +53,9 @@ if (typeof(Vue) != "undefined") {
   console.log('[Webpack] Vue: Missing')
 }
 ////////////////////////////////////////////////////////////////////////////////
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Vue({
+    el: '#app_notification_tag',
+  })
+})

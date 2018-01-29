@@ -1,21 +1,31 @@
 module ApplicationHelper
   include ActsAsTaggableOn::TagsHelper
 
+  delegate :icon_tag, to: Fa
+
   def html_title
     [AppConfig[:app_name], @page_title].compact.reverse.join(" - ")
   end
 
-  def bootstrap_flash
-    flash.collect { |key, message|
-      key = {notice: :success, alert: :danger, error: :danger}.fetch(key.to_sym) { key }
-      close_button = content_tag(:button, raw("&times;"), key: "button", "class": "close", "data-dismiss": "alert")
-      Array(message).collect do |e|
-        content_tag(:div, close_button + e, "class": "alert fade in alert-#{key}")
-      end
-    }.flatten.compact.join("\n").html_safe
-  end
+  def app_notification_tag
+    legacy_types = {
+      notice: :success,
+      alert: :warning,
+      error: :danger,
+    }
 
-  delegate :icon_tag, to: Fa
+    if params[:debug]
+      flash.now[:info] = "(info)"
+      flash.now[:danger] = "(danger)"
+    end
+
+    content_tag(:div, id: "app_notification_tag") do
+      flash.collect { |key, message|
+        key = legacy_types.fetch(key.to_sym) { key }
+        content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "true")
+      }.join.html_safe
+    end
+  end
 
   def skill_option_create(e)
     str = e.name

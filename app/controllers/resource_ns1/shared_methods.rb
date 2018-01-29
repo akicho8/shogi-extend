@@ -9,16 +9,13 @@ module ResourceNs1
 
       rescue_from "Bushido::BushidoError" do |exception|
         h = ApplicationController.helpers
-        lines = exception.message.lines
+        lines = exception.message.lines.collect(&:rstrip)
         message = lines.first.strip.html_safe
-        if field = lines.drop(1).join.presence
-          message += "<br>".html_safe
-          message += h.content_tag(:pre, field).html_safe
+        if field = lines.drop(1).presence
+          message += h.content_tag(:div, field.join("<br/>").html_safe, "class": "error_message_pre").html_safe
         end
-        unless Rails.env.production?
-          if exception.backtrace
-            message += h.content_tag(:pre, exception.backtrace.first(8).join("\n").html_safe).html_safe
-          end
+        if exception.backtrace
+          message += h.content_tag(:div, exception.backtrace.first(8).join("<br/>").html_safe, "class": "error_message_pre").html_safe
         end
         behavior_after_rescue(message)
       end
