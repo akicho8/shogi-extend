@@ -169,7 +169,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.21)
+    ffi (1.9.18)
     font-awesome-sass (5.0.6.2)
       sass (>= 3.2)
     foreman (0.84.0)
@@ -412,6 +412,7 @@ DEPENDENCIES
   exception_notification
   factory_bot_rails
   faraday
+  ffi (= 1.9.18)
   font-awesome-sass
   foreman
   html_format
