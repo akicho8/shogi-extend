@@ -28,14 +28,14 @@ module ConvertMethods
       destroy_all: false,
     }.merge(options)
 
-    info = Bushido::Parser.parse(kifu_body, typical_error_case: :embed)
+    info = Warabi::Parser.parse(kifu_body, typical_error_case: :embed)
     converted_infos.destroy_all if options[:destroy_all]
     KifuFormatInfo.each do |e|
       converted_info = converted_infos.text_format_eq(e.key).take
       converted_info ||= converted_infos.build
       converted_info.attributes = {text_body: info.public_send("to_#{e.key}"), text_format: e.key}
     end
-    self.turn_max = info.mediator.turn_max
+    self.turn_max = info.mediator.turn_info.turn_max
 
     self.meta_info = {
       :header          => info.header.to_h,

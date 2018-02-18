@@ -345,7 +345,7 @@ class SwarsBattleRecord < ApplicationRecord
             judge_key = :draw
           end
 
-          swars_battle_record.swars_battle_ships.build(swars_battle_user:  swars_battle_user, swars_battle_grade: swars_battle_grade, judge_key: judge_key, location_key: Bushido::Location.fetch(i).key)
+          swars_battle_record.swars_battle_ships.build(swars_battle_user:  swars_battle_user, swars_battle_grade: swars_battle_grade, judge_key: judge_key, location_key: Warabi::Location.fetch(i).key)
         end
 
         # SQLをシンプルにするために勝者だけ、所有者的な意味で、SwarsBattleRecord 自体に入れとく

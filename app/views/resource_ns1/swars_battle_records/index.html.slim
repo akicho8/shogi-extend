@@ -7,7 +7,7 @@
         .control.is-expanded
           = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_query_hash.blank?)
           = tag.datalist(id: "user_key_list") do
-            - Bushido::TacticInfo.all_elements.each do |e|
+            - Warabi::TacticInfo.all_elements.each do |e|
               = tag.option(value: e.name)
             - user_keys = []
             / 利用者

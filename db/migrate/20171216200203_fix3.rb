@@ -3,7 +3,7 @@ class Fix3 < ActiveRecord::Migration[5.1]
     # ActiveRecord::Schema.define do
     #   add_column :swars_battle_ships, :location_key, :string, default: "black"
     #   SwarsBattleShip.reset_column_information
-    #   SwarsBattleShip.find_each { |e| e.update!(location_key: Bushido::Location[e.position].key) }
+    #   SwarsBattleShip.find_each { |e| e.update!(location_key: Warabi::Location[e.position].key) }
     # 
     #   SwarsBattleShip.find_each { |e|
     #     if e.swars_battle_record.blank?

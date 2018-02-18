@@ -41,10 +41,10 @@ class GeneralBattleShip < ApplicationRecord
   with_options allow_blank: true do
     validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
     validates :location_key, uniqueness: {scope: :general_battle_record_id}
-    validates :location_key, inclusion: Bushido::Location.keys.collect(&:to_s)
+    validates :location_key, inclusion: Warabi::Location.keys.collect(&:to_s)
   end
 
   def location
-    Bushido::Location.fetch(location_key)
+    Warabi::Location.fetch(location_key)
   end
 end

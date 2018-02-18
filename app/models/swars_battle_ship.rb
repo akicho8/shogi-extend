@@ -63,7 +63,7 @@ class SwarsBattleShip < ApplicationRecord
     validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
     validates :swars_battle_user_id, uniqueness: {scope: :swars_battle_record_id}
     validates :location_key, uniqueness: {scope: :swars_battle_record_id}
-    validates :location_key, inclusion: Bushido::Location.keys.collect(&:to_s)
+    validates :location_key, inclusion: Warabi::Location.keys.collect(&:to_s)
   end
 
   def name_with_grade
@@ -71,6 +71,6 @@ class SwarsBattleShip < ApplicationRecord
   end
 
   def location
-    Bushido::Location.fetch(location_key)
+    Warabi::Location.fetch(location_key)
   end
 end

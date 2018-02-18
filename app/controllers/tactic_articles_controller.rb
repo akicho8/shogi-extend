@@ -1,5 +1,5 @@
 class TacticArticlesController < ApplicationController
-  delegate :soldiers_hash, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, :to => "current_record.board_parser"
+  delegate :point_as_key_table, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, :to => "current_record.board_parser"
 
   helper_method :current_record
 
@@ -8,11 +8,11 @@ class TacticArticlesController < ApplicationController
 
     case params[:mode]
     when "list"
-      @rows = Bushido::TacticInfo.flat_map do |group|
+      @rows = Warabi::TacticInfo.flat_map do |group|
         group.model.collect { |e| row_build(e) }
       end
     when "tree"
-      @tree = Bushido::TacticInfo.flat_map do |group|
+      @tree = Warabi::TacticInfo.flat_map do |group|
         group.model.find_all(&:root?).collect { |root|
           root.to_s_tree do |e|
             link_to(e.name, [:tactic_article, id: e.key])
@@ -20,8 +20,8 @@ class TacticArticlesController < ApplicationController
         }.join
       end
     when "fortune"
-      @attack_info = Bushido::AttackInfo.to_a.sample
-      @defense_info = Bushido::DefenseInfo.to_a.sample
+      @attack_info = Warabi::AttackInfo.to_a.sample
+      @defense_info = Warabi::DefenseInfo.to_a.sample
     end
   end
 
@@ -31,12 +31,12 @@ class TacticArticlesController < ApplicationController
     # ☆ 移動元ではない
 
     @board_table = tag.table(:class => "tactic_board_table") do
-      Bushido::Position::Vpos.board_size.times.collect { |y|
+      Warabi::Position::Vpos.board_size.times.collect { |y|
         tag.tr {
-          Bushido::Position::Hpos.board_size.times.collect { |x|
+          Warabi::Position::Hpos.board_size.times.collect { |x|
             td_class = []
 
-            point = Bushido::Point.fetch([x, y])
+            point = Warabi::Point.fetch([x, y])
             str = nil
 
             # トリガー駒
@@ -46,7 +46,7 @@ class TacticArticlesController < ApplicationController
               str = soldier.any_name
             else
               # トリガーではない駒
-              if soldier = soldiers_hash[point]
+              if soldier = point_as_key_table[point]
                 td_class << "location_#{soldier[:location].key}"
                 str = soldier.any_name
               end
@@ -100,7 +100,7 @@ class TacticArticlesController < ApplicationController
     end
     @detail_hash = row.transform_values(&:presence).compact
 
-    all_records = Bushido::TacticInfo.all_elements
+    all_records = Warabi::TacticInfo.all_elements
     if index = all_records.find_index(current_record)
       @left_right_link = tag.navi(:class => "pagination is-right", role: "navigation", "aria-label": "pagination") do
         [
@@ -117,7 +117,7 @@ class TacticArticlesController < ApplicationController
   def current_record
     @current_record ||= -> {
       v = nil
-      Bushido::TacticInfo.each do |e|
+      Warabi::TacticInfo.each do |e|
         if v = e.model.lookup(params[:id])
           break
         end
@@ -169,13 +169,13 @@ class TacticArticlesController < ApplicationController
     row["手番"] = str
 
     row["歩がない"] = e.not_have_pawn ? checked : nil
-    row["打時"] = e.stroke_only ? checked : nil
+    row["打時"] = e.direct_only ? checked : nil
     row["キル時"] = e.kill_only ? checked : nil
     row["開戦前"] = e.cold_war ? checked : nil
-    row["所持あり"] = Array(e.hold_piece_in).collect(&:name).join(", ")
-    row["所持なし"] = Array(e.hold_piece_not_in).collect(&:name).join(", ")
-    row["持駒数"] = e.hold_piece_count_eq
-    row["持駒一致"] = Array(e.hold_piece_eq).collect(&:name).join(", ")
+    row["所持あり"] = e.hold_piece_in ? e.hold_piece_in.to_s : nil,
+    row["所持なし"] = e.hold_piece_not_in ? e.hold_piece_not_in.to_s : nil,
+    row["持駒が空"] = e.hold_piece_empty ? checked : nil
+    row["持駒一致"] = e.hold_piece_eq ? e.hold_piece_eq.to_s : nil
     row["歩以外不所持"] = e.not_have_anything_except_pawn ? checked : nil
 
     # if e.compare_condition

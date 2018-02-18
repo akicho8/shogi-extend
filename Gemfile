@@ -100,7 +100,7 @@ gem 'org_tp'
 gem 'html_format'
 gem 'daiku',         github: 'akicho8/daiku'
 gem 'aam',           github: 'akicho8/aam'
-gem 'bushido',       github: 'akicho8/bushido'
+gem 'warabi',        github: 'akicho8/warabi'
 
 # for SwarsBattleAgent
 gem 'nokogiri'

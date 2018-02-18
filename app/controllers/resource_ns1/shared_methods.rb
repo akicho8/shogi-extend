@@ -7,7 +7,7 @@ module ResourceNs1
         end
       end
 
-      rescue_from "Bushido::BushidoError" do |exception|
+      rescue_from "Warabi::WarabiError" do |exception|
         h = ApplicationController.helpers
         lines = exception.message.lines
         message = lines.first.strip.html_safe

@@ -146,7 +146,7 @@ module ResourceNs1
     end
 
     def current_tactics
-      @current_tactics ||= current_tags.find_all { |tag| Bushido::TacticInfo.any? { |e| e.model[tag] } }
+      @current_tactics ||= current_tags.find_all { |tag| Warabi::TacticInfo.any? { |e| e.model[tag] } }
     end
 
     def current_user

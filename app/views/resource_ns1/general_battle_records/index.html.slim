@@ -11,7 +11,7 @@ ruby:
           .control.is-expanded
             = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
             = tag.datalist(id: "user_key_list") do
-              - Bushido::TacticInfo.all_elements.each do |e|
+              - Warabi::TacticInfo.all_elements.each do |e|
                 = tag.option(value: e.name)
           .control
             = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
@@ -33,10 +33,10 @@ ruby:
               input#minus_tag.input type="text" v-model="minus_tag"
             .field
               label.label[for="attack_key"]= "戦型"
-              = select_func[Bushido::AttackInfo, :attack_key]
+              = select_func[Warabi::AttackInfo, :attack_key]
             .field
               label.label[for="defense_key"]= "囲い"
-              = select_func[Bushido::DefenseInfo, :defense_key]
+              = select_func[Warabi::DefenseInfo, :defense_key]
             .field
               label.label[for="turn_max"]= "手数"
               .control
