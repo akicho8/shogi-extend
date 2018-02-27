@@ -169,7 +169,7 @@ class TacticArticlesController < ApplicationController
     row["手番"] = str
 
     row["歩がない"] = e.not_have_pawn ? checked : nil
-    row["打時"] = e.direct_only ? checked : nil
+    row["打時"] = e.drop_only ? checked : nil
     row["キル時"] = e.kill_only ? checked : nil
     row["開戦前"] = e.cold_war ? checked : nil
     row["所持あり"] = e.hold_piece_in ? e.hold_piece_in.to_s : nil,

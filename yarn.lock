@@ -5510,9 +5510,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi-player@0.0.24:
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.24.tgz#8e256b8ab04f472cf40b2da209b31a9ea0462307"
+shogi-player@0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.30.tgz#c80ec471c407306bfb5b6b1900a669867ca2dc2a"
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
@@ -5533,6 +5533,7 @@ shogi-player@0.0.24:
     babel-preset-es2015 "^6.24.1"
     babel-preset-stage-2 "^6.22.0"
     babel-register "^6.22.0"
+    buefy "^0.6.2"
     bulma "^0.6.2"
     debug "^3.1.0"
     lodash "^4.17.4"
