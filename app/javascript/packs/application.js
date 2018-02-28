@@ -25,6 +25,10 @@ import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 Vue.use(Buefy)
 
+// // From outside Vue instance
+// import { Toast, ModalProgrammatic } from 'buefy'
+// Toast
+
 // // OR
 //
 // Vue.component(Buefy.Checkbox.name, Buefy.Checkbox);

@@ -22,6 +22,8 @@ module ResourceNs1
     end
 
     def show
+      access_log_create
+
       if params[:mountain]
         current_record.mountain_post_once
 
@@ -93,6 +95,9 @@ module ResourceNs1
 
     def behavior_after_rescue(message)
       redirect_to :root, danger: message
+    end
+
+    def access_log_create
     end
   end
 end

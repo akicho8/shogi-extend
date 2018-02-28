@@ -162,6 +162,10 @@ module ResourceNs1
 
     private
 
+    def access_log_create
+      current_record.update!(last_accessd_at: Time.current)
+    end
+
     def current_scope
       super.yield_self do |s|
         if v = current_plus_tags.presence

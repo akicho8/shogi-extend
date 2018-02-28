@@ -5,7 +5,7 @@
   .column
     - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
       #shogi_player_app
-        shogi-player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true"
+        shogi-player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :sound_effect="true" :volume="0.1"
       - content_for :head do
         = javascript_pack_tag("shogi_player_app")
         = stylesheet_pack_tag("shogi_player_app")

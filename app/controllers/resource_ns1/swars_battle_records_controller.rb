@@ -30,6 +30,7 @@ module ResourceNs1
     include SharedMethods
 
     def index
+      # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
       if query = params[:query].presence
         if query.match?(%r{https?://kif-pona.heroz.jp/games/})
           battle_key = URI(query).path.split("/").last
@@ -44,6 +45,7 @@ module ResourceNs1
           before_count = swars_battle_user.swars_battle_records.count
         end
 
+        # 連続クロール回避
         Rails.cache.fetch("basic_import_#{current_user_key}", expires_in: Rails.env.production? ? 30.seconds : 0) do
           current_model.basic_import(user_key: current_user_key)
           nil
@@ -62,114 +64,43 @@ module ResourceNs1
         end
       end
 
-      if true
-        if request.format.zip?
-          filename = -> {
-            parts = []
-            parts << "shogiwars"
-            if @swars_battle_user
-              parts << @swars_battle_user.user_key
-            end
-            parts << Time.current.strftime("%Y%m%d%H%M%S")
-            if current_tags
-              parts.concat(current_tags)
-            end
-            parts.compact.join("_") + ".zip"
-          }
-
-          zip_buffer = Zip::OutputStream.write_buffer do |zos|
-            current_scope.limit(params[:limit] || 512).each do |swars_battle_record|
-              KifuFormatInfo.each.with_index do |e|
-                if converted_info = swars_battle_record.converted_infos.text_format_eq(e.key).take
-                  zos.put_next_entry("#{e.key}/#{swars_battle_record.battle_key}.#{e.key}")
-                  zos.write converted_info.text_body
-                end
-              end
-            end
-          end
-
-          send_data(zip_buffer.string, type: Mime[params[:format]], filename: filename.call, disposition: "attachment")
-          return
-        end
+      perform_zip_download
+      if performed?
+        return
       end
 
       self.current_records = current_scope.page(params[:page]).per(params[:per])
-
-      @rows = current_records.collect do |record|
-        {}.tap do |row|
-          if @swars_battle_user
-            l_ship = record.myself(@swars_battle_user)
-            r_ship = record.rival(@swars_battle_user)
-          else
-            if record.win_swars_battle_user
-              l_ship = record.swars_battle_ships.judge_key_eq(:win)
-              r_ship = record.swars_battle_ships.judge_key_eq(:lose)
-            else
-              l_ship = record.swars_battle_ships.black
-              r_ship = record.swars_battle_ships.white
-            end
-          end
-
-          if @swars_battle_user
-            row["対象プレイヤー"] = record.win_lose_str(l_ship.swars_battle_user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.swars_battle_user)
-            row["対戦相手"]       = record.win_lose_str(r_ship.swars_battle_user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.swars_battle_user)
-          else
-            if record.win_swars_battle_user
-              row["勝ち"] = icon_tag(:far, :circle) + swars_battle_user_link2(l_ship)
-              row["負け"] = icon_tag(:fas, :times)    + swars_battle_user_link2(r_ship)
-            else
-              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(l_ship)
-              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(r_ship)
-            end
-          end
-
-          row["結果"] = link_to(swars_battle_state_info_decorate(record), resource_ns1_swars_search_path(record.swars_battle_state_info.name))
-
-          if false
-            row["戦法"] = record.tag_list.collect { |e| link_to(e, resource_ns1_swars_search_path(e)) }.join(" ").html_safe
-          else
-            row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-            row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
-          end
-          row["手数"] = record.turn_max
-          row["種類"] = link_to(record.swars_battle_rule_info.name, resource_ns1_swars_search_path(record.swars_battle_rule_info.name))
-
-          key = :battle_long
-          if record.battled_at >= Time.current.midnight
-            key = :battle_short
-          end
-          row["日時"] = record.battled_at.to_s(key)
-
-          row[""] = row_links(record)
-        end
-      end
+      @rows = current_records.collect { |record| row_build(record) }
     end
 
     def current_query_hash
-      if e = [:query].find { |e| params[e].present? }
-        acc = {}
-        params[e].to_s.gsub(/\p{blank}/, " ").strip.split(/\s+/).each do |s|
-          if s.match?(/\A(tag):/i) || query_nihongo?(s)
-            acc[:tags] ||= []
-            acc[:tags] << s.remove("tag:")
-          else
-            # https://shogiwars.heroz.jp/users/history/yuuki_130?gtype=&locale=ja -> yuuki_130
-            # https://shogiwars.heroz.jp/users/yuuki_130                          -> yuuki_130
-            if true
-              if url = URI::Parser.new.extract(s).first
-                uri = URI(url)
-                if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
-                  s = md.captures.compact.first
+      @current_query_hash ||= -> {
+        if e = [:query].find { |e| params[e].present? }
+          acc = {}
+          str = params[e].to_s.gsub(/\p{blank}/, " ").strip
+          str.split.each do |s|
+            if s.match?(/\A(tag):/i) || query_nihongo?(s)
+              acc[:tags] ||= []
+              acc[:tags] << s.remove("tag:")
+            else
+              # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
+              # https://shogiwars.heroz.jp/users/foo                          -> foo
+              if true
+                if url = URI::Parser.new.extract(s).first
+                  uri = URI(url)
+                  if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
+                    s = md.captures.compact.first
+                  end
+                  logger.info([url, s].to_t)
                 end
-                logger.info([url, s].to_t)
               end
+              acc[:user_key] ||= []
+              acc[:user_key] << s
             end
-            acc[:user_key] ||= []
-            acc[:user_key] << s
           end
+          acc
         end
-        acc
-      end
+      }.call
     end
 
     def current_tags
@@ -206,23 +137,27 @@ module ResourceNs1
 
     private
 
+    def access_log_create
+      current_record.swars_battle_record_access_logs.create!
+    end
+
     def current_scope
-      super.yield_self do |s|
-        s = s.joins(:swars_battle_ships => :swars_battle_user)
-        if action_name == "index"
-          s = s.includes(:win_swars_battle_user)
-        end
+      s = super
+      # s = s.joins(:swars_battle_ships => :swars_battle_user)
 
-        if @swars_battle_user
-          s = s.where(:swars_battle_users => {:id => @swars_battle_user.id})
-        end
-
-        if current_tags
-          s = s.tagged_with(current_tags)
-        end
-
-        s.order(battled_at: :desc)
+      if action_name == "index"
+        s = s.includes(:win_swars_battle_user)
       end
+
+      if @swars_battle_user
+        s = s.where(:swars_battle_users => {:id => @swars_battle_user.id})
+      end
+
+      if current_tags
+        s = s.tagged_with(current_tags)
+      end
+
+      s.order(battled_at: :desc)
     end
 
     def raw_current_record
@@ -282,6 +217,85 @@ module ResourceNs1
         str = tag.span(str, "class": "text-#{v}")
       end
       str
+    end
+
+    def perform_zip_download
+      if request.format.zip?
+        filename = -> {
+          parts = []
+          parts << "shogiwars"
+          if @swars_battle_user
+            parts << @swars_battle_user.user_key
+          end
+          parts << Time.current.strftime("%Y%m%d%H%M%S")
+          if current_tags
+            parts.concat(current_tags)
+          end
+          parts.compact.join("_") + ".zip"
+        }
+
+        zip_buffer = Zip::OutputStream.write_buffer do |zos|
+          current_scope.limit(params[:limit] || 512).each do |swars_battle_record|
+            KifuFormatInfo.each.with_index do |e|
+              if converted_info = swars_battle_record.converted_infos.text_format_eq(e.key).take
+                zos.put_next_entry("#{e.key}/#{swars_battle_record.battle_key}.#{e.key}")
+                zos.write converted_info.text_body
+              end
+            end
+          end
+        end
+
+        send_data(zip_buffer.string, type: Mime[params[:format]], filename: filename.call, disposition: "attachment")
+      end
+    end
+
+    def row_build(record)
+      {}.tap do |row|
+        if @swars_battle_user
+          l_ship = record.myself(@swars_battle_user)
+          r_ship = record.rival(@swars_battle_user)
+        else
+          if record.win_swars_battle_user
+            l_ship = record.swars_battle_ships.judge_key_eq(:win)
+            r_ship = record.swars_battle_ships.judge_key_eq(:lose)
+          else
+            l_ship = record.swars_battle_ships.black
+            r_ship = record.swars_battle_ships.white
+          end
+        end
+
+        if @swars_battle_user
+          row["対象プレイヤー"] = record.win_lose_str(l_ship.swars_battle_user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.swars_battle_user)
+          row["対戦相手"]       = record.win_lose_str(r_ship.swars_battle_user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.swars_battle_user)
+        else
+          if record.win_swars_battle_user
+            row["勝ち"] = icon_tag(:far, :circle) + swars_battle_user_link2(l_ship)
+            row["負け"] = icon_tag(:fas, :times)    + swars_battle_user_link2(r_ship)
+          else
+            row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(l_ship)
+            row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(r_ship)
+          end
+        end
+
+        row["結果"] = link_to(swars_battle_state_info_decorate(record), resource_ns1_swars_search_path(record.swars_battle_state_info.name))
+
+        if false
+          row["戦法"] = record.tag_list.collect { |e| link_to(e, resource_ns1_swars_search_path(e)) }.join(" ").html_safe
+        else
+          row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
+          row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
+        end
+        row["手数"] = record.turn_max
+        row["種類"] = link_to(record.swars_battle_rule_info.name, resource_ns1_swars_search_path(record.swars_battle_rule_info.name))
+
+        key = :battle_long
+        if record.battled_at >= Time.current.midnight
+          key = :battle_short
+        end
+        row["日時"] = record.battled_at.to_s(key)
+
+        row[""] = row_links(record)
+      end
     end
   end
 end

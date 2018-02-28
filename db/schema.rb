@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
+    t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_key"], name: "index_general_battle_records_on_battle_key", unique: true
@@ -81,6 +82,13 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.index ["unique_key"], name: "index_swars_battle_grades_on_unique_key", unique: true
   end
 
+  create_table "swars_battle_record_access_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "swars_battle_record_id", null: false, comment: "対局"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["swars_battle_record_id"], name: "index_swars_battle_record_access_logs_on_swars_battle_record_id"
+  end
+
   create_table "swars_battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "battle_key", null: false, comment: "対局識別子"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
@@ -91,6 +99,8 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
+    t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
+    t.integer "swars_battle_record_access_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_key"], name: "index_swars_battle_records_on_battle_key", unique: true

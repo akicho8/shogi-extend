@@ -47,6 +47,9 @@ class CreateSwarsBattleRecords < ActiveRecord::Migration[5.1]
 
       t.string :mountain_url, comment: "将棋山脈の変換後URL"
 
+      t.datetime :last_accessd_at, null: false, comment: "最終参照日時"
+      t.integer :swars_battle_record_access_logs_count, default: 0
+
       t.timestamps null: false
     end
 
@@ -70,6 +73,11 @@ class CreateSwarsBattleRecords < ActiveRecord::Migration[5.1]
 
     create_table :swars_battle_user_receptions, force: true do |t|
       t.belongs_to :swars_battle_user, null: false, comment: "プレイヤー"
+      t.timestamps null: false
+    end
+
+    create_table :swars_battle_record_access_logs, force: true do |t|
+      t.belongs_to :swars_battle_record, null: false, comment: "対局"
       t.timestamps null: false
     end
   end

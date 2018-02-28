@@ -7,8 +7,13 @@ Object.defineProperty(Vue.prototype, '_', {value: _})
 // Vue.component('shogi-player', ShogiPlayer)
 
 document.addEventListener('DOMContentLoaded', () => {
-  new Vue({
+  var foobar = new Vue({
     el: '#shogi_player_app',
+    data: function() {
+      return {
+        foo: "",
+      }
+    },
     components: { ShogiPlayer },
   })
 })

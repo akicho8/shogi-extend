@@ -57,8 +57,8 @@ html lang="ja"
         .tabs.is-boxed.is-centered
           .container
             ul
-              li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
               li class=("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
+              li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
               li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
               li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)
               li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
@@ -75,16 +75,7 @@ html lang="ja"
               ul
                 li= link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
                 li= link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
+                li= link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
                 li= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
                 li= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
-              / span.tag= link_to("将棋ウォーズ", "https://shogiwars.heroz.jp/", target: "_blank")
-              / span.tag= link_to("将棋山脈", "http://shogi-s.com/", target: "_blank")
-              / span.tag= link_to("ぴよ将棋", "https://www.studiok-i.net/ios/piyo_shogi.html", target: "_blank")
-              / span.tag= link_to("2ch名人", "http://i2chmeijin.blog.fc2.com/", target: "_blank")
-              / span.tag= link_to("5ちゃんねる将棋板", "https://mevius.5ch.net/bgame/", target: "_blank")
-              / span.tag= link_to("AbemaTV将棋チャンネル", "https://abema.tv/now-on-air/shogi", target: "_blank")
-              / span.tag= link_to("ニコ生将棋チャンネル", "http://ch.nicovideo.jp/shogi", target: "_blank")
-              / span.tag= link_to("将棋DB2", "https://shogidb2.com/", target: "_blank")
-              / span.tag= link_to("日本将棋連盟", "https://www.shogi.or.jp/", target: "_blank")
-              / span.tag= link_to("81道場", "http://81dojo.com/jp/", target: "_blank")
             = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"

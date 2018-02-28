@@ -50,6 +50,26 @@ pre
   visibility: hidden !important
 
 ////////////////////////////////////////////////////////////////////////////// 囲い
+  
+.hero
+  &.is-primary
+    background-color: transparent !important
+
+  position: relative
+  &:after
+    position: absolute
+    z-index: -1
+    content: ""
+    background-image: url("../assets/hero.jpg")
+    background-position: center
+    background-size: cover
+    opacity: 1.0
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+  
+////////////////////////////////////////////////////////////////////////////// 囲い
 
 @import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
 @import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"

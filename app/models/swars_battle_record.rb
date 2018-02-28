@@ -34,6 +34,8 @@ class SwarsBattleRecord < ApplicationRecord
   has_many :swars_battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :swars_battle_record
   delegate :rival, :myself, to: :swars_battle_ships
 
+  has_many :swars_battle_record_access_logs, dependent: :destroy # アクセスログみたいもの
+
   has_many :swars_battle_users, through: :swars_battle_ships do
     # 先手/後手プレイヤー
     def black
@@ -45,7 +47,9 @@ class SwarsBattleRecord < ApplicationRecord
     end
   end
 
-  before_validation do
+  before_validation on: :create do
+    self.last_accessd_at ||= Time.current
+
     # "" から ten_min への変換
     if battle_rule_key
       self.battle_rule_key = SwarsBattleRuleInfo.fetch(battle_rule_key).key
@@ -187,20 +191,44 @@ class SwarsBattleRecord < ApplicationRecord
         import(*args, params, &block)
       end
 
+      def old_record_destroy(**params)
+        params = {
+          time: 1.months.ago,
+        }.merge(params)
+
+        all.where(arel_table[:last_accessd_at].lteq(params[:time])).destroy_all
+      end
+
+      def remake(**params)
+        params = {
+          limit: 256,
+        }.merge(params)
+
+        c = Hash.new(0)
+        all.order(last_accessd_at: :desc).limit(params[:limit]).find_each do |e|
+          e.parser_exec
+          c[e.changed?] += 1
+          print(e.changed? ? 'U' : '.')
+          e.save!
+        end
+        p c
+      end
+
       def import(key, **params, &block)
         counts = -> { Vector[SwarsBattleUser.count, SwarsBattleRecord.count] }
         old = counts.call
         begin
-          p [Time.current.to_s(:ymdhms), key, 'begin', *old]
+          p [Time.current.to_s(:ymdhms), key, 'begin', old.to_a]
           if block_given?
             yield
           else
-            public_send("#{key}_import", params)
+            public_send(key, params)
           end
         rescue => error
           raise error
         ensure
-          p [Time.current.to_s(:ymdhms), key, 'end__', *(counts.call - old), error].compact
+          v = counts.call
+          p [Time.current.to_s(:ymdhms), key, 'end__', v.to_a, (v - old).to_a, error].compact
         end
       end
 

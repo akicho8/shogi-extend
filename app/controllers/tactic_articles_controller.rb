@@ -1,5 +1,5 @@
 class TacticArticlesController < ApplicationController
-  delegate :point_as_key_table, :trigger_soldiers_hash, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, :to => "current_record.board_parser"
+  delegate :soldiers, :trigger_soldiers, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, :to => "current_record.board_parser"
 
   helper_method :current_record
 
@@ -30,24 +30,24 @@ class TacticArticlesController < ApplicationController
     # ● 何かある
     # ☆ 移動元ではない
 
-    @board_table = tag.table(:class => "tactic_board_table") do
-      Warabi::Position::Vpos.board_size.times.collect { |y|
+    @board_table = tag.table(:class => "board-inner") do
+      Warabi::Position::Vpos.dimension.times.collect { |y|
         tag.tr {
-          Warabi::Position::Hpos.board_size.times.collect { |x|
+          Warabi::Position::Hpos.dimension.times.collect { |x|
             td_class = []
 
             point = Warabi::Point.fetch([x, y])
             str = nil
 
             # トリガー駒
-            if soldier = trigger_soldiers_hash[point]
-              td_class << "location_#{soldier[:location].key}"
+            if soldier = trigger_soldiers.point_as_key_table[point]
+              td_class << "location_#{soldier.location.key}"
               td_class << "current"
               str = soldier.any_name
             else
               # トリガーではない駒
-              if soldier = point_as_key_table[point]
-                td_class << "location_#{soldier[:location].key}"
+              if soldier = soldiers.point_as_key_table[point]
+                td_class << "location_#{soldier.location.key}"
                 str = soldier.any_name
               end
             end
@@ -83,7 +83,7 @@ class TacticArticlesController < ApplicationController
 
             # どれかの駒がある
             if soldier = any_exist_soldiers.find {|e| e[:point] == point }
-              td_class << "location_#{soldier[:location].key}"
+              td_class << "location_#{soldier.location.key}"
               td_class << "any_exist_soldiers"
               str = soldier.any_name
             end
@@ -111,6 +111,11 @@ class TacticArticlesController < ApplicationController
           link_to(icon_tag(:fas, *icon), [:tactic_article, id: r.key], :class => klass)
         }.join(" ").html_safe + tag.ul("class": "pagination-list")
       end
+    end
+
+    @sample_kifu_body = Rails.cache.fetch("#{__method__}_#{current_record.hash}", :expires_in => 1.week) do
+      file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
+      Warabi::Parser.file_parse(file).to_sfen
     end
   end
 
@@ -172,8 +177,8 @@ class TacticArticlesController < ApplicationController
     row["打時"] = e.drop_only ? checked : nil
     row["キル時"] = e.kill_only ? checked : nil
     row["開戦前"] = e.cold_war ? checked : nil
-    row["所持あり"] = e.hold_piece_in ? e.hold_piece_in.to_s : nil,
-    row["所持なし"] = e.hold_piece_not_in ? e.hold_piece_not_in.to_s : nil,
+    row["所持あり"] = e.hold_piece_in ? e.hold_piece_in.to_s : nil
+    row["所持なし"] = e.hold_piece_not_in ? e.hold_piece_not_in.to_s : nil
     row["持駒が空"] = e.hold_piece_empty ? checked : nil
     row["持駒一致"] = e.hold_piece_eq ? e.hold_piece_eq.to_s : nil
     row["歩以外不所持"] = e.not_have_anything_except_pawn ? checked : nil

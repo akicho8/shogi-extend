@@ -25,10 +25,13 @@ class GeneralBattleRecord < ApplicationRecord
 
   has_many :general_battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :general_battle_record
 
-  before_validation do
+  before_validation on: :create do
+    self.last_accessd_at ||= Time.current
     self.battle_key ||= SecureRandom.hex
     self.kifu_body ||= ""
+  end
 
+  before_validation do
     if changes[:kifu_body]
       parser_exec
     end
@@ -71,6 +74,20 @@ class GeneralBattleRecord < ApplicationRecord
         end
       end
 
+      def import(key, **params)
+        begin
+          p [Time.current.to_s(:ymdhms), "begin", GeneralBattleUser.count, GeneralBattleRecord.count] unless Rails.env.test?
+          public_send(key, params)
+        rescue => error
+          raise error
+        ensure
+          unless Rails.env.test?
+            puts
+            p [Time.current.to_s(:ymdhms), "end__", GeneralBattleUser.count, GeneralBattleRecord.count, error].compact
+          end
+        end
+      end
+
       # rails r 'GeneralBattleRecord.destroy_all; GeneralBattleRecord.all_import'
       # capp rails:runner CODE='GeneralBattleRecord.all_import'
       # rails r 'GeneralBattleRecord.all_import(kifu_dir: "..")'
@@ -93,20 +110,9 @@ class GeneralBattleRecord < ApplicationRecord
           GeneralBattleUser.destroy_all
           GeneralBattleRecord.destroy_all
         end
-
-        begin
-          p [Time.current.to_s(:ymdhms), "begin", GeneralBattleUser.count, GeneralBattleRecord.count] unless Rails.env.test?
-          files.each do |file|
-            basic_import(params.merge(file: file))
-            STDOUT.flush
-          end
-        rescue => error
-          raise error
-        ensure
-          unless Rails.env.test?
-            puts
-            p [Time.current.to_s(:ymdhms), "end__", GeneralBattleUser.count, GeneralBattleRecord.count, error].compact
-          end
+        files.each do |file|
+          basic_import(params.merge(file: file))
+          STDOUT.flush
         end
       end
 
@@ -129,6 +135,14 @@ class GeneralBattleRecord < ApplicationRecord
         end
 
         record.save!
+      end
+
+      def old_record_destroy(**params)
+        params = {
+          time: 1.weeks.ago,
+        }.merge(params)
+
+        where(arel_table[:last_accessd_at].lteq(params[:time])).destroy_all
       end
     end
 

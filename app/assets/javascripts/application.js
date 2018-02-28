@@ -42,14 +42,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (result) {
         if (true) {
-          alert("クリップボードにコピーしました")
+          Vue.prototype.$toast.open({message: "クリップボードにコピーしました", position: "is-bottom", type: "is-success"})
         } else {
           $(e.target).tooltip({title: "クリップボードにコピーしました", trigger: "manual"})
           $(e.target).tooltip("show")
           setTimeout(() => $(e.target).tooltip("destroy"), 1000)
         }
       } else {
-        alert("クリップボードへのコピーに失敗しました")
+        Vue.prototype.$toast.open({message: "クリップボードへのコピーに失敗しました", position: "is-bottom", type: "is-danger"})
       }
 
       e.preventDefault()

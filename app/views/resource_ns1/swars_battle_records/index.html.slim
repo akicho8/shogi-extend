@@ -1,3 +1,5 @@
+#app
+
 = render :partial => "header"
 
 .columns
@@ -27,8 +29,9 @@
           =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-info")
         - if controller.current_query_hash
           - if tags = controller.current_query_hash[:tags]
-            - tags.each do |e|
-              = link_to(e, [:tactic_article, id: e], class: "button is-success")
+            - tags.each do |tag|
+              - if Warabi::TacticInfo.any? { |e| e.model[tag] }
+                = link_to(tag, [:tactic_article, id: tag], class: "button is-success")
 .columns
   .column
     = @rows.to_html
