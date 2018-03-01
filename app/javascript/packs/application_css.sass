@@ -1,4 +1,12 @@
-$sp-assert-dir: "./assets"
+////////////////////////////////////////////////////////////////////////////// ShogiPlayer の css を再利用
+
+// $sp-assets-dir: "../sp-assets"
+$sp-assets-dir: "../../../node_modules/shogi-player/src/assets"
+
+@import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
+@import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"
+
+@import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
 
 ////////////////////////////////////////////////////////////////////////////// Vue
 
@@ -62,7 +70,7 @@ pre
     position: absolute
     z-index: -1
     content: ""
-    background-image: url("#{$sp-assert-dir}/hero.jpg")
+    background-image: url("#{$sp-assets-dir}/hero.jpg")
     background-position: center
     background-size: cover
     opacity: 1.0
@@ -72,11 +80,6 @@ pre
     height: 100%
   
 ////////////////////////////////////////////////////////////////////////////// 囲い
-
-@import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
-@import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"
-
-@import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
 
 $cell_blank_bg:       $grey
 $something_exist_bg:  $green

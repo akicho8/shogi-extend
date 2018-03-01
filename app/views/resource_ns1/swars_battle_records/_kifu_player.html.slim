@@ -8,7 +8,8 @@
         shogi-player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :sound_effect="true" :volume="0.1"
       - content_for :head do
         = javascript_pack_tag("shogi_player_app")
-        = stylesheet_pack_tag("shogi_player_app")
+        / CSSは別にしたので生成されなくなった
+        / = stylesheet_pack_tag("shogi_player_app")
   .column.has-text-left
     #drop_down_div v-cloak="true"
       b-dropdown :hoverable="true"
