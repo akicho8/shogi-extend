@@ -1,3 +1,5 @@
+$sp-assert-dir: "./assets"
+
 ////////////////////////////////////////////////////////////////////////////// Vue
 
 [v-cloak]
@@ -60,7 +62,7 @@ pre
     position: absolute
     z-index: -1
     content: ""
-    background-image: url("../assets/hero.jpg")
+    background-image: url("#{$sp-assert-dir}/hero.jpg")
     background-position: center
     background-size: cover
     opacity: 1.0
@@ -73,6 +75,7 @@ pre
 
 @import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
 @import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"
+
 @import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
 
 $cell_blank_bg:       $grey
