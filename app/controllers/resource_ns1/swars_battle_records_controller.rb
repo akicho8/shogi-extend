@@ -70,6 +70,7 @@ module ResourceNs1
       end
 
       self.current_records = current_scope.page(params[:page]).per(params[:per])
+
       @rows = current_records.collect { |record| row_build(record) }
     end
 
@@ -143,13 +144,13 @@ module ResourceNs1
 
     def current_scope
       s = super
-      # s = s.joins(:swars_battle_ships => :swars_battle_user)
 
       if action_name == "index"
-        s = s.includes(:win_swars_battle_user)
+        # s = s.includes(:win_swars_battle_user)
       end
 
       if @swars_battle_user
+        s = s.joins(:swars_battle_ships => :swars_battle_user)
         s = s.where(:swars_battle_users => {:id => @swars_battle_user.id})
       end
 
