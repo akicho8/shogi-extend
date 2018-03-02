@@ -2,7 +2,11 @@
 // https://github.com/rails/webpacker/blob/master/lib/webpacker/compiler.rb
 // で WEBPACKER_RELATIVE_URL_ROOT が追加されたのでそのうち↓これは不要になるはず
 
-const isProduction = process.env.NODE_ENV === 'production'
+const publicPath = {
+  production:  '/shogi/packs/',
+  development: '/packs/',
+  test:        '/packs-test/',
+}[process.env.NODE_ENV]
 
 module.exports = {
   test: /\.(wav|jpg|jpeg|png|gif|tiff|ico|svg|eot|otf|ttf|woff|woff2)$/i,
@@ -10,7 +14,7 @@ module.exports = {
     {
       loader: 'file-loader', // http://devdocs.io/webpack/loaders/file-loader
       options: {
-        publicPath: isProduction ? '/shogi/packs/' : '/packs/',
+        publicPath: publicPath,
         outputPath: 'files/',
         // context: "app/javascript", // 基準ディレクトリ。name に [path] が含まれるときに書いたぶんだけ省略できる。デフォルトは Rails.root になっている
         name: '[name]-[hash].[ext]', // [path]
