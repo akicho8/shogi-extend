@@ -145,10 +145,6 @@ module ResourceNs1
     def current_scope
       s = super
 
-      if action_name == "index"
-        # s = s.includes(:win_swars_battle_user)
-      end
-
       if @swars_battle_user
         s = s.joins(:swars_battle_ships => :swars_battle_user)
         s = s.where(:swars_battle_users => {:id => @swars_battle_user.id})
@@ -271,7 +267,7 @@ module ResourceNs1
         else
           if record.win_swars_battle_user
             row["勝ち"] = icon_tag(:far, :circle) + swars_battle_user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :times)    + swars_battle_user_link2(r_ship)
+            row["負け"] = icon_tag(:fas, :times)  + swars_battle_user_link2(r_ship)
           else
             row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(l_ship)
             row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + swars_battle_user_link2(r_ship)

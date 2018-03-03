@@ -7,6 +7,8 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import "rails-ujs"
+
 // import "bulma"
 import "./application_css.sass"
 // import "./bootstrap_tuning.sass"
@@ -25,6 +27,13 @@ import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 Vue.use(Buefy)
 
+import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
+Vue.component('shogi-player', ShogiPlayer)
+
+import _ from "lodash"
+Object.defineProperty(Vue.prototype, '_', {value: _})
+
+
 // // From outside Vue instance
 // import { Toast, ModalProgrammatic } from 'buefy'
 // Toast
@@ -38,10 +47,10 @@ Vue.use(Buefy)
 ////////////////////////////////////////////////////////////////////////////////
 
 // import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
-// 
+//
 // import _ from "lodash"
 // Object.defineProperty(Vue.prototype, '_', {value: _})
-// 
+//
 // Vue.component('shogi-player', ShogiPlayer)
 
 // document.addEventListener('DOMContentLoaded', () => {
@@ -73,10 +82,20 @@ if (typeof(Vue) != "undefined") {
 } else {
   console.log('[Webpack] Vue: Missing')
 }
-////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////// 最初からあるDOMに kifu_copy_hook_all 適用
+
+import * as AppUtils from "./app_utils.js"
+
+document.addEventListener('DOMContentLoaded', () => {
+  AppUtils.kifu_copy_hook_all()
+})
+
+//////////////////////////////////////////////////////////////////////////////// これなに？
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: '#app_notification_tag',
   })
 })
+

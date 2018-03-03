@@ -5392,6 +5392,10 @@ rails-erb-loader@^5.1.0:
     loader-utils "^1.1.0"
     lodash.defaults "^4.2.0"
 
+rails-ujs@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/rails-ujs/-/rails-ujs-5.1.5.tgz#e490a10ae29a5e1e57c130a42f93da10e91b5280"
+
 randomatic@^1.1.3:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-1.1.7.tgz#c7abe9cc8b87c0baa876b19fde83fd464797e38c"
@@ -5961,9 +5965,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi-player@0.0.34:
-  version "0.0.34"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.34.tgz#36fdf7b9ea4d8492c644e7faff89ee620fc96e82"
+shogi-player@0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.35.tgz#8aa21cc8956d05d53481c348905f977d56f788ae"
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
