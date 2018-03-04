@@ -42,9 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }).then((response) => {
           const url = response.data.url
           if (url === "") {
-            Vue.prototype.$toast.open({message: "混み合っているようです", position: "is-bottom", type: "is-danger"})
+            this.$toast.open({message: "混み合っているようです", position: "is-bottom", type: "is-danger"})
           } else {
-            window.open(url, "_blank")
+            this.$dialog.confirm({
+              message: '準備ができたようです。移動しますか？',
+              onConfirm: () => {
+                window.open(url, "_blank")
+              },
+            })
           }
         }).catch((error) => {
           console.table([error.response])
