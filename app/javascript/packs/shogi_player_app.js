@@ -38,10 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
       this_goto_mountain: function(e) {
         const url = e.target.dataset[_.camelCase("mountain_url_get_path")]
         axios.get(url, {
-          timeout: 1000 * 3,
+          timeout: 1000 * 15,
         }).then((response) => {
           const url = response.data.url
-          if (url === "") {
+          if (_.isEmpty(url)) {
             this.$toast.open({message: "混み合っているようです", position: "is-bottom", type: "is-danger"})
           } else {
             this.$dialog.confirm({

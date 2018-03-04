@@ -174,7 +174,7 @@ module ConvertMethods
     if converted_info = converted_infos.text_format_eq(:kif).take
       kif = converted_info.text_body
 
-      if ENV["RUN_REMOTE"] == "1"
+      if ENV["RUN_REMOTE"] == "1" || Rails.env.production?
         response = Faraday.post(url, kif: kif)
         logger.info(response.status.to_t)
         logger.info(response.headers.to_t)
