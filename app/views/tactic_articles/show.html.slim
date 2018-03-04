@@ -1,35 +1,31 @@
 .columns
+  ////////////////////////////////////////////////////////////////////////////////
   .column
-    .columns
-      .column
-        .breadcrumb
-          ul
-            li= link_to("一覧", :tactic_articles)
-            li.is-active= link_to(current_record.name, "#")
-    .columns
-      .column
-        = @left_right_link
-    .columns
-      .column
-        = @detail_hash.to_html(table_class: "table is-fullwidth")
+    .breadcrumb
+      ul
+        li= link_to("一覧", :tactic_articles)
+        li.is-active= link_to(current_record.name, "#")
+    = @left_right_link
+    = @detail_hash.to_html(table_class: "table is-fullwidth")
+  ////////////////////////////////////////////////////////////////////////////////
   .column
-    .columns
-      .column
-        .has-text-centered
-          p.title.is-2.yumincho= current_record.name
-    .columns
-      .column
-        .shogi-player.theme-simple.size-default
-          .board-container
-            .board-wrap
-              .board-outer
-                = @board_table
-  .column
+    .has-text-centered
+      p.title.is-2.yumincho= current_record.name
     #shogi_player_app
       shogi-player :kifu_body="'#{@sample_kifu_body}'" :start_turn="0" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :sound_effect="true" :volume="0.1"
     - content_for :head do
       = javascript_pack_tag("shogi_player_app")
-      = stylesheet_pack_tag("shogi_player_app")
+      / = stylesheet_pack_tag("shogi_player_app")
+  ////////////////////////////////////////////////////////////////////////////////
+  .column
+    br
+    br
+    br
+    .shogi-player.theme-simple.size-default
+      .board-container
+        .board-wrap
+          .board-outer
+            = @board_table
 
 / .has-text-centered
 / - count = GeneralBattleShip.tagged_with(current_record.name).count
