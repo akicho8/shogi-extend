@@ -29,24 +29,24 @@ module ResourceNs1
         render json: {url: current_record.mountain_url}
         return
 
-        # 通常リンク(remote: false)の場合
-        if true
-          if request.format.html?
-            if current_record.mountain_url
-              redirect_to current_record.mountain_url
-            else
-              # 無限ループしないように fallback_location に mountain を含めないこと
-              # redirect_back を使うと referer に mountain に含まれていて無限ループするはずなので注意
-              raise MustNotHappen if params[:fallback_location].to_s.include?("mountain")
-              redirect_to params[:fallback_location], notice: "混み合っているようです"
-            end
-            return
-          end
-        end
-
-        logger.info({mountain_url: current_record.mountain_url}.to_t)
-        render "resource_ns1/swars_battle_records/show"
-        return
+        # # 通常リンク(remote: false)の場合
+        # if true
+        #   if request.format.html?
+        #     if current_record.mountain_url
+        #       redirect_to current_record.mountain_url
+        #     else
+        #       # 無限ループしないように fallback_location に mountain を含めないこと
+        #       # redirect_back を使うと referer に mountain に含まれていて無限ループするはずなので注意
+        #       raise MustNotHappen if params[:fallback_location].to_s.include?("mountain")
+        #       redirect_to params[:fallback_location], notice: "混み合っているようです"
+        #     end
+        #     return
+        #   end
+        # end
+        # 
+        # logger.info({mountain_url: current_record.mountain_url}.to_t)
+        # render "resource_ns1/swars_battle_records/show"
+        # return
       end
 
       respond_to do |format|

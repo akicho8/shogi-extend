@@ -22,7 +22,7 @@ module ApplicationHelper
     content_tag(:div, id: "app_notification_tag") do
       flash.collect { |key, message|
         key = legacy_types.fetch(key.to_sym) { key }
-        content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "true")
+        content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "false") + tag.br
       }.join.html_safe
     end
   end
