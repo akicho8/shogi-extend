@@ -26,6 +26,8 @@ module ResourceNs1
 
       if params[:mountain]
         current_record.mountain_post_once
+        render json: {url: current_record.mountain_url}
+        return
 
         # 通常リンク(remote: false)の場合
         if true

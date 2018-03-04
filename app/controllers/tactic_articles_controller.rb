@@ -215,12 +215,12 @@ class TacticArticlesController < ApplicationController
           end
           link_to(name, e, target: "_blank")
         }.join(tag.br).html_safe
+        row["参考URL"] = str
       else
-        str = urls.collect.with_index { |e, i|
-          link_to(("A".ord + i).chr, e, target: "_blank")
-        }.join(" ").html_safe
+        # str = urls.collect.with_index { |e, i|
+        #   link_to(("A".ord + i).chr, e, target: "_blank")
+        # }.join(" ").html_safe
       end
-      row["参考URL"] = str
     end
 
     row

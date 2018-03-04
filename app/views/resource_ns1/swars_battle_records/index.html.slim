@@ -1,9 +1,4 @@
-- content_for :head do
-  = javascript_pack_tag("shogi_player_app")
-
-/ #app
-
-= render :partial => "header"
+= render partial: "header"
 
 .columns
   .column
@@ -12,8 +7,6 @@
         .control.is-expanded
           = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_query_hash.blank?)
           = tag.datalist(id: "user_key_list") do
-            - Warabi::TacticInfo.all_elements.each do |e|
-              = tag.option(value: e.name)
             - user_keys = []
             / 利用者
             - user_keys.concat SwarsBattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:user_key)
@@ -23,6 +16,8 @@
             - user_keys.concat SwarsBattleUser.joins(:swars_battle_grade).order("swars_battle_grades.priority desc").order(:updated_at => :desc).limit(32).pluck(:user_key)
             - user_keys.uniq.each do |e|
               = tag.option(value: e)
+            - Warabi::TacticInfo.all_elements.each do |e|
+              = tag.option(value: e.name)
         .control
           = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
           = form.submit("検索") if Rails.env.test?
@@ -37,31 +32,47 @@
                 = link_to(tag, [:tactic_article, id: tag], class: "button is-success")
 
 #shogi_player_app
+  - content_for :head do
+    = javascript_pack_tag("shogi_player_app")
   - current_records.each_slice(3) do |current_records|
     .columns
       - current_records.each do |current_record|
         .column
           .card
             header.card-header
+              //////////////////////////////////////////////////////////////////////////////// 対局者名
               p.card-header-title
-                = "☗ " + current_record.swars_battle_ships.black.name_with_grade
+                - ship = current_record.swars_battle_ships.black
+                - user = ship.swars_battle_user
+                = "☗"
+                == link_to(user.user_key, user) + ship.swars_battle_grade.name
                 span.has-text-grey == "&nbsp;&nbsp;vs&nbsp;&nbsp;"
-                = "☖ " + current_record.swars_battle_ships.white.name_with_grade
+                - ship = current_record.swars_battle_ships.white
+                - user = ship.swars_battle_user
+                = "☖"
+                == link_to(user.user_key, user) + ship.swars_battle_grade.name
+
+              //////////////////////////////////////////////////////////////////////////////// 右端ドロップダウン
               b-dropdown hoverable=true
                 a class="card-header-icon" slot="trigger"
                   b-icon pack="fas" icon="angle-down" size="is-small"
                 b-dropdown-item.has-link
-                  = link_to("将棋山脈", "", :data => {:href2 => url_for([:resource_ns1, current_record, mountain: true])}, "@click.prevent" => "this_goto_mountain")
+                  = link_to("将棋山脈", "", :data => {:mountain_url_get_path => url_for([:resource_ns1, current_record, mountain: true, format: "json"])}, "@click.prevent" => "this_goto_mountain")
+                b-dropdown-item.has-link
+                  = link_to("KI2", "#", "@click.prevent" => "this_kifu_copy_exec", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "ki2"])})
+
             .card-content
               - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
                   shogi-player :kifu_body="'#{converted_info.text_body}'" :global_key_event_capture="false" :slider_show="true" :sfen_show="false" :controller_show="false" :theme="'real'" :sound_effect="true" :volume="0.1"
             footer.card-footer
-              = link_to("棋譜コピー", "#", "class": "card-footer-item", "@click.prevent" => "this_kifu_copy_exec", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+              = link_to("コピー", "#", "class": "card-footer-item", "@click.prevent" => "this_kifu_copy_exec", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
               = link_to("ウォーズ", swars_real_battle_url(current_record), "class": "card-footer-item", target: "_blank")
               = link_to("詳細", [:resource_ns1, current_record], "class": "card-footer-item")
 
 .columns
   .column
+    br
+    br
     = @rows.to_html
 .columns
   .column
