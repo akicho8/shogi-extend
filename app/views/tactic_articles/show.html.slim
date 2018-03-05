@@ -12,7 +12,7 @@
     .has-text-centered
       p.title.is-2.yumincho= current_record.name
     #shogi_player_app
-      shogi-player :kifu_body="'#{@sample_kifu_body}'" :start_turn="0" :global_key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :sound_effect="true" :volume="0.1"
+      shogi-player :kifu_body="'#{@sample_kifu_body}'" :start_turn="0" :key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :sound_effect="true" :volume="0.1"
     - content_for :head do
       = javascript_pack_tag("shogi_player_app")
       / = stylesheet_pack_tag("shogi_player_app")

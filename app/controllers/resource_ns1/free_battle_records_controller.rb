@@ -24,6 +24,20 @@ module ResourceNs1
     include ModulableCrud::All
     include SharedMethods
 
+    def new
+      if kifu_body = params[:kifu_body]
+        info = Warabi::Parser.parse(kifu_body, typical_error_case: :embed)
+        render json: {sfen: info.to_sfen}
+        return
+      end
+
+      @shogi_preview_app_params = {
+        path: url_for([:new, :resource_ns1, :free_battle_record, format: "json"]),
+      }
+
+      super
+    end
+
     def create
       if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
         url

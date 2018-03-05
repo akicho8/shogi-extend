@@ -33,7 +33,7 @@ module ConvertMethods
     KifuFormatInfo.each do |e|
       converted_info = converted_infos.text_format_eq(e.key).take
       converted_info ||= converted_infos.build
-      converted_info.attributes = {text_body: info.public_send("to_#{e.key}"), text_format: e.key}
+      converted_info.attributes = {text_body: info.public_send("to_#{e.key}", compact: true), text_format: e.key}
     end
     self.turn_max = info.mediator.turn_info.turn_max
 

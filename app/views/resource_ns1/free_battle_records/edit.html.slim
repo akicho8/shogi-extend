@@ -1,10 +1,23 @@
-p.title.is-2.yumincho
-  = current_record.new_record? ? "棋譜変換" : "編集"
-hr
+javascript:
+  var shogi_preview_app_params = #{@shogi_preview_app_params.to_json.html_safe};
 
-= form_with(model: [:resource_ns1, current_record]) do |form|
-  = render partial: "error_messages", locals: {form: form}
-  = render partial: "form", locals: {form: form}
-  .field
-    p.control
-      =<> form.submit(name: :_submit, class: "button is-primary")
+- content_for :head do
+  = javascript_pack_tag("shogi_preview_app")
+
+#shogi_preview_app
+  p.title.is-2.yumincho
+    = current_record.new_record? ? "棋譜変換" : "編集"
+  hr
+
+  .columns
+    .column
+      = form_with(model: [:resource_ns1, current_record]) do |form|
+        = render partial: "error_messages", locals: {form: form}
+        = render partial: "form", locals: {form: form}
+        .field
+          p.control
+            =<> form.submit(name: :_submit, class: "button is-primary")
+    .column
+      .card
+        .card-content
+          shogi-player :kifu_body="kifu_body_sfen" :start_turn="-1" :debug_mode="false" :key_event_capture="true" :slider_show="true" :sfen_show="false" :controller_show="false" :theme="'simple'" :size="'default'" :sound_effect="true" :volume="0.1"
