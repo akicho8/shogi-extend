@@ -20,9 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     methods: {
       preview_update: _.debounce(function() {
-        axios.get(shogi_preview_app_params.path, {
-          params: {kifu_body: this.kifu_body},
-          timeout: 1000 * 15,
+        axios.post(shogi_preview_app_params.path, {
+          kifu_body: this.kifu_body,
         }).then((response) => {
           // this.current_turn2 = -1
           this.kifu_body_sfen = response.data.sfen
