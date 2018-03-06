@@ -7,6 +7,7 @@ module ApplicationHelper
     [AppConfig[:app_name], @page_title].compact.reverse.join(" - ")
   end
 
+  # :success, :info, :warning, :danger
   def app_notification_tag
     legacy_types = {
       notice: :success,
@@ -22,7 +23,7 @@ module ApplicationHelper
     content_tag(:div, id: "app_notification_tag") do
       flash.collect { |key, message|
         key = legacy_types.fetch(key.to_sym) { key }
-        content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "false") + tag.br
+        content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "false", ":closable": "false") + tag.br
       }.join.html_safe
     end
   end
