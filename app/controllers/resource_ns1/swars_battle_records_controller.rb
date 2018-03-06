@@ -133,7 +133,7 @@ module ResourceNs1
       if Rails.env.development?
         flash.now[:alert] = "#{exception.class.name}: #{exception.message}"
       end
-      render :show
+      render :index
     end
 
     private
