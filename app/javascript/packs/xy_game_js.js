@@ -1,3 +1,5 @@
+import numeral from "numeral"
+
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: "#xy_game_app",
@@ -36,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.restTime <= 0) {
           this.mode = "goal"
           this.timerRun = false
+          this.$dialog.alert({message: `正解:${this.okCount} 不正解:${this.ngCount}`, type: "is-primary"})
         }
       }
     },
@@ -50,10 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       timeFormat: function() {
-        const mm = Math.floor(this.restTime / 1000 / 60).toString().padStart(2, "0")
-        const ss = Math.floor(this.restTime / 1000 % 60).toString().padStart(2, "0")
-        const ms = Math.floor(this.restTime % 1000 / 10).toString().padStart(2, "0")
-        return `${mm}:${ss}:${ms}`
+        const seconds = this.restTime / 1000
+        return numeral(seconds).format("0.00")
       },
     },
 

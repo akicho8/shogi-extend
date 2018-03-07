@@ -24,6 +24,7 @@
     "jquery": "^3.2.1",
     "js-yaml": "^3.9.1",
     "node-sass": "^4.5.3",
+    "numeral": "^2.0.6",
     "path-complete-extname": "^0.1.0",
     "postcss-loader": "^2.0.6",
     "postcss-smart-import": "^0.7.5",
