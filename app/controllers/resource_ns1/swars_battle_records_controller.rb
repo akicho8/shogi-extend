@@ -277,8 +277,9 @@ module ResourceNs1
           row["戦法"] = record.tag_list.collect { |e| link_to(e, resource_ns1_swars_search_path(e)) }.join(" ").html_safe
         else
           row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-          row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
+          # row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
+
         row["手数"] = record.turn_max
         row["種類"] = link_to(record.swars_battle_rule_info.name, resource_ns1_swars_search_path(record.swars_battle_rule_info.name))
 
