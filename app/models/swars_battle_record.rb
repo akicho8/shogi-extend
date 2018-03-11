@@ -382,7 +382,10 @@ class SwarsBattleRecord < ApplicationRecord
           swars_battle_record.win_swars_battle_user = swars_battle_record.swars_battle_ships[winner_index].swars_battle_user
         end
 
-        swars_battle_record.save!
+        begin
+          swars_battle_record.save!
+        rescue ActiveRecord::RecordNotUnique
+        end
       end
 
       private
