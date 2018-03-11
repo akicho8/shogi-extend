@@ -5,15 +5,13 @@
   .columns
     ////////////////////////////////////////////////////////////////////////////////
     .column
-      = current_record.header_detail(self).to_html(table_class: "table is-fullwidth")
-
-    ////////////////////////////////////////////////////////////////////////////////
-    .column
       - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
-        shogi-player :kifu_body="'#{converted_info.text_body}'" :key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :sound_effect="true" :volume="0.1"
+        shogi-player :kifu_body="'#{converted_info.text_body}'" :key_event_capture="true" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :size="'x-large'" :sound_effect="true" :volume="0.1"
 
     ////////////////////////////////////////////////////////////////////////////////
     .column.has-text-left
+      = current_record.header_detail(self).to_html(table_class: "table is-fullwidth")
+
       div v-cloak="true"
         b-dropdown :hoverable="true"
           button class="button" slot="trigger"
