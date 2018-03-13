@@ -30,7 +30,7 @@ module ResourceNs1
     include SharedMethods
 
     def index
-      unless requesr.user_agent.to_s.match?(/Googlebot/i)
+      unless request.user_agent.to_s.match?(/Googlebot/i)
         # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
         if query = params[:query].presence
           if query.match?(%r{https?://kif-pona.heroz.jp/games/})
@@ -39,19 +39,19 @@ module ResourceNs1
             return
           end
         end
-      
+
         if current_user_key
           before_count = 0
           if swars_battle_user = SwarsBattleUser.find_by(user_key: current_user_key)
             before_count = swars_battle_user.swars_battle_records.count
           end
-      
+
           # 連続クロール回避
           Rails.cache.fetch("basic_import_#{current_user_key}", expires_in: Rails.env.production? ? 30.seconds : 0) do
             current_model.basic_import(user_key: current_user_key)
             nil
           end
-      
+
           @swars_battle_user = SwarsBattleUser.find_by(user_key: current_user_key)
           if @swars_battle_user
             count_diff = @swars_battle_user.swars_battle_records.count - before_count
@@ -64,7 +64,7 @@ module ResourceNs1
             flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
           end
         end
-      
+
         perform_zip_download
         if performed?
           return
