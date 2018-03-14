@@ -30,7 +30,7 @@ module ResourceNs1
     include SharedMethods
 
     def index
-      unless request.user_agent.to_s.match?(/Googlebot/i)
+      unless bot_agent?
         # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
         if query = params[:query].presence
           if query.match?(%r{https?://kif-pona.heroz.jp/games/})
