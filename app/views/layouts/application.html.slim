@@ -72,11 +72,10 @@ html lang="ja"
         .columns
           .column.has-text-centered
             = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
-            .breadcrumb.is-centered.has-dot-separator
-              ul
-                li= link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
-                li= link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
-                li= link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
-                li= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
-                li= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
+            div.content
+              =<> link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
+              =<> link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
+              =<> link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
+              =<> link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
+              =<> link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
             = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
