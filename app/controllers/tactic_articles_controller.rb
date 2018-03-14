@@ -1,5 +1,5 @@
 class TacticArticlesController < ApplicationController
-  delegate :soldiers, :trigger_soldiers, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, :to => "current_record.board_parser"
+  delegate :soldiers, :trigger_soldiers, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, to: "current_record.board_parser"
 
   helper_method :current_record
 
