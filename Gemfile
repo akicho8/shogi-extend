@@ -113,7 +113,6 @@ gem 'faraday'
 gem 'acts-as-taggable-on'
 
 gem 'bootstrap-sass'
-gem 'bootswatch-rails'
 
 gem 'rubyzip', require: "zip"
 
