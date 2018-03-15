@@ -112,8 +112,6 @@ gem 'faraday'
 
 gem 'acts-as-taggable-on'
 
-gem 'bootstrap-sass'
-
 gem 'rubyzip', require: "zip"
 
 gem 'whenever', require: false
