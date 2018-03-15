@@ -98,7 +98,6 @@ gem 'memory_record'
 gem 'tree_support'
 gem 'org_tp'
 gem 'html_format'
-gem 'daiku',         github: 'akicho8/daiku'
 gem 'aam',           github: 'akicho8/aam'
 gem 'warabi',        github: 'akicho8/warabi'
 
