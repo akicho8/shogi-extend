@@ -114,7 +114,6 @@ gem 'acts-as-taggable-on'
 
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'
-gem 'font-awesome-sass'
 
 gem 'rubyzip', require: "zip"
 
