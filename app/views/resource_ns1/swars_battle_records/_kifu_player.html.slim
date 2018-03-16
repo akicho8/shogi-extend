@@ -18,8 +18,8 @@
             span コピー
             b-icon icon="menu-down"
           - KifuFormatInfo.each do |e|
-            b-dropdown-item :has-link="true"
-              = link_to(e.name, "", "@click.prevent" => "this_kifu_copy_exec", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: e.key])})
+            b-dropdown-item :has-link="true" :paddingless="true"
+              = link_to(e.name, "", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: e.key])})
         b-dropdown :hoverable="true"
           button class="button" slot="trigger"
             span ダウンロード
@@ -33,6 +33,8 @@
             b-icon icon="menu-down"
           - if current_record.kind_of?(SwarsBattleRecord)
             = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
+            b-dropdown-item :has-link="true" :paddingless="true"
+              = link_to("ウォーズTweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')")
           = content_tag("b-dropdown-item", "将棋山脈", :href => url_for([:resource_ns1, current_record, mountain: true]), "data-remote": true, class: "kif_clipboard_copy_button2")
           b-dropdown-item href=piyo_shogi_app_url(full_url_for([:resource_ns1, current_record, format: "kif"])) ぴよ将棋
 

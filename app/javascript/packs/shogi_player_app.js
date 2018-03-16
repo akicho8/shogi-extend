@@ -23,22 +23,20 @@ import axios from "axios"
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: '#shogi_player_app',
-    // mounted: function () {
-    //   kifu_copy_hook_all()
-    // },
-    // components: { ShogiPlayer },
     data: function() {
-      return {}
+      return {
+      }
     },
     methods: {
-      this_kifu_copy_exec: function(e) {
       wars_tweet_copy_click(wars_tweet_body) {
         AppUtils.clipboard_copy(wars_tweet_body)
       },
+
+      kifu_copy_exec_click: function(e) {
         AppUtils.kifu_copy_exec(e.target.dataset[_.camelCase("kif_direct_access_path")])
       },
 
-      this_goto_mountain: function(e) {
+      goto_mountain_click: function(e) {
         const url = e.target.dataset[_.camelCase("mountain_url_get_path")]
         axios.get(url, {
           timeout: 1000 * 15,
