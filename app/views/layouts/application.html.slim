@@ -23,7 +23,7 @@ html lang="ja"
     = render "google_analytics" if Rails.env.production?
     = yield :head
   body
-    section.hero.is-primary class=(controller_name == "swars_battle_records" && params[:query].present? ? "is-small" : "")
+    section.hero.is-primary.is-bold class=(controller_name == "swars_battle_records" && params[:query].present? ? "is-small" : "")
       .hero-head
         nav.navbar
           .container
