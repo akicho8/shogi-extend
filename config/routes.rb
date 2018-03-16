@@ -56,8 +56,11 @@ Rails.application.routes.draw do
 
   ################################################################################ 外部リンク
 
-  direct :swars_real_battle do |swars_battle_record|
-    "http://kif-pona.heroz.jp/games/#{swars_battle_record.battle_key}?locale=ja"
+  direct :swars_real_battle do |swars_battle_record, **options|
+    options = {
+      locale: "ja",
+    }.merge(options)
+    "http://kif-pona.heroz.jp/games/#{swars_battle_record.battle_key}?#{options.to_query}"
   end
 
   direct :mountain_upload do
