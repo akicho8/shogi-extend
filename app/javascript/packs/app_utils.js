@@ -13,20 +13,26 @@ export function kifu_copy_exec(url) {
   if (!url) {
     alert("棋譜のURLが不明です")
   }
-
   const kifu_text = $.ajax({type: "GET", url: url, async: false}).responseText // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
+  clipboard_copy(kifu_text)
+}
 
-  // クリップボードにコピー
+export function clipboard_copy(str, _options = {}) {
+  const options = Object.assign({}, {
+    success_message: "クリップボードにコピーしました",
+    error_message: "クリップボードへのコピーに失敗しました",
+  }, _options)
+
   const elem = document.createElement("textarea")
-  elem.value = kifu_text
+  elem.value = str
   document.body.appendChild(elem)
   elem.select()
   const success = document.execCommand("copy")
   document.body.removeChild(elem)
 
   if (success) {
-    Vue.prototype.$toast.open({message: "クリップボードにコピーしました", position: "is-bottom", type: "is-success"})
+    Vue.prototype.$toast.open({message: options["success_message"], position: "is-bottom", type: "is-success"})
   } else {
-    Vue.prototype.$toast.open({message: "クリップボードへのコピーに失敗しました", position: "is-bottom", type: "is-danger"})
+    Vue.prototype.$toast.open({message: options["error_message"], position: "is-bottom", type: "is-danger"})
   }
 }
