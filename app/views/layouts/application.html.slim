@@ -50,8 +50,9 @@ html lang="ja"
             /           | Download
       .hero-body
         .container.has-text-centered
-          h1.title
-            = link_to(AppConfig[:app_name], :root)
+          = link_to(:root) do
+            h1.title= AppConfig[:app_name]
+          // h1.title
           // h2.subtitle
       .hero-foot
         .tabs.is-boxed.is-centered
