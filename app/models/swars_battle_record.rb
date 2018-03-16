@@ -183,6 +183,12 @@ class SwarsBattleRecord < ApplicationRecord
         Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
       end
     end
+
+    def wars_tweet_body
+      vs = swars_battle_ships.collect(&:name_with_grade).join(" 対 ")
+      url = Rails.application.routes.url_helpers.swars_real_battle_url(self, tw: 1)
+      "将棋ウォーズ棋譜(#{vs}) #{url} #shogiwars #将棋"
+    end
   end
 
   concerning :ImportMethods do

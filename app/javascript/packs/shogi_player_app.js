@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     methods: {
       this_kifu_copy_exec: function(e) {
+      wars_tweet_copy_click(wars_tweet_body) {
+        AppUtils.clipboard_copy(wars_tweet_body)
+      },
         AppUtils.kifu_copy_exec(e.target.dataset[_.camelCase("kif_direct_access_path")])
       },
 
