@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.table([error.response])
           Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })
-      }, 1000 * 1),
+      }, 1000 * 1),            // 指定秒間放置されたらプレビューする
     },
   })
 })
