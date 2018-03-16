@@ -9,10 +9,7 @@
 
 import "rails-ujs"
 
-// import "bulma"
 import "./application_css.sass"
-// import "./bootstrap_tuning.sass"
-
 import "./modulable_crud.coffee"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
@@ -22,27 +19,23 @@ window.Vue = Vue
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
-// import Vue from 'vue'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 Vue.use(Buefy)
 
+//////////////////////////////////////////////////////////////////////////////// ShogiPlayer
+
 import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
 Vue.component('shogi-player', ShogiPlayer)
+
+//////////////////////////////////////////////////////////////////////////////// lodash
 
 import _ from "lodash"
 Object.defineProperty(Vue.prototype, '_', {value: _})
 
+//////////////////////////////////////////////////////////////////////////////// アプリ用の雑多なライブラリ
 
-// // From outside Vue instance
-// import { Toast, ModalProgrammatic } from 'buefy'
-// Toast
-
-// // OR
-//
-// Vue.component(Buefy.Checkbox.name, Buefy.Checkbox);
-// Vue.component(Buefy.Table.name, Buefy.Table);
-// Vue.component(Buefy.Switch.name, Buefy.Switch);
+import * as AppUtils from "./app_utils.js"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -60,7 +53,21 @@ Object.defineProperty(Vue.prototype, '_', {value: _})
 //   })
 // })
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 最初からあるDOMに kifu_copy_hook_all 適用
+
+document.addEventListener('DOMContentLoaded', () => {
+  AppUtils.kifu_copy_hook_all()
+})
+
+//////////////////////////////////////////////////////////////////////////////// 通知
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Vue({
+    el: '#app_notification_tag',
+  })
+})
+
+//////////////////////////////////////////////////////////////////////////////// 確認用
 
 if (typeof(jQuery) != "undefined") {
   console.log('[Webpack] jQuery: OK')
@@ -82,20 +89,3 @@ if (typeof(Vue) != "undefined") {
 } else {
   console.log('[Webpack] Vue: Missing')
 }
-
-//////////////////////////////////////////////////////////////////////////////// 最初からあるDOMに kifu_copy_hook_all 適用
-
-import * as AppUtils from "./app_utils.js"
-
-document.addEventListener('DOMContentLoaded', () => {
-  AppUtils.kifu_copy_hook_all()
-})
-
-//////////////////////////////////////////////////////////////////////////////// 通知
-
-document.addEventListener('DOMContentLoaded', () => {
-  new Vue({
-    el: '#app_notification_tag',
-  })
-})
-
