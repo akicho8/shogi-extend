@@ -1,3 +1,5 @@
+// 棋譜変換用
+
 import _ from "lodash"
 import * as AppUtils from "./app_utils.js"
 import axios from "axios"
@@ -9,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         kifu_body: "",
         kifu_body_sfen: "position sfen startpos",
-        current_turn2: 0,
       }
     },
     watch: {
@@ -23,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         axios.post(shogi_preview_app_params.path, {
           kifu_body: this.kifu_body,
         }).then((response) => {
-          // this.current_turn2 = -1
           this.kifu_body_sfen = response.data.sfen
         }).catch((error) => {
           console.table([error.response])
