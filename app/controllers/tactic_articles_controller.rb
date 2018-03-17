@@ -31,22 +31,22 @@ class TacticArticlesController < ApplicationController
     # ☆ 移動元ではない
 
     @board_table = tag.table(:class => "board-inner") do
-      Warabi::Position::Vpos.dimension.times.collect { |y|
+      Warabi::Dimension::Xplace.dimension.times.collect { |y|
         tag.tr {
-          Warabi::Position::Hpos.dimension.times.collect { |x|
+          Warabi::Dimension::Yplace.dimension.times.collect { |x|
             td_class = []
 
-            point = Warabi::Point.fetch([x, y])
+            point = Warabi::Place.fetch([x, y])
             str = nil
 
             # トリガー駒
-            if soldier = trigger_soldiers.point_as_key_table[point]
+            if soldier = trigger_soldiers.place_as_key_table[point]
               td_class << "location_#{soldier.location.key}"
               td_class << "current"
               str = soldier.any_name
             else
               # トリガーではない駒
-              if soldier = soldiers.point_as_key_table[point]
+              if soldier = soldiers.place_as_key_table[point]
                 td_class << "location_#{soldier.location.key}"
                 str = soldier.any_name
               end
