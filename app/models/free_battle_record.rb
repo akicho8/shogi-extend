@@ -24,10 +24,11 @@ require "open-uri"
 class FreeBattleRecord < ApplicationRecord
   include ConvertMethods
 
+  has_secure_token :unique_key
+
   mount_uploader :kifu_file, AttachmentUploader
 
   before_validation do
-    self.unique_key ||= SecureRandom.hex
     self.kifu_body ||= ""
 
     if changes[:kifu_file]

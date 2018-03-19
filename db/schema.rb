@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
   end
 
   create_table "free_battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "unique_key", null: false, comment: "URL識別子"
+    t.string "unique_key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_file", comment: "アップロードした棋譜ファイル"
     t.string "kifu_url", comment: "入力した棋譜URL"
     t.text "kifu_body", null: false, comment: "棋譜本文"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.datetime "battled_at", null: false, comment: "対局開始日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["unique_key"], name: "index_free_battle_records_on_unique_key"
+    t.index ["unique_key"], name: "index_free_battle_records_on_unique_key", unique: true
   end
 
   create_table "general_battle_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
