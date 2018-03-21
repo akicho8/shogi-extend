@@ -46,10 +46,11 @@ module ResourceNs1
             before_count = swars_battle_user.swars_battle_records.count
           end
 
-          # 連続クロール回避
-          Rails.cache.fetch("basic_import_#{current_user_key}", expires_in: Rails.env.production? ? 30.seconds : 0) do
+          # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
+          key = "basic_import_#{current_user_key}"
+          if !Rails.cache.exist?(key)
+            Rails.cache.write(key, true, expires_in: Rails.env.production? ? 30.seconds : 0.seconds)
             current_model.basic_import(user_key: current_user_key)
-            nil
           end
 
           @swars_battle_user = SwarsBattleUser.find_by(user_key: current_user_key)
