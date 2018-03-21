@@ -351,7 +351,11 @@ class SwarsBattleRecord < ApplicationRecord
         swars_battle_users = info[:swars_battle_user_infos].collect do |e|
           SwarsBattleUser.find_or_initialize_by(user_key: e[:user_key]).tap do |swars_battle_user|
             swars_battle_grade = SwarsBattleGrade.find_by!(unique_key: e[:swars_battle_grade_key])
-            swars_battle_user.update!(swars_battle_grade: swars_battle_grade) # 常にランクを更新する
+            swars_battle_user.swars_battle_grade = swars_battle_grade # 常にランクを更新する
+            begin
+              swars_battle_user.save!
+            rescue ActiveRecord::RecordNotUnique
+            end
           end
         end
 
