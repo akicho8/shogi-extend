@@ -30,7 +30,7 @@ class TacticArticlesController < ApplicationController
     # ● 何かある
     # ☆ 移動元ではない
 
-    @board_table = tag.table(:class => "board-inner") do
+    @board_table = tag.table(:class => "board_inner") do
       Warabi::Dimension::Xplace.dimension.times.collect { |y|
         tag.tr {
           Warabi::Dimension::Yplace.dimension.times.collect { |x|

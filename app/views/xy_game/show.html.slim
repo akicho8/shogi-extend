@@ -18,8 +18,8 @@
   .shogi-player.theme-simple.size-default
     .board-container
       .board-wrap
-        .board-outer
-          table.board-inner
+        .board_outer
+          table.board_inner
             tr v-for="y in boardSize"
               td v-for="x in boardSize" :class="cellClass(x - 1, y - 1)"
                 template v-if="isActive(x - 1, y - 1)"

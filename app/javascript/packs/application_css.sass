@@ -74,13 +74,13 @@ pre
 @import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
 @import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"
 
-// ShogiPlayer.sass からの相対パスで画像が参照できるはずだけど次の謎のエラーになるため $sp-assets-dir をこのファイルからの相対パスに変更する
+// ShogiPlayer.sass からの相対パスで画像が参照できるはずだけど次の謎のエラーになるため $sp_assets_dir をこのファイルからの相対パスに変更する
 //
 // ERROR in ./node_modules/css-loader??ref--2-2!./node_modules/postcss-loader/lib??ref--2-3!./node_modules/sass-loader/lib/loader.js??ref--2-4!./app/javascript/packs/application_css.sass
 // Module not found: Error: Can't resolve '../assets/japanese-chess/koma/60x64/sgl58.png' in '/Users/ikeda/src/shogi_web/app/javascript/packs'
 //  @ ./node_modules/css-loader??ref--2-2!./node_modules/postcss-loader/lib??ref--2-3!./node_modules/sass-loader/lib/loader.js??ref--2-4!./app/javascript/packs/application_css.sass 7:13975-14031
 //
-$sp-assets-dir: "../../../node_modules/shogi-player/src/assets"
+$sp_assets_dir: "../../../node_modules/shogi-player/src/assets"
 @import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
 
 ////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
