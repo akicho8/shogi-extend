@@ -16,6 +16,7 @@ if (true) {
       sourceMap: true,
       uglifyOptions: {
         ecma: 6,
+        drop_console: true,
         // beautiful: true,
         // mangle: {
         //   safari10: true,
