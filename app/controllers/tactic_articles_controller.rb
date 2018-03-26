@@ -88,7 +88,8 @@ class TacticArticlesController < ApplicationController
               str = soldier.any_name
             end
 
-            tag.td(str, :class => td_class)
+            str = tag.span(str, :class => "piece_inner")
+            tag.td(str, :class => ["piece_outer", *td_class])
           }.join.html_safe
         }
       }.join.html_safe
