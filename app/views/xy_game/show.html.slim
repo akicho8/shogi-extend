@@ -21,8 +21,8 @@
         .board_outer
           table.board_inner
             tr v-for="y in boardSize"
-              td v-for="x in boardSize" :class="cellClass(x - 1, y - 1)"
-                template v-if="isActive(x - 1, y - 1)"
+              td.piece_outer v-for="x in boardSize" :class="cellClass(x - 1, y - 1)"
+                span.piece_inner v-if="isActive(x - 1, y - 1)"
                   | {{piece}}
 
   .time.fixed_font.is-size-3
