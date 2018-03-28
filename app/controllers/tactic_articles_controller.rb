@@ -194,8 +194,10 @@ class TacticArticlesController < ApplicationController
       urls = e.urls.sort
 
       if detail?
-        urls << h.google_search_url(e.name)
-        urls << h.youtube_search_url(e.name)
+        if false
+          urls << h.google_search_url(e.name)
+          urls << h.youtube_search_url(e.name)
+        end
 
         str = urls.collect { |e|
           case e
