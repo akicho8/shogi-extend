@@ -34,62 +34,64 @@ class TacticArticlesController < ApplicationController
       Warabi::Dimension::Xplace.dimension.times.collect { |y|
         tag.tr {
           Warabi::Dimension::Yplace.dimension.times.collect { |x|
-            td_class = []
+            outer_class = []
+            inner_class = []
 
-            point = Warabi::Place.fetch([x, y])
+            place = Warabi::Place.fetch([x, y])
             str = nil
 
             # トリガー駒
-            if soldier = trigger_soldiers.place_as_key_table[point]
-              td_class << "location_#{soldier.location.key}"
-              td_class << "current"
+            if soldier = trigger_soldiers.place_as_key_table[place]
+              inner_class << "location_#{soldier.location.key}"
+              outer_class << "current"
               str = soldier.any_name
             else
               # トリガーではない駒
-              if soldier = soldiers.place_as_key_table[point]
-                td_class << "location_#{soldier.location.key}"
+              if soldier = soldiers.place_as_key_table[place]
+                inner_class << "location_#{soldier.location.key}"
                 str = soldier.any_name
               end
             end
 
             # 何もない
             if v = other_objects_hash["○"]
-              if v[point]
-                td_class << "cell_blank"
+              if v[place]
+                outer_class << "cell_blank"
               end
             end
 
             # 何かある
             if v = other_objects_hash["●"]
-              if v[point]
-                td_class << "something_exist"
+              if v[place]
+                outer_class << "something_exist"
               end
             end
 
             # 移動元
             if v = other_objects_hash["★"]
-              if v[point]
-                td_class << "origin_point"
+              if v[place]
+                outer_class << "origin_place"
               end
             end
 
             # 移動元ではない
             if v = other_objects_hash["☆"]
-              if v[point]
-                td_class << "not_any_from_point"
+              if v[place]
+                outer_class << "not_any_from_place"
                 str = icon_tag(:fab, :times)
               end
             end
 
             # どれかの駒がある
-            if soldier = any_exist_soldiers.find {|e| e[:point] == point }
-              td_class << "location_#{soldier.location.key}"
-              td_class << "any_exist_soldiers"
+            if soldier = any_exist_soldiers.find {|e| e.place == place }
+              inner_class << "location_#{soldier.location.key}"
+              outer_class << "any_exist_soldiers"
               str = soldier.any_name
             end
 
-            str = tag.span(str, :class => "piece_inner")
-            tag.td(str, :class => ["piece_outer", *td_class])
+            tag.td(:class => ["piece_outer", *outer_class]) do
+              tag.span(str, :class => ["piece_inner", *inner_class])
+            end
           }.join.html_safe
         }
       }.join.html_safe
@@ -97,7 +99,7 @@ class TacticArticlesController < ApplicationController
 
     row = row_build(current_record)
     if v = other_objects_hash_ary["☆"]
-      row["移動元制限"] = v.collect { |e| e[:point].name }.join("、").html_safe + "が移動元ではない"
+      row["移動元制限"] = v.collect { |e| e[:place].name }.join("、").html_safe + "が移動元ではない"
     end
     @detail_hash = row.transform_values(&:presence).compact
 

@@ -85,15 +85,15 @@ $sp_assets_dir: "../../../node_modules/shogi-player/src/assets"
 
 ////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
 
-$cell_blank_bg:       $grey
-$something_exist_bg:  $green
-$any_exist_soldiers:  $grey-light
+$cell_blank_bg:      $grey
+$something_exist_bg: $green
+$any_exist_soldiers: $grey-light
 
 .shogi-player
-  td
-    &.cell_blank
+  table
+    .cell_blank
       background: $cell_blank_bg
-    &.something_exist
+    .something_exist
       background: $something_exist_bg
-    &.any_exist_soldiers
+    .any_exist_soldiers
       color: $any_exist_soldiers
