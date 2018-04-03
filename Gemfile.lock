@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: 703f198feccd77b8587594774707a59a016acccf
+  revision: d6ea600a145070f275502f3544187aa99338d15f
   specs:
     warabi (0.0.1)
       actionview
@@ -237,8 +237,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     rails_autolink (1.1.6)
       rails (> 3.1)
     railties (5.1.5)

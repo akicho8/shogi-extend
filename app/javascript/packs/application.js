@@ -25,8 +25,8 @@ Vue.use(Buefy)
 
 //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
 
-import { PresetInfo } from 'shogi-player/src/preset_info.js'
-Object.defineProperty(Vue.prototype, 'PresetInfo', {value: PresetInfo})
+// import { PresetInfo } from 'shogi-player/src/preset_info.js'
+// Object.defineProperty(Vue.prototype, 'PresetInfo', {value: PresetInfo})
 
 import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
 Vue.component('shogi-player', ShogiPlayer)
