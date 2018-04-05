@@ -55,6 +55,8 @@ Rails.application.routes.draw do
   get "xy", to: "xy_game#show"
   get "zzz", to: "zzz#show"
 
+  resource :cpu_versus, path: "cpu_versus", only: [:show, :create], path: "cpu-versus"
+
   ################################################################################ 外部リンク
 
   direct :swars_real_battle do |swars_battle_record, **options|

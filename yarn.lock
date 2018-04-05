@@ -5969,9 +5969,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi-player@0.0.50:
-  version "0.0.50"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.50.tgz#ec16857dcd3ce0efdeef2b0692181e9f87615603"
+shogi-player@0.0.53:
+  version "0.0.53"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.53.tgz#5c2d553c9f5996e85f06e555a8d7871e79317cae"
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"

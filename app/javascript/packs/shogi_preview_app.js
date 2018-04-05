@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     methods: {
       preview_update: _.debounce(function() {
-        axios.post(shogi_preview_app_params.path, {
-          kifu_body: this.kifu_body,
-        }).then((response) => {
+        const params = new URLSearchParams()
+        params.append("kifu_body", this.kifu_body)
+        axios.post(shogi_preview_app_params.path, params).then((response) => {
           this.kifu_body_sfen = response.data.sfen
         }).catch((error) => {
           console.table([error.response])

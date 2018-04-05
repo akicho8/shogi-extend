@@ -58,13 +58,14 @@ html lang="ja"
         .tabs.is-boxed.is-centered
           .container
             ul
-              li class=("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
+              li class=("is-active" if params[:controller] == "cpu_versus")                                    = link_to("CPU対戦", :cpu_versus)
+              li class=("is-active" if params[:controller] == "zzz")                                           = link_to("盤面編集", :zzz)
               li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
+              li class=("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
               - unless Rails.env.production?
                 li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
               li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)
               li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
-              li class=("is-active" if params[:controller] == "zzz")                                           = link_to("盤面編集", :zzz)
     section.section
       .container.is-fluid.main_container
         == app_notification_tag
