@@ -60,7 +60,7 @@ Rails.application.routes.draw do
 
   ################################################################################ CPU対戦
 
-  resource :cpu_versus, path: "cpu_versus", only: [:show, :create], path: "cpu-versus"
+  resource :cpu_versus, path: "cpu-versus", only: [:show, :create]
 
   ################################################################################ 外部リンク
 
