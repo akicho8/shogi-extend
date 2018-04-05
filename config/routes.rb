@@ -53,7 +53,12 @@ Rails.application.routes.draw do
   ################################################################################ 符号入力ゲーム
 
   get "xy", to: "xy_game#show"
-  get "zzz", to: "zzz#show"
+
+  ################################################################################ 局面編集
+
+  get "position-editor", to: "position_editor#show", as: :position_editor
+
+  ################################################################################ CPU対戦
 
   resource :cpu_versus, path: "cpu_versus", only: [:show, :create], path: "cpu-versus"
 

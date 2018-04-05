@@ -4,7 +4,7 @@ import axios from "axios"
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
-    el: '#zzz_app',
+    el: '#position_editor_app',
     data: function() {
       return {
       }

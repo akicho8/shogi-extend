@@ -11,6 +11,16 @@ RSpec.describe "その他", type: :system do
     expect(page).to have_content "Rails"
   end
 
+  it "CPU対戦" do
+    visit "/cpu-versus"
+    expect(page).to have_content "Rails"
+  end
+
+  it "局面編集" do
+    visit "/position-editor"
+    expect(page).to have_content "Rails"
+  end
+
   it "戦法一覧" do
     visit "/tactics"
     expect(page).to have_content "Rails"
