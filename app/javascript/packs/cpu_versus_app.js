@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     methods: {
-      update_position1(v) {
+      play_mode_long_sfen_set(v) {
         const params = new URLSearchParams()
         params.append("kifu_body", v)
 
