@@ -5969,9 +5969,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi-player@0.0.58:
-  version "0.0.58"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.58.tgz#dd0e93e0cd7d63417f4ebe1deb381f685d381645"
+shogi-player@0.0.61:
+  version "0.0.61"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.61.tgz#88ad4a27870de911e555284e12d3592064d4a6c5"
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
@@ -6001,6 +6001,7 @@ shogi-player@0.0.58:
     sass-loader "^6.0.6"
     vue "^2.5.16"
     vue-router "^3.0.1"
+    vuex "^3.0.1"
     xregexp "^4.0.0"
 
 signal-exit@^3.0.0:
@@ -6781,6 +6782,10 @@ vue-template-es2015-compiler@^1.6.0:
 vue@^2.5.16:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
+
+vuex@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
 
 watchpack@^1.4.0:
   version "1.5.0"

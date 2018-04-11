@@ -31,6 +31,9 @@ Vue.use(Buefy)
 import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
 Vue.component('shogi-player', ShogiPlayer)
 
+import Vuex from "vuex"
+Vue.use(Vuex)
+
 //////////////////////////////////////////////////////////////////////////////// lodash
 
 import _ from "lodash"
