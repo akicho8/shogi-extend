@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: e761f11cadec61a7bb5d6f91f84736dbd58f4475
+  revision: ef76a242dc1708b73d5ab6d8ed3d5f75053b6c70
   specs:
     warabi (0.0.1)
       actionview
@@ -201,7 +201,7 @@ GEM
     minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
-    mysql2 (0.5.0)
+    mysql2 (0.5.1)
     net-http-digest_auth (1.4.1)
     net-http-persistent (2.9.4)
     net-scp (1.2.1)
@@ -327,14 +327,14 @@ GEM
       activesupport
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.8)
+    uglifier (4.1.9)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
     uniform_notifier (1.11.0)
     url (0.3.2)
-    web-console (3.5.1)
+    web-console (3.6.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)

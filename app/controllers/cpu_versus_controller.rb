@@ -17,7 +17,8 @@ class CpuVersusController < ApplicationController
         end
 
         puts mediator
-        records = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver).interactive_deepning(time_limit: 3, depth_max_range: 0..8)
+        brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
+        records = brain.interactive_deepning(time_limit: 3, depth_max_range: 0..8)
         tp Warabi::Brain.human_format(records)
         record = records.first
         hand = record[:hand]
