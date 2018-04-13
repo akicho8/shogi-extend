@@ -171,4 +171,10 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "type022_articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end
