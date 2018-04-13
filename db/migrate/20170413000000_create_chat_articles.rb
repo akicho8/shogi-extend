@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 件名と本文のみテーブル (type022_articles as Type022Article)
+# 件名と本文のみテーブル (chat_articles as ChatArticle)
 #
 # +------------+----------+----------+-------------+------+-------+
 # | カラム名   | 意味     | タイプ   | 属性        | 参照 | INDEX |
@@ -13,9 +13,9 @@
 # | updated_at | 更新日時 | datetime | NOT NULL    |      |       |
 # +------------+----------+----------+-------------+------+-------+
 
-class CreateType022Articles < ActiveRecord::Migration[5.1]
+class CreateChatArticles < ActiveRecord::Migration[5.1]
   def up
-    create_table :type022_articles, force: true do |t|
+    create_table :chat_articles, force: true do |t|
       t.text :body
       t.timestamps null: false
     end

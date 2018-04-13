@@ -1,8 +1,0 @@
-- content_for :head do
-  = javascript_pack_tag("type022_room")
-
-table#type022_articles.table.table-hover
-  = render partial: "type022_article", as: :type022_article, collection: Type022Article.order(:created_at).last(10)
-
-#type022_room_app
-  = text_field_tag("_", "", "data-behavior" => "type022_room_speaker", class: "form-control", autocomplete: "off")

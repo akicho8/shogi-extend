@@ -66,7 +66,7 @@ html lang="ja"
                 li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
               li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)
               li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
-              li class=("is-active" if params[:controller].start_with?("resource_ns1/type022_chat_rooms"))    = link_to("対人戦", [:new, :resource_ns1, :type022_chat_room])
+              li class=("is-active" if params[:controller].start_with?("resource_ns1/chat_rooms"))    = link_to("対人戦", [:new, :resource_ns1, :chat_room])
     section.section
       .container.is-fluid.main_container
         == app_notification_tag

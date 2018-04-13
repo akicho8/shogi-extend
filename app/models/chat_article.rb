@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 件名と本文のみテーブル (type022_articles as Type022Article)
+# 件名と本文のみテーブル (chat_articles as ChatArticle)
 #
 # +------------+----------+----------+-------------+------+-------+
 # | カラム名   | 意味     | タイプ   | 属性        | 参照 | INDEX |
@@ -13,9 +13,9 @@
 # | updated_at | 更新日時 | datetime | NOT NULL    |      |       |
 # +------------+----------+----------+-------------+------+-------+
 
-class Type022Article < ApplicationRecord
+class ChatArticle < ApplicationRecord
   # 非同期にするため
   after_create_commit do
-    Type022ArticleBroadcastJob.perform_later(self)
+    ChatArticleBroadcastJob.perform_later(self)
   end
 end

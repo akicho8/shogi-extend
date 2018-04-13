@@ -1,5 +1,5 @@
 module ResourceNs1
-  class Type022ChatRoomsController < ApplicationController
+  class ChatRoomsController < ApplicationController
     def new
     end
     def show
