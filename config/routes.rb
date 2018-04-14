@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :resource_ns1, path: "" do
-    resources :chat_rooms
+    resource :chat_rooms
   end
 
   root "resource_ns1/swars_battle_records#index"

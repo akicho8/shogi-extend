@@ -1,4 +1,5 @@
 import _ from "lodash"
+import axios from "axios"
 
 // (function() {
 //   this.chat_vm || (this.chat_vm = {})
@@ -43,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el: "#chat_room_app",
     data: function() {
       return {
+        kifu_body_sfen: "position startpos",
         message: "",
         list: [],
       }
@@ -55,10 +57,33 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_room.chat_say(this.message)
         this.message = ""
       },
+
+      play_mode_long_sfen_set(v) {
+        const params = new URLSearchParams()
+        params.append("kifu_body", v)
+
+        axios({
+          method: "post",
+          timeout: 1000 * 10,
+          headers: {"X-TAISEN": true},
+          url: chat_room_app_params.path,
+          data: params,
+        }).then((response) => {
+          if (response.data.error_message) {
+            Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
+          }
+          if (response.data.sfen) {
+            this.kifu_body_sfen = response.data.sfen
+          }
+        }).catch((error) => {
+          console.table([error.response])
+          Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        })
+      },
     },
     computed: {
       latest_list() {
-        return _.takeRight(this.list, 5)
+        return _.takeRight(this.list, 10)
       },
     },
   })

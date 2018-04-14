@@ -1,12 +1,13 @@
 # モデルに保存する版
 class ChatRoomChannel < ApplicationCable::Channel
   def subscribed
+    Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "subscribed"])
     stream_from "chat_room_channel"
   end
 
-  # なにこれ？
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
+    Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "unsubscribed"])
   end
 
   # モデルに保存して非同期でブロードキャストする
