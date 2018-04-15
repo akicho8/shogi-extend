@@ -2,7 +2,13 @@
 class ChatRoomChannel < ApplicationCable::Channel
   def subscribed
     Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "subscribed"])
+
+    # stream_from "chat_#{params[:room]}"
     stream_from "chat_room_channel"
+
+    # post = Post.find(params[:id])
+    # stream_for post
+    # ChatRoomChannel.broadcast_to(@post, @comment)
   end
 
   def unsubscribed
@@ -15,7 +21,9 @@ class ChatRoomChannel < ApplicationCable::Channel
     if false
       ChatArticle.create!(body: data["chat_article_body"])
     else
-      chat_article = ChatArticle.create!(body: data["chat_article_body"])
+      chat_user = ChatUser.find(data["chat_user_id"])
+      chat_room = ChatRoom.first
+      chat_article = chat_user.chat_articles.create!(chat_room: chat_room, body: data["chat_article_body"])
       # chat_article = ChatArticle.create!(body: data["chat_article_body"])
 
       # body = data["chat_article_body"]
@@ -24,8 +32,9 @@ class ChatRoomChannel < ApplicationCable::Channel
       # html = ApplicationController.renderer.render(partial: "resource_ns1/chat_rooms/chat_article", locals: {chat_article: chat_article})
 
       # それを全員に通知
-      # 各自の chat_room.coffee の received メソッドに引数が渡る
-      ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article)
+      # 各自の chat_room.js の received メソッドに引数が渡る
+      attributes = chat_article.attributes.merge(chat_user: chat_article.chat_user.attributes, chat_room: chat_article.chat_room.attributes)
+      ActionCable.server.broadcast("chat_room_channel", chat_article: attributes)
     end
   end
 end

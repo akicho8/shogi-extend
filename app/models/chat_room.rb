@@ -13,12 +13,7 @@
 # | updated_at | 更新日時 | datetime | NOT NULL    |      |       |
 # +------------+----------+----------+-------------+------+-------+
 
-class ChatArticle < ApplicationRecord
-  belongs_to :chat_user
-  belongs_to :chat_room
-
-  # 非同期にするため
-  after_create_commit do
-    ChatArticleBroadcastJob.perform_later(self)
-  end
+class ChatRoom < ApplicationRecord
+  has_many :chat_users, dependent: :destroy
+  has_many :chat_articles, dependent: :destroy
 end

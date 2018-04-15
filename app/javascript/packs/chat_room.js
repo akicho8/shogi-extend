@@ -5,6 +5,12 @@ import axios from "axios"
 //   this.chat_vm || (this.chat_vm = {})
 // }).call(this)
 
+// app/assets/javascripts/cable/subscriptions/chat.coffee
+// App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" }
+//
+// # app/assets/javascripts/cable/subscriptions/appearance.coffee
+// App.cable.subscriptions.create { channel: "AppearanceChannel" }
+
 document.addEventListener('DOMContentLoaded', () => {
   App.chat_room = App.cable.subscriptions.create("ChatRoomChannel", {
     connected: function() {
@@ -19,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
     received: function(data) {
       // Called when there"s incoming data on the websocket for this channel
-      // console.log(`received: ${data}`)
+      console.log("received")
+      console.table(data)
 
       const chat_article = data["chat_article"]
       App.chat_vm.list.push(chat_article)
@@ -27,8 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 自由に定義してよいメソッド
     chat_say: function(chat_article_body) {
       console.log(`chat_say: ${chat_article_body}`)
+      console.log(`chat_say: ${chat_room_app_params.current_chat_user.id}`)
       // app/channels/chat_room_channel.rb の chat_say メソッドに処理が渡る
-      this.perform("chat_say", {chat_article_body: chat_article_body})
+      this.perform("chat_say", {chat_user_id: chat_room_app_params.current_chat_user.id, chat_article_body: chat_article_body})
     },
   })
 

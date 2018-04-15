@@ -16,7 +16,16 @@
 class CreateChatArticles < ActiveRecord::Migration[5.1]
   def up
     create_table :chat_articles, force: true do |t|
+      t.belongs_to :chat_user, null: false, comment: "人"
+      t.belongs_to :chat_room, null: false, comment: "部屋"
       t.text :body
+      t.timestamps null: false
+    end
+    create_table :chat_rooms, force: true do |t|
+      t.timestamps null: false
+    end
+    create_table :chat_users, force: true do |t|
+      t.string :name
       t.timestamps null: false
     end
   end

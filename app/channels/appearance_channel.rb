@@ -1,17 +1,22 @@
+# appearance_channel
 class AppearanceChannel < ApplicationCable::Channel
   def subscribed
-    current_user.appear
+    logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
+    # current_user.appear
   end
 
   def unsubscribed
-    current_user.disappear
+    logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
+    # current_user.disappear
   end
 
   def appear(data)
-    current_user.appear on: data['appearing_on']
+    logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data])
+    # current_user.appear on: data['appearing_on']
   end
 
   def away
-    current_user.away
+    logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
+    # current_user.away
   end
 end

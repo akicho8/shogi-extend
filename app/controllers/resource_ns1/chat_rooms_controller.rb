@@ -1,8 +1,13 @@
 module ResourceNs1
   class ChatRoomsController < ApplicationController
     def show
+      unless ChatRoom.exists?
+        ChatRoom.create!
+      end
+
       @chat_room_app_params = {
         path: url_for([:resource_ns1, :chat_rooms, format: "json"]),
+        current_chat_user: current_chat_user,
       }
     end
 
@@ -36,5 +41,16 @@ module ResourceNs1
         end
       end
     end
+
+    def current_chat_user
+      @current_chat_user ||= ChatUser.find_by(id: cookies.signed[:chat_user_id])
+      unless @current_chat_user
+        @current_chat_user = ChatUser.create!(name: "#{ChatUser.count.next}さん")
+        cookies.signed[:chat_user_id] = @current_chat_user.id
+      end
+      @current_chat_user
+    end
+
+    helper_method :current_chat_user
   end
 end
