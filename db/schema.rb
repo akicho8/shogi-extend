@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.index ["chat_user_id"], name: "index_chat_articles_on_chat_user_id"
   end
 
+  create_table "chat_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "chat_room_id", null: false
+    t.bigint "chat_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"
+    t.index ["chat_user_id"], name: "index_chat_memberships_on_chat_user_id"
+  end
+
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

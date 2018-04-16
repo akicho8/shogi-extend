@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
           method: "post",
           timeout: 1000 * 10,
           headers: {"X-TAISEN": true},
-          url: cpu_versus_app_params.path,
+          url: cpu_versus_app_params.player_mode_moved_path,
           data: params,
         }).then((response) => {
           if (response.data.error_message) {

@@ -14,6 +14,8 @@
 # +------------+----------+----------+-------------+------+-------+
 
 class ChatUser < ApplicationRecord
-  has_many :chat_rooms, dependent: :destroy
+  # has_many :chat_rooms, dependent: :destroy
   has_many :chat_articles, dependent: :destroy
+  has_many :chat_memberships, dependent: :destroy
+  has_many :chat_rooms, through: :chat_memberships
 end

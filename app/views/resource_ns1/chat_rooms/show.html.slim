@@ -4,29 +4,29 @@ javascript:
 
 - content_for :head do
   = javascript_pack_tag("chat_room")
-  = javascript_pack_tag("appearance")
+  #= javascript_pack_tag("appearance")
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
-    App.chat_vm.list = #{ChatArticle.order(:created_at).last(10).to_json(include: [:chat_user, :chat_room]).html_safe}
+    App.chat_vm.list = #{current_record.chat_articles.order(:created_at).last(10).to_json(include: [:chat_user, :chat_room]).html_safe}
   })
 
-/ render partial: "chat_article", as: :chat_article, collection: ChatArticle.order(:created_at).last(10)
+/ render partial: "chat_article", as: :chat_article, collection: current_record.chat_articles.order(:created_at).last(10)
 
-#chat_room_app.has-text-centered v-cloak="true"
+#chat_room_app v-cloak="true"
   .columns
     .column
       shogi-player :kifu_body="kifu_body_sfen" :key_event_capture="false" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :size="'default'" :sound_effect="true" :volume="0.1" :run_mode="'play_mode'" @update:play_mode_long_sfen="play_mode_long_sfen_set" :human_side="null"
-      
+
     .column
-      .box2
+      div
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_list"
             td
               span.has-text-grey-lighter
                 = "{{e.chat_user.id}}:"
               = " "
-              = "{{e.body}}"
+              span v-html="e.body"
         .field
           .control
             input.input.is-large.is-primary type="text" autocomplete="off" v-model="message" @keydown.enter="input_send"
@@ -35,9 +35,14 @@ javascript:
             button.button @click="input_send"
               | 送信
 
+      br
+      .box
+        = "メンバー: "
+        span v-for="e of online_chat_users"
+          = " {{e.id}}"
+
 #appearance_app
   = "{{latest_list}}"
 
 = "ログイン: #{current_chat_user ? current_chat_user.id : ""}"
 = html_format(cookies.signed[:chat_user_id])
-

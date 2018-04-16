@@ -4,4 +4,3 @@ module ResourceNs1
     end
   end
 end
-

@@ -1,7 +1,7 @@
 class CpuVersusController < ApplicationController
   def show
     @cpu_versus_app_params = {
-      path: url_for([:cpu_versus, format: "json"]),
+      player_mode_moved_path: url_for([:cpu_versus, format: "json"]),
     }
   end
 

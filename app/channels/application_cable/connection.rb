@@ -21,7 +21,7 @@ module ApplicationCable
       unless verified_user
         reject_unauthorized_connection
       end
-      cookies.signed[:chat_user_id] = verified_user.id
+      # cookies.signed[:chat_user_id] = verified_user.id
       verified_user
     end
   end
