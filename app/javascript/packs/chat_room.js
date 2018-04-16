@@ -20,15 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // Called when the subscription is ready for use on the server
       console.log("connected")
       // App.chat_vm.online_chat_users = _.concat(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
-      this.perform("appear", chat_room_app_params)
+
+      // this.perform("appear", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">${chat_room_app_params.current_chat_user.id}さんが入室しました</span>`)
     },
     disconnected: function() {
-      // Called when the subscription has been terminated by the server
-      console.log("disconnected")
-      // App.chat_vm.online_chat_users = _.without(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
-      this.perform("disappear", chat_room_app_params)
-      this.chat_say(`<span class="has-text-primary">${chat_room_app_params.current_chat_user.id}さんが退出しました</span>`)
+      // // Called when the subscription has been terminated by the server
+      // console.log("disconnected")
+      // // App.chat_vm.online_chat_users = _.without(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
+      // this.perform("disappear", chat_room_app_params)
+      // this.chat_say(`<span class="has-text-primary">${chat_room_app_params.current_chat_user.id}さんが退出しました</span>`)
     },
 
     // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
@@ -36,6 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
       // Called when there"s incoming data on the websocket for this channel
       console.log("received")
       console.table(data)
+
+      if (data["kifu_body_sfen"]) {
+        console.log(data["current_chat_user"]["id"])
+        console.log(chat_room_app_params.current_chat_user.id)
+
+        if (data["current_chat_user"]["id"] === chat_room_app_params.current_chat_user.id) {
+          // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
+          // (が、こうすると本当にまわりにブロードキャストされたのか不安ではある)
+        } else {
+          App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
+        }
+      }
 
       if (data["online_chat_users"]) {
         App.chat_vm.online_chat_users = data["online_chat_users"]
@@ -54,6 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // app/channels/chat_room_channel.rb の chat_say メソッドに処理が渡る
 
       this.perform("chat_say", {chat_user_id: chat_room_app_params.current_chat_user.id, chat_room_id: chat_room_app_params.chat_room.id, chat_article_body: chat_article_body})
+    },
+
+    kifu_body_sfen_broadcast: function(data) {
+      this.perform("kifu_body_sfen_broadcast", data)
     },
   })
 
@@ -99,7 +116,17 @@ document.addEventListener('DOMContentLoaded', () => {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
           }
           if (response.data.sfen) {
-            this.kifu_body_sfen = response.data.sfen
+            if (false) {
+              // これまでの方法
+              this.kifu_body_sfen = response.data.sfen
+            } else {
+              // 局面を共有する
+              // /Users/ikeda/src/shogi_web/app/channels/chat_room_channel.rb の receive を呼び出してブロードキャストする
+
+              // App.chat_room.send({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
+
+              App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
+            }
           }
         }).catch((error) => {
           console.table([error.response])

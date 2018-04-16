@@ -21,6 +21,15 @@ class ChatRoomChannel < ApplicationCable::Channel
     Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__])
   end
 
+  # /Users/ikeda/src/shogi_web/app/javascript/packs/chat_room.js の App.chat_room.send({kifu_body_sfen: response.data.sfen}) で呼ばれる
+  def receive(data)
+    Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__])
+    # if data["kifu_body_sfen"]
+    #   Rails.logger.debug(current_chat_user)
+    #   ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
+    # end
+  end
+
   ################################################################################
 
   # モデルに保存して非同期でブロードキャストする
@@ -45,20 +54,32 @@ class ChatRoomChannel < ApplicationCable::Channel
     end
   end
 
-  def appear(data)
-    chat_room = ChatRoom.find(data["chat_room"]["id"])
-    chat_user = ChatUser.find(data["current_chat_user"]["id"])
-    unless chat_room.chat_users.include?(chat_user)
-      chat_room.chat_users << chat_user
-    end
-    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
+  # わざわざ ruby 側に戻してブロードキャストする意味がない気がする
+  # JavaScript 側でそのまま自分以外にブロードキャストできればそれにこしたことはない → たぶん方法はある
+  def kifu_body_sfen_broadcast(data)
+    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data["current_chat_user"]["id"]])    
+    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_chat_user.id])    
+    # if data["current_chat_user"]["id"] == current_chat_user.id
+    #   # 駒音が重複するため自分にはブロードキャストしない
+    # else
+    # end
+    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
   end
-
-  def disappear(data)
-    chat_room = ChatRoom.find(data["chat_room"]["id"])
-    chat_user = ChatUser.find(data["current_chat_user"]["id"])
-    chat_room.chat_users.destroy(alice)
-
-    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
-  end
+  
+  # def appear(data)
+  #   chat_room = ChatRoom.find(data["chat_room"]["id"])
+  #   chat_user = ChatUser.find(data["current_chat_user"]["id"])
+  #   unless chat_room.chat_users.include?(chat_user)
+  #     chat_room.chat_users << chat_user
+  #   end
+  #   ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
+  # end
+  # 
+  # def disappear(data)
+  #   chat_room = ChatRoom.find(data["chat_room"]["id"])
+  #   chat_user = ChatUser.find(data["current_chat_user"]["id"])
+  #   chat_room.chat_users.destroy(alice)
+  # 
+  #   ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
+  # end
 end

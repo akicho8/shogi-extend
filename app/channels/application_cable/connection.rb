@@ -1,10 +1,10 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    identified_by :current_user
+    identified_by :current_chat_user
 
     def connect
-      self.current_user = find_verified_user
-      logger.add_tags current_user.name
+      self.current_chat_user = find_verified_user
+      logger.add_tags current_chat_user.name
     end
 
     def disconnect
