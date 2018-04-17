@@ -33,7 +33,7 @@ javascript:
             input.input.is-large.is-primary type="text" autocomplete="off" v-model="message" @keydown.enter="input_send"
         .field
           .control
-            button.button @click="input_send"
+            button.button.is-primary @click="input_send"
               | 送信
   .columns
     .column
@@ -56,6 +56,8 @@ javascript:
         .title= "棋譜"
         b-input :value="ki2_a_block" type="textarea" readonly="readonly"
 
+br
+br
 .box
   .title= "@chat_room_app_params"
   = html_format(JSON.load(@chat_room_app_params.to_json))
