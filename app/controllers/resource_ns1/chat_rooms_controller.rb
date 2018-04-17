@@ -2,9 +2,8 @@ module ResourceNs1
   class ChatRoomsController < ApplicationController
     include ModulableCrud::All
 
-    before_action do
+    prepend_before_action do
       unless ChatRoom.exists?
-        cookies.signed[:chat_user_id] = nil
         ChatRoom.create!
       end
     end
@@ -21,8 +20,8 @@ module ResourceNs1
       @current_chat_user ||= ChatUser.find_by(id: cookies.signed[:chat_user_id])
       unless @current_chat_user
         @current_chat_user = ChatUser.create!(name: "#{ChatUser.count.next}さん")
-        cookies.signed[:chat_user_id] = @current_chat_user.id
       end
+      cookies.signed[:chat_user_id] = @current_chat_user.id
       @current_chat_user
     end
 

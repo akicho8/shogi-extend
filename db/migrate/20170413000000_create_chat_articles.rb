@@ -20,8 +20,8 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.datetime :appearing_on
       t.timestamps null: false
     end
-
     create_table :chat_rooms, force: true do |t|
+      t.text :kifu_body_sfen, null: false
       t.timestamps null: false
     end
     create_table :chat_memberships, force: true do |t|

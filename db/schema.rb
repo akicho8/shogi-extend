@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
   end
 
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.text "kifu_body_sfen", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

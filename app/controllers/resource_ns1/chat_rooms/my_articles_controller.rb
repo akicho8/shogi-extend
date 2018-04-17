@@ -24,9 +24,12 @@ module ResourceNs1
             #
             # logger.debug(info.to_sfen)
 
-            sfen = mediator.to_sfen
+            kifu_body_sfen = mediator.to_sfen
 
-            render json: {sfen: sfen}
+            chat_room = ChatRoom.find(params[:chat_room_id])
+            chat_room.update!(kifu_body_sfen: kifu_body_sfen)
+
+            render json: {kifu_body_sfen: kifu_body_sfen, last_hand: mediator.to_ki2_a.last}
             return
           end
         end

@@ -18,13 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }, {
     connected: function() {
       // Called when the subscription is ready for use on the server
-      console.log("connected")
+      console.log("ChatRoomChannel.connected")
       // App.chat_vm.online_chat_users = _.concat(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
 
       this.perform("room_in", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">入室しました</span>`)
+
+      // 入室したときに局面を反映する
+      App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
     },
     disconnected: function() {
+      console.log("ChatRoomChannel.disconnected")
       // // Called when the subscription has been terminated by the server
       // console.log("disconnected")
       // // App.chat_vm.online_chat_users = _.without(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
@@ -49,6 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
           App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
         }
       }
+
+      // // 指し手の反映
+      // if (data["last_hand"]) {
+      //   App.chat_vm.chat_articles.push(data["last_hand"])
+      // }
 
       if (data["online_chat_users"]) {
         App.chat_vm.online_chat_users = data["online_chat_users"]
@@ -111,17 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
           if (response.data.error_message) {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
           }
-          if (response.data.sfen) {
+          if (response.data.kifu_body_sfen) {
             if (false) {
               // これまでの方法
-              this.kifu_body_sfen = response.data.sfen
+              this.kifu_body_sfen = response.data.kifu_body_sfen
             } else {
               // 局面を共有する
               // /Users/ikeda/src/shogi_web/app/channels/chat_room_channel.rb の receive を呼び出してブロードキャストする
 
               // App.chat_room.send({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
 
-              App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
+              App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, kifu_body_sfen: response.data.kifu_body_sfen})
+              App.chat_room.chat_say(response.data.last_hand)
             }
           }
         }).catch((error) => {

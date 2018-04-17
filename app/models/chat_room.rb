@@ -17,4 +17,8 @@ class ChatRoom < ApplicationRecord
   has_many :chat_articles, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_users, through: :chat_memberships
+
+  before_validation on: :create do
+    self.kifu_body_sfen ||= "position startpos"
+  end
 end
