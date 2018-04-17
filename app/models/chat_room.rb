@@ -21,4 +21,14 @@ class ChatRoom < ApplicationRecord
   before_validation on: :create do
     self.kifu_body_sfen ||= "position startpos"
   end
+
+  def ki2_a_block_get
+    info = Warabi::Parser.parse(kifu_body_sfen, typical_error_case: :embed)
+    begin
+      mediator = info.mediator
+    rescue => error
+      return error.message
+    end
+    mediator.to_ki2_a.join(" ")
+  end
 end

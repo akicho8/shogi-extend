@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("room_in", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">入室しました</span>`)
 
-      // 入室したときに局面を反映する
+      // 入室したときに局面を反映する(これはビューの方で行なってもよい)
       App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
     },
     disconnected: function() {
@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
     received: function(data) {
       // Called when there"s incoming data on the websocket for this channel
-      console.log("received")
-      console.table(data)
+      // console.log("received")
+      // console.table(data)
 
       if (data["kifu_body_sfen"]) {
         console.log(data["current_chat_user"]["id"])
@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
         }
+      }
+
+      if (data["ki2_a_block"]) {
+        App.chat_vm.ki2_a_block = data["ki2_a_block"]
       }
 
       // // 指し手の反映
@@ -95,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         message: "",
         chat_articles: [],
         online_chat_users: [],
+        ki2_a_block: "",
       }
     },
     methods: {
@@ -119,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).then((response) => {
           if (response.data.error_message) {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
+            App.chat_room.chat_say(`<span class="has-text-danger">${response.data.error_message}</span>`)
           }
           if (response.data.kifu_body_sfen) {
             if (false) {
@@ -130,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // App.chat_room.send({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
 
-              App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, kifu_body_sfen: response.data.kifu_body_sfen})
+              App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, ...response.data})
               App.chat_room.chat_say(`<span class="has-text-info">${response.data.last_hand}</span>`)
             }
           }
