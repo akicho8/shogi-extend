@@ -1,6 +1,6 @@
 module ResourceNs1
   module ChatRooms
-    class MyArticlesController < ApplicationController
+    class KifuValidsController < ApplicationController
       def create
         if request.format.json?
           if v = params[:kifu_body]

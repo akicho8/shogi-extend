@@ -10,7 +10,7 @@ module ResourceNs1
 
     def show
       @chat_room_app_params = {
-        player_mode_moved_path: url_for([:resource_ns1, current_record, :my_articles, format: "json"]),
+        player_mode_moved_path: url_for([:resource_ns1, current_record, :kifu_valids, format: "json"]),
         current_chat_user: current_chat_user,
         chat_room: current_record,
       }

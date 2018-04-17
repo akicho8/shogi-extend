@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :resource_ns1, path: "" do
     resources :chat_rooms do
-      resource :my_articles, only: :create, :module => :chat_rooms
+      resource :kifu_valids, only: :create, :module => :chat_rooms
     end
   end
 
