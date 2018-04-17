@@ -8,7 +8,7 @@ javascript:
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
-    App.chat_vm.list = #{current_record.chat_articles.order(:created_at).last(10).to_json(include: [:chat_user, :chat_room]).html_safe}
+    App.chat_vm.chat_articles = #{current_record.chat_articles.order(:created_at).last(10).to_json(include: [:chat_user, :chat_room]).html_safe}
   })
 
 / render partial: "chat_article", as: :chat_article, collection: current_record.chat_articles.order(:created_at).last(10)
