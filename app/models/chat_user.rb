@@ -18,4 +18,12 @@ class ChatUser < ApplicationRecord
   has_many :chat_articles, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_rooms, through: :chat_memberships
+
+  def appear
+    update!(appearing_on: Time.current)
+  end
+
+  def disappear
+    update!(appearing_on: nil)
+  end
 end

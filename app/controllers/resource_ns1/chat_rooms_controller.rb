@@ -4,6 +4,7 @@ module ResourceNs1
 
     before_action do
       unless ChatRoom.exists?
+        cookies.signed[:chat_user_id] = nil
         ChatRoom.create!
       end
     end

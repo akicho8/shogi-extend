@@ -21,15 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("connected")
       // App.chat_vm.online_chat_users = _.concat(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
 
-      // this.perform("appear", chat_room_app_params)
-      this.chat_say(`<span class="has-text-primary">${chat_room_app_params.current_chat_user.id}さんが入室しました</span>`)
+      this.perform("room_in", chat_room_app_params)
+      this.chat_say(`<span class="has-text-primary">入室しました</span>`)
     },
     disconnected: function() {
       // // Called when the subscription has been terminated by the server
       // console.log("disconnected")
       // // App.chat_vm.online_chat_users = _.without(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
-      // this.perform("disappear", chat_room_app_params)
-      // this.chat_say(`<span class="has-text-primary">${chat_room_app_params.current_chat_user.id}さんが退出しました</span>`)
+      this.perform("room_out", chat_room_app_params)
+      this.chat_say(`<span class="has-text-primary">退出しました</span>`)
     },
 
     // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
@@ -54,9 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_vm.online_chat_users = data["online_chat_users"]
       }
 
+      // 発言の反映
       if (data["chat_article"]) {
-        const chat_article = data["chat_article"]
-        App.chat_vm.list.push(chat_article)
+        App.chat_vm.chat_articles.push(data["chat_article"])
       }
     },
 
@@ -66,7 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(`chat_say: ${chat_room_app_params.current_chat_user.id}`)
       // app/channels/chat_room_channel.rb の chat_say メソッドに処理が渡る
 
-      this.perform("chat_say", {chat_user_id: chat_room_app_params.current_chat_user.id, chat_room_id: chat_room_app_params.chat_room.id, chat_article_body: chat_article_body})
+      this.perform("chat_say", {
+        sayed_chat_user_id: chat_room_app_params.current_chat_user.id,
+        chat_room_id: chat_room_app_params.chat_room.id,
+        chat_article_body: chat_article_body,
+      })
     },
 
     kifu_body_sfen_broadcast: function(data) {
@@ -74,21 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
-  // $(document).on("keypress", "[data-behavior~=chat_room_speaker]", (event) => {
-  //   if (event.keyCode === 13) {
-  //     App.chat_room.chat_say(event.target.value)
-  //     event.target.value = ""
-  //     event.preventDefault()
-  //   }
-  // })
-
   App.chat_vm = new Vue({
     el: "#chat_room_app",
     data: function() {
       return {
         kifu_body_sfen: "position startpos",
         message: "",
-        list: [],
+        chat_articles: [],
         online_chat_users: [],
       }
     },
@@ -133,10 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
           Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })
       },
+      chat_user_self_p(chat_user) {
+        return chat_user.id === chat_room_app_params.current_chat_user.id
+      },
     },
     computed: {
-      latest_list() {
-        return _.takeRight(this.list, 10)
+      latest_chat_articles() {
+        return _.takeRight(this.chat_articles, 10)
       },
     },
   })

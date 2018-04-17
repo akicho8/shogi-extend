@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 20171222200100) do
 
   create_table "chat_articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "chat_user_id", null: false, comment: "人"
     t.bigint "chat_room_id", null: false, comment: "部屋"
+    t.bigint "chat_user_id", null: false, comment: "人"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
 
   create_table "chat_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "name"
+    t.datetime "appearing_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

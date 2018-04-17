@@ -37,7 +37,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     if false
       ChatArticle.create!(body: data["chat_article_body"])
     else
-      chat_user = ChatUser.find(data["chat_user_id"])
+      chat_user = ChatUser.find(data["sayed_chat_user_id"])
       chat_room = ChatRoom.find(data["chat_room_id"])
       chat_article = chat_user.chat_articles.create!(chat_room: chat_room, body: data["chat_article_body"])
       # chat_article = ChatArticle.create!(body: data["chat_article_body"])
@@ -66,20 +66,20 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
   end
   
-  # def appear(data)
-  #   chat_room = ChatRoom.find(data["chat_room"]["id"])
-  #   chat_user = ChatUser.find(data["current_chat_user"]["id"])
-  #   unless chat_room.chat_users.include?(chat_user)
-  #     chat_room.chat_users << chat_user
-  #   end
-  #   ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
-  # end
-  # 
-  # def disappear(data)
-  #   chat_room = ChatRoom.find(data["chat_room"]["id"])
-  #   chat_user = ChatUser.find(data["current_chat_user"]["id"])
-  #   chat_room.chat_users.destroy(alice)
-  # 
-  #   ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
-  # end
+  def room_in(data)
+    chat_room = ChatRoom.find(data["chat_room"]["id"])
+    chat_user = ChatUser.find(data["current_chat_user"]["id"])
+    unless chat_room.chat_users.include?(chat_user)
+      chat_room.chat_users << chat_user
+    end
+    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
+  end
+  
+  def room_out(data)
+    chat_room = ChatRoom.find(data["chat_room"]["id"])
+    chat_user = ChatUser.find(data["current_chat_user"]["id"])
+    # chat_room.chat_users.destroy(alice)
+  
+    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
+  end
 end

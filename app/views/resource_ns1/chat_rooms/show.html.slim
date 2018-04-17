@@ -4,7 +4,7 @@ javascript:
 
 - content_for :head do
   = javascript_pack_tag("chat_room")
-  #= javascript_pack_tag("appearance")
+  = javascript_pack_tag("appearance")
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
@@ -21,7 +21,7 @@ javascript:
     .column
       div
         table.table.is-narrow.is-fullwidth
-          tr v-for="e of latest_list"
+          tr v-for="e of latest_chat_articles"
             td
               span.has-text-grey-lighter
                 = "{{e.chat_user.id}}:"
@@ -34,15 +34,35 @@ javascript:
           .control
             button.button @click="input_send"
               | 送信
-
-      br
+  .columns
+    .column
       .box
-        = "メンバー: "
-        span v-for="e of online_chat_users"
-          = " {{e.id}}"
+        .title= "参加者"
+        table.table.is-narrow
+          tr v-for="e of online_chat_users"
+            td
+              template v-if="e.appearing_on"
+                b-icon icon="access-point" class="has-text-success"
+              template v-else=""
+                b-icon icon="access-point" class="has-text-grey-lighter"
+            td
+              = "{{e.name}}"
+            td
+              template v-if="chat_user_self_p(e)"
+                = "←自分"
+
+.box
+  .title= "@chat_room_app_params"
+  = html_format(JSON.load(@chat_room_app_params.to_json))
+
+.box
+  = html_format({"cookies.signed[:chat_user_id]" => cookies.signed[:chat_user_id]})
+
+.box
+  .title= "ChatUser"
+  = html_format(ChatUser)
+  .title= "ChatArticle"
+  = html_format(current_record.chat_articles)
 
 #appearance_app
   = "{{latest_list}}"
-
-= "ログイン: #{current_chat_user ? current_chat_user.id : ""}"
-= html_format(cookies.signed[:chat_user_id])

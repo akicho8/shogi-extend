@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
       App.appearance_vm.puts("connected")
       // this.install()
       // this.appear()
-      this.perform("appear")
+      // this.perform("appear")
     },
     // Called when the WebSocket connection is closed
     disconnected: function() {
