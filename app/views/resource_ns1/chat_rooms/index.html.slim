@@ -1,3 +1,6 @@
+- content_for :head do
+  = javascript_pack_tag("appearance")
+
 .title
   h2= "#{current_model.model_name.human}一覧"
 
@@ -18,3 +21,14 @@
   p= paginate current_records
 
 = render partial: "index_footer"
+
+.box
+  .title= "オンラインのユーザー"
+  = html_format(ChatUser.where.not(appearing_on: nil))
+
+.box
+  .title= "あなたの情報"
+  = html_format([current_chat_user.attributes])
+
+#appearance_app
+  = "{{latest_list}}"
