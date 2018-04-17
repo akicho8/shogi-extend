@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      if (data["ki2_a_block"]) {
-        App.chat_vm.ki2_a_block = data["ki2_a_block"]
+      if (data["human_kifu_text"]) {
+        App.chat_vm.human_kifu_text = data["human_kifu_text"]
       }
 
       // // 指し手の反映
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         message: "",
         chat_articles: [],
         online_chat_users: [],
-        ki2_a_block: "",
+        human_kifu_text: "",
       }
     },
     methods: {

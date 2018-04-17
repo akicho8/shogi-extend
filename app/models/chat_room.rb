@@ -22,7 +22,7 @@ class ChatRoom < ApplicationRecord
     self.kifu_body_sfen ||= "position startpos"
   end
 
-  def ki2_a_block_get
+  def human_kifu_text_get
     info = Warabi::Parser.parse(kifu_body_sfen, typical_error_case: :embed)
     begin
       mediator = info.mediator

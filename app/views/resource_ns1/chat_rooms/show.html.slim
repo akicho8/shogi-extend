@@ -9,7 +9,7 @@ javascript:
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
     App.chat_vm.chat_articles = #{current_record.chat_articles.order(:created_at).last(10).to_json(include: [:chat_user, :chat_room]).html_safe}
-    App.chat_vm.ki2_a_block = #{current_record.ki2_a_block_get.to_json.html_safe}
+    App.chat_vm.human_kifu_text = #{current_record.human_kifu_text_get.to_json.html_safe}
   })
 
 / render partial: "chat_article", as: :chat_article, collection: current_record.chat_articles.order(:created_at).last(10)
@@ -54,7 +54,7 @@ javascript:
     .column
       .box
         .title= "棋譜"
-        b-input :value="ki2_a_block" type="textarea" readonly="readonly"
+        b-input :value="human_kifu_text" type="textarea" readonly="readonly"
 
 br
 br

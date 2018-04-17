@@ -30,7 +30,7 @@ module ResourceNs1
             chat_room = ChatRoom.find(params[:chat_room_id])
             chat_room.update!(kifu_body_sfen: kifu_body_sfen)
 
-            render json: {kifu_body_sfen: kifu_body_sfen, ki2_a_block: ki2_a.join(" "), last_hand: ki2_a.last}
+            render json: {kifu_body_sfen: kifu_body_sfen, human_kifu_text: ki2_a.join(" "), last_hand: ki2_a.last}
             return
           end
         end
