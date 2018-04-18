@@ -70,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 発言の反映
       if (data["chat_article"]) {
+        console.log("発言の反映")
+        console.log(data)
         App.chat_vm.chat_articles.push(data["chat_article"])
       }
 

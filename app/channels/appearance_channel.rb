@@ -1,6 +1,8 @@
 # appearance_channel
 class AppearanceChannel < ApplicationCable::Channel
   def subscribed
+    stream_from "appearance_channel" # ブロードキャストするにはこれが必要
+
     logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
     current_chat_user.appear
   end

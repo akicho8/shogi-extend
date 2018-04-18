@@ -21,4 +21,8 @@ class ChatArticle < ApplicationRecord
   after_create_commit do
     ChatArticleBroadcastJob.perform_later(self)
   end
+
+  def js_attributes
+    JSON.load(to_json(include: [:chat_user, :chat_room]))
+  end
 end

@@ -25,6 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
       App.appearance_vm.puts("rejected")
       // this.uninstall()
     },
+
+    received: function(data) {
+      // App.appearance_vm.chat_rooms = []
+      // App.appearance_vm.chat_rooms = [data["chat_room"]]
+      // App.appearance_vm.puts(data)
+      if (data["chat_room"]) {
+        App.appearance_vm.chat_rooms = _.concat([data["chat_room"]], App.appearance_vm.chat_rooms)
+      }
+    },
+
     // appear: function() {
     //   // Calls `AppearanceChannel#appear(data)` on the server
     //   this.perform("appear", appearing_on: $("main").data("appearing-on"))
@@ -54,11 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
     data: function() {
       return {
         list: [],
+        chat_rooms: [],
+        columns: [
+          { field: 'name', label: '部屋', },
+        ],
       }
     },
     methods: {
       puts(v) {
-        console.log(`appearance_vm: ${v}`)
         this.list.push(v)
       }
     },

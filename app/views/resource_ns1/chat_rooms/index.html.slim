@@ -1,34 +1,36 @@
 - content_for :head do
   = javascript_pack_tag("appearance")
 
-.title
-  h2= "#{current_model.model_name.human}一覧"
-
-= render partial: "index_header"
-
-- if controller.respond_to?(:new)
-  p= link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button is-primary")
-
-- if current_records.respond_to?(:total_pages) && false
-  p= page_entries_info current_records
-
-- if false
-  = render partial: "row", collection: current_records, as: :record, spacer_template: "divider"
-- else
-  = render partial: "index_rows"
-
-- if current_records.respond_to?(:total_pages)
-  p= paginate current_records
-
-= render partial: "index_footer"
-
-.box
-  .title= "オンラインのユーザー"
-  = html_format(ChatUser.where.not(appearing_on: nil))
-
-.box
-  .title= "あなたの情報"
-  = html_format([current_chat_user.attributes])
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    App.appearance_vm.chat_rooms = #{ChatRoom.order(updated_at: :desc).first(10).to_json(include: [:chat_users], methods: [:show_link]).html_safe}
+  })
 
 #appearance_app
+  / .title.is-2= "#{current_model.model_name.human}一覧"
+  / hr
+
+  p= link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button is-primary")
+  br
+
+  .columns
+    .column
+      .box
+        .title.is-4= "対戦部屋"
+        b-table :data="chat_rooms"
+          template slot-scope="props"
+            b-table-column field="name" label="名前" sortable="sortable"
+              a :href="props.row.show_link"
+                | {{props.row.name}}
+            b-table-column field="chat_users" label="参加者" sortable="sortable" numeric="numeric"
+              | {{props.row.chat_users.length}}
+    .column
+      .box
+        .title= "オンラインのユーザー"
+        = html_format(ChatUser.where.not(appearing_on: nil))
+
+  .box
+    .title= "あなたの情報"
+    = html_format([current_chat_user.attributes])
+
   = "{{latest_list}}"
