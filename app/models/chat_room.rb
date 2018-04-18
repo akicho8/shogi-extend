@@ -19,7 +19,12 @@ class ChatRoom < ApplicationRecord
   has_many :chat_users, through: :chat_memberships
 
   before_validation on: :create do
+    self.name ||= name_default
     self.kifu_body_sfen ||= "position startpos"
+  end
+
+  def name_default
+    "#{ChatRoom.count.next}番目の対戦部屋"
   end
 
   def human_kifu_text_get

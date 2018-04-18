@@ -26,5 +26,16 @@ module ResourceNs1
     end
 
     helper_method :current_chat_user
+
+
+    def raw_current_record
+      super.tap do |e|
+        e.name ||= e.name_default
+      end
+    end
+
+    def redirect_to_where
+      [self.class.parent_name.underscore, current_record]
+    end
   end
 end

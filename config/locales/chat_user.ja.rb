@@ -16,6 +16,9 @@
         chat_room: "対戦部屋",
       },
       attributes: {
+        chat_room: {
+          name: "部屋名",
+        },
       },
     },
   },

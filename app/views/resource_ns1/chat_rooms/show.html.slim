@@ -15,6 +15,10 @@ javascript:
 / render partial: "chat_article", as: :chat_article, collection: current_record.chat_articles.order(:created_at).last(10)
 
 #chat_room_app v-cloak="true"
+  p
+    = link_to("一覧に戻る", [:resource_ns1, :chat_rooms], :class => "button")
+  br
+
   .title.is-4= "対戦部屋 ##{current_record.id}"
   .columns
     .column
