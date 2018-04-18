@@ -29,6 +29,9 @@ javascript:
     .column
       .box
         shogi-player :kifu_body="kifu_body_sfen" :key_event_capture="false" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :size="'default'" :sound_effect="true" :volume="0.1" :run_mode="'play_mode'" @update:play_mode_long_sfen="play_mode_long_sfen_set" :human_side="null"
+      .box
+        .title.is-4= "棋譜"
+        b-input :value="human_kifu_text" type="textarea" readonly="readonly"
 
     .column
       .box
@@ -47,8 +50,6 @@ javascript:
           .control
             button.button.is-primary @click="message_send"
               | 送信
-  .columns
-    .column
       .box
         .title.is-4= "参加者"
         table.table.is-narrow
@@ -63,10 +64,6 @@ javascript:
             td
               template v-if="chat_user_self_p(e)"
                 = "←自分"
-    .column
-      .box
-        .title.is-4= "棋譜"
-        b-input :value="human_kifu_text" type="textarea" readonly="readonly"
 
 br
 br
