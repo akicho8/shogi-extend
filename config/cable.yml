@@ -5,6 +5,7 @@ test:
   adapter: async
 
 production:
-  adapter: redis
-  url: redis://localhost:6379/2
-  channel_prefix: shogi_web_production
+  adapter: async
+  # adapter: redis
+  # url: redis://localhost:6379/2
+  # channel_prefix: shogi_web_production
