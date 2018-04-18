@@ -57,15 +57,21 @@ class ChatRoomChannel < ApplicationCable::Channel
   # わざわざ ruby 側に戻してブロードキャストする意味がない気がする
   # JavaScript 側でそのまま自分以外にブロードキャストできればそれにこしたことはない → たぶん方法はある
   def kifu_body_sfen_broadcast(data)
-    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data["current_chat_user"]["id"]])    
-    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_chat_user.id])    
+    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data["current_chat_user"]["id"]])
+    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_chat_user.id])
     # if data["current_chat_user"]["id"] == current_chat_user.id
     #   # 駒音が重複するため自分にはブロードキャストしない
     # else
     # end
     ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
   end
-  
+
+  def room_name_changed(data)
+    chat_room = ChatRoom.find(params[:chat_room_id])
+    chat_room.update!(name: data["room_name"])
+    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
+  end
+
   def room_in(data)
     chat_room = ChatRoom.find(data["chat_room"]["id"])
     chat_user = ChatUser.find(data["current_chat_user"]["id"])
@@ -74,12 +80,12 @@ class ChatRoomChannel < ApplicationCable::Channel
     end
     ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
   end
-  
+
   def room_out(data)
     chat_room = ChatRoom.find(data["chat_room"]["id"])
     chat_user = ChatUser.find(data["current_chat_user"]["id"])
     # chat_room.chat_users.destroy(alice)
-  
+
     ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
   end
 end

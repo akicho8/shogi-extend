@@ -71,6 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["chat_article"]) {
         App.chat_vm.chat_articles.push(data["chat_article"])
       }
+
+      // 部屋名の共有
+      if (data["room_name"]) {
+        App.chat_vm.room_name = data["room_name"]
+      }
     },
 
     // 自由に定義してよいメソッド
@@ -84,6 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chat_room_id: chat_room_app_params.chat_room.id,
         chat_article_body: chat_article_body,
       })
+    },
+
+    // 自由に定義してよいメソッド
+    room_name_changed: function(data) {
+      this.perform("room_name_changed", data)
     },
 
     kifu_body_sfen_broadcast: function(data) {
@@ -100,14 +110,30 @@ document.addEventListener('DOMContentLoaded', () => {
         chat_articles: [],
         online_chat_users: [],
         human_kifu_text: "(human_kifu_text)",
-        room_title: "(room_title)",
-        room_title_edit: false,
+        room_name: "(room_name)",
+        room_name_before: null,
+        room_name_edit: false,
       }
     },
+    watch: {
+      room_name_edit(value) {
+        if (this.room_name === "") {
+          this.room_name = chat_room_app_params.chat_room.name
+        }
+        if (value) {
+          this.room_name_before = this.room_name
+        } else  {
+          if (this.room_name_before !== this.room_name) {
+            App.chat_room.chat_say(`<span class="has-text-info">部屋名を「${this.room_name}」に変更しました</span>`)
+            App.chat_room.room_name_changed({room_name: this.room_name})
+          }
+        }
+      },
+    },
     methods: {
-      room_title_click: function() {
-        this.room_title_edit = true
-        this.$nextTick(function () { this.$refs.room_title_input.focus() })
+      room_name_click: function() {
+        this.room_name_edit = true
+        this.$nextTick(function () { this.$refs.room_name_input.focus() })
       },
       foo() {
         alert(1)
