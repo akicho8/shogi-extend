@@ -1,7 +1,6 @@
 export default {
   data: function() {
     return {
-      // 部屋名
       room_name: "(room_name)", // 部屋名
       room_name_before: null,   // 部屋名を変更する前の名前
       room_name_edit_p: false,  // 部屋名変更中？
@@ -25,7 +24,7 @@ export default {
   methods: {
     room_name_click() {
       this.room_name_edit_p = true
-      this.$nextTick(function () { this.$refs.room_name_input.focus() })
+      this.$nextTick(() => this.$refs.room_name_input.focus())
     },
   },
 }
