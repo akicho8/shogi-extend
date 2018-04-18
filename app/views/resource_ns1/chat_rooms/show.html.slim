@@ -20,8 +20,8 @@ javascript:
     = link_to("一覧に戻る", [:resource_ns1, :chat_rooms], :class => "button")
   br
 
-  template v-if="room_name_edit"
-    input.input.is-large v-model.trim="room_name" @keyup.enter="room_name_edit = false" @blur="room_name_edit = false" ref="room_name_input"
+  template v-if="room_name_edit_p"
+    input.input.is-large v-model.trim="room_name" @keyup.enter="room_name_edit_p = false" @blur="room_name_edit_p = false" ref="room_name_input"
   template v-else=""
     .title.is-4 v-text="room_name" @click="room_name_click"
 
