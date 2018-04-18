@@ -292,3 +292,49 @@ task :v do
   end
 end
 # ~> -:2:in `<main>': undefined method `lock' for main:Object (NoMethodError)
+
+################################################################################ ActionCable
+
+namespace :cable_puma do
+  desc "action_cable 用の puma を deploy:restart にひっかけて再起動"
+  task :restart do
+    on roles(:app) do |host|
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :pgrep, "-fl puma || true"
+          execute :bundle, "exec", :pumactl, "-Q -F cable/puma.rb stop || true"
+          execute :pgrep, "-fl puma || true"
+          execute :bundle, "exec", :pumactl, "-F cable/puma.rb start"
+          execute :pgrep, "-fl puma || true"
+          execute :bundle, "exec", :pumactl, "-F cable/puma.rb status"
+        end
+      end
+    end
+  end
+  before "deploy:restart", "cable_puma:restart"
+
+  desc "action_cable 用の puma を定義"
+  task :stop do
+    on roles(:app) do |host|
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, "exec", :pumactl, "-Q -F cable/puma.rb stop || true"
+          execute :pgrep, "-fl puma || true"
+        end
+      end
+    end
+  end
+  after "deploy:restart", "cable_puma:status"
+
+  desc "action_cable 用の puma の状態を確認"
+  task :status do
+    on roles(:app) do |host|
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, "exec", :pumactl, "-F cable/puma.rb status"
+        end
+      end
+    end
+  end
+  after "deploy:restart", "cable_puma:status"
+end
