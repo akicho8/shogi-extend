@@ -314,7 +314,7 @@ namespace :cable_puma do
     end
   end
 
-  desc "action_cable 用の puma を deploy:restart にひっかけて再起動"
+  desc "cap production cable_puma:restart"
   task :restart do
     on roles(:app) do |host|
       within current_path do
@@ -331,7 +331,7 @@ namespace :cable_puma do
   end
   before "deploy:restart", "cable_puma:restart"
 
-  desc "action_cable 用の puma を定義"
+  desc "cap production cable_puma:stop"
   task :stop do
     on roles(:app) do |host|
       within current_path do
@@ -344,7 +344,7 @@ namespace :cable_puma do
   end
   after "deploy:restart", "cable_puma:status"
 
-  desc "action_cable 用の puma の状態を確認"
+  desc "cap production cable_puma:status"
   task :status do
     on roles(:app) do |host|
       within current_path do
