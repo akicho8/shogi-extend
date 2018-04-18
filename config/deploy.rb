@@ -296,6 +296,24 @@ end
 ################################################################################ ActionCable
 
 namespace :cable_puma do
+  desc "cap production cable_puma:log"
+  task :log do
+    on roles(:app) do |host|
+      within current_path do
+        execute :tailf, "log/puma_#{fetch(:rails_env)}.log"
+      end
+    end
+  end
+
+  desc "cap production cable_puma:error_log"
+  task :error_log do
+    on roles(:app) do |host|
+      within current_path do
+        execute :tailf, "log/puma_#{fetch(:rails_env)}_error.log"
+      end
+    end
+  end
+
   desc "action_cable 用の puma を deploy:restart にひっかけて再起動"
   task :restart do
     on roles(:app) do |host|
