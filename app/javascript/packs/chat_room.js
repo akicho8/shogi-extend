@@ -99,10 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
         message: "",
         chat_articles: [],
         online_chat_users: [],
-        human_kifu_text: "",
+        human_kifu_text: "(human_kifu_text)",
+        room_title: "(room_title)",
+        room_title_edit: false,
       }
     },
     methods: {
+      room_title_click: function() {
+        this.room_title_edit = true
+        this.$nextTick(function () { this.$refs.room_title_input.focus() })
+      },
       foo() {
         alert(1)
       },
