@@ -42,7 +42,7 @@ javascript:
               span v-html="e.message"
         .field
           .control
-            input.input.is-large.is-primary type="text" autocomplete="off" v-model="message" @keydown.enter="message_send"
+            input.input.is-large.is-primary type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_send"
         .field
           .control
             button.button.is-primary @click="message_send"

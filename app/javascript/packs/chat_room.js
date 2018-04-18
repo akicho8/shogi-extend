@@ -118,7 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     methods: {
       message_send(value) {
-        App.chat_room.chat_say(this.message)
+        if (this.message !== "") {
+          App.chat_room.chat_say(this.message)
+        }
         this.message = ""
       },
 
