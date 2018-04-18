@@ -1,5 +1,6 @@
 import _ from "lodash"
 import axios from "axios"
+import chat_room_name from "./chat_room_name.js"
 
 // (function() {
 //   this.chat_vm || (this.chat_vm = {})
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   App.chat_vm = new Vue({
+    mixins: [chat_room_name],
     el: "#chat_room_app",
     data: function() {
       return {
@@ -110,33 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chat_articles: [],                    // 発言一覧
         online_chat_users: [],                // 参加者
         human_kifu_text: "(human_kifu_text)", // 棋譜
-
-        // 部屋名
-        room_name: "(room_name)", // 部屋名
-        room_name_before: null,   // 部屋名を変更する前の名前
-        room_name_edit_p: false,  // 部屋名変更中？
       }
     },
     watch: {
-      room_name_edit_p(value) {
-        if (this.room_name === "") {
-          this.room_name = chat_room_app_params.chat_room.name
-        }
-        if (value) {
-          this.room_name_before = this.room_name
-        } else  {
-          if (this.room_name_before !== this.room_name) {
-            App.chat_room.chat_say(`<span class="has-text-info">部屋名を「${this.room_name}」に変更しました</span>`)
-            App.chat_room.room_name_changed({room_name: this.room_name})
-          }
-        }
-      },
     },
     methods: {
-      room_name_click: function() {
-        this.room_name_edit_p = true
-        this.$nextTick(function () { this.$refs.room_name_input.focus() })
-      },
       foo() {
         alert(1)
       },
