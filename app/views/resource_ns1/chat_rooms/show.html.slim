@@ -15,12 +15,15 @@ javascript:
 / render partial: "chat_article", as: :chat_article, collection: current_record.chat_articles.order(:created_at).last(10)
 
 #chat_room_app v-cloak="true"
+  .title.is-4= "対戦部屋 ##{current_record.id}"
   .columns
     .column
-      shogi-player :kifu_body="kifu_body_sfen" :key_event_capture="false" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :size="'default'" :sound_effect="true" :volume="0.1" :run_mode="'play_mode'" @update:play_mode_long_sfen="play_mode_long_sfen_set" :human_side="null"
+      .box
+        shogi-player :kifu_body="kifu_body_sfen" :key_event_capture="false" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :size="'default'" :sound_effect="true" :volume="0.1" :run_mode="'play_mode'" @update:play_mode_long_sfen="play_mode_long_sfen_set" :human_side="null"
 
     .column
-      div
+      .box
+        .title.is-4= "チャット"
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_chat_articles"
             td
@@ -38,7 +41,7 @@ javascript:
   .columns
     .column
       .box
-        .title= "参加者"
+        .title.is-4= "参加者"
         table.table.is-narrow
           tr v-for="e of online_chat_users"
             td
@@ -53,22 +56,22 @@ javascript:
                 = "←自分"
     .column
       .box
-        .title= "棋譜"
+        .title.is-4= "棋譜"
         b-input :value="human_kifu_text" type="textarea" readonly="readonly"
 
 br
 br
 .box
-  .title= "@chat_room_app_params"
+  .title.is-4= "@chat_room_app_params"
   = html_format(JSON.load(@chat_room_app_params.to_json))
 
 .box
   = html_format({"cookies.signed[:chat_user_id]" => cookies.signed[:chat_user_id]})
 
 .box
-  .title= "ChatUser"
+  .title.is-4= "ChatUser"
   = html_format(current_record.chat_users)
-  .title= "ChatArticle"
+  .title.is-4= "ChatArticle"
   = html_format(current_record.chat_articles)
 
 #appearance_app
