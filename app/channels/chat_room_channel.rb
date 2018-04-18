@@ -35,11 +35,11 @@ class ChatRoomChannel < ApplicationCable::Channel
   # モデルに保存して非同期でブロードキャストする
   def chat_say(data)
     if false
-      ChatArticle.create!(body: data["chat_article_body"])
+      ChatArticle.create!(message: data["chat_article_body"])
     else
       chat_user = ChatUser.find(data["sayed_chat_user_id"])
       chat_room = ChatRoom.find(data["chat_room_id"])
-      chat_article = chat_user.chat_articles.create!(chat_room: chat_room, body: data["chat_article_body"])
+      chat_article = chat_user.chat_articles.create!(chat_room: chat_room, message: data["chat_article_body"])
       # chat_article = ChatArticle.create!(body: data["chat_article_body"])
 
       # body = data["chat_article_body"]

@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   App.chat_vm = new Vue({
     mixins: [chat_room_name],
     el: "#chat_room_app",
-    data: function() {
+    data() {
       return {
         kifu_body_sfen: "position startpos",  // 棋譜(shogi-player用)
         message: "",                          // 発言
@@ -117,10 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     watch: {
     },
     methods: {
-      foo() {
-        alert(1)
-      },
-      input_send(value) {
+      message_send(value) {
         App.chat_room.chat_say(this.message)
         this.message = ""
       },

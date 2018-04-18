@@ -16,7 +16,7 @@
 class CreateChatArticles < ActiveRecord::Migration[5.1]
   def up
     create_table :chat_users, force: true do |t|
-      t.string :name
+      t.string :name, null: false
       t.datetime :appearing_on
       t.timestamps null: false
     end
@@ -33,7 +33,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
     create_table :chat_articles, force: true do |t|
       t.belongs_to :chat_room, null: false, comment: "部屋"
       t.belongs_to :chat_user, null: false, comment: "人"
-      t.text :body
+      t.text :message, null: false
       t.timestamps null: false
     end
   end

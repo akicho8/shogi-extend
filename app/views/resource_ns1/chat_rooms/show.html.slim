@@ -39,13 +39,13 @@ javascript:
               span.has-text-grey-lighter
                 = "{{e.chat_user.id}}:"
               = " "
-              span v-html="e.body"
+              span v-html="e.message"
         .field
           .control
-            input.input.is-large.is-primary type="text" autocomplete="off" v-model="message" @keydown.enter="input_send"
+            input.input.is-large.is-primary type="text" autocomplete="off" v-model="message" @keydown.enter="message_send"
         .field
           .control
-            button.button.is-primary @click="input_send"
+            button.button.is-primary @click="message_send"
               | 送信
   .columns
     .column
