@@ -16,6 +16,14 @@ class CpuVersusController < ApplicationController
           return
         end
 
+        captured_soldier = mediator.opponent_player.executor.captured_soldier
+        if captured_soldier
+          if captured_soldier.piece.key == :king
+            render json: {toryo_message: "玉を取られたので負けました"}
+            return
+          end
+        end
+
         puts mediator
         brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance, legal_moves_only: false)
         records = []
@@ -44,8 +52,17 @@ class CpuVersusController < ApplicationController
         # puts mediator.to_sfen
         sfen = mediator.to_sfen
 
+        retval = {sfen: sfen}
+
+        captured_soldier = mediator.opponent_player.executor.captured_soldier
+        if captured_soldier
+          if captured_soldier.piece.key == :king
+            retval.update(toryo_message: "CPUの勝ちです")
+          end
+        end
+
         logger.debug(info.to_sfen)
-        render json: {sfen: sfen}
+        render json: retval
         return
       end
     end
