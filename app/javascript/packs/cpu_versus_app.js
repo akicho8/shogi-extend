@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (response.data.error_message) {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
           }
+          if (response.data.toryo_message) {
+            Vue.prototype.$toast.open({message: response.data.toryo_message, position: "is-bottom", type: "is-info", duration: 1000 * 10})
+          }
           if (response.data.sfen) {
             this.kifu_body_sfen = response.data.sfen
           }

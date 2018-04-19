@@ -21,6 +21,12 @@ class CpuVersusController < ApplicationController
         records = brain.interactive_deepning(time_limit: 3, depth_range: 0..8)
         tp Warabi::Brain.human_format(records)
         record = records.first
+
+        if record[:score] <= -Warabi::INF_MAX
+          render json: {toryo_message: "負けました(T_T)"}
+          return
+        end
+
         hand = record[:hand]
         mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
         # puts mediator.to_sfen
