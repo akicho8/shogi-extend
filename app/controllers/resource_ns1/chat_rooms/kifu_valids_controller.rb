@@ -14,7 +14,7 @@ module ResourceNs1
 
             # puts mediator
             # brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
-            # records = brain.interactive_deepning(time_limit: 3, depth_range: 0..8)
+            # records = brain.iterative_deepening(time_limit: 3, depth_range: 0..8)
             # tp Warabi::Brain.human_format(records)
             # record = records.first
             # hand = record[:hand]

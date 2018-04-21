@@ -25,25 +25,26 @@ class CpuVersusController < ApplicationController
         end
 
         puts mediator
-        brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance, legal_moves_only: false)
+        brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
         records = []
-        time_limit = 3
+        time_limit = (params[:time_limit].presence || 3).to_i
         begin
-          records = brain.interactive_deepning(time_limit: time_limit, depth_max_range: 0..8)
-        rescue Warabi::BrainHandsEmpty
+          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: 1..5)
+        rescue Warabi::BrainProcessingHeavy
           time_limit += 1
+          p [:retry, {time_limit: time_limit}]
           retry
         end
         tp Warabi::Brain.human_format(records)
 
         if records.empty?
-          render json: {toryo_message: "指し手がないので負けました(T_T)"}
+          render json: {toryo_message: "もう指す手がありません。負けました(T_T)"}
           return
         end
 
         record = records.first
         if record[:score] <= -Warabi::INF_MAX
-          render json: {toryo_message: "負けました(T_T)"}
+          render json: {toryo_message: "降参です。負けました(T_T)"}
           return
         end
 
@@ -51,6 +52,15 @@ class CpuVersusController < ApplicationController
         mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
         # puts mediator.to_sfen
         sfen = mediator.to_sfen
+
+        if true
+          # 人間側の手がなければ人間側のまけ
+          brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
+          if brain.lazy_all_hands.none? { |e| e.regal_move?(mediator) }
+            render json: {toryo_message: "CPUの勝ちです"}
+            return
+          end
+        end
 
         retval = {sfen: sfen}
 

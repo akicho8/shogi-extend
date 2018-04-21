@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: c45ce7b8f4b43521c894eb9e514ae8f7959dee49
+  revision: 1cf3f2f32ff67fba170f2cb4ed024a4f4ba39797
   specs:
     warabi (0.0.1)
       actionview
@@ -141,7 +141,7 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faraday (0.14.0)
+    faraday (0.15.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     foreman (0.84.0)
