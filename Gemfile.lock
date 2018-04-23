@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: 1cf3f2f32ff67fba170f2cb4ed024a4f4ba39797
+  revision: 73069c7edd67de4d8c4689de0f6653f4cea6629c
   specs:
     warabi (0.0.1)
       actionview
@@ -327,7 +327,7 @@ GEM
       activesupport
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.9)
+    uglifier (4.1.10)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext

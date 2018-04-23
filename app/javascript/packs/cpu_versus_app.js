@@ -9,17 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         kifu_body_sfen: "position startpos",
 
-        cpu_tuyosa_key: "hutuu",
+        cpu_tuyosa_key: "yowai",
         cpu_tuyosa_infos: {
-          yowai:  { name: "弱い", time_limit:  1 },
-          hutuu:  { name: "普通", time_limit:  3 },
-          tuyoi:  { name: "強い", time_limit:  5 },
+          yowai:  { name: "弱い" },
+          hutuu:  { name: "普通" },
+          tuyoi:  { name: "強い" },
           // saikyo: { name: "もっと強いけどめっちゃ時間かかる", time_limit: 30 },
         },
       }
     },
     computed: {
-      tuyosa_info() {
+      cpu_tuyosa_info() {
         return this.cpu_tuyosa_infos[this.cpu_tuyosa_key]
       },
     },
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       play_mode_long_sfen_set(v) {
         const params = new URLSearchParams()
         params.append("kifu_body", v)
-        params.append("time_limit", this.tuyosa_info.time_limit)
+        params.append("cpu_tuyosa_key", this.cpu_tuyosa_key)
 
         axios({
           method: "post",
@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
           if (response.data.error_message) {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
           }
-          if (response.data.toryo_message) {
-            Vue.prototype.$toast.open({message: response.data.toryo_message, position: "is-bottom", type: "is-info", duration: 1000 * 60 * 60})
+          if (response.data.normal_message) {
+            Vue.prototype.$toast.open({message: response.data.normal_message, position: "is-bottom", type: "is-info", duration: 1000 * 60 * 60})
           }
           if (response.data.sfen) {
             this.kifu_body_sfen = response.data.sfen
