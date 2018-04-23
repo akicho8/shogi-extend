@@ -50,8 +50,9 @@ class CpuVersusController < ApplicationController
 
         hand = record[:hand]
       else
+        # ランダムに指す
         # hands = mediator.current_player.normal_all_hands
-        # hand = mediator.current_player.normal_all_hands.to_a.shuffle.find { |e| e.legal_move?(mediator) }
+        # hand = hands.to_a.shuffle.find { |e| e.legal_move?(mediator) }
       end
 
       # CPUの手を指す
@@ -91,7 +92,7 @@ class CpuVersusController < ApplicationController
     memory_record [
       { key: :yowai, name: "弱い", time_limit: nil, depth_max_range: 0..0 }, # 最初の合法手リストを最善手順に並べたもの
       { key: :hutuu, name: "普通", time_limit:   3, depth_max_range: 0..9 }, # 3秒まで深読みできる
-      { key: :tuyoi, name: "強い", time_limit:  10, depth_max_range: 0..9 }, # 10秒まで深読みできる
+      { key: :tuyoi, name: "強い", time_limit:   5, depth_max_range: 0..9 }, # 必ず相手の手を読む
     ]
   end
 end

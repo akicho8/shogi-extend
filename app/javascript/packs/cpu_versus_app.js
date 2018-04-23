@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
           }
           if (response.data.normal_message) {
-            Vue.prototype.$toast.open({message: response.data.normal_message, position: "is-bottom", type: "is-info", duration: 1000 * 60 * 60})
+            Vue.prototype.$toast.open({message: response.data.normal_message, position: "is-bottom", type: "is-info", duration: 1000 * 60})
           }
           if (response.data.sfen) {
             this.kifu_body_sfen = response.data.sfen
