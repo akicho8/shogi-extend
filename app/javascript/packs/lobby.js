@@ -1,28 +1,20 @@
-// import _ from "lodash"
-// import axios from "axios"
-
-// (function() {
-//   this.chat_vm || (this.chat_vm = {})
-// }).call(this)
-
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
   App.lobby = App.cable.subscriptions.create("LobbyChannel", {
-    // Called when the subscription is ready for use on the server
     connected: function() {
-      App.lobby_vm.puts("connected")
+      // App.lobby_vm.puts("connected")
       // this.install()
       // this.appear()
       // this.perform("appear")
     },
     // Called when the WebSocket connection is closed
     disconnected: function() {
-      App.lobby_vm.puts("disconnected")
+      // App.lobby_vm.puts("disconnected")
       // this.uninstall()
     },
     // Called when the subscription is rejected by the server
     rejected: function() {
-      App.lobby_vm.puts("rejected")
+      // App.lobby_vm.puts("rejected")
       // this.uninstall()
     },
 
@@ -66,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el: "#lobby_app",
     data: function() {
       return {
-        status_list: [],
+        // status_list: [],
         chat_rooms: [],
         online_users: [],                // 参加者
         columns: [
@@ -78,9 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     methods: {
-      puts(v) {
-        this.status_list.push(v)
-      },
+      // puts(v) {
+      //   this.status_list.push(v)
+      // },
       chat_user_self_p(chat_user) {
         return chat_user.id === lobby_app_params.current_chat_user.id
       },
@@ -102,9 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     computed: {
-      latest_status_list() {
-        return _.takeRight(this.status_list, 10)
-      },
+      // latest_status_list() {
+      //   return _.takeRight(this.status_list, 10)
+      // },
     },
   })
 })

@@ -1,59 +1,66 @@
-// import _ from "lodash"
-// import axios from "axios"
-
 document.addEventListener('DOMContentLoaded', () => {
   App.system_notification = App.cable.subscriptions.create({
     channel: "SystemNotificationChannel",
-    // chat_room_id: chat_room_app_params.chat_room.id,
   }, {
     connected() {
+      App.system_notification_vm.puts("connected")
     },
     disconnected() {
+      App.system_notification_vm.puts("disconnected")
+    },
+    rejected: function() {
+      App.system_notification_vm.puts("rejected")
     },
     received(data) {
+      App.system_notification_vm.puts("received")
+
       if (data["message"]) {
         const message = data["message"]
         const from = data["from"]
-        // const to = data["to"]
-        str = `${from.name}: ${message}`
+        const str = `${from.name}: ${message}`
         Vue.prototype.$toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
       }
+
+      if (data["active_user_count"]) {
+        App.header_vm.active_user_count = data["active_user_count"]
+      }
     },
+
     // 自由に定義してよいメソッド
     message_send_all(data) {
       this.perform("message_send_all", data)
     },
   })
 
-  // App.web_notification_vm = new Vue({
-  //   el: "#web_notification_app",
-  //   data() {
-  //     return {
-  //       kifu_body_sfen: "position startpos",  // 棋譜(shogi-player用)
-  //       message: "",                          // 発言
-  //       chat_articles: [],                    // 発言一覧
-  //       online_chat_users: [],                // 参加者
-  //       human_kifu_text: "(human_kifu_text)", // 棋譜
-  //     }
-  //   },
-  //   watch: {
-  //   },
-  //   methods: {
-  //     message_enter(value) {
-  //       if (this.message !== "") {
-  //         App.chat_room.chat_say(this.message)
-  //       }
-  //       this.message = ""
-  //     },
-  //
-  //     chat_user_self_p(chat_user) {
-  //       return chat_user.id === chat_room_app_params.current_chat_user.id
-  //     },
-  //   },
-  //   computed: {
-  //     latest_chat_articles() {
-  //       return _.takeRight(this.chat_articles, 10)
-  //     },
-  //   },
-  // })
+  App.system_notification_vm = new Vue({
+    el: "#system_notification_app",
+    data: function() {
+      return {
+        system_logs: [],
+      }
+    },
+    methods: {
+      puts(v) {
+        this.system_logs.push(v)
+      },
+    },
+    computed: {
+      latest_system_logs() {
+        return _.takeRight(this.system_logs, 10)
+      },
+    },
+  })
+
+  App.header_vm = new Vue({
+    el: "#header_app",
+    data: function() {
+      return {
+        active_user_count: 0,
+      }
+    },
+    methods: {
+    },
+    computed: {
+    },
+  })
 })

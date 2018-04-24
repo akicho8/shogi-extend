@@ -36,6 +36,10 @@ html lang="ja"
                 span
                 span
                 span
+            #header_app.navbar-menu(v-cloak)
+              .navbar-end
+                span.navbar-item
+                  = link_to("{{active_user_count}}", [:resource_ns1, :chat_rooms], :class => ["button", "is-primary", "is-inverted"])
             / #navbarMenuHeroA.navbar-menu
             /   .navbar-end
             /     a.navbar-item.is-active
@@ -84,4 +88,12 @@ html lang="ja"
               =<> link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
               =<> link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
               =<> link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
-            = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
+              br
+              = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
+            #system_notification_app.has-text-grey-light
+              | ActionCable: {{latest_system_logs.join(" ")}}
+
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    App.header_vm.active_user_count = #{ChatUser.where.not(appearing_on: nil).count.to_json.html_safe}
+  })
