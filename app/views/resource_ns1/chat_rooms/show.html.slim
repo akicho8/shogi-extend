@@ -38,8 +38,8 @@ javascript:
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_chat_articles"
             td
-              span.has-text-grey-lighter
-                = "{{e.chat_user.id}}:"
+              span.has-text-grey
+                = "{{e.chat_user.name}}： "
               = " "
               span v-html="e.message"
         .field
