@@ -2,7 +2,6 @@ class SystemNotificationChannel < ApplicationCable::Channel
   def subscribed
     stream_from "system_notification_channel"
     current_chat_user.appear
-    ActionCable.server.broadcast("system_notification_channel", {active_user_count: ChatUser.where.not(appearing_on: nil).count})
   end
 
   def unsubscribed

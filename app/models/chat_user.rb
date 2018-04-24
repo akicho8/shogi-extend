@@ -28,5 +28,6 @@ class ChatUser < ApplicationRecord
 
   after_commit do
     ActionCable.server.broadcast("lobby_channel", online_users: ChatUser.where.not(appearing_on: nil))
+    ActionCable.server.broadcast("system_notification_channel", {active_user_count: ChatUser.where.not(appearing_on: nil).count})
   end
 end
