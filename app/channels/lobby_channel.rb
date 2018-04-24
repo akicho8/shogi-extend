@@ -4,7 +4,6 @@ class LobbyChannel < ApplicationCable::Channel
     stream_from "lobby_channel" # ブロードキャストするにはこれが必要
 
     logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
-    current_chat_user.appear
   end
 
   def unsubscribed

@@ -92,7 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
       message_enter() {
         if (this.message !== "") {
           // Vue.prototype.$toast.open({message: this.message, position: "is-bottom", type: "is-info", duration: 1000 * 2})
-          App.web_notification.message_send_to({from: lobby_app_params.current_chat_user, to: this.message_to, message: this.message})
+          if (this.message_to) {
+            App.web_notification.message_send_to({from: lobby_app_params.current_chat_user, to: this.message_to, message: this.message})
+          } else {
+            App.system_notification.message_send_all({from: lobby_app_params.current_chat_user, message: this.message})
+          }
         }
         this.message = ""
       }
