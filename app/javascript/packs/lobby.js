@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // App.lobby_vm.chat_rooms = []
       // App.lobby_vm.chat_rooms = [data["chat_room"]]
       // App.lobby_vm.puts(data)
-      if (data["chat_room"]) {
-        App.lobby_vm.chat_rooms = _.concat([data["chat_room"]], App.lobby_vm.chat_rooms)
+      if (data["chat_room_created"]) {
+        App.lobby_vm.chat_rooms = _.concat([data["chat_room_created"]], App.lobby_vm.chat_rooms)
       }
       if (data["online_users"]) {
         App.lobby_vm.online_users = data["online_users"]

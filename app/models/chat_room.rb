@@ -18,13 +18,17 @@ class ChatRoom < ApplicationRecord
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_users, through: :chat_memberships
 
+  scope :latest_list, -> { order(updated_at: :desc).limit(50) }
+
+  cattr_accessor(:to_json_params) { {include: [:chat_users], methods: [:show_link]} }
+
   before_validation on: :create do
     self.name = name.presence || name_default
     self.kifu_body_sfen ||= "position startpos"
   end
 
   def name_default
-    "対戦ルーム ##{ChatRoom.count.next}"
+    "対戦部屋 ##{ChatRoom.count.next}"
   end
 
   def human_kifu_text_get
@@ -37,21 +41,17 @@ class ChatRoom < ApplicationRecord
     mediator.to_ki2_a.join(" ")
   end
 
+  after_create_commit do
+    ActionCable.server.broadcast("lobby_channel", chat_room_created: js_attributes)
+  end
+
+  private
+
   def show_link
     Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
   end
 
   def js_attributes
-    JSON.load(to_json(include: [:chat_users], methods: [:show_link]))
-  end
-
-  after_create_commit do
-    # ChatArticleBroadcastJob.perform_later(self)
-    # App.lobby_vm.chat_rooms = #{}
-    # chat_rooms = ChatRoom.order(updated_at: :desc).first(10).to_json(include: [:chat_users], methods: [:show_link])
-    # chat_room = to_json(include: [:chat_users], methods: [:show_link])
-
-    ActionCable.server.broadcast("lobby_channel", chat_room: js_attributes)
-    # ActionCable.server.broadcast("chat_room_channel_#{1}", chat_article: ChatArticle.first.js_attributes)
+    JSON.load(to_json(to_json_params))
   end
 end

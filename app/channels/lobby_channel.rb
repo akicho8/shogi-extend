@@ -2,13 +2,12 @@
 class LobbyChannel < ApplicationCable::Channel
   def subscribed
     stream_from "lobby_channel" # ブロードキャストするにはこれが必要
-
-    logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
+    # logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
   end
 
   def unsubscribed
-    logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
-    current_chat_user.disappear
+    # logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
+    # current_chat_user.disappear
   end
 
   # def appear(data)
