@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     watch: {
     },
     methods: {
-      message_send(value) {
+      message_enter(value) {
         if (this.message !== "") {
           App.chat_room.chat_say(this.message)
         }

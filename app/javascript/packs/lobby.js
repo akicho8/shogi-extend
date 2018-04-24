@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
         columns: [
           { field: 'name', label: '部屋', },
         ],
+        message_modal_p: false,
+        message_to: null,
+        message: "",
       }
     },
     methods: {
@@ -81,6 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
       chat_user_self_p(chat_user) {
         return chat_user.id === lobby_app_params.current_chat_user.id
       },
+      message_form_modal_open(message_to) {
+        this.message_to = message_to
+        this.message_modal_p = true
+        this.$nextTick(() => this.$refs.message_input.focus())
+      },
+      message_enter() {
+        if (this.message !== "") {
+          // Vue.prototype.$toast.open({message: this.message, position: "is-bottom", type: "is-info", duration: 1000 * 2})
+          App.web_notification.message_send_to({from: lobby_app_params.current_chat_user, to: this.message_to, message: this.message})
+        }
+        this.message = ""
+      }
     },
     computed: {
       latest_list() {

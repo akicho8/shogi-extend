@@ -6,14 +6,39 @@ javascript:
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
-    lobby_app
     App.lobby_vm.chat_rooms = #{ChatRoom.order(updated_at: :desc).first(10).to_json(include: [:chat_users], methods: [:show_link]).html_safe}
     App.lobby_vm.online_users = #{ChatUser.where.not(appearing_on: nil).to_json.html_safe}
   })
 
 #lobby_app
-  / .title.is-2= "#{current_model.model_name.human}一覧"
-  / hr
+  b-modal(:active.sync="message_modal_p" has-modal-card)
+    / .modal-card.has-text-left
+    /   header.modal-card-head
+    /     p.modal-card-title 設定
+    /   section.modal-card-body
+    /     b-field(label="モード")
+    /       .block
+    /         b-radio(v-model="current_mode" native-value="view_mode") 再生
+    /         b-radio(v-model="current_mode" native-value="play_mode") 操作
+    /         b-radio(v-model="current_mode" native-value="edit_mode") 編集
+    /     b-field(label="反転")
+    /       b-switch(v-model="flip")
+    /     b-field(label="デバッグモード")
+    /       b-switch(v-model="inside_debug_mode")
+    /     b-field(label="棋譜")
+    /       b-input(v-model="kifu_source2" type="textarea")
+    /   footer.modal-card-foot
+    /     button.button.is-primary(@click="$parent.close()") 閉じる
+    .modal-card
+      header.modal-card-head
+        p.modal-card-title
+          template v-if="message_to"
+            = "{{message_to.name}}にメッセージ送信"
+      section.modal-card-body
+        b-field label=""
+          input.input.is-large type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input"
+      footer.modal-card-foot
+        button.button.is-primary(@click="message_enter") 送信
 
   .buttons
     = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button is-primary")
@@ -36,7 +61,7 @@ javascript:
         b-table :data="online_users"
           template slot-scope="props"
             b-table-column field="name" label="名前" sortable="sortable"
-              a @click="send_to_message"
+              a @click="message_form_modal_open(props.row)"
                 | {{props.row.name}}
 
   / .box

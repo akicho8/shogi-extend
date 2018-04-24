@@ -45,10 +45,10 @@ javascript:
               span v-html="e.message"
         .field
           .control
-            input.input.is-large.is-primary type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_send"
+            input.input.is-large.is-primary type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter"
         .field
           .control
-            button.button.is-primary @click="message_send"
+            button.button.is-primary @click="message_enter"
               | 送信
       .box
         .title.is-4= "参加者"
