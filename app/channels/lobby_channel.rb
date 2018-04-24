@@ -1,7 +1,7 @@
-# appearance_channel
-class AppearanceChannel < ApplicationCable::Channel
+# lobby_channel
+class LobbyChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "appearance_channel" # ブロードキャストするにはこれが必要
+    stream_from "lobby_channel" # ブロードキャストするにはこれが必要
 
     logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
     current_chat_user.appear

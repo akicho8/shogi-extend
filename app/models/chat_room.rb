@@ -47,11 +47,11 @@ class ChatRoom < ApplicationRecord
 
   after_create_commit do
     # ChatArticleBroadcastJob.perform_later(self)
-    # App.appearance_vm.chat_rooms = #{}
+    # App.lobby_vm.chat_rooms = #{}
     # chat_rooms = ChatRoom.order(updated_at: :desc).first(10).to_json(include: [:chat_users], methods: [:show_link])
     # chat_room = to_json(include: [:chat_users], methods: [:show_link])
 
-    ActionCable.server.broadcast("appearance_channel", chat_room: js_attributes)
+    ActionCable.server.broadcast("lobby_channel", chat_room: js_attributes)
     # ActionCable.server.broadcast("chat_room_channel_#{1}", chat_article: ChatArticle.first.js_attributes)
   end
 end

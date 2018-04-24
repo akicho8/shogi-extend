@@ -1,17 +1,17 @@
 javascript:
-  var appearance_app_params = #{@appearance_app_params.to_json.html_safe};
+  var lobby_app_params = #{@lobby_app_params.to_json.html_safe};
 
 - content_for :head do
-  = javascript_pack_tag("appearance")
+  = javascript_pack_tag("lobby")
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
-    appearance_app
-    App.appearance_vm.chat_rooms = #{ChatRoom.order(updated_at: :desc).first(10).to_json(include: [:chat_users], methods: [:show_link]).html_safe}
-    App.appearance_vm.online_users = #{ChatUser.where.not(appearing_on: nil).to_json.html_safe}
+    lobby_app
+    App.lobby_vm.chat_rooms = #{ChatRoom.order(updated_at: :desc).first(10).to_json(include: [:chat_users], methods: [:show_link]).html_safe}
+    App.lobby_vm.online_users = #{ChatUser.where.not(appearing_on: nil).to_json.html_safe}
   })
 
-#appearance_app
+#lobby_app
   / .title.is-2= "#{current_model.model_name.human}一覧"
   / hr
 

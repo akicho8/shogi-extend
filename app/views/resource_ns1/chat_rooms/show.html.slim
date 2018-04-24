@@ -4,7 +4,7 @@ javascript:
 
 - content_for :head do
   = javascript_pack_tag("chat_room")
-  = javascript_pack_tag("appearance")
+  = javascript_pack_tag("lobby")
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
@@ -80,5 +80,5 @@ br
   .title.is-4= "ChatArticle"
   = html_format(current_record.chat_articles)
 
-#appearance_app
+#lobby_app
   = "{{latest_list}}"

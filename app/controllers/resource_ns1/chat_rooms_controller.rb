@@ -9,7 +9,7 @@ module ResourceNs1
     end
 
     before_action do
-      @appearance_app_params = {
+      @lobby_app_params = {
         current_chat_user: current_chat_user,
       }
     end

@@ -6,64 +6,64 @@
 // }).call(this)
 
 document.addEventListener('DOMContentLoaded', () => {
-  // ~/src/shogi_web/app/channels/appearance_channel.rb
-  App.appearance = App.cable.subscriptions.create("AppearanceChannel", {
+  // ~/src/shogi_web/app/channels/lobby_channel.rb
+  App.lobby = App.cable.subscriptions.create("LobbyChannel", {
     // Called when the subscription is ready for use on the server
     connected: function() {
-      App.appearance_vm.puts("connected")
+      App.lobby_vm.puts("connected")
       // this.install()
       // this.appear()
       // this.perform("appear")
     },
     // Called when the WebSocket connection is closed
     disconnected: function() {
-      App.appearance_vm.puts("disconnected")
+      App.lobby_vm.puts("disconnected")
       // this.uninstall()
     },
     // Called when the subscription is rejected by the server
     rejected: function() {
-      App.appearance_vm.puts("rejected")
+      App.lobby_vm.puts("rejected")
       // this.uninstall()
     },
 
     received: function(data) {
-      // App.appearance_vm.chat_rooms = []
-      // App.appearance_vm.chat_rooms = [data["chat_room"]]
-      // App.appearance_vm.puts(data)
+      // App.lobby_vm.chat_rooms = []
+      // App.lobby_vm.chat_rooms = [data["chat_room"]]
+      // App.lobby_vm.puts(data)
       if (data["chat_room"]) {
-        App.appearance_vm.chat_rooms = _.concat([data["chat_room"]], App.appearance_vm.chat_rooms)
+        App.lobby_vm.chat_rooms = _.concat([data["chat_room"]], App.lobby_vm.chat_rooms)
       }
       if (data["online_users"]) {
-        App.appearance_vm.online_users = data["online_users"]
+        App.lobby_vm.online_users = data["online_users"]
       }
     },
 
     // appear: function() {
-    //   // Calls `AppearanceChannel#appear(data)` on the server
+    //   // Calls `LobbyChannel#appear(data)` on the server
     //   this.perform("appear", appearing_on: $("main").data("appearing-on"))
     // },
     // away: function() {
-    //   // Calls `AppearanceChannel#away` on the server
+    //   // Calls `LobbyChannel#away` on the server
     //   this.perform("away")
     // },
 
     // buttonSelector = "[data-behavior~=appear_away]"
     // install: function() {
-    //   $(document).on "turbolinks:load.appearance", =>
+    //   $(document).on "turbolinks:load.lobby", =>
     //     this.appear()
-    //   $(document).on "click.appearance", buttonSelector, =>
+    //   $(document).on "click.lobby", buttonSelector, =>
     //     this.away()
     //   false
     // $(buttonSelector).show()
 
     // uninstall: function() {
-    //   $(document).off(".appearance")
+    //   $(document).off(".lobby")
     //   $(buttonSelector).hide()
     // },
   })
 
-  App.appearance_vm = new Vue({
-    el: "#appearance_app",
+  App.lobby_vm = new Vue({
+    el: "#lobby_app",
     data: function() {
       return {
         list: [],
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.list.push(v)
       },
       chat_user_self_p(chat_user) {
-        return chat_user.id === appearance_app_params.current_chat_user.id
+        return chat_user.id === lobby_app_params.current_chat_user.id
       },
     },
     computed: {

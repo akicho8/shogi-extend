@@ -9,8 +9,8 @@ import chat_room_name from "./chat_room_name.js"
 // app/assets/javascripts/cable/subscriptions/chat.coffee
 // App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" }
 //
-// # app/assets/javascripts/cable/subscriptions/appearance.coffee
-// App.cable.subscriptions.create { channel: "AppearanceChannel" }
+// # app/assets/javascripts/cable/subscriptions/lobby.coffee
+// App.cable.subscriptions.create { channel: "LobbyChannel" }
 
 document.addEventListener('DOMContentLoaded', () => {
   App.chat_room = App.cable.subscriptions.create({
