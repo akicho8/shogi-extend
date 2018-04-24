@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
       unless @current_chat_user
         @current_chat_user = ChatUser.create!(name: "謎の棋士#{ChatUser.count.next}号")
       end
-      cookies.signed[:chat_user_id] = @current_chat_user.id
+      cookies.signed[:chat_user_id] = {value: @current_chat_user.id, expires: 1.weeks.from_now}
       @current_chat_user
     end
   end
