@@ -30,4 +30,26 @@ class ApplicationController < ActionController::Base
       request.user_agent.to_s.match?(self.class.bot_regexp)
     end
   end
+
+  concerning :CurrentChatUserMethods do
+    included do
+      helper_method :current_chat_user
+
+      before_action do
+        current_chat_user
+      end
+    end
+
+    class_methods do
+    end
+
+    def current_chat_user
+      @current_chat_user ||= ChatUser.find_by(id: cookies.signed[:chat_user_id])
+      unless @current_chat_user
+        @current_chat_user = ChatUser.create!(name: "謎の棋士#{ChatUser.count.next}号")
+      end
+      cookies.signed[:chat_user_id] = @current_chat_user.id
+      @current_chat_user
+    end
+  end
 end

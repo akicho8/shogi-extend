@@ -4,7 +4,6 @@ javascript:
 
 - content_for :head do
   = javascript_pack_tag("chat_room")
-  = javascript_pack_tag("lobby")
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
@@ -64,21 +63,21 @@ javascript:
             td
               template v-if="chat_user_self_p(e)"
                 = "←自分"
-
-br
-br
-.box
-  .title.is-4= "@chat_room_app_params"
-  = html_format(JSON.load(@chat_room_app_params.to_json))
-
-.box
-  = html_format({"cookies.signed[:chat_user_id]" => cookies.signed[:chat_user_id]})
-
-.box
-  .title.is-4= "ChatUser"
-  = html_format(current_record.chat_users)
-  .title.is-4= "ChatArticle"
-  = html_format(current_record.chat_articles)
+/ br
+/ br
+/ .box
+/   .title.is-4= "@chat_room_app_params"
+/   = html_format(JSON.load(@chat_room_app_params.to_json))
+/
+/ .box
+/   = html_format({"cookies.signed[:chat_user_id]" => cookies.signed[:chat_user_id]})
+/
+/ .box
+/   .title.is-4= "ChatUser"
+/   = html_format(current_record.chat_users)
+/   .title.is-4= "ChatArticle"
+/   = html_format(current_record.chat_articles)
 
 #lobby_app
-  = "{{latest_list}}"
+  - if Rails.env.development?
+    = "{{latest_status_list}}"

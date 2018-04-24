@@ -22,17 +22,6 @@ module ResourceNs1
       }
     end
 
-    def current_chat_user
-      @current_chat_user ||= ChatUser.find_by(id: cookies.signed[:chat_user_id])
-      unless @current_chat_user
-        @current_chat_user = ChatUser.create!(name: "謎の棋士#{ChatUser.count.next}号")
-      end
-      cookies.signed[:chat_user_id] = @current_chat_user.id
-      @current_chat_user
-    end
-
-    helper_method :current_chat_user
-
     def raw_current_record
       super.tap do |e|
         e.name ||= e.name_default

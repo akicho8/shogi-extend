@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el: "#lobby_app",
     data: function() {
       return {
-        list: [],
+        status_list: [],
         chat_rooms: [],
         online_users: [],                // 参加者
         columns: [
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     methods: {
       puts(v) {
-        this.list.push(v)
+        this.status_list.push(v)
       },
       chat_user_self_p(chat_user) {
         return chat_user.id === lobby_app_params.current_chat_user.id
@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     computed: {
-      latest_list() {
-        return _.takeRight(this.list, 10)
+      latest_status_list() {
+        return _.takeRight(this.status_list, 10)
       },
     },
   })
