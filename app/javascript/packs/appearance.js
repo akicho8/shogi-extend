@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["chat_room"]) {
         App.appearance_vm.chat_rooms = _.concat([data["chat_room"]], App.appearance_vm.chat_rooms)
       }
+      if (data["online_users"]) {
+        App.appearance_vm.online_users = data["online_users"]
+      }
     },
 
     // appear: function() {
@@ -65,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         list: [],
         chat_rooms: [],
+        online_users: [],                // 参加者
         columns: [
           { field: 'name', label: '部屋', },
         ],
@@ -73,7 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
     methods: {
       puts(v) {
         this.list.push(v)
-      }
+      },
+      chat_user_self_p(chat_user) {
+        return chat_user.id === appearance_app_params.current_chat_user.id
+      },
     },
     computed: {
       latest_list() {

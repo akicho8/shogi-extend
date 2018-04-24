@@ -1,17 +1,23 @@
+javascript:
+  var appearance_app_params = #{@appearance_app_params.to_json.html_safe};
+
 - content_for :head do
   = javascript_pack_tag("appearance")
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
+    appearance_app
     App.appearance_vm.chat_rooms = #{ChatRoom.order(updated_at: :desc).first(10).to_json(include: [:chat_users], methods: [:show_link]).html_safe}
+    App.appearance_vm.online_users = #{ChatUser.where.not(appearing_on: nil).to_json.html_safe}
   })
 
 #appearance_app
   / .title.is-2= "#{current_model.model_name.human}一覧"
   / hr
 
-  p= link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button is-primary")
-  br
+  .buttons
+    = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button is-primary")
+    = link_to("新しい部屋を作って入る", [:resource_ns1, current_plural_key], class: "button is-primary", method: :post)
 
   .columns
     .column
@@ -26,11 +32,15 @@ javascript:
               | {{props.row.chat_users.length}}
     .column
       .box
-        .title= "オンラインのユーザー"
-        = html_format(ChatUser.where.not(appearing_on: nil))
+        .title.is-4= "オンラインのユーザー"
+        b-table :data="online_users"
+          template slot-scope="props"
+            b-table-column field="name" label="名前" sortable="sortable"
+              a @click="send_to_message"
+                | {{props.row.name}}
 
-  .box
-    .title= "あなたの情報"
-    = html_format([current_chat_user.attributes])
+  / .box
+  /   .title= "あなたの情報"
+  /   = html_format([current_chat_user.attributes])
 
   = "{{latest_list}}"

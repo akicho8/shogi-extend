@@ -8,6 +8,12 @@ module ResourceNs1
       end
     end
 
+    before_action do
+      @appearance_app_params = {
+        current_chat_user: current_chat_user,
+      }
+    end
+
     def show
       @chat_room_app_params = {
         player_mode_moved_path: url_for([:resource_ns1, current_record, :kifu_valids, format: "json"]),
@@ -26,7 +32,6 @@ module ResourceNs1
     end
 
     helper_method :current_chat_user
-
 
     def raw_current_record
       super.tap do |e|
