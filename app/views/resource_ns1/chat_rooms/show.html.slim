@@ -58,10 +58,10 @@ javascript:
               template v-else=""
                 b-icon icon="access-point" class="has-text-grey-lighter"
             td
-              = "{{e.name}}"
+              messenger :message_to="e"
             td
               template v-if="chat_user_self_p(e)"
-                = "←自分"
+                = "*"
 / br
 / br
 / .box

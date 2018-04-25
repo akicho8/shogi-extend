@@ -20,6 +20,7 @@
 
 <script>
 export default {
+  // name: "messenger",
   props: {
     message_to: { default: null, },
   },
@@ -37,9 +38,9 @@ export default {
     message_enter() {
       if (this.message !== "") {
         if (this.message_to) {
-          App.web_notification.message_send_to({from: lobby_app_params.current_chat_user, to: this.message_to, message: this.message})
+          App.web_notification.message_send_to({from: js_global_params.current_chat_user, to: this.message_to, message: this.message})
         } else {
-          App.system_notification.message_send_all({from: lobby_app_params.current_chat_user, message: this.message})
+          App.system_notification.message_send_all({from: js_global_params.current_chat_user, message: this.message})
         }
         // Vue.prototype.$toast.open({message: "送信完了", position: "is-top", type: "is-info", duration: 1000})
       }

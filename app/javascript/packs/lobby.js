@@ -1,5 +1,5 @@
 // import Vue from 'vue/dist/vue.esm'
-import messenger from '../messenger.vue'
+// import messenger from '../messenger.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   App.lobby_vm = new Vue({
     el: "#lobby_app",
-    components: { "messenger": messenger },
+    // components: { "messenger": messenger },
     data: function() {
       return {
         // status_list: [],
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //   this.status_list.push(v)
       // },
       chat_user_self_p(chat_user) {
-        return chat_user.id === lobby_app_params.current_chat_user.id
+        return chat_user.id === js_global_params.current_chat_user.id
       },
     },
     computed: {

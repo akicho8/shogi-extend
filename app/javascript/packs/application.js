@@ -15,30 +15,35 @@ import "./modulable_crud.coffee"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
-import Vue from 'vue/dist/vue.esm'
+import Vue from "vue/dist/vue.esm"
 window.Vue = Vue
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
-import Buefy from 'buefy'
-import 'buefy/lib/buefy.css'
+import Buefy from "buefy"
+import "buefy/lib/buefy.css"
 Vue.use(Buefy)
 
 //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
 
-// import { PresetInfo } from 'shogi-player/src/preset_info.js'
-// Object.defineProperty(Vue.prototype, 'PresetInfo', {value: PresetInfo})
+// import { PresetInfo } from "shogi-player/src/preset_info.js"
+// Object.defineProperty(Vue.prototype, "PresetInfo", {value: PresetInfo})
 
-import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
-Vue.component('shogi-player', ShogiPlayer)
+import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
+Vue.component("shogi-player", ShogiPlayer)
 
 import Vuex from "vuex"
 Vue.use(Vuex)
 
+//////////////////////////////////////////////////////////////////////////////// messenger
+
+import Messanger from "../messenger.vue"
+Vue.component("messenger", Messanger)
+
 //////////////////////////////////////////////////////////////////////////////// lodash
 
 import _ from "lodash"
-Object.defineProperty(Vue.prototype, '_', {value: _})
+Object.defineProperty(Vue.prototype, "_", {value: _})
 
 //////////////////////////////////////////////////////////////////////////////// アプリ用の雑多なライブラリ
 
@@ -46,53 +51,53 @@ import * as AppUtils from "./app_utils.js"
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// import ShogiPlayer from 'shogi-player/src/components/ShogiPlayer.vue'
+// import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
 //
 // import _ from "lodash"
-// Object.defineProperty(Vue.prototype, '_', {value: _})
+// Object.defineProperty(Vue.prototype, "_", {value: _})
 //
-// Vue.component('shogi-player', ShogiPlayer)
+// Vue.component("shogi-player", ShogiPlayer)
 
-// document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener("DOMContentLoaded", () => {
 //   new Vue({
-//     el: '#shogi_player_app',
+//     el: "#shogi_player_app",
 //     components: { ShogiPlayer },
 //   })
 // })
 
 //////////////////////////////////////////////////////////////////////////////// 最初からあるDOMに kifu_copy_hook_all 適用
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   AppUtils.kifu_copy_hook_all()
 })
 
 //////////////////////////////////////////////////////////////////////////////// 通知
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   new Vue({
-    el: '#app_notification_tag',
+    el: "#app_notification_tag",
   })
 })
 
 //////////////////////////////////////////////////////////////////////////////// 確認用
 
 if (typeof(jQuery) != "undefined") {
-  console.log('[Webpack] jQuery: OK')
+  console.log("[Webpack] jQuery: OK")
   if (typeof($) != "undefined") {
-    console.log('[Webpack] $: OK')
+    console.log("[Webpack] $: OK")
     if (typeof($().tooltip) != "undefined") {
-      console.log('[Webpack] Bootstrap JS: OK')
+      console.log("[Webpack] Bootstrap JS: OK")
     } else {
-      console.log('[Webpack] Bootstrap JS: Missing')
+      console.log("[Webpack] Bootstrap JS: Missing")
     }
   } else {
-    console.log('[Webpack] $: Missing')
+    console.log("[Webpack] $: Missing")
   }
 } else {
-  console.log('[Webpack] jQuery: Missing')
+  console.log("[Webpack] jQuery: Missing")
 }
 if (typeof(Vue) != "undefined") {
-  console.log('[Webpack] Vue: OK')
+  console.log("[Webpack] Vue: OK")
 } else {
-  console.log('[Webpack] Vue: Missing')
+  console.log("[Webpack] Vue: Missing")
 }

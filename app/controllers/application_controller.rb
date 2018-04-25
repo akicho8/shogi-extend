@@ -37,6 +37,10 @@ class ApplicationController < ActionController::Base
 
       before_action do
         current_chat_user
+
+        @js_global_params = {
+          current_chat_user: current_chat_user,
+        }
       end
     end
 
@@ -45,9 +49,7 @@ class ApplicationController < ActionController::Base
 
     def current_chat_user
       @current_chat_user ||= ChatUser.find_by(id: cookies.signed[:chat_user_id])
-      unless @current_chat_user
-        @current_chat_user = ChatUser.create!(name: "謎の棋士#{ChatUser.count.next}号")
-      end
+      @current_chat_user ||= ChatUser.create!(name: "謎の棋士#{ChatUser.count.next}号")
       cookies.signed[:chat_user_id] = {value: @current_chat_user.id, expires: 1.weeks.from_now}
       @current_chat_user
     end
