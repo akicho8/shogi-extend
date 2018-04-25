@@ -1,6 +1,5 @@
 javascript:
-  var chat_room_app_params = #{@chat_room_app_params.to_json.html_safe};
-  console.log(chat_room_app_params)
+  var chat_room_app_params = #{@chat_room_app_params.to_json.html_safe}
 
 - content_for :head do
   = javascript_pack_tag("chat_room")

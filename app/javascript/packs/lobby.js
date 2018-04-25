@@ -1,3 +1,6 @@
+// import Vue from 'vue/dist/vue.esm'
+import messanger from '../messanger.vue'
+
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
   App.lobby = App.cable.subscriptions.create("LobbyChannel", {
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   App.lobby_vm = new Vue({
     el: "#lobby_app",
+    components: { "messanger": messanger },
     data: function() {
       return {
         // status_list: [],
@@ -64,9 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         columns: [
           { field: 'name', label: '部屋', },
         ],
-        message_modal_p: false,
-        message_to: null,
-        message: "",
       }
     },
     methods: {
@@ -76,22 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
       chat_user_self_p(chat_user) {
         return chat_user.id === lobby_app_params.current_chat_user.id
       },
-      message_form_modal_open(message_to) {
-        this.message_to = message_to
-        this.message_modal_p = true
-        this.$nextTick(() => this.$refs.message_input.focus())
-      },
-      message_enter() {
-        if (this.message !== "") {
-          // Vue.prototype.$toast.open({message: this.message, position: "is-bottom", type: "is-info", duration: 1000 * 2})
-          if (this.message_to) {
-            App.web_notification.message_send_to({from: lobby_app_params.current_chat_user, to: this.message_to, message: this.message})
-          } else {
-            App.system_notification.message_send_all({from: lobby_app_params.current_chat_user, message: this.message})
-          }
-        }
-        this.message = ""
-      }
     },
     computed: {
       // latest_status_list() {
