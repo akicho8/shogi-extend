@@ -58,9 +58,5 @@ document.addEventListener('DOMContentLoaded', () => {
         active_user_count: 0,
       }
     },
-    methods: {
-    },
-    computed: {
-    },
   })
 })

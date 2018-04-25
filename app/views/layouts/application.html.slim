@@ -21,10 +21,16 @@ html lang="ja"
     = javascript_pack_tag "application"
 
     = render "google_analytics" if Rails.env.production?
+
+    / ActionCable
     = javascript_pack_tag("system_notification")
     = javascript_pack_tag("single_notification")
     javascript:
       var js_global_params = #{@js_global_params.to_json.html_safe}
+      document.addEventListener('DOMContentLoaded', () => {
+        App.header_vm.active_user_count = #{ChatUser.where.not(appearing_on: nil).count.to_json.html_safe}
+      })
+
     = yield :head
   body
     section.hero.is-primary.is-bold class=(controller_name == "swars_battle_records" && params[:query].present? ? "is-small" : "")
@@ -94,8 +100,3 @@ html lang="ja"
               = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
             #system_notification_app.has-text-grey-light
               | ActionCable: {{latest_system_logs.join(" ")}}
-
-javascript:
-  document.addEventListener('DOMContentLoaded', () => {
-    App.header_vm.active_user_count = #{ChatUser.where.not(appearing_on: nil).count.to_json.html_safe}
-  })
