@@ -75,9 +75,9 @@ html lang="ja"
               li class=("is-active" if params[:controller].start_with?("resource_ns1/chat_rooms"))             = link_to("ネット対戦", [:resource_ns1, :chat_rooms])
               li class=("is-active" if params[:controller] == "cpu_versus")                                    = link_to("CPU対戦", :cpu_versus)
               li class=("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
-              li class=("is-active" if params[:controller] == "position_editor")                               = link_to("盤面編集", :position_editor)
-              li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
               li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)
+              li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
+              li class=("is-active" if params[:controller] == "position_editor")                               = link_to("盤面編集", :position_editor)
               li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
               - unless Rails.env.production?
                 li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
