@@ -1,5 +1,5 @@
 // import Vue from 'vue/dist/vue.esm'
-import messanger from '../messanger.vue'
+import messenger from '../messenger.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   App.lobby_vm = new Vue({
     el: "#lobby_app",
-    components: { "messanger": messanger },
+    components: { "messenger": messenger },
     data: function() {
       return {
         // status_list: [],
