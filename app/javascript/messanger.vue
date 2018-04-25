@@ -1,11 +1,11 @@
 <template lang="pug">
   span
     template(v-if="message_to")
-      a(@click.prevent="message_form_modal_open") {{message_to.name}}
+      a(@click.prevent="modal_open") {{message_to.name}}
     template(v-else="")
-      .button(@click.prevent="message_form_modal_open") 全体通知
+      .button(@click.prevent="modal_open") 全体通知
 
-    b-modal(:active.sync="message_modal_p" has-modal-card)
+    b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card
         header.modal-card-head
           p.modal-card-title
@@ -25,23 +25,23 @@ export default {
   },
   data() {
     return {
-      message_modal_p: false,
+      modal_p: false,
       message: "",
     }
   },
   methods: {
-    message_form_modal_open() {
-      this.message_modal_p = true
+    modal_open() {
+      this.modal_p = true
       this.$nextTick(() => this.$refs.message_input.focus())
     },
     message_enter() {
       if (this.message !== "") {
-        // Vue.prototype.$toast.open({message: this.message, position: "is-bottom", type: "is-info", duration: 1000 * 2})
         if (this.message_to) {
           App.web_notification.message_send_to({from: lobby_app_params.current_chat_user, to: this.message_to, message: this.message})
         } else {
           App.system_notification.message_send_all({from: lobby_app_params.current_chat_user, message: this.message})
         }
+        // Vue.prototype.$toast.open({message: "送信完了", position: "is-top", type: "is-info", duration: 1000})
       }
       this.message = ""
     },
