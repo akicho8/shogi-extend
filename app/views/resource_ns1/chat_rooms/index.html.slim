@@ -8,9 +8,13 @@ javascript:
   })
 
 #lobby_app
+  / .title.is-4 ロビー
+  / hr
+
   .buttons
     = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button is-primary")
     / = link_to("新しい部屋を作って入る", [:resource_ns1, current_plural_key], class: "button is-primary", method: :post)
+    = link_to("プロフィール編集", [:edit, :resource_ns1, current_chat_user], class: "button")
 
   .columns
     .column

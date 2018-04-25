@@ -1,7 +1,7 @@
-p= link_to("ロビーに戻る", [:resource_ns1, current_plural_key], class: "button")
+p= link_to("ロビーに戻る", [:resource_ns1, :chat_rooms], class: "button")
 br
 
-.title.is-2= current_record.new_record? ? "部屋の作成" : "部屋名の編集"
+.title.is-4= current_record.new_record? ? "作成" : "プロフィール編集"
 hr
 
 = form_with(model: [:resource_ns1, current_record]) do |form|

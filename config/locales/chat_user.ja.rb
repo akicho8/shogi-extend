@@ -19,6 +19,9 @@
         chat_room: {
           name: "部屋名",
         },
+        chat_user: {
+          name: "名前",
+        },
       },
     },
   },

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :chat_rooms, path: "online/battles" do
       resource :kifu_valids, only: :create, :module => :chat_rooms
     end
+    resources :chat_users, path: "online/users"
   end
 
   root "resource_ns1/swars_battle_records#index"
