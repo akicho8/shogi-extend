@@ -8,16 +8,20 @@ module ResourceNs1
       end
 
       rescue_from "Warabi::WarabiError" do |exception|
-        h = ApplicationController.helpers
-        lines = exception.message.lines
-        message = lines.first.strip.html_safe
-        if field = lines.drop(1).presence
-          message += h.tag.div(field.join.html_safe, :class => "error_message_pre").html_safe
+        if request.format.json?
+          render json: {error_message: exception.message.lines.first.strip}
+        else
+          h = ApplicationController.helpers
+          lines = exception.message.lines
+          message = lines.first.strip.html_safe
+          if field = lines.drop(1).presence
+            message += h.tag.div(field.join.html_safe, :class => "error_message_pre").html_safe
+          end
+          if v = exception.backtrace
+            message += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre").html_safe
+          end
+          behavior_after_rescue(message)
         end
-        if v = exception.backtrace
-          message += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre").html_safe
-        end
-        behavior_after_rescue(message)
       end
     end
 

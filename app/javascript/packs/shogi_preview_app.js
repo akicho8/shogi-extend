@@ -24,7 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams()
         params.append("kifu_body", this.kifu_body)
         axios.post(shogi_preview_app_params.path, params).then((response) => {
-          this.kifu_body_sfen = response.data.sfen
+          if (response.data.error_message) {
+            Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+          }
+          if (response.data.sfen) {
+            this.kifu_body_sfen = response.data.sfen
+          }
         }).catch((error) => {
           console.table([error.response])
           Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
