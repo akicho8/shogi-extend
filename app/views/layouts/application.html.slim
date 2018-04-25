@@ -83,7 +83,7 @@ html lang="ja"
                 li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
     section.section
       .container.is-fluid.main_container
-        == app_notification_tag
+        == flash_danger_notification_tag
         = yield
     footer.footer
       .container.is-fluid
@@ -100,3 +100,11 @@ html lang="ja"
               = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
             #system_notification_app.has-text-grey-light
               | ActionCable: {{latest_system_logs.join(" ")}}
+
+    javascript:
+      var flash_success_notifications = #{flash_success_notifications.to_json.html_safe}
+      document.addEventListener('DOMContentLoaded', () => {
+        _.forIn(flash_success_notifications, (message, key) => {
+          Vue.prototype.$toast.open({message: message, position: "is-bottom", type: `is-${key}`, duration: 1000 * 2, queue: false})
+        })
+      })

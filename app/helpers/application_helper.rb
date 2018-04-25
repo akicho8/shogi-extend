@@ -7,23 +7,37 @@ module ApplicationHelper
     [AppConfig[:app_name], @page_title].compact.reverse.join(" - ")
   end
 
-  # :success, :info, :warning, :danger
-  def app_notification_tag
-    legacy_types = {
+  def legacy_types
+    {
       notice: :success,
       alert: :warning,
       error: :danger,
     }
+  end
 
+  def tost_types
+    [:success, :info]
+  end
+
+  def normalized_flash
+    @normalized_flash ||= flash.to_h.transform_keys { |key| legacy_types.fetch(key.to_sym, key) }
+  end
+
+  # success, info は toast で表示
+  def flash_success_notifications
+    normalized_flash.slice(*tost_types)
+  end
+
+  # :success, :info, :warning, :danger
+  def flash_danger_notification_tag
     if params[:debug]
       flash.now[:info] = "(info)"
       flash.now[:danger] = "(danger)"
     end
 
-    content_tag(:div, id: "app_notification_tag") do
-      flash.collect { |key, message|
-        key = legacy_types.fetch(key.to_sym) { key }
-        content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "false", ":closable": "false") + tag.br
+    content_tag(:div, id: "flash_danger_notification_tag") do
+      normalized_flash.except(*tost_types).collect { |key, message|
+        content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "false", ":closable": "true") + tag.br
       }.join.html_safe
     end
   end
