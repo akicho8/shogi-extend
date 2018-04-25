@@ -38,7 +38,7 @@ export default {
     message_enter() {
       if (this.message !== "") {
         if (this.message_to) {
-          App.web_notification.message_send_to({from: js_global_params.current_chat_user, to: this.message_to, message: this.message})
+          App.single_notification.message_send_to({from: js_global_params.current_chat_user, to: this.message_to, message: this.message})
         } else {
           App.system_notification.message_send_all({from: js_global_params.current_chat_user, message: this.message})
         }

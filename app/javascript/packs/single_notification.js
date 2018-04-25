@@ -2,8 +2,8 @@
 // import axios from "axios"
 
 document.addEventListener('DOMContentLoaded', () => {
-  App.web_notification = App.cable.subscriptions.create({
-    channel: "WebNotificationChannel",
+  App.single_notification = App.cable.subscriptions.create({
+    channel: "SingleNotificationChannel",
     // chat_room_id: chat_room_app_params.chat_room.id,
   }, {
     connected() {
@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
-  // App.web_notification_vm = new Vue({
-  //   el: "#web_notification_app",
+  // App.single_notification_vm = new Vue({
+  //   el: "#single_notification_app",
   //   data() {
   //     return {
   //       kifu_body_sfen: "position startpos",  // 棋譜(shogi-player用)

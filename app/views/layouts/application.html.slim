@@ -22,7 +22,7 @@ html lang="ja"
 
     = render "google_analytics" if Rails.env.production?
     = javascript_pack_tag("system_notification")
-    = javascript_pack_tag("web_notification")
+    = javascript_pack_tag("single_notification")
     javascript:
       var js_global_params = #{@js_global_params.to_json.html_safe}
     = yield :head
