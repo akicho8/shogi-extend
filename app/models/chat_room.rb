@@ -17,10 +17,11 @@ class ChatRoom < ApplicationRecord
   has_many :chat_articles, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_users, through: :chat_memberships
+  belongs_to :room_owner, class_name: "ChatUser"
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
-  cattr_accessor(:to_json_params) { {include: [:chat_users], methods: [:show_link]} }
+  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users], methods: [:show_link]} }
 
   before_validation on: :create do
     self.name = name.presence || name_default
@@ -28,7 +29,12 @@ class ChatRoom < ApplicationRecord
   end
 
   def name_default
-    "対戦部屋 ##{ChatRoom.count.next}"
+    names = []
+    if room_owner
+      names << "#{room_owner.name}の"
+    end
+    names << "対戦部屋 ##{ChatRoom.count.next}"
+    names.join
   end
 
   def human_kifu_text_get

@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
 
     def current_chat_user
       @current_chat_user ||= ChatUser.find_by(id: cookies.signed[:chat_user_id])
-      @current_chat_user ||= ChatUser.create!(name: "謎の棋士#{ChatUser.count.next}号")
+      @current_chat_user ||= ChatUser.create!(name: "野良#{ChatUser.count.next}号")
       cookies.signed[:chat_user_id] = {value: @current_chat_user.id, expires: 1.weeks.from_now}
       @current_chat_user
     end

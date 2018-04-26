@@ -3,8 +3,11 @@ module ResourceNs1
     include ModulableCrud::All
 
     prepend_before_action do
+      # ChatUser.destroy_all
+      # ChatRoom.destroy_all
       unless ChatRoom.exists?
-        ChatRoom.create!
+        current_chat_user.owner_rooms.create!
+        # ChatRoom.create!
       end
     end
 
@@ -21,6 +24,7 @@ module ResourceNs1
 
     def raw_current_record
       super.tap do |e|
+        e.room_owner ||= current_chat_user
         e.name ||= e.name_default
       end
     end

@@ -21,6 +21,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
     create_table :chat_rooms, force: true do |t|
+      t.belongs_to :room_owner, null: false
       t.string :name, null: false
       t.text :kifu_body_sfen, null: false
       t.timestamps null: false

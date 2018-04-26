@@ -17,6 +17,7 @@ class ChatUser < ApplicationRecord
   has_many :chat_articles, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_rooms, through: :chat_memberships
+  has_many :owner_rooms, class_name: "ChatRoom", foreign_key: :room_owner_id, dependent: :destroy
 
   def appear
     update!(appearing_on: Time.current)
