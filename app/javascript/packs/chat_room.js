@@ -2,6 +2,8 @@ import _ from "lodash"
 import axios from "axios"
 import chat_room_name from "./chat_room_name.js"
 
+import { PresetInfo } from 'shogi-player/src/preset_info.js'
+
 // (function() {
 //   this.chat_vm || (this.chat_vm = {})
 // }).call(this)
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     connected: function() {
       // Called when the subscription is ready for use on the server
       console.log("ChatRoomChannel.connected")
-      // App.chat_vm.online_chat_users = _.concat(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
+      // App.chat_vm.online_chat_users = _.concat(App.chat_vm.online_chat_users, js_global_params.current_chat_user.id)
 
       this.perform("room_in", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">入室しました</span>`)
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("ChatRoomChannel.disconnected")
       // // Called when the subscription has been terminated by the server
       // console.log("disconnected")
-      // // App.chat_vm.online_chat_users = _.without(App.chat_vm.online_chat_users, chat_room_app_params.current_chat_user.id)
+      // // App.chat_vm.online_chat_users = _.without(App.chat_vm.online_chat_users, js_global_params.current_chat_user.id)
       this.perform("room_out", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">退出しました</span>`)
     },
@@ -44,10 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.table(data)
 
       if (data["kifu_body_sfen"]) {
-        console.log(data["current_chat_user"]["id"])
-        console.log(chat_room_app_params.current_chat_user.id)
-
-        if (data["current_chat_user"]["id"] === chat_room_app_params.current_chat_user.id) {
+        if (data["without_self"] && data["current_chat_user"]["id"] === js_global_params.current_chat_user.id) {
           // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
           // (が、こうすると本当にまわりにブロードキャストされたのか不安ではある)
         } else {
@@ -84,11 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 自由に定義してよいメソッド
     chat_say: function(chat_article_body) {
       console.log(`chat_say: ${chat_article_body}`)
-      console.log(`chat_say: ${chat_room_app_params.current_chat_user.id}`)
+      console.log(`chat_say: ${js_global_params.current_chat_user.id}`)
       // app/channels/chat_room_channel.rb の chat_say メソッドに処理が渡る
 
       this.perform("chat_say", {
-        sayed_chat_user_id: chat_room_app_params.current_chat_user.id,
+        sayed_chat_user_id: js_global_params.current_chat_user.id,
         chat_room_id: chat_room_app_params.chat_room.id,
         chat_article_body: chat_article_body,
       })
@@ -114,9 +113,15 @@ document.addEventListener('DOMContentLoaded', () => {
         chat_articles: [],                    // 発言一覧
         online_chat_users: [],                // 参加者
         human_kifu_text: "(human_kifu_text)", // 棋譜
+        current_preset_key: "平手",
       }
     },
     watch: {
+      current_preset_key(v) {
+        App.chat_room.chat_say(`<span class="has-text-info">手合割を${this.current_preset_info.name}に変更しました</span>`)
+        App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, ...{kifu_body_sfen: this.current_preset_info.sfen}})
+        // App.chat_room.chat_say(`<span class="has-text-info">${response.data.last_hand}</span>`)
+      },
     },
     methods: {
       message_enter(value) {
@@ -161,12 +166,18 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       },
       chat_user_self_p(chat_user) {
-        return chat_user.id === chat_room_app_params.current_chat_user.id
+        return chat_user.id === js_global_params.current_chat_user.id
       },
     },
     computed: {
       latest_chat_articles() {
         return _.takeRight(this.chat_articles, 10)
+      },
+      preset_info_values() {
+        return PresetInfo.values
+      },
+      current_preset_info() {
+        return PresetInfo.fetch(this.current_preset_key)
       },
     },
   })

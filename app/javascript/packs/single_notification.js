@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //     },
   //
   //     chat_user_self_p(chat_user) {
-  //       return chat_user.id === chat_room_app_params.current_chat_user.id
+  //       return chat_user.id === js_global_params.current_chat_user.id
   //     },
   //   },
   //   computed: {

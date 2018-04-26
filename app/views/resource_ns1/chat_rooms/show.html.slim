@@ -62,6 +62,16 @@ javascript:
             td
               template v-if="chat_user_self_p(e)"
                 = "*"
+      .box
+        .title.is-4= "ルール"
+        b-dropdown(v-model="current_preset_key")
+          button.button(slot="trigger")
+            span
+              | {{current_preset_info.name}}
+            b-icon(icon="menu-down")
+          b-dropdown-item(v-for="record in preset_info_values" :value="record.key" :key="record.key")
+            | {{record.name}}
+
 / br
 / br
 / .box
