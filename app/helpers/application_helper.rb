@@ -20,7 +20,12 @@ module ApplicationHelper
   end
 
   def normalized_flash
-    @normalized_flash ||= flash.to_h.transform_keys { |key| legacy_types.fetch(key.to_sym, key) }
+    if params[:debug]
+      flash.now[:info] = "(info)"
+      flash.now[:danger] = "(danger)"
+    end
+
+    @normalized_flash ||= flash.to_h.transform_keys { |key| legacy_types.fetch(key.to_sym, key.to_sym) }
   end
 
   # success, info は toast で表示
@@ -30,11 +35,6 @@ module ApplicationHelper
 
   # :success, :info, :warning, :danger
   def flash_danger_notification_tag
-    if params[:debug]
-      flash.now[:info] = "(info)"
-      flash.now[:danger] = "(danger)"
-    end
-
     content_tag(:div, id: "flash_danger_notification_tag") do
       normalized_flash.except(*tost_types).collect { |key, message|
         content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "false", ":closable": "true") + tag.br
