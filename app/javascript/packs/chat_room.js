@@ -135,22 +135,24 @@ document.addEventListener('DOMContentLoaded', () => {
         current_preset_key: chat_room_app_params.chat_room.preset_key,
       }
     },
+
     watch: {
-      current_preset_key(v) {
-        // alert(v)
+      // 使ってはいけない
+      // 使うとブロードキャストの無限ループを考慮する必要がでてきてカオスになる
+      // 遠回りだが @input にフックしてサーバー側に送って返ってきた値で更新する
+      // 遠回りだと「更新」するのが遅くなると思うかもしれないがブロードキャストする側の画面は切り替わっているので問題ない
+      // ただしチャットのメッセージは除く。チャットの場合は入力を即座にチャット一覧に反映していないため
+      // このように一概にどう扱うのがよいのか判断が難しい
+      // 間違っても watch は使うな
+    },
+
+    methods: {
+      current_preset_key_change(v) {
         App.chat_room.chat_say(`<span class="has-text-info">手合割を${this.current_preset_info.name}に変更しました</span>`)
         App.chat_room.preset_key_broadcast({...chat_room_app_params, ...{preset_key: this.current_preset_info.name}})
         // App.chat_room.chat_say(`<span class="has-text-info">${response.data.last_hand}</span>`)
       },
-      // online_members: {
-      //   handler: function(v) {
-      //     App.chat_room.member_location_change_broadcast({online_members: v})
-      //   },
-      //   // immediate: true,
-      //   deep: true,
-      // },
-    },
-    methods: {
+
       member_location_change(chat_membership_id, location_key) {
         App.chat_room.member_location_change_broadcast({chat_membership_id: chat_membership_id, location_key: location_key})
       },

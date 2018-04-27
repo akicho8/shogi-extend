@@ -80,7 +80,7 @@ javascript:
 
       .box
         .title.is-4= "ルール"
-        b-dropdown(v-model="current_preset_key")
+        b-dropdown(:value="current_preset_key" @input="current_preset_key_change")
           button.button(slot="trigger")
             span
               | {{current_preset_info.name}}
