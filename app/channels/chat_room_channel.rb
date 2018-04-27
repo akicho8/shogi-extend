@@ -9,7 +9,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, params[:chat_room_id]])
 
     # stream_from [:chat_room_channel, params[:chat_room_id]].join
-    stream_from "chat_room_channel_#{params[:chat_room_id]}"
+    stream_from room_key
 
     # post = Post.find(params[:id])
     # stream_for post
@@ -26,7 +26,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__])
     # if data["kifu_body_sfen"]
     #   Rails.logger.debug(current_chat_user)
-    #   ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
+    #   ActionCable.server.broadcast(room_key, data)
     # end
   end
 
@@ -50,7 +50,7 @@ class ChatRoomChannel < ApplicationCable::Channel
       # それを全員に通知
       # 各自の chat_room.js の received メソッドに引数が渡る
       attributes = chat_article.attributes.merge(chat_user: chat_article.chat_user.attributes, chat_room: chat_article.chat_room.attributes)
-      ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", chat_article: attributes)
+      ActionCable.server.broadcast(room_key, chat_article: attributes)
     end
   end
 
@@ -63,13 +63,22 @@ class ChatRoomChannel < ApplicationCable::Channel
     #   # 駒音が重複するため自分にはブロードキャストしない
     # else
     # end
-    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
+    ActionCable.server.broadcast(room_key, data)
+  end
+
+  def preset_key_broadcast(data)
+    preset_info = Warabi::PresetInfo.fetch(data["preset_key"])
+    
+    chat_room = ChatRoom.find(params[:chat_room_id])
+    chat_room.update!(preset_key: preset_info.key, kifu_body_sfen: preset_info.to_position_sfen)
+    
+    ActionCable.server.broadcast(room_key, chat_room.js_attributes)
   end
 
   def room_name_changed(data)
     chat_room = ChatRoom.find(params[:chat_room_id])
     chat_room.update!(name: data["room_name"])
-    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", data)
+    ActionCable.server.broadcast(room_key, data)
   end
 
   def room_in(data)
@@ -78,7 +87,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     unless chat_room.chat_users.include?(chat_user)
       chat_room.chat_users << chat_user
     end
-    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
+    ActionCable.server.broadcast(room_key, online_chat_users: chat_room.chat_users)
   end
 
   def room_out(data)
@@ -86,6 +95,12 @@ class ChatRoomChannel < ApplicationCable::Channel
     chat_user = ChatUser.find(data["current_chat_user"]["id"])
     # chat_room.chat_users.destroy(alice)
 
-    ActionCable.server.broadcast("chat_room_channel_#{params[:chat_room_id]}", online_chat_users: chat_room.chat_users)
+    ActionCable.server.broadcast(room_key, online_chat_users: chat_room.chat_users)
+  end
+
+  private
+
+  def room_key
+    "chat_room_channel_#{params[:chat_room_id]}"
   end
 end

@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("room_in", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">入室しました</span>`)
 
-      // 入室したときに局面を反映する(これはビューの方で行なってもよい)
-      App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
     },
     disconnected: function() {
       console.log("ChatRoomChannel.disconnected")
@@ -52,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
         }
+      }
+
+      if (data["preset_key"]) {
+        App.chat_vm.current_preset_key = data["preset_key"]
       }
 
       if (data["human_kifu_text"]) {
@@ -101,6 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
     kifu_body_sfen_broadcast: function(data) {
       this.perform("kifu_body_sfen_broadcast", data)
     },
+
+    preset_key_broadcast(data) {
+      this.perform("preset_key_broadcast", data)
+    },
   })
 
   App.chat_vm = new Vue({
@@ -108,18 +114,22 @@ document.addEventListener('DOMContentLoaded', () => {
     el: "#chat_room_app",
     data() {
       return {
-        kifu_body_sfen: "position startpos",  // 棋譜(shogi-player用)
         message: "",                          // 発言
         chat_articles: [],                    // 発言一覧
         online_chat_users: [],                // 参加者
         human_kifu_text: "(human_kifu_text)", // 棋譜
-        current_preset_key: "平手",
+
+        // 入室したときに局面を反映する(これはビューの方で行なってもよい)
+        // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
+        kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
+        current_preset_key: chat_room_app_params.chat_room.preset_key,
       }
     },
     watch: {
       current_preset_key(v) {
+        // alert(v)
         App.chat_room.chat_say(`<span class="has-text-info">手合割を${this.current_preset_info.name}に変更しました</span>`)
-        App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, ...{kifu_body_sfen: this.current_preset_info.sfen}})
+        App.chat_room.preset_key_broadcast({...chat_room_app_params, ...{preset_key: this.current_preset_info.name}})
         // App.chat_room.chat_say(`<span class="has-text-info">${response.data.last_hand}</span>`)
       },
     },

@@ -26,7 +26,20 @@ javascript:
   .columns
     .column
       .box
-        shogi-player :kifu_body="kifu_body_sfen" :key_event_capture="false" :slider_show="true" :sfen_show="true" :controller_show="true" :theme="'real'" :size="'large'" :sound_effect="true" :volume="0.1" :run_mode="'play_mode'" @update:play_mode_long_sfen="play_mode_long_sfen_set" :human_side="null"
+        shogi-player(
+          :kifu_body="kifu_body_sfen"
+          :key_event_capture="false"
+          :slider_show="true"
+          :sfen_show="true"
+          :controller_show="true"
+          :theme="'real'"
+          :size="'large'"
+          :sound_effect="true"
+          :volume="0.1"
+          :run_mode="'play_mode'" @update
+          :play_mode_long_sfen="play_mode_long_sfen_set"
+          :human_side="null"
+        )
       .box
         .title.is-4= "棋譜"
         b-input :value="human_kifu_text" type="textarea" readonly="readonly"

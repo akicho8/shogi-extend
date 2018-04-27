@@ -26,6 +26,7 @@ class ChatRoom < ApplicationRecord
   before_validation on: :create do
     self.name = name.presence || name_default
     self.kifu_body_sfen ||= "position startpos"
+    self.preset_key ||= "平手"
   end
 
   def name_default
@@ -51,13 +52,13 @@ class ChatRoom < ApplicationRecord
     ActionCable.server.broadcast("lobby_channel", chat_room_created: js_attributes)
   end
 
+  def js_attributes
+    JSON.load(to_json(to_json_params))
+  end
+
   private
 
   def show_link
     Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
-  end
-
-  def js_attributes
-    JSON.load(to_json(to_json_params))
   end
 end
