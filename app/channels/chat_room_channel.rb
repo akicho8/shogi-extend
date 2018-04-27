@@ -68,11 +68,9 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def preset_key_broadcast(data)
     preset_info = Warabi::PresetInfo.fetch(data["preset_key"])
+    current_chat_room.update!(preset_key: preset_info.key)
 
-    chat_room = ChatRoom.find(params[:chat_room_id])
-    chat_room.update!(preset_key: preset_info.key, kifu_body_sfen: preset_info.to_position_sfen)
-
-    ActionCable.server.broadcast(room_key, chat_room.js_attributes)
+    ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
   end
 
   def member_location_change_broadcast(data)

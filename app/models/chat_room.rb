@@ -25,8 +25,15 @@ class ChatRoom < ApplicationRecord
 
   before_validation on: :create do
     self.name = name.presence || name_default
-    self.kifu_body_sfen ||= "position startpos"
     self.preset_key ||= "平手"
+    # self.kifu_body_sfen ||= "position startpos"
+  end
+
+  before_validation do
+    if changes_to_save[:preset_key] && preset_key
+      preset_info = Warabi::PresetInfo.fetch(preset_key)
+      self.kifu_body_sfen = preset_info.to_position_sfen
+    end
   end
 
   def name_default

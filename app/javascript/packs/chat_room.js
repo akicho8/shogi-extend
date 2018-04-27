@@ -101,6 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     },
 
+    system_say(str) {
+      this.chat_say(`<span class="has-text-info">${str}</span>`)
+    },
+
     // 自由に定義してよいメソッド
     room_name_changed: function(data) {
       this.perform("room_name_changed", data)
@@ -126,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         message: "",                          // 発言
         chat_articles: [],                    // 発言一覧
-        online_members: [],                // 参加者
+        online_members: [],                   // 参加者
         human_kifu_text: "(human_kifu_text)", // 棋譜
 
         // 入室したときに局面を反映する(これはビューの方で行なってもよい)
@@ -139,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     watch: {
       // 使ってはいけない
       // 使うとブロードキャストの無限ループを考慮する必要がでてきてカオスになる
+      // ちょっとバグっただけで無限ループになる
       // 遠回りだが @input にフックしてサーバー側に送って返ってきた値で更新する
       // 遠回りだと「更新」するのが遅くなると思うかもしれないがブロードキャストする側の画面は切り替わっているので問題ない
       // ただしチャットのメッセージは除く。チャットの場合は入力を即座にチャット一覧に反映していないため
@@ -147,10 +152,13 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     methods: {
-      current_preset_key_change(v) {
-        App.chat_room.chat_say(`<span class="has-text-info">手合割を${this.current_preset_info.name}に変更しました</span>`)
-        App.chat_room.preset_key_broadcast({...chat_room_app_params, ...{preset_key: this.current_preset_info.name}})
-        // App.chat_room.chat_say(`<span class="has-text-info">${response.data.last_hand}</span>`)
+      // 手番の変更
+      preset_key_broadcast(v) {
+        if (this.current_preset_key !== v) {
+          this.current_preset_key = v
+          App.chat_room.preset_key_broadcast({preset_key: this.current_preset_info.name})
+          App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
+        }
       },
 
       member_location_change(chat_membership_id, location_key) {
