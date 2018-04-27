@@ -25,10 +25,14 @@ ActiveRecord::Schema.define(version: 20171222200100) do
   create_table "chat_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "chat_room_id", null: false
     t.bigint "chat_user_id", null: false
+    t.string "location_key", comment: "▲△"
+    t.integer "position", comment: "入室順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"
     t.index ["chat_user_id"], name: "index_chat_memberships_on_chat_user_id"
+    t.index ["location_key"], name: "index_chat_memberships_on_location_key"
+    t.index ["position"], name: "index_chat_memberships_on_position"
   end
 
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|

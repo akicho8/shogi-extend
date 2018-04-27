@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //       kifu_body_sfen: "position startpos",  // 棋譜(shogi-player用)
   //       message: "",                          // 発言
   //       chat_articles: [],                    // 発言一覧
-  //       online_chat_users: [],                // 参加者
+  //       online_members: [],                // 参加者
   //       human_kifu_text: "(human_kifu_text)", // 棋譜
   //     }
   //   },

@@ -3,6 +3,7 @@ import axios from "axios"
 import chat_room_name from "./chat_room_name.js"
 
 import { PresetInfo } from 'shogi-player/src/preset_info.js'
+import { Location } from 'shogi-player/src/location.js'
 
 // (function() {
 //   this.chat_vm || (this.chat_vm = {})
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     connected: function() {
       // Called when the subscription is ready for use on the server
       console.log("ChatRoomChannel.connected")
-      // App.chat_vm.online_chat_users = _.concat(App.chat_vm.online_chat_users, js_global_params.current_chat_user.id)
+      // App.chat_vm.online_members = _.concat(App.chat_vm.online_members, js_global_params.current_chat_user.id)
 
       this.perform("room_in", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">入室しました</span>`)
@@ -32,13 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("ChatRoomChannel.disconnected")
       // // Called when the subscription has been terminated by the server
       // console.log("disconnected")
-      // // App.chat_vm.online_chat_users = _.without(App.chat_vm.online_chat_users, js_global_params.current_chat_user.id)
+      // // App.chat_vm.online_members = _.without(App.chat_vm.online_members, js_global_params.current_chat_user.id)
       this.perform("room_out", chat_room_app_params)
       this.chat_say(`<span class="has-text-primary">退出しました</span>`)
     },
 
     // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
     received: function(data) {
+      if (!_.isNil(data["without_id"]) && data["without_id"] === js_global_params.current_chat_user.id) {
+        console.log("skip")
+        return
+      }
+
       // Called when there"s incoming data on the websocket for this channel
       // console.log("received")
       // console.table(data)
@@ -65,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
       //   App.chat_vm.chat_articles.push(data["last_hand"])
       // }
 
-      if (data["online_chat_users"]) {
-        App.chat_vm.online_chat_users = data["online_chat_users"]
+      if (data["online_members"]) {
+        App.chat_vm.online_members = data["online_members"]
       }
 
       // 発言の反映
@@ -107,6 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
     preset_key_broadcast(data) {
       this.perform("preset_key_broadcast", data)
     },
+
+    member_location_change_broadcast(data) {
+      this.perform("member_location_change_broadcast", data)
+    },
   })
 
   App.chat_vm = new Vue({
@@ -116,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         message: "",                          // 発言
         chat_articles: [],                    // 発言一覧
-        online_chat_users: [],                // 参加者
+        online_members: [],                // 参加者
         human_kifu_text: "(human_kifu_text)", // 棋譜
 
         // 入室したときに局面を反映する(これはビューの方で行なってもよい)
@@ -132,8 +142,19 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_room.preset_key_broadcast({...chat_room_app_params, ...{preset_key: this.current_preset_info.name}})
         // App.chat_room.chat_say(`<span class="has-text-info">${response.data.last_hand}</span>`)
       },
+      // online_members: {
+      //   handler: function(v) {
+      //     App.chat_room.member_location_change_broadcast({online_members: v})
+      //   },
+      //   // immediate: true,
+      //   deep: true,
+      // },
     },
     methods: {
+      member_location_change(chat_membership_id, location_key) {
+        App.chat_room.member_location_change_broadcast({chat_membership_id: chat_membership_id, location_key: location_key})
+      },
+
       message_enter(value) {
         if (this.message !== "") {
           App.chat_room.chat_say(this.message)
@@ -188,6 +209,13 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       current_preset_info() {
         return PresetInfo.fetch(this.current_preset_key)
+      },
+      location_infos() {
+        return [
+          { key: "black",  name: "☗先手", },
+          { key: "white",  name: "☖後手", },
+          { key: null,     name: "観戦",   }, // null だと Bufy が意図を呼んで色を薄くしてくれる
+        ]
       },
     },
   })

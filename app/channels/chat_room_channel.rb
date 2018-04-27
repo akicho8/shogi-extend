@@ -68,11 +68,31 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def preset_key_broadcast(data)
     preset_info = Warabi::PresetInfo.fetch(data["preset_key"])
-    
+
     chat_room = ChatRoom.find(params[:chat_room_id])
     chat_room.update!(preset_key: preset_info.key, kifu_body_sfen: preset_info.to_position_sfen)
-    
+
     ActionCable.server.broadcast(room_key, chat_room.js_attributes)
+  end
+
+  def member_location_change_broadcast(data)
+    # App.chat_room.member_location_change_broadcast({chat_membership_id: chat_membership_id, location_key: location_key})
+    chat_membership_id = data["chat_membership_id"]
+    location_key = data["location_key"]
+    
+    chat_membership = current_chat_room.chat_memberships.find(chat_membership_id)
+    chat_membership.location_key = location_key
+    chat_membership.save!
+    
+    # online_members = data["online_members"]
+    # online_members.each do |e|
+    #   if chat_membership = current_chat_room.chat_memberships.find_by(chat_user_id: e["chat_user_id"])
+    #     chat_membership.location_key = e["location_key"]
+    #     chat_membership.save!
+    #   end
+    # end
+    ActionCable.server.broadcast(room_key, online_members: JSON.load(current_chat_room.chat_memberships.reload.to_json(include: [:chat_user])))
+    # ActionCable.server.broadcast(room_key, online_members: JSON.load(current_chat_room.chat_memberships.reload.to_json(include: [:chat_user])), without_id: current_chat_user.id)
   end
 
   def room_name_changed(data)
@@ -87,20 +107,27 @@ class ChatRoomChannel < ApplicationCable::Channel
     unless chat_room.chat_users.include?(chat_user)
       chat_room.chat_users << chat_user
     end
-    ActionCable.server.broadcast(room_key, online_chat_users: chat_room.chat_users)
+    online_members_update
   end
 
   def room_out(data)
     chat_room = ChatRoom.find(data["chat_room"]["id"])
     chat_user = ChatUser.find(data["current_chat_user"]["id"])
     # chat_room.chat_users.destroy(alice)
-
-    ActionCable.server.broadcast(room_key, online_chat_users: chat_room.chat_users)
+    online_members_update
   end
 
   private
 
+  def online_members_update
+    ActionCable.server.broadcast(room_key, online_members: JSON.load(current_chat_room.chat_memberships.reload.to_json(include: [:chat_user])))
+  end
+
   def room_key
     "chat_room_channel_#{params[:chat_room_id]}"
+  end
+
+  def current_chat_room
+    @current_chat_room ||= ChatRoom.find(params[:chat_room_id])
   end
 end

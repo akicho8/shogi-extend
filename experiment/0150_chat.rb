@@ -7,22 +7,27 @@ ChatRoom.destroy_all
 ChatMembership.destroy_all
 
 alice = ChatUser.create!
+bob = ChatUser.create!
 
-chat_room = ChatRoom.create!    # => #<ChatRoom id: 16, created_at: "2018-04-16 05:58:17", updated_at: "2018-04-16 05:58:17">
+chat_room = alice.owner_rooms.create!
 chat_room.chat_users << alice
-p chat_room.chat_memberships
-chat_room.chat_users.destroy(alice)
-p chat_room.chat_memberships
+chat_room.chat_users << bob
 
-# chat_user = ChatUser.first      # => #<ChatUser id: 1, name: "1さん", created_at: "2018-04-15 04:31:22", updated_at: "2018-04-15 04:31:22">
-# chat_article = chat_user.chat_articles.build
-# chat_article.chat_room = chat_room
-# chat_article = chat_user.chat_articles.create(chat_room: chat_room, body: "(body)")
-# tp chat_article.errors.full_messages # => []
-# 
-# # chat_article.includes(:chat_user).attributes # => 
-# 
-# chat_article.to_json(include: [:chat_user, :chat_room]) # => 
-# # 
-# >> #<ActiveRecord::Associations::CollectionProxy [#<ChatMembership id: 9, chat_room_id: 16, chat_user_id: 16, created_at: "2018-04-16 05:58:17", updated_at: "2018-04-16 05:58:17">]>
-# >> #<ActiveRecord::Associations::CollectionProxy []>
+tp chat_room.chat_memberships
+
+alice.chat_articles.create(chat_room: chat_room, message: "(body)")
+tp ChatArticle
+
+# >> nil
+# >> nil
+# >> |----+--------------+--------------+--------------+----------+---------------------------+---------------------------|
+# >> | id | chat_room_id | chat_user_id | location_key | position | created_at                | updated_at                |
+# >> |----+--------------+--------------+--------------+----------+---------------------------+---------------------------|
+# >> | 13 |           15 |           30 | black        |        0 | 2018-04-27 17:17:39 +0900 | 2018-04-27 17:17:39 +0900 |
+# >> | 14 |           15 |           31 | white        |        1 | 2018-04-27 17:17:39 +0900 | 2018-04-27 17:17:39 +0900 |
+# >> |----+--------------+--------------+--------------+----------+---------------------------+---------------------------|
+# >> |-----+--------------+--------------+---------+---------------------------+---------------------------|
+# >> | id  | chat_room_id | chat_user_id | message | created_at                | updated_at                |
+# >> |-----+--------------+--------------+---------+---------------------------+---------------------------|
+# >> | 138 |           15 |           30 | (body)  | 2018-04-27 17:17:39 +0900 | 2018-04-27 17:17:39 +0900 |
+# >> |-----+--------------+--------------+---------+---------------------------+---------------------------|

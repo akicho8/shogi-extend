@@ -30,6 +30,8 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
     create_table :chat_memberships, force: true do |t|
       t.belongs_to :chat_room, null: false
       t.belongs_to :chat_user, null: false
+      t.string :location_key, null: true, index: true, comment: "▲△"
+      t.integer :position, index: true, comment: "入室順序"
       t.timestamps null: false
     end
     create_table :chat_articles, force: true do |t|
