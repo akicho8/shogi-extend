@@ -2,6 +2,8 @@ class CpuVersusController < ApplicationController
   def show
     @cpu_versus_app_params = {
       player_mode_moved_path: url_for([:cpu_versus, format: "json"]),
+      cpu_tuyosa_infos: CpuTuyosaInfo.values.collect(&:attributes),
+      cpu_tuyosa_key: current_cpu_tuyosa_key,
     }
   end
 
@@ -23,11 +25,12 @@ class CpuVersusController < ApplicationController
         end
       end
 
-      if true
-        puts mediator
+      puts mediator
+      if current_cpu_tuyosa_info.depth_max_range
         brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
         records = []
         time_limit = current_cpu_tuyosa_info.time_limit
+
         begin
           records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_tuyosa_info.depth_max_range)
         rescue Warabi::BrainProcessingHeavy
@@ -50,9 +53,15 @@ class CpuVersusController < ApplicationController
 
         hand = record[:hand]
       else
-        # ランダムに指す
-        # hands = mediator.current_player.normal_all_hands
-        # hand = hands.to_a.shuffle.find { |e| e.legal_move?(mediator) }
+        hands = mediator.current_player.normal_all_hands.to_a
+        if current_cpu_tuyosa_info.legal_only
+          hands = hands.find_all { |e| e.legal_move?(mediator) }
+        end
+        hand = hands.sample
+        unless hand
+          render json: {normal_message: "もう指す手がありません。負けました(T_T)", sfen: mediator.to_sfen}
+          return
+        end
       end
 
       # CPUの手を指す
@@ -84,15 +93,17 @@ class CpuVersusController < ApplicationController
   end
 
   def current_cpu_tuyosa_key
-    params[:cpu_tuyosa_key].presence || :yowai
+    params[:cpu_tuyosa_key].presence || :level3
   end
 
   class CpuTuyosaInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :yowai, name: "弱い", time_limit: nil, depth_max_range: 0..0 }, # 最初の合法手リストを最善手順に並べたもの
-      { key: :hutuu, name: "普通", time_limit:   3, depth_max_range: 0..9 }, # 3秒まで深読みできる
-      { key: :tuyoi, name: "強い", time_limit:   5, depth_max_range: 0..9 }, # 必ず相手の手を読む
+      { key: :level1, name: "呆れるほど弱い",     time_limit: nil, depth_max_range: nil,  legal_only: false, }, # ランダム
+      { key: :level2, name: "ありえないほど弱い", time_limit: nil, depth_max_range: nil,  legal_only: true,  }, # 合法手のランダム
+      { key: :level3, name: "めちゃくちゃ弱い",   time_limit: nil, depth_max_range: 0..0, legal_only: nil,   }, # 最初の合法手リストを最善手順に並べたもの
+      { key: :level4, name: "かなり弱い",         time_limit:   3, depth_max_range: 0..9, legal_only: nil,   }, # 3秒まで深読みできる
+      { key: :level5, name: "弱い",               time_limit:   5, depth_max_range: 0..9, legal_only: nil,   }, # 必ず相手の手を読む
     ]
   end
 end

@@ -8,14 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     data: function() {
       return {
         kifu_body_sfen: "position startpos",
-
-        cpu_tuyosa_key: "yowai",
-        cpu_tuyosa_infos: {
-          yowai:  { name: "弱い" },
-          hutuu:  { name: "普通" },
-          tuyoi:  { name: "強い" },
-          // saikyo: { name: "もっと強いけどめっちゃ時間かかる", time_limit: 30 },
-        },
+        cpu_tuyosa_key: cpu_versus_app_params.cpu_tuyosa_key,
+        cpu_tuyosa_infos: cpu_versus_app_params.cpu_tuyosa_infos,
       }
     },
     computed: {

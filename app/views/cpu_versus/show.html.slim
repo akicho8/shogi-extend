@@ -13,6 +13,6 @@ javascript:
   .box
     b-field label="CPUの強さ"
       .block
-        template v-for="(e, key) in cpu_tuyosa_infos"
-          b-radio v-model="cpu_tuyosa_key" :native-value="key"
+        template v-for="e in cpu_tuyosa_infos"
+          b-radio v-model="cpu_tuyosa_key" :native-value="e.key"
             = "{{e.name}}"
