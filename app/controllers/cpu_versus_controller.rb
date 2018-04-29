@@ -13,14 +13,32 @@ class CpuVersusController < ApplicationController
       begin
         mediator = info.mediator
       rescue => error
-        render json: {error_message: error.message}
+        lines = error.message.lines
+        error_message = [
+          "#{lines.first.remove("【反則】")}",
+
+          # "<br><br>"
+          # "<pre>", lines.drop(1).join, "</pre>",
+
+          # "<br>",
+          # "<br>",
+          # '<span class="is-size-7 has-text-grey">一手戻して再開できます</span>'
+        ].join
+
+        # info.move_infos.size - 0
+
+        # before_sfen = Warabi::Parser.parse(v, turn_limit: 1).mediator.to_sfen
+        # before_sfen = Warabi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
+        # render json: {error_message: error_message, before_sfen: before_sfen}
+
+        render json: {error_message: error_message}
         return
       end
 
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          render json: {normal_message: "玉を取られたので負けました", sfen: mediator.to_sfen}
+          render json: {you_win_message: "玉を取って勝ちました", sfen: mediator.to_sfen}
           return
         end
       end
@@ -41,13 +59,13 @@ class CpuVersusController < ApplicationController
         tp Warabi::Brain.human_format(records)
 
         if records.empty?
-          render json: {normal_message: "もう指す手がありません。負けました(T_T)", sfen: mediator.to_sfen}
+          render json: {you_win_message: "CPUが投了しました", sfen: mediator.to_sfen}
           return
         end
 
         record = records.first
         if record[:score] <= -Warabi::INF_MAX
-          render json: {normal_message: "降参です。負けました(T_T)", sfen: mediator.to_sfen}
+          render json: {you_win_message: "CPUが降参しました", sfen: mediator.to_sfen}
           return
         end
 
@@ -59,7 +77,7 @@ class CpuVersusController < ApplicationController
         end
         hand = hands.sample
         unless hand
-          render json: {normal_message: "もう指す手がありません。負けました(T_T)", sfen: mediator.to_sfen}
+          render json: {you_win_message: "CPUはもう何も指す手がなかったようです", sfen: mediator.to_sfen}
           return
         end
       end
@@ -70,7 +88,7 @@ class CpuVersusController < ApplicationController
       if true
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
-          render json: {normal_message: "CPUの勝ちです", sfen: mediator.to_sfen}
+          render json: {you_lose_message: "CPUの勝ちです", sfen: mediator.to_sfen}
           return
         end
       end
@@ -78,7 +96,7 @@ class CpuVersusController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          render json: {normal_message: "CPUの勝ちです", sfen: mediator.to_sfen}
+          render json: {you_lose_message: "玉を取られました", sfen: mediator.to_sfen}
           return
         end
       end

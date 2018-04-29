@@ -7,8 +7,20 @@ javascript:
 
 #cpu_versus_app(v-cloak)
   .has-text-centered
-    shogi-player :kifu_body="kifu_body_sfen" :key_event_capture="false" :slider_show="false" :sfen_show="false" :controller_show="true" :theme="'real'" :size="'medium'" :sound_effect="true" :volume="0.1" :run_mode="'play_mode'" :human_side="'black'" @update:play_mode_long_sfen="play_mode_long_sfen_set"
-
+    shogi-player(
+      :kifu_body="kifu_body_sfen"
+      :key_event_capture="false"
+      :slider_show="false"
+      :sfen_show="false"
+      :controller_show="true"
+      :theme="'real'"
+      :size="'medium'"
+      :sound_effect="true"
+      :volume="0.1"
+      :run_mode="'play_mode'"
+      :human_side="'black'"
+      @update:play_mode_long_sfen="play_mode_long_sfen_set"
+    )
   br
   .box
     b-field label="CPUの強さ"
