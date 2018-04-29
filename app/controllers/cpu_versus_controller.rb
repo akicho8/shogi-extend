@@ -9,7 +9,7 @@ class CpuVersusController < ApplicationController
 
   def create
     if v = params[:kifu_body]
-      info = Warabi::Parser.parse(v, typical_error_case: :embed)
+      info = Warabi::Parser.parse(v)
       begin
         mediator = info.mediator
       rescue => error
