@@ -12,8 +12,8 @@ class LobbyChannel < ApplicationCable::Channel
 
   # def appear(data)
   #   logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data])
-  #   # current_chat_user.appear on: data['appearing_on']
-  #   current_chat_user.update!(appearing_on: Time.current)
+  #   # current_chat_user.appear on: data['appearing_at']
+  #   current_chat_user.update!(appearing_at: Time.current)
   # end
   # 
   # def away

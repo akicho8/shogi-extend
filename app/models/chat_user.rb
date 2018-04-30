@@ -24,15 +24,15 @@ class ChatUser < ApplicationRecord
   end
 
   def appear
-    update!(appearing_on: Time.current)
+    update!(appearing_at: Time.current)
   end
 
   def disappear
-    update!(appearing_on: nil)
+    update!(appearing_at: nil)
   end
 
   after_commit do
-    ActionCable.server.broadcast("lobby_channel", online_users: ChatUser.where.not(appearing_on: nil))
-    ActionCable.server.broadcast("system_notification_channel", {active_user_count: ChatUser.where.not(appearing_on: nil).count})
+    ActionCable.server.broadcast("lobby_channel", online_users: ChatUser.where.not(appearing_at: nil))
+    ActionCable.server.broadcast("system_notification_channel", {active_user_count: ChatUser.where.not(appearing_at: nil).count})
   end
 end

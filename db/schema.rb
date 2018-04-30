@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
 
   create_table "chat_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "name", null: false
-    t.datetime "appearing_on"
+    t.datetime "appearing_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

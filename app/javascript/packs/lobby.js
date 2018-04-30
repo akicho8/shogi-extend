@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // appear: function() {
     //   // Calls `LobbyChannel#appear(data)` on the server
-    //   this.perform("appear", appearing_on: $("main").data("appearing-on"))
+    //   this.perform("appear", appearing_at: $("main").data("appearing-on"))
     // },
     // away: function() {
     //   // Calls `LobbyChannel#away` on the server

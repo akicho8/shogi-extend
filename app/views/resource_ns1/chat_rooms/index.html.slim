@@ -4,7 +4,7 @@
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
     App.lobby_vm.chat_rooms = #{ChatRoom.latest_list.to_json(ChatRoom.to_json_params).html_safe}
-    App.lobby_vm.online_users = #{ChatUser.where.not(appearing_on: nil).to_json.html_safe}
+    App.lobby_vm.online_users = #{ChatUser.where.not(appearing_at: nil).to_json.html_safe}
   })
 
 #lobby_app

@@ -28,7 +28,7 @@ html lang="ja"
     javascript:
       var js_global_params = #{@js_global_params.to_json.html_safe}
       document.addEventListener('DOMContentLoaded', () => {
-        App.header_vm.active_user_count = #{ChatUser.where.not(appearing_on: nil).count.to_json.html_safe}
+        App.header_vm.active_user_count = #{ChatUser.where.not(appearing_at: nil).count.to_json.html_safe}
       })
 
     = yield :head
