@@ -18,7 +18,7 @@ class ChatUser < ApplicationRecord
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_rooms, through: :chat_memberships
   has_many :owner_rooms, class_name: "ChatRoom", foreign_key: :room_owner_id, dependent: :destroy, inverse_of: :room_owner
-  belongs_to :current_chat_room, class_name: "ChatRoom", optional: true
+  belongs_to :current_chat_room, class_name: "ChatRoom", optional: true, counter_cache: true
 
   before_validation on: :create do
     self.name ||= "野良#{ChatUser.count.next}号"

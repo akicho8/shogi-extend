@@ -27,6 +27,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.string :preset_key, null: false
       t.string :name, null: false
       t.text :kifu_body_sfen, null: false
+      t.integer :current_chat_users_count, default: 0
       t.timestamps null: false
     end
     create_table :chat_memberships, force: true do |t|
