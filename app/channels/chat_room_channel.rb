@@ -100,6 +100,8 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def room_in(data)
+    current_chat_user.update!(current_chat_room: current_chat_room)
+    
     chat_room = ChatRoom.find(data["chat_room"]["id"])
     chat_user = ChatUser.find(data["current_chat_user"]["id"])
     unless chat_room.chat_users.include?(chat_user)
@@ -109,6 +111,8 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def room_out(data)
+    current_chat_user.update!(current_chat_room_id: nil)
+    
     chat_room = ChatRoom.find(data["chat_room"]["id"])
     chat_user = ChatUser.find(data["current_chat_user"]["id"])
     # chat_room.chat_users.destroy(alice)

@@ -18,6 +18,7 @@ class ChatUser < ApplicationRecord
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_rooms, through: :chat_memberships
   has_many :owner_rooms, class_name: "ChatRoom", foreign_key: :room_owner_id, dependent: :destroy, inverse_of: :room_owner
+  belongs_to :current_chat_room, class_name: "ChatRoom", optional: true
 
   before_validation on: :create do
     self.name ||= "野良#{ChatUser.count.next}号"
@@ -32,7 +33,12 @@ class ChatUser < ApplicationRecord
   end
 
   after_commit do
-    ActionCable.server.broadcast("lobby_channel", online_users: ChatUser.where.not(appearing_at: nil))
-    ActionCable.server.broadcast("system_notification_channel", {active_user_count: ChatUser.where.not(appearing_at: nil).count})
+    online_users = self.class.where.not(appearing_at: nil)
+    online_users = online_users.collect do |e|
+      e.attributes.merge(current_chat_room: e.current_chat_room&.js_attributes)
+    end
+
+    ActionCable.server.broadcast("lobby_channel", online_users: online_users)
+    ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.where.not(appearing_at: nil).count})
   end
 end

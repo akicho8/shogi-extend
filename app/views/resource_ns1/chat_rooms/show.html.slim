@@ -23,6 +23,7 @@ javascript:
     .column
       .box
         shogi-player(
+          :run_mode="run_mode"
           :kifu_body="kifu_body_sfen"
           :key_event_capture="false"
           :slider_show="true"
@@ -32,7 +33,6 @@ javascript:
           :size="'large'"
           :sound_effect="true"
           :volume="0.1"
-          :run_mode="'play_mode'"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
           :human_side="human_side"
           :flip="flip"

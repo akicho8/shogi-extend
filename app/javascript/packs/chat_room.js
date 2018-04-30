@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log("disconnected")
       // // App.chat_vm.online_members = _.without(App.chat_vm.online_members, js_global_params.current_chat_user.id)
       this.perform("room_out", chat_room_app_params)
-      this.chat_say(`<span class="has-text-primary">退出しました</span>`)
+      this.chat_say(`<span class="has-text-primary">退出しました</span>`) // 呼ばれない？
     },
 
     // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
@@ -240,6 +240,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       flip() {
         return this.human_side === "white"
+      },
+
+      run_mode() {
+        if (this.human_side) {
+          return "play_mode"
+        } else {
+          return "view_mode"
+        }
       },
     },
   })

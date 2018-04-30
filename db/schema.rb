@@ -47,10 +47,12 @@ ActiveRecord::Schema.define(version: 20171222200100) do
 
   create_table "chat_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "name", null: false
+    t.bigint "current_chat_room_id"
     t.datetime "appearing_at"
     t.datetime "matching_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["current_chat_room_id"], name: "index_chat_users_on_current_chat_room_id"
   end
 
   create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|

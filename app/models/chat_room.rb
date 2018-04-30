@@ -17,6 +17,7 @@ class ChatRoom < ApplicationRecord
   has_many :chat_articles, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_users, through: :chat_memberships
+  has_many :current_chat_users, class_name: "ChatUser", foreign_key: :current_chat_room_id, dependent: :nullify
   belongs_to :room_owner, class_name: "ChatUser"
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }

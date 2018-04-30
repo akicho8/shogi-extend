@@ -37,6 +37,12 @@ javascript:
               messenger :message_to="props.row"
               template v-if="chat_user_self_p(props.row)"
                 = " *"
+            b-table-column field="name" label="状態" sortable="sortable"
+              template(v-if="props.row.matching_at")
+                = "マッチング中"
+              template(v-if="props.row.current_chat_room")
+                a :href="props.row.current_chat_room.show_path"
+                  | {{props.row.current_chat_room.name}}
 
         br
         messenger
