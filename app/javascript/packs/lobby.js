@@ -1,6 +1,8 @@
 // import Vue from 'vue/dist/vue.esm'
 // import messenger from '../messenger.vue'
 
+import _ from "lodash"
+
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
   App.lobby = App.cable.subscriptions.create("LobbyChannel", {
@@ -31,6 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["online_users"]) {
         App.lobby_vm.online_users = data["online_users"]
       }
+    },
+
+    matching_start(data) {
+      this.perform("matching_start", data)
+    },
+    matching_cancel(data) {
+      this.perform("matching_cancel", data)
     },
 
     // appear: function() {
@@ -68,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         columns: [
           { field: 'name', label: '部屋', },
         ],
+        matching_start_p: !_.isNil(js_global_params.current_chat_user.matching_at),
       }
     },
     methods: {
@@ -77,11 +87,36 @@ document.addEventListener('DOMContentLoaded', () => {
       chat_user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
       },
+      matching_click() {
+        if (this.matching_start_p) {
+          this.matching_start_p = false
+          App.lobby.matching_cancel()
+        } else {
+          this.matching_start_p = true
+          App.lobby.matching_start()
+        }
+      },
     },
     computed: {
       // latest_status_list() {
       //   return _.takeRight(this.status_list, 10)
       // },
+      matching_class() {
+        if (this.matching_start_p) {
+          return ["is-danger"]
+        } else {
+          return ["is-primary"]
+        }
+      },
+
+      matching_label() {
+        if (this.matching_start_p) {
+          return "マッチング中"
+        } else {
+          return "自動マッチング開始"
+        }
+      },
+
     },
   })
 })

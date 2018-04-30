@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }, {
     connected() {
     },
+
     disconnected() {
+
     },
     received(data) {
       if (data["message"]) {
@@ -18,6 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
         str = `${from.name}: ${message}`
         Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
       }
+
+      if (data["matching_ok"]) {
+        const chat_room = data["chat_room"]
+        location.href = chat_room["show_path"]
+        // Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
+      }
+
     },
     // 自由に定義してよいメソッド
     message_send_to(data) {

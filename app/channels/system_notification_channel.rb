@@ -2,6 +2,7 @@ class SystemNotificationChannel < ApplicationCable::Channel
   def subscribed
     stream_from "system_notification_channel"
     current_chat_user.appear
+    # stream_for current_chat_user
   end
 
   def unsubscribed

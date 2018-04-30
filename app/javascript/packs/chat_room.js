@@ -227,6 +227,20 @@ document.addEventListener('DOMContentLoaded', () => {
           { key: null,     name: "観戦",   }, // null だと Bufy が意図を呼んで色を薄くしてくれる
         ]
       },
+
+      current_membership() {
+        return _.find(this.online_members, (e) => this.chat_user_self_p(e.chat_user))
+      },
+
+      human_side() {
+        if (this.current_membership) {
+          return this.current_membership.location_key
+        }
+      },
+
+      flip() {
+        return this.human_side === "white"
+      },
     },
   })
 })

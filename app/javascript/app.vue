@@ -16,10 +16,5 @@ export default {
 }
 </script>
 
-<style scoped>
-p {
-    font-color: white;
-    font-size: 2em;
-    text-align: center;
-}
+<style scoped lang="scss">
 </style>

@@ -14,10 +14,6 @@ javascript:
 / render partial: "chat_article", as: :chat_article, collection: current_record.chat_articles.order(:created_at).last(10)
 
 #chat_room_app v-cloak="true"
-  p
-    = link_to("ロビーに戻る", [:resource_ns1, :chat_rooms], :class => "button")
-  br
-
   template v-if="room_name_edit_p"
     input.input.is-large v-model.trim="room_name" @keyup.enter="room_name_edit_p = false" @blur="room_name_edit_p = false" ref="room_name_input"
   template v-else=""
@@ -38,7 +34,8 @@ javascript:
           :volume="0.1"
           :run_mode="'play_mode'"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
-          :human_side="null"
+          :human_side="human_side"
+          :flip="flip"
         )
       .box
         .title.is-4= "棋譜"
@@ -87,6 +84,9 @@ javascript:
             b-icon(icon="menu-down")
           b-dropdown-item(v-for="record in preset_info_values" :value="record.key" :key="record.key")
             | {{record.name}}
+
+  p
+    = link_to("ロビーに戻る", [:resource_ns1, :chat_rooms], :class => "button")
 
 / br
 / br

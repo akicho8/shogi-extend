@@ -21,7 +21,7 @@ class ChatRoom < ApplicationRecord
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
-  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users], methods: [:show_link]} }
+  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users], methods: [:show_path]} }
 
   before_validation on: :create do
     self.name = name.presence || name_default
@@ -65,7 +65,7 @@ class ChatRoom < ApplicationRecord
 
   private
 
-  def show_link
+  def show_path
     Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
   end
 end
