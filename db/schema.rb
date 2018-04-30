@@ -40,6 +40,9 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "preset_key", null: false
     t.string "name", null: false
     t.text "kifu_body_sfen", null: false
+    t.integer "current_chat_users_count", default: 0
+    t.integer "turn_max", null: false
+    t.datetime "game_started_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_owner_id"], name: "index_chat_rooms_on_room_owner_id"

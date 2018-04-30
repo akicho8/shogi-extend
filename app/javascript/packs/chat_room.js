@@ -1,3 +1,4 @@
+import numeral from "numeral"
 import _ from "lodash"
 import axios from "axios"
 import chat_room_name from "./chat_room_name.js"
@@ -25,16 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("ChatRoomChannel.connected")
       // App.chat_vm.online_members = _.concat(App.chat_vm.online_members, js_global_params.current_chat_user.id)
 
-      this.perform("room_in", chat_room_app_params)
+      this.perform("room_in")
       this.chat_say(`<span class="has-text-primary">入室しました</span>`)
-
     },
     disconnected: function() {
       console.log("ChatRoomChannel.disconnected")
       // // Called when the subscription has been terminated by the server
       // console.log("disconnected")
       // // App.chat_vm.online_members = _.without(App.chat_vm.online_members, js_global_params.current_chat_user.id)
-      this.perform("room_out", chat_room_app_params)
+      this.perform("room_out")
       this.chat_say(`<span class="has-text-primary">退出しました</span>`) // 呼ばれない？
     },
 
@@ -45,9 +45,30 @@ document.addEventListener('DOMContentLoaded', () => {
         return
       }
 
+      // ↓この方法にすればシンプル
+      // if (data["chat_room"]) {
+      //   const v = data["chat_room"]
+      //   // App.chat_vm.kifu_body_sfen = v.chat_room.kifu_body_sfen
+      //   App.chat_vm.current_preset_key = v.preset_key
+      //   App.chat_vm.game_started_at = v.game_started_at
+      // }
+
+      if (data["game_started_at"]) {
+        App.chat_vm.game_started_at = data["game_started_at"]
+        App.chat_vm.game_setup()
+      }
+
       // Called when there"s incoming data on the websocket for this channel
       // console.log("received")
       // console.table(data)
+
+      // if (data["turn_info"]) {
+      //   App.chat_vm.turn_info = data["turn_info"]
+      // }
+
+      if (data["turn_max"]) {
+        App.chat_vm.turn_max = data["turn_max"]
+      }
 
       if (data["kifu_body_sfen"]) {
         if (data["without_self"] && data["current_chat_user"]["id"] === js_global_params.current_chat_user.id) {
@@ -121,6 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
     member_location_change_broadcast(data) {
       this.perform("member_location_change_broadcast", data)
     },
+
+    game_start(data) {
+      this.perform("game_start", data)
+    },
   })
 
   App.chat_vm = new Vue({
@@ -132,12 +157,29 @@ document.addEventListener('DOMContentLoaded', () => {
         chat_articles: [],                    // 発言一覧
         online_members: [],                   // 参加者
         human_kifu_text: "(human_kifu_text)", // 棋譜
+        // turn_max: 0,
 
         // 入室したときに局面を反映する(これはビューの方で行なってもよい)
         // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         current_preset_key: chat_room_app_params.chat_room.preset_key,
+        game_started_at: chat_room_app_params.chat_room.game_started_at,
+        turn_max: chat_room_app_params.chat_room.turn_max,
+
+        timer_count: {black: 0, white: 0},
+        limit_seconds: 60 * 10,
+        turn_info: null,
       }
+    },
+
+    created() {
+      this.timer_run = !_.isNil(this.game_started_at)
+
+      setInterval(() => {
+        if (this.timer_run) {
+          this.timer_count[this.current_location.key]++
+        }
+      }, 1000)
     },
 
     watch: {
@@ -152,6 +194,15 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     methods: {
+      game_start() {
+        App.chat_room.game_start()
+        // this.game_started_at = new Date()
+      },
+
+      game_setup() {
+        this.timer_run = true
+      },
+
       // 手番の変更
       preset_key_broadcast(v) {
         if (this.current_preset_key !== v) {
@@ -209,23 +260,48 @@ document.addEventListener('DOMContentLoaded', () => {
       chat_user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
       },
+
+      rest_time(location_key) {
+        let v = this.limit_seconds - this.timer_count[location_key]
+        if (v < 0) {
+          v = 0
+        }
+        return v
+      },
+
+      time_format(location_key) {
+        return numeral(this.rest_time(location_key)).format("0:00")
+      },
+
     },
     computed: {
       latest_chat_articles() {
         return _.takeRight(this.chat_articles, 10)
       },
+
       preset_info_values() {
         return PresetInfo.values
       },
+
       current_preset_info() {
         return PresetInfo.fetch(this.current_preset_key)
       },
+
       location_infos() {
         return [
-          { key: "black",  name: "☗先手", },
-          { key: "white",  name: "☖後手", },
+          { key: "black",  name: "☗" + (this.komaochi_p ? "下手" : "先手"), },
+          { key: "white",  name: "☖" + (this.komaochi_p ? "上手" : "後手"), },
           { key: null,     name: "観戦",   }, // null だと Bufy が意図を呼んで色を薄くしてくれる
         ]
+      },
+
+      current_location() {
+        const index = (this.komaochi_p ? 1 : 0) + this.turn_max
+        return Location.values[index % Location.values.length]
+      },
+
+      komaochi_p() {
+        return /落/.test(this.current_preset_key)
       },
 
       current_membership() {
@@ -246,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.human_side) {
           return "play_mode"
         } else {
-          return "view_mode"
+          return "play_mode"    // FIXME: view_mode にするとおかしくなる
         }
       },
     },

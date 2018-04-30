@@ -57,12 +57,6 @@ class ChatRoomChannel < ApplicationCable::Channel
   # わざわざ ruby 側に戻してブロードキャストする意味がない気がする
   # JavaScript 側でそのまま自分以外にブロードキャストできればそれにこしたことはない → たぶん方法はある
   def kifu_body_sfen_broadcast(data)
-    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data["current_chat_user"]["id"]])
-    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_chat_user.id])
-    # if data["current_chat_user"]["id"] == current_chat_user.id
-    #   # 駒音が重複するため自分にはブロードキャストしない
-    # else
-    # end
     ActionCable.server.broadcast(room_key, data)
   end
 
@@ -101,11 +95,8 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def room_in(data)
     current_chat_user.update!(current_chat_room: current_chat_room)
-    
-    chat_room = ChatRoom.find(data["chat_room"]["id"])
-    chat_user = ChatUser.find(data["current_chat_user"]["id"])
-    unless chat_room.chat_users.include?(chat_user)
-      chat_room.chat_users << chat_user
+    unless current_chat_room.chat_users.include?(current_chat_user)
+      current_chat_room.chat_users << current_chat_user
     end
     online_members_update
   end
@@ -113,10 +104,14 @@ class ChatRoomChannel < ApplicationCable::Channel
   def room_out(data)
     current_chat_user.update!(current_chat_room_id: nil)
     
-    chat_room = ChatRoom.find(data["chat_room"]["id"])
-    chat_user = ChatUser.find(data["current_chat_user"]["id"])
-    # chat_room.chat_users.destroy(alice)
+    current_chat_room.chat_users.destroy(current_chat_user)
+
     online_members_update
+  end
+  
+  def game_start(data)
+    current_chat_room.update!(game_started_at: Time.current)
+    ActionCable.server.broadcast(room_key, game_started_at: current_chat_room.game_started_at)
   end
 
   private

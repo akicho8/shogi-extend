@@ -28,6 +28,7 @@ class ChatRoom < ApplicationRecord
     self.name = name.presence || name_default
     self.preset_key ||= "平手"
     # self.kifu_body_sfen ||= "position startpos"
+    self.turn_max ||= 0
   end
 
   before_validation do
@@ -56,8 +57,10 @@ class ChatRoom < ApplicationRecord
     mediator.to_ki2_a.join(" ")
   end
 
-  after_create_commit do
-    ActionCable.server.broadcast("lobby_channel", chat_room_created: js_attributes)
+  after_commit do
+    # ActionCable.server.broadcast("lobby_channel", chat_room_created: js_attributes)
+    ActionCable.server.broadcast("lobby_channel", chat_rooms: JSON.load(self.class.latest_list.to_json(to_json_params)))
+    ActionCable.server.broadcast("chat_room_channel_#{id}", chat_room: js_attributes)
   end
 
   def js_attributes

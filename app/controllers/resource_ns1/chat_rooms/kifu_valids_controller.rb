@@ -28,9 +28,20 @@ module ResourceNs1
             ki2_a = mediator.to_ki2_a
 
             chat_room = ChatRoom.find(params[:chat_room_id])
-            chat_room.update!(kifu_body_sfen: kifu_body_sfen)
+            chat_room.update!(kifu_body_sfen: kifu_body_sfen, turn_max: mediator.turn_info.turn_max)
+            # chat_room.update!(kifu_body_sfen: kifu_body_sfen) FIXME: turn_max も記録する
 
-            render json: {kifu_body_sfen: kifu_body_sfen, human_kifu_text: ki2_a.join(" "), last_hand: ki2_a.last, without_self: true}
+            render json: {
+              # turn_info: {
+              #   turn_max: mediator.turn_info.turn_max,
+              #   current_location_key: mediator.turn_info.current_location.key,
+              # }
+              turn_max: mediator.turn_info.turn_max,
+              kifu_body_sfen: kifu_body_sfen,
+              human_kifu_text: ki2_a.join(" "),
+              last_hand: ki2_a.last,
+              without_self: true,
+            }
             return
           end
         end

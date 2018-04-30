@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["chat_room_created"]) {
         App.lobby_vm.chat_rooms = _.concat([data["chat_room_created"]], App.lobby_vm.chat_rooms)
       }
+      if (data["chat_rooms"]) {
+        App.lobby_vm.chat_rooms = data["chat_rooms"]
+      }
       if (data["online_users"]) {
         App.lobby_vm.online_users = data["online_users"]
       }
