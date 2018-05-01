@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       komaochi_p() {
-        return /落/.test(this.current_preset_key)
+        return this.current_preset_info.first_location_key === "white"
       },
 
       current_membership() {
