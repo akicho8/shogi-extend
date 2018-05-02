@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         game_started_at: chat_room_app_params.chat_room.game_started_at,
         turn_max: chat_room_app_params.chat_room.turn_max,
 
-        timer_count: {black: 0, white: 0},
+        timer_counts: {black: 0, white: 0},
         limit_seconds: 60 * 10,
         turn_info: null,
       }
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setInterval(() => {
         if (this.timer_running_p) {
-          this.timer_count[this.current_location.key]++
+          this.timer_counts[this.current_location.key]++
         }
       }, 1000)
     },
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       rest_time(location_key) {
-        let v = this.limit_seconds - this.timer_count[location_key]
+        let v = this.limit_seconds - this.timer_counts[location_key]
         if (v < 0) {
           v = 0
         }
