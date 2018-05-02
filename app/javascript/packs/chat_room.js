@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
               // App.chat_room.send({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
 
               App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, ...response.data})
-              App.chat_room.chat_say(`<span class="has-text-info">${response.data.last_hand}</span>`)
+              App.chat_room.system_say(`${response.data.last_hand}`)
             }
           }
         }).catch((error) => {
