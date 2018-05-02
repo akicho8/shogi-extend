@@ -40,13 +40,18 @@ javascript:
   .columns
     .column
       .box
-        | 手番 {{current_location.name}}
-
+        - if Rails.env.development?
+          | {{think_counter}}
+          | {{clock_counts}}
+          | {{think_counter}}
+        
         template v-if="game_started_at"
           .has-text-centered
-            | ▲{{time_format('black')}}
+            | 手番 {{current_location.name}}
             | &nbsp;
-            | △{{time_format('white')}}
+            | ☗{{time_format('black')}}
+            | &nbsp;
+            | ☖{{time_format('white')}}
 
         shogi-player(
           :run_mode="run_mode"

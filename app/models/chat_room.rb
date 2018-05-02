@@ -24,11 +24,14 @@ class ChatRoom < ApplicationRecord
 
   cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users], methods: [:show_path]} }
 
+  serialize :clock_counts
+
   before_validation on: :create do
     self.name = name.presence || name_default
     self.preset_key ||= "平手"
     # self.kifu_body_sfen ||= "position startpos"
     self.turn_max ||= 0
+    self.clock_counts ||= {black: [], white: []}
   end
 
   before_validation do

@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (data["turn_max"]) {
         App.chat_vm.turn_max = data["turn_max"]
+        App.chat_vm.clock_counts = data["clock_counts"]
+        App.chat_vm.think_counter = 0
       }
 
       if (data["kifu_body_sfen"]) {
@@ -131,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("room_name_changed", data)
     },
 
-    kifu_body_sfen_broadcast: function(data) {
+    kifu_body_sfen_broadcast(data) {
       this.perform("kifu_body_sfen_broadcast", data)
     },
 
@@ -165,19 +167,20 @@ document.addEventListener('DOMContentLoaded', () => {
         current_preset_key: chat_room_app_params.chat_room.preset_key,
         game_started_at: chat_room_app_params.chat_room.game_started_at,
         turn_max: chat_room_app_params.chat_room.turn_max,
+        clock_counts: chat_room_app_params.chat_room.clock_counts,
 
-        timer_counts: {black: 0, white: 0},
+        think_counter: 0,
         limit_seconds: 60 * 10,
         turn_info: null,
       }
     },
 
     created() {
-      this.timer_running_p = !_.isNil(this.game_started_at)
+      this.thinking_p = !_.isNil(this.game_started_at)
 
       setInterval(() => {
-        if (this.timer_running_p) {
-          this.timer_counts[this.current_location.key]++
+        if (this.thinking_p) {
+          this.think_counter++
         }
       }, 1000)
     },
@@ -200,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       game_setup() {
-        this.timer_running_p = true
+        this.thinking_p = true
       },
 
       // 手番の変更
@@ -226,7 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
       play_mode_long_sfen_set(v) {
         const params = new URLSearchParams()
         params.append("kifu_body", v)
+        params.append("think_counter", this.think_counter)
 
+        // TODO: axios を使わない
         axios({
           method: "post",
           timeout: 1000 * 10,
@@ -248,8 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // App.chat_room.send({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
 
-              App.chat_room.kifu_body_sfen_broadcast({...chat_room_app_params, ...response.data})
-              App.chat_room.system_say(`${response.data.last_hand}`)
+              App.chat_room.kifu_body_sfen_broadcast({...response.data})
+              App.chat_room.system_say(response.data.last_hand)
             }
           }
         }).catch((error) => {
@@ -257,16 +262,24 @@ document.addEventListener('DOMContentLoaded', () => {
           Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })
       },
+
       chat_user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
       },
 
       rest_time(location_key) {
-        let v = this.limit_seconds - this.timer_counts[location_key]
+        let v = this.limit_seconds - this.total_time(location_key)
+        if (this.current_location.key === location_key) {
+          v -= this.think_counter
+        }
         if (v < 0) {
           v = 0
         }
         return v
+      },
+
+      total_time(location_key) {
+        return _.reduce(this.clock_counts[location_key], (a, e) => a + e, 0)
       },
 
       time_format(location_key) {
