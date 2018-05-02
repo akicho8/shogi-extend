@@ -173,10 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     created() {
-      this.timer_run = !_.isNil(this.game_started_at)
+      this.timer_running_p = !_.isNil(this.game_started_at)
 
       setInterval(() => {
-        if (this.timer_run) {
+        if (this.timer_running_p) {
           this.timer_count[this.current_location.key]++
         }
       }, 1000)
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       game_setup() {
-        this.timer_run = true
+        this.timer_running_p = true
       },
 
       // 手番の変更
