@@ -83,8 +83,8 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def game_start(data)
-    current_chat_room.update!(game_started_at: Time.current)
-    ActionCable.server.broadcast(room_key, game_started_at: current_chat_room.game_started_at)
+    current_chat_room.update!(battle_started_at: Time.current)
+    ActionCable.server.broadcast(room_key, battle_started_at: current_chat_room.battle_started_at)
   end
 
   # 先後をまとめて反転する

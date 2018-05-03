@@ -19,7 +19,7 @@ javascript:
   template v-else=""
     .title.is-4 v-text="room_name" @click="room_name_click"
 
-  template v-if="!game_started_at"
+  template v-if="!battle_started_at"
     .columns
       .column
         .box
@@ -43,7 +43,7 @@ javascript:
           | {{clock_counts}}
           | {{think_counter}}
 
-        template v-if="game_started_at"
+        template v-if="battle_started_at"
           .has-text-centered
             | 手番 {{current_location.name}}
             | &nbsp;

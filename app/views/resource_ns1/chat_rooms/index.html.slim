@@ -30,9 +30,9 @@ javascript:
               | {{props.row.chat_users.length}}
             b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
               | {{props.row.current_chat_users_count}}
-            b-table-column field="game_started_at" label="開始日時" sortable="sortable" numeric="numeric"
-              template(v-if="props.row.game_started_at")
-                | {{moment(props.row.game_started_at).format('YYYY/MM/DD hh:mm')}}
+            b-table-column field="battle_started_at" label="開始日時" sortable="sortable" numeric="numeric"
+              template(v-if="props.row.battle_started_at")
+                | {{moment(props.row.battle_started_at).format('YYYY/MM/DD hh:mm')}}
     .column
       .box
         .title.is-4= "オンラインのユーザー"

@@ -51,11 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
       //   const v = data["chat_room"]
       //   // App.chat_vm.kifu_body_sfen = v.chat_room.kifu_body_sfen
       //   App.chat_vm.current_preset_key = v.preset_key
-      //   App.chat_vm.game_started_at = v.game_started_at
+      //   App.chat_vm.battle_started_at = v.battle_started_at
       // }
 
-      if (data["game_started_at"]) {
-        App.chat_vm.game_started_at = data["game_started_at"]
+      if (data["battle_started_at"]) {
+        App.chat_vm.battle_started_at = data["battle_started_at"]
         App.chat_vm.game_setup()
       }
 
@@ -158,11 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         current_preset_key: chat_room_app_params.chat_room.preset_key,
-        game_started_at: chat_room_app_params.chat_room.game_started_at,
+        battle_started_at: chat_room_app_params.chat_room.battle_started_at,
         turn_max: chat_room_app_params.chat_room.turn_max,
         clock_counts: chat_room_app_params.chat_room.clock_counts,
 
-        think_counter: 0,
         think_counter: localStorage.getItem(chat_room_app_params.chat_room.id) || 0, // リロードしたときに戻す
         limit_seconds: 60 * 10,
         turn_info: null,
@@ -170,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     created() {
-      this.thinking_p = !_.isNil(this.game_started_at)
+      this.thinking_p = !_.isNil(this.battle_started_at)
 
       setInterval(() => {
         if (this.thinking_p) {
@@ -194,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     methods: {
       game_start() {
         App.chat_room.game_start()
-        // this.game_started_at = new Date()
+        // this.battle_started_at = new Date()
       },
 
       game_setup() {
