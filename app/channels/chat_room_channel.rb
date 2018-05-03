@@ -71,11 +71,11 @@ class ChatRoomChannel < ApplicationCable::Channel
     # App.chat_room.member_location_change_broadcast({chat_membership_id: chat_membership_id, location_key: location_key})
     chat_membership_id = data["chat_membership_id"]
     location_key = data["location_key"]
-    
+
     chat_membership = current_chat_room.chat_memberships.find(chat_membership_id)
     chat_membership.location_key = location_key
     chat_membership.save!
-    
+
     # online_members = data["online_members"]
     # online_members.each do |e|
     #   if chat_membership = current_chat_room.chat_memberships.find_by(chat_user_id: e["chat_user_id"])
@@ -94,6 +94,9 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def room_in(data)
+    # 自分から部屋に入ったらマッチングを解除する
+    current_chat_user.update!(matching_at: nil)
+
     current_chat_user.update!(current_chat_room: current_chat_room)
     unless current_chat_room.chat_users.include?(current_chat_user)
       current_chat_room.chat_users << current_chat_user
@@ -103,12 +106,12 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def room_out(data)
     current_chat_user.update!(current_chat_room_id: nil)
-    
+
     current_chat_room.chat_users.destroy(current_chat_user)
 
     online_members_update
   end
-  
+
   def game_start(data)
     current_chat_room.update!(game_started_at: Time.current)
     ActionCable.server.broadcast(room_key, game_started_at: current_chat_room.game_started_at)

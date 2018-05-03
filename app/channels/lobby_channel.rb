@@ -1,8 +1,7 @@
-# lobby_channel
+# チャットルーム一覧
 class LobbyChannel < ApplicationCable::Channel
   def subscribed
     stream_from "lobby_channel" # ブロードキャストするにはこれが必要
-    # logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
     current_chat_user.update!(current_chat_room_id: nil)
   end
 
