@@ -326,7 +326,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 指定手番(location_key)の残り時間の表示用
       time_format(location_key) {
-        return numeral(this.rest_counter(location_key)).format("0:00")
+        let location = Location.fetch(location_key)
+        if (this.flip) {
+          location = location.flip
+        }
+        return location.name + numeral(this.rest_counter(location.key)).format("0:00")
       },
 
       think_counter_reset() {
