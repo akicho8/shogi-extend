@@ -57,7 +57,7 @@ class ChatRoom < ApplicationRecord
     rescue => error
       return error.message
     end
-    mediator.to_ki2_a.join(" ")
+    info.to_ki2
   end
 
   after_commit do
