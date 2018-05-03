@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
     received: function(data) {
+      // 結局使ってない
       if (!_.isNil(data["without_id"]) && data["without_id"] === js_global_params.current_chat_user.id) {
         console.log("skip")
         return
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (data["kifu_body_sfen"]) {
-        if (data["without_self"] && data["current_chat_user"]["id"] === js_global_params.current_chat_user.id) {
+        if (!_.isNil(data["moved_chat_user_id"]) && data["moved_chat_user_id"] === js_global_params.current_chat_user.id) {
           // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
           // (が、こうすると本当にまわりにブロードキャストされたのか不安ではある)
         } else {
@@ -100,8 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 発言の反映
       if (data["chat_article"]) {
-        console.log("発言の反映")
-        console.log(data)
         App.chat_vm.chat_articles.push(data["chat_article"])
       }
 
@@ -251,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // App.chat_room.send({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
 
-              App.chat_room.kifu_body_sfen_broadcast({...response.data})
+              App.chat_room.kifu_body_sfen_broadcast(response.data)
               App.chat_room.system_say(response.data.last_hand)
             }
           }
