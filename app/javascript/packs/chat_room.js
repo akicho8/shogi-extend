@@ -163,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clock_counts: chat_room_app_params.chat_room.clock_counts,
 
         think_counter: 0,
+        think_counter: localStorage.getItem(chat_room_app_params.chat_room.id) || 0, // リロードしたときに戻す
         limit_seconds: 60 * 10,
         turn_info: null,
       }
@@ -174,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setInterval(() => {
         if (this.thinking_p) {
           this.think_counter++
+          localStorage.setItem(chat_room_app_params.chat_room.id, this.think_counter) // リロードしたときに0に戻らないように保存しておく
         }
       }, 1000)
     },
