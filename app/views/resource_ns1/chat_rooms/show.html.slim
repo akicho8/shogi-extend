@@ -25,7 +25,7 @@ javascript:
         .box
           button.button.is-primary.is-large.is-rounded @click="game_start" バトル開始！
           | &nbsp;
-          b-dropdown(:value="current_preset_key" @input="preset_key_broadcast")
+          b-dropdown(:value="current_preset_key" @input="preset_key_update")
             button.button.is-large.is-rounded(slot="trigger")
               span
                 | {{current_preset_info.name}}

@@ -27,15 +27,15 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, data)
   end
 
-  def preset_key_broadcast(data)
+  def preset_key_update(data)
     preset_info = Warabi::PresetInfo.fetch(data["preset_key"])
     current_chat_room.update!(preset_key: preset_info.key)
 
     ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
   end
 
-  def member_location_change_broadcast(data)
-    # App.chat_room.member_location_change_broadcast({chat_membership_id: chat_membership_id, location_key: location_key})
+  def member_location_change(data)
+    # App.chat_room.member_location_change({chat_membership_id: chat_membership_id, location_key: location_key})
     chat_membership_id = data["chat_membership_id"]
     location_key = data["location_key"]
 

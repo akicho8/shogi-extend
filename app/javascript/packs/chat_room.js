@@ -55,17 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // }
 
       if (data["battle_started_at"]) {
-        App.chat_vm.battle_started_at = data["battle_started_at"]
-        App.chat_vm.game_setup()
+        App.chat_vm.game_setup(data)
       }
 
       // Called when there"s incoming data on the websocket for this channel
       // console.log("received")
       // console.table(data)
-
-      // if (data["turn_info"]) {
-      //   App.chat_vm.turn_info = data["turn_info"]
-      // }
 
       if (data["turn_max"]) {
         App.chat_vm.turn_max = data["turn_max"]
@@ -126,12 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("kifu_body_sfen_broadcast", data)
     },
 
-    preset_key_broadcast(data) {
-      this.perform("preset_key_broadcast", data)
+    preset_key_update(data) {
+      this.perform("preset_key_update", data)
     },
 
-    member_location_change_broadcast(data) {
-      this.perform("member_location_change_broadcast", data)
+    member_location_change(data) {
+      this.perform("member_location_change", data)
     },
 
     game_start(data) {
@@ -164,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         think_counter: localStorage.getItem(chat_room_app_params.chat_room.id) || 0, // リロードしたときに戻す
         limit_seconds: 60 * 10,
-        turn_info: null,
       }
     },
 
@@ -191,32 +185,37 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     methods: {
+      // バトル開始！(1人がトリガー)
       game_start() {
         App.chat_room.game_start()
-        // this.battle_started_at = new Date()
       },
 
-      game_setup() {
+      // バトル開始(トリガーから全体通知が来たときの処理)
+      game_setup(data) {
+        this.battle_started_at = data["battle_started_at"]
         this.thinking_p = true
       },
 
-      location_flip_all() {
-        App.chat_room.location_flip_all()
-      },
-
-      // 手番の変更
-      preset_key_broadcast(v) {
+      // 手合割の変更
+      preset_key_update(v) {
         if (this.current_preset_key !== v) {
           this.current_preset_key = v
-          App.chat_room.preset_key_broadcast({preset_key: this.current_preset_info.name})
+          App.chat_room.preset_key_update({preset_key: this.current_preset_info.name})
           App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
         }
       },
 
-      member_location_change(chat_membership_id, location_key) {
-        App.chat_room.member_location_change_broadcast({chat_membership_id: chat_membership_id, location_key: location_key})
+      // 先後反転(全体)
+      location_flip_all() {
+        App.chat_room.location_flip_all()
       },
 
+      // 先後変更(個別)
+      member_location_change(chat_membership_id, location_key) {
+        App.chat_room.member_location_change({chat_membership_id: chat_membership_id, location_key: location_key})
+      },
+
+      // メッセージ送信
       message_enter(value) {
         if (this.message !== "") {
           App.chat_room.chat_say(this.message)
@@ -224,10 +223,38 @@ document.addEventListener('DOMContentLoaded', () => {
         this.message = ""
       },
 
+      // chat_user は自分か？
+      chat_user_self_p(chat_user) {
+        return chat_user.id === js_global_params.current_chat_user.id
+      },
+
+      // 指定手番(location_key)の残り秒数
+      rest_time(location_key) {
+        let v = this.limit_seconds - this.total_time(location_key)
+        if (this.current_location.key === location_key) {
+          v -= this.think_counter
+        }
+        if (v < 0) {
+          v = 0
+        }
+        return v
+      },
+
+      // 指定手番(location_key)のトータル使用時間
+      total_time(location_key) {
+        return _.reduce(this.clock_counts[location_key], (a, e) => a + e, 0)
+      },
+
+      // 指定手番(location_key)の残り時間の表示用
+      time_format(location_key) {
+        return numeral(this.rest_time(location_key)).format("0:00")
+      },
+
+      // FIXME: ActionCable の方で行う
       play_mode_long_sfen_set(v) {
         const params = new URLSearchParams()
         params.append("kifu_body", v)
-        params.append("think_counter", this.think_counter)
+        params.append("think_counter", this.think_counter) // 使用秒数も記録する
 
         // TODO: axios を使わない
         axios({
@@ -261,43 +288,24 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       },
 
-      chat_user_self_p(chat_user) {
-        return chat_user.id === js_global_params.current_chat_user.id
-      },
-
-      rest_time(location_key) {
-        let v = this.limit_seconds - this.total_time(location_key)
-        if (this.current_location.key === location_key) {
-          v -= this.think_counter
-        }
-        if (v < 0) {
-          v = 0
-        }
-        return v
-      },
-
-      total_time(location_key) {
-        return _.reduce(this.clock_counts[location_key], (a, e) => a + e, 0)
-      },
-
-      time_format(location_key) {
-        return numeral(this.rest_time(location_key)).format("0:00")
-      },
-
     },
     computed: {
+      // チャットに表示する最新メッセージたち
       latest_chat_articles() {
         return _.takeRight(this.chat_articles, 10)
       },
 
+      // 手合割一覧
       preset_info_values() {
         return PresetInfo.values
       },
 
+      // 現在選択されている手合割情報
       current_preset_info() {
         return PresetInfo.fetch(this.current_preset_key)
       },
 
+      // 手番選択用
       location_infos() {
         return [
           { key: "black",  name: "☗" + (this.komaochi_p ? "下手" : "先手"), },
@@ -306,25 +314,30 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
       },
 
+      // 現在の手番
       current_location() {
         const index = (this.komaochi_p ? 1 : 0) + this.turn_max
         return Location.values[index % Location.values.length]
       },
 
+      // 駒落ち？
       komaochi_p() {
         return this.current_preset_info.first_location_key === "white"
       },
 
+      // 自分の中間情報
       current_membership() {
         return _.find(this.online_members, (e) => this.chat_user_self_p(e.chat_user))
       },
 
+      // 自分の手番
       human_side() {
         if (this.current_membership) {
           return this.current_membership.location_key
         }
       },
 
+      // 盤面を反転するか？
       flip() {
         return this.human_side === "white"
       },
