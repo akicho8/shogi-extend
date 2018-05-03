@@ -23,7 +23,7 @@ module ResourceNs1
             render json: {
               turn_max: mediator.turn_info.turn_max,
               kifu_body_sfen: kifu_body_sfen,
-              human_kifu_text: ki2_a.join(" "),
+              human_kifu_text: info.to_ki2, # or ki2_a.join(" ")
               last_hand: ki2_a.last,
               moved_chat_user_id: current_chat_user.id, # 操作した人(この人以外に盤面を反映する)
               clock_counts: current_chat_room.clock_counts,
