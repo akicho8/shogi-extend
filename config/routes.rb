@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :chat_users, path: "online/users"
   end
 
-  root "resource_ns1/swars_battle_records#index"
+  root "resource_ns1/chat_rooms#index"
 
   ################################################################################ 2ch棋譜検索
 
