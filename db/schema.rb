@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.datetime "battle_started_at"
     t.datetime "battle_ended_at"
     t.string "win_location_key"
+    t.string "toryo_location_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_owner_id"], name: "index_chat_rooms_on_room_owner_id"

@@ -149,6 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
     game_end(data) {
       this.perform("game_end", data)
     },
+    
+    game_toryo(data) {
+      this.perform("game_toryo", data)
+    },
 
     location_flip_all(data) {
       this.perform("location_flip_all", data)
@@ -174,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         battle_started_at: chat_room_app_params.chat_room.battle_started_at,
         battle_ended_at: chat_room_app_params.chat_room.battle_ended_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
+        toryo_location_key: chat_room_app_params.chat_room.toryo_location_key,
         turn_max: chat_room_app_params.chat_room.turn_max,
         clock_counts: chat_room_app_params.chat_room.clock_counts,
 
@@ -206,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     methods: {
       // バトル開始！(1人がトリガー)
       game_start() {
+        App.chat_room.system_say("バトル開始！")
         App.chat_room.game_start()
       },
 
@@ -214,6 +220,12 @@ document.addEventListener('DOMContentLoaded', () => {
         this.battle_started_at = data["battle_started_at"]
         this.battle_ended_at = null
         this.think_counter_reset()
+      },
+
+      // 投了
+      game_toryo() {
+        App.chat_room.game_toryo({win_location_key: this.current_location.flip.key, toryo_location_key: this.current_location.key})
+        App.chat_room.system_say("負けました")
       },
 
       // 時間切れ(生きている人みんなで投げる)
@@ -225,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       game_ended(data) {
         this.battle_ended_at = data["battle_ended_at"]
         this.win_location_key = data["win_location_key"]
+        this.toryo_location_key = data["toryo_location_key"]
         App.chat_room.system_say(`${this.current_location.flip.name}の勝ち！`)
 
         if (this.my_location_key) {
@@ -402,6 +415,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
 
+      // 今は自分の手番か？
+      my_teban_p() {
+        return this.my_location_key === this.current_location.key
+      },
+
       // 盤面を反転するか？
       flip() {
         return this.my_location_key === "white"
@@ -443,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
       current_rest_counter() {
         return this.rest_counter(this.current_location.key)
       },
-      
+
       thinking_p() {
         return !_.isNil(this.battle_started_at) && _.isNil(this.battle_ended_at)
       },

@@ -99,6 +99,11 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key)
   end
 
+  def game_toryo(data)
+    current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"], toryo_location_key: data["toryo_location_key"])
+    ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key, toryo_location_key: current_chat_room.toryo_location_key)
+  end
+
   # 先後をまとめて反転する
   def location_flip_all(data)
     current_chat_room.chat_memberships.each(&:location_flip!)

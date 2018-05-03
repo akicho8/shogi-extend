@@ -34,6 +34,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.datetime :battle_started_at
       t.datetime :battle_ended_at
       t.string :win_location_key, null: true
+      t.string :toryo_location_key, null: true
       t.timestamps null: false
     end
     create_table :chat_memberships, force: true do |t|
