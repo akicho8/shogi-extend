@@ -111,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
 
-    // 自由に定義してよいメソッド
     chat_say(chat_message_body) {
       this.perform("chat_say", {chat_message_body: chat_message_body})
     },
@@ -120,9 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
       this.chat_say(`<span class="has-text-info">${str}</span>`)
     },
 
-    // 自由に定義してよいメソッド
-    room_name_changed: function(data) {
-      this.perform("room_name_changed", data)
+    room_name_changed(room_name) {
+      this.perform("room_name_changed", {room_name: room_name})
     },
 
     kifu_body_sfen_broadcast(data) {

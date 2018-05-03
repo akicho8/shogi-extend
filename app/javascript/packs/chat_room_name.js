@@ -15,8 +15,8 @@ export default {
         this.room_name_before = this.room_name
       } else  {
         if (this.room_name_before !== this.room_name) {
-          App.chat_room.chat_say(`<span class="has-text-info">部屋名を「${this.room_name}」に変更しました</span>`)
-          App.chat_room.room_name_changed({room_name: this.room_name})
+          App.chat_room.system_say(`部屋名を「${this.room_name}」に変更しました`)
+          App.chat_room.room_name_changed(this.room_name)
         }
       }
     },

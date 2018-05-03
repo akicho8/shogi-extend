@@ -55,8 +55,7 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def room_name_changed(data)
-    chat_room = ChatRoom.find(params[:chat_room_id])
-    chat_room.update!(name: data["room_name"])
+    current_chat_room.update!(name: data["room_name"])
     ActionCable.server.broadcast(room_key, data)
   end
 
