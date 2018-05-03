@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["turn_max"]) {
         App.chat_vm.turn_max = data["turn_max"]
         App.chat_vm.clock_counts = data["clock_counts"]
-        App.chat_vm.think_counter = 0
+        App.chat_vm.think_counter_reset()
       }
 
       if (data["kifu_body_sfen"]) {
@@ -79,6 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (data["preset_key"]) {
         App.chat_vm.current_preset_key = data["preset_key"]
+      }
+
+      if (data["motijikan_key"]) {
+        App.chat_vm.current_motijikan_key = data["motijikan_key"]
       }
 
       if (data["human_kifu_text"]) {
@@ -103,6 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["room_name"]) {
         App.chat_vm.room_name = data["room_name"]
       }
+
+      // 終了
+      if (data["battle_ended_at"]) {
+        App.chat_vm.game_ended(data)
+      }
     },
 
     chat_say(chat_message_body) {
@@ -125,12 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("preset_key_update", data)
     },
 
+    motijikan_key_update(data) {
+      this.perform("motijikan_key_update", data)
+    },
+
     member_location_change(data) {
       this.perform("member_location_change", data)
     },
 
     game_start(data) {
       this.perform("game_start", data)
+    },
+
+    game_end(data) {
+      this.perform("game_end", data)
     },
 
     location_flip_all(data) {
@@ -153,22 +170,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         current_preset_key: chat_room_app_params.chat_room.preset_key,
+        current_motijikan_key: chat_room_app_params.chat_room.motijikan_key,
         battle_started_at: chat_room_app_params.chat_room.battle_started_at,
+        battle_ended_at: chat_room_app_params.chat_room.battle_ended_at,
+        win_location_key: chat_room_app_params.chat_room.win_location_key,
         turn_max: chat_room_app_params.chat_room.turn_max,
         clock_counts: chat_room_app_params.chat_room.clock_counts,
 
         think_counter: localStorage.getItem(chat_room_app_params.chat_room.id) || 0, // リロードしたときに戻す
-        limit_seconds: 60 * 10,
       }
     },
 
     created() {
-      this.thinking_p = !_.isNil(this.battle_started_at)
-
       setInterval(() => {
         if (this.thinking_p) {
-          this.think_counter++
-          localStorage.setItem(chat_room_app_params.chat_room.id, this.think_counter) // リロードしたときに0に戻らないように保存しておく
+          this.think_counter_set(this.think_counter + 1)
+          if (this.current_rest_counter === 0) {
+            this.game_end()
+          }
         }
       }, 1000)
     },
@@ -193,7 +212,45 @@ document.addEventListener('DOMContentLoaded', () => {
       // バトル開始(トリガーから全体通知が来たときの処理)
       game_setup(data) {
         this.battle_started_at = data["battle_started_at"]
-        this.thinking_p = true
+        this.battle_ended_at = null
+        this.think_counter_reset()
+      },
+
+      // 時間切れ(生きている人みんなで投げる)
+      game_end() {
+        App.chat_room.game_end({win_location_key: this.current_location.flip.key})
+      },
+
+      // 終了
+      game_ended(data) {
+        this.battle_ended_at = data["battle_ended_at"]
+        this.win_location_key = data["win_location_key"]
+        App.chat_room.system_say(`${this.current_location.flip.name}の勝ち！`)
+
+        if (this.my_location_key) {
+          // 対局者同士
+          if (this.win_location_key === this.my_location_key) {
+            // 勝った方
+            Vue.prototype.$dialog.alert({
+              title: "勝利",
+              message: "勝ちました",
+              type: 'is-primary',
+              hasIcon: true,
+              icon: 'crown',
+              iconPack: 'mdi',
+            })
+          } else {
+            // 負けた方
+            Vue.prototype.$dialog.alert({
+              title: "敗北",
+              message: "負けました",
+              type: 'is-primary',
+            })
+          }
+        } else {
+          // 観戦者
+          Vue.prototype.$dialog.alert({title: "結果", message: `${this.current_location.flip.name}の勝ち！`, type: 'is-primary'})
+        }
       },
 
       // 手合割の変更
@@ -202,6 +259,15 @@ document.addEventListener('DOMContentLoaded', () => {
           this.current_preset_key = v
           App.chat_room.preset_key_update({preset_key: this.current_preset_info.name})
           App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
+        }
+      },
+
+      // 持ち時間の変更
+      motijikan_key_update(v) {
+        if (this.current_motijikan_key !== v) {
+          this.current_motijikan_key = v
+          App.chat_room.motijikan_key_update({motijikan_key: this.current_motijikan_info.key})
+          App.chat_room.system_say(`持ち時間を${this.current_motijikan_info.name}に変更しました`)
         }
       },
 
@@ -229,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 指定手番(location_key)の残り秒数
-      rest_time(location_key) {
+      rest_counter(location_key) {
         let v = this.limit_seconds - this.total_time(location_key)
         if (this.current_location.key === location_key) {
           v -= this.think_counter
@@ -247,7 +313,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 指定手番(location_key)の残り時間の表示用
       time_format(location_key) {
-        return numeral(this.rest_time(location_key)).format("0:00")
+        return numeral(this.rest_counter(location_key)).format("0:00")
+      },
+
+      think_counter_reset() {
+        this.think_counter_set(0)
+      },
+
+      think_counter_set(v) {
+        this.think_counter = v
+        localStorage.setItem(chat_room_app_params.chat_room.id, v)
       },
 
       // FIXME: ActionCable の方で行う
@@ -295,16 +370,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return _.takeRight(this.chat_articles, 10)
       },
 
-      // 手合割一覧
-      preset_info_values() {
-        return PresetInfo.values
-      },
-
-      // 現在選択されている手合割情報
-      current_preset_info() {
-        return PresetInfo.fetch(this.current_preset_key)
-      },
-
       // 手番選択用
       location_infos() {
         return [
@@ -331,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 自分の手番
-      human_side() {
+      my_location_key() {
         if (this.current_membership) {
           return this.current_membership.location_key
         }
@@ -339,15 +404,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 盤面を反転するか？
       flip() {
-        return this.human_side === "white"
+        return this.my_location_key === "white"
       },
 
       run_mode() {
-        if (this.human_side) {
+        if (this.my_location_key) {
           return "play_mode"
         } else {
           return "play_mode"    // FIXME: view_mode にするとおかしくなる
         }
+      },
+
+      // 手合割一覧
+      preset_info_values() {
+        return PresetInfo.values
+      },
+
+      // 現在選択されている手合割情報
+      current_preset_info() {
+        return PresetInfo.fetch(this.current_preset_key)
+      },
+
+      // 持ち時間項目一覧
+      motijikan_infos() {
+        return chat_room_app_params.motijikan_infos
+      },
+
+      // 持ち時間項目一覧
+      current_motijikan_info() {
+        console.table(this.motijikan_infos)
+        return _.find(this.motijikan_infos, (e) => e.key === this.current_motijikan_key)
+      },
+
+      limit_seconds() {
+        return this.current_motijikan_info["limit_seconds"]
+      },
+
+      current_rest_counter() {
+        return this.rest_counter(this.current_location.key)
+      },
+      
+      thinking_p() {
+        return !_.isNil(this.battle_started_at) && _.isNil(this.battle_ended_at)
       },
     },
   })

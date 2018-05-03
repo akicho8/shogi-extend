@@ -29,6 +29,7 @@ class ChatRoom < ApplicationRecord
   before_validation on: :create do
     self.name = name.presence || name_default
     self.preset_key ||= "平手"
+    self.motijikan_key ||= :mode1
     # self.kifu_body_sfen ||= "position startpos"
     self.turn_max ||= 0
     self.clock_counts ||= {black: [], white: []}

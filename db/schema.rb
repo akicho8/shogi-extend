@@ -38,12 +38,15 @@ ActiveRecord::Schema.define(version: 20171222200100) do
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "room_owner_id", null: false
     t.string "preset_key", null: false
+    t.string "motijikan_key", null: false
     t.string "name", null: false
     t.text "kifu_body_sfen", null: false
     t.text "clock_counts", null: false
     t.integer "current_chat_users_count", default: 0
     t.integer "turn_max", null: false
     t.datetime "battle_started_at"
+    t.datetime "battle_ended_at"
+    t.string "win_location_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_owner_id"], name: "index_chat_rooms_on_room_owner_id"

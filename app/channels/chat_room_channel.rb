@@ -34,6 +34,13 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
   end
 
+  def motijikan_key_update(data)
+    motijikan_info = MotijikanInfo.fetch(data["motijikan_key"])
+    current_chat_room.update!(motijikan_key: motijikan_info.key)
+
+    ActionCable.server.broadcast(room_key, data)
+  end
+
   def member_location_change(data)
     # App.chat_room.member_location_change({chat_membership_id: chat_membership_id, location_key: location_key})
     chat_membership_id = data["chat_membership_id"]
@@ -85,6 +92,11 @@ class ChatRoomChannel < ApplicationCable::Channel
   def game_start(data)
     current_chat_room.update!(battle_started_at: Time.current)
     ActionCable.server.broadcast(room_key, battle_started_at: current_chat_room.battle_started_at)
+  end
+
+  def game_end(data)
+    current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"])
+    ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key)
   end
 
   # 先後をまとめて反転する

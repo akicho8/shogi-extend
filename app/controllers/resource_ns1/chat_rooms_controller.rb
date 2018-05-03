@@ -19,6 +19,7 @@ module ResourceNs1
         player_mode_moved_path: url_for([:resource_ns1, current_record, :kifu_valids, format: "json"]),
         current_chat_user: current_chat_user,
         chat_room: current_record,
+        motijikan_infos: MotijikanInfo.collect(&:attributes),
       }
     end
 

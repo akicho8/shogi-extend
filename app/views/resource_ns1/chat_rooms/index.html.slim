@@ -33,6 +33,13 @@ javascript:
             b-table-column field="battle_started_at" label="開始日時" sortable="sortable" numeric="numeric"
               template(v-if="props.row.battle_started_at")
                 | {{moment(props.row.battle_started_at).format('YYYY/MM/DD hh:mm')}}
+            b-table-column label="状態"
+              template(v-if="props.row.battle_started_at && props.row.battle_ended_at")
+                | 終了
+              template(v-if="props.row.battle_started_at && !props.row.battle_ended_at")
+                | 対局中
+              template(v-if="!props.row.battle_started_at && !props.row.battle_ended_at")
+                | 対局前
     .column
       .box
         .title.is-4= "オンラインのユーザー"
