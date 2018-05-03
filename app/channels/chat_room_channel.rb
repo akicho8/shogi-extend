@@ -87,6 +87,12 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, game_started_at: current_chat_room.game_started_at)
   end
 
+  # 先後をまとめて反転する
+  def location_flip_all(data)
+    current_chat_room.chat_memberships.each(&:location_flip!)
+    online_members_update
+  end
+
   private
 
   def online_members_update

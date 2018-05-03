@@ -1,6 +1,3 @@
-p= link_to("ロビーに戻る", [:resource_ns1, current_plural_key], class: "button")
-br
-
 .title.is-2= current_record.new_record? ? "部屋の作成" : "部屋名の編集"
 hr
 
@@ -10,3 +7,7 @@ hr
   .field
     .control
       =<> form.submit(name: :_submit, class: "button is-primary")
+
+br
+br
+p= link_to("ロビーに戻る", [:resource_ns1, current_plural_key], class: "button")

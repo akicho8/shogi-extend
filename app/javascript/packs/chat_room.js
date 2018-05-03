@@ -138,6 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
     game_start(data) {
       this.perform("game_start", data)
     },
+
+    location_flip_all(data) {
+      this.perform("location_flip_all", data)
+    },
   })
 
   App.chat_vm = new Vue({
@@ -194,6 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       game_setup() {
         this.thinking_p = true
+      },
+
+      location_flip_all() {
+        App.chat_room.location_flip_all()
       },
 
       // 手番の変更

@@ -38,4 +38,10 @@ class ChatMembership < ApplicationRecord
   def location
     Warabi::Location[location_key]
   end
+
+  def location_flip!
+    if location
+      update!(location_key: location.flip.key)
+    end
+  end
 end

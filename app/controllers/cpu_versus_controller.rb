@@ -38,7 +38,7 @@ class CpuVersusController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          render json: {you_win_message: "玉を取って勝ちました", sfen: mediator.to_sfen}
+          render json: {you_win_message: "玉を取って勝ちました！", sfen: mediator.to_sfen}
           return
         end
       end

@@ -23,19 +23,17 @@ javascript:
     .columns
       .column
         .box
-          .title.is-4= "ルール"
+          button.button.is-primary.is-large.is-rounded @click="game_start" バトル開始！
+          | &nbsp;
           b-dropdown(:value="current_preset_key" @input="preset_key_broadcast")
-            button.button(slot="trigger")
+            button.button.is-large.is-rounded(slot="trigger")
               span
                 | {{current_preset_info.name}}
               b-icon(icon="menu-down")
             b-dropdown-item(v-for="record in preset_info_values" :value="record.key" :key="record.key")
               | {{record.name}}
-          br
-          br
-          template(v-if="game_started_at")
-          template(v-else)
-            button.button.is-primary.is-large @click="game_start" スタート
+          | &nbsp;
+          button.button.is-large.is-rounded @click="location_flip_all" 先後反転
 
   .columns
     .column
@@ -44,7 +42,7 @@ javascript:
           | {{think_counter}}
           | {{clock_counts}}
           | {{think_counter}}
-        
+
         template v-if="game_started_at"
           .has-text-centered
             | 手番 {{current_location.name}}
@@ -87,7 +85,7 @@ javascript:
             input.input.is-large.is-primary type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter"
         .field
           .control
-            button.button.is-primary @click="message_enter"
+            button.button.is-primary.is-rounded @click="message_enter"
               | 送信
       .box
         .title.is-4= "参加者"
