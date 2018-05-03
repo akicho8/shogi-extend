@@ -45,6 +45,11 @@ Vue.component("messenger", Messanger)
 import _ from "lodash"
 Object.defineProperty(Vue.prototype, "_", {value: _})
 
+//////////////////////////////////////////////////////////////////////////////// moment
+
+import moment from "moment"
+Object.defineProperty(Vue.prototype, "moment", {value: moment})
+
 //////////////////////////////////////////////////////////////////////////////// アプリ用の雑多なライブラリ
 
 import * as AppUtils from "./app_utils.js"

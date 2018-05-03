@@ -26,12 +26,13 @@ javascript:
             b-table-column field="name" label="名前" sortable="sortable"
               a :href="props.row.show_path"
                 | {{props.row.name}}
-            b-table-column field="chat_users" label="参加者" sortable="sortable" numeric="numeric"
+            b-table-column field="chat_users" label="全参加者" sortable="sortable" numeric="numeric"
               | {{props.row.chat_users.length}}
             b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
               | {{props.row.current_chat_users_count}}
             b-table-column field="game_started_at" label="開始日時" sortable="sortable" numeric="numeric"
-              | {{props.row.game_started_at}}
+              template(v-if="props.row.game_started_at")
+                | {{moment(props.row.game_started_at).format('YYYY/MM/DD hh:mm')}}
     .column
       .box
         .title.is-4= "オンラインのユーザー"
