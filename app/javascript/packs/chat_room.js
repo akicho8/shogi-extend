@@ -112,16 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     // 自由に定義してよいメソッド
-    chat_say: function(chat_article_body) {
-      console.log(`chat_say: ${chat_article_body}`)
-      console.log(`chat_say: ${js_global_params.current_chat_user.id}`)
-      // app/channels/chat_room_channel.rb の chat_say メソッドに処理が渡る
-
-      this.perform("chat_say", {
-        sayed_chat_user_id: js_global_params.current_chat_user.id,
-        chat_room_id: chat_room_app_params.chat_room.id,
-        chat_article_body: chat_article_body,
-      })
+    chat_say(chat_message_body) {
+      this.perform("chat_say", {chat_message_body: chat_message_body})
     },
 
     system_say(str) {
