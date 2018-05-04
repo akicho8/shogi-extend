@@ -6,7 +6,9 @@ html lang="ja"
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
     link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css"
-
+    sass:
+      [v-cloak]
+        display: none
     = favicon_link_tag
     = csrf_meta_tag
     title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
@@ -33,54 +35,85 @@ html lang="ja"
 
     = yield :head
   body
-    section.hero.is-primary.is-bold class=(controller_name == "swars_battle_records" && params[:query].present? ? "is-small" : "")
-      .hero-head
-        nav.navbar
-          .container
-            .navbar-brand
-              / a.navbar-item
-              /   = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
-              span.navbar-burger.burger[data-target="navbarMenuHeroA"]
-                span
-                span
-                span
-            #header_app.navbar-menu(v-cloak)
-              .navbar-end
-                span.navbar-item
-                  = link_to("{{active_user_count}}", [:resource_ns1, :chat_rooms], :class => ["button", "is-primary", "is-inverted"])
-            / #navbarMenuHeroA.navbar-menu
-            /   .navbar-end
-            /     a.navbar-item.is-active
-            /       |  Home
-            /     a.navbar-item
-            /       |  Examples
-            /     a.navbar-item
-            /       |  Documentation
-            /     span.navbar-item
-            /       a.button.is-primary.is-inverted
-            /         span.icon
-            /           i.fab.fa-github
-            /         span
-            /           | Download
-      .hero-body
-        .container.has-text-centered
-          = link_to(:root) do
-            h1.title= AppConfig[:app_name]
-          // h1.title
-          // h2.subtitle
-      .hero-foot
-        .tabs.is-boxed.is-centered
-          .container
-            ul
-              li class=("is-active" if params[:controller].start_with?("resource_ns1/chat_rooms"))             = link_to("ネット対戦", [:resource_ns1, :chat_rooms])
-              li class=("is-active" if params[:controller] == "cpu_versus")                                    = link_to("CPU対戦", :cpu_versus)
-              li class=("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
-              li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)
-              li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
-              li class=("is-active" if params[:controller] == "position_editor")                               = link_to("盤面編集", :position_editor)
-              li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
+    nav.navbar.is-transparent.is-primary
+      .navbar-brand
+        = link_to(AppConfig[:app_name], :root, :class => "navbar-item")
+        .navbar-burger.burger(data-target="main_navar")
+          span
+          span
+          span
+      #main_navar.navbar-menu
+        .navbar-start
+          / ここでの is-active に意味はない
+          = link_to("ネット対戦", [:resource_ns1, :chat_rooms], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/chat_rooms"))])
+          = link_to("CPU対戦", :cpu_versus, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_versus")])
+          = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))])
+          = link_to("戦法トリガー辞典", :tactic_articles, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_articles")])
+          = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))])
+          .navbar-item.has-dropdown.is-hoverable
+            span.navbar-link その他
+            .navbar-dropdown.is-boxed
+              = link_to("盤面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
+              = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
               - unless Rails.env.production?
-                li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
+                = link_to("2ch棋譜検索", [:resource_ns1, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records"))])
+        .navbar-end
+          span#header_app.navbar-item(v-cloak)
+            = link_to("{{active_user_count}}", [:resource_ns1, :chat_rooms], :class => ["button", "is-primary", "is-inverted"])
+
+    - if false
+      .nav.navbar.is-primary(role="navigation" aria-label="main navigation")
+        .navbar-brand
+          = link_to(AppConfig[:app_name], :root, :class => "navbar-item")
+
+      section.hero.is-primary.is-bold class=(controller_name == "swars_battle_records" && params[:query].present? ? "is-small" : "")
+        .hero-head
+          nav.navbar
+            .container
+              .navbar-brand
+                / a.navbar-item
+                /   = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
+                span.navbar-burger.burger[data-target="navbarMenuHeroA"]
+                  span
+                  span
+                  span
+              #header_app.navbar-menu(v-cloak)
+                .navbar-end
+                  span.navbar-item
+                    = link_to("{{active_user_count}}", [:resource_ns1, :chat_rooms], :class => ["button", "is-primary", "is-inverted"])
+              / #navbarMenuHeroA.navbar-menu
+              /   .navbar-end
+              /     a.navbar-item.is-active
+              /       |  Home
+              /     a.navbar-item
+              /       |  Examples
+              /     a.navbar-item
+              /       |  Documentation
+              /     span.navbar-item
+              /       a.button.is-primary.is-inverted
+              /         span.icon
+              /           i.fab.fa-github
+              /         span
+              /           | Download
+        .hero-body
+          .container.has-text-centered
+            = link_to(:root) do
+              h1.title= AppConfig[:app_name]
+            // h1.title
+            // h2.subtitle
+        .hero-foot
+          .tabs.is-boxed.is-centered
+            .container
+              ul
+                li class=("is-active" if params[:controller].start_with?("resource_ns1/chat_rooms"))             = link_to("ネット対戦", [:resource_ns1, :chat_rooms])
+                li class=("is-active" if params[:controller] == "cpu_versus")                                    = link_to("CPU対戦", :cpu_versus)
+                li class=("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
+                li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)
+                li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
+                li class=("is-active" if params[:controller] == "position_editor")                               = link_to("盤面編集", :position_editor)
+                li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
+                - unless Rails.env.production?
+                  li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
     section.section
       .container.is-fluid.main_container
         == flash_danger_notification_tag
