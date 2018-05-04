@@ -69,12 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (data["kifu_body_sfen"]) {
-        if (!_.isNil(data["moved_chat_user_id"]) && data["moved_chat_user_id"] === js_global_params.current_chat_user.id) {
-          // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
-          // (が、こうすると本当にまわりにブロードキャストされたのか不安ではある)
-        } else {
-          App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
-        }
+        // これはだめ
+        // if (!_.isNil(data["moved_chat_user_id"]) && data["moved_chat_user_id"] === js_global_params.current_chat_user.id) {
+        //   // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
+        //   // (が、こうすると本当にまわりにブロードキャストされたのか不安ではある)
+        // } else {
+        // }
+
+        // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
+        App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
       }
 
       if (data["preset_key"]) {
@@ -433,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.my_location_key) {
           return "play_mode"
         } else {
-          return "play_mode"    // FIXME: view_mode にするとおかしくなる
+          return "view_mode"    // FIXME: view_mode にするとおかしくなる
         }
       },
 

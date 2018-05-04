@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   App.header_vm = new Vue({
     el: "#header_app",
-    data: function() {
+    data() {
       return {
         active_user_count: 0,
       }
