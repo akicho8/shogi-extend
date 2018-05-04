@@ -19,7 +19,7 @@ javascript:
   template v-else=""
     .title.is-4 v-text="room_name" @click="room_name_click"
 
-  template v-if="!battle_started_at"
+  template v-if="!battle_begin_at"
     .columns
       .column
         .box
@@ -51,9 +51,9 @@ javascript:
           | {{clock_counts}}
           | {{think_counter}}
 
-        div v-if="battle_started_at"
+        div v-if="battle_begin_at"
           .has-text-centered.is-size-5
-            template v-if="!battle_ended_at && my_teban_p"
+            template v-if="!battle_end_at && my_teban_p"
               button.button.is-rounded.is-small(@click="give_up_game_end") 投了
             .is-pulled-right v-html="time_format('black')"
             .is-pulled-left  v-html="time_format('white')"

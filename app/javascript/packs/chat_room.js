@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
       //   const v = data["chat_room"]
       //   // App.chat_vm.kifu_body_sfen = v.chat_room.kifu_body_sfen
       //   App.chat_vm.current_preset_key = v.preset_key
-      //   App.chat_vm.battle_started_at = v.battle_started_at
+      //   App.chat_vm.battle_begin_at = v.battle_begin_at
       // }
 
-      if (data["battle_started_at"]) {
+      if (data["battle_begin_at"]) {
         App.chat_vm.game_setup(data)
       }
 
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 終了
-      if (data["battle_ended_at"]) {
+      if (data["battle_end_at"]) {
         App.chat_vm.game_ended(data)
       }
     },
@@ -181,8 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         current_preset_key: chat_room_app_params.chat_room.preset_key,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
-        battle_started_at: chat_room_app_params.chat_room.battle_started_at,
-        battle_ended_at: chat_room_app_params.chat_room.battle_ended_at,
+        battle_begin_at: chat_room_app_params.chat_room.battle_begin_at,
+        battle_end_at: chat_room_app_params.chat_room.battle_end_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
         give_up_location_key: chat_room_app_params.chat_room.give_up_location_key,
         turn_max: chat_room_app_params.chat_room.turn_max,
@@ -209,8 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // バトル開始(トリガーから全体通知が来たときの処理)
       game_setup(data) {
-        this.battle_started_at = data["battle_started_at"]
-        this.battle_ended_at = null
+        this.battle_begin_at = data["battle_begin_at"]
+        this.battle_end_at = null
         this.think_counter_reset()
       },
 
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 終了
       game_ended(data) {
-        this.battle_ended_at = data["battle_ended_at"]
+        this.battle_end_at = data["battle_end_at"]
         this.win_location_key = data["win_location_key"]
         this.give_up_location_key = data["give_up_location_key"]
         App.chat_room.system_say(`${this.current_location.flip.name}の勝ち！`)
@@ -406,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 考え中？ (プレイ中？)
       thinking_p() {
-        return !_.isNil(this.battle_started_at) && _.isNil(this.battle_ended_at)
+        return !_.isNil(this.battle_begin_at) && _.isNil(this.battle_end_at)
       },
     },
   })

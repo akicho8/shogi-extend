@@ -41,7 +41,7 @@ tp chat_room.current_chat_users
 # >> |                     name | 野良1号の対戦部屋 #1                                                          |
 # >> |           kifu_body_sfen | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 |
 # >> | current_chat_users_count | 0                                                                             |
-# >> |          battle_started_at |                                                                               |
+# >> |          battle_begin_at |                                                                               |
 # >> |               created_at | 2018-04-30 17:34:55 +0900                                                     |
 # >> |               updated_at | 2018-04-30 17:34:55 +0900                                                     |
 # >> |--------------------------+-------------------------------------------------------------------------------|

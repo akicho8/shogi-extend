@@ -90,18 +90,18 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def game_start(data)
-    current_chat_room.update!(battle_started_at: Time.current)
-    ActionCable.server.broadcast(room_key, battle_started_at: current_chat_room.battle_started_at)
+    current_chat_room.update!(battle_begin_at: Time.current)
+    ActionCable.server.broadcast(room_key, battle_begin_at: current_chat_room.battle_begin_at)
   end
 
   def timeout_game_end(data)
-    current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"])
-    ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key)
+    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"])
+    ActionCable.server.broadcast(room_key, battle_end_at: current_chat_room.battle_end_at, win_location_key: current_chat_room.win_location_key)
   end
 
   def give_up_game_end(data)
-    current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"], give_up_location_key: data["give_up_location_key"])
-    ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key, give_up_location_key: current_chat_room.give_up_location_key)
+    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"], give_up_location_key: data["give_up_location_key"])
+    ActionCable.server.broadcast(room_key, battle_end_at: current_chat_room.battle_end_at, win_location_key: current_chat_room.win_location_key, give_up_location_key: current_chat_room.give_up_location_key)
   end
 
   # 先後をまとめて反転する

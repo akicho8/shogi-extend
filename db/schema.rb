@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.text "clock_counts", null: false
     t.integer "current_chat_users_count", default: 0
     t.integer "turn_max", null: false
-    t.datetime "battle_started_at"
-    t.datetime "battle_ended_at"
+    t.datetime "battle_begin_at"
+    t.datetime "battle_end_at"
     t.string "win_location_key"
     t.string "give_up_location_key"
     t.datetime "created_at", null: false

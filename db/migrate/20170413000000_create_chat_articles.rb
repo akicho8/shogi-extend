@@ -31,8 +31,8 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.text :clock_counts, null: false
       t.integer :current_chat_users_count, default: 0
       t.integer :turn_max, null: false
-      t.datetime :battle_started_at
-      t.datetime :battle_ended_at
+      t.datetime :battle_begin_at
+      t.datetime :battle_end_at
       t.string :win_location_key, null: true
       t.string :give_up_location_key, null: true
       t.timestamps null: false

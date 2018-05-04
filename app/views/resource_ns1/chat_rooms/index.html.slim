@@ -49,15 +49,15 @@ javascript:
               | {{props.row.chat_users.length}}
             b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
               | {{props.row.current_chat_users_count}}
-            b-table-column field="battle_started_at" label="開始日時" sortable="sortable" numeric="numeric"
-              template(v-if="props.row.battle_started_at")
-                | {{moment(props.row.battle_started_at).format('YYYY/MM/DD hh:mm')}}
+            b-table-column field="battle_begin_at" label="開始日時" sortable="sortable" numeric="numeric"
+              template(v-if="props.row.battle_begin_at")
+                | {{moment(props.row.battle_begin_at).format('YYYY/MM/DD hh:mm')}}
             b-table-column label="状態"
-              template(v-if="props.row.battle_started_at && props.row.battle_ended_at")
+              template(v-if="props.row.battle_begin_at && props.row.battle_end_at")
                 | 終了
-              template(v-if="props.row.battle_started_at && !props.row.battle_ended_at")
+              template(v-if="props.row.battle_begin_at && !props.row.battle_end_at")
                 | 対局中
-              template(v-if="!props.row.battle_started_at && !props.row.battle_ended_at")
+              template(v-if="!props.row.battle_begin_at && !props.row.battle_end_at")
                 | 対局前
 
   / .box
