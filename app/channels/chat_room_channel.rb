@@ -94,12 +94,12 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, battle_started_at: current_chat_room.battle_started_at)
   end
 
-  def game_end(data)
+  def timeout_game_end(data)
     current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"])
     ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key)
   end
 
-  def game_toryo(data)
+  def toryo_game_end(data)
     current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"], toryo_location_key: data["toryo_location_key"])
     ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key, toryo_location_key: current_chat_room.toryo_location_key)
   end

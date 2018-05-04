@@ -54,7 +54,7 @@ javascript:
         div v-if="battle_started_at"
           .has-text-centered.is-size-5
             template v-if="!battle_ended_at && my_teban_p"
-              button.button.is-rounded.is-small(@click="game_toryo") 投了
+              button.button.is-rounded.is-small(@click="toryo_game_end") 投了
             .is-pulled-right v-html="time_format('black')"
             .is-pulled-left  v-html="time_format('white')"
         .is-clearfix

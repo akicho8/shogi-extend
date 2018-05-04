@@ -1,7 +1,7 @@
-import numeral from "numeral"
 import _ from "lodash"
 import axios from "axios"
 import chat_room_name from "./chat_room_name.js"
+import chess_clock from "./chess_clock.js"
 
 import { PresetInfo } from 'shogi-player/src/preset_info.js'
 import { Location } from 'shogi-player/src/location.js'
@@ -149,12 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("game_start", data)
     },
 
-    game_end(data) {
-      this.perform("game_end", data)
+    timeout_game_end(data) {
+      this.perform("timeout_game_end", data)
     },
 
-    game_toryo(data) {
-      this.perform("game_toryo", data)
+    toryo_game_end(data) {
+      this.perform("toryo_game_end", data)
     },
 
     location_flip_all(data) {
@@ -163,7 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   App.chat_vm = new Vue({
-    mixins: [chat_room_name],
+    mixins: [
+      chat_room_name,
+      chess_clock,
+    ],
     el: "#chat_room_app",
     data() {
       return {
@@ -183,21 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         win_location_key: chat_room_app_params.chat_room.win_location_key,
         toryo_location_key: chat_room_app_params.chat_room.toryo_location_key,
         turn_max: chat_room_app_params.chat_room.turn_max,
-        clock_counts: chat_room_app_params.chat_room.clock_counts,
-
-        think_counter: localStorage.getItem(chat_room_app_params.chat_room.id) || 0, // リロードしたときに戻す
       }
-    },
-
-    created() {
-      setInterval(() => {
-        if (this.thinking_p) {
-          this.think_counter_set(this.think_counter + 1)
-          if (this.current_rest_counter === 0) {
-            this.game_end()
-          }
-        }
-      }, 1000)
     },
 
     watch: {
@@ -226,14 +215,14 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 投了
-      game_toryo() {
-        App.chat_room.game_toryo({win_location_key: this.current_location.flip.key, toryo_location_key: this.current_location.key})
+      toryo_game_end() {
+        App.chat_room.toryo_game_end({win_location_key: this.current_location.flip.key, toryo_location_key: this.current_location.key})
         App.chat_room.system_say("負けました")
       },
 
       // 時間切れ(生きている人みんなで投げる)
-      game_end() {
-        App.chat_room.game_end({win_location_key: this.current_location.flip.key})
+      timeout_game_end() {
+        App.chat_room.timeout_game_end({win_location_key: this.current_location.flip.key})
       },
 
       // 終了
@@ -308,43 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // chat_user は自分か？
       chat_user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
-      },
-
-      // 指定手番(location_key)の残り秒数
-      rest_counter(location_key) {
-        let v = this.limit_seconds - this.total_time(location_key)
-        if (this.current_location.key === location_key) {
-          v -= this.think_counter
-        }
-        if (v < 0) {
-          v = 0
-        }
-        return v
-      },
-
-      // 指定手番(location_key)のトータル使用時間
-      total_time(location_key) {
-        return _.reduce(this.clock_counts[location_key], (a, e) => a + e, 0)
-      },
-
-      // 指定手番(location_key)の残り時間の表示用
-      time_format(location_key) {
-        let location = Location.fetch(location_key)
-        if (this.flip) {
-          location = location.flip
-        }
-        let str = numeral(this.rest_counter(location.key)).format("00:00:00") // 0:00:00 になってしまう
-        str = str.replace(/^0:/, "")
-        return location.name + `<span class="digit_font">${str}</span>`
-      },
-
-      think_counter_reset() {
-        this.think_counter_set(0)
-      },
-
-      think_counter_set(v) {
-        this.think_counter = v
-        localStorage.setItem(chat_room_app_params.chat_room.id, v)
       },
 
       // FIXME: ActionCable の方で行う
@@ -438,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.my_location_key) {
           return "play_mode"
         } else {
-          return "view_mode"    // FIXME: view_mode にするとおかしくなる
+          return "view_mode"
         }
       },
 
@@ -452,25 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return PresetInfo.fetch(this.current_preset_key)
       },
 
-      // 持ち時間項目一覧
-      lifetime_infos() {
-        return chat_room_app_params.lifetime_infos
-      },
-
-      // 持ち時間項目一覧
-      current_lifetime_info() {
-        console.table(this.lifetime_infos)
-        return _.find(this.lifetime_infos, (e) => e.key === this.current_lifetime_key)
-      },
-
-      limit_seconds() {
-        return this.current_lifetime_info["limit_seconds"]
-      },
-
-      current_rest_counter() {
-        return this.rest_counter(this.current_location.key)
-      },
-
+      // 考え中？ (プレイ中？)
       thinking_p() {
         return !_.isNil(this.battle_started_at) && _.isNil(this.battle_ended_at)
       },
