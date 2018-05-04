@@ -12,6 +12,7 @@ Rails.start()
 
 import "./application_css.sass"
 import "./modulable_crud.coffee"
+import "./bulma.js"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
