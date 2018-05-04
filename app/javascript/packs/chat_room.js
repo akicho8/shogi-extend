@@ -153,8 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("timeout_game_end", data)
     },
 
-    toryo_game_end(data) {
-      this.perform("toryo_game_end", data)
+    give_up_game_end(data) {
+      this.perform("give_up_game_end", data)
     },
 
     location_flip_all(data) {
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         battle_started_at: chat_room_app_params.chat_room.battle_started_at,
         battle_ended_at: chat_room_app_params.chat_room.battle_ended_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
-        toryo_location_key: chat_room_app_params.chat_room.toryo_location_key,
+        give_up_location_key: chat_room_app_params.chat_room.give_up_location_key,
         turn_max: chat_room_app_params.chat_room.turn_max,
       }
     },
@@ -215,8 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 投了
-      toryo_game_end() {
-        App.chat_room.toryo_game_end({win_location_key: this.current_location.flip.key, toryo_location_key: this.current_location.key})
+      give_up_game_end() {
+        App.chat_room.give_up_game_end({win_location_key: this.current_location.flip.key, give_up_location_key: this.current_location.key})
         App.chat_room.system_say("負けました")
       },
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
       game_ended(data) {
         this.battle_ended_at = data["battle_ended_at"]
         this.win_location_key = data["win_location_key"]
-        this.toryo_location_key = data["toryo_location_key"]
+        this.give_up_location_key = data["give_up_location_key"]
         App.chat_room.system_say(`${this.current_location.flip.name}の勝ち！`)
 
         if (this.my_location_key) {

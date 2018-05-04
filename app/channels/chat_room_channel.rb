@@ -99,9 +99,9 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key)
   end
 
-  def toryo_game_end(data)
-    current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"], toryo_location_key: data["toryo_location_key"])
-    ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key, toryo_location_key: current_chat_room.toryo_location_key)
+  def give_up_game_end(data)
+    current_chat_room.update!(battle_ended_at: Time.current, win_location_key: data["win_location_key"], give_up_location_key: data["give_up_location_key"])
+    ActionCable.server.broadcast(room_key, battle_ended_at: current_chat_room.battle_ended_at, win_location_key: current_chat_room.win_location_key, give_up_location_key: current_chat_room.give_up_location_key)
   end
 
   # 先後をまとめて反転する
