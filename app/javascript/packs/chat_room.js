@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_vm.current_preset_key = data["preset_key"]
       }
 
-      if (data["motijikan_key"]) {
-        App.chat_vm.current_motijikan_key = data["motijikan_key"]
+      if (data["lifetime_key"]) {
+        App.chat_vm.current_lifetime_key = data["lifetime_key"]
       }
 
       if (data["human_kifu_text"]) {
@@ -134,8 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("preset_key_update", data)
     },
 
-    motijikan_key_update(data) {
-      this.perform("motijikan_key_update", data)
+    lifetime_key_update(data) {
+      this.perform("lifetime_key_update", data)
     },
 
     member_location_change(data) {
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         current_preset_key: chat_room_app_params.chat_room.preset_key,
-        current_motijikan_key: chat_room_app_params.chat_room.motijikan_key,
+        current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
         battle_started_at: chat_room_app_params.chat_room.battle_started_at,
         battle_ended_at: chat_room_app_params.chat_room.battle_ended_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
@@ -276,11 +276,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 持ち時間の変更
-      motijikan_key_update(v) {
-        if (this.current_motijikan_key !== v) {
-          this.current_motijikan_key = v
-          App.chat_room.motijikan_key_update({motijikan_key: this.current_motijikan_info.key})
-          App.chat_room.system_say(`持ち時間を${this.current_motijikan_info.name}に変更しました`)
+      lifetime_key_update(v) {
+        if (this.current_lifetime_key !== v) {
+          this.current_lifetime_key = v
+          App.chat_room.lifetime_key_update({lifetime_key: this.current_lifetime_info.key})
+          App.chat_room.system_say(`持ち時間を${this.current_lifetime_info.name}に変更しました`)
         }
       },
 
@@ -448,18 +448,18 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 持ち時間項目一覧
-      motijikan_infos() {
-        return chat_room_app_params.motijikan_infos
+      lifetime_infos() {
+        return chat_room_app_params.lifetime_infos
       },
 
       // 持ち時間項目一覧
-      current_motijikan_info() {
-        console.table(this.motijikan_infos)
-        return _.find(this.motijikan_infos, (e) => e.key === this.current_motijikan_key)
+      current_lifetime_info() {
+        console.table(this.lifetime_infos)
+        return _.find(this.lifetime_infos, (e) => e.key === this.current_lifetime_key)
       },
 
       limit_seconds() {
-        return this.current_motijikan_info["limit_seconds"]
+        return this.current_lifetime_info["limit_seconds"]
       },
 
       current_rest_counter() {

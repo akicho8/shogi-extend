@@ -35,12 +35,12 @@ javascript:
           | &nbsp;
           button.button.is-large.is-rounded @click="location_flip_all" 手番反転
           | &nbsp;
-          b-dropdown(:value="current_motijikan_key" @input="motijikan_key_update")
+          b-dropdown(:value="current_lifetime_key" @input="lifetime_key_update")
             button.button.is-large.is-rounded(slot="trigger")
               span
-                | {{current_motijikan_info.name}}
+                | {{current_lifetime_info.name}}
               b-icon(icon="menu-down")
-            b-dropdown-item(v-for="record in motijikan_infos" :value="record.key" :key="record.key")
+            b-dropdown-item(v-for="record in lifetime_infos" :value="record.key" :key="record.key")
               | {{record.name}}
 
   .columns

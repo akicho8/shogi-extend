@@ -34,9 +34,9 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
   end
 
-  def motijikan_key_update(data)
-    motijikan_info = MotijikanInfo.fetch(data["motijikan_key"])
-    current_chat_room.update!(motijikan_key: motijikan_info.key)
+  def lifetime_key_update(data)
+    lifetime_info = LifetimeInfo.fetch(data["lifetime_key"])
+    current_chat_room.update!(lifetime_key: lifetime_info.key)
 
     ActionCable.server.broadcast(room_key, data)
   end

@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "room_owner_id", null: false
     t.string "preset_key", null: false
-    t.string "motijikan_key", null: false
+    t.string "lifetime_key", null: false
     t.string "name", null: false
     t.text "kifu_body_sfen", null: false
     t.text "clock_counts", null: false
