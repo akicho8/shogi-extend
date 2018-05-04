@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     game_end(data) {
       this.perform("game_end", data)
     },
-    
+
     game_toryo(data) {
       this.perform("game_toryo", data)
     },
@@ -333,7 +333,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.flip) {
           location = location.flip
         }
-        return location.name + numeral(this.rest_counter(location.key)).format("0:00")
+        let str = numeral(this.rest_counter(location.key)).format("00:00:00") // 0:00:00 になってしまう
+        str = str.replace(/^0:/, "")
+        return location.name + `<span class="digit_font">${str}</span>`
       },
 
       think_counter_reset() {
