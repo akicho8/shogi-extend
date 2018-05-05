@@ -6,6 +6,7 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
+    # js 側では無理でも ruby 側だと接続切れの処理が書ける
     room_out({})
   end
 
@@ -57,7 +58,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     chat_membership.location_key = location_key
     chat_membership.save!
 
-    online_members_update
+    room_members_update
   end
 
   def room_name_changed(data)
@@ -101,30 +102,25 @@ class ChatRoomChannel < ApplicationCable::Channel
       end
     end
 
-    online_members_update
+    room_members_update
   end
 
   def room_out(data)
-    chat_say("chat_message_body" => "退室しました")
+    chat_say("chat_message_body" => '<span class="has-text-info">退室しました</span>')
 
     current_chat_user.update!(current_chat_room_id: nil)
 
     if current_chat_membership
+      # 対局者
+      # 切断したときにの処理がここで書ける
+      # TODO: 対局中なら、残っている方がポーリングを開始して、10秒間以内に戻らなかったら勝ちとしてあげる
     else
+      # 観戦者
       current_chat_room.kansen_users.destroy(current_chat_user)
       # ActionCable.server.broadcast(room_key, kansen_users: current_chat_room.kansen_users)
     end
 
-    # # 必ずある
-    # if chat_membership = current_chat_room.chat_memberships.find_by(chat_user: current_chat_user)
-    #   # 観戦者の場合のみ退出扱いとする
-    #   unless chat_membership.location_key
-    #     chat_membership.destroy!
-    #   end
-    #   # current_chat_room.chat_users.destroy(current_chat_user)
-    # end
-
-    online_members_update
+    room_members_update
   end
 
   def game_start(data)
@@ -149,12 +145,12 @@ class ChatRoomChannel < ApplicationCable::Channel
   # 先後をまとめて反転する
   def location_flip_all(data)
     current_chat_room.chat_memberships.each(&:location_flip!)
-    online_members_update
+    room_members_update
   end
 
   private
 
-  def online_members_update
+  def room_members_update
     ActionCable.server.broadcast(room_key, room_members: current_chat_room.js_room_members)
   end
 
