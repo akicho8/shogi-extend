@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "location_key", comment: "▲△"
     t.integer "position", comment: "入室順序"
     t.datetime "standby_at", comment: "準備完了日時"
+    t.datetime "alive_at", comment: "生きてる開始日時(切断するとnull)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"

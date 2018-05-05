@@ -106,7 +106,8 @@ javascript:
               template v-if="chat_user_self_p(props.row.chat_user)"
                 = " *"
             b-table-column(field="chat_user.online_at" label="状態" sortable)
-              template v-if="props.row.chat_user.online_at"
+              / template v-if="props.row.chat_user.online_at"
+              template v-if="props.row.alive_at"
                 b-icon icon="access-point" class="has-text-success"
               template v-else=""
                 b-icon icon="access-point" class="has-text-grey-lighter"

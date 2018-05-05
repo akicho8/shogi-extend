@@ -46,6 +46,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.string :location_key, null: true, index: true, comment: "▲△"
       t.integer :position, index: true, comment: "入室順序"
       t.datetime :standby_at, comment: "準備完了日時"
+      t.datetime :alive_at, comment: "生きてる開始日時(切断するとnull)"
       t.timestamps null: false
     end
     create_table :kansen_memberships, force: true do |t|

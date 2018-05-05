@@ -80,6 +80,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
     if current_chat_membership
       # 対局者
+      current_chat_membership.update!(alive_at: Time.current)
     else
       # 観戦者
       unless current_chat_room.kansen_users.include?(current_chat_user)
@@ -114,6 +115,7 @@ class ChatRoomChannel < ApplicationCable::Channel
       # 対局者
       # 切断したときにの処理がここで書ける
       # TODO: 対局中なら、残っている方がポーリングを開始して、10秒間以内に戻らなかったら勝ちとしてあげる
+      current_chat_membership.update!(alive_at: nil)
     else
       # 観戦者
       current_chat_room.kansen_users.destroy(current_chat_user)
