@@ -18,7 +18,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
     create_table :chat_users, force: true do |t|
       t.string :name, null: false
       t.belongs_to :current_chat_room, null: true
-      t.datetime :appearing_at
+      t.datetime :online_at
       t.datetime :matching_at
       t.string :lifetime_key
       t.string :preset_key

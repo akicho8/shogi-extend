@@ -30,11 +30,11 @@ class ChatUser < ApplicationRecord
   end
 
   def appear
-    update!(appearing_at: Time.current)
+    update!(online_at: Time.current)
   end
 
   def disappear
-    update!(appearing_at: nil)
+    update!(online_at: nil)
   end
 
   def js_attributes
@@ -42,12 +42,12 @@ class ChatUser < ApplicationRecord
   end
 
   after_commit do
-    online_users = self.class.where.not(appearing_at: nil)
+    online_users = self.class.where.not(online_at: nil)
     online_users = online_users.collect do |e|
       e.attributes.merge(current_chat_room: e.current_chat_room&.js_attributes)
     end
 
     ActionCable.server.broadcast("lobby_channel", online_users: online_users)
-    ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.where.not(appearing_at: nil).count})
+    ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.where.not(online_at: nil).count})
   end
 end

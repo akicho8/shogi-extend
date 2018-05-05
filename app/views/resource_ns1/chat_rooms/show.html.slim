@@ -105,8 +105,8 @@ javascript:
               messenger :message_to="props.row.chat_user"
               template v-if="chat_user_self_p(props.row.chat_user)"
                 = " *"
-            b-table-column(field="chat_user.appearing_at" label="状態" sortable)
-              template v-if="props.row.chat_user.appearing_at"
+            b-table-column(field="chat_user.online_at" label="状態" sortable)
+              template v-if="props.row.chat_user.online_at"
                 b-icon icon="access-point" class="has-text-success"
               template v-else=""
                 b-icon icon="access-point" class="has-text-grey-lighter"

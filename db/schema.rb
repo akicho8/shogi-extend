@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
   create_table "chat_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "name", null: false
     t.bigint "current_chat_room_id"
-    t.datetime "appearing_at"
+    t.datetime "online_at"
     t.datetime "matching_at"
     t.string "lifetime_key"
     t.string "preset_key"
