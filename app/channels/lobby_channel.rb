@@ -3,28 +3,10 @@ class LobbyChannel < ApplicationCable::Channel
   def subscribed
     stream_from "lobby_channel" # ブロードキャストするにはこれが必要
     stream_for current_chat_user
-
-    # チャットルームから退出した判定が難しいためロビーに来たことで退出したことにしている
-    current_chat_user.update!(current_chat_room_id: nil)
-    current_chat_user.kansen_rooms.destroy_all
   end
 
   def unsubscribed
-
-    # logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
-    # current_chat_user.disappear
   end
-
-  # def appear(data)
-  #   logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data])
-  #   # current_chat_user.appear on: data['appearing_at']
-  #   current_chat_user.update!(appearing_at: Time.current)
-  # end
-  #
-  # def away
-  #   logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
-  #   # current_chat_user.away
-  # end
 
   def matching_start(data)
     if true
