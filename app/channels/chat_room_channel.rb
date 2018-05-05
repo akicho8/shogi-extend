@@ -66,15 +66,15 @@ class ChatRoomChannel < ApplicationCable::Channel
     current_chat_user.update!(current_chat_room: current_chat_room)
 
     # 部屋のメンバーとして登録(マッチング済みの場合はもう登録されている)
-    unless current_chat_room.chat_users.include?(current_chat_user)
-      current_chat_room.chat_users << current_chat_user
-    end
+    # unless current_chat_room.chat_users.include?(current_chat_user)
+    #   current_chat_room.chat_users << current_chat_user
+    # end
 
     unless current_chat_room.battle_end_at
       # 中間情報
       if current_chat_membership
         # 自分が対局者の場合
-        if current_chat_membership.location_key
+        if current_chat_membership.location_key # 絶対ある
           unless current_chat_membership.standby_at
             current_chat_membership.update!(standby_at: Time.current)
             if current_chat_room.chat_memberships.standby_enable.count >= Warabi::Location.count
@@ -92,14 +92,14 @@ class ChatRoomChannel < ApplicationCable::Channel
   def room_out(data)
     current_chat_user.update!(current_chat_room_id: nil)
 
-    # 必ずある
-    if chat_membership = current_chat_room.chat_memberships.find_by(chat_user: current_chat_user)
-      # 観戦者の場合のみ退出扱いとする
-      unless chat_membership.location_key
-        chat_membership.destroy!
-      end
-      # current_chat_room.chat_users.destroy(current_chat_user)
-    end
+    # # 必ずある
+    # if chat_membership = current_chat_room.chat_memberships.find_by(chat_user: current_chat_user)
+    #   # 観戦者の場合のみ退出扱いとする
+    #   unless chat_membership.location_key
+    #     chat_membership.destroy!
+    #   end
+    #   # current_chat_room.chat_users.destroy(current_chat_user)
+    # end
 
     online_members_update
   end
