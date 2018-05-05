@@ -41,9 +41,6 @@ Vue.use(Vuex)
 import Messanger from "../messenger.vue"
 Vue.component("messenger", Messanger)
 
-import Messanger2 from "../messenger2.vue"
-Vue.component("messenger2", Messanger2)
-
 //////////////////////////////////////////////////////////////////////////////// lodash
 
 import _ from "lodash"
