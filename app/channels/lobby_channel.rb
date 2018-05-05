@@ -45,8 +45,7 @@ class LobbyChannel < ApplicationCable::Channel
       users = users.sort_by { |e| (e.preset_key == "平手") ? 0 : 1 }
     end
 
-    chat_room = opponent.owner_rooms.create!
-    chat_room.chat_users = users
+    chat_room = opponent.owner_rooms.create!(chat_users: users)
     chat_room.update!(auto_matched_at: Time.current)
     # chat_room.update!(battle_begin_at: Time.current) # バトル開始
 

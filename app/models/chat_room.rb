@@ -46,12 +46,16 @@ class ChatRoom < ApplicationRecord
   end
 
   def name_default
-    names = []
-    if room_owner
-      names << "#{room_owner.name}の"
+    if chat_users.present?
+      chat_users.collect(&:name).join(" vs ")
+    else
+      names = []
+      if room_owner
+        names << "#{room_owner.name}の"
+      end
+      names << "対戦部屋 ##{ChatRoom.count.next}"
+      names.join
     end
-    names << "対戦部屋 ##{ChatRoom.count.next}"
-    names.join
   end
 
   def human_kifu_text_get
