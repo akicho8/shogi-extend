@@ -48,6 +48,11 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.datetime :standby_at, comment: "準備完了日時"
       t.timestamps null: false
     end
+    create_table :kansen_memberships, force: true do |t|
+      t.belongs_to :chat_room, null: false
+      t.belongs_to :chat_user, null: false
+      t.timestamps null: false
+    end
     create_table :chat_articles, force: true do |t|
       t.belongs_to :chat_room, null: false, comment: "部屋"
       t.belongs_to :chat_user, null: false, comment: "人"

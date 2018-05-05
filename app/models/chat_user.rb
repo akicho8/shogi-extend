@@ -20,6 +20,9 @@ class ChatUser < ApplicationRecord
   has_many :owner_rooms, class_name: "ChatRoom", foreign_key: :room_owner_id, dependent: :destroy, inverse_of: :room_owner # 自分が作った部屋
   belongs_to :current_chat_room, class_name: "ChatRoom", optional: true, counter_cache: :current_chat_users_count # 今入っている部屋
 
+  has_many :kansen_memberships, dependent: :destroy                        # 自分が観戦している部屋たち(中間情報)
+  has_many :kansen_rooms, through: :kansen_memberships, source: :chat_room # 自分が観戦している部屋たち
+
   before_validation on: :create do
     self.name ||= "野良#{ChatUser.count.next}号"
     self.preset_key ||= "平手"
@@ -32,6 +35,10 @@ class ChatUser < ApplicationRecord
 
   def disappear
     update!(appearing_at: nil)
+  end
+
+  def js_attributes
+    JSON.load(to_json)
   end
 
   after_commit do

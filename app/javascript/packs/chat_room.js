@@ -29,15 +29,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     disconnected() {
       console.log("ChatRoomChannel.disconnected")
-      this.perform("room_out")
-      this.system_say("退室しました")
+      // 【注意】接続が切れている状態なのでここから perform で ruby 側を呼び出すことはできない。が、ruby 側の unsubscribed は自動的に呼ばれるのでそこで退室時の処理を書ける
+      // this.perform("room_out")
+      // this.system_say("退室しました")
     },
 
     received(data) {
+      // 部屋名の共有
+      if (data["chat_room"]) {
+        // alert(data["chat_room"])
+      }
+      
+      
+      
       // 結局使ってない
       if (!_.isNil(data["without_id"]) && data["without_id"] === js_global_params.current_chat_user.id) {
         console.log("skip")
         return
+      }
+
+      if (data["kansen_users"]) {
+        App.chat_vm.kansen_users = data["kansen_users"]
       }
 
       // ↓この方法にすればシンプル
@@ -149,6 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
     location_flip_all(data) {
       this.perform("location_flip_all", data)
     },
+    
+    kansen_users_update_by_polling(data) {
+      this.perform("kansen_users_update_by_polling", data)
+    },
   })
 
   App.chat_vm = new Vue({
@@ -162,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         message: "",                          // 発言
         chat_articles: [],                    // 発言一覧
         human_kifu_text: "(human_kifu_text)", // 棋譜
+
         // turn_max: 0,
 
         // 入室したときに局面を反映する(これはビューの方で行なってもよい)
@@ -174,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         battle_end_at: chat_room_app_params.chat_room.battle_end_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
         give_up_location_key: chat_room_app_params.chat_room.give_up_location_key,
+        kansen_users: chat_room_app_params.chat_room.kansen_users,
         turn_max: chat_room_app_params.chat_room.turn_max,
       }
     },
@@ -190,6 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     created() {
+      // setInterval(() => {
+      //   App.chat_room.kansen_users_update_by_polling()
+      // }, 1000 * 5)
     },
 
     methods: {

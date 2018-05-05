@@ -99,7 +99,7 @@ javascript:
               | 送信
       .box
         .title.is-4= "参加者"
-        b-table(:data="room_members" :paginated="true" :per-page="10")
+        b-table(:data="room_members" :paginated="false" :per-page="10")
           template slot-scope="props"
             b-table-column(field="chat_user.name" label="名前" sortable)
               messenger :message_to="props.row.chat_user"
@@ -113,6 +113,14 @@ javascript:
             b-table-column label="手番"
               b-select(:value="props.row.location_key" @input="member_location_change(props.row.id, $event)")
                 option(v-for="e in location_infos" :value="e.key" :key="e.key") {{e.name}}
+      .box
+        .title.is-4= "観戦者"
+        b-table(:data="kansen_users" :paginated="false" :per-page="10")
+          template slot-scope="props"
+            b-table-column(field="name" label="名前" sortable)
+              messenger :message_to="props.row"
+              template v-if="chat_user_self_p(props.row)"
+                = " *"
 
   p
     = link_to("ロビーに戻る", [:resource_ns1, :chat_rooms], :class => "button")

@@ -3,7 +3,10 @@ class LobbyChannel < ApplicationCable::Channel
   def subscribed
     stream_from "lobby_channel" # ブロードキャストするにはこれが必要
     stream_for current_chat_user
+
+    # チャットルームから退出した判定が難しいためロビーに来たことで退出したことにしている
     current_chat_user.update!(current_chat_room_id: nil)
+    current_chat_user.kansen_rooms.destroy_all
   end
 
   def unsubscribed

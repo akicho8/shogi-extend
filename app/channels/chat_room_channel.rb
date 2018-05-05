@@ -2,9 +2,11 @@
 class ChatRoomChannel < ApplicationCable::Channel
   def subscribed
     stream_from room_key
+    stream_for current_chat_user
   end
 
   def unsubscribed
+    room_out({})
   end
 
   # /Users/ikeda/src/shogi_web/app/javascript/packs/chat_room.js の App.chat_room.send({kifu_body_sfen: response.data.sfen}) で呼ばれる
@@ -14,6 +16,11 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   ################################################################################
+
+  # # 定期的に観戦者を更新する
+  # def kansen_users_update_by_polling(data)
+  #   ChatRoomChannel.broadcast_to(current_chat_user, kansen_users: current_chat_room.kansen_users)
+  # end
 
   # 発言
   def chat_say(data)
@@ -70,6 +77,15 @@ class ChatRoomChannel < ApplicationCable::Channel
     #   current_chat_room.chat_users << current_chat_user
     # end
 
+    if current_chat_membership
+      # 対局者
+    else
+      # 観戦者
+      unless current_chat_room.kansen_users.include?(current_chat_user)
+        current_chat_room.kansen_users << current_chat_user
+      end
+    end
+
     unless current_chat_room.battle_end_at
       # 中間情報
       if current_chat_membership
@@ -88,9 +104,16 @@ class ChatRoomChannel < ApplicationCable::Channel
     online_members_update
   end
 
-  # FIXME: これ呼ばれているか確認
   def room_out(data)
+    chat_say("chat_message_body" => "退室しました")
+
     current_chat_user.update!(current_chat_room_id: nil)
+
+    if current_chat_membership
+    else
+      current_chat_room.kansen_users.destroy(current_chat_user)
+      # ActionCable.server.broadcast(room_key, kansen_users: current_chat_room.kansen_users)
+    end
 
     # # 必ずある
     # if chat_membership = current_chat_room.chat_memberships.find_by(chat_user: current_chat_user)

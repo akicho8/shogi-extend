@@ -20,9 +20,12 @@ class ChatRoom < ApplicationRecord
   has_many :current_chat_users, class_name: "ChatUser", foreign_key: :current_chat_room_id, dependent: :nullify
   belongs_to :room_owner, class_name: "ChatUser"
 
+  has_many :kansen_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
+  has_many :kansen_users, through: :kansen_memberships, source: :chat_user # 観戦中の人たち
+
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
-  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users], methods: [:show_path]} }
+  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users, :kansen_users], methods: [:show_path]} }
 
   serialize :clock_counts
 
@@ -64,7 +67,7 @@ class ChatRoom < ApplicationRecord
   after_commit do
     # ActionCable.server.broadcast("lobby_channel", chat_room_created: js_attributes)
     ActionCable.server.broadcast("lobby_channel", chat_rooms: JSON.load(self.class.latest_list.to_json(to_json_params)))
-    ActionCable.server.broadcast("chat_room_channel_#{id}", chat_room: js_attributes)
+    ActionCable.server.broadcast("chat_room_channel_#{id}", chat_room: js_attributes) # FIXME: これは重いだけで使ってないのではずす
   end
 
   def js_attributes
