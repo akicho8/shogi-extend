@@ -50,15 +50,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     chat_membership.location_key = location_key
     chat_membership.save!
 
-    # online_members = data["online_members"]
-    # online_members.each do |e|
-    #   if chat_membership = current_chat_room.chat_memberships.find_by(chat_user_id: e["chat_user_id"])
-    #     chat_membership.location_key = e["location_key"]
-    #     chat_membership.save!
-    #   end
-    # end
-    ActionCable.server.broadcast(room_key, online_members: JSON.load(current_chat_room.chat_memberships.reload.to_json(include: [:chat_user])))
-    # ActionCable.server.broadcast(room_key, online_members: JSON.load(current_chat_room.chat_memberships.reload.to_json(include: [:chat_user])), without_id: current_chat_user.id)
+    online_members_update
   end
 
   def room_name_changed(data)
@@ -73,18 +65,41 @@ class ChatRoomChannel < ApplicationCable::Channel
     # どの部屋にいるか設定
     current_chat_user.update!(current_chat_room: current_chat_room)
 
-    # 部屋のメンバーとして登録
+    # 部屋のメンバーとして登録(マッチング済みの場合はもう登録されている)
     unless current_chat_room.chat_users.include?(current_chat_user)
       current_chat_room.chat_users << current_chat_user
+    end
+
+    unless current_chat_room.battle_end_at
+      # 中間情報
+      if current_chat_membership
+        # 自分が対局者の場合
+        if current_chat_membership.location_key
+          unless current_chat_membership.standby_at
+            current_chat_membership.update!(standby_at: Time.current)
+            if current_chat_room.chat_memberships.standby_enable.count >= Warabi::Location.count
+              game_start({})
+            end
+          end
+        end
+      end
     end
 
     online_members_update
   end
 
+  # FIXME: これ呼ばれているか確認
   def room_out(data)
     current_chat_user.update!(current_chat_room_id: nil)
 
-    current_chat_room.chat_users.destroy(current_chat_user)
+    # 必ずある
+    if chat_membership = current_chat_room.chat_memberships.find_by(chat_user: current_chat_user)
+      # 観戦者の場合のみ退出扱いとする
+      unless chat_membership.location_key
+        chat_membership.destroy!
+      end
+      # current_chat_room.chat_users.destroy(current_chat_user)
+    end
 
     online_members_update
   end
@@ -95,6 +110,10 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def timeout_game_end(data)
+    if current_chat_room.battle_end_at
+      # みんなで送信してくるので1回だけに絞るため
+      return
+    end
     current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"])
     ActionCable.server.broadcast(room_key, battle_end_at: current_chat_room.battle_end_at, win_location_key: current_chat_room.win_location_key)
   end
@@ -113,7 +132,7 @@ class ChatRoomChannel < ApplicationCable::Channel
   private
 
   def online_members_update
-    ActionCable.server.broadcast(room_key, online_members: JSON.load(current_chat_room.chat_memberships.reload.to_json(include: [:chat_user])))
+    ActionCable.server.broadcast(room_key, room_members: current_chat_room.js_room_members)
   end
 
   def room_key
@@ -122,5 +141,9 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def current_chat_room
     @current_chat_room ||= ChatRoom.find(params[:chat_room_id])
+  end
+
+  def current_chat_membership
+    @current_chat_membership ||= current_chat_room.chat_memberships.find_by(chat_user: current_chat_user)
   end
 end

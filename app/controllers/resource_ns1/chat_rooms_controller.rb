@@ -12,14 +12,17 @@ module ResourceNs1
     end
 
     before_action do
+      @lobby_app_params = {
+        preset_infos: Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
+        lifetime_infos: LifetimeInfo.collect(&:attributes),
+      }
     end
 
     def show
       @chat_room_app_params = {
-        player_mode_moved_path: url_for([:resource_ns1, current_record, :kifu_valids, format: "json"]),
-        current_chat_user: current_chat_user,
         chat_room: current_record,
-        lifetime_infos: LifetimeInfo.collect(&:attributes),
+        room_members: current_record.js_room_members,
+        player_mode_moved_path: url_for([:resource_ns1, current_record, :kifu_valids, format: "json"]),
       }
     end
 

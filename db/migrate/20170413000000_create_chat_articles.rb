@@ -20,6 +20,8 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.belongs_to :current_chat_room, null: true
       t.datetime :appearing_at
       t.datetime :matching_at
+      t.string :lifetime_key
+      t.string :preset_key
       t.timestamps null: false
     end
     create_table :chat_rooms, force: true do |t|
@@ -31,6 +33,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.text :clock_counts, null: false
       t.integer :current_chat_users_count, default: 0
       t.integer :turn_max, null: false
+      t.datetime :auto_matched_at
       t.datetime :battle_begin_at
       t.datetime :battle_end_at
       t.string :win_location_key, null: true
@@ -42,6 +45,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.belongs_to :chat_user, null: false
       t.string :location_key, null: true, index: true, comment: "▲△"
       t.integer :position, index: true, comment: "入室順序"
+      t.datetime :standby_at, comment: "準備完了日時"
       t.timestamps null: false
     end
     create_table :chat_articles, force: true do |t|

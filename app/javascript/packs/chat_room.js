@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     connected: function() {
       // Called when the subscription is ready for use on the server
       console.log("ChatRoomChannel.connected")
-      // App.chat_vm.online_members = _.concat(App.chat_vm.online_members, js_global_params.current_chat_user.id)
+      // App.chat_vm.room_members = _.concat(App.chat_vm.room_members, js_global_params.current_chat_user.id)
 
       this.perform("room_in")
       this.chat_say(`<span class="has-text-primary">入室しました</span>`)
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("ChatRoomChannel.disconnected")
       // // Called when the subscription has been terminated by the server
       // console.log("disconnected")
-      // // App.chat_vm.online_members = _.without(App.chat_vm.online_members, js_global_params.current_chat_user.id)
+      // // App.chat_vm.room_members = _.without(App.chat_vm.room_members, js_global_params.current_chat_user.id)
       this.perform("room_out")
       this.chat_say(`<span class="has-text-primary">退出しました</span>`) // 呼ばれない？
     },
@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
       //   App.chat_vm.chat_articles.push(data["last_hand"])
       // }
 
-      if (data["online_members"]) {
-        App.chat_vm.online_members = data["online_members"]
+      if (data["room_members"]) {
+        App.chat_vm.room_members = data["room_members"]
       }
 
       // 発言の反映
@@ -172,12 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         message: "",                          // 発言
         chat_articles: [],                    // 発言一覧
-        online_members: [],                   // 参加者
         human_kifu_text: "(human_kifu_text)", // 棋譜
         // turn_max: 0,
 
         // 入室したときに局面を反映する(これはビューの方で行なってもよい)
         // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
+        room_members: chat_room_app_params.room_members,
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         current_preset_key: chat_room_app_params.chat_room.preset_key,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
@@ -200,7 +200,13 @@ document.addEventListener('DOMContentLoaded', () => {
       // 間違っても watch は使うな
     },
 
+    created() {
+    },
+
     methods: {
+      room_in() {
+      },
+
       // バトル開始！(1人がトリガー)
       game_start() {
         App.chat_room.system_say("バトル開始！")
@@ -220,9 +226,11 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_room.system_say("負けました")
       },
 
-      // 時間切れ(生きている人みんなで投げる)
+      // 時間切れ(生き残っている全員で送信)
       timeout_game_end() {
-        App.chat_room.timeout_game_end({win_location_key: this.current_location.flip.key})
+        if (this.current_membership) {
+          App.chat_room.timeout_game_end({win_location_key: this.current_location.flip.key})
+        }
       },
 
       // 終了
@@ -366,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 自分の中間情報
       current_membership() {
-        return _.find(this.online_members, (e) => this.chat_user_self_p(e.chat_user))
+        return _.find(this.room_members, (e) => this.chat_user_self_p(e.chat_user))
       },
 
       // 自分の手番
@@ -395,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 手合割一覧
-      preset_info_values() {
+      preset_infos() {
         return PresetInfo.values
       },
 

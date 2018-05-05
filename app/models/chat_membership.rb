@@ -5,19 +5,32 @@ class ChatMembership < ApplicationRecord
   scope :black, -> { where(location_key: "black") }
   scope :white, -> { where(location_key: "white") }
 
-  scope :active, -> { where.not(location_key: nil) }
+  scope :active, -> { where.not(location_key: nil) }       # 対局者
+  scope :standby_enable, -> { where.not(standby_at: nil) } # 準備ができている
 
   acts_as_list top_of_list: 0, scope: :chat_room
 
+  default_scope { order(:position) }
+
   before_validation on: :create do
+    # active = chat_room.chat_memberships.active
+    # if active.count < Warabi::Location.count
+    #   if chat_membership = active.first
+    #     location = chat_membership.location
+    #   else
+    #     location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
+    #   end
+    #   self.location_key ||= location.flip.key
+    # end
+
     active = chat_room.chat_memberships.active
     if active.count < Warabi::Location.count
-      if chat_membership = active.first
-        location = chat_membership.location
-      else
-        location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
-      end
-      self.location_key ||= location.flip.key
+      # if chat_membership = active.first
+      #   location = chat_membership.location
+      # else
+      #   location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
+      # end
+      self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
     end
   end
 

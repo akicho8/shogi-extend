@@ -5,7 +5,7 @@ export default {
   data: function() {
     return {
       clock_counts: chat_room_app_params.chat_room.clock_counts,
-      think_counter: localStorage.getItem(chat_room_app_params.chat_room.id) || 0, // リロードしたときに戻す
+      think_counter: parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3, // リロードしたときに戻す。ペナルティとして3秒進める
     }
   },
 
@@ -65,10 +65,10 @@ export default {
   computed: {
     // 持ち時間項目一覧
     lifetime_infos() {
-      return chat_room_app_params.lifetime_infos
+      return lobby_app_params.lifetime_infos
     },
 
-    // 持ち時間項目一覧
+    // 選択中の持ち時間項目
     current_lifetime_info() {
       return _.find(this.lifetime_infos, (e) => e.key === this.current_lifetime_key)
     },

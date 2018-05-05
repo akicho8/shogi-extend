@@ -1,7 +1,5 @@
-// import Vue from 'vue/dist/vue.esm'
-// import messenger from '../messenger.vue'
-
 import _ from "lodash"
+import { PresetInfo } from 'shogi-player/src/preset_info.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
@@ -36,6 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["online_users"]) {
         App.lobby_vm.online_users = data["online_users"]
       }
+      if (data["matching_wait"]) {
+        App.lobby_vm.matching_wait()
+      }
     },
 
     matching_start(data) {
@@ -44,29 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     matching_cancel(data) {
       this.perform("matching_cancel", data)
     },
-
-    // appear: function() {
-    //   // Calls `LobbyChannel#appear(data)` on the server
-    //   this.perform("appear", appearing_at: $("main").data("appearing-on"))
-    // },
-    // away: function() {
-    //   // Calls `LobbyChannel#away` on the server
-    //   this.perform("away")
-    // },
-
-    // buttonSelector = "[data-behavior~=appear_away]"
-    // install: function() {
-    //   $(document).on "turbolinks:load.lobby", =>
-    //     this.appear()
-    //   $(document).on "click.lobby", buttonSelector, =>
-    //     this.away()
-    //   false
-    // $(buttonSelector).show()
-
-    // uninstall: function() {
-    //   $(document).off(".lobby")
-    //   $(buttonSelector).hide()
-    // },
   })
 
   App.lobby_vm = new Vue({
@@ -81,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
           { field: 'name', label: '部屋', },
         ],
         matching_start_p: !_.isNil(js_global_params.current_chat_user.matching_at),
+        modal_p: false,
+        current_preset_key: "平手",
+        current_lifetime_key: "lifetime5_min",
       }
     },
     methods: {
@@ -90,17 +71,92 @@ document.addEventListener('DOMContentLoaded', () => {
       chat_user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
       },
-      matching_click() {
+
+      matching_setting_modal_open() {
         if (this.matching_start_p) {
           this.matching_start_p = false
           App.lobby.matching_cancel()
         } else {
-          this.matching_start_p = true
-          App.lobby.matching_start()
+          this.modal_p = true
         }
+        // this.modal_p = true
+        // this.$nextTick(() => this.$refs.message_input.focus())
+        // if (this.matching_start_p) {
+        //   this.matching_start_p = false
+        //   App.lobby.matching_cancel()
+        // } else {
+        //   this.matching_start_p = true
+        //   App.lobby.matching_start()
+        // }
       },
+
+      matching_setting_done() {
+        this.modal_p = false
+        App.lobby.matching_start({
+          preset_key: this.current_preset_key,
+          lifetime_key: this.current_lifetime_key,
+        })
+      },
+
+      matching_wait() {
+        this.matching_start_p = true
+      },
+
+      // // 手合割の変更
+      // preset_key_update(v) {
+      //   if (this.current_preset_key !== v) {
+      //     this.current_preset_key = v
+      //     App.chat_room.preset_key_update({preset_key: this.current_preset_info.name})
+      //     App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
+      //   }
+      // },
+
+      // modal_open() {
+      // },
+      // message_enter() {
+      //   if (this.message !== "") {
+      //     if (this.message_to) {
+      //       App.single_notification.message_send_to({from: js_global_params.current_chat_user, to: this.message_to, message: this.message})
+      //     } else {
+      //       App.system_notification.message_send_all({from: js_global_params.current_chat_user, message: this.message})
+      //     }
+      //     // Vue.prototype.$toast.open({message: "送信完了", position: "is-top", type: "is-info", duration: 1000})
+      //   }
+      //   this.message = ""
+      // },
+
     },
     computed: {
+      // // 持ち時間の変更
+      // lifetime_key_update(v) {
+      //   // if (this.current_lifetime_key !== v) {
+      //   //   this.current_lifetime_key = v
+      //   //   App.chat_room.lifetime_key_update({lifetime_key: this.current_lifetime_info.key})
+      //   //   App.chat_room.system_say(`持ち時間を${this.current_lifetime_info.name}に変更しました`)
+      //   // }
+      // },
+
+      // 持ち時間項目一覧
+      lifetime_infos() {
+        return lobby_app_params.lifetime_infos
+      },
+
+      // 選択中の持ち時間項目
+      current_lifetime_info() {
+        return _.find(this.lifetime_infos, (e) => e.key === this.current_lifetime_key)
+      },
+
+      // 手合割一覧
+      preset_infos() {
+        // return PresetInfo.values
+        return lobby_app_params.preset_infos
+      },
+
+      // 現在選択されている手合割情報
+      current_preset_info() {
+        return PresetInfo.fetch(this.current_preset_key)
+      },
+
       // latest_status_list() {
       //   return _.takeRight(this.status_list, 10)
       // },
@@ -116,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.matching_start_p) {
           return "マッチング中"
         } else {
-          return "自動マッチング開始"
+          return "ゲーム開始"
         }
       },
 

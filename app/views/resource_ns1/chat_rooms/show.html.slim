@@ -1,4 +1,5 @@
 javascript:
+  var lobby_app_params = #{@lobby_app_params.to_json.html_safe}
   var chat_room_app_params = #{@chat_room_app_params.to_json.html_safe}
 
 - content_for :head do
@@ -30,7 +31,7 @@ javascript:
               span
                 | {{current_preset_info.name}}
               b-icon(icon="menu-down")
-            b-dropdown-item(v-for="record in preset_info_values" :value="record.key" :key="record.key")
+            b-dropdown-item(v-for="record in preset_infos" :value="record.key" :key="record.key")
               | {{record.name}}
           | &nbsp;
           button.button.is-large.is-rounded @click="location_flip_all" 手番反転
@@ -47,10 +48,10 @@ javascript:
     .column
       .box
         - if Rails.env.development?
-          | {{think_counter}}
-          | {{clock_counts}}
-          | {{think_counter}}
-
+          | current_rest_counter:{{current_rest_counter}}<br>
+          | think_counter:{{think_counter}}<br>
+          | {{clock_counts}}<br>
+            
         div v-if="battle_begin_at"
           .has-text-centered.is-size-5
             template v-if="!battle_end_at && my_teban_p"
@@ -98,7 +99,7 @@ javascript:
               | 送信
       .box
         .title.is-4= "参加者"
-        b-table(:data="online_members" :paginated="true" :per-page="10")
+        b-table(:data="room_members" :paginated="true" :per-page="10")
           template slot-scope="props"
             b-table-column(field="chat_user.name" label="名前" sortable)
               messenger :message_to="props.row.chat_user"

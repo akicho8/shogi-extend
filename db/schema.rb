@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.bigint "chat_user_id", null: false
     t.string "location_key", comment: "▲△"
     t.integer "position", comment: "入室順序"
+    t.datetime "standby_at", comment: "準備完了日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.text "clock_counts", null: false
     t.integer "current_chat_users_count", default: 0
     t.integer "turn_max", null: false
+    t.datetime "auto_matched_at"
     t.datetime "battle_begin_at"
     t.datetime "battle_end_at"
     t.string "win_location_key"
@@ -58,6 +60,8 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.bigint "current_chat_room_id"
     t.datetime "appearing_at"
     t.datetime "matching_at"
+    t.string "lifetime_key"
+    t.string "preset_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_chat_room_id"], name: "index_chat_users_on_current_chat_room_id"

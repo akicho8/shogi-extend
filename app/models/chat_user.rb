@@ -22,6 +22,8 @@ class ChatUser < ApplicationRecord
 
   before_validation on: :create do
     self.name ||= "野良#{ChatUser.count.next}号"
+    self.preset_key ||= "平手"
+    self.lifetime_key ||= "lifetime5_min"
   end
 
   def appear

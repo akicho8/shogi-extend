@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
       }
 
+      // マッチングが成立した
       if (data["matching_ok"]) {
         const chat_room = data["chat_room"]
         location.href = chat_room["show_path"]
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //       kifu_body_sfen: "position startpos",  // 棋譜(shogi-player用)
   //       message: "",                          // 発言
   //       chat_articles: [],                    // 発言一覧
-  //       online_members: [],                // 参加者
+  //       room_members: [],                // 参加者
   //       human_kifu_text: "(human_kifu_text)", // 棋譜
   //     }
   //   },

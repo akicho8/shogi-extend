@@ -71,6 +71,10 @@ class ChatRoom < ApplicationRecord
     JSON.load(to_json(to_json_params))
   end
 
+  def js_room_members
+    JSON.load(chat_memberships.to_json(include: [:chat_user]))
+  end
+
   private
 
   def show_path
