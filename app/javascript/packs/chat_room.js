@@ -21,25 +21,19 @@ document.addEventListener('DOMContentLoaded', () => {
     channel: "ChatRoomChannel",
     chat_room_id: chat_room_app_params.chat_room.id,
   }, {
-    connected: function() {
-      // Called when the subscription is ready for use on the server
+    connected() {
       console.log("ChatRoomChannel.connected")
-      // App.chat_vm.room_members = _.concat(App.chat_vm.room_members, js_global_params.current_chat_user.id)
-
       this.perform("room_in")
-      this.chat_say(`<span class="has-text-primary">入室しました</span>`)
-    },
-    disconnected: function() {
-      console.log("ChatRoomChannel.disconnected")
-      // // Called when the subscription has been terminated by the server
-      // console.log("disconnected")
-      // // App.chat_vm.room_members = _.without(App.chat_vm.room_members, js_global_params.current_chat_user.id)
-      this.perform("room_out")
-      this.chat_say(`<span class="has-text-primary">退出しました</span>`) // 呼ばれない？
+      this.system_say("入室しました")
     },
 
-    // Ruby 側の ActionCable.server.broadcast("chat_room_channel", chat_article: chat_article) に反応して呼ばれる
-    received: function(data) {
+    disconnected() {
+      console.log("ChatRoomChannel.disconnected")
+      this.perform("room_out")
+      this.system_say("退室しました")
+    },
+
+    received(data) {
       // 結局使ってない
       if (!_.isNil(data["without_id"]) && data["without_id"] === js_global_params.current_chat_user.id) {
         console.log("skip")
@@ -91,11 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["human_kifu_text"]) {
         App.chat_vm.human_kifu_text = data["human_kifu_text"]
       }
-
-      // // 指し手の反映
-      // if (data["last_hand"]) {
-      //   App.chat_vm.chat_articles.push(data["last_hand"])
-      // }
 
       if (data["room_members"]) {
         App.chat_vm.room_members = data["room_members"]
