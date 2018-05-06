@@ -14,7 +14,7 @@ javascript:
   b-modal(:active.sync="setting_modal_p")
     header.modal-card-head
       p.modal-card-title
-        | 対戦ルール設定
+        | ルール設定
     section.modal-card-body
       ////////////////////////////////////////////////////////////////////////////////
       p
@@ -46,10 +46,15 @@ javascript:
 
   .buttons
     template(v-if="!matching_at")
-      a.button.is-primary(@click.prevent="matching_start") ゲーム開始！
-      a.button(@click.prevent="matching_setting_open") 対戦ルール設定
+      .button.is-primary.is-large(@click.prevent="matching_start")
+        b-icon(icon="human-handsup")
+        span スタート
+
+      .button.is-primary.is-large.is-outlined(@click.prevent="matching_setting_open")
+        b-icon(icon="settings")
+        span ルール設定
     template(v-else)
-      a.button.is-danger(@click.prevent="matching_cancel") マッチング開始
+      a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
 
     - if Rails.env.development?
       = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button")
