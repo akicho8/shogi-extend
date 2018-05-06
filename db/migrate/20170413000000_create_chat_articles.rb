@@ -21,12 +21,14 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.datetime :online_at
       t.datetime :matching_at
       t.string :lifetime_key
-      t.string :preset_key
+      t.string :ps_preset_key
+      t.string :po_preset_key
       t.timestamps null: false
     end
     create_table :chat_rooms, force: true do |t|
       t.belongs_to :room_owner, null: false
-      t.string :preset_key, null: false
+      t.string :ps_preset_key, null: false
+      t.string :po_preset_key, null: false
       t.string :lifetime_key, null: false
       t.string :name, null: false
       t.text :kifu_body_sfen, null: false
@@ -41,6 +43,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
     create_table :chat_memberships, force: true do |t|
+      t.string :preset_key, null: false
       t.belongs_to :chat_room, null: false
       t.belongs_to :chat_user, null: false
       t.string :location_key, null: true, index: true, comment: "▲△"

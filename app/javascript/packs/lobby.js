@@ -59,11 +59,41 @@ document.addEventListener('DOMContentLoaded', () => {
           { field: 'name', label: '部屋', },
         ],
         matching_start_p: !_.isNil(js_global_params.current_chat_user.matching_at),
-        modal_p: false,
-        current_preset_key: "平手",
+        setting_modal_p: false,
         current_lifetime_key: "lifetime5_min",
+
+        ps_preset_key: js_global_params.current_chat_user["ps_preset_key"],
+        po_preset_key: js_global_params.current_chat_user["po_preset_key"],
+        current_hira_or_koma: null,
       }
     },
+
+    created() {
+      this.current_hira_or_koma = this.hira_or_koma
+    },
+
+    watch: {
+      current_hira_or_koma(v) {
+        if (v === "hirate") {
+          this.ps_preset_key = "平手"
+          this.po_preset_key = "平手"
+        }
+      },
+      ps_preset_key(v) {
+        if (v !== "平手") {
+          this.po_preset_key = "平手"
+        }
+      },
+      po_preset_key(v) {
+        if (v !== "平手") {
+          this.ps_preset_key = "平手"
+        }
+      },
+    },
+    current_preset_info2() {
+      return PresetInfo.fetch(this.po_preset_key)
+    },
+
     methods: {
       // puts(v) {
       //   this.status_list.push(v)
@@ -72,14 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return chat_user.id === js_global_params.current_chat_user.id
       },
 
-      matching_setting_modal_open() {
+      matching_setting_open() {
         if (this.matching_start_p) {
           this.matching_start_p = false
           App.lobby.matching_cancel()
         } else {
-          this.modal_p = true
+          this.setting_modal_p = true
         }
-        // this.modal_p = true
+        // this.setting_modal_p = true
         // this.$nextTick(() => this.$refs.message_input.focus())
         // if (this.matching_start_p) {
         //   this.matching_start_p = false
@@ -90,10 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // }
       },
 
-      matching_setting_done() {
-        this.modal_p = false
+      matching_start() {
+        this.setting_modal_p = false
         App.lobby.matching_start({
-          preset_key: this.current_preset_key,
+          ps_preset_key: this.current_preset_info1.key,
+          po_preset_key: this.current_preset_info2.key,
           lifetime_key: this.current_lifetime_key,
         })
       },
@@ -104,10 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // // 手合割の変更
       // preset_key_update(v) {
-      //   if (this.current_preset_key !== v) {
-      //     this.current_preset_key = v
-      //     App.chat_room.preset_key_update({preset_key: this.current_preset_info.name})
-      //     App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
+      //   if (this.ps_preset_key !== v) {
+      //     this.ps_preset_key = v
+      //     App.chat_room.preset_key_update({ps_preset_key: this.current_preset_info1.name})
+      //     App.chat_room.system_say(`手合割を${this.current_preset_info1.name}に変更しました`)
       //   }
       // },
 
@@ -153,8 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 現在選択されている手合割情報
-      current_preset_info() {
-        return PresetInfo.fetch(this.current_preset_key)
+      current_preset_info1() {
+        return PresetInfo.fetch(this.ps_preset_key)
+      },
+      current_preset_info2() {
+        return PresetInfo.fetch(this.po_preset_key)
       },
 
       // latest_status_list() {
@@ -173,6 +207,21 @@ document.addEventListener('DOMContentLoaded', () => {
           return "マッチング中"
         } else {
           return "ゲーム開始"
+        }
+      },
+
+      hira_or_koma() {
+        if (this.ps_preset_key === "平手" && this.po_preset_key === "平手") {
+          return "hirate"
+        } else {
+          return "komaochi"
+        }
+      },
+
+      hirate_komaochi_infos() {
+        return {
+          hirate:   {name: "平手",   },
+          komaochi: {name: "駒落ち", },
         }
       },
 

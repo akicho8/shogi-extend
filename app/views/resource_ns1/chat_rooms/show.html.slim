@@ -12,8 +12,6 @@ javascript:
     App.chat_vm.room_name = #{current_record.name.to_json.html_safe}
   })
 
-/ render partial: "chat_article", as: :chat_article, collection: current_record.chat_articles.order(:created_at).last(10)
-
 #chat_room_app v-cloak="true"
   template v-if="room_name_edit_p"
     input.input.is-large v-model.trim="room_name" @keyup.enter="room_name_edit_p = false" @blur="room_name_edit_p = false" ref="room_name_input"
@@ -25,14 +23,14 @@ javascript:
       .column
         .box
           button.button.is-primary.is-large.is-rounded @click="game_start" バトル開始！
-          | &nbsp;
-          b-dropdown(:value="current_preset_key" @input="preset_key_update")
-            button.button.is-large.is-rounded(slot="trigger")
-              span
-                | {{current_preset_info.name}}
-              b-icon(icon="menu-down")
-            b-dropdown-item(v-for="record in preset_infos" :value="record.key" :key="record.key")
-              | {{record.name}}
+          / | &nbsp;
+          / b-dropdown(:value="ps_preset_key" @input="preset_key_update")
+          /   button.button.is-large.is-rounded(slot="trigger")
+          /     span
+          /       | {{current_preset_info1.name}}
+          /     b-icon(icon="menu-down")
+          /   b-dropdown-item(v-for="record in preset_infos" :value="record.key" :key="record.key")
+          /     | {{record.name}}
           | &nbsp;
           button.button.is-large.is-rounded @click="location_flip_all" 手番反転
           | &nbsp;

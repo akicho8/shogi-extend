@@ -35,12 +35,12 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, data)
   end
 
-  def preset_key_update(data)
-    preset_info = Warabi::PresetInfo.fetch(data["preset_key"])
-    current_chat_room.update!(preset_key: preset_info.key)
-
-    ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
-  end
+  # def preset_key_update(data)
+  #   preset_info = Warabi::PresetInfo.fetch(data["ps_preset_key"])
+  #   current_chat_room.update!(ps_preset_key: preset_info.key)
+  #
+  #   ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
+  # end
 
   def lifetime_key_update(data)
     lifetime_info = LifetimeInfo.fetch(data["lifetime_key"])

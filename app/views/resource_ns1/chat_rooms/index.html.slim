@@ -11,51 +11,41 @@ javascript:
   })
 
 #lobby_app
-  b-modal(:active.sync="modal_p")
+  b-modal(:active.sync="setting_modal_p")
     header.modal-card-head
       p.modal-card-title
-        | マッチングルール
+        | ルール
     section.modal-card-body
       ////////////////////////////////////////////////////////////////////////////////
-      b-field label="持ち時間"
-        template v-if="true"
-          .block
-            template v-for="e in lifetime_infos"
-              b-radio v-model="current_lifetime_key" :native-value="e.key"
-                = "{{e.name}}"
-        template(v-else)
-          b-dropdown(v-modal="current_lifetime_key")
-            button.button.is-large.is-rounded(slot="trigger")
-              span
-                | {{current_lifetime_info.name}}
-              b-icon(icon="menu-down")
-      template v-if="false"
-        ////////////////////////////////////////////////////////////////////////////////
-        b-field label="手合割"
-          template v-if="true"
-            .block
-              template v-for="e in preset_infos"
-                b-radio v-model="current_preset_key" :native-value="e.key"
-                  = "{{e.name}}"
-          template(v-else)
-            / ▼カードモードのドロップダウンの問題・Issue＃936・jgthms / bulma
-            / https://github.com/jgthms/bulma/issues/936
-            b-dropdown(v-modeal="current_preset_key")
-              button.button(slot="trigger")
-                span
-                  | {{current_preset_info.name}}
-                b-icon(icon="menu-down")
-              b-dropdown-item(v-for="record in preset_infos" :value="record.key" :key="record.key")
-                | {{record.name}}
+      p
+        b 持ち時間
+      b-field
+        template(v-for="e in lifetime_infos")
+          b-radio-button v-model="current_lifetime_key" :native-value="e.key" {{e.name}}
+      ////////////////////////////////////////////////////////////////////////////////
+      b 手合割
+      b-field
+        template(v-for="(e, key) in hirate_komaochi_infos")
+          b-radio-button(v-model="current_hira_or_koma" :native-value="key") {{e.name}}
+
+      template(v-if="current_hira_or_koma === 'komaochi'")
+        b 自分
+        b-field
+          template(v-for="e in preset_infos")
+            b-radio-button(v-model="ps_preset_key" :native-value="e.key") {{e.name}}
+        b 相手
+        b-field
+          template(v-for="e in preset_infos")
+            b-radio-button(v-model="po_preset_key" :native-value="e.key") {{e.name}}
 
     footer.modal-card-foot
-      button.button.is-primary(@click="matching_setting_done") OK
+      button.button.is-primary(@click="matching_start") OK
 
   / .title.is-4 ネット対戦・ロビー
   / hr
 
   .buttons
-    a.button @click.prevent="matching_setting_modal_open" :class="matching_class" {{matching_label}}
+    a.button @click.prevent="matching_setting_open" :class="matching_class" {{matching_label}}
     = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button")
     / = link_to("新しい部屋を作って入る", [:resource_ns1, current_plural_key], class: "button is-primary", method: :post)
     = link_to("プロフィール編集", [:edit, :resource_ns1, current_chat_user], class: "button")

@@ -32,6 +32,11 @@ class ChatMembership < ApplicationRecord
       # end
       self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
     end
+
+    if chat_user
+      self.preset_key ||= chat_user.ps_preset_key
+    end
+    self.preset_key ||= "平手"
   end
 
   # before_validation do

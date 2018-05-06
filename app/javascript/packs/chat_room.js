@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // if (data["chat_room"]) {
       //   const v = data["chat_room"]
       //   // App.chat_vm.kifu_body_sfen = v.chat_room.kifu_body_sfen
-      //   App.chat_vm.current_preset_key = v.preset_key
+      //   App.chat_vm.ps_preset_key = v.ps_preset_key
       //   App.chat_vm.battle_begin_at = v.battle_begin_at
       // }
 
@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
       }
 
-      if (data["preset_key"]) {
-        App.chat_vm.current_preset_key = data["preset_key"]
+      if (data["ps_preset_key"]) {
+        App.chat_vm.ps_preset_key = data["ps_preset_key"]
       }
 
       if (data["lifetime_key"]) {
@@ -134,9 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("kifu_body_sfen_broadcast", data)
     },
 
-    preset_key_update(data) {
-      this.perform("preset_key_update", data)
-    },
+    // preset_key_update(data) {
+    //   this.perform("preset_key_update", data)
+    // },
 
     lifetime_key_update(data) {
       this.perform("lifetime_key_update", data)
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
         room_members: chat_room_app_params.room_members,
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
-        current_preset_key: chat_room_app_params.chat_room.preset_key,
+        ps_preset_key: chat_room_app_params.chat_room.ps_preset_key,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
         battle_begin_at: chat_room_app_params.chat_room.battle_begin_at,
         battle_end_at: chat_room_app_params.chat_room.battle_end_at,
@@ -276,14 +276,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
 
-      // 手合割の変更
-      preset_key_update(v) {
-        if (this.current_preset_key !== v) {
-          this.current_preset_key = v
-          App.chat_room.preset_key_update({preset_key: this.current_preset_info.name})
-          App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
-        }
-      },
+      // // 手合割の変更
+      // preset_key_update(v) {
+      //   if (this.ps_preset_key !== v) {
+      //     this.ps_preset_key = v
+      //     App.chat_room.preset_key_update({ps_preset_key: this.current_preset_info1.name})
+      //     App.chat_room.system_say(`手合割を${this.current_preset_info1.name}に変更しました`)
+      //   }
+      // },
 
       // 持ち時間の変更
       lifetime_key_update(v) {
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 駒落ち？
       komaochi_p() {
-        return this.current_preset_info.first_location_key === "white"
+        return this.current_preset_info1.first_location_key === "white"
       },
 
       // 自分の中間情報
@@ -418,8 +418,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 現在選択されている手合割情報
-      current_preset_info() {
-        return PresetInfo.fetch(this.current_preset_key)
+      current_preset_info1() {
+        return PresetInfo.fetch(this.ps_preset_key)
       },
 
       // 考え中？ (プレイ中？)
