@@ -17,6 +17,7 @@ class LobbyChannel < ApplicationCable::Channel
       })
 
     s = ChatUser.all
+    s = s.where.not(online_at: nil)                             # オンラインの人のみ
     s = s.where.not(id: current_chat_user.id)                   # 自分以外
     s = s.where.not(matching_at: nil)                           # マッチング希望者
     s = s.where(lifetime_key: current_chat_user.lifetime_key)   # 同じ持ち時間

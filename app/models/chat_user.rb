@@ -30,25 +30,42 @@ class ChatUser < ApplicationRecord
     self.lifetime_key ||= "lifetime5_min"
   end
 
-  def appear
-    update!(online_at: Time.current)
-  end
-
-  def disappear
-    update!(online_at: nil)
-  end
-
   def js_attributes
     JSON.load(to_json)
   end
 
   after_commit do
-    online_users = self.class.where.not(online_at: nil)
+    # FIXME: 重い
+    online_users = self.class.online_only
     online_users = online_users.collect do |e|
       e.attributes.merge(current_chat_room: e.current_chat_room&.js_attributes)
     end
-
     ActionCable.server.broadcast("lobby_channel", online_users: online_users)
-    ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.where.not(online_at: nil).count})
+  end
+
+  concerning :OnlineMethods do
+    included do
+      scope :online_only, -> { where.not(online_at: nil) }
+
+      after_commit do
+        if saved_changes[:online_at]
+          active_user_count_update
+        end
+      end
+
+      after_destroy_commit :active_user_count_update
+    end
+
+    def appear
+      update!(online_at: Time.current)
+    end
+
+    def disappear
+      update!(online_at: nil)
+    end
+
+    def active_user_count_update
+      ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.where.not(online_at: nil).count})
+    end
   end
 end
