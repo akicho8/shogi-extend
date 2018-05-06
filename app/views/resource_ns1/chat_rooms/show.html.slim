@@ -105,13 +105,16 @@ javascript:
                 = " *"
             b-table-column(field="chat_user.online_at" label="状態" sortable)
               / template v-if="props.row.chat_user.online_at"
-              template v-if="props.row.alive_at"
+              template v-if="props.row.fighting_now_at"
                 b-icon icon="access-point" class="has-text-success"
               template v-else=""
                 b-icon icon="access-point" class="has-text-grey-lighter"
-            b-table-column label="手番"
-              b-select(:value="props.row.location_key" @input="member_location_change(props.row.id, $event)")
-                option(v-for="e in location_infos" :value="e.key" :key="e.key") {{e.name}}
+            b-table-column(field="location_key" label="手番" sortable)
+              | {{location_key_name(props.row.location_key)}}
+            - if Rails.env.development?
+              b-table-column label="手番変更"
+                b-select(:value="props.row.location_key" @input="member_location_change(props.row.id, $event)")
+                  option(v-for="(e, key) in location_infos" :value="key" :key="key") {{e.name}}
       .box
         .title.is-4= "観戦者"
         b-table(:data="kansen_users" :paginated="false" :per-page="10")

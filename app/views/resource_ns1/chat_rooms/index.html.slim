@@ -14,7 +14,7 @@ javascript:
   b-modal(:active.sync="setting_modal_p")
     header.modal-card-head
       p.modal-card-title
-        | ルール
+        | 対戦ルール設定
     section.modal-card-body
       ////////////////////////////////////////////////////////////////////////////////
       p
@@ -39,16 +39,21 @@ javascript:
             b-radio-button(v-model="po_preset_key" :native-value="e.key") {{e.name}}
 
     footer.modal-card-foot
-      button.button.is-primary(@click="matching_start") OK
+      button.button.is-primary(@click="setting_save") 保存
 
   / .title.is-4 ネット対戦・ロビー
   / hr
 
   .buttons
-    a.button @click.prevent="matching_setting_open" :class="matching_class" {{matching_label}}
-    = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button")
+    template(v-if="!matching_at")
+      a.button.is-primary(@click.prevent="matching_start") ゲーム開始！
+      a.button(@click.prevent="matching_setting_open") 対戦ルール設定
+    template(v-else)
+      a.button.is-danger(@click.prevent="matching_cancel") マッチング開始
+
+    - if Rails.env.development?
+      = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button")
     / = link_to("新しい部屋を作って入る", [:resource_ns1, current_plural_key], class: "button is-primary", method: :post)
-    = link_to("プロフィール編集", [:edit, :resource_ns1, current_chat_user], class: "button")
 
   .columns
     .column

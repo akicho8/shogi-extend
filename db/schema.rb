@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "preset_key", null: false
     t.bigint "chat_room_id", null: false
     t.bigint "chat_user_id", null: false
-    t.string "location_key", comment: "▲△"
+    t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "入室順序"
     t.datetime "standby_at", comment: "準備完了日時"
-    t.datetime "alive_at", comment: "生きてる開始日時(切断するとnull)"
+    t.datetime "fighting_now_at", comment: "部屋に入った日時で抜けたり切断するとnull"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"
@@ -40,8 +40,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
 
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "room_owner_id", null: false
-    t.string "ps_preset_key", null: false
-    t.string "po_preset_key", null: false
+    t.string "preset_key", null: false
     t.string "lifetime_key", null: false
     t.string "name", null: false
     t.text "kifu_body_sfen", null: false
@@ -62,6 +61,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "name", null: false
     t.bigint "current_chat_room_id"
     t.datetime "online_at"
+    t.datetime "fighting_now_at", comment: "chat_memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
     t.datetime "matching_at"
     t.string "lifetime_key"
     t.string "ps_preset_key"

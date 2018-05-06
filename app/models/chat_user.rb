@@ -65,7 +65,25 @@ class ChatUser < ApplicationRecord
     end
 
     def active_user_count_update
-      ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.where.not(online_at: nil).count})
+      ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.online_only.count})
+    end
+  end
+
+  concerning :ActiveFighterMethods do
+    included do
+      scope :fighter_only, -> { where.not(fighting_now_at: nil) }
+
+      after_commit do
+        if saved_changes[:fighting_now_at]
+          fighter_count_update
+        end
+      end
+
+      after_destroy_commit :fighter_count_update
+    end
+
+    def fighter_count_update
+      ActionCable.server.broadcast("system_notification_channel", {fighter_count: self.class.fighter_only.count})
     end
   end
 end

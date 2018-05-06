@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["active_user_count"]) {
         App.header_vm.active_user_count = data["active_user_count"]
       }
+      if (data["fighter_count"]) {
+        App.header_vm.fighter_count = data["fighter_count"]
+      }
     },
 
     // 自由に定義してよいメソッド
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     data() {
       return {
         active_user_count: 0,
+        fighter_count: 0,
       }
     },
   })

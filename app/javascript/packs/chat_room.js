@@ -39,9 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["chat_room"]) {
         // alert(data["chat_room"])
       }
-      
-      
-      
+
       // 結局使ってない
       if (!_.isNil(data["without_id"]) && data["without_id"] === js_global_params.current_chat_user.id) {
         console.log("skip")
@@ -56,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // if (data["chat_room"]) {
       //   const v = data["chat_room"]
       //   // App.chat_vm.kifu_body_sfen = v.chat_room.kifu_body_sfen
-      //   App.chat_vm.ps_preset_key = v.ps_preset_key
+      //   App.chat_vm.preset_key = v.preset_key
       //   App.chat_vm.battle_begin_at = v.battle_begin_at
       // }
 
@@ -86,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
       }
 
-      if (data["ps_preset_key"]) {
-        App.chat_vm.ps_preset_key = data["ps_preset_key"]
+      if (data["preset_key"]) {
+        App.chat_vm.preset_key = data["preset_key"]
       }
 
       if (data["lifetime_key"]) {
@@ -161,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     location_flip_all(data) {
       this.perform("location_flip_all", data)
     },
-    
+
     kansen_users_update_by_polling(data) {
       this.perform("kansen_users_update_by_polling", data)
     },
@@ -185,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
         room_members: chat_room_app_params.room_members,
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
-        ps_preset_key: chat_room_app_params.chat_room.ps_preset_key,
+        preset_key: chat_room_app_params.chat_room.preset_key,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
         battle_begin_at: chat_room_app_params.chat_room.battle_begin_at,
         battle_end_at: chat_room_app_params.chat_room.battle_end_at,
@@ -278,10 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // // 手合割の変更
       // preset_key_update(v) {
-      //   if (this.ps_preset_key !== v) {
-      //     this.ps_preset_key = v
-      //     App.chat_room.preset_key_update({ps_preset_key: this.current_preset_info1.name})
-      //     App.chat_room.system_say(`手合割を${this.current_preset_info1.name}に変更しました`)
+      //   if (this.preset_key !== v) {
+      //     this.preset_key = v
+      //     App.chat_room.preset_key_update({preset_key: this.current_preset_info.name})
+      //     App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
       //   }
       // },
 
@@ -302,6 +300,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // 先後変更(個別)
       member_location_change(chat_membership_id, location_key) {
         App.chat_room.member_location_change({chat_membership_id: chat_membership_id, location_key: location_key})
+      },
+
+      location_key_name(v) {
+        return this.location_infos[v].name
       },
 
       // メッセージ送信
@@ -364,11 +366,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 手番選択用
       location_infos() {
-        return [
-          { key: "black",  name: "☗" + (this.komaochi_p ? "下手" : "先手"), },
-          { key: "white",  name: "☖" + (this.komaochi_p ? "上手" : "後手"), },
-          { key: null,     name: "観戦",   }, // null だと Bufy が意図を呼んで色を薄くしてくれる
-        ]
+        return {
+          "black": { name: "☗" + (this.komaochi_p ? "下手" : "先手"), },
+          "white": { name: "☖" + (this.komaochi_p ? "上手" : "後手"), },
+        }
       },
 
       // 現在の手番
@@ -379,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 駒落ち？
       komaochi_p() {
-        return this.current_preset_info1.first_location_key === "white"
+        return this.current_preset_info.first_location_key === "white"
       },
 
       // 自分の中間情報
@@ -418,8 +419,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 現在選択されている手合割情報
-      current_preset_info1() {
-        return PresetInfo.fetch(this.ps_preset_key)
+      current_preset_info() {
+        return PresetInfo.fetch(this.preset_key)
       },
 
       // 考え中？ (プレイ中？)

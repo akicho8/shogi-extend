@@ -19,6 +19,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.string :name, null: false
       t.belongs_to :current_chat_room, null: true
       t.datetime :online_at
+      t.datetime :fighting_now_at, comment: "chat_memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
       t.datetime :matching_at
       t.string :lifetime_key
       t.string :ps_preset_key
@@ -27,8 +28,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
     end
     create_table :chat_rooms, force: true do |t|
       t.belongs_to :room_owner, null: false
-      t.string :ps_preset_key, null: false
-      t.string :po_preset_key, null: false
+      t.string :preset_key, null: false
       t.string :lifetime_key, null: false
       t.string :name, null: false
       t.text :kifu_body_sfen, null: false
@@ -46,10 +46,10 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.string :preset_key, null: false
       t.belongs_to :chat_room, null: false
       t.belongs_to :chat_user, null: false
-      t.string :location_key, null: true, index: true, comment: "▲△"
+      t.string :location_key, null: false, index: true, comment: "▲△"
       t.integer :position, index: true, comment: "入室順序"
       t.datetime :standby_at, comment: "準備完了日時"
-      t.datetime :alive_at, comment: "生きてる開始日時(切断するとnull)"
+      t.datetime :fighting_now_at, comment: "部屋に入った日時で抜けたり切断するとnull"
       t.timestamps null: false
     end
     create_table :kansen_memberships, force: true do |t|

@@ -36,8 +36,8 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   # def preset_key_update(data)
-  #   preset_info = Warabi::PresetInfo.fetch(data["ps_preset_key"])
-  #   current_chat_room.update!(ps_preset_key: preset_info.key)
+  #   preset_info = Warabi::PresetInfo.fetch(data["preset_key"])
+  #   current_chat_room.update!(preset_key: preset_info.key)
   #
   #   ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
   # end
@@ -80,7 +80,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
     if current_chat_membership
       # 対局者
-      current_chat_membership.update!(alive_at: Time.current)
+      current_chat_membership.update!(fighting_now_at: Time.current)
     else
       # 観戦者
       unless current_chat_room.kansen_users.include?(current_chat_user)
@@ -115,7 +115,7 @@ class ChatRoomChannel < ApplicationCable::Channel
       # 対局者
       # 切断したときにの処理がここで書ける
       # TODO: 対局中なら、残っている方がポーリングを開始して、10秒間以内に戻らなかったら勝ちとしてあげる
-      current_chat_membership.update!(alive_at: nil)
+      current_chat_membership.update!(fighting_now_at: nil)
     else
       # 観戦者
       current_chat_room.kansen_users.destroy(current_chat_user)
@@ -153,7 +153,8 @@ class ChatRoomChannel < ApplicationCable::Channel
   private
 
   def room_members_update
-    ActionCable.server.broadcast(room_key, room_members: current_chat_room.js_room_members)
+    # model の中から行う
+    ActionCable.server.broadcast(room_key, room_members: current_chat_room.reload.js_room_members) # 部屋を抜けたときの状態が反映されるように reload が必要
   end
 
   def room_key

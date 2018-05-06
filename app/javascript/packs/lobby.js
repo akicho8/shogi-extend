@@ -35,10 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
         App.lobby_vm.online_users = data["online_users"]
       }
       if (data["matching_wait"]) {
-        App.lobby_vm.matching_wait()
+        App.lobby_vm.matching_wait(data["matching_wait"])
       }
     },
 
+    setting_save(data) {
+      this.perform("setting_save", data)
+    },
     matching_start(data) {
       this.perform("matching_start", data)
     },
@@ -58,7 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
         columns: [
           { field: 'name', label: '部屋', },
         ],
-        matching_start_p: !_.isNil(js_global_params.current_chat_user.matching_at),
+
+        matching_at: js_global_params.current_chat_user.matching_at, // マッチングをサーバー側で受理した日時
+        // matching_start_p: null,                                      // マッチングの状態(クライアント側)
+
         setting_modal_p: false,
         current_lifetime_key: "lifetime5_min",
 
@@ -70,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     created() {
       this.current_hira_or_koma = this.hira_or_koma
+      // this.matching_start_p = !!this.matching_at
     },
 
     watch: {
@@ -90,9 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
     },
-    current_preset_info2() {
-      return PresetInfo.fetch(this.po_preset_key)
-    },
 
     methods: {
       // puts(v) {
@@ -103,12 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       matching_setting_open() {
-        if (this.matching_start_p) {
-          this.matching_start_p = false
-          App.lobby.matching_cancel()
-        } else {
-          this.setting_modal_p = true
-        }
+        this.setting_modal_p = true
+
+        // if (this.matching_start_p) {
+        //   this.matching_start_p = false
+        //   // App.lobby.matching_cancel()
+        // } else {
+        //   this.setting_modal_p = true
+        // }
+
         // this.setting_modal_p = true
         // this.$nextTick(() => this.$refs.message_input.focus())
         // if (this.matching_start_p) {
@@ -120,17 +127,30 @@ document.addEventListener('DOMContentLoaded', () => {
         // }
       },
 
-      matching_start() {
+      setting_save() {
         this.setting_modal_p = false
-        App.lobby.matching_start({
+
+        App.lobby.setting_save({
           ps_preset_key: this.current_preset_info1.key,
           po_preset_key: this.current_preset_info2.key,
           lifetime_key: this.current_lifetime_key,
         })
       },
 
-      matching_wait() {
-        this.matching_start_p = true
+      matching_start() {
+        // this.matching_start_p = true
+        App.lobby.matching_start({})
+      },
+
+      matching_cancel() {
+        // this.matching_start_p = false
+        this.matching_at = null
+        App.lobby.matching_cancel()
+      },
+
+      matching_wait(data) {
+        this.matching_at = data["matching_at"]
+        // Vue.prototype.$toast.open({message: "マッチングを開始しました。しばらくお待ちください", position: "is-bottom", type: "is-success", duration: 1000 * 2})
       },
 
       // // 手合割の変更
@@ -194,21 +214,21 @@ document.addEventListener('DOMContentLoaded', () => {
       // latest_status_list() {
       //   return _.takeRight(this.status_list, 10)
       // },
-      matching_class() {
-        if (this.matching_start_p) {
-          return ["is-danger"]
-        } else {
-          return ["is-primary"]
-        }
-      },
+      // matching_class() {
+      //   if (this.matching_start_p) {
+      //     return ["is-danger"]
+      //   } else {
+      //     return ["is-primary"]
+      //   }
+      // },
 
-      matching_label() {
-        if (this.matching_start_p) {
-          return "マッチング中"
-        } else {
-          return "ゲーム開始"
-        }
-      },
+      // matching_label() {
+      //   if (this.matching_start_p) {
+      //     return "マッチング中"
+      //   } else {
+      //     return "ゲーム開始"
+      //   }
+      // },
 
       hira_or_koma() {
         if (this.ps_preset_key === "平手" && this.po_preset_key === "平手") {

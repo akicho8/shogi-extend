@@ -23,20 +23,28 @@ class ChatMembership < ApplicationRecord
     #   self.location_key ||= location.flip.key
     # end
 
-    active = chat_room.chat_memberships.active
-    if active.count < Warabi::Location.count
-      # if chat_membership = active.first
-      #   location = chat_membership.location
-      # else
-      #   location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
-      # end
-      self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
-    end
+    # create!(chat_users: [user1, user2]) とされた場合を考慮する
+    index = chat_room.chat_users.find_index(chat_user) || chat_room.chat_users.count
+    self.location_key ||= Warabi::Location.fetch(index).key
+
+    # if active.count < Warabi::Location.count
+    # if chat_membership = active.first
+    #   location = chat_membership.location
+    # else
+    #   location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
+    # end
+    # self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
 
     if chat_user
       self.preset_key ||= chat_user.ps_preset_key
     end
     self.preset_key ||= "平手"
+  end
+
+  after_save do
+    if saved_changes[:fighting_now_at]
+      chat_user.update!(fighting_now_at: fighting_now_at)
+    end
   end
 
   # before_validation do
