@@ -99,22 +99,18 @@ javascript:
         .title.is-4= "参加者"
         b-table(:data="room_members" :paginated="false" :per-page="10")
           template slot-scope="props"
-            b-table-column(field="chat_user.name" label="名前" sortable)
+            b-table-column(label="名前")
               messenger :message_to="props.row.chat_user"
               template v-if="chat_user_self_p(props.row.chat_user)"
                 = " *"
-            b-table-column(field="chat_user.online_at" label="状態" sortable)
+            b-table-column(label="状態")
               / template v-if="props.row.chat_user.online_at"
               template v-if="props.row.fighting_now_at"
                 b-icon icon="access-point" class="has-text-success"
               template v-else=""
                 b-icon icon="access-point" class="has-text-grey-lighter"
-            b-table-column(field="location_key" label="手番" sortable)
+            b-table-column(label="手番")
               | {{location_key_name(props.row.location_key)}}
-            - if Rails.env.development?
-              b-table-column label="手番変更"
-                b-select(:value="props.row.location_key" @input="member_location_change(props.row.id, $event)")
-                  option(v-for="(e, key) in location_infos" :value="key" :key="key") {{e.name}}
       .box
         .title.is-4= "観戦者"
         b-table(:data="kansen_users" :paginated="false" :per-page="10")

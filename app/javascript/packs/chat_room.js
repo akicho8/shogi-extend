@@ -140,10 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("lifetime_key_update", data)
     },
 
-    member_location_change(data) {
-      this.perform("member_location_change", data)
-    },
-
     game_start(data) {
       this.perform("game_start", data)
     },
@@ -295,11 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // 先後反転(全体)
       location_flip_all() {
         App.chat_room.location_flip_all()
-      },
-
-      // 先後変更(個別)
-      member_location_change(chat_membership_id, location_key) {
-        App.chat_room.member_location_change({chat_membership_id: chat_membership_id, location_key: location_key})
       },
 
       location_key_name(v) {

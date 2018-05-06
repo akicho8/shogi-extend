@@ -49,18 +49,6 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, data)
   end
 
-  def member_location_change(data)
-    # App.chat_room.member_location_change({chat_membership_id: chat_membership_id, location_key: location_key})
-    chat_membership_id = data["chat_membership_id"]
-    location_key = data["location_key"]
-
-    chat_membership = current_chat_room.chat_memberships.find(chat_membership_id)
-    chat_membership.location_key = location_key
-    chat_membership.save!
-
-    room_members_update
-  end
-
   def room_name_changed(data)
     current_chat_room.update!(name: data["room_name"])
     ActionCable.server.broadcast(room_key, data)
