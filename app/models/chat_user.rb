@@ -49,11 +49,11 @@ class ChatUser < ApplicationRecord
 
       after_commit do
         if saved_changes[:online_at]
-          active_user_count_update
+          online_only_count_update
         end
       end
 
-      after_destroy_commit :active_user_count_update
+      after_destroy_commit :online_only_count_update
     end
 
     def appear
@@ -64,8 +64,8 @@ class ChatUser < ApplicationRecord
       update!(online_at: nil)
     end
 
-    def active_user_count_update
-      ActionCable.server.broadcast("system_notification_channel", {active_user_count: self.class.online_only.count})
+    def online_only_count_update
+      ActionCable.server.broadcast("system_notification_channel", {online_only_count: self.class.online_only.count})
     end
   end
 
@@ -75,15 +75,15 @@ class ChatUser < ApplicationRecord
 
       after_commit do
         if saved_changes[:fighting_now_at]
-          fighter_count_update
+          fighter_only_count_update
         end
       end
 
-      after_destroy_commit :fighter_count_update
+      after_destroy_commit :fighter_only_count_update
     end
 
-    def fighter_count_update
-      ActionCable.server.broadcast("system_notification_channel", {fighter_count: self.class.fighter_only.count})
+    def fighter_only_count_update
+      ActionCable.server.broadcast("system_notification_channel", {fighter_only_count: self.class.fighter_only.count})
     end
   end
 end

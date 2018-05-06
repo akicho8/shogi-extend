@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         Vue.prototype.$toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
       }
 
-      if (data["active_user_count"]) {
-        App.header_vm.active_user_count = data["active_user_count"]
+      if (data["online_only_count"]) {
+        App.header_vm.online_only_count = data["online_only_count"]
       }
-      if (data["fighter_count"]) {
-        App.header_vm.fighter_count = data["fighter_count"]
+      if (data["fighter_only_count"]) {
+        App.header_vm.fighter_only_count = data["fighter_only_count"]
       }
     },
 
@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
     el: "#header_app",
     data() {
       return {
-        active_user_count: 0,
-        fighter_count: 0,
+        online_only_count: js_global_params.online_only_count,
+        fighter_only_count: js_global_params.fighter_only_count,
       }
     },
   })

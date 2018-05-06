@@ -32,7 +32,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activerecord-5.1.6/lib/active_record/relation/calculations.rb:216:in `perform_calculation'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activerecord-5.1.6/lib/active_record/relation/calculations.rb:125:in `calculate'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activerecord-5.1.6/lib/active_record/relation/calculations.rb:41:in `count'
-# ~> 	from /Users/ikeda/src/shogi_web/app/models/chat_user.rb:86:in `fighter_count_update'
+# ~> 	from /Users/ikeda/src/shogi_web/app/models/chat_user.rb:86:in `fighter_only_count_update'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.6/lib/active_support/callbacks.rb:413:in `block in make_lambda'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.6/lib/active_support/callbacks.rb:260:in `block in conditional'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.6/lib/active_support/callbacks.rb:511:in `block in invoke_after'

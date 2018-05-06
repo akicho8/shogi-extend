@@ -40,6 +40,8 @@ class ApplicationController < ActionController::Base
 
         @js_global_params = {
           current_chat_user: current_chat_user,
+          online_only_count: ChatUser.online_only.count,
+          fighter_only_count: ChatUser.fighter_only.count,
         }
       end
     end
