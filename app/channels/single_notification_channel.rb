@@ -6,8 +6,4 @@ class SingleNotificationChannel < ApplicationCable::Channel
   def message_send_to(data)
     ActionCable.server.broadcast("single_notification_#{data['to']['id']}", data)
   end
-
-  # def goto_chat_room(data)
-  #   ActionCable.server.broadcast("single_notification_#{data['to']['id']}", data)
-  # end
 end

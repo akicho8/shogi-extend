@@ -8,6 +8,11 @@ class LobbyChannel < ApplicationCable::Channel
   def unsubscribed
   end
 
+  def chat_say(data)
+    lobby_article = current_chat_user.lobby_articles.create!(message: data["message"])
+    ActionCable.server.broadcast("lobby_channel", lobby_article: lobby_article.js_attributes)
+  end
+
   def setting_save(data)
     current_chat_user.update!({
         lifetime_key: data["lifetime_key"],

@@ -37,8 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["matching_wait"]) {
         App.lobby_vm.matching_wait(data["matching_wait"])
       }
+      if (data["lobby_article"]) {
+        App.lobby_vm.lobby_articles.push(data["lobby_article"])
+      }
     },
 
+    chat_say(message) {
+      this.perform("chat_say", {message: message})
+    },
     setting_save(data) {
       this.perform("setting_save", data)
     },
@@ -55,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // components: { "messenger": messenger },
     data: function() {
       return {
+        lobby_articles: lobby_app_params.lobby_articles,                    // 発言一覧
+        message: "",                          // 発言
+
         // status_list: [],
         chat_rooms: [],
         online_users: [],                // 参加者
@@ -153,6 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Vue.prototype.$toast.open({message: "マッチングを開始しました。しばらくお待ちください", position: "is-bottom", type: "is-success", duration: 1000 * 2})
       },
 
+      // メッセージ送信
+      message_enter(value) {
+        if (this.message !== "") {
+          App.lobby.chat_say(this.message)
+        }
+        this.message = ""
+      },
+
       // // 手合割の変更
       // preset_key_update(v) {
       //   if (this.ps_preset_key !== v) {
@@ -178,6 +195,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     },
     computed: {
+      // チャットに表示する最新メッセージたち
+      latest_lobby_articles() {
+        return _.takeRight(this.lobby_articles, 10)
+      },
+
       // // 持ち時間の変更
       // lifetime_key_update(v) {
       //   // if (this.current_lifetime_key !== v) {

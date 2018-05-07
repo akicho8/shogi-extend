@@ -141,6 +141,14 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.index ["chat_user_id"], name: "index_kansen_memberships_on_chat_user_id"
   end
 
+  create_table "lobby_articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "chat_user_id", null: false, comment: "人"
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_user_id"], name: "index_lobby_articles_on_chat_user_id"
+  end
+
   create_table "swars_battle_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "unique_key", null: false
     t.integer "priority", null: false, comment: "優劣"

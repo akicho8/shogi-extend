@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
 
-    chat_say(chat_message_body) {
-      this.perform("chat_say", {chat_message_body: chat_message_body})
+    chat_say(message) {
+      this.perform("chat_say", {message: message})
     },
 
     system_say(str) {

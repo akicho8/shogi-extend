@@ -15,6 +15,7 @@ module ResourceNs1
       @lobby_app_params = {
         preset_infos: Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
         lifetime_infos: LifetimeInfo.collect(&:attributes),
+        lobby_articles: JSON.load(LobbyArticle.order(:created_at).last(10).to_json(include: [:chat_user]))
       }
     end
 

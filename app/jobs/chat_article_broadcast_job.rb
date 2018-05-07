@@ -3,7 +3,7 @@ class ChatArticleBroadcastJob < ApplicationJob
 
   # 全員に通知
   def perform(chat_article)
-    # ActionCable.server.broadcast("chat_room_channel", chat_message_body: render_html(chat_article))
+    # ActionCable.server.broadcast("chat_room_channel", message: render_html(chat_article))
   end
 
   private

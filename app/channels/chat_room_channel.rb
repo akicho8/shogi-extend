@@ -25,7 +25,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   # 発言
   def chat_say(data)
-    chat_article = current_chat_user.chat_articles.create!(chat_room: current_chat_room, message: data["chat_message_body"])
+    chat_article = current_chat_user.chat_articles.create!(chat_room: current_chat_room, message: data["message"])
     ActionCable.server.broadcast(room_key, chat_article: chat_article.js_attributes)
   end
 
@@ -95,7 +95,7 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   def room_out(data)
-    chat_say("chat_message_body" => '<span class="has-text-info">退室しました</span>')
+    chat_say("message" => '<span class="has-text-info">退室しました</span>')
 
     current_chat_user.update!(current_chat_room_id: nil)
 

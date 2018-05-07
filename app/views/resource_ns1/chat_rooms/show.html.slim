@@ -22,20 +22,20 @@ javascript:
     .columns
       .column
         .box
-          button.button.is-primary.is-large.is-rounded @click="game_start" バトル開始！
+          button.button.is-primary.is-large @click="game_start" バトル開始！
           / | &nbsp;
           / b-dropdown(:value="ps_preset_key" @input="preset_key_update")
-          /   button.button.is-large.is-rounded(slot="trigger")
+          /   button.button.is-large(slot="trigger")
           /     span
           /       | {{current_preset_info1.name}}
           /     b-icon(icon="menu-down")
           /   b-dropdown-item(v-for="record in preset_infos" :value="record.key" :key="record.key")
           /     | {{record.name}}
           | &nbsp;
-          button.button.is-large.is-rounded @click="location_flip_all" 手番反転
+          button.button.is-large @click="location_flip_all" 手番反転
           | &nbsp;
           b-dropdown(:value="current_lifetime_key" @input="lifetime_key_update")
-            button.button.is-large.is-rounded(slot="trigger")
+            button.button.is-large(slot="trigger")
               span
                 | {{current_lifetime_info.name}}
               b-icon(icon="menu-down")
@@ -53,7 +53,7 @@ javascript:
         div v-if="battle_begin_at"
           .has-text-centered.is-size-5
             template v-if="!battle_end_at && my_teban_p"
-              button.button.is-rounded.is-small(@click="give_up_game_end") 投了
+              button.button.is-small(@click="give_up_game_end") 投了
             .is-pulled-right v-html="time_format('black')"
             .is-pulled-left  v-html="time_format('white')"
         .is-clearfix
@@ -93,7 +93,7 @@ javascript:
             input.input.is-large.is-primary type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter"
         .field
           .control
-            button.button.is-primary.is-rounded @click="message_enter"
+            button.button.is-primary @click="message_enter"
               | 送信
       .box
         .title.is-4= "参加者"

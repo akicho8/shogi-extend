@@ -1,12 +1,14 @@
 class SystemNotificationChannel < ApplicationCable::Channel
   def subscribed
     stream_from "system_notification_channel"
+
+    # このようにすれば SystemNotificationChannel.broadcast_to(chat_user, ...) として個別送信もできる
+    stream_for current_chat_user
+
     current_chat_user.appear
-    # stream_for current_chat_user
   end
 
   def unsubscribed
-    logger.debug(["#{__FILE__}:#{__LINE__}", __method__, ])
     current_chat_user.disappear
   end
 

@@ -98,6 +98,25 @@ javascript:
               template(v-if="!props.row.battle_begin_at && !props.row.battle_end_at")
                 | 前
 
+  .columns
+    .column
+      .box
+        .title.is-4= "チャット"
+        table.table.is-narrow.is-fullwidth
+          tr v-for="e of latest_lobby_articles"
+            td
+              span.has-text-grey
+                messenger :message_to="e.chat_user"
+                = "： "
+              = " "
+              span v-html="e.message"
+        .field
+          .control
+            input.input.is-large.is-primary(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter")
+        .field
+          .control
+            button.button.is-primary(@click="message_enter") 送信
+
   / .box
   /   .title= "あなたの情報"
   /   = html_format([current_chat_user.attributes])
