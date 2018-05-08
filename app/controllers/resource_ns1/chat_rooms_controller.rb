@@ -5,10 +5,10 @@ module ResourceNs1
     prepend_before_action do
       # ChatUser.destroy_all
       # ChatRoom.destroy_all
-      unless ChatRoom.exists?
-        current_chat_user.owner_rooms.create!
-        # ChatRoom.create!
-      end
+      # unless ChatRoom.exists?
+      #   current_chat_user.owner_rooms.create!
+      #   # ChatRoom.create!
+      # end
     end
 
     before_action do
