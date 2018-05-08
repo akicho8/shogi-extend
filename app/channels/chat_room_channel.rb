@@ -25,8 +25,8 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   # 発言
   def chat_say(data)
-    chat_article = current_chat_user.chat_articles.create!(chat_room: current_chat_room, message: data["message"])
-    ActionCable.server.broadcast(room_key, chat_article: chat_article.js_attributes)
+    room_chat_message = current_chat_user.room_chat_messages.create!(chat_room: current_chat_room, message: data["message"])
+    ActionCable.server.broadcast(room_key, room_chat_message: room_chat_message.js_attributes)
   end
 
   # わざわざ ruby 側に戻してブロードキャストする意味がない気がする

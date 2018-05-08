@@ -3,7 +3,7 @@ class LobbyChatMessage < ApplicationRecord
 
   # # 非同期にするため
   # after_create_commit do
-  #   ChatArticleBroadcastJob.perform_later(self)
+  #   RoomChatMessageBroadcastJob.perform_later(self)
   # end
 
   def js_attributes

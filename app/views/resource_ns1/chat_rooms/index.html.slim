@@ -58,25 +58,6 @@ javascript:
   .columns
     .column
       .box
-        .title.is-4= "オンラインのユーザー"
-        b-table(:data="online_users" :paginated="true" :per-page="10")
-          template slot-scope="props"
-            b-table-column field="name" label="名前" sortable="sortable"
-              messenger :message_to="props.row"
-              template v-if="chat_user_self_p(props.row)"
-                = " *"
-            b-table-column field="name" label="状態" sortable="sortable"
-              template(v-if="props.row.matching_at")
-                = "マッチング中"
-              template(v-if="props.row.current_chat_room")
-                a :href="props.row.current_chat_room.show_path"
-                  | {{props.row.current_chat_room.name}}
-
-        br
-        messenger
-
-    .column
-      .box
         .title.is-4= "対戦部屋"
         b-table(:data="chat_rooms" :paginated="true" :per-page="10")
           template slot-scope="props"
@@ -116,6 +97,25 @@ javascript:
         .field
           .control
             button.button.is-primary(@click="message_enter") 送信
+
+    .column
+      .box
+        .title.is-4= "オンラインのユーザー"
+        b-table(:data="online_users" :paginated="true" :per-page="10")
+          template slot-scope="props"
+            b-table-column field="name" label="名前" sortable="sortable"
+              messenger :message_to="props.row"
+              template v-if="chat_user_self_p(props.row)"
+                = " *"
+            b-table-column field="name" label="状態" sortable="sortable"
+              template(v-if="props.row.matching_at")
+                = "マッチング中"
+              template(v-if="props.row.current_chat_room")
+                a :href="props.row.current_chat_room.show_path"
+                  | {{props.row.current_chat_room.name}}
+
+        br
+        messenger
 
   / .box
   /   .title= "あなたの情報"

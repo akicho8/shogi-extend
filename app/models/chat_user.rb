@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 件名と本文のみテーブル (chat_articles as ChatArticle)
+# 件名と本文のみテーブル (room_chat_messages as RoomChatMessage)
 #
 # +------------+----------+----------+-------------+------+-------+
 # | カラム名   | 意味     | タイプ   | 属性        | 参照 | INDEX |
@@ -14,7 +14,7 @@
 # +------------+----------+----------+-------------+------+-------+
 
 class ChatUser < ApplicationRecord
-  has_many :chat_articles, dependent: :destroy
+  has_many :room_chat_messages, dependent: :destroy
   has_many :lobby_chat_messages, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_rooms, through: :chat_memberships

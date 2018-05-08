@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //     return {
   //       kifu_body_sfen: "position startpos",  // 棋譜(shogi-player用)
   //       message: "",                          // 発言
-  //       chat_articles: [],                    // 発言一覧
+  //       room_chat_messages: [],                    // 発言一覧
   //       room_members: [],                // 参加者
   //       human_kifu_text: "(human_kifu_text)", // 棋譜
   //     }
@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
   //     },
   //   },
   //   computed: {
-  //     latest_chat_articles() {
-  //       return _.takeRight(this.chat_articles, 10)
+  //     latest_room_chat_messages() {
+  //       return _.takeRight(this.room_chat_messages, 10)
   //     },
   //   },
   // })

@@ -12,16 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20171222200100) do
 
-  create_table "chat_articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "chat_room_id", null: false, comment: "部屋"
-    t.bigint "chat_user_id", null: false, comment: "人"
-    t.text "message", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chat_room_id"], name: "index_chat_articles_on_chat_room_id"
-    t.index ["chat_user_id"], name: "index_chat_articles_on_chat_user_id"
-  end
-
   create_table "chat_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "preset_key", null: false
     t.bigint "chat_room_id", null: false
@@ -147,6 +137,16 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_user_id"], name: "index_lobby_chat_messages_on_chat_user_id"
+  end
+
+  create_table "room_chat_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "chat_room_id", null: false, comment: "部屋"
+    t.bigint "chat_user_id", null: false, comment: "人"
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_room_chat_messages_on_chat_room_id"
+    t.index ["chat_user_id"], name: "index_room_chat_messages_on_chat_user_id"
   end
 
   create_table "swars_battle_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|

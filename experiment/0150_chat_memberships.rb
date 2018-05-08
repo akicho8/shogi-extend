@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-ChatArticle.destroy_all
+RoomChatMessage.destroy_all
 ChatUser.destroy_all
 ChatRoom.destroy_all
 ChatMembership.destroy_all

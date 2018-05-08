@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 件名と本文のみテーブル (chat_articles as ChatArticle)
+# 件名と本文のみテーブル (room_chat_messages as RoomChatMessage)
 #
 # +------------+----------+----------+-------------+------+-------+
 # | カラム名   | 意味     | タイプ   | 属性        | 参照 | INDEX |
@@ -13,7 +13,7 @@
 # | updated_at | 更新日時 | datetime | NOT NULL    |      |       |
 # +------------+----------+----------+-------------+------+-------+
 
-class CreateChatArticles < ActiveRecord::Migration[5.1]
+class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
   def up
     create_table :chat_users, force: true do |t|
       t.string :name, null: false
@@ -57,7 +57,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.belongs_to :chat_user, null: false
       t.timestamps null: false
     end
-    create_table :chat_articles, force: true do |t|
+    create_table :room_chat_messages, force: true do |t|
       t.belongs_to :chat_room, null: false, comment: "部屋"
       t.belongs_to :chat_user, null: false, comment: "人"
       t.text :message, null: false

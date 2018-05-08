@@ -101,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 発言の反映
-      if (data["chat_article"]) {
-        App.chat_vm.chat_articles.push(data["chat_article"])
+      if (data["room_chat_message"]) {
+        App.chat_vm.room_chat_messages.push(data["room_chat_message"])
       }
 
       // 部屋名の共有
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     data() {
       return {
         message: "",                          // 発言
-        chat_articles: [],                    // 発言一覧
+        room_chat_messages: [],                    // 発言一覧
         human_kifu_text: "(human_kifu_text)", // 棋譜
 
         // turn_max: 0,
@@ -351,8 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     computed: {
       // チャットに表示する最新メッセージたち
-      latest_chat_articles() {
-        return _.takeRight(this.chat_articles, 10)
+      latest_room_chat_messages() {
+        return _.takeRight(this.room_chat_messages, 10)
       },
 
       // 手番選択用

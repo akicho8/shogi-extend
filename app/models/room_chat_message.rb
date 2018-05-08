@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 件名と本文のみテーブル (chat_articles as ChatArticle)
+# 件名と本文のみテーブル (room_chat_messages as RoomChatMessage)
 #
 # +------------+----------+----------+-------------+------+-------+
 # | カラム名   | 意味     | タイプ   | 属性        | 参照 | INDEX |
@@ -13,13 +13,13 @@
 # | updated_at | 更新日時 | datetime | NOT NULL    |      |       |
 # +------------+----------+----------+-------------+------+-------+
 
-class ChatArticle < ApplicationRecord
+class RoomChatMessage < ApplicationRecord
   belongs_to :chat_user
   belongs_to :chat_room
 
   # 非同期にするため
   after_create_commit do
-    ChatArticleBroadcastJob.perform_later(self)
+    RoomChatMessageBroadcastJob.perform_later(self)
   end
 
   def js_attributes
