@@ -63,7 +63,7 @@ class CreateChatArticles < ActiveRecord::Migration[5.1]
       t.text :message, null: false
       t.timestamps null: false
     end
-    create_table :lobby_articles, force: true do |t|
+    create_table :lobby_chat_messages, force: true do |t|
       t.belongs_to :chat_user, null: false, comment: "人"
       t.text :message, null: false
       t.timestamps null: false

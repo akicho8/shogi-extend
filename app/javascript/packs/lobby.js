@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["matching_wait"]) {
         App.lobby_vm.matching_wait(data["matching_wait"])
       }
-      if (data["lobby_article"]) {
-        App.lobby_vm.lobby_articles.push(data["lobby_article"])
+      if (data["lobby_chat_message"]) {
+        App.lobby_vm.lobby_chat_messages.push(data["lobby_chat_message"])
       }
     },
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // components: { "messenger": messenger },
     data: function() {
       return {
-        lobby_articles: lobby_app_params.lobby_articles,                    // 発言一覧
+        lobby_chat_messages: lobby_app_params.lobby_chat_messages,                    // 発言一覧
         message: "",                          // 発言
 
         // status_list: [],
@@ -196,8 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     computed: {
       // チャットに表示する最新メッセージたち
-      latest_lobby_articles() {
-        return _.takeRight(this.lobby_articles, 10)
+      latest_lobby_chat_messages() {
+        return _.takeRight(this.lobby_chat_messages, 10)
       },
 
       // // 持ち時間の変更

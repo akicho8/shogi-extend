@@ -103,7 +103,7 @@ javascript:
       .box
         .title.is-4= "チャット"
         table.table.is-narrow.is-fullwidth
-          tr v-for="e of latest_lobby_articles"
+          tr v-for="e of latest_lobby_chat_messages"
             td
               span.has-text-grey
                 messenger :message_to="e.chat_user"

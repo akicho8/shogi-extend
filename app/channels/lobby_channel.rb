@@ -9,8 +9,8 @@ class LobbyChannel < ApplicationCable::Channel
   end
 
   def chat_say(data)
-    lobby_article = current_chat_user.lobby_articles.create!(message: data["message"])
-    ActionCable.server.broadcast("lobby_channel", lobby_article: lobby_article.js_attributes)
+    lobby_chat_message = current_chat_user.lobby_chat_messages.create!(message: data["message"])
+    ActionCable.server.broadcast("lobby_channel", lobby_chat_message: lobby_chat_message.js_attributes)
   end
 
   def setting_save(data)

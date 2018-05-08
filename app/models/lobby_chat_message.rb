@@ -1,4 +1,4 @@
-class LobbyArticle < ApplicationRecord
+class LobbyChatMessage < ApplicationRecord
   belongs_to :chat_user
 
   # # 非同期にするため
