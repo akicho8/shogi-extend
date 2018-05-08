@@ -63,6 +63,9 @@ html lang="ja"
           .navbar-item
             = link_to([:edit, :resource_ns1, current_chat_user], class: "button") do
               b-icon(icon="account")
+              == "&nbsp;"
+              == "&nbsp;"
+              | #{current_chat_user.name}
 
     - if false
       .nav.navbar.is-primary(role="navigation" aria-label="main navigation")
