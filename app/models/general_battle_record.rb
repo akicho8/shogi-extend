@@ -3,20 +3,21 @@
 #
 # 対局情報テーブル (general_battle_records as GeneralBattleRecord)
 #
-# |--------------------------+--------------+-------------+-------------+------+-------|
-# | カラム名                 | 意味         | タイプ      | 属性        | 参照 | INDEX |
-# |--------------------------+--------------+-------------+-------------+------+-------|
-# | id                       | ID           | integer(8)  | NOT NULL PK |      |       |
-# | battle_key               | 対局キー     | string(255) | NOT NULL    |      | A!    |
-# | battled_at               | 対局日       | datetime    |             |      |       |
-# | kifu_body                | 棋譜内容     | text(65535) | NOT NULL    |      |       |
-# | general_battle_state_key | 結果         | string(255) | NOT NULL    |      | B     |
-# | turn_max                 | 手数         | integer(4)  | NOT NULL    |      |       |
-# | meta_info                | 棋譜ヘッダー | text(65535) | NOT NULL    |      |       |
-# | mountain_url             | 将棋山脈URL  | string(255) |             |      |       |
-# | created_at               | 作成日時     | datetime    | NOT NULL    |      |       |
-# | updated_at               | 更新日時     | datetime    | NOT NULL    |      |       |
-# |--------------------------+--------------+-------------+-------------+------+-------|
+# |--------------------------+-----------------+-------------+-------------+------+-------|
+# | カラム名                 | 意味            | タイプ      | 属性        | 参照 | INDEX |
+# |--------------------------+-----------------+-------------+-------------+------+-------|
+# | id                       | ID              | integer(8)  | NOT NULL PK |      |       |
+# | battle_key               | 対局キー        | string(255) | NOT NULL    |      | A!    |
+# | battled_at               | 対局日          | datetime    |             |      |       |
+# | kifu_body                | 棋譜内容        | text(65535) | NOT NULL    |      |       |
+# | general_battle_state_key | 結果            | string(255) | NOT NULL    |      | B     |
+# | turn_max                 | 手数            | integer(4)  | NOT NULL    |      |       |
+# | meta_info                | 棋譜ヘッダー    | text(65535) | NOT NULL    |      |       |
+# | mountain_url             | 将棋山脈URL     | string(255) |             |      |       |
+# | last_accessd_at          | Last accessd at | datetime    | NOT NULL    |      |       |
+# | created_at               | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at               | 更新日時        | datetime    | NOT NULL    |      |       |
+# |--------------------------+-----------------+-------------+-------------+------+-------|
 
 require "matrix"
 

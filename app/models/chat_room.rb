@@ -1,17 +1,33 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 件名と本文のみテーブル (room_chat_messages as RoomChatMessage)
+# 対戦部屋テーブル (chat_rooms as ChatRoom)
 #
-# +------------+----------+----------+-------------+------+-------+
-# | カラム名   | 意味     | タイプ   | 属性        | 参照 | INDEX |
-# +------------+----------+----------+-------------+------+-------+
-# | id         | ID       | integer  | NOT NULL PK |      |       |
-# | subject    | 件名     | string   |             |      |       |
-# | body       | 内容     | text     |             |      |       |
-# | created_at | 作成日時 | datetime | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime | NOT NULL    |      |       |
-# +------------+----------+----------+-------------+------+-------+
+# |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
+# | カラム名                 | 意味                     | タイプ      | 属性                | 参照           | INDEX |
+# |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
+# | id                       | ID                       | integer(8)  | NOT NULL PK         |                |       |
+# | room_owner_id            | Room owner               | integer(8)  | NOT NULL            | => ChatUser#id | A     |
+# | preset_key               | Preset key               | string(255) | NOT NULL            |                |       |
+# | lifetime_key             | Lifetime key             | string(255) | NOT NULL            |                |       |
+# | name                     | 部屋名                   | string(255) | NOT NULL            |                |       |
+# | kifu_body_sfen           | Kifu body sfen           | text(65535) | NOT NULL            |                |       |
+# | clock_counts             | Clock counts             | text(65535) | NOT NULL            |                |       |
+# | turn_max                 | Turn max                 | integer(4)  | NOT NULL            |                |       |
+# | auto_matched_at          | Auto matched at          | datetime    |                     |                |       |
+# | battle_begin_at          | Battle begin at          | datetime    |                     |                |       |
+# | battle_end_at            | Battle end at            | datetime    |                     |                |       |
+# | win_location_key         | Win location key         | string(255) |                     |                |       |
+# | give_up_location_key     | Give up location key     | string(255) |                     |                |       |
+# | created_at               | 作成日時                 | datetime    | NOT NULL            |                |       |
+# | updated_at               | 更新日時                 | datetime    | NOT NULL            |                |       |
+# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
+# | kansen_memberships_count | Kansen memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
+# |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・ChatRoom モデルは ChatUser モデルから has_many :owner_rooms, :foreign_key => :room_owner_id されています。
+#--------------------------------------------------------------------------------
 
 class ChatRoom < ApplicationRecord
   has_many :room_chat_messages, dependent: :destroy

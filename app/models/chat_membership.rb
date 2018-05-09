@@ -1,3 +1,28 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Chat membershipテーブル (chat_memberships as ChatMembership)
+#
+# |-----------------+-----------------+-------------+-------------+----------------+-------|
+# | カラム名        | 意味            | タイプ      | 属性        | 参照           | INDEX |
+# |-----------------+-----------------+-------------+-------------+----------------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |                |       |
+# | preset_key      | Preset key      | string(255) | NOT NULL    |                |       |
+# | chat_room_id    | Chat room       | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
+# | chat_user_id    | Chat user       | integer(8)  | NOT NULL    | => ChatUser#id | B     |
+# | location_key    | Location key    | string(255) | NOT NULL    |                | C     |
+# | position        | 順序            | integer(4)  |             |                | D     |
+# | standby_at      | Standby at      | datetime    |             |                |       |
+# | fighting_now_at | Fighting now at | datetime    |             |                |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |                |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |                |       |
+# |-----------------+-----------------+-------------+-------------+----------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・ChatMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・ChatMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
+#--------------------------------------------------------------------------------
+
 class ChatMembership < ApplicationRecord
   belongs_to :chat_room
   belongs_to :chat_user

@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 件名と本文のみテーブル (room_chat_messages as RoomChatMessage)
+# Room chat messageテーブル (room_chat_messages as RoomChatMessage)
 #
-# +------------+----------+----------+-------------+------+-------+
-# | カラム名   | 意味     | タイプ   | 属性        | 参照 | INDEX |
-# +------------+----------+----------+-------------+------+-------+
-# | id         | ID       | integer  | NOT NULL PK |      |       |
-# | subject    | 件名     | string   |             |      |       |
-# | body       | 内容     | text     |             |      |       |
-# | created_at | 作成日時 | datetime | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime | NOT NULL    |      |       |
-# +------------+----------+----------+-------------+------+-------+
+# |--------------+-----------+-------------+-------------+----------------+-------|
+# | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
+# |--------------+-----------+-------------+-------------+----------------+-------|
+# | id           | ID        | integer(8)  | NOT NULL PK |                |       |
+# | chat_room_id | Chat room | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
+# | chat_user_id | Chat user | integer(8)  | NOT NULL    | => ChatUser#id | B     |
+# | message      | Message   | text(65535) | NOT NULL    |                |       |
+# | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
+# | updated_at   | 更新日時  | datetime    | NOT NULL    |                |       |
+# |--------------+-----------+-------------+-------------+----------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・RoomChatMessage モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・RoomChatMessage モデルは ChatUser モデルから has_many :room_chat_messages されています。
+#--------------------------------------------------------------------------------
 
 class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
   def up
