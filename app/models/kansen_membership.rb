@@ -1,5 +1,5 @@
 class KansenMembership < ApplicationRecord
-  belongs_to :chat_room
+  belongs_to :chat_room, counter_cache: true
   belongs_to :chat_user
 
   after_commit do

@@ -73,6 +73,7 @@ class ChatRoomChannel < ApplicationCable::Channel
       # 観戦者
       unless current_chat_room.kansen_users.include?(current_chat_user)
         current_chat_room.kansen_users << current_chat_user
+        current_chat_room.broadcast # counter_cache の kansen_memberships_count を反映させるため
       end
     end
 

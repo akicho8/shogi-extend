@@ -64,20 +64,22 @@ javascript:
             b-table-column field="name" label="名前" sortable="sortable"
               a :href="props.row.show_path"
                 | {{props.row.name}}
-            b-table-column field="chat_users" label="全参加者" sortable="sortable" numeric="numeric"
-              | {{props.row.chat_users.length}}
-            b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
-              | {{props.row.current_chat_users_count}}
+            - if Rails.env.development?
+              b-table-column field="chat_users" label="全参加者" sortable="sortable" numeric="numeric"
+                | {{props.row.chat_users.length}}
+              b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
+                | {{props.row.current_chat_users_count}}
+            b-table-column field="kansen_memberships_count" label="観戦者" sortable="sortable" numeric="numeric"
+              | {{props.row.kansen_memberships_count}}
             b-table-column field="battle_begin_at" label="開始日時" sortable="sortable" numeric="numeric"
               template(v-if="props.row.battle_begin_at")
                 | {{moment(props.row.battle_begin_at).format('YYYY/MM/DD hh:mm')}}
             b-table-column label="状態"
               template(v-if="props.row.battle_begin_at && props.row.battle_end_at")
-                | 終
+                .has-text-success 終了
               template(v-if="props.row.battle_begin_at && !props.row.battle_end_at")
-                | 戦
+                .has-text-danger 対局中
               template(v-if="!props.row.battle_begin_at && !props.row.battle_end_at")
-                | 前
 
   .columns
     .column
@@ -100,7 +102,7 @@ javascript:
 
     .column
       .box
-        .title.is-4= "オンラインのユーザー"
+        .title.is-4= "ユーザー"
         b-table(:data="online_users" :paginated="true" :per-page="10")
           template slot-scope="props"
             b-table-column field="name" label="名前" sortable="sortable"
