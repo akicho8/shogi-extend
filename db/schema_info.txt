@@ -39,6 +39,7 @@
 # | kifu_body_sfen           | Kifu body sfen           | text(65535) | NOT NULL            |                |       |
 # | clock_counts             | Clock counts             | text(65535) | NOT NULL            |                |       |
 # | turn_max                 | Turn max                 | integer(4)  | NOT NULL            |                |       |
+# | battle_request_at        | Battle request at        | datetime    |                     |                |       |
 # | auto_matched_at          | Auto matched at          | datetime    |                     |                |       |
 # | battle_begin_at          | Battle begin at          | datetime    |                     |                |       |
 # | battle_end_at            | Battle end at            | datetime    |                     |                |       |
