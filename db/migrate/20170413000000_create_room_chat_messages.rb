@@ -40,6 +40,7 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
       t.text :kifu_body_sfen,                          null: false
       t.text :clock_counts,                            null: false
       t.integer :turn_max,                             null: false
+      t.datetime :battle_request_at
       t.datetime :auto_matched_at
       t.datetime :battle_begin_at
       t.datetime :battle_end_at

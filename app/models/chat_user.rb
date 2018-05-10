@@ -113,27 +113,44 @@ class ChatUser < ApplicationRecord
         update!(matching_at: Time.current)
         LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
       else
-        opponent = s.sample
-        opponent.update!(matching_at: nil) # 相手のマッチング状態を解除
-
-        users = [self, opponent]
-        if users.all? { |e| e.ps_preset_key == "平手" }
-          preset_key = "平手"
-          users = users.shuffle
-        else
-          users = users.sort_by { |e| (e.ps_preset_key == "平手") ? 0 : 1 }
-          preset_key = users.last.ps_preset_key
-        end
-
-        chat_room = opponent.owner_rooms.create!(chat_users: users, preset_key: preset_key, auto_matched_at: Time.current)
-
-        chat_room.chat_users.each do |chat_user|
-          ActionCable.server.broadcast("single_notification_#{chat_user.id}", {
-              matching_ok: true,
-              chat_room: chat_room.js_attributes,
-            })
-        end
+        battle_match_to(s.sample, chat_room: {auto_matched_at: Time.current})
       end
+    end
+
+    # 自分のルールを優先する
+    def battle_match_to(opponent, **options)
+      options = {
+        chat_room: {},
+      }.merge(options)
+
+      opponent.update!(matching_at: nil) # 相手のマッチング状態を解除
+      room_params = users_and_preset_key(opponent)
+      chat_room = opponent.owner_rooms.create!(preset_key: room_params[:preset_key], **options[:chat_room])
+      room_params[:chat_users].each do |user|
+        chat_room.chat_users << user
+      end
+      chat_room.chat_users.each do |chat_user|
+        ActionCable.server.broadcast("single_notification_#{chat_user.id}", {
+            matching_ok: true,
+            chat_room: chat_room.js_attributes,
+          })
+      end
+    end
+
+    def users_and_preset_key(opponent)
+      users = [self, opponent]
+      if ps_preset_key == "平手" && po_preset_key == "平手"
+        users = users.shuffle
+        preset_key = "平手"
+      else
+        if ps_preset_key == "平手"
+          users = [opponent, self]
+        else
+          users = [self, opponent]
+        end
+        preset_key = "駒落ち"
+      end
+      {chat_users: users, preset_key: preset_key}
     end
   end
 end

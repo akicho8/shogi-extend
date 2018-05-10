@@ -49,8 +49,9 @@ class ChatMembership < ApplicationRecord
     # end
 
     # create!(chat_users: [user1, user2]) とされた場合を考慮する
-    index = chat_room.chat_users.find_index(chat_user) || chat_room.chat_users.count
-    self.location_key ||= Warabi::Location.fetch(index).key
+    # index = chat_room.chat_users.find_index(chat_user) || chat_room.chat_users.count
+    # self.location_key ||= Warabi::Location.fetch(index).key
+    self.location_key ||= Warabi::Location.fetch(chat_room.chat_users.count).key
 
     # if active.count < Warabi::Location.count
     # if chat_membership = active.first

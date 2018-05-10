@@ -140,6 +140,8 @@ html lang="ja"
             #system_notification_app.has-text-grey-light
               | ActionCable: {{latest_system_logs.join(" ")}}
 
+    #single_notification_app
+
     javascript:
       var flash_success_notifications = #{flash_success_notifications.to_json.html_safe}
       document.addEventListener('DOMContentLoaded', () => {

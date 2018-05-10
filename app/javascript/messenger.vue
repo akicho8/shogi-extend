@@ -2,20 +2,21 @@
   span
     template(v-if="message_to")
       a(@click.prevent="modal_open") {{message_to.name}}
-    template(v-else="")
+    template(v-else)
       .button.is-info.is-outlined(@click.prevent="modal_open") 全体通知
-
     b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card
         header.modal-card-head
           p.modal-card-title
             template(v-if="message_to") {{message_to.name}}に送信
-            template(v-else="") 全体通知
+            template(v-else) 全体通知
         section.modal-card-body
           b-field(label="")
             input.input.is-large(type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input")
         footer.modal-card-foot
           button.button.is-primary(@click="message_enter") 送信
+          template(v-if="message_to")
+            button.button.is-primary(@click="message_enter2") 対局申し込み
 </template>
 
 <script>
@@ -44,6 +45,10 @@ export default {
         }
         // Vue.prototype.$toast.open({message: "送信完了", position: "is-top", type: "is-info", duration: 1000})
       }
+      this.message = ""
+    },
+    message_enter2() {
+      App.single_notification.battle_request_to({battle_request: {from: js_global_params.current_chat_user, to: this.message_to, message: this.message}})
       this.message = ""
     },
   },
