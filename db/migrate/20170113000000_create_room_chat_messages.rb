@@ -48,7 +48,7 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
       t.string :give_up_location_key
       t.timestamps                                     null: false
       t.integer :current_chat_users_count, default: 0, null: false
-      t.integer :kansen_memberships_count, default: 0, null: false
+      t.integer :watch_memberships_count, default: 0, null: false
     end
     create_table :chat_memberships, force: true do |t|
       t.string :preset_key, null: false
@@ -60,7 +60,7 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
       t.datetime :fighting_now_at, comment: "部屋に入った日時で抜けたり切断するとnull"
       t.timestamps null: false
     end
-    create_table :kansen_memberships, force: true do |t|
+    create_table :watch_memberships, force: true do |t|
       t.belongs_to :chat_room, null: false
       t.belongs_to :chat_user, null: false
       t.timestamps null: false

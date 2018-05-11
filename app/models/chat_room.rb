@@ -23,7 +23,7 @@
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |                |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |                |       |
 # | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
-# | kansen_memberships_count | Kansen memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
+# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
 # |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
@@ -37,12 +37,12 @@ class ChatRoom < ApplicationRecord
   has_many :current_chat_users, class_name: "ChatUser", foreign_key: :current_chat_room_id, dependent: :nullify
   belongs_to :room_owner, class_name: "ChatUser"
 
-  has_many :kansen_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
-  has_many :kansen_users, through: :kansen_memberships, source: :chat_user # 観戦中の人たち
+  has_many :watch_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
+  has_many :watch_users, through: :watch_memberships, source: :chat_user # 観戦中の人たち
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
-  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users, :kansen_users], methods: [:show_path]} }
+  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users, :watch_users], methods: [:show_path]} }
 
   serialize :clock_counts
 

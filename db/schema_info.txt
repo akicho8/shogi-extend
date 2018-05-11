@@ -48,7 +48,7 @@
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |                |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |                |       |
 # | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
-# | kansen_memberships_count | Kansen memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
+# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
 # |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
@@ -170,7 +170,7 @@
 
 # == Schema Information ==
 #
-# Kansen membershipテーブル (kansen_memberships as KansenMembership)
+# Watch membershipテーブル (watch_memberships as WatchMembership)
 #
 # |--------------+-----------+------------+-------------+----------------+-------|
 # | カラム名     | 意味      | タイプ     | 属性        | 参照           | INDEX |
@@ -183,8 +183,8 @@
 # |--------------+-----------+------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・KansenMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・KansenMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==

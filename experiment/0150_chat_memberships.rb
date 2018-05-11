@@ -28,8 +28,8 @@ tp ChatMembership.all
 # >>   ChatRoom Load (0.3ms)  SELECT  `chat_rooms`.* FROM `chat_rooms` ORDER BY `chat_rooms`.`updated_at` DESC LIMIT 50
 # >>   ChatUser Load (0.3ms)  SELECT  `chat_users`.* FROM `chat_users` WHERE `chat_users`.`id` = 35 LIMIT 1
 # >>   ChatUser Load (0.6ms)  SELECT `chat_users`.* FROM `chat_users` INNER JOIN `chat_memberships` ON `chat_users`.`id` = `chat_memberships`.`chat_user_id` WHERE `chat_memberships`.`chat_room_id` = 16 ORDER BY `chat_memberships`.`position` ASC
-# >>   ChatUser Load (0.4ms)  SELECT `chat_users`.* FROM `chat_users` INNER JOIN `kansen_memberships` ON `chat_users`.`id` = `kansen_memberships`.`chat_user_id` WHERE `kansen_memberships`.`chat_room_id` = 16
-# >>   ChatUser Load (0.5ms)  SELECT `chat_users`.* FROM `chat_users` INNER JOIN `kansen_memberships` ON `chat_users`.`id` = `kansen_memberships`.`chat_user_id` WHERE `kansen_memberships`.`chat_room_id` = 16
+# >>   ChatUser Load (0.4ms)  SELECT `chat_users`.* FROM `chat_users` INNER JOIN `watch_memberships` ON `chat_users`.`id` = `watch_memberships`.`chat_user_id` WHERE `watch_memberships`.`chat_room_id` = 16
+# >>   ChatUser Load (0.5ms)  SELECT `chat_users`.* FROM `chat_users` INNER JOIN `watch_memberships` ON `chat_users`.`id` = `watch_memberships`.`chat_user_id` WHERE `watch_memberships`.`chat_room_id` = 16
 # >>   ChatMembership Load (0.5ms)  SELECT `chat_memberships`.* FROM `chat_memberships` ORDER BY `chat_memberships`.`position` ASC
 # >> |----+------------+--------------+--------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
 # >> | id | preset_key | chat_room_id | chat_user_id | location_key | position | standby_at | fighting_now_at | created_at                | updated_at                |

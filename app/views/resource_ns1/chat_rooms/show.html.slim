@@ -117,7 +117,7 @@ javascript:
               | {{location_mark(props.row)}}
       .box
         .title.is-4= "観戦者"
-        b-table(:data="kansen_users" :paginated="false" :per-page="10")
+        b-table(:data="watch_users" :paginated="false" :per-page="10")
           template slot-scope="props"
             b-table-column(field="name" label="名前" sortable)
               messenger :message_to="props.row"

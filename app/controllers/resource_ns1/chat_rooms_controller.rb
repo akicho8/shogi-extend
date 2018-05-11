@@ -23,7 +23,7 @@
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |                |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |                |       |
 # | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
-# | kansen_memberships_count | Kansen memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
+# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
 # |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------

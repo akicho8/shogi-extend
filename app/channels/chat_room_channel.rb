@@ -19,8 +19,8 @@ class ChatRoomChannel < ApplicationCable::Channel
   ################################################################################
 
   # # 定期的に観戦者を更新する
-  # def kansen_users_update_by_polling(data)
-  #   ChatRoomChannel.broadcast_to(current_chat_user, kansen_users: current_chat_room.kansen_users)
+  # def watch_users_update_by_polling(data)
+  #   ChatRoomChannel.broadcast_to(current_chat_user, watch_users: current_chat_room.watch_users)
   # end
 
   # 発言
@@ -73,9 +73,9 @@ class ChatRoomChannel < ApplicationCable::Channel
       end
     else
       # 観戦者
-      unless current_chat_room.kansen_users.include?(current_chat_user)
-        current_chat_room.kansen_users << current_chat_user
-        current_chat_room.broadcast # counter_cache の kansen_memberships_count を反映させるため
+      unless current_chat_room.watch_users.include?(current_chat_user)
+        current_chat_room.watch_users << current_chat_user
+        current_chat_room.broadcast # counter_cache の watch_memberships_count を反映させるため
       end
     end
 
@@ -111,8 +111,8 @@ class ChatRoomChannel < ApplicationCable::Channel
       end
     else
       # 観戦者
-      current_chat_room.kansen_users.destroy(current_chat_user)
-      # ActionCable.server.broadcast(room_key, kansen_users: current_chat_room.kansen_users)
+      current_chat_room.watch_users.destroy(current_chat_user)
+      # ActionCable.server.broadcast(room_key, watch_users: current_chat_room.watch_users)
     end
 
     room_members_update

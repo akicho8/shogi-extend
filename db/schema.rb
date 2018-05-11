@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "current_chat_users_count", default: 0, null: false
-    t.integer "kansen_memberships_count", default: 0, null: false
+    t.integer "watch_memberships_count", default: 0, null: false
     t.index ["room_owner_id"], name: "index_chat_rooms_on_room_owner_id"
   end
 
@@ -124,13 +124,13 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.index ["name"], name: "index_general_battle_users_on_name", unique: true
   end
 
-  create_table "kansen_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+  create_table "watch_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "chat_room_id", null: false
     t.bigint "chat_user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chat_room_id"], name: "index_kansen_memberships_on_chat_room_id"
-    t.index ["chat_user_id"], name: "index_kansen_memberships_on_chat_user_id"
+    t.index ["chat_room_id"], name: "index_watch_memberships_on_chat_room_id"
+    t.index ["chat_user_id"], name: "index_watch_memberships_on_chat_user_id"
   end
 
   create_table "lobby_chat_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|

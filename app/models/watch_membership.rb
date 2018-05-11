@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Kansen membershipテーブル (kansen_memberships as KansenMembership)
+# Watch membershipテーブル (watch_memberships as WatchMembership)
 #
 # |--------------+-----------+------------+-------------+----------------+-------|
 # | カラム名     | 意味      | タイプ     | 属性        | 参照           | INDEX |
@@ -14,16 +14,16 @@
 # |--------------+-----------+------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・KansenMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・KansenMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
-class KansenMembership < ApplicationRecord
+class WatchMembership < ApplicationRecord
   belongs_to :chat_room, counter_cache: true
   belongs_to :chat_user
 
   after_commit do
     # 観戦者が入室/退出した瞬間にチャットルームに反映する
-    ActionCable.server.broadcast("chat_room_channel_#{chat_room.id}", kansen_users: chat_room.kansen_users)
+    ActionCable.server.broadcast("chat_room_channel_#{chat_room.id}", watch_users: chat_room.watch_users)
   end
 end

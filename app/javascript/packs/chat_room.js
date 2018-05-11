@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return
       }
 
-      if (data["kansen_users"]) {
-        App.chat_vm.kansen_users = data["kansen_users"]
+      if (data["watch_users"]) {
+        App.chat_vm.watch_users = data["watch_users"]
       }
 
       // ↓この方法にすればシンプル
@@ -156,8 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("location_flip_all", data)
     },
 
-    kansen_users_update_by_polling(data) {
-      this.perform("kansen_users_update_by_polling", data)
+    watch_users_update_by_polling(data) {
+      this.perform("watch_users_update_by_polling", data)
     },
   })
 
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         battle_end_at: chat_room_app_params.chat_room.battle_end_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
         give_up_location_key: chat_room_app_params.chat_room.give_up_location_key,
-        kansen_users: chat_room_app_params.chat_room.kansen_users,
+        watch_users: chat_room_app_params.chat_room.watch_users,
         turn_max: chat_room_app_params.chat_room.turn_max,
       }
     },
