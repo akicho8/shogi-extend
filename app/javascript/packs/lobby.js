@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // puts(v) {
       //   this.status_list.push(v)
       // },
-      chat_user_self_p(chat_user) {
+      user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
       },
 

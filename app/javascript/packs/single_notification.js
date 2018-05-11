@@ -20,24 +20,33 @@ document.addEventListener('DOMContentLoaded', () => {
         // str = `${from.name}: ${message}`
         // Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
 
+        let message = ``
+        message += `時間: ${e.from.lifetime_key}<br/>`
+        message += `あなた: ${e.from.po_preset_key}<br/>`
+        message += `相手: ${e.from.ps_preset_key}<br/>`
+
+        this.confirmed = false
         Vue.prototype.$dialog.confirm({
-          title: `${e.from.name}さんから挑戦されています`,
-          message: `
-時間:${e.from.lifetime_key}<br/>
-あなた:${e.from.po_preset_key}<br/>
-相手:${e.from.ps_preset_key}<br/>
-`,
-          confirmText: '戦う',
-          cancelText: '断わる',
+          title: `${e.from.name}さんからの挑戦状`,
+          message: message,
+          confirmText: 'たたかう',
+          cancelText: 'にげる',
+          focusOn: "cancel",
           onConfirm: () => {
-            // this.$toast.open('User confirmed')
-            this.perform("battle_match_ok", data)
+            this.confirmed = true
+            // // this.$toast.open('User confirmed')
           },
-          onCancel: () => {
-            console.log("onCancel")
+          onCancel: (e) => {
+            if (this.confirmed) {
+              this.perform("battle_match_ok", data)
+            } else {
+              this.perform("battle_match_ng", data)
+            }
+            // Vue.prototype.$toast.open(`${this.foo}`)
+            // Vue.prototype.$toast.open("に")
+            // console.log("onCancel")
           },
         })
-
       }
 
       if (data["message"]) {
@@ -52,7 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["matching_ok"]) {
         const chat_room = data["chat_room"]
         location.href = chat_room["show_path"]
-        Vue.prototype.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 2})
+        if (chat_room.auto_matched_at) {
+          Vue.prototype.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 2})
+        }
       }
 
     },

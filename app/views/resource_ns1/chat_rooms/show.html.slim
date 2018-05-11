@@ -44,21 +44,24 @@ javascript:
 
   .columns
     .column
+      - if Rails.env.development?
+        .box
+          | current_rest_counter: {{current_rest_counter}}<br>
+          | think_counter: {{think_counter}}<br>
+          | clock_counts: {{clock_counts}}<br>
+          | human_side_key: {{human_side_key}}<br>
+          | current_membership_is_self_p: {{current_membership_is_self_p}}<br>
+          | flip: {{flip}}<br>
+
       .box
-        - if Rails.env.development?
-          | current_rest_counter:{{current_rest_counter}}<br>
-          | think_counter:{{think_counter}}<br>
-          | {{clock_counts}}<br>
-            
         div v-if="battle_begin_at"
           .has-text-centered.is-size-5
-            template v-if="!battle_end_at && my_teban_p"
-              button.button.is-small(@click="give_up_game_end") 投了
+            template v-if="!battle_end_at && current_membership_is_self_p"
+              button.button.is-primary.is-medium.is-outlined(@click="give_up_game_end") 投了
             .is-pulled-right v-html="time_format('black')"
             .is-pulled-left  v-html="time_format('white')"
         .is-clearfix
-                
-                
+
         shogi-player(
           :run_mode="run_mode"
           :kifu_body="kifu_body_sfen"
@@ -71,7 +74,7 @@ javascript:
           :sound_effect="true"
           :volume="0.5"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
-          :human_side="my_location_key"
+          :human_side="human_side_key"
           :flip="flip"
         )
       .box
@@ -101,7 +104,7 @@ javascript:
           template slot-scope="props"
             b-table-column(label="名前")
               messenger :message_to="props.row.chat_user"
-              template v-if="chat_user_self_p(props.row.chat_user)"
+              template v-if="user_self_p(props.row.chat_user)"
                 = " *"
             b-table-column(label="状態")
               / template v-if="props.row.chat_user.online_at"
@@ -110,14 +113,15 @@ javascript:
               template v-else=""
                 b-icon icon="access-point" class="has-text-grey-lighter"
             b-table-column(label="手番")
-              | {{location_key_name(props.row.location_key)}}
+              | {{location_key_name(props.row)}}
+              | {{location_mark(props.row)}}
       .box
         .title.is-4= "観戦者"
         b-table(:data="kansen_users" :paginated="false" :per-page="10")
           template slot-scope="props"
             b-table-column(field="name" label="名前" sortable)
               messenger :message_to="props.row"
-              template v-if="chat_user_self_p(props.row)"
+              template v-if="user_self_p(props.row)"
                 = " *"
 
   p

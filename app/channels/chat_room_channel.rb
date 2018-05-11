@@ -66,9 +66,11 @@ class ChatRoomChannel < ApplicationCable::Channel
     #   current_chat_room.chat_users << current_chat_user
     # end
 
-    if current_chat_membership
+    if current_chat_memberships.present?
       # 対局者
-      current_chat_membership.update!(fighting_now_at: Time.current)
+      current_chat_memberships.each do |e|
+        e.update!(fighting_now_at: Time.current)
+      end
     else
       # 観戦者
       unless current_chat_room.kansen_users.include?(current_chat_user)
@@ -77,17 +79,17 @@ class ChatRoomChannel < ApplicationCable::Channel
       end
     end
 
-    unless current_chat_room.battle_end_at
-      # 中間情報
-      if current_chat_membership
-        # 自分が対局者の場合
-        if current_chat_membership.location_key # 絶対ある
-          unless current_chat_membership.standby_at
-            current_chat_membership.update!(standby_at: Time.current)
-            if current_chat_room.chat_memberships.standby_enable.count >= Warabi::Location.count
-              game_start({})
-            end
+    if current_chat_room.battle_end_at
+    else
+      # 自分が対局者の場合
+      if current_chat_memberships.present?
+        current_chat_memberships.each do |e|
+          unless e.standby_at
+            e.update!(standby_at: Time.current)
           end
+        end
+        if current_chat_room.chat_memberships.standby_enable.count >= current_chat_room.chat_memberships.count
+          game_start({})
         end
       end
     end
@@ -100,11 +102,13 @@ class ChatRoomChannel < ApplicationCable::Channel
 
     current_chat_user.update!(current_chat_room_id: nil)
 
-    if current_chat_membership
+    if current_chat_memberships.present?
       # 対局者
       # 切断したときにの処理がここで書ける
       # TODO: 対局中なら、残っている方がポーリングを開始して、10秒間以内に戻らなかったら勝ちとしてあげる
-      current_chat_membership.update!(fighting_now_at: nil)
+      current_chat_memberships.each do |e|
+        e.update!(fighting_now_at: nil)
+      end
     else
       # 観戦者
       current_chat_room.kansen_users.destroy(current_chat_user)
@@ -154,7 +158,8 @@ class ChatRoomChannel < ApplicationCable::Channel
     @current_chat_room ||= ChatRoom.find(params[:chat_room_id])
   end
 
-  def current_chat_membership
-    @current_chat_membership ||= current_chat_room.chat_memberships.find_by(chat_user: current_chat_user)
+  # 自分対自分の場合もあるためメンバー情報は複数ある
+  def current_chat_memberships
+    @current_chat_memberships ||= current_chat_room.chat_memberships.where(chat_user: current_chat_user)
   end
 end

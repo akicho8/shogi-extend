@@ -107,7 +107,7 @@ javascript:
           template slot-scope="props"
             b-table-column field="name" label="名前" sortable="sortable"
               messenger :message_to="props.row"
-              template v-if="chat_user_self_p(props.row)"
+              template v-if="user_self_p(props.row)"
                 = " *"
             b-table-column field="name" label="状態" sortable="sortable"
               template(v-if="props.row.matching_at")

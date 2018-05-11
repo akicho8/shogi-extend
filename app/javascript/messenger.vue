@@ -14,9 +14,9 @@
           b-field(label="")
             input.input.is-large(type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input")
         footer.modal-card-foot
-          button.button.is-primary(@click="message_enter") 送信
+          button.button.is-primary.is-outlined(@click="message_enter") 送信
           template(v-if="message_to")
-            button.button.is-primary(@click="message_enter2") 対局申し込み
+            button.button.is-primary.is-outlined(@click="battle_request_to") 対局申し込み
 </template>
 
 <script>
@@ -40,14 +40,14 @@ export default {
       if (this.message !== "") {
         if (this.message_to) {
           App.single_notification.message_send_to({from: js_global_params.current_chat_user, to: this.message_to, message: this.message})
+          Vue.prototype.$toast.open({message: "送信OK", position: "is-top", type: "is-info", duration: 500})
         } else {
           App.system_notification.message_send_all({from: js_global_params.current_chat_user, message: this.message})
         }
-        // Vue.prototype.$toast.open({message: "送信完了", position: "is-top", type: "is-info", duration: 1000})
       }
       this.message = ""
     },
-    message_enter2() {
+    battle_request_to() {
       App.single_notification.battle_request_to({battle_request: {from: js_global_params.current_chat_user, to: this.message_to, message: this.message}})
       this.message = ""
     },

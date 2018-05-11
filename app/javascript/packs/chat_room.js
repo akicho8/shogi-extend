@@ -202,9 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     created() {
-      // setInterval(() => {
-      //   App.chat_room.kansen_users_update_by_polling()
-      // }, 1000 * 5)
     },
 
     methods: {
@@ -232,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 時間切れ(生き残っている全員で送信)
       timeout_game_end() {
-        if (this.current_membership) {
+        if (this.member_p) {
           App.chat_room.timeout_game_end({win_location_key: this.current_location.flip.key})
         }
       },
@@ -244,9 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
         this.give_up_location_key = data["give_up_location_key"]
         App.chat_room.system_say(`${this.current_location.flip.name}の勝ち！`)
 
-        if (this.my_location_key) {
+        if (this.human_side_key) {
           // 対局者同士
-          if (this.win_location_key === this.my_location_key) {
+          if (this.win_location_key === this.human_side_key) {
             // 勝った方
             Vue.prototype.$dialog.alert({
               title: "勝利",
@@ -293,8 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_room.location_flip_all()
       },
 
-      location_key_name(v) {
-        return this.location_infos[v].name
+      location_key_name(membership) {
+        return this.location_infos[membership.location_key].name
+      },
+
+      location_mark(membership) {
+        if (this.current_membership === membership) {
+          return "○"
+        }
       },
 
       // メッセージ送信
@@ -306,8 +309,12 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // chat_user は自分か？
-      chat_user_self_p(chat_user) {
+      user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
+      },
+
+      __membership_self_p(e) {
+        return this.user_self_p(e.chat_user)
       },
 
       // FIXME: ActionCable の方で行う
@@ -363,41 +370,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
 
-      // 現在の手番
-      current_location() {
-        const index = (this.komaochi_p ? 1 : 0) + this.turn_max
-        return Location.values[index % Location.values.length]
-      },
-
       // 駒落ち？
       komaochi_p() {
         return this.current_preset_info.first_location_key === "white"
       },
 
-      // 自分の中間情報
+      // 現在の手番番号
+      current_index() {
+        return (this.komaochi_p ? 1 : 0) + this.turn_max
+      },
+
+      // 現在手番を割り当てられたメンバー
       current_membership() {
-        return _.find(this.room_members, (e) => this.chat_user_self_p(e.chat_user))
+        return this.room_members[this.current_index % this.room_members.length]
       },
 
-      // 自分の手番
-      my_location_key() {
-        if (this.current_membership) {
-          return this.current_membership.location_key
+      // 現在の手番はそのメンバーの先後
+      current_location() {
+        return Location.fetch(this.current_membership.location_key)
+      },
+
+      // 現在の手番は私ですか？(1人の場合常にtrueになる)
+      current_membership_is_self_p() {
+        return this.__membership_self_p(this.current_membership)
+      },
+
+      // 操作する側を返す
+      // 手番のメンバーが自分の場合に、自分の先後を返せばよい
+      human_side_key() {
+        if (this.current_membership_is_self_p) {
+          return this.current_location.key
         }
-      },
-
-      // 今は自分の手番か？
-      my_teban_p() {
-        return this.my_location_key === this.current_location.key
       },
 
       // 盤面を反転するか？
       flip() {
-        return this.my_location_key === "white"
+        if (this.current_membership_is_self_p) {
+          return this.current_location.key === "white"
+        }
+      },
+
+      // この部屋にいる私は対局者ですか？
+      member_p() {
+        return _.find(this.room_members, (e) => this.user_self_p(e.chat_user))
       },
 
       run_mode() {
-        if (this.my_location_key) {
+        if (this.human_side_key) {
           return "play_mode"
         } else {
           return "view_mode"

@@ -123,17 +123,14 @@ class ChatUser < ApplicationRecord
         chat_room: {},
       }.merge(options)
 
-      opponent.update!(matching_at: nil) # 相手のマッチング状態を解除
       room_params = users_and_preset_key(opponent)
       chat_room = opponent.owner_rooms.create!(preset_key: room_params[:preset_key], **options[:chat_room])
       room_params[:chat_users].each do |user|
+        user.update!(matching_at: nil) # 互いのマッチング状態をリセット
         chat_room.chat_users << user
       end
       chat_room.chat_users.each do |chat_user|
-        ActionCable.server.broadcast("single_notification_#{chat_user.id}", {
-            matching_ok: true,
-            chat_room: chat_room.js_attributes,
-          })
+        ActionCable.server.broadcast("single_notification_#{chat_user.id}", {matching_ok: true, chat_room: chat_room.js_attributes})
       end
     end
 
