@@ -27,28 +27,28 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
       t.datetime :online_at
       t.datetime :fighting_now_at, comment: "chat_memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
       t.datetime :matching_at
-      t.string :lifetime_key
-      t.string :ps_preset_key
-      t.string :po_preset_key
+      t.string :lifetime_key, index: true
+      t.string :ps_preset_key, index: true
+      t.string :po_preset_key, index: true
       t.timestamps null: false
     end
     create_table :chat_rooms, force: true do |t|
-      t.belongs_to :room_owner,                        null: false
-      t.string :preset_key,                            null: false
-      t.string :lifetime_key,                          null: false
-      t.string :name,                                  null: false
-      t.text :kifu_body_sfen,                          null: false
-      t.text :clock_counts,                            null: false
-      t.integer :turn_max,                             null: false
-      t.datetime :battle_request_at
-      t.datetime :auto_matched_at
-      t.datetime :battle_begin_at
-      t.datetime :battle_end_at
-      t.string :win_location_key
-      t.string :give_up_location_key
+      t.belongs_to :room_owner,                        null: false, comment: "部屋を作った人(とくに利用していなが親メンバーを特定したいときに使う)",
+      t.string :preset_key,                            null: false, comment: "手合割",
+      t.string :lifetime_key,                          null: false, comment: "時間",
+      t.string :name,                                  null: false, comment: "部屋名",
+      t.text :kifu_body_sfen,                          null: false, comment: "USI形式棋譜",
+      t.text :clock_counts,                            null: false, comment: "対局時計情報",
+      t.integer :turn_max,                             null: false, comment: "手番数",
+      t.datetime :battle_request_at,                                comment: "対局申し込みによる成立日時"
+      t.datetime :auto_matched_at,                                  comment: "自動マッチングによる成立日時"
+      t.datetime :battle_begin_at,                                  comment: "メンバーたち部屋に入って対局開始になった日時"
+      t.datetime :battle_end_at,                                    comment: "バトル終了日時"
+      t.string :win_location_key,                                   comment: "勝った方の先後"
+      t.string :give_up_location_key,                               comment: "投了した側(投了した場合のみ)"
       t.timestamps                                     null: false
       t.integer :current_chat_users_count, default: 0, null: false
-      t.integer :watch_memberships_count, default: 0, null: false
+      t.integer :watch_memberships_count, default: 0,  null: false
     end
     create_table :chat_memberships, force: true do |t|
       t.string :preset_key, null: false
