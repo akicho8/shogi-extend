@@ -124,6 +124,23 @@ javascript:
               template v-if="user_self_p(props.row)"
                 = " *"
 
+
+  - if Rails.env.development?
+    .columns
+      .column
+        .box
+          .title.is-4 Vue Internal Variables
+          table.table(border=1)
+            tr(v-for="(value, key) in $data")
+              th v-text="key"
+              td v-text="value"
+        .box
+          .title.is-4 Vue Computed Results
+          table.table(border=1)
+            tr(v-for="(e, key) in _computedWatchers")
+              th v-text="key"
+              td v-text="e.value"
+                
   p
     = link_to("ロビーに戻る", [:resource_ns1, :chat_rooms], :class => "button")
 
