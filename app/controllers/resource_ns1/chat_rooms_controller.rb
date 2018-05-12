@@ -34,20 +34,13 @@ module ResourceNs1
   class ChatRoomsController < ApplicationController
     include ModulableCrud::All
 
-    prepend_before_action do
-      # ChatUser.destroy_all
-      # ChatRoom.destroy_all
-      # unless ChatRoom.exists?
-      #   current_chat_user.owner_rooms.create!
-      #   # ChatRoom.create!
-      # end
-    end
-
     before_action do
       @lobby_app_params = {
         preset_infos: Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
         lifetime_infos: LifetimeInfo.collect(&:attributes),
-        lobby_chat_messages: JSON.load(LobbyChatMessage.order(:created_at).last(10).to_json(include: [:chat_user]))
+        lobby_chat_messages: JSON.load(LobbyChatMessage.order(:created_at).last(10).to_json(include: :chat_user)),
+        chat_rooms: JSON.load(ChatRoom.latest_list.to_json(ChatRoom.to_json_params)),
+        online_users: ChatUser.where.not(online_at: nil),
       }
     end
 

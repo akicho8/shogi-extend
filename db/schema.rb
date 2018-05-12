@@ -13,13 +13,13 @@
 ActiveRecord::Schema.define(version: 20171222200100) do
 
   create_table "chat_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "preset_key", null: false
-    t.bigint "chat_room_id", null: false
-    t.bigint "chat_user_id", null: false
-    t.string "location_key", null: false, comment: "▲△"
+    t.bigint "chat_room_id", null: false, comment: "部屋"
+    t.bigint "chat_user_id", null: false, comment: "ユーザー"
+    t.string "preset_key", null: false, comment: "手合割"
+    t.string "location_key", null: false, comment: "先後"
     t.integer "position", comment: "入室順序"
     t.datetime "standby_at", comment: "準備完了日時"
-    t.datetime "fighting_now_at", comment: "部屋に入った日時で抜けたり切断するとnull"
+    t.datetime "fighting_now_at", comment: "部屋に入った日時で抜けたり切断すると空"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"
@@ -29,38 +29,41 @@ ActiveRecord::Schema.define(version: 20171222200100) do
   end
 
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "room_owner_id", null: false
-    t.string "preset_key", null: false
-    t.string "lifetime_key", null: false
-    t.string "name", null: false
-    t.text "kifu_body_sfen", null: false
-    t.text "clock_counts", null: false
-    t.integer "turn_max", null: false
-    t.datetime "battle_request_at"
-    t.datetime "auto_matched_at"
-    t.datetime "battle_begin_at"
-    t.datetime "battle_end_at"
-    t.string "win_location_key"
-    t.string "give_up_location_key"
+    t.bigint "room_owner_id", null: false, comment: "部屋を作った人(とくに利用していなが親メンバーを特定したいときに使う)"
+    t.string "preset_key", null: false, comment: "手合割"
+    t.string "lifetime_key", null: false, comment: "時間"
+    t.string "name", null: false, comment: "部屋名"
+    t.text "kifu_body_sfen", null: false, comment: "USI形式棋譜"
+    t.text "clock_counts", null: false, comment: "対局時計情報"
+    t.integer "turn_max", null: false, comment: "手番数"
+    t.datetime "battle_request_at", comment: "対局申し込みによる成立日時"
+    t.datetime "auto_matched_at", comment: "自動マッチングによる成立日時"
+    t.datetime "battle_begin_at", comment: "メンバーたち部屋に入って対局開始になった日時"
+    t.datetime "battle_end_at", comment: "バトル終了日時"
+    t.string "win_location_key", comment: "勝った方の先後"
+    t.string "give_up_location_key", comment: "投了した側(投了した場合のみ)"
+    t.integer "current_chat_users_count", default: 0, null: false, comment: "この部屋にいる人数"
+    t.integer "watch_memberships_count", default: 0, null: false, comment: "この部屋の観戦者数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "current_chat_users_count", default: 0, null: false
-    t.integer "watch_memberships_count", default: 0, null: false
     t.index ["room_owner_id"], name: "index_chat_rooms_on_room_owner_id"
   end
 
   create_table "chat_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "name", null: false
-    t.bigint "current_chat_room_id"
-    t.datetime "online_at"
+    t.string "name", null: false, comment: "名前"
+    t.bigint "current_chat_room_id", comment: "現在入室している部屋"
+    t.datetime "online_at", comment: "オンラインになった日時"
     t.datetime "fighting_now_at", comment: "chat_memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
-    t.datetime "matching_at"
-    t.string "lifetime_key"
-    t.string "ps_preset_key"
-    t.string "po_preset_key"
+    t.datetime "matching_at", comment: "マッチング中(開始日時)"
+    t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
+    t.string "ps_preset_key", null: false, comment: "ルール・自分の手合割"
+    t.string "po_preset_key", null: false, comment: "ルール・相手の手合割"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_chat_room_id"], name: "index_chat_users_on_current_chat_room_id"
+    t.index ["lifetime_key"], name: "index_chat_users_on_lifetime_key"
+    t.index ["po_preset_key"], name: "index_chat_users_on_po_preset_key"
+    t.index ["ps_preset_key"], name: "index_chat_users_on_ps_preset_key"
   end
 
   create_table "converted_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
@@ -124,18 +127,9 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.index ["name"], name: "index_general_battle_users_on_name", unique: true
   end
 
-  create_table "watch_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "chat_room_id", null: false
-    t.bigint "chat_user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chat_room_id"], name: "index_watch_memberships_on_chat_room_id"
-    t.index ["chat_user_id"], name: "index_watch_memberships_on_chat_user_id"
-  end
-
   create_table "lobby_chat_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.bigint "chat_user_id", null: false, comment: "人"
-    t.text "message", null: false
+    t.bigint "chat_user_id", null: false, comment: "ユーザー"
+    t.text "message", null: false, comment: "発言"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_user_id"], name: "index_lobby_chat_messages_on_chat_user_id"
@@ -143,8 +137,8 @@ ActiveRecord::Schema.define(version: 20171222200100) do
 
   create_table "room_chat_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.bigint "chat_room_id", null: false, comment: "部屋"
-    t.bigint "chat_user_id", null: false, comment: "人"
-    t.text "message", null: false
+    t.bigint "chat_user_id", null: false, comment: "ユーザー"
+    t.text "message", null: false, comment: "発言"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_room_chat_messages_on_chat_room_id"
@@ -247,6 +241,15 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "watch_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "chat_room_id", null: false, comment: "部屋"
+    t.bigint "chat_user_id", null: false, comment: "ユーザー"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_watch_memberships_on_chat_room_id"
+    t.index ["chat_user_id"], name: "index_watch_memberships_on_chat_user_id"
   end
 
 end

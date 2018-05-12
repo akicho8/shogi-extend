@@ -4,24 +4,24 @@ import { PresetInfo } from 'shogi-player/src/preset_info.js'
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
   App.lobby = App.cable.subscriptions.create("LobbyChannel", {
-    connected: function() {
+    connected() {
       // App.lobby_vm.puts("connected")
       // this.install()
       // this.appear()
       // this.perform("appear")
     },
     // Called when the WebSocket connection is closed
-    disconnected: function() {
+    disconnected() {
       // App.lobby_vm.puts("disconnected")
       // this.uninstall()
     },
     // Called when the subscription is rejected by the server
-    rejected: function() {
+    rejected() {
       // App.lobby_vm.puts("rejected")
       // this.uninstall()
     },
 
-    received: function(data) {
+    received(data) {
       // App.lobby_vm.chat_rooms = []
       // App.lobby_vm.chat_rooms = [data["chat_room"]]
       // App.lobby_vm.puts(data)
@@ -45,12 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
     chat_say(message) {
       this.perform("chat_say", {message: message})
     },
+
     setting_save(data) {
       this.perform("setting_save", data)
     },
+
     matching_start(data) {
       this.perform("matching_start", data)
     },
+
     matching_cancel(data) {
       this.perform("matching_cancel", data)
     },
@@ -58,18 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   App.lobby_vm = new Vue({
     el: "#lobby_app",
-    // components: { "messenger": messenger },
     data: function() {
       return {
-        lobby_chat_messages: lobby_app_params.lobby_chat_messages,                    // 発言一覧
-        message: "",                          // 発言
+        // 発言
+        lobby_chat_messages: lobby_app_params.lobby_chat_messages, // 発言一覧
+        message: "",                                               // 発言
 
-        // status_list: [],
-        chat_rooms: [],
-        online_users: [],                // 参加者
+        // 部屋一覧
+        chat_rooms: lobby_app_params.chat_rooms,
         columns: [
           { field: 'name', label: '部屋', },
         ],
+
+        // ユーザー
+        online_users: lobby_app_params.online_users,
 
         matching_at: js_global_params.current_chat_user.matching_at, // マッチングをサーバー側で受理した日時
         // matching_start_p: null,                                      // マッチングの状態(クライアント側)
@@ -77,9 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setting_modal_p: false,
         current_lifetime_key: "lifetime5_min",
 
+        current_hira_or_koma: null,
         ps_preset_key: js_global_params.current_chat_user["ps_preset_key"],
         po_preset_key: js_global_params.current_chat_user["po_preset_key"],
-        current_hira_or_koma: null,
       }
     },
 
@@ -108,32 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     methods: {
-      // puts(v) {
-      //   this.status_list.push(v)
-      // },
       user_self_p(chat_user) {
         return chat_user.id === js_global_params.current_chat_user.id
       },
 
       matching_setting_open() {
         this.setting_modal_p = true
-
-        // if (this.matching_start_p) {
-        //   this.matching_start_p = false
-        //   // App.lobby.matching_cancel()
-        // } else {
-        //   this.setting_modal_p = true
-        // }
-
-        // this.setting_modal_p = true
-        // this.$nextTick(() => this.$refs.message_input.focus())
-        // if (this.matching_start_p) {
-        //   this.matching_start_p = false
-        //   App.lobby.matching_cancel()
-        // } else {
-        //   this.matching_start_p = true
-        //   App.lobby.matching_start()
-        // }
       },
 
       setting_save() {
@@ -147,12 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       matching_start() {
-        // this.matching_start_p = true
         App.lobby.matching_start({})
       },
 
       matching_cancel() {
-        // this.matching_start_p = false
         this.matching_at = null
         App.lobby.matching_cancel()
       },
