@@ -14,7 +14,7 @@ export default {
       if (this.thinking_p) {
         this.think_counter_set(this.think_counter + 1)
         if (this.current_rest_counter === 0) {
-          this.timeout_game_end()
+          this.game_end_time_up_trigger()
         }
       }
     }, 1000)

@@ -128,9 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("room_name_changed", {room_name: room_name})
     },
 
-    kifu_body_sfen_broadcast(data) {
-      this.perform("kifu_body_sfen_broadcast", data)
-    },
+    // kifu_body_sfen_broadcast(data) {
+    //   this.perform("kifu_body_sfen_broadcast", data)
+    // },
 
     // preset_key_update(data) {
     //   this.perform("preset_key_update", data)
@@ -144,21 +144,22 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("game_start", data)
     },
 
-    timeout_game_end(data) {
-      this.perform("timeout_game_end", data)
+    game_end_time_up_trigger(data) {
+      this.perform("game_end_time_up_trigger", data)
     },
 
-    give_up_game_end(data) {
-      this.perform("give_up_game_end", data)
+    game_end_give_up_trigger(data) {
+      this.perform("game_end_give_up_trigger", data)
     },
 
     location_flip_all(data) {
       this.perform("location_flip_all", data)
     },
 
-    watch_users_update_by_polling(data) {
-      this.perform("watch_users_update_by_polling", data)
+    play_mode_long_sfen_set(data) {
+      this.perform("play_mode_long_sfen_set", data)
     },
+
   })
 
   App.chat_vm = new Vue({
@@ -173,10 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
         room_chat_messages: [],                    // 発言一覧
         human_kifu_text: "(human_kifu_text)", // 棋譜
 
-        // turn_max: 0,
-
-        // 入室したときに局面を反映する(これはビューの方で行なってもよい)
-        // App.chat_vm.kifu_body_sfen = chat_room_app_params.chat_room.kifu_body_sfen
         room_members: chat_room_app_params.room_members,
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         preset_key: chat_room_app_params.chat_room.preset_key,
@@ -184,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         battle_begin_at: chat_room_app_params.chat_room.battle_begin_at,
         battle_end_at: chat_room_app_params.chat_room.battle_end_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
-        give_up_location_key: chat_room_app_params.chat_room.give_up_location_key,
+        last_action_key: chat_room_app_params.chat_room.last_action_key,
         watch_users: chat_room_app_params.chat_room.watch_users,
         turn_max: chat_room_app_params.chat_room.turn_max,
       }
@@ -221,50 +218,63 @@ document.addEventListener('DOMContentLoaded', () => {
         this.think_counter_reset()
       },
 
-      // 投了
-      give_up_game_end() {
-        App.chat_room.give_up_game_end({win_location_key: this.current_location.flip.key, give_up_location_key: this.current_location.key})
+      // ゲーム終了(投了により
+      game_end_give_up_trigger() {
+        App.chat_room.game_end_give_up_trigger({win_location_key: this.current_location.flip.key})
         App.chat_room.system_say("負けました")
       },
 
-      // 時間切れ(生き残っている全員で送信)
-      timeout_game_end() {
+      // ゲーム終了(時間切れにより・生き残っている全員で送信)
+      game_end_time_up_trigger() {
         if (this.member_p) {
-          App.chat_room.timeout_game_end({win_location_key: this.current_location.flip.key})
+          App.chat_room.game_end_time_up_trigger({win_location_key: this.current_location.flip.key})
         }
       },
 
-      // 終了
+      // 終了の通達があった
       game_ended(data) {
         this.battle_end_at = data["battle_end_at"]
         this.win_location_key = data["win_location_key"]
-        this.give_up_location_key = data["give_up_location_key"]
-        App.chat_room.system_say(`${this.current_location.flip.name}の勝ち！`)
+        this.last_action_key = data["last_action_key"]
 
-        if (this.human_side_key) {
+        // App.chat_room.system_say(`${this.win_location.name}の勝ち！`)
+
+        if (this.member_p) {
           // 対局者同士
-          if (this.win_location_key === this.human_side_key) {
-            // 勝った方
-            Vue.prototype.$dialog.alert({
-              title: "勝利",
-              message: "勝ちました",
-              type: 'is-primary',
-              hasIcon: true,
-              icon: 'crown',
-              iconPack: 'mdi',
-            })
+          if (this.my_uniq_locations.length >= 2) {
+            // 両方に所属している場合(自分対自分になっている場合)
+            // 客観的な味方で報告
+            this.kyakkanntekina_kekka_dialog()
           } else {
-            // 負けた方
-            Vue.prototype.$dialog.alert({
-              title: "敗北",
-              message: "負けました",
-              type: 'is-primary',
-            })
+            // 片方に所属している場合
+            if (_.includes(this.my_uniq_locations, this.win_location)) {
+              // 勝った方
+              Vue.prototype.$dialog.alert({
+                title: "勝利",
+                message: "勝ちました",
+                type: 'is-primary',
+                hasIcon: true,
+                icon: 'crown',
+                iconPack: 'mdi',
+              })
+            } else {
+              // 負けた方
+              Vue.prototype.$dialog.alert({
+                title: "敗北",
+                message: "負けました",
+                type: 'is-primary',
+              })
+            }
           }
         } else {
           // 観戦者
-          Vue.prototype.$dialog.alert({title: "結果", message: `${this.current_location.flip.name}の勝ち！`, type: 'is-primary'})
+          this.kyakkanntekina_kekka_dialog()
         }
+      },
+
+      // 客観的結果通知
+      kyakkanntekina_kekka_dialog() {
+        Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_name}により${this.location_name(this.win_location)}が勝ちました`, type: 'is-primary'})
       },
 
       // // 手合割の変更
@@ -317,42 +327,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return this.user_self_p(e.chat_user)
       },
 
-      // FIXME: ActionCable の方で行う
       play_mode_long_sfen_set(v) {
-        const params = new URLSearchParams()
-        params.append("kifu_body", v)
-        params.append("think_counter", this.think_counter) // 使用秒数も記録する
+        if (this.battle_end_at) {
+          return
+        }
+        if (!this.battle_begin_at) {
+          return
+        }
+        App.chat_room.play_mode_long_sfen_set({kifu_body: v, think_counter: this.think_counter, current_location_key: this.current_location.key})
+      },
 
-        // TODO: axios を使わない
-        axios({
-          method: "post",
-          timeout: 1000 * 10,
-          headers: {"X-TAISEN": true},
-          url: chat_room_app_params.player_mode_moved_path,
-          data: params,
-        }).then((response) => {
-          if (response.data.error_message) {
-            Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger"})
-            App.chat_room.chat_say(`<span class="has-text-danger">${response.data.error_message}</span>`)
-          }
-          if (response.data.kifu_body_sfen) {
-            if (false) {
-              // これまでの方法
-              this.kifu_body_sfen = response.data.kifu_body_sfen
-            } else {
-              // 局面を共有する
-              // /Users/ikeda/src/shogi_web/app/channels/chat_room_channel.rb の receive を呼び出してブロードキャストする
-
-              // App.chat_room.send({...chat_room_app_params, kifu_body_sfen: response.data.sfen})
-
-              App.chat_room.kifu_body_sfen_broadcast(response.data)
-              App.chat_room.system_say(response.data.last_hand)
-            }
-          }
-        }).catch((error) => {
-          console.table([error.response])
-          Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
-        })
+      location_name(location) {
+        return location.any_name(this.komaochi_p)
       },
 
     },
@@ -365,8 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // 手番選択用
       location_infos() {
         return {
-          "black": { name: "☗" + (this.komaochi_p ? "下手" : "先手"), },
-          "white": { name: "☖" + (this.komaochi_p ? "上手" : "後手"), },
+          "black": { name: "☗" + this.location_name(Location.fetch("black")), },
+          "white": { name: "☖" + this.location_name(Location.fetch("white")), },
         }
       },
 
@@ -412,11 +398,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // この部屋にいる私は対局者ですか？
       member_p() {
-        return _.find(this.room_members, (e) => this.user_self_p(e.chat_user))
+        return this.my_memberships.length >= 1
+      },
+
+      my_memberships() {
+        return _.filter(this.room_members, (e) => this.user_self_p(e.chat_user))
+      },
+
+      my_uniq_locations() {
+        return _.uniq(_.map(this.my_memberships, (e) => Location.fetch(e.location_key)))
       },
 
       run_mode() {
-        if (this.human_side_key) {
+        if (_.isNil(this.battle_begin_at)) {
+          return "edit_mode"
+        }
+        if (this.battle_end_at) {
+          return "view_mode"
+        }
+        if (this.member_p) {
           return "play_mode"
         } else {
           return "view_mode"
@@ -437,6 +437,21 @@ document.addEventListener('DOMContentLoaded', () => {
       thinking_p() {
         return !_.isNil(this.battle_begin_at) && _.isNil(this.battle_end_at)
       },
+
+      // 勝った方
+      win_location() {
+        return Location.fetch(this.win_location_key)
+      },
+
+      last_action_name() {
+        const table = {
+          TORYO: "投了",
+          TIME_UP: "時間切れ",
+          ILLEGAL_MOVE: "反則",
+        }
+        return table[this.last_action_key]
+      },
+
     },
   })
 })

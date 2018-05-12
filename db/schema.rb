@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.datetime "auto_matched_at", comment: "自動マッチングによる成立日時"
     t.datetime "battle_begin_at", comment: "メンバーたち部屋に入って対局開始になった日時"
     t.datetime "battle_end_at", comment: "バトル終了日時"
+    t.string "last_action_key", comment: "最後の状態"
     t.string "win_location_key", comment: "勝った方の先後"
-    t.string "give_up_location_key", comment: "投了した側(投了した場合のみ)"
     t.integer "current_chat_users_count", default: 0, null: false, comment: "この部屋にいる人数"
     t.integer "watch_memberships_count", default: 0, null: false, comment: "この部屋の観戦者数"
     t.datetime "created_at", null: false

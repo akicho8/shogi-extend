@@ -57,7 +57,7 @@ javascript:
         div v-if="battle_begin_at"
           .has-text-centered.is-size-5
             template v-if="!battle_end_at && current_membership_is_self_p"
-              button.button.is-primary.is-medium.is-outlined(@click="give_up_game_end") 投了
+              button.button.is-primary.is-medium.is-outlined(@click="game_end_give_up_trigger") 投了
             .is-pulled-right v-html="time_format('black')"
             .is-pulled-left  v-html="time_format('white')"
         .is-clearfix
@@ -124,7 +124,6 @@ javascript:
               template v-if="user_self_p(props.row)"
                 = " *"
 
-
   - if Rails.env.development?
     .columns
       .column
@@ -140,7 +139,7 @@ javascript:
             tr(v-for="(e, key) in _computedWatchers")
               th v-text="key"
               td v-text="e.value"
-                
+
   p
     = link_to("ロビーに戻る", [:resource_ns1, :chat_rooms], :class => "button")
 

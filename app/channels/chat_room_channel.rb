@@ -18,12 +18,42 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   ################################################################################
 
-  # # 定期的に観戦者を更新する
-  # def watch_users_update_by_polling(data)
-  #   ChatRoomChannel.broadcast_to(current_chat_user, watch_users: current_chat_room.watch_users)
-  # end
+  def play_mode_long_sfen_set(data)
+    current_location = Warabi::Location.fetch(data["current_location_key"])
+
+    v = data["kifu_body"]
+    info = Warabi::Parser.parse(v)
+    begin
+      mediator = info.mediator
+    rescue => error
+      chat_say("message" => "<span class=\"has-text-info\">#{error.message.lines.first.strip}</span>")
+      current_chat_room.update!(battle_end_at: Time.current, win_location_key: current_location.flip.key, last_action_key: "ILLEGAL_MOVE")
+      game_end_broadcast
+      return
+    end
+
+    kifu_body_sfen = mediator.to_sfen
+    ki2_a = mediator.to_ki2_a
+
+    current_chat_room.clock_counts[mediator.opponent_player.location.key].push(data["think_counter"].to_i) # push でも AR は INSERT 対象になる
+    current_chat_room.kifu_body_sfen = kifu_body_sfen
+    current_chat_room.turn_max = mediator.turn_info.turn_max
+    current_chat_room.save!
+
+    broadcast_data = {
+      turn_max: mediator.turn_info.turn_max,
+      kifu_body_sfen: kifu_body_sfen,
+      human_kifu_text: info.to_ki2, # or ki2_a.join(" ")
+      last_hand: ki2_a.last,
+      moved_chat_user_id: current_chat_user.id, # 操作した人(この人以外に盤面を反映する)
+      clock_counts: current_chat_room.clock_counts,
+    }
+
+    ActionCable.server.broadcast(room_key, broadcast_data)
+  end
 
   # 発言
+  # chat_say("message" => '<span class="has-text-info">退室しました</span>')
   def chat_say(data)
     room_chat_message = current_chat_user.room_chat_messages.create!(chat_room: current_chat_room, message: data["message"])
     ActionCable.server.broadcast(room_key, room_chat_message: room_chat_message.js_attributes)
@@ -31,9 +61,10 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   # わざわざ ruby 側に戻してブロードキャストする意味がない気がする
   # JavaScript 側でそのまま自分以外にブロードキャストできればそれにこしたことはない → たぶん方法はある
-  def kifu_body_sfen_broadcast(data)
-    ActionCable.server.broadcast(room_key, data)
-  end
+  # def kifu_body_sfen_broadcast(data)
+  #   # 未使用
+  #   ActionCable.server.broadcast(room_key, data)
+  # end
 
   # def preset_key_update(data)
   #   preset_info = Warabi::PresetInfo.fetch(data["preset_key"])
@@ -123,24 +154,33 @@ class ChatRoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(room_key, battle_begin_at: current_chat_room.battle_begin_at)
   end
 
-  def timeout_game_end(data)
+  def game_end_time_up_trigger(data)
     if current_chat_room.battle_end_at
       # みんなで送信してくるので1回だけに絞るため
       return
     end
-    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"])
-    ActionCable.server.broadcast(room_key, battle_end_at: current_chat_room.battle_end_at, win_location_key: current_chat_room.win_location_key)
+    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
+    game_end_broadcast
   end
 
-  def give_up_game_end(data)
-    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"], give_up_location_key: data["give_up_location_key"])
-    ActionCable.server.broadcast(room_key, battle_end_at: current_chat_room.battle_end_at, win_location_key: current_chat_room.win_location_key, give_up_location_key: current_chat_room.give_up_location_key)
+  # 負ける人が申告する
+  def game_end_give_up_trigger(data)
+    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TORYO")
+    game_end_broadcast
   end
 
   # 先後をまとめて反転する
   def location_flip_all(data)
     current_chat_room.chat_memberships.each(&:location_flip!)
     room_members_update
+  end
+
+  def game_end_broadcast
+    ActionCable.server.broadcast(room_key, {
+        battle_end_at: current_chat_room.battle_end_at,
+        win_location_key: current_chat_room.win_location_key,
+        last_action_key: current_chat_room.last_action_key,
+      })
   end
 
   private

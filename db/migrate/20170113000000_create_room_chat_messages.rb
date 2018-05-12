@@ -47,8 +47,8 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
       t.datetime :auto_matched_at,                     null: true,  comment: "自動マッチングによる成立日時"
       t.datetime :battle_begin_at,                     null: true,  comment: "メンバーたち部屋に入って対局開始になった日時"
       t.datetime :battle_end_at,                       null: true,  comment: "バトル終了日時"
+      t.string :last_action_key,                       null: true,  comment: "最後の状態"
       t.string :win_location_key,                      null: true,  comment: "勝った方の先後"
-      t.string :give_up_location_key,                  null: true,  comment: "投了した側(投了した場合のみ)"
       t.integer :current_chat_users_count, default: 0, null: false, comment: "この部屋にいる人数"
       t.integer :watch_memberships_count, default: 0,  null: false, comment: "この部屋の観戦者数"
       t.timestamps null: false
