@@ -16,7 +16,7 @@ javascript:
   template v-if="room_name_edit_p"
     input.input.is-large v-model.trim="room_name" @keyup.enter="room_name_edit_p = false" @blur="room_name_edit_p = false" ref="room_name_input"
   template v-else=""
-    .title.is-4 v-text="room_name" @click="room_name_click"
+    .title.is-5 v-text="room_name" @click="room_name_click"
 
   template v-if="!battle_begin_at"
     .columns
@@ -44,23 +44,29 @@ javascript:
 
   .columns
     .column.is-two-thirds
-      - if Rails.env.development?
-        .box
-          | current_rest_counter: {{current_rest_counter}}<br>
-          | think_counter: {{think_counter}}<br>
-          | clock_counts: {{clock_counts}}<br>
-          | human_side_key: {{human_side_key}}<br>
-          | current_membership_is_self_p: {{current_membership_is_self_p}}<br>
-          | flip: {{flip}}<br>
-
       .box
+        / div v-if="battle_begin_at"
+        /   .has-text-centered.is-size-5
+        /     template v-if="!battle_end_at && current_membership_is_self_p"
+        /       button.button.is-primary.is-medium.is-outlined(@click="game_end_give_up_trigger") 投了
+        /     .is-pulled-right v-html="time_format('black')"
+        /     .is-pulled-left  v-html="time_format('white')"
+        / .is-clearfix
+
         div v-if="battle_begin_at"
-          .has-text-centered.is-size-5
+          nav.level
+            .level-item.has-text-centered
+              div
+                p.heading 残り時間
+                p.title v-html="time_format('white')"
             template v-if="!battle_end_at && current_membership_is_self_p"
-              button.button.is-primary.is-medium.is-outlined(@click="game_end_give_up_trigger") 投了
-            .is-pulled-right v-html="time_format('black')"
-            .is-pulled-left  v-html="time_format('white')"
-        .is-clearfix
+              .level-item.has-text-centered
+                div
+                  button.button.is-primary.is-outlined(@click="game_end_give_up_trigger") 投了
+            .level-item.has-text-centered
+              div
+                p.heading 残り時間
+                p.title v-html="time_format('black')"
 
         shogi-player(
           :run_mode="run_mode"
@@ -77,14 +83,23 @@ javascript:
           :human_side="human_side_key"
           :flip="flip"
         )
+      - if Rails.env.development?
+        .box
+          | current_rest_counter: {{current_rest_counter}}<br>
+          | think_counter: {{think_counter}}<br>
+          | clock_counts: {{clock_counts}}<br>
+          | human_side_key: {{human_side_key}}<br>
+          | current_membership_is_self_p: {{current_membership_is_self_p}}<br>
+          | flip: {{flip}}<br>
+
       .box
-        .title.is-4= "棋譜"
+        .title.is-5= "棋譜"
         b-input :value="human_kifu_text" type="textarea" readonly="readonly"
 
     .column
       .box
-        .title.is-4= "チャット"
-        table.table.is-narrow.is-fullwidth
+        .title.is-5= "チャット"
+        table.table.is-narrow.is-fullwidth.chat_div
           tr v-for="e of latest_room_chat_messages"
             td
               span.has-text-grey
@@ -99,7 +114,7 @@ javascript:
             button.button.is-primary @click="message_enter"
               | 送信
       .box
-        .title.is-4= "参加者"
+        .title.is-5= "参加者"
         b-table(:data="room_members" :paginated="false" :per-page="10")
           template slot-scope="props"
             b-table-column(label="名前")
@@ -116,7 +131,7 @@ javascript:
               | {{location_key_name(props.row)}}
               | {{location_mark(props.row)}}
       .box
-        .title.is-4= "観戦者"
+        .title.is-5= "観戦者"
         b-table(:data="watch_users" :paginated="false" :per-page="10")
           template slot-scope="props"
             b-table-column(field="name" label="名前" sortable)
@@ -128,13 +143,13 @@ javascript:
     .columns
       .column
         .box
-          .title.is-4 Vue Internal Variables
+          .title.is-5 Vue Internal Variables
           table.table(border=1)
             tr(v-for="(value, key) in $data")
               th v-text="key"
               td v-text="value"
         .box
-          .title.is-4 Vue Computed Results
+          .title.is-5 Vue Computed Results
           table.table(border=1)
             tr(v-for="(e, key) in _computedWatchers")
               th v-text="key"
@@ -146,16 +161,16 @@ javascript:
 / br
 / br
 / .box
-/   .title.is-4= "@chat_room_app_params"
+/   .title.is-5= "@chat_room_app_params"
 /   = html_format(JSON.load(@chat_room_app_params.to_json))
 /
 / .box
 /   = html_format({"cookies.signed[:chat_user_id]" => cookies.signed[:chat_user_id]})
 /
 / .box
-/   .title.is-4= "ChatUser"
+/   .title.is-5= "ChatUser"
 /   = html_format(current_record.chat_users)
-/   .title.is-4= "RoomChatMessage"
+/   .title.is-5= "RoomChatMessage"
 /   = html_format(current_record.room_chat_messages)
 
 / #lobby_app
