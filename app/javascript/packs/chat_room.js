@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (this.member_p) {
           // 対局者同士
-          if (this.my_uniq_locations.length >= 2) {
+          if (this.double_team_p) {
             // 両方に所属している場合(自分対自分になっている場合)
             // 客観的な味方で報告
             this.kyakkanntekina_kekka_dialog()
@@ -389,43 +389,91 @@ document.addEventListener('DOMContentLoaded', () => {
       // 操作する側を返す
       // 手番のメンバーが自分の場合に、自分の先後を返せばよい
       human_side_key() {
-        if (this.current_membership_is_self_p) {
-          return this.current_location.key
+        if (this.current_status === "battle_now") {
+          if (this.current_membership_is_self_p) {
+            return this.current_location.key
+          }
         }
+        return "none"
       },
 
       // 盤面を反転するか？
       flip() {
-        if (this.current_membership_is_self_p) {
-          return this.current_location.key === "white"
+        if (this.member_p) {
+          if (this.double_team_p) {
+            // 自分対自分の場合
+            if (this.current_membership_is_self_p) {
+              return this.current_location.key === "white"
+            }
+          } else {
+            // 一方のチームに所属している場合に後手なら反転する
+            return this.my_uniq_locations[0].key === "white"
+          }
+        } else {
+          // 観戦者なので反転しない
         }
       },
 
       // この部屋にいる私は対局者ですか？
       member_p() {
-        return this.my_memberships.length >= 1
+        return this.__my_memberships.length >= 1
       },
 
-      my_memberships() {
+      // 自分に対応する membership の配列
+      __my_memberships() {
         return _.filter(this.room_members, (e) => this.user_self_p(e.chat_user))
       },
 
+      // 所属しているチーム(複数)
       my_uniq_locations() {
-        return _.uniq(_.map(this.my_memberships, (e) => Location.fetch(e.location_key)))
+        return _.uniq(_.map(this.__my_memberships, (e) => Location.fetch(e.location_key)))
+      },
+
+      // 1人で複数のチームに所属している？ (自分対自分の場合などになる)
+      double_team_p() {
+        return this.my_uniq_locations.length >= 2
+      },
+
+      // 片方のチームのみに所属している？
+      single_team_p() {
+        return this.my_uniq_locations.length == 1
       },
 
       run_mode() {
-        if (_.isNil(this.battle_begin_at)) {
-          return "edit_mode"
+        if (this.current_status === "battle_before") {
+          return "play_mode"
+        }
+        if (this.current_status === "battle_now") {
+          if (this.member_p) {
+            return "play_mode"
+          } else {
+            return "view_mode"
+          }
+        }
+        if (this.current_status === "battle_done") {
+          return "view_mode"
+        }
+        // if (this.member_p) {
+        //   return "play_mode"
+        // } else {
+        //   return "view_mode"
+        // }
+        // if (_.isNil(this.battle_begin_at)) {
+        //   return "play_mode"
+        // }
+        // if (this.battle_end_at) {
+        //   return "view_mode"
+        // }
+      },
+
+      current_status() {
+        if (!this.battle_begin_at) {
+          return "battle_before"
         }
         if (this.battle_end_at) {
-          return "view_mode"
+          return "battle_done"
         }
-        if (this.member_p) {
-          return "play_mode"
-        } else {
-          return "view_mode"
-        }
+        return "battle_now"
       },
 
       // 手合割一覧
@@ -456,7 +504,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return table[this.last_action_key]
       },
-
     },
   })
 })

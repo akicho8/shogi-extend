@@ -17,7 +17,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   # 定期的に呼ぶ処理が書ける
   periodically every: 30.seconds do
-    # 疑問: transmit(...) は ActionCable.server.broadcast(room_key, ...)  と同じことなんだろうか？
+    # 疑問: transmit(...) は ActionCable.server.broadcast(room_key, ...)  と同じか？ → 違うっぽい。反応しないクライアントがある
     transmit action: :update_count, count: 1
   end
 
