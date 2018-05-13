@@ -114,6 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["battle_end_at"]) {
         App.chat_vm.game_ended(data)
       }
+
+      // 定期的に呼ぶ場合
+      if (data["action"] === "update_count") {
+        console.log(data["count"])
+      }
     },
 
     chat_say(message) {

@@ -1,4 +1,3 @@
-# モデルに保存する版
 class ChatRoomChannel < ApplicationCable::Channel
   def subscribed
     stream_from room_key
@@ -14,6 +13,12 @@ class ChatRoomChannel < ApplicationCable::Channel
   # アクションを指定せずに send で呼ぶときに対応する Rails 側のアクションらしい
   # が、ごちゃごちゃになりそうなので使わない
   def receive(data)
+  end
+
+  # 定期的に呼ぶ処理が書ける
+  periodically every: 30.seconds do
+    # 疑問: transmit(...) は ActionCable.server.broadcast(room_key, ...)  と同じことなんだろうか？
+    transmit action: :update_count, count: 1
   end
 
   ################################################################################
