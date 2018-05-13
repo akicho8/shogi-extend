@@ -103,6 +103,6 @@ class ChatRoom < ApplicationRecord
   end
 
   def show_path
-    Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true, relative_url_root: ActionController::Base.relative_url_root])
+    Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
   end
 end
