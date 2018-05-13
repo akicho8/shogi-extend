@@ -102,9 +102,7 @@ class ChatRoom < ApplicationRecord
     JSON.load(chat_memberships.to_json(include: [:chat_user]))
   end
 
-  private
-
   def show_path
-    Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
+    Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true, relative_url_root: ActionController::Base.relative_url_root])
   end
 end
