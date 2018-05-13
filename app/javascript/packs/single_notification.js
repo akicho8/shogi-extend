@@ -20,23 +20,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // str = `${from.name}: ${message}`
         // Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
 
+        if (this.dialog_now) {
+          this.perform("battle_match_ng", data)
+        }
+
         let message = ``
         message += `時間: ${e.from.lifetime_key}<br/>`
-        message += `あなた: ${e.from.po_preset_key}<br/>`
-        message += `相手: ${e.from.ps_preset_key}<br/>`
+        if (e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手") {
+        } else {
+          message += `あなた: ${e.from.po_preset_key}<br/>`
+          message += `相手: ${e.from.ps_preset_key}<br/>`
+        }
 
+        this.dialog_now = true
         this.confirmed = false
         Vue.prototype.$dialog.confirm({
           title: `${e.from.name}さんからの挑戦状`,
           message: message,
-          confirmText: 'たたかう',
-          cancelText: 'にげる',
+          confirmText: "受ける",
+          cancelText: 'ごめん',
           focusOn: "cancel",
           onConfirm: () => {
             this.confirmed = true
             // // this.$toast.open('User confirmed')
           },
           onCancel: (e) => {
+            this.dialog_now = false
             if (this.confirmed) {
               this.perform("battle_match_ok", data)
             } else {

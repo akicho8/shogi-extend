@@ -3,6 +3,7 @@ class SingleNotificationChannel < ApplicationCable::Channel
     stream_from "single_notification_#{current_chat_user.id}"
   end
 
+  # App.single_notification.message_send_to({from: js_global_params.current_chat_user, to: this.message_to, message: this.message})
   def message_send_to(data)
     ActionCable.server.broadcast("single_notification_#{data['to']['id']}", data)
   end
@@ -19,7 +20,8 @@ class SingleNotificationChannel < ApplicationCable::Channel
     alice.battle_match_to(bob, chat_room: {battle_request_at: Time.current})
   end
 
-  def battle_request_ng(data)
-    # 断られました
+  def battle_match_ng(data)
+    e = data["battle_request"]
+    message_send_to({"from" => e["to"], "to" => e["from"], "message" => "ごめん"})
   end
 end
