@@ -43,7 +43,7 @@ javascript:
               | {{record.name}}
 
   .columns
-    .column
+    .column.is-two-thirds
       - if Rails.env.development?
         .box
           | current_rest_counter: {{current_rest_counter}}<br>
@@ -70,7 +70,7 @@ javascript:
           :sfen_show="true"
           :controller_show="true"
           :theme="'real'"
-          :size="'large'"
+          :size="'x-large'"
           :sound_effect="true"
           :volume="0.5"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
