@@ -3,7 +3,7 @@
     template(v-if="message_to")
       a(@click.prevent="modal_open") {{message_to.name}}
     template(v-else)
-      .button.is-info.is-outlined(@click.prevent="modal_open") 全体通知
+      .button.is-primary.is-outlined(@click.prevent="modal_open") 全体通知
     b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card
         header.modal-card-head

@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 客観的結果通知
       kyakkanntekina_kekka_dialog() {
-        Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_name}により${this.location_name(this.win_location)}が勝ちました`, type: 'is-primary'})
+        Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`, type: 'is-primary'})
       },
 
       // // 手合割の変更
