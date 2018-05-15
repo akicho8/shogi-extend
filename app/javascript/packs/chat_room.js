@@ -345,7 +345,6 @@ document.addEventListener('DOMContentLoaded', () => {
       location_name(location) {
         return location.any_name(this.komaochi_p)
       },
-
     },
     computed: {
       // チャットに表示する最新メッセージたち

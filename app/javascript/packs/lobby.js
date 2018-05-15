@@ -176,6 +176,14 @@ document.addEventListener('DOMContentLoaded', () => {
       //   this.message = ""
       // },
 
+      room_members_format(chat_room) {
+        return chat_room.chat_memberships.map(e => e.chat_user.name).join(" vs ")
+        // const m1 = chat_room.chat_memberships[0]
+        // const m2 = chat_room.chat_memberships[1]
+        // return [m1.chat_user.name, m2.chat_user.name].join(" vs ")
+      },
+
+      
     },
     computed: {
       // チャットに表示する最新メッセージたち

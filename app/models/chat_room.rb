@@ -42,7 +42,8 @@ class ChatRoom < ApplicationRecord
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
-  cattr_accessor(:to_json_params) { {include: [:room_owner, :chat_users, :watch_users], methods: [:show_path]} }
+  # FIXME: chat_users は無駄
+  cattr_accessor(:to_json_params) {{include: {:room_owner => nil, :chat_users => nil, :watch_users => nil, :chat_memberships => {include: :chat_user}}, methods: [:show_path]} }
 
   serialize :clock_counts
 
