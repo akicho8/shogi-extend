@@ -145,7 +145,7 @@ class ChatUser < ApplicationRecord
         else
           users = [self, opponent]
         end
-        preset_key = "駒落ち"
+        preset_key = po_preset_key
       end
       {chat_users: users, preset_key: preset_key}
     end
