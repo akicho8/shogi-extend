@@ -37,6 +37,15 @@ class ChatRoomChannel < ApplicationCable::Channel
       return
     end
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
     kifu_body_sfen = mediator.to_sfen
     ki2_a = mediator.to_ki2_a
 

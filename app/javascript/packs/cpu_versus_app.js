@@ -8,21 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
     data: function() {
       return {
         kifu_body_sfen: "position startpos",
-        cpu_tuyosa_key: cpu_versus_app_params.cpu_tuyosa_key,
-        cpu_tuyosa_infos: cpu_versus_app_params.cpu_tuyosa_infos,
+        cpu_brain_key: cpu_versus_app_params.cpu_brain_key,
+        cpu_brain_infos: cpu_versus_app_params.cpu_brain_infos,
         // start_turn: -1,
       }
     },
     computed: {
-      cpu_tuyosa_info() {
-        return this.cpu_tuyosa_infos[this.cpu_tuyosa_key]
+      cpu_brain_info() {
+        return this.cpu_brain_infos[this.cpu_brain_key]
       },
     },
     methods: {
       play_mode_long_sfen_set(v) {
         const params = new URLSearchParams()
         params.append("kifu_body", v)
-        params.append("cpu_tuyosa_key", this.cpu_tuyosa_key)
+        params.append("cpu_brain_key", this.cpu_brain_key)
 
         axios({
           method: "post",

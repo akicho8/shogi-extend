@@ -2,8 +2,8 @@ class CpuVersusController < ApplicationController
   def show
     @cpu_versus_app_params = {
       player_mode_moved_path: url_for([:cpu_versus, format: "json"]),
-      cpu_tuyosa_infos: CpuTuyosaInfo.values.collect(&:attributes),
-      cpu_tuyosa_key: current_cpu_tuyosa_key,
+      cpu_brain_infos: CpuBrainInfo.values.collect(&:attributes),
+      cpu_brain_key: current_cpu_brain_key,
     }
   end
 
@@ -44,13 +44,13 @@ class CpuVersusController < ApplicationController
       end
 
       puts mediator
-      if current_cpu_tuyosa_info.depth_max_range
+      if current_cpu_brain_info.depth_max_range
         brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
         records = []
-        time_limit = current_cpu_tuyosa_info.time_limit
+        time_limit = current_cpu_brain_info.time_limit
 
         begin
-          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_tuyosa_info.depth_max_range)
+          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
         rescue Warabi::BrainProcessingHeavy
           time_limit += 1
           p [:retry, {time_limit: time_limit}]
@@ -72,7 +72,7 @@ class CpuVersusController < ApplicationController
         hand = record[:hand]
       else
         hands = mediator.current_player.normal_all_hands.to_a
-        if current_cpu_tuyosa_info.legal_only
+        if current_cpu_brain_info.legal_only
           hands = hands.find_all { |e| e.legal_move?(mediator) }
         end
         hand = hands.sample
@@ -106,15 +106,15 @@ class CpuVersusController < ApplicationController
     end
   end
 
-  def current_cpu_tuyosa_info
-    CpuTuyosaInfo.fetch(current_cpu_tuyosa_key)
+  def current_cpu_brain_info
+    CpuBrainInfo.fetch(current_cpu_brain_key)
   end
 
-  def current_cpu_tuyosa_key
-    params[:cpu_tuyosa_key].presence || :level3
+  def current_cpu_brain_key
+    params[:cpu_brain_key].presence || :level3
   end
 
-  class CpuTuyosaInfo
+  class CpuBrainInfo
     include ApplicationMemoryRecord
     memory_record [
       { key: :level1, name: "呆れるほど弱い",     time_limit: nil, depth_max_range: nil,  legal_only: false, }, # ランダム
