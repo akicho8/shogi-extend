@@ -27,11 +27,21 @@ Vue.use(Buefy)
 
 //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
 
-// import { PresetInfo } from "shogi-player/src/preset_info.js"
-// Object.defineProperty(Vue.prototype, "PresetInfo", {value: PresetInfo})
-
 import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
 Vue.component("shogi-player", ShogiPlayer)
+
+// FIXME: これどうにからんか？
+import { PresetInfo } from "shogi-player/src/preset_info.js"
+import { RunModeInfo } from "shogi-player/src/run_mode_info.js"
+import { ThemeInfo } from "shogi-player/src/theme_info.js"
+import { SizeInfo } from "shogi-player/src/size_info.js"
+import { VariationInfo } from "shogi-player/src/variation_info.js"
+
+Object.defineProperty(Vue.prototype, 'PresetInfo', {value: PresetInfo})
+Object.defineProperty(Vue.prototype, 'RunModeInfo', {value: RunModeInfo})
+Object.defineProperty(Vue.prototype, 'ThemeInfo', {value: ThemeInfo})
+Object.defineProperty(Vue.prototype, 'SizeInfo', {value: SizeInfo})
+Object.defineProperty(Vue.prototype, 'VariationInfo', {value: VariationInfo})
 
 import Vuex from "vuex"
 Vue.use(Vuex)
