@@ -64,6 +64,13 @@ class ChatRoomChannel < ApplicationCable::Channel
     }
 
     ActionCable.server.broadcast(room_key, broadcast_data)
+    # 合法手がない = 詰まされた
+    hands = mediator.current_player.normal_all_hands.find_all { |e| e.legal_move?(mediator) }
+    if hands.empty?
+      current_chat_room.update!(battle_end_at: Time.current, win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
+      game_end_broadcast
+      return
+    end
   end
 
   # 発言
