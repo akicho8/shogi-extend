@@ -37,15 +37,19 @@ class ChatRoomChannel < ApplicationCable::Channel
       return
     end
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    # opponent_player: 今指した人
+    # current_player:  次に指す人
+
+    # 指した直後にもかかわらず王手の状態になっている -> 王手放置 or 自らピンを外した(自滅)
+    if mediator.opponent_player.mate_danger?
+      chat_say("message" => "<span class=\"has-text-info\">【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です</span>")
+      current_chat_room.update!(battle_end_at: Time.current, win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
+      game_end_broadcast
+      return
+    end
+
+    # ここからは棋譜として正しい
+
     kifu_body_sfen = mediator.to_sfen
     ki2_a = mediator.to_ki2_a
 
@@ -64,6 +68,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     }
 
     ActionCable.server.broadcast(room_key, broadcast_data)
+
     # 合法手がない = 詰まされた
     hands = mediator.current_player.normal_all_hands.find_all { |e| e.legal_move?(mediator) }
     if hands.empty?

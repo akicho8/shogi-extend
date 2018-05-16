@@ -500,6 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
           TORYO: "投了",
           TIME_UP: "時間切れ",
           ILLEGAL_MOVE: "反則",
+          TSUMI: "詰み",
         }
         return table[this.last_action_key]
       },
