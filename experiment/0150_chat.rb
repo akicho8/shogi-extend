@@ -46,8 +46,8 @@ tp chat_room.current_chat_users
 # >> | current_chat_users_count | 0                                                                             |
 # >> |                 turn_max | 0                                                                             |
 # >> |          auto_matched_at |                                                                               |
-# >> |          battle_begin_at |                                                                               |
-# >> |            battle_end_at |                                                                               |
+# >> |          begin_at |                                                                               |
+# >> |            end_at |                                                                               |
 # >> |         win_location_key |                                                                               |
 # >> |     give_up_location_key |                                                                               |
 # >> |               created_at | 2018-05-06 18:49:22 +0900                                                     |

@@ -22,8 +22,8 @@ tp ChatRoom
 # >> |             clock_counts | {:black=>[], :white=>[]}                                                      |
 # >> |                 turn_max | 0                                                                             |
 # >> |          auto_matched_at | 2018-05-09 19:48:40 +0900                                                     |
-# >> |          battle_begin_at |                                                                               |
-# >> |            battle_end_at |                                                                               |
+# >> |          begin_at |                                                                               |
+# >> |            end_at |                                                                               |
 # >> |         win_location_key |                                                                               |
 # >> |     give_up_location_key |                                                                               |
 # >> |               created_at | 2018-05-09 19:48:40 +0900                                                     |

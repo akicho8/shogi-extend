@@ -3,6 +3,7 @@ import numeral from "numeral"
 
 export default {
   data: function() {
+    console.log("DEBUG", "data", "think_counter", parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3)
     return {
       clock_counts: chat_room_app_params.chat_room.clock_counts,
       think_counter: parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3, // リロードしたときに戻す。ペナルティとして3秒進める
@@ -10,6 +11,8 @@ export default {
   },
 
   created() {
+    console.log("DEBUG", "created", "think_counter", this.think_counter)
+
     setInterval(() => {
       if (this.thinking_p) {
         this.think_counter_set(this.think_counter + 1)
@@ -18,6 +21,10 @@ export default {
         }
       }
     }, 1000)
+  },
+
+  destroyed() {
+    console.log("DEBUG", "destroyed")
   },
 
   watch: {
@@ -59,6 +66,7 @@ export default {
     think_counter_set(v) {
       this.think_counter = v
       localStorage.setItem(chat_room_app_params.chat_room.id, v)
+      console.log("DEBUG", "think_counter_set", v)
     },
   },
 

@@ -32,7 +32,7 @@ class ChatRoomChannel < ApplicationCable::Channel
       mediator = info.mediator
     rescue => error
       chat_say("message" => "<span class=\"has-text-info\">#{error.message.lines.first.strip}</span>")
-      current_chat_room.update!(battle_end_at: Time.current, win_location_key: current_location.flip.key, last_action_key: "ILLEGAL_MOVE")
+      current_chat_room.update!(end_at: Time.current, win_location_key: current_location.flip.key, last_action_key: "ILLEGAL_MOVE")
       game_end_broadcast
       return
     end
@@ -43,7 +43,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     # 指した直後にもかかわらず王手の状態になっている -> 王手放置 or 自らピンを外した(自滅)
     if mediator.opponent_player.mate_danger?
       chat_say("message" => "<span class=\"has-text-info\">【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です</span>")
-      current_chat_room.update!(battle_end_at: Time.current, win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
+      current_chat_room.update!(end_at: Time.current, win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
       game_end_broadcast
       return
     end
@@ -72,7 +72,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     # 合法手がない = 詰まされた
     hands = mediator.current_player.normal_all_hands.find_all { |e| e.legal_move?(mediator) }
     if hands.empty?
-      current_chat_room.update!(battle_end_at: Time.current, win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
+      current_chat_room.update!(end_at: Time.current, win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
       game_end_broadcast
       return
     end
@@ -136,17 +136,20 @@ class ChatRoomChannel < ApplicationCable::Channel
       end
     end
 
-    if current_chat_room.battle_end_at
+    if current_chat_room.end_at
     else
       # 自分が対局者の場合
       if current_chat_memberships.present?
-        current_chat_memberships.each do |e|
-          unless e.standby_at
+        if current_chat_memberships.all? { |e| e.standby_at }
+          # 入り直した場合
+        else
+          # 新規の場合
+          current_chat_memberships.each do |e|
             e.update!(standby_at: Time.current)
           end
-        end
-        if current_chat_room.chat_memberships.standby_enable.count >= current_chat_room.chat_memberships.count
-          game_start({})
+          if current_chat_room.chat_memberships.standby_enable.count >= current_chat_room.chat_memberships.count
+            game_start({})
+          end
         end
       end
     end
@@ -175,23 +178,24 @@ class ChatRoomChannel < ApplicationCable::Channel
     room_members_update
   end
 
+  # FIXME: 入り直したときにも再び呼ばれてしまう
   def game_start(data)
-    current_chat_room.update!(battle_begin_at: Time.current)
-    ActionCable.server.broadcast(room_key, battle_begin_at: current_chat_room.battle_begin_at)
+    current_chat_room.update!(begin_at: Time.current)
+    ActionCable.server.broadcast(room_key, begin_at: current_chat_room.begin_at)
   end
 
   def game_end_time_up_trigger(data)
-    if current_chat_room.battle_end_at
+    if current_chat_room.end_at
       # みんなで送信してくるので1回だけに絞るため
       return
     end
-    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
+    current_chat_room.update!(end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
     game_end_broadcast
   end
 
   # 負ける人が申告する
   def game_end_give_up_trigger(data)
-    current_chat_room.update!(battle_end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TORYO")
+    current_chat_room.update!(end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TORYO")
     game_end_broadcast
   end
 
@@ -203,7 +207,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def game_end_broadcast
     ActionCable.server.broadcast(room_key, {
-        battle_end_at: current_chat_room.battle_end_at,
+        end_at: current_chat_room.end_at,
         win_location_key: current_chat_room.win_location_key,
         last_action_key: current_chat_room.last_action_key,
       })

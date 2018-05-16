@@ -55,10 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
       //   const v = data["chat_room"]
       //   // App.chat_vm.kifu_body_sfen = v.chat_room.kifu_body_sfen
       //   App.chat_vm.preset_key = v.preset_key
-      //   App.chat_vm.battle_begin_at = v.battle_begin_at
+      //   App.chat_vm.begin_at = v.begin_at
       // }
 
-      if (data["battle_begin_at"]) {
+      if (data["begin_at"]) {
         App.chat_vm.game_setup(data)
       }
 
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 終了
-      if (data["battle_end_at"]) {
+      if (data["end_at"]) {
         App.chat_vm.game_ended(data)
       }
 
@@ -183,8 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
         preset_key: chat_room_app_params.chat_room.preset_key,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
-        battle_begin_at: chat_room_app_params.chat_room.battle_begin_at,
-        battle_end_at: chat_room_app_params.chat_room.battle_end_at,
+        begin_at: chat_room_app_params.chat_room.begin_at,
+        end_at: chat_room_app_params.chat_room.end_at,
         win_location_key: chat_room_app_params.chat_room.win_location_key,
         last_action_key: chat_room_app_params.chat_room.last_action_key,
         watch_users: chat_room_app_params.chat_room.watch_users,
@@ -218,8 +218,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // バトル開始(トリガーから全体通知が来たときの処理)
       game_setup(data) {
-        this.battle_begin_at = data["battle_begin_at"]
-        this.battle_end_at = null
+        console.log("DEBUG", "game_setup")
+
+        this.begin_at = data["begin_at"]
+        this.end_at = null
         this.think_counter_reset()
       },
 
@@ -238,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 終了の通達があった
       game_ended(data) {
-        this.battle_end_at = data["battle_end_at"]
+        this.end_at = data["end_at"]
         this.win_location_key = data["win_location_key"]
         this.last_action_key = data["last_action_key"]
 
@@ -333,10 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       play_mode_long_sfen_set(v) {
-        if (this.battle_end_at) {
+        if (this.end_at) {
           return
         }
-        if (!this.battle_begin_at) {
+        if (!this.begin_at) {
           return
         }
         App.chat_room.play_mode_long_sfen_set({kifu_body: v, think_counter: this.think_counter, current_location_key: this.current_location.key})
@@ -457,19 +459,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // } else {
         //   return "view_mode"
         // }
-        // if (_.isNil(this.battle_begin_at)) {
+        // if (_.isNil(this.begin_at)) {
         //   return "play_mode"
         // }
-        // if (this.battle_end_at) {
+        // if (this.end_at) {
         //   return "view_mode"
         // }
       },
 
       current_status() {
-        if (!this.battle_begin_at) {
+        if (!this.begin_at) {
           return "battle_before"
         }
-        if (this.battle_end_at) {
+        if (this.end_at) {
           return "battle_done"
         }
         return "battle_now"
@@ -487,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 考え中？ (プレイ中？)
       thinking_p() {
-        return !_.isNil(this.battle_begin_at) && _.isNil(this.battle_end_at)
+        return !_.isNil(this.begin_at) && _.isNil(this.end_at)
       },
 
       // 勝った方

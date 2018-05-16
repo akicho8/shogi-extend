@@ -16,8 +16,8 @@
 # | turn_max                 | Turn max                 | integer(4)  | NOT NULL            |                |       |
 # | battle_request_at        | Battle request at        | datetime    |                     |                |       |
 # | auto_matched_at          | Auto matched at          | datetime    |                     |                |       |
-# | battle_begin_at          | Battle begin at          | datetime    |                     |                |       |
-# | battle_end_at            | Battle end at            | datetime    |                     |                |       |
+# | begin_at          | Battle begin at          | datetime    |                     |                |       |
+# | end_at            | Battle end at            | datetime    |                     |                |       |
 # | win_location_key         | Win location key         | string(255) |                     |                |       |
 # | give_up_location_key     | Give up location key     | string(255) |                     |                |       |
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |                |       |

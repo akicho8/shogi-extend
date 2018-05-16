@@ -108,17 +108,17 @@ javascript:
             b-table-column field="watch_memberships_count" label="観戦者" sortable="sortable" numeric="numeric"
               | {{props.row.watch_memberships_count}}
             - if Rails.env.development? && false
-              b-table-column field="battle_begin_at" label="開始日時" sortable="sortable" numeric="numeric"
-                template(v-if="props.row.battle_begin_at")
-                  | {{moment(props.row.battle_begin_at).format('YYYY/MM/DD hh:mm')}}
+              b-table-column field="begin_at" label="開始日時" sortable="sortable" numeric="numeric"
+                template(v-if="props.row.begin_at")
+                  | {{moment(props.row.begin_at).format('YYYY/MM/DD hh:mm')}}
             b-table-column(field="turn_max" label="手数" sortable numeric="numeric")
               | {{props.row.turn_max}}
             b-table-column label="状態"
-              template(v-if="props.row.battle_begin_at && props.row.battle_end_at")
+              template(v-if="props.row.begin_at && props.row.end_at")
                 .has-text-success 終了
-              template(v-if="props.row.battle_begin_at && !props.row.battle_end_at")
+              template(v-if="props.row.begin_at && !props.row.end_at")
                 .has-text-danger 対局中
-              template(v-if="!props.row.battle_begin_at && !props.row.battle_end_at")
+              template(v-if="!props.row.begin_at && !props.row.end_at")
           
   / .box
   /   .title= "あなたの情報"
