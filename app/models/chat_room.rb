@@ -32,6 +32,8 @@
 #--------------------------------------------------------------------------------
 
 class ChatRoom < ApplicationRecord
+  time_rangable
+
   has_many :room_chat_messages, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_users, through: :chat_memberships

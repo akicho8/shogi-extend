@@ -55,12 +55,12 @@ module TimeRangable
   # begin_at end_at メソッドを持っているクラスに気軽に include できるモジュール
   concern :GeneralInstanceMethods do
     class TimeStatusScopeInfo
-      include ApplicationStaticRecord
-      static_record [
+      include ApplicationMemoryRecord
+      memory_record [
         {:key => :time_future, :name => "待機中", :color => :success, :order => {:begin_at => :asc }, :tooltip => "もうすぐ開始するもの順", },
         {:key => :time_active, :name => "期間中", :color => :danger,  :order => {:end_at   => :asc }, :tooltip => "もうすぐ終わるもの順",   },
         {:key => :time_past,   :name => "おわり", :color => :default, :order => {:end_at   => :desc}, :tooltip => "最近終わったもの順",     },
-      ], :attr_reader_auto => true
+      ]
     end
 
     def time_future?
