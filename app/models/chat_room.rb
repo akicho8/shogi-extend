@@ -32,7 +32,7 @@
 #--------------------------------------------------------------------------------
 
 class ChatRoom < ApplicationRecord
-  time_rangable
+  time_rangable default: false
 
   has_many :room_chat_messages, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
