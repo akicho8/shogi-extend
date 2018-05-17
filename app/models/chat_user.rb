@@ -12,9 +12,9 @@
 # | online_at            | Online at         | datetime    |             |                |       |
 # | fighting_now_at      | Fighting now at   | datetime    |             |                |       |
 # | matching_at          | Matching at       | datetime    |             |                |       |
-# | lifetime_key         | Lifetime key      | string(255) |             |                |       |
-# | ps_preset_key        | Ps preset key     | string(255) |             |                |       |
-# | po_preset_key        | Po preset key     | string(255) |             |                |       |
+# | lifetime_key         | Lifetime key      | string(255) | NOT NULL    |                | B     |
+# | ps_preset_key        | Ps preset key     | string(255) | NOT NULL    |                | C     |
+# | po_preset_key        | Po preset key     | string(255) | NOT NULL    |                | D     |
 # | created_at           | 作成日時          | datetime    | NOT NULL    |                |       |
 # | updated_at           | 更新日時          | datetime    | NOT NULL    |                |       |
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
@@ -103,16 +103,17 @@ class ChatUser < ApplicationRecord
       s = ChatUser.all
       s = s.online_only
       s = s.where.not(id: id)                   # 自分以外
-      s = s.where.not(matching_at: nil)                           # マッチング希望者
+      s = s.where.not(matching_at: nil)         # マッチング希望者
       s = s.where(lifetime_key: lifetime_key)   # 同じ持ち時間
       s = s.where(ps_preset_key: po_preset_key) # 「相手から見た自分」と「相手」の手合が一致する
       s = s.where(po_preset_key: ps_preset_key) # 「相手から見た相手」と「自分」の手合が一致する
 
-      # 誰もいなかったら登録する
       if s.count == 0
+        # 誰もいなかったら登録する
         update!(matching_at: Time.current)
         LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
       else
+        # 誰かいたので相手を見つける
         battle_match_to(s.sample, chat_room: {auto_matched_at: Time.current})
       end
     end
@@ -124,7 +125,7 @@ class ChatUser < ApplicationRecord
       }.merge(options)
 
       room_params = users_and_preset_key(opponent)
-      chat_room = opponent.owner_rooms.create!(preset_key: room_params[:preset_key], **options[:chat_room])
+      chat_room = opponent.owner_rooms.create!(room_params.slice(:black_preset_key, :white_preset_key).merge(options[:chat_room]))
       room_params[:chat_users].each do |user|
         user.update!(matching_at: nil) # 互いのマッチング状態をリセット
         chat_room.chat_users << user
@@ -136,18 +137,38 @@ class ChatUser < ApplicationRecord
 
     def users_and_preset_key(opponent)
       users = [self, opponent]
+
       if ps_preset_key == "平手" && po_preset_key == "平手"
+        # 相平手
         users = users.shuffle
-        preset_key = "平手"
+      elsif ps_preset_key == "平手"
+        users = [self, opponent]
+      elsif po_preset_key == "平手"
+        users = [opponent, self]
       else
-        if ps_preset_key == "平手"
+        # 両方駒落ち
+        ps = Warabi::PresetInfo[ps_preset_key]
+        po = Warabi::PresetInfo[po_preset_key]
+        if ps.formal_level == po.formal_level
+          # 両方同じ駒落ち
+          users = users.shuffle
+        elsif ps.formal_level > po.formal_level
+          # 同じ駒落ちだけど自分の方が格式が高いので上手ということで△側
           users = [opponent, self]
         else
           users = [self, opponent]
         end
-        preset_key = po_preset_key
       end
-      {chat_users: users, preset_key: preset_key}
+
+      if users.first == self
+        black_preset_key = ps_preset_key
+        white_preset_key = po_preset_key
+      else
+        black_preset_key = po_preset_key
+        white_preset_key = ps_preset_key
+      end
+
+      {chat_users: users, black_preset_key: black_preset_key, white_preset_key: white_preset_key}
     end
   end
 end

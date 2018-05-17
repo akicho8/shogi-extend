@@ -319,6 +319,9 @@ namespace :cable_puma do
     on roles(:app) do |host|
       within current_path do
         with rails_env: fetch(:rails_env), "RAILS_RELATIVE_URL_ROOT" => "/shogi" do
+          if ENV["APP_RESET"] == "1"
+            execute "sudo pkill -9 -f puma"
+          end
           execute :pgrep, "-fl puma || true"
           execute :bundle, "exec", :pumactl, "-Q -F cable/puma.rb stop || true"
           execute :pgrep, "-fl puma || true"

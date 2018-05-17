@@ -7,9 +7,9 @@
 # | カラム名        | 意味            | タイプ      | 属性        | 参照           | INDEX |
 # |-----------------+-----------------+-------------+-------------+----------------+-------|
 # | id              | ID              | integer(8)  | NOT NULL PK |                |       |
-# | preset_key      | Preset key      | string(255) | NOT NULL    |                |       |
 # | chat_room_id    | Chat room       | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
 # | chat_user_id    | Chat user       | integer(8)  | NOT NULL    | => ChatUser#id | B     |
+# | preset_key      | Preset key      | string(255) | NOT NULL    |                |       |
 # | location_key    | Location key    | string(255) | NOT NULL    |                | C     |
 # | position        | 順序            | integer(4)  |             |                | D     |
 # | standby_at      | Standby at      | datetime    |             |                |       |

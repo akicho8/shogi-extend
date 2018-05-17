@@ -37,7 +37,8 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
     # 部屋
     create_table :chat_rooms, force: true do |t|
       t.belongs_to :room_owner,                        null: false, comment: "部屋を作った人(とくに利用していなが親メンバーを特定したいときに使う)"
-      t.string :preset_key,                            null: false, comment: "手合割"
+      t.string :black_preset_key,                      null: false, comment: "▲手合割"
+      t.string :white_preset_key,                      null: false, comment: "△手合割"
       t.string :lifetime_key,                          null: false, comment: "時間"
       t.string :name,                                  null: false, comment: "部屋名"
       t.text :kifu_body_sfen,                          null: false, comment: "USI形式棋譜"

@@ -8,7 +8,8 @@
 # |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
 # | id                       | ID                       | integer(8)  | NOT NULL PK         |                |       |
 # | room_owner_id            | Room owner               | integer(8)  | NOT NULL            | => ChatUser#id | A     |
-# | preset_key               | Preset key               | string(255) | NOT NULL            |                |       |
+# | black_preset_key         | Black preset key         | string(255) | NOT NULL            |                |       |
+# | white_preset_key         | White preset key         | string(255) | NOT NULL            |                |       |
 # | lifetime_key             | Lifetime key             | string(255) | NOT NULL            |                |       |
 # | name                     | 部屋名                   | string(255) | NOT NULL            |                |       |
 # | kifu_body_sfen           | Kifu body sfen           | text(65535) | NOT NULL            |                |       |
@@ -16,14 +17,14 @@
 # | turn_max                 | Turn max                 | integer(4)  | NOT NULL            |                |       |
 # | battle_request_at        | Battle request at        | datetime    |                     |                |       |
 # | auto_matched_at          | Auto matched at          | datetime    |                     |                |       |
-# | begin_at          | Battle begin at          | datetime    |                     |                |       |
-# | end_at            | Battle end at            | datetime    |                     |                |       |
+# | begin_at                 | Begin at                 | datetime    |                     |                |       |
+# | end_at                   | End at                   | datetime    |                     |                |       |
+# | last_action_key          | Last action key          | string(255) |                     |                |       |
 # | win_location_key         | Win location key         | string(255) |                     |                |       |
-# | give_up_location_key     | Give up location key     | string(255) |                     |                |       |
+# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
+# | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |                |       |
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |                |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |                |       |
-# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
-# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
 # |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------

@@ -8,7 +8,8 @@
 # |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
 # | id                       | ID                       | integer(8)  | NOT NULL PK         |                |       |
 # | room_owner_id            | Room owner               | integer(8)  | NOT NULL            | => ChatUser#id | A     |
-# | preset_key               | Preset key               | string(255) | NOT NULL            |                |       |
+# | black_preset_key         | Black preset key         | string(255) | NOT NULL            |                |       |
+# | white_preset_key         | White preset key         | string(255) | NOT NULL            |                |       |
 # | lifetime_key             | Lifetime key             | string(255) | NOT NULL            |                |       |
 # | name                     | 部屋名                   | string(255) | NOT NULL            |                |       |
 # | kifu_body_sfen           | Kifu body sfen           | text(65535) | NOT NULL            |                |       |
@@ -16,14 +17,14 @@
 # | turn_max                 | Turn max                 | integer(4)  | NOT NULL            |                |       |
 # | battle_request_at        | Battle request at        | datetime    |                     |                |       |
 # | auto_matched_at          | Auto matched at          | datetime    |                     |                |       |
-# | begin_at          | Battle begin at          | datetime    |                     |                |       |
-# | end_at            | Battle end at            | datetime    |                     |                |       |
+# | begin_at                 | Begin at                 | datetime    |                     |                |       |
+# | end_at                   | End at                   | datetime    |                     |                |       |
+# | last_action_key          | Last action key          | string(255) |                     |                |       |
 # | win_location_key         | Win location key         | string(255) |                     |                |       |
-# | give_up_location_key     | Give up location key     | string(255) |                     |                |       |
+# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
+# | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |                |       |
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |                |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |                |       |
-# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
-# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |                |       |
 # |--------------------------+--------------------------+-------------+---------------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
@@ -43,13 +44,27 @@ class ChatRoom < ApplicationRecord
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
   # FIXME: chat_users は無駄
-  cattr_accessor(:to_json_params) {{include: {:room_owner => nil, :chat_users => nil, :watch_users => nil, :chat_memberships => {include: :chat_user}}, methods: [:show_path]} }
+  cattr_accessor(:to_json_params) {
+    {include: {
+        :room_owner => nil,
+        :chat_users => nil,
+        :watch_users => nil,
+        :chat_memberships => {
+          include: :chat_user,
+        },
+      }, methods: [
+        :show_path,
+        :handicap,
+      ],
+    }
+  }
 
   serialize :clock_counts
 
   before_validation on: :create do
     self.name = name.presence || name_default
-    self.preset_key ||= "平手"
+    self.black_preset_key ||= "平手"
+    self.white_preset_key ||= "平手"
     self.lifetime_key ||= :lifetime5_min
     # self.kifu_body_sfen ||= "position startpos"
     self.turn_max ||= 0
@@ -57,9 +72,15 @@ class ChatRoom < ApplicationRecord
   end
 
   before_validation do
-    if changes_to_save[:preset_key] && preset_key
-      preset_info = Warabi::PresetInfo.fetch(preset_key)
-      self.kifu_body_sfen = preset_info.to_position_sfen
+    if (changes_to_save[:black_preset_key] || changes_to_save[:white_preset_key]) && black_preset_key && white_preset_key
+
+      # preset_info = Warabi::PresetInfo.fetch(preset_key)
+      # self.kifu_body_sfen = preset_info.to_position_sfen
+
+      mediator = Warabi::Mediator.new
+      mediator.board.placement_from_hash(black: black_preset_key, white: white_preset_key)
+      mediator.turn_info.handicap = handicap
+      self.kifu_body_sfen = "position #{mediator.to_long_sfen}"
     end
   end
 
@@ -105,5 +126,9 @@ class ChatRoom < ApplicationRecord
 
   def show_path
     Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
+  end
+
+  def handicap
+    !(black_preset_key == "平手" && white_preset_key == "平手")
   end
 end

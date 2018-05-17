@@ -50,14 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         App.chat_vm.watch_users = data["watch_users"]
       }
 
-      // ↓この方法にすればシンプル
-      // if (data["chat_room"]) {
-      //   const v = data["chat_room"]
-      //   // App.chat_vm.kifu_body_sfen = v.chat_room.kifu_body_sfen
-      //   App.chat_vm.preset_key = v.preset_key
-      //   App.chat_vm.begin_at = v.begin_at
-      // }
-
       if (data["begin_at"]) {
         App.chat_vm.game_setup(data)
       }
@@ -82,10 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
         App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
-      }
-
-      if (data["preset_key"]) {
-        App.chat_vm.preset_key = data["preset_key"]
       }
 
       if (data["lifetime_key"]) {
@@ -137,10 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //   this.perform("kifu_body_sfen_broadcast", data)
     // },
 
-    // preset_key_update(data) {
-    //   this.perform("preset_key_update", data)
-    // },
-
     lifetime_key_update(data) {
       this.perform("lifetime_key_update", data)
     },
@@ -181,7 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         room_members: chat_room_app_params.room_members,
         kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
-        preset_key: chat_room_app_params.chat_room.preset_key,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
         begin_at: chat_room_app_params.chat_room.begin_at,
         end_at: chat_room_app_params.chat_room.end_at,
@@ -189,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         last_action_key: chat_room_app_params.chat_room.last_action_key,
         watch_users: chat_room_app_params.chat_room.watch_users,
         turn_max: chat_room_app_params.chat_room.turn_max,
+        handicap: chat_room_app_params.chat_room.handicap,
       }
     },
 
@@ -284,15 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
         Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`, type: 'is-primary'})
       },
 
-      // // 手合割の変更
-      // preset_key_update(v) {
-      //   if (this.preset_key !== v) {
-      //     this.preset_key = v
-      //     App.chat_room.preset_key_update({preset_key: this.current_preset_info.name})
-      //     App.chat_room.system_say(`手合割を${this.current_preset_info.name}に変更しました`)
-      //   }
-      // },
-
       // 持ち時間の変更
       lifetime_key_update(v) {
         if (this.current_lifetime_key !== v) {
@@ -345,10 +320,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       location_name(location) {
-        return location.any_name(this.komaochi_p)
+        return location.any_name(this.handicap)
       },
     },
     computed: {
+
       // チャットに表示する最新メッセージたち
       latest_room_chat_messages() {
         return _.takeRight(this.room_chat_messages, 10)
@@ -362,14 +338,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
 
-      // 駒落ち？
-      komaochi_p() {
-        return this.current_preset_info.first_location_key === "white"
+      chat_room() {
+        return chat_room_app_params.chat_room
       },
 
       // 現在の手番番号
       current_index() {
-        return (this.komaochi_p ? 1 : 0) + this.turn_max
+        return (this.handicap ? 1 : 0) + this.turn_max
       },
 
       // 現在手番を割り当てられたメンバー
@@ -480,11 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // 手合割一覧
       preset_infos() {
         return PresetInfo.values
-      },
-
-      // 現在選択されている手合割情報
-      current_preset_info() {
-        return PresetInfo.fetch(this.preset_key)
       },
 
       // 考え中？ (プレイ中？)

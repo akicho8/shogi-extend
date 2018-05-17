@@ -3,7 +3,7 @@ import numeral from "numeral"
 
 export default {
   data: function() {
-    console.log("DEBUG", "data", "think_counter", parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3)
+    // console.log("DEBUG", "data", "think_counter", parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3)
     return {
       clock_counts: chat_room_app_params.chat_room.clock_counts,
       think_counter: parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3, // リロードしたときに戻す。ペナルティとして3秒進める
@@ -66,7 +66,7 @@ export default {
     think_counter_set(v) {
       this.think_counter = v
       localStorage.setItem(chat_room_app_params.chat_room.id, v)
-      console.log("DEBUG", "think_counter_set", v)
+      // console.log("DEBUG", "think_counter_set", v)
     },
   },
 

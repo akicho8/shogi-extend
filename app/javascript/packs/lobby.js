@@ -100,16 +100,19 @@ document.addEventListener('DOMContentLoaded', () => {
           this.po_preset_key = "平手"
         }
       },
-      ps_preset_key(v) {
-        if (v !== "平手") {
-          this.po_preset_key = "平手"
-        }
-      },
-      po_preset_key(v) {
-        if (v !== "平手") {
-          this.ps_preset_key = "平手"
-        }
-      },
+      //
+      // これら入れると駒落ちではない方が必ず平手になる(が、自由度が下がるので入れない)
+      //
+      // ps_preset_key(v) {
+      //   if (v !== "平手") {
+      //     this.po_preset_key = "平手"
+      //   }
+      // },
+      // po_preset_key(v) {
+      //   if (v !== "平手") {
+      //     this.ps_preset_key = "平手"
+      //   }
+      // },
     },
 
     methods: {
@@ -183,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // return [m1.chat_user.name, m2.chat_user.name].join(" vs ")
       },
 
-      
     },
     computed: {
       // チャットに表示する最新メッセージたち
