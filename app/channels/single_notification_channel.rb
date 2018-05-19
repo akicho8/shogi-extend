@@ -10,7 +10,11 @@ class SingleNotificationChannel < ApplicationCable::Channel
 
   def battle_request_to(data)
     e = data["battle_request"]
-    ActionCable.server.broadcast("single_notification_#{e['to']['id']}", data)
+    from = ChatUser.find(e["from_id"])
+    to = ChatUser.find(e["to_id"])
+    data["battle_request"]["from"] = from.js_attributes # 送信元ユーザーの最新の状態のルールを用いるため
+    data["battle_request"]["to"] = to.js_attributes
+    ActionCable.server.broadcast("single_notification_#{to.id}", data)
   end
 
   def battle_match_ok(data)

@@ -48,7 +48,7 @@ export default {
       this.message = ""
     },
     battle_request_to() {
-      App.single_notification.battle_request_to({battle_request: {from: js_global_params.current_chat_user, to: this.message_to, message: this.message}})
+      App.single_notification.battle_request_to({battle_request: {from_id: js_global_params.current_chat_user.id, to_id: this.message_to.id, message: this.message}})
       this.message = ""
     },
   },
