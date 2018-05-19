@@ -354,11 +354,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 現在の手番はそのメンバーの先後
       current_location() {
+        if (!this.current_membership) {
+          return
+        }
         return Location.fetch(this.current_membership.location_key)
       },
 
       // 現在の手番は私ですか？(1人の場合常にtrueになる)
       current_membership_is_self_p() {
+        if (!this.current_membership) {
+          return false
+        }
         return this.__membership_self_p(this.current_membership)
       },
 

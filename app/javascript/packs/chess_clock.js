@@ -88,6 +88,9 @@ export default {
 
     // 現在の手番の人の残り時間
     current_rest_counter() {
+      if (!this.current_location) {
+        return 0
+      }
       return this.rest_counter(this.current_location.key)
     },
   },
