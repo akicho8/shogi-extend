@@ -85,6 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
         current_hira_or_koma: null,
         ps_preset_key: js_global_params.current_chat_user["ps_preset_key"],
         po_preset_key: js_global_params.current_chat_user["po_preset_key"],
+
+        when_koma_one_side_force_hirate: false, // 駒落ちのとき片方を必ず平手に強制する？
       }
     },
 
@@ -100,19 +102,22 @@ document.addEventListener('DOMContentLoaded', () => {
           this.po_preset_key = "平手"
         }
       },
-      //
+
       // これら入れると駒落ちではない方が必ず平手になる(が、自由度が下がるので入れない)
-      //
-      // ps_preset_key(v) {
-      //   if (v !== "平手") {
-      //     this.po_preset_key = "平手"
-      //   }
-      // },
-      // po_preset_key(v) {
-      //   if (v !== "平手") {
-      //     this.ps_preset_key = "平手"
-      //   }
-      // },
+      ps_preset_key(v) {
+        if (this.when_koma_one_side_force_hirate) {
+          if (v !== "平手") {
+            this.po_preset_key = "平手"
+          }
+        }
+      },
+      po_preset_key(v) {
+        if (this.when_koma_one_side_force_hirate) {
+          if (v !== "平手") {
+            this.ps_preset_key = "平手"
+          }
+        }
+      }
     },
 
     methods: {
