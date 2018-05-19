@@ -159,20 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
     el: "#chat_room_app",
     data() {
       return {
-        message: "",                          // 発言
-        room_chat_messages: [],                    // 発言一覧
-        human_kifu_text: "(human_kifu_text)", // 棋譜
-
-        room_members: chat_room_app_params.room_members,
-        kifu_body_sfen: chat_room_app_params.chat_room.kifu_body_sfen,
+        message: "",            // 発言
+        room_members:         chat_room_app_params.room_members,
+        room_chat_messages:   chat_room_app_params.room_chat_messages,
+        kifu_body_sfen:       chat_room_app_params.chat_room.kifu_body_sfen,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
-        begin_at: chat_room_app_params.chat_room.begin_at,
-        end_at: chat_room_app_params.chat_room.end_at,
-        win_location_key: chat_room_app_params.chat_room.win_location_key,
-        last_action_key: chat_room_app_params.chat_room.last_action_key,
-        watch_users: chat_room_app_params.chat_room.watch_users,
-        turn_max: chat_room_app_params.chat_room.turn_max,
-        handicap: chat_room_app_params.chat_room.handicap,
+        begin_at:             chat_room_app_params.chat_room.begin_at,
+        end_at:               chat_room_app_params.chat_room.end_at,
+        win_location_key:     chat_room_app_params.chat_room.win_location_key,
+        last_action_key:      chat_room_app_params.chat_room.last_action_key,
+        watch_users:          chat_room_app_params.chat_room.watch_users,
+        turn_max:             chat_room_app_params.chat_room.turn_max,
+        handicap:             chat_room_app_params.chat_room.handicap,
+        human_kifu_text:      chat_room_app_params.chat_room.human_kifu_text,
       }
     },
 

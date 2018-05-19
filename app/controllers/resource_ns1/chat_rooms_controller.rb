@@ -37,19 +37,33 @@ module ResourceNs1
 
     before_action do
       @lobby_app_params = {
-        preset_infos: Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
-        lifetime_infos: LifetimeInfo.collect(&:attributes),
-        lobby_chat_messages: JSON.load(LobbyChatMessage.order(:created_at).last(10).to_json(include: :chat_user)),
-        chat_rooms: JSON.load(ChatRoom.latest_list.to_json(ChatRoom.to_json_params)),
-        online_users: ChatUser.where.not(online_at: nil),
+        :preset_infos        => Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
+        :lifetime_infos      => LifetimeInfo.collect(&:attributes),
+        :lobby_chat_messages => JSON.load(LobbyChatMessage.order(:created_at).last(10).to_json(include: :chat_user)),
+        :chat_rooms          => JSON.load(ChatRoom.latest_list.to_json(ChatRoom.to_json_params)),
+        :online_users        => ChatUser.where.not(online_at: nil),
       }
     end
 
     def show
       @chat_room_app_params = {
-        chat_room: current_record.js_attributes,
+        chat_room: JSON.load(current_record.to_json({
+              include: {
+                :room_owner => nil,
+                :chat_users => nil,
+                :watch_users => nil,
+                :chat_memberships => {
+                  include: :chat_user,
+                },
+              }, methods: [
+                :show_path,
+                :handicap,
+                :human_kifu_text,
+              ],
+            })),
         room_members: current_record.js_room_members,
         player_mode_moved_path: url_for([:resource_ns1, current_record, :kifu_valids, format: "json"]),
+        room_chat_messages: JSON.load(current_record.room_chat_messages.latest_list.to_json(include: [:chat_user, :chat_room])),
       }
     end
 

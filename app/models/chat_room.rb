@@ -99,7 +99,7 @@ class ChatRoom < ApplicationRecord
     end
   end
 
-  def human_kifu_text_get
+  def human_kifu_text
     info = Warabi::Parser.parse(kifu_body_sfen, typical_error_case: :embed)
     begin
       mediator = info.mediator

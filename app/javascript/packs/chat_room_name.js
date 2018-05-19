@@ -1,9 +1,9 @@
 export default {
   data: function() {
     return {
-      room_name: "(room_name)", // 部屋名
-      room_name_before: null,   // 部屋名を変更する前の名前
-      room_name_edit_p: false,  // 部屋名変更中？
+      room_name: chat_room_app_params.chat_room.name, // 部屋名
+      room_name_before: null,                         // 部屋名を変更する前の名前
+      room_name_edit_p: false,                        // 部屋名変更中？
     }
   },
   watch: {

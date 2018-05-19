@@ -23,6 +23,8 @@ class RoomChatMessage < ApplicationRecord
   belongs_to :chat_user
   belongs_to :chat_room
 
+  scope :latest_list, -> { order(:created_at).limit(10) } # チャットルームに表示する最新N件
+
   # 非同期にするため
   after_create_commit do
     RoomChatMessageBroadcastJob.perform_later(self)
