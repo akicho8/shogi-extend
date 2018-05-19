@@ -94,7 +94,8 @@ javascript:
 
       .box
         .title.is-5= "棋譜"
-        b-input :value="human_kifu_text" type="textarea" readonly="readonly"
+        pre.pre-wrap
+          | {{human_kifu_text}}
 
     .column
       .box
