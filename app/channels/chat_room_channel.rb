@@ -58,6 +58,9 @@ class ChatRoomChannel < ApplicationCable::Channel
     current_chat_room.turn_max = mediator.turn_info.turn_max
     current_chat_room.save!
 
+    info.names_set(current_chat_room.names_hash)
+    human_kifu_text = info.to_ki2 # or ki2_a.join(" ")
+
     broadcast_data = {
       turn_max: mediator.turn_info.turn_max,
       kifu_body_sfen: kifu_body_sfen,

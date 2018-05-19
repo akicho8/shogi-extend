@@ -106,6 +106,7 @@ class ChatRoom < ApplicationRecord
     rescue => error
       return error.message
     end
+    info.names_set(names_hash)
     info.to_ki2
   end
 
@@ -132,5 +133,9 @@ class ChatRoom < ApplicationRecord
 
   def handicap
     !(black_preset_key == "平手" && white_preset_key == "平手")
+  end
+
+  def names_hash
+    chat_memberships.group_by(&:location_key).transform_values { |a| a.collect { |e| e.chat_user.name }.join("・") }.symbolize_keys
   end
 end
