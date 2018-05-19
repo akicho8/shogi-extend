@@ -120,13 +120,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return chat_user.id === js_global_params.current_chat_user.id
       },
 
-      matching_setting_open() {
+      matching_setting_open_click() {
         this.setting_modal_p = true
       },
 
-      setting_save() {
+      matching_setting_close_click() {
         this.setting_modal_p = false
+      },
 
+      setting_save() {
         App.lobby.setting_save({
           ps_preset_key: this.current_preset_info1.key,
           po_preset_key: this.current_preset_info2.key,
