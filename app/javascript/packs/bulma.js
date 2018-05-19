@@ -1,4 +1,5 @@
 //
+// ハンバーガーで開閉対応
 // https://bulma.io/documentation/components/navbar/
 //
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Toggle the class on both the "navbar-burger" and the "navbar-menu"
         $el.classList.toggle('is-active')
         $target.classList.toggle('is-active')
-
       })
     })
   }

@@ -1,5 +1,5 @@
 import _ from "lodash"
-import * as AppUtils from "./app_utils.js"
+import * as AppHelper from "./app_helper.js"
 import axios from "axios"
 
 document.addEventListener('DOMContentLoaded', () => {

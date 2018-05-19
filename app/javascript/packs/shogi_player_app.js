@@ -16,7 +16,7 @@ import _ from "lodash"
 
 // Vue.component('shogi-player', ShogiPlayer)
 
-import * as AppUtils from "./app_utils.js"
+import * as AppHelper from "./app_helper.js"
 
 import axios from "axios"
 
@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     methods: {
       wars_tweet_copy_click(wars_tweet_body) {
-        AppUtils.clipboard_copy(wars_tweet_body)
+        AppHelper.clipboard_copy(wars_tweet_body)
       },
 
       kifu_copy_exec_click: function(e) {
-        AppUtils.kifu_copy_exec(e.target.dataset[_.camelCase("kif_direct_access_path")])
+        AppHelper.kifu_copy_exec(e.target.dataset[_.camelCase("kif_direct_access_path")])
       },
 
       goto_mountain_click: function(e) {
