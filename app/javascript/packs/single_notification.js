@@ -25,11 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let message = ``
-        message += `時間: ${e.from.lifetime_key}<br/>`
+        message += `時間: ${js_global_params.lifetime_info_hash[e.from.lifetime_key].name}<br/>`
         if (e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手") {
+          message += `手合割: 平手<br/>`
         } else {
-          message += `あなた: ${e.from.po_preset_key}<br/>`
-          message += `相手: ${e.from.ps_preset_key}<br/>`
+          message += `手合割: 駒落ち<br/>`
+          message += `※あなた: ${e.from.po_preset_key}<br/>`
+          message += `※相手: ${e.from.ps_preset_key}<br/>`
         }
 
         this.dialog_now = true

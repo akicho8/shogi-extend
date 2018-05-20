@@ -72,13 +72,13 @@ export default {
 
   computed: {
     // 持ち時間項目一覧
-    lifetime_infos() {
-      return lobby_app_params.lifetime_infos
+    lifetime_info_hash() {
+      return js_global_params.lifetime_info_hash
     },
 
     // 選択中の持ち時間項目
     current_lifetime_info() {
-      return _.find(this.lifetime_infos, (e) => e.key === this.current_lifetime_key)
+      return this.lifetime_info_hash[this.current_lifetime_key]
     },
 
     // 持ち時間

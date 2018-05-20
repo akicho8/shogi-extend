@@ -15,8 +15,8 @@ javascript:
       p
         b 持ち時間
       b-field
-        template(v-for="e in lifetime_infos")
-          b-radio-button v-model="current_lifetime_key" :native-value="e.key" {{e.name}}
+        template(v-for="(e, key) in lifetime_info_hash")
+          b-radio-button v-model="current_lifetime_key" :native-value="key" {{e.name}}
       ////////////////////////////////////////////////////////////////////////////////
       b 手合割
       b-field

@@ -33,8 +33,8 @@ javascript:
                 span
                   | {{current_lifetime_info.name}}
                 b-icon(icon="menu-down")
-              b-dropdown-item(v-for="record in lifetime_infos" :value="record.key" :key="record.key")
-                | {{record.name}}
+              b-dropdown-item(v-for="(e, key) in lifetime_info_hash" :value="key" :key="key")
+                | {{e.name}}
 
   .columns
     .column.is-two-thirds
