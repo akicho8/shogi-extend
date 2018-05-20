@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
           current_chat_user: current_chat_user,
           online_only_count: ChatUser.online_only.count,
           fighter_only_count: ChatUser.fighter_only.count,
-          lifetime_info_hash: LifetimeInfo.as_hash_json(only: [:name, :limit_seconds]),
+          lifetime_info_hash: LifetimeInfo.as_hash_json,
         }
       end
     end

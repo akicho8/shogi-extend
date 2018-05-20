@@ -46,6 +46,12 @@ Object.defineProperty(Vue.prototype, 'VariationInfo', {value: VariationInfo})
 import Vuex from "vuex"
 Vue.use(Vuex)
 
+//////////////////////////////////////////////////////////////////////////////// 静的情報
+
+import { LifetimeInfo } from "./lifetime_info"
+window.LifetimeInfo = LifetimeInfo
+Object.defineProperty(Vue.prototype, 'LifetimeInfo', {value: LifetimeInfo})
+
 //////////////////////////////////////////////////////////////////////////////// チャット関連コンポーネント
 
 import Messanger from "../messenger.vue"
