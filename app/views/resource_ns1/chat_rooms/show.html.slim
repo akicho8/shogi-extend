@@ -33,7 +33,7 @@ javascript:
                 span
                   | {{current_lifetime_info.name}}
                 b-icon(icon="menu-down")
-              b-dropdown-item(v-for="(e, key) in lifetime_info_hash" :value="key" :key="key")
+              b-dropdown-item(v-for="e in LifetimeInfo.values" :value="e.key" :key="e.key")
                 | {{e.name}}
 
   .columns

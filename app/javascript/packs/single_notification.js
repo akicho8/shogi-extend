@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let message = ``
-        message += `時間: ${js_global_params.lifetime_info_hash[e.from.lifetime_key].name}<br/>`
+        message += `時間: ${LifetimeInfo.fetch(e.from.lifetime_key).name}<br/>`
         if (e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手") {
           message += `手合割: 平手<br/>`
         } else {
