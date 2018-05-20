@@ -3633,9 +3633,9 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
 
-js-memory-record@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.3.tgz#6d0d23013eb87660c712665f4ec2c246d763d54a"
+js-memory-record@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.5.tgz#87bebe21de2d7dd20fcefbaaafdf46c647d0456a"
   dependencies:
     babel-core "^6.22.1"
     lodash "^4.17.4"
@@ -6174,9 +6174,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi-player@0.0.79:
-  version "0.0.79"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.79.tgz#72666b8f3c8a2ee310783109b38d158af130a850"
+shogi-player@0.0.80:
+  version "0.0.80"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.80.tgz#dd31da74f6814a36f3c200423b2e887122cc63cc"
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
@@ -6200,7 +6200,7 @@ shogi-player@0.0.79:
     buefy "^0.6.5"
     bulma "^0.6.2"
     debug "^3.1.0"
-    js-memory-record "^0.0.3"
+    js-memory-record "^0.0.5"
     lodash "^4.17.4"
     minimalistic-assert "^1.0.0"
     node-sass "^4.7.2"
