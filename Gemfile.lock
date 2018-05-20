@@ -190,7 +190,7 @@ GEM
       nokogiri (~> 1.6)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
-    memory_record (0.0.12)
+    memory_record (0.0.13)
       activesupport
     method_source (0.9.0)
     mime-types (3.1)
