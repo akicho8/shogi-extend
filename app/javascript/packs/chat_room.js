@@ -223,42 +223,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 終了の通達があった
       game_ended(data) {
-        this.end_at = data["end_at"]
-        this.win_location_key = data["win_location_key"]
-        this.last_action_key = data["last_action_key"]
+        if (this.current_status === "battle_now") {
+          this.end_at = data["end_at"]
+          this.win_location_key = data["win_location_key"]
+          this.last_action_key = data["last_action_key"]
 
-        // App.chat_room.system_say(`${this.win_location.name}の勝ち！`)
+          // App.chat_room.system_say(`${this.win_location.name}の勝ち！`)
 
-        if (this.member_p) {
-          // 対局者同士
-          if (this.double_team_p) {
-            // 両方に所属している場合(自分対自分になっている場合)
-            // 客観的な味方で報告
-            this.kyakkanntekina_kekka_dialog()
-          } else {
-            // 片方に所属している場合
-            if (_.includes(this.my_uniq_locations, this.win_location)) {
-              // 勝った方
-              Vue.prototype.$dialog.alert({
-                title: "勝利",
-                message: "勝ちました",
-                type: 'is-primary',
-                hasIcon: true,
-                icon: 'crown',
-                iconPack: 'mdi',
-              })
+          if (this.member_p) {
+            // 対局者同士
+            if (this.double_team_p) {
+              // 両方に所属している場合(自分対自分になっている場合)
+              // 客観的な味方で報告
+              this.kyakkanntekina_kekka_dialog()
             } else {
-              // 負けた方
-              Vue.prototype.$dialog.alert({
-                title: "敗北",
-                message: "負けました",
-                type: 'is-primary',
-              })
+              // 片方に所属している場合
+              if (_.includes(this.my_uniq_locations, this.win_location)) {
+                // 勝った方
+                Vue.prototype.$dialog.alert({
+                  title: "勝利",
+                  message: "勝ちました",
+                  type: 'is-primary',
+                  hasIcon: true,
+                  icon: 'crown',
+                  iconPack: 'mdi',
+                })
+              } else {
+                // 負けた方
+                Vue.prototype.$dialog.alert({
+                  title: "敗北",
+                  message: "負けました",
+                  type: 'is-primary',
+                })
+              }
             }
+          } else {
+            // 観戦者
+            this.kyakkanntekina_kekka_dialog()
           }
-        } else {
-          // 観戦者
-          this.kyakkanntekina_kekka_dialog()
         }
       },
 
