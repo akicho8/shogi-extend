@@ -80,11 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // matching_start_p: null,                                      // マッチングの状態(クライアント側)
 
         setting_modal_p: false,
-        current_lifetime_key: "lifetime5_min",
 
         current_hira_or_koma: null,
         ps_preset_key: js_global_params.current_chat_user["ps_preset_key"],
         po_preset_key: js_global_params.current_chat_user["po_preset_key"],
+        current_lifetime_key: js_global_params.current_chat_user["lifetime_key"],
 
         when_koma_one_side_force_hirate: false, // 駒落ちのとき片方を必ず平手に強制する？
       }
