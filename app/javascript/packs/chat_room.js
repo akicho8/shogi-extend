@@ -406,7 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 考え中？ (プレイ中？)
       thinking_p() {
-        return this.current_status === "st_done"
+        return this.current_status === "st_battling"
       },
 
       // 勝った方
