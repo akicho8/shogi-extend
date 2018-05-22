@@ -20,17 +20,17 @@ javascript:
       ////////////////////////////////////////////////////////////////////////////////
       b 手合割
       b-field
-        template(v-for="(e, key) in hirate_komaochi_infos")
-          b-radio-button(v-model="current_hira_or_koma" :native-value="key") {{e.name}}
+        template(v-for="e in HiraKomaInfo.values")
+          b-radio-button(v-model="current_hira_koma_key" :native-value="e.key") {{e.name}}
 
-      template(v-if="current_hira_or_koma === 'komaochi'")
+      template(v-if="current_hira_koma_key === 'koma'")
         b 自分
         b-field
-          template(v-for="e in preset_infos")
+          template(v-for="e in CustomPresetInfo.values")
             b-radio-button(v-model="ps_preset_key" :native-value="e.key") {{e.name}}
         b 相手
         b-field
-          template(v-for="e in preset_infos")
+          template(v-for="e in CustomPresetInfo.values")
             b-radio-button(v-model="po_preset_key" :native-value="e.key") {{e.name}}
     template(v-if="false")
       footer.modal-card-foot

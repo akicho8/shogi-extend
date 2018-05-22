@@ -1,5 +1,6 @@
 import _ from "lodash"
-import { PresetInfo } from 'shogi-player/src/preset_info.js'
+import { CustomPresetInfo } from './custom_preset_info'
+import { HiraKomaInfo } from './hira_koma_info'
 
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
@@ -81,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setting_modal_p: false,
 
-        current_hira_or_koma: null,
+        current_hira_koma_key: null,
         ps_preset_key: js_global_params.current_chat_user["ps_preset_key"],
         po_preset_key: js_global_params.current_chat_user["po_preset_key"],
         current_lifetime_key: js_global_params.current_chat_user["lifetime_key"],
@@ -91,13 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     created() {
-      this.current_hira_or_koma = this.hira_or_koma
-      // this.matching_start_p = !!this.matching_at
+      this.current_hira_koma_key = this.hira_koma_default_key
     },
 
     watch: {
-      current_hira_or_koma(v) {
-        if (v === "hirate") {
+      current_hira_koma_key(v) {
+        if (v === "hira") {
           this.ps_preset_key = "平手"
           this.po_preset_key = "平手"
         }
@@ -214,18 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return LifetimeInfo.fetch(this.current_lifetime_key)
       },
 
-      // 手合割一覧
-      preset_infos() {
-        // return PresetInfo.values
-        return lobby_app_params.preset_infos
-      },
-
       // 現在選択されている手合割情報
       current_preset_info1() {
-        return PresetInfo.fetch(this.ps_preset_key)
+        return CustomPresetInfo.fetch(this.ps_preset_key)
       },
+
       current_preset_info2() {
-        return PresetInfo.fetch(this.po_preset_key)
+        return CustomPresetInfo.fetch(this.po_preset_key)
       },
 
       // latest_status_list() {
@@ -247,21 +242,17 @@ document.addEventListener('DOMContentLoaded', () => {
       //   }
       // },
 
-      hira_or_koma() {
+      hira_koma_default_key() {
         if (this.ps_preset_key === "平手" && this.po_preset_key === "平手") {
-          return "hirate"
+          return "hira"
         } else {
-          return "komaochi"
+          return "koma"
         }
       },
 
-      hirate_komaochi_infos() {
-        return {
-          hirate:   {name: "平手",   },
-          komaochi: {name: "駒落ち", },
-        }
+      current_hira_koma_info() {
+        return HiraKomaInfo.fetch(this.current_hira_koma_key)
       },
-
     },
   })
 })

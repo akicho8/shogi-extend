@@ -19,6 +19,9 @@ import "./bulma.js"
 import Vue from "vue/dist/vue.esm"
 window.Vue = Vue
 
+import Vuex from "vuex"
+Vue.use(Vuex)
+
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
 import Buefy from "buefy"
@@ -30,27 +33,34 @@ Vue.use(Buefy)
 import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
 Vue.component("shogi-player", ShogiPlayer)
 
-// FIXME: これどうにからんか？
-import { PresetInfo } from "shogi-player/src/preset_info.js"
-import { RunModeInfo } from "shogi-player/src/run_mode_info.js"
-import { ThemeInfo } from "shogi-player/src/theme_info.js"
-import { SizeInfo } from "shogi-player/src/size_info.js"
-import { VariationInfo } from "shogi-player/src/variation_info.js"
+import { PresetInfo } from "shogi-player/src/preset_info"
+Object.defineProperty(Vue.prototype, "PresetInfo", {value: PresetInfo})
 
-Object.defineProperty(Vue.prototype, 'PresetInfo', {value: PresetInfo})
-Object.defineProperty(Vue.prototype, 'RunModeInfo', {value: RunModeInfo})
-Object.defineProperty(Vue.prototype, 'ThemeInfo', {value: ThemeInfo})
-Object.defineProperty(Vue.prototype, 'SizeInfo', {value: SizeInfo})
-Object.defineProperty(Vue.prototype, 'VariationInfo', {value: VariationInfo})
+import { RunModeInfo } from "shogi-player/src/run_mode_info"
+Object.defineProperty(Vue.prototype, "RunModeInfo", {value: RunModeInfo})
 
-import Vuex from "vuex"
-Vue.use(Vuex)
+import { ThemeInfo } from "shogi-player/src/theme_info"
+Object.defineProperty(Vue.prototype, "ThemeInfo", {value: ThemeInfo})
+
+import { SizeInfo } from "shogi-player/src/size_info"
+Object.defineProperty(Vue.prototype, "SizeInfo", {value: SizeInfo})
+
+import { VariationInfo } from "shogi-player/src/variation_info"
+Object.defineProperty(Vue.prototype, "VariationInfo", {value: VariationInfo})
 
 //////////////////////////////////////////////////////////////////////////////// 静的情報
 
 import { LifetimeInfo } from "./lifetime_info"
-window.LifetimeInfo = LifetimeInfo
-Object.defineProperty(Vue.prototype, 'LifetimeInfo', {value: LifetimeInfo})
+Object.defineProperty(Vue.prototype, "LifetimeInfo", {value: LifetimeInfo})
+
+import { LastActionInfo } from "./last_action_info"
+Object.defineProperty(Vue.prototype, "LastActionInfo", {value: LastActionInfo})
+
+import { CustomPresetInfo } from "./custom_preset_info"
+Object.defineProperty(Vue.prototype, "CustomPresetInfo", {value: CustomPresetInfo})
+
+import { HiraKomaInfo } from "./hira_koma_info"
+Object.defineProperty(Vue.prototype, "HiraKomaInfo", {value: HiraKomaInfo})
 
 //////////////////////////////////////////////////////////////////////////////// チャット関連コンポーネント
 

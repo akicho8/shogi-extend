@@ -1,51 +1,28 @@
 import _ from "lodash"
 import axios from "axios"
-import chat_room_name from "./chat_room_name.js"
-import chess_clock from "./chess_clock.js"
+import chat_room_name from "./chat_room_name"
+import chess_clock from "./chess_clock"
 
-import { PresetInfo } from 'shogi-player/src/preset_info.js'
-import { Location } from 'shogi-player/src/location.js'
+import { PresetInfo } from "shogi-player/src/preset_info"
+import { Location } from "shogi-player/src/location"
+import { LastActionInfo } from "./last_action_info"
 
-// (function() {
-//   this.chat_vm || (this.chat_vm = {})
-// }).call(this)
-
-// app/assets/javascripts/cable/subscriptions/chat.coffee
-// App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" }
-//
-// # app/assets/javascripts/cable/subscriptions/lobby.coffee
-// App.cable.subscriptions.create { channel: "LobbyChannel" }
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   App.chat_room = App.cable.subscriptions.create({
     channel: "ChatRoomChannel",
     chat_room_id: chat_room_app_params.chat_room.id,
   }, {
     connected() {
-      console.log("ChatRoomChannel.connected")
       this.perform("room_in")
       this.system_say("入室しました")
     },
 
     disconnected() {
-      console.log("ChatRoomChannel.disconnected")
-      // 【注意】接続が切れている状態なのでここから perform で ruby 側を呼び出すことはできない。が、ruby 側の unsubscribed は自動的に呼ばれるのでそこで退室時の処理を書ける
-      // this.perform("room_out")
-      // this.system_say("退室しました")
+      // ここではすでに接続が切れている状態なので ruby 側の退出処理を呼び出すことができない。
+      // しかし ruby 側の unsubscribed もまた同じタイミングで呼ばれるのでそこで退出処理を書けばよい。
     },
 
     received(data) {
-      // 部屋名の共有
-      if (data["chat_room"]) {
-        // alert(data["chat_room"])
-      }
-
-      // 結局使ってない
-      if (!_.isNil(data["without_id"]) && data["without_id"] === js_global_params.current_chat_user.id) {
-        console.log("skip")
-        return
-      }
-
       if (data["watch_users"]) {
         App.chat_vm.watch_users = data["watch_users"]
       }
@@ -121,10 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("room_name_changed", {room_name: room_name})
     },
 
-    // kifu_body_sfen_broadcast(data) {
-    //   this.perform("kifu_body_sfen_broadcast", data)
-    // },
-
     lifetime_key_update(data) {
       this.perform("lifetime_key_update", data)
     },
@@ -148,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
     play_mode_long_sfen_set(data) {
       this.perform("play_mode_long_sfen_set", data)
     },
-
   })
 
   App.chat_vm = new Vue({
@@ -175,24 +147,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
 
+    created() {
+    },
+
     watch: {
-      // 使ってはいけない
+      // 【使うな危険】
       // 使うとブロードキャストの無限ループを考慮する必要がでてきてカオスになる
       // ちょっとバグっただけで無限ループになる
       // 遠回りだが @input にフックしてサーバー側に送って返ってきた値で更新する
       // 遠回りだと「更新」するのが遅くなると思うかもしれないがブロードキャストする側の画面は切り替わっているので問題ない
-      // ただしチャットのメッセージは除く。チャットの場合は入力を即座にチャット一覧に反映していないため
+      // ただしチャットのメッセージは除く
+      // チャットの場合は入力を即座にチャット一覧に反映していないため
       // このように一概にどう扱うのがよいのか判断が難しい
-      // 間違っても watch は使うな
-    },
-
-    created() {
+      // とりあえず基本として watch は使うな
     },
 
     methods: {
-      room_in() {
-      },
-
       // バトル開始！(1人がトリガー)
       game_start() {
         App.chat_room.system_say("バトル開始！")
@@ -223,19 +193,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 終了の通達があった
       game_ended(data) {
-        if (this.current_status === "battle_now") {
+        if (this.current_status === "st_battling") {
           this.end_at = data["end_at"]
           this.win_location_key = data["win_location_key"]
           this.last_action_key = data["last_action_key"]
-
-          // App.chat_room.system_say(`${this.win_location.name}の勝ち！`)
 
           if (this.member_p) {
             // 対局者同士
             if (this.double_team_p) {
               // 両方に所属している場合(自分対自分になっている場合)
               // 客観的な味方で報告
-              this.kyakkanntekina_kekka_dialog()
+              this.last_action_notify_dialog_basic()
             } else {
               // 片方に所属している場合
               if (_.includes(this.my_uniq_locations, this.win_location)) {
@@ -243,30 +211,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 Vue.prototype.$dialog.alert({
                   title: "勝利",
                   message: "勝ちました",
-                  type: 'is-primary',
+                  type: "is-primary",
                   hasIcon: true,
-                  icon: 'crown',
-                  iconPack: 'mdi',
+                  icon: "crown",
+                  iconPack: "mdi",
                 })
               } else {
                 // 負けた方
                 Vue.prototype.$dialog.alert({
                   title: "敗北",
                   message: "負けました",
-                  type: 'is-primary',
+                  type: "is-primary",
                 })
               }
             }
           } else {
             // 観戦者
-            this.kyakkanntekina_kekka_dialog()
+            this.last_action_notify_dialog_basic()
           }
         }
       },
 
       // 客観的結果通知
-      kyakkanntekina_kekka_dialog() {
-        Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`, type: 'is-primary'})
+      last_action_notify_dialog_basic() {
+        Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`, type: "is-primary"})
       },
 
       // 持ち時間の変更
@@ -311,13 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       play_mode_long_sfen_set(v) {
-        if (this.end_at) {
-          return
+        if (this.current_status === "st_battling") {
+          App.chat_room.play_mode_long_sfen_set({kifu_body: v, think_counter: this.think_counter, current_location_key: this.current_location.key})
         }
-        if (!this.begin_at) {
-          return
-        }
-        App.chat_room.play_mode_long_sfen_set({kifu_body: v, think_counter: this.think_counter, current_location_key: this.current_location.key})
       },
 
       location_name(location) {
@@ -372,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 操作する側を返す
       // 手番のメンバーが自分の場合に、自分の先後を返せばよい
       human_side_key() {
-        if (this.current_status === "battle_now") {
+        if (this.current_status === "st_battling") {
           if (this.current_membership_is_self_p) {
             return this.current_location.key
           }
@@ -423,40 +387,29 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       run_mode() {
-        if (this.current_status === "battle_before") {
+        if (this.current_status === "st_before") {
           return "play_mode"
         }
-        if (this.current_status === "battle_now") {
+        if (this.current_status === "st_battling") {
           if (this.member_p) {
             return "play_mode"
           } else {
             return "view_mode"
           }
         }
-        if (this.current_status === "battle_done") {
+        if (this.current_status === "st_done") {
           return "view_mode"
         }
-        // if (this.member_p) {
-        //   return "play_mode"
-        // } else {
-        //   return "view_mode"
-        // }
-        // if (_.isNil(this.begin_at)) {
-        //   return "play_mode"
-        // }
-        // if (this.end_at) {
-        //   return "view_mode"
-        // }
       },
 
       current_status() {
         if (!this.begin_at) {
-          return "battle_before"
+          return "st_before"
         }
         if (this.end_at) {
-          return "battle_done"
+          return "st_done"
         }
-        return "battle_now"
+        return "st_battling"
       },
 
       // 手合割一覧
@@ -466,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 考え中？ (プレイ中？)
       thinking_p() {
-        return !_.isNil(this.begin_at) && _.isNil(this.end_at)
+        return this.current_status === "st_done"
       },
 
       // 勝った方
@@ -474,14 +427,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return Location.fetch(this.win_location_key)
       },
 
-      last_action_name() {
-        const table = {
-          TORYO: "投了",
-          TIME_UP: "時間切れ",
-          ILLEGAL_MOVE: "反則",
-          TSUMI: "詰み",
-        }
-        return table[this.last_action_key]
+      last_action_info() {
+        LastActionInfo.fetch(this.last_action_key)
       },
     },
   })

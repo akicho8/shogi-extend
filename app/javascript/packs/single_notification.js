@@ -1,5 +1,4 @@
-// import _ from "lodash"
-// import axios from "axios"
+import { LifetimeInfo } from "./lifetime_info"
 
 document.addEventListener('DOMContentLoaded', () => {
   App.single_notification = App.cable.subscriptions.create({

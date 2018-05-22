@@ -340,7 +340,7 @@ class SwarsBattleRecord < ApplicationRecord
         info = swars_battle_agent.record_get(battle_key)
 
         # 対局中や引き分けのときは棋譜がないのでスキップ
-        unless info[:battle_done]
+        unless info[:st_done]
           return
         end
 

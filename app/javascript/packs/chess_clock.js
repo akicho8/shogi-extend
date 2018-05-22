@@ -1,4 +1,5 @@
-import { Location } from 'shogi-player/src/location.js'
+import { Location } from 'shogi-player/src/location'
+import { LifetimeInfo } from "./lifetime_info"
 import numeral from "numeral"
 
 export default {
