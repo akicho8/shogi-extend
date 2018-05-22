@@ -23,19 +23,32 @@ document.addEventListener('DOMContentLoaded', () => {
           this.perform("battle_match_ng", data)
         }
 
-        let message = ``
-        message += `時間: ${LifetimeInfo.fetch(e.from.lifetime_key).name}<br/>`
-        if (e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手") {
-          message += `手合割: 平手<br/>`
-        } else {
-          message += `手合割: 駒落ち<br/>`
-          message += `※あなた: ${e.from.po_preset_key}<br/>`
-          message += `※相手: ${e.from.ps_preset_key}<br/>`
-        }
-
+        let message = `
+<nav class="level">
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">持ち時間</p>
+      <p class="title is-size-4">${LifetimeInfo.fetch(e.from.lifetime_key).name}</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">手合割(あなた)</p>
+      <p class="title is-size-4">${e.from.po_preset_key}</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">手合割(相手)</p>
+      <p class="title is-size-4">${e.from.ps_preset_key}</p>
+    </div>
+  </div>
+</nav>
+`
         this.dialog_now = true
         this.confirmed = false
         Vue.prototype.$dialog.confirm({
+          // size: "is-large",
           title: `${e.from.name}さんからの挑戦状`,
           message: message,
           confirmText: "受ける",
