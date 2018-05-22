@@ -230,7 +230,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 客観的結果通知
       last_action_notify_dialog_basic() {
-        Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`, type: "is-primary"})
+        Vue.prototype.$dialog.alert({
+          type: "is-primary",
+          title: "結果",
+          message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`,
+        })
       },
 
       // 先後反転(全体)
@@ -415,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       last_action_info() {
-        LastActionInfo.fetch(this.last_action_key)
+        return LastActionInfo.fetch(this.last_action_key)
       },
     },
   })
