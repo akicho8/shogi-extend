@@ -11,42 +11,9 @@ javascript:
   template v-else=""
     .title.is-5 v-text="room_name" @click="room_name_click"
 
-  template(v-if="false")
-    template v-if="!begin_at"
-      .columns
-        .column
-          .box
-            button.button.is-primary.is-large @click="game_start" バトル開始！
-            / | &nbsp;
-            / b-dropdown(:value="ps_preset_key" @input="preset_key_update")
-            /   button.button.is-large(slot="trigger")
-            /     span
-            /       | {{current_preset_info1.name}}
-            /     b-icon(icon="menu-down")
-            /   b-dropdown-item(v-for="record in preset_infos" :value="record.key" :key="record.key")
-            /     | {{record.name}}
-            | &nbsp;
-            button.button.is-large @click="location_flip_all" 手番反転
-            | &nbsp;
-            b-dropdown(:value="current_lifetime_key" @input="lifetime_key_update")
-              button.button.is-large(slot="trigger")
-                span
-                  | {{current_lifetime_info.name}}
-                b-icon(icon="menu-down")
-              b-dropdown-item(v-for="e in LifetimeInfo.values" :value="e.key" :key="e.key")
-                | {{e.name}}
-
   .columns
     .column.is-two-thirds
       .box
-        / div v-if="begin_at"
-        /   .has-text-centered.is-size-5
-        /     template v-if="!end_at && current_membership_is_self_p"
-        /       button.button.is-primary.is-medium.is-outlined(@click="game_end_give_up_trigger") 投了
-        /     .is-pulled-right v-html="time_format('black')"
-        /     .is-pulled-left  v-html="time_format('white')"
-        / .is-clearfix
-
         div v-if="begin_at"
           nav.level
             .level-item.has-text-centered

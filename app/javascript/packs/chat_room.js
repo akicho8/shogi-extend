@@ -98,10 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("room_name_changed", {room_name: room_name})
     },
 
-    lifetime_key_update(data) {
-      this.perform("lifetime_key_update", data)
-    },
-
     game_start(data) {
       this.perform("game_start", data)
     },
@@ -235,15 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // 客観的結果通知
       last_action_notify_dialog_basic() {
         Vue.prototype.$dialog.alert({title: "結果", message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`, type: "is-primary"})
-      },
-
-      // 持ち時間の変更
-      lifetime_key_update(v) {
-        if (this.current_lifetime_key !== v) {
-          this.current_lifetime_key = v
-          App.chat_room.lifetime_key_update({lifetime_key: this.current_lifetime_info.key})
-          App.chat_room.system_say(`持ち時間を${this.current_lifetime_info.name}に変更しました`)
-        }
       },
 
       // 先後反転(全体)

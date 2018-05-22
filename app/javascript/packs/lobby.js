@@ -200,15 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return _.takeRight(this.lobby_chat_messages, 10)
       },
 
-      // // 持ち時間の変更
-      // lifetime_key_update(v) {
-      //   // if (this.current_lifetime_key !== v) {
-      //   //   this.current_lifetime_key = v
-      //   //   App.chat_room.lifetime_key_update({lifetime_key: this.current_lifetime_info.key})
-      //   //   App.chat_room.system_say(`持ち時間を${this.current_lifetime_info.name}に変更しました`)
-      //   // }
-      // },
-
       // 選択中の持ち時間項目
       current_lifetime_info() {
         return LifetimeInfo.fetch(this.current_lifetime_key)

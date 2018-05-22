@@ -102,13 +102,6 @@ class ChatRoomChannel < ApplicationCable::Channel
   #   ActionCable.server.broadcast(room_key, current_chat_room.js_attributes)
   # end
 
-  def lifetime_key_update(data)
-    lifetime_info = LifetimeInfo.fetch(data["lifetime_key"])
-    current_chat_room.update!(lifetime_key: lifetime_info.key)
-
-    ActionCable.server.broadcast(room_key, data)
-  end
-
   def room_name_changed(data)
     current_chat_room.update!(name: data["room_name"])
     ActionCable.server.broadcast(room_key, data)
