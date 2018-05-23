@@ -3,11 +3,12 @@ import { LifetimeInfo } from "./lifetime_info"
 import numeral from "numeral"
 
 export default {
-  data: function() {
+  data() {
     // console.log("DEBUG", "data", "think_counter", parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3)
     return {
       clock_counts: chat_room_app_params.chat_room.clock_counts,
-      think_counter: parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3, // リロードしたときに戻す。ペナルティとして3秒進める
+      think_counter: parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
+      byoyomi_data: chat_room_app_params.chat_room.byoyomi_data,
     }
   },
 
@@ -17,8 +18,17 @@ export default {
     setInterval(() => {
       if (this.thinking_p) {
         this.think_counter_set(this.think_counter + 1)
-        if (this.current_rest_counter === 0) {
-          this.game_end_time_up_trigger()
+
+        if (this.current_location) {
+          if (!this.second_p) {
+            if (this.current_rest_counter1 <= 0) {
+              this.byoyomi_mode_on()
+            }
+          } else {
+            if (this.current_rest_counter2 <= 0) {
+              this.game_end_time_up_trigger()
+            }
+          }
         }
       }
     }, 1000)
@@ -33,8 +43,20 @@ export default {
 
   methods: {
     // 指定手番(location_key)の残り秒数
-    rest_counter(location_key) {
-      let v = this.limit_seconds - this.total_time(location_key)
+    rest_counter1(location_key) {
+      let v = this.current_lifetime_info.limit_seconds - this.total_time(location_key)
+      if (this.current_location.key === location_key) {
+        v -= this.think_counter
+      }
+      if (v < 0) {
+        v = 0
+      }
+      return v
+    },
+
+    // 指定手番(location_key)の残り秒数
+    rest_counter2(location_key) {
+      let v = this.current_lifetime_info.byoyomi
       if (this.current_location.key === location_key) {
         v -= this.think_counter
       }
@@ -55,9 +77,16 @@ export default {
       if (this.flip) {
         location = location.flip
       }
-      let str = numeral(this.rest_counter(location.key)).format("00:00:00") // 0:00:00 になってしまう
-      str = str.replace(/^0:/, "")
-      return location.name + `<span class="digit_font">${str}</span>`
+
+      if (!this.byoyomi_data[location.key]) {
+        const count1 = this.rest_counter1(location.key)
+        let str = numeral(this.rest_counter1(location.key)).format("00:00:00") // 0:00:00 になってしまう
+        str = str.replace(/^0:/, "")
+        return location.name + `<span class="digit_font">${str}</span>`
+      }
+
+      const count2 = this.rest_counter2(location.key)
+      return location.name + `<span class="digit_font">${count2}</span>`
     },
 
     think_counter_reset() {
@@ -67,8 +96,13 @@ export default {
     think_counter_set(v) {
       this.think_counter = v
       localStorage.setItem(chat_room_app_params.chat_room.id, v)
-      // console.log("DEBUG", "think_counter_set", v)
     },
+
+    byoyomi_mode_on() {
+      this.byoyomi_data[this.current_location.key] = true
+      this.think_counter_set(0)
+      App.chat_room.byoyomi_mode_on(this.current_location.key)
+    }
   },
 
   computed: {
@@ -77,17 +111,25 @@ export default {
       return LifetimeInfo.fetch(this.current_lifetime_key)
     },
 
-    // 持ち時間
-    limit_seconds() {
-      return this.current_lifetime_info.limit_seconds
+    second_p() {
+      return this.byoyomi_data[this.current_location.key]
     },
 
-    // 現在の手番の人の残り時間
-    current_rest_counter() {
-      if (!this.current_location) {
-        return 0
-      }
-      return this.rest_counter(this.current_location.key)
+    current_rest_counter1() {
+      return this.rest_counter1(this.current_location.key)
     },
+
+    current_rest_counter2() {
+      return this.rest_counter2(this.current_location.key)
+    },
+
+    // // 現在の手番の人の残り時間
+    // current_rest_counter() {
+    //   if (!this.current_location) {
+    //     return 0
+    //   }
+    //   const count = this.rest_counter1(this.current_location.key)
+    //   return this.rest_counter2(this.current_location.key)
+    // },
   },
 }

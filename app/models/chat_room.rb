@@ -62,6 +62,7 @@ class ChatRoom < ApplicationRecord
   }
 
   serialize :clock_counts
+  serialize :byoyomi_data
 
   before_validation on: :create do
     self.name = name.presence || name_default
@@ -71,6 +72,7 @@ class ChatRoom < ApplicationRecord
     # self.kifu_body_sfen ||= "position startpos"
     self.turn_max ||= 0
     self.clock_counts ||= {black: [], white: []}
+    self.byoyomi_data ||= {black: false, white: false}
   end
 
   before_validation do

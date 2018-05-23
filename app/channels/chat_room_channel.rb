@@ -202,6 +202,13 @@ class ChatRoomChannel < ApplicationCable::Channel
       })
   end
 
+  # 先後をまとめて反転する
+  def byoyomi_mode_on(data)
+    location = Warabi::Location.fetch(data["location_key"])
+    current_chat_room.byoyomi_data[location.key] = true
+    current_chat_room.save!
+  end
+
   private
 
   def room_members_update

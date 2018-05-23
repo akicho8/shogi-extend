@@ -117,6 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
     play_mode_long_sfen_set(data) {
       this.perform("play_mode_long_sfen_set", data)
     },
+
+    byoyomi_mode_on(location_key) {
+      this.perform("byoyomi_mode_on", {location_key: location_key})
+    },
   })
 
   App.chat_vm = new Vue({

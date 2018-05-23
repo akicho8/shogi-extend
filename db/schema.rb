@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "name", null: false, comment: "部屋名"
     t.text "kifu_body_sfen", null: false, comment: "USI形式棋譜"
     t.text "clock_counts", null: false, comment: "対局時計情報"
+    t.text "byoyomi_data", null: false, comment: "秒読み状態"
     t.integer "turn_max", null: false, comment: "手番数"
     t.datetime "battle_request_at", comment: "対局申し込みによる成立日時"
     t.datetime "auto_matched_at", comment: "自動マッチングによる成立日時"
