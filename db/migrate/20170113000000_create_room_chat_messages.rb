@@ -65,6 +65,7 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
       t.integer :position,                  index: true, comment: "入室順序"
       t.datetime :standby_at,                            comment: "準備完了日時"
       t.datetime :fighting_now_at,                       comment: "部屋に入った日時で抜けたり切断すると空"
+      t.datetime :game_end_time_up_trigger_at,           comment: "タイムアップしたのを検知した日時"
       t.timestamps null: false
     end
 
