@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (data["begin_at"]) {
-        App.chat_vm.game_setup(data)
+        App.chat_vm.battle_setup(data)
       }
 
       // Called when there"s incoming data on the websocket for this channel
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data["turn_max"]) {
         App.chat_vm.turn_max = data["turn_max"]
         App.chat_vm.clock_counts = data["clock_counts"]
-        App.chat_vm.think_counter_reset()
+        App.chat_vm.clock_counter_reset()
       }
 
       if (data["kifu_body_sfen"]) {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 終了
       if (data["end_at"]) {
-        App.chat_vm.game_ended(data)
+        App.chat_vm.battle_end_notice(data)
       }
 
       // 定期的に呼ぶ場合
@@ -98,16 +98,12 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("room_name_changed", {room_name: room_name})
     },
 
-    game_start(data) {
-      this.perform("game_start", data)
+    time_up_trigger(data) {
+      this.perform("time_up_trigger", data)
     },
 
-    game_end_time_up_trigger(data) {
-      this.perform("game_end_time_up_trigger", data)
-    },
-
-    game_end_give_up_trigger(data) {
-      this.perform("game_end_give_up_trigger", data)
+    give_up_trigger(data) {
+      this.perform("give_up_trigger", data)
     },
 
     location_flip_all(data) {
@@ -118,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("play_mode_long_sfen_set", data)
     },
 
-    byoyomi_mode_on(location_key) {
-      this.perform("byoyomi_mode_on", {location_key: location_key})
+    countdown_mode_on(location_key) {
+      this.perform("countdown_mode_on", {location_key: location_key})
     },
   })
 
@@ -163,36 +159,23 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     methods: {
-      // バトル開始！(1人がトリガー)
-      game_start() {
-        App.chat_room.system_say("バトル開始！")
-        App.chat_room.game_start()
-      },
-
       // バトル開始(トリガーから全体通知が来たときの処理)
-      game_setup(data) {
-        console.log("DEBUG", "game_setup")
+      battle_setup(data) {
+        console.log("DEBUG", "battle_setup")
 
         this.begin_at = data["begin_at"]
         this.end_at = null
-        this.think_counter_reset()
+        this.clock_counter_reset()
       },
 
       // ゲーム終了(投了により
-      game_end_give_up_trigger() {
-        App.chat_room.game_end_give_up_trigger({win_location_key: this.current_location.flip.key})
+      give_up_trigger() {
+        App.chat_room.give_up_trigger({win_location_key: this.current_location.flip.key})
         App.chat_room.system_say("負けました")
       },
 
-      // ゲーム終了(時間切れにより・生き残っている全員で送信)
-      game_end_time_up_trigger() {
-        if (this.member_p) {
-          App.chat_room.game_end_time_up_trigger({win_location_key: this.current_location.flip.key})
-        }
-      },
-
       // 終了の通達があった
-      game_ended(data) {
+      battle_end_notice(data) {
         if (this.current_status === "st_battling") {
           this.end_at = data["end_at"]
           this.win_location_key = data["win_location_key"]
@@ -275,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       play_mode_long_sfen_set(v) {
         if (this.current_status === "st_battling") {
-          App.chat_room.play_mode_long_sfen_set({kifu_body: v, think_counter: this.think_counter, current_location_key: this.current_location.key})
+          App.chat_room.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key})
         }
       },
 
@@ -363,12 +346,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 自分に対応する membership の配列
       __my_memberships() {
-        return _.filter(this.room_members, (e) => this.user_self_p(e.chat_user))
+        return _.filter(this.room_members, e => this.user_self_p(e.chat_user))
+      },
+
+      // 自分に対応する membership の IDs
+      __my_membership_ids() {
+        return this.__my_memberships.map(e => e.id)
       },
 
       // 所属しているチーム(複数)
       my_uniq_locations() {
-        return _.uniq(_.map(this.__my_memberships, (e) => Location.fetch(e.location_key)))
+        return _.uniq(_.map(this.__my_memberships, e => Location.fetch(e.location_key)))
       },
 
       // 1人で複数のチームに所属している？ (自分対自分の場合などになる)

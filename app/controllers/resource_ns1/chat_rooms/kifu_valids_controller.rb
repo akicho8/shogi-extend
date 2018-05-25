@@ -15,7 +15,7 @@ module ResourceNs1
       #       kifu_body_sfen = mediator.to_sfen
       #       ki2_a = mediator.to_ki2_a
       # 
-      #       current_chat_room.clock_counts[mediator.opponent_player.location.key].push(params[:think_counter].to_i) # push でも AR は INSERT 対象になる
+      #       current_chat_room.clock_counts[mediator.opponent_player.location.key].push(params[:clock_counter].to_i) # push でも AR は INSERT 対象になる
       #       current_chat_room.kifu_body_sfen = kifu_body_sfen
       #       current_chat_room.turn_max = mediator.turn_info.turn_max
       #       current_chat_room.save!

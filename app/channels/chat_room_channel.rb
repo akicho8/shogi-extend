@@ -53,7 +53,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     kifu_body_sfen = mediator.to_sfen
     ki2_a = mediator.to_ki2_a
 
-    current_chat_room.clock_counts[mediator.opponent_player.location.key].push(data["think_counter"].to_i) # push でも AR は INSERT 対象になる
+    current_chat_room.clock_counts[mediator.opponent_player.location.key].push(data["clock_counter"].to_i) # push でも AR は INSERT 対象になる
     current_chat_room.kifu_body_sfen = kifu_body_sfen
     current_chat_room.turn_max = mediator.turn_info.turn_max
     current_chat_room.save!
@@ -137,7 +137,7 @@ class ChatRoomChannel < ApplicationCable::Channel
             e.update!(standby_at: Time.current)
           end
           if current_chat_room.chat_memberships.standby_enable.count >= current_chat_room.chat_memberships.count
-            game_start({})
+            battle_start({})
           end
         end
       end
@@ -168,22 +168,28 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   # FIXME: 入り直したときにも再び呼ばれてしまう
-  def game_start(data)
+  def battle_start(data)
     current_chat_room.update!(begin_at: Time.current)
     ActionCable.server.broadcast(room_key, begin_at: current_chat_room.begin_at)
   end
 
-  def game_end_time_up_trigger(data)
-    if current_chat_room.end_at
-      # みんなで送信してくるので1回だけに絞るため
-      return
+  def time_up_trigger(data)
+    # membership_ids は送ってきた人で対応するレコードにタイムアップ認定する
+    chat_memberships = current_chat_room.chat_memberships.where(id: data["membership_ids"])
+    chat_memberships.each do |e|
+      e.update!(time_up_trigger_at: Time.current)
     end
-    current_chat_room.update!(end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
-    game_end_broadcast
+
+    # メンバー是認がタイムアップ認定したら全員にタイムアップ通知する
+    # こうすることで1秒残してタイムアップにならなくなる
+    if current_chat_room.chat_memberships.where.not(time_up_trigger_at: nil).count >= current_chat_room.chat_memberships.count
+      current_chat_room.update!(end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
+      game_end_broadcast
+    end
   end
 
   # 負ける人が申告する
-  def game_end_give_up_trigger(data)
+  def give_up_trigger(data)
     current_chat_room.update!(end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TORYO")
     game_end_broadcast
   end
@@ -203,9 +209,9 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   # 先後をまとめて反転する
-  def byoyomi_mode_on(data)
+  def countdown_mode_on(data)
     location = Warabi::Location.fetch(data["location_key"])
-    current_chat_room.byoyomi_data[location.key] = true
+    current_chat_room.countdown_mode_hash[location.key] = true
     current_chat_room.save!
   end
 

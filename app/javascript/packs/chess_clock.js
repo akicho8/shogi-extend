@@ -4,29 +4,30 @@ import numeral from "numeral"
 
 export default {
   data() {
-    // console.log("DEBUG", "data", "think_counter", parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3)
+    // console.log("DEBUG", "data", "clock_counter", parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 0) + 3)
     return {
       clock_counts: chat_room_app_params.chat_room.clock_counts,
-      think_counter: parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
-      byoyomi_data: chat_room_app_params.chat_room.byoyomi_data,
+      clock_counter: parseInt(localStorage.getItem(chat_room_app_params.chat_room.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
+      countdown_mode_hash: chat_room_app_params.chat_room.countdown_mode_hash,
+      time_up_trigger_count: 0, // time_up_trigger() 実行回数制限用
     }
   },
 
   created() {
-    console.log("DEBUG", "created", "think_counter", this.think_counter)
+    console.log("DEBUG", "created", "clock_counter", this.clock_counter)
 
     setInterval(() => {
       if (this.thinking_p) {
-        this.think_counter_set(this.think_counter + 1)
+        this.clock_counter_inc()
 
         if (this.current_location) {
           if (!this.second_p) {
             if (this.current_rest_counter1 <= 0) {
-              this.byoyomi_mode_on()
+              this.countdown_mode_on()
             }
           } else {
             if (this.current_rest_counter2 <= 0) {
-              this.game_end_time_up_trigger()
+              this.time_up_trigger()
             }
           }
         }
@@ -42,11 +43,22 @@ export default {
   },
 
   methods: {
+    // ゲーム終了(時間切れにより・生き残っている全員で送信)
+    time_up_trigger() {
+      if (this.member_p) {
+        if (this.time_up_trigger_count === 0) {
+          // ログが見やすいように1回だけコールする
+          App.chat_room.time_up_trigger({membership_ids: this.__my_membership_ids, win_location_key: this.current_location.flip.key})
+        }
+        this.time_up_trigger_count += 1
+      }
+    },
+
     // 指定手番(location_key)の残り秒数
     rest_counter1(location_key) {
       let v = this.current_lifetime_info.limit_seconds - this.total_time(location_key)
       if (this.current_location.key === location_key) {
-        v -= this.think_counter
+        v -= this.clock_counter
       }
       if (v < 0) {
         v = 0
@@ -58,7 +70,7 @@ export default {
     rest_counter2(location_key) {
       let v = this.current_lifetime_info.byoyomi
       if (this.current_location.key === location_key) {
-        v -= this.think_counter
+        v -= this.clock_counter
       }
       if (v < 0) {
         v = 0
@@ -78,7 +90,7 @@ export default {
         location = location.flip
       }
 
-      if (!this.byoyomi_data[location.key]) {
+      if (!this.countdown_mode_hash[location.key]) {
         const count1 = this.rest_counter1(location.key)
         let str = numeral(this.rest_counter1(location.key)).format("00:00:00") // 0:00:00 になってしまう
         str = str.replace(/^0:/, "")
@@ -89,19 +101,23 @@ export default {
       return location.name + `<span class="digit_font">${count2}</span>`
     },
 
-    think_counter_reset() {
-      this.think_counter_set(0)
+    clock_counter_inc() {
+      this.clock_counter_set(this.clock_counter + 1)
     },
 
-    think_counter_set(v) {
-      this.think_counter = v
+    clock_counter_reset() {
+      this.clock_counter_set(0)
+    },
+
+    clock_counter_set(v) {
+      this.clock_counter = v
       localStorage.setItem(chat_room_app_params.chat_room.id, v)
     },
 
-    byoyomi_mode_on() {
-      this.byoyomi_data[this.current_location.key] = true
-      this.think_counter_set(0)
-      App.chat_room.byoyomi_mode_on(this.current_location.key)
+    countdown_mode_on() {
+      this.countdown_mode_hash[this.current_location.key] = true
+      this.clock_counter_set(0)
+      App.chat_room.countdown_mode_on(this.current_location.key)
     }
   },
 
@@ -112,7 +128,7 @@ export default {
     },
 
     second_p() {
-      return this.byoyomi_data[this.current_location.key]
+      return this.countdown_mode_hash[this.current_location.key]
     },
 
     current_rest_counter1() {
@@ -122,14 +138,5 @@ export default {
     current_rest_counter2() {
       return this.rest_counter2(this.current_location.key)
     },
-
-    // // 現在の手番の人の残り時間
-    // current_rest_counter() {
-    //   if (!this.current_location) {
-    //     return 0
-    //   }
-    //   const count = this.rest_counter1(this.current_location.key)
-    //   return this.rest_counter2(this.current_location.key)
-    // },
   },
 }

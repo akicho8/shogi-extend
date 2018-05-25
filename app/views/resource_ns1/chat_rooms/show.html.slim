@@ -23,7 +23,7 @@ javascript:
             template v-if="!end_at && current_membership_is_self_p"
               .level-item.has-text-centered
                 div
-                  button.button.is-primary.is-outlined(@click="game_end_give_up_trigger") 投了
+                  button.button.is-primary.is-outlined(@click="give_up_trigger") 投了
             .level-item.has-text-centered
               div
                 p.heading 残り時間
@@ -31,7 +31,7 @@ javascript:
 
       - if Rails.env.development?
         .box
-          | think_counter: {{think_counter}}<br>
+          | clock_counter: {{clock_counter}}<br>
 
         shogi-player(
           :run_mode="run_mode"
@@ -51,7 +51,7 @@ javascript:
       - if Rails.env.development?
         .box
           | current_location: {{current_location.key}}<br>
-          | think_counter: {{think_counter}}<br>
+          | clock_counter: {{clock_counter}}<br>
           | clock_counts: {{clock_counts}}<br>
           | human_side_key: {{human_side_key}}<br>
           | current_membership_is_self_p: {{current_membership_is_self_p}}<br>

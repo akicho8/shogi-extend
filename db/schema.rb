@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.integer "position", comment: "入室順序"
     t.datetime "standby_at", comment: "準備完了日時"
     t.datetime "fighting_now_at", comment: "部屋に入った日時で抜けたり切断すると空"
+    t.datetime "time_up_trigger_at", comment: "タイムアップしたのを検知した日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"
@@ -36,7 +37,7 @@ ActiveRecord::Schema.define(version: 20171222200100) do
     t.string "name", null: false, comment: "部屋名"
     t.text "kifu_body_sfen", null: false, comment: "USI形式棋譜"
     t.text "clock_counts", null: false, comment: "対局時計情報"
-    t.text "byoyomi_data", null: false, comment: "秒読み状態"
+    t.text "countdown_mode_hash", null: false, comment: "秒読み状態"
     t.integer "turn_max", null: false, comment: "手番数"
     t.datetime "battle_request_at", comment: "対局申し込みによる成立日時"
     t.datetime "auto_matched_at", comment: "自動マッチングによる成立日時"
