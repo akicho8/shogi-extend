@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = data["message"]
         const from = data["from"]
         const to = data["to"]
-        str = `${from.name}: ${message}`
+        const str = `${from.name}: ${message}`
         Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
       }
 
