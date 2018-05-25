@@ -29,9 +29,8 @@ javascript:
                 p.heading 残り時間
                 p.title v-html="time_format('black')"
 
-      - if Rails.env.development?
-        .box
-          | clock_counter: {{clock_counter}}<br>
+        - if Rails.env.development?
+            | clock_counter: {{clock_counter}}<br>
 
         shogi-player(
           :run_mode="run_mode"
