@@ -16,7 +16,7 @@ if (true) {
       sourceMap: true,
       uglifyOptions: {
         ecma: 6,
-        drop_console: true,
+        drop_console: false,     // console.log を除去するか？
         // beautiful: true,
         // mangle: {
         //   safari10: true,
