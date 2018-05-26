@@ -424,12 +424,6 @@ aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-axios-debug-log@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/axios-debug-log/-/axios-debug-log-0.4.0.tgz#f3fee09b3c0c52cc710cf32c099ec04206c2f7b4"
-  dependencies:
-    debug "^3.0.0"
-
 axios@^0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
@@ -2123,7 +2117,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8:
   dependencies:
     ms "2.0.0"
 
-debug@^3.0.0, debug@^3.0.1, debug@^3.1.0:
+debug@^3.0.1, debug@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -6174,14 +6168,13 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi-player@0.0.83:
-  version "0.0.83"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.83.tgz#87e4a922beedfc24935d18b80bb7c167bab91b81"
+shogi-player@^0.0.85:
+  version "0.0.85"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.85.tgz#8bb841c2b9bf608b7749a5024d9f241a883af735"
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
     axios "^0.17.1"
-    axios-debug-log "^0.4.0"
     babel-cli "^6.26.0"
     babel-core "^6.22.1"
     babel-eslint "^8.2.1"
