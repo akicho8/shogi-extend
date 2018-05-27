@@ -42,7 +42,7 @@ class ChatUser < ApplicationRecord
   end
 
   def js_attributes
-    JSON.load(to_json)
+    as_json
   end
 
   after_commit do
@@ -57,6 +57,16 @@ class ChatUser < ApplicationRecord
   concerning :AvatarMethods do
     included do
       has_one_attached :avatar
+    end
+
+    def avatar_url
+      if avatar.attached?
+        # ▼Activestorrage service_url missing default_url_options[:host] · Issue #32866 · rails/rails
+        # https://github.com/rails/rails/issues/32866
+        Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true)
+      else
+        ActionController::Base.helpers.asset_path("character_game_syougi.png")
+      end
     end
   end
 

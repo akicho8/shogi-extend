@@ -58,26 +58,56 @@ javascript:
 
       .box
         .title.is-5= "棋譜"
-        pre.pre-wrap
-          | {{human_kifu_text}}
+        pre.pre-wrap(v-text="human_kifu_text")
 
     .column
       .box
         / .title.is-5= "チャット"
+
         table.table.is-narrow.is-fullwidth.chat_div
           tr v-for="e of latest_room_chat_messages"
             td
+              img(:src="e.chat_user.avatar_url")
               span.has-text-grey
                 = "{{e.chat_user.name}}： "
               = " "
               span v-html="e.message"
-        .field
-          .control
-            input.input.is-large.is-primary type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter"
-        .field
-          .control
-            button.button.is-primary @click="message_enter"
-              | 送信
+
+        / template v-for="e of latest_room_chat_messages"
+        /   article.media
+        /     figure.media-left
+        /       p.image.is-16x16
+        /         img(:src="e.chat_user.avatar_url")
+        /     .media-content
+        /       .field
+        /         p.control
+        /           = "{{e.chat_user.name}}： "
+        /           span(v-html="e.message")
+                
+                
+        article.media
+          figure.media-left
+            p.image.is-48x48
+              - if current_chat_user.avatar.attached?
+                = image_tag current_chat_user.avatar
+              - else
+                = image_tag("character_game_syougi.png", size: "128")
+
+          .media-content
+            .field
+              p.control
+                input.input.is-large type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter"
+            nav.level
+              .level-left
+                .level-item
+                  button.button.is-primary @click="message_enter"
+                    | 送信
+              / .level-right
+              /   .level-item
+              /     label.checkbox
+              /       input[type="checkbox"]
+              /       |  Press enter to submit
+
       .box
         b-table(:data="room_members")
           template slot-scope="props"
@@ -93,7 +123,7 @@ javascript:
             b-table-column(label="手番")
               | {{location_key_name(props.row)}}
               | {{location_mark(props.row)}}
-                
+
       template(v-if="!_.isEmpty(watch_users)")
         .box
           .title.is-5= "観戦者"

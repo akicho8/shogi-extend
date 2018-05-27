@@ -31,6 +31,6 @@ class RoomChatMessage < ApplicationRecord
   end
 
   def js_attributes
-    JSON.load(to_json(include: [:chat_user, :chat_room]))
+    JSON.load(to_json(include: [{:chat_user => {methods: [:avatar_url]}}, :chat_room]))
   end
 end
