@@ -18,6 +18,7 @@ module ShogiWeb
 
     config.time_zone = "Tokyo"
     config.i18n.default_locale = :ja
+    config.colorize_logging = false
     config.before_configuration do
       require Rails.root.join("config/app_config")
       config.app_config = AppConfig
