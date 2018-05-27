@@ -18,7 +18,7 @@ javascript:
           nav.level
             .level-item.has-text-centered
               div
-                p.heading 残り時間
+                / p.heading 残り時間
                 p.title v-html="time_format('white')"
             template v-if="!end_at && current_membership_is_self_p"
               .level-item.has-text-centered
@@ -26,7 +26,7 @@ javascript:
                   button.button.is-primary.is-outlined(@click="give_up_trigger") 投了
             .level-item.has-text-centered
               div
-                p.heading 残り時間
+                / p.heading 残り時間
                 p.title v-html="time_format('black')"
 
         - if Rails.env.development?
@@ -63,7 +63,7 @@ javascript:
 
     .column
       .box
-        .title.is-5= "チャット"
+        / .title.is-5= "チャット"
         table.table.is-narrow.is-fullwidth.chat_div
           tr v-for="e of latest_room_chat_messages"
             td
@@ -79,30 +79,30 @@ javascript:
             button.button.is-primary @click="message_enter"
               | 送信
       .box
-        .title.is-5= "参加者"
-        b-table(:data="room_members" :paginated="false" :per-page="10")
+        b-table(:data="room_members")
           template slot-scope="props"
-            b-table-column(label="名前")
-              messenger :message_to="props.row.chat_user"
-              template v-if="user_self_p(props.row.chat_user)"
-                = " *"
-            b-table-column(label="状態")
-              / template v-if="props.row.chat_user.online_at"
-              template v-if="props.row.fighting_now_at"
-                b-icon icon="access-point" class="has-text-success"
-              template v-else=""
-                b-icon icon="access-point" class="has-text-grey-lighter"
+            b-table-column(label="対局者")
+              messenger(:message_to="props.row.chat_user")
+              = " "
+              template(v-if="props.row.fighting_now_at")
+                b-icon(icon="access-point" class="has-text-success" custom-size="mdi-18px")
+              template(v-else)
+                b-icon(icon="access-point" class="has-text-grey-lighter")
+              template(v-if="user_self_p(props.row.chat_user)")
+                = " ★"
             b-table-column(label="手番")
               | {{location_key_name(props.row)}}
               | {{location_mark(props.row)}}
-      .box
-        .title.is-5= "観戦者"
-        b-table(:data="watch_users" :paginated="false" :per-page="10")
-          template slot-scope="props"
-            b-table-column(field="name" label="名前" sortable)
-              messenger :message_to="props.row"
-              template v-if="user_self_p(props.row)"
-                = " *"
+                
+      template(v-if="!_.isEmpty(watch_users)")
+        .box
+          .title.is-5= "観戦者"
+          b-table(:data="watch_users")
+            template slot-scope="props"
+              b-table-column(field="name" label="名前" sortable)
+                messenger :message_to="props.row"
+                template v-if="user_self_p(props.row)"
+                  = " *"
 
   - if Rails.env.development?
     .columns
