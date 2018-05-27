@@ -1,11 +1,6 @@
 class ApplicationController < ActionController::Base
   add_flash_types :success, :info, :warning, :danger
 
-  # モデルのなかで service_url を取得するため。これは Rails 5.3.0 ぐらい修正されるはず
-  before_action do
-    ActiveStorage::Current.host ||= request.base_url
-  end
-
   def submitted?(name)
     [name, "#{name}.x", "#{name}.y"].any? {|e| params.key?(e) }
   end
