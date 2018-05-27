@@ -267,6 +267,10 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     },
     computed: {
+      // コントローラー類を非表示にする？
+      any_controller_hide() {
+        return this.member_p && this.current_status === "st_battling"
+      },
 
       // チャットに表示する最新メッセージたち
       latest_room_chat_messages() {
