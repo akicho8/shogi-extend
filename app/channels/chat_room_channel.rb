@@ -58,13 +58,10 @@ class ChatRoomChannel < ApplicationCable::Channel
     current_chat_room.turn_max = mediator.turn_info.turn_max
     current_chat_room.save!
 
-    info.names_set(current_chat_room.names_hash)
-    human_kifu_text = info.to_ki2 # or ki2_a.join(" ")
-
     broadcast_data = {
       turn_max: mediator.turn_info.turn_max,
       kifu_body_sfen: kifu_body_sfen,
-      human_kifu_text: info.to_ki2, # or ki2_a.join(" ")
+      human_kifu_text: current_chat_room.human_kifu_text,
       last_hand: ki2_a.last,
       moved_chat_user_id: current_chat_user.id, # 操作した人(この人以外に盤面を反映する)
       clock_counts: current_chat_room.clock_counts,

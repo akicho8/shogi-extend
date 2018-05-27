@@ -108,6 +108,15 @@ class ChatRoom < ApplicationRecord
     rescue => error
       return error.message
     end
+    if begin_at
+      info.header["開始日時"] = begin_at.to_s(:csa_ymdhms)
+    end
+    if end_at
+      info.header["終了日時"] = end_at.to_s(:csa_ymdhms)
+    end
+    if persisted?
+      info.header["場所"] = Rails.application.routes.url_helpers.url_for([:resource_ns1, self, {only_path: false}.merge(ActionMailer::Base.default_url_options)])
+    end
     info.names_set(names_hash)
     info.to_ki2
   end
