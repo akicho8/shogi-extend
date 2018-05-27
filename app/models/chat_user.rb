@@ -54,6 +54,12 @@ class ChatUser < ApplicationRecord
     ActionCable.server.broadcast("lobby_channel", online_users: online_users)
   end
 
+  concerning :AvatarMethods do
+    included do
+      has_one_attached :avatar
+    end
+  end
+
   concerning :OnlineMethods do
     included do
       scope :online_only, -> { where.not(online_at: nil) }

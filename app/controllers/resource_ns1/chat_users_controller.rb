@@ -28,7 +28,9 @@ module ResourceNs1
     include ModulableCrud::All
 
     def redirect_to_where
-      [:resource_ns1, :chat_rooms]
+      # [:resource_ns1, :chat_rooms]
+      # [:edit, :resource_ns1, current_record]
+      [:edit, :resource_ns1, current_record]
     end
   end
 end

@@ -2,3 +2,9 @@
   = form.label(:name, class: "label")
   .control
     = form.text_field(:name, class: "input", required: true)
+.field
+  = form.label(:avatar, class: "label")
+  .control
+    = form.file_field(:avatar, class: "input")
+    - if form.object.avatar.attached?
+      = image_tag form.object.avatar.variant(resize: "640")
