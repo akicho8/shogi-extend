@@ -27,6 +27,26 @@ module ResourceNs1
   class ChatUsersController < ApplicationController
     include ModulableCrud::All
 
+    def show
+      @chat_user_show_app_params = {
+        chat_rooms: current_record.chat_rooms.as_json({
+            include: {
+              :room_owner => nil,
+              :chat_users => nil,
+              :watch_users => nil,
+              :chat_memberships => {
+                include: :chat_user,
+              },
+            }, methods: [
+              :show_path,
+              :handicap,
+              :human_kifu_text,
+            ],
+          })
+
+      }
+    end
+
     def redirect_to_where
       # [:resource_ns1, :chat_rooms]
       # [:edit, :resource_ns1, current_record]

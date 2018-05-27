@@ -54,7 +54,7 @@
                   == link_to(user.user_key, user) + ship.swars_battle_grade.name
 
                 //////////////////////////////////////////////////////////////////////////////// 右端ドロップダウン
-                b-dropdown hoverable=true
+                b-dropdown(hoverable)
                   a class="card-header-icon" slot="trigger"
                     b-icon pack="fas" icon="angle-down" size="is-small"
                   b-dropdown-item :has-link="true" :paddingless="true"

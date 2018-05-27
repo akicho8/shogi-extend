@@ -57,15 +57,23 @@ html lang="ja"
                 = link_to("2ch棋譜検索", [:resource_ns1, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records"))])
         #header_app.navbar-end(v-cloak)
           .navbar-item
+            b-dropdown(hoverable)
+              span(slot="trigger")
+                - if current_chat_user.avatar.attached?
+                  = image_tag(current_chat_user.avatar, class: "face_icon")
+                - else
+                  = image_tag("character_game_syougi.png", class: "face_icon")
+                span.my_name
+                  = current_chat_user.name
+              b-dropdown-item :has-link="true" :paddingless="true"
+                = link_to("プロフィール", [:resource_ns1, current_chat_user])
+              b-dropdown-item :has-link="true" :paddingless="true"
+                = link_to("設定", [:edit, :resource_ns1, current_chat_user])
+          .navbar-item
             | オンライン{{online_only_count}}人
           .navbar-item
             | 対局中{{fighter_only_count}}人
-          .navbar-item
-            = link_to([:edit, :resource_ns1, current_chat_user], class: "button") do
-              b-icon(icon="account")
-              == "&nbsp;"
-              == "&nbsp;"
-              | #{current_chat_user.name}
+
 
     - if false
       .nav.navbar.is-primary(role="navigation" aria-label="main navigation")

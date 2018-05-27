@@ -1,0 +1,69 @@
+javascript:
+  var chat_user_show_app_params = #{@chat_user_show_app_params.to_json.html_safe}
+
+- content_for :head do
+  = javascript_pack_tag("chat_user_show")
+
+#chat_user_show_app
+  .title.is-4
+    = "#{current_record.name}さんのプロフィール"
+
+  .columns
+    .column.is-one-quarter
+      - if current_record.avatar.attached?
+        = image_tag current_record.avatar.variant(resize: "800"), size: "256"
+      - else
+        = image_tag("character_game_syougi.png", size: "128")
+    .column
+      nav.level.box
+        .level-item.has-text-centered
+          div
+            p.heading 勝ち
+            p.title.is-size-4
+              = 0
+        .level-item.has-text-centered
+          div
+            p.heading 負け
+            p.title.is-size-4
+              = 0
+
+      .box
+        .title.is-4= "対局履歴"
+        b-table(:data="chat_rooms" :paginated="true" :per-page="10")
+          template slot-scope="props"
+            b-table-column field="name" label="部屋" sortable="sortable"
+              a :href="props.row.show_path"
+                - if Rails.env.development?
+                  | #
+                  | {{props.row.id}}
+                  | &nbsp;
+                | {{room_members_format(props.row)}}
+            - if Rails.env.development?
+              b-table-column field="chat_users" label="全参加者" sortable="sortable" numeric="numeric"
+                | {{props.row.chat_users.length}}
+              b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
+                | {{props.row.current_chat_users_count}}
+            b-table-column field="watch_memberships_count" label="観戦者" sortable="sortable" numeric="numeric"
+              | {{props.row.watch_memberships_count}}
+            - if Rails.env.development? && false
+              b-table-column field="begin_at" label="開始日時" sortable="sortable" numeric="numeric"
+                template(v-if="props.row.begin_at")
+                  | {{moment(props.row.begin_at).format('YYYY/MM/DD hh:mm')}}
+            b-table-column(field="turn_max" label="手数" sortable numeric="numeric")
+              | {{props.row.turn_max}}
+            b-table-column label="状態"
+              template(v-if="props.row.begin_at && props.row.end_at")
+                .has-text-success 終了
+              template(v-if="props.row.begin_at && !props.row.end_at")
+                .has-text-danger 対局中
+              template(v-if="!props.row.begin_at && !props.row.end_at")
+
+- if Rails.env.development?
+  p
+    .panel.panel-default
+      .panel-body
+        =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
+        - if controller.respond_to?(:edit)
+          =<> link_to("編集", [:edit, :resource_ns1, current_record], class: "button button-success")
+        - if controller.respond_to_destroy?
+          =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
