@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
 
         if (this.dialog_now) {
-          this.perform("battle_match_ng", data)
+          this.message_send_to({from: e["to"], to: e["from"], message: `(他の人からの挑戦状を見ている状態なので少ししてから送ってください)`})
+          return
         }
 
         let message = `
