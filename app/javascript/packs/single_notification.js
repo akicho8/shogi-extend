@@ -56,19 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
           cancelText: 'ごめん',
           focusOn: "cancel",
           onConfirm: () => {
-            this.confirmed = true
-            // // this.$toast.open('User confirmed')
-          },
-          onCancel: (e) => {
             this.dialog_now = false
-            if (this.confirmed) {
-              this.perform("battle_match_ok", data)
-            } else {
-              this.perform("battle_match_ng", data)
-            }
-            // Vue.prototype.$toast.open(`${this.foo}`)
-            // Vue.prototype.$toast.open("に")
-            // console.log("onCancel")
+            this.perform("battle_match_ok", data)
+          },
+          onCancel: () => {
+            this.dialog_now = false
+            this.perform("battle_match_ng", data)
           },
         })
       }
