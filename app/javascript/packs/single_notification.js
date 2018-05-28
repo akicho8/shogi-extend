@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
           return
         }
 
-        let message = `
+        const hirate_p = (e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手")
+        const message_template = `
 <nav class="level">
   <div class="level-item has-text-centered">
     <div>
@@ -32,22 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
       <p class="title is-size-4">${LifetimeInfo.fetch(e.from.lifetime_key).name}</p>
     </div>
   </div>
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">手合割(あなた)</p>
-      <p class="title is-size-4">${e.from.po_preset_key}</p>
+  <% if (!hirate_p) { %>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">手合割(あなた)</p>
+        <p class="title is-size-4">${e.from.po_preset_key}</p>
+      </div>
     </div>
-  </div>
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">手合割(相手)</p>
-      <p class="title is-size-4">${e.from.ps_preset_key}</p>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">手合割(相手)</p>
+        <p class="title is-size-4">${e.from.ps_preset_key}</p>
+      </div>
     </div>
-  </div>
+  <% } %>
 </nav>
 `
+        const message = _.template(message_template)({hirate_p: hirate_p})
+
         this.dialog_now = true
-        this.confirmed = false
         Vue.prototype.$dialog.confirm({
           // size: "is-large",
           title: `${e.from.name}さんからの挑戦状`,
