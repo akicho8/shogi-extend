@@ -164,10 +164,12 @@ class ChatRoomChannel < ApplicationCable::Channel
     room_members_update
   end
 
-  # FIXME: 入り直したときにも再び呼ばれてしまう
   def battle_start(data)
     current_chat_room.update!(begin_at: Time.current)
-    ActionCable.server.broadcast(room_key, begin_at: current_chat_room.begin_at)
+    ActionCable.server.broadcast(room_key, {
+        begin_at: current_chat_room.begin_at,
+        human_kifu_text: current_chat_room.human_kifu_text, # 開始日時が埋められた棋譜で更新したいため
+      })
   end
 
   def time_up_trigger(data)
@@ -202,6 +204,7 @@ class ChatRoomChannel < ApplicationCable::Channel
         end_at: current_chat_room.end_at,
         win_location_key: current_chat_room.win_location_key,
         last_action_key: current_chat_room.last_action_key,
+        human_kifu_text: current_chat_room.human_kifu_text, # end_at が埋めこまれた棋譜で更新しておくため
       })
   end
 
