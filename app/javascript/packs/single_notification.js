@@ -13,18 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     received(data) {
       if (data["battle_request"]) {
         const e = data["battle_request"]
-        // const message = data["message"]
-        // const from = data["from"]
-        // const to = data["to"]
-        // str = `${from.name}: ${message}`
-        // Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
 
         if (this.dialog_now) {
           this.message_send_to({from: e["to"], to: e["from"], message: `(他の人からの挑戦状を見ている状態なので少ししてから送ってください)`})
           return
         }
 
-        const hirate_p = (e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手")
+        const handicap = !(e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手")
         const message_template = `
 <nav class="level">
   <div class="level-item has-text-centered">
@@ -33,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <p class="title is-size-4">${LifetimeInfo.fetch(e.from.lifetime_key).name}</p>
     </div>
   </div>
-  <% if (!hirate_p) { %>
+  <% if (handicap) { %>
     <div class="level-item has-text-centered">
       <div>
         <p class="heading">手合割(あなた)</p>
@@ -49,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
   <% } %>
 </nav>
 `
-        const message = _.template(message_template)({hirate_p: hirate_p})
+        const message = _.template(message_template)({handicap: handicap})
 
         this.dialog_now = true
         Vue.prototype.$dialog.confirm({
-          // size: "is-large",
+          size: "is-large",
           title: `${e.from.name}さんからの挑戦状`,
           message: message,
           confirmText: "受ける",

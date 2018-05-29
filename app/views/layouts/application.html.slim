@@ -74,7 +74,6 @@ html lang="ja"
           .navbar-item
             | 対局中{{fighter_only_count}}人
 
-
     - if false
       .nav.navbar.is-primary(role="navigation" aria-label="main navigation")
         .navbar-brand
@@ -136,13 +135,16 @@ html lang="ja"
       .container.is-fluid
         .columns
           .column.has-text-centered
-            = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
+            p
+              = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
             div.content
               =<> link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
               =<> link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
               =<> link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
+              br
               =<> link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
               =<> link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
+              br
               br
               = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
             #system_notification_app.has-text-grey-light
