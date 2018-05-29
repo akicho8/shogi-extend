@@ -20,12 +20,18 @@
 class LobbyChatMessage < ApplicationRecord
   belongs_to :chat_user
 
+  scope :latest_list, -> { order(created_at: :desc).limit(10) } # 実際に使うときは昇順表示なので reverse しよう
+
   # # 非同期にするため
   # after_create_commit do
   #   RoomChatMessageBroadcastJob.perform_later(self)
   # end
 
-  def js_attributes
-    JSON.load(to_json(include: [:chat_user]))
+  # def js_attributes
+  #   as_json(include: [:chat_user])
+  # end
+
+  def as_json(**args)
+    super({include: {chat_user: {methods: [:avatar_url]}}}.merge(args))
   end
 end

@@ -45,6 +45,10 @@ class ChatUser < ApplicationRecord
     as_json
   end
 
+  def as_json(**args)
+    super({methods: :avatar_url}.merge(args))
+  end
+
   after_commit do
     # FIXME: 重い
     online_users = self.class.online_only

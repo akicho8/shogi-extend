@@ -37,9 +37,9 @@ module ResourceNs1
 
     before_action do
       @lobby_app_params = {
-        :lobby_chat_messages => JSON.load(LobbyChatMessage.order(:created_at).last(10).to_json(include: :chat_user)),
-        :chat_rooms          => JSON.load(ChatRoom.latest_list.to_json(ChatRoom.to_json_params)),
-        :online_users        => ChatUser.where.not(online_at: nil),
+        :lobby_chat_messages => LobbyChatMessage.latest_list.reverse,
+        :chat_rooms          => ChatRoom.latest_list.as_json(ChatRoom.to_json_params),
+        :online_users        => ChatUser.online_only,
       }
     end
 
