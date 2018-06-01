@@ -219,7 +219,9 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def room_members_update
     # model の中から行う
-    ActionCable.server.broadcast(room_key, room_members: ams_sr(current_chat_room.reload.chat_memberships)) # 部屋を抜けたときの状態が反映されるように reload が必要
+    # 部屋を抜けたときの状態が反映されるように reload が必要
+    # FIXME: 1件だけ行う
+    ActionCable.server.broadcast(room_key, room_members: ams_sr(current_chat_room.reload.chat_memberships))
   end
 
   def room_key

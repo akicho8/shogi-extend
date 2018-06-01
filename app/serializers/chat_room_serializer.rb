@@ -26,8 +26,12 @@ class ChatRoomSerializer < ApplicationSerializer
     :human_kifu_text,           # これは重い
   ]
 
+  has_many :room_chat_messages
+
+  # :room_chat_messages => ams_sr(current_record.room_chat_messages.latest_list),
+
   # attribute :can_edit
-  # 
+  #
   # def can_edit
   #   view_context.current_chat_user.id
   # end
@@ -38,20 +42,21 @@ class ChatRoomSerializer < ApplicationSerializer
   end
 
   has_many :chat_memberships
-  class ChatMembershipSerializer < ApplicationSerializer
-    attributes *[
-      :preset_key,
-      :location_key,
-      :standby_at,
-      :fighting_now_at,
-      :time_up_trigger_at,
-    ]
 
-    belongs_to :chat_user
-    class ChatUserSerializer < ApplicationSerializer
-      attributes :name, :avatar_url
-    end
-  end
+  # class ChatMembershipSerializer < ApplicationSerializer
+  #   attributes *[
+  #     :preset_key,
+  #     :location_key,
+  #     :standby_at,
+  #     :fighting_now_at,
+  #     :time_up_trigger_at,
+  #   ]
+  #
+  #   belongs_to :chat_user
+  #   class ChatUserSerializer < ApplicationSerializer
+  #     attributes :name, :avatar_url
+  #   end
+  # end
 end
 
 if $0 == __FILE__

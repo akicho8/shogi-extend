@@ -128,8 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
     data() {
       return {
         message: "",            // 発言
-        room_members:         chat_room_app_params.room_members,
-        room_chat_messages:   chat_room_app_params.room_chat_messages,
+        room_members:         chat_room_app_params.chat_room.chat_memberships,
+        room_chat_messages:   chat_room_app_params.chat_room.room_chat_messages,
         kifu_body_sfen:       chat_room_app_params.chat_room.kifu_body_sfen,
         current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
         begin_at:             chat_room_app_params.chat_room.begin_at,
