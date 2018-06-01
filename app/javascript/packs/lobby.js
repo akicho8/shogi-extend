@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         App.lobby_vm.chat_rooms = data["chat_rooms"]
       }
       if (data["online_users"]) {
-        App.lobby_vm.online_users = data["online_users"]
+        // App.lobby_vm.online_users = data["online_users"] // FIXME: indexにアクセスした直後に必ず呼ばれる
       }
       if (data["matching_wait"]) {
         App.lobby_vm.matching_wait(data["matching_wait"])

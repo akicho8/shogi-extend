@@ -2,7 +2,7 @@
   span
     template(v-if="user_to")
       a(@click.prevent="modal_open")
-        img.chat_message_avatar_image(:src="user_to.avatar_url")
+        img.avatar_image(:src="user_to.avatar_url")
         | {{user_to.name}}
     template(v-else)
       slot(name="notify_to_all")

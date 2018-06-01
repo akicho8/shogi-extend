@@ -4,7 +4,6 @@ class ChatUserSerializer < ApplicationSerializer
     :name,
     :avatar_url,
 
-    :current_chat_room_id,
     :online_at,
     :fighting_now_at,
     :matching_at,
@@ -12,4 +11,6 @@ class ChatUserSerializer < ApplicationSerializer
     :ps_preset_key,
     :po_preset_key,
   ]
+
+  belongs_to :current_chat_room
 end

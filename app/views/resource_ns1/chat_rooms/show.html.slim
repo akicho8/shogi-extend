@@ -67,7 +67,7 @@ javascript:
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_room_chat_messages"
             td
-              img.chat_message_avatar_image(:src="e.chat_user.avatar_url")
+              img.avatar_image(:src="e.chat_user.avatar_url")
               span.has-text-grey
                 message_link_to :user_to="e.chat_user"
                 = "： "

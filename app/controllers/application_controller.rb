@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def ams_sr(*args)
+    ActiveModelSerializers::SerializableResource.new(*args)
+  end
+
   def h
     @h ||= view_context
   end
