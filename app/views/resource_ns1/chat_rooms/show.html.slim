@@ -69,7 +69,7 @@ javascript:
             td
               img.chat_message_avatar_image(:src="e.chat_user.avatar_url")
               span.has-text-grey
-                message_link_to :message_to="e.chat_user"
+                message_link_to :user_to="e.chat_user"
                 = "： "
               = " "
               span v-html="e.message"
@@ -109,7 +109,7 @@ javascript:
         b-table(:data="room_members")
           template slot-scope="props"
             b-table-column(label="対局者")
-              message_link_to(:message_to="props.row.chat_user")
+              message_link_to(:user_to="props.row.chat_user")
               = " "
               template(v-if="props.row.fighting_now_at")
                 b-icon(icon="access-point" class="has-text-success" custom-size="mdi-18px")
@@ -127,7 +127,7 @@ javascript:
           b-table(:data="watch_users")
             template slot-scope="props"
               b-table-column(field="name" label="名前" sortable)
-                message_link_to :message_to="props.row"
+                message_link_to :user_to="props.row"
                 template v-if="user_self_p(props.row)"
                   = " *"
 

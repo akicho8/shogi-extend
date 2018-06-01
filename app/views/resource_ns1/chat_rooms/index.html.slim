@@ -57,7 +57,7 @@ javascript:
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_lobby_chat_messages"
             td
-              message_link_to(:message_to="e.chat_user")
+              message_link_to(:user_to="e.chat_user")
               = " "
               | {{e.message}}
 
@@ -97,7 +97,7 @@ javascript:
         b-table(:data="online_users" :paginated="true" :per-page="10")
           template slot-scope="props"
             b-table-column field="name" label="名前" sortable="sortable"
-              message_link_to :message_to="props.row"
+              message_link_to :user_to="props.row"
               template v-if="user_self_p(props.row)"
                 = " *"
             b-table-column field="name" label="状態" sortable="sortable"
