@@ -10,7 +10,7 @@ import { LastActionInfo } from "./last_action_info"
 document.addEventListener("DOMContentLoaded", () => {
   App.chat_room = App.cable.subscriptions.create({
     channel: "ChatRoomChannel",
-    chat_room_id: chat_room_app_params.chat_room.id,
+    chat_room_id: js_current_chat_room.id,
   }, {
     connected() {
       this.perform("room_in")
@@ -128,18 +128,18 @@ document.addEventListener("DOMContentLoaded", () => {
     data() {
       return {
         message: "",            // 発言
-        room_members:         chat_room_app_params.chat_room.chat_memberships,
-        room_chat_messages:   chat_room_app_params.chat_room.room_chat_messages,
-        kifu_body_sfen:       chat_room_app_params.chat_room.kifu_body_sfen,
-        current_lifetime_key: chat_room_app_params.chat_room.lifetime_key,
-        begin_at:             chat_room_app_params.chat_room.begin_at,
-        end_at:               chat_room_app_params.chat_room.end_at,
-        win_location_key:     chat_room_app_params.chat_room.win_location_key,
-        last_action_key:      chat_room_app_params.chat_room.last_action_key,
-        watch_users:          chat_room_app_params.chat_room.watch_users,
-        turn_max:             chat_room_app_params.chat_room.turn_max,
-        handicap:             chat_room_app_params.chat_room.handicap,
-        human_kifu_text:      chat_room_app_params.chat_room.human_kifu_text,
+        room_members:         js_current_chat_room.chat_memberships,
+        room_chat_messages:   js_current_chat_room.room_chat_messages,
+        kifu_body_sfen:       js_current_chat_room.kifu_body_sfen,
+        current_lifetime_key: js_current_chat_room.lifetime_key,
+        begin_at:             js_current_chat_room.begin_at,
+        end_at:               js_current_chat_room.end_at,
+        win_location_key:     js_current_chat_room.win_location_key,
+        last_action_key:      js_current_chat_room.last_action_key,
+        watch_users:          js_current_chat_room.watch_users,
+        turn_max:             js_current_chat_room.turn_max,
+        handicap:             js_current_chat_room.handicap,
+        human_kifu_text:      js_current_chat_room.human_kifu_text,
       }
     },
 
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       chat_room() {
-        return chat_room_app_params.chat_room
+        return js_current_chat_room
       },
 
       // 現在の手番番号

@@ -59,10 +59,7 @@ html lang="ja"
           .navbar-item
             b-dropdown(hoverable)
               span(slot="trigger")
-                - if current_chat_user.avatar.attached?
-                  = image_tag(current_chat_user.avatar, class: "face_icon")
-                - else
-                  = image_tag("character_game_syougi.png", class: "face_icon")
+                = image_tag(current_chat_user.avatar_url, class: "face_icon")
                 span.my_name
                   = current_chat_user.name
               b-dropdown-item :has-link="true" :paddingless="true"

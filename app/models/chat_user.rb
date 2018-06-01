@@ -56,15 +56,28 @@ class ChatUser < ApplicationRecord
   concerning :AvatarMethods do
     included do
       has_one_attached :avatar
+
+      cattr_accessor :icon_files do
+        relative_path = Rails.root.join("app/assets/images")
+        relative_path.join("fallback_icons").glob("0*.png").collect do |e|
+          e.relative_path_from(relative_path)
+        end
+      end
     end
 
+    # FALLBACK_ICONS_DEBUG=1 fs
     def avatar_url
+      if ENV["FALLBACK_ICONS_DEBUG"]
+        return ActionController::Base.helpers.asset_path(icon_files.sample)
+      end
+
       if avatar.attached?
         # ▼Activestorrage service_url missing default_url_options[:host] · Issue #32866 · rails/rails
         # https://github.com/rails/rails/issues/32866
         Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true)
       else
-        ActionController::Base.helpers.asset_path("character_game_syougi.png")
+        file = icon_files[id.modulo(icon_files.size)]
+        ActionController::Base.helpers.asset_path(file)
       end
     end
   end

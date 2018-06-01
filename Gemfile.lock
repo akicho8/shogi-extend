@@ -276,6 +276,7 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (3.3.5)
+    rgb (0.1.0)
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -416,6 +417,7 @@ DEPENDENCIES
   rails (~> 5.2.0)
   rails_autolink
   redis (~> 3.0)
+  rgb
   rspec-rails
   rubyzip
   sass-rails (~> 5.0)

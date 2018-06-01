@@ -10,10 +10,7 @@ javascript:
 
   .columns
     .column.is-one-quarter
-      - if current_record.avatar.attached?
-        = image_tag current_record.avatar.variant(resize: "800"), size: "256"
-      - else
-        = image_tag("character_game_syougi.png", size: "128")
+      = image_tag current_record.avatar_url, size: "256"
     .column
       nav.level.box
         .level-item.has-text-centered

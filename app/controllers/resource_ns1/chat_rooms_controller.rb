@@ -44,9 +44,7 @@ module ResourceNs1
     end
 
     def show
-      @chat_room_app_params = {
-        :chat_room          => ams_sr(current_record, include: {chat_memberships: :chat_user, room_chat_messages: :chat_user}),
-      }
+      @js_current_chat_room = ams_sr(current_record, include: {chat_memberships: :chat_user, room_chat_messages: :chat_user})
     end
 
     def raw_current_record

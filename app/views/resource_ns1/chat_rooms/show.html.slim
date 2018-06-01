@@ -1,6 +1,6 @@
 javascript:
   var lobby_app_params = #{@lobby_app_params.to_json.html_safe}
-  var chat_room_app_params = #{@chat_room_app_params.to_json.html_safe}
+  var js_current_chat_room = #{@js_current_chat_room.to_json.html_safe}
 
 - content_for :head do
   = javascript_pack_tag("chat_room")
@@ -150,8 +150,8 @@ javascript:
 / br
 / br
 / .box
-/   .title.is-5= "@chat_room_app_params"
-/   = html_format(JSON.load(@chat_room_app_params.to_json))
+/   .title.is-5= "@js_current_chat_room"
+/   = html_format(JSON.load(@js_current_chat_room.to_json))
 /
 / .box
 /   = html_format({"cookies.signed[:chat_user_id]" => cookies.signed[:chat_user_id]})

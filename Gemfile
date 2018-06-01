@@ -79,6 +79,8 @@ group :development, :test do
   gem 'test-unit'
   gem 'factory_bot_rails'
   # gem 'webmock' # rack-proxy と干渉するため外す
+
+  gem "rgb"
 end
 
 group :development do
@@ -88,7 +90,6 @@ end
 group :test do
   gem 'chromedriver-helper'     # for SystemTestCase
 end
-
 
 # gem 'activerecord-session_store'
 

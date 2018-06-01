@@ -6,7 +6,7 @@
   = form.label(:avatar, class: "label")
   .control
     = form.file_field(:avatar, class: "input")
-    - if form.object.avatar.attached?
-      = image_tag form.object.avatar.variant(resize: "800"), size: "256"
-    - else
-      = image_tag("character_game_syougi.png", size: "128")
+    = image_tag form.object.avatar_url, size: "256"
+    / - if form.object.avatar.attached?
+    / - else
+    /   = image_tag("character_game_syougi.png", size: "128")
