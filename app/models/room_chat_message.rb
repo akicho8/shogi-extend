@@ -26,11 +26,7 @@ class RoomChatMessage < ApplicationRecord
   scope :latest_list, -> { order(:created_at).limit(10) } # チャットルームに表示する最新N件
 
   # 非同期にするため
-  after_create_commit do
-    RoomChatMessageBroadcastJob.perform_later(self)
-  end
-
-  def js_attributes
-    JSON.load(to_json(include: [{:chat_user => {methods: [:avatar_url]}}, :chat_room]))
-  end
+  # after_create_commit do
+  #   RoomChatMessageBroadcastJob.perform_later(self)
+  # end
 end

@@ -11,7 +11,7 @@ class ChatMembershipSerializer < ApplicationSerializer
 
   belongs_to :chat_user
   class ChatUserSerializer < ApplicationSerializer
-    attributes :id, :name, :avatar_url
+    attributes :name, :avatar_url
   end
 end
 

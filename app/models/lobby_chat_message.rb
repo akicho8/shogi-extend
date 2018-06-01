@@ -26,12 +26,4 @@ class LobbyChatMessage < ApplicationRecord
   # after_create_commit do
   #   RoomChatMessageBroadcastJob.perform_later(self)
   # end
-
-  # def js_attributes
-  #   as_json(include: [:chat_user])
-  # end
-
-  # def as_json(**args)
-  #   super({include: {chat_user: {}}}.merge(args))
-  # end
 end

@@ -41,21 +41,16 @@ class ChatUser < ApplicationRecord
     self.lifetime_key ||= "lifetime5_min"
   end
 
-  def js_attributes
-    as_json
-  end
+  # def js_attributes
+  #   as_json
+  # end
 
   # def as_json(**args)
   #   super({methods: :avatar_url}.merge(args))
   # end
 
   after_commit do
-    # FIXME: 重い
-    online_users = self.class.online_only
-    online_users = online_users.collect do |e|
-      e.attributes.merge(current_chat_room: e.current_chat_room&.js_attributes)
-    end
-    ActionCable.server.broadcast("lobby_channel", online_users: online_users)
+    ActionCable.server.broadcast("lobby_channel", online_users: ams_sr(self.class.online_only)) # 重い
   end
 
   concerning :AvatarMethods do
@@ -151,7 +146,7 @@ class ChatUser < ApplicationRecord
         chat_room.chat_users << user
       end
       chat_room.chat_users.each do |chat_user|
-        ActionCable.server.broadcast("single_notification_#{chat_user.id}", {matching_ok: true, chat_room: chat_room.js_attributes})
+        ActionCable.server.broadcast("single_notification_#{chat_user.id}", {matching_ok: true, chat_room: ams_sr(chat_room)})
       end
     end
 

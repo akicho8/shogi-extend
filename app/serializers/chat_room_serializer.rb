@@ -27,7 +27,7 @@ class ChatRoomSerializer < ApplicationSerializer
 
   has_many :watch_users
   class ChatUserSerializer < ApplicationSerializer
-    attributes :id, :name, :avatar_url
+    attributes :name, :avatar_url
   end
 
   has_many :chat_memberships
@@ -42,7 +42,7 @@ class ChatRoomSerializer < ApplicationSerializer
 
     belongs_to :chat_user
     class ChatUserSerializer < ApplicationSerializer
-      attributes :id, :name, :avatar_url
+      attributes :name, :avatar_url
     end
   end
 end

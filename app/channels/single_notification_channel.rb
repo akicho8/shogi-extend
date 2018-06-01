@@ -12,8 +12,8 @@ class SingleNotificationChannel < ApplicationCable::Channel
     e = data["battle_request"]
     from = ChatUser.find(e["from_id"])
     to = ChatUser.find(e["to_id"])
-    data["battle_request"]["from"] = from.js_attributes # 送信元ユーザーの最新の状態のルールを用いるため
-    data["battle_request"]["to"] = to.js_attributes
+    data["battle_request"]["from"] = ams_sr(from) # 送信元ユーザーの最新の状態のルールを用いるため
+    data["battle_request"]["to"] = ams_sr(to)
     ActionCable.server.broadcast("single_notification_#{to.id}", data)
   end
 

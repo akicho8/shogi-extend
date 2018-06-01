@@ -45,21 +45,21 @@ class ChatRoom < ApplicationRecord
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
-  # FIXME: chat_users は無駄
-  cattr_accessor(:to_json_params) {
-    {include: {
-        :room_owner => nil,
-        :chat_users => nil,
-        :watch_users => nil,
-        :chat_memberships => {
-          include: :chat_user,
-        },
-      }, methods: [
-        :show_path,
-        :handicap,
-      ],
-    }
-  }
+  # # FIXME: chat_users は無駄
+  # cattr_accessor(:to_json_params) {
+  #   {include: {
+  #       :room_owner => nil,
+  #       :chat_users => nil,
+  #       :watch_users => nil,
+  #       :chat_memberships => {
+  #         include: :chat_user,
+  #       },
+  #     }, methods: [
+  #       :show_path,
+  #       :handicap,
+  #     ],
+  #   }
+  # }
 
   serialize :clock_counts
   serialize :countdown_mode_hash
@@ -121,18 +121,18 @@ class ChatRoom < ApplicationRecord
     info.to_ki2
   end
 
-  after_commit do
-    broadcast
-  end
+  # after_commit do
+  #   broadcast
+  # end
 
-  def broadcast
-    # ActionCable.server.broadcast("lobby_channel", chat_rooms: JSON.load(self.class.latest_list.to_json(to_json_params)))
-    ActionCable.server.broadcast("chat_room_channel_#{id}", chat_room: js_attributes) # FIXME: これは重いだけで使ってないのではずす
-  end
+  # def broadcast
+  #   # ActionCable.server.broadcast("lobby_channel", chat_rooms: JSON.load(self.class.latest_list.to_json(to_json_params)))
+  #   # ActionCable.server.broadcast("chat_room_channel_#{id}", chat_room: js_attributes) # FIXME: これは重いだけで使ってないのではずす
+  # end
 
-  def js_attributes
-    JSON.load(to_json(to_json_params))
-  end
+  # def js_attributes
+  #   JSON.load(to_json(to_json_params))
+  # end
 
   def show_path
     Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
