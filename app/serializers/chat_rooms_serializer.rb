@@ -1,28 +1,60 @@
-#!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../../config/environment', __FILE__) if $0 == __FILE__
 
-pp ActiveModelSerializers::SerializableResource.new(ChatUser.first).as_json
-pp ActiveModelSerializers::SerializableResource.new(LobbyChatMessage.first).as_json
-pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :chat_user}).as_json
-# >> {:id=>1,
-# >>  :name=>"野良1号",
-# >>  :current_chat_room_id=>nil,
-# >>  :online_at=>nil,
-# >>  :fighting_now_at=>nil,
-# >>  :matching_at=>nil,
-# >>  :lifetime_key=>"lifetime5_min",
-# >>  :ps_preset_key=>"平手",
-# >>  :po_preset_key=>"平手",
-# >>  :avatar_url=>
-# >>   "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bda60366d3f3573c24c096e0d889993b7ca06772/0270_kemono_friends.png"}
-# >> {:id=>1,
-# >>  :message=>"aa",
-# >>  :created_at=>Tue, 29 May 2018 20:52:47 JST +09:00,
-# >>  :chat_user=>
-# >>   {:id=>1,
-# >>    :name=>"野良1号",
-# >>    :avatar_url=>
-# >>     "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bda60366d3f3573c24c096e0d889993b7ca06772/0270_kemono_friends.png"}}
+class ChatRoomsSerializer < ApplicationSerializer
+  attributes *[
+    :room_owner_id,
+    :black_preset_key,
+    :white_preset_key,
+    :lifetime_key,
+    :name,
+    :kifu_body_sfen,
+    :clock_counts,
+    :turn_max,
+    # :battle_request_at,
+    # :auto_matched_at,
+    :begin_at,
+    :end_at,
+    :last_action_key,
+    :win_location_key,
+    :current_chat_users_count,
+    :watch_memberships_count,
+    :countdown_mode_hash,
+
+    :show_path,
+    :handicap,
+  ]
+
+  # attribute :can_edit
+  #
+  # def can_edit
+  #   view_context.current_chat_user.id
+  # end
+
+  # has_many :watch_users
+  # class ChatUserSerializer < ApplicationSerializer
+  #   attributes :name, :avatar_url
+  # end
+
+  has_many :chat_memberships
+  class ChatMembershipSerializer < ApplicationSerializer
+    attributes *[
+      # :preset_key,
+      :location_key,
+      # :standby_at,
+      # :fighting_now_at,
+      # :time_up_trigger_at,
+    ]
+
+    belongs_to :chat_user
+    class ChatUserSerializer < ApplicationSerializer
+      attributes :name, :avatar_url
+    end
+  end
+end
+
+if $0 == __FILE__
+  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :chat_user}).as_json
+end
 # >> {:id=>1,
 # >>  :room_owner_id=>1,
 # >>  :black_preset_key=>"平手",

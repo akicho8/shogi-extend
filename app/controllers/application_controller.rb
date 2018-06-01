@@ -1,4 +1,22 @@
 class ApplicationController < ActionController::Base
+  concerning :ActiveModelSerializerMethods do
+    included do
+      # 効かないのはなぜ……？
+      #
+      # ▼active_model_serializers/serializers.md at v0.10.6 · rails-api/active_model_serializers
+      # https://github.com/rails-api/active_model_serializers/blob/v0.10.6/docs/general/serializers.md
+      #
+      # serialization_scope :view_context
+    end
+
+    class_methods do
+    end
+
+    def ams_sr(*args)
+      ActiveModelSerializers::SerializableResource.new(*args)
+    end
+  end
+
   add_flash_types :success, :info, :warning, :danger
 
   def submitted?(name)
@@ -7,10 +25,6 @@ class ApplicationController < ActionController::Base
   helper_method :submitted?
 
   private
-
-  def ams_sr(*args)
-    ActiveModelSerializers::SerializableResource.new(*args)
-  end
 
   def h
     @h ||= view_context

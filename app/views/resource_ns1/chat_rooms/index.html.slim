@@ -115,6 +115,9 @@ javascript:
           template slot-scope="props"
             b-table-column field="name" label="部屋" sortable="sortable"
               a(:href="props.row.show_path")
+                | #
+                | {{props.row.id}}
+                | &nbsp;
                 span(v-html="room_members_format(props.row)")
 
             / - if Rails.env.development?

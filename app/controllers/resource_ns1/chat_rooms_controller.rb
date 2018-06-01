@@ -38,29 +38,16 @@ module ResourceNs1
     before_action do
       @lobby_app_params = {
         :lobby_chat_messages => ams_sr(LobbyChatMessage.latest_list.reverse),
-        :chat_rooms          => ams_sr(ChatRoom.latest_list, include: {chat_memberships: :chat_user}),
+        :chat_rooms          => ams_sr(ChatRoom.latest_list, include: {chat_memberships: :chat_user}, each_serializer: ChatRoomsSerializer),
         :online_users        => ams_sr(ChatUser.online_only),
       }
     end
 
     def show
       @chat_room_app_params = {
-        chat_room: JSON.load(current_record.to_json({
-              include: {
-                :room_owner => nil,
-                :chat_users => nil,
-                :watch_users => nil,
-                :chat_memberships => {
-                  include: :chat_user,
-                },
-              }, methods: [
-                :show_path,
-                :handicap,
-                :human_kifu_text,
-              ],
-            })),
-        room_members: ams_sr(current_record.chat_memberships),
-        room_chat_messages: current_record.room_chat_messages.latest_list.as_json(include: [:chat_user => {methods: [:avatar_url]}, :chat_room => {}]),
+        :chat_room          => ams_sr(current_record, include: {chat_memberships: :chat_user}),
+        :room_members       => ams_sr(current_record.chat_memberships),
+        :room_chat_messages => ams_sr(current_record.room_chat_messages.latest_list),
       }
     end
 

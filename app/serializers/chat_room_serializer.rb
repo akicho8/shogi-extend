@@ -18,12 +18,19 @@ class ChatRoomSerializer < ApplicationSerializer
     :win_location_key,
     :current_chat_users_count,
     :watch_memberships_count,
+    :countdown_mode_hash,
 
     :show_path,
     :handicap,
 
-    # :room_owner,
+    :human_kifu_text,           # これは重い
   ]
+
+  # attribute :can_edit
+  # 
+  # def can_edit
+  #   view_context.current_chat_user.id
+  # end
 
   has_many :watch_users
   class ChatUserSerializer < ApplicationSerializer
