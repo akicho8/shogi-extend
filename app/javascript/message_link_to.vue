@@ -12,10 +12,8 @@
       .modal-card
         header.modal-card-head
           p.modal-card-title
-            template(v-if="message_to")
-              | {{message_to.name}}に送信
-            template(v-else)
-              | 全体通知
+            template(v-if="message_to") {{message_to.name}}に送信
+            template(v-else) 全体通知
         section.modal-card-body
           b-field(label="")
             input.input.is-large(type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input")

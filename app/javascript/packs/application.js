@@ -64,8 +64,8 @@ Object.defineProperty(Vue.prototype, "HiraKomaInfo", {value: HiraKomaInfo})
 
 //////////////////////////////////////////////////////////////////////////////// チャット関連コンポーネント
 
-import Messanger from "../messenger.vue"
-Vue.component("messenger", Messanger)
+import Messanger from "../message_link_to.vue"
+Vue.component("message_link_to", Messanger)
 
 //////////////////////////////////////////////////////////////////////////////// lodash
 

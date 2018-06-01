@@ -31,7 +31,7 @@ class LobbyChatMessage < ApplicationRecord
   #   as_json(include: [:chat_user])
   # end
 
-  def as_json(**args)
-    super({include: {chat_user: {methods: [:avatar_url]}}}.merge(args))
-  end
+  # def as_json(**args)
+  #   super({include: {chat_user: {}}}.merge(args))
+  # end
 end

@@ -45,9 +45,9 @@ class ChatUser < ApplicationRecord
     as_json
   end
 
-  def as_json(**args)
-    super({methods: :avatar_url}.merge(args))
-  end
+  # def as_json(**args)
+  #   super({methods: :avatar_url}.merge(args))
+  # end
 
   after_commit do
     # FIXME: 重い

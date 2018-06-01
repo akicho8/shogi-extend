@@ -127,3 +127,5 @@ gem 'codecov', require: false, group: :test
 gem 'rack-cors',require: 'rack/cors'
 
 gem 'ffi', '1.9.18'             # 1.9.19 が転けるのでとりあえず
+
+gem 'active_model_serializers'

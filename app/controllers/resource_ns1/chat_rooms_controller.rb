@@ -37,8 +37,8 @@ module ResourceNs1
 
     before_action do
       @lobby_app_params = {
-        :lobby_chat_messages => LobbyChatMessage.latest_list.reverse,
-        :chat_rooms          => ChatRoom.latest_list.as_json(ChatRoom.to_json_params),
+        :lobby_chat_messages => ActiveModelSerializers::SerializableResource.new(LobbyChatMessage.latest_list.reverse),
+        :chat_rooms          => ActiveModelSerializers::SerializableResource.new(ChatRoom.latest_list, include: {chat_memberships: :chat_user}),
         :online_users        => ChatUser.online_only,
       }
     end
