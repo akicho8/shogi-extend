@@ -67,12 +67,9 @@ javascript:
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_room_chat_messages"
             td
-              img.avatar_image(:src="e.chat_user.avatar_url")
-              span.has-text-grey
-                message_link_to :user_to="e.chat_user"
-                = "： "
+              message_link_to :user_to="e.chat_user"
               = " "
-              span v-html="e.message"
+              span(v-html="e.message")
 
         / template v-for="e of latest_room_chat_messages"
         /   article.media

@@ -114,12 +114,9 @@ javascript:
         b-table(:data="chat_rooms" :paginated="true" :per-page="10")
           template slot-scope="props"
             b-table-column field="name" label="部屋" sortable="sortable"
-              a :href="props.row.show_path"
-                - if Rails.env.development?
-                  | #
-                  | {{props.row.id}}
-                  | &nbsp;
-                | {{room_members_format(props.row)}}
+              a(:href="props.row.show_path")
+                span(v-html="room_members_format(props.row)")
+
             / - if Rails.env.development?
               / b-table-column field="chat_users" label="全参加者" sortable="sortable" numeric="numeric"
               /   | {{props.row.chat_users.length}}

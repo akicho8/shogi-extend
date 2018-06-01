@@ -59,7 +59,7 @@ module ResourceNs1
                 :human_kifu_text,
               ],
             })),
-        room_members: current_record.js_room_members,
+        room_members: ams_sr(current_record.chat_memberships),
         player_mode_moved_path: url_for([:resource_ns1, current_record, :kifu_valids, format: "json"]),
         room_chat_messages: current_record.room_chat_messages.latest_list.as_json(include: [:chat_user => {methods: [:avatar_url]}, :chat_room => {}]),
       }

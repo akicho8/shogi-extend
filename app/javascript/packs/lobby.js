@@ -146,7 +146,12 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       room_members_format(chat_room) {
-        return chat_room.chat_memberships.map(e => e.chat_user.name).join(" vs ")
+        const list = _.groupBy(chat_room.chat_memberships, "location_key")
+        return _.map(list, (list, key) => {
+          return list.map(e => {
+            return `<img class="avatar_image" src="${e.chat_user.avatar_url}" />${e.chat_user.name}`
+          }).join("・")
+        }).join(" vs ")
       },
     },
 
