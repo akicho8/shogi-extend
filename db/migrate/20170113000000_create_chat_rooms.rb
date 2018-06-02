@@ -19,8 +19,8 @@
 # ・RoomChatMessage モデルは ChatUser モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
-class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
-  def up
+class CreateChatRooms < ActiveRecord::Migration[5.1]
+  def change
     # ユーザー
     create_table :chat_users, force: true do |t|
       t.string :name,                  null: false,              comment: "名前"
@@ -40,7 +40,6 @@ class CreateRoomChatMessages < ActiveRecord::Migration[5.1]
       t.string :black_preset_key,                      null: false, comment: "▲手合割"
       t.string :white_preset_key,                      null: false, comment: "△手合割"
       t.string :lifetime_key,                          null: false, comment: "時間"
-      t.string :name,                                  null: false, comment: "部屋名"
       t.text :kifu_body_sfen,                          null: false, comment: "USI形式棋譜"
       t.text :clock_counts,                            null: false, comment: "対局時計情報"
       t.text :countdown_mode_hash,                            null: false, comment: "秒読み状態"

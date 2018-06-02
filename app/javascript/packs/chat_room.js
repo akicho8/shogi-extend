@@ -1,6 +1,5 @@
 import _ from "lodash"
 import axios from "axios"
-import chat_room_name from "./chat_room_name"
 import chess_clock from "./chess_clock"
 
 import { PresetInfo } from "shogi-player/src/preset_info"
@@ -94,10 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
       this.chat_say(`<span class="has-text-info">${str}</span>`)
     },
 
-    room_name_changed(room_name) {
-      this.perform("room_name_changed", {room_name: room_name})
-    },
-
     time_up_trigger(data) {
       this.perform("time_up_trigger", data)
     },
@@ -121,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   App.chat_vm = new Vue({
     mixins: [
-      chat_room_name,
       chess_clock,
     ],
     el: "#chat_room_app",

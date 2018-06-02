@@ -92,11 +92,6 @@ class ChatRoomChannel < ApplicationCable::Channel
   #   ActionCable.server.broadcast(room_key, data)
   # end
 
-  def room_name_changed(data)
-    current_chat_room.update!(name: data["room_name"])
-    ActionCable.server.broadcast(room_key, data)
-  end
-
   def room_in(data)
     # 自分から部屋に入ったらマッチングを解除する
     current_chat_user.update!(matching_at: nil)

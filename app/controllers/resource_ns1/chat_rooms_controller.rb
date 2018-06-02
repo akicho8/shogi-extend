@@ -50,7 +50,6 @@ module ResourceNs1
     def raw_current_record
       super.tap do |e|
         e.room_owner ||= current_chat_user
-        e.name ||= e.name_default
       end
     end
 

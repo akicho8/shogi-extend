@@ -65,7 +65,6 @@ class ChatRoom < ApplicationRecord
   serialize :countdown_mode_hash
 
   before_validation on: :create do
-    self.name = name.presence || name_default
     self.black_preset_key ||= "平手"
     self.white_preset_key ||= "平手"
     self.lifetime_key ||= :lifetime5_min
@@ -88,17 +87,18 @@ class ChatRoom < ApplicationRecord
     end
   end
 
-  def name_default
-    if chat_users.present?
-      chat_users.collect(&:name).join(" vs ")
-    else
-      names = []
-      if room_owner
-        names << "#{room_owner.name}の"
-      end
-      names << "対戦部屋 ##{ChatRoom.count.next}"
-      names.join
-    end
+  def name
+    # if chat_users.present?
+    #   chat_users.collect(&:name).join(" vs ")
+    # else
+    #   names = []
+    #   if room_owner
+    #     names << "#{room_owner.name}の"
+    #   end
+    #   names << "対戦部屋 ##{ChatRoom.count.next}"
+    #   names.join
+    # end
+    "##{id}"
   end
 
   def human_kifu_text
