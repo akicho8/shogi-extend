@@ -6,18 +6,16 @@ javascript:
 
 #lobby_app
   b-modal(:active.sync="setting_modal_p" @close="setting_save")
-    template(v-if="false")
+    template(v-if="true")
       header.modal-card-head
        p.modal-card-title
          | ルール設定
     section.modal-card-body
-      ////////////////////////////////////////////////////////////////////////////////
       p
         b 持ち時間
       b-field
         template(v-for="e in LifetimeInfo.values")
           b-radio-button v-model="current_lifetime_key" :native-value="e.key" {{e.name}}
-            ////////////////////////////////////////////////////////////////////////////////
       b 手合割
       b-field
         template(v-for="e in HiraKomaInfo.values")
@@ -32,7 +30,7 @@ javascript:
         b-field
           template(v-for="e in CustomPresetInfo.values")
             b-radio-button(v-model="po_preset_key" :native-value="e.key") {{e.name}}
-    template(v-if="false")
+    template(v-if="true")
       footer.modal-card-foot
         button.button.is-primary(@click="matching_setting_close_click") 閉じる
 
