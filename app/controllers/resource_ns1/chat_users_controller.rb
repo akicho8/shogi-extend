@@ -31,7 +31,6 @@ module ResourceNs1
       @chat_user_show_app_params = {
         chat_rooms: current_record.chat_rooms.as_json({
             include: {
-              :room_owner => nil,
               :chat_users => nil,
               :watch_users => nil,
               :chat_memberships => {

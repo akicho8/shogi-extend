@@ -13,7 +13,7 @@ ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
 ActiveSupport::LogSubscriber.colorize_logging = false
 
 chat_users = [alice, bob]
-chat_room = alice.owner_rooms.create!(chat_users: chat_users)
+chat_room = OwnerRoom.create!(chat_users: chat_users)
 
 tp ChatMembership.all
 # >>    (0.2ms)  BEGIN

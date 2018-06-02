@@ -47,12 +47,6 @@ module ResourceNs1
       @js_current_chat_room = ams_sr(current_record, include: {chat_memberships: :chat_user, room_chat_messages: :chat_user})
     end
 
-    def raw_current_record
-      super.tap do |e|
-        e.room_owner ||= current_chat_user
-      end
-    end
-
     def redirect_to_where
       [self.class.parent_name.underscore, current_record]
     end

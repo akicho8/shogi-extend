@@ -38,7 +38,6 @@ class ChatRoom < ApplicationRecord
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_users, through: :chat_memberships
   has_many :current_chat_users, class_name: "ChatUser", foreign_key: :current_chat_room_id, dependent: :nullify
-  belongs_to :room_owner, class_name: "ChatUser"
 
   has_many :watch_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
   has_many :watch_users, through: :watch_memberships, source: :chat_user # 観戦中の人たち

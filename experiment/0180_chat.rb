@@ -9,7 +9,7 @@ ChatMembership.destroy_all
 alice = ChatUser.create!
 bob = ChatUser.create!
 
-chat_room = alice.owner_rooms.create!
+chat_room = OwnerRoom.create!
 chat_room.chat_users << alice
 chat_room.chat_users << bob
 

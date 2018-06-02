@@ -51,11 +51,9 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
   end
 
   create_table "chat_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "room_owner_id", null: false, comment: "部屋を作った人(とくに利用していなが親メンバーを特定したいときに使う)"
     t.string "black_preset_key", null: false, comment: "▲手合割"
     t.string "white_preset_key", null: false, comment: "△手合割"
     t.string "lifetime_key", null: false, comment: "時間"
-    t.string "name", null: false, comment: "部屋名"
     t.text "kifu_body_sfen", null: false, comment: "USI形式棋譜"
     t.text "clock_counts", null: false, comment: "対局時計情報"
     t.text "countdown_mode_hash", null: false, comment: "秒読み状態"
@@ -70,7 +68,6 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.integer "watch_memberships_count", default: 0, null: false, comment: "この部屋の観戦者数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_owner_id"], name: "index_chat_rooms_on_room_owner_id"
   end
 
   create_table "chat_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
