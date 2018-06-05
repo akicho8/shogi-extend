@@ -1,6 +1,6 @@
 require File.expand_path('../../../config/environment', __FILE__) if $0 == __FILE__
 
-class ChatRoomsSerializer < ApplicationSerializer
+class ChatRoomEachSerializer < ApplicationSerializer
   attributes *[
     :black_preset_key,
     :white_preset_key,
