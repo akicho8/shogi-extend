@@ -12,7 +12,7 @@ addons:
 
 language: ruby
 
-rvm: 2.5.0
+rvm: 2.5.1
 
 # なくても動いている
 # services:
