@@ -1,23 +1,30 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Room chat messageテーブル (room_chat_messages as RoomChatMessage)
+# 対戦部屋テーブル (chat_rooms as ChatRoom)
 #
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | id           | ID        | integer(8)  | NOT NULL PK |                |       |
-# | chat_room_id | Chat room | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
-# | chat_user_id | Chat user | integer(8)  | NOT NULL    | => ChatUser#id | B     |
-# | message      | Message   | text(65535) | NOT NULL    |                |       |
-# | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
-# | updated_at   | 更新日時  | datetime    | NOT NULL    |                |       |
-# |--------------+-----------+-------------+-------------+----------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・RoomChatMessage モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・RoomChatMessage モデルは ChatUser モデルから has_many :room_chat_messages されています。
-#--------------------------------------------------------------------------------
+# |--------------------------+--------------------------+-------------+---------------------+------+-------|
+# | カラム名                 | 意味                     | タイプ      | 属性                | 参照 | INDEX |
+# |--------------------------+--------------------------+-------------+---------------------+------+-------|
+# | id                       | ID                       | integer(8)  | NOT NULL PK         |      |       |
+# | black_preset_key         | Black preset key         | string(255) | NOT NULL            |      |       |
+# | white_preset_key         | White preset key         | string(255) | NOT NULL            |      |       |
+# | lifetime_key             | Lifetime key             | string(255) | NOT NULL            |      |       |
+# | kifu_body_sfen           | Kifu body sfen           | text(65535) | NOT NULL            |      |       |
+# | clock_counts             | Clock counts             | text(65535) | NOT NULL            |      |       |
+# | countdown_mode_hash      | Countdown mode hash      | text(65535) | NOT NULL            |      |       |
+# | turn_max                 | Turn max                 | integer(4)  | NOT NULL            |      |       |
+# | battle_request_at        | Battle request at        | datetime    |                     |      |       |
+# | auto_matched_at          | Auto matched at          | datetime    |                     |      |       |
+# | begin_at                 | Begin at                 | datetime    |                     |      |       |
+# | end_at                   | End at                   | datetime    |                     |      |       |
+# | last_action_key          | Last action key          | string(255) |                     |      |       |
+# | win_location_key         | Win location key         | string(255) |                     |      |       |
+# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at               | 作成日時                 | datetime    | NOT NULL            |      |       |
+# | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
+# |--------------------------+--------------------------+-------------+---------------------+------+-------|
 
 class CreateChatRooms < ActiveRecord::Migration[5.1]
   def change
