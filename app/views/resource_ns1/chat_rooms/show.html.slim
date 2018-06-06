@@ -85,11 +85,11 @@ javascript:
           .media-content
             .field
               p.control
-                input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter" @focus="message_input_focus_p = true" @blur="message_input_focus_p = false")
+                input.input.is-large type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter"
             nav.level
               .level-left
                 .level-item
-                  button.button.is-primary(@click="message_enter" :disabled="!message_input_focus_p")
+                  button.button.is-primary @click="message_enter"
                     | 送信
               / .level-right
               /   .level-item

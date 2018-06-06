@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // 発言
         lobby_chat_messages: lobby_app_params.lobby_chat_messages, // 発言一覧
         message: "",                                               // 発言
-        message_input_focus_p: false,
 
         // 部屋一覧
         chat_rooms: lobby_app_params.chat_rooms,
@@ -146,9 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
         this.message = ""
       },
 
-      input_focus() {
-      },
-
       room_members_format(chat_room) {
         const list = _.groupBy(chat_room.chat_memberships, "location_key")
         return _.map(list, (list, key) => {
@@ -185,13 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
       current_hira_koma_info() {
         return HiraKomaInfo.fetch(this.current_hira_koma_key)
       },
-      
-      // input_class() {
-      //   if (this.$refs.key1.hasFocus()) {
-      //     return ["is-large"]
-      //   }
-      // },
-
     },
   })
 })
