@@ -122,6 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
     data() {
       return {
         message: "",            // 発言
+        message_input_focus_p: false,
+
         room_members:         js_current_chat_room.chat_memberships,
         room_chat_messages:   js_current_chat_room.room_chat_messages,
         kifu_body_sfen:       js_current_chat_room.kifu_body_sfen,
