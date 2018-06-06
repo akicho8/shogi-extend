@@ -23,6 +23,8 @@ class ChatRoomSerializer < ApplicationSerializer
     :handicap,
 
     :human_kifu_text,           # これは重い
+
+    :chat_window_size,
   ]
 
   has_many :room_chat_messages
@@ -62,45 +64,32 @@ if $0 == __FILE__
   pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :chat_user}).as_json
 end
 # >> {:id=>1,
-# >>  :room_owner_id=>1,
 # >>  :black_preset_key=>"平手",
 # >>  :white_preset_key=>"平手",
 # >>  :lifetime_key=>"lifetime5_min",
-# >>  :name=>"野良1号の対戦部屋 #1",
+# >>  :name=>"#1",
 # >>  :kifu_body_sfen=>
-# >>   "position startpos moves 7g7f 5c5d 2g2f 8c8d 1g1f 9c9d 2h2g 9a9b 1i1h",
-# >>  :clock_counts=>{:black=>[3, 8, 6, 62, 3], :white=>[2, 43, 4, 20]},
-# >>  :turn_max=>9,
-# >>  :battle_request_at=>Sun, 27 May 2018 19:58:48 JST +09:00,
+# >>   "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+# >>  :clock_counts=>{:black=>[], :white=>[]},
+# >>  :turn_max=>0,
+# >>  :battle_request_at=>Sat, 02 Jun 2018 22:28:24 JST +09:00,
 # >>  :auto_matched_at=>nil,
-# >>  :begin_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
-# >>  :end_at=>Sun, 27 May 2018 20:01:37 JST +09:00,
-# >>  :last_action_key=>"ILLEGAL_MOVE",
-# >>  :win_location_key=>"black",
-# >>  :current_chat_users_count=>-2,
+# >>  :begin_at=>Sat, 02 Jun 2018 22:28:26 JST +09:00,
+# >>  :end_at=>nil,
+# >>  :last_action_key=>nil,
+# >>  :win_location_key=>nil,
+# >>  :current_chat_users_count=>0,
 # >>  :watch_memberships_count=>0,
+# >>  :countdown_mode_hash=>{:black=>false, :white=>false},
 # >>  :show_path=>"/online/battles/1",
 # >>  :handicap=>false,
-# >>  :chat_memberships=>
-# >>   [{:id=>1,
-# >>     :preset_key=>"平手",
-# >>     :location_key=>"black",
-# >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
-# >>     :fighting_now_at=>nil,
-# >>     :time_up_trigger_at=>nil,
-# >>     :chat_user=>
-# >>      {:id=>1,
-# >>       :name=>"野良1号",
-# >>       :avatar_url=>
-# >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bda60366d3f3573c24c096e0d889993b7ca06772/0270_kemono_friends.png"}},
-# >>    {:id=>2,
-# >>     :preset_key=>"平手",
-# >>     :location_key=>"white",
-# >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
-# >>     :fighting_now_at=>nil,
-# >>     :time_up_trigger_at=>nil,
-# >>     :chat_user=>
-# >>      {:id=>1,
-# >>       :name=>"野良1号",
-# >>       :avatar_url=>
-# >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bda60366d3f3573c24c096e0d889993b7ca06772/0270_kemono_friends.png"}}]}
+# >>  :human_kifu_text=>
+# >>   "開始日時：2018/06/02 22:28:26\n" +
+# >>   "場所：http://localhost:3000/online/battles/1\n" +
+# >>   "先手：？\n" +
+# >>   "後手：？\n" +
+# >>   "手合割：平手\n" +
+# >>   "\n" +
+# >>   "まで0手で後手の勝ち\n",
+# >>  :chat_window_size=>10,
+# >>  :chat_memberships=>[]}

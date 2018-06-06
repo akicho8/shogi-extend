@@ -268,7 +268,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // チャットに表示する最新メッセージたち
       latest_room_chat_messages() {
-        return _.takeRight(this.room_chat_messages, 10)
+        console.assert(js_current_chat_room.chat_window_size)
+        return _.takeRight(this.room_chat_messages, js_current_chat_room.chat_window_size)
       },
 
       // 手番選択用

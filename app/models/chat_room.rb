@@ -29,31 +29,9 @@
 class ChatRoom < ApplicationRecord
   time_rangable default: false
 
-  has_many :room_chat_messages, dependent: :destroy
-  has_many :chat_memberships, dependent: :destroy
-  has_many :chat_users, through: :chat_memberships
   has_many :current_chat_users, class_name: "ChatUser", foreign_key: :current_chat_room_id, dependent: :nullify
 
-  has_many :watch_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
-  has_many :watch_users, through: :watch_memberships, source: :chat_user # 観戦中の人たち
-
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
-
-  # # FIXME: chat_users は無駄
-  # cattr_accessor(:to_json_params) {
-  #   {include: {
-  #       :room_owner => nil,
-  #       :chat_users => nil,
-  #       :watch_users => nil,
-  #       :chat_memberships => {
-  #         include: :chat_user,
-  #       },
-  #     }, methods: [
-  #       :show_path,
-  #       :handicap,
-  #     ],
-  #   }
-  # }
 
   serialize :clock_counts
   serialize :countdown_mode_hash
@@ -138,5 +116,34 @@ class ChatRoom < ApplicationRecord
 
   def names_hash
     chat_memberships.group_by(&:location_key).transform_values { |a| a.collect { |e| e.chat_user.name }.join("・") }.symbolize_keys
+  end
+
+  # 対局者
+  concerning :ChatUserMethods do
+    included do
+      has_many :chat_memberships, dependent: :destroy
+      has_many :chat_users, through: :chat_memberships
+    end
+  end
+
+  # 観戦者
+  concerning :ChatUserMethods do
+    included do
+      has_many :watch_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
+      has_many :watch_users, through: :watch_memberships, source: :chat_user # 観戦中の人たち
+    end
+  end
+
+  # チャット関連
+  concerning :RoomChatMessageMethods do
+    included do
+      cattr_accessor(:chat_window_size) { 10 }
+
+      has_many :room_chat_messages, dependent: :destroy do
+        def limited_latest_list
+          latest_list.limit(chat_window_size)
+        end
+      end
+    end
   end
 end
