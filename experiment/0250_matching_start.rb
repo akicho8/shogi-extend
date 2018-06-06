@@ -16,7 +16,7 @@ tp ChatRoom
 # >> |                       id | 32                                                                            |
 # >> |            room_owner_id | 72                                                                            |
 # >> |               preset_key | 平手                                                                          |
-# >> |             lifetime_key | lifetime5_min                                                                 |
+# >> |             lifetime_key | lifetime_m5                                                                 |
 # >> |                     name | 野良73号 vs 野良72号                                                          |
 # >> |           kifu_body_sfen | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 |
 # >> |             clock_counts | {:black=>[], :white=>[]}                                                      |

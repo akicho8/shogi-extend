@@ -52,9 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
         App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
       }
 
-      if (data["lifetime_key"]) {
-        App.chat_vm.current_lifetime_key = data["lifetime_key"]
-      }
+      // if (data["lifetime_key"]) {
+      //   App.chat_vm.current_lifetime_key = data["lifetime_key"]
+      // }
 
       if (data["human_kifu_text"]) {
         App.chat_vm.human_kifu_text = data["human_kifu_text"]
@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         room_chat_messages:   js_current_chat_room.room_chat_messages,
         kifu_body_sfen:       js_current_chat_room.kifu_body_sfen,
         current_lifetime_key: js_current_chat_room.lifetime_key,
+        current_platoon_key: js_current_chat_room.platoon_key,
         begin_at:             js_current_chat_room.begin_at,
         end_at:               js_current_chat_room.end_at,
         win_location_key:     js_current_chat_room.win_location_key,

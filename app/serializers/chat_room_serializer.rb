@@ -5,6 +5,7 @@ class ChatRoomSerializer < ApplicationSerializer
     :black_preset_key,
     :white_preset_key,
     :lifetime_key,
+    :platoon_key,
     :name,
     :kifu_body_sfen,
     :clock_counts,
@@ -66,7 +67,7 @@ end
 # >> {:id=>1,
 # >>  :black_preset_key=>"平手",
 # >>  :white_preset_key=>"平手",
-# >>  :lifetime_key=>"lifetime5_min",
+# >>  :lifetime_key=>"lifetime_m5",
 # >>  :name=>"#1",
 # >>  :kifu_body_sfen=>
 # >>   "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",

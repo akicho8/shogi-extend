@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.dialog_now = true
         Vue.prototype.$dialog.confirm({
-          size: "is-large",
+          // size: "is-large",
           title: `${e.from.name}さんからの挑戦状`,
           message: message,
           confirmText: "受ける",

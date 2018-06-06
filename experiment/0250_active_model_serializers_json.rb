@@ -12,7 +12,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {ch
 # >>  :online_at=>Fri, 01 Jun 2018 16:29:36 JST +09:00,
 # >>  :fighting_now_at=>nil,
 # >>  :matching_at=>nil,
-# >>  :lifetime_key=>"lifetime5_min",
+# >>  :lifetime_key=>"lifetime_m5",
 # >>  :ps_preset_key=>"平手",
 # >>  :po_preset_key=>"平手",
 # >>  :current_chat_room=>nil}
@@ -28,7 +28,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {ch
 # >>  :room_owner_id=>1,
 # >>  :black_preset_key=>"平手",
 # >>  :white_preset_key=>"平手",
-# >>  :lifetime_key=>"lifetime5_min",
+# >>  :lifetime_key=>"lifetime_m5",
 # >>  :name=>"野良1号の対戦部屋 #1",
 # >>  :kifu_body_sfen=>
 # >>   "position startpos moves 7g7f 5c5d 2g2f 8c8d 1g1f 9c9d 2h2g 9a9b 1i1h",

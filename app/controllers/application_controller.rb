@@ -61,6 +61,7 @@ class ApplicationController < ActionController::Base
           online_only_count: ChatUser.online_only.count,
           fighter_only_count: ChatUser.fighter_only.count,
           lifetime_infos: LifetimeInfo.as_json,
+          platoon_infos: PlatoonInfo.as_json,
           preset_infos: Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
         }
       end

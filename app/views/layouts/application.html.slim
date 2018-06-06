@@ -152,7 +152,9 @@ html lang="ja"
     javascript:
       var flash_success_notifications = #{flash_success_notifications.to_json.html_safe}
       document.addEventListener('DOMContentLoaded', () => {
-        _.forIn(flash_success_notifications, (message, key) => {
-          Vue.prototype.$toast.open({message: message, position: "is-bottom", type: `is-${key}`, duration: 1000 * 2, queue: false})
-        })
+        if (_) {
+          _.forIn(flash_success_notifications, (message, key) => {
+            Vue.prototype.$toast.open({message: message, position: "is-bottom", type: `is-${key}`, duration: 1000 * 2, queue: false})
+          })
+        }
       })

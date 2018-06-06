@@ -39,7 +39,8 @@ class ChatRoom < ApplicationRecord
   before_validation on: :create do
     self.black_preset_key ||= "平手"
     self.white_preset_key ||= "平手"
-    self.lifetime_key ||= :lifetime5_min
+    self.lifetime_key ||= :lifetime_m5
+    self.platoon_key ||= :versus_p1
     self.turn_max ||= 0
     self.clock_counts ||= {black: [], white: []}
     self.countdown_mode_hash ||= {black: false, white: false}
@@ -124,7 +125,7 @@ class ChatRoom < ApplicationRecord
   end
 
   # 観戦者
-  concerning :ChatUserMethods do
+  concerning :WatchUserMethods do
     included do
       has_many :watch_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
       has_many :watch_users, through: :watch_memberships, source: :chat_user # 観戦中の人たち

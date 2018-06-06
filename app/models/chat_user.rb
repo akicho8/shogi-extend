@@ -37,7 +37,8 @@ class ChatUser < ApplicationRecord
     self.name ||= "野良#{ChatUser.count.next}号"
     self.ps_preset_key ||= "平手"
     self.po_preset_key ||= "平手"
-    self.lifetime_key ||= "lifetime5_min"
+    self.lifetime_key ||= "lifetime_m5"
+    self.platoon_key ||= "versus_p1"
   end
 
   # def js_attributes
@@ -50,6 +51,14 @@ class ChatUser < ApplicationRecord
 
   after_commit do
     ActionCable.server.broadcast("lobby_channel", online_users: ams_sr(self.class.online_only)) # 重い
+  end
+
+  def lifetime_info
+    LifetimeInfo.fetch(lifetime_key)
+  end
+
+  def platoon_info
+    PlatoonInfo.fetch(platoon_key)
   end
 
   concerning :AvatarMethods do
@@ -126,37 +135,57 @@ class ChatUser < ApplicationRecord
   end
 
   concerning :MathingMethods do
+
     def matching_start
-      s = ChatUser.all
+      # 検索
+
+      s = self.class.all
       s = s.online_only
       s = s.where.not(id: id)                   # 自分以外
       s = s.where.not(matching_at: nil)         # マッチング希望者
       s = s.where(lifetime_key: lifetime_key)   # 同じ持ち時間
+      s = s.where(platoon_key: platoon_key)
       s = s.where(ps_preset_key: po_preset_key) # 「相手から見た自分」と「相手」の手合が一致する
       s = s.where(po_preset_key: ps_preset_key) # 「相手から見た相手」と「自分」の手合が一致する
 
-      if s.count == 0
-        # 誰もいなかったら登録する
-        update!(matching_at: Time.current)
+      if s.count < (platoon_info.count - 1)
+        # 人数に足りてなさそうなので待ち状態にする
+        update!(matching_at: Time.current) # マッチング対象になる
         LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
-      else
-        # 誰かいたので相手を見つける
-        battle_match_to(s.sample, chat_room: {auto_matched_at: Time.current})
+        return
       end
+
+      # 人数に達した
+      users = s.order("RAND()").limit(platoon_info.count - 1)
+
+      chat_room_setup(users, chat_room: {auto_matched_at: Time.current})
     end
 
-    # 自分のルールを優先する
-    def battle_match_to(opponent, **options)
+    def chat_room_setup(users, **options)
       options = {
         chat_room: {},
       }.merge(options)
 
-      room_params = users_and_preset_key(opponent)
-      chat_room = ChatRoom.create!(room_params.slice(:black_preset_key, :white_preset_key).merge(lifetime_key: lifetime_key).merge(options[:chat_room]))
-      room_params[:chat_users].each do |user|
-        user.update!(matching_at: nil) # 互いのマッチング状態をリセット
-        chat_room.chat_users << user
+      chat_room = ChatRoom.new
+      chat_room.lifetime_key = lifetime_key
+      chat_room.platoon_key = platoon_key
+      chat_room.assign_attributes(options[:chat_room])
+      chat_room.save!
+
+      # 二人ずつ取り出して振り分ける
+      [self, *users].each_slice(2) do |user1, user2|
+        room_params = user1.users_and_preset_key(user2)
+        chat_room.black_preset_key = room_params[:black_preset_key]
+        chat_room.white_preset_key = room_params[:white_preset_key]
+        chat_room.save!
+
+        room_params[:chat_users].each do |user|
+          user.update!(matching_at: nil) # 互いのマッチング状態をリセット
+          chat_room.chat_users << user
+        end
       end
+
+      # 召集
       chat_room.chat_users.each do |chat_user|
         ActionCable.server.broadcast("single_notification_#{chat_user.id}", {matching_ok: true, chat_room: ams_sr(chat_room)})
       end
@@ -197,5 +226,6 @@ class ChatUser < ApplicationRecord
 
       {chat_users: users, black_preset_key: black_preset_key, white_preset_key: white_preset_key}
     end
+
   end
 end

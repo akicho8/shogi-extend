@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ps_preset_key: js_global_params.current_chat_user["ps_preset_key"],
         po_preset_key: js_global_params.current_chat_user["po_preset_key"],
         current_lifetime_key: js_global_params.current_chat_user["lifetime_key"],
+        current_platoon_key: js_global_params.current_chat_user["platoon_key"],
 
         when_koma_one_side_force_hirate: false, // 駒落ちのとき片方を必ず平手に強制する？
       }
@@ -109,19 +110,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return chat_user.id === js_global_params.current_chat_user.id
       },
 
-      matching_setting_open_click() {
+      chat_room_setting_open_click() {
         this.setting_modal_p = true
       },
 
-      matching_setting_close_click() {
+      chat_room_setting_close_click() {
         this.setting_modal_p = false
       },
 
       setting_save() {
+        alert("setting_save")
         App.lobby.setting_save({
           ps_preset_key: this.current_ps_preset_info.key,
           po_preset_key: this.current_po_preset_info.key,
           lifetime_key: this.current_lifetime_key,
+          platoon_key: this.current_platoon_key,
         })
       },
 
@@ -164,6 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // 選択中の持ち時間項目
       current_lifetime_info() {
         return LifetimeInfo.fetch(this.current_lifetime_key)
+      },
+
+      current_platoon_info() {
+        return PlatoonInfo.fetch(this.current_platoon_key)
       },
 
       // 現在選択されている手合割情報

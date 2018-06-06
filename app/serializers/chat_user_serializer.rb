@@ -7,6 +7,7 @@ class ChatUserSerializer < ApplicationSerializer
     :fighting_now_at,
     :matching_at,
     :lifetime_key,
+    :platoon_key,
     :ps_preset_key,
     :po_preset_key,
   ]

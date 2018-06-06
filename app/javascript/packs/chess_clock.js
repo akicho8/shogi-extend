@@ -127,6 +127,10 @@ export default {
       return LifetimeInfo.fetch(this.current_lifetime_key)
     },
 
+    current_platoon_info() {
+      return PlatoonInfo.fetch(this.current_platoon_key)
+    },
+
     second_p() {
       return this.countdown_mode_hash[this.current_location.key]
     },

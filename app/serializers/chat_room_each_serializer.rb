@@ -5,6 +5,7 @@ class ChatRoomEachSerializer < ApplicationSerializer
     :black_preset_key,
     :white_preset_key,
     :lifetime_key,
+    :platoon_key,
     :name,
     :kifu_body_sfen,
     :clock_counts,
@@ -58,7 +59,7 @@ end
 # >>  :room_owner_id=>1,
 # >>  :black_preset_key=>"平手",
 # >>  :white_preset_key=>"平手",
-# >>  :lifetime_key=>"lifetime5_min",
+# >>  :lifetime_key=>"lifetime_m5",
 # >>  :name=>"野良1号の対戦部屋 #1",
 # >>  :kifu_body_sfen=>
 # >>   "position startpos moves 7g7f 5c5d 2g2f 8c8d 1g1f 9c9d 2h2g 9a9b 1i1h",

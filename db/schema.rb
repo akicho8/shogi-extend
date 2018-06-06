@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "black_preset_key", null: false, comment: "▲手合割"
     t.string "white_preset_key", null: false, comment: "△手合割"
     t.string "lifetime_key", null: false, comment: "時間"
+    t.string "platoon_key", null: false, comment: "人数"
     t.text "kifu_body_sfen", null: false, comment: "USI形式棋譜"
     t.text "clock_counts", null: false, comment: "対局時計情報"
     t.text "countdown_mode_hash", null: false, comment: "秒読み状態"
@@ -77,12 +78,14 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "fighting_now_at", comment: "chat_memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
     t.datetime "matching_at", comment: "マッチング中(開始日時)"
     t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
+    t.string "platoon_key", null: false, comment: "ルール・人数"
     t.string "ps_preset_key", null: false, comment: "ルール・自分の手合割"
     t.string "po_preset_key", null: false, comment: "ルール・相手の手合割"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_chat_room_id"], name: "index_chat_users_on_current_chat_room_id"
     t.index ["lifetime_key"], name: "index_chat_users_on_lifetime_key"
+    t.index ["platoon_key"], name: "index_chat_users_on_platoon_key"
     t.index ["po_preset_key"], name: "index_chat_users_on_po_preset_key"
     t.index ["ps_preset_key"], name: "index_chat_users_on_ps_preset_key"
   end
