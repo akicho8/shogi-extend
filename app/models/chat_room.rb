@@ -40,22 +40,19 @@ class ChatRoom < ApplicationRecord
     self.black_preset_key ||= "平手"
     self.white_preset_key ||= "平手"
     self.lifetime_key ||= :lifetime5_min
-    # self.kifu_body_sfen ||= "position startpos"
     self.turn_max ||= 0
     self.clock_counts ||= {black: [], white: []}
     self.countdown_mode_hash ||= {black: false, white: false}
   end
 
   before_validation do
-    if (changes_to_save[:black_preset_key] || changes_to_save[:white_preset_key]) && black_preset_key && white_preset_key
-
-      # preset_info = Warabi::PresetInfo.fetch(preset_key)
-      # self.kifu_body_sfen = preset_info.to_position_sfen
-
-      mediator = Warabi::Mediator.new
-      mediator.board.placement_from_hash(black: black_preset_key, white: white_preset_key)
-      mediator.turn_info.handicap = handicap
-      self.kifu_body_sfen = "position #{mediator.to_long_sfen}"
+    if changes_to_save[:black_preset_key] || changes_to_save[:white_preset_key]
+      if black_preset_key && white_preset_key
+        mediator = Warabi::Mediator.new
+        mediator.board.placement_from_hash(black: black_preset_key, white: white_preset_key)
+        mediator.turn_info.handicap = handicap
+        self.kifu_body_sfen = "position #{mediator.to_long_sfen}"
+      end
     end
   end
 
