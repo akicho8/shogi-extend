@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       setting_save() {
-        alert("setting_save")
+        // alert("setting_save")
         App.lobby.setting_save({
           ps_preset_key: this.current_ps_preset_info.key,
           po_preset_key: this.current_po_preset_info.key,
