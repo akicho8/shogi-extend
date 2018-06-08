@@ -2,78 +2,50 @@
 
 # == Schema Information ==
 #
-# Chat membershipテーブル (memberships as Membership)
-#
-# |--------------------+--------------------+-------------+-------------+----------------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照           | INDEX |
-# |--------------------+--------------------+-------------+-------------+----------------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |                |       |
-# | battle_room_id       | Chat room          | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
-# | user_id       | Chat user          | integer(8)  | NOT NULL    | => User#id | B     |
-# | preset_key         | Preset key         | string(255) | NOT NULL    |                |       |
-# | location_key       | Location key       | string(255) | NOT NULL    |                | C     |
-# | position           | 順序               | integer(4)  |             |                | D     |
-# | standby_at         | Standby at         | datetime    |             |                |       |
-# | fighting_now_at    | Fighting now at    | datetime    |             |                |       |
-# | time_up_trigger_at | Time up trigger at | datetime    |             |                |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |                |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |                |       |
-# |--------------------+--------------------+-------------+-------------+----------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは BattleRoom モデルから has_many :chat_messages されています。
-# ・Membership モデルは User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
 # 対戦部屋テーブル (battle_rooms as BattleRoom)
 #
-# |--------------------------+--------------------------+-------------+---------------------+------+-------|
-# | カラム名                 | 意味                     | タイプ      | 属性                | 参照 | INDEX |
-# |--------------------------+--------------------------+-------------+---------------------+------+-------|
-# | id                       | ID                       | integer(8)  | NOT NULL PK         |      |       |
-# | black_preset_key         | Black preset key         | string(255) | NOT NULL            |      |       |
-# | white_preset_key         | White preset key         | string(255) | NOT NULL            |      |       |
-# | lifetime_key             | Lifetime key             | string(255) | NOT NULL            |      |       |
-# | kifu_body_sfen           | Kifu body sfen           | text(65535) | NOT NULL            |      |       |
-# | clock_counts             | Clock counts             | text(65535) | NOT NULL            |      |       |
-# | countdown_mode_hash      | Countdown mode hash      | text(65535) | NOT NULL            |      |       |
-# | turn_max                 | Turn max                 | integer(4)  | NOT NULL            |      |       |
-# | battle_request_at        | Battle request at        | datetime    |                     |      |       |
-# | auto_matched_at          | Auto matched at          | datetime    |                     |      |       |
-# | begin_at                 | Begin at                 | datetime    |                     |      |       |
-# | end_at                   | End at                   | datetime    |                     |      |       |
-# | last_action_key          | Last action key          | string(255) |                     |      |       |
-# | win_location_key         | Win location key         | string(255) |                     |      |       |
-# | current_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at               | 作成日時                 | datetime    | NOT NULL            |      |       |
-# | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
-# |--------------------------+--------------------------+-------------+---------------------+------+-------|
+# |-------------------------+-------------------------+-------------+---------------------+------+-------|
+# | カラム名                | 意味                    | タイプ      | 属性                | 参照 | INDEX |
+# |-------------------------+-------------------------+-------------+---------------------+------+-------|
+# | id                      | ID                      | integer(8)  | NOT NULL PK         |      |       |
+# | black_preset_key        | Black preset key        | string(255) | NOT NULL            |      |       |
+# | white_preset_key        | White preset key        | string(255) | NOT NULL            |      |       |
+# | lifetime_key            | Lifetime key            | string(255) | NOT NULL            |      |       |
+# | platoon_key             | Platoon key             | string(255) | NOT NULL            |      |       |
+# | kifu_body_sfen          | Kifu body sfen          | text(65535) | NOT NULL            |      |       |
+# | clock_counts            | Clock counts            | text(65535) | NOT NULL            |      |       |
+# | countdown_mode_hash     | Countdown mode hash     | text(65535) | NOT NULL            |      |       |
+# | turn_max                | Turn max                | integer(4)  | NOT NULL            |      |       |
+# | battle_request_at       | Battle request at       | datetime    |                     |      |       |
+# | auto_matched_at         | Auto matched at         | datetime    |                     |      |       |
+# | begin_at                | Begin at                | datetime    |                     |      |       |
+# | end_at                  | End at                  | datetime    |                     |      |       |
+# | last_action_key         | Last action key         | string(255) |                     |      |       |
+# | win_location_key        | Win location key        | string(255) |                     |      |       |
+# | current_users_count     | Current users count     | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at              | 作成日時                | datetime    | NOT NULL            |      |       |
+# | updated_at              | 更新日時                | datetime    | NOT NULL            |      |       |
+# |-------------------------+-------------------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
 #
-# ユーザーテーブル (users as User)
+# Chat messageテーブル (chat_messages as ChatMessage)
 #
-# |----------------------+-------------------+-------------+-------------+----------------+-------|
-# | カラム名             | 意味              | タイプ      | 属性        | 参照           | INDEX |
-# |----------------------+-------------------+-------------+-------------+----------------+-------|
-# | id                   | ID                | integer(8)  | NOT NULL PK |                |       |
-# | name                 | 名前              | string(255) | NOT NULL    |                |       |
-# | current_battle_room_id | Current chat room | integer(8)  |             | => BattleRoom#id | A     |
-# | online_at            | Online at         | datetime    |             |                |       |
-# | fighting_now_at      | Fighting now at   | datetime    |             |                |       |
-# | matching_at          | Matching at       | datetime    |             |                |       |
-# | lifetime_key         | Lifetime key      | string(255) | NOT NULL    |                | B     |
-# | self_preset_key        | Ps preset key     | string(255) | NOT NULL    |                | C     |
-# | oppo_preset_key        | Po preset key     | string(255) | NOT NULL    |                | D     |
-# | created_at           | 作成日時          | datetime    | NOT NULL    |                |       |
-# | updated_at           | 更新日時          | datetime    | NOT NULL    |                |       |
-# |----------------------+-------------------+-------------+-------------+----------------+-------|
+# |----------------+-------------+-------------+-------------+------------------+-------|
+# | カラム名       | 意味        | タイプ      | 属性        | 参照             | INDEX |
+# |----------------+-------------+-------------+-------------+------------------+-------|
+# | id             | ID          | integer(8)  | NOT NULL PK |                  |       |
+# | battle_room_id | Battle room | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
+# | user_id        | User        | integer(8)  | NOT NULL    | => User#id       | B     |
+# | message        | Message     | text(65535) | NOT NULL    |                  |       |
+# | created_at     | 作成日時    | datetime    | NOT NULL    |                  |       |
+# | updated_at     | 更新日時    | datetime    | NOT NULL    |                  |       |
+# |----------------+-------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・User モデルは BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
+# ・ChatMessage モデルは BattleRoom モデルから has_many :memberships されています。
+# ・ChatMessage モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -167,17 +139,17 @@
 
 # == Schema Information ==
 #
-# Lobby chat messageテーブル (lobby_messages as LobbyMessage)
+# Lobby messageテーブル (lobby_messages as LobbyMessage)
 #
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | id           | ID        | integer(8)  | NOT NULL PK |                |       |
-# | user_id | Chat user | integer(8)  | NOT NULL    | => User#id | A     |
-# | message      | Message   | text(65535) | NOT NULL    |                |       |
-# | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
-# | updated_at   | 更新日時  | datetime    | NOT NULL    |                |       |
-# |--------------+-----------+-------------+-------------+----------------+-------|
+# |------------+----------+-------------+-------------+------------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照       | INDEX |
+# |------------+----------+-------------+-------------+------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |            |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => User#id | A     |
+# | message    | Message  | text(65535) | NOT NULL    |            |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |            |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |            |       |
+# |------------+----------+-------------+-------------+------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・LobbyMessage モデルは User モデルから has_many :chat_messages されています。
@@ -185,22 +157,27 @@
 
 # == Schema Information ==
 #
-# Room chat messageテーブル (chat_messages as ChatMessage)
+# Membershipテーブル (memberships as Membership)
 #
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | id           | ID        | integer(8)  | NOT NULL PK |                |       |
-# | battle_room_id | Chat room | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
-# | user_id | Chat user | integer(8)  | NOT NULL    | => User#id | B     |
-# | message      | Message   | text(65535) | NOT NULL    |                |       |
-# | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
-# | updated_at   | 更新日時  | datetime    | NOT NULL    |                |       |
-# |--------------+-----------+-------------+-------------+----------------+-------|
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
+# | battle_room_id     | Battle room        | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
+# | user_id            | User               | integer(8)  | NOT NULL    | => User#id       | B     |
+# | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
+# | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
+# | position           | 順序               | integer(4)  |             |                  | D     |
+# | standby_at         | Standby at         | datetime    |             |                  |       |
+# | fighting_now_at    | Fighting now at    | datetime    |             |                  |       |
+# | time_up_trigger_at | Time up trigger at | datetime    |             |                  |       |
+# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
+# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・ChatMessage モデルは BattleRoom モデルから has_many :chat_messages されています。
-# ・ChatMessage モデルは User モデルから has_many :chat_messages されています。
+# ・Membership モデルは BattleRoom モデルから has_many :memberships されています。
+# ・Membership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -324,20 +301,45 @@
 
 # == Schema Information ==
 #
-# Watch membershipテーブル (watch_memberships as WatchMembership)
+# ユーザーテーブル (users as User)
 #
-# |--------------+-----------+------------+-------------+----------------+-------|
-# | カラム名     | 意味      | タイプ     | 属性        | 参照           | INDEX |
-# |--------------+-----------+------------+-------------+----------------+-------|
-# | id           | ID        | integer(8) | NOT NULL PK |                |       |
-# | battle_room_id | Chat room | integer(8) | NOT NULL    | => BattleRoom#id | A     |
-# | user_id | Chat user | integer(8) | NOT NULL    | => User#id | B     |
-# | created_at   | 作成日時  | datetime   | NOT NULL    |                |       |
-# | updated_at   | 更新日時  | datetime   | NOT NULL    |                |       |
-# |--------------+-----------+------------+-------------+----------------+-------|
+# |------------------------+---------------------+-------------+-------------+------------------+-------|
+# | カラム名               | 意味                | タイプ      | 属性        | 参照             | INDEX |
+# |------------------------+---------------------+-------------+-------------+------------------+-------|
+# | id                     | ID                  | integer(8)  | NOT NULL PK |                  |       |
+# | name                   | 名前                | string(255) | NOT NULL    |                  |       |
+# | current_battle_room_id | Current battle room | integer(8)  |             | => BattleRoom#id | A     |
+# | online_at              | Online at           | datetime    |             |                  |       |
+# | fighting_now_at        | Fighting now at     | datetime    |             |                  |       |
+# | matching_at            | Matching at         | datetime    |             |                  |       |
+# | lifetime_key           | Lifetime key        | string(255) | NOT NULL    |                  | B     |
+# | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |
+# | self_preset_key        | Self preset key     | string(255) | NOT NULL    |                  | D     |
+# | oppo_preset_key        | Oppo preset key     | string(255) | NOT NULL    |                  | E     |
+# | created_at             | 作成日時            | datetime    | NOT NULL    |                  |       |
+# | updated_at             | 更新日時            | datetime    | NOT NULL    |                  |       |
+# |------------------------+---------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・WatchMembership モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・User モデルは BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Watch membershipテーブル (watch_memberships as WatchMembership)
+#
+# |----------------+-------------+------------+-------------+------------------+-------|
+# | カラム名       | 意味        | タイプ     | 属性        | 参照             | INDEX |
+# |----------------+-------------+------------+-------------+------------------+-------|
+# | id             | ID          | integer(8) | NOT NULL PK |                  |       |
+# | battle_room_id | Battle room | integer(8) | NOT NULL    | => BattleRoom#id | A     |
+# | user_id        | User        | integer(8) | NOT NULL    | => User#id       | B     |
+# | created_at     | 作成日時    | datetime   | NOT NULL    |                  |       |
+# | updated_at     | 更新日時    | datetime   | NOT NULL    |                  |       |
+# |----------------+-------------+------------+-------------+------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・WatchMembership モデルは BattleRoom モデルから has_many :memberships されています。
 # ・WatchMembership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 

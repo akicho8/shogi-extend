@@ -1,22 +1,28 @@
+# -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_battle_records as FreeBattleRecord)
+# ユーザーテーブル (users as User)
 #
-# |--------------+--------------------+-------------+-------------+------+-------|
-# | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
-# |--------------+--------------------+-------------+-------------+------+-------|
-# | id           | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | unique_key   | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |
-# | kifu_file    | 棋譜ファイル       | string(255) |             |      |       |
-# | kifu_url     | 棋譜URL            | string(255) |             |      |       |
-# | kifu_body    | 棋譜内容           | text(65535) | NOT NULL    |      |       |
-# | turn_max     | 手数               | integer(4)  | NOT NULL    |      |       |
-# | meta_info    | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
-# | mountain_url | 将棋山脈URL        | string(255) |             |      |       |
-# | battled_at   | Battled at         | datetime    | NOT NULL    |      |       |
-# | created_at   | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |
-# |--------------+--------------------+-------------+-------------+------+-------|
+# |------------------------+---------------------+-------------+-------------+------------------+-------|
+# | カラム名               | 意味                | タイプ      | 属性        | 参照             | INDEX |
+# |------------------------+---------------------+-------------+-------------+------------------+-------|
+# | id                     | ID                  | integer(8)  | NOT NULL PK |                  |       |
+# | name                   | 名前                | string(255) | NOT NULL    |                  |       |
+# | current_battle_room_id | Current battle room | integer(8)  |             | => BattleRoom#id | A     |
+# | online_at              | Online at           | datetime    |             |                  |       |
+# | fighting_now_at        | Fighting now at     | datetime    |             |                  |       |
+# | matching_at            | Matching at         | datetime    |             |                  |       |
+# | lifetime_key           | Lifetime key        | string(255) | NOT NULL    |                  | B     |
+# | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |
+# | self_preset_key        | Self preset key     | string(255) | NOT NULL    |                  | D     |
+# | oppo_preset_key        | Oppo preset key     | string(255) | NOT NULL    |                  | E     |
+# | created_at             | 作成日時            | datetime    | NOT NULL    |                  |       |
+# | updated_at             | 更新日時            | datetime    | NOT NULL    |                  |       |
+# |------------------------+---------------------+-------------+-------------+------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・User モデルは BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
+#--------------------------------------------------------------------------------
 
 require 'rails_helper'
 

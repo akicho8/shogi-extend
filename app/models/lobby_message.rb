@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Lobby chat messageテーブル (lobby_messages as LobbyMessage)
+# Lobby messageテーブル (lobby_messages as LobbyMessage)
 #
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
-# |--------------+-----------+-------------+-------------+----------------+-------|
-# | id           | ID        | integer(8)  | NOT NULL PK |                |       |
-# | user_id | Chat user | integer(8)  | NOT NULL    | => User#id | A     |
-# | message      | Message   | text(65535) | NOT NULL    |                |       |
-# | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
-# | updated_at   | 更新日時  | datetime    | NOT NULL    |                |       |
-# |--------------+-----------+-------------+-------------+----------------+-------|
+# |------------+----------+-------------+-------------+------------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照       | INDEX |
+# |------------+----------+-------------+-------------+------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |            |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => User#id | A     |
+# | message    | Message  | text(65535) | NOT NULL    |            |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |            |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |            |       |
+# |------------+----------+-------------+-------------+------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・LobbyMessage モデルは User モデルから has_many :chat_messages されています。

@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Chat membershipテーブル (memberships as Membership)
+# Membershipテーブル (memberships as Membership)
 #
-# |--------------------+--------------------+-------------+-------------+----------------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照           | INDEX |
-# |--------------------+--------------------+-------------+-------------+----------------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |                |       |
-# | battle_room_id       | Chat room          | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
-# | user_id       | Chat user          | integer(8)  | NOT NULL    | => User#id | B     |
-# | preset_key         | Preset key         | string(255) | NOT NULL    |                |       |
-# | location_key       | Location key       | string(255) | NOT NULL    |                | C     |
-# | position           | 順序               | integer(4)  |             |                | D     |
-# | standby_at         | Standby at         | datetime    |             |                |       |
-# | fighting_now_at    | Fighting now at    | datetime    |             |                |       |
-# | time_up_trigger_at | Time up trigger at | datetime    |             |                |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |                |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |                |       |
-# |--------------------+--------------------+-------------+-------------+----------------+-------|
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
+# | battle_room_id     | Battle room        | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
+# | user_id            | User               | integer(8)  | NOT NULL    | => User#id       | B     |
+# | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
+# | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
+# | position           | 順序               | integer(4)  |             |                  | D     |
+# | standby_at         | Standby at         | datetime    |             |                  |       |
+# | fighting_now_at    | Fighting now at    | datetime    |             |                  |       |
+# | time_up_trigger_at | Time up trigger at | datetime    |             |                  |       |
+# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
+# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・Membership モデルは BattleRoom モデルから has_many :memberships されています。
 # ・Membership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
