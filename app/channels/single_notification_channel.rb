@@ -21,7 +21,7 @@ class SingleNotificationChannel < ApplicationCable::Channel
     e = data["battle_request"]
     alice = ChatUser.find(e["from"]["id"]) # 最初にリクエストを送った方
     bob = ChatUser.find(e["to"]["id"])     # 承諾した方
-    alice.single_chat_room_setup(bob)
+    alice.battle_setup_with(bob)
   end
 
   def battle_match_ng(data)

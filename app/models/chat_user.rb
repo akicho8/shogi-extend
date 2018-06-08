@@ -157,7 +157,7 @@ class ChatUser < ApplicationRecord
       if rule_cop.same_rule?
         s = s.merge(preset_reverse)
         if s.count < platoon_info.total_limit
-          matching_wait_mode
+          matching_wait_notify
           return
         end
         users = s.random_order.limit(platoon_info.total_limit) # 人数に達したのでそのメンバーをランダムで取得
@@ -166,7 +166,7 @@ class ChatUser < ApplicationRecord
         s1 = s.merge(preset_equal)   # 自分の味方を探す
         s2 = s.merge(preset_reverse) # 相手を探す
         if s1.count < platoon_info.half_limit || s2.count < platoon_info.half_limit
-          matching_wait_mode
+          matching_wait_notify
           return
         end
         users1 = s1.limit(platoon_info.half_limit)
@@ -177,7 +177,7 @@ class ChatUser < ApplicationRecord
       chat_room_setup(pair_list, auto_matched_at: Time.current)
     end
 
-    def single_chat_room_setup(opponent)
+    def battle_setup_with(opponent)
       chat_room_setup([[self, opponent]], {battle_request_at: Time.current})
     end
 
@@ -225,7 +225,7 @@ class ChatUser < ApplicationRecord
       end
     end
 
-    def matching_wait_mode
+    def matching_wait_notify
       LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
     end
 

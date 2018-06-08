@@ -24,7 +24,7 @@ RSpec.describe ChatUser, type: :model do
   context "対戦リクエスト" do
     it "自分vs自分" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
-      chat_room = @user1.single_chat_room_setup(@user1)
+      chat_room = @user1.battle_setup_with(@user1)
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "平手" }
@@ -38,7 +38,7 @@ RSpec.describe ChatUser, type: :model do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
       @user2 = create_user(:platoon_p4vs4, "平手", "二枚落ち")
 
-      chat_room = @user1.single_chat_room_setup(@user2)
+      chat_room = @user1.battle_setup_with(@user2)
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "平手" }
@@ -49,7 +49,7 @@ RSpec.describe ChatUser, type: :model do
       @user1 = create_user(:platoon_p4vs4, "二枚落ち", "平手")
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
-      chat_room = @user1.single_chat_room_setup(@user2)
+      chat_room = @user1.battle_setup_with(@user2)
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "二枚落ち" }
@@ -61,7 +61,7 @@ RSpec.describe ChatUser, type: :model do
       @user1 = create_user(:platoon_p4vs4, "二枚落ち", "香落ち")
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
-      chat_room = @user1.single_chat_room_setup(@user2)
+      chat_room = @user1.battle_setup_with(@user2)
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "香落ち" }
       _assert { chat_room.white_preset_key == "二枚落ち" }
@@ -111,7 +111,7 @@ RSpec.describe ChatUser, type: :model do
       _assert { chat_room }
     end
 
-    it "両方同じ駒落ちでのシングルス" do
+    it "全員同じ駒落ちでのシングルス" do
       @user1 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
       @user2 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
 
