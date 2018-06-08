@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data["kifu_body_sfen"]) {
         // これはだめ
-        // if (!_.isNil(data["moved_chat_user_id"]) && data["moved_chat_user_id"] === js_global_params.current_chat_user.id) {
+        // if (!_.isNil(data["moved_user_id"]) && data["moved_user_id"] === js_global_params.current_user.id) {
         //   // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
         //   // (が、こうすると本当にまわりにブロードキャストされたのか不安ではある)
         // } else {
@@ -242,13 +242,13 @@ document.addEventListener("DOMContentLoaded", () => {
         this.message = ""
       },
 
-      // chat_user は自分か？
-      user_self_p(chat_user) {
-        return chat_user.id === js_global_params.current_chat_user.id
+      // user は自分か？
+      user_self_p(user) {
+        return user.id === js_global_params.current_user.id
       },
 
       __membership_self_p(e) {
-        return this.user_self_p(e.chat_user)
+        return this.user_self_p(e.user)
       },
 
       play_mode_long_sfen_set(v) {
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 自分に対応する membership の配列
       __my_memberships() {
-        return _.filter(this.room_members, e => this.user_self_p(e.chat_user))
+        return _.filter(this.room_members, e => this.user_self_p(e.user))
       },
 
       // 自分に対応する membership の IDs

@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-pp ActiveModelSerializers::SerializableResource.new(ChatUser.first).as_json
+pp ActiveModelSerializers::SerializableResource.new(User.first).as_json
 pp ActiveModelSerializers::SerializableResource.new(LobbyChatMessage.first).as_json
-pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :chat_user}).as_json
+pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :user}).as_json
 
 # >> {:id=>1,
 # >>  :name=>"野良1号",
@@ -19,7 +19,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {ch
 # >> {:id=>1,
 # >>  :message=>"aa",
 # >>  :created_at=>Tue, 29 May 2018 20:52:47 JST +09:00,
-# >>  :chat_user=>
+# >>  :user=>
 # >>   {:id=>1,
 # >>    :name=>"野良1号",
 # >>    :avatar_url=>
@@ -40,7 +40,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {ch
 # >>  :end_at=>Sun, 27 May 2018 20:01:37 JST +09:00,
 # >>  :last_action_key=>"ILLEGAL_MOVE",
 # >>  :win_location_key=>"black",
-# >>  :current_chat_users_count=>-2,
+# >>  :current_users_count=>-2,
 # >>  :watch_memberships_count=>0,
 # >>  :countdown_mode_hash=>{:black=>false, :white=>false},
 # >>  :show_path=>"/online/battles/1",
@@ -62,7 +62,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {ch
 # >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>     :fighting_now_at=>nil,
 # >>     :time_up_trigger_at=>nil,
-# >>     :chat_user=>
+# >>     :user=>
 # >>      {:id=>1,
 # >>       :name=>"野良1号",
 # >>       :avatar_url=>
@@ -73,7 +73,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {ch
 # >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>     :fighting_now_at=>nil,
 # >>     :time_up_trigger_at=>nil,
-# >>     :chat_user=>
+# >>     :user=>
 # >>      {:id=>1,
 # >>       :name=>"野良1号",
 # >>       :avatar_url=>

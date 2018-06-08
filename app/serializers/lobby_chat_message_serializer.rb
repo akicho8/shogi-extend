@@ -1,8 +1,8 @@
 class LobbyChatMessageSerializer < ApplicationSerializer
   attributes :message, :created_at
 
-  has_one :chat_user
-  class ChatUserSerializer < ApplicationSerializer
+  has_one :user
+  class UserSerializer < ApplicationSerializer
     attributes :name, :avatar_url
   end
 end

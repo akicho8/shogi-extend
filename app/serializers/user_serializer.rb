@@ -1,4 +1,4 @@
-class ChatUserSerializer < ApplicationSerializer
+class UserSerializer < ApplicationSerializer
   attributes *[
     :name,
     :avatar_url,

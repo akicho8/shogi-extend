@@ -20,7 +20,7 @@
 # | end_at                   | End at                   | datetime    |                     |      |       |
 # | last_action_key          | Last action key          | string(255) |                     |      |       |
 # | win_location_key         | Win location key         | string(255) |                     |      |       |
-# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | current_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |      |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
@@ -29,7 +29,7 @@
 class CreateChatRooms < ActiveRecord::Migration[5.1]
   def change
     # ユーザー
-    create_table :chat_users, force: true do |t|
+    create_table :users, force: true do |t|
       t.string :name,                  null: false,              comment: "名前"
       t.belongs_to :current_chat_room, null: true,               comment: "現在入室している部屋"
       t.datetime :online_at,           null: true,               comment: "オンラインになった日時"
@@ -58,7 +58,7 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
       t.datetime :end_at,                       null: true,  comment: "バトル終了日時"
       t.string :last_action_key,                       null: true,  comment: "最後の状態"
       t.string :win_location_key,                      null: true,  comment: "勝った方の先後"
-      t.integer :current_chat_users_count, default: 0, null: false, comment: "この部屋にいる人数"
+      t.integer :current_users_count, default: 0, null: false, comment: "この部屋にいる人数"
       t.integer :watch_memberships_count, default: 0,  null: false, comment: "この部屋の観戦者数"
       t.timestamps null: false
     end
@@ -66,7 +66,7 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
     # 対局者
     create_table :chat_memberships, force: true do |t|
       t.belongs_to :chat_room, null: false,              comment: "部屋"
-      t.belongs_to :chat_user, null: false,              comment: "ユーザー"
+      t.belongs_to :user, null: false,              comment: "ユーザー"
       t.string :preset_key,    null: false,              comment: "手合割"
       t.string :location_key,  null: false, index: true, comment: "先後"
       t.integer :position,                  index: true, comment: "入室順序"
@@ -79,21 +79,21 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
     # 観戦者
     create_table :watch_memberships, force: true do |t|
       t.belongs_to :chat_room, null: false, comment: "部屋"
-      t.belongs_to :chat_user, null: false, comment: "ユーザー"
+      t.belongs_to :user, null: false, comment: "ユーザー"
       t.timestamps null: false
     end
 
     # 対局部屋のチャット発言
     create_table :room_chat_messages, force: true do |t|
       t.belongs_to :chat_room, null: false, comment: "部屋"
-      t.belongs_to :chat_user, null: false, comment: "ユーザー"
+      t.belongs_to :user, null: false, comment: "ユーザー"
       t.text :message, null: false, comment: "発言"
       t.timestamps null: false
     end
 
     # ロビーチャット発言
     create_table :lobby_chat_messages, force: true do |t|
-      t.belongs_to :chat_user, null: false, comment: "ユーザー"
+      t.belongs_to :user, null: false, comment: "ユーザー"
       t.text :message, null: false, comment: "発言"
       t.timestamps null: false
     end

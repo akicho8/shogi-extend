@@ -1,7 +1,7 @@
 class ChatRoomChannel < ApplicationCable::Channel
   def subscribed
     stream_from room_key
-    stream_for current_chat_user
+    stream_for current_user
   end
 
   def unsubscribed
@@ -63,7 +63,7 @@ class ChatRoomChannel < ApplicationCable::Channel
       kifu_body_sfen: kifu_body_sfen,
       human_kifu_text: current_chat_room.human_kifu_text,
       last_hand: ki2_a.last,
-      moved_chat_user_id: current_chat_user.id, # 操作した人(この人以外に盤面を反映する)
+      moved_user_id: current_user.id, # 操作した人(この人以外に盤面を反映する)
       clock_counts: current_chat_room.clock_counts,
     }
 
@@ -81,7 +81,7 @@ class ChatRoomChannel < ApplicationCable::Channel
   # 発言
   # chat_say("message" => '<span class="has-text-info">退室しました</span>')
   def chat_say(data)
-    room_chat_message = current_chat_user.room_chat_messages.create!(chat_room: current_chat_room, message: data["message"])
+    room_chat_message = current_user.room_chat_messages.create!(chat_room: current_chat_room, message: data["message"])
     ActionCable.server.broadcast(room_key, room_chat_message: ams_sr(room_chat_message))
   end
 
@@ -94,14 +94,14 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def room_in(data)
     # 自分から部屋に入ったらマッチングを解除する
-    current_chat_user.update!(matching_at: nil)
+    current_user.update!(matching_at: nil)
 
     # どの部屋にいるか設定
-    current_chat_user.update!(current_chat_room: current_chat_room)
+    current_user.update!(current_chat_room: current_chat_room)
 
     # 部屋のメンバーとして登録(マッチング済みの場合はもう登録されている)
-    # unless current_chat_room.chat_users.include?(current_chat_user)
-    #   current_chat_room.chat_users << current_chat_user
+    # unless current_chat_room.users.include?(current_user)
+    #   current_chat_room.users << current_user
     # end
 
     if current_chat_memberships.present?
@@ -111,8 +111,8 @@ class ChatRoomChannel < ApplicationCable::Channel
       end
     else
       # 観戦者
-      unless current_chat_room.watch_users.include?(current_chat_user)
-        current_chat_room.watch_users << current_chat_user
+      unless current_chat_room.watch_users.include?(current_user)
+        current_chat_room.watch_users << current_user
         current_chat_room.broadcast # counter_cache の watch_memberships_count を反映させるため
       end
     end
@@ -141,7 +141,7 @@ class ChatRoomChannel < ApplicationCable::Channel
   def room_out(data)
     chat_say("message" => '<span class="has-text-info">退室しました</span>')
 
-    current_chat_user.update!(current_chat_room_id: nil)
+    current_user.update!(current_chat_room_id: nil)
 
     if current_chat_memberships.present?
       # 対局者
@@ -152,7 +152,7 @@ class ChatRoomChannel < ApplicationCable::Channel
       end
     else
       # 観戦者
-      current_chat_room.watch_users.destroy(current_chat_user)
+      current_chat_room.watch_users.destroy(current_user)
       # ActionCable.server.broadcast(room_key, watch_users: current_chat_room.watch_users)
     end
 
@@ -229,6 +229,6 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   # 自分対自分の場合もあるためメンバー情報は複数ある
   def current_chat_memberships
-    @current_chat_memberships ||= current_chat_room.chat_memberships.where(chat_user: current_chat_user)
+    @current_chat_memberships ||= current_chat_room.chat_memberships.where(user: current_user)
   end
 end

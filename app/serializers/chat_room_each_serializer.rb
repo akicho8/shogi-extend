@@ -16,7 +16,7 @@ class ChatRoomEachSerializer < ApplicationSerializer
     :end_at,
     :last_action_key,
     :win_location_key,
-    :current_chat_users_count,
+    :current_users_count,
     :watch_memberships_count,
     :countdown_mode_hash,
 
@@ -27,11 +27,11 @@ class ChatRoomEachSerializer < ApplicationSerializer
   # attribute :can_edit
   #
   # def can_edit
-  #   view_context.current_chat_user.id
+  #   view_context.current_user.id
   # end
 
   # has_many :watch_users
-  # class ChatUserSerializer < ApplicationSerializer
+  # class UserSerializer < ApplicationSerializer
   #   attributes :name, :avatar_url
   # end
 
@@ -45,15 +45,15 @@ class ChatRoomEachSerializer < ApplicationSerializer
       # :time_up_trigger_at,
     ]
 
-    belongs_to :chat_user
-    class ChatUserSerializer < ApplicationSerializer
+    belongs_to :user
+    class UserSerializer < ApplicationSerializer
       attributes :name, :avatar_url
     end
   end
 end
 
 if $0 == __FILE__
-  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :chat_user}).as_json
+  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :user}).as_json
 end
 # >> {:id=>1,
 # >>  :room_owner_id=>1,
@@ -71,7 +71,7 @@ end
 # >>  :end_at=>Sun, 27 May 2018 20:01:37 JST +09:00,
 # >>  :last_action_key=>"ILLEGAL_MOVE",
 # >>  :win_location_key=>"black",
-# >>  :current_chat_users_count=>-2,
+# >>  :current_users_count=>-2,
 # >>  :watch_memberships_count=>0,
 # >>  :show_path=>"/online/battles/1",
 # >>  :handicap=>false,
@@ -82,7 +82,7 @@ end
 # >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>     :fighting_now_at=>nil,
 # >>     :time_up_trigger_at=>nil,
-# >>     :chat_user=>
+# >>     :user=>
 # >>      {:id=>1,
 # >>       :name=>"野良1号",
 # >>       :avatar_url=>
@@ -93,7 +93,7 @@ end
 # >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>     :fighting_now_at=>nil,
 # >>     :time_up_trigger_at=>nil,
-# >>     :chat_user=>
+# >>     :user=>
 # >>      {:id=>1,
 # >>       :name=>"野良1号",
 # >>       :avatar_url=>

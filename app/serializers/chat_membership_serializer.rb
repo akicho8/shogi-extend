@@ -9,8 +9,8 @@ class ChatMembershipSerializer < ApplicationSerializer
     :time_up_trigger_at,
   ]
 
-  belongs_to :chat_user
-  class ChatUserSerializer < ApplicationSerializer
+  belongs_to :user
+  class UserSerializer < ApplicationSerializer
     attributes :name, :avatar_url
   end
 end
@@ -24,7 +24,7 @@ end
 # >>   :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>   :fighting_now_at=>nil,
 # >>   :time_up_trigger_at=>nil,
-# >>   :chat_user=>
+# >>   :user=>
 # >>    {:id=>1,
 # >>     :name=>"野良1号",
 # >>     :avatar_url=>
@@ -35,7 +35,7 @@ end
 # >>   :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>   :fighting_now_at=>nil,
 # >>   :time_up_trigger_at=>nil,
-# >>   :chat_user=>
+# >>   :user=>
 # >>    {:id=>1,
 # >>     :name=>"野良1号",
 # >>     :avatar_url=>

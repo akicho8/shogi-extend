@@ -1,10 +1,10 @@
 javascript:
-  var chat_user_show_app_params = #{@chat_user_show_app_params.to_json.html_safe}
+  var user_show_app_params = #{@user_show_app_params.to_json.html_safe}
 
 - content_for :head do
-  = javascript_pack_tag("chat_user_show")
+  = javascript_pack_tag("user_show")
 
-#chat_user_show_app
+#user_show_app
   .title.is-4
     = "#{current_record.name}さんのプロフィール"
 
@@ -36,10 +36,10 @@ javascript:
                   | &nbsp;
                 | {{room_members_format(props.row)}}
             - if Rails.env.development?
-              b-table-column field="chat_users" label="全参加者" sortable="sortable" numeric="numeric"
-                | {{props.row.chat_users.length}}
-              b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
-                | {{props.row.current_chat_users_count}}
+              b-table-column field="users" label="全参加者" sortable="sortable" numeric="numeric"
+                | {{props.row.users.length}}
+              b-table-column field="current_users_count" label="現参加者" sortable="sortable" numeric="numeric"
+                | {{props.row.current_users_count}}
             b-table-column field="watch_memberships_count" label="観戦者" sortable="sortable" numeric="numeric"
               | {{props.row.watch_memberships_count}}
             - if Rails.env.development? && false

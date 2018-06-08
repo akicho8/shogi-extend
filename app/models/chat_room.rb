@@ -20,7 +20,7 @@
 # | end_at                   | End at                   | datetime    |                     |      |       |
 # | last_action_key          | Last action key          | string(255) |                     |      |       |
 # | win_location_key         | Win location key         | string(255) |                     |      |       |
-# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | current_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |      |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
@@ -29,7 +29,7 @@
 class ChatRoom < ApplicationRecord
   time_rangable default: false
 
-  has_many :current_chat_users, class_name: "ChatUser", foreign_key: :current_chat_room_id, dependent: :nullify
+  has_many :current_users, class_name: "User", foreign_key: :current_chat_room_id, dependent: :nullify
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
@@ -58,8 +58,8 @@ class ChatRoom < ApplicationRecord
   end
 
   def name
-    # if chat_users.present?
-    #   chat_users.collect(&:name).join(" vs ")
+    # if users.present?
+    #   users.collect(&:name).join(" vs ")
     # else
     #   names = []
     #   if room_owner
@@ -113,14 +113,14 @@ class ChatRoom < ApplicationRecord
   end
 
   def names_hash
-    chat_memberships.group_by(&:location_key).transform_values { |a| a.collect { |e| e.chat_user.name }.join("・") }.symbolize_keys
+    chat_memberships.group_by(&:location_key).transform_values { |a| a.collect { |e| e.user.name }.join("・") }.symbolize_keys
   end
 
   # 対局者
-  concerning :ChatUserMethods do
+  concerning :UserMethods do
     included do
       has_many :chat_memberships, dependent: :destroy
-      has_many :chat_users, through: :chat_memberships
+      has_many :users, through: :chat_memberships
     end
   end
 
@@ -128,7 +128,7 @@ class ChatRoom < ApplicationRecord
   concerning :WatchUserMethods do
     included do
       has_many :watch_memberships, dependent: :destroy                        # 観戦中の人たち(中間情報)
-      has_many :watch_users, through: :watch_memberships, source: :chat_user # 観戦中の人たち
+      has_many :watch_users, through: :watch_memberships, source: :user # 観戦中の人たち
     end
   end
 

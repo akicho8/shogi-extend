@@ -49,17 +49,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  concerning :CurrentChatUserMethods do
+  concerning :CurrentUserMethods do
     included do
-      helper_method :current_chat_user
+      helper_method :current_user
 
       before_action do
-        current_chat_user
+        current_user
 
         @js_global_params = {
-          current_chat_user: current_chat_user,
-          online_only_count: ChatUser.online_only.count,
-          fighter_only_count: ChatUser.fighter_only.count,
+          current_user: current_user,
+          online_only_count: User.online_only.count,
+          fighter_only_count: User.fighter_only.count,
           lifetime_infos: LifetimeInfo.as_json,
           platoon_infos: PlatoonInfo.as_json,
           preset_infos: Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
@@ -70,11 +70,11 @@ class ApplicationController < ActionController::Base
     class_methods do
     end
 
-    def current_chat_user
-      @current_chat_user ||= ChatUser.find_by(id: cookies.signed[:chat_user_id])
-      @current_chat_user ||= ChatUser.create!
-      cookies.signed[:chat_user_id] = {value: @current_chat_user.id, expires: 1.weeks.from_now}
-      @current_chat_user
+    def current_user
+      @current_user ||= User.find_by(id: cookies.signed[:user_id])
+      @current_user ||= User.create!
+      cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}
+      @current_user
     end
   end
 end

@@ -8,7 +8,7 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                |       |
 # | chat_room_id       | Chat room          | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
-# | chat_user_id       | Chat user          | integer(8)  | NOT NULL    | => ChatUser#id | B     |
+# | user_id       | Chat user          | integer(8)  | NOT NULL    | => User#id | B     |
 # | preset_key         | Preset key         | string(255) | NOT NULL    |                |       |
 # | location_key       | Location key       | string(255) | NOT NULL    |                | C     |
 # | position           | 順序               | integer(4)  |             |                | D     |
@@ -21,12 +21,12 @@
 #
 #- 備考 -------------------------------------------------------------------------
 # ・ChatMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・ChatMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
+# ・ChatMembership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 class ChatMembership < ApplicationRecord
   belongs_to :chat_room
-  belongs_to :chat_user
+  belongs_to :user
 
   scope :black, -> { where(location_key: "black") }
   scope :white, -> { where(location_key: "white") }
@@ -49,10 +49,10 @@ class ChatMembership < ApplicationRecord
     #   self.location_key ||= location.flip.key
     # end
 
-    # create!(chat_users: [user1, user2]) とされた場合を考慮する
-    # index = chat_room.chat_users.find_index(chat_user) || chat_room.chat_users.count
+    # create!(users: [user1, user2]) とされた場合を考慮する
+    # index = chat_room.users.find_index(user) || chat_room.users.count
     # self.location_key ||= Warabi::Location.fetch(index).key
-    self.location_key ||= Warabi::Location.fetch(chat_room.chat_users.count).key
+    self.location_key ||= Warabi::Location.fetch(chat_room.users.count).key
 
     # if active.count < Warabi::Location.count
     # if chat_membership = active.first
@@ -62,15 +62,15 @@ class ChatMembership < ApplicationRecord
     # end
     # self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
 
-    if chat_user
-      self.preset_key ||= chat_user.ps_preset_key
+    if user
+      self.preset_key ||= user.ps_preset_key
     end
     self.preset_key ||= "平手"
   end
 
   after_save do
     if saved_changes[:fighting_now_at]
-      chat_user.update!(fighting_now_at: fighting_now_at)
+      user.update!(fighting_now_at: fighting_now_at)
     end
   end
 

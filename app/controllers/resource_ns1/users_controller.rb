@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# ユーザーテーブル (chat_users as ChatUser)
+# ユーザーテーブル (users as User)
 #
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 # | カラム名             | 意味              | タイプ      | 属性        | 参照           | INDEX |
@@ -20,21 +20,21 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・ChatUser モデルは ChatRoom モデルから has_many :current_chat_users, :foreign_key => :current_chat_room_id されています。
+# ・User モデルは ChatRoom モデルから has_many :current_users, :foreign_key => :current_chat_room_id されています。
 #--------------------------------------------------------------------------------
 
 module ResourceNs1
-  class ChatUsersController < ApplicationController
+  class UsersController < ApplicationController
     include ModulableCrud::All
 
     def show
-      @chat_user_show_app_params = {
+      @user_show_app_params = {
         chat_rooms: current_record.chat_rooms.as_json({
             include: {
-              :chat_users => nil,
+              :users => nil,
               :watch_users => nil,
               :chat_memberships => {
-                include: :chat_user,
+                include: :user,
               },
             }, methods: [
               :show_path,

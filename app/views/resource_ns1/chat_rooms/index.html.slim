@@ -60,7 +60,7 @@ javascript:
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_lobby_chat_messages"
             td
-              message_link_to(:user_to="e.chat_user")
+              message_link_to(:user_to="e.user")
               = " "
               | {{e.message}}
 
@@ -74,7 +74,7 @@ javascript:
         article.media
           figure.media-left
             p.image.is-64x64
-              = image_tag current_chat_user.avatar_url
+              = image_tag current_user.avatar_url
 
           .media-content
             .field
@@ -124,10 +124,10 @@ javascript:
                 span(v-html="room_members_format(props.row)")
 
             / - if Rails.env.development?
-              / b-table-column field="chat_users" label="全参加者" sortable="sortable" numeric="numeric"
-              /   | {{props.row.chat_users.length}}
-              / b-table-column field="current_chat_users_count" label="現参加者" sortable="sortable" numeric="numeric"
-              /   | {{props.row.current_chat_users_count}}
+              / b-table-column field="users" label="全参加者" sortable="sortable" numeric="numeric"
+              /   | {{props.row.users.length}}
+              / b-table-column field="current_users_count" label="現参加者" sortable="sortable" numeric="numeric"
+              /   | {{props.row.current_users_count}}
             b-table-column field="watch_memberships_count" label="観戦者" sortable="sortable" numeric="numeric"
               | {{props.row.watch_memberships_count}}
             - if Rails.env.development? && false
@@ -145,4 +145,4 @@ javascript:
 
   / .box
   /   .title= "あなたの情報"
-  /   = html_format([current_chat_user.attributes])
+  /   = html_format([current_user.attributes])

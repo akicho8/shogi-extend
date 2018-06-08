@@ -9,7 +9,7 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                |       |
 # | chat_room_id       | Chat room          | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
-# | chat_user_id       | Chat user          | integer(8)  | NOT NULL    | => ChatUser#id | B     |
+# | user_id       | Chat user          | integer(8)  | NOT NULL    | => User#id | B     |
 # | preset_key         | Preset key         | string(255) | NOT NULL    |                |       |
 # | location_key       | Location key       | string(255) | NOT NULL    |                | C     |
 # | position           | 順序               | integer(4)  |             |                | D     |
@@ -22,7 +22,7 @@
 #
 #- 備考 -------------------------------------------------------------------------
 # ・ChatMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・ChatMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
+# ・ChatMembership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -46,7 +46,7 @@
 # | end_at                   | End at                   | datetime    |                     |      |       |
 # | last_action_key          | Last action key          | string(255) |                     |      |       |
 # | win_location_key         | Win location key         | string(255) |                     |      |       |
-# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | current_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |      |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
@@ -54,7 +54,7 @@
 
 # == Schema Information ==
 #
-# ユーザーテーブル (chat_users as ChatUser)
+# ユーザーテーブル (users as User)
 #
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 # | カラム名             | 意味              | タイプ      | 属性        | 参照           | INDEX |
@@ -73,7 +73,7 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・ChatUser モデルは ChatRoom モデルから has_many :current_chat_users, :foreign_key => :current_chat_room_id されています。
+# ・User モデルは ChatRoom モデルから has_many :current_users, :foreign_key => :current_chat_room_id されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -173,14 +173,14 @@
 # | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
 # |--------------+-----------+-------------+-------------+----------------+-------|
 # | id           | ID        | integer(8)  | NOT NULL PK |                |       |
-# | chat_user_id | Chat user | integer(8)  | NOT NULL    | => ChatUser#id | A     |
+# | user_id | Chat user | integer(8)  | NOT NULL    | => User#id | A     |
 # | message      | Message   | text(65535) | NOT NULL    |                |       |
 # | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
 # | updated_at   | 更新日時  | datetime    | NOT NULL    |                |       |
 # |--------------+-----------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・LobbyChatMessage モデルは ChatUser モデルから has_many :room_chat_messages されています。
+# ・LobbyChatMessage モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -192,7 +192,7 @@
 # |--------------+-----------+-------------+-------------+----------------+-------|
 # | id           | ID        | integer(8)  | NOT NULL PK |                |       |
 # | chat_room_id | Chat room | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
-# | chat_user_id | Chat user | integer(8)  | NOT NULL    | => ChatUser#id | B     |
+# | user_id | Chat user | integer(8)  | NOT NULL    | => User#id | B     |
 # | message      | Message   | text(65535) | NOT NULL    |                |       |
 # | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
 # | updated_at   | 更新日時  | datetime    | NOT NULL    |                |       |
@@ -200,7 +200,7 @@
 #
 #- 備考 -------------------------------------------------------------------------
 # ・RoomChatMessage モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・RoomChatMessage モデルは ChatUser モデルから has_many :room_chat_messages されています。
+# ・RoomChatMessage モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -331,13 +331,13 @@
 # |--------------+-----------+------------+-------------+----------------+-------|
 # | id           | ID        | integer(8) | NOT NULL PK |                |       |
 # | chat_room_id | Chat room | integer(8) | NOT NULL    | => ChatRoom#id | A     |
-# | chat_user_id | Chat user | integer(8) | NOT NULL    | => ChatUser#id | B     |
+# | user_id | Chat user | integer(8) | NOT NULL    | => User#id | B     |
 # | created_at   | 作成日時  | datetime   | NOT NULL    |                |       |
 # | updated_at   | 更新日時  | datetime   | NOT NULL    |                |       |
 # |--------------+-----------+------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
 # ・WatchMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・WatchMembership モデルは ChatUser モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 

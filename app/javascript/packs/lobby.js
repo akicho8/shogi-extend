@@ -62,15 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // ユーザー
         online_users: lobby_app_params.online_users,
 
-        matching_at: js_global_params.current_chat_user.matching_at, // マッチングをサーバー側で受理した日時
+        matching_at: js_global_params.current_user.matching_at, // マッチングをサーバー側で受理した日時
 
         setting_modal_p: false,
 
         current_hira_koma_key: null,
-        ps_preset_key: js_global_params.current_chat_user["ps_preset_key"],
-        po_preset_key: js_global_params.current_chat_user["po_preset_key"],
-        current_lifetime_key: js_global_params.current_chat_user["lifetime_key"],
-        current_platoon_key: js_global_params.current_chat_user["platoon_key"],
+        ps_preset_key: js_global_params.current_user["ps_preset_key"],
+        po_preset_key: js_global_params.current_user["po_preset_key"],
+        current_lifetime_key: js_global_params.current_user["lifetime_key"],
+        current_platoon_key: js_global_params.current_user["platoon_key"],
 
         when_koma_one_side_force_hirate: false, // 駒落ちのとき片方を必ず平手に強制する？
       }
@@ -106,8 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     methods: {
-      user_self_p(chat_user) {
-        return chat_user.id === js_global_params.current_chat_user.id
+      user_self_p(user) {
+        return user.id === js_global_params.current_user.id
       },
 
       chat_room_setting_open_click() {
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const list = _.groupBy(chat_room.chat_memberships, "location_key")
         return _.map(list, (list, key) => {
           return list.map(e => {
-            return `<img class="avatar_image" src="${e.chat_user.avatar_url}" />${e.chat_user.name}`
+            return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
           }).join("・")
         }).join(" vs ")
       },

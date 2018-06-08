@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# ユーザーテーブル (chat_users as ChatUser)
+# ユーザーテーブル (users as User)
 #
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 # | カラム名             | 意味              | タイプ      | 属性        | 参照           | INDEX |
@@ -20,15 +20,15 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・ChatUser モデルは ChatRoom モデルから has_many :current_chat_users, :foreign_key => :current_chat_room_id されています。
+# ・User モデルは ChatRoom モデルから has_many :current_users, :foreign_key => :current_chat_room_id されています。
 #--------------------------------------------------------------------------------
 
-class ChatUser < ApplicationRecord
+class User < ApplicationRecord
   has_many :room_chat_messages, dependent: :destroy
   has_many :lobby_chat_messages, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :chat_rooms, through: :chat_memberships
-  belongs_to :current_chat_room, class_name: "ChatRoom", optional: true, counter_cache: :current_chat_users_count # 今入っている部屋
+  belongs_to :current_chat_room, class_name: "ChatRoom", optional: true, counter_cache: :current_users_count # 今入っている部屋
 
   has_many :watch_memberships, dependent: :destroy                        # 自分が観戦している部屋たち(中間情報)
   has_many :watch_rooms, through: :watch_memberships, source: :chat_room # 自分が観戦している部屋たち
@@ -36,7 +36,7 @@ class ChatUser < ApplicationRecord
   scope :random_order, -> { order(Arel.sql("rand()")) }
 
   before_validation on: :create do
-    self.name ||= "野良#{ChatUser.count.next}号"
+    self.name ||= "野良#{User.count.next}号"
     self.ps_preset_key ||= "平手"
     self.po_preset_key ||= "平手"
     self.lifetime_key ||= "lifetime_m5"
@@ -203,13 +203,13 @@ class ChatUser < ApplicationRecord
       # 二人ずつ取り出して振り分ける
       pair_list.each do |a, b|
         a.seat_determination(b).each do |user|
-          chat_room.chat_users << user
+          chat_room.users << user
         end
       end
 
       # 召集
-      chat_room.chat_users.each do |chat_user|
-        ActionCable.server.broadcast("single_notification_#{chat_user.id}", {matching_ok: true, chat_room: ams_sr(chat_room)})
+      chat_room.users.each do |user|
+        ActionCable.server.broadcast("single_notification_#{user.id}", {matching_ok: true, chat_room: ams_sr(chat_room)})
       end
 
       chat_room

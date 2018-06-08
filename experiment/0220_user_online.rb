@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-# user = ChatUser.create!
+# user = User.create!
 # user.appear
 # user.disappear
 # user.reload.destroy
 # tp user
-# ~> /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:131:in `_query': Mysql2::Error: Unknown column 'chat_users.fighting_now_at' in 'where clause': SELECT COUNT(*) FROM `chat_users` WHERE (`chat_users`.`fighting_now_at` IS NOT NULL) (ActiveRecord::StatementInvalid)
+# ~> /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:131:in `_query': Mysql2::Error: Unknown column 'users.fighting_now_at' in 'where clause': SELECT COUNT(*) FROM `users` WHERE (`users`.`fighting_now_at` IS NOT NULL) (ActiveRecord::StatementInvalid)
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:131:in `block in query'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:130:in `handle_interrupt'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:130:in `query'
@@ -32,7 +32,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activerecord-5.1.6/lib/active_record/relation/calculations.rb:216:in `perform_calculation'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activerecord-5.1.6/lib/active_record/relation/calculations.rb:125:in `calculate'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activerecord-5.1.6/lib/active_record/relation/calculations.rb:41:in `count'
-# ~> 	from /Users/ikeda/src/shogi_web/app/models/chat_user.rb:86:in `fighter_only_count_update'
+# ~> 	from /Users/ikeda/src/shogi_web/app/models/user.rb:86:in `fighter_only_count_update'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.6/lib/active_support/callbacks.rb:413:in `block in make_lambda'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.6/lib/active_support/callbacks.rb:260:in `block in conditional'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/activesupport-5.1.6/lib/active_support/callbacks.rb:511:in `block in invoke_after'

@@ -20,7 +20,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ChatUser, type: :model do
+RSpec.describe User, type: :model do
   context "対戦リクエスト" do
     it "自分vs自分" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
@@ -28,7 +28,7 @@ RSpec.describe ChatUser, type: :model do
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "平手" }
-      _assert { chat_room.chat_users.sort == [@user1, @user1] }
+      _assert { chat_room.users.sort == [@user1, @user1] }
 
       _assert { chat_room.battle_request_at }
       _assert { chat_room.auto_matched_at == nil }
@@ -42,7 +42,7 @@ RSpec.describe ChatUser, type: :model do
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "平手" }
-      _assert { chat_room.chat_users.sort == [@user1, @user2] }
+      _assert { chat_room.users.sort == [@user1, @user2] }
     end
 
     it "駒落ち" do
@@ -53,8 +53,8 @@ RSpec.describe ChatUser, type: :model do
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "二枚落ち" }
-      _assert { chat_room.chat_memberships.black.collect(&:chat_user) == [@user2] }
-      _assert { chat_room.chat_memberships.white.collect(&:chat_user) == [@user1] }
+      _assert { chat_room.chat_memberships.black.collect(&:user) == [@user2] }
+      _assert { chat_room.chat_memberships.white.collect(&:user) == [@user1] }
     end
 
     it "両方駒落ち" do
@@ -65,8 +65,8 @@ RSpec.describe ChatUser, type: :model do
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "香落ち" }
       _assert { chat_room.white_preset_key == "二枚落ち" }
-      _assert { chat_room.chat_memberships.black.collect(&:chat_user) == [@user2] }
-      _assert { chat_room.chat_memberships.white.collect(&:chat_user) == [@user1] }
+      _assert { chat_room.chat_memberships.black.collect(&:user) == [@user2] }
+      _assert { chat_room.chat_memberships.white.collect(&:user) == [@user1] }
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe ChatUser, type: :model do
       @user1.matching_start
       chat_room = @user2.matching_start
       _assert { chat_room }
-      _assert { chat_room.chat_users.sort == [@user1, @user2] }
+      _assert { chat_room.users.sort == [@user1, @user2] }
 
       _assert { chat_room.battle_request_at == nil }
       _assert { chat_room.auto_matched_at }
@@ -99,7 +99,7 @@ RSpec.describe ChatUser, type: :model do
       _assert { chat_room }
 
       _assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
-      _assert { chat_room.chat_users.sort == [@user1, @user2, @user3, @user4] }
+      _assert { chat_room.users.sort == [@user1, @user2, @user3, @user4] }
     end
 
     it "駒落ちシングルス" do
@@ -119,7 +119,7 @@ RSpec.describe ChatUser, type: :model do
       chat_room = @user2.matching_start
 
       _assert { chat_room }
-      _assert { chat_room.chat_users.sort == [@user1, @user2] }
+      _assert { chat_room.users.sort == [@user1, @user2] }
     end
 
     it "駒落ちダブルス" do
@@ -135,12 +135,12 @@ RSpec.describe ChatUser, type: :model do
       chat_room = @user4.matching_start
 
       _assert { chat_room }
-      _assert { chat_room.chat_memberships.black.collect(&:chat_user) == [@user1, @user2] }
-      _assert { chat_room.chat_memberships.white.collect(&:chat_user) == [@user3, @user4] }
+      _assert { chat_room.chat_memberships.black.collect(&:user) == [@user1, @user2] }
+      _assert { chat_room.chat_memberships.white.collect(&:user) == [@user3, @user4] }
     end
   end
 
   def create_user(platoon_key, ps_preset_key, po_preset_key)
-    create(:chat_user, {platoon_key: platoon_key, ps_preset_key: ps_preset_key, po_preset_key: po_preset_key})
+    create(:user, {platoon_key: platoon_key, ps_preset_key: ps_preset_key, po_preset_key: po_preset_key})
   end
 end

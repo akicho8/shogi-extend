@@ -62,7 +62,7 @@ javascript:
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_room_chat_messages"
             td
-              message_link_to :user_to="e.chat_user"
+              message_link_to :user_to="e.user"
               = " "
               span(v-html="e.message")
 
@@ -70,17 +70,17 @@ javascript:
         /   article.media
         /     figure.media-left
         /       p.image.is-16x16
-        /         img(:src="e.chat_user.avatar_url")
+        /         img(:src="e.user.avatar_url")
         /     .media-content
         /       .field
         /         p.control
-        /           = "{{e.chat_user.name}}： "
+        /           = "{{e.user.name}}： "
         /           span(v-html="e.message")
 
         article.media
           figure.media-left
             p.image.is-64x64
-              = image_tag current_chat_user.avatar_url
+              = image_tag current_user.avatar_url
 
           .media-content
             .field
@@ -101,13 +101,13 @@ javascript:
         b-table(:data="room_members")
           template slot-scope="props"
             b-table-column(label="対局者")
-              message_link_to(:user_to="props.row.chat_user")
+              message_link_to(:user_to="props.row.user")
               = " "
               template(v-if="props.row.fighting_now_at")
                 b-icon(icon="access-point" class="has-text-success" custom-size="mdi-18px")
               template(v-else)
                 b-icon(icon="access-point" class="has-text-grey-lighter")
-              template(v-if="user_self_p(props.row.chat_user)")
+              template(v-if="user_self_p(props.row.user)")
                 = " ★"
             b-table-column(label="手番")
               | {{location_key_name(props.row)}}
@@ -149,11 +149,11 @@ javascript:
 /   = html_format(JSON.load(@js_current_chat_room.to_json))
 /
 / .box
-/   = html_format({"cookies.signed[:chat_user_id]" => cookies.signed[:chat_user_id]})
+/   = html_format({"cookies.signed[:user_id]" => cookies.signed[:user_id]})
 /
 / .box
-/   .title.is-5= "ChatUser"
-/   = html_format(current_record.chat_users)
+/   .title.is-5= "User"
+/   = html_format(current_record.users)
 /   .title.is-5= "RoomChatMessage"
 /   = html_format(current_record.room_chat_messages)
 

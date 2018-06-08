@@ -2,14 +2,14 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 30.times do
-  alice = ChatUser.create!(online_at: Time.current)
-  bob = ChatUser.create!(online_at: Time.current)
-  [alice, bob].each do |chat_user|
-    chat_user.matching_start
+  alice = User.create!(online_at: Time.current)
+  bob = User.create!(online_at: Time.current)
+  [alice, bob].each do |user|
+    user.matching_start
   end
 end
 
-tp ChatUser
+tp User
 
 tp ChatRoom
 # >> |--------------------------+-------------------------------------------------------------------------------|
@@ -28,6 +28,6 @@ tp ChatRoom
 # >> |     give_up_location_key |                                                                               |
 # >> |               created_at | 2018-05-09 19:48:40 +0900                                                     |
 # >> |               updated_at | 2018-05-09 19:48:40 +0900                                                     |
-# >> | current_chat_users_count | 1                                                                             |
+# >> | current_users_count | 1                                                                             |
 # >> | watch_memberships_count | 1                                                                             |
 # >> |--------------------------+-------------------------------------------------------------------------------|

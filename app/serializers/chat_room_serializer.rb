@@ -16,7 +16,7 @@ class ChatRoomSerializer < ApplicationSerializer
     :end_at,
     :last_action_key,
     :win_location_key,
-    :current_chat_users_count,
+    :current_users_count,
     :watch_memberships_count,
     :countdown_mode_hash,
 
@@ -35,11 +35,11 @@ class ChatRoomSerializer < ApplicationSerializer
   # attribute :can_edit
   #
   # def can_edit
-  #   view_context.current_chat_user.id
+  #   view_context.current_user.id
   # end
 
   has_many :watch_users
-  class ChatUserSerializer < ApplicationSerializer
+  class UserSerializer < ApplicationSerializer
     attributes :name, :avatar_url
   end
 
@@ -54,15 +54,15 @@ class ChatRoomSerializer < ApplicationSerializer
   #     :time_up_trigger_at,
   #   ]
   #
-  #   belongs_to :chat_user
-  #   class ChatUserSerializer < ApplicationSerializer
+  #   belongs_to :user
+  #   class UserSerializer < ApplicationSerializer
   #     attributes :name, :avatar_url
   #   end
   # end
 end
 
 if $0 == __FILE__
-  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :chat_user}).as_json
+  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :user}).as_json
 end
 # >> {:id=>1,
 # >>  :black_preset_key=>"平手",
@@ -79,7 +79,7 @@ end
 # >>  :end_at=>nil,
 # >>  :last_action_key=>nil,
 # >>  :win_location_key=>nil,
-# >>  :current_chat_users_count=>0,
+# >>  :current_users_count=>0,
 # >>  :watch_memberships_count=>0,
 # >>  :countdown_mode_hash=>{:black=>false, :white=>false},
 # >>  :show_path=>"/online/battles/1",

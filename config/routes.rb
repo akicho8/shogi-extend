@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :resource_ns1, path: "" do
     resources :chat_rooms, path: "online/battles"
-    resources :chat_users, path: "online/users"
+    resources :users, path: "online/users"
   end
 
   root "resource_ns1/chat_rooms#index"

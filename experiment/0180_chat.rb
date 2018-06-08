@@ -2,16 +2,16 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 RoomChatMessage.destroy_all
-ChatUser.destroy_all
+User.destroy_all
 ChatRoom.destroy_all
 ChatMembership.destroy_all
 
-alice = ChatUser.create!
-bob = ChatUser.create!
+alice = User.create!
+bob = User.create!
 
 chat_room = OwnerRoom.create!
-chat_room.chat_users << alice
-chat_room.chat_users << bob
+chat_room.users << alice
+chat_room.users << bob
 
 tp chat_room.chat_memberships
 
@@ -21,16 +21,16 @@ tp RoomChatMessage
 tp chat_room
 
 alice.update!(current_chat_room: chat_room)
-tp chat_room.current_chat_users
+tp chat_room.current_users
 
 # >> |----+--------------+--------------+------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
-# >> | id | chat_room_id | chat_user_id | preset_key | location_key | position | standby_at | fighting_now_at | created_at                | updated_at                |
+# >> | id | chat_room_id | user_id | preset_key | location_key | position | standby_at | fighting_now_at | created_at                | updated_at                |
 # >> |----+--------------+--------------+------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
 # >> |  1 |            1 |            2 | 平手       | black        |        0 |            |                 | 2018-05-17 20:31:14 +0900 | 2018-05-17 20:31:14 +0900 |
 # >> |  2 |            1 |            3 | 平手       | white        |        1 |            |                 | 2018-05-17 20:31:14 +0900 | 2018-05-17 20:31:14 +0900 |
 # >> |----+--------------+--------------+------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
 # >> |----+--------------+--------------+---------+---------------------------+---------------------------|
-# >> | id | chat_room_id | chat_user_id | message | created_at                | updated_at                |
+# >> | id | chat_room_id | user_id | message | created_at                | updated_at                |
 # >> |----+--------------+--------------+---------+---------------------------+---------------------------|
 # >> |  1 |            1 |            2 | (body)  | 2018-05-17 20:31:14 +0900 | 2018-05-17 20:31:14 +0900 |
 # >> |----+--------------+--------------+---------+---------------------------+---------------------------|
@@ -50,7 +50,7 @@ tp chat_room.current_chat_users
 # >> |                   end_at |                                                                               |
 # >> |          last_action_key |                                                                               |
 # >> |         win_location_key |                                                                               |
-# >> | current_chat_users_count | 0                                                                             |
+# >> | current_users_count | 0                                                                             |
 # >> |  watch_memberships_count | 0                                                                             |
 # >> |               created_at | 2018-05-17 20:31:14 +0900                                                     |
 # >> |               updated_at | 2018-05-17 20:31:14 +0900                                                     |

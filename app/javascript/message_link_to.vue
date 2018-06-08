@@ -45,16 +45,16 @@ export default {
     message_enter() {
       if (this.message !== "") {
         if (this.user_to) {
-          App.single_notification.message_send_to({from: js_global_params.current_chat_user, to: this.user_to, message: this.message})
+          App.single_notification.message_send_to({from: js_global_params.current_user, to: this.user_to, message: this.message})
           Vue.prototype.$toast.open({message: "送信OK", position: "is-top", type: "is-info", duration: 500})
         } else {
-          App.system_notification.message_send_all({from: js_global_params.current_chat_user, message: this.message})
+          App.system_notification.message_send_all({from: js_global_params.current_user, message: this.message})
         }
       }
       this.message = ""
     },
     battle_request_to() {
-      App.single_notification.battle_request_to({battle_request: {from_id: js_global_params.current_chat_user.id, to_id: this.user_to.id, message: this.message}})
+      App.single_notification.battle_request_to({battle_request: {from_id: js_global_params.current_user.id, to_id: this.user_to.id, message: this.message}})
       this.message = ""
     },
   },

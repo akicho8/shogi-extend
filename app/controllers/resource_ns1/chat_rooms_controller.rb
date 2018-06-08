@@ -20,7 +20,7 @@
 # | end_at                   | End at                   | datetime    |                     |      |       |
 # | last_action_key          | Last action key          | string(255) |                     |      |       |
 # | win_location_key         | Win location key         | string(255) |                     |      |       |
-# | current_chat_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | current_users_count | Current chat users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | watch_memberships_count  | Watch memberships count  | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | created_at               | 作成日時                 | datetime    | NOT NULL            |      |       |
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
@@ -33,13 +33,13 @@ module ResourceNs1
     before_action do
       @lobby_app_params = {
         :lobby_chat_messages => ams_sr(LobbyChatMessage.latest_list.reverse),
-        :chat_rooms          => ams_sr(ChatRoom.latest_list, include: {chat_memberships: :chat_user}, each_serializer: ChatRoomEachSerializer),
-        :online_users        => ams_sr(ChatUser.online_only),
+        :chat_rooms          => ams_sr(ChatRoom.latest_list, include: {chat_memberships: :user}, each_serializer: ChatRoomEachSerializer),
+        :online_users        => ams_sr(User.online_only),
       }
     end
 
     def show
-      @js_current_chat_room = ams_sr(current_record, include: {chat_memberships: :chat_user, room_chat_messages: :chat_user})
+      @js_current_chat_room = ams_sr(current_record, include: {chat_memberships: :user, room_chat_messages: :user})
     end
 
     def redirect_to_where
