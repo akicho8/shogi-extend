@@ -17,19 +17,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  add_flash_types :success, :info, :warning, :danger
+  concerning :Choremethods do
+    included do
+      add_flash_types :success, :info, :warning, :danger
+      helper_method :submitted?
+    end
 
-  def submitted?(name)
-    [name, "#{name}.x", "#{name}.y"].any? {|e| params.key?(e) }
+    def submitted?(name)
+      [name, "#{name}.x", "#{name}.y"].any? {|e| params.key?(e) }
+    end
+
+    private
+
+    def h
+      @h ||= view_context
+    end
+    delegate :tag, :link_to, :icon_tag, to: :h
   end
-  helper_method :submitted?
-
-  private
-
-  def h
-    @h ||= view_context
-  end
-  delegate :tag, :link_to, :icon_tag, to: :h
 
   concerning :BotCheckMethods do
     included do

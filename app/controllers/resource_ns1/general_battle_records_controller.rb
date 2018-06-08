@@ -31,8 +31,8 @@ module ResourceNs1
           filename = -> {
             parts = []
             parts << "2chkifu"
-            if current_user
-              parts << current_user.name
+            if current_general_battle_user
+              parts << current_general_battle_user.name
             end
             parts << Time.current.strftime("%Y%m%d%H%M%S")
             parts.concat(current_tags)
@@ -60,9 +60,9 @@ module ResourceNs1
       @rows = current_records.collect do |general_battle_record|
         {}.tap do |row|
 
-          if current_user
-            l_ship = general_battle_record.myself(current_user)
-            r_ship = general_battle_record.rival(current_user)
+          if current_general_battle_user
+            l_ship = general_battle_record.myself(current_general_battle_user)
+            r_ship = general_battle_record.rival(current_general_battle_user)
           else
             if general_battle_record.general_battle_state_info.draw
               l_ship = general_battle_record.general_battle_ships.black
@@ -73,7 +73,7 @@ module ResourceNs1
             end
           end
 
-          if current_user
+          if current_general_battle_user
             row["対象棋士"] = general_battle_record.win_lose_str(l_ship).html_safe + " " + h.general_battle_user_link2(l_ship)
             row["対戦相手"] = general_battle_record.win_lose_str(r_ship).html_safe + " " + h.general_battle_user_link2(r_ship)
           else
@@ -150,8 +150,8 @@ module ResourceNs1
       @current_tactics ||= current_tags.find_all { |tag| Warabi::TacticInfo.any? { |e| e.model[tag] } }
     end
 
-    def current_user
-      @current_user ||= nil.yield_self { |v|
+    def current_general_battle_user
+      @current_general_battle_user ||= nil.yield_self { |v|
         current_tags.each do |e|
           if v = GeneralBattleUser.find_by(name: e)
             break v
