@@ -1,4 +1,4 @@
-class LobbyChatMessageSerializer < ApplicationSerializer
+class LobbyMessageSerializer < ApplicationSerializer
   attributes :message, :created_at
 
   has_one :user

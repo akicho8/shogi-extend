@@ -58,7 +58,7 @@ javascript:
       .box.chat_container
         .title.is-4= "チャット"
         table.table.is-narrow.is-fullwidth
-          tr v-for="e of latest_lobby_chat_messages"
+          tr v-for="e of latest_lobby_messages"
             td
               message_link_to(:user_to="e.user")
               = " "

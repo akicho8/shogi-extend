@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["matching_wait"]) {
         App.lobby_vm.matching_wait(data["matching_wait"])
       }
-      if (data["lobby_chat_message"]) {
-        App.lobby_vm.lobby_chat_messages.push(data["lobby_chat_message"])
+      if (data["lobby_message"]) {
+        App.lobby_vm.lobby_messages.push(data["lobby_message"])
       }
     },
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     data: function() {
       return {
         // 発言
-        lobby_chat_messages: lobby_app_params.lobby_chat_messages, // 発言一覧
+        lobby_messages: lobby_app_params.lobby_messages, // 発言一覧
         message: "",                                               // 発言
 
         // 部屋一覧
@@ -160,8 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     computed: {
       // チャットに表示する最新メッセージたち
-      latest_lobby_chat_messages() {
-        return _.takeRight(this.lobby_chat_messages, 10)
+      latest_lobby_messages() {
+        return _.takeRight(this.lobby_messages, 10)
       },
 
       // 選択中の持ち時間項目

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Lobby chat messageテーブル (lobby_chat_messages as LobbyChatMessage)
+# Lobby chat messageテーブル (lobby_messages as LobbyMessage)
 #
 # |--------------+-----------+-------------+-------------+----------------+-------|
 # | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
@@ -14,10 +14,10 @@
 # |--------------+-----------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・LobbyChatMessage モデルは User モデルから has_many :room_chat_messages されています。
+# ・LobbyMessage モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
-class LobbyChatMessage < ApplicationRecord
+class LobbyMessage < ApplicationRecord
   belongs_to :user
 
   cattr_accessor(:chat_window_size) { 10 }

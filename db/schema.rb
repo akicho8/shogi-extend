@@ -151,12 +151,12 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["name"], name: "index_general_battle_users_on_name", unique: true
   end
 
-  create_table "lobby_chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "message", null: false, comment: "発言"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_lobby_chat_messages_on_user_id"
+    t.index ["user_id"], name: "index_lobby_messages_on_user_id"
   end
 
   create_table "room_chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

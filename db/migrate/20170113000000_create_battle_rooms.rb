@@ -92,7 +92,7 @@ class CreateBattleRooms < ActiveRecord::Migration[5.1]
     end
 
     # ロビーチャット発言
-    create_table :lobby_chat_messages, force: true do |t|
+    create_table :lobby_messages, force: true do |t|
       t.belongs_to :user, null: false, comment: "ユーザー"
       t.text :message, null: false, comment: "発言"
       t.timestamps null: false

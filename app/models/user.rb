@@ -25,7 +25,7 @@
 
 class User < ApplicationRecord
   has_many :room_chat_messages, dependent: :destroy
-  has_many :lobby_chat_messages, dependent: :destroy
+  has_many :lobby_messages, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :battle_rooms, through: :memberships
   belongs_to :current_battle_room, class_name: "BattleRoom", optional: true, counter_cache: :current_users_count # 今入っている部屋
