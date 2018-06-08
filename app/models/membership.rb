@@ -63,7 +63,7 @@ class Membership < ApplicationRecord
     # self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
 
     if user
-      self.preset_key ||= user.ps_preset_key
+      self.preset_key ||= user.self_preset_key
     end
     self.preset_key ||= "平手"
   end

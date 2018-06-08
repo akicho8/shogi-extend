@@ -25,11 +25,11 @@ javascript:
         b 自分
         b-field
           template(v-for="e in CustomPresetInfo.values")
-            b-radio-button(v-model="ps_preset_key" :native-value="e.key") {{e.name}}
+            b-radio-button(v-model="self_preset_key" :native-value="e.key") {{e.name}}
         b 相手
         b-field
           template(v-for="e in CustomPresetInfo.values")
-            b-radio-button(v-model="po_preset_key" :native-value="e.key") {{e.name}}
+            b-radio-button(v-model="oppo_preset_key" :native-value="e.key") {{e.name}}
       p
         b 人数
       b-field

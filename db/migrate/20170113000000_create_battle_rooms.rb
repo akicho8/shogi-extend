@@ -37,8 +37,8 @@ class CreateBattleRooms < ActiveRecord::Migration[5.1]
       t.datetime :matching_at,         null: true,               comment: "マッチング中(開始日時)"
       t.string :lifetime_key,          null: false, index: true, comment: "ルール・持ち時間"
       t.string :platoon_key,          null: false, index: true, comment: "ルール・人数"
-      t.string :ps_preset_key,         null: false, index: true, comment: "ルール・自分の手合割"
-      t.string :po_preset_key,         null: false, index: true, comment: "ルール・相手の手合割"
+      t.string :self_preset_key,         null: false, index: true, comment: "ルール・自分の手合割"
+      t.string :oppo_preset_key,         null: false, index: true, comment: "ルール・相手の手合割"
       t.timestamps null: false
     end
 

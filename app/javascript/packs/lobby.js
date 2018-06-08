@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setting_modal_p: false,
 
         current_hira_koma_key: null,
-        ps_preset_key: js_global_params.current_user["ps_preset_key"],
-        po_preset_key: js_global_params.current_user["po_preset_key"],
+        self_preset_key: js_global_params.current_user["self_preset_key"],
+        oppo_preset_key: js_global_params.current_user["oppo_preset_key"],
         current_lifetime_key: js_global_params.current_user["lifetime_key"],
         current_platoon_key: js_global_params.current_user["platoon_key"],
 
@@ -83,23 +83,23 @@ document.addEventListener('DOMContentLoaded', () => {
     watch: {
       current_hira_koma_key(v) {
         if (v === "hira") {
-          this.ps_preset_key = "平手"
-          this.po_preset_key = "平手"
+          this.self_preset_key = "平手"
+          this.oppo_preset_key = "平手"
         }
       },
 
       // これら入れると駒落ちではない方が必ず平手になる(が、自由度が下がるので入れない)
-      ps_preset_key(v) {
+      self_preset_key(v) {
         if (this.when_koma_one_side_force_hirate) {
           if (v !== "平手") {
-            this.po_preset_key = "平手"
+            this.oppo_preset_key = "平手"
           }
         }
       },
-      po_preset_key(v) {
+      oppo_preset_key(v) {
         if (this.when_koma_one_side_force_hirate) {
           if (v !== "平手") {
-            this.ps_preset_key = "平手"
+            this.self_preset_key = "平手"
           }
         }
       }
@@ -121,8 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
       setting_save() {
         // alert("setting_save")
         App.lobby.setting_save({
-          ps_preset_key: this.current_ps_preset_info.key,
-          po_preset_key: this.current_po_preset_info.key,
+          self_preset_key: this.current_self_preset_info.key,
+          oppo_preset_key: this.current_oppo_preset_info.key,
           lifetime_key: this.current_lifetime_key,
           platoon_key: this.current_platoon_key,
         })
@@ -174,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       // 現在選択されている手合割情報
-      current_ps_preset_info() { return CustomPresetInfo.fetch(this.ps_preset_key) },
-      current_po_preset_info() { return CustomPresetInfo.fetch(this.po_preset_key) },
+      current_self_preset_info() { return CustomPresetInfo.fetch(this.self_preset_key) },
+      current_oppo_preset_info() { return CustomPresetInfo.fetch(this.oppo_preset_key) },
 
       hira_koma_default_key() {
-        if (this.ps_preset_key === "平手" && this.po_preset_key === "平手") {
+        if (this.self_preset_key === "平手" && this.oppo_preset_key === "平手") {
           return "hira"
         } else {
           return "koma"

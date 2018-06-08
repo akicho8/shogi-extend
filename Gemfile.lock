@@ -427,7 +427,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rack-cors
   rails (~> 5.2.0)
-  rails-erd (~> 1.5)
+  rails-erd
   rails_autolink
   redis (~> 3.0)
   rgb

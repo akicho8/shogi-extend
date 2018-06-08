@@ -140,7 +140,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  def create_user(platoon_key, ps_preset_key, po_preset_key)
-    create(:user, {platoon_key: platoon_key, ps_preset_key: ps_preset_key, po_preset_key: po_preset_key})
+  def create_user(platoon_key, self_preset_key, oppo_preset_key)
+    create(:user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key})
   end
 end

@@ -13,8 +13,8 @@
 # | fighting_now_at      | Fighting now at   | datetime    |             |                |       |
 # | matching_at          | Matching at       | datetime    |             |                |       |
 # | lifetime_key         | Lifetime key      | string(255) | NOT NULL    |                | B     |
-# | ps_preset_key        | Ps preset key     | string(255) | NOT NULL    |                | C     |
-# | po_preset_key        | Po preset key     | string(255) | NOT NULL    |                | D     |
+# | self_preset_key        | Ps preset key     | string(255) | NOT NULL    |                | C     |
+# | oppo_preset_key        | Po preset key     | string(255) | NOT NULL    |                | D     |
 # | created_at           | 作成日時          | datetime    | NOT NULL    |                |       |
 # | updated_at           | 更新日時          | datetime    | NOT NULL    |                |       |
 # |----------------------+-------------------+-------------+-------------+----------------+-------|

@@ -13,8 +13,8 @@
 # | fighting_now_at      | Fighting now at   | datetime    |             |                |       |
 # | matching_at          | Matching at       | datetime    |             |                |       |
 # | lifetime_key         | Lifetime key      | string(255) | NOT NULL    |                | B     |
-# | ps_preset_key        | Ps preset key     | string(255) | NOT NULL    |                | C     |
-# | po_preset_key        | Po preset key     | string(255) | NOT NULL    |                | D     |
+# | self_preset_key        | Ps preset key     | string(255) | NOT NULL    |                | C     |
+# | oppo_preset_key        | Po preset key     | string(255) | NOT NULL    |                | D     |
 # | created_at           | 作成日時          | datetime    | NOT NULL    |                |       |
 # | updated_at           | 更新日時          | datetime    | NOT NULL    |                |       |
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
@@ -37,8 +37,8 @@ class User < ApplicationRecord
 
   before_validation on: :create do
     self.name ||= "野良#{User.count.next}号"
-    self.ps_preset_key ||= "平手"
-    self.po_preset_key ||= "平手"
+    self.self_preset_key ||= "平手"
+    self.oppo_preset_key ||= "平手"
     self.lifetime_key ||= "lifetime_m5"
     self.platoon_key ||= "platoon_p1vs1"
   end
@@ -63,12 +63,12 @@ class User < ApplicationRecord
     PlatoonInfo.fetch(platoon_key)
   end
 
-  def ps_preset_info
-    Warabi::PresetInfo[ps_preset_key]
+  def self_preset_info
+    Warabi::PresetInfo[self_preset_key]
   end
 
-  def po_preset_info
-    Warabi::PresetInfo[po_preset_key]
+  def oppo_preset_info
+    Warabi::PresetInfo[oppo_preset_key]
   end
 
   concerning :AvatarMethods do
@@ -146,7 +146,7 @@ class User < ApplicationRecord
 
   concerning :MathingMethods do
     included do
-      scope :preset_scope, -> ps_preset_key, po_preset_key { where(ps_preset_key: ps_preset_key).where(po_preset_key: po_preset_key) }
+      scope :preset_scope, -> self_preset_key, oppo_preset_key { where(self_preset_key: self_preset_key).where(oppo_preset_key: oppo_preset_key) }
     end
 
     def matching_start
@@ -239,51 +239,51 @@ class User < ApplicationRecord
 
     # 自分と同じ条件
     def preset_equal
-      self.class.preset_scope(ps_preset_key, po_preset_key)
+      self.class.preset_scope(self_preset_key, oppo_preset_key)
     end
 
     # 自分が探している人
     def preset_reverse
-      self.class.preset_scope(po_preset_key, ps_preset_key)
+      self.class.preset_scope(oppo_preset_key, self_preset_key)
     end
 
     def rule_cop
-      RuleCop.new(ps_preset_key, po_preset_key)
+      RuleCop.new(self_preset_key, oppo_preset_key)
     end
 
     class RuleCop
-      attr_accessor :ps_preset_key
-      attr_accessor :po_preset_key
+      attr_accessor :self_preset_key
+      attr_accessor :oppo_preset_key
 
-      def initialize(ps_preset_key, po_preset_key)
-        @ps_preset_key = ps_preset_key
-        @po_preset_key = po_preset_key
+      def initialize(self_preset_key, oppo_preset_key)
+        @self_preset_key = self_preset_key
+        @oppo_preset_key = oppo_preset_key
       end
 
-      def ps_preset_info
-        Warabi::PresetInfo[ps_preset_key]
+      def self_preset_info
+        Warabi::PresetInfo[self_preset_key]
       end
 
-      def po_preset_info
-        Warabi::PresetInfo[po_preset_key]
+      def oppo_preset_info
+        Warabi::PresetInfo[oppo_preset_key]
       end
 
       def same_rule?
-        ps_preset_info == po_preset_info
+        self_preset_info == oppo_preset_info
       end
 
       # 駒をたくさん落している方が先生
       def teacher?
-        ps_preset_info > po_preset_info
+        self_preset_info > oppo_preset_info
       end
 
       # 駒が充足している方が生徒
       def student?
-        ps_preset_info < po_preset_info
+        self_preset_info < oppo_preset_info
       end
 
       def to_a
-        a = [ps_preset_info.key, po_preset_info.key]
+        a = [self_preset_info.key, oppo_preset_info.key]
         if teacher?
           a = a.reverse
         end

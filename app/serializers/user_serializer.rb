@@ -8,8 +8,8 @@ class UserSerializer < ApplicationSerializer
     :matching_at,
     :lifetime_key,
     :platoon_key,
-    :ps_preset_key,
-    :po_preset_key,
+    :self_preset_key,
+    :oppo_preset_key,
   ]
 
   belongs_to :current_battle_room

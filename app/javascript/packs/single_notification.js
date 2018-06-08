@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return
         }
 
-        const handicap = !(e.from.ps_preset_key === "平手" && e.from.po_preset_key === "平手")
+        const handicap = !(e.from.self_preset_key === "平手" && e.from.oppo_preset_key === "平手")
         const message_template = `
 <nav class="level">
   <div class="level-item has-text-centered">
@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="level-item has-text-centered">
       <div>
         <p class="heading">手合割(あなた)</p>
-        <p class="title is-size-4">${e.from.po_preset_key}</p>
+        <p class="title is-size-4">${e.from.oppo_preset_key}</p>
       </div>
     </div>
     <div class="level-item has-text-centered">
       <div>
         <p class="heading">手合割(相手)</p>
-        <p class="title is-size-4">${e.from.ps_preset_key}</p>
+        <p class="title is-size-4">${e.from.self_preset_key}</p>
       </div>
     </div>
   <% } %>

@@ -13,8 +13,8 @@ pp ActiveModelSerializers::SerializableResource.new(BattleRoom.first, include: {
 # >>  :fighting_now_at=>nil,
 # >>  :matching_at=>nil,
 # >>  :lifetime_key=>"lifetime_m5",
-# >>  :ps_preset_key=>"平手",
-# >>  :po_preset_key=>"平手",
+# >>  :self_preset_key=>"平手",
+# >>  :oppo_preset_key=>"平手",
 # >>  :current_battle_room=>nil}
 # >> {:id=>1,
 # >>  :message=>"aa",

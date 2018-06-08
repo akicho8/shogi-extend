@@ -17,8 +17,8 @@ class LobbyChannel < ApplicationCable::Channel
     current_user.update!({
         lifetime_key: data["lifetime_key"],
         platoon_key: data["platoon_key"],
-        ps_preset_key: data["ps_preset_key"],
-        po_preset_key: data["po_preset_key"],
+        self_preset_key: data["self_preset_key"],
+        oppo_preset_key: data["oppo_preset_key"],
       })
   end
 
