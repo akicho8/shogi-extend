@@ -6,7 +6,7 @@
         | {{user_to.name}}
     template(v-else)
       slot(name="notify_to_all")
-        .button.is-primary.is-outlined(@click.prevent="modal_open") 全体通知
+        .button.is-primary(@click.prevent="modal_open") 全体通知
 
     b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card

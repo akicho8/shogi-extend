@@ -44,8 +44,8 @@ javascript:
 
   .buttons
     template(v-if="!matching_at")
-      .button.is-primary.is-large(@click.prevent="matching_start") バトル開始
-      .button.is-primary.is-large(@click.prevent="battle_room_setting_open_click") ルール設定
+      button.button.is-primary.is-large(@click.prevent="matching_start") バトル開始
+      button.button.is-primary.is-large(@click.prevent="battle_room_setting_open_click") ルール設定
     template(v-else)
       a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
 
@@ -79,7 +79,7 @@ javascript:
           .media-content
             .field
               p.control
-                input.input.is-large type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter"
+                input#chat_message_input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter")
             nav.level
               .level-left
                 .level-item
