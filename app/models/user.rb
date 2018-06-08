@@ -26,8 +26,8 @@
 class User < ApplicationRecord
   has_many :room_chat_messages, dependent: :destroy
   has_many :lobby_chat_messages, dependent: :destroy
-  has_many :chat_memberships, dependent: :destroy
-  has_many :chat_rooms, through: :chat_memberships
+  has_many :memberships, dependent: :destroy
+  has_many :chat_rooms, through: :memberships
   belongs_to :current_chat_room, class_name: "ChatRoom", optional: true, counter_cache: :current_users_count # 今入っている部屋
 
   has_many :watch_memberships, dependent: :destroy                        # 自分が観戦している部屋たち(中間情報)

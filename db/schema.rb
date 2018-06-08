@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "chat_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_room_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "preset_key", null: false, comment: "手合割"
@@ -44,10 +44,10 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "time_up_trigger_at", comment: "タイムアップしたのを検知した日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chat_room_id"], name: "index_chat_memberships_on_chat_room_id"
-    t.index ["user_id"], name: "index_chat_memberships_on_user_id"
-    t.index ["location_key"], name: "index_chat_memberships_on_location_key"
-    t.index ["position"], name: "index_chat_memberships_on_position"
+    t.index ["chat_room_id"], name: "index_memberships_on_chat_room_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+    t.index ["location_key"], name: "index_memberships_on_location_key"
+    t.index ["position"], name: "index_memberships_on_position"
   end
 
   create_table "chat_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "name", null: false, comment: "名前"
     t.bigint "current_chat_room_id", comment: "現在入室している部屋"
     t.datetime "online_at", comment: "オンラインになった日時"
-    t.datetime "fighting_now_at", comment: "chat_memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
+    t.datetime "fighting_now_at", comment: "memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
     t.datetime "matching_at", comment: "マッチング中(開始日時)"
     t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
     t.string "platoon_key", null: false, comment: "ルール・人数"

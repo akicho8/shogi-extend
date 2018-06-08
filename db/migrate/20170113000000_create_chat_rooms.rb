@@ -33,7 +33,7 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
       t.string :name,                  null: false,              comment: "名前"
       t.belongs_to :current_chat_room, null: true,               comment: "現在入室している部屋"
       t.datetime :online_at,           null: true,               comment: "オンラインになった日時"
-      t.datetime :fighting_now_at,     null: true,               comment: "chat_memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
+      t.datetime :fighting_now_at,     null: true,               comment: "memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
       t.datetime :matching_at,         null: true,               comment: "マッチング中(開始日時)"
       t.string :lifetime_key,          null: false, index: true, comment: "ルール・持ち時間"
       t.string :platoon_key,          null: false, index: true, comment: "ルール・人数"
@@ -64,7 +64,7 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
     end
 
     # 対局者
-    create_table :chat_memberships, force: true do |t|
+    create_table :memberships, force: true do |t|
       t.belongs_to :chat_room, null: false,              comment: "部屋"
       t.belongs_to :user, null: false,              comment: "ユーザー"
       t.string :preset_key,    null: false,              comment: "手合割"

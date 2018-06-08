@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     methods: {
       room_members_format(chat_room) {
-        return chat_room.chat_memberships.map(e => e.user.name).join(" vs ")
+        return chat_room.memberships.map(e => e.user.name).join(" vs ")
       },
 
     },

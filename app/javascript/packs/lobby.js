@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       room_members_format(chat_room) {
-        const list = _.groupBy(chat_room.chat_memberships, "location_key")
+        const list = _.groupBy(chat_room.memberships, "location_key")
         return _.map(list, (list, key) => {
           return list.map(e => {
             return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`

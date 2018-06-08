@@ -104,9 +104,9 @@ class ChatRoomChannel < ApplicationCable::Channel
     #   current_chat_room.users << current_user
     # end
 
-    if current_chat_memberships.present?
+    if current_memberships.present?
       # 対局者
-      current_chat_memberships.each do |e|
+      current_memberships.each do |e|
         e.update!(fighting_now_at: Time.current)
       end
     else
@@ -120,15 +120,15 @@ class ChatRoomChannel < ApplicationCable::Channel
     if current_chat_room.end_at
     else
       # 自分が対局者の場合
-      if current_chat_memberships.present?
-        if current_chat_memberships.all? { |e| e.standby_at }
+      if current_memberships.present?
+        if current_memberships.all? { |e| e.standby_at }
           # 入り直した場合
         else
           # 新規の場合
-          current_chat_memberships.each do |e|
+          current_memberships.each do |e|
             e.update!(standby_at: Time.current)
           end
-          if current_chat_room.chat_memberships.standby_enable.count >= current_chat_room.chat_memberships.count
+          if current_chat_room.memberships.standby_enable.count >= current_chat_room.memberships.count
             battle_start({})
           end
         end
@@ -143,11 +143,11 @@ class ChatRoomChannel < ApplicationCable::Channel
 
     current_user.update!(current_chat_room_id: nil)
 
-    if current_chat_memberships.present?
+    if current_memberships.present?
       # 対局者
       # 切断したときにの処理がここで書ける
       # TODO: 対局中なら、残っている方がポーリングを開始して、10秒間以内に戻らなかったら勝ちとしてあげる
-      current_chat_memberships.each do |e|
+      current_memberships.each do |e|
         e.update!(fighting_now_at: nil)
       end
     else
@@ -169,14 +169,14 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def time_up_trigger(data)
     # membership_ids は送ってきた人で対応するレコードにタイムアップ認定する
-    chat_memberships = current_chat_room.chat_memberships.where(id: data["membership_ids"])
-    chat_memberships.each do |e|
+    memberships = current_chat_room.memberships.where(id: data["membership_ids"])
+    memberships.each do |e|
       e.update!(time_up_trigger_at: Time.current)
     end
 
     # メンバー是認がタイムアップ認定したら全員にタイムアップ通知する
     # こうすることで1秒残してタイムアップにならなくなる
-    if current_chat_room.chat_memberships.where.not(time_up_trigger_at: nil).count >= current_chat_room.chat_memberships.count
+    if current_chat_room.memberships.where.not(time_up_trigger_at: nil).count >= current_chat_room.memberships.count
       current_chat_room.update!(end_at: Time.current, win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
       game_end_broadcast
     end
@@ -190,7 +190,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   # 先後をまとめて反転する
   def location_flip_all(data)
-    current_chat_room.chat_memberships.each(&:location_flip!)
+    current_chat_room.memberships.each(&:location_flip!)
     room_members_update
   end
 
@@ -216,7 +216,7 @@ class ChatRoomChannel < ApplicationCable::Channel
     # model の中から行う
     # 部屋を抜けたときの状態が反映されるように reload が必要
     # FIXME: 1件だけ行う
-    ActionCable.server.broadcast(room_key, room_members: ams_sr(current_chat_room.reload.chat_memberships))
+    ActionCable.server.broadcast(room_key, room_members: ams_sr(current_chat_room.reload.memberships))
   end
 
   def room_key
@@ -228,7 +228,7 @@ class ChatRoomChannel < ApplicationCable::Channel
   end
 
   # 自分対自分の場合もあるためメンバー情報は複数ある
-  def current_chat_memberships
-    @current_chat_memberships ||= current_chat_room.chat_memberships.where(user: current_user)
+  def current_memberships
+    @current_memberships ||= current_chat_room.memberships.where(user: current_user)
   end
 end

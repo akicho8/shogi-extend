@@ -33,13 +33,13 @@ module ResourceNs1
     before_action do
       @lobby_app_params = {
         :lobby_chat_messages => ams_sr(LobbyChatMessage.latest_list.reverse),
-        :chat_rooms          => ams_sr(ChatRoom.latest_list, include: {chat_memberships: :user}, each_serializer: ChatRoomEachSerializer),
+        :chat_rooms          => ams_sr(ChatRoom.latest_list, include: {memberships: :user}, each_serializer: ChatRoomEachSerializer),
         :online_users        => ams_sr(User.online_only),
       }
     end
 
     def show
-      @js_current_chat_room = ams_sr(current_record, include: {chat_memberships: :user, room_chat_messages: :user})
+      @js_current_chat_room = ams_sr(current_record, include: {memberships: :user, room_chat_messages: :user})
     end
 
     def redirect_to_where

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Chat membershipテーブル (chat_memberships as ChatMembership)
+# Chat membershipテーブル (memberships as Membership)
 #
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 # | カラム名           | 意味               | タイプ      | 属性        | 参照           | INDEX |
@@ -20,11 +20,11 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・ChatMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・ChatMembership モデルは User モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
-class ChatMembership < ApplicationRecord
+class Membership < ApplicationRecord
   belongs_to :chat_room
   belongs_to :user
 
@@ -39,10 +39,10 @@ class ChatMembership < ApplicationRecord
   default_scope { order(:position) }
 
   before_validation on: :create do
-    # active = chat_room.chat_memberships.active
+    # active = chat_room.memberships.active
     # if active.count < Warabi::Location.count
-    #   if chat_membership = active.first
-    #     location = chat_membership.location
+    #   if membership = active.first
+    #     location = membership.location
     #   else
     #     location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
     #   end
@@ -55,8 +55,8 @@ class ChatMembership < ApplicationRecord
     self.location_key ||= Warabi::Location.fetch(chat_room.users.count).key
 
     # if active.count < Warabi::Location.count
-    # if chat_membership = active.first
-    #   location = chat_membership.location
+    # if membership = active.first
+    #   location = membership.location
     # else
     #   location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
     # end

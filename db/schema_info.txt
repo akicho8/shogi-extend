@@ -2,7 +2,7 @@
 
 # == Schema Information ==
 #
-# Chat membershipテーブル (chat_memberships as ChatMembership)
+# Chat membershipテーブル (memberships as Membership)
 #
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 # | カラム名           | 意味               | タイプ      | 属性        | 参照           | INDEX |
@@ -21,8 +21,8 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・ChatMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
-# ・ChatMembership モデルは User モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==

@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 pp ActiveModelSerializers::SerializableResource.new(User.first).as_json
 pp ActiveModelSerializers::SerializableResource.new(LobbyChatMessage.first).as_json
-pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :user}).as_json
+pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {memberships: :user}).as_json
 
 # >> {:id=>1,
 # >>  :name=>"野良1号",
@@ -55,7 +55,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {ch
 # >>   "\n" +
 # >>   "▲７六歩 △５四歩 ▲２六歩 △８四歩 ▲１六歩 △９四歩 ▲２七飛 △９二香 ▲１八香\n" +
 # >>   "まで9手で先手の勝ち\n",
-# >>  :chat_memberships=>
+# >>  :memberships=>
 # >>   [{:id=>1,
 # >>     :preset_key=>"平手",
 # >>     :location_key=>"black",

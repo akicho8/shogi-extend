@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     data() {
       return {
         message: "",            // 発言
-        room_members:         js_current_chat_room.chat_memberships,
+        room_members:         js_current_chat_room.memberships,
         room_chat_messages:   js_current_chat_room.room_chat_messages,
         kifu_body_sfen:       js_current_chat_room.kifu_body_sfen,
         current_lifetime_key: js_current_chat_room.lifetime_key,

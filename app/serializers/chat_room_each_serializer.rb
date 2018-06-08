@@ -35,8 +35,8 @@ class ChatRoomEachSerializer < ApplicationSerializer
   #   attributes :name, :avatar_url
   # end
 
-  has_many :chat_memberships
-  class ChatMembershipSerializer < ApplicationSerializer
+  has_many :memberships
+  class MembershipSerializer < ApplicationSerializer
     attributes *[
       # :preset_key,
       :location_key,
@@ -53,7 +53,7 @@ class ChatRoomEachSerializer < ApplicationSerializer
 end
 
 if $0 == __FILE__
-  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {chat_memberships: :user}).as_json
+  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {memberships: :user}).as_json
 end
 # >> {:id=>1,
 # >>  :room_owner_id=>1,
@@ -75,7 +75,7 @@ end
 # >>  :watch_memberships_count=>0,
 # >>  :show_path=>"/online/battles/1",
 # >>  :handicap=>false,
-# >>  :chat_memberships=>
+# >>  :memberships=>
 # >>   [{:id=>1,
 # >>     :preset_key=>"平手",
 # >>     :location_key=>"black",

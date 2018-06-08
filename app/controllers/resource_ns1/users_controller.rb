@@ -33,7 +33,7 @@ module ResourceNs1
             include: {
               :users => nil,
               :watch_users => nil,
-              :chat_memberships => {
+              :memberships => {
                 include: :user,
               },
             }, methods: [

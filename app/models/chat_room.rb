@@ -113,14 +113,14 @@ class ChatRoom < ApplicationRecord
   end
 
   def names_hash
-    chat_memberships.group_by(&:location_key).transform_values { |a| a.collect { |e| e.user.name }.join("・") }.symbolize_keys
+    memberships.group_by(&:location_key).transform_values { |a| a.collect { |e| e.user.name }.join("・") }.symbolize_keys
   end
 
   # 対局者
   concerning :UserMethods do
     included do
-      has_many :chat_memberships, dependent: :destroy
-      has_many :users, through: :chat_memberships
+      has_many :memberships, dependent: :destroy
+      has_many :users, through: :memberships
     end
   end
 

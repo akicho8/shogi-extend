@@ -53,8 +53,8 @@ RSpec.describe User, type: :model do
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "二枚落ち" }
-      _assert { chat_room.chat_memberships.black.collect(&:user) == [@user2] }
-      _assert { chat_room.chat_memberships.white.collect(&:user) == [@user1] }
+      _assert { chat_room.memberships.black.collect(&:user) == [@user2] }
+      _assert { chat_room.memberships.white.collect(&:user) == [@user1] }
     end
 
     it "両方駒落ち" do
@@ -65,8 +65,8 @@ RSpec.describe User, type: :model do
       _assert { chat_room }
       _assert { chat_room.black_preset_key == "香落ち" }
       _assert { chat_room.white_preset_key == "二枚落ち" }
-      _assert { chat_room.chat_memberships.black.collect(&:user) == [@user2] }
-      _assert { chat_room.chat_memberships.white.collect(&:user) == [@user1] }
+      _assert { chat_room.memberships.black.collect(&:user) == [@user2] }
+      _assert { chat_room.memberships.white.collect(&:user) == [@user1] }
     end
   end
 
@@ -135,8 +135,8 @@ RSpec.describe User, type: :model do
       chat_room = @user4.matching_start
 
       _assert { chat_room }
-      _assert { chat_room.chat_memberships.black.collect(&:user) == [@user1, @user2] }
-      _assert { chat_room.chat_memberships.white.collect(&:user) == [@user3, @user4] }
+      _assert { chat_room.memberships.black.collect(&:user) == [@user1, @user2] }
+      _assert { chat_room.memberships.white.collect(&:user) == [@user3, @user4] }
     end
   end
 

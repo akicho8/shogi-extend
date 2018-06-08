@@ -4,7 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 RoomChatMessage.destroy_all
 User.destroy_all
 ChatRoom.destroy_all
-ChatMembership.destroy_all
+Membership.destroy_all
 
 alice = User.create!
 bob = User.create!
@@ -13,7 +13,7 @@ chat_room = OwnerRoom.create!
 chat_room.users << alice
 chat_room.users << bob
 
-tp chat_room.chat_memberships
+tp chat_room.memberships
 
 alice.room_chat_messages.create(chat_room: chat_room, message: "(body)")
 tp RoomChatMessage
