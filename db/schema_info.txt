@@ -8,7 +8,7 @@
 # | カラム名           | 意味               | タイプ      | 属性        | 参照           | INDEX |
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                |       |
-# | chat_room_id       | Chat room          | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
+# | battle_room_id       | Chat room          | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
 # | user_id       | Chat user          | integer(8)  | NOT NULL    | => User#id | B     |
 # | preset_key         | Preset key         | string(255) | NOT NULL    |                |       |
 # | location_key       | Location key       | string(255) | NOT NULL    |                | C     |
@@ -21,13 +21,13 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは BattleRoom モデルから has_many :room_chat_messages されています。
 # ・Membership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# 対戦部屋テーブル (chat_rooms as ChatRoom)
+# 対戦部屋テーブル (battle_rooms as BattleRoom)
 #
 # |--------------------------+--------------------------+-------------+---------------------+------+-------|
 # | カラム名                 | 意味                     | タイプ      | 属性                | 参照 | INDEX |
@@ -61,7 +61,7 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 # | id                   | ID                | integer(8)  | NOT NULL PK |                |       |
 # | name                 | 名前              | string(255) | NOT NULL    |                |       |
-# | current_chat_room_id | Current chat room | integer(8)  |             | => ChatRoom#id | A     |
+# | current_battle_room_id | Current chat room | integer(8)  |             | => BattleRoom#id | A     |
 # | online_at            | Online at         | datetime    |             |                |       |
 # | fighting_now_at      | Fighting now at   | datetime    |             |                |       |
 # | matching_at          | Matching at       | datetime    |             |                |       |
@@ -73,7 +73,7 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・User モデルは ChatRoom モデルから has_many :current_users, :foreign_key => :current_chat_room_id されています。
+# ・User モデルは BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -191,7 +191,7 @@
 # | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
 # |--------------+-----------+-------------+-------------+----------------+-------|
 # | id           | ID        | integer(8)  | NOT NULL PK |                |       |
-# | chat_room_id | Chat room | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
+# | battle_room_id | Chat room | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
 # | user_id | Chat user | integer(8)  | NOT NULL    | => User#id | B     |
 # | message      | Message   | text(65535) | NOT NULL    |                |       |
 # | created_at   | 作成日時  | datetime    | NOT NULL    |                |       |
@@ -199,7 +199,7 @@
 # |--------------+-----------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・RoomChatMessage モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・RoomChatMessage モデルは BattleRoom モデルから has_many :room_chat_messages されています。
 # ・RoomChatMessage モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
@@ -330,14 +330,14 @@
 # | カラム名     | 意味      | タイプ     | 属性        | 参照           | INDEX |
 # |--------------+-----------+------------+-------------+----------------+-------|
 # | id           | ID        | integer(8) | NOT NULL PK |                |       |
-# | chat_room_id | Chat room | integer(8) | NOT NULL    | => ChatRoom#id | A     |
+# | battle_room_id | Chat room | integer(8) | NOT NULL    | => BattleRoom#id | A     |
 # | user_id | Chat user | integer(8) | NOT NULL    | => User#id | B     |
 # | created_at   | 作成日時  | datetime   | NOT NULL    |                |       |
 # | updated_at   | 更新日時  | datetime   | NOT NULL    |                |       |
 # |--------------+-----------+------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・WatchMembership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは BattleRoom モデルから has_many :room_chat_messages されています。
 # ・WatchMembership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 

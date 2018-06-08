@@ -8,7 +8,7 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 # | id                   | ID                | integer(8)  | NOT NULL PK |                |       |
 # | name                 | 名前              | string(255) | NOT NULL    |                |       |
-# | current_chat_room_id | Current chat room | integer(8)  |             | => ChatRoom#id | A     |
+# | current_battle_room_id | Current chat room | integer(8)  |             | => BattleRoom#id | A     |
 # | online_at            | Online at         | datetime    |             |                |       |
 # | fighting_now_at      | Fighting now at   | datetime    |             |                |       |
 # | matching_at          | Matching at       | datetime    |             |                |       |
@@ -20,18 +20,18 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・User モデルは ChatRoom モデルから has_many :current_users, :foreign_key => :current_chat_room_id されています。
+# ・User モデルは BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
 #--------------------------------------------------------------------------------
 
 class User < ApplicationRecord
   has_many :room_chat_messages, dependent: :destroy
   has_many :lobby_chat_messages, dependent: :destroy
   has_many :memberships, dependent: :destroy
-  has_many :chat_rooms, through: :memberships
-  belongs_to :current_chat_room, class_name: "ChatRoom", optional: true, counter_cache: :current_users_count # 今入っている部屋
+  has_many :battle_rooms, through: :memberships
+  belongs_to :current_battle_room, class_name: "BattleRoom", optional: true, counter_cache: :current_users_count # 今入っている部屋
 
   has_many :watch_memberships, dependent: :destroy                        # 自分が観戦している部屋たち(中間情報)
-  has_many :watch_rooms, through: :watch_memberships, source: :chat_room # 自分が観戦している部屋たち
+  has_many :watch_rooms, through: :watch_memberships, source: :battle_room # 自分が観戦している部屋たち
 
   scope :random_order, -> { order(Arel.sql("rand()")) }
 
@@ -174,11 +174,11 @@ class User < ApplicationRecord
         pair_list = users1.zip(users2)
       end
 
-      chat_room_setup(pair_list, auto_matched_at: Time.current)
+      battle_room_setup(pair_list, auto_matched_at: Time.current)
     end
 
     def battle_setup_with(opponent)
-      chat_room_setup([[self, opponent]], {battle_request_at: Time.current})
+      battle_room_setup([[self, opponent]], {battle_request_at: Time.current})
     end
 
     # 手合割を考慮して自分と相手の座席を決定する
@@ -195,28 +195,28 @@ class User < ApplicationRecord
 
     private
 
-    def chat_room_setup(pair_list, **attributes)
-      chat_room = chat_room_create(attributes)
+    def battle_room_setup(pair_list, **attributes)
+      battle_room = battle_room_create(attributes)
 
       pair_list.flatten.each { |e| e.update!(matching_at: nil) } # マッチング状態をリセット
 
       # 二人ずつ取り出して振り分ける
       pair_list.each do |a, b|
         a.seat_determination(b).each do |user|
-          chat_room.users << user
+          battle_room.users << user
         end
       end
 
       # 召集
-      chat_room.users.each do |user|
-        ActionCable.server.broadcast("single_notification_#{user.id}", {matching_ok: true, chat_room: ams_sr(chat_room)})
+      battle_room.users.each do |user|
+        ActionCable.server.broadcast("single_notification_#{user.id}", {matching_ok: true, battle_room: ams_sr(battle_room)})
       end
 
-      chat_room
+      battle_room
     end
 
-    def chat_room_create(attributes = {})
-      ChatRoom.create! do |e|
+    def battle_room_create(attributes = {})
+      BattleRoom.create! do |e|
         e.lifetime_key = lifetime_key
         e.platoon_key = platoon_key
         e.attributes = [:black_preset_key, :white_preset_key].zip(rule_cop.to_a).to_h

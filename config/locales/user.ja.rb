@@ -13,10 +13,10 @@
     activerecord: {
       models: {
         user: "ユーザー",
-        chat_room: "対戦部屋",
+        battle_room: "対戦部屋",
       },
       attributes: {
-        chat_room: {
+        battle_room: {
           name: "部屋名",
         },
         user: {

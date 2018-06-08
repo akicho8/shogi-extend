@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対戦部屋テーブル (chat_rooms as ChatRoom)
+# 対戦部屋テーブル (battle_rooms as BattleRoom)
 #
 # |--------------------------+--------------------------+-------------+---------------------+------+-------|
 # | カラム名                 | 意味                     | タイプ      | 属性                | 参照 | INDEX |
@@ -27,19 +27,19 @@
 # |--------------------------+--------------------------+-------------+---------------------+------+-------|
 
 module ResourceNs1
-  class ChatRoomsController < ApplicationController
+  class BattleRoomsController < ApplicationController
     include ModulableCrud::All
 
     before_action do
       @lobby_app_params = {
         :lobby_chat_messages => ams_sr(LobbyChatMessage.latest_list.reverse),
-        :chat_rooms          => ams_sr(ChatRoom.latest_list, include: {memberships: :user}, each_serializer: ChatRoomEachSerializer),
+        :battle_rooms          => ams_sr(BattleRoom.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
         :online_users        => ams_sr(User.online_only),
       }
     end
 
     def show
-      @js_current_chat_room = ams_sr(current_record, include: {memberships: :user, room_chat_messages: :user})
+      @js_current_battle_room = ams_sr(current_record, include: {memberships: :user, room_chat_messages: :user})
     end
 
     def redirect_to_where

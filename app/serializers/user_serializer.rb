@@ -12,5 +12,5 @@ class UserSerializer < ApplicationSerializer
     :po_preset_key,
   ]
 
-  belongs_to :current_chat_room
+  belongs_to :current_battle_room
 end

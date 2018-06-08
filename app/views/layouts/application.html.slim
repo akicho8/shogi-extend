@@ -43,7 +43,7 @@ html lang="ja"
       #main_navar.navbar-menu
         .navbar-start
           / ここでの is-active に意味はない
-          = link_to("ネット対戦", [:resource_ns1, :chat_rooms], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/chat_rooms"))])
+          = link_to("ネット対戦", [:resource_ns1, :battle_rooms], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/battle_rooms"))])
           = link_to("CPU対戦", :cpu_versus, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_versus")])
           = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))])
           .navbar-item.has-dropdown.is-hoverable
@@ -90,7 +90,7 @@ html lang="ja"
               #header_app.navbar-menu(v-cloak)
                 .navbar-end
                   span.navbar-item
-                    = link_to("{{online_only_count}}", [:resource_ns1, :chat_rooms], :class => ["button", "is-primary", "is-inverted"])
+                    = link_to("{{online_only_count}}", [:resource_ns1, :battle_rooms], :class => ["button", "is-primary", "is-inverted"])
               / #navbarMenuHeroA.navbar-menu
               /   .navbar-end
               /     a.navbar-item.is-active
@@ -115,7 +115,7 @@ html lang="ja"
           .tabs.is-boxed.is-centered
             .container
               ul
-                li class=("is-active" if params[:controller].start_with?("resource_ns1/chat_rooms"))             = link_to("ネット対戦", [:resource_ns1, :chat_rooms])
+                li class=("is-active" if params[:controller].start_with?("resource_ns1/battle_rooms"))             = link_to("ネット対戦", [:resource_ns1, :battle_rooms])
                 li class=("is-active" if params[:controller] == "cpu_versus")                                    = link_to("CPU対戦", :cpu_versus)
                 li class=("is-active" if params[:controller].start_with?("resource_ns1/swars_battle_records"))   = link_to("将棋ウォーズ棋譜検索", [:resource_ns1, :w])
                 li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)

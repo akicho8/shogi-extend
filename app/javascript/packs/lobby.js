@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     received(data) {
-      if (data["chat_room_created"]) {
-        App.lobby_vm.chat_rooms = _.concat([data["chat_room_created"]], App.lobby_vm.chat_rooms)
+      if (data["battle_room_created"]) {
+        App.lobby_vm.battle_rooms = _.concat([data["battle_room_created"]], App.lobby_vm.battle_rooms)
       }
-      if (data["chat_rooms"]) {
-        App.lobby_vm.chat_rooms = data["chat_rooms"]
+      if (data["battle_rooms"]) {
+        App.lobby_vm.battle_rooms = data["battle_rooms"]
       }
       if (data["online_users"]) {
         // App.lobby_vm.online_users = data["online_users"] // FIXME: indexにアクセスした直後に必ず呼ばれる
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         message: "",                                               // 発言
 
         // 部屋一覧
-        chat_rooms: lobby_app_params.chat_rooms,
+        battle_rooms: lobby_app_params.battle_rooms,
         columns: [
           { field: 'name', label: '部屋', },
         ],
@@ -110,11 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return user.id === js_global_params.current_user.id
       },
 
-      chat_room_setting_open_click() {
+      battle_room_setting_open_click() {
         this.setting_modal_p = true
       },
 
-      chat_room_setting_close_click() {
+      battle_room_setting_close_click() {
         this.setting_modal_p = false
       },
 
@@ -148,8 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.message = ""
       },
 
-      room_members_format(chat_room) {
-        const list = _.groupBy(chat_room.memberships, "location_key")
+      room_members_format(battle_room) {
+        const list = _.groupBy(battle_room.memberships, "location_key")
         return _.map(list, (list, key) => {
           return list.map(e => {
             return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`

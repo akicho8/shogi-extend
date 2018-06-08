@@ -75,9 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // マッチングが成立した
       if (data["matching_ok"]) {
-        const chat_room = data["chat_room"]
-        location.href = chat_room["show_path"]
-        if (chat_room.auto_matched_at) {
+        const battle_room = data["battle_room"]
+        location.href = battle_room["show_path"]
+        if (battle_room.auto_matched_at) {
           Vue.prototype.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 2})
         }
       }

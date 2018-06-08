@@ -16,7 +16,7 @@ class MembershipSerializer < ApplicationSerializer
 end
 
 if $0 == __FILE__
-  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first.memberships).as_json
+  pp ActiveModelSerializers::SerializableResource.new(BattleRoom.first.memberships).as_json
 end
 # >> [{:id=>1,
 # >>   :location_key=>"black",

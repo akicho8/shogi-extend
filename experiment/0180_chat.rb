@@ -3,34 +3,34 @@ require File.expand_path('../../config/environment', __FILE__)
 
 RoomChatMessage.destroy_all
 User.destroy_all
-ChatRoom.destroy_all
+BattleRoom.destroy_all
 Membership.destroy_all
 
 alice = User.create!
 bob = User.create!
 
-chat_room = OwnerRoom.create!
-chat_room.users << alice
-chat_room.users << bob
+battle_room = OwnerRoom.create!
+battle_room.users << alice
+battle_room.users << bob
 
-tp chat_room.memberships
+tp battle_room.memberships
 
-alice.room_chat_messages.create(chat_room: chat_room, message: "(body)")
+alice.room_chat_messages.create(battle_room: battle_room, message: "(body)")
 tp RoomChatMessage
 
-tp chat_room
+tp battle_room
 
-alice.update!(current_chat_room: chat_room)
-tp chat_room.current_users
+alice.update!(current_battle_room: battle_room)
+tp battle_room.current_users
 
 # >> |----+--------------+--------------+------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
-# >> | id | chat_room_id | user_id | preset_key | location_key | position | standby_at | fighting_now_at | created_at                | updated_at                |
+# >> | id | battle_room_id | user_id | preset_key | location_key | position | standby_at | fighting_now_at | created_at                | updated_at                |
 # >> |----+--------------+--------------+------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
 # >> |  1 |            1 |            2 | 平手       | black        |        0 |            |                 | 2018-05-17 20:31:14 +0900 | 2018-05-17 20:31:14 +0900 |
 # >> |  2 |            1 |            3 | 平手       | white        |        1 |            |                 | 2018-05-17 20:31:14 +0900 | 2018-05-17 20:31:14 +0900 |
 # >> |----+--------------+--------------+------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
 # >> |----+--------------+--------------+---------+---------------------------+---------------------------|
-# >> | id | chat_room_id | user_id | message | created_at                | updated_at                |
+# >> | id | battle_room_id | user_id | message | created_at                | updated_at                |
 # >> |----+--------------+--------------+---------+---------------------------+---------------------------|
 # >> |  1 |            1 |            2 | (body)  | 2018-05-17 20:31:14 +0900 | 2018-05-17 20:31:14 +0900 |
 # >> |----+--------------+--------------+---------+---------------------------+---------------------------|
@@ -56,7 +56,7 @@ tp chat_room.current_users
 # >> |               updated_at | 2018-05-17 20:31:14 +0900                                                     |
 # >> |--------------------------+-------------------------------------------------------------------------------|
 # >> |----+---------+----------------------+-----------+-----------------+-------------+---------------+---------------+---------------+---------------------------+---------------------------|
-# >> | id | name    | current_chat_room_id | online_at | fighting_now_at | matching_at | lifetime_key  | ps_preset_key | po_preset_key | created_at                | updated_at                |
+# >> | id | name    | current_battle_room_id | online_at | fighting_now_at | matching_at | lifetime_key  | ps_preset_key | po_preset_key | created_at                | updated_at                |
 # >> |----+---------+----------------------+-----------+-----------------+-------------+---------------+---------------+---------------+---------------------------+---------------------------|
 # >> |  2 | 野良1号 |                    1 |           |                 |             | lifetime_m5 | 平手          | 平手          | 2018-05-17 20:31:14 +0900 | 2018-05-17 20:31:14 +0900 |
 # >> |----+---------+----------------------+-----------+-----------------+-------------+---------------+---------------+---------------+---------------------------+---------------------------|

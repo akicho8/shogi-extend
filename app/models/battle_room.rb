@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対戦部屋テーブル (chat_rooms as ChatRoom)
+# 対戦部屋テーブル (battle_rooms as BattleRoom)
 #
 # |--------------------------+--------------------------+-------------+---------------------+------+-------|
 # | カラム名                 | 意味                     | タイプ      | 属性                | 参照 | INDEX |
@@ -26,10 +26,10 @@
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
 # |--------------------------+--------------------------+-------------+---------------------+------+-------|
 
-class ChatRoom < ApplicationRecord
+class BattleRoom < ApplicationRecord
   time_rangable default: false
 
-  has_many :current_users, class_name: "User", foreign_key: :current_chat_room_id, dependent: :nullify
+  has_many :current_users, class_name: "User", foreign_key: :current_battle_room_id, dependent: :nullify
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
 
@@ -65,7 +65,7 @@ class ChatRoom < ApplicationRecord
     #   if room_owner
     #     names << "#{room_owner.name}の"
     #   end
-    #   names << "対戦部屋 ##{ChatRoom.count.next}"
+    #   names << "対戦部屋 ##{BattleRoom.count.next}"
     #   names.join
     # end
     "##{id}"
@@ -96,8 +96,8 @@ class ChatRoom < ApplicationRecord
   # end
 
   # def broadcast
-  #   # ActionCable.server.broadcast("lobby_channel", chat_rooms: JSON.load(self.class.latest_list.to_json(to_json_params)))
-  #   # ActionCable.server.broadcast("chat_room_channel_#{id}", chat_room: js_attributes) # FIXME: これは重いだけで使ってないのではずす
+  #   # ActionCable.server.broadcast("lobby_channel", battle_rooms: JSON.load(self.class.latest_list.to_json(to_json_params)))
+  #   # ActionCable.server.broadcast("battle_room_channel_#{id}", battle_room: js_attributes) # FIXME: これは重いだけで使ってないのではずす
   # end
 
   # def js_attributes

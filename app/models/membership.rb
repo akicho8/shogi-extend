@@ -7,7 +7,7 @@
 # | カラム名           | 意味               | タイプ      | 属性        | 参照           | INDEX |
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                |       |
-# | chat_room_id       | Chat room          | integer(8)  | NOT NULL    | => ChatRoom#id | A     |
+# | battle_room_id       | Chat room          | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
 # | user_id       | Chat user          | integer(8)  | NOT NULL    | => User#id | B     |
 # | preset_key         | Preset key         | string(255) | NOT NULL    |                |       |
 # | location_key       | Location key       | string(255) | NOT NULL    |                | C     |
@@ -20,12 +20,12 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは ChatRoom モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは BattleRoom モデルから has_many :room_chat_messages されています。
 # ・Membership モデルは User モデルから has_many :room_chat_messages されています。
 #--------------------------------------------------------------------------------
 
 class Membership < ApplicationRecord
-  belongs_to :chat_room
+  belongs_to :battle_room
   belongs_to :user
 
   scope :black, -> { where(location_key: "black") }
@@ -34,31 +34,31 @@ class Membership < ApplicationRecord
   scope :active, -> { where.not(location_key: nil) }       # 対局者
   scope :standby_enable, -> { where.not(standby_at: nil) } # 準備ができている
 
-  acts_as_list top_of_list: 0, scope: :chat_room
+  acts_as_list top_of_list: 0, scope: :battle_room
 
   default_scope { order(:position) }
 
   before_validation on: :create do
-    # active = chat_room.memberships.active
+    # active = battle_room.memberships.active
     # if active.count < Warabi::Location.count
     #   if membership = active.first
     #     location = membership.location
     #   else
-    #     location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
+    #     location = Warabi::Location[BattleRoom.count.modulo(Warabi::Location.count)]
     #   end
     #   self.location_key ||= location.flip.key
     # end
 
     # create!(users: [user1, user2]) とされた場合を考慮する
-    # index = chat_room.users.find_index(user) || chat_room.users.count
+    # index = battle_room.users.find_index(user) || battle_room.users.count
     # self.location_key ||= Warabi::Location.fetch(index).key
-    self.location_key ||= Warabi::Location.fetch(chat_room.users.count).key
+    self.location_key ||= Warabi::Location.fetch(battle_room.users.count).key
 
     # if active.count < Warabi::Location.count
     # if membership = active.first
     #   location = membership.location
     # else
-    #   location = Warabi::Location[ChatRoom.count.modulo(Warabi::Location.count)]
+    #   location = Warabi::Location[BattleRoom.count.modulo(Warabi::Location.count)]
     # end
     # self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
 

@@ -4,11 +4,11 @@ import numeral from "numeral"
 
 export default {
   data() {
-    // console.log("DEBUG", "data", "clock_counter", parseInt(localStorage.getItem(js_current_chat_room.id) || 0) + 3)
+    // console.log("DEBUG", "data", "clock_counter", parseInt(localStorage.getItem(js_current_battle_room.id) || 0) + 3)
     return {
-      clock_counts: js_current_chat_room.clock_counts,
-      clock_counter: parseInt(localStorage.getItem(js_current_chat_room.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
-      countdown_mode_hash: js_current_chat_room.countdown_mode_hash,
+      clock_counts: js_current_battle_room.clock_counts,
+      clock_counter: parseInt(localStorage.getItem(js_current_battle_room.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
+      countdown_mode_hash: js_current_battle_room.countdown_mode_hash,
       time_up_trigger_count: 0, // time_up_trigger() 実行回数制限用
     }
   },
@@ -48,7 +48,7 @@ export default {
       if (this.member_p) {
         if (this.time_up_trigger_count === 0) {
           // ログが見やすいように1回だけコールする
-          App.chat_room.time_up_trigger({membership_ids: this.__my_membership_ids, win_location_key: this.current_location.flip.key})
+          App.battle_room.time_up_trigger({membership_ids: this.__my_membership_ids, win_location_key: this.current_location.flip.key})
         }
         this.time_up_trigger_count += 1
       }
@@ -111,13 +111,13 @@ export default {
 
     clock_counter_set(v) {
       this.clock_counter = v
-      localStorage.setItem(js_current_chat_room.id, v)
+      localStorage.setItem(js_current_battle_room.id, v)
     },
 
     countdown_mode_on() {
       this.countdown_mode_hash[this.current_location.key] = true
       this.clock_counter_set(0)
-      App.chat_room.countdown_mode_on(this.current_location.key)
+      App.battle_room.countdown_mode_on(this.current_location.key)
     }
   },
 

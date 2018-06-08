@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対戦部屋テーブル (chat_rooms as ChatRoom)
+# 対戦部屋テーブル (battle_rooms as BattleRoom)
 #
 # |--------------------------+--------------------------+-------------+---------------------+------+-------|
 # | カラム名                 | 意味                     | タイプ      | 属性                | 参照 | INDEX |
@@ -26,12 +26,12 @@
 # | updated_at               | 更新日時                 | datetime    | NOT NULL            |      |       |
 # |--------------------------+--------------------------+-------------+---------------------+------+-------|
 
-class CreateChatRooms < ActiveRecord::Migration[5.1]
+class CreateBattleRooms < ActiveRecord::Migration[5.1]
   def change
     # ユーザー
     create_table :users, force: true do |t|
       t.string :name,                  null: false,              comment: "名前"
-      t.belongs_to :current_chat_room, null: true,               comment: "現在入室している部屋"
+      t.belongs_to :current_battle_room, null: true,               comment: "現在入室している部屋"
       t.datetime :online_at,           null: true,               comment: "オンラインになった日時"
       t.datetime :fighting_now_at,     null: true,               comment: "memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
       t.datetime :matching_at,         null: true,               comment: "マッチング中(開始日時)"
@@ -43,7 +43,7 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
     end
 
     # 部屋
-    create_table :chat_rooms, force: true do |t|
+    create_table :battle_rooms, force: true do |t|
       t.string :black_preset_key,                      null: false, comment: "▲手合割"
       t.string :white_preset_key,                      null: false, comment: "△手合割"
       t.string :lifetime_key,                          null: false, comment: "時間"
@@ -65,7 +65,7 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
 
     # 対局者
     create_table :memberships, force: true do |t|
-      t.belongs_to :chat_room, null: false,              comment: "部屋"
+      t.belongs_to :battle_room, null: false,              comment: "部屋"
       t.belongs_to :user, null: false,              comment: "ユーザー"
       t.string :preset_key,    null: false,              comment: "手合割"
       t.string :location_key,  null: false, index: true, comment: "先後"
@@ -78,14 +78,14 @@ class CreateChatRooms < ActiveRecord::Migration[5.1]
 
     # 観戦者
     create_table :watch_memberships, force: true do |t|
-      t.belongs_to :chat_room, null: false, comment: "部屋"
+      t.belongs_to :battle_room, null: false, comment: "部屋"
       t.belongs_to :user, null: false, comment: "ユーザー"
       t.timestamps null: false
     end
 
     # 対局部屋のチャット発言
     create_table :room_chat_messages, force: true do |t|
-      t.belongs_to :chat_room, null: false, comment: "部屋"
+      t.belongs_to :battle_room, null: false, comment: "部屋"
       t.belongs_to :user, null: false, comment: "ユーザー"
       t.text :message, null: false, comment: "発言"
       t.timestamps null: false

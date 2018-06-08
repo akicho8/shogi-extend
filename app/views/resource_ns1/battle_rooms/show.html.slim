@@ -1,11 +1,11 @@
 javascript:
   var lobby_app_params = #{@lobby_app_params.to_json.html_safe}
-  var js_current_chat_room = #{@js_current_chat_room.to_json.html_safe}
+  var js_current_battle_room = #{@js_current_battle_room.to_json.html_safe}
 
 - content_for :head do
-  = javascript_pack_tag("chat_room")
+  = javascript_pack_tag("battle_room")
 
-#chat_room_app v-cloak="true"
+#battle_room_app v-cloak="true"
   .columns
     .column.is-two-thirds
       .box
@@ -140,13 +140,13 @@ javascript:
               td v-text="e.value"
 
   p
-    = link_to("ロビーに戻る", [:resource_ns1, :chat_rooms], :class => "button")
+    = link_to("ロビーに戻る", [:resource_ns1, :battle_rooms], :class => "button")
 
 / br
 / br
 / .box
-/   .title.is-5= "@js_current_chat_room"
-/   = html_format(JSON.load(@js_current_chat_room.to_json))
+/   .title.is-5= "@js_current_battle_room"
+/   = html_format(JSON.load(@js_current_battle_room.to_json))
 /
 / .box
 /   = html_format({"cookies.signed[:user_id]" => cookies.signed[:user_id]})

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     el: "#user_show_app",
     data() {
       return {
-        chat_rooms: user_show_app_params.chat_rooms,
+        battle_rooms: user_show_app_params.battle_rooms,
       }
     },
 
@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     methods: {
-      room_members_format(chat_room) {
-        return chat_room.memberships.map(e => e.user.name).join(" vs ")
+      room_members_format(battle_room) {
+        return battle_room.memberships.map(e => e.user.name).join(" vs ")
       },
 
     },

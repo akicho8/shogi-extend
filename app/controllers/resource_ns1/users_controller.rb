@@ -8,7 +8,7 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 # | id                   | ID                | integer(8)  | NOT NULL PK |                |       |
 # | name                 | 名前              | string(255) | NOT NULL    |                |       |
-# | current_chat_room_id | Current chat room | integer(8)  |             | => ChatRoom#id | A     |
+# | current_battle_room_id | Current chat room | integer(8)  |             | => BattleRoom#id | A     |
 # | online_at            | Online at         | datetime    |             |                |       |
 # | fighting_now_at      | Fighting now at   | datetime    |             |                |       |
 # | matching_at          | Matching at       | datetime    |             |                |       |
@@ -20,7 +20,7 @@
 # |----------------------+-------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・User モデルは ChatRoom モデルから has_many :current_users, :foreign_key => :current_chat_room_id されています。
+# ・User モデルは BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
 #--------------------------------------------------------------------------------
 
 module ResourceNs1
@@ -29,7 +29,7 @@ module ResourceNs1
 
     def show
       @user_show_app_params = {
-        chat_rooms: current_record.chat_rooms.as_json({
+        battle_rooms: current_record.battle_rooms.as_json({
             include: {
               :users => nil,
               :watch_users => nil,
@@ -47,7 +47,7 @@ module ResourceNs1
     end
 
     def redirect_to_where
-      # [:resource_ns1, :chat_rooms]
+      # [:resource_ns1, :battle_rooms]
       # [:edit, :resource_ns1, current_record]
       [:edit, :resource_ns1, current_record]
     end

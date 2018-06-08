@@ -1,6 +1,6 @@
 require File.expand_path('../../../config/environment', __FILE__) if $0 == __FILE__
 
-class ChatRoomEachSerializer < ApplicationSerializer
+class BattleRoomEachSerializer < ApplicationSerializer
   attributes *[
     :black_preset_key,
     :white_preset_key,
@@ -53,7 +53,7 @@ class ChatRoomEachSerializer < ApplicationSerializer
 end
 
 if $0 == __FILE__
-  pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {memberships: :user}).as_json
+  pp ActiveModelSerializers::SerializableResource.new(BattleRoom.first, include: {memberships: :user}).as_json
 end
 # >> {:id=>1,
 # >>  :room_owner_id=>1,

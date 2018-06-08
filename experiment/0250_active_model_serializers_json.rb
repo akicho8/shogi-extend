@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 pp ActiveModelSerializers::SerializableResource.new(User.first).as_json
 pp ActiveModelSerializers::SerializableResource.new(LobbyChatMessage.first).as_json
-pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {memberships: :user}).as_json
+pp ActiveModelSerializers::SerializableResource.new(BattleRoom.first, include: {memberships: :user}).as_json
 
 # >> {:id=>1,
 # >>  :name=>"野良1号",
@@ -15,7 +15,7 @@ pp ActiveModelSerializers::SerializableResource.new(ChatRoom.first, include: {me
 # >>  :lifetime_key=>"lifetime_m5",
 # >>  :ps_preset_key=>"平手",
 # >>  :po_preset_key=>"平手",
-# >>  :current_chat_room=>nil}
+# >>  :current_battle_room=>nil}
 # >> {:id=>1,
 # >>  :message=>"aa",
 # >>  :created_at=>Tue, 29 May 2018 20:52:47 JST +09:00,

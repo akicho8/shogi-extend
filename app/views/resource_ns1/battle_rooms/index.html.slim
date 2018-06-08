@@ -37,7 +37,7 @@ javascript:
           b-radio-button v-model="current_platoon_key" :native-value="e.key" {{e.name}}
     template(v-if="true")
       footer.modal-card-foot
-        button.button.is-primary(@click="chat_room_setting_close_click") 閉じる
+        button.button.is-primary(@click="battle_room_setting_close_click") 閉じる
 
   / .title.is-4 ネット対戦・ロビー
   / hr
@@ -45,7 +45,7 @@ javascript:
   .buttons
     template(v-if="!matching_at")
       .button.is-primary.is-large(@click.prevent="matching_start") バトル開始
-      .button.is-primary.is-large(@click.prevent="chat_room_setting_open_click") ルール設定
+      .button.is-primary.is-large(@click.prevent="battle_room_setting_open_click") ルール設定
     template(v-else)
       a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
 
@@ -103,9 +103,9 @@ javascript:
             b-table-column(field="name" label="状態" sortable="sortable")
               template(v-if="props.row.matching_at")
                 = "マッチング中"
-              template(v-if="props.row.current_chat_room")
-                a :href="props.row.current_chat_room.show_path"
-                  | {{props.row.current_chat_room.name}}
+              template(v-if="props.row.current_battle_room")
+                a :href="props.row.current_battle_room.show_path"
+                  | {{props.row.current_battle_room.name}}
 
         br
         message_link_to
@@ -114,7 +114,7 @@ javascript:
     .column
       .box
         .title.is-4= "観戦"
-        b-table(:data="chat_rooms" :paginated="true" :per-page="10")
+        b-table(:data="battle_rooms" :paginated="true" :per-page="10")
           template slot-scope="props"
             b-table-column field="name" label="部屋" sortable="sortable"
               a(:href="props.row.show_path")

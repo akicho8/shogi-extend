@@ -7,9 +7,9 @@ import { Location } from "shogi-player/src/location"
 import { LastActionInfo } from "./last_action_info"
 
 document.addEventListener("DOMContentLoaded", () => {
-  App.chat_room = App.cable.subscriptions.create({
-    channel: "ChatRoomChannel",
-    chat_room_id: js_current_chat_room.id,
+  App.battle_room = App.cable.subscriptions.create({
+    channel: "BattleRoomChannel",
+    battle_room_id: js_current_battle_room.id,
   }, {
     connected() {
       this.perform("room_in")
@@ -118,23 +118,23 @@ document.addEventListener("DOMContentLoaded", () => {
     mixins: [
       chess_clock,
     ],
-    el: "#chat_room_app",
+    el: "#battle_room_app",
     data() {
       return {
         message: "",            // 発言
-        room_members:         js_current_chat_room.memberships,
-        room_chat_messages:   js_current_chat_room.room_chat_messages,
-        kifu_body_sfen:       js_current_chat_room.kifu_body_sfen,
-        current_lifetime_key: js_current_chat_room.lifetime_key,
-        current_platoon_key: js_current_chat_room.platoon_key,
-        begin_at:             js_current_chat_room.begin_at,
-        end_at:               js_current_chat_room.end_at,
-        win_location_key:     js_current_chat_room.win_location_key,
-        last_action_key:      js_current_chat_room.last_action_key,
-        watch_users:          js_current_chat_room.watch_users,
-        turn_max:             js_current_chat_room.turn_max,
-        handicap:             js_current_chat_room.handicap,
-        human_kifu_text:      js_current_chat_room.human_kifu_text,
+        room_members:         js_current_battle_room.memberships,
+        room_chat_messages:   js_current_battle_room.room_chat_messages,
+        kifu_body_sfen:       js_current_battle_room.kifu_body_sfen,
+        current_lifetime_key: js_current_battle_room.lifetime_key,
+        current_platoon_key: js_current_battle_room.platoon_key,
+        begin_at:             js_current_battle_room.begin_at,
+        end_at:               js_current_battle_room.end_at,
+        win_location_key:     js_current_battle_room.win_location_key,
+        last_action_key:      js_current_battle_room.last_action_key,
+        watch_users:          js_current_battle_room.watch_users,
+        turn_max:             js_current_battle_room.turn_max,
+        handicap:             js_current_battle_room.handicap,
+        human_kifu_text:      js_current_battle_room.human_kifu_text,
       }
     },
 
@@ -165,8 +165,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ゲーム終了(投了により
       give_up_trigger() {
-        App.chat_room.give_up_trigger({win_location_key: this.current_location.flip.key})
-        App.chat_room.system_say("負けました")
+        App.battle_room.give_up_trigger({win_location_key: this.current_location.flip.key})
+        App.battle_room.system_say("負けました")
       },
 
       // 終了の通達があった
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 先後反転(全体)
       location_flip_all() {
-        App.chat_room.location_flip_all()
+        App.battle_room.location_flip_all()
       },
 
       location_key_name(membership) {
@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // メッセージ送信
       message_enter(value) {
         if (this.message !== "") {
-          App.chat_room.chat_say(this.message)
+          App.battle_room.chat_say(this.message)
         }
         this.message = ""
       },
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       play_mode_long_sfen_set(v) {
         if (this.current_status === "st_battling") {
-          App.chat_room.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key})
+          App.battle_room.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key})
         }
       },
 
@@ -269,8 +269,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // チャットに表示する最新メッセージたち
       latest_room_chat_messages() {
-        console.assert(js_current_chat_room.chat_window_size)
-        return _.takeRight(this.room_chat_messages, js_current_chat_room.chat_window_size)
+        console.assert(js_current_battle_room.chat_window_size)
+        return _.takeRight(this.room_chat_messages, js_current_battle_room.chat_window_size)
       },
 
       // 手番選択用
@@ -281,8 +281,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       },
 
-      chat_room() {
-        return js_current_chat_room
+      battle_room() {
+        return js_current_battle_room
       },
 
       // 現在の手番番号
