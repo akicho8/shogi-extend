@@ -33,23 +33,6 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "battle_room_id", null: false, comment: "部屋"
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "preset_key", null: false, comment: "手合割"
-    t.string "location_key", null: false, comment: "先後"
-    t.integer "position", comment: "入室順序"
-    t.datetime "standby_at", comment: "準備完了日時"
-    t.datetime "fighting_now_at", comment: "部屋に入った日時で抜けたり切断すると空"
-    t.datetime "time_up_trigger_at", comment: "タイムアップしたのを検知した日時"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_room_id"], name: "index_memberships_on_battle_room_id"
-    t.index ["user_id"], name: "index_memberships_on_user_id"
-    t.index ["location_key"], name: "index_memberships_on_location_key"
-    t.index ["position"], name: "index_memberships_on_position"
-  end
-
   create_table "battle_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "black_preset_key", null: false, comment: "▲手合割"
     t.string "white_preset_key", null: false, comment: "△手合割"
@@ -71,23 +54,14 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "name", null: false, comment: "名前"
-    t.bigint "current_battle_room_id", comment: "現在入室している部屋"
-    t.datetime "online_at", comment: "オンラインになった日時"
-    t.datetime "fighting_now_at", comment: "memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
-    t.datetime "matching_at", comment: "マッチング中(開始日時)"
-    t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
-    t.string "platoon_key", null: false, comment: "ルール・人数"
-    t.string "ps_preset_key", null: false, comment: "ルール・自分の手合割"
-    t.string "po_preset_key", null: false, comment: "ルール・相手の手合割"
+  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "battle_room_id", null: false, comment: "部屋"
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.text "message", null: false, comment: "発言"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["current_battle_room_id"], name: "index_users_on_current_battle_room_id"
-    t.index ["lifetime_key"], name: "index_users_on_lifetime_key"
-    t.index ["platoon_key"], name: "index_users_on_platoon_key"
-    t.index ["po_preset_key"], name: "index_users_on_po_preset_key"
-    t.index ["ps_preset_key"], name: "index_users_on_ps_preset_key"
+    t.index ["battle_room_id"], name: "index_chat_messages_on_battle_room_id"
+    t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
   create_table "converted_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -159,14 +133,21 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["user_id"], name: "index_lobby_messages_on_user_id"
   end
 
-  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_room_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
-    t.text "message", null: false, comment: "発言"
+    t.string "preset_key", null: false, comment: "手合割"
+    t.string "location_key", null: false, comment: "先後"
+    t.integer "position", comment: "入室順序"
+    t.datetime "standby_at", comment: "準備完了日時"
+    t.datetime "fighting_now_at", comment: "部屋に入った日時で抜けたり切断すると空"
+    t.datetime "time_up_trigger_at", comment: "タイムアップしたのを検知した日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_room_id"], name: "index_chat_messages_on_battle_room_id"
-    t.index ["user_id"], name: "index_chat_messages_on_user_id"
+    t.index ["battle_room_id"], name: "index_memberships_on_battle_room_id"
+    t.index ["location_key"], name: "index_memberships_on_location_key"
+    t.index ["position"], name: "index_memberships_on_position"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "swars_battle_grades", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -265,6 +246,25 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", null: false, comment: "名前"
+    t.bigint "current_battle_room_id", comment: "現在入室している部屋"
+    t.datetime "online_at", comment: "オンラインになった日時"
+    t.datetime "fighting_now_at", comment: "memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
+    t.datetime "matching_at", comment: "マッチング中(開始日時)"
+    t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
+    t.string "platoon_key", null: false, comment: "ルール・人数"
+    t.string "ps_preset_key", null: false, comment: "ルール・自分の手合割"
+    t.string "po_preset_key", null: false, comment: "ルール・相手の手合割"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["current_battle_room_id"], name: "index_users_on_current_battle_room_id"
+    t.index ["lifetime_key"], name: "index_users_on_lifetime_key"
+    t.index ["platoon_key"], name: "index_users_on_platoon_key"
+    t.index ["po_preset_key"], name: "index_users_on_po_preset_key"
+    t.index ["ps_preset_key"], name: "index_users_on_ps_preset_key"
   end
 
   create_table "watch_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

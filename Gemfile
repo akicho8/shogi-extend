@@ -83,6 +83,8 @@ group :development, :test do
   # gem 'webmock' # rack-proxy と干渉するため外す
 
   gem "rgb"
+
+  gem "rails-erd"
 end
 
 group :development do
