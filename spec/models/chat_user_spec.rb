@@ -107,26 +107,37 @@ RSpec.describe ChatUser, type: :model do
       @user2 = create_user(:platoon_p1vs1, "飛車落ち", "平手")
 
       @user1.matching_start
-      @user2.matching_start
-      _assert { ChatRoom.first }
+      chat_room = @user2.matching_start
+      _assert { chat_room }
     end
-  end
 
-  it "駒落ちダブルス" do
-    @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
-    @user2 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
-    @user3 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
-    @user4 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
+    it "両方同じ駒落ちでのシングルス" do
+      @user1 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
+      @user2 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
 
-    @user1.matching_start
-    @user2.matching_start
-    @user3.matching_start
+      @user1.matching_start
+      chat_room = @user2.matching_start
 
-    chat_room = @user4.matching_start
+      _assert { chat_room }
+      _assert { chat_room.chat_users.sort == [@user1, @user2] }
+    end
 
-    _assert { chat_room }
-    _assert { chat_room.chat_memberships.black.collect(&:chat_user) == [@user1, @user2] }
-    _assert { chat_room.chat_memberships.white.collect(&:chat_user) == [@user3, @user4] }
+    it "駒落ちダブルス" do
+      @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
+      @user2 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
+      @user3 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
+      @user4 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
+
+      @user1.matching_start
+      @user2.matching_start
+      @user3.matching_start
+
+      chat_room = @user4.matching_start
+
+      _assert { chat_room }
+      _assert { chat_room.chat_memberships.black.collect(&:chat_user) == [@user1, @user2] }
+      _assert { chat_room.chat_memberships.white.collect(&:chat_user) == [@user3, @user4] }
+    end
   end
 
   def create_user(platoon_key, ps_preset_key, po_preset_key)

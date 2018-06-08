@@ -71,10 +71,6 @@ class ChatUser < ApplicationRecord
     Warabi::PresetInfo[po_preset_key]
   end
 
-  def handicap_mode?
-    !(ps_preset_key == "平手" && po_preset_key == "平手")
-  end
-
   concerning :AvatarMethods do
     included do
       has_one_attached :avatar
@@ -158,32 +154,24 @@ class ChatUser < ApplicationRecord
 
       s = matching_scope
 
-      if handicap_mode?
-        s1 = s.merge(preset_equal)
-        s2 = s.merge(preset_reverse)
-        if s1.count < platoon_info.half_limit || s2.count < platoon_info.half_limit
-          matching_wait_mode
-          return
-        end
-
-        users1 = s1.limit(platoon_info.half_limit)
-        users2 = s2.limit(platoon_info.half_limit)
-
-        pair_list = users1.zip(users2)
-      else
+      if rule_cop.same_rule?
         s = s.merge(preset_reverse)
-
-        # 人数に達していない？
         if s.count < platoon_info.total_limit
           matching_wait_mode
           return
         end
-
-        # 人数に達したのでそのメンバーをランダムで取得
-        users = s.random_order.limit(platoon_info.total_limit)
-
-        # そのメンバーで部屋を作って召集する
+        users = s.random_order.limit(platoon_info.total_limit) # 人数に達したのでそのメンバーをランダムで取得
         pair_list = users.each_slice(2).to_a
+      else
+        s1 = s.merge(preset_equal)   # 自分の味方を探す
+        s2 = s.merge(preset_reverse) # 相手を探す
+        if s1.count < platoon_info.half_limit || s2.count < platoon_info.half_limit
+          matching_wait_mode
+          return
+        end
+        users1 = s1.limit(platoon_info.half_limit)
+        users2 = s2.limit(platoon_info.half_limit)
+        pair_list = users1.zip(users2)
       end
 
       chat_room_setup(pair_list, auto_matched_at: Time.current)
@@ -213,8 +201,8 @@ class ChatUser < ApplicationRecord
       pair_list.flatten.each { |e| e.update!(matching_at: nil) } # マッチング状態をリセット
 
       # 二人ずつ取り出して振り分ける
-      pair_list.each do |user1, user2|
-        user1.seat_determination(user2).each do |user|
+      pair_list.each do |a, b|
+        a.seat_determination(b).each do |user|
           chat_room.chat_users << user
         end
       end
