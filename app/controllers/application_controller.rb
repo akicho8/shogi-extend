@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
 
     def current_user
       @current_user ||= User.find_by(id: cookies.signed[:user_id])
-      @current_user ||= User.create!
+      @current_user ||= User.create!(user_agent: request.user_agent)
       cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}
       @current_user
     end

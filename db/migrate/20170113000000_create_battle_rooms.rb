@@ -40,6 +40,7 @@ class CreateBattleRooms < ActiveRecord::Migration[5.1]
       t.string :platoon_key,          null: false, index: true, comment: "ルール・人数"
       t.string :self_preset_key,         null: false, index: true, comment: "ルール・自分の手合割"
       t.string :oppo_preset_key,         null: false, index: true, comment: "ルール・相手の手合割"
+      t.string :user_agent,              null: false, comment: "ブラウザ情報"
       t.timestamps null: false
     end
 

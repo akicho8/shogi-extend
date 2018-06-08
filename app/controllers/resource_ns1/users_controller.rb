@@ -16,6 +16,7 @@
 # | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |
 # | self_preset_key        | Self preset key     | string(255) | NOT NULL    |                  | D     |
 # | oppo_preset_key        | Oppo preset key     | string(255) | NOT NULL    |                  | E     |
+# | user_agent             | User agent          | string(255) | NOT NULL    |                  |       |
 # | created_at             | 作成日時            | datetime    | NOT NULL    |                  |       |
 # | updated_at             | 更新日時            | datetime    | NOT NULL    |                  |       |
 # |------------------------+---------------------+-------------+-------------+------------------+-------|

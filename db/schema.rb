@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "platoon_key", null: false, comment: "ルール・人数"
     t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
     t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
+    t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_battle_room_id"], name: "index_users_on_current_battle_room_id"
