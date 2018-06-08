@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Room chat messageテーブル (room_chat_messages as RoomChatMessage)
+# Room chat messageテーブル (chat_messages as ChatMessage)
 #
 # |--------------+-----------+-------------+-------------+----------------+-------|
 # | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
@@ -15,11 +15,11 @@
 # |--------------+-----------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・RoomChatMessage モデルは BattleRoom モデルから has_many :room_chat_messages されています。
-# ・RoomChatMessage モデルは User モデルから has_many :room_chat_messages されています。
+# ・ChatMessage モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・ChatMessage モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
-class RoomChatMessage < ApplicationRecord
+class ChatMessage < ApplicationRecord
   belongs_to :user
   belongs_to :battle_room
 
@@ -27,6 +27,6 @@ class RoomChatMessage < ApplicationRecord
 
   # 非同期にするため
   # after_create_commit do
-  #   RoomChatMessageBroadcastJob.perform_later(self)
+  #   ChatMessageBroadcastJob.perform_later(self)
   # end
 end

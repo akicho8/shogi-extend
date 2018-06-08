@@ -39,7 +39,7 @@ module ResourceNs1
     end
 
     def show
-      @js_current_battle_room = ams_sr(current_record, include: {memberships: :user, room_chat_messages: :user})
+      @js_current_battle_room = ams_sr(current_record, include: {memberships: :user, chat_messages: :user})
     end
 
     def redirect_to_where

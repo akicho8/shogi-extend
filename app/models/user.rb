@@ -24,7 +24,7 @@
 #--------------------------------------------------------------------------------
 
 class User < ApplicationRecord
-  has_many :room_chat_messages, dependent: :destroy
+  has_many :chat_messages, dependent: :destroy
   has_many :lobby_messages, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :battle_rooms, through: :memberships

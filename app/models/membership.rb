@@ -20,8 +20,8 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは BattleRoom モデルから has_many :room_chat_messages されています。
-# ・Membership モデルは User モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・Membership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 class Membership < ApplicationRecord

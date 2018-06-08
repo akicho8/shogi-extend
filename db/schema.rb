@@ -159,14 +159,14 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["user_id"], name: "index_lobby_messages_on_user_id"
   end
 
-  create_table "room_chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_room_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "message", null: false, comment: "発言"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_room_id"], name: "index_room_chat_messages_on_battle_room_id"
-    t.index ["user_id"], name: "index_room_chat_messages_on_user_id"
+    t.index ["battle_room_id"], name: "index_chat_messages_on_battle_room_id"
+    t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
   create_table "swars_battle_grades", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

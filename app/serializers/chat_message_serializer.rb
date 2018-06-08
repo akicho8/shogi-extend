@@ -1,4 +1,4 @@
-class RoomChatMessageSerializer < ApplicationSerializer
+class ChatMessageSerializer < ApplicationSerializer
   attributes :message, :created_at
 
   has_one :user

@@ -65,8 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 発言の反映
-      if (data["room_chat_message"]) {
-        App.chat_vm.room_chat_messages.push(data["room_chat_message"])
+      if (data["chat_message"]) {
+        App.chat_vm.chat_messages.push(data["chat_message"])
       }
 
       // 部屋名の共有
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return {
         message: "",            // 発言
         room_members:         js_current_battle_room.memberships,
-        room_chat_messages:   js_current_battle_room.room_chat_messages,
+        chat_messages:   js_current_battle_room.chat_messages,
         kifu_body_sfen:       js_current_battle_room.kifu_body_sfen,
         current_lifetime_key: js_current_battle_room.lifetime_key,
         current_platoon_key: js_current_battle_room.platoon_key,
@@ -268,9 +268,9 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       // チャットに表示する最新メッセージたち
-      latest_room_chat_messages() {
+      latest_chat_messages() {
         console.assert(js_current_battle_room.chat_window_size)
-        return _.takeRight(this.room_chat_messages, js_current_battle_room.chat_window_size)
+        return _.takeRight(this.chat_messages, js_current_battle_room.chat_window_size)
       },
 
       // 手番選択用

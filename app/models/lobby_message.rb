@@ -14,7 +14,7 @@
 # |--------------+-----------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・LobbyMessage モデルは User モデルから has_many :room_chat_messages されています。
+# ・LobbyMessage モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 class LobbyMessage < ApplicationRecord
@@ -26,6 +26,6 @@ class LobbyMessage < ApplicationRecord
 
   # # 非同期にするため
   # after_create_commit do
-  #   RoomChatMessageBroadcastJob.perform_later(self)
+  #   ChatMessageBroadcastJob.perform_later(self)
   # end
 end

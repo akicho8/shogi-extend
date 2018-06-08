@@ -60,13 +60,13 @@ javascript:
         / .title.is-5= "チャット"
 
         table.table.is-narrow.is-fullwidth
-          tr v-for="e of latest_room_chat_messages"
+          tr v-for="e of latest_chat_messages"
             td
               message_link_to :user_to="e.user"
               = " "
               span(v-html="e.message")
 
-        / template v-for="e of latest_room_chat_messages"
+        / template v-for="e of latest_chat_messages"
         /   article.media
         /     figure.media-left
         /       p.image.is-16x16
@@ -154,8 +154,8 @@ javascript:
 / .box
 /   .title.is-5= "User"
 /   = html_format(current_record.users)
-/   .title.is-5= "RoomChatMessage"
-/   = html_format(current_record.room_chat_messages)
+/   .title.is-5= "ChatMessage"
+/   = html_format(current_record.chat_messages)
 
 / #lobby_app
 /   - if Rails.env.development?

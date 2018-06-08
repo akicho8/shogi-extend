@@ -14,8 +14,8 @@
 # |--------------+-----------+------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・WatchMembership モデルは BattleRoom モデルから has_many :room_chat_messages されています。
-# ・WatchMembership モデルは User モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・WatchMembership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 class WatchMembership < ApplicationRecord

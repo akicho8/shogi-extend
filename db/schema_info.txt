@@ -21,8 +21,8 @@
 # |--------------------+--------------------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは BattleRoom モデルから has_many :room_chat_messages されています。
-# ・Membership モデルは User モデルから has_many :room_chat_messages されています。
+# ・Membership モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・Membership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -180,12 +180,12 @@
 # |--------------+-----------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・LobbyMessage モデルは User モデルから has_many :room_chat_messages されています。
+# ・LobbyMessage モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# Room chat messageテーブル (room_chat_messages as RoomChatMessage)
+# Room chat messageテーブル (chat_messages as ChatMessage)
 #
 # |--------------+-----------+-------------+-------------+----------------+-------|
 # | カラム名     | 意味      | タイプ      | 属性        | 参照           | INDEX |
@@ -199,8 +199,8 @@
 # |--------------+-----------+-------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・RoomChatMessage モデルは BattleRoom モデルから has_many :room_chat_messages されています。
-# ・RoomChatMessage モデルは User モデルから has_many :room_chat_messages されています。
+# ・ChatMessage モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・ChatMessage モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -337,7 +337,7 @@
 # |--------------+-----------+------------+-------------+----------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・WatchMembership モデルは BattleRoom モデルから has_many :room_chat_messages されています。
-# ・WatchMembership モデルは User モデルから has_many :room_chat_messages されています。
+# ・WatchMembership モデルは BattleRoom モデルから has_many :chat_messages されています。
+# ・WatchMembership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 

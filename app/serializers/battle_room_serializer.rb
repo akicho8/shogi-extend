@@ -28,9 +28,9 @@ class BattleRoomSerializer < ApplicationSerializer
     :chat_window_size,
   ]
 
-  has_many :room_chat_messages
+  has_many :chat_messages
 
-  # :room_chat_messages => ams_sr(current_record.room_chat_messages.latest_list),
+  # :chat_messages => ams_sr(current_record.chat_messages.latest_list),
 
   # attribute :can_edit
   #

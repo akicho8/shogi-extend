@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-RoomChatMessage.destroy_all
+ChatMessage.destroy_all
 User.destroy_all
 BattleRoom.destroy_all
 Membership.destroy_all
@@ -15,8 +15,8 @@ battle_room.users << bob
 
 tp battle_room.memberships
 
-alice.room_chat_messages.create(battle_room: battle_room, message: "(body)")
-tp RoomChatMessage
+alice.chat_messages.create(battle_room: battle_room, message: "(body)")
+tp ChatMessage
 
 tp battle_room
 

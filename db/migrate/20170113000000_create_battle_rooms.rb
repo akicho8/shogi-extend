@@ -84,7 +84,7 @@ class CreateBattleRooms < ActiveRecord::Migration[5.1]
     end
 
     # 対局部屋のチャット発言
-    create_table :room_chat_messages, force: true do |t|
+    create_table :chat_messages, force: true do |t|
       t.belongs_to :battle_room, null: false, comment: "部屋"
       t.belongs_to :user, null: false, comment: "ユーザー"
       t.text :message, null: false, comment: "発言"

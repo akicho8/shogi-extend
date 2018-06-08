@@ -133,11 +133,11 @@ class BattleRoom < ApplicationRecord
   end
 
   # チャット関連
-  concerning :RoomChatMessageMethods do
+  concerning :ChatMessageMethods do
     included do
       cattr_accessor(:chat_window_size) { 10 }
 
-      has_many :room_chat_messages, dependent: :destroy do
+      has_many :chat_messages, dependent: :destroy do
         def limited_latest_list
           latest_list.limit(chat_window_size)
         end

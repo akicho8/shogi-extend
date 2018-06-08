@@ -81,8 +81,8 @@ class BattleRoomChannel < ApplicationCable::Channel
   # 発言
   # chat_say("message" => '<span class="has-text-info">退室しました</span>')
   def chat_say(data)
-    room_chat_message = current_user.room_chat_messages.create!(battle_room: current_battle_room, message: data["message"])
-    ActionCable.server.broadcast(room_key, room_chat_message: ams_sr(room_chat_message))
+    chat_message = current_user.chat_messages.create!(battle_room: current_battle_room, message: data["message"])
+    ActionCable.server.broadcast(room_key, chat_message: ams_sr(chat_message))
   end
 
   # わざわざ ruby 側に戻してブロードキャストする意味がない気がする
