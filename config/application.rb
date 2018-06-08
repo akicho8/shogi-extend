@@ -24,7 +24,7 @@ module ShogiWeb
       config.app_config = AppConfig
     end
 
-    if Rails.env.development?
+    if Rails.env.development? || Rails.env.test?
       config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
     end
 

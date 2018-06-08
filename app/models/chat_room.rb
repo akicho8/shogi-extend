@@ -40,7 +40,7 @@ class ChatRoom < ApplicationRecord
     self.black_preset_key ||= "平手"
     self.white_preset_key ||= "平手"
     self.lifetime_key ||= :lifetime_m5
-    self.platoon_key ||= :versus_p1
+    self.platoon_key ||= :platoon_p1vs1
     self.turn_max ||= 0
     self.clock_counts ||= {black: [], white: []}
     self.countdown_mode_hash ||= {black: false, white: false}

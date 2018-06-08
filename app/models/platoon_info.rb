@@ -1,8 +1,12 @@
 class PlatoonInfo
   include ApplicationMemoryRecord
   memory_record [
-    {key: :versus_p1,  name: "タイマン", count: 1, },
-    {key: :number_of_people2,  name: "ダブルス", count: 2, },
-    {key: :number_of_people4,  name: "チーム戦", count: 4, },
+    { key: :platoon_p1vs1,  name: "タイマン", half_limit: 1, },
+    { key: :platoon_p2vs2,  name: "ダブルス", half_limit: 2, },
+    { key: :platoon_p4vs4,  name: "チーム戦", half_limit: 4, },
   ]
+
+  def total_limit
+    half_limit * 2
+  end
 end

@@ -1,7 +1,9 @@
-RSpec.configure do |config|
-  config.include FactoryBot::Syntax::Methods
+if defined?(FactoryBot)
+  RSpec.configure do |config|
+    config.include FactoryBot::Syntax::Methods
 
-  config.before(:all) do
-    FactoryBot.reload
+    config.before(:all) do
+      FactoryBot.reload
+    end
   end
 end

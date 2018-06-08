@@ -33,12 +33,14 @@ class ChatUser < ApplicationRecord
   has_many :watch_memberships, dependent: :destroy                        # 自分が観戦している部屋たち(中間情報)
   has_many :watch_rooms, through: :watch_memberships, source: :chat_room # 自分が観戦している部屋たち
 
+  scope :random_order, -> { order(Arel.sql("rand()")) }
+
   before_validation on: :create do
     self.name ||= "野良#{ChatUser.count.next}号"
     self.ps_preset_key ||= "平手"
     self.po_preset_key ||= "平手"
     self.lifetime_key ||= "lifetime_m5"
-    self.platoon_key ||= "versus_p1"
+    self.platoon_key ||= "platoon_p1vs1"
   end
 
   # def js_attributes
@@ -59,6 +61,18 @@ class ChatUser < ApplicationRecord
 
   def platoon_info
     PlatoonInfo.fetch(platoon_key)
+  end
+
+  def ps_preset_info
+    Warabi::PresetInfo[ps_preset_key]
+  end
+
+  def po_preset_info
+    Warabi::PresetInfo[po_preset_key]
+  end
+
+  def hirate_mode?
+    ps_preset_key == "平手" && po_preset_key == "平手"
   end
 
   concerning :AvatarMethods do
@@ -135,52 +149,114 @@ class ChatUser < ApplicationRecord
   end
 
   concerning :MathingMethods do
-
-    def matching_start
-      # 検索
-
-      s = self.class.all
-      s = s.online_only
-      s = s.where.not(id: id)                   # 自分以外
-      s = s.where.not(matching_at: nil)         # マッチング希望者
-      s = s.where(lifetime_key: lifetime_key)   # 同じ持ち時間
-      s = s.where(platoon_key: platoon_key)
-      s = s.where(ps_preset_key: po_preset_key) # 「相手から見た自分」と「相手」の手合が一致する
-      s = s.where(po_preset_key: ps_preset_key) # 「相手から見た相手」と「自分」の手合が一致する
-
-      if s.count < (platoon_info.count - 1)
-        # 人数に足りてなさそうなので待ち状態にする
-        update!(matching_at: Time.current) # マッチング対象になる
-        LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
-        return
-      end
-
-      # 人数に達した
-      users = s.order("RAND()").limit(platoon_info.count - 1)
-
-      chat_room_setup(users, chat_room: {auto_matched_at: Time.current})
+    included do
+      scope :preset_scope, -> ps_preset_key, po_preset_key { where(ps_preset_key: ps_preset_key).where(po_preset_key: po_preset_key) }
     end
 
-    def chat_room_setup(users, **options)
-      options = {
-        chat_room: {},
-      }.merge(options)
+    # 自分と同じ条件
+    def preset_equal
+      self.class.preset_scope(ps_preset_key, po_preset_key)
+    end
 
-      chat_room = ChatRoom.new
-      chat_room.lifetime_key = lifetime_key
-      chat_room.platoon_key = platoon_key
-      chat_room.assign_attributes(options[:chat_room])
-      chat_room.save!
+    # 自分が探している人
+    def preset_reverse
+      self.class.preset_scope(po_preset_key, ps_preset_key)
+    end
+
+    def matching_start
+      update!(matching_at: Time.current) # マッチング対象にして待つ
+
+      # 同じ条件の人たちを探す
+      s = self.class.all
+      s = s.online_only                         # オンラインの人のみ
+      s = s.where.not(matching_at: nil)         # マッチング希望者
+      s = s.where(lifetime_key: lifetime_key)   # 同じ持ち時間
+      s = s.where(platoon_key: platoon_key)     # 人数モード
+      if hirate_mode?
+        s = s.merge(preset_reverse)
+
+        # 人数に達していない？
+        if s.count < platoon_info.total_limit
+          # update!(matching_at: Time.current) # マッチング対象にして待つ
+          LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
+          return
+        end
+
+        # 人数に達したのでそのメンバーをランダムで取得
+        users = s.random_order.limit(platoon_info.total_limit)
+
+        # そのメンバーで部屋を作って召集する
+        chat_room_setup(users.each_slice(2).to_a, auto_matched_at: Time.current)
+      else
+        s1 = s.merge(preset_equal)
+        s2 = s.merge(preset_reverse)
+        if s1.count < platoon_info.half_limit || s2.count < platoon_info.half_limit
+          LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
+          return
+        end
+
+        users1 = s1.limit(platoon_info.half_limit)
+        users2 = s2.limit(platoon_info.half_limit)
+
+        pairs = users1.zip(users2)
+
+        chat_room = chat_room_create(auto_matched_at: Time.current)
+
+        pairs.flatten.each { |e| e.update!(matching_at: nil) } # マッチング状態をリセット
+
+        pairs.each do |user1, user2|
+          user1.users_and_preset_key(user2).each do |user|
+            chat_room.chat_users << user
+          end
+        end
+
+        # 召集
+        chat_room.chat_users.each do |chat_user|
+          ActionCable.server.broadcast("single_notification_#{chat_user.id}", {matching_ok: true, chat_room: ams_sr(chat_room)})
+        end
+        chat_room
+      end
+    end
+
+    def single_chat_room_setup(opponent)
+      chat_room_setup([[self, opponent]], {battle_request_at: Time.current})
+    end
+
+    def users_and_preset_key(opponent)
+      a = [self, opponent]
+
+      s = ps_preset_key         # self
+      o = po_preset_key         # opponent
+
+      si = ps_preset_info
+      oi = po_preset_info
+
+      case
+      when s == "平手" && o == "平手"
+        a = a.shuffle
+      when s == "平手" && o != "平手"
+      when s != "平手" && o == "平手"
+        a = a.reverse
+      when si == oi # 両方同じ駒落ち
+        a = a.shuffle
+      when si > oi
+        a = a.reverse
+      else
+      end
+
+      a
+    end
+
+    private
+
+    def chat_room_setup(pair_list, **attributes)
+      chat_room = chat_room_create(attributes)
+
+      pair_list.flatten.each { |e| e.update!(matching_at: nil) } # マッチング状態をリセット
 
       # 二人ずつ取り出して振り分ける
-      [self, *users].each_slice(2) do |user1, user2|
-        room_params = user1.users_and_preset_key(user2)
-        chat_room.black_preset_key = room_params[:black_preset_key]
-        chat_room.white_preset_key = room_params[:white_preset_key]
-        chat_room.save!
-
-        room_params[:chat_users].each do |user|
-          user.update!(matching_at: nil) # 互いのマッチング状態をリセット
+      pair_list.each do |user1, user2|
+        user1.users_and_preset_key(user2).each do |user|
           chat_room.chat_users << user
         end
       end
@@ -189,43 +265,41 @@ class ChatUser < ApplicationRecord
       chat_room.chat_users.each do |chat_user|
         ActionCable.server.broadcast("single_notification_#{chat_user.id}", {matching_ok: true, chat_room: ams_sr(chat_room)})
       end
+
+      chat_room
     end
 
-    def users_and_preset_key(opponent)
-      users = [self, opponent]
-
-      if ps_preset_key == "平手" && po_preset_key == "平手"
-        # 相平手
-        users = users.shuffle
-      elsif ps_preset_key == "平手"
-        users = [self, opponent]
-      elsif po_preset_key == "平手"
-        users = [opponent, self]
-      else
-        # 両方駒落ち
-        ps = Warabi::PresetInfo[ps_preset_key]
-        po = Warabi::PresetInfo[po_preset_key]
-        if ps.formal_level == po.formal_level
-          # 両方同じ駒落ち
-          users = users.shuffle
-        elsif ps.formal_level > po.formal_level
-          # 同じ駒落ちだけど自分の方が格式が高いので上手ということで△側
-          users = [opponent, self]
-        else
-          users = [self, opponent]
-        end
+    def chat_room_create(attributes = {})
+      ChatRoom.create! do |e|
+        e.lifetime_key = lifetime_key
+        e.platoon_key = platoon_key
+        e.assign_attributes(any_preset_key_attributes)
+        e.save!
       end
-
-      if users.first == self
-        black_preset_key = ps_preset_key
-        white_preset_key = po_preset_key
-      else
-        black_preset_key = po_preset_key
-        white_preset_key = ps_preset_key
-      end
-
-      {chat_users: users, black_preset_key: black_preset_key, white_preset_key: white_preset_key}
     end
 
+    def any_preset_key_attributes
+      s = ps_preset_key         # self
+      o = po_preset_key         # opponent
+
+      si = ps_preset_info
+      oi = po_preset_info
+
+      a = [s, o]
+
+      # 片方が平手なら ▲=平手 △=香車落ち の状態にする
+      case
+      when s == "平手" && o == "平手"
+      when s == "平手" && o != "平手"
+      when s != "平手" && o == "平手"
+        a = a.reverse
+      when si == oi
+      when si > oi              # 二枚落ち(6) > 香落ち(1)
+        a = a.reverse
+      else
+      end
+
+      [:black_preset_key, :white_preset_key].zip(a).to_h
+    end
   end
 end

@@ -76,7 +76,9 @@ group :development, :test do
   gem "capistrano-rails-console"
 
   gem 'rspec-rails'
-  gem 'test-unit'
+  # gem 'test-unit'      # 入れなくても rspec-rails が minitest などを入れているせいで assert は使える (が、そのせいで test-unit 経由で power_assert が使えない)
+  # gem 'minitest-power_assert'
+  gem 'rspec-power_assert'      # なのでこっちを使う(が、assert の名前では使えない)
   gem 'factory_bot_rails'
   # gem 'webmock' # rack-proxy と干渉するため外す
 
