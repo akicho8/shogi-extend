@@ -29,6 +29,9 @@ RSpec.describe ChatUser, type: :model do
       _assert { chat_room.black_preset_key == "平手" }
       _assert { chat_room.white_preset_key == "平手" }
       _assert { chat_room.chat_users.sort == [@user1, @user1] }
+
+      _assert { chat_room.battle_request_at }
+      _assert { chat_room.auto_matched_at == nil }
     end
 
     it "平手" do
@@ -68,73 +71,62 @@ RSpec.describe ChatUser, type: :model do
   end
 
   context "マッチング" do
-    context "平手シングルス" do
-      before do
-        @user1 = create_user(:platoon_p1vs1, "平手", "平手")
-        @user2 = create_user(:platoon_p1vs1, "平手", "平手")
-      end
+    it "平手シングルス" do
+      @user1 = create_user(:platoon_p1vs1, "平手", "平手")
+      @user2 = create_user(:platoon_p1vs1, "平手", "平手")
 
-      it do
-        @user1.matching_start
-        chat_room = @user2.matching_start
-        _assert { chat_room }
-        _assert { chat_room.chat_users.sort == [@user1, @user2] }
-      end
+      @user1.matching_start
+      chat_room = @user2.matching_start
+      _assert { chat_room }
+      _assert { chat_room.chat_users.sort == [@user1, @user2] }
+
+      _assert { chat_room.battle_request_at == nil }
+      _assert { chat_room.auto_matched_at }
     end
 
-    context "平手ダブルス" do
-      before do
-        @user1 = create_user(:platoon_p2vs2, "平手", "平手")
-        @user2 = create_user(:platoon_p2vs2, "平手", "平手")
-        @user3 = create_user(:platoon_p2vs2, "平手", "平手")
-        @user4 = create_user(:platoon_p2vs2, "平手", "平手")
-      end
+    it "平手ダブルス" do
+      @user1 = create_user(:platoon_p2vs2, "平手", "平手")
+      @user2 = create_user(:platoon_p2vs2, "平手", "平手")
+      @user3 = create_user(:platoon_p2vs2, "平手", "平手")
+      @user4 = create_user(:platoon_p2vs2, "平手", "平手")
 
-      it do
-        @user1.matching_start
-        @user2.matching_start
-        @user3.matching_start
+      @user1.matching_start
+      @user2.matching_start
+      @user3.matching_start
 
-        # 最後の1人
-        chat_room = @user4.matching_start
-        _assert { chat_room }
+      # 最後の1人
+      chat_room = @user4.matching_start
+      _assert { chat_room }
 
-        _assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
-        _assert { chat_room.chat_users.sort == [@user1, @user2, @user3, @user4] }
-      end
+      _assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
+      _assert { chat_room.chat_users.sort == [@user1, @user2, @user3, @user4] }
     end
 
-    context "駒落ちシングルス" do
-      before do
-        @user1 = create_user(:platoon_p1vs1, "平手", "飛車落ち")
-        @user2 = create_user(:platoon_p1vs1, "飛車落ち", "平手")
-      end
+    it "駒落ちシングルス" do
+      @user1 = create_user(:platoon_p1vs1, "平手", "飛車落ち")
+      @user2 = create_user(:platoon_p1vs1, "飛車落ち", "平手")
 
-      it do
-        @user1.matching_start
-        @user2.matching_start
-        _assert { ChatRoom.first }
-      end
+      @user1.matching_start
+      @user2.matching_start
+      _assert { ChatRoom.first }
     end
+  end
 
-    context "駒落ちダブルス" do
-      it do
-        @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
-        @user2 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
-        @user3 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
-        @user4 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
+  it "駒落ちダブルス" do
+    @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
+    @user2 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
+    @user3 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
+    @user4 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
 
-        @user1.matching_start
-        @user2.matching_start
-        @user3.matching_start
+    @user1.matching_start
+    @user2.matching_start
+    @user3.matching_start
 
-        chat_room = @user4.matching_start
+    chat_room = @user4.matching_start
 
-        _assert { chat_room }
-        _assert { chat_room.chat_memberships.black.collect(&:chat_user) == [@user1, @user2] }
-        _assert { chat_room.chat_memberships.white.collect(&:chat_user) == [@user3, @user4] }
-      end
-    end
+    _assert { chat_room }
+    _assert { chat_room.chat_memberships.black.collect(&:chat_user) == [@user1, @user2] }
+    _assert { chat_room.chat_memberships.white.collect(&:chat_user) == [@user3, @user4] }
   end
 
   def create_user(platoon_key, ps_preset_key, po_preset_key)

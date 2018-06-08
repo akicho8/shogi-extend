@@ -273,7 +273,8 @@ class ChatUser < ApplicationRecord
       ChatRoom.create! do |e|
         e.lifetime_key = lifetime_key
         e.platoon_key = platoon_key
-        e.assign_attributes(any_preset_key_attributes)
+        e.attributes = attributes
+        e.attributes = any_preset_key_attributes
         e.save!
       end
     end
