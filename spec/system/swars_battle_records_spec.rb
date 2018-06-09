@@ -9,11 +9,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   it "フォーム表示→入力→実行→結果" do
     visit "/w"
     expect(page).to have_content "将棋ウォーズ棋譜検索"
+    doc_image("将棋ウォーズ棋譜検索_トップ")
 
     expect(page).to have_field "query"
 
     fill_in "query", with: "hanairobiyori"
     click_button "検索"
+    doc_image("将棋ウォーズ棋譜検索_結果")
 
     expect(page).to have_content "対戦相手"
 
@@ -24,11 +26,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     # click_button "検索"
 
     # うごかん
-    # click_link "詳細"
+    # click_on "詳細"
+    # doc_image("将棋ウォーズ棋譜検索_詳細")
   end
 
   it "戦法クラウド" do
     visit "/w-cloud"
     expect(page).to have_content "Rails"
+    doc_image("戦法クラウド")
   end
 end

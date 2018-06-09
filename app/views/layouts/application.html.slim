@@ -63,7 +63,7 @@ html lang="ja"
                 span.my_name
                   = current_user.name
               b-dropdown-item :has-link="true" :paddingless="true"
-                = link_to("プロフィール", [:resource_ns1, current_user])
+                = link_to("プロフィール", [:resource_ns1, current_user], id: "header_profile_show")
               b-dropdown-item :has-link="true" :paddingless="true"
                 = link_to("設定", [:edit, :resource_ns1, current_user])
           .navbar-item

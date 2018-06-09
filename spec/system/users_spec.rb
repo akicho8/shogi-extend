@@ -17,6 +17,16 @@ RSpec.describe "対戦", type: :system do
   #   expect(page).to have_http_status(:success)
   # end
 
+  it "プロフィール表示" do
+    visit "/online/users/#{User.last.id}"
+    doc_image("プロフィール")
+  end
+
+  it "プロフィール設定" do
+    visit "/online/users/#{User.last.id}/edit"
+    doc_image("プロフィール設定")
+  end
+
   it "ロビーが見れる" do
     doc_image("ロビー")
     expect(page).to have_content "Rails"
