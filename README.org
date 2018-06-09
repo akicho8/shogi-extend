@@ -5,7 +5,7 @@
 
 * 将棋のツール（仮）
 
-#+html <p><a href="http://tk2-221-20341.vs.sakura.ne.jp/shogi"><img src="https://raw.github.com/akicho8/shogi_web/master/montage.png" height="480" /></a></p>
+#+html: <p><a href="http://tk2-221-20341.vs.sakura.ne.jp/shogi"><img src="https://raw.github.com/akicho8/shogi_web/master/montage.png" height="480" /></a></p>
 
 http://tk2-221-20341.vs.sakura.ne.jp/shogi
 
