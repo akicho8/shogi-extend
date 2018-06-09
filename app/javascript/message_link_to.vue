@@ -1,7 +1,7 @@
 <template lang="pug">
   span
     template(v-if="user_to")
-      a(@click.prevent="modal_open")
+      a.message_link_to(@click.prevent="modal_open" :class="`user_${user_to.id}`")
         img.avatar_image(:src="user_to.avatar_url")
         | {{user_to.name}}
     template(v-else)

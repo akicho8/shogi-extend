@@ -8,18 +8,6 @@ require 'rspec/rails'
 # スクリーンショット画像がコンソールに吐かれるのを停止
 ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
-if true
-  require 'simplecov'
-  SimpleCov.start
-
-  if ENV['CI']
-    ENV['CODECOV_TOKEN'] ||= '4df92e33-f3b2-483d-8675-1f82a6809553'
-
-    require 'codecov'
-    SimpleCov.formatter = SimpleCov::Formatter::Codecov
-  end
-end
-
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -67,10 +55,16 @@ RSpec.configure do |config|
   # Chrome をヘッドレスモードで起動
   # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
   # 必須ではないが設定すると画面出てこなくなる
-  config.before(:each) do |example|
-    if example.metadata[:type] == :system
-      driven_by :selenium_chrome_headless, screen_size: [1400, 1400]
-    end
+  config.before(:example, type: :system) do
+    # driven_by :selenium_chrome_headless, screen_size: [1920, 1200]
+    # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
+    # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
+
+    driven_by :selenium_chrome_headless
+
+    # 設定したいのはこっち
+    height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+    Capybara.current_session.driver.browser.manage.window.resize_to(1920, [1200, height].max)
   end
 
   # テストの中で使う便利メソッド
