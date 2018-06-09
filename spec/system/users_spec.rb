@@ -47,10 +47,36 @@ RSpec.describe "対戦", type: :system do
     click_on("閉じる")
   end
 
-  it "自動マッチング" do
-    click_on("バトル開始")
-    expect(page).to have_content "マッチング開始"
-    doc_image("マッチング開始")
+  it "自動マッチング_シングルス" do
+    Capybara.using_session("user1") do
+      visit "/online/battles"
+      click_on("バトル開始")
+      expect(page).to have_content "マッチング開始"
+      doc_image("マッチング開始")
+    end
+    Capybara.using_session("user2") do
+      visit "/online/battles"
+      click_on("バトル開始")
+      sleep(3)
+      _assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
+      doc_image("自動マッチング_対戦開始")
+    end
+  end
+
+  it "自動マッチング ダブルス" do
+    # Capybara.using_session("user1") do
+    #   visit "/online/battles"
+    #   click_on("バトル開始")
+    #   expect(page).to have_content "マッチング開始"
+    #   doc_image("マッチング開始")
+    # end
+    # Capybara.using_session("user2") do
+    #   visit "/online/battles"
+    #   click_on("バトル開始")
+    #   sleep(3)
+    #   _assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
+    #   doc_image("自動マッチング_対戦開始")
+    # end
   end
 
   it "対局リクエスト" do
@@ -74,6 +100,6 @@ RSpec.describe "対戦", type: :system do
 
     # 対局画面に移動
     _assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
-    doc_image("対戦開始")
+    doc_image("自己対局")
   end
 end

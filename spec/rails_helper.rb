@@ -56,15 +56,18 @@ RSpec.configure do |config|
   # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
   # 必須ではないが設定すると画面出てこなくなる
   config.before(:example, type: :system) do
-    # driven_by :selenium_chrome_headless, screen_size: [1920, 1200]
+    driven_by :selenium_chrome_headless, screen_size: [1680, 1050]
     # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
     # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
 
-    driven_by :selenium_chrome_headless
+    # driven_by :selenium_chrome_headless
 
     # 設定したいのはこっち
-    height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-    Capybara.current_session.driver.browser.manage.window.resize_to(1920, [1200, height].max)
+    # これ visit で移動してスクリーンショットを撮る前にリサイズしないと意味がない
+    # height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+    # p height
+    # Retinaディスプレイのせいか指定した横幅の2倍の画像が生成されるため半分にする
+    Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
   end
 
   # テストの中で使う便利メソッド
