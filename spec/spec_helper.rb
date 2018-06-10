@@ -33,6 +33,7 @@ RSpec.configure do |config|
   end
 
   # config.expect_with :minitest
+  # config.expect_with :test_unit
 
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.

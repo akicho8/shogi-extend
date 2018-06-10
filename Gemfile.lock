@@ -222,6 +222,9 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    minitest-power_assert (0.3.0)
+      minitest
+      power_assert (>= 1.1)
     msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
@@ -357,6 +360,8 @@ GEM
     sshkit-interactive (0.2.3)
       sshkit (~> 1.12)
     temple (0.8.0)
+    test-unit (3.2.8)
+      power_assert
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -421,6 +426,7 @@ DEPENDENCIES
   mechanize
   memory_record
   mini_magick (~> 4.8)
+  minitest-power_assert
   mysql2
   nokogiri
   org_tp
@@ -441,6 +447,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   sqlite3
+  test-unit
   tree_support
   tzinfo-data
   uglifier (>= 1.3.0)

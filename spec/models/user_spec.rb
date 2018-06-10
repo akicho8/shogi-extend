@@ -28,17 +28,21 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  it "foo" do
+    assert { 1 == 1 }
+  end
+
   context "対戦リクエスト" do
     it "自分vs自分" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
       battle_room = @user1.battle_setup_with(@user1)
-      _assert { battle_room }
-      _assert { battle_room.black_preset_key == "平手" }
-      _assert { battle_room.white_preset_key == "平手" }
-      _assert { battle_room.users.sort == [@user1, @user1] }
+      assert { battle_room }
+      assert { battle_room.black_preset_key == "平手" }
+      assert { battle_room.white_preset_key == "平手" }
+      assert { battle_room.users.sort == [@user1, @user1] }
 
-      _assert { battle_room.battle_request_at }
-      _assert { battle_room.auto_matched_at == nil }
+      assert { battle_room.battle_request_at }
+      assert { battle_room.auto_matched_at == nil }
     end
 
     it "平手" do
@@ -46,10 +50,10 @@ RSpec.describe User, type: :model do
       @user2 = create_user(:platoon_p4vs4, "平手", "二枚落ち")
 
       battle_room = @user1.battle_setup_with(@user2)
-      _assert { battle_room }
-      _assert { battle_room.black_preset_key == "平手" }
-      _assert { battle_room.white_preset_key == "平手" }
-      _assert { battle_room.users.sort == [@user1, @user2] }
+      assert { battle_room }
+      assert { battle_room.black_preset_key == "平手" }
+      assert { battle_room.white_preset_key == "平手" }
+      assert { battle_room.users.sort == [@user1, @user2] }
     end
 
     it "駒落ち" do
@@ -57,11 +61,11 @@ RSpec.describe User, type: :model do
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
       battle_room = @user1.battle_setup_with(@user2)
-      _assert { battle_room }
-      _assert { battle_room.black_preset_key == "平手" }
-      _assert { battle_room.white_preset_key == "二枚落ち" }
-      _assert { battle_room.memberships.black.collect(&:user) == [@user2] }
-      _assert { battle_room.memberships.white.collect(&:user) == [@user1] }
+      assert { battle_room }
+      assert { battle_room.black_preset_key == "平手" }
+      assert { battle_room.white_preset_key == "二枚落ち" }
+      assert { battle_room.memberships.black.collect(&:user) == [@user2] }
+      assert { battle_room.memberships.white.collect(&:user) == [@user1] }
     end
 
     it "両方駒落ち" do
@@ -69,11 +73,11 @@ RSpec.describe User, type: :model do
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
       battle_room = @user1.battle_setup_with(@user2)
-      _assert { battle_room }
-      _assert { battle_room.black_preset_key == "香落ち" }
-      _assert { battle_room.white_preset_key == "二枚落ち" }
-      _assert { battle_room.memberships.black.collect(&:user) == [@user2] }
-      _assert { battle_room.memberships.white.collect(&:user) == [@user1] }
+      assert { battle_room }
+      assert { battle_room.black_preset_key == "香落ち" }
+      assert { battle_room.white_preset_key == "二枚落ち" }
+      assert { battle_room.memberships.black.collect(&:user) == [@user2] }
+      assert { battle_room.memberships.white.collect(&:user) == [@user1] }
     end
   end
 
@@ -84,11 +88,11 @@ RSpec.describe User, type: :model do
 
       @user1.matching_start
       battle_room = @user2.matching_start
-      _assert { battle_room }
-      _assert { battle_room.users.sort == [@user1, @user2] }
+      assert { battle_room }
+      assert { battle_room.users.sort == [@user1, @user2] }
 
-      _assert { battle_room.battle_request_at == nil }
-      _assert { battle_room.auto_matched_at }
+      assert { battle_room.battle_request_at == nil }
+      assert { battle_room.auto_matched_at }
     end
 
     it "平手ダブルス" do
@@ -103,10 +107,10 @@ RSpec.describe User, type: :model do
 
       # 最後の1人
       battle_room = @user4.matching_start
-      _assert { battle_room }
+      assert { battle_room }
 
-      _assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
-      _assert { battle_room.users.sort == [@user1, @user2, @user3, @user4] }
+      assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
+      assert { battle_room.users.sort == [@user1, @user2, @user3, @user4] }
     end
 
     it "駒落ちシングルス" do
@@ -115,7 +119,7 @@ RSpec.describe User, type: :model do
 
       @user1.matching_start
       battle_room = @user2.matching_start
-      _assert { battle_room }
+      assert { battle_room }
     end
 
     it "全員同じ駒落ちでのシングルス" do
@@ -125,8 +129,8 @@ RSpec.describe User, type: :model do
       @user1.matching_start
       battle_room = @user2.matching_start
 
-      _assert { battle_room }
-      _assert { battle_room.users.sort == [@user1, @user2] }
+      assert { battle_room }
+      assert { battle_room.users.sort == [@user1, @user2] }
     end
 
     it "駒落ちダブルス" do
@@ -141,9 +145,9 @@ RSpec.describe User, type: :model do
 
       battle_room = @user4.matching_start
 
-      _assert { battle_room }
-      _assert { battle_room.memberships.black.collect(&:user) == [@user1, @user2] }
-      _assert { battle_room.memberships.white.collect(&:user) == [@user3, @user4] }
+      assert { battle_room }
+      assert { battle_room.memberships.black.collect(&:user) == [@user1, @user2] }
+      assert { battle_room.memberships.white.collect(&:user) == [@user3, @user4] }
     end
   end
 

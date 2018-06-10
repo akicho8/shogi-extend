@@ -58,24 +58,37 @@ RSpec.describe "対戦", type: :system do
       visit "/online/battles"
       click_on("バトル開始")
       sleep(3)
-      _assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
+      assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
       doc_image("自動マッチング_対戦開始")
     end
   end
 
-  it "自動マッチング ダブルス" do
-    # Capybara.using_session("user1") do
+  it "自動マッチング_ダブルス" do
+    matching_start = -> name, rule {
+      Capybara.using_session(name) do
+        visit "/online/battles"
+        click_on("ルール設定")
+        choose(rule)
+        click_on("閉じる")      # ← ここで反映されていない
+        sleep(2)
+        click_on("バトル開始")
+        expect(page).to have_content "マッチング開始"
+      end
+    }
+    matching_start.("user1", "ダブルス")
+    matching_start.("user2", "ダブルス")
+    # matching_start.("user3", "ダブルス")
+    # 
+    # Capybara.using_session("user4") do
     #   visit "/online/battles"
-    #   click_on("バトル開始")
-    #   expect(page).to have_content "マッチング開始"
-    #   doc_image("マッチング開始")
-    # end
-    # Capybara.using_session("user2") do
-    #   visit "/online/battles"
+    #   click_on("ルール設定")
+    #   choose("ダブルス")
+    #   click_on("閉じる")
     #   click_on("バトル開始")
     #   sleep(3)
-    #   _assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
-    #   doc_image("自動マッチング_対戦開始")
+    #   assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
+    #   doc_image("自動マッチング_ダブルス_対戦開始")
+    #   # 4人そろっていることを確認したい
     # end
   end
 
@@ -99,7 +112,7 @@ RSpec.describe "対戦", type: :system do
     sleep(2)
 
     # 対局画面に移動
-    _assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
+    assert { current_path == polymorphic_path([:resource_ns1, BattleRoom.last]) }
     doc_image("自己対局")
   end
 end
