@@ -5,7 +5,7 @@ javascript:
   = javascript_pack_tag("lobby")
 
 #lobby_app
-  b-modal(:active.sync="setting_modal_p" @close="setting_save")
+  b-modal(:active.sync="setting_modal_p")
     template(v-if="true")
       header.modal-card-head
        p.modal-card-title
@@ -34,7 +34,7 @@ javascript:
         b 人数
       b-field
         template(v-for="e in PlatoonInfo.values")
-          b-radio-button v-model="current_platoon_key" :native-value="e.key" {{e.name}}
+          b-radio-button(v-model="current_platoon_key" :native-value="e.key" :id="e.key") {{e.name}}
     template(v-if="true")
       footer.modal-card-foot
         button.button.is-primary(@click="battle_room_setting_close_click") 閉じる
@@ -79,7 +79,7 @@ javascript:
           .media-content
             .field
               p.control
-                input#chat_message_input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter")
+                input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter")
             nav.level
               .level-left
                 .level-item

@@ -28,10 +28,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it "foo" do
-    assert { 1 == 1 }
-  end
-
   context "対戦リクエスト" do
     it "自分vs自分" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")

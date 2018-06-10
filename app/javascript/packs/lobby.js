@@ -81,6 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     watch: {
+      setting_modal_p(v) {
+        if (!v) {
+          this.setting_save()
+        }
+      },
+
       current_hira_koma_key(v) {
         if (v === "hira") {
           this.self_preset_key = "平手"
@@ -102,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.self_preset_key = "平手"
           }
         }
-      }
+      },
     },
 
     methods: {
