@@ -120,7 +120,7 @@ gem 'acts_as_list'
 
 gem 'faraday'
 
-gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on.git', branch: 'rails-5.2'
+gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on', branch: 'master'
 
 gem 'rubyzip', require: "zip"
 

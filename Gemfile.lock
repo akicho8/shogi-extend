@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/Fodoj/acts-as-taggable-on.git
-  revision: eee01af2fa01563f353627fa2e775cdab8026164
-  branch: rails-5.2
-  specs:
-    acts-as-taggable-on (5.0.0)
-      activerecord (>= 5.0)
-      rake
-
-GIT
   remote: https://github.com/akicho8/aam.git
   revision: bbc451cbc6cfcaabb5dd090ec8086ae50149b435
   specs:
@@ -27,6 +18,14 @@ GIT
       memory_record
       org_tp
       tree_support
+
+GIT
+  remote: https://github.com/mbleigh/acts-as-taggable-on.git
+  revision: a1d0d30bf5d545e3b639a0a43336e341a9a17167
+  branch: master
+  specs:
+    acts-as-taggable-on (5.0.0)
+      activerecord (~> 5.0)
 
 GEM
   remote: https://rubygems.org/
