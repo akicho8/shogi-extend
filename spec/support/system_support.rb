@@ -12,10 +12,10 @@ end
 
 Capybara.configure do |config|
   # config.server                = :puma, { Silent: true } #  webrick にするとこける
-  config.server                = :puma
+  # config.server                = :puma
   config.automatic_label_click = true # choose("ラベル名") でラジオボタンが押せるようになる
-  config.default_max_wait_time = 10    # 2ぐらいだと chromedriver の転ける確立が高い
-  config.automatic_reload = false      # ←これを入れると安定する
+  config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
+  # config.automatic_reload = false      # ←これを入れると安定する ← 関係ない
   # config.threadsafe            = true
 end
 
