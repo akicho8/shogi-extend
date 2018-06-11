@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
           fighter_only_count: User.fighter_only.count,
           lifetime_infos: LifetimeInfo,
           platoon_infos: PlatoonInfo,
-          preset_infos: Warabi::PresetInfo.collect { |e| e.attributes.merge(name: e.key) },
+          custom_preset_infos: CustomPresetInfo,
         }
       end
     end

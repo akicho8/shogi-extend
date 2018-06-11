@@ -22,11 +22,10 @@ RSpec.describe "CPU対戦", type: :system do
     doc_image("1手目")
     expect(page).to have_content "2手目" # CPUがすぐに指したため2手目になっている
 
+    # 3手目「５一飛成」を指す
     first(".place_28").click
     first(".place_51").click
     sleep(1)
-
-    # 3手目「５一飛成」
     doc_image("3手目")
     expect(page).to have_content "成りますか？"
     click_on("成")
