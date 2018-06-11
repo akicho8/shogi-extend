@@ -31,27 +31,15 @@ module ResourceNs1
 
     def show
       @user_show_app_params = {
-        battle_rooms: current_record.battle_rooms.as_json({
-            include: {
-              :users => nil,
-              :watch_users => nil,
-              :memberships => {
-                include: :user,
-              },
-            }, methods: [
-              :show_path,
-              :handicap,
-              :human_kifu_text,
-            ],
-          })
-
+        :battle_rooms => ams_sr(current_record.battle_rooms.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
       }
     end
 
     def redirect_to_where
       # [:resource_ns1, :battle_rooms]
       # [:edit, :resource_ns1, current_record]
-      [:edit, :resource_ns1, current_record]
+      # [:edit, :resource_ns1, current_record]
+      [:resource_ns1, current_record]
     end
   end
 end

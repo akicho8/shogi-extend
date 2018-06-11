@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 終了の通達があった
       battle_end_notice(data) {
-        if (this.current_status === "st_battling") {
+        if (this.xmode_key === "st_battling") {
           this.end_at = data["end_at"]
           this.win_location_key = data["win_location_key"]
           this.last_action_key = data["last_action_key"]
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       play_mode_long_sfen_set(v) {
-        if (this.current_status === "st_battling") {
+        if (this.xmode_key === "st_battling") {
           App.battle_room.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key})
         }
       },
@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     computed: {
       // コントローラー類を非表示にする？
       any_controller_hide() {
-        return this.member_p && this.current_status === "st_battling"
+        return this.member_p && this.xmode_key === "st_battling"
       },
 
       // チャットに表示する最新メッセージたち
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // 操作する側を返す
       // 手番のメンバーが自分の場合に、自分の先後を返せばよい
       human_side_key() {
-        if (this.current_status === "st_battling") {
+        if (this.xmode_key === "st_battling") {
           if (this.current_membership_is_self_p) {
             return this.current_location.key
           }
@@ -370,22 +370,22 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       run_mode() {
-        if (this.current_status === "st_before") {
+        if (this.xmode_key === "st_before") {
           return "play_mode"
         }
-        if (this.current_status === "st_battling") {
+        if (this.xmode_key === "st_battling") {
           if (this.member_p) {
             return "play_mode"
           } else {
             return "view_mode"
           }
         }
-        if (this.current_status === "st_done") {
+        if (this.xmode_key === "st_done") {
           return "view_mode"
         }
       },
 
-      current_status() {
+      xmode_key() {
         if (!this.begin_at) {
           return "st_before"
         }
@@ -402,7 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 考え中？ (プレイ中？)
       thinking_p() {
-        return this.current_status === "st_battling"
+        return this.xmode_key === "st_battling"
       },
 
       // 勝った方

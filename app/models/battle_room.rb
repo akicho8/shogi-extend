@@ -72,6 +72,20 @@ class BattleRoom < ApplicationRecord
     "##{id}"
   end
 
+  def xmode_key
+    if begin_at && end_at
+      :st_done
+    elsif begin_at
+      :st_battling
+    else
+      :st_before
+    end
+  end
+
+  def xmode_info
+    XmodeInfo.fetch(xmode_key)
+  end
+
   def human_kifu_text
     info = Warabi::Parser.parse(kifu_body_sfen, typical_error_case: :embed)
     begin

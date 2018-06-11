@@ -137,12 +137,8 @@ javascript:
                   | {{moment(props.row.begin_at).format('YYYY/MM/DD hh:mm')}}
             b-table-column(field="turn_max" label="手数" sortable numeric="numeric")
               | {{props.row.turn_max}}
-            b-table-column label="状態"
-              template(v-if="props.row.begin_at && props.row.end_at")
-                .has-text-success 終了
-              template(v-if="props.row.begin_at && !props.row.end_at")
-                .has-text-danger 対局中
-              template(v-if="!props.row.begin_at && !props.row.end_at")
+            b-table-column(label="状態")
+              span(:class="props.row.xmode_info.color") {{props.row.xmode_info.name}}
 
   / .box
   /   .title= "あなたの情報"

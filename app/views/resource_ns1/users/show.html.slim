@@ -10,7 +10,14 @@ javascript:
 
   .columns
     .column.is-one-quarter
-      = image_tag current_record.avatar_url, size: "256"
+      = image_tag(current_record.avatar_url, size: "256")
+      - if current_user == current_record
+        p
+          = link_to("編集", [:edit, :resource_ns1, current_record], class: "button button-success")
+          - if Rails.env.development?
+            =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
+            =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
+
     .column
       nav.level.box
         .level-item.has-text-centered
@@ -35,32 +42,18 @@ javascript:
                   | {{props.row.id}}
                   | &nbsp;
                 | {{room_members_format(props.row)}}
-            - if Rails.env.development?
-              b-table-column field="users" label="全参加者" sortable="sortable" numeric="numeric"
-                | {{props.row.users.length}}
-              b-table-column field="current_users_count" label="現参加者" sortable="sortable" numeric="numeric"
-                | {{props.row.current_users_count}}
-            b-table-column field="watch_memberships_count" label="観戦者" sortable="sortable" numeric="numeric"
-              | {{props.row.watch_memberships_count}}
-            - if Rails.env.development? && false
-              b-table-column field="begin_at" label="開始日時" sortable="sortable" numeric="numeric"
-                template(v-if="props.row.begin_at")
-                  | {{moment(props.row.begin_at).format('YYYY/MM/DD hh:mm')}}
-            b-table-column(field="turn_max" label="手数" sortable numeric="numeric")
-              | {{props.row.turn_max}}
-            b-table-column label="状態"
-              template(v-if="props.row.begin_at && props.row.end_at")
-                .has-text-success 終了
-              template(v-if="props.row.begin_at && !props.row.end_at")
-                .has-text-danger 対局中
-              template(v-if="!props.row.begin_at && !props.row.end_at")
-
-- if Rails.env.development?
-  p
-    .panel.panel-default
-      .panel-body
-        =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
-        - if controller.respond_to?(:edit)
-          =<> link_to("編集", [:edit, :resource_ns1, current_record], class: "button button-success")
-        - if controller.respond_to_destroy?
-          =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
+            / - if Rails.env.development?
+            /   b-table-column field="users" label="全参加者" sortable="sortable" numeric="numeric"
+            /     | {{props.row.users.length}}
+            /   b-table-column field="current_users_count" label="現参加者" sortable="sortable" numeric="numeric"
+            /     | {{props.row.current_users_count}}
+            / b-table-column field="watch_memberships_count" label="観戦者" sortable="sortable" numeric="numeric"
+            /   | {{props.row.watch_memberships_count}}
+            / - if Rails.env.development? && false
+            /   b-table-column field="begin_at" label="開始日時" sortable="sortable" numeric="numeric"
+            /     template(v-if="props.row.begin_at")
+            /       | {{moment(props.row.begin_at).format('YYYY/MM/DD hh:mm')}}
+            / b-table-column(field="turn_max" label="手数" sortable numeric="numeric")
+            /   | {{props.row.turn_max}}
+            b-table-column(label="状態")
+              span(:class="props.row.xmode_info.color") {{props.row.xmode_info.name}}

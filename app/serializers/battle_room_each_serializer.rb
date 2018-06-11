@@ -22,6 +22,7 @@ class BattleRoomEachSerializer < ApplicationSerializer
 
     :show_path,
     :handicap,
+    :xmode_info,
   ]
 
   # attribute :can_edit

@@ -59,9 +59,10 @@ html lang="ja"
           .navbar-item
             b-dropdown(hoverable)
               span(slot="trigger")
-                = image_tag(current_user.avatar_url, class: "face_icon")
-                span.my_name
-                  = current_user.name
+                = link_to([:resource_ns1, current_user], class: "navbar-link") do
+                  = image_tag(current_user.avatar_url, class: "face_icon")
+                  span.my_name
+                    = current_user.name
               b-dropdown-item :has-link="true" :paddingless="true"
                 = link_to("プロフィール", [:resource_ns1, current_user], id: "header_profile_show")
               b-dropdown-item :has-link="true" :paddingless="true"
