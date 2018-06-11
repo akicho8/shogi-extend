@@ -4,42 +4,42 @@ RSpec.describe "その他", type: :system do
   it "トップ" do
     visit "/"
     expect(page).to have_content "Rails"
-    doc_image("トップ")
+    doc_image
   end
 
   it "符号入力ゲーム" do
     visit "/xy"
     expect(page).to have_content "Rails"
-    doc_image("符号入力ゲーム")
+    doc_image
   end
 
   it "局面編集" do
     visit "/position-editor"
     expect(page).to have_content "Rails"
-    doc_image("局面編集")
+    doc_image
   end
 
   it "戦法一覧" do
     visit "/tactics"
     expect(page).to have_content "Rails"
-    doc_image("戦法一覧")
+    doc_image
   end
 
   it "戦法詳細" do
     visit "/tactics/ダイヤモンド美濃"
     expect(page).to have_content "Rails"
-    doc_image("戦法詳細")
+    doc_image
   end
 
   it "戦法ツリー" do
     visit "/tactics-tree"
     expect(page).to have_content "Rails"
-    doc_image("戦法ツリー")
+    doc_image
   end
 
   it "今日の戦法占い" do
     visit "/tactics-fortune"
     expect(page).to have_content "Rails"
-    doc_image("今日の戦法占い")
+    doc_image
   end
 end

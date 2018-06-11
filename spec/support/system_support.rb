@@ -20,9 +20,11 @@ Capybara.configure do |config|
 end
 
 module SystemSupport
-  def doc_image(name)
+  def doc_image(name = nil)
     max_resize
-    page.save_screenshot(Rails.root.join("doc/images/#{name}.png"))
+    name = [@__full_description__, name].compact.join("_").gsub(/\s+/, "_")
+    path = Rails.root.join("doc/images/#{name}.png")
+    page.save_screenshot(path)
   end
 
   def max_resize
@@ -41,5 +43,9 @@ RSpec.configure do |config|
   config.include(SystemSupport, type: :system)
   config.after do
     # `pkill -f chromedriver`
+  end
+
+  config.before(:example) do |ex|
+    @__full_description__ = ex.full_description
   end
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "FreeBattleRecords", type: :system do
+RSpec.describe "棋譜変換", type: :system do
   before do
     @free_battle_record = FreeBattleRecord.create!
   end
@@ -10,7 +10,7 @@ RSpec.describe "FreeBattleRecords", type: :system do
     expect(page).to have_content "一覧"
   end
 
-  it "入力→変換→完了" do
+  it "変換" do
     visit "/x/new"
 
     expect(page).to have_field "free_battle_record[kifu_body]"
@@ -19,12 +19,12 @@ RSpec.describe "FreeBattleRecords", type: :system do
 
     fill_in "free_battle_record[kifu_body]", with: "68銀"
     sleep(3)
-    doc_image("棋譜変換_入力")
+    doc_image("入力")
     click_button "変換"
 
     expect(page).to have_content "結果"
     expect(page).to have_content "▲６八銀"
 
-    doc_image("棋譜変換_結果")
+    doc_image("結果")
   end
 end
