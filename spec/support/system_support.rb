@@ -30,6 +30,11 @@ module SystemSupport
     # p [:height, height]
     Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050) # or 1050
   end
+
+  def debug
+    `open #{save_screenshot}`
+    `open #{save_page}`
+  end
 end
 
 RSpec.configure do |config|
