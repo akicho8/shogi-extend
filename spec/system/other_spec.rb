@@ -13,12 +13,6 @@ RSpec.describe "その他", type: :system do
     doc_image("符号入力ゲーム")
   end
 
-  it "CPU対戦" do
-    visit "/cpu-versus"
-    expect(page).to have_content "Rails"
-    doc_image("CPU対戦")
-  end
-
   it "局面編集" do
     visit "/position-editor"
     expect(page).to have_content "Rails"

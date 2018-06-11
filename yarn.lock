@@ -6162,9 +6162,9 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
-shogi-player@^0.0.86:
-  version "0.0.86"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.86.tgz#0e6017637e3b302462f63c0b2b2482ae6ae1562b"
+shogi-player@^0.0.87:
+  version "0.0.87"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.87.tgz#732514b48596a0f932455fa8eab12435e60520a6"
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
