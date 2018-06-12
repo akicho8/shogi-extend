@@ -10,13 +10,14 @@ javascript:
 
   .columns
     .column.is-one-quarter
-      = image_tag(current_record.avatar_url, size: "256")
+      = image_tag(current_record.avatar_url, size: "100%")
       - if current_user == current_record
-        p
-          = link_to("編集", [:edit, :resource_ns1, current_record], class: "button button-success")
+        p.has-text-centered
+
+          = link_to("編集", [:edit, :resource_ns1, current_record], class: "button is-small")
           - if Rails.env.development?
-            =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
-            =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
+            =<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button is-small")
+            =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button is-small")
 
     .column
       nav.level.box
