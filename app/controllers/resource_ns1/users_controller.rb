@@ -29,6 +29,12 @@ module ResourceNs1
   class UsersController < ApplicationController
     include ModulableCrud::All
 
+    before_action only: [:edit, :update, :destroy] do
+      unless current_user == current_record
+        redirect_to :root, alert: "アクセス権限がありません"
+      end
+    end
+
     def show
       @user_show_app_params = {
         :battle_rooms => ams_sr(current_record.battle_rooms.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
