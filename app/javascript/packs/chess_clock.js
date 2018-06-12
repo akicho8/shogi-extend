@@ -4,11 +4,11 @@ import numeral from "numeral"
 
 export default {
   data() {
-    // console.log("DEBUG", "data", "clock_counter", parseInt(localStorage.getItem(js_current_battle_room.id) || 0) + 3)
+    // console.log("DEBUG", "data", "clock_counter", parseInt(localStorage.getItem(js_battle.id) || 0) + 3)
     return {
-      clock_counts: js_current_battle_room.clock_counts,
-      clock_counter: parseInt(localStorage.getItem(js_current_battle_room.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
-      countdown_mode_hash: js_current_battle_room.countdown_mode_hash,
+      clock_counts: js_battle.clock_counts,
+      clock_counter: parseInt(localStorage.getItem(js_battle.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
+      countdown_mode_hash: js_battle.countdown_mode_hash,
       time_up_trigger_count: 0, // time_up_trigger() 実行回数制限用
     }
   },
@@ -111,7 +111,7 @@ export default {
 
     clock_counter_set(v) {
       this.clock_counter = v
-      localStorage.setItem(js_current_battle_room.id, v)
+      localStorage.setItem(js_battle.id, v)
     },
 
     countdown_mode_on() {

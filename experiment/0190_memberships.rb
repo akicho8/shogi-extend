@@ -32,7 +32,7 @@ tp Membership.all
 # >>   User Load (0.5ms)  SELECT `users`.* FROM `users` INNER JOIN `watch_memberships` ON `users`.`id` = `watch_memberships`.`user_id` WHERE `watch_memberships`.`battle_room_id` = 16
 # >>   Membership Load (0.5ms)  SELECT `memberships`.* FROM `memberships` ORDER BY `memberships`.`position` ASC
 # >> |----+------------+--------------+--------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
-# >> | id | preset_key | battle_room_id | user_id | location_key | position | standby_at | fighting_now_at | created_at                | updated_at                |
+# >> | id | preset_key | battle_room_id | user_id | location_key | position | standby_at | fighting_at | created_at                | updated_at                |
 # >> |----+------------+--------------+--------------+--------------+----------+------------+-----------------+---------------------------+---------------------------|
 # >> | 25 | 平手       |           16 |           35 | black        |        0 |            |                 | 2018-05-06 18:52:40 +0900 | 2018-05-06 18:52:40 +0900 |
 # >> | 26 | 平手       |           16 |           36 | white        |        1 |            |                 | 2018-05-06 18:52:40 +0900 | 2018-05-06 18:52:40 +0900 |

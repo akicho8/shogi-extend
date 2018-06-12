@@ -107,7 +107,7 @@ class BattleRoomChannel < ApplicationCable::Channel
     if current_memberships.present?
       # 対局者
       current_memberships.each do |e|
-        e.update!(fighting_now_at: Time.current)
+        e.update!(fighting_at: Time.current)
       end
     else
       # 観戦者
@@ -135,7 +135,7 @@ class BattleRoomChannel < ApplicationCable::Channel
       end
     end
 
-    room_members_update
+    memberships_update
   end
 
   def room_out(data)
@@ -148,7 +148,7 @@ class BattleRoomChannel < ApplicationCable::Channel
       # 切断したときにの処理がここで書ける
       # TODO: 対局中なら、残っている方がポーリングを開始して、10秒間以内に戻らなかったら勝ちとしてあげる
       current_memberships.each do |e|
-        e.update!(fighting_now_at: nil)
+        e.update!(fighting_at: nil)
       end
     else
       # 観戦者
@@ -156,7 +156,7 @@ class BattleRoomChannel < ApplicationCable::Channel
       # ActionCable.server.broadcast(room_key, watch_users: current_battle_room.watch_users)
     end
 
-    room_members_update
+    memberships_update
   end
 
   def battle_start(data)
@@ -191,7 +191,7 @@ class BattleRoomChannel < ApplicationCable::Channel
   # 先後をまとめて反転する
   def location_flip_all(data)
     current_battle_room.memberships.each(&:location_flip!)
-    room_members_update
+    memberships_update
   end
 
   def game_end_broadcast
@@ -212,11 +212,11 @@ class BattleRoomChannel < ApplicationCable::Channel
 
   private
 
-  def room_members_update
+  def memberships_update
     # model の中から行う
     # 部屋を抜けたときの状態が反映されるように reload が必要
     # FIXME: 1件だけ行う
-    ActionCable.server.broadcast(room_key, room_members: ams_sr(current_battle_room.reload.memberships))
+    ActionCable.server.broadcast(room_key, memberships: ams_sr(current_battle_room.reload.memberships))
   end
 
   def room_key

@@ -11,10 +11,6 @@ class ApplicationController < ActionController::Base
 
     class_methods do
     end
-
-    def ams_sr(*args)
-      ActiveModelSerializers::SerializableResource.new(*args)
-    end
   end
 
   concerning :Choremethods do

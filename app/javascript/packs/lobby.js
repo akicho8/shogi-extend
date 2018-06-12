@@ -50,17 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
     data: function() {
       return {
         // 発言
-        lobby_messages: lobby_app_params.lobby_messages, // 発言一覧
+        lobby_messages: js_lobby.lobby_messages, // 発言一覧
         message: "",                                               // 発言
 
         // 部屋一覧
-        battle_rooms: lobby_app_params.battle_rooms,
+        battle_rooms: js_lobby.battle_rooms,
         columns: [
           { field: 'name', label: '部屋', },
         ],
 
         // ユーザー
-        online_users: lobby_app_params.online_users,
+        online_users: js_lobby.online_users,
 
         matching_at: js_global_params.current_user.matching_at, // マッチングをサーバー側で受理した日時
 
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.message = ""
       },
 
-      room_members_format(battle_room) {
+      memberships_format(battle_room) {
         if (true) {
           return battle_room.memberships.map(e => {
             return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`

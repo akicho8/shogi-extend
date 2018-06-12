@@ -13,7 +13,7 @@
 # | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
 # | position           | 順序               | integer(4)  |             |                  | D     |
 # | standby_at         | Standby at         | datetime    |             |                  |       |
-# | fighting_now_at    | Fighting now at    | datetime    |             |                  |       |
+# | fighting_at        | Fighting at        | datetime    |             |                  |       |
 # | time_up_trigger_at | Time up trigger at | datetime    |             |                  |       |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
@@ -69,8 +69,8 @@ class Membership < ApplicationRecord
   end
 
   after_save do
-    if saved_changes[:fighting_now_at]
-      user.update!(fighting_now_at: fighting_now_at)
+    if saved_changes[:fighting_at]
+      user.update!(fighting_at: fighting_at)
     end
   end
 

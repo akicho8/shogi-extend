@@ -1,5 +1,5 @@
 javascript:
-  var lobby_app_params = #{@lobby_app_params.to_json.html_safe}
+  var js_lobby = #{@js_lobby.to_json.html_safe}
 
 - content_for :head do
   = javascript_pack_tag("lobby")
@@ -100,12 +100,13 @@ javascript:
             b-table-column(field="name" label="名前" sortable="sortable")
               message_link_to(:user_to="props.row")
               template(v-if="user_self_p(props.row)")
-                = " *"
-            b-table-column(field="name" label="状態" sortable="sortable")
+                = " ★"
+            b-table-column(label="状態")
               template(v-if="props.row.matching_at")
                 = "マッチング中"
               template(v-if="props.row.current_battle_room")
-                a :href="props.row.current_battle_room.show_path"
+                a(:href="props.row.current_battle_room.show_path")
+                  = "対局中 "
                   | {{props.row.current_battle_room.name}}
 
         br
@@ -140,8 +141,4 @@ javascript:
             b-table-column(field="turn_max" label="手数" sortable numeric="numeric")
               | {{props.row.turn_max}}
             b-table-column(label="状態")
-              span(:class="props.row.xmode_info.color") {{props.row.xmode_info.name}}
-
-  / .box
-  /   .title= "あなたの情報"
-  /   = html_format([current_user.attributes])
+              span(:class="props.row.xstate_info.color") {{props.row.xstate_info.name}}

@@ -10,7 +10,7 @@
 # | name                   | 名前                | string(255) | NOT NULL    |                  |       |
 # | current_battle_room_id | Current battle room | integer(8)  |             | => BattleRoom#id | A     |
 # | online_at              | Online at           | datetime    |             |                  |       |
-# | fighting_now_at        | Fighting now at     | datetime    |             |                  |       |
+# | fighting_at            | Fighting at         | datetime    |             |                  |       |
 # | matching_at            | Matching at         | datetime    |             |                  |       |
 # | lifetime_key           | Lifetime key        | string(255) | NOT NULL    |                  | B     |
 # | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |

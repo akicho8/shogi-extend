@@ -31,16 +31,12 @@ module ResourceNs1
   class BattleRoomsController < ApplicationController
     include ModulableCrud::All
 
-    before_action do
-      @lobby_app_params = {
-        :lobby_messages => ams_sr(LobbyMessage.latest_list.reverse),
-        :battle_rooms   => ams_sr(BattleRoom.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
-        :online_users   => ams_sr(User.online_only),
-      }
+    def index
+      @js_lobby = ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battle_rooms: {memberships: :user}, online_users: nil})
     end
 
     def show
-      @js_current_battle_room = ams_sr(current_record, include: {memberships: :user, chat_messages: :user})
+      @js_battle = ams_sr(current_record, serializer: BattleRoomShowSerializer, include: {memberships: :user, chat_messages: :user, watch_users: nil})
     end
 
     def redirect_to_where

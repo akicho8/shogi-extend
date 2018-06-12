@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "location_key", null: false, comment: "先後"
     t.integer "position", comment: "入室順序"
     t.datetime "standby_at", comment: "準備完了日時"
-    t.datetime "fighting_now_at", comment: "部屋に入った日時で抜けたり切断すると空"
+    t.datetime "fighting_at", comment: "部屋に入った日時で抜けたり切断すると空"
     t.datetime "time_up_trigger_at", comment: "タイムアップしたのを検知した日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "name", null: false, comment: "名前"
     t.bigint "current_battle_room_id", comment: "現在入室している部屋"
     t.datetime "online_at", comment: "オンラインになった日時"
-    t.datetime "fighting_now_at", comment: "memberships.fighting_now_at と同じでこれを見ると対局中かどうかがすぐにわかる"
+    t.datetime "fighting_at", comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
     t.datetime "matching_at", comment: "マッチング中(開始日時)"
     t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
     t.string "platoon_key", null: false, comment: "ルール・人数"

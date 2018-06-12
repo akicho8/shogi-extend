@@ -1,4 +1,5 @@
 import _ from "lodash"
+import assert from "assert"
 import axios from "axios"
 import chess_clock from "./chess_clock"
 
@@ -9,7 +10,7 @@ import { LastActionInfo } from "./last_action_info"
 document.addEventListener("DOMContentLoaded", () => {
   App.battle_room = App.cable.subscriptions.create({
     channel: "BattleRoomChannel",
-    battle_room_id: js_current_battle_room.id,
+    battle_room_id: js_battle.id,
   }, {
     connected() {
       this.perform("room_in")
@@ -60,8 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
         App.chat_vm.human_kifu_text = data["human_kifu_text"]
       }
 
-      if (data["room_members"]) {
-        App.chat_vm.room_members = data["room_members"]
+      if (data["memberships"]) {
+        App.chat_vm.memberships = data["memberships"]
       }
 
       // 発言の反映
@@ -120,21 +121,24 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
     el: "#battle_room_app",
     data() {
+      assert(js_battle.memberships)
+      assert(js_battle.chat_messages)
+
       return {
         message: "",            // 発言
-        room_members:         js_current_battle_room.memberships,
-        chat_messages:   js_current_battle_room.chat_messages,
-        kifu_body_sfen:       js_current_battle_room.kifu_body_sfen,
-        current_lifetime_key: js_current_battle_room.lifetime_key,
-        current_platoon_key: js_current_battle_room.platoon_key,
-        begin_at:             js_current_battle_room.begin_at,
-        end_at:               js_current_battle_room.end_at,
-        win_location_key:     js_current_battle_room.win_location_key,
-        last_action_key:      js_current_battle_room.last_action_key,
-        watch_users:          js_current_battle_room.watch_users,
-        turn_max:             js_current_battle_room.turn_max,
-        handicap:             js_current_battle_room.handicap,
-        human_kifu_text:      js_current_battle_room.human_kifu_text,
+        memberships:          js_battle.memberships,
+        chat_messages:        js_battle.chat_messages,
+        kifu_body_sfen:       js_battle.kifu_body_sfen,
+        current_lifetime_key: js_battle.lifetime_key,
+        current_platoon_key:  js_battle.platoon_key,
+        begin_at:             js_battle.begin_at,
+        end_at:               js_battle.end_at,
+        win_location_key:     js_battle.win_location_key,
+        last_action_key:      js_battle.last_action_key,
+        watch_users:          js_battle.watch_users,
+        turn_max:             js_battle.turn_max,
+        handicap:             js_battle.handicap,
+        human_kifu_text:      js_battle.human_kifu_text,
       }
     },
 
@@ -171,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 終了の通達があった
       battle_end_notice(data) {
-        if (this.xmode_key === "st_battling") {
+        if (this.xstate_key === "st_battling") {
           this.end_at = data["end_at"]
           this.win_location_key = data["win_location_key"]
           this.last_action_key = data["last_action_key"]
@@ -252,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       play_mode_long_sfen_set(v) {
-        if (this.xmode_key === "st_battling") {
+        if (this.xstate_key === "st_battling") {
           App.battle_room.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key})
         }
       },
@@ -264,13 +268,13 @@ document.addEventListener("DOMContentLoaded", () => {
     computed: {
       // コントローラー類を非表示にする？
       any_controller_hide() {
-        return this.member_p && this.xmode_key === "st_battling"
+        return this.member_p && this.xstate_key === "st_battling"
       },
 
       // チャットに表示する最新メッセージたち
       latest_chat_messages() {
-        console.assert(js_current_battle_room.chat_window_size)
-        return _.takeRight(this.chat_messages, js_current_battle_room.chat_window_size)
+        console.assert(js_battle.chat_window_size)
+        return _.takeRight(this.chat_messages, js_battle.chat_window_size)
       },
 
       // 手番選択用
@@ -282,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       battle_room() {
-        return js_current_battle_room
+        return js_battle
       },
 
       // 現在の手番番号
@@ -292,7 +296,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 現在手番を割り当てられたメンバー
       current_membership() {
-        return this.room_members[this.current_index % this.room_members.length]
+        assert(this.memberships)
+        return this.memberships[this.current_index % this.memberships.length]
       },
 
       // 現在の手番はそのメンバーの先後
@@ -314,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // 操作する側を返す
       // 手番のメンバーが自分の場合に、自分の先後を返せばよい
       human_side_key() {
-        if (this.xmode_key === "st_battling") {
+        if (this.xstate_key === "st_battling") {
           if (this.current_membership_is_self_p) {
             return this.current_location.key
           }
@@ -346,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 自分に対応する membership の配列
       __my_memberships() {
-        return _.filter(this.room_members, e => this.user_self_p(e.user))
+        return _.filter(this.memberships, e => this.user_self_p(e.user))
       },
 
       // 自分に対応する membership の IDs
@@ -370,22 +375,22 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       run_mode() {
-        if (this.xmode_key === "st_before") {
+        if (this.xstate_key === "st_before") {
           return "play_mode"
         }
-        if (this.xmode_key === "st_battling") {
+        if (this.xstate_key === "st_battling") {
           if (this.member_p) {
             return "play_mode"
           } else {
             return "view_mode"
           }
         }
-        if (this.xmode_key === "st_done") {
+        if (this.xstate_key === "st_done") {
           return "view_mode"
         }
       },
 
-      xmode_key() {
+      xstate_key() {
         if (!this.begin_at) {
           return "st_before"
         }
@@ -395,14 +400,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return "st_battling"
       },
 
-      // 手合割一覧
-      preset_infos() {
-        return PresetInfo.values
-      },
-
       // 考え中？ (プレイ中？)
       thinking_p() {
-        return this.xmode_key === "st_battling"
+        return this.xstate_key === "st_battling"
       },
 
       // 勝った方

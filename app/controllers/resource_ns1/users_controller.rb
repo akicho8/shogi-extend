@@ -10,7 +10,7 @@
 # | name                   | 名前                | string(255) | NOT NULL    |                  |       |
 # | current_battle_room_id | Current battle room | integer(8)  |             | => BattleRoom#id | A     |
 # | online_at              | Online at           | datetime    |             |                  |       |
-# | fighting_now_at        | Fighting now at     | datetime    |             |                  |       |
+# | fighting_at            | Fighting at         | datetime    |             |                  |       |
 # | matching_at            | Matching at         | datetime    |             |                  |       |
 # | lifetime_key           | Lifetime key        | string(255) | NOT NULL    |                  | B     |
 # | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |
@@ -36,9 +36,11 @@ module ResourceNs1
     end
 
     def show
-      @user_show_app_params = {
-        :battle_rooms => ams_sr(current_record.battle_rooms.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
-      }
+      # @js_user_profile = {
+      #   :user         => ams_sr(current_record),
+      #   :battle_rooms => ams_sr(current_record.battle_rooms.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
+      # }
+      @js_user_profile = ams_sr(current_record, serializer: UserProfileSerializer, include: {battle_rooms: {memberships: :user}})
     end
 
     def redirect_to_where

@@ -10,7 +10,7 @@
 # | name                   | 名前                | string(255) | NOT NULL    |                  |       |
 # | current_battle_room_id | Current battle room | integer(8)  |             | => BattleRoom#id | A     |
 # | online_at              | Online at           | datetime    |             |                  |       |
-# | fighting_now_at        | Fighting now at     | datetime    |             |                  |       |
+# | fighting_at            | Fighting at         | datetime    |             |                  |       |
 # | matching_at            | Matching at         | datetime    |             |                  |       |
 # | lifetime_key           | Lifetime key        | string(255) | NOT NULL    |                  | B     |
 # | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |
@@ -135,10 +135,10 @@ class User < ApplicationRecord
 
   concerning :ActiveFighterMethods do
     included do
-      scope :fighter_only, -> { where.not(fighting_now_at: nil) }
+      scope :fighter_only, -> { where.not(fighting_at: nil) }
 
       after_commit do
-        if saved_changes[:fighting_now_at]
+        if saved_changes[:fighting_at]
           fighter_only_count_update
         end
       end
@@ -216,7 +216,7 @@ class User < ApplicationRecord
 
       # 召集
       battle_room.users.each do |user|
-        ActionCable.server.broadcast("single_notification_#{user.id}", {matching_ok: true, battle_room: ams_sr(battle_room)})
+        ActionCable.server.broadcast("single_notification_#{user.id}", {matching_ok: true, battle_room_show_path: battle_room.show_path}.merge(attributes))
       end
 
       battle_room

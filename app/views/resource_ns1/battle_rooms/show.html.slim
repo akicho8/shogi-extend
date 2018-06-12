@@ -1,6 +1,5 @@
 javascript:
-  var lobby_app_params = #{@lobby_app_params.to_json.html_safe}
-  var js_current_battle_room = #{@js_current_battle_room.to_json.html_safe}
+  var js_battle = #{@js_battle.to_json.html_safe}
 
 - content_for :head do
   = javascript_pack_tag("battle_room")
@@ -98,12 +97,12 @@ javascript:
               /       |  Press enter to submit
 
       .box
-        b-table(:data="room_members")
+        b-table(:data="memberships")
           template slot-scope="props"
             b-table-column(label="対局者")
               message_link_to(:user_to="props.row.user")
               = " "
-              template(v-if="props.row.fighting_now_at")
+              template(v-if="props.row.fighting_at")
                 b-icon(icon="access-point" class="has-text-success" custom-size="mdi-18px")
               template(v-else)
                 b-icon(icon="access-point" class="has-text-grey-lighter")
@@ -145,8 +144,8 @@ javascript:
 / br
 / br
 / .box
-/   .title.is-5= "@js_current_battle_room"
-/   = html_format(JSON.load(@js_current_battle_room.to_json))
+/   .title.is-5= "@js_battle"
+/   = html_format(JSON.load(@js_battle.to_json))
 /
 / .box
 /   = html_format({"cookies.signed[:user_id]" => cookies.signed[:user_id]})

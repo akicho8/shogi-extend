@@ -6,7 +6,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # user.disappear
 # user.reload.destroy
 # tp user
-# ~> /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:131:in `_query': Mysql2::Error: Unknown column 'users.fighting_now_at' in 'where clause': SELECT COUNT(*) FROM `users` WHERE (`users`.`fighting_now_at` IS NOT NULL) (ActiveRecord::StatementInvalid)
+# ~> /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:131:in `_query': Mysql2::Error: Unknown column 'users.fighting_at' in 'where clause': SELECT COUNT(*) FROM `users` WHERE (`users`.`fighting_at` IS NOT NULL) (ActiveRecord::StatementInvalid)
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:131:in `block in query'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:130:in `handle_interrupt'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/mysql2-0.5.1/lib/mysql2/client.rb:130:in `query'

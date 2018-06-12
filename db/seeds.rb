@@ -1,3 +1,5 @@
+# User.destroy_all
+
 unless FreeBattleRecord.exists?
   30.times { FreeBattleRecord.create!(kifu_body: "") }
 end

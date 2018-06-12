@@ -33,6 +33,8 @@ class BattleRoom < ApplicationRecord
   has_many :current_users, class_name: "User", foreign_key: :current_battle_room_id, dependent: :nullify
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }
+  scope :latest_list_for_profile, -> { order(updated_at: :desc).limit(25) }
+  scope :st_battling, -> { where.not(begin_at: nil).where(end_at: nil) }
 
   serialize :clock_counts
   serialize :countdown_mode_hash
@@ -72,7 +74,7 @@ class BattleRoom < ApplicationRecord
     "##{id}"
   end
 
-  def xmode_key
+  def xstate_key
     if begin_at && end_at
       :st_done
     elsif begin_at
@@ -82,8 +84,8 @@ class BattleRoom < ApplicationRecord
     end
   end
 
-  def xmode_info
-    XmodeInfo.fetch(xmode_key)
+  def xstate_info
+    XstateInfo.fetch(xstate_key)
   end
 
   def human_kifu_text
