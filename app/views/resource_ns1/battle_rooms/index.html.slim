@@ -50,9 +50,9 @@ javascript:
     template(v-else)
       a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
 
-    - if Rails.env.development?
+    - if Rails.env.development? && false
       = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button")
-    / = link_to("新しい部屋を作って入る", [:resource_ns1, current_plural_key], class: "button is-primary", method: :post)
+      = link_to("新しい部屋を作って入る", [:resource_ns1, current_plural_key], class: "button is-primary", method: :post)
 
   .columns
     .column
@@ -122,7 +122,9 @@ javascript:
                 | #
                 | {{props.row.id}}
                 | &nbsp;
-                span(v-html="room_members_format(props.row)")
+            b-table-column(label="対局者")
+              template(v-for="membership in props.row.memberships")
+                message_link_to(:user_to="membership.user")
 
             / - if Rails.env.development?
               / b-table-column field="users" label="全参加者" sortable="sortable" numeric="numeric"

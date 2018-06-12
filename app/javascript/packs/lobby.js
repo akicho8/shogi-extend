@@ -155,12 +155,18 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       room_members_format(battle_room) {
-        const list = _.groupBy(battle_room.memberships, "location_key")
-        return _.map(list, (list, key) => {
-          return list.map(e => {
+        if (true) {
+          return battle_room.memberships.map(e => {
             return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
-          }).join("・")
-        }).join(" vs ")
+          }).join(" ")
+        } else {
+          const list = _.groupBy(battle_room.memberships, "location_key")
+          return _.map(list, (list, key) => {
+            return list.map(e => {
+              return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
+            }).join("・")
+          }).join(" vs ")
+        }
       },
     },
 
