@@ -74,6 +74,10 @@ class User < ApplicationRecord
     Warabi::PresetInfo[oppo_preset_key]
   end
 
+  def show_path
+    Rails.application.routes.url_helpers.url_for([:resource_ns1, self, only_path: true])
+  end
+
   concerning :AvatarMethods do
     included do
       has_one_attached :avatar

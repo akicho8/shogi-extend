@@ -13,16 +13,17 @@
         header.modal-card-head
           p.modal-card-title
             template(v-if="user_to")
-              | {{user_to.name}}に送信
+              a(:href="user_to.show_path") {{user_to.name}}
+              | さんに送信
             template(v-else)
               | 全体通知
         section.modal-card-body
           b-field(label="")
             input.input.is-large(type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input")
         footer.modal-card-foot
-          button.button.is-primary.is-outlined(@click="message_enter") 送信
+          button.button(@click="message_enter") 送信
           template(v-if="user_to")
-            button.button.is-primary.is-outlined(@click="battle_request_to") 対局申し込み
+            button.button(@click="battle_request_to") 対局申し込み
 </template>
 
 <script>
@@ -56,6 +57,7 @@ export default {
     battle_request_to() {
       App.single_notification.battle_request_to({battle_request: {from_id: js_global_params.current_user.id, to_id: this.user_to.id, message: this.message}})
       this.message = ""
+      Vue.prototype.$toast.open({message: "対局を申し込みました", position: "is-top", type: "is-info", duration: 500})
     },
   },
 }

@@ -34,8 +34,8 @@ module ResourceNs1
     before_action do
       @lobby_app_params = {
         :lobby_messages => ams_sr(LobbyMessage.latest_list.reverse),
-        :battle_rooms          => ams_sr(BattleRoom.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
-        :online_users        => ams_sr(User.online_only),
+        :battle_rooms   => ams_sr(BattleRoom.latest_list, include: {memberships: :user}, each_serializer: BattleRoomEachSerializer),
+        :online_users   => ams_sr(User.online_only),
       }
     end
 

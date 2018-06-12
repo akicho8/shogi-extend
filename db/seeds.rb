@@ -22,3 +22,23 @@ if Rails.env.development?
   GeneralBattleRecord.all_import(limit: 2)
   GeneralBattleRecord.all_import
 end
+
+if Rails.env.development?
+  users = 10.times.collect { User.create!(online_at: Time.current, platoon_key: "platoon_p2vs2") }
+
+  50.times do
+    list = users.sample(4)
+    battle_room = BattleRoom.create!
+    list.each do |e|
+      battle_room.users << e
+    end
+    if rand(2).zero?
+      battle_room.update!(begin_at: Time.current)
+      if rand(2).zero?
+        battle_room.update!(end_at: Time.current)
+      end
+    end
+  end
+
+  p BattleRoom.count
+end
