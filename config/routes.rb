@@ -9,13 +9,13 @@ Rails.application.routes.draw do
   ################################################################################ 2ch棋譜検索
 
   namespace :resource_ns1, path: "" do
-    resources :general_battle_records, path: "sr", only: [:index, :show] do
-      resources :tag_cloud, :only => :index, :module => :general_battle_records
+    resources :general_battles, path: "sr", only: [:index, :show] do
+      resources :tag_cloud, :only => :index, :module => :general_battles
     end
 
-    get "s/:query", to: "general_battle_records#index", as: :general_search
-    get "s",        to: "general_battle_records#index"
-    get "s-cloud",  to: "general_battle_records/tag_cloud#index", as: :general_cloud
+    get "s/:query", to: "general_battles#index", as: :general_search
+    get "s",        to: "general_battles#index"
+    get "s-cloud",  to: "general_battles/tag_cloud#index", as: :general_cloud
   end
 
   resolve "GeneralUser" do |general_user, options|
@@ -25,13 +25,13 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :swars, path: "" do
-    resources :battle_records, path: "wr", only: [:index, :show] do
-      resources :tag_cloud, :only => :index, :module => :battle_records
+    resources :battles, path: "wr", only: [:index, :show] do
+      resources :tag_cloud, :only => :index, :module => :battles
     end
 
-    get "w/:query", to: "battle_records#index", as: :search
-    get "w",        to: "battle_records#index"
-    get "w-cloud",  to: "battle_records/tag_cloud#index", as: :swars_cloud
+    get "w/:query", to: "battles#index", as: :search
+    get "w",        to: "battles#index"
+    get "w-cloud",  to: "battles/tag_cloud#index", as: :swars_cloud
   end
 
   resolve "Swars::User" do |user, options|
@@ -41,11 +41,11 @@ Rails.application.routes.draw do
   ################################################################################ 棋譜変換
 
   namespace :resource_ns1, path: "" do
-    resources :free_battle_records, path: "x"
+    resources :free_battles, path: "x"
   end
 
-  resolve "FreeBattleRecord" do |free_battle_record, options|
-    [:resource_ns1, free_battle_record, options]
+  resolve "FreeBattle" do |free_battle, options|
+    [:resource_ns1, free_battle, options]
   end
 
   ################################################################################ 戦法トリガー辞典
@@ -70,11 +70,11 @@ Rails.application.routes.draw do
 
   ################################################################################ 外部リンク
 
-  direct :swars_real_battle do |battle_record, **options|
+  direct :swars_real_battle do |battle, **options|
     options = {
       locale: "ja",
     }.merge(options)
-    "http://kif-pona.heroz.jp/games/#{battle_record.battle_key}?#{options.to_query}"
+    "http://kif-pona.heroz.jp/games/#{battle.battle_key}?#{options.to_query}"
   end
 
   direct :mountain_upload do

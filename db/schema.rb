@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["text_format"], name: "index_converted_infos_on_text_format"
   end
 
-  create_table "free_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "unique_key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_file", comment: "アップロードした棋譜ファイル"
     t.string "kifu_url", comment: "入力した棋譜URL"
@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "battled_at", null: false, comment: "対局開始日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["unique_key"], name: "index_free_battle_records_on_unique_key", unique: true
+    t.index ["unique_key"], name: "index_free_battles_on_unique_key", unique: true
   end
 
-  create_table "general_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "general_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "battle_key", null: false, comment: "対局識別子"
     t.datetime "battled_at", comment: "対局開始日時"
     t.text "kifu_body", null: false, comment: "棋譜の断片"
@@ -100,22 +100,22 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_key"], name: "index_general_battle_records_on_battle_key", unique: true
-    t.index ["general_battle_state_key"], name: "index_general_battle_records_on_general_battle_state_key"
+    t.index ["battle_key"], name: "index_general_battles_on_battle_key", unique: true
+    t.index ["general_battle_state_key"], name: "index_general_battles_on_general_battle_state_key"
   end
 
-  create_table "general_battle_ships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "general_battle_record_id", null: false, comment: "対局"
+  create_table "general_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "general_battle_id", null: false, comment: "対局"
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "手番の順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["general_battle_record_id", "location_key"], name: "general_battle_ships_gbri_lk", unique: true
-    t.index ["general_battle_record_id"], name: "index_general_battle_ships_on_general_battle_record_id"
-    t.index ["judge_key"], name: "index_general_battle_ships_on_judge_key"
-    t.index ["location_key"], name: "index_general_battle_ships_on_location_key"
-    t.index ["position"], name: "index_general_battle_ships_on_position"
+    t.index ["general_battle_id", "location_key"], name: "general_memberships_gbri_lk", unique: true
+    t.index ["general_battle_id"], name: "index_general_memberships_on_general_battle_id"
+    t.index ["judge_key"], name: "index_general_memberships_on_judge_key"
+    t.index ["location_key"], name: "index_general_memberships_on_location_key"
+    t.index ["position"], name: "index_general_memberships_on_position"
   end
 
   create_table "general_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -150,26 +150,17 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
-  create_table "swars_battle_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "battle_record_id", null: false, comment: "対局"
+  create_table "swars_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対局"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_record_id"], name: "index_swars_battle_access_logs_on_battle_record_id"
+    t.index ["battle_id"], name: "index_swars_access_logs_on_battle_id"
   end
 
-  create_table "swars_battle_grades", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "unique_key", null: false
-    t.integer "priority", null: false, comment: "優劣"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["priority"], name: "index_swars_battle_grades_on_priority"
-    t.index ["unique_key"], name: "index_swars_battle_grades_on_unique_key", unique: true
-  end
-
-  create_table "swars_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "swars_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "battle_key", null: false, comment: "対局識別子"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
-    t.string "battle_rule_key", null: false, comment: "ルール"
+    t.string "rule_key", null: false, comment: "ルール"
     t.text "csa_seq", null: false, comment: "棋譜の断片"
     t.string "battle_state_key", null: false, comment: "結果詳細"
     t.bigint "win_user_id", comment: "勝者(ショートカット用)"
@@ -177,32 +168,41 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
     t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
-    t.integer "battle_access_logs_count", default: 0
+    t.integer "access_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_key"], name: "index_swars_battle_records_on_battle_key", unique: true
-    t.index ["battle_rule_key"], name: "index_swars_battle_records_on_battle_rule_key"
-    t.index ["battle_state_key"], name: "index_swars_battle_records_on_battle_state_key"
-    t.index ["win_user_id"], name: "index_swars_battle_records_on_win_user_id"
+    t.index ["battle_key"], name: "index_swars_battles_on_battle_key", unique: true
+    t.index ["battle_state_key"], name: "index_swars_battles_on_battle_state_key"
+    t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
+    t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
   end
 
-  create_table "swars_battle_ships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "battle_record_id", null: false, comment: "対局"
+  create_table "swars_grades", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "unique_key", null: false
+    t.integer "priority", null: false, comment: "優劣"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["priority"], name: "index_swars_grades_on_priority"
+    t.index ["unique_key"], name: "index_swars_grades_on_unique_key", unique: true
+  end
+
+  create_table "swars_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対局"
     t.bigint "user_id", null: false, comment: "対局者"
-    t.bigint "battle_grade_id", null: false, comment: "対局時の段級"
+    t.bigint "grade_id", null: false, comment: "対局時の段級"
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "手番の順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_grade_id"], name: "index_swars_battle_ships_on_battle_grade_id"
-    t.index ["battle_record_id", "location_key"], name: "battle_ships_sbri_lk", unique: true
-    t.index ["battle_record_id", "user_id"], name: "battle_ships_sbri_sbui", unique: true
-    t.index ["battle_record_id"], name: "index_swars_battle_ships_on_battle_record_id"
-    t.index ["judge_key"], name: "index_swars_battle_ships_on_judge_key"
-    t.index ["location_key"], name: "index_swars_battle_ships_on_location_key"
-    t.index ["position"], name: "index_swars_battle_ships_on_position"
-    t.index ["user_id"], name: "index_swars_battle_ships_on_user_id"
+    t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
+    t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
+    t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
+    t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
+    t.index ["judge_key"], name: "index_swars_memberships_on_judge_key"
+    t.index ["location_key"], name: "index_swars_memberships_on_location_key"
+    t.index ["position"], name: "index_swars_memberships_on_position"
+    t.index ["user_id"], name: "index_swars_memberships_on_user_id"
   end
 
   create_table "swars_search_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -214,12 +214,12 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
 
   create_table "swars_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "user_key", null: false, comment: "対局者名"
-    t.bigint "battle_grade_id", null: false, comment: "最高段級"
+    t.bigint "grade_id", null: false, comment: "最高段級"
     t.datetime "last_reception_at", comment: "受容日時"
     t.integer "search_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_grade_id"], name: "index_swars_users_on_battle_grade_id"
+    t.index ["grade_id"], name: "index_swars_users_on_grade_id"
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
   end
 

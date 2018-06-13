@@ -38,10 +38,10 @@
             = @board_table
 
 / .has-text-centered
-/ - count = GeneralBattleShip.tagged_with(current_record.name).count
+/ - count = GeneralMembership.tagged_with(current_record.name).count
 / - if count >= 1
 /   =<> link_to("2ch棋譜検索".html_safe + tag.span(count, class: "badge"), [:resource_ns1, :general_search, query: current_record.key])
-/ - count = Swars::BattleRecord.tagged_with(current_record.name).count
+/ - count = Swars::Battle.tagged_with(current_record.name).count
 / - if count >= 1
 /   =<> link_to("将棋ウォーズ棋譜検索".html_safe +  tag.span(count, class: "badge"), [:swars_search, query: current_record.key])
 / b-pagination :total="total" :current.sync="current" :order="order" :size="size" :simple="false" :per-page="perPage"

@@ -1,0 +1,6 @@
+= render partial: "resource_ns1/general_battles/header"
+
+.tags.yumincho.has-text-centered
+  - tag_cloud(GeneralBattle.all_tag_counts(order: "count desc", limit: 512, at_least: Rails.env.production? ? 8 : 0), ["", "is-medium", "is-large"]) do |tag, klass|
+    span.tag class=klass
+      = link_to(tag.name, resource_ns1_general_search_path(tag.name))

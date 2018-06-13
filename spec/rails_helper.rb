@@ -72,22 +72,22 @@ RSpec.configure do |config|
 
   # テストの中で使う便利メソッド
   config.include Module.new {
-    def battle_grade_setup
-      unless Swars::BattleGrade.exists?
-        Swars::BattleGradeInfo.each do |e|
-          Swars::BattleGrade.create!(unique_key: e.key, priority: e.priority)
+    def grade_setup
+      unless Swars::Grade.exists?
+        Swars::GradeInfo.each do |e|
+          Swars::Grade.create!(unique_key: e.key, priority: e.priority)
         end
       end
     end
 
-    def swars_battle_record_setup
-      battle_grade_setup
-      Swars::BattleRecord.basic_import(user_key: "hanairobiyori")
+    def swars_battle_setup
+      grade_setup
+      Swars::Battle.basic_import(user_key: "hanairobiyori")
     end
 
-    def general_battle_record_setup
-      if GeneralBattleRecord.count.zero?
-        GeneralBattleRecord.all_import
+    def general_battle_setup
+      if GeneralBattle.count.zero?
+        GeneralBattle.all_import
       end
     end
   }

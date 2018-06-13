@@ -19,8 +19,8 @@ module ConvertMethods
 
   # 更新方法
   # ActiveRecord::Base.logger = nil
-  # Swars::BattleRecord.find_each { |e| e.tap(&:parser_exec).save! }
-  # Swars::BattleRecord.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
+  # Swars::Battle.find_each { |e| e.tap(&:parser_exec).save! }
+  # Swars::Battle.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
   def parser_exec(**options)
     return if @parser_executed
 

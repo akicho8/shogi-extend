@@ -2,9 +2,9 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 GeneralUser.destroy_all
-GeneralBattleRecord.destroy_all
+GeneralBattle.destroy_all
 
-general_battle_record = GeneralBattleRecord.create!(kifu_body: <<~EOT)
+general_battle = GeneralBattle.create!(kifu_body: <<~EOT)
 先手：花村元司五段
 後手：阿久津主税
 *「花村元司五段」vs「阿久津主税七段」

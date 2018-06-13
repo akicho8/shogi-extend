@@ -66,7 +66,7 @@
 
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_battle_records as FreeBattleRecord)
+# 棋譜変換テーブル (free_battles as FreeBattle)
 #
 # |--------------+--------------------+-------------+-------------+------+-------|
 # | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
@@ -86,7 +86,7 @@
 
 # == Schema Information ==
 #
-# 対局情報テーブル (general_battle_records as GeneralBattleRecord)
+# 対局情報テーブル (general_battles as GeneralBattle)
 #
 # |--------------------------+-----------------+-------------+-------------+------+-------|
 # | カラム名                 | 意味            | タイプ      | 属性        | 参照 | INDEX |
@@ -106,13 +106,13 @@
 
 # == Schema Information ==
 #
-# 対局時の両者テーブル (general_battle_ships as GeneralBattleShip)
+# 対局時の両者テーブル (general_memberships as GeneralMembership)
 #
 # |--------------------------+-----------------------+-------------+-------------+---------------------------+-------|
 # | カラム名                 | 意味                  | タイプ      | 属性        | 参照                      | INDEX |
 # |--------------------------+-----------------------+-------------+-------------+---------------------------+-------|
 # | id                       | ID                    | integer(8)  | NOT NULL PK |                           |       |
-# | general_battle_record_id | General battle record | integer(8)  | NOT NULL    | => GeneralBattleRecord#id | A! B  |
+# | general_battle_id | General battle record | integer(8)  | NOT NULL    | => GeneralBattle#id | A! B  |
 # | judge_key                | Judge key             | string(255) | NOT NULL    |                           | C     |
 # | location_key             | Location key          | string(255) | NOT NULL    |                           | A! D  |
 # | position                 | 順序                  | integer(4)  |             |                           | E     |
@@ -121,7 +121,7 @@
 # |--------------------------+-----------------------+-------------+-------------+---------------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・GeneralBattleShip モデルは GeneralBattleRecord モデルから has_many :general_battle_ships されています。
+# ・GeneralMembership モデルは GeneralBattle モデルから has_many :general_memberships されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -182,7 +182,7 @@
 
 # == Schema Information ==
 #
-# Swars battle gradeテーブル (battle_grades as Swars::BattleGrade)
+# Swars battle gradeテーブル (grades as Swars::Grade)
 #
 # |------------+------------+-------------+-------------+------+-------|
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
@@ -196,7 +196,7 @@
 
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報テーブル (battle_records as Swars::BattleRecord)
+# 将棋ウォーズ対戦情報テーブル (battles as Swars::Battle)
 #
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
 # | カラム名                              | 意味                                  | タイプ      | 属性        | 参照                  | INDEX |
@@ -204,7 +204,7 @@
 # | id                                    | ID                                    | integer(8)  | NOT NULL PK |                       |       |
 # | battle_key                            | Battle key                            | string(255) | NOT NULL    |                       | A!    |
 # | battled_at                            | Battled at                            | datetime    | NOT NULL    |                       |       |
-# | battle_rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
+# | rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
 # | csa_seq                               | Csa seq                               | text(65535) | NOT NULL    |                       |       |
 # | battle_state_key                      | Battle state key                      | string(255) | NOT NULL    |                       | C     |
 # | win_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::User#id | D     |
@@ -212,43 +212,43 @@
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
 # | mountain_url                          | 将棋山脈URL                           | string(255) |             |                       |       |
 # | last_accessd_at                       | Last accessd at                       | datetime    | NOT NULL    |                       |       |
-# | battle_access_logs_count | Swars battle record access logs count | integer(4)  | DEFAULT(0)  |                       |       |
+# | access_logs_count | Swars battle record access logs count | integer(4)  | DEFAULT(0)  |                       |       |
 # | created_at                            | 作成日時                              | datetime    | NOT NULL    |                       |       |
 # | updated_at                            | 更新日時                              | datetime    | NOT NULL    |                       |       |
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】Swars::Userモデルで has_many :battle_records されていません
+# ・【警告:リレーション欠如】Swars::Userモデルで has_many :battles されていません
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# Swars battle record access logテーブル (battle_access_logs as Swars::BattleAccessLog)
+# Swars battle record access logテーブル (access_logs as Swars::AccessLog)
 #
 # |------------------------+---------------------+------------+-------------+-------------------------+-------|
 # | カラム名               | 意味                | タイプ     | 属性        | 参照                    | INDEX |
 # |------------------------+---------------------+------------+-------------+-------------------------+-------|
 # | id                     | ID                  | integer(8) | NOT NULL PK |                         |       |
-# | battle_record_id | Swars battle record | integer(8) | NOT NULL    | => Swars::BattleRecord#id | A     |
+# | battle_id | Swars battle record | integer(8) | NOT NULL    | => Swars::Battle#id | A     |
 # | created_at             | 作成日時            | datetime   | NOT NULL    |                         |       |
 # | updated_at             | 更新日時            | datetime   | NOT NULL    |                         |       |
 # |------------------------+---------------------+------------+-------------+-------------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::BattleAccessLog モデルは Swars::BattleRecord モデルから has_many :battle_ships されています。
+# ・Swars::AccessLog モデルは Swars::Battle モデルから has_many :memberships されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# 対局と対局者の対応テーブル (battle_ships as Swars::BattleShip)
+# 対局と対局者の対応テーブル (memberships as Swars::Membership)
 #
 # |------------------------+---------------------+-------------+-------------+-------------------------+---------|
 # | カラム名               | 意味                | タイプ      | 属性        | 参照                    | INDEX   |
 # |------------------------+---------------------+-------------+-------------+-------------------------+---------|
 # | id                     | ID                  | integer(8)  | NOT NULL PK |                         |         |
-# | battle_record_id | Swars battle record | integer(8)  | NOT NULL    | => Swars::BattleRecord#id | A! B! C |
+# | battle_id | Swars battle record | integer(8)  | NOT NULL    | => Swars::Battle#id | A! B! C |
 # | user_id   | Swars battle user   | integer(8)  | NOT NULL    | => Swars::User#id   | B! D    |
-# | battle_grade_id  | Swars battle grade  | integer(8)  | NOT NULL    | => Swars::BattleGrade#id  | E       |
+# | grade_id  | Swars battle grade  | integer(8)  | NOT NULL    | => Swars::Grade#id  | E       |
 # | judge_key              | Judge key           | string(255) | NOT NULL    |                         | F       |
 # | location_key           | Location key        | string(255) | NOT NULL    |                         | A! G    |
 # | position               | 順序                | integer(4)  |             |                         | H       |
@@ -257,9 +257,9 @@
 # |------------------------+---------------------+-------------+-------------+-------------------------+---------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::BattleShip モデルは Swars::BattleRecord モデルから has_many :battle_ships されています。
-# ・Swars::BattleShip モデルは Swars::User モデルから has_many :battle_ships されています。
-# ・Swars::BattleShip モデルは Swars::BattleGrade モデルから has_many :users されています。
+# ・Swars::Membership モデルは Swars::Battle モデルから has_many :memberships されています。
+# ・Swars::Membership モデルは Swars::User モデルから has_many :memberships されています。
+# ・Swars::Membership モデルは Swars::Grade モデルから has_many :users されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -271,7 +271,7 @@
 # |------------------------------------+------------------------------------+-------------+-------------+------------------------+-------|
 # | id                                 | ID                                 | integer(8)  | NOT NULL PK |                        |       |
 # | user_key                           | User key                           | string(255) | NOT NULL    |                        | A!    |
-# | battle_grade_id              | Swars battle grade                 | integer(8)  | NOT NULL    | => Swars::BattleGrade#id | B     |
+# | grade_id              | Swars battle grade                 | integer(8)  | NOT NULL    | => Swars::Grade#id | B     |
 # | last_reception_at                  | Last reception at                  | datetime    |             |                        |       |
 # | search_logs_count | Swars battle user receptions count | integer(4)  | DEFAULT(0)  |                        |       |
 # | created_at                         | 作成日時                           | datetime    | NOT NULL    |                        |       |
@@ -279,7 +279,7 @@
 # |------------------------------------+------------------------------------+-------------+-------------+------------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::User モデルは Swars::BattleGrade モデルから has_many :users されています。
+# ・Swars::User モデルは Swars::Grade モデルから has_many :users されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -296,7 +296,7 @@
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::SearchLog モデルは Swars::User モデルから has_many :battle_ships されています。
+# ・Swars::SearchLog モデルは Swars::User モデルから has_many :memberships されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==

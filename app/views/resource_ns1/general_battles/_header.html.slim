@@ -1,0 +1,6 @@
+p.title.is-2.yumincho= "2ch棋譜検索"
+
+.tabs
+  ul
+    li class=("is-active" if params["controller"] == "resource_ns1/general_battles")           = link_to("検索", [:resource_ns1, :s])
+    li class=("is-active" if params["controller"] == "resource_ns1/general_battles/tag_cloud") = link_to("タグクラウド", [:resource_ns1, :general_cloud])

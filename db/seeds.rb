@@ -1,28 +1,28 @@
 # User.destroy_all
 
-unless FreeBattleRecord.exists?
-  30.times { FreeBattleRecord.create!(kifu_body: "") }
+unless FreeBattle.exists?
+  30.times { FreeBattle.create!(kifu_body: "") }
 end
 
-unless Swars::BattleGrade.exists?
-  Swars::BattleGradeInfo.each do |e|
-    Swars::BattleGrade.create!(unique_key: e.key, priority: e.priority)
+unless Swars::Grade.exists?
+  Swars::GradeInfo.each do |e|
+    Swars::Grade.create!(unique_key: e.key, priority: e.priority)
   end
-  tp Swars::BattleGrade
+  tp Swars::Grade
 end
 
 if Rails.env.development?
-  Swars::BattleRecord.basic_import(user_key: "hanairobiyori")
-  Swars::BattleRecord.reception_import
-  Swars::BattleRecord.expert_import
-  Swars::BattleRecord.conditional_import(battle_grade_key_gteq: '三段')
-  Swars::BattleRecord.find_each { |e| e.parser_exec; e.save! }
-  p Swars::BattleRecord.count
+  Swars::Battle.basic_import(user_key: "hanairobiyori")
+  Swars::Battle.reception_import
+  Swars::Battle.expert_import
+  Swars::Battle.conditional_import(grade_key_gteq: '三段')
+  Swars::Battle.find_each { |e| e.parser_exec; e.save! }
+  p Swars::Battle.count
 end
 
 if Rails.env.development?
-  GeneralBattleRecord.all_import(limit: 2)
-  GeneralBattleRecord.all_import
+  GeneralBattle.all_import(limit: 2)
+  GeneralBattle.all_import
 end
 
 if Rails.env.development?

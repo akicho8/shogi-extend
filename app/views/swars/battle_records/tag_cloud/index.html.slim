@@ -1,6 +1,0 @@
-= render partial: "swars/battle_records/header"
-
-.tags.yumincho
-  - tag_cloud(Swars::BattleRecord.all_tag_counts(order: "count desc", limit: 512, at_least: Rails.env.production? ? 8 : 0), ["", "is-medium", "is-large"]) do |tag, klass|
-    span.tag(class=klass)
-      = link_to(tag.name, swars_search_path(tag.name))

@@ -42,7 +42,7 @@
           button class="button" slot="trigger"
             span リンク
             b-icon icon="menu-down"
-          - if current_record.kind_of?(Swars::BattleRecord)
+          - if current_record.kind_of?(Swars::Battle)
             = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
             b-dropdown-item :has-link="true" :paddingless="true"
               = link_to("ウォーズTweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')")

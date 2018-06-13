@@ -45,16 +45,16 @@ html lang="ja"
           / ここでの is-active に意味はない
           = link_to("ネット対戦", [:resource_ns1, :battle_rooms], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/battle_rooms"))])
           = link_to("CPU対戦", :cpu_versus, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_versus")])
-          = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battle_records"))])
+          = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
-              = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))])
+              = link_to("棋譜変換", [:new, :resource_ns1, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/free_battles"))])
               = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
               = link_to("戦法トリガー辞典", :tactic_articles, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_articles")])
               = link_to("盤面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
               - unless Rails.env.production?
-                = link_to("2ch棋譜検索", [:resource_ns1, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records"))])
+                = link_to("2ch棋譜検索", [:resource_ns1, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("resource_ns1/general_battles"))])
         #header_app.navbar-end(v-cloak)
           .navbar-item
             b-dropdown(hoverable)
@@ -77,7 +77,7 @@ html lang="ja"
         .navbar-brand
           = link_to(AppConfig[:app_name], :root, :class => "navbar-item")
 
-      section.hero.is-primary.is-bold class=(controller_name == "battle_records" && params[:query].present? ? "is-small" : "")
+      section.hero.is-primary.is-bold class=(controller_name == "battles" && params[:query].present? ? "is-small" : "")
         .hero-head
           nav.navbar
             .container
@@ -118,13 +118,13 @@ html lang="ja"
               ul
                 li class=("is-active" if params[:controller].start_with?("resource_ns1/battle_rooms"))           = link_to("ネット対戦", [:resource_ns1, :battle_rooms])
                 li class=("is-active" if params[:controller] == "cpu_versus")                                    = link_to("CPU対戦", :cpu_versus)
-                li class=("is-active" if params[:controller].start_with?("swars/battle_records"))         = link_to("将棋ウォーズ棋譜検索", [:swars, :w])
+                li class=("is-active" if params[:controller].start_with?("swars/battles"))         = link_to("将棋ウォーズ棋譜検索", [:swars, :w])
                 li class=("is-active" if params[:controller] == "tactic_articles")                               = link_to("戦法トリガー辞典", :tactic_articles)
-                li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battle_records"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle_record])
+                li class=("is-active" if params[:controller].start_with?("resource_ns1/free_battles"))    = link_to("棋譜変換", [:new, :resource_ns1, :free_battle])
                 li class=("is-active" if params[:controller] == "position_editor")                               = link_to("盤面編集", :position_editor)
                 li class=("is-active" if params[:controller] == "xy_game")                                       = link_to("符号入力ゲーム", :xy)
                 - unless Rails.env.production?
-                  li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battle_records")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
+                  li class=("is-active" if params[:controller].start_with?("resource_ns1/general_battles")) = link_to("2ch棋譜検索", [:resource_ns1, :s])
     section.section
       .container.is-fluid.main_container
         == flash_danger_notification_tag

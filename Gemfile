@@ -112,7 +112,7 @@ gem 'html_format'
 gem 'aam',           github: 'akicho8/aam'
 gem 'warabi',        github: 'akicho8/warabi'
 
-# for Swars::BattleAgent
+# for Swars::Agent
 gem 'nokogiri'
 gem 'mechanize'
 
