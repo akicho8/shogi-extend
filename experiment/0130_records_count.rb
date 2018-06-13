@@ -13,7 +13,7 @@ tp ActiveRecord::Base.connection.tables.collect { |table|
 # >> |            general_battle_users | 10  |
 # >> |               schema_migrations | 14  |
 # >> |             battle_grades | 39  |
-# >> | battle_record_access_logs | 0   |
+# >> | battle_access_logs | 0   |
 # >> |            battle_records | 12  |
 # >> |              battle_ships | 24  |
 # >> |    battle_user_receptions | 2   |

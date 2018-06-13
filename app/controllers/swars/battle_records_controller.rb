@@ -17,7 +17,7 @@
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
 # | mountain_url                          | 将棋山脈URL                           | string(255) |             |                       |       |
 # | last_accessd_at                       | Last accessd at                       | datetime    | NOT NULL    |                       |       |
-# | battle_record_access_logs_count | Swars battle record access logs count | integer(4)  | DEFAULT(0)  |                       |       |
+# | battle_access_logs_count | Swars battle record access logs count | integer(4)  | DEFAULT(0)  |                       |       |
 # | created_at                            | 作成日時                              | datetime    | NOT NULL    |                       |       |
 # | updated_at                            | 更新日時                              | datetime    | NOT NULL    |                       |       |
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
@@ -145,7 +145,7 @@ module Swars
     private
 
     def access_log_create
-      current_record.battle_record_access_logs.create!
+      current_record.battle_access_logs.create!
     end
 
     def current_scope

@@ -17,7 +17,7 @@
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
 # | mountain_url                          | 将棋山脈URL                           | string(255) |             |                       |       |
 # | last_accessd_at                       | Last accessd at                       | datetime    | NOT NULL    |                       |       |
-# | battle_record_access_logs_count | Swars battle record access logs count | integer(4)  | DEFAULT(0)  |                       |       |
+# | battle_access_logs_count | Swars battle record access logs count | integer(4)  | DEFAULT(0)  |                       |       |
 # | created_at                            | 作成日時                              | datetime    | NOT NULL    |                       |       |
 # | updated_at                            | 更新日時                              | datetime    | NOT NULL    |                       |       |
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
@@ -50,7 +50,7 @@ class CreateSwarsBattleRecords < ActiveRecord::Migration[5.1]
       t.string :mountain_url, comment: "将棋山脈の変換後URL"
 
       t.datetime :last_accessd_at, null: false, comment: "最終参照日時"
-      t.integer :battle_record_access_logs_count, default: 0
+      t.integer :battle_access_logs_count, default: 0
 
       t.timestamps null: false
     end
@@ -79,7 +79,7 @@ class CreateSwarsBattleRecords < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
 
-    create_table :swars_battle_record_access_logs, force: true do |t|
+    create_table :swars_battle_access_logs, force: true do |t|
       t.belongs_to :battle_record, null: false, comment: "対局"
       t.timestamps null: false
     end

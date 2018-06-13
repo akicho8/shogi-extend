@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Swars battle record access logテーブル (battle_record_access_logs as Swars::BattleRecordAccessLog)
+# Swars battle record access logテーブル (battle_access_logs as Swars::BattleAccessLog)
 #
 # |------------------------+---------------------+------------+-------------+-------------------------+-------|
 # | カラム名               | 意味                | タイプ     | 属性        | 参照                    | INDEX |
@@ -13,9 +13,9 @@
 # |------------------------+---------------------+------------+-------------+-------------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::BattleRecordAccessLog モデルは Swars::BattleRecord モデルから has_many :battle_ships されています。
+# ・Swars::BattleAccessLog モデルは Swars::BattleRecord モデルから has_many :battle_ships されています。
 #--------------------------------------------------------------------------------
 
-class Swars::BattleRecordAccessLog < ApplicationRecord
+class Swars::BattleAccessLog < ApplicationRecord
   belongs_to :battle_record, counter_cache: true, touch: :last_accessd_at
 end
