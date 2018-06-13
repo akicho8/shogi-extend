@@ -12,7 +12,7 @@
 # | battle_rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
 # | csa_seq                               | Csa seq                               | text(65535) | NOT NULL    |                       |       |
 # | battle_state_key                      | Battle state key                      | string(255) | NOT NULL    |                       | C     |
-# | win_battle_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::BattleUser#id | D     |
+# | win_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::User#id | D     |
 # | turn_max                              | 手数                                  | integer(4)  | NOT NULL    |                       |       |
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
 # | mountain_url                          | 将棋山脈URL                           | string(255) |             |                       |       |
@@ -23,12 +23,12 @@
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】Swars::BattleUserモデルで has_many :battle_records されていません
+# ・【警告:リレーション欠如】Swars::Userモデルで has_many :battle_records されていません
 #--------------------------------------------------------------------------------
 
 require 'rails_helper'
 
-RSpec.describe ResourceNs1::Swars::BattleRecordsController, type: :controller do
+RSpec.describe Swars::BattleRecordsController, type: :controller do
   before do
     swars_battle_record_setup
     @battle_record = Swars::BattleRecord.first

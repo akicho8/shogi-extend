@@ -21,7 +21,7 @@
 
 class CreateGeneralBattleRecords < ActiveRecord::Migration[5.1]
   def up
-    create_table :general_battle_users, force: true do |t|
+    create_table :general_users, force: true do |t|
       t.string :name, null: false, index: {unique: true}, comment: "対局者名"
       t.timestamps null: false
     end

@@ -20,7 +20,7 @@
 # |--------------------------+-----------------+-------------+-------------+------+-------|
 
 module GeneralBattleRecordsHelper
-  def general_battle_user_link2(general_battle_ship)
+  def general_user_link2(general_battle_ship)
     meta_info = general_battle_ship.general_battle_record.meta_info
     names = meta_info[:detail_names][general_battle_ship.location.code]
 

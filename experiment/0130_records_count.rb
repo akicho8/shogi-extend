@@ -14,7 +14,7 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |             free_battle_records | 33  |
 # >> |          general_battle_records | 5   |
 # >> |            general_battle_ships | 10  |
-# >> |            general_battle_users | 10  |
+# >> |            general_users | 10  |
 # >> |                  lobby_messages | 0   |
 # >> |                     memberships | 200 |
 # >> |               schema_migrations | 11  |
@@ -22,8 +22,8 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> | swars_battle_record_access_logs | 18  |
 # >> |            swars_battle_records | 10  |
 # >> |              swars_battle_ships | 20  |
-# >> |    swars_battle_user_receptions | 0   |
-# >> |              swars_battle_users | 11  |
+# >> |    swars_user_receptions | 0   |
+# >> |              swars_users | 11  |
 # >> |                        taggings | 439 |
 # >> |                            tags | 124 |
 # >> |                           users | 11  |

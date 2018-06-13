@@ -18,8 +18,8 @@ Rails.application.routes.draw do
     get "s-cloud",  to: "general_battle_records/tag_cloud#index", as: :general_cloud
   end
 
-  resolve "GeneralBattleUser" do |general_battle_user, options|
-    resource_ns1_general_search_path(query: general_battle_user.to_param)
+  resolve "GeneralUser" do |general_user, options|
+    resource_ns1_general_search_path(query: general_user.to_param)
   end
 
   ################################################################################ 将棋ウォーズ棋譜検索
@@ -34,8 +34,8 @@ Rails.application.routes.draw do
     get "w-cloud",  to: "battle_records/tag_cloud#index", as: :swars_cloud
   end
 
-  resolve "Swars::BattleUser" do |battle_user, options|
-    swars_search_path(query: battle_user.to_param)
+  resolve "Swars::User" do |user, options|
+    swars_search_path(query: user.to_param)
   end
 
   ################################################################################ 棋譜変換

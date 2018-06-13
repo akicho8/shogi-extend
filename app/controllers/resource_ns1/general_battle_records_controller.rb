@@ -31,8 +31,8 @@ module ResourceNs1
           filename = -> {
             parts = []
             parts << "2chkifu"
-            if current_general_battle_user
-              parts << current_general_battle_user.name
+            if current_general_user
+              parts << current_general_user.name
             end
             parts << Time.current.strftime("%Y%m%d%H%M%S")
             parts.concat(current_tags)
@@ -60,9 +60,9 @@ module ResourceNs1
       @rows = current_records.collect do |general_battle_record|
         {}.tap do |row|
 
-          if current_general_battle_user
-            l_ship = general_battle_record.myself(current_general_battle_user)
-            r_ship = general_battle_record.rival(current_general_battle_user)
+          if current_general_user
+            l_ship = general_battle_record.myself(current_general_user)
+            r_ship = general_battle_record.rival(current_general_user)
           else
             if general_battle_record.general_battle_state_info.draw
               l_ship = general_battle_record.general_battle_ships.black
@@ -73,16 +73,16 @@ module ResourceNs1
             end
           end
 
-          if current_general_battle_user
-            row["対象棋士"] = general_battle_record.win_lose_str(l_ship).html_safe + " " + h.general_battle_user_link2(l_ship)
-            row["対戦相手"] = general_battle_record.win_lose_str(r_ship).html_safe + " " + h.general_battle_user_link2(r_ship)
+          if current_general_user
+            row["対象棋士"] = general_battle_record.win_lose_str(l_ship).html_safe + " " + h.general_user_link2(l_ship)
+            row["対戦相手"] = general_battle_record.win_lose_str(r_ship).html_safe + " " + h.general_user_link2(r_ship)
           else
             if general_battle_record.general_battle_state_info.draw
-              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_battle_user_link2(l_ship)
-              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_battle_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_user_link2(l_ship)
+              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_user_link2(r_ship)
             else
-              row["勝ち"] = icon_tag(:far, :circle) + h.general_battle_user_link2(l_ship)
-              row["負け"] = icon_tag(:fas, :times)    + h.general_battle_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:far, :circle) + h.general_user_link2(l_ship)
+              row["負け"] = icon_tag(:fas, :times)    + h.general_user_link2(r_ship)
             end
           end
 
@@ -149,10 +149,10 @@ module ResourceNs1
       @current_tactics ||= current_tags.find_all { |tag| Warabi::TacticInfo.any? { |e| e.model[tag] } }
     end
 
-    def current_general_battle_user
-      @current_general_battle_user ||= nil.yield_self { |v|
+    def current_general_user
+      @current_general_user ||= nil.yield_self { |v|
         current_tags.each do |e|
-          if v = GeneralBattleUser.find_by(name: e)
+          if v = GeneralUser.find_by(name: e)
             break v
           end
         end
@@ -222,9 +222,9 @@ module ResourceNs1
       list.compact.join(" ").html_safe
     end
 
-    def general_battle_user_link(general_battle_record, judge_key)
+    def general_user_link(general_battle_record, judge_key)
       if general_battle_ship = general_battle_record.general_battle_ships.judge_key_eq(judge_key)
-        h.general_battle_user_link2(general_battle_ship)
+        h.general_user_link2(general_battle_ship)
       end
     end
 

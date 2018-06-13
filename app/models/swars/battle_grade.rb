@@ -14,7 +14,7 @@
 # |------------+------------+-------------+-------------+------+-------|
 
 class Swars::BattleGrade < ApplicationRecord
-  has_many :battle_users, dependent: :destroy
+  has_many :users, dependent: :destroy
 
   default_scope { order(:priority) }
 

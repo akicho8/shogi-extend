@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-GeneralBattleUser.destroy_all
+GeneralUser.destroy_all
 GeneralBattleRecord.destroy_all
 
 general_battle_record = GeneralBattleRecord.create!(kifu_body: <<~EOT)
@@ -10,7 +10,7 @@ general_battle_record = GeneralBattleRecord.create!(kifu_body: <<~EOT)
 *「花村元司五段」vs「阿久津主税七段」
 EOT
 
-tp GeneralBattleUser
+tp GeneralUser
 # >> |----+------------+---------------------------+---------------------------|
 # >> | id | name       | created_at                | updated_at                |
 # >> |----+------------+---------------------------+---------------------------|

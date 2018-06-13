@@ -8,7 +8,7 @@
 # |------------------------+---------------------+-------------+-------------+-------------------------+---------|
 # | id                     | ID                  | integer(8)  | NOT NULL PK |                         |         |
 # | battle_record_id | Swars battle record | integer(8)  | NOT NULL    | => Swars::BattleRecord#id | A! B! C |
-# | battle_user_id   | Swars battle user   | integer(8)  | NOT NULL    | => Swars::BattleUser#id   | B! D    |
+# | user_id   | Swars battle user   | integer(8)  | NOT NULL    | => Swars::User#id   | B! D    |
 # | battle_grade_id  | Swars battle grade  | integer(8)  | NOT NULL    | => Swars::BattleGrade#id  | E       |
 # | judge_key              | Judge key           | string(255) | NOT NULL    |                         | F       |
 # | location_key           | Location key        | string(255) | NOT NULL    |                         | A! G    |
@@ -19,13 +19,13 @@
 #
 #- 備考 -------------------------------------------------------------------------
 # ・Swars::BattleShip モデルは Swars::BattleRecord モデルから has_many :battle_ships されています。
-# ・Swars::BattleShip モデルは Swars::BattleUser モデルから has_many :battle_ships されています。
-# ・Swars::BattleShip モデルは Swars::BattleGrade モデルから has_many :battle_users されています。
+# ・Swars::BattleShip モデルは Swars::User モデルから has_many :battle_ships されています。
+# ・Swars::BattleShip モデルは Swars::BattleGrade モデルから has_many :users されています。
 #--------------------------------------------------------------------------------
 
 class Swars::BattleShip < ApplicationRecord
   belongs_to :battle_record            # 対局
-  belongs_to :battle_user, touch: true # 対局者
+  belongs_to :user, touch: true # 対局者
   belongs_to :battle_grade             # 対局したときの段位
 
   acts_as_list top_of_list: 0, scope: :battle_record
@@ -40,17 +40,17 @@ class Swars::BattleShip < ApplicationRecord
   # scope :win,  -> { judge_key_eq(:win)  }
   # scope :lose, -> { judge_key_eq(:lose) }
 
-  # battle_user に対する自分/相手
-  scope :myself, -> battle_user { where(battle_user_id: battle_user.id).take!     }
-  scope :rival,  -> battle_user { where.not(battle_user_id: battle_user.id).take! }
+  # user に対する自分/相手
+  scope :myself, -> user { where(user_id: user.id).take!     }
+  scope :rival,  -> user { where.not(user_id: user.id).take! }
 
   acts_as_ordered_taggable_on :defense_tags
   acts_as_ordered_taggable_on :attack_tags
 
   before_validation do
     # 無かったときだけ入れる(絶対あるんだけど)
-    if battle_user
-      self.battle_grade ||= battle_user.battle_grade
+    if user
+      self.battle_grade ||= user.battle_grade
     end
   end
 
@@ -61,13 +61,13 @@ class Swars::BattleShip < ApplicationRecord
 
   with_options allow_blank: true do
     validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-    validates :battle_user_id, uniqueness: {scope: :battle_record_id}
+    validates :user_id, uniqueness: {scope: :battle_record_id}
     validates :location_key, uniqueness: {scope: :battle_record_id}
     validates :location_key, inclusion: Warabi::Location.keys.collect(&:to_s)
   end
 
   def name_with_grade
-    "#{battle_user.user_key} #{battle_grade.name}"
+    "#{user.user_key} #{battle_grade.name}"
   end
 
   def location

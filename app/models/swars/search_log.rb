@@ -7,15 +7,15 @@
 # | カラム名             | 意味              | タイプ     | 属性        | 参照                  | INDEX |
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 # | id                   | ID                | integer(8) | NOT NULL PK |                       |       |
-# | battle_user_id | Swars battle user | integer(8) | NOT NULL    | => Swars::BattleUser#id | A     |
+# | user_id | Swars battle user | integer(8) | NOT NULL    | => Swars::User#id | A     |
 # | created_at           | 作成日時          | datetime   | NOT NULL    |                       |       |
 # | updated_at           | 更新日時          | datetime   | NOT NULL    |                       |       |
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::SearchLog モデルは Swars::BattleUser モデルから has_many :battle_ships されています。
+# ・Swars::SearchLog モデルは Swars::User モデルから has_many :battle_ships されています。
 #--------------------------------------------------------------------------------
 
 class Swars::SearchLog < ApplicationRecord
-  belongs_to :battle_user, counter_cache: true, touch: :last_reception_at
+  belongs_to :user, counter_cache: true, touch: :last_reception_at
 end

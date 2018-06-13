@@ -12,7 +12,7 @@
 # | battle_rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
 # | csa_seq                               | Csa seq                               | text(65535) | NOT NULL    |                       |       |
 # | battle_state_key                      | Battle state key                      | string(255) | NOT NULL    |                       | C     |
-# | win_battle_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::BattleUser#id | D     |
+# | win_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::User#id | D     |
 # | turn_max                              | 手数                                  | integer(4)  | NOT NULL    |                       |       |
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
 # | mountain_url                          | 将棋山脈URL                           | string(255) |             |                       |       |
@@ -23,7 +23,7 @@
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】Swars::BattleUserモデルで has_many :battle_records されていません
+# ・【警告:リレーション欠如】Swars::Userモデルで has_many :battle_records されていません
 #--------------------------------------------------------------------------------
 
 module Swars
@@ -48,8 +48,8 @@ module Swars
 
         if current_user_key
           before_count = 0
-          if battle_user = ::Swars::BattleUser.find_by(user_key: current_user_key)
-            before_count = battle_user.battle_records.count
+          if user = ::Swars::User.find_by(user_key: current_user_key)
+            before_count = user.battle_records.count
           end
 
           # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
@@ -59,14 +59,14 @@ module Swars
             current_model.basic_import(user_key: current_user_key)
           end
 
-          @battle_user = ::Swars::BattleUser.find_by(user_key: current_user_key)
-          if @battle_user
-            count_diff = @battle_user.battle_records.count - before_count
+          @user = ::Swars::User.find_by(user_key: current_user_key)
+          if @user
+            count_diff = @user.battle_records.count - before_count
             if count_diff.zero?
             else
               flash.now[:info] = "#{count_diff}件新しく見つかりました"
             end
-            @battle_user.search_logs.create!
+            @user.search_logs.create!
           else
             flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
           end
@@ -151,9 +151,9 @@ module Swars
     def current_scope
       s = super
 
-      if @battle_user
-        s = s.joins(:battle_ships => :battle_user)
-        s = s.merge(::Swars::BattleUser.where(id: @battle_user.id))
+      if @user
+        s = s.joins(:battle_ships => :user)
+        s = s.merge(::Swars::User.where(id: @user.id))
       end
 
       if current_tags
@@ -203,14 +203,14 @@ module Swars
       list.compact.join(" ").html_safe
     end
 
-    def battle_user_link(record, judge_key)
+    def user_link(record, judge_key)
       if battle_ship = record.battle_ships.judge_key_eq(judge_key)
-        battle_user_link2(battle_ship)
+        user_link2(battle_ship)
       end
     end
 
-    def battle_user_link2(battle_ship)
-      link_to(battle_ship.name_with_grade, battle_ship.battle_user)
+    def user_link2(battle_ship)
+      link_to(battle_ship.name_with_grade, battle_ship.user)
     end
 
     def swars_battle_state_info_decorate(record)
@@ -227,8 +227,8 @@ module Swars
         filename = -> {
           parts = []
           parts << "shogiwars"
-          if @battle_user
-            parts << @battle_user.user_key
+          if @user
+            parts << @user.user_key
           end
           parts << Time.current.strftime("%Y%m%d%H%M%S")
           if current_tags
@@ -254,11 +254,11 @@ module Swars
 
     def row_build(record)
       {}.tap do |row|
-        if @battle_user
-          l_ship = record.myself(@battle_user)
-          r_ship = record.rival(@battle_user)
+        if @user
+          l_ship = record.myself(@user)
+          r_ship = record.rival(@user)
         else
-          if record.win_battle_user
+          if record.win_user
             l_ship = record.battle_ships.judge_key_eq(:win)
             r_ship = record.battle_ships.judge_key_eq(:lose)
           else
@@ -267,16 +267,16 @@ module Swars
           end
         end
 
-        if @battle_user
-          row["対象プレイヤー"] = record.win_lose_str(l_ship.battle_user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.battle_user)
-          row["対戦相手"]       = record.win_lose_str(r_ship.battle_user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.battle_user)
+        if @user
+          row["対象プレイヤー"] = record.win_lose_str(l_ship.user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.user)
+          row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.user)
         else
-          if record.win_battle_user
-            row["勝ち"] = icon_tag(:far, :circle) + battle_user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :times)  + battle_user_link2(r_ship)
+          if record.win_user
+            row["勝ち"] = icon_tag(:far, :circle) + user_link2(l_ship)
+            row["負け"] = icon_tag(:fas, :times)  + user_link2(r_ship)
           else
-            row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + battle_user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + battle_user_link2(r_ship)
+            row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
+            row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
           end
         end
 

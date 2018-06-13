@@ -5,7 +5,7 @@ ActsAsTaggableOn::Tag.destroy_all
 ActsAsTaggableOn::Tagging.destroy_all
 GeneralBattleRecord.all_import(limit: 10, reset: true)
 
-tp GeneralBattleUser
+tp GeneralUser
 
 tp GeneralBattleRecord.all.collect {|e| e.other_tag_list.join(",") }
 # >> ["2018-02-28 00:03:34", "begin", 0, 0]

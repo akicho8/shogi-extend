@@ -12,7 +12,7 @@
 # | battle_rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
 # | csa_seq                               | Csa seq                               | text(65535) | NOT NULL    |                       |       |
 # | battle_state_key                      | Battle state key                      | string(255) | NOT NULL    |                       | C     |
-# | win_battle_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::BattleUser#id | D     |
+# | win_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::User#id | D     |
 # | turn_max                              | 手数                                  | integer(4)  | NOT NULL    |                       |       |
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
 # | mountain_url                          | 将棋山脈URL                           | string(255) |             |                       |       |
@@ -23,7 +23,7 @@
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】Swars::BattleUserモデルで has_many :battle_records されていません
+# ・【警告:リレーション欠如】Swars::Userモデルで has_many :battle_records されていません
 #--------------------------------------------------------------------------------
 
 require "matrix"
@@ -31,14 +31,14 @@ require "matrix"
 class Swars::BattleRecord < ApplicationRecord
   include ConvertMethods
 
-  belongs_to :win_battle_user, class_name: "Swars::BattleUser", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。battle_ships.win.battle_user と同じ
+  belongs_to :win_user, class_name: "Swars::User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。battle_ships.win.user と同じ
 
   has_many :battle_ships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle_record
   delegate :rival, :myself, to: :battle_ships
 
   has_many :battle_access_logs, dependent: :destroy # アクセスログみたいもの
 
-  has_many :battle_users, through: :battle_ships do
+  has_many :users, through: :battle_ships do
     # 先手/後手プレイヤー
     def black
       first
@@ -162,21 +162,21 @@ class Swars::BattleRecord < ApplicationRecord
   end
 
   concerning :HelperMethods do
-    def winner_desuka?(battle_user)
-      if win_battle_user
-        win_battle_user == battle_user
+    def winner_desuka?(user)
+      if win_user
+        win_user == user
       end
     end
 
-    def lose_desuka?(battle_user)
-      if win_battle_user
-        win_battle_user != battle_user
+    def lose_desuka?(user)
+      if win_user
+        win_user != user
       end
     end
 
-    def win_lose_str(battle_user)
-      if win_battle_user
-        if winner_desuka?(battle_user)
+    def win_lose_str(user)
+      if win_user
+        if winner_desuka?(user)
           Fa.icon_tag(:far, :circle)
         else
           Fa.icon_tag(:fas, :times)
@@ -223,7 +223,7 @@ class Swars::BattleRecord < ApplicationRecord
       end
 
       def import(key, **params, &block)
-        counts = -> { Vector[Swars::BattleUser.count, Swars::BattleRecord.count] }
+        counts = -> { Vector[Swars::User.count, Swars::BattleRecord.count] }
         old = counts.call
         begin
           p [Time.current.to_s(:ymdhms), key, 'begin', old.to_a]
@@ -242,16 +242,16 @@ class Swars::BattleRecord < ApplicationRecord
 
       # Swars::BattleRecord.reception_import(limit: 10, sleep: 5)
       def reception_import(**params)
-        Swars::BattleUser.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(params[:limit] || 1).each do |battle_user|
-          basic_import(params.merge(user_key: battle_user.user_key))
+        Swars::User.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(params[:limit] || 1).each do |user|
+          basic_import(params.merge(user_key: user.user_key))
         end
       end
 
       # Swars::BattleRecord.expert_import
       # Swars::BattleRecord.expert_import(page_max: 3, sleep: 5)
       def expert_import(**params)
-        swars_battle_agent.legend_battle_user_keys.each do |battle_user_key|
-          basic_import(params.merge(user_key: battle_user_key))
+        swars_battle_agent.legend_user_keys.each do |user_key|
+          basic_import(params.merge(user_key: user_key))
         end
       end
 
@@ -263,22 +263,22 @@ class Swars::BattleRecord < ApplicationRecord
         if true
           if v = params[:battle_grade_key_gteq]
             priority = Swars::BattleGradeInfo.fetch(v).priority
-            s = s.joins(battle_user: :battle_grade).where(Swars::BattleGrade.arel_table[:priority].lteq(priority))
+            s = s.joins(user: :battle_grade).where(Swars::BattleGrade.arel_table[:priority].lteq(priority))
           end
         end
-        s = s.group(:battle_user_id).select(:battle_user_id)
+        s = s.group(:user_id).select(:user_id)
         s = s.joins(:battle_record).order("max(#{Swars::BattleRecord.table_name}.battled_at) desc")
         s = s.limit(params[:limit] || 1)
-        # SELECT  `battle_ships`.`battle_user_id` FROM `battle_ships` INNER JOIN `battle_users` ON `battle_users`.`id` = `battle_ships`.`battle_user_id` INNER JOIN `battle_grades` ON `battle_grades`.`id` = `battle_users`.`battle_grade_id` INNER JOIN `battle_records` ON `battle_records`.`id` = `battle_ships`.`battle_record_id` WHERE (`battle_grades`.`priority` <= 8) GROUP BY `battle_ships`.`battle_user_id` ORDER BY max(battle_records.battled_at) desc LIMIT 1
-        battle_user_ids = s.pluck(:battle_user_id)
+        # SELECT  `battle_ships`.`user_id` FROM `battle_ships` INNER JOIN `users` ON `users`.`id` = `battle_ships`.`user_id` INNER JOIN `battle_grades` ON `battle_grades`.`id` = `users`.`battle_grade_id` INNER JOIN `battle_records` ON `battle_records`.`id` = `battle_ships`.`battle_record_id` WHERE (`battle_grades`.`priority` <= 8) GROUP BY `battle_ships`.`user_id` ORDER BY max(battle_records.battled_at) desc LIMIT 1
+        user_ids = s.pluck(:user_id)
 
         # 最近取り込んだプレイヤー limit 人取得
-        # battle_user_ids = Swars::BattleShip.group(:battle_user_id).select(:battle_user_id).order("max(created_at) desc").limit(params[:limit] || 1).pluck(:battle_user_id)
+        # user_ids = Swars::BattleShip.group(:user_id).select(:user_id).order("max(created_at) desc").limit(params[:limit] || 1).pluck(:user_id)
 
-        battle_users = Swars::BattleUser.find(battle_user_ids)
+        users = Swars::User.find(user_ids)
 
-        battle_users.each do |battle_user|
-          basic_import(params.merge(user_key: battle_user.user_key))
+        users.each do |user|
+          basic_import(params.merge(user_key: user.user_key))
         end
       end
 
@@ -315,9 +315,9 @@ class Swars::BattleRecord < ApplicationRecord
             #   if v = params[:battle_grade_key_gteq]
             #     v = Swars::BattleGradeInfo.fetch(v)
             #     # 取得してないときもあるため
-            #     if battle_user_infos = history[:battle_user_infos]
+            #     if user_infos = history[:user_infos]
             #       # 両方初段以上ならOK
-            #       if battle_user_infos.all? { |e| Swars::BattleGradeInfo.fetch(e[:battle_grade_key]).priority <= v.priority }
+            #       if user_infos.all? { |e| Swars::BattleGradeInfo.fetch(e[:battle_grade_key]).priority <= v.priority }
             #       else
             #         next
             #       end
@@ -350,12 +350,12 @@ class Swars::BattleRecord < ApplicationRecord
         #   return
         # end
 
-        battle_users = info[:battle_user_infos].collect do |e|
-          Swars::BattleUser.find_or_initialize_by(user_key: e[:user_key]).tap do |battle_user|
+        users = info[:user_infos].collect do |e|
+          Swars::User.find_or_initialize_by(user_key: e[:user_key]).tap do |user|
             battle_grade = Swars::BattleGrade.find_by!(unique_key: e[:battle_grade_key])
-            battle_user.battle_grade = battle_grade # 常にランクを更新する
+            user.battle_grade = battle_grade # 常にランクを更新する
             begin
-              battle_user.save!
+              user.save!
             rescue ActiveRecord::RecordNotUnique
             end
           end
@@ -375,8 +375,8 @@ class Swars::BattleRecord < ApplicationRecord
           battle_record.battle_state_key = info[:__battle_state_key]
         end
 
-        info[:battle_user_infos].each.with_index do |e, i|
-          battle_user = Swars::BattleUser.find_by!(user_key: e[:user_key])
+        info[:user_infos].each.with_index do |e, i|
+          user = Swars::User.find_by!(user_key: e[:user_key])
           battle_grade = Swars::BattleGrade.find_by!(unique_key: e[:battle_grade_key])
 
           if winner_index
@@ -385,13 +385,13 @@ class Swars::BattleRecord < ApplicationRecord
             judge_key = :draw
           end
 
-          battle_record.battle_ships.build(battle_user:  battle_user, battle_grade: battle_grade, judge_key: judge_key, location_key: Warabi::Location.fetch(i).key)
+          battle_record.battle_ships.build(user:  user, battle_grade: battle_grade, judge_key: judge_key, location_key: Warabi::Location.fetch(i).key)
         end
 
         # SQLをシンプルにするために勝者だけ、所有者的な意味で、Swars::BattleRecord 自体に入れとく
         # いらんかったらあとでとる
         if winner_index
-          battle_record.win_battle_user = battle_record.battle_ships[winner_index].battle_user
+          battle_record.win_user = battle_record.battle_ships[winner_index].user
         end
 
         begin

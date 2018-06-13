@@ -13,7 +13,7 @@
     activerecord: {
       models: {
         general_battle_record: "対局情報",
-        general_battle_user:   "対局者",
+        general_user:   "対局者",
         general_battle_ship:   "対局時の両者",
       },
       attributes: {

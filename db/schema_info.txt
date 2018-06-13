@@ -126,7 +126,7 @@
 
 # == Schema Information ==
 #
-# 対局者テーブル (general_battle_users as GeneralBattleUser)
+# 対局者テーブル (general_users as GeneralUser)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
@@ -207,7 +207,7 @@
 # | battle_rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
 # | csa_seq                               | Csa seq                               | text(65535) | NOT NULL    |                       |       |
 # | battle_state_key                      | Battle state key                      | string(255) | NOT NULL    |                       | C     |
-# | win_battle_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::BattleUser#id | D     |
+# | win_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::User#id | D     |
 # | turn_max                              | 手数                                  | integer(4)  | NOT NULL    |                       |       |
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
 # | mountain_url                          | 将棋山脈URL                           | string(255) |             |                       |       |
@@ -218,7 +218,7 @@
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】Swars::BattleUserモデルで has_many :battle_records されていません
+# ・【警告:リレーション欠如】Swars::Userモデルで has_many :battle_records されていません
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -247,7 +247,7 @@
 # |------------------------+---------------------+-------------+-------------+-------------------------+---------|
 # | id                     | ID                  | integer(8)  | NOT NULL PK |                         |         |
 # | battle_record_id | Swars battle record | integer(8)  | NOT NULL    | => Swars::BattleRecord#id | A! B! C |
-# | battle_user_id   | Swars battle user   | integer(8)  | NOT NULL    | => Swars::BattleUser#id   | B! D    |
+# | user_id   | Swars battle user   | integer(8)  | NOT NULL    | => Swars::User#id   | B! D    |
 # | battle_grade_id  | Swars battle grade  | integer(8)  | NOT NULL    | => Swars::BattleGrade#id  | E       |
 # | judge_key              | Judge key           | string(255) | NOT NULL    |                         | F       |
 # | location_key           | Location key        | string(255) | NOT NULL    |                         | A! G    |
@@ -258,13 +258,13 @@
 #
 #- 備考 -------------------------------------------------------------------------
 # ・Swars::BattleShip モデルは Swars::BattleRecord モデルから has_many :battle_ships されています。
-# ・Swars::BattleShip モデルは Swars::BattleUser モデルから has_many :battle_ships されています。
-# ・Swars::BattleShip モデルは Swars::BattleGrade モデルから has_many :battle_users されています。
+# ・Swars::BattleShip モデルは Swars::User モデルから has_many :battle_ships されています。
+# ・Swars::BattleShip モデルは Swars::BattleGrade モデルから has_many :users されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# 将棋ウォーズユーザーテーブル (battle_users as Swars::BattleUser)
+# 将棋ウォーズユーザーテーブル (users as Swars::User)
 #
 # |------------------------------------+------------------------------------+-------------+-------------+------------------------+-------|
 # | カラム名                           | 意味                               | タイプ      | 属性        | 参照                   | INDEX |
@@ -279,7 +279,7 @@
 # |------------------------------------+------------------------------------+-------------+-------------+------------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::BattleUser モデルは Swars::BattleGrade モデルから has_many :battle_users されています。
+# ・Swars::User モデルは Swars::BattleGrade モデルから has_many :users されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -290,13 +290,13 @@
 # | カラム名             | 意味              | タイプ     | 属性        | 参照                  | INDEX |
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 # | id                   | ID                | integer(8) | NOT NULL PK |                       |       |
-# | battle_user_id | Swars battle user | integer(8) | NOT NULL    | => Swars::BattleUser#id | A     |
+# | user_id | Swars battle user | integer(8) | NOT NULL    | => Swars::User#id | A     |
 # | created_at           | 作成日時          | datetime   | NOT NULL    |                       |       |
 # | updated_at           | 更新日時          | datetime   | NOT NULL    |                       |       |
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::SearchLog モデルは Swars::BattleUser モデルから has_many :battle_ships されています。
+# ・Swars::SearchLog モデルは Swars::User モデルから has_many :battle_ships されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==

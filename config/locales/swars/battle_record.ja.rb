@@ -13,7 +13,7 @@
     activerecord: {
       models: {
         battle_record: "将棋ウォーズ対戦情報",
-        battle_user: "将棋ウォーズユーザー",
+        user: "将棋ウォーズユーザー",
         battle_ship: "対局と対局者の対応",
       },
       attributes: {

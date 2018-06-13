@@ -77,14 +77,14 @@ class GeneralBattleRecord < ApplicationRecord
 
       def import(key, **params)
         begin
-          p [Time.current.to_s(:ymdhms), "begin", GeneralBattleUser.count, GeneralBattleRecord.count] unless Rails.env.test?
+          p [Time.current.to_s(:ymdhms), "begin", GeneralUser.count, GeneralBattleRecord.count] unless Rails.env.test?
           public_send(key, params)
         rescue => error
           raise error
         ensure
           unless Rails.env.test?
             puts
-            p [Time.current.to_s(:ymdhms), "end__", GeneralBattleUser.count, GeneralBattleRecord.count, error].compact
+            p [Time.current.to_s(:ymdhms), "end__", GeneralUser.count, GeneralBattleRecord.count, error].compact
           end
         end
       end
@@ -108,7 +108,7 @@ class GeneralBattleRecord < ApplicationRecord
           files = files.sample(v)
         end
         if params[:reset]
-          GeneralBattleUser.destroy_all
+          GeneralUser.destroy_all
           GeneralBattleRecord.destroy_all
         end
         files.each do |file|
@@ -155,7 +155,7 @@ class GeneralBattleRecord < ApplicationRecord
 
       meta_info[:simple_names].each do |pair|
         pair.each do |names|
-          GeneralBattleUser.find_or_create_by(name: names.first)
+          GeneralUser.find_or_create_by(name: names.first)
         end
       end
 

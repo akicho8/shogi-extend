@@ -43,11 +43,11 @@ end
 # >> | general_battle_ships | index_general_battle_ships_on_position                 | false  | ["position"]                                 | {}      |        |       |      | btree |         |
 # >> |----------------------+--------------------------------------------------------+--------+----------------------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> general_battle_users
+# >> general_users
 # >> |----------------------+------------------------------------+--------+----------+---------+--------+-------+------+-------+---------|
 # >> | table                | name                               | unique | columns  | lengths | orders | where | type | using | comment |
 # >> |----------------------+------------------------------------+--------+----------+---------+--------+-------+------+-------+---------|
-# >> | general_battle_users | index_general_battle_users_on_name | true   | ["name"] | {}      |        |       |      | btree |         |
+# >> | general_users | index_general_users_on_name | true   | ["name"] | {}      |        |       |      | btree |         |
 # >> |----------------------+------------------------------------+--------+----------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> schema_migrations
@@ -67,7 +67,7 @@ end
 # >> | battle_records | index_battle_records_on_battle_key               | true   | ["battle_key"]               | {}      |        |       |      | btree |         |
 # >> | battle_records | index_battle_records_on_battle_rule_key          | false  | ["battle_rule_key"]          | {}      |        |       |      | btree |         |
 # >> | battle_records | index_battle_records_on_battle_state_key         | false  | ["battle_state_key"]         | {}      |        |       |      | btree |         |
-# >> | battle_records | index_battle_records_on_win_battle_user_id | false  | ["win_battle_user_id"] | {}      |        |       |      | btree |         |
+# >> | battle_records | index_battle_records_on_win_user_id | false  | ["win_user_id"] | {}      |        |       |      | btree |         |
 # >> |----------------------+--------------------------------------------------------+--------+------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> battle_ships
@@ -75,28 +75,28 @@ end
 # >> | table              | name                                               | unique | columns                                            | lengths | orders | where | type | using | comment |
 # >> |--------------------+----------------------------------------------------+--------+----------------------------------------------------+---------+--------+-------+------+-------+---------|
 # >> | battle_ships | battle_ships_sbri_lk                         | true   | ["battle_record_id", "location_key"]         | {}      |        |       |      | btree |         |
-# >> | battle_ships | battle_ships_sbri_sbui                       | true   | ["battle_record_id", "battle_user_id"] | {}      |        |       |      | btree |         |
+# >> | battle_ships | battle_ships_sbri_sbui                       | true   | ["battle_record_id", "user_id"] | {}      |        |       |      | btree |         |
 # >> | battle_ships | index_battle_ships_on_battle_record_id | false  | ["battle_record_id"]                         | {}      |        |       |      | btree |         |
-# >> | battle_ships | index_battle_ships_on_battle_user_id   | false  | ["battle_user_id"]                           | {}      |        |       |      | btree |         |
+# >> | battle_ships | index_battle_ships_on_user_id   | false  | ["user_id"]                           | {}      |        |       |      | btree |         |
 # >> | battle_ships | index_battle_ships_on_battle_grade_id  | false  | ["battle_grade_id"]                          | {}      |        |       |      | btree |         |
 # >> | battle_ships | index_battle_ships_on_judge_key              | false  | ["judge_key"]                                      | {}      |        |       |      | btree |         |
 # >> | battle_ships | index_battle_ships_on_location_key           | false  | ["location_key"]                                   | {}      |        |       |      | btree |         |
 # >> | battle_ships | index_battle_ships_on_position               | false  | ["position"]                                       | {}      |        |       |      | btree |         |
 # >> |--------------------+----------------------------------------------------+--------+----------------------------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> battle_users
+# >> users
 # >> |--------------------+---------------------------------------------------+--------+---------------------------+---------+--------+-------+------+-------+---------|
 # >> | table              | name                                              | unique | columns                   | lengths | orders | where | type | using | comment |
 # >> |--------------------+---------------------------------------------------+--------+---------------------------+---------+--------+-------+------+-------+---------|
-# >> | battle_users | index_battle_users_on_user_key                   | true   | ["user_key"]                   | {}      |        |       |      | btree |         |
-# >> | battle_users | index_battle_users_on_battle_grade_id | false  | ["battle_grade_id"] | {}      |        |       |      | btree |         |
+# >> | users | index_users_on_user_key                   | true   | ["user_key"]                   | {}      |        |       |      | btree |         |
+# >> | users | index_users_on_battle_grade_id | false  | ["battle_grade_id"] | {}      |        |       |      | btree |         |
 # >> |--------------------+---------------------------------------------------+--------+---------------------------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> search_logs
 # >> |------------------------------------+------------------------------------------------------------------+--------+--------------------------+---------+--------+-------+------+-------+---------|
 # >> | table                              | name                                                             | unique | columns                  | lengths | orders | where | type | using | comment |
 # >> |------------------------------------+------------------------------------------------------------------+--------+--------------------------+---------+--------+-------+------+-------+---------|
-# >> | search_logs | index_search_logs_on_battle_user_id | false  | ["battle_user_id"] | {}      |        |       |      | btree |         |
+# >> | search_logs | index_search_logs_on_user_id | false  | ["user_id"] | {}      |        |       |      | btree |         |
 # >> |------------------------------------+------------------------------------------------------------------+--------+--------------------------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> taggings
