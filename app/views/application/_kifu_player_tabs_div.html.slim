@@ -1,0 +1,19 @@
+.columns
+  .column.has-text-left
+    #kifu_player_tabs_div
+      label.label 棋譜
+      b-tabs v-model="kifuActiveTab"
+        - KifuFormatInfo.each do |e|
+          b-tab-item label=e.name
+            - if converted_info = current_record.converted_infos.text_format_eq(e.key).take
+              pre.pre-wrap= converted_info.text_body
+
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    new Vue({
+      el: "#kifu_player_tabs_div",
+      data: {
+        kifuActiveTab: 0,
+      }
+    })
+  })

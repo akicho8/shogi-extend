@@ -2,7 +2,7 @@
 
 .columns
   .column
-    = form_with(url: [:resource_ns1, :swars, :w], method: :get, skip_enforcing_utf8: true) do |form|
+    = form_with(url: [:swars, :w], method: :get, skip_enforcing_utf8: true) do |form|
       .field.has-addons
         .control.is-expanded
           = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_query_hash.blank?)
@@ -60,9 +60,9 @@
                   b-dropdown-item :has-link="true" :paddingless="true"
                     = link_to("ウォーズ", swars_real_battle_url(current_record), target: "_blank")
                   b-dropdown-item :has-link="true" :paddingless="true"
-                    = link_to("将棋山脈", "", :data => {:mountain_url_get_path => url_for([:resource_ns1, current_record, mountain: true, format: "json"])}, "@click.prevent" => "goto_mountain_click")
+                    = link_to("将棋山脈", "", :data => {:mountain_url_get_path => url_for([current_record, mountain: true, format: "json"])}, "@click.prevent" => "goto_mountain_click")
                   b-dropdown-item :has-link="true" :paddingless="true"
-                    = link_to("KI2 コピー", "#", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "ki2"])})
+                    = link_to("KI2 コピー", "#", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([current_record, format: "ki2"])})
 
               .card-content
                 - if converted_info = current_record.converted_infos.text_format_eq(:sfen).take
@@ -77,9 +77,9 @@
                       :volume=AppConfig[:volume]
                     )
               footer.card-footer
-                = link_to("コピー", "#", "class": "card-footer-item", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([:resource_ns1, current_record, format: "kif"])})
+                = link_to("コピー", "#", "class": "card-footer-item", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([current_record, format: "kif"])})
                 = link_to("Tweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')", "class": "card-footer-item")
-                = link_to("詳細", [:resource_ns1, current_record], "class": "card-footer-item")
+                = link_to("詳細", [current_record], "class": "card-footer-item")
 
 - if @rows
   .columns

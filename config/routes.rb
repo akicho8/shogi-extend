@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :users, path: "online/users"
   end
 
-  root "resource_ns1/swars/battle_rooms#index"
+  root "resource_ns1/battle_rooms#index"
 
   ################################################################################ 2ch棋譜検索
 
@@ -24,20 +24,18 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋ウォーズ棋譜検索
 
-  namespace :resource_ns1, path: "" do
-    namespace :swars, path: "" do
-      resources :battle_records, path: "wr", only: [:index, :show] do
-        resources :tag_cloud, :only => :index, :module => :battle_records
-      end
-
-      get "w/:query", to: "battle_records#index", as: :search
-      get "w",        to: "battle_records#index"
-      get "w-cloud",  to: "battle_records/tag_cloud#index", as: :swars_cloud
+  namespace :swars, path: "" do
+    resources :battle_records, path: "wr", only: [:index, :show] do
+      resources :tag_cloud, :only => :index, :module => :battle_records
     end
+
+    get "w/:query", to: "battle_records#index", as: :search
+    get "w",        to: "battle_records#index"
+    get "w-cloud",  to: "battle_records/tag_cloud#index", as: :swars_cloud
   end
 
   resolve "Swars::BattleUser" do |battle_user, options|
-    resource_ns1_swars_search_path(query: battle_user.to_param)
+    swars_search_path(query: battle_user.to_param)
   end
 
   ################################################################################ 棋譜変換

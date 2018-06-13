@@ -9,4 +9,4 @@ hr
   - current_record.showable_tag_list.each do |e|
     span.tag= link_to(e, resource_ns1_general_search_path(e))
 
-= render partial: "resource_ns1/swars/battle_records/kifu_player"
+= render :partial => "kifu_player", locals: {ns_prefix: :resource_ns1}

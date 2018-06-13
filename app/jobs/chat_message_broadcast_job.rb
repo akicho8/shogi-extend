@@ -10,6 +10,6 @@ class ChatMessageBroadcastJob < ApplicationJob
 
   # HTMLを作る
   def render_html(chat_message)
-    ApplicationController.renderer.render(partial: "resource_ns1/swars/battle_rooms/chat_message", locals: {chat_message: chat_message})
+    ApplicationController.renderer.render(partial: "resource_ns1/battle_rooms/chat_message", locals: {chat_message: chat_message})
   end
 end

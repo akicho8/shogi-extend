@@ -1,4 +1,5 @@
-p.title.is-2.yumincho= "変換結果"
+.title.is-2.yumincho= "変換結果"
 hr
+
 .has-text-centered
-  = render partial: "resource_ns1/swars/battle_records/kifu_player"
+  = render :partial => "kifu_player", locals: {ns_prefix: :resource_ns1}
