@@ -6,8 +6,8 @@ class JudgeInfo
     {key: :draw, name: "引き分け", },
   ]
 
-  def swars_battle_ships
-    SwarsBattleShip.where(judge_key: key)
+  def battle_ships
+    Swars::BattleShip.where(judge_key: key)
   end
 
   def general_battle_ships

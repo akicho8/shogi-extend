@@ -8,6 +8,7 @@ if $0 == "-"
 end
 
 Kernel.module_eval do
+  p ["#{__FILE__}:#{__LINE__}", __method__, :ams_sr]
   def ams_sr(*args)
     ActiveModelSerializers::SerializableResource.new(*args).as_json
   end

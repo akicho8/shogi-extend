@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-SwarsBattleRecord.destroy_all
-SwarsBattleRecord.import(:basic_import, user_key: "hanairobiyori")
+Swars::BattleRecord.destroy_all
+Swars::BattleRecord.import(:basic_import, user_key: "hanairobiyori")
 sleep(1)
-SwarsBattleRecord.import(:old_record_destroy, time: 0.seconds.ago)
+Swars::BattleRecord.import(:old_record_destroy, time: 0.seconds.ago)
 
 GeneralBattleRecord.import(:all_import, reset: true, sample: 1)
 sleep(2)

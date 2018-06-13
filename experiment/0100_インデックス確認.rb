@@ -17,11 +17,11 @@ end
 # >> | converted_infos | index_converted_infos_on_text_format                         | false  | ["text_format"]                        | {}      |        |       |      | btree |         |
 # >> |-----------------+--------------------------------------------------------------+--------+----------------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> free_swars_battle_records
+# >> free_battle_records
 # >> |---------------------------+-----------------------------------------------+--------+----------------+---------+--------+-------+------+-------+---------|
 # >> | table                     | name                                          | unique | columns        | lengths | orders | where | type | using | comment |
 # >> |---------------------------+-----------------------------------------------+--------+----------------+---------+--------+-------+------+-------+---------|
-# >> | free_swars_battle_records | index_free_swars_battle_records_on_unique_key | false  | ["unique_key"] | {}      |        |       |      | btree |         |
+# >> | free_battle_records | index_free_battle_records_on_unique_key | false  | ["unique_key"] | {}      |        |       |      | btree |         |
 # >> |---------------------------+-----------------------------------------------+--------+----------------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> general_battle_records
@@ -52,51 +52,51 @@ end
 # >> 
 # >> schema_migrations
 # >> 
-# >> swars_battle_grades
+# >> battle_grades
 # >> |---------------------+-----------------------------------------+--------+----------------+---------+--------+-------+------+-------+---------|
 # >> | table               | name                                    | unique | columns        | lengths | orders | where | type | using | comment |
 # >> |---------------------+-----------------------------------------+--------+----------------+---------+--------+-------+------+-------+---------|
-# >> | swars_battle_grades | index_swars_battle_grades_on_unique_key | true   | ["unique_key"] | {}      |        |       |      | btree |         |
-# >> | swars_battle_grades | index_swars_battle_grades_on_priority   | false  | ["priority"]   | {}      |        |       |      | btree |         |
+# >> | battle_grades | index_battle_grades_on_unique_key | true   | ["unique_key"] | {}      |        |       |      | btree |         |
+# >> | battle_grades | index_battle_grades_on_priority   | false  | ["priority"]   | {}      |        |       |      | btree |         |
 # >> |---------------------+-----------------------------------------+--------+----------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> swars_battle_records
+# >> battle_records
 # >> |----------------------+--------------------------------------------------------+--------+------------------------------+---------+--------+-------+------+-------+---------|
 # >> | table                | name                                                   | unique | columns                      | lengths | orders | where | type | using | comment |
 # >> |----------------------+--------------------------------------------------------+--------+------------------------------+---------+--------+-------+------+-------+---------|
-# >> | swars_battle_records | index_swars_battle_records_on_battle_key               | true   | ["battle_key"]               | {}      |        |       |      | btree |         |
-# >> | swars_battle_records | index_swars_battle_records_on_battle_rule_key          | false  | ["battle_rule_key"]          | {}      |        |       |      | btree |         |
-# >> | swars_battle_records | index_swars_battle_records_on_battle_state_key         | false  | ["battle_state_key"]         | {}      |        |       |      | btree |         |
-# >> | swars_battle_records | index_swars_battle_records_on_win_swars_battle_user_id | false  | ["win_swars_battle_user_id"] | {}      |        |       |      | btree |         |
+# >> | battle_records | index_battle_records_on_battle_key               | true   | ["battle_key"]               | {}      |        |       |      | btree |         |
+# >> | battle_records | index_battle_records_on_battle_rule_key          | false  | ["battle_rule_key"]          | {}      |        |       |      | btree |         |
+# >> | battle_records | index_battle_records_on_battle_state_key         | false  | ["battle_state_key"]         | {}      |        |       |      | btree |         |
+# >> | battle_records | index_battle_records_on_win_battle_user_id | false  | ["win_battle_user_id"] | {}      |        |       |      | btree |         |
 # >> |----------------------+--------------------------------------------------------+--------+------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> swars_battle_ships
+# >> battle_ships
 # >> |--------------------+----------------------------------------------------+--------+----------------------------------------------------+---------+--------+-------+------+-------+---------|
 # >> | table              | name                                               | unique | columns                                            | lengths | orders | where | type | using | comment |
 # >> |--------------------+----------------------------------------------------+--------+----------------------------------------------------+---------+--------+-------+------+-------+---------|
-# >> | swars_battle_ships | swars_battle_ships_sbri_lk                         | true   | ["swars_battle_record_id", "location_key"]         | {}      |        |       |      | btree |         |
-# >> | swars_battle_ships | swars_battle_ships_sbri_sbui                       | true   | ["swars_battle_record_id", "swars_battle_user_id"] | {}      |        |       |      | btree |         |
-# >> | swars_battle_ships | index_swars_battle_ships_on_swars_battle_record_id | false  | ["swars_battle_record_id"]                         | {}      |        |       |      | btree |         |
-# >> | swars_battle_ships | index_swars_battle_ships_on_swars_battle_user_id   | false  | ["swars_battle_user_id"]                           | {}      |        |       |      | btree |         |
-# >> | swars_battle_ships | index_swars_battle_ships_on_swars_battle_grade_id  | false  | ["swars_battle_grade_id"]                          | {}      |        |       |      | btree |         |
-# >> | swars_battle_ships | index_swars_battle_ships_on_judge_key              | false  | ["judge_key"]                                      | {}      |        |       |      | btree |         |
-# >> | swars_battle_ships | index_swars_battle_ships_on_location_key           | false  | ["location_key"]                                   | {}      |        |       |      | btree |         |
-# >> | swars_battle_ships | index_swars_battle_ships_on_position               | false  | ["position"]                                       | {}      |        |       |      | btree |         |
+# >> | battle_ships | battle_ships_sbri_lk                         | true   | ["battle_record_id", "location_key"]         | {}      |        |       |      | btree |         |
+# >> | battle_ships | battle_ships_sbri_sbui                       | true   | ["battle_record_id", "battle_user_id"] | {}      |        |       |      | btree |         |
+# >> | battle_ships | index_battle_ships_on_battle_record_id | false  | ["battle_record_id"]                         | {}      |        |       |      | btree |         |
+# >> | battle_ships | index_battle_ships_on_battle_user_id   | false  | ["battle_user_id"]                           | {}      |        |       |      | btree |         |
+# >> | battle_ships | index_battle_ships_on_battle_grade_id  | false  | ["battle_grade_id"]                          | {}      |        |       |      | btree |         |
+# >> | battle_ships | index_battle_ships_on_judge_key              | false  | ["judge_key"]                                      | {}      |        |       |      | btree |         |
+# >> | battle_ships | index_battle_ships_on_location_key           | false  | ["location_key"]                                   | {}      |        |       |      | btree |         |
+# >> | battle_ships | index_battle_ships_on_position               | false  | ["position"]                                       | {}      |        |       |      | btree |         |
 # >> |--------------------+----------------------------------------------------+--------+----------------------------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> swars_battle_users
+# >> battle_users
 # >> |--------------------+---------------------------------------------------+--------+---------------------------+---------+--------+-------+------+-------+---------|
 # >> | table              | name                                              | unique | columns                   | lengths | orders | where | type | using | comment |
 # >> |--------------------+---------------------------------------------------+--------+---------------------------+---------+--------+-------+------+-------+---------|
-# >> | swars_battle_users | index_swars_battle_users_on_user_key                   | true   | ["user_key"]                   | {}      |        |       |      | btree |         |
-# >> | swars_battle_users | index_swars_battle_users_on_swars_battle_grade_id | false  | ["swars_battle_grade_id"] | {}      |        |       |      | btree |         |
+# >> | battle_users | index_battle_users_on_user_key                   | true   | ["user_key"]                   | {}      |        |       |      | btree |         |
+# >> | battle_users | index_battle_users_on_battle_grade_id | false  | ["battle_grade_id"] | {}      |        |       |      | btree |         |
 # >> |--------------------+---------------------------------------------------+--------+---------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> swars_battle_user_receptions
+# >> battle_user_receptions
 # >> |------------------------------------+------------------------------------------------------------------+--------+--------------------------+---------+--------+-------+------+-------+---------|
 # >> | table                              | name                                                             | unique | columns                  | lengths | orders | where | type | using | comment |
 # >> |------------------------------------+------------------------------------------------------------------+--------+--------------------------+---------+--------+-------+------+-------+---------|
-# >> | swars_battle_user_receptions | index_swars_battle_user_receptions_on_swars_battle_user_id | false  | ["swars_battle_user_id"] | {}      |        |       |      | btree |         |
+# >> | battle_user_receptions | index_battle_user_receptions_on_battle_user_id | false  | ["battle_user_id"] | {}      |        |       |      | btree |         |
 # >> |------------------------------------+------------------------------------------------------------------+--------+--------------------------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> taggings
