@@ -10,7 +10,7 @@
 # | user_key                           | User key                           | string(255) | NOT NULL    |                        | A!    |
 # | battle_grade_id              | Swars battle grade                 | integer(8)  | NOT NULL    | => Swars::BattleGrade#id | B     |
 # | last_reception_at                  | Last reception at                  | datetime    |             |                        |       |
-# | battle_user_receptions_count | Swars battle user receptions count | integer(4)  | DEFAULT(0)  |                        |       |
+# | search_logs_count | Swars battle user receptions count | integer(4)  | DEFAULT(0)  |                        |       |
 # | created_at                         | 作成日時                           | datetime    | NOT NULL    |                        |       |
 # | updated_at                         | 更新日時                           | datetime    | NOT NULL    |                        |       |
 # |------------------------------------+------------------------------------+-------------+-------------+------------------------+-------|
@@ -23,7 +23,7 @@ class Swars::BattleUser < ApplicationRecord
   has_many :battle_ships, dependent: :destroy      # 対局時の情報(複数)
   has_many :battle_records, through: :battle_ships # 対局(複数)
   belongs_to :battle_grade                         # すべてのモードのなかで一番よい段級位
-  has_many :battle_user_receptions, dependent: :destroy   # 明示的に取り込んだ日時の記録
+  has_many :search_logs, dependent: :destroy   # 明示的に取り込んだ日時の記録
 
   before_validation do
     self.battle_grade ||= Swars::BattleGrade.last

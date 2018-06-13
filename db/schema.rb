@@ -205,18 +205,18 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["position"], name: "index_swars_battle_ships_on_position"
   end
 
-  create_table "swars_battle_user_receptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "swars_search_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_user_id", null: false, comment: "プレイヤー"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_user_id"], name: "index_swars_battle_user_receptions_on_battle_user_id"
+    t.index ["battle_user_id"], name: "index_swars_search_logs_on_battle_user_id"
   end
 
   create_table "swars_battle_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "user_key", null: false, comment: "対局者名"
     t.bigint "battle_grade_id", null: false, comment: "最高段級"
     t.datetime "last_reception_at", comment: "受容日時"
-    t.integer "battle_user_receptions_count", default: 0
+    t.integer "search_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_grade_id"], name: "index_swars_battle_users_on_battle_grade_id"

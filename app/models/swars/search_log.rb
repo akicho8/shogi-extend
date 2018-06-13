@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Swars battle user receptionテーブル (battle_user_receptions as Swars::BattleUserReception)
+# Swars battle user receptionテーブル (search_logs as Swars::SearchLog)
 #
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 # | カラム名             | 意味              | タイプ     | 属性        | 参照                  | INDEX |
@@ -13,9 +13,9 @@
 # |----------------------+-------------------+------------+-------------+-----------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::BattleUserReception モデルは Swars::BattleUser モデルから has_many :battle_ships されています。
+# ・Swars::SearchLog モデルは Swars::BattleUser モデルから has_many :battle_ships されています。
 #--------------------------------------------------------------------------------
 
-class Swars::BattleUserReception < ApplicationRecord
+class Swars::SearchLog < ApplicationRecord
   belongs_to :battle_user, counter_cache: true, touch: :last_reception_at
 end

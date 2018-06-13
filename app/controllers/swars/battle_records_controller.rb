@@ -66,7 +66,7 @@ module Swars
             else
               flash.now[:info] = "#{count_diff}件新しく見つかりました"
             end
-            @battle_user.battle_user_receptions.create!
+            @battle_user.search_logs.create!
           else
             flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
           end
