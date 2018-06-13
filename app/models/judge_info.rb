@@ -10,7 +10,7 @@ class JudgeInfo
     Swars::Membership.where(judge_key: key)
   end
 
-  def general_memberships
-    GeneralMembership.where(judge_key: key)
+  def memberships
+    General::Membership.where(judge_key: key)
   end
 end

@@ -108,19 +108,19 @@ module ConvertMethods
     end
 
     if y.nonzero?
-      list << h.link_to(("%04d" % y), h.resource_ns1_general_search_path("%04d" % y))
+      list << h.link_to(("%04d" % y), h.general_search_path("%04d" % y))
     else
       list << "????"
     end
 
     if m.nonzero?
-      list << h.link_to(("%02d" % m), h.resource_ns1_general_search_path("%04d/%02d" % [y, m]))
+      list << h.link_to(("%02d" % m), h.general_search_path("%04d/%02d" % [y, m]))
     else
       list << "??"
     end
 
     if d.nonzero?
-      list << h.link_to(("%02d" % d), h.resource_ns1_general_search_path("%04d/%02d/%02d" % [y, m, d]))
+      list << h.link_to(("%02d" % d), h.general_search_path("%04d/%02d/%02d" % [y, m, d]))
     else
       list << "??"
     end
@@ -160,7 +160,7 @@ module ConvertMethods
     if label != "平手"
       label = h.tag.span(label, :class => "text-danger")
     end
-    h.link_to(label, h.resource_ns1_general_search_path(name))
+    h.link_to(label, h.general_search_path(name))
   end
 
   def mountain_post_once

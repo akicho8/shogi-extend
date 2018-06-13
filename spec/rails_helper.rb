@@ -86,8 +86,8 @@ RSpec.configure do |config|
     end
 
     def general_battle_setup
-      if GeneralBattle.count.zero?
-        GeneralBattle.all_import
+      if General::Battle.count.zero?
+        General::Battle.all_import
       end
     end
   }

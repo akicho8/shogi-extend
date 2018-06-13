@@ -24,30 +24,30 @@ end
 # >> | free_battles | index_free_battles_on_unique_key | false  | ["unique_key"] | {}      |        |       |      | btree |         |
 # >> |---------------------------+-----------------------------------------------+--------+----------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> general_battles
+# >> general/battles
 # >> |------------------------+---------------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
 # >> | table                  | name                                              | unique | columns               | lengths | orders | where | type | using | comment |
 # >> |------------------------+---------------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
-# >> | general_battles | index_general_battles_on_battle_key        | true   | ["battle_key"]        | {}      |        |       |      | btree |         |
-# >> | general_battles | index_general_battles_on_general_battle_state_key | false  | ["general_battle_state_key"] | {}      |        |       |      | btree |         |
+# >> | general/battles | index_general/battles_on_battle_key        | true   | ["battle_key"]        | {}      |        |       |      | btree |         |
+# >> | general/battles | index_general/battles_on_battle_state_key | false  | ["battle_state_key"] | {}      |        |       |      | btree |         |
 # >> |------------------------+---------------------------------------------------+--------+-----------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> general_memberships
+# >> memberships
 # >> |----------------------+--------------------------------------------------------+--------+----------------------------------------------+---------+--------+-------+------+-------+---------|
 # >> | table                | name                                                   | unique | columns                                      | lengths | orders | where | type | using | comment |
 # >> |----------------------+--------------------------------------------------------+--------+----------------------------------------------+---------+--------+-------+------+-------+---------|
-# >> | general_memberships | general_memberships_gbri_lk                           | true   | ["general_battle_id", "location_key"] | {}      |        |       |      | btree |         |
-# >> | general_memberships | index_general_memberships_on_general_battle_id | false  | ["general_battle_id"]                 | {}      |        |       |      | btree |         |
-# >> | general_memberships | index_general_memberships_on_judge_key                | false  | ["judge_key"]                                | {}      |        |       |      | btree |         |
-# >> | general_memberships | index_general_memberships_on_location_key             | false  | ["location_key"]                             | {}      |        |       |      | btree |         |
-# >> | general_memberships | index_general_memberships_on_position                 | false  | ["position"]                                 | {}      |        |       |      | btree |         |
+# >> | memberships | memberships_gbri_lk                           | true   | ["general/battle_id", "location_key"] | {}      |        |       |      | btree |         |
+# >> | memberships | index_memberships_on_general/battle_id | false  | ["general/battle_id"]                 | {}      |        |       |      | btree |         |
+# >> | memberships | index_memberships_on_judge_key                | false  | ["judge_key"]                                | {}      |        |       |      | btree |         |
+# >> | memberships | index_memberships_on_location_key             | false  | ["location_key"]                             | {}      |        |       |      | btree |         |
+# >> | memberships | index_memberships_on_position                 | false  | ["position"]                                 | {}      |        |       |      | btree |         |
 # >> |----------------------+--------------------------------------------------------+--------+----------------------------------------------+---------+--------+-------+------+-------+---------|
 # >> 
-# >> general_users
+# >> general/users
 # >> |----------------------+------------------------------------+--------+----------+---------+--------+-------+------+-------+---------|
 # >> | table                | name                               | unique | columns  | lengths | orders | where | type | using | comment |
 # >> |----------------------+------------------------------------+--------+----------+---------+--------+-------+------+-------+---------|
-# >> | general_users | index_general_users_on_name | true   | ["name"] | {}      |        |       |      | btree |         |
+# >> | general/users | index_general/users_on_name | true   | ["name"] | {}      |        |       |      | btree |         |
 # >> |----------------------+------------------------------------+--------+----------+---------+--------+-------+------+-------+---------|
 # >> 
 # >> schema_migrations

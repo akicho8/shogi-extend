@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "battle_key", null: false, comment: "対局識別子"
     t.datetime "battled_at", comment: "対局開始日時"
     t.text "kifu_body", null: false, comment: "棋譜の断片"
-    t.string "general_battle_state_key", null: false, comment: "結果詳細"
+    t.string "battle_state_key", null: false, comment: "結果詳細"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.string "mountain_url", comment: "将棋山脈の変換後URL"
@@ -101,18 +101,18 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_key"], name: "index_general_battles_on_battle_key", unique: true
-    t.index ["general_battle_state_key"], name: "index_general_battles_on_general_battle_state_key"
+    t.index ["battle_state_key"], name: "index_general_battles_on_battle_state_key"
   end
 
   create_table "general_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "general_battle_id", null: false, comment: "対局"
+    t.bigint "battle_id", null: false, comment: "対局"
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "手番の順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["general_battle_id", "location_key"], name: "general_memberships_gbri_lk", unique: true
-    t.index ["general_battle_id"], name: "index_general_memberships_on_general_battle_id"
+    t.index ["battle_id", "location_key"], name: "general_memberships_126b7e47a41d11c2", unique: true
+    t.index ["battle_id"], name: "index_general_memberships_on_battle_id"
     t.index ["judge_key"], name: "index_general_memberships_on_judge_key"
     t.index ["location_key"], name: "index_general_memberships_on_location_key"
     t.index ["position"], name: "index_general_memberships_on_position"

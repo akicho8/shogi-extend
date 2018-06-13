@@ -21,8 +21,8 @@ if Rails.env.development?
 end
 
 if Rails.env.development?
-  GeneralBattle.all_import(limit: 2)
-  GeneralBattle.all_import
+  General::Battle.all_import(limit: 2)
+  General::Battle.all_import
 end
 
 if Rails.env.development?

@@ -12,9 +12,9 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |                   chat_messages | 0   |
 # >> |                 converted_infos | 192 |
 # >> |             free_battles | 33  |
-# >> |          general_battles | 5   |
-# >> |            general_memberships | 10  |
-# >> |            general_users | 10  |
+# >> |          general/battles | 5   |
+# >> |            memberships | 10  |
+# >> |            general/users | 10  |
 # >> |                  lobby_messages | 0   |
 # >> |                     memberships | 200 |
 # >> |               schema_migrations | 11  |

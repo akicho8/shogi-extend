@@ -8,18 +8,18 @@ Rails.application.routes.draw do
 
   ################################################################################ 2ch棋譜検索
 
-  namespace :resource_ns1, path: "" do
-    resources :general_battles, path: "sr", only: [:index, :show] do
-      resources :tag_cloud, :only => :index, :module => :general_battles
+  namespace :general, path: "" do
+    resources :battles, path: "sr", only: [:index, :show] do
+      resources :tag_cloud, :only => :index, :module => :battles
     end
 
-    get "s/:query", to: "general_battles#index", as: :general_search
-    get "s",        to: "general_battles#index"
-    get "s-cloud",  to: "general_battles/tag_cloud#index", as: :general_cloud
+    get "s/:query", to: "battles#index", as: :search
+    get "s",        to: "battles#index"
+    get "s-cloud",  to: "battles/tag_cloud#index", as: :cloud
   end
 
-  resolve "GeneralUser" do |general_user, options|
-    resource_ns1_general_search_path(query: general_user.to_param)
+  resolve "General::User" do |user, options|
+    general_search_path(query: user.to_param)
   end
 
   ################################################################################ 将棋ウォーズ棋譜検索
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
     get "w/:query", to: "battles#index", as: :search
     get "w",        to: "battles#index"
-    get "w-cloud",  to: "battles/tag_cloud#index", as: :swars_cloud
+    get "w-cloud",  to: "battles/tag_cloud#index", as: :cloud
   end
 
   resolve "Swars::User" do |user, options|

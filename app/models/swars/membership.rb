@@ -1,26 +1,27 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対局と対局者の対応テーブル (memberships as Swars::Membership)
+# Membershipテーブル (memberships as Membership)
 #
-# |------------------------+---------------------+-------------+-------------+-------------------------+---------|
-# | カラム名               | 意味                | タイプ      | 属性        | 参照                    | INDEX   |
-# |------------------------+---------------------+-------------+-------------+-------------------------+---------|
-# | id                     | ID                  | integer(8)  | NOT NULL PK |                         |         |
-# | battle_id | Swars battle record | integer(8)  | NOT NULL    | => Swars::Battle#id | A! B! C |
-# | user_id   | Swars battle user   | integer(8)  | NOT NULL    | => Swars::User#id   | B! D    |
-# | grade_id  | Swars battle grade  | integer(8)  | NOT NULL    | => Swars::Grade#id  | E       |
-# | judge_key              | Judge key           | string(255) | NOT NULL    |                         | F       |
-# | location_key           | Location key        | string(255) | NOT NULL    |                         | A! G    |
-# | position               | 順序                | integer(4)  |             |                         | H       |
-# | created_at             | 作成日時            | datetime    | NOT NULL    |                         |         |
-# | updated_at             | 更新日時            | datetime    | NOT NULL    |                         |         |
-# |------------------------+---------------------+-------------+-------------+-------------------------+---------|
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
+# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
+# | battle_room_id     | Battle room        | integer(8)  | NOT NULL    | => BattleRoom#id | A     |
+# | user_id            | User               | integer(8)  | NOT NULL    | => User#id       | B     |
+# | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
+# | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
+# | position           | 順序               | integer(4)  |             |                  | D     |
+# | standby_at         | Standby at         | datetime    |             |                  |       |
+# | fighting_at        | Fighting at        | datetime    |             |                  |       |
+# | time_up_trigger_at | Time up trigger at | datetime    |             |                  |       |
+# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
+# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
+# |--------------------+--------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Swars::Membership モデルは Swars::Battle モデルから has_many :memberships されています。
-# ・Swars::Membership モデルは Swars::User モデルから has_many :memberships されています。
-# ・Swars::Membership モデルは Swars::Grade モデルから has_many :users されています。
+# ・Membership モデルは BattleRoom モデルから has_many :memberships されています。
+# ・Membership モデルは User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 class Swars::Membership < ApplicationRecord

@@ -3,4 +3,4 @@ p.title.is-2.yumincho= "将棋ウォーズ棋譜検索"
 .tabs
   ul
     li class=("is-active" if params["controller"] == "swars/battles")           = link_to("検索", [:swars, :w])
-    li class=("is-active" if params["controller"] == "swars/battles/tag_cloud") = link_to("タグクラウド", [:swars, :swars_cloud])
+    li class=("is-active" if params["controller"] == "swars/battles/tag_cloud") = link_to("タグクラウド", [:swars, :cloud])

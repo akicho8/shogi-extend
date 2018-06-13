@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 `rm -fr __tactic_infos`
 Warabi::TacticInfo.all_elements.each do |e|
-  record = GeneralBattle.tagged_with(e.name, on: "#{e.tactic_info.key}_tags").order(:turn_max).take
+  record = General::Battle.tagged_with(e.name, on: "#{e.tactic_info.key}_tags").order(:turn_max).take
   if record
     if converted_info = record.converted_infos.text_format_eq(:kif).take
       file = Pathname("__tactic_infos/#{e.tactic_info.name}/#{e.name}.kif")
