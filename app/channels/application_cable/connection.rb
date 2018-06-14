@@ -14,9 +14,9 @@ module ApplicationCable
     private
 
     def find_verified_user
-      verified_user = User.find_by(id: cookies.signed[:user_id])
+      verified_user = Fanta::User.find_by(id: cookies.signed[:user_id])
       # unless verified_user
-      #   verified_user = User.create!(name: "#{User.count.next}さん")
+      #   verified_user = Fanta::User.create!(name: "#{User.count.next}さん")
       # end
       unless verified_user
         reject_unauthorized_connection

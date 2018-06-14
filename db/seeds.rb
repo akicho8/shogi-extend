@@ -1,4 +1,4 @@
-# User.destroy_all
+# Fanta::User.destroy_all
 
 unless FreeBattle.exists?
   30.times { FreeBattle.create!(kifu_body: "") }
@@ -26,11 +26,11 @@ if Rails.env.development?
 end
 
 if Rails.env.development?
-  users = 10.times.collect { User.create!(online_at: Time.current, platoon_key: "platoon_p2vs2") }
+  users = 10.times.collect { Fanta::User.create!(online_at: Time.current, platoon_key: "platoon_p2vs2") }
 
   50.times do
     list = users.sample(4)
-    battle_room = BattleRoom.create!
+    battle_room = Fanta::BattleRoom.create!
     list.each do |e|
       battle_room.users << e
     end
@@ -42,5 +42,5 @@ if Rails.env.development?
     end
   end
 
-  p BattleRoom.count
+  p Fanta::BattleRoom.count
 end

@@ -3,11 +3,11 @@ require File.expand_path('../../config/environment', __FILE__)
 
 ChatMessage.destroy_all
 User.destroy_all
-BattleRoom.destroy_all
+Fanta::BattleRoom.destroy_all
 Membership.destroy_all
 
-alice = User.create!
-bob = User.create!
+alice = Fanta::User.create!
+bob = Fanta::User.create!
 
 battle_room = OwnerRoom.create!
 battle_room.users << alice

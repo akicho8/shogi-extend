@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# ユーザーテーブル (users as User)
+# ユーザーテーブル (users as Fanta::User)
 #
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 # | カラム名               | 意味                | タイプ      | 属性        | 参照             | INDEX |
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 # | id                     | ID                  | integer(8)  | NOT NULL PK |                  |       |
 # | name                   | 名前                | string(255) | NOT NULL    |                  |       |
-# | current_battle_room_id | Current battle room | integer(8)  |             | => BattleRoom#id | A     |
+# | current_battle_room_id | Current battle room | integer(8)  |             | => Fanta::BattleRoom#id | A     |
 # | online_at              | Online at           | datetime    |             |                  |       |
 # | fighting_at            | Fighting at         | datetime    |             |                  |       |
 # | matching_at            | Matching at         | datetime    |             |                  |       |
@@ -16,18 +16,18 @@
 # | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |
 # | self_preset_key        | Self preset key     | string(255) | NOT NULL    |                  | D     |
 # | oppo_preset_key        | Oppo preset key     | string(255) | NOT NULL    |                  | E     |
-# | user_agent             | User agent          | string(255) | NOT NULL    |                  |       |
+# | user_agent             | Fanta::User agent          | string(255) | NOT NULL    |                  |       |
 # | created_at             | 作成日時            | datetime    | NOT NULL    |                  |       |
 # | updated_at             | 更新日時            | datetime    | NOT NULL    |                  |       |
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・User モデルは BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
+# ・User モデルは Fanta::BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
 #--------------------------------------------------------------------------------
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe Fanta::User, type: :model do
   context "対戦リクエスト" do
     it "自分vs自分" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
@@ -148,6 +148,6 @@ RSpec.describe User, type: :model do
   end
 
   def create_user(platoon_key, self_preset_key, oppo_preset_key)
-    create(:user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key})
+    create(:fanta_user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key})
   end
 end

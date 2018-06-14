@@ -57,12 +57,12 @@ class ApplicationController < ActionController::Base
         current_user
 
         @js_global_params = {
-          :current_user        => ams_sr(current_user, serializer: CurrentUserSerializer),
-          :online_only_count   => User.online_only.count,
-          :fighter_only_count  => User.fighter_only.count,
-          :lifetime_infos      => LifetimeInfo,
-          :platoon_infos       => PlatoonInfo,
-          :custom_preset_infos => CustomPresetInfo,
+          :current_user        => ams_sr(current_user, serializer: Fanta::CurrentUserSerializer),
+          :online_only_count   => Fanta::User.online_only.count,
+          :fighter_only_count  => Fanta::User.fighter_only.count,
+          :lifetime_infos      => Fanta::LifetimeInfo,
+          :platoon_infos       => Fanta::PlatoonInfo,
+          :custom_preset_infos => Fanta::CustomPresetInfo,
         }
       end
     end
@@ -71,8 +71,8 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user
-      @current_user ||= User.find_by(id: cookies.signed[:user_id])
-      @current_user ||= User.create!(user_agent: request.user_agent)
+      @current_user ||= Fanta::User.find_by(id: cookies.signed[:user_id])
+      @current_user ||= Fanta::User.create!(user_agent: request.user_agent)
       cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}
       @current_user
     end

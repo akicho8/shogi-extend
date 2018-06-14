@@ -224,7 +224,7 @@ class BattleRoomChannel < ApplicationCable::Channel
   end
 
   def current_battle_room
-    @current_battle_room ||= BattleRoom.find(params[:battle_room_id])
+    @current_battle_room ||= Fanta::BattleRoom.find(params[:battle_room_id])
   end
 
   # 自分対自分の場合もあるためメンバー情報は複数ある

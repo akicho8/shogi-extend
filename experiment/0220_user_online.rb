@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-# user = User.create!
+# user = Fanta::User.create!
 # user.appear
 # user.disappear
 # user.reload.destroy

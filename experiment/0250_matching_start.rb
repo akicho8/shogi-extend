@@ -2,16 +2,16 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 30.times do
-  alice = User.create!(online_at: Time.current)
-  bob = User.create!(online_at: Time.current)
+  alice = Fanta::User.create!(online_at: Time.current)
+  bob = Fanta::User.create!(online_at: Time.current)
   [alice, bob].each do |user|
     user.matching_start
   end
 end
 
-tp User
+tp Fanta::User
 
-tp BattleRoom
+tp Fanta::BattleRoom
 # >> |--------------------------+-------------------------------------------------------------------------------|
 # >> |                       id | 32                                                                            |
 # >> |            room_owner_id | 72                                                                            |

@@ -41,19 +41,23 @@ module ModulableCrud
     end
 
     def current_single_key
-      current_model.name.demodulize.underscore.to_sym
+      current_model.model_name.singular
     end
 
     def current_plural_key
-      current_model.name.demodulize.underscore.pluralize.to_sym
+      current_model.model_name.plural
+    end
+
+    def current_param_key
+      current_model.model_name.param_key
     end
 
     def current_record
-      instance_variable_get("@#{current_single_key}")
+      instance_variable_get("@#{current_param_key}")
     end
 
     def current_record=(v)
-      instance_variable_set("@#{current_single_key}", v)
+      instance_variable_set("@#{current_param_key}", v)
     end
 
     def record_load

@@ -10,17 +10,17 @@ class SingleNotificationChannel < ApplicationCable::Channel
 
   def battle_request_to(data)
     e = data["battle_request"]
-    from = User.find(e["from_id"])
-    to = User.find(e["to_id"])
-    data["battle_request"]["from"] = ams_sr(from, serializer: CurrentUserSerializer) # 送信元ユーザーの最新の状態のルールを用いるため
+    from = Fanta::User.find(e["from_id"])
+    to = Fanta::User.find(e["to_id"])
+    data["battle_request"]["from"] = ams_sr(from, serializer: Fanta::CurrentUserSerializer) # 送信元ユーザーの最新の状態のルールを用いるため
     data["battle_request"]["to"] = ams_sr(to)
     ActionCable.server.broadcast("single_notification_#{to.id}", data)
   end
 
   def battle_match_ok(data)
     e = data["battle_request"]
-    alice = User.find(e["from"]["id"]) # 最初にリクエストを送った方
-    bob = User.find(e["to"]["id"])     # 承諾した方
+    alice = Fanta::User.find(e["from"]["id"]) # 最初にリクエストを送った方
+    bob = Fanta::User.find(e["to"]["id"])     # 承諾した方
     alice.battle_setup_with(bob)
   end
 

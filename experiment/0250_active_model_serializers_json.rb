@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 pp ActiveModelSerializers::SerializableResource.new(User.first).as_json
 pp ActiveModelSerializers::SerializableResource.new(LobbyMessage.first).as_json
-pp ActiveModelSerializers::SerializableResource.new(BattleRoom.first, include: {memberships: :user}).as_json
+pp ActiveModelSerializers::SerializableResource.new(Fanta::BattleRoom.first, include: {memberships: :user}).as_json
 
 # >> {:id=>1,
 # >>  :name=>"野良1号",

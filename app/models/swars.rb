@@ -1,5 +1,5 @@
 module Swars
   def self.table_name_prefix
-    'swars_'
+    name.underscore.gsub("/", "_") + "_"
   end
 end

@@ -6,11 +6,11 @@ class JudgeInfo
     {key: :draw, name: "引き分け", },
   ]
 
-  def memberships
+  def swars_memberships
     Swars::Membership.where(judge_key: key)
   end
 
-  def memberships
+  def general_pmemberships
     General::Membership.where(judge_key: key)
   end
 end

@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  namespace :resource_ns1, path: "" do
+  namespace :fanta, path: "" do
     resources :battle_rooms, path: "online/battles"
     resources :users, path: "online/users"
   end
 
-  root "resource_ns1/battle_rooms#index"
+  root "fanta/battle_rooms#index"
 
   ################################################################################ 2ch棋譜検索
 
