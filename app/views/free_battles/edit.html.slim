@@ -4,9 +4,17 @@ javascript:
 - content_for :head do
   = javascript_pack_tag("shogi_preview_app")
 
+ruby:
+  label = current_record.new_record? ? "棋譜変換" : "編集"
+
 #shogi_preview_app
+  nav.breadcrumb
+    ul
+      li= link_to("一覧", current_plural_key)
+      li.is-active= link_to("#{label} ##{current_record.id}", current_record)
+
   p.title.is-2.yumincho
-    = current_record.new_record? ? "棋譜変換" : "編集"
+    = label
   hr
 
   .columns

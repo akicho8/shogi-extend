@@ -56,11 +56,11 @@ module ModulableCrud
     end
 
     def current_single_key
-      current_model.model_name.singular
+      current_model.model_name.singular.to_sym
     end
 
     def current_plural_key
-      current_model.model_name.plural
+      current_model.model_name.plural.to_sym
     end
 
     def current_param_key

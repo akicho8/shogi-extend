@@ -1,16 +1,14 @@
-.page-header
-  h2= "#{current_model.model_name.human}一覧"
+.title.is-2.yumincho= "#{current_model.model_name.human}一覧"
+hr
 
 p= link_to("新規", [:new, ns_prefix, current_single_key], class: "button is-primary")
 
-= page_entries_info current_records
-
 ruby:
-  rows = current_records.collect {|e|
+  rows = current_records.collect { |e|
     {
-      "ID" => link_to(e.id, [ns_prefix, e]),
-      "先手" => e.meta_info["先手"],
-      "後手" => e.meta_info["後手"],
+      "ID" => link_to("##{e.id}", [ns_prefix, e]),
+      # "先手" => e.meta_info["先手"],
+      # "後手" => e.meta_info["後手"],
       "手数" => e.turn_max,
       "変換日時" => time_ago_in_words(e.created_at) + "前",
       "操作" => [

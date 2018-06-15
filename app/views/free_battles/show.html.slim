@@ -1,5 +1,14 @@
-.title.is-2.yumincho= "変換結果"
+nav.breadcrumb
+ ul
+   li= link_to("一覧", current_plural_key)
+   li.is-active= link_to("##{current_record.id}", current_record)
+
+.title.is-3.yumincho= "変換結果"
 hr
 
 .has-text-centered
   = render :partial => "kifu_player"
+
+p
+  =<> link_to("編集", [:edit, ns_prefix, current_record], class: "button")
+  =<> link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button is-danger")
