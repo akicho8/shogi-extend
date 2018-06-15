@@ -17,3 +17,4 @@ config/secrets.yml.key
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+/spec/examples.txt
