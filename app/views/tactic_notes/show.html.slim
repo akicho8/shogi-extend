@@ -1,0 +1,47 @@
+.columns
+  ////////////////////////////////////////////////////////////////////////////////
+  .column
+    .breadcrumb
+      ul
+        li= link_to("一覧", :tactic_notes)
+        li.is-active= link_to(current_record.name, "#")
+    = @left_right_link
+    = @detail_hash.to_html(table_class: "table is-fullwidth")
+  ////////////////////////////////////////////////////////////////////////////////
+  .column
+    .has-text-centered
+      .title.is-2.yumincho= current_record.name
+    #shogi_player_app
+      shogi-player(
+        :kifu_body="'#{@sample_kifu_body}'"
+        :start_turn="0"
+        :key_event_capture="true"
+        :slider_show="true"
+        :sfen_show="true"
+        :controller_show="true"
+        :theme="'real'"
+        :sound_effect="true"
+        :volume=AppConfig[:volume]
+      )
+    - content_for :head do
+      = javascript_pack_tag("shogi_player_app")
+      / = stylesheet_pack_tag("shogi_player_app")
+  ////////////////////////////////////////////////////////////////////////////////
+  .column
+    br
+    br
+    br
+    .shogi-player.theme-simple.size-default
+      .board_container
+        .board_wrap
+          .board_outer
+            = @board_table
+
+/ .has-text-centered
+/ - count = General::Membership.tagged_with(current_record.name).count
+/ - if count >= 1
+ /   =<> link_to("2ch棋譜検索".html_safe + tag.span(count, class: "badge"), [:general_search, query: current_record.key])
+/ - count = Swars::Battle.tagged_with(current_record.name).count
+/ - if count >= 1
+/   =<> link_to("将棋ウォーズ棋譜検索".html_safe +  tag.span(count, class: "badge"), [:swars_search, query: current_record.key])
+/ b-pagination :total="total" :current.sync="current" :order="order" :size="size" :simple="false" :per-page="perPage"

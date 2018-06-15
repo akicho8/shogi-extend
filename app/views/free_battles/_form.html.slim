@@ -1,0 +1,14 @@
+.field
+  = form.label(:kifu_body, class: "label")
+  .control
+    = form.text_area(:kifu_body, rows: 12, class: "textarea", autofocus: true, placeholder: "#{KifuFormatInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "kifu_body")
+
+.field
+  = form.label(:kifu_url, class: "label")
+  .control
+    = form.url_field(:kifu_url, class: "input", placeholder: "別のサイトにある場合は URL で指定できます")
+
+.field
+  = form.label(:kifu_file, class: "label")
+  .control
+    = form.file_field(:kifu_file, class: "input")
