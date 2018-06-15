@@ -1,7 +1,7 @@
 .page-header
   h2= current_record.new_record? ? "新規登録" : "編集"
 
-= form_with(model: [:resource_ns1, current_record]) do |form|
+= form_with(model: [ns_prefix, current_record]) do |form|
   = render partial: "error_messages", locals: {form: form}
   - if false
     / かならず確認画面に行くにはここを有効にする
@@ -15,10 +15,10 @@
         =<> form.submit("確認", name: :_goto_confirm, class: "button")
 
 hr
-=<> link_to("一覧", [:resource_ns1, current_plural_key], class: "button")
+=<> link_to("一覧", [ns_prefix, current_plural_key], class: "button")
 - if current_record.persisted?
-  =<> link_to("詳細", [:resource_ns1, current_record], class: "button button-info")
+  =<> link_to("詳細", [ns_prefix, current_record], class: "button button-info")
 - if controller.respond_to_destroy? && current_record.persisted?
-  =<> link_to("削除", [:resource_ns1, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
+  =<> link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button button-danger")
 
 = render partial: "crud_debug"

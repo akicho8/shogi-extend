@@ -4,7 +4,7 @@
 = render partial: "index_header"
 
 - if controller.respond_to?(:new)
-  p= link_to("新規", [:new, :resource_ns1, current_single_key], class: "button is-primary")
+  p= link_to("新規", [:new, ns_prefix, current_single_key], class: "button is-primary")
 
 - if current_records.respond_to?(:total_pages) && false
   p= page_entries_info current_records

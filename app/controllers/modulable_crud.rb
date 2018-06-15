@@ -1,3 +1,6 @@
+# This module is not a solid black boxed library.
+# Basically all methods are designed to override.
+
 module ModulableCrud
   concern :Base do
     included do
@@ -15,13 +18,25 @@ module ModulableCrud
 
       before_action :record_load
 
+      helper_method :ns_prefix
       helper_method :current_model
       helper_method :current_record
       helper_method :current_single_key
     end
 
+    # override according to the situation
+    #
+    # Examples
+    #   :foo
+    #   [:foo, :bar]
+    #   self.class.parent_name.underscore
+    #
+    def ns_prefix
+    end
+
+    # override according to the situation
     def current_model
-      controller_path.classify.demodulize.constantize
+      controller_path.classify.constantize
     end
 
     def current_scope
@@ -64,6 +79,7 @@ module ModulableCrud
       self.current_record = raw_current_record
     end
 
+    # override according to the situation
     def raw_current_record
       if v = params[:id].presence
         current_scope.find(v)
@@ -128,11 +144,12 @@ module ModulableCrud
       session[current_single_key] = nil
     end
 
+    # override according to the situation
     def redirect_to_where
       if false
-        [self.class.parent_name.underscore, current_record]
+        [ns_prefix, current_record]
       else
-        [self.class.parent_name.underscore, current_plural_key]
+        [ns_prefix, current_plural_key]
       end
     end
 
@@ -153,10 +170,12 @@ module ModulableCrud
       current_record.valid?
     end
 
+    # override according to the situation
     def current_record_save
       current_record.save
     end
 
+    # override according to the situation
     def current_record_params
       v = nil
       if params.has_key?(current_single_key)
@@ -173,10 +192,12 @@ module ModulableCrud
       v || {}
     end
 
+    # override according to the situation
     def permit_all?
       true
     end
 
+    # override according to the situation
     def current_permit_columns
       current_model.column_names.collect(&:to_sym) - [:id, :created_at, :updated_at]
     end
@@ -243,7 +264,7 @@ module ModulableCrud
   concern :DestroyMethods do
     def destroy
       current_record.destroy!
-      redirect_to [self.class.parent_name.underscore, current_plural_key], notice: "削除しました"
+      redirect_to [ns_prefix, current_plural_key], notice: "削除しました"
     end
   end
 
