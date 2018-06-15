@@ -118,10 +118,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (>= 2.0, < 4.0)
-    carrierwave (1.2.2)
-      activemodel (>= 4.0.0)
-      activesupport (>= 4.0.0)
-      mime-types (>= 1.16)
     case_transform (0.2)
       activesupport
     childprocess (0.9.0)
@@ -404,7 +400,6 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano-yarn
   capybara (>= 2.15, < 4.0)
-  carrierwave
   chromedriver-helper
   codecov
   coffee-rails (~> 4.2)

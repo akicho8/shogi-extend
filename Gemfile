@@ -103,7 +103,6 @@ gem 'slim-rails'
 
 gem 'rails_autolink'
 gem 'kaminari'
-gem 'carrierwave'
 
 gem 'memory_record'
 gem 'tree_support'

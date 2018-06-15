@@ -26,15 +26,15 @@ class FreeBattle < ApplicationRecord
 
   has_secure_token :unique_key
 
-  mount_uploader :kifu_file, AttachmentUploader
+  has_one_attached :kifu_file
 
   before_validation do
     self.kifu_body ||= ""
 
-    if changes[:kifu_file]
-      if v = kifu_file.presence
-        self.kifu_body = v.read.toutf8
-      end
+    if kifu_file.attached?
+      v = kifu_file.download
+      v = v.to_s.toutf8 rescue nil
+      self.kifu_body = v
     end
 
     if changes[:kifu_url]
@@ -54,6 +54,8 @@ class FreeBattle < ApplicationRecord
 
   before_save do
     if changes[:kifu_body]
+      kifu_file.purge
+
       if kifu_body
         parser_exec
       end
