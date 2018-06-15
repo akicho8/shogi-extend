@@ -33,7 +33,7 @@ javascript:
 
       .box
         .title.is-4= "対局履歴"
-        b-table(:data="battle_rooms" :paginated="true" :per-page="30")
+        b-table(:data="battles" :paginated="true" :per-page="30")
           template slot-scope="props"
             b-table-column(field="name" label="部屋" sortable)
               a(:href="props.row.show_path") {{props.row.name}}

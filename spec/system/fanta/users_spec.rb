@@ -60,7 +60,7 @@ RSpec.describe "対戦", type: :system do
         visit "/online/battles"
         click_on("バトル開始")
         sleep(2)
-        assert { current_path == polymorphic_path(Fanta::BattleRoom.last) }
+        assert { current_path == polymorphic_path(Fanta::Battle.last) }
         doc_image("成立")
       end
     end
@@ -77,7 +77,7 @@ RSpec.describe "対戦", type: :system do
         click_on("閉じる")
         click_on("バトル開始")
         sleep(2)
-        assert { current_path == polymorphic_path(Fanta::BattleRoom.last) }
+        assert { current_path == polymorphic_path(Fanta::Battle.last) }
         doc_image("成立")
         # TODO: 4人そろっていることを確認したい
       end
@@ -99,7 +99,7 @@ RSpec.describe "対戦", type: :system do
         click_on("閉じる")
         click_on("バトル開始")
         sleep(2)
-        assert { current_path == polymorphic_path([Fanta::BattleRoom.last]) }
+        assert { current_path == polymorphic_path([Fanta::Battle.last]) }
         doc_image("成立")
       end
     end
@@ -117,7 +117,7 @@ RSpec.describe "対戦", type: :system do
       doc_image("受諾")
       click_on("受ける")
       sleep(2)
-      assert { current_path == polymorphic_path([Fanta::BattleRoom.last]) }
+      assert { current_path == polymorphic_path([Fanta::Battle.last]) }
       doc_image("対局")
     end
 
@@ -139,12 +139,12 @@ RSpec.describe "対戦", type: :system do
         click_on("受ける")
         sleep(2)
         # 対局画面に移動
-        assert { current_path == polymorphic_path([Fanta::BattleRoom.last]) }
+        assert { current_path == polymorphic_path([Fanta::Battle.last]) }
         doc_image("成立移動1")
       end
       using_session("user2") do
         # 対局画面に移動
-        assert { current_path == polymorphic_path([Fanta::BattleRoom.last]) }
+        assert { current_path == polymorphic_path([Fanta::Battle.last]) }
         doc_image("成立移動2")
       end
     end

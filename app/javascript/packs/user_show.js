@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     el: "#user_show_app",
     data() {
       return {
-        battle_rooms: js_user_profile.battle_rooms,
+        battles: js_user_profile.battles,
       }
     },
 
@@ -11,23 +11,23 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     methods: {
-      memberships_format(battle_room) {
-        return battle_room.memberships.map(e => {
+      memberships_format(battle) {
+        return battle.memberships.map(e => {
           return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
         }).join(" ")
       },
 
-      kattakadouka(battle_room) {
+      kattakadouka(battle) {
         let str = null
-        if (_.isNil(battle_room.win_location_key)) {
+        if (_.isNil(battle.win_location_key)) {
           return "未決着"
         }
-        let list = _.filter(battle_room.memberships, e => (e.user.id == js_user_profile.id))
+        let list = _.filter(battle.memberships, e => (e.user.id == js_user_profile.id))
         list = _.uniqBy(list, e => e.location_key)
         if (list.length > 1) {
           str = "自己対局"
         } else {
-          if (_.first(list).location_key == battle_room.win_location_key) {
+          if (_.first(list).location_key == battle.win_location_key) {
             str = "勝ち"
           } else {
             str = "負け"

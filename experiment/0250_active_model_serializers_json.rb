@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 pp ActiveModelSerializers::SerializableResource.new(User.first).as_json
 pp ActiveModelSerializers::SerializableResource.new(LobbyMessage.first).as_json
-pp ActiveModelSerializers::SerializableResource.new(Fanta::BattleRoom.first, include: {memberships: :user}).as_json
+pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include: {memberships: :user}).as_json
 
 # >> {:id=>1,
 # >>  :name=>"野良1号",
@@ -15,7 +15,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::BattleRoom.first, inc
 # >>  :lifetime_key=>"lifetime_m5",
 # >>  :self_preset_key=>"平手",
 # >>  :oppo_preset_key=>"平手",
-# >>  :current_battle_room=>nil}
+# >>  :current_battle=>nil}
 # >> {:id=>1,
 # >>  :message=>"aa",
 # >>  :created_at=>Tue, 29 May 2018 20:52:47 JST +09:00,
@@ -41,7 +41,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::BattleRoom.first, inc
 # >>  :last_action_key=>"ILLEGAL_MOVE",
 # >>  :win_location_key=>"black",
 # >>  :current_users_count=>-2,
-# >>  :watch_memberships_count=>0,
+# >>  :watch_ships_count=>0,
 # >>  :countdown_mode_hash=>{:black=>false, :white=>false},
 # >>  :show_path=>"/online/battles/1",
 # >>  :handicap=>false,

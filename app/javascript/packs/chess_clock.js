@@ -48,7 +48,7 @@ export default {
       if (this.member_p) {
         if (this.time_up_trigger_count === 0) {
           // ログが見やすいように1回だけコールする
-          App.battle_room.time_up_trigger({membership_ids: this.__my_membership_ids, win_location_key: this.current_location.flip.key})
+          App.battle.time_up_trigger({membership_ids: this.__my_membership_ids, win_location_key: this.current_location.flip.key})
         }
         this.time_up_trigger_count += 1
       }
@@ -117,7 +117,7 @@ export default {
     countdown_mode_on() {
       this.countdown_mode_hash[this.current_location.key] = true
       this.clock_counter_set(0)
-      App.battle_room.countdown_mode_on(this.current_location.key)
+      App.battle.countdown_mode_on(this.current_location.key)
     }
   },
 

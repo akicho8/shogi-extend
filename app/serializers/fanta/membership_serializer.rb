@@ -14,7 +14,7 @@ module Fanta
   end
 
   if $0 == __FILE__
-    pp ams_sr(BattleRoom.first.memberships)
+    pp ams_sr(Battle.first.memberships)
   end
 end
 

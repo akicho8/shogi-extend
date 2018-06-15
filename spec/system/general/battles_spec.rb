@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "2ch棋譜検索", type: :system do
+RSpec.describe "2ch棋譜", type: :system do
   before do
     general_battle_setup
   end
@@ -14,9 +14,9 @@ RSpec.describe "2ch棋譜検索", type: :system do
 
   it "検索" do
     visit "/s"
-    fill_in "query", with: "一太郎"
-    click_on("検索")
-    expect(page).to have_content "結果"
+    find("#search_form input[type=search]").set("一太郎")
+    find("#search_form button").click
+    expect(page).to have_content "一太郎 ZIP ダウンロード"
     doc_image
   end
 end

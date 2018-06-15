@@ -7,7 +7,7 @@
 # | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | battle_room_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::BattleRoom#id | A     |
+# | battle_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::Battle#id | A     |
 # | user_id            | Fanta::User               | integer(8)  | NOT NULL    | => Fanta::User#id       | B     |
 # | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
 # | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
@@ -20,7 +20,7 @@
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは Fanta::BattleRoom モデルから has_many :memberships されています。
+# ・Membership モデルは Fanta::Battle モデルから has_many :memberships されています。
 # ・Membership モデルは Fanta::User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 

@@ -5,8 +5,8 @@ module Fanta
     def id
     end
 
-    has_many :battle_rooms, serializer: BattleRoomEachSerializer do
-      Fanta::BattleRoom.st_battling.latest_list
+    has_many :battles, serializer: BattleEachSerializer do
+      Fanta::Battle.st_battling.latest_list
     end
 
     has_many :lobby_messages do
@@ -19,13 +19,13 @@ module Fanta
   end
 
   if $0 == __FILE__
-    pp ams_sr({}, serializer: LobbySerializer, include: {battle_rooms: {memberships: :user}, lobby_messages: :user, online_users: {}})
+    pp ams_sr({}, serializer: LobbySerializer, include: {battles: {memberships: :user}, lobby_messages: :user, online_users: {}})
   end
 end
 # >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
 # >> I, [2018-06-14T17:41:58.604656 #47356]  INFO -- : Rendered Fanta::LobbySerializer with ActiveModelSerializers::Adapter::Attributes (2185.56ms)
 # >> {:id=>nil,
-# >>  :battle_rooms=>
+# >>  :battles=>
 # >>   [{:id=>29,
 # >>     :name=>"#29",
 # >>     :show_path=>"/online/battles/29",
@@ -37,7 +37,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>113,
 # >>        :location_key=>"black",
@@ -82,7 +82,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>125,
 # >>        :location_key=>"black",
@@ -127,7 +127,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>145,
 # >>        :location_key=>"black",
@@ -172,7 +172,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>169,
 # >>        :location_key=>"black",
@@ -217,7 +217,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>1,
 # >>        :location_key=>"black",
@@ -262,7 +262,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>13,
 # >>        :location_key=>"black",
@@ -307,7 +307,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>21,
 # >>        :location_key=>"black",
@@ -352,7 +352,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>33,
 # >>        :location_key=>"black",
@@ -397,7 +397,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>41,
 # >>        :location_key=>"black",
@@ -442,7 +442,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>45,
 # >>        :location_key=>"black",
@@ -487,7 +487,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>53,
 # >>        :location_key=>"black",
@@ -532,7 +532,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>57,
 # >>        :location_key=>"black",
@@ -577,7 +577,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>61,
 # >>        :location_key=>"black",
@@ -622,7 +622,7 @@ end
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
 # >>     :turn_max=>0,
-# >>     :watch_memberships_count=>0,
+# >>     :watch_ships_count=>0,
 # >>     :memberships=>
 # >>      [{:id=>93,
 # >>        :location_key=>"black",

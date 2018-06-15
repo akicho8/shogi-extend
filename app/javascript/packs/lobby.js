@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     received(data) {
-      if (data["battle_room_created"]) {
-        App.lobby_vm.battle_rooms = _.concat([data["battle_room_created"]], App.lobby_vm.battle_rooms)
+      if (data["battle_created"]) {
+        App.lobby_vm.battles = _.concat([data["battle_created"]], App.lobby_vm.battles)
       }
-      if (data["battle_rooms"]) {
-        App.lobby_vm.battle_rooms = data["battle_rooms"]
+      if (data["battles"]) {
+        App.lobby_vm.battles = data["battles"]
       }
       if (data["online_users"]) {
         // App.lobby_vm.online_users = data["online_users"] // FIXME: indexにアクセスした直後に必ず呼ばれる
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         message: "",                                               // 発言
 
         // 部屋一覧
-        battle_rooms: js_lobby.battle_rooms,
+        battles: js_lobby.battles,
         columns: [
           { field: 'name', label: '部屋', },
         ],
@@ -116,11 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return user.id === js_global_params.current_user.id
       },
 
-      battle_room_setting_open_click() {
+      battle_setting_open_click() {
         this.setting_modal_p = true
       },
 
-      battle_room_setting_close_click() {
+      battle_setting_close_click() {
         this.setting_modal_p = false
       },
 
@@ -154,13 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
         this.message = ""
       },
 
-      memberships_format(battle_room) {
+      memberships_format(battle) {
         if (true) {
-          return battle_room.memberships.map(e => {
+          return battle.memberships.map(e => {
             return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
           }).join(" ")
         } else {
-          const list = _.groupBy(battle_room.memberships, "location_key")
+          const list = _.groupBy(battle.memberships, "location_key")
           return _.map(list, (list, key) => {
             return list.map(e => {
               return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`

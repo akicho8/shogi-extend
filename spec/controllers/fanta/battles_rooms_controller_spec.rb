@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Fanta::BattleRoomsController, type: :controller do
+RSpec.describe Fanta::BattlesController, type: :controller do
   before do
     @current_user = user_login
   end
@@ -13,11 +13,11 @@ RSpec.describe Fanta::BattleRoomsController, type: :controller do
   it "show" do
     @user1 = create(:fanta_user)
     @user2 = create(:fanta_user)
-    @battle_room = Fanta::BattleRoom.create!
-    @battle_room.users << @user1
-    @battle_room.users << @user1
+    @battle = Fanta::Battle.create!
+    @battle.users << @user1
+    @battle.users << @user1
 
-    get :show, params: {id: @battle_room.id}
+    get :show, params: {id: @battle.id}
     expect(response).to have_http_status(:ok)
   end
 end

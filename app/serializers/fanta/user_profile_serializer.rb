@@ -2,11 +2,11 @@ require File.expand_path('../../../../config/environment', __FILE__) if $0 == __
 
 module Fanta
   class UserProfileSerializer < SimpleUserSerializer
-    has_many :battle_rooms do
-      object.battle_rooms.latest_list_for_profile
+    has_many :battles do
+      object.battles.latest_list_for_profile
     end
 
-    class BattleRoomSerializer < ApplicationSerializer
+    class BattleSerializer < ApplicationSerializer
       attributes :name, :show_path
       attributes :win_location_key
       attributes :begin_at, :end_at
@@ -22,7 +22,7 @@ module Fanta
   end
 
   if $0 == __FILE__
-    pp ams_sr(User.first, include: {battle_rooms: {memberships: :user}}, serializer: UserProfileSerializer)
+    pp ams_sr(User.first, include: {battles: {memberships: :user}}, serializer: UserProfileSerializer)
   end
 end
 # >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
@@ -32,7 +32,7 @@ end
 # >>  :show_path=>"/online/users/1",
 # >>  :avatar_url=>
 # >>   "/assets/fallback_icons/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png",
-# >>  :battle_rooms=>
+# >>  :battles=>
 # >>   [{:id=>26,
 # >>     :name=>"#26",
 # >>     :show_path=>"/online/battles/26",

@@ -7,7 +7,7 @@
 # | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | battle_room_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::BattleRoom#id | A     |
+# | battle_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::Battle#id | A     |
 # | user_id            | Fanta::User               | integer(8)  | NOT NULL    | => Fanta::User#id       | B     |
 # | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
 # | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
@@ -20,12 +20,12 @@
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Fanta::Membership モデルは Fanta::BattleRoom モデルから has_many :memberships されています。
+# ・Fanta::Membership モデルは Fanta::Battle モデルから has_many :memberships されています。
 # ・Fanta::Membership モデルは Fanta::User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
 class Fanta::Membership < ApplicationRecord
-  belongs_to :battle_room
+  belongs_to :battle
   belongs_to :user
 
   scope :black, -> { where(location_key: "black") }
@@ -34,31 +34,31 @@ class Fanta::Membership < ApplicationRecord
   scope :active, -> { where.not(location_key: nil) }       # 対局者
   scope :standby_enable, -> { where.not(standby_at: nil) } # 準備ができている
 
-  acts_as_list top_of_list: 0, scope: :battle_room
+  acts_as_list top_of_list: 0, scope: :battle
 
   default_scope { order(:position) }
 
   before_validation on: :create do
-    # active = battle_room.memberships.active
+    # active = battle.memberships.active
     # if active.count < Warabi::Location.count
     #   if membership = active.first
     #     location = membership.location
     #   else
-    #     location = Warabi::Location[Fanta::BattleRoom.count.modulo(Warabi::Location.count)]
+    #     location = Warabi::Location[Fanta::Battle.count.modulo(Warabi::Location.count)]
     #   end
     #   self.location_key ||= location.flip.key
     # end
 
     # create!(users: [user1, user2]) とされた場合を考慮する
-    # index = battle_room.users.find_index(user) || battle_room.users.count
+    # index = battle.users.find_index(user) || battle.users.count
     # self.location_key ||= Warabi::Location.fetch(index).key
-    self.location_key ||= Warabi::Location.fetch(battle_room.users.count).key
+    self.location_key ||= Warabi::Location.fetch(battle.users.count).key
 
     # if active.count < Warabi::Location.count
     # if membership = active.first
     #   location = membership.location
     # else
-    #   location = Warabi::Location[Fanta::BattleRoom.count.modulo(Warabi::Location.count)]
+    #   location = Warabi::Location[Fanta::Battle.count.modulo(Warabi::Location.count)]
     # end
     # self.location_key ||= Warabi::Location[active.count.modulo(Warabi::Location.count)].key
 

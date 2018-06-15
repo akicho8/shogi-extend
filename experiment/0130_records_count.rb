@@ -8,7 +8,7 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |      active_storage_attachments | 0   |
 # >> |            active_storage_blobs | 0   |
 # >> |            ar_internal_metadata | 1   |
-# >> |                    battle_rooms | 50  |
+# >> |                    battles | 50  |
 # >> |                   chat_messages | 0   |
 # >> |                 converted_infos | 192 |
 # >> |             free_battles | 33  |
@@ -27,5 +27,5 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |                        taggings | 439 |
 # >> |                            tags | 124 |
 # >> |                           users | 11  |
-# >> |               watch_memberships | 0   |
+# >> |               watch_ships | 0   |
 # >> |---------------------------------+-----|

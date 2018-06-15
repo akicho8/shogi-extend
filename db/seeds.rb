@@ -30,17 +30,17 @@ if Rails.env.development?
 
   50.times do
     list = users.sample(4)
-    battle_room = Fanta::BattleRoom.create!
+    battle = Fanta::Battle.create!
     list.each do |e|
-      battle_room.users << e
+      battle.users << e
     end
     if rand(2).zero?
-      battle_room.update!(begin_at: Time.current)
+      battle.update!(begin_at: Time.current)
       if rand(2).zero?
-        battle_room.update!(end_at: Time.current)
+        battle.update!(end_at: Time.current)
       end
     end
   end
 
-  p Fanta::BattleRoom.count
+  p Fanta::Battle.count
 end

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対戦部屋テーブル (battle_rooms as Fanta::BattleRoom)
+# 対戦部屋テーブル (battles as Fanta::Battle)
 #
 # |-------------------------+-------------------------+-------------+---------------------+------+-------|
 # | カラム名                | 意味                    | タイプ      | 属性                | 参照 | INDEX |
@@ -22,7 +22,7 @@
 # | last_action_key         | Last action key         | string(255) |                     |      |       |
 # | win_location_key        | Win location key        | string(255) |                     |      |       |
 # | current_users_count     | Current users count     | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_ships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | created_at              | 作成日時                | datetime    | NOT NULL            |      |       |
 # | updated_at              | 更新日時                | datetime    | NOT NULL            |      |       |
 # |-------------------------+-------------------------+-------------+---------------------+------+-------|
@@ -32,7 +32,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
     # ユーザー
     create_table :fanta_users, force: true do |t|
       t.string :name,                                 null: false,              comment: "名前"
-      t.belongs_to :current_battle_room,              null: true,               comment: "現在入室している部屋"
+      t.belongs_to :current_battle,              null: true,               comment: "現在入室している部屋"
       t.datetime :online_at,                          null: true,               comment: "オンラインになった日時"
       t.datetime :fighting_at,                    null: true,               comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
       t.datetime :matching_at,                        null: true,               comment: "マッチング中(開始日時)"
@@ -45,7 +45,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
     end
 
     # 部屋
-    create_table :fanta_battle_rooms, force: true do |t|
+    create_table :fanta_battles, force: true do |t|
       t.string :black_preset_key,                     null: false,              comment: "▲手合割"
       t.string :white_preset_key,                     null: false,              comment: "△手合割"
       t.string :lifetime_key,                         null: false,              comment: "時間"
@@ -61,13 +61,13 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.string :last_action_key,                      null: true,               comment: "最後の状態"
       t.string :win_location_key,                     null: true,               comment: "勝った方の先後"
       t.integer :current_users_count, default: 0,     null: false,              comment: "この部屋にいる人数"
-      t.integer :watch_memberships_count, default: 0, null: false,              comment: "この部屋の観戦者数"
+      t.integer :watch_ships_count, default: 0, null: false,              comment: "この部屋の観戦者数"
       t.timestamps                                    null: false
     end
 
     # 対局者
     create_table :fanta_memberships, force: true do |t|
-      t.belongs_to :battle_room,                      null: false,              comment: "部屋"
+      t.belongs_to :battle,                      null: false,              comment: "部屋"
       t.belongs_to :user,                             null: false,              comment: "ユーザー"
       t.string :preset_key,                           null: false,              comment: "手合割"
       t.string :location_key,                         null: false, index: true, comment: "先後"
@@ -79,15 +79,15 @@ class CreateFanta < ActiveRecord::Migration[5.1]
     end
 
     # 観戦者
-    create_table :fanta_watch_memberships, force: true do |t|
-      t.belongs_to :battle_room,                      null: false,              comment: "部屋"
+    create_table :fanta_watch_ships, force: true do |t|
+      t.belongs_to :battle,                      null: false,              comment: "部屋"
       t.belongs_to :user,                             null: false,              comment: "ユーザー"
       t.timestamps                                    null: false
     end
 
     # 対局部屋のチャット発言
     create_table :fanta_chat_messages, force: true do |t|
-      t.belongs_to :battle_room,                      null: false,              comment: "部屋"
+      t.belongs_to :battle,                      null: false,              comment: "部屋"
       t.belongs_to :user,                             null: false,              comment: "ユーザー"
       t.text :message,                                null: false,              comment: "発言"
       t.timestamps                                    null: false

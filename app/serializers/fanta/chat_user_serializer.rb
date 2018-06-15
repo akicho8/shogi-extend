@@ -7,8 +7,8 @@ module Fanta
       :matching_at,
     ]
 
-    belongs_to :current_battle_room
-    class BattleRoomSerializer < ApplicationSerializer
+    belongs_to :current_battle
+    class BattleSerializer < ApplicationSerializer
       attributes :name, :show_path
     end
   end
@@ -26,5 +26,5 @@ end
 # >> |          avatar_url | /assets/fallback_icons/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png |
 # >> |         fighting_at |                                                                                                                     |
 # >> |         matching_at |                                                                                                                     |
-# >> | current_battle_room |                                                                                                                     |
+# >> | current_battle |                                                                                                                     |
 # >> |---------------------+---------------------------------------------------------------------------------------------------------------------|

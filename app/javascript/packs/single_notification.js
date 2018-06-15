@@ -76,14 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // マッチングが成立した
       if (data["matching_ok"]) {
-        assert(data["battle_room_show_path"])
+        assert(data["battle_show_path"])
         if (data["auto_matched_at"]) {
           Vue.prototype.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 2})
         }
         if (data["battle_request_at"]) {
           Vue.prototype.$toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 2})
         }
-        location.href = data["battle_room_show_path"]
+        location.href = data["battle_show_path"]
       }
     },
 

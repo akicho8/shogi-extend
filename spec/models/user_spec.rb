@@ -8,7 +8,7 @@
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 # | id                     | ID                  | integer(8)  | NOT NULL PK |                  |       |
 # | name                   | 名前                | string(255) | NOT NULL    |                  |       |
-# | current_battle_room_id | Current battle room | integer(8)  |             | => Fanta::BattleRoom#id | A     |
+# | current_battle_id | Current battle room | integer(8)  |             | => Fanta::Battle#id | A     |
 # | online_at              | Online at           | datetime    |             |                  |       |
 # | fighting_at            | Fighting at         | datetime    |             |                  |       |
 # | matching_at            | Matching at         | datetime    |             |                  |       |
@@ -22,7 +22,7 @@
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・User モデルは Fanta::BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
+# ・User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
 #--------------------------------------------------------------------------------
 
 require 'rails_helper'
@@ -31,49 +31,49 @@ RSpec.describe Fanta::User, type: :model do
   context "対戦リクエスト" do
     it "自分vs自分" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
-      battle_room = @user1.battle_setup_with(@user1)
-      assert { battle_room }
-      assert { battle_room.black_preset_key == "平手" }
-      assert { battle_room.white_preset_key == "平手" }
-      assert { battle_room.users.sort == [@user1, @user1] }
+      battle = @user1.battle_setup_with(@user1)
+      assert { battle }
+      assert { battle.black_preset_key == "平手" }
+      assert { battle.white_preset_key == "平手" }
+      assert { battle.users.sort == [@user1, @user1] }
 
-      assert { battle_room.battle_request_at }
-      assert { battle_room.auto_matched_at == nil }
+      assert { battle.battle_request_at }
+      assert { battle.auto_matched_at == nil }
     end
 
     it "平手" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
       @user2 = create_user(:platoon_p4vs4, "平手", "二枚落ち")
 
-      battle_room = @user1.battle_setup_with(@user2)
-      assert { battle_room }
-      assert { battle_room.black_preset_key == "平手" }
-      assert { battle_room.white_preset_key == "平手" }
-      assert { battle_room.users.sort == [@user1, @user2] }
+      battle = @user1.battle_setup_with(@user2)
+      assert { battle }
+      assert { battle.black_preset_key == "平手" }
+      assert { battle.white_preset_key == "平手" }
+      assert { battle.users.sort == [@user1, @user2] }
     end
 
     it "駒落ち" do
       @user1 = create_user(:platoon_p4vs4, "二枚落ち", "平手")
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
-      battle_room = @user1.battle_setup_with(@user2)
-      assert { battle_room }
-      assert { battle_room.black_preset_key == "平手" }
-      assert { battle_room.white_preset_key == "二枚落ち" }
-      assert { battle_room.memberships.black.collect(&:user) == [@user2] }
-      assert { battle_room.memberships.white.collect(&:user) == [@user1] }
+      battle = @user1.battle_setup_with(@user2)
+      assert { battle }
+      assert { battle.black_preset_key == "平手" }
+      assert { battle.white_preset_key == "二枚落ち" }
+      assert { battle.memberships.black.collect(&:user) == [@user2] }
+      assert { battle.memberships.white.collect(&:user) == [@user1] }
     end
 
     it "両方駒落ち" do
       @user1 = create_user(:platoon_p4vs4, "二枚落ち", "香落ち")
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
-      battle_room = @user1.battle_setup_with(@user2)
-      assert { battle_room }
-      assert { battle_room.black_preset_key == "香落ち" }
-      assert { battle_room.white_preset_key == "二枚落ち" }
-      assert { battle_room.memberships.black.collect(&:user) == [@user2] }
-      assert { battle_room.memberships.white.collect(&:user) == [@user1] }
+      battle = @user1.battle_setup_with(@user2)
+      assert { battle }
+      assert { battle.black_preset_key == "香落ち" }
+      assert { battle.white_preset_key == "二枚落ち" }
+      assert { battle.memberships.black.collect(&:user) == [@user2] }
+      assert { battle.memberships.white.collect(&:user) == [@user1] }
     end
   end
 
@@ -83,12 +83,12 @@ RSpec.describe Fanta::User, type: :model do
       @user2 = create_user(:platoon_p1vs1, "平手", "平手")
 
       @user1.matching_start
-      battle_room = @user2.matching_start
-      assert { battle_room }
-      assert { battle_room.users.sort == [@user1, @user2] }
+      battle = @user2.matching_start
+      assert { battle }
+      assert { battle.users.sort == [@user1, @user2] }
 
-      assert { battle_room.battle_request_at == nil }
-      assert { battle_room.auto_matched_at }
+      assert { battle.battle_request_at == nil }
+      assert { battle.auto_matched_at }
     end
 
     it "平手ダブルス" do
@@ -102,11 +102,11 @@ RSpec.describe Fanta::User, type: :model do
       @user3.matching_start
 
       # 最後の1人
-      battle_room = @user4.matching_start
-      assert { battle_room }
+      battle = @user4.matching_start
+      assert { battle }
 
       assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
-      assert { battle_room.users.sort == [@user1, @user2, @user3, @user4] }
+      assert { battle.users.sort == [@user1, @user2, @user3, @user4] }
     end
 
     it "駒落ちシングルス" do
@@ -114,8 +114,8 @@ RSpec.describe Fanta::User, type: :model do
       @user2 = create_user(:platoon_p1vs1, "飛車落ち", "平手")
 
       @user1.matching_start
-      battle_room = @user2.matching_start
-      assert { battle_room }
+      battle = @user2.matching_start
+      assert { battle }
     end
 
     it "全員同じ駒落ちでのシングルス" do
@@ -123,10 +123,10 @@ RSpec.describe Fanta::User, type: :model do
       @user2 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
 
       @user1.matching_start
-      battle_room = @user2.matching_start
+      battle = @user2.matching_start
 
-      assert { battle_room }
-      assert { battle_room.users.sort == [@user1, @user2] }
+      assert { battle }
+      assert { battle.users.sort == [@user1, @user2] }
     end
 
     it "駒落ちダブルス" do
@@ -139,11 +139,11 @@ RSpec.describe Fanta::User, type: :model do
       @user2.matching_start
       @user3.matching_start
 
-      battle_room = @user4.matching_start
+      battle = @user4.matching_start
 
-      assert { battle_room }
-      assert { battle_room.memberships.black.collect(&:user) == [@user1, @user2] }
-      assert { battle_room.memberships.white.collect(&:user) == [@user3, @user4] }
+      assert { battle }
+      assert { battle.memberships.black.collect(&:user) == [@user1, @user2] }
+      assert { battle.memberships.white.collect(&:user) == [@user3, @user4] }
     end
   end
 

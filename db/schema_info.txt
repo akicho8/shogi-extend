@@ -51,7 +51,7 @@
 
 # == Schema Information ==
 #
-# 対戦部屋テーブル (battle_rooms as Fanta::BattleRoom)
+# 対戦部屋テーブル (battles as Fanta::Battle)
 #
 # |-------------------------+-------------------------+-------------+---------------------+------+-------|
 # | カラム名                | 意味                    | タイプ      | 属性                | 参照 | INDEX |
@@ -72,7 +72,7 @@
 # | last_action_key         | Last action key         | string(255) |                     |      |       |
 # | win_location_key        | Win location key        | string(255) |                     |      |       |
 # | current_users_count     | Current users count     | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | watch_memberships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_ships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | created_at              | 作成日時                | datetime    | NOT NULL            |      |       |
 # | updated_at              | 更新日時                | datetime    | NOT NULL            |      |       |
 # |-------------------------+-------------------------+-------------+---------------------+------+-------|
@@ -85,7 +85,7 @@
 # | カラム名       | 意味        | タイプ      | 属性        | 参照             | INDEX |
 # |----------------+-------------+-------------+-------------+------------------+-------|
 # | id             | ID          | integer(8)  | NOT NULL PK |                  |       |
-# | battle_room_id | Battle room | integer(8)  | NOT NULL    | => Fanta::BattleRoom#id | A     |
+# | battle_id | Battle room | integer(8)  | NOT NULL    | => Fanta::Battle#id | A     |
 # | user_id        | Fanta::User        | integer(8)  | NOT NULL    | => Fanta::User#id       | B     |
 # | message        | Message     | text(65535) | NOT NULL    |                  |       |
 # | created_at     | 作成日時    | datetime    | NOT NULL    |                  |       |
@@ -93,7 +93,7 @@
 # |----------------+-------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・ChatMessage モデルは Fanta::BattleRoom モデルから has_many :memberships されています。
+# ・ChatMessage モデルは Fanta::Battle モデルから has_many :memberships されています。
 # ・ChatMessage モデルは Fanta::User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
@@ -175,7 +175,7 @@
 # | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 # | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | battle_room_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::BattleRoom#id | A     |
+# | battle_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::Battle#id | A     |
 # | user_id            | Fanta::User               | integer(8)  | NOT NULL    | => Fanta::User#id       | B     |
 # | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
 # | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
@@ -188,7 +188,7 @@
 # |--------------------+--------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは Fanta::BattleRoom モデルから has_many :memberships されています。
+# ・Membership モデルは Fanta::Battle モデルから has_many :memberships されています。
 # ・Membership モデルは Fanta::User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
@@ -294,7 +294,7 @@
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 # | id                     | ID                  | integer(8)  | NOT NULL PK |                  |       |
 # | name                   | 名前                | string(255) | NOT NULL    |                  |       |
-# | current_battle_room_id | Current battle room | integer(8)  |             | => Fanta::BattleRoom#id | A     |
+# | current_battle_id | Current battle room | integer(8)  |             | => Fanta::Battle#id | A     |
 # | online_at              | Online at           | datetime    |             |                  |       |
 # | fighting_at            | Fighting at         | datetime    |             |                  |       |
 # | matching_at            | Matching at         | datetime    |             |                  |       |
@@ -308,25 +308,25 @@
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・User モデルは Fanta::BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
+# ・User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# Watch membershipテーブル (watch_memberships as WatchMembership)
+# Watch membershipテーブル (watch_ships as WatchShip)
 #
 # |----------------+-------------+------------+-------------+------------------+-------|
 # | カラム名       | 意味        | タイプ     | 属性        | 参照             | INDEX |
 # |----------------+-------------+------------+-------------+------------------+-------|
 # | id             | ID          | integer(8) | NOT NULL PK |                  |       |
-# | battle_room_id | Battle room | integer(8) | NOT NULL    | => Fanta::BattleRoom#id | A     |
+# | battle_id | Battle room | integer(8) | NOT NULL    | => Fanta::Battle#id | A     |
 # | user_id        | Fanta::User        | integer(8) | NOT NULL    | => Fanta::User#id       | B     |
 # | created_at     | 作成日時    | datetime   | NOT NULL    |                  |       |
 # | updated_at     | 更新日時    | datetime   | NOT NULL    |                  |       |
 # |----------------+-------------+------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・WatchMembership モデルは Fanta::BattleRoom モデルから has_many :memberships されています。
-# ・WatchMembership モデルは Fanta::User モデルから has_many :chat_messages されています。
+# ・WatchShip モデルは Fanta::Battle モデルから has_many :memberships されています。
+# ・WatchShip モデルは Fanta::User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 

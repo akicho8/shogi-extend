@@ -8,7 +8,7 @@
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 # | id                     | ID                  | integer(8)  | NOT NULL PK |                  |       |
 # | name                   | 名前                | string(255) | NOT NULL    |                  |       |
-# | current_battle_room_id | Current battle room | integer(8)  |             | => Fanta::BattleRoom#id | A     |
+# | current_battle_id | Current battle room | integer(8)  |             | => Fanta::Battle#id | A     |
 # | online_at              | Online at           | datetime    |             |                  |       |
 # | fighting_at            | Fighting at         | datetime    |             |                  |       |
 # | matching_at            | Matching at         | datetime    |             |                  |       |
@@ -22,7 +22,7 @@
 # |------------------------+---------------------+-------------+-------------+------------------+-------|
 #
 #- 備考 -------------------------------------------------------------------------
-# ・Fanta::User モデルは Fanta::BattleRoom モデルから has_many :current_users, :foreign_key => :current_battle_room_id されています。
+# ・Fanta::User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
 #--------------------------------------------------------------------------------
 
 module Fanta
@@ -40,11 +40,11 @@ module Fanta
     end
 
     def show
-      @js_user_profile = ams_sr(current_record, serializer: UserProfileSerializer, include: {battle_rooms: {memberships: :user}})
+      @js_user_profile = ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
     end
 
     def redirect_to_where
-      # [:fanta, :battle_rooms]
+      # [:fanta, :battles]
       # [:edit, :fanta, current_record]
       # [:edit, :fanta, current_record]
       current_record
