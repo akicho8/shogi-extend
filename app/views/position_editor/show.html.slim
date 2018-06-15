@@ -2,7 +2,7 @@
   = stylesheet_pack_tag("position_editor_style")
   = javascript_pack_tag("position_editor_app")
 
-#position_editor_app.has-text-centered v-cloak="true"
+#position_editor_app.has-text-centered(v-cloak)
   shogi-player(
     :kifu_body="'position startpos'"
     :key_event_capture="false"

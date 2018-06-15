@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         kifu_body: "",
         kifu_body_sfen: "position sfen startpos",
+        update_delay: 1000 * 1, // 指定ms入力がなくなってからプレビューする
       }
     },
+
     watch: {
       kifu_body: function (v) {
         this.preview_update()
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       preview_update: _.debounce(function() {
         const params = new URLSearchParams()
         params.append("kifu_body", this.kifu_body)
-        axios.post(shogi_preview_app_params.path, params).then((response) => {
+        axios.post(js_preview_params.path, params).then((response) => {
           if (response.data.error_message) {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
           }
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.table([error.response])
           Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })
-      }, 1000 * 1),            // 指定秒間放置されたらプレビューする
+      }, this.update_delay),
     },
   })
 })

@@ -40,20 +40,18 @@ Rails.application.routes.draw do
 
   ################################################################################ 棋譜変換
 
-  namespace :resource_ns1, path: "" do
-    resources :free_battles, path: "x"
-  end
+  resources :free_battles, path: "x"
 
   resolve "FreeBattle" do |free_battle, options|
-    [:resource_ns1, free_battle, options]
+    [ns_prefix, free_battle, options]
   end
 
   ################################################################################ 戦法トリガー辞典
 
-  resources :tactic_articles, path: "tactics", only: [:index, :show]
+  resources :tactic_notes, path: "tactics", only: [:index, :show]
 
-  get "tactics-tree",   to: "tactic_articles#index", defaults: {mode: "tree"}, as: :tree
-  get "tactics-fortune", to: "tactic_articles#index", defaults: {mode: "fortune"}, as: :fortune
+  get "tactics-tree",   to: "tactic_notes#index", defaults: {mode: "tree"}, as: :tree
+  get "tactics-fortune", to: "tactic_notes#index", defaults: {mode: "fortune"}, as: :fortune
 
   ################################################################################ 符号入力ゲーム
 

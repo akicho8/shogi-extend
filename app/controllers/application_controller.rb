@@ -71,8 +71,8 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user
-      @current_user ||= Fanta::User.find_by(id: cookies.signed[:user_id])
-      @current_user ||= Fanta::User.create!(user_agent: request.user_agent)
+      @current_user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
+      @current_user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
       cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}
       @current_user
     end

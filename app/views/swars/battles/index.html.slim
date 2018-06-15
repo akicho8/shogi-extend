@@ -29,7 +29,7 @@
           - if tags = controller.current_tags.presence
             - tags.each do |tag|
               - if Warabi::TacticInfo.any? { |e| e.model[tag] }
-                = link_to(tag, [:tactic_article, id: tag], class: "button is-success")
+                = link_to(tag, [:tactic_note, id: tag], class: "button is-success")
 
 - if current_records
   #shogi_player_app v-cloak="true"

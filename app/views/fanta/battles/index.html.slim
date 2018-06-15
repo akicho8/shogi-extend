@@ -51,8 +51,8 @@ javascript:
       a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
 
     - if Rails.env.development? && false
-      = link_to("新しい部屋を作る", [:new, :resource_ns1, current_single_key], class: "button")
-      = link_to("新しい部屋を作って入る", [:resource_ns1, current_plural_key], class: "button is-primary", method: :post)
+      = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
+      = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
 
   .columns
     .column

@@ -54,7 +54,7 @@ module TimeRangable
 
   # begin_at end_at メソッドを持っているクラスに気軽に include できるモジュール
   concern :GeneralInstanceMethods do
-    class Fanta::TimeStatusScopeInfo
+    class TimeStatusScopeInfo
       include ApplicationMemoryRecord
       memory_record [
         {:key => :time_future, :name => "待機中", :color => :success, :order => {:begin_at => :asc }, :tooltip => "もうすぐ開始するもの順", },

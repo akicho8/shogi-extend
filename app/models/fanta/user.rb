@@ -216,7 +216,7 @@ class Fanta::User < ApplicationRecord
 
       # 召集
       battle.users.each do |user|
-        ActionCable.server.broadcast("single_notification_#{user.id}", {matching_ok: true, battle_show_path: battle.show_path}.merge(attributes))
+        ActionCable.server.broadcast("single_notification_#{user.id}", {matching_establish: true, battle_show_path: battle.show_path}.merge(attributes))
       end
 
       battle

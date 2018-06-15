@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "対戦", type: :system do
   context "ロビー" do
     before do
-      visit "/online/battles"
+      become_lobby
     end
 
     it "トップ" do
@@ -50,18 +50,38 @@ RSpec.describe "対戦", type: :system do
 
   describe "自動マッチング" do
     it "シングルス" do
-      using_session("user1") do
-        visit "/online/battles"
+      using_session(:user1) do
+        become_lobby
         click_on("バトル開始")
         expect(page).to have_content "マッチング開始"
         doc_image("待ち")
       end
-      using_session("user2") do
-        visit "/online/battles"
+      using_session(:user2) do
+        become_lobby
         click_on("バトル開始")
-        sleep(2)
+      end
+      sleep(2)
+
+      using_session(:user1) do
         assert { current_path == polymorphic_path(Fanta::Battle.last) }
-        doc_image("成立")
+        doc_image("user1_部屋移動")
+      end
+      using_session(:user2) do
+        assert { current_path == polymorphic_path(Fanta::Battle.last) }
+        doc_image("user2_部屋移動")
+      end
+
+      battle = Fanta::Battle.last
+      black_user_name = battle.memberships.black.first.user.name
+      white_user_name = battle.memberships.white.first.user.name
+
+      using_session(black_user_name) do
+        click_on("投了")
+        doc_image("投了")
+      end
+
+      using_session(white_user_name) do
+        doc_image("勝ち")
       end
     end
 
@@ -71,7 +91,7 @@ RSpec.describe "対戦", type: :system do
       matching_set("user3", "ダブルス")
 
       using_session("user4") do
-        visit "/online/battles"
+        become_lobby
         click_on("ルール設定")
         choose("ダブルス")
         click_on("閉じる")
@@ -93,7 +113,7 @@ RSpec.describe "対戦", type: :system do
       matching_set("user7", "チーム戦")
 
       using_session("user8") do
-        visit "/online/battles"
+        become_lobby
         click_on("ルール設定")
         choose("チーム戦")
         click_on("閉じる")
@@ -107,7 +127,7 @@ RSpec.describe "対戦", type: :system do
 
   context "対局リクエスト" do
     it "自分vs自分" do
-      visit "/online/battles"
+      become_lobby
       refresh
       find(".message_link_to.user_#{Fanta::User.last.id}").click
       expect(page).to have_content "対局申し込み"
@@ -123,11 +143,11 @@ RSpec.describe "対戦", type: :system do
 
     it "自分vs他人" do
       using_session("user1") do
-        visit "/online/battles"
+        become_lobby
         @user1 = Fanta::User.last
       end
       using_session("user2") do
-        visit "/online/battles"
+        become_lobby
         find(".message_link_to.user_#{@user1.id}").click
         expect(page).to have_content "対局申し込み"
         doc_image("申込")
@@ -152,7 +172,7 @@ RSpec.describe "対戦", type: :system do
 
   context "メッセージ送信" do
     it "自分宛" do
-      visit "/online/battles"
+      become_lobby
       refresh
       find(".message_link_to.user_#{Fanta::User.last.id}").click
       within(".modal-card") do
@@ -166,7 +186,7 @@ RSpec.describe "対戦", type: :system do
 
     it "他者宛" do
       @alice = create(:fanta_user)
-      visit "/online/battles"
+      become_lobby
       find(".message_link_to.user_#{@alice.id}").click
       expect(page).to have_content "対局申し込み"
       within(".modal-card") do
@@ -179,13 +199,17 @@ RSpec.describe "対戦", type: :system do
 
   def matching_set(name, rule)
     using_session(name) do
-      visit "/online/battles"
+      become_lobby
       click_on("ルール設定")
       choose(rule)
       click_on("閉じる")
       click_on("バトル開始")
       expect(page).to have_content "マッチング開始"
     end
+  end
+
+  def become_lobby
+    visit "/online/battles?__user_name__=#{Capybara.session_name}"
   end
 
   def message

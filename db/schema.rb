@@ -131,7 +131,6 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "unique_key", null: false, collation: "utf8_bin", comment: "URL識別子"
-    t.string "kifu_file", comment: "アップロードした棋譜ファイル"
     t.string "kifu_url", comment: "入力した棋譜URL"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"

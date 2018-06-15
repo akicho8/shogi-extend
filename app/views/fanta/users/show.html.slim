@@ -2,7 +2,7 @@ javascript:
   var js_user_profile = #{@js_user_profile.to_json.html_safe}
 
 - content_for :head do
-  = javascript_pack_tag("user_show")
+  = javascript_pack_tag("user_profile")
 
 #user_show_app
   .title.is-4
@@ -23,12 +23,12 @@ javascript:
         .level-item.has-text-centered
           div
             p.heading 勝ち
-            p.title.is-size-4
+            .title.is-size-4
               = 0
         .level-item.has-text-centered
           div
             p.heading 負け
-            p.title.is-size-4
+            .title.is-size-4
               = 0
 
       .box
@@ -42,7 +42,7 @@ javascript:
                 message_link_to(:user_to="membership.user")
             b-table-column(label="結果")
               template(v-if="props.row.xstate_info.key == 'st_done'")
-                | {{kattakadouka(props.row)}}
+                | {{winning_or_losing_format(props.row)}}
               template(v-else)
                 span(:class="props.row.xstate_info.color") {{props.row.xstate_info.name}}
             b-table-column(field="turn_max" label="手数" sortable numeric)
