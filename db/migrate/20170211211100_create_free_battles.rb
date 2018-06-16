@@ -27,7 +27,6 @@ class CreateFreeBattles < ActiveRecord::Migration[5.1]
       t.text :kifu_body, null: false, comment: "棋譜本文"
       t.integer :turn_max, null: false, comment: "手数"
       t.text :meta_info, null: false, comment: "棋譜メタ情報"
-      t.string :mountain_url, comment: "将棋山脈の変換後URL"
       t.datetime :battled_at, null: false, comment: "対局開始日時"
       t.timestamps null: false
     end

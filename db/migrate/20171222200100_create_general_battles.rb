@@ -33,7 +33,6 @@ class CreateGeneralBattles < ActiveRecord::Migration[5.1]
       t.string   :battle_state_key, null: false, index: true,           comment: "結果詳細"
       t.integer  :turn_max,         null: false,                        comment: "手数"
       t.text     :meta_info,        null: false,                        comment: "棋譜メタ情報"
-      t.string   :mountain_url,                                         comment: "将棋山脈の変換後URL"
       t.datetime :last_accessd_at,  null: false,                        comment: "最終参照日時"
       t.timestamps                  null: false
     end

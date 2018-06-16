@@ -1,7 +1,6 @@
 {
   ja: {
     attributes: {
-      mountain_url: "将棋山脈URL",
     },
     helpers: {
       submit: {

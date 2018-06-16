@@ -29,12 +29,6 @@ module SharedMethods
   def show
     access_log_create
 
-    if params[:mountain]
-      current_record.mountain_post_once
-      render json: {url: current_record.mountain_url}
-      return
-    end
-
     respond_to do |format|
       format.html
       format.any { kifu_send_data }

@@ -194,10 +194,6 @@ class Swars::BattlesController < ApplicationController
     list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([current_record, format: "kif"])})
     list << link_to("ウォーズ", swars_real_battle_url(current_record), "class": "button is-small", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
     list << link_to("詳細", [current_record], "class": "button is-small")
-    if Rails.env.development? && false
-      list << link_to("山脈(remote:false)", [current_record, mountain: true, fallback_location: url_for([:s])], "class": "button is-small", remote: false)
-    end
-    # list << link_to("山", [:swars, current_record, mountain: true], "class": "button is-small", remote: true, data: {toggle: :tooltip, title: "将棋山脈"})
     # list << link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([:swars, current_record, format: "kif"])))
     list.compact.join(" ").html_safe
   end

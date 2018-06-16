@@ -75,10 +75,6 @@ Rails.application.routes.draw do
     "http://kif-pona.heroz.jp/games/#{battle.battle_key}?#{options.to_query}"
   end
 
-  direct :mountain_upload do
-    "http://shogi-s.com/upload-text"
-  end
-
   direct :piyo_shogi_app do |url|
     "piyoshogi://?url=#{url}"
   end

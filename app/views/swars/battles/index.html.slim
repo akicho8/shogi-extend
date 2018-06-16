@@ -60,8 +60,6 @@
                   b-dropdown-item :has-link="true" :paddingless="true"
                     = link_to("ウォーズ", swars_real_battle_url(current_record), target: "_blank")
                   b-dropdown-item :has-link="true" :paddingless="true"
-                    = link_to("将棋山脈", "", :data => {:mountain_url_get_path => url_for([current_record, mountain: true, format: "json"])}, "@click.prevent" => "goto_mountain_click")
-                  b-dropdown-item :has-link="true" :paddingless="true"
                     = link_to("KI2 コピー", "#", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([current_record, format: "ki2"])})
 
               .card-content

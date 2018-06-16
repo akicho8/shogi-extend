@@ -163,32 +163,6 @@ module ConvertMethods
     h.link_to(label, h.general_search_path(name))
   end
 
-  def mountain_post_once
-    unless mountain_url
-      mountain_post
-    end
-  end
-
-  def mountain_post
-    url = Rails.application.routes.url_helpers.mountain_upload_url
-    if converted_info = converted_infos.text_format_eq(:kif).take
-      kif = converted_info.text_body
-
-      if ENV["RUN_REMOTE"] == "1" || Rails.env.production?
-        response = Faraday.post(url, kif: kif)
-        logger.info(response.status.to_t)
-        logger.info(response.headers.to_t)
-        url = response.headers["location"].presence
-      else
-        url = "http://shogi-s.com/result/5a274d10px"
-      end
-
-      if url
-        update!(mountain_url: url)
-      end
-    end
-  end
-
   def showable_tag_list
     attack_tag_list + defense_tag_list + other_tag_list
   end

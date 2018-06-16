@@ -46,7 +46,6 @@
             = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
             b-dropdown-item :has-link="true" :paddingless="true"
               = link_to("ウォーズTweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')")
-          = content_tag("b-dropdown-item", "将棋山脈", :href => url_for([ns_prefix, current_record, mountain: true]), "data-remote": true, class: "kif_clipboard_copy_button2")
           b-dropdown-item href=piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])) ぴよ将棋
 
 = render :partial => "kifu_player_tabs_div"
