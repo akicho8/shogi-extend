@@ -84,12 +84,12 @@ class Swars::Battle < ApplicationRecord
     battle_key
   end
 
-  def swars_rule_info
+  def rule_info
     Swars::RuleInfo.fetch(rule_key)
   end
 
-  def swars_wstate_info
-    Swars::WstateInfo.fetch(battle_state_key)
+  def final_info
+    Swars::FinalInfo.fetch(battle_state_key)
   end
 
   concerning :ConvertHookMethos do
@@ -117,8 +117,8 @@ class Swars::Battle < ApplicationRecord
       s << ["N+", players.first.name_with_grade].join
       s << ["N-", players.second.name_with_grade].join
       s << ["$START_TIME", battled_at.to_s(:csa_ymdhms)] * ":"
-      s << ["$EVENT", "将棋ウォーズ(#{swars_rule_info.long_name})"] * ":"
-      s << ["$TIME_LIMIT", swars_rule_info.csa_time_limit] * ":"
+      s << ["$EVENT", "将棋ウォーズ(#{rule_info.long_name})"] * ":"
+      s << ["$TIME_LIMIT", rule_info.csa_time_limit] * ":"
 
       # $OPENING は 戦型 のことで、これが判明するのはパースの後なのでいまはわからない。
       # それに自動的にあとから埋められるのでここは指定しなくてよい
@@ -128,7 +128,7 @@ class Swars::Battle < ApplicationRecord
       s << "+"
 
       # 残り時間の並びから使用時間を求めつつ指し手と一緒に並べていく
-      life = [swars_rule_info.life_time] * memberships.size
+      life = [rule_info.life_time] * memberships.size
       csa_seq.each.with_index do |(op, t), i|
         i = i.modulo(life.size)
         used = life[i] - t
@@ -137,7 +137,7 @@ class Swars::Battle < ApplicationRecord
         s << "T#{used}"
       end
 
-      s << "%#{swars_wstate_info.last_action_key}"
+      s << "%#{final_info.last_action_key}"
       s.join("\n") + "\n"
     end
 
@@ -156,8 +156,8 @@ class Swars::Battle < ApplicationRecord
         end
       end
 
-      other_tag_list << swars_rule_info.name
-      other_tag_list << swars_wstate_info.name
+      other_tag_list << rule_info.name
+      other_tag_list << final_info.name
     end
   end
 
@@ -250,7 +250,7 @@ class Swars::Battle < ApplicationRecord
       # Swars::Battle.expert_import
       # Swars::Battle.expert_import(page_max: 3, sleep: 5)
       def expert_import(**params)
-        swars_agent.legend_user_keys.each do |user_key|
+        agent.legend_user_keys.each do |user_key|
           basic_import(params.merge(user_key: user_key))
         end
       end
@@ -294,7 +294,7 @@ class Swars::Battle < ApplicationRecord
       # Swars::Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
       def multiple_battle_import(**params)
         (params[:page_max] || 1).times do |i|
-          list = swars_agent.index_get(params.merge(page_index: i))
+          list = agent.index_get(params.merge(page_index: i))
 
           # もうプレイしていない人のページは履歴が空なのでクロールを完全にやめる (もしくは過去のページに行きすぎたので中断)
           if list.empty?
@@ -337,7 +337,7 @@ class Swars::Battle < ApplicationRecord
           return
         end
 
-        info = swars_agent.record_get(battle_key)
+        info = agent.record_get(battle_key)
 
         # 対局中や引き分けのときは棋譜がないのでスキップ
         unless info[:st_done]
@@ -402,8 +402,8 @@ class Swars::Battle < ApplicationRecord
 
       private
 
-      def swars_agent
-        @swars_agent ||= Swars::Agent.new
+      def agent
+        @agent ||= Swars::Agent.new
       end
     end
   end

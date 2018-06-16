@@ -28,8 +28,6 @@
 # |-------------------------+-------------------------+-------------+---------------------+------+-------|
 
 class Fanta::Battle < ApplicationRecord
-  time_rangable default: false
-
   has_many :current_users, class_name: "Fanta::User", foreign_key: :current_battle_id, dependent: :nullify
 
   scope :latest_list, -> { order(updated_at: :desc).limit(50) }

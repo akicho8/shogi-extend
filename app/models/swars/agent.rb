@@ -1,7 +1,7 @@
 class Swars::Agent
   def initialize(**options)
     @options = {
-      run_remote: (ENV["RUN_REMOTE"] == "1") || Rails.env.production?,
+      run_remote: false,
     }.merge(options)
   end
 
@@ -13,7 +13,7 @@ class Swars::Agent
         page_index: 0,
       }.merge(params)
 
-      if @options[:run_remote]
+      if run_remote?
         q = {
           gtype: params[:gtype],
           locale: "ja",
@@ -25,7 +25,7 @@ class Swars::Agent
         page = agent.get(url)
         js_str = page.body
       else
-        js_str = Rails.root.join("app/models/https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja.html").read
+        js_str = local_html("https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja")
       end
 
       # $().html("xxx") となっているので xxx の部分を取り出して Nokogiri が解釈できる程度に整える
@@ -77,11 +77,11 @@ class Swars::Agent
       url_info = [:black, :white, :battled_at].zip(battle_key.split("-")).to_h
       info[:battled_at] = url_info[:battled_at]
 
-      if @options[:run_remote]
+      if run_remote?
         page = agent.get(info[:url])
         str = page.body
       else
-        str = Rails.root.join("app/models/http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja.html").read
+        str = local_html("http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja")
       end
 
       if md = str.match(/\b(?:receiveMove)\("(?<__csa_data>.*)"\)/)
@@ -125,10 +125,10 @@ class Swars::Agent
   concerning :LegendSwarsUserKeysMethods do
     # 騎士団フェスのときは何もとれない
     def legend_user_keys(**params)
-      if @options[:run_remote]
+      if run_remote?
         str = agent.get("https://shogiwars.heroz.jp/?locale=en").body
       else
-        str = Rails.root.join("app/models/https_shogiwars_heroz_jp_locale_en.html").read
+        str = local_html("https_shogiwars_heroz_jp_locale_en")
       end
       str.scan(%r{shogiwars.heroz.jp/users/(\w+)}).flatten.uniq
     end
@@ -140,28 +140,19 @@ class Swars::Agent
       e.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
     end
   end
+
+  def run_remote?
+    @options[:run_remote] || (ENV["RUN_REMOTE"] == "1") || Rails.env.production?
+  end
+
+  def local_html(key)
+    Pathname("#{__dir__}/html/#{key}.html").read
+  end
+  
 end
 
 if $0 == __FILE__
   tp Swars::Agent.new.legend_user_keys
-  # |-----------------|
-  # | adventstart     |
-  # | shu_chan        |
-  # | syougi8         |
-  # | miya_with_r     |
-  # | yuuki_130       |
-  # | kiriyama_reikun |
-  # | kensirou0727    |
-  # | liquser_keyendu      |
-  # | wolf73          |
-  # | syunhoh         |
-  # | sniper_take     |
-  # | shigetoshikun   |
-  # | hagashin724     |
-  # | kiyopooon       |
-  # | shogi_9_dan     |
-  # |-----------------|
-
   tp Swars::Agent.new.index_get(gtype: "",  user_key: "Apery8")
   tp Swars::Agent.new.index_get(gtype: "",  user_key: "Apery8", page_index: 1)
 

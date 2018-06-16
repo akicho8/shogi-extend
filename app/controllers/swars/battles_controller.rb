@@ -212,8 +212,8 @@ class Swars::BattlesController < ApplicationController
     link_to(membership.name_with_grade, membership.user)
   end
 
-  def swars_wstate_info_decorate(record)
-    e = record.swars_wstate_info
+  def final_info_decorate(record)
+    e = record.final_info
     str = e.name
     if v = e.label_key
       str = tag.span(str, "class": "text-#{v}")
@@ -279,7 +279,7 @@ class Swars::BattlesController < ApplicationController
         end
       end
 
-      row["結果"] = link_to(swars_wstate_info_decorate(record), swars_search_path(record.swars_wstate_info.name))
+      row["結果"] = link_to(final_info_decorate(record), swars_search_path(record.final_info.name))
 
       if false
         row["戦法"] = record.tag_list.collect { |e| link_to(e, swars_search_path(e)) }.join(" ").html_safe
@@ -289,7 +289,7 @@ class Swars::BattlesController < ApplicationController
       end
 
       row["手数"] = record.turn_max
-      row["種類"] = link_to(record.swars_rule_info.name, swars_search_path(record.swars_rule_info.name))
+      row["種類"] = link_to(record.rule_info.name, swars_search_path(record.rule_info.name))
 
       key = :battle_long
       if record.battled_at >= Time.current.midnight
