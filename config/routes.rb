@@ -75,10 +75,6 @@ Rails.application.routes.draw do
     "http://kif-pona.heroz.jp/games/#{battle.battle_key}?#{options.to_query}"
   end
 
-  direct :piyo_shogi_app do |url|
-    "piyoshogi://?url=#{url}"
-  end
-
   direct :google_search do |query|
     "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&q=#{query}"
   end
