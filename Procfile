@@ -1,2 +1,2 @@
-web: bundle exec rails server -p $PORT
-webpack-watcher: bin/webpack-dev-server
+web: bundle exec bin/rails server -p $PORT
+webpack-watcher: bundle exec bin/webpack-dev-server
