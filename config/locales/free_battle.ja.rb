@@ -16,7 +16,7 @@
       },
       attributes: {
         free_battle: {
-          unique_key: "ユニークなハッシュ",
+          key: "ユニークなハッシュ",
           kifu_file: "棋譜ファイル",
           kifu_url: "棋譜URL",
           kifu_body: "棋譜内容",

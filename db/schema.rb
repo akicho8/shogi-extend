@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
   end
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "unique_key", null: false, collation: "utf8_bin", comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_url", comment: "入力した棋譜URL"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "battled_at", null: false, comment: "対局開始日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["unique_key"], name: "index_free_battles_on_unique_key", unique: true
+    t.index ["key"], name: "index_free_battles_on_key", unique: true
   end
 
   create_table "general_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -203,12 +203,12 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
   end
 
   create_table "swars_grades", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "unique_key", null: false
+    t.string "key", null: false
     t.integer "priority", null: false, comment: "優劣"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_swars_grades_on_key", unique: true
     t.index ["priority"], name: "index_swars_grades_on_priority"
-    t.index ["unique_key"], name: "index_swars_grades_on_unique_key", unique: true
   end
 
   create_table "swars_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

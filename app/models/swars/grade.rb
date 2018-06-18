@@ -7,7 +7,7 @@
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
 # |------------+------------+-------------+-------------+------+-------|
 # | id         | ID         | integer(8)  | NOT NULL PK |      |       |
-# | unique_key | Unique key | string(255) | NOT NULL    |      | A!    |
+# | key | Unique key | string(255) | NOT NULL    |      | A!    |
 # | priority   | Priority   | integer(4)  | NOT NULL    |      | B     |
 # | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
@@ -19,15 +19,15 @@ class Swars::Grade < ApplicationRecord
   default_scope { order(:priority) }
 
   with_options presence: true do
-    validates :unique_key
+    validates :key
   end
 
   with_options allow_blank: true do
-    validates :unique_key, inclusion: Swars::GradeInfo.collect(&:name)
+    validates :key, inclusion: Swars::GradeInfo.collect(&:name)
   end
 
   def grade_info
-    Swars::GradeInfo.fetch(unique_key)
+    Swars::GradeInfo.fetch(key)
   end
 
   delegate :name, to: :grade_info

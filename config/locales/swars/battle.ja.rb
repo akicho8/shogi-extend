@@ -12,13 +12,13 @@
     },
     activerecord: {
       models: {
-        battle: "将棋ウォーズ対戦情報",
-        user: "将棋ウォーズユーザー",
-        membership: "対局と対局者の対応",
+        "swars/battle": "将棋ウォーズ対戦情報",
+        "swars/user": "将棋ウォーズユーザー",
+        "swars/membership": "対局と対局者の対応",
       },
       attributes: {
-        battle: {
-          unique_key: "ユニークなハッシュ",
+        "swars/battle": {
+          key: "ユニークなハッシュ",
           kifu_file: "棋譜ファイル",
           kifu_url: "棋譜URL",
           kifu_body: "棋譜内容",

@@ -7,7 +7,7 @@ ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
 
 free_battle = FreeBattle.create!
 free_battle.kifu_file.attach({io: File.open("spec/rails.png"), filename: "rails.png", content_type: "image/png"})
-free_battle.kifu_file           # => #<ActiveStorage::Attached::One:0x00007fcaad0370f8 @name="kifu_file", @record=#<FreeBattle id: 31, unique_key: "qKTyHfgjnRnzpFwD5P97QCWw", kifu_url: nil, kifu_body: "", turn_max: 0, meta_info: {:header=>{"手合割"=>"平手"}, :detail_names=>[[], []], :simple_names=>[[], []], :skill_set_hash=>{}}, battled_at: "0000-12-31 15:00:00", created_at: "2018-06-17 13:55:46", updated_at: "2018-06-17 13:55:46", defense_tag_list: nil, attack_tag_list: nil, other_tag_list: nil, secret_tag_list: nil>, @dependent=:purge_later>
+free_battle.kifu_file           # => #<ActiveStorage::Attached::One:0x00007fcaad0370f8 @name="kifu_file", @record=#<FreeBattle id: 31, key: "qKTyHfgjnRnzpFwD5P97QCWw", kifu_url: nil, kifu_body: "", turn_max: 0, meta_info: {:header=>{"手合割"=>"平手"}, :detail_names=>[[], []], :simple_names=>[[], []], :skill_set_hash=>{}}, battled_at: "0000-12-31 15:00:00", created_at: "2018-06-17 13:55:46", updated_at: "2018-06-17 13:55:46", defense_tag_list: nil, attack_tag_list: nil, other_tag_list: nil, secret_tag_list: nil>, @dependent=:purge_later>
 free_battle.kifu_file.service_url rescue $! # => #<ArgumentError: Missing host to link to! Please provide the :host parameter, set default_url_options[:host], or set :only_path to true>
 free_battle.kifu_file.attached? rescue $! # => true
 free_battle.kifu_file.download.size       # => 6646
@@ -27,7 +27,7 @@ tp free_battle
 # >>   ↳ app/models/convert_methods.rb:49
 # >>   ActsAsTaggableOn::Tag Update All (0.2ms)  UPDATE `tags` SET `taggings_count` = COALESCE(`taggings_count`, 0) - 1 WHERE 1=0
 # >>   ↳ app/models/convert_methods.rb:50
-# >>   FreeBattle Create (0.4ms)  INSERT INTO `free_battles` (`unique_key`, `kifu_body`, `turn_max`, `meta_info`, `battled_at`, `created_at`, `updated_at`) VALUES ('qKTyHfgjnRnzpFwD5P97QCWw', '', 0, '---\n:header:\n  手合割: 平手\n:detail_names:\n- []\n- []\n:simple_names:\n- []\n- []\n:skill_set_hash: {}\n', '0000-12-31 15:00:00', '2018-06-17 13:55:46', '2018-06-17 13:55:46')
+# >>   FreeBattle Create (0.4ms)  INSERT INTO `free_battles` (`key`, `kifu_body`, `turn_max`, `meta_info`, `battled_at`, `created_at`, `updated_at`) VALUES ('qKTyHfgjnRnzpFwD5P97QCWw', '', 0, '---\n:header:\n  手合割: 平手\n:detail_names:\n- []\n- []\n:simple_names:\n- []\n- []\n:skill_set_hash: {}\n', '0000-12-31 15:00:00', '2018-06-17 13:55:46', '2018-06-17 13:55:46')
 # >>   ↳ /usr/local/var/rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
 # >>   ConvertedInfo Create (0.3ms)  INSERT INTO `converted_infos` (`convertable_type`, `convertable_id`, `text_body`, `text_format`, `created_at`, `updated_at`) VALUES ('FreeBattle', 31, '手合割：平手\n\nまで0手で後手の勝ち\n', 'ki2', '2018-06-17 13:55:46', '2018-06-17 13:55:46')
 # >>   ↳ /usr/local/var/rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
@@ -85,7 +85,7 @@ tp free_battle
 # >>   ↳ /usr/local/var/rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
 # >> |------------------+------------------------------------------------------------------------------------------------------|
 # >> |               id | 31                                                                                                   |
-# >> |       unique_key | qKTyHfgjnRnzpFwD5P97QCWw                                                                             |
+# >> |       key | qKTyHfgjnRnzpFwD5P97QCWw                                                                             |
 # >> |         kifu_url |                                                                                                      |
 # >> |        kifu_body |                                                                                                      |
 # >> |         turn_max | 0                                                                                                    |

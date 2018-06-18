@@ -6,7 +6,7 @@ end
 
 unless Swars::Grade.exists?
   Swars::GradeInfo.each do |e|
-    Swars::Grade.create!(unique_key: e.key, priority: e.priority)
+    Swars::Grade.create!(key: e.key, priority: e.priority)
   end
   tp Swars::Grade
 end

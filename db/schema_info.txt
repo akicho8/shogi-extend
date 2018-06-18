@@ -2,6 +2,60 @@
 
 # == Schema Information ==
 #
+# Userテーブル (fanta_users as Fanta::User)
+#
+# |-------------------+-----------------+-------------+-------------+---------------------+-------|
+# | カラム名          | 意味            | タイプ      | 属性        | 参照                | INDEX |
+# |-------------------+-----------------+-------------+-------------+---------------------+-------|
+# | id                | ID              | integer(8)  | NOT NULL PK |                     |       |
+# | name              | Name            | string(255) | NOT NULL    |                     |       |
+# | current_battle_id | Current battle  | integer(8)  |             | => Fanta::Battle#id | A     |
+# | online_at         | Online at       | datetime    |             |                     |       |
+# | fighting_at       | Fighting at     | datetime    |             |                     |       |
+# | matching_at       | Matching at     | datetime    |             |                     |       |
+# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |                     | B     |
+# | platoon_key       | Platoon key     | string(255) | NOT NULL    |                     | C     |
+# | self_preset_key   | Self preset key | string(255) | NOT NULL    |                     | D     |
+# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |                     | E     |
+# | user_agent        | User agent      | string(255) | NOT NULL    |                     |       |
+# | created_at        | 作成日時        | datetime    | NOT NULL    |                     |       |
+# | updated_at        | 更新日時        | datetime    | NOT NULL    |                     |       |
+# |-------------------+-----------------+-------------+-------------+---------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・Fanta::User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Battleテーブル (fanta_battles as Fanta::Battle)
+#
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | カラム名            | 意味                | タイプ      | 属性                | 参照 | INDEX |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
+# | black_preset_key    | Black preset key    | string(255) | NOT NULL            |      |       |
+# | white_preset_key    | White preset key    | string(255) | NOT NULL            |      |       |
+# | lifetime_key        | Lifetime key        | string(255) | NOT NULL            |      |       |
+# | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
+# | kifu_body_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
+# | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
+# | countdown_mode_hash | Countdown mode hash | text(65535) | NOT NULL            |      |       |
+# | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
+# | battle_request_at   | Battle request at   | datetime    |                     |      |       |
+# | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |
+# | begin_at            | Begin at            | datetime    |                     |      |       |
+# | end_at              | End at              | datetime    |                     |      |       |
+# | last_action_key     | Last action key     | string(255) |                     |      |       |
+# | win_location_key    | Win location key    | string(255) |                     |      |       |
+# | current_users_count | Current users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_ships_count   | Watch ships count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
 # Battleテーブル (general_battles as General::Battle)
 #
 # |------------------+------------------+-------------+-------------+------+-------|
@@ -14,7 +68,6 @@
 # | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |
 # | turn_max         | Turn max         | integer(4)  | NOT NULL    |      |       |
 # | meta_info        | Meta info        | text(65535) | NOT NULL    |      |       |
-# | mountain_url     | 将棋山脈URL      | string(255) |             |      |       |
 # | last_accessd_at  | Last accessd at  | datetime    | NOT NULL    |      |       |
 # | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
 # | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
@@ -22,7 +75,7 @@
 
 # == Schema Information ==
 #
-# Fanta::Userテーブル (general_users as General::User)
+# Userテーブル (general_users as General::User)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
@@ -35,67 +88,45 @@
 
 # == Schema Information ==
 #
-# Fanta::Userテーブル (swars_users as Swars::User)
+# Battleテーブル (swars_battles as Swars::Battle)
+#
+# |-------------------+-------------------+-------------+-------------+-------------------+-------|
+# | カラム名          | 意味              | タイプ      | 属性        | 参照              | INDEX |
+# |-------------------+-------------------+-------------+-------------+-------------------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK |                   |       |
+# | battle_key        | Battle key        | string(255) | NOT NULL    |                   | A!    |
+# | battled_at        | Battled at        | datetime    | NOT NULL    |                   |       |
+# | rule_key          | Rule key          | string(255) | NOT NULL    |                   | B     |
+# | csa_seq           | Csa seq           | text(65535) | NOT NULL    |                   |       |
+# | battle_state_key  | Battle state key  | string(255) | NOT NULL    |                   | C     |
+# | win_user_id       | Win user          | integer(8)  |             | => Swars::User#id | D     |
+# | turn_max          | Turn max          | integer(4)  | NOT NULL    |                   |       |
+# | meta_info         | Meta info         | text(65535) | NOT NULL    |                   |       |
+# | last_accessd_at   | Last accessd at   | datetime    | NOT NULL    |                   |       |
+# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0)  |                   |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL    |                   |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL    |                   |       |
+# |-------------------+-------------------+-------------+-------------+-------------------+-------|
+#
+#- 備考 -------------------------------------------------------------------------
+# ・【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Userテーブル (swars_users as Swars::User)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | user_key          | Fanta::User key          | string(255) | NOT NULL    |      | A!    |
+# | user_key          | User key          | string(255) | NOT NULL    |      | A!    |
 # | grade_id          | Grade             | integer(8)  | NOT NULL    |      | B     |
 # | last_reception_at | Last reception at | datetime    |             |      |       |
 # | search_logs_count | Search logs count | integer(4)  | DEFAULT(0)  |      |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
 # |-------------------+-------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# 対戦部屋テーブル (battles as Fanta::Battle)
-#
-# |-------------------------+-------------------------+-------------+---------------------+------+-------|
-# | カラム名                | 意味                    | タイプ      | 属性                | 参照 | INDEX |
-# |-------------------------+-------------------------+-------------+---------------------+------+-------|
-# | id                      | ID                      | integer(8)  | NOT NULL PK         |      |       |
-# | black_preset_key        | Black preset key        | string(255) | NOT NULL            |      |       |
-# | white_preset_key        | White preset key        | string(255) | NOT NULL            |      |       |
-# | lifetime_key            | Lifetime key            | string(255) | NOT NULL            |      |       |
-# | platoon_key             | Platoon key             | string(255) | NOT NULL            |      |       |
-# | kifu_body_sfen          | Kifu body sfen          | text(65535) | NOT NULL            |      |       |
-# | clock_counts            | Clock counts            | text(65535) | NOT NULL            |      |       |
-# | countdown_mode_hash     | Countdown mode hash     | text(65535) | NOT NULL            |      |       |
-# | turn_max                | Turn max                | integer(4)  | NOT NULL            |      |       |
-# | battle_request_at       | Battle request at       | datetime    |                     |      |       |
-# | auto_matched_at         | Auto matched at         | datetime    |                     |      |       |
-# | begin_at                | Begin at                | datetime    |                     |      |       |
-# | end_at                  | End at                  | datetime    |                     |      |       |
-# | last_action_key         | Last action key         | string(255) |                     |      |       |
-# | win_location_key        | Win location key        | string(255) |                     |      |       |
-# | current_users_count     | Current users count     | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | watch_ships_count | Watch memberships count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at              | 作成日時                | datetime    | NOT NULL            |      |       |
-# | updated_at              | 更新日時                | datetime    | NOT NULL            |      |       |
-# |-------------------------+-------------------------+-------------+---------------------+------+-------|
-
-# == Schema Information ==
-#
-# Chat messageテーブル (chat_messages as ChatMessage)
-#
-# |----------------+-------------+-------------+-------------+------------------+-------|
-# | カラム名       | 意味        | タイプ      | 属性        | 参照             | INDEX |
-# |----------------+-------------+-------------+-------------+------------------+-------|
-# | id             | ID          | integer(8)  | NOT NULL PK |                  |       |
-# | battle_id | Battle room | integer(8)  | NOT NULL    | => Fanta::Battle#id | A     |
-# | user_id        | Fanta::User        | integer(8)  | NOT NULL    | => Fanta::User#id       | B     |
-# | message        | Message     | text(65535) | NOT NULL    |                  |       |
-# | created_at     | 作成日時    | datetime    | NOT NULL    |                  |       |
-# | updated_at     | 更新日時    | datetime    | NOT NULL    |                  |       |
-# |----------------+-------------+-------------+-------------+------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・ChatMessage モデルは Fanta::Battle モデルから has_many :memberships されています。
-# ・ChatMessage モデルは Fanta::User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
@@ -115,23 +146,84 @@
 
 # == Schema Information ==
 #
+# Chat messageテーブル (fanta_chat_messages as Fanta::ChatMessage)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | battle_id  | Battle   | integer(8)  | NOT NULL    |      | A     |
+# | user_id    | User     | integer(8)  | NOT NULL    |      | B     |
+# | message    | Message  | text(65535) | NOT NULL    |      |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Lobby messageテーブル (fanta_lobby_messages as Fanta::LobbyMessage)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | user_id    | User     | integer(8)  | NOT NULL    |      | A     |
+# | message    | Message  | text(65535) | NOT NULL    |      |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Membershipテーブル (fanta_memberships as Fanta::Membership)
+#
+# |--------------------+--------------------+-------------+-------------+------+-------|
+# | カラム名           | 意味               | タイプ      | 属性        | 参照 | INDEX |
+# |--------------------+--------------------+-------------+-------------+------+-------|
+# | id                 | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | battle_id          | Battle             | integer(8)  | NOT NULL    |      | A     |
+# | user_id            | User               | integer(8)  | NOT NULL    |      | B     |
+# | preset_key         | Preset key         | string(255) | NOT NULL    |      |       |
+# | location_key       | Location key       | string(255) | NOT NULL    |      | C     |
+# | position           | 順序               | integer(4)  |             |      | D     |
+# | standby_at         | Standby at         | datetime    |             |      |       |
+# | fighting_at        | Fighting at        | datetime    |             |      |       |
+# | time_up_trigger_at | Time up trigger at | datetime    |             |      |       |
+# | created_at         | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at         | 更新日時           | datetime    | NOT NULL    |      |       |
+# |--------------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Watch shipテーブル (fanta_watch_ships as Fanta::WatchShip)
+#
+# |------------+----------+------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# |------------+----------+------------+-------------+------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |      |       |
+# | battle_id  | Battle   | integer(8) | NOT NULL    |      | A     |
+# | user_id    | User     | integer(8) | NOT NULL    |      | B     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
+# |------------+----------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # 棋譜変換テーブル (free_battles as FreeBattle)
 #
-# |--------------+--------------------+-------------+-------------+------+-------|
-# | カラム名     | 意味               | タイプ      | 属性        | 参照 | INDEX |
-# |--------------+--------------------+-------------+-------------+------+-------|
-# | id           | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | unique_key   | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |
-# | kifu_file    | 棋譜ファイル       | string(255) |             |      |       |
-# | kifu_url     | 棋譜URL            | string(255) |             |      |       |
-# | kifu_body    | 棋譜内容           | text(65535) | NOT NULL    |      |       |
-# | turn_max     | 手数               | integer(4)  | NOT NULL    |      |       |
-# | meta_info    | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
-# | mountain_url | 将棋山脈URL        | string(255) |             |      |       |
-# | battled_at   | Battled at         | datetime    | NOT NULL    |      |       |
-# | created_at   | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時           | datetime    | NOT NULL    |      |       |
-# |--------------+--------------------+-------------+-------------+------+-------|
+# |------------+--------------------+-------------+-------------+------+-------|
+# | カラム名   | 意味               | タイプ      | 属性        | 参照 | INDEX |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |
+# | kifu_url   | 棋譜URL            | string(255) |             |      |       |
+# | kifu_body  | 棋譜内容           | text(65535) | NOT NULL    |      |       |
+# | turn_max   | 手数               | integer(4)  | NOT NULL    |      |       |
+# | meta_info  | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
+# | battled_at | Battled at         | datetime    | NOT NULL    |      |       |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -151,49 +243,6 @@
 
 # == Schema Information ==
 #
-# Lobby messageテーブル (lobby_messages as LobbyMessage)
-#
-# |------------+----------+-------------+-------------+------------+-------|
-# | カラム名   | 意味     | タイプ      | 属性        | 参照       | INDEX |
-# |------------+----------+-------------+-------------+------------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |            |       |
-# | user_id    | Fanta::User     | integer(8)  | NOT NULL    | => Fanta::User#id | A     |
-# | message    | Message  | text(65535) | NOT NULL    |            |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |            |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |            |       |
-# |------------+----------+-------------+-------------+------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・LobbyMessage モデルは Fanta::User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Membershipテーブル (memberships as Membership)
-#
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | battle_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::Battle#id | A     |
-# | user_id            | Fanta::User               | integer(8)  | NOT NULL    | => Fanta::User#id       | B     |
-# | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
-# | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
-# | position           | 順序               | integer(4)  |             |                  | D     |
-# | standby_at         | Standby at         | datetime    |             |                  |       |
-# | fighting_at        | Fighting at        | datetime    |             |                  |       |
-# | time_up_trigger_at | Time up trigger at | datetime    |             |                  |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは Fanta::Battle モデルから has_many :memberships されています。
-# ・Membership モデルは Fanta::User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
 # Access logテーブル (swars_access_logs as Swars::AccessLog)
 #
 # |------------+----------+------------+-------------+------+-------|
@@ -207,126 +256,46 @@
 
 # == Schema Information ==
 #
-# Battleテーブル (swars_battles as Swars::Battle)
-#
-# |-------------------+-------------------+-------------+-------------+-------------------+-------|
-# | カラム名          | 意味              | タイプ      | 属性        | 参照              | INDEX |
-# |-------------------+-------------------+-------------+-------------+-------------------+-------|
-# | id                | ID                | integer(8)  | NOT NULL PK |                   |       |
-# | battle_key        | Battle key        | string(255) | NOT NULL    |                   | A!    |
-# | battled_at        | Battled at        | datetime    | NOT NULL    |                   |       |
-# | rule_key          | Rule key          | string(255) | NOT NULL    |                   | B     |
-# | csa_seq           | Csa seq           | text(65535) | NOT NULL    |                   |       |
-# | battle_state_key  | Battle state key  | string(255) | NOT NULL    |                   | C     |
-# | win_user_id       | Win user          | integer(8)  |             | => Swars::User#id | D     |
-# | turn_max          | Turn max          | integer(4)  | NOT NULL    |                   |       |
-# | meta_info         | Meta info         | text(65535) | NOT NULL    |                   |       |
-# | mountain_url      | 将棋山脈URL       | string(255) |             |                   |       |
-# | last_accessd_at   | Last accessd at   | datetime    | NOT NULL    |                   |       |
-# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0)  |                   |       |
-# | created_at        | 作成日時          | datetime    | NOT NULL    |                   |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL    |                   |       |
-# |-------------------+-------------------+-------------+-------------+-------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
 # Gradeテーブル (swars_grades as Swars::Grade)
 #
-# |------------+------------+-------------+-------------+------+-------|
-# | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
-# |------------+------------+-------------+-------------+------+-------|
-# | id         | ID         | integer(8)  | NOT NULL PK |      |       |
-# | unique_key | Unique key | string(255) | NOT NULL    |      | A!    |
-# | priority   | Priority   | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
-# |------------+------------+-------------+-------------+------+-------|
+# |------------+----------+-------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | Key      | string(255) | NOT NULL    |      | A!    |
+# | priority   | Priority | integer(4)  | NOT NULL    |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
 # Membershipテーブル (swars_memberships as Swars::Membership)
 #
-# |--------------+--------------+-------------+-------------+------------+---------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照       | INDEX   |
-# |--------------+--------------+-------------+-------------+------------+---------|
-# | id           | ID           | integer(8)  | NOT NULL PK |            |         |
-# | battle_id    | Battle       | integer(8)  | NOT NULL    |            | A! B! C |
-# | user_id      | Fanta::User         | integer(8)  | NOT NULL    | => Fanta::User#id | B! D    |
-# | grade_id     | Grade        | integer(8)  | NOT NULL    |            | E       |
-# | judge_key    | Judge key    | string(255) | NOT NULL    |            | F       |
-# | location_key | Location key | string(255) | NOT NULL    |            | A! G    |
-# | position     | 順序         | integer(4)  |             |            | H       |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |            |         |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |            |         |
-# |--------------+--------------+-------------+-------------+------------+---------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・Swars::Membership モデルは Fanta::User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
+# |--------------+--------------+-------------+-------------+------+---------|
+# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX   |
+# |--------------+--------------+-------------+-------------+------+---------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |         |
+# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B! C |
+# | user_id      | User         | integer(8)  | NOT NULL    |      | B! D    |
+# | grade_id     | Grade        | integer(8)  | NOT NULL    |      | E       |
+# | judge_key    | Judge key    | string(255) | NOT NULL    |      | F       |
+# | location_key | Location key | string(255) | NOT NULL    |      | A! G    |
+# | position     | 順序         | integer(4)  |             |      | H       |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
+# |--------------+--------------+-------------+-------------+------+---------|
 
 # == Schema Information ==
 #
 # Search logテーブル (swars_search_logs as Swars::SearchLog)
 #
-# |------------+----------+------------+-------------+------------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照       | INDEX |
-# |------------+----------+------------+-------------+------------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |            |       |
-# | user_id    | Fanta::User     | integer(8) | NOT NULL    | => Fanta::User#id | A     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |            |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |            |       |
-# |------------+----------+------------+-------------+------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・Swars::SearchLog モデルは Fanta::User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# ユーザーテーブル (users as Fanta::User)
-#
-# |------------------------+---------------------+-------------+-------------+------------------+-------|
-# | カラム名               | 意味                | タイプ      | 属性        | 参照             | INDEX |
-# |------------------------+---------------------+-------------+-------------+------------------+-------|
-# | id                     | ID                  | integer(8)  | NOT NULL PK |                  |       |
-# | name                   | 名前                | string(255) | NOT NULL    |                  |       |
-# | current_battle_id | Current battle room | integer(8)  |             | => Fanta::Battle#id | A     |
-# | online_at              | Online at           | datetime    |             |                  |       |
-# | fighting_at            | Fighting at         | datetime    |             |                  |       |
-# | matching_at            | Matching at         | datetime    |             |                  |       |
-# | lifetime_key           | Lifetime key        | string(255) | NOT NULL    |                  | B     |
-# | platoon_key            | Platoon key         | string(255) | NOT NULL    |                  | C     |
-# | self_preset_key        | Self preset key     | string(255) | NOT NULL    |                  | D     |
-# | oppo_preset_key        | Oppo preset key     | string(255) | NOT NULL    |                  | E     |
-# | user_agent             | Fanta::User agent          | string(255) | NOT NULL    |                  |       |
-# | created_at             | 作成日時            | datetime    | NOT NULL    |                  |       |
-# | updated_at             | 更新日時            | datetime    | NOT NULL    |                  |       |
-# |------------------------+---------------------+-------------+-------------+------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Watch membershipテーブル (watch_ships as WatchShip)
-#
-# |----------------+-------------+------------+-------------+------------------+-------|
-# | カラム名       | 意味        | タイプ     | 属性        | 参照             | INDEX |
-# |----------------+-------------+------------+-------------+------------------+-------|
-# | id             | ID          | integer(8) | NOT NULL PK |                  |       |
-# | battle_id | Battle room | integer(8) | NOT NULL    | => Fanta::Battle#id | A     |
-# | user_id        | Fanta::User        | integer(8) | NOT NULL    | => Fanta::User#id       | B     |
-# | created_at     | 作成日時    | datetime   | NOT NULL    |                  |       |
-# | updated_at     | 更新日時    | datetime   | NOT NULL    |                  |       |
-# |----------------+-------------+------------+-------------+------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・WatchShip モデルは Fanta::Battle モデルから has_many :memberships されています。
-# ・WatchShip モデルは Fanta::User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
+# |------------+----------+------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# |------------+----------+------------+-------------+------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |      |       |
+# | user_id    | User     | integer(8) | NOT NULL    |      | A     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
+# |------------+----------+------------+-------------+------+-------|
 

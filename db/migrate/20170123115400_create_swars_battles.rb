@@ -67,7 +67,7 @@ class CreateSwarsBattles < ActiveRecord::Migration[5.1]
     end
 
     create_table :swars_grades, force: true do |t|
-      t.string :unique_key, null: false, index: {unique: true}
+      t.string :key, null: false, index: {unique: true}
       t.integer :priority, null: false, index: true, comment: "優劣"
       t.timestamps null: false
     end

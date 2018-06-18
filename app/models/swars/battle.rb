@@ -352,7 +352,7 @@ class Swars::Battle < ApplicationRecord
 
         users = info[:user_infos].collect do |e|
           Swars::User.find_or_initialize_by(user_key: e[:user_key]).tap do |user|
-            grade = Swars::Grade.find_by!(unique_key: e[:grade_key])
+            grade = Swars::Grade.find_by!(key: e[:grade_key])
             user.grade = grade # 常にランクを更新する
             begin
               user.save!
@@ -377,7 +377,7 @@ class Swars::Battle < ApplicationRecord
 
         info[:user_infos].each.with_index do |e, i|
           user = Swars::User.find_by!(user_key: e[:user_key])
-          grade = Swars::Grade.find_by!(unique_key: e[:grade_key])
+          grade = Swars::Grade.find_by!(key: e[:grade_key])
 
           if winner_index
             judge_key = (i == winner_index) ? :win : :lose
