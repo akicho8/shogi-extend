@@ -25,16 +25,18 @@
 # ・User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
 #--------------------------------------------------------------------------------
 
-class General::User < ApplicationRecord
-  with_options presence: true do
-    validates :name
-  end
+module General
+  class User < ApplicationRecord
+    with_options presence: true do
+      validates :name
+    end
 
-  with_options allow_blank: true do
-    validates :name, uniqueness: true
-  end
+    with_options allow_blank: true do
+      validates :name, uniqueness: true
+    end
 
-  def to_param
-    name
+    def to_param
+      name
+    end
   end
 end

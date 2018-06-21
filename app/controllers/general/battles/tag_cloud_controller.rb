@@ -1,4 +1,6 @@
-module General::Battles
-  class TagCloudController < ApplicationController
+module General
+  module Battles
+    class TagCloudController < ApplicationController
+    end
   end
 end

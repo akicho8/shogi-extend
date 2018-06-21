@@ -32,7 +32,7 @@ module Fanta
     include ModulableCrud::All
 
     def current_model
-      ::Fanta::Battle
+      Battle
     end
 
     def index

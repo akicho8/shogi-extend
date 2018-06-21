@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Swars battle gradeテーブル (grades as Swars::Grade)
+# Swars battle gradeテーブル (grades as Grade)
 #
 # |------------+------------+-------------+-------------+------+-------|
 # | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
@@ -13,22 +13,24 @@
 # | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
 # |------------+------------+-------------+-------------+------+-------|
 
-class Swars::Grade < ApplicationRecord
-  has_many :users, dependent: :destroy
+module Swars
+  class Grade < ApplicationRecord
+    has_many :users, dependent: :destroy
 
-  default_scope { order(:priority) }
+    default_scope { order(:priority) }
 
-  with_options presence: true do
-    validates :key
+    with_options presence: true do
+      validates :key
+    end
+
+    with_options allow_blank: true do
+      validates :key, inclusion: GradeInfo.collect(&:name)
+    end
+
+    def grade_info
+      GradeInfo.fetch(key)
+    end
+
+    delegate :name, to: :grade_info
   end
-
-  with_options allow_blank: true do
-    validates :key, inclusion: Swars::GradeInfo.collect(&:name)
-  end
-
-  def grade_info
-    Swars::GradeInfo.fetch(key)
-  end
-
-  delegate :name, to: :grade_info
 end

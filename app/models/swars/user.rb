@@ -25,36 +25,38 @@
 # ・User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
 #--------------------------------------------------------------------------------
 
-class Swars::User < ApplicationRecord
-  has_many :memberships, dependent: :destroy      # 対局時の情報(複数)
-  has_many :battles, through: :memberships # 対局(複数)
-  belongs_to :grade                         # すべてのモードのなかで一番よい段級位
-  has_many :search_logs, dependent: :destroy   # 明示的に取り込んだ日時の記録
+module Swars
+  class User < ApplicationRecord
+    has_many :memberships, dependent: :destroy # 対局時の情報(複数)
+    has_many :battles, through: :memberships   # 対局(複数)
+    belongs_to :grade                          # すべてのモードのなかで一番よい段級位
+    has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
 
-  before_validation do
-    self.grade ||= Swars::Grade.last
+    before_validation do
+      self.grade ||= Grade.last
 
-    # Swars::Grade が下がらないようにする
-    # 例えば10分メインの人が3分を1回やっただけで30級に戻らないようにする
-    if changes[:grade_id]
-      ov, nv = changes[:grade_id]
-      if ov && nv
-        if Swars::Grade.find(ov).priority < Swars::Grade.find(nv).priority
-          self.grade_id = ov
+      # Grade が下がらないようにする
+      # 例えば10分メインの人が3分を1回やっただけで30級に戻らないようにする
+      if changes[:grade_id]
+        ov, nv = changes[:grade_id]
+        if ov && nv
+          if Grade.find(ov).priority < Grade.find(nv).priority
+            self.grade_id = ov
+          end
         end
       end
     end
-  end
 
-  with_options presence: true do
-    validates :user_key
-  end
+    with_options presence: true do
+      validates :user_key
+    end
 
-  with_options allow_blank: true do
-    validates :user_key, uniqueness: true
-  end
+    with_options allow_blank: true do
+      validates :user_key, uniqueness: true
+    end
 
-  def to_param
-    user_key
+    def to_param
+      user_key
+    end
   end
 end

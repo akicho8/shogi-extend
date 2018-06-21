@@ -1,5 +1,7 @@
-module Swars::Battles
-  class TagCloudController < ApplicationController
+module Swars
+  module Battles
+    class TagCloudController < ApplicationController
+    end
   end
 end
 

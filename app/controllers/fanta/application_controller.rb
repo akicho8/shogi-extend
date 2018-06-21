@@ -1,2 +1,4 @@
-class Fanta::ApplicationController < ApplicationController
+module Fanta
+  class ApplicationController < ::ApplicationController
+  end
 end

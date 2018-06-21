@@ -12,23 +12,25 @@
 # |    8-9 | 四枚落ち         | 上手が飛車と角行、両方の香車を落とす       |
 # | 10以上 | 六枚落ち         | 上手が飛車と角行、両方の香車と桂馬を落とす |
 # |--------+------------------+--------------------------------------------|
-class Fanta::CustomPresetInfo < Warabi::PresetInfo
-  memory_record_reset superclass.find_all { |e|
-    e.name.in?([
-        "平手",
-        "香落ち",
-        # "右香落ち",
-        "角落ち",
-        "飛車落ち",
-        "飛香落ち",
-        "二枚落ち",
-        # "三枚落ち",
-        "四枚落ち",
-        "六枚落ち",
-        # "八枚落ち",
-        # "十枚落ち",
-        # "十九枚落ち",
-        # "二十枚落ち",
-      ])
-  }.collect(&:attributes)
+module Fanta
+  class CustomPresetInfo < Warabi::PresetInfo
+    memory_record_reset superclass.find_all { |e|
+      e.name.in?([
+          "平手",
+          "香落ち",
+          # "右香落ち",
+          "角落ち",
+          "飛車落ち",
+          "飛香落ち",
+          "二枚落ち",
+          # "三枚落ち",
+          "四枚落ち",
+          "六枚落ち",
+          # "八枚落ち",
+          # "十枚落ち",
+          # "十九枚落ち",
+          # "二十枚落ち",
+        ])
+    }.collect(&:attributes)
+  end
 end

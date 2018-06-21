@@ -21,19 +21,21 @@
 # 第3版で追加。
 # ※%+ILLEGAL_ACTION,%-ILLEGAL_ACTIONは、手番側の勝ちを表現できる。
 
-class Swars::FinalInfo
-  include ApplicationMemoryRecord
-  memory_record [
-    {key: "TORYO",         name: "投了",     label_key: nil,      last_action_key: "TORYO",      },
-    {key: "DISCONNECT",    name: "切断",     label_key: :danger,  last_action_key: "CHUDAN",     },
-    {key: "TIMEOUT",       name: "時間切れ", label_key: nil,      last_action_key: "TIME_UP",    },
-    {key: "CHECKMATE",     name: "詰み",     label_key: nil,      last_action_key: "TSUMI",      },
-    {key: "ENTERINGKING",  name: "入玉",     label_key: :info,    last_action_key: "KACHI",      },
-    {key: "DRAW_SENNICHI", name: "千日手",   label_key: :warning, last_action_key: "SENNICHITE", }, # これだけは (SENTE|GOTE)_WIN の型で来てない
-    {key: "OUTE_SENNICHI", name: "千日手",   label_key: :warning, last_action_key: "SENNICHITE", }, # 連続王手の千日手 https://ja.wikipedia.org/wiki/%E5%8D%83%E6%97%A5%E6%89%8B#%E9%80%A3%E7%B6%9A%E7%8E%8B%E6%89%8B%E3%81%AE%E5%8D%83%E6%97%A5%E6%89%8B
-  ]
+module Swars
+  class FinalInfo
+    include ApplicationMemoryRecord
+    memory_record [
+      {key: "TORYO",         name: "投了",     label_key: nil,      last_action_key: "TORYO",      },
+      {key: "DISCONNECT",    name: "切断",     label_key: :danger,  last_action_key: "CHUDAN",     },
+      {key: "TIMEOUT",       name: "時間切れ", label_key: nil,      last_action_key: "TIME_UP",    },
+      {key: "CHECKMATE",     name: "詰み",     label_key: nil,      last_action_key: "TSUMI",      },
+      {key: "ENTERINGKING",  name: "入玉",     label_key: :info,    last_action_key: "KACHI",      },
+      {key: "DRAW_SENNICHI", name: "千日手",   label_key: :warning, last_action_key: "SENNICHITE", }, # これだけは (SENTE|GOTE)_WIN の型で来てない
+      {key: "OUTE_SENNICHI", name: "千日手",   label_key: :warning, last_action_key: "SENNICHITE", }, # 連続王手の千日手 https://ja.wikipedia.org/wiki/%E5%8D%83%E6%97%A5%E6%89%8B#%E9%80%A3%E7%B6%9A%E7%8E%8B%E6%89%8B%E3%81%AE%E5%8D%83%E6%97%A5%E6%89%8B
+    ]
 
-  def csa_key
-    last_action_key
+    def csa_key
+      last_action_key
+    end
   end
 end

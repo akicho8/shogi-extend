@@ -24,7 +24,8 @@
 # ・Membership モデルは Fanta::User モデルから has_many :chat_messages されています。
 #--------------------------------------------------------------------------------
 
-class General::Membership < ApplicationRecord
+module General
+class Membership < ApplicationRecord
   belongs_to :battle            # 対局
 
   acts_as_list top_of_list: 0, scope: :battle
@@ -52,4 +53,5 @@ class General::Membership < ApplicationRecord
   def location
     Warabi::Location.fetch(location_key)
   end
+end
 end
