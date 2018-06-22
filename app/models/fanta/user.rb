@@ -94,7 +94,7 @@ module Fanta
           # https://github.com/rails/rails/issues/32866
           Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true)
         else
-          file = icon_files[id.modulo(icon_files.size)]
+          file = icon_files[(id || self.class.count.next).modulo(icon_files.size)]
           ActionController::Base.helpers.asset_path(file)
         end
       end
