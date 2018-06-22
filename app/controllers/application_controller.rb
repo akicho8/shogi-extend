@@ -8,9 +8,6 @@ class ApplicationController < ActionController::Base
       #
       # serialization_scope :view_context
     end
-
-    class_methods do
-    end
   end
 
   concerning :Choremethods do
@@ -20,7 +17,7 @@ class ApplicationController < ActionController::Base
     end
 
     def submitted?(name)
-      [name, "#{name}.x", "#{name}.y"].any? {|e| params.key?(e) }
+      params.key?(name)
     end
 
     private
@@ -45,7 +42,7 @@ class ApplicationController < ActionController::Base
     end
 
     def bot_agent?
-      request.user_agent.to_s.match?(self.class.bot_regexp)
+      @bot_agent ||= request.user_agent.to_s.match?(self.class.bot_regexp)
     end
   end
 
@@ -54,10 +51,8 @@ class ApplicationController < ActionController::Base
       helper_method :current_user
 
       before_action do
-        current_user
-
         @js_global_params = {
-          :current_user        => ams_sr(current_user, serializer: Fanta::CurrentUserSerializer),
+          :current_user        => current_user && ams_sr(current_user, serializer: Fanta::CurrentUserSerializer),
           :online_only_count   => Fanta::User.online_only.count,
           :fighter_only_count  => Fanta::User.fighter_only.count,
           :lifetime_infos      => Fanta::LifetimeInfo,
@@ -67,10 +62,9 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    class_methods do
-    end
-
     def current_user
+      return nil if bot_agent?
+
       @current_user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
       @current_user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
       cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}

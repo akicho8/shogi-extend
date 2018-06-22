@@ -62,22 +62,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // ユーザー
         online_users: js_lobby.online_users,
 
-        matching_at: js_global_params.current_user.matching_at, // マッチングをサーバー側で受理した日時
-
         setting_modal_p: false,
+        when_koma_one_side_force_hirate: false, // 駒落ちのとき片方を必ず平手に強制する？
 
         current_hira_koma_key: null,
-        self_preset_key: js_global_params.current_user["self_preset_key"],
-        oppo_preset_key: js_global_params.current_user["oppo_preset_key"],
-        current_lifetime_key: js_global_params.current_user["lifetime_key"],
-        current_platoon_key: js_global_params.current_user["platoon_key"],
 
-        when_koma_one_side_force_hirate: false, // 駒落ちのとき片方を必ず平手に強制する？
+        current_user: js_global_params.current_user,
+
+        matching_at:           null, // マッチングをサーバー側で受理した日時
+        self_preset_key:       null,
+        oppo_preset_key:       null,
+        current_lifetime_key:  null,
+        current_platoon_key:   null,
       }
     },
 
     created() {
       this.current_hira_koma_key = this.hira_koma_default_key
+
+      if (this.current_user) {
+        this.matching_at          = this.current_user.matching_at
+        this.self_preset_key      = this.current_user.self_preset_key
+        this.oppo_preset_key      = this.current_user.oppo_preset_key
+        this.current_lifetime_key = this.current_user.lifetime_key
+        this.current_platoon_key  = this.current_user.platoon_key
+      }
     },
 
     watch: {
@@ -113,7 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     methods: {
       user_self_p(user) {
-        return user.id === js_global_params.current_user.id
+        if (this.current_user) {
+          return user.id === this.current_user.id
+        }
       },
 
       battle_setting_open_click() {
@@ -129,8 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
         App.lobby.setting_save({
           self_preset_key: this.current_self_preset_info.key,
           oppo_preset_key: this.current_oppo_preset_info.key,
-          lifetime_key: this.current_lifetime_key,
-          platoon_key: this.current_platoon_key,
+          lifetime_key:    this.current_lifetime_key,
+          platoon_key:     this.current_platoon_key,
         })
       },
 

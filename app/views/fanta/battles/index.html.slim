@@ -43,16 +43,17 @@ javascript:
   / .title.is-4 ネット対戦・ロビー
   / hr
 
-  .buttons
-    template(v-if="!matching_at")
-      button.button.is-primary.is-large(@click.prevent="matching_start") バトル開始
-      button.button.is-primary.is-large(@click.prevent="battle_setting_open_click") ルール設定
-    template(v-else)
-      a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
+  - if current_user
+    .buttons
+      template(v-if="!matching_at")
+        button.button.is-primary.is-large(@click.prevent="matching_start") バトル開始
+        button.button.is-primary.is-large(@click.prevent="battle_setting_open_click") ルール設定
+      template(v-else)
+        a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
 
-    - if Rails.env.development? && false
-      = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
-      = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
+      - if Rails.env.development? && false
+        = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
+        = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
 
   .columns
     .column
@@ -72,25 +73,26 @@ javascript:
         /   .control
         /     button.button.is-primary(@click="message_enter") 送信
 
-        article.media
-          figure.media-left
-            p.image.is-64x64
-              = image_tag current_user.avatar_url
+        - if current_user
+          article.media
+            figure.media-left
+              p.image.is-64x64
+                = image_tag current_user.avatar_url
 
-          .media-content
-            .field
-              p.control
-                input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter")
-            nav.level
-              .level-left
-                .level-item
-                  button.button.is-primary @click="message_enter"
-                    | 送信
-              / .level-right
-              /   .level-item
-              /     label.checkbox
-              /       input[type="checkbox"]
-              /       |  Press enter to submit
+            .media-content
+              .field
+                p.control
+                  input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter")
+              nav.level
+                .level-left
+                  .level-item
+                    button.button.is-primary @click="message_enter"
+                      | 送信
+                / .level-right
+                /   .level-item
+                /     label.checkbox
+                /       input[type="checkbox"]
+                /       |  Press enter to submit
 
     .column
       .box

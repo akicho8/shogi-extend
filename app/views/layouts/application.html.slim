@@ -56,17 +56,18 @@ html lang="ja"
               - unless Rails.env.production?
                 = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
         #header_app.navbar-end(v-cloak)
-          .navbar-item
-            b-dropdown(hoverable)
-              span(slot="trigger")
-                = link_to([current_user], class: "navbar-link") do
-                  = image_tag(current_user.avatar_url, class: "face_icon")
-                  span.my_name
-                    = current_user.name
-              b-dropdown-item :has-link="true" :paddingless="true"
-                = link_to("プロフィール", [current_user], id: "header_profile_show")
-              b-dropdown-item :has-link="true" :paddingless="true"
-                = link_to("設定", [:edit, current_user])
+          - if current_user
+            .navbar-item
+              b-dropdown(hoverable)
+                span(slot="trigger")
+                  = link_to([current_user], class: "navbar-link") do
+                    = image_tag(current_user.avatar_url, class: "face_icon")
+                    span.my_name
+                      = current_user.name
+                b-dropdown-item :has-link="true" :paddingless="true"
+                  = link_to("プロフィール", [current_user], id: "header_profile_show")
+                b-dropdown-item :has-link="true" :paddingless="true"
+                  = link_to("設定", [:edit, current_user])
           .navbar-item
             | オンライン{{online_only_count}}人
           .navbar-item
