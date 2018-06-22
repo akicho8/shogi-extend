@@ -15,8 +15,8 @@ class LobbyChannel < ApplicationCable::Channel
 
   def setting_save(data)
     current_user.update!({
-        lifetime_key: data["lifetime_key"],
-        platoon_key: data["platoon_key"],
+        lifetime_key:    data["lifetime_key"],
+        platoon_key:     data["platoon_key"],
         self_preset_key: data["self_preset_key"],
         oppo_preset_key: data["oppo_preset_key"],
       })

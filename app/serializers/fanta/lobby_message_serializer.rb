@@ -40,4 +40,4 @@ end
 # ~> 	from -:10:in `<module:Fanta>'
 # ~> 	from -:3:in `<main>'
 # >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
-# >> I, [2018-06-14T17:41:02.417027 #47289]  INFO -- : Rendered Fanta::LobbyMessageSerializer with ActiveModelSerializers::Adapter::Attributes (4.15ms)
+# >> I, [2018-06-22T21:18:27.461812 #10466]  INFO -- : Rendered Fanta::LobbyMessageSerializer with ActiveModelSerializers::Adapter::Attributes (4.19ms)

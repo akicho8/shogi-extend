@@ -81,6 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
       this.current_hira_koma_key = this.hira_koma_default_key
 
       if (this.current_user) {
+        console.assert("matching_at" in this.current_user)
+        console.assert("self_preset_key" in this.current_user)
+        console.assert("oppo_preset_key" in this.current_user)
+        console.assert("lifetime_key" in this.current_user)
+        console.assert("platoon_key" in this.current_user)
+
         this.matching_at          = this.current_user.matching_at
         this.self_preset_key      = this.current_user.self_preset_key
         this.oppo_preset_key      = this.current_user.oppo_preset_key
