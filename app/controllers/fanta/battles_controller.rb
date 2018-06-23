@@ -31,10 +31,6 @@ module Fanta
   class BattlesController < ApplicationController
     include ModulableCrud::All
 
-    def current_model
-      Battle
-    end
-
     def index
       @js_lobby = ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: nil})
     end

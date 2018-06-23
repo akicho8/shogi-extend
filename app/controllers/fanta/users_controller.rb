@@ -37,10 +37,6 @@ module Fanta
       end
     end
 
-    def current_model
-      User
-    end
-
     def show
       @js_user_profile = ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
     end

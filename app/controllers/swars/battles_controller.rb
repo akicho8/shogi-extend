@@ -31,10 +31,6 @@ module Swars
     include ModulableCrud::All
     include SharedMethods
 
-    def current_model
-      Battle
-    end
-
     def index
       unless bot_agent?
         # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
