@@ -4,14 +4,13 @@ class BattleChannel < ApplicationCable::Channel
     stream_for current_user
   end
 
+  # js 側では無理でも ruby 側だと接続切れの処理が書ける
   def unsubscribed
-    # js 側では無理でも ruby 側だと接続切れの処理が書ける
     room_out({})
   end
 
-  # /Users/ikeda/src/shogi_web/app/javascript/packs/battle.js の App.battle.send({kifu_body_sfen: response.data.sfen}) で呼ばれる
-  # アクションを指定せずに send で呼ぶときに対応する Rails 側のアクションらしい
-  # が、ごちゃごちゃになりそうなので使わない
+  # ../javascript/packs/battle.js の App.battle.send({kifu_body_sfen: response.data.sfen}) に対応して呼ばれる
+  # アクションを指定しなかったときに対応する Rails 側のアクションらしいが、ごちゃごちゃになりそうなので使わない
   def receive(data)
   end
 
@@ -212,11 +211,10 @@ class BattleChannel < ApplicationCable::Channel
 
   private
 
+  # 部屋が抜けたときの状態も簡単に反映できるように全メンバー一気に送るのでよさそう
   def memberships_update
-    # model の中から行う
-    # 部屋を抜けたときの状態が反映されるように reload が必要
-    # FIXME: 1件だけ行う
-    ActionCable.server.broadcast(room_key, memberships: ams_sr(current_battle.reload.memberships))
+    current_battle.reload # 部屋を抜けたときの状態が反映されるように reload が必要
+    ActionCable.server.broadcast(room_key, memberships: ams_sr(current_battle.memberships))
   end
 
   def room_key
