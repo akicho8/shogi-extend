@@ -1,8 +1,8 @@
 .has-text-centered
   .title.is-2.yumincho
-    = general_user_link2(current_record.memberships.black)
+    = controller.membership_name(current_record.memberships.black)
     span.has-text-grey =<> "vs"
-    = general_user_link2(current_record.memberships.white)
+    = controller.membership_name(current_record.memberships.white)
 hr
 
 .tags

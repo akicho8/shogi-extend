@@ -73,15 +73,15 @@ module General
           end
 
           if current_general_user
-            row["対象棋士"] = battle.win_lose_str(l_ship).html_safe + " " + h.general_user_link2(l_ship)
-            row["対戦相手"] = battle.win_lose_str(r_ship).html_safe + " " + h.general_user_link2(r_ship)
+            row["対象棋士"] = battle.win_lose_str(l_ship).html_safe + " " + membership_name(l_ship)
+            row["対戦相手"] = battle.win_lose_str(r_ship).html_safe + " " + membership_name(r_ship)
           else
             if battle.gstate_info.draw
-              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_user_link2(l_ship)
-              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + h.general_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(l_ship)
+              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(r_ship)
             else
-              row["勝ち"] = icon_tag(:far, :circle) + h.general_user_link2(l_ship)
-              row["負け"] = icon_tag(:fas, :times)  + h.general_user_link2(r_ship)
+              row["勝ち"] = icon_tag(:far, :circle) + membership_name(l_ship)
+              row["負け"] = icon_tag(:fas, :times)  + membership_name(r_ship)
             end
           end
 
@@ -159,6 +159,24 @@ module General
       }
     end
 
+    def membership_name(membership)
+      meta_info = membership.battle.meta_info
+      names = meta_info[:detail_names][membership.location.code]
+
+      # 詳細になかったら「先手」「後手」のところから探す
+      if names.blank?
+        names = meta_info[:simple_names][membership.location.code].flatten
+      end
+
+      if names.blank?
+        return "不明"
+      end
+
+      names.collect {|e|
+        link_to(e, general_search_path(e))
+      }.join(" ").html_safe
+    end
+
     private
 
     def access_log_create
@@ -223,7 +241,7 @@ module General
 
     def general_user_link(battle, judge_key)
       if membership = battle.memberships.judge_key_eq(judge_key)
-        h.general_user_link2(membership)
+        membership_name(membership)
       end
     end
 

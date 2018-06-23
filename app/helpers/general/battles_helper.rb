@@ -20,20 +20,4 @@
 # |--------------------------+-----------------+-------------+-------------+------+-------|
 
 module General::BattlesHelper
-  def general_user_link2(membership)
-    meta_info = membership.battle.meta_info
-    names = meta_info[:detail_names][membership.location.code]
-
-    # 詳細になかったら「先手」「後手」のところから探す
-    if names.blank?
-      names = meta_info[:simple_names][membership.location.code].flatten
-    end
-
-    if names.blank?
-      return "不明"
-    end
-    names.collect {|e|
-      link_to(e, general_search_path(e))
-    }.join(" ").html_safe
-  end
 end
