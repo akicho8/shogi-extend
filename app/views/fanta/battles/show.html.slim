@@ -7,7 +7,7 @@ javascript:
 #battle_app v-cloak="true"
   .columns
     .column.is-two-thirds
-      .box
+      .virtual_box
         div v-if="begin_at"
           nav.level
             .level-item.has-text-centered
@@ -42,7 +42,7 @@ javascript:
           :flip="flip"
         )
       - if Rails.env.development?
-        .box
+        .virtual_box
           | current_location: {{current_location.key}}<br>
           | clock_counter: {{clock_counter}}<br>
           | clock_counts: {{clock_counts}}<br>
@@ -50,12 +50,12 @@ javascript:
           | current_membership_is_self_p: {{current_membership_is_self_p}}<br>
           | flip: {{flip}}<br>
 
-      .box
+      .virtual_box
         .title.is-5= "棋譜"
         pre.pre-wrap(v-text="human_kifu_text")
 
     .column
-      .box.chat_container
+      .virtual_box.chat_container
         / .title.is-5= "チャット"
 
         table.table.is-narrow.is-fullwidth
@@ -96,7 +96,7 @@ javascript:
               /       input[type="checkbox"]
               /       |  Press enter to submit
 
-      .box
+      .virtual_box
         b-table(:data="memberships")
           template slot-scope="props"
             b-table-column(label="対局者")
@@ -113,7 +113,7 @@ javascript:
               | {{location_mark(props.row)}}
 
       template(v-if="!_.isEmpty(watch_users)")
-        .box
+        .virtual_box
           .title.is-5= "観戦者"
           b-table(:data="watch_users")
             template slot-scope="props"
@@ -125,13 +125,13 @@ javascript:
   - if Rails.env.development?
     .columns
       .column
-        .box
+        .virtual_box
           .title.is-5 Vue Internal Variables
           table.table(border=1)
             tr(v-for="(value, key) in $data")
               th v-text="key"
               td v-text="value"
-        .box
+        .virtual_box
           .title.is-5 Vue Computed Results
           table.table(border=1)
             tr(v-for="(e, key) in _computedWatchers")
@@ -143,14 +143,14 @@ javascript:
 
 / br
 / br
-/ .box
+/ .virtual_box
 /   .title.is-5= "@js_battle"
 /   = html_format(JSON.load(@js_battle.to_json))
 /
-/ .box
+/ .virtual_box
 /   = html_format({"cookies.signed[:user_id]" => cookies.signed[:user_id]})
 /
-/ .box
+/ .virtual_box
 /   .title.is-5= "Fanta::User"
 /   = html_format(current_record.users)
 /   .title.is-5= "Fanta::ChatMessage"

@@ -19,7 +19,7 @@ javascript:
             =<> link_to("削除", [current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button is-small")
 
     .column
-      nav.level.box
+      nav.level.virtual_box
         .level-item.has-text-centered
           div
             p.heading 勝ち
@@ -31,7 +31,7 @@ javascript:
             .title.is-size-4
               = 0
 
-      .box
+      .virtual_box
         .title.is-4= "対局履歴"
         b-table(:data="battles" :paginated="true" :per-page="30")
           template slot-scope="props"

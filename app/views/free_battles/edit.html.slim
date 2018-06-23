@@ -26,7 +26,7 @@ ruby:
           p.control
             =<> form.submit(name: :_submit, class: "button is-primary")
     .column
-      .box
+      .virtual_box
         shogi-player(
           :kifu_body="kifu_body_sfen"
           :start_turn="-1"
