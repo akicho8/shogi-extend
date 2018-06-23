@@ -128,7 +128,7 @@ html lang="ja"
                   li class=("is-active" if params[:controller].start_with?("general/battles")) = link_to("2ch棋譜検索", [:general, :s])
     section.section
       .container.is-fluid.main_container
-        == flash_danger_notification_tag
+        == flash_danger_notify_tag
         = yield
     footer.footer
       .container.is-fluid
@@ -152,10 +152,10 @@ html lang="ja"
     #single_notification_app
 
     javascript:
-      var flash_success_notifications = #{flash_success_notifications.to_json.html_safe}
+      var flash_light_notify = #{flash_light_notify.to_json.html_safe}
       document.addEventListener('DOMContentLoaded', () => {
         if (_) {
-          _.forIn(flash_success_notifications, (message, key) => {
+          _.forIn(flash_light_notify, (message, key) => {
             Vue.prototype.$toast.open({message: message, position: "is-bottom", type: `is-${key}`, duration: 1000 * 2, queue: false})
           })
         }

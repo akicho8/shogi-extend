@@ -86,11 +86,12 @@ module General
           end
 
           row["結果"] = gstate_info_decorate(battle)
+
           if false
             row["手合割"] = battle.preset_link(h, battle.meta_info[:header]["手合割"])
             row["棋戦"] = battle.tournament_list.collect { |e| link_to(e.truncate(8), general_search_path(e)) }.join(" ").html_safe
-            row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-            row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
+            row["戦型対決"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
+            row["囲い対決"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
 
             place_list = battle.place_list
             str = "".html_safe
@@ -177,7 +178,22 @@ module General
       }.join(" ").html_safe
     end
 
+    def select_func(model, key)
+      hash = model.sort_by(&:name).inject({}) { |a, e| a.merge(skill_option_create(e)) }
+      view_context.select_tag(key, view_context.options_for_select(hash), :class => "input", "v-model" => key, name: "", include_blank: true)
+    end
+
     private
+
+    def skill_option_create(e)
+      str = e.name
+      if v = e.alias_names.presence
+        v = v.join("・")
+        v = "（#{v}）"
+        str = "#{str}#{v}"
+      end
+      {str => e.name}
+    end
 
     def access_log_create
       current_record.update!(last_accessd_at: Time.current)
@@ -211,16 +227,11 @@ module General
       end
     end
 
-    def pc_only(v)
-      tag.span(v, :class => "visible-lg")
-    end
-
     def versus_tag(*list)
       list = list.compact
       if list.present?
         vs = tag.span(" vs ", :class => "text-muted")
-        str = list.collect { |e| e || "不明" }.join(vs).html_safe
-        pc_only(str)
+        list.collect { |e| e || "不明" }.join(vs).html_safe
       end
     end
 

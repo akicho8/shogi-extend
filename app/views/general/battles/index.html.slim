@@ -1,6 +1,3 @@
-ruby:
-  select_func = -> (model, key) { select_tag(key, options_for_select(model.sort_by(&:name).inject({}) { |a, e| a.merge(skill_option_create(e)) }), class: "input", "v-model" => key, name: "", include_blank: true) }
-
 #app
   = render :partial => "header"
 
@@ -27,25 +24,25 @@ ruby:
           .has-text-left
             .field
               label.label[for="plus_tag"]= "タグ"
-              input#plus_tag.input type="text" v-model="plus_tag" ref="plus_tag"
+              input#plus_tag.input(type="text" v-model="plus_tag" ref="plus_tag")
             .field
               label.label[for="minus_tag"]= "含まないタグ"
-              input#minus_tag.input type="text" v-model="minus_tag"
+              input#minus_tag.input(type="text" v-model="minus_tag")
             .field
               label.label[for="attack_key"]= "戦型"
-              = select_func[Warabi::AttackInfo, :attack_key]
+              = controller.select_func(Warabi::AttackInfo, :attack_key)
             .field
               label.label[for="defense_key"]= "囲い"
-              = select_func[Warabi::DefenseInfo, :defense_key]
+              = controller.select_func(Warabi::DefenseInfo, :defense_key)
             .field
               label.label[for="turn_max"]= "手数"
               .control
                 label.radio
-                  input type="radio" v-model="turn_max" value="手数<50" = " " + "50手未満"
+                  input(type="radio" v-model="turn_max" value="手数<50") = " " + "50手未満"
                 label.radio
-                  input type="radio" v-model="turn_max" value="手数>=150" = " " + "150手以上"
+                  input(type="radio" v-model="turn_max" value="手数>=150") = " " + "150手以上"
                 label.radio
-                  input type="radio" v-model="turn_max" value="手数>=200" = " " + "200手以上"
+                  input(type="radio" v-model="turn_max" value="手数>=200") = " " + "200手以上"
             .field
               p.control
                 = form.submit("検索", name: nil, class: "button is-primary", data: {disable_with: "検索中"})

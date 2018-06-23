@@ -168,15 +168,10 @@ module Swars
       end
     end
 
-    def pc_only(v)
-      tag.span(v, :class => "visible-lg")
-    end
-
     def versus_tag(*list)
       if !list.compact.empty?
         vs = tag.span(" vs ", :class => "text-muted")
-        str = list.collect { |e| e || "不明" }.join(vs).html_safe
-        pc_only(str)
+        list.collect { |e| e || "不明" }.join(vs).html_safe
       end
     end
 
@@ -277,8 +272,8 @@ module Swars
         if false
           row["戦法"] = record.tag_list.collect { |e| link_to(e, swars_search_path(e)) }.join(" ").html_safe
         else
-          row[pc_only("戦型対決")] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-          # row[pc_only("囲い対決")] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
+          row["戦型対決"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
+          # row["囲い対決"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
 
         row["手数"] = record.turn_max

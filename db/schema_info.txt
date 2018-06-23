@@ -2,57 +2,25 @@
 
 # == Schema Information ==
 #
-# Userテーブル (fanta_users as Fanta::User)
+# ユーザーテーブル (fanta_users as Fanta::User)
 #
-# |-------------------+-----------------+-------------+-------------+---------------------+-------|
-# | カラム名          | 意味            | タイプ      | 属性        | 参照                | INDEX |
-# |-------------------+-----------------+-------------+-------------+---------------------+-------|
-# | id                | ID              | integer(8)  | NOT NULL PK |                     |       |
-# | name              | Name            | string(255) | NOT NULL    |                     |       |
-# | current_battle_id | Current battle  | integer(8)  |             | => Fanta::Battle#id | A     |
-# | online_at         | Online at       | datetime    |             |                     |       |
-# | fighting_at       | Fighting at     | datetime    |             |                     |       |
-# | matching_at       | Matching at     | datetime    |             |                     |       |
-# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |                     | B     |
-# | platoon_key       | Platoon key     | string(255) | NOT NULL    |                     | C     |
-# | self_preset_key   | Self preset key | string(255) | NOT NULL    |                     | D     |
-# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |                     | E     |
-# | user_agent        | User agent      | string(255) | NOT NULL    |                     |       |
-# | created_at        | 作成日時        | datetime    | NOT NULL    |                     |       |
-# | updated_at        | 更新日時        | datetime    | NOT NULL    |                     |       |
-# |-------------------+-----------------+-------------+-------------+---------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・Fanta::User モデルは Fanta::Battle モデルから has_many :current_users, :foreign_key => :current_battle_id されています。
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Battleテーブル (fanta_battles as Fanta::Battle)
-#
-# |---------------------+---------------------+-------------+---------------------+------+-------|
-# | カラム名            | 意味                | タイプ      | 属性                | 参照 | INDEX |
-# |---------------------+---------------------+-------------+---------------------+------+-------|
-# | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
-# | black_preset_key    | Black preset key    | string(255) | NOT NULL            |      |       |
-# | white_preset_key    | White preset key    | string(255) | NOT NULL            |      |       |
-# | lifetime_key        | Lifetime key        | string(255) | NOT NULL            |      |       |
-# | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
-# | kifu_body_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
-# | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
-# | countdown_mode_hash | Countdown mode hash | text(65535) | NOT NULL            |      |       |
-# | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
-# | battle_request_at   | Battle request at   | datetime    |                     |      |       |
-# | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |
-# | begin_at            | Begin at            | datetime    |                     |      |       |
-# | end_at              | End at              | datetime    |                     |      |       |
-# | last_action_key     | Last action key     | string(255) |                     |      |       |
-# | win_location_key    | Win location key    | string(255) |                     |      |       |
-# | current_users_count | Current users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | watch_ships_count   | Watch ships count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
-# | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
-# |---------------------+---------------------+-------------+---------------------+------+-------|
+# |-------------------+-----------------+-------------+-------------+------+-------|
+# | カラム名          | 意味            | タイプ      | 属性        | 参照 | INDEX |
+# |-------------------+-----------------+-------------+-------------+------+-------|
+# | id                | ID              | integer(8)  | NOT NULL PK |      |       |
+# | name              | Name            | string(255) | NOT NULL    |      |       |
+# | current_battle_id | Current battle  | integer(8)  |             |      | A     |
+# | online_at         | Online at       | datetime    |             |      |       |
+# | fighting_at       | Fighting at     | datetime    |             |      |       |
+# | matching_at       | Matching at     | datetime    |             |      |       |
+# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | B     |
+# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | C     |
+# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | D     |
+# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | E     |
+# | user_agent        | User agent      | string(255) | NOT NULL    |      |       |
+# | created_at        | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-------------------+-----------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -90,27 +58,23 @@
 #
 # Battleテーブル (swars_battles as Swars::Battle)
 #
-# |-------------------+-------------------+-------------+-------------+-------------------+-------|
-# | カラム名          | 意味              | タイプ      | 属性        | 参照              | INDEX |
-# |-------------------+-------------------+-------------+-------------+-------------------+-------|
-# | id                | ID                | integer(8)  | NOT NULL PK |                   |       |
-# | battle_key        | Battle key        | string(255) | NOT NULL    |                   | A!    |
-# | battled_at        | Battled at        | datetime    | NOT NULL    |                   |       |
-# | rule_key          | Rule key          | string(255) | NOT NULL    |                   | B     |
-# | csa_seq           | Csa seq           | text(65535) | NOT NULL    |                   |       |
-# | battle_state_key  | Battle state key  | string(255) | NOT NULL    |                   | C     |
-# | win_user_id       | Win user          | integer(8)  |             | => Swars::User#id | D     |
-# | turn_max          | Turn max          | integer(4)  | NOT NULL    |                   |       |
-# | meta_info         | Meta info         | text(65535) | NOT NULL    |                   |       |
-# | last_accessd_at   | Last accessd at   | datetime    | NOT NULL    |                   |       |
-# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0)  |                   |       |
-# | created_at        | 作成日時          | datetime    | NOT NULL    |                   |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL    |                   |       |
-# |-------------------+-------------------+-------------+-------------+-------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
-#--------------------------------------------------------------------------------
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
+# | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
+# | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
+# | rule_key          | Rule key          | string(255) | NOT NULL    |      | B     |
+# | csa_seq           | Csa seq           | text(65535) | NOT NULL    |      |       |
+# | battle_state_key  | Battle state key  | string(255) | NOT NULL    |      | C     |
+# | win_user_id       | Win user          | integer(8)  |             |      | D     |
+# | turn_max          | Turn max          | integer(4)  | NOT NULL    |      |       |
+# | meta_info         | Meta info         | text(65535) | NOT NULL    |      |       |
+# | last_accessd_at   | Last accessd at   | datetime    | NOT NULL    |      |       |
+# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
+# |-------------------+-------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -130,34 +94,125 @@
 
 # == Schema Information ==
 #
-# 各種棋譜ファイル内容テーブル (converted_infos as ConvertedInfo)
+# Membershipテーブル (general_memberships as General::Membership)
 #
-# |------------------+------------------+-------------+-------------+--------------------------+-------|
-# | カラム名         | 意味             | タイプ      | 属性        | 参照                     | INDEX |
-# |------------------+------------------+-------------+-------------+--------------------------+-------|
-# | id               | ID               | integer(8)  | NOT NULL PK |                          |       |
-# | convertable_type | Convertable type | string(255) | NOT NULL    | モデル名(polymorphic)    | A     |
-# | convertable_id   | Convertable      | integer(8)  | NOT NULL    | => (convertable_type)#id | A     |
-# | text_body        | 本体             | text(65535) | NOT NULL    |                          |       |
-# | text_format      | 種類             | string(255) | NOT NULL    |                          | B     |
-# | created_at       | 作成日時         | datetime    | NOT NULL    |                          |       |
-# | updated_at       | 更新日時         | datetime    | NOT NULL    |                          |       |
-# |------------------+------------------+-------------+-------------+--------------------------+-------|
+# |--------------+--------------+-------------+-------------+------+-------|
+# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX |
+# |--------------+--------------+-------------+-------------+------+-------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
+# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B  |
+# | judge_key    | Judge key    | string(255) | NOT NULL    |      | C     |
+# | location_key | Location key | string(255) | NOT NULL    |      | A! D  |
+# | position     | 順序         | integer(4)  |             |      | E     |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
+# |--------------+--------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
-# Chat messageテーブル (fanta_chat_messages as Fanta::ChatMessage)
+# Membershipテーブル (swars_memberships as Swars::Membership)
+#
+# |--------------+--------------+-------------+-------------+------+---------|
+# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX   |
+# |--------------+--------------+-------------+-------------+------+---------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |         |
+# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B! C |
+# | user_id      | User         | integer(8)  | NOT NULL    |      | B! D    |
+# | grade_id     | Grade        | integer(8)  | NOT NULL    |      | E       |
+# | judge_key    | Judge key    | string(255) | NOT NULL    |      | F       |
+# | location_key | Location key | string(255) | NOT NULL    |      | A! G    |
+# | position     | 順序         | integer(4)  |             |      | H       |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
+# |--------------+--------------+-------------+-------------+------+---------|
+
+# == Schema Information ==
+#
+# Gradeテーブル (swars_grades as Swars::Grade)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | battle_id  | Battle   | integer(8)  | NOT NULL    |      | A     |
-# | user_id    | User     | integer(8)  | NOT NULL    |      | B     |
-# | message    | Message  | text(65535) | NOT NULL    |      |       |
+# | key        | Key      | string(255) | NOT NULL    |      | A!    |
+# | priority   | Priority | integer(4)  | NOT NULL    |      | B     |
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Search logテーブル (swars_search_logs as Swars::SearchLog)
+#
+# |------------+----------+------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# |------------+----------+------------+-------------+------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |      |       |
+# | user_id    | User     | integer(8) | NOT NULL    |      | A     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
+# |------------+----------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Access logテーブル (swars_access_logs as Swars::AccessLog)
+#
+# |------------+----------+------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# |------------+----------+------------+-------------+------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |      |       |
+# | battle_id  | Battle   | integer(8) | NOT NULL    |      | A     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
+# |------------+----------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 対局と対局者の対応テーブル (fanta_memberships as Fanta::Membership)
+#
+# |--------------------+--------------------+-------------+-------------+------+-------|
+# | カラム名           | 意味               | タイプ      | 属性        | 参照 | INDEX |
+# |--------------------+--------------------+-------------+-------------+------+-------|
+# | id                 | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | battle_id          | Battle             | integer(8)  | NOT NULL    |      | A     |
+# | user_id            | User               | integer(8)  | NOT NULL    |      | B     |
+# | preset_key         | Preset key         | string(255) | NOT NULL    |      |       |
+# | location_key       | Location key       | string(255) | NOT NULL    |      | C     |
+# | position           | 順序               | integer(4)  |             |      | D     |
+# | standby_at         | Standby at         | datetime    |             |      |       |
+# | fighting_at        | Fighting at        | datetime    |             |      |       |
+# | time_up_trigger_at | Time up trigger at | datetime    |             |      |       |
+# | created_at         | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at         | 更新日時           | datetime    | NOT NULL    |      |       |
+# |--------------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 対局テーブル (fanta_battles as Fanta::Battle)
+#
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | カラム名            | 意味                | タイプ      | 属性                | 参照 | INDEX |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
+# | black_preset_key    | Black preset key    | string(255) | NOT NULL            |      |       |
+# | white_preset_key    | White preset key    | string(255) | NOT NULL            |      |       |
+# | lifetime_key        | Lifetime key        | string(255) | NOT NULL            |      |       |
+# | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
+# | kifu_body_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
+# | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
+# | countdown_mode_hash | Countdown mode hash | text(65535) | NOT NULL            |      |       |
+# | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
+# | battle_request_at   | Battle request at   | datetime    |                     |      |       |
+# | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |
+# | begin_at            | Begin at            | datetime    |                     |      |       |
+# | end_at              | End at              | datetime    |                     |      |       |
+# | last_action_key     | Last action key     | string(255) |                     |      |       |
+# | win_location_key    | Win location key    | string(255) |                     |      |       |
+# | current_users_count | Current users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_ships_count   | Watch ships count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
 #
@@ -175,23 +230,18 @@
 
 # == Schema Information ==
 #
-# Membershipテーブル (fanta_memberships as Fanta::Membership)
+# Chat messageテーブル (fanta_chat_messages as Fanta::ChatMessage)
 #
-# |--------------------+--------------------+-------------+-------------+------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照 | INDEX |
-# |--------------------+--------------------+-------------+-------------+------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | battle_id          | Battle             | integer(8)  | NOT NULL    |      | A     |
-# | user_id            | User               | integer(8)  | NOT NULL    |      | B     |
-# | preset_key         | Preset key         | string(255) | NOT NULL    |      |       |
-# | location_key       | Location key       | string(255) | NOT NULL    |      | C     |
-# | position           | 順序               | integer(4)  |             |      | D     |
-# | standby_at         | Standby at         | datetime    |             |      |       |
-# | fighting_at        | Fighting at        | datetime    |             |      |       |
-# | time_up_trigger_at | Time up trigger at | datetime    |             |      |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |      |       |
-# |--------------------+--------------------+-------------+-------------+------+-------|
+# |------------+----------+-------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | battle_id  | Battle   | integer(8)  | NOT NULL    |      | A     |
+# | user_id    | User     | integer(8)  | NOT NULL    |      | B     |
+# | message    | Message  | text(65535) | NOT NULL    |      |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -227,75 +277,17 @@
 
 # == Schema Information ==
 #
-# Membershipテーブル (general_memberships as General::Membership)
+# 各種棋譜ファイル内容テーブル (converted_infos as ConvertedInfo)
 #
-# |--------------+--------------+-------------+-------------+------+-------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX |
-# |--------------+--------------+-------------+-------------+------+-------|
-# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
-# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B  |
-# | judge_key    | Judge key    | string(255) | NOT NULL    |      | C     |
-# | location_key | Location key | string(255) | NOT NULL    |      | A! D  |
-# | position     | 順序         | integer(4)  |             |      | E     |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
-# |--------------+--------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Access logテーブル (swars_access_logs as Swars::AccessLog)
-#
-# |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
-# |------------+----------+------------+-------------+------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |      |       |
-# | battle_id  | Battle   | integer(8) | NOT NULL    |      | A     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
-# |------------+----------+------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Gradeテーブル (swars_grades as Swars::Grade)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | Key      | string(255) | NOT NULL    |      | A!    |
-# | priority   | Priority | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Membershipテーブル (swars_memberships as Swars::Membership)
-#
-# |--------------+--------------+-------------+-------------+------+---------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX   |
-# |--------------+--------------+-------------+-------------+------+---------|
-# | id           | ID           | integer(8)  | NOT NULL PK |      |         |
-# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B! C |
-# | user_id      | User         | integer(8)  | NOT NULL    |      | B! D    |
-# | grade_id     | Grade        | integer(8)  | NOT NULL    |      | E       |
-# | judge_key    | Judge key    | string(255) | NOT NULL    |      | F       |
-# | location_key | Location key | string(255) | NOT NULL    |      | A! G    |
-# | position     | 順序         | integer(4)  |             |      | H       |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
-# |--------------+--------------+-------------+-------------+------+---------|
-
-# == Schema Information ==
-#
-# Search logテーブル (swars_search_logs as Swars::SearchLog)
-#
-# |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
-# |------------+----------+------------+-------------+------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |      |       |
-# | user_id    | User     | integer(8) | NOT NULL    |      | A     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
-# |------------+----------+------------+-------------+------+-------|
+# |------------------+------------------+-------------+-------------+--------------------------+-------|
+# | カラム名         | 意味             | タイプ      | 属性        | 参照                     | INDEX |
+# |------------------+------------------+-------------+-------------+--------------------------+-------|
+# | id               | ID               | integer(8)  | NOT NULL PK |                          |       |
+# | convertable_type | Convertable type | string(255) | NOT NULL    | モデル名(polymorphic)    | A     |
+# | convertable_id   | Convertable      | integer(8)  | NOT NULL    | => (convertable_type)#id | A     |
+# | text_body        | 本体             | text(65535) | NOT NULL    |                          |       |
+# | text_format      | 種類             | string(255) | NOT NULL    |                          | B     |
+# | created_at       | 作成日時         | datetime    | NOT NULL    |                          |       |
+# | updated_at       | 更新日時         | datetime    | NOT NULL    |                          |       |
+# |------------------+------------------+-------------+-------------+--------------------------+-------|
 

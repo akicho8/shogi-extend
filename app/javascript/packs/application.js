@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   new Vue({
-    el: "#flash_danger_notification_tag",
+    el: "#flash_danger_notify_tag",
   })
 })
 
