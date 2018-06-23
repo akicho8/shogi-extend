@@ -82,11 +82,11 @@ javascript:
             .media-content
               .field
                 p.control
-                  input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter")
+                  input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter" ref="message_input")
               nav.level
                 .level-left
                   .level-item
-                    button.button.is-primary @click="message_enter"
+                    button.button.is-primary(@click="message_enter")
                       | 送信
                 / .level-right
                 /   .level-item

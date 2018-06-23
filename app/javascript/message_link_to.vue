@@ -53,6 +53,7 @@ export default {
         }
       }
       this.message = ""
+      this.$refs.message_input.focus()
     },
     battle_request_to() {
       App.single_notification.battle_request_to({battle_request: {from_id: js_global_params.current_user.id, to_id: this.user_to.id, message: this.message}})

@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
           App.lobby.chat_say(this.message)
         }
         this.message = ""
+        this.$refs.message_enter.focus()
       },
 
       memberships_format(battle) {
