@@ -108,8 +108,7 @@ gem 'memory_record'
 gem 'tree_support'
 gem 'org_tp'
 gem 'html_format'
-gem 'aam',           github: 'akicho8/aam'
-gem 'warabi',        github: 'akicho8/warabi'
+gem "aam"
 
 # for Swars::Agent
 gem 'nokogiri'

@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Swars battle gradeテーブル (grades as Grade)
+# Gradeテーブル (swars_grades as Swars::Grade)
 #
-# |------------+------------+-------------+-------------+------+-------|
-# | カラム名   | 意味       | タイプ      | 属性        | 参照 | INDEX |
-# |------------+------------+-------------+-------------+------+-------|
-# | id         | ID         | integer(8)  | NOT NULL PK |      |       |
-# | key | Unique key | string(255) | NOT NULL    |      | A!    |
-# | priority   | Priority   | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
-# |------------+------------+-------------+-------------+------+-------|
+# |------------+----------+-------------+-------------+------+-------|
+# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | Key      | string(255) | NOT NULL    |      | A!    |
+# | priority   | Priority | integer(4)  | NOT NULL    |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
 module Swars
   class Grade < ApplicationRecord

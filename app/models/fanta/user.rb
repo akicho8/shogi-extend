@@ -1,3 +1,26 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# ユーザーテーブル (fanta_users as Fanta::User)
+#
+# |-------------------+-----------------+-------------+-------------+------+-------|
+# | カラム名          | 意味            | タイプ      | 属性        | 参照 | INDEX |
+# |-------------------+-----------------+-------------+-------------+------+-------|
+# | id                | ID              | integer(8)  | NOT NULL PK |      |       |
+# | name              | Name            | string(255) | NOT NULL    |      |       |
+# | current_battle_id | Current battle  | integer(8)  |             |      | A     |
+# | online_at         | Online at       | datetime    |             |      |       |
+# | fighting_at       | Fighting at     | datetime    |             |      |       |
+# | matching_at       | Matching at     | datetime    |             |      |       |
+# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | B     |
+# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | C     |
+# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | D     |
+# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | E     |
+# | user_agent        | User agent      | string(255) | NOT NULL    |      |       |
+# | created_at        | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-------------------+-----------------+-------------+-------------+------+-------|
+
 module Fanta
   class User < ApplicationRecord
     has_many :chat_messages, dependent: :destroy

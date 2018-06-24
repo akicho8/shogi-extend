@@ -1,28 +1,21 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Membershipテーブル (memberships as Membership)
+# Membershipテーブル (swars_memberships as Swars::Membership)
 #
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照             | INDEX |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |                  |       |
-# | battle_id     | Battle room        | integer(8)  | NOT NULL    | => Fanta::Battle#id | A     |
-# | user_id            | Fanta::User               | integer(8)  | NOT NULL    | => Fanta::User#id       | B     |
-# | preset_key         | Preset key         | string(255) | NOT NULL    |                  |       |
-# | location_key       | Location key       | string(255) | NOT NULL    |                  | C     |
-# | position           | 順序               | integer(4)  |             |                  | D     |
-# | standby_at         | Standby at         | datetime    |             |                  |       |
-# | fighting_at        | Fighting at        | datetime    |             |                  |       |
-# | time_up_trigger_at | Time up trigger at | datetime    |             |                  |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |                  |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |                  |       |
-# |--------------------+--------------------+-------------+-------------+------------------+-------|
-#
-#- 備考 -------------------------------------------------------------------------
-# ・Membership モデルは Fanta::Battle モデルから has_many :memberships されています。
-# ・Membership モデルは Fanta::User モデルから has_many :chat_messages されています。
-#--------------------------------------------------------------------------------
+# |--------------+--------------+-------------+-------------+------+---------|
+# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX   |
+# |--------------+--------------+-------------+-------------+------+---------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |         |
+# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B! C |
+# | user_id      | User         | integer(8)  | NOT NULL    |      | B! D    |
+# | grade_id     | Grade        | integer(8)  | NOT NULL    |      | E       |
+# | judge_key    | Judge key    | string(255) | NOT NULL    |      | F       |
+# | location_key | Location key | string(255) | NOT NULL    |      | A! G    |
+# | position     | 順序         | integer(4)  |             |      | H       |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
+# |--------------+--------------+-------------+-------------+------+---------|
 
 module Swars
   class Membership < ApplicationRecord
