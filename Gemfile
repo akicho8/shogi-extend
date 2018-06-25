@@ -89,6 +89,7 @@ end
 
 group :development do
   gem 'foreman', require: false
+  gem 'annotate_models'
 end
 
 group :test do
@@ -109,6 +110,7 @@ gem 'tree_support'
 gem 'org_tp'
 gem 'html_format'
 gem "aam"
+gem 'warabi', github: 'akicho8/warabi'
 
 # for Swars::Agent
 gem 'nokogiri'
