@@ -42,10 +42,7 @@ module SharedMethods
   end
 
   def kifu_send_data
-    text_body = nil
-    if converted_info = current_record.converted_infos.find_by(text_format: params[:format])
-      text_body = converted_info.text_body
-    end
+    text_body = current_record.to_xxx(params[:format])
 
     if params[:shift_jis].present? || params[:sjis].present?
       text_body = text_body.tosjis

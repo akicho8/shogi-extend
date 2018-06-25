@@ -70,7 +70,7 @@ javascript:
       defense_key: "",
       attack_key: "",
     },
-    created: function() {
+    created() {
       const dom = document.querySelector("input[type=search]")
       this.plus_tag = dom.value
       // Vue のスコープに入ると autofocus 属性が無視されるようなので自力で設定する

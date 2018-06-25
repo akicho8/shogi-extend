@@ -222,9 +222,9 @@ module Swars
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           current_scope.limit(params[:limit] || 512).each do |battle|
             KifuFormatInfo.each.with_index do |e|
-              if converted_info = battle.converted_infos.text_format_eq(e.key).take
+              if kd = battle.to_xxx(e.key)
                 zos.put_next_entry("#{e.key}/#{battle.battle_key}.#{e.key}")
-                zos.write converted_info.text_body
+                zos.write kd
               end
             end
           end

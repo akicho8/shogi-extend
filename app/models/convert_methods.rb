@@ -2,6 +2,8 @@ module ConvertMethods
   extend ActiveSupport::Concern
 
   included do
+    cattr_accessor(:use_redis) { true }
+
     acts_as_ordered_taggable_on :defense_tags
     acts_as_ordered_taggable_on :attack_tags
     acts_as_ordered_taggable_on :other_tags
@@ -17,6 +19,22 @@ module ConvertMethods
     end
   end
 
+  def to_xxx(key)
+    if use_redis
+      Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? 1.days : 0) do
+        parsed_info.public_send("to_#{key}", compact: true)
+      end
+    else
+      if e = converted_infos.text_format_eq(key).take
+        e.text_body
+      end
+    end
+  end
+
+  def parsed_info
+    @parsed_info ||= Warabi::Parser.parse(kifu_body, typical_error_case: :embed)
+  end
+
   # 更新方法
   # ActiveRecord::Base.logger = nil
   # Swars::Battle.find_each { |e| e.tap(&:parser_exec).save! }
@@ -28,13 +46,18 @@ module ConvertMethods
       destroy_all: false,
     }.merge(options)
 
-    info = Warabi::Parser.parse(kifu_body, typical_error_case: :embed)
+    info = parsed_info
     converted_infos.destroy_all if options[:destroy_all]
-    KifuFormatInfo.each do |e|
-      converted_info = converted_infos.text_format_eq(e.key).take
-      converted_info ||= converted_infos.build
-      converted_info.attributes = {text_body: info.public_send("to_#{e.key}", compact: true), text_format: e.key}
+
+    if use_redis
+    else
+      KifuFormatInfo.each do |e|
+        converted_info = converted_infos.text_format_eq(e.key).take || converted_infos.build
+        converted_info.text_body = info.public_send("to_#{e.key}", compact: true)
+        converted_info.text_format = e.key
+      end
     end
+
     self.turn_max = info.mediator.turn_info.turn_max
 
     self.meta_info = {
