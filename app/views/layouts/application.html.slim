@@ -53,8 +53,7 @@ html lang="ja"
               = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
               = link_to("戦法トリガー辞典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
               = link_to("盤面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
-              - unless Rails.env.production?
-                = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
+              = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
         #header_app.navbar-end(v-cloak)
           - if current_user
             .navbar-item
