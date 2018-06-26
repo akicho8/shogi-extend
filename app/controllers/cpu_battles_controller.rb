@@ -1,8 +1,8 @@
 class CpuBattlesController < ApplicationController
   def show
-    @cpu_battles_app_params = {
+    @js_cpu_battle = {
       player_mode_moved_path: url_for([:cpu_battles, format: "json"]),
-      cpu_brain_infos: CpuBrainInfo.values.collect(&:attributes),
+      cpu_brain_infos: CpuBrainInfo,
       cpu_brain_key: current_cpu_brain_key,
     }
   end

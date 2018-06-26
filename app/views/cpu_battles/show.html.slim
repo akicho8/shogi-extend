@@ -1,5 +1,5 @@
 javascript:
-  var cpu_battles_app_params = #{@cpu_battles_app_params.to_json.html_safe};
+  var js_cpu_battle = #{@js_cpu_battle.to_json.html_safe};
 
 - content_for :head do
   = stylesheet_pack_tag("cpu_battles_style")
@@ -24,6 +24,6 @@ javascript:
     br
     b-field label="CPUの強さ"
       .block
-        template v-for="e in cpu_brain_infos"
+        template v-for="e in CpuBrainInfo.values"
           b-radio v-model="cpu_brain_key" :native-value="e.key"
             = "{{e.name}}"

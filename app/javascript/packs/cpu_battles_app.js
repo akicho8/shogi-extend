@@ -2,22 +2,22 @@ import _ from "lodash"
 import * as AppHelper from "./app_helper.js"
 import axios from "axios"
 
+import { CpuBrainInfo } from "./cpu_brain_info.js"
+Object.defineProperty(Vue.prototype, "CpuBrainInfo", {value: CpuBrainInfo})
+
 document.addEventListener('DOMContentLoaded', () => {
   const cpu_battles_app = new Vue({
     el: '#cpu_battles_app',
-    data: function() {
+    data() {
       return {
         kifu_body_sfen: "position startpos",
-        cpu_brain_key: cpu_battles_app_params.cpu_brain_key,
-        cpu_brain_infos: cpu_battles_app_params.cpu_brain_infos,
-        // start_turn: -1,
+        cpu_brain_key: js_cpu_battle.cpu_brain_key,
       }
     },
+
     computed: {
-      cpu_brain_info() {
-        return this.cpu_brain_infos[this.cpu_brain_key]
-      },
     },
+
     methods: {
       play_mode_long_sfen_set(v) {
         const params = new URLSearchParams()
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
           method: "post",
           timeout: 1000 * 60 * 10,
           headers: {"X-TAISEN": true},
-          url: cpu_battles_app_params.player_mode_moved_path,
+          url: js_cpu_battle.player_mode_moved_path,
           data: params,
         }).then((response) => {
           if (response.data["error_message"]) {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //   onConfirm: () => {
             //     // alert(response.data["before_sfen"])
             //     // alert(cpu_battles_app.kifu_body_sfen)
-            // 
+            //
             //     // this.kifu_body_sfen = response.data["before_sfen"]
             //   },
             //   // 最後に必ず呼ばれる
