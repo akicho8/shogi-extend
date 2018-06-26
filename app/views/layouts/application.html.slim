@@ -49,11 +49,11 @@ html lang="ja"
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
               = link_to("棋譜変換", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles"))])
-              = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
               = link_to("戦法トリガー辞典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
               = link_to("盤面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
-              = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
+              = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
         #header_app.navbar-end(v-cloak)
           - if current_user
             .navbar-item
