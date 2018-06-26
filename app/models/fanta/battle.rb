@@ -29,6 +29,32 @@
 
 module Fanta
   class Battle < ApplicationRecord
+    class << self
+      def setup(options = {})
+        super
+
+        if Rails.env.development?
+          users = 10.times.collect { User.create!(online_at: Time.current, platoon_key: "platoon_p2vs2") }
+
+          50.times do
+            list = users.sample(4)
+            battle = create!
+            list.each do |e|
+              battle.users << e
+            end
+            if rand(2).zero?
+              battle.update!(begin_at: Time.current)
+              if rand(2).zero?
+                battle.update!(end_at: Time.current)
+              end
+            end
+          end
+
+          p count
+        end
+      end
+    end
+
     has_many :current_users, class_name: "User", foreign_key: :current_battle_id, dependent: :nullify
 
     scope :latest_list, -> { order(updated_at: :desc).limit(50) }

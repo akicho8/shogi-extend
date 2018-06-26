@@ -22,6 +22,18 @@ require "open-uri"
 class FreeBattle < ApplicationRecord
   include ConvertMethods
 
+  class << self
+    def setup(options = {})
+      super
+
+      if Rails.env.development?
+        unless exists?
+          30.times { create!(kifu_body: "") }
+        end
+      end
+    end
+  end
+
   has_secure_token :key
 
   has_one_attached :kifu_file

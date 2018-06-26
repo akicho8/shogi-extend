@@ -61,7 +61,7 @@ class CreateSwarsBattles < ActiveRecord::Migration[5.1]
       t.string :location_key, null: false, index: true, comment: "▲△"
       t.integer :position, index: true, comment: "手番の順序"
       t.timestamps null: false
-      
+
       t.index [:battle_id, :location_key], unique: true, name: :memberships_sbri_lk
       t.index [:battle_id, :user_id], unique: true, name: :memberships_sbri_sbui
     end

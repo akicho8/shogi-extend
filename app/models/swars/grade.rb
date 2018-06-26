@@ -15,16 +15,33 @@
 
 module Swars
   class Grade < ApplicationRecord
+    class << self
+      def setup(options = {})
+        super
+
+        unless exists?
+          GradeInfo.each { |e| create!(key: e.key) }
+          if Rails.env.development?
+            tp self
+          end
+        end
+      end
+    end
+
     has_many :users, dependent: :destroy
 
     default_scope { order(:priority) }
+
+    before_validation do
+      self.priority ||= grade_info.priority
+    end
 
     with_options presence: true do
       validates :key
     end
 
     with_options allow_blank: true do
-      validates :key, inclusion: GradeInfo.collect(&:name)
+      validates :key, inclusion: GradeInfo.keys.collect(&:to_s)
     end
 
     def grade_info

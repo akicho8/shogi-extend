@@ -5,9 +5,6 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
-# スクリーンショット画像がコンソールに吐かれるのを停止
-ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
-
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -52,36 +49,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.render_views
 
-  # Chrome をヘッドレスモードで起動
-  # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
-  # 必須ではないが設定すると画面出てこなくなる
-  config.before(:example, type: :system) do
-    driven_by :selenium_chrome_headless, screen_size: [1680, 1050]
-    # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
-    # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
-
-    # driven_by :selenium_chrome_headless
-
-    # 設定したいのはこっち
-    # これ visit で移動してスクリーンショットを撮る前にリサイズしないと意味がない
-    # height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-    # p height
-    # Retinaディスプレイのせいか指定した横幅の2倍の画像が生成されるため半分にする
-    Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
-  end
-
   # テストの中で使う便利メソッド
   config.include Module.new {
-    def grade_setup
-      unless Swars::Grade.exists?
-        Swars::GradeInfo.each do |e|
-          Swars::Grade.create!(key: e.key, priority: e.priority)
-        end
-      end
-    end
-
     def swars_battle_setup
-      grade_setup
+      Swars::Grade.setup
       Swars::Battle.basic_import(user_key: "hanairobiyori")
     end
 

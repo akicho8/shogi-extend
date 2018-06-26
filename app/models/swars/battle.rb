@@ -191,6 +191,22 @@ module Swars
 
     concerning :ImportMethods do
       class_methods do
+        def setup(options = {})
+          super
+
+          if Rails.env.development?
+            basic_import(user_key: "hanairobiyori")
+            reception_import
+            expert_import
+            conditional_import(grade_key_gteq: '三段')
+            find_each do |e|
+              e.parser_exec
+              e.save!
+            end
+            p count
+          end
+        end
+
         def run(*args, **params, &block)
           import(*args, params, &block)
         end

@@ -1,3 +1,6 @@
+# スクリーンショット画像がコンソールに吐かれるのを停止
+ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
+
 if true
   chromedriver_pids = `pgrep -f chromedriver`.split
   unless chromedriver_pids.empty?
@@ -19,33 +22,51 @@ Capybara.configure do |config|
   # config.threadsafe            = true
 end
 
-module SystemSupport
-  def doc_image(name = nil)
-    max_resize
-    name = [@__full_description__, name].compact.join("_").gsub(/\s+/, "_")
-    path = Rails.root.join("doc/images/#{name}.png")
-    page.save_screenshot(path)
-  end
+RSpec.configure do |config|
+  # Chrome をヘッドレスモードで起動
+  # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
+  # 必須ではないが設定すると画面出てこなくなる
+  config.before(:example, type: :system) do
+    driven_by :selenium_chrome_headless, screen_size: [1680, 1050]
+    # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
+    # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
 
-  def max_resize
-    height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-    # p [:height, height]
-    Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050) # or 1050
-  end
+    # driven_by :selenium_chrome_headless
 
-  def debug
-    `open #{save_screenshot}`
-    `open #{save_page}`
+    # 設定したいのはこっち
+    # これ visit で移動してスクリーンショットを撮る前にリサイズしないと意味がない
+    # height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+    # p height
+    Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
   end
 end
 
-RSpec.configure do |config|
-  config.include(SystemSupport, type: :system)
-  config.after do
-    # `pkill -f chromedriver`
+if true
+  module SystemSupport
+    def doc_image(name = nil)
+      max_resize
+      name = [@__full_description__, name].compact.join("_").gsub(/\s+/, "_")
+      path = Rails.root.join("doc/images/#{name}.png")
+      page.save_screenshot(path)
+    end
+
+    def max_resize
+      height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+      # p [:height, height]
+      Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050) # or 1050
+    end
+
+    def debug
+      `open #{save_screenshot}`
+      `open #{save_page}`
+    end
   end
 
-  config.before(:example) do |ex|
-    @__full_description__ = ex.full_description
+  RSpec.configure do |config|
+    config.include(SystemSupport, type: :system)
+
+    config.before(:example) do |ex|
+      @__full_description__ = ex.full_description
+    end
   end
 end

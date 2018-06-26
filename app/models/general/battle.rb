@@ -64,6 +64,15 @@ module General
 
     concerning :ConvertHookMethos do
       class_methods do
+        def setup(options = {})
+          super
+
+          if Rails.env.development?
+            all_import(limit: 2)
+            all_import
+          end
+        end
+
         def kifu_dir_default
           if Rails.env.test?
             "."
