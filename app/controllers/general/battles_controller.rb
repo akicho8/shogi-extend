@@ -7,7 +7,7 @@
 # | カラム名         | 意味             | タイプ      | 属性        | 参照 | INDEX |
 # |------------------+------------------+-------------+-------------+------+-------|
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | battle_key       | Battle key       | string(255) | NOT NULL    |      | A!    |
+# | key       | Battle key       | string(255) | NOT NULL    |      | A!    |
 # | battled_at       | Battled at       | datetime    |             |      |       |
 # | kifu_body        | Kifu body        | text(65535) | NOT NULL    |      |       |
 # | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |
@@ -41,7 +41,7 @@ module General
             current_scope.limit(params[:limit] || 512).each do |battle|
               KifuFormatInfo.each.with_index do |e|
                 if kd = battle.to_xxx(e.key)
-                  zos.put_next_entry("#{e.key}/#{battle.battle_key}.#{e.key}")
+                  zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
                   zos.write kd
                 end
               end
@@ -221,7 +221,7 @@ module General
 
     def raw_current_record
       if v = params[:id].presence
-        current_scope.find_by!(battle_key: v)
+        current_scope.find_by!(key: v)
       else
         current_scope.new
       end

@@ -7,7 +7,7 @@
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
+# | key        | Battle key        | string(255) | NOT NULL    |      | A!    |
 # | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
 # | rule_key          | Rule key          | string(255) | NOT NULL    |      | B     |
 # | csa_seq           | Csa seq           | text(65535) | NOT NULL    |      |       |
@@ -31,8 +31,8 @@ module Swars
         # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
         if query = params[:query].presence
           if query.match?(%r{https?://kif-pona.heroz.jp/games/})
-            battle_key = URI(query).path.split("/").last
-            redirect_to [:swars, :battle, id: battle_key]
+            key = URI(query).path.split("/").last
+            redirect_to [:swars, :battle, id: key]
             return
           end
         end
@@ -157,7 +157,7 @@ module Swars
     def raw_current_record
       if v = params[:id].presence
         current_model.single_battle_import(v)
-        current_scope.find_by!(battle_key: v)
+        current_scope.find_by!(key: v)
       else
         current_scope.new
       end
@@ -223,7 +223,7 @@ module Swars
           current_scope.limit(params[:limit] || 512).each do |battle|
             KifuFormatInfo.each.with_index do |e|
               if kd = battle.to_xxx(e.key)
-                zos.put_next_entry("#{e.key}/#{battle.battle_key}.#{e.key}")
+                zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
                 zos.write kd
               end
             end

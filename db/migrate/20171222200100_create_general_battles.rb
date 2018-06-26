@@ -7,7 +7,7 @@
 # | カラム名                 | 意味            | タイプ      | 属性        | 参照 | INDEX |
 # |--------------------------+-----------------+-------------+-------------+------+-------|
 # | id                       | ID              | integer(8)  | NOT NULL PK |      |       |
-# | battle_key               | 対局キー        | string(255) | NOT NULL    |      | A!    |
+# | key               | 対局キー        | string(255) | NOT NULL    |      | A!    |
 # | battled_at               | 対局日          | datetime    |             |      |       |
 # | kifu_body                | 棋譜内容        | text(65535) | NOT NULL    |      |       |
 # | battle_state_key | 結果            | string(255) | NOT NULL    |      | B     |
@@ -27,7 +27,7 @@ class CreateGeneralBattles < ActiveRecord::Migration[5.1]
     end
 
     create_table :general_battles, force: true do |t|
-      t.string   :battle_key,       null: false, index: {unique: true}, comment: "対局識別子"
+      t.string   :key,       null: false, index: {unique: true}, comment: "対局識別子"
       t.datetime :battled_at,       null: true,                         comment: "対局開始日時"
       t.text     :kifu_body,        null: false,                        comment: "棋譜の断片"
       t.string   :battle_state_key, null: false, index: true,           comment: "結果詳細"

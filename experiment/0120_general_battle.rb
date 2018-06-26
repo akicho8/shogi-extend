@@ -19,7 +19,7 @@ tp battle.convert_infos.count  # =>
 # >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
 # >> |------------------+------------------------------------------------------------------------------------------------------|
 # >> |               id | 6                                                                                                    |
-# >> |       battle_key | 7b1ecf917e29fee02b11b6a76b194f5e                                                                     |
+# >> |       key | 7b1ecf917e29fee02b11b6a76b194f5e                                                                     |
 # >> |       battled_at | 0001-01-01 00:00:00 +0900                                                                            |
 # >> |        kifu_body |                                                                                                      |
 # >> | battle_state_key | TORYO                                                                                                |
@@ -38,7 +38,7 @@ tp battle.convert_infos.count  # =>
 # >> |--------+------|
 # >> |------------------+------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |               id | 7                                                                                                                                                    |
-# >> |       battle_key | b39df6093c7baaad97708a025a1cb5d7                                                                                                                     |
+# >> |       key | b39df6093c7baaad97708a025a1cb5d7                                                                                                                     |
 # >> |       battled_at | 0001-01-01 00:00:00 +0900                                                                                                                            |
 # >> |        kifu_body | ６八銀                                                                                                                                               |
 # >> | battle_state_key | TORYO                                                                                                                                                |

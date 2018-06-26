@@ -41,8 +41,8 @@ class FreeBattlesController < ApplicationController
     if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
       url
       if url.match?(%r{https?://kif-pona.heroz.jp/games/})
-        battle_key = URI(url).path.split("/").last
-        redirect_to [:swars, :battle, id: battle_key]
+        key = URI(url).path.split("/").last
+        redirect_to [:swars, :battle, id: key]
         return
       end
     end

@@ -131,7 +131,7 @@ Rails.application.routes.draw do
     options = {
       locale: "ja",
     }.merge(options)
-    "http://kif-pona.heroz.jp/games/#{battle.battle_key}?#{options.to_query}"
+    "http://kif-pona.heroz.jp/games/#{battle.key}?#{options.to_query}"
   end
 
   direct :google_search do |query|

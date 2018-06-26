@@ -7,7 +7,7 @@
 # | カラム名                              | 意味                                  | タイプ      | 属性        | 参照                  | INDEX |
 # |---------------------------------------+---------------------------------------+-------------+-------------+-----------------------+-------|
 # | id                                    | ID                                    | integer(8)  | NOT NULL PK |                       |       |
-# | battle_key                            | Battle key                            | string(255) | NOT NULL    |                       | A!    |
+# | key                            | Battle key                            | string(255) | NOT NULL    |                       | A!    |
 # | battled_at                            | Battled at                            | datetime    | NOT NULL    |                       |       |
 # | rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
 # | csa_seq                               | Csa seq                               | text(65535) | NOT NULL    |                       |       |
@@ -37,7 +37,7 @@ class CreateSwarsBattles < ActiveRecord::Migration[5.1]
     end
 
     create_table :swars_battles, force: true do |t|
-      t.string :battle_key, null: false, index: {unique: true}, comment: "対局識別子"
+      t.string :key, null: false, index: {unique: true}, comment: "対局識別子"
       t.datetime :battled_at, null: false, comment: "対局開始日時"
       t.string :rule_key, null: false, index: true, comment: "ルール"
       t.text :csa_seq, null: false, comment: "棋譜の断片"

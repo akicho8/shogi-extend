@@ -7,7 +7,7 @@
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
+# | key        | Battle key        | string(255) | NOT NULL    |      | A!    |
 # | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
 # | rule_key          | Rule key          | string(255) | NOT NULL    |      | B     |
 # | csa_seq           | Csa seq           | text(65535) | NOT NULL    |      |       |

@@ -38,7 +38,7 @@ module SharedMethods
   private
 
   def current_filename
-    "#{current_record.battle_key}.#{params[:format]}"
+    "#{current_record.key}.#{params[:format]}"
   end
 
   def kifu_send_data

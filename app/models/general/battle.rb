@@ -7,7 +7,7 @@
 # | カラム名         | 意味             | タイプ      | 属性        | 参照 | INDEX |
 # |------------------+------------------+-------------+-------------+------+-------|
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | battle_key       | Battle key       | string(255) | NOT NULL    |      | A!    |
+# | key       | Battle key       | string(255) | NOT NULL    |      | A!    |
 # | battled_at       | Battled at       | datetime    |             |      |       |
 # | kifu_body        | Kifu body        | text(65535) | NOT NULL    |      |       |
 # | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |
@@ -28,7 +28,7 @@ module General
 
     before_validation on: :create do
       self.last_accessd_at ||= Time.current
-      self.battle_key ||= SecureRandom.hex
+      self.key ||= SecureRandom.hex
       self.kifu_body ||= ""
     end
 
@@ -39,13 +39,13 @@ module General
     end
 
     with_options presence: true do
-      validates :battle_key
+      validates :key
       validates :battled_at
       validates :battle_state_key
     end
 
     with_options allow_blank: true do
-      validates :battle_key, uniqueness: true
+      validates :key, uniqueness: true
     end
 
     validate do
@@ -55,7 +55,7 @@ module General
     end
 
     def to_param
-      battle_key
+      key
     end
 
     def gstate_info
@@ -127,8 +127,8 @@ module General
         end
 
         def basic_import(**params)
-          battle_key = params[:file].basename(".*").to_s
-          record = find_or_initialize_by(battle_key: battle_key)
+          key = params[:file].basename(".*").to_s
+          record = find_or_initialize_by(key: key)
           record.kifu_body = params[:file].read.toutf8
           record.parser_exec
           if record.new_record?
@@ -160,7 +160,7 @@ module General
         self.battle_state_key = info.last_action_info.key
         other_tag_list << gstate_info.name
 
-        other_tag_list << battle_key
+        other_tag_list << key
 
         meta_info[:simple_names].each do |pair|
           pair.each do |names|

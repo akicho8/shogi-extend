@@ -7,7 +7,7 @@
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | battle_key        | Battle key        | string(255) | NOT NULL    |      | A!    |
+# | key        | Battle key        | string(255) | NOT NULL    |      | A!    |
 # | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
 # | rule_key          | Rule key          | string(255) | NOT NULL    |      | B     |
 # | csa_seq           | Csa seq           | text(65535) | NOT NULL    |      |       |
@@ -54,20 +54,20 @@ module Swars
       end
 
       # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
-      if battle_key
-        self.battled_at ||= Time.zone.parse(battle_key.split("-").last)
+      if key
+        self.battled_at ||= Time.zone.parse(key.split("-").last)
       end
     end
 
     with_options presence: true do
-      validates :battle_key
+      validates :key
       validates :battled_at
       validates :rule_key
       validates :battle_state_key
     end
 
     with_options allow_blank: true do
-      validates :battle_key, uniqueness: true
+      validates :key, uniqueness: true
     end
 
     validate do
@@ -77,7 +77,7 @@ module Swars
     end
 
     def to_param
-      battle_key
+      key
     end
 
     def rule_info
@@ -314,10 +314,10 @@ module Swars
             end
 
             list.each do |history|
-              battle_key = history[:battle_key]
+              key = history[:key]
 
               # すでに取り込んでいるならスキップ
-              if Battle.where(battle_key: battle_key).exists?
+              if Battle.where(key: key).exists?
                 next
               end
 
@@ -337,19 +337,19 @@ module Swars
               #   end
               # end
 
-              single_battle_import(battle_key)
+              single_battle_import(key)
               sleep(params[:sleep].to_i)
             end
           end
         end
 
-        def single_battle_import(battle_key)
+        def single_battle_import(key)
           # 登録済みなのでスキップ
-          if Battle.where(battle_key: battle_key).exists?
+          if Battle.where(key: key).exists?
             return
           end
 
-          info = agent.record_get(battle_key)
+          info = agent.record_get(key)
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
           unless info[:st_done]
@@ -374,7 +374,7 @@ module Swars
           end
 
           battle = Battle.new({
-              battle_key: info[:battle_key],
+              key: info[:key],
               rule_key: info.dig(:gamedata, :gtype),
               csa_seq: info[:csa_seq],
             })
