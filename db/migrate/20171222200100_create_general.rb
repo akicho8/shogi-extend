@@ -19,7 +19,7 @@
 # | updated_at               | 更新日時        | datetime    | NOT NULL    |      |       |
 # |--------------------------+-----------------+-------------+-------------+------+-------|
 
-class CreateGeneralBattles < ActiveRecord::Migration[5.1]
+class CreateGeneral < ActiveRecord::Migration[5.1]
   def change
     create_table :general_users, force: true do |t|
       t.string :name, null: false, index: {unique: true}, comment: "対局者名"

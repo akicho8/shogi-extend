@@ -26,7 +26,7 @@
 # ・【警告:リレーション欠如】Swars::Userモデルで has_many :battles されていません
 #--------------------------------------------------------------------------------
 
-class CreateSwarsBattles < ActiveRecord::Migration[5.1]
+class CreateSwars < ActiveRecord::Migration[5.1]
   def change
     create_table :swars_users, force: true do |t|
       t.string :user_key, null: false, index: {unique: true}, comment: "対局者名"
