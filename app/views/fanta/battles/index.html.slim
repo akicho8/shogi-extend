@@ -23,11 +23,11 @@ javascript:
 
       template(v-if="current_hira_koma_key === 'koma'")
         .virtual_box
-          .has-text-grey.is-size-6 自分
+          .is-size-6 自分
           b-field
             template(v-for="e in CustomPresetInfo.values")
               b-radio-button(v-model="self_preset_key" :native-value="e.key" size="is-small") {{e.name}}
-          .has-text-grey.is-size-6 相手
+          .is-size-6 相手
           b-field
             template(v-for="e in CustomPresetInfo.values")
               b-radio-button(v-model="oppo_preset_key" :native-value="e.key" size="is-small") {{e.name}}
@@ -40,7 +40,7 @@ javascript:
       footer.modal-card-foot
         button.button.is-primary(@click="battle_setting_close_click") 閉じる
 
-  / .title.is-4 ネット対戦・ロビー
+  / .title.is-6 ネット対戦・ロビー
   / hr
 
   - if current_user
@@ -58,7 +58,7 @@ javascript:
   .columns
     .column
       .virtual_box.chat_container
-        .title.is-4= "チャット"
+        / .title.is-6= "チャット"
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_lobby_messages"
             td
@@ -96,7 +96,7 @@ javascript:
 
     .column
       .virtual_box
-        .title.is-4= "プレイヤー"
+        / .title.is-6= "プレイヤー"
         b-table(:data="online_users" :paginated="true" :per-page="10")
           template(slot-scope="props")
             b-table-column(field="name" label="名前" sortable="sortable")
@@ -117,7 +117,7 @@ javascript:
   .columns
     .column
       .virtual_box
-        .title.is-4= "観戦"
+        / .title.is-6= "観戦"
         b-table(:data="battles" :paginated="true" :per-page="10")
           template slot-scope="props"
             b-table-column field="name" label="部屋" sortable="sortable"

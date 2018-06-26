@@ -57,6 +57,7 @@ module General
 
       @rows = current_records.collect do |battle|
         {}.tap do |row|
+          row["ID"] = link_to("##{battle.to_param}", battle)
 
           if current_general_user
             l_ship = battle.myself(current_general_user)

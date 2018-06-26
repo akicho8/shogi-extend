@@ -1,7 +1,6 @@
 .columns
   .column.has-text-left
     #kifu_player_tabs_div
-      label.label 棋譜
       b-tabs v-model="kifuActiveTab"
         - KifuFormatInfo.each do |e|
           b-tab-item(label=e.name)
