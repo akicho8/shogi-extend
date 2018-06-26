@@ -1,11 +1,11 @@
 javascript:
-  var cpu_versus_app_params = #{@cpu_versus_app_params.to_json.html_safe};
+  var cpu_battles_app_params = #{@cpu_battles_app_params.to_json.html_safe};
 
 - content_for :head do
-  = stylesheet_pack_tag("cpu_versus_style")
-  = javascript_pack_tag("cpu_versus_app")
+  = stylesheet_pack_tag("cpu_battles_style")
+  = javascript_pack_tag("cpu_battles_app")
 
-#cpu_versus_app(v-cloak)
+#cpu_battles_app(v-cloak)
   .has-text-centered
     shogi-player(
       :kifu_body="kifu_body_sfen"

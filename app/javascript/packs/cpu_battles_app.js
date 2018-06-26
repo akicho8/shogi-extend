@@ -3,13 +3,13 @@ import * as AppHelper from "./app_helper.js"
 import axios from "axios"
 
 document.addEventListener('DOMContentLoaded', () => {
-  const cpu_versus_app = new Vue({
-    el: '#cpu_versus_app',
+  const cpu_battles_app = new Vue({
+    el: '#cpu_battles_app',
     data: function() {
       return {
         kifu_body_sfen: "position startpos",
-        cpu_brain_key: cpu_versus_app_params.cpu_brain_key,
-        cpu_brain_infos: cpu_versus_app_params.cpu_brain_infos,
+        cpu_brain_key: cpu_battles_app_params.cpu_brain_key,
+        cpu_brain_infos: cpu_battles_app_params.cpu_brain_infos,
         // start_turn: -1,
       }
     },
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
           method: "post",
           timeout: 1000 * 60 * 10,
           headers: {"X-TAISEN": true},
-          url: cpu_versus_app_params.player_mode_moved_path,
+          url: cpu_battles_app_params.player_mode_moved_path,
           data: params,
         }).then((response) => {
           if (response.data["error_message"]) {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //   cancelText: '不成',
             //   onConfirm: () => {
             //     // alert(response.data["before_sfen"])
-            //     // alert(cpu_versus_app.kifu_body_sfen)
+            //     // alert(cpu_battles_app.kifu_body_sfen)
             // 
             //     // this.kifu_body_sfen = response.data["before_sfen"]
             //   },

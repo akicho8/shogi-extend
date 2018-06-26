@@ -48,9 +48,9 @@
 #                        fortune GET    /tactics-fortune(.:format)                                                               tactic_notes#index {:mode=>"fortune"}
 #                             xy GET    /xy(.:format)                                                                            xy_game#show
 #                position_editor GET    /position-editor(.:format)                                                               position_editor#show
-#                     cpu_versus GET    /cpu/versus(.:format)                                                                    cpu_versus#show
-#                                POST   /cpu/versus(.:format)                                                                    cpu_versus#create
-#                                GET    /cpu-versus(.:format)                                                                    cpu_versus#show
+#                     cpu_battles GET    /cpu/versus(.:format)                                                                    cpu_battles#show
+#                                POST   /cpu/versus(.:format)                                                                    cpu_battles#create
+#                                GET    /cpu/battles(.:format)                                                                    cpu_battles#show
 #             rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #      rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #             rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -122,8 +122,8 @@ Rails.application.routes.draw do
 
   ################################################################################ CPU対戦
 
-  resource :cpu_versus, path: "cpu/versus", only: [:show, :create]
-  get "cpu-versus", to: "cpu_versus#show"
+  resource :cpu_battles, path: "cpu/battles", only: [:show, :create]
+  get "cpu/battles", to: "cpu_battles#show"
 
   ################################################################################ 外部リンク
 

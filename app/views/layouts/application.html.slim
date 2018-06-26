@@ -44,7 +44,7 @@ html lang="ja"
         .navbar-start
           / ここでの is-active に意味はない
           = link_to("ネット対戦", [:fanta, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("fanta/battles"))])
-          = link_to("CPU対戦", :cpu_versus, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_versus")])
+          = link_to("CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
           = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
@@ -117,7 +117,7 @@ html lang="ja"
             .container
               ul
                 li class=("is-active" if params[:controller].start_with?("fanta/battles"))   = link_to("ネット対戦", [:fanta, :battles])
-                li class=("is-active" if params[:controller] == "cpu_versus")                = link_to("CPU対戦", :cpu_versus)
+                li class=("is-active" if params[:controller] == "cpu_battles")                = link_to("CPU対戦", :cpu_battles)
                 li class=("is-active" if params[:controller].start_with?("swars/battles"))   = link_to("将棋ウォーズ棋譜検索", [:swars, :w])
                 li class=("is-active" if params[:controller] == "tactic_notes")              = link_to("戦法トリガー辞典", :tactic_notes)
                 li class=("is-active" if params[:controller].start_with?("free_battles"))    = link_to("棋譜変換", [:new, :free_battle])

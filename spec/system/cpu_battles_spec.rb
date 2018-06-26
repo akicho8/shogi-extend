@@ -2,19 +2,19 @@ require "rails_helper"
 
 RSpec.describe "CPU対戦", type: :system do
   it "トップ" do
-    visit "/cpu-versus"
+    visit "/cpu/battles"
     expect(page).to have_content "CPUの強さ"
     doc_image
   end
 
   it "CPUの強さ変更" do
-    visit "/cpu-versus"
+    visit "/cpu/battles"
     choose("弱い")
     doc_image
   end
 
   it "対局" do
-    visit "/cpu-versus"
+    visit "/cpu/battles"
 
     # 1手目「６八銀」
     first(".place_79").click
