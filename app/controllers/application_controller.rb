@@ -70,5 +70,9 @@ class ApplicationController < ActionController::Base
       cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}
       @current_user
     end
+    def current_user_set(user_id)
+      @current_user = nil
+      session[:user_id] = user_id
+    end
   end
 end

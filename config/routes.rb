@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
   root "fanta/battles#index"
 
+  match 'eval', to: "eval#run", via: [:get, :post, :put, :delete]
   ################################################################################ 2ch棋譜検索
 
   namespace :general, path: "" do

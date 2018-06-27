@@ -1,0 +1,32 @@
+class EvalController < ApplicationController
+  before_action if: proc { Rails.env.production? } do
+    raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
+  end
+
+  def run
+    retval = evaluate(current_code)
+    console_str = ">> #{current_code}\n#{retval}"
+
+    if v = params[:redirect_to].presence
+      redirect_to v, alert: console_str
+      return
+    end
+
+    render html: h.content_tag(:pre, console_str), layout: true
+  end
+
+  private
+
+  def current_code
+    params[:code]
+  end
+
+  def evaluate(input)
+    begin
+      "=> #{eval(input).inspect}\n"
+    rescue => error
+      backtrace = Array(error.backtrace) - caller
+      ["#{error.class.name}: #{error}\n", *backtrace.map { |e| "#{' ' * 8}from #{e}\n"}].join
+    end
+  end
+end
