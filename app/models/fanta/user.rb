@@ -23,6 +23,20 @@
 
 module Fanta
   class User < ApplicationRecord
+    class << self
+      def setup(options = {})
+        super
+
+        if Rails.env.development?
+          2.times.collect do
+            create!(online_at: Time.current, platoon_key: "platoon_p2vs2")
+          end
+
+          create!(name: "弱いCPU", behavior_key: :yowai_cpu, online_at: Time.current)
+        end
+      end
+    end
+
     has_many :chat_messages, dependent: :destroy
     has_many :lobby_messages, dependent: :destroy
     has_many :memberships, dependent: :destroy
@@ -41,6 +55,10 @@ module Fanta
       self.lifetime_key ||= "lifetime_m5"
       self.platoon_key ||= "platoon_p1vs1"
       self.user_agent ||= ""
+
+      if Rails.env.development?
+        self.online_at ||= Time.current
+      end
     end
 
     after_commit do
@@ -65,6 +83,12 @@ module Fanta
 
     def show_path
       Rails.application.routes.url_helpers.url_for([self, only_path: true])
+    end
+
+    concerning :BehaviorMethods do
+      def behavior_info
+        BehaviorInfo.fetch(behavior_key || :ningen)
+      end
     end
 
     concerning :AvatarMethods do
@@ -174,7 +198,7 @@ module Fanta
         battle_setup(pair_list, auto_matched_at: Time.current)
       end
 
-      def battle_setup_with(opponent)
+      def battle_with(opponent)
         battle_setup([[self, opponent]], {battle_request_at: Time.current})
       end
 
@@ -183,7 +207,11 @@ module Fanta
         a = [self, opponent]
         case
         when rule_cop.same_rule?
-          a = a.shuffle
+          if Rails.env.development?
+            a = a.reverse
+          else
+            a = a.shuffle
+          end
         when rule_cop.teacher?
           a = a.reverse
         end
@@ -192,6 +220,7 @@ module Fanta
 
       private
 
+      # class method or battle のインスタンスにする
       def battle_setup(pair_list, **attributes)
         battle = battle_create(attributes)
 
@@ -206,8 +235,15 @@ module Fanta
 
         # 召集
         battle.users.each do |user|
-          ActionCable.server.broadcast("single_notification_#{user.id}", {matching_establish: true, battle_show_path: battle.show_path}.merge(attributes))
+          if user.behavior_info.auto_iku
+            user.room_in(battle)
+          else
+            ActionCable.server.broadcast("single_notification_#{user.id}", {matching_establish: true, battle_show_path: battle.show_path}.merge(attributes))
+          end
         end
+
+        # 最初の手番がCPUなら指す
+        battle.saisyonisasu
 
         battle
       end
@@ -284,6 +320,78 @@ module Fanta
           end
           a
         end
+      end
+    end
+
+    concerning :BattleMethods do
+      def room_in(battle)
+        memberships ||= battle.memberships.where(user: self)
+
+        # 自分から部屋に入ったらマッチングを解除する
+        update!(matching_at: nil)
+
+        # どの部屋にいるか設定
+        update!(current_battle: battle) # FIXME: とる
+
+        # 部屋のメンバーとして登録(マッチング済みの場合はもう登録されている)
+        # unless battle.users.include?(current_user)
+        #   battle.users << current_user
+        # end
+
+        if memberships.present?
+          # 対局者
+          memberships.each do |e|
+            e.update!(fighting_at: Time.current)
+          end
+        else
+          # 観戦者
+          if !battle.watch_users.include?(current_user)
+            battle.watch_users << current_user
+            battle.broadcast # counter_cache の watch_ships_count を反映させるため
+          end
+        end
+
+        if battle.end_at
+          # もう対局は終わっている
+        else
+          # 自分が対局者の場合
+          if memberships.present?
+            if memberships.all? { |e| e.standby_at }
+              # 入り直した場合
+            else
+              # 新規の場合
+              memberships.each { |e|
+                e.update!(standby_at: Time.current)
+              }
+              if battle.memberships.standby_enable.count >= battle.memberships.count
+                battle.battle_start
+              end
+            end
+          end
+        end
+
+        battle.memberships_update
+      end
+
+      def room_out(battle)
+        memberships ||= battle.memberships.where(user: self)
+
+        update!(current_battle_id: nil) # とる
+
+        if memberships.present?
+          # 対局者
+          # 切断したときにの処理がここで書ける
+          # TODO: 対局中なら、残っている方がポーリングを開始して、10秒間以内に戻らなかったら勝ちとしてあげる
+          memberships.each do |e|
+            e.update!(fighting_at: nil)
+          end
+        else
+          # 観戦者
+          battle.watch_users.destroy(current_user)
+          # ActionCable.server.broadcast(channel_key, watch_users: battle.watch_users)
+        end
+
+        battle.memberships_update
       end
     end
   end

@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         App.chat_vm.clock_counter_reset()
       }
 
-      if (data["kifu_body_sfen"]) {
+      if (data["full_sfen"]) {
         // これはだめ
         // if (!_.isNil(data["moved_user_id"]) && data["moved_user_id"] === js_global_params.current_user.id) {
         //   // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // }
 
         // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
-        App.chat_vm.kifu_body_sfen = data["kifu_body_sfen"]
+        App.chat_vm.full_sfen = data["full_sfen"]
       }
 
       // if (data["lifetime_key"]) {
@@ -102,9 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("give_up_trigger", data)
     },
 
-    location_flip_all(data) {
-      this.perform("location_flip_all", data)
-    },
+    // location_flip_all(data) {
+    //   this.perform("location_flip_all", data)
+    // },
 
     play_mode_long_sfen_set(data) {
       this.perform("play_mode_long_sfen_set", data)
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         message: "",            // 発言
         memberships:          js_battle.memberships,
         chat_messages:        js_battle.chat_messages,
-        kifu_body_sfen:       js_battle.kifu_body_sfen,
+        full_sfen:            js_battle.full_sfen,
         current_lifetime_key: js_battle.lifetime_key,
         current_platoon_key:  js_battle.platoon_key,
         begin_at:             js_battle.begin_at,
@@ -223,10 +223,10 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       },
 
-      // 先後反転(全体)
-      location_flip_all() {
-        App.battle.location_flip_all()
-      },
+      // // 先後反転(全体)
+      // location_flip_all() {
+      //   App.battle.location_flip_all()
+      // },
 
       location_key_name(membership) {
         return this.location_infos[membership.location_key].name
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       play_mode_long_sfen_set(v) {
         if (this.xstate_key === "st_battling") {
-          App.battle.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key})
+          App.battle.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key, current_index: this.current_index})
         }
       },
 

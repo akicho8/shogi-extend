@@ -8,11 +8,12 @@ class EvalController < ApplicationController
     console_str = ">> #{current_code}\n#{retval}"
 
     if v = params[:redirect_to].presence
-      redirect_to v, alert: console_str
+      redirect_to v, alert: h.simple_format(console_str)
       return
     end
 
-    render html: h.content_tag(:pre, console_str), layout: true
+    html = h.content_tag(:pre, console_str)
+    render html: html, layout: true
   end
 
   private
@@ -23,7 +24,11 @@ class EvalController < ApplicationController
 
   def evaluate(input)
     begin
-      "=> #{eval(input).inspect}\n"
+      retval = eval(input)
+      if !retval.kind_of?(String) && retval.respond_to?(:to_t)
+        retval = retval.to_t
+      end
+      retval
     rescue => error
       backtrace = Array(error.backtrace) - caller
       ["#{error.class.name}: #{error}\n", *backtrace.map { |e| "#{' ' * 8}from #{e}\n"}].join

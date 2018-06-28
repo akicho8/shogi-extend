@@ -14,7 +14,7 @@ module Fanta
       :lifetime_key,
       :platoon_key,
 
-      :kifu_body_sfen,
+      :full_sfen,
       :turn_max,
 
       :current_users_count, :watch_ships_count,
@@ -50,7 +50,7 @@ end
 # >>  :white_preset_key=>"平手",
 # >>  :lifetime_key=>"lifetime_m5",
 # >>  :platoon_key=>"platoon_p1vs1",
-# >>  :kifu_body_sfen=>
+# >>  :full_sfen=>
 # >>   "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
 # >>  :turn_max=>0,
 # >>  :current_users_count=>2,
@@ -522,7 +522,7 @@ end
 # >>  :white_preset_key=>"平手",
 # >>  :lifetime_key=>"lifetime_m5",
 # >>  :platoon_key=>"platoon_p1vs1",
-# >>  :kifu_body_sfen=>
+# >>  :full_sfen=>
 # >>   "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
 # >>  :turn_max=>0,
 # >>  :current_users_count=>2,

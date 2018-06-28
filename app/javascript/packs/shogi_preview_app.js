@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     data: function () {
       return {
         kifu_body: "",
-        kifu_body_sfen: "position sfen startpos",
+        full_sfen: "position sfen startpos",
         update_delay: 1000 * 1, // 指定ms入力がなくなってからプレビューする
       }
     },
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
           }
           if (response.data.sfen) {
-            this.kifu_body_sfen = response.data.sfen
+            this.full_sfen = response.data.sfen
           }
         }).catch((error) => {
           console.table([error.response])

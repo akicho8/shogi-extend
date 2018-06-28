@@ -14,57 +14,32 @@ module Fanta
   end
 
   if $0 == __FILE__
-    pp ams_sr(Battle.first.memberships)
+    pp ams_sr(Battle.last.memberships)
   end
 end
 
-# >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
-# >> I, [2018-06-14T17:35:50.043252 #46862]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (1668.35ms)
-# >> [{:id=>1,
+# >> I, [2018-06-27T18:37:09.371180 #74035]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (2020.53ms)
+# >> [{:id=>215,
 # >>   :location_key=>"black",
 # >>   :preset_key=>"平手",
-# >>   :standby_at=>nil,
-# >>   :fighting_at=>nil,
+# >>   :standby_at=>Wed, 27 Jun 2018 18:34:05 JST +09:00,
+# >>   :fighting_at=>Wed, 27 Jun 2018 18:34:06 JST +09:00,
 # >>   :time_up_trigger_at=>nil,
 # >>   :user=>
-# >>    {:id=>6,
-# >>     :name=>"野良6号",
-# >>     :show_path=>"/online/users/6",
+# >>    {:id=>139,
+# >>     :name=>"野良1号",
+# >>     :show_path=>"/online/users/139",
 # >>     :avatar_url=>
-# >>      "/assets/fallback_icons/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
-# >>  {:id=>2,
+# >>      "/assets/fallback_icons/0000_fallback_face_icon-11e320818eebd21b25499cba64b057c32b984346f4201b53d4c43a4032d0417b.png"}},
+# >>  {:id=>216,
 # >>   :location_key=>"white",
 # >>   :preset_key=>"平手",
 # >>   :standby_at=>nil,
 # >>   :fighting_at=>nil,
 # >>   :time_up_trigger_at=>nil,
 # >>   :user=>
-# >>    {:id=>2,
-# >>     :name=>"野良2号",
-# >>     :show_path=>"/online/users/2",
+# >>    {:id=>142,
+# >>     :name=>"弱いCPU",
+# >>     :show_path=>"/online/users/142",
 # >>     :avatar_url=>
-# >>      "/assets/fallback_icons/0002_fallback_face_icon-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
-# >>  {:id=>3,
-# >>   :location_key=>"black",
-# >>   :preset_key=>"平手",
-# >>   :standby_at=>nil,
-# >>   :fighting_at=>nil,
-# >>   :time_up_trigger_at=>nil,
-# >>   :user=>
-# >>    {:id=>7,
-# >>     :name=>"野良7号",
-# >>     :show_path=>"/online/users/7",
-# >>     :avatar_url=>
-# >>      "/assets/fallback_icons/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
-# >>  {:id=>4,
-# >>   :location_key=>"white",
-# >>   :preset_key=>"平手",
-# >>   :standby_at=>nil,
-# >>   :fighting_at=>nil,
-# >>   :time_up_trigger_at=>nil,
-# >>   :user=>
-# >>    {:id=>9,
-# >>     :name=>"野良9号",
-# >>     :show_path=>"/online/users/9",
-# >>     :avatar_url=>
-# >>      "/assets/fallback_icons/0009_fallback_face_icon-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}}]
+# >>      "/assets/fallback_icons/0018_fallback_face_icon-223ef766c0fcfbf7987b4ce9213a5a29eb31ee97ac9922099e6a51c5a1784c39.png"}}]

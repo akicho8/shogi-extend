@@ -33,7 +33,7 @@ module ApplicationHelper
     def flash_danger_notify_tag
       tag.div(id: "flash_danger_notify_tag") do
         normalized_flash.except(*tost_types).collect { |key, message|
-          content_tag("b-notification", message, type: "is-#{key}", ":has-icon": "false", ":closable": "true") + tag.br
+          content_tag("b-notification", message.html_safe, type: "is-#{key}", ":has-icon": "false", ":closable": "true") + tag.br
         }.join.html_safe
       end
     end

@@ -31,7 +31,7 @@ RSpec.describe Fanta::User, type: :model do
   context "対戦リクエスト" do
     it "自分vs自分" do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
-      battle = @user1.battle_setup_with(@user1)
+      battle = @user1.battle_with(@user1)
       assert { battle }
       assert { battle.black_preset_key == "平手" }
       assert { battle.white_preset_key == "平手" }
@@ -45,7 +45,7 @@ RSpec.describe Fanta::User, type: :model do
       @user1 = create_user(:platoon_p4vs4, "平手", "平手")
       @user2 = create_user(:platoon_p4vs4, "平手", "二枚落ち")
 
-      battle = @user1.battle_setup_with(@user2)
+      battle = @user1.battle_with(@user2)
       assert { battle }
       assert { battle.black_preset_key == "平手" }
       assert { battle.white_preset_key == "平手" }
@@ -56,7 +56,7 @@ RSpec.describe Fanta::User, type: :model do
       @user1 = create_user(:platoon_p4vs4, "二枚落ち", "平手")
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
-      battle = @user1.battle_setup_with(@user2)
+      battle = @user1.battle_with(@user2)
       assert { battle }
       assert { battle.black_preset_key == "平手" }
       assert { battle.white_preset_key == "二枚落ち" }
@@ -68,7 +68,7 @@ RSpec.describe Fanta::User, type: :model do
       @user1 = create_user(:platoon_p4vs4, "二枚落ち", "香落ち")
       @user2 = create_user(:platoon_p4vs4, "平手", "平手")
 
-      battle = @user1.battle_setup_with(@user2)
+      battle = @user1.battle_with(@user2)
       assert { battle }
       assert { battle.black_preset_key == "香落ち" }
       assert { battle.white_preset_key == "二枚落ち" }

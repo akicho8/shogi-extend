@@ -33,7 +33,7 @@
           :white_preset_key     => "△手合割",
           :lifetime_key         => "時間",
           :platoon_key          => "人数",
-          :kifu_body_sfen       => "USI形式棋譜",
+          :full_sfen       => "USI形式棋譜",
           :clock_counts         => "対局時計情報",
           :countdown_mode_hash  => "秒読み状態",
           :turn_max             => "手番数",

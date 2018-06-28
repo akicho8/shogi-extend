@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: 8cbf78734593d182b4b436f3fb356792830e2ed1
+  revision: dcea3431f0e233dc08cb3840b3298281c6ce5bfe
   specs:
     warabi (0.0.1)
       actionview

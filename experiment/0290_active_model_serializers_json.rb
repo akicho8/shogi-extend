@@ -30,7 +30,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>  :white_preset_key=>"平手",
 # >>  :lifetime_key=>"lifetime_m5",
 # >>  :name=>"野良1号の対戦部屋 #1",
-# >>  :kifu_body_sfen=>
+# >>  :full_sfen=>
 # >>   "position startpos moves 7g7f 5c5d 2g2f 8c8d 1g1f 9c9d 2h2g 9a9b 1i1h",
 # >>  :clock_counts=>{:black=>[3, 8, 6, 62, 3], :white=>[2, 43, 4, 20]},
 # >>  :turn_max=>9,

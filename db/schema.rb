@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "white_preset_key", null: false, comment: "△手合割"
     t.string "lifetime_key", null: false, comment: "時間"
     t.string "platoon_key", null: false, comment: "人数"
-    t.text "kifu_body_sfen", null: false, comment: "USI形式棋譜"
+    t.text "full_sfen", null: false, comment: "USI形式棋譜"
     t.text "clock_counts", null: false, comment: "対局時計情報"
     t.text "countdown_mode_hash", null: false, comment: "秒読み状態"
     t.integer "turn_max", null: false, comment: "手番数"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
     t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
+    t.string "behavior_key", comment: "動作"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_battle_id"], name: "index_fanta_users_on_current_battle_id"

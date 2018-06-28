@@ -51,7 +51,7 @@ module ConvertMethods
 
     if use_redis
     else
-      KifuFormatInfo.each do |e|
+      Warabi::KifuFormatInfo.each do |e|
         converted_info = converted_infos.text_format_eq(e.key).take || converted_infos.build
         converted_info.text_body = info.public_send("to_#{e.key}", compact: true)
         converted_info.text_format = e.key

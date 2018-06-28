@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el: '#cpu_battles_app',
     data() {
       return {
-        kifu_body_sfen: "position startpos",
+        full_sfen: "position startpos",
         cpu_brain_key: js_cpu_battle.cpu_brain_key,
       }
     },
@@ -41,15 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
             //   cancelText: '不成',
             //   onConfirm: () => {
             //     // alert(response.data["before_sfen"])
-            //     // alert(cpu_battles_app.kifu_body_sfen)
+            //     // alert(cpu_battles_app.full_sfen)
             //
-            //     // this.kifu_body_sfen = response.data["before_sfen"]
+            //     // this.full_sfen = response.data["before_sfen"]
             //   },
             //   // 最後に必ず呼ばれる
             //   onCancel: () => {
             //     // alert(response.data["before_sfen"])
-            //     // this.kifu_body_sfen = response.data["before_sfen"]
-            //     // // this.kifu_body_sfen = "position sfen startpos"
+            //     // this.full_sfen = response.data["before_sfen"]
+            //     // // this.full_sfen = "position sfen startpos"
             //     this.start_turn = -2
             //   },
             // })
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           if (response.data["sfen"]) {
-            this.kifu_body_sfen = response.data["sfen"]
+            this.full_sfen = response.data["sfen"]
           }
 
         }).catch((error) => {

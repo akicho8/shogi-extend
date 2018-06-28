@@ -128,24 +128,7 @@ html lang="ja"
       .container.is-fluid.main_container
         == flash_danger_notify_tag
         = yield
-
-        - if Rails.env.development?
-          ruby:
-            rows = Fanta::User.all.collect { |e|
-              row = {}
-              row[:id] = link_to(e.id, e)
-              row[:name] = link_to(e.name, e)
-              row["操作"] = [
-                link_to("login", eval_path(code: "current_user_set(#{e.id})"), method: :put),
-                link_to("destroy", eval_path(code: "Fanta::User.find(#{e.id}).destroy"), method: :put),
-                (link_to("online", eval_path(code: "Fanta::User.find(#{e.id}).update!(online_at: Time.current)"), method: :put) if !e.online_at),
-                (link_to("offline", eval_path(code: "Fanta::User.find(#{e.id}).update!(online_at: nil)"), method: :put) if e.online_at),
-                (link_to("logout", eval_path(code: "reset_session"), method: :put) if e == current_user),
-                (link_to("1 / 0", eval_path(code: "Fanta::User.find(0)"), method: :put)),
-              ].compact.join(" ").html_safe
-              row
-            }
-          = rows.to_html
+        == controller.eval_box
 
     footer.footer
       .container.is-fluid

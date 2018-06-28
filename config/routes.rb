@@ -65,7 +65,10 @@ Rails.application.routes.draw do
 
   root "fanta/battles#index"
 
+  ################################################################################ Debug
+
   match 'eval', to: "eval#run", via: [:get, :post, :put, :delete]
+
   ################################################################################ 2ch棋譜検索
 
   namespace :general, path: "" do
@@ -110,7 +113,7 @@ Rails.application.routes.draw do
 
   resources :tactic_notes, path: "tactics", only: [:index, :show]
 
-  get "tactics-tree",   to: "tactic_notes#index", defaults: {mode: "tree"}, as: :tree
+  get "tactics-tree", to: "tactic_notes#index", defaults: {mode: "tree"}, as: :tree
   get "tactics-fortune", to: "tactic_notes#index", defaults: {mode: "fortune"}, as: :fortune
 
   ################################################################################ 符号入力ゲーム

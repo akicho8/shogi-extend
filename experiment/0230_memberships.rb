@@ -17,7 +17,7 @@ battle = OwnerRoom.create!(users: users)
 
 tp Membership.all
 # >>    (0.2ms)  BEGIN
-# >>   SQL (0.6ms)  INSERT INTO `battles` (`room_owner_id`, `self_preset_key`, `oppo_preset_key`, `lifetime_key`, `name`, `kifu_body_sfen`, `clock_counts`, `turn_max`, `created_at`, `updated_at`) VALUES (35, '平手', '平手', 'lifetime_m5', '野良1号 vs 野良2号', 'position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1', '---\n:black: []\n:white: []\n', 0, '2018-05-06 09:52:40', '2018-05-06 09:52:40')
+# >>   SQL (0.6ms)  INSERT INTO `battles` (`room_owner_id`, `self_preset_key`, `oppo_preset_key`, `lifetime_key`, `name`, `full_sfen`, `clock_counts`, `turn_max`, `created_at`, `updated_at`) VALUES (35, '平手', '平手', 'lifetime_m5', '野良1号 vs 野良2号', 'position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1', '---\n:black: []\n:white: []\n', 0, '2018-05-06 09:52:40', '2018-05-06 09:52:40')
 # >> nil
 # >>   Membership Load (0.4ms)  SELECT  `memberships`.* FROM `memberships` WHERE `memberships`.`battle_id` = 16 AND (`memberships`.`position` IS NOT NULL) ORDER BY `memberships`.`position` DESC LIMIT 1
 # >>   SQL (0.2ms)  INSERT INTO `memberships` (`preset_key`, `battle_id`, `user_id`, `location_key`, `position`, `created_at`, `updated_at`) VALUES ('平手', 16, 35, 'black', 0, '2018-05-06 09:52:40', '2018-05-06 09:52:40')

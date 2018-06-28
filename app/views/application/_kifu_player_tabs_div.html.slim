@@ -2,7 +2,7 @@
   .column.has-text-left
     #kifu_player_tabs_div
       b-tabs v-model="kifuActiveTab"
-        - KifuFormatInfo.each do |e|
+        - Warabi::KifuFormatInfo.each do |e|
           b-tab-item(label=e.name)
             - if s = current_record.to_xxx(e.key)
               pre.pre-wrap= s

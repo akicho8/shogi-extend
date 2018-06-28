@@ -41,7 +41,7 @@ tp battle.current_users
 # >> |         white_preset_key | 平手                                                                          |
 # >> |             lifetime_key | lifetime_m5                                                                 |
 # >> |                     name | 野良1号の対戦部屋 #1                                                          |
-# >> |           kifu_body_sfen | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 |
+# >> |           full_sfen | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 |
 # >> |             clock_counts | {:black=>[], :white=>[]}                                                      |
 # >> |                 turn_max | 0                                                                             |
 # >> |        battle_request_at |                                                                               |

@@ -11,7 +11,7 @@
 # | white_preset_key        | White preset key        | string(255) | NOT NULL            |      |       |
 # | lifetime_key            | Lifetime key            | string(255) | NOT NULL            |      |       |
 # | platoon_key             | Platoon key             | string(255) | NOT NULL            |      |       |
-# | kifu_body_sfen          | Kifu body sfen          | text(65535) | NOT NULL            |      |       |
+# | full_sfen          | Kifu body sfen          | text(65535) | NOT NULL            |      |       |
 # | clock_counts            | Clock counts            | text(65535) | NOT NULL            |      |       |
 # | countdown_mode_hash     | Countdown mode hash     | text(65535) | NOT NULL            |      |       |
 # | turn_max                | Turn max                | integer(4)  | NOT NULL            |      |       |
@@ -41,6 +41,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.string :self_preset_key,                      null: false, index: true, comment: "ルール・自分の手合割"
       t.string :oppo_preset_key,                      null: false, index: true, comment: "ルール・相手の手合割"
       t.string :user_agent,                           null: false,              comment: "ブラウザ情報"
+      t.string :behavior_key,                         null: true,               comment: "動作"
       t.timestamps                                    null: false
     end
 
@@ -50,7 +51,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.string :white_preset_key,                     null: false,              comment: "△手合割"
       t.string :lifetime_key,                         null: false,              comment: "時間"
       t.string :platoon_key,                          null: false,              comment: "人数"
-      t.text :kifu_body_sfen,                         null: false,              comment: "USI形式棋譜"
+      t.text :full_sfen,                         null: false,              comment: "USI形式棋譜"
       t.text :clock_counts,                           null: false,              comment: "対局時計情報"
       t.text :countdown_mode_hash,                    null: false,              comment: "秒読み状態"
       t.integer :turn_max,                            null: false,              comment: "手番数"
