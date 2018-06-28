@@ -107,7 +107,7 @@ gem 'kaminari'
 
 gem 'memory_record'
 gem 'tree_support'
-gem 'org_tp'
+gem 'table_format'
 gem 'html_format'
 gem "aam"
 gem 'warabi', github: 'akicho8/warabi'
