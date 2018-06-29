@@ -148,7 +148,7 @@ module Fanta
       end
     end
 
-    it "人間vsCPUのとき、CPUが先手なら最初に指した状態で始まる(ようにもできる)" do
+    it "最初に指した状態で始まるようにもできる" do
       alice = User.create!
       bob = User.create!(race_key: :robot)
       battle = alice.battle_with(bob)
