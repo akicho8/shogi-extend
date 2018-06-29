@@ -97,10 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("give_up", data)
     },
 
-    // location_flip_all(data) {
-    //   this.perform("location_flip_all", data)
-    // },
-
     play_mode_long_sfen_set(data) {
       this.perform("play_mode_long_sfen_set", data)
     },
@@ -217,11 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
           message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`,
         })
       },
-
-      // // 先後反転(全体)
-      // location_flip_all() {
-      //   App.battle.location_flip_all()
-      // },
 
       location_key_name(membership) {
         return this.location_infos[membership.location_key].name
