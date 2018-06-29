@@ -10,7 +10,7 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   # ../javascript/packs/battle.js の App.battle.send({full_sfen: response.data.sfen}) に対応して呼ばれる
-  # アクションを指定しなかったときに対応する Rails 側のアクションらしいが、ごちゃごちゃになりそうなので使わない
+  # アクションを指定しなかったときに対応する Rails 側のアクションらしいがこの部分のコードが肥大化しそうなので使わない
   def receive(data)
   end
 
@@ -47,9 +47,17 @@ class BattleChannel < ApplicationCable::Channel
     battle.give_up(data)
   end
 
+  def hebokisin(data)
+    battle.next_run
+  end
+
   # 持ち時間を使いきった時
   def countdown_flag_on(data)
     battle.countdown_flag_on(data)
+  end
+
+  def next_run_if_robot
+    battle.next_run_if_robot
   end
 
   private

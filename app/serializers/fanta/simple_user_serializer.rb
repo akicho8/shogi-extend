@@ -2,7 +2,7 @@ require File.expand_path('../../../../config/environment', __FILE__) if $0 == __
 
 module Fanta
   class SimpleUserSerializer < ApplicationSerializer
-    attributes :name, :show_path, :avatar_url
+    attributes :name, :show_path, :avatar_url, :race_key
   end
 
   if $0 == __FILE__

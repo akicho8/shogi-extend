@@ -32,12 +32,14 @@ module Fanta
       def setup(options = {})
         super
 
-        destroy_all
-
-        create!(key: "sysop", name: "SYSOP")
+        unless find_by(key: "sysop")
+          create!(key: "sysop", name: "SYSOP")
+        end
 
         CpuBrainInfo.each do |e|
-          create!(name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, cpu_brain_key: e.key)
+          unless find_by(key: e.key)
+            create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, cpu_brain_key: e.key)
+          end
         end
 
         if Rails.env.development?
@@ -48,7 +50,6 @@ module Fanta
       end
     end
 
-    has_many :lobby_messages, dependent: :destroy
     has_many :memberships, dependent: :destroy
     has_many :battles, through: :memberships
     belongs_to :current_battle, class_name: "Battle", optional: true, counter_cache: :current_users_count # 今入っている部屋
@@ -111,6 +112,17 @@ module Fanta
       def chat_say(battle, message, msg_options = {})
         chat_message = chat_messages.create!(battle: battle, message: message, msg_options: msg_options)
         ActionCable.server.broadcast(battle.channel_key, chat_message: ams_sr(chat_message))
+      end
+    end
+
+    concerning :LobbyMessageMethods do
+      included do
+        has_many :lobby_messages, dependent: :destroy
+      end
+
+      def lobby_chat_say(message, msg_options = {})
+        lobby_message = lobby_messages.create!(message: message, msg_options: msg_options)
+        ActionCable.server.broadcast("lobby_channel", lobby_message: ams_sr(lobby_message))
       end
     end
 
@@ -284,8 +296,8 @@ module Fanta
           end
         end
 
-        # 最初の手番がCPUなら指す
-        battle.next_run
+        # 最初の手番がCPUなら指す。しかしここで動かしてしまうと音がでない。なので battle.js のトリガーで指すようにした。
+        # battle.next_run_if_robot
 
         battle
       end

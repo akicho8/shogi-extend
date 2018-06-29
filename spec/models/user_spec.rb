@@ -148,10 +148,12 @@ module Fanta
       end
     end
 
-    it "人間vsCPUのとき、CPUが先手なら最初に指した状態で始まる" do
+    it "人間vsCPUのとき、CPUが先手なら最初に指した状態で始まる(ようにもできる)" do
       alice = User.create!
       bob = User.create!(race_key: :robot)
       battle = alice.battle_with(bob)
+
+      battle.next_run
 
       info = Warabi::Parser.parse(battle.full_sfen)
       assert { info.mediator.turn_info.turn_max == 1 }

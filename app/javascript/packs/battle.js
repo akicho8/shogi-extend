@@ -23,11 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     received(data) {
       if (data["watch_users"]) {
-        App.chat_vm.watch_users = data["watch_users"]
+        App.battle_vm.watch_users = data["watch_users"]
       }
 
       if (data["begin_at"]) {
-        App.chat_vm.battle_setup(data)
+        App.battle_vm.battle_setup(data)
       }
 
       // Called when there"s incoming data on the websocket for this channel
@@ -35,9 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // console.table(data)
 
       if (data["turn_max"]) {
-        App.chat_vm.turn_max = data["turn_max"]
-        App.chat_vm.clock_counts = data["clock_counts"]
-        App.chat_vm.clock_counter_reset()
+        App.battle_vm.turn_max = data["turn_max"]
+        App.battle_vm.clock_counts = data["clock_counts"]
+        App.battle_vm.clock_counter_reset()
+        // App.battle_vm.next_run_if_robot() // ここでCPUに指してもらう手もある。これはブロードキャストされているのでここで呼んではいけない。
       }
 
       if (data["full_sfen"]) {
@@ -49,34 +50,34 @@ document.addEventListener("DOMContentLoaded", () => {
         // }
 
         // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
-        App.chat_vm.full_sfen = data["full_sfen"]
+        App.battle_vm.full_sfen = data["full_sfen"]
       }
 
       // if (data["lifetime_key"]) {
-      //   App.chat_vm.current_lifetime_key = data["lifetime_key"]
+      //   App.battle_vm.current_lifetime_key = data["lifetime_key"]
       // }
 
       if (data["human_kifu_text"]) {
-        App.chat_vm.human_kifu_text = data["human_kifu_text"]
+        App.battle_vm.human_kifu_text = data["human_kifu_text"]
       }
 
       if (data["memberships"]) {
-        App.chat_vm.memberships = data["memberships"]
+        App.battle_vm.memberships = data["memberships"]
       }
 
       // 発言の反映
       if (data["chat_message"]) {
-        App.chat_vm.chat_messages.push(data["chat_message"])
+        App.battle_vm.chat_messages.push(data["chat_message"])
       }
 
       // 部屋名の共有
       if (data["room_name"]) {
-        App.chat_vm.room_name = data["room_name"]
+        App.battle_vm.room_name = data["room_name"]
       }
 
       // 終了
       if (data["end_at"]) {
-        App.chat_vm.battle_end_notice(data)
+        App.battle_vm.battle_end_notice(data)
       }
 
       // 定期的に呼ぶ場合
@@ -97,6 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("give_up", data)
     },
 
+    hebokisin(data) {
+      this.perform("hebokisin", data)
+    },
+
     play_mode_long_sfen_set(data) {
       this.perform("play_mode_long_sfen_set", data)
     },
@@ -104,9 +109,13 @@ document.addEventListener("DOMContentLoaded", () => {
     countdown_flag_on(location_key) {
       this.perform("countdown_flag_on", {location_key: location_key})
     },
+
+    next_run_if_robot() {
+      this.perform("next_run_if_robot")
+    },
   })
 
-  App.chat_vm = new Vue({
+  App.battle_vm = new Vue({
     mixins: [
       chess_clock,
     ],
@@ -134,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     created() {
+      setTimeout(() => this.next_run_if_robot(), 1000)
     },
 
     watch: {
@@ -162,6 +172,16 @@ document.addEventListener("DOMContentLoaded", () => {
       give_up() {
         App.battle.give_up({win_location_key: this.current_location.flip.key})
         App.battle.chat_say("負けました", {mclass: "has-text-info"})
+      },
+
+      hebokisin() {
+        App.battle.hebokisin()
+      },
+
+      next_run_if_robot() {
+        if (this.host_p) {
+          App.battle.next_run_if_robot()
+        }
       },
 
       // 終了の通達があった
@@ -358,6 +378,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // 片方のチームのみに所属している？
       single_team_p() {
         return this.my_uniq_locations.length == 1
+      },
+
+      // リーダー (最初のブラウザを持っている人)
+      primary_member() {
+        return this.memberships.find(e => e.user.race_key === "human")
+      },
+
+      // 自分はホストなのか？
+      host_p() {
+        return _.includes(this.__my_memberships, this.primary_member)
       },
 
       run_mode() {

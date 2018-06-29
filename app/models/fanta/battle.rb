@@ -202,21 +202,18 @@ module Fanta
           end
         end
 
-        def execute_loop
-          catch :loop_break do
-            loop do
-              execute_one
+        def execute_loop_if_robot
+          loop do
+            if !battle.current_user.race_info.auto_hand
+              break
             end
+            execute_one
           end
         end
 
         def execute_one
-          user = battle.user_by_turn(mediator.turn_info.turn_max)
-
-          # 次に指す人が人間なら終わる
-          if !user.race_info.auto_hand
-            throw :loop_break
-          end
+          # user = battle.user_by_turn(mediator.turn_info.turn_max)
+          # user = battle.current_user
 
           time_start = Time.current
 
@@ -260,14 +257,23 @@ module Fanta
         end
       end
 
+      def next_run_if_robot
+        catch :exit do
+          brain_get(full_sfen).tap do |o|
+            # o.validate_checkmate_ignore
+            # o.win_check
+            o.execute_loop_if_robot
+          end
+        end
+      end
+
       def next_run
         catch :exit do
           brain_get(full_sfen).tap do |o|
-            o.validate_checkmate_ignore
-            o.win_check
-            o.execute_loop
+            o.execute_one
           end
         end
+        next_run_if_robot
       end
 
       # 人間が指した直後のトリガー
@@ -279,7 +285,9 @@ module Fanta
             o.clock_counts_update(data["clock_counter"].to_i)
             o.mediator_broadcast
             o.win_check
-            o.execute_loop
+
+            # CPUの手を続けて指す場合
+            o.execute_loop_if_robot
           end
         end
       end
@@ -354,6 +362,10 @@ module Fanta
 
       def current_user
         user_by_turn(turn_max)
+      end
+
+      def robot_player?
+        current_user.race_info.key == :robot
       end
     end
 
