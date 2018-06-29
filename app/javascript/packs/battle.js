@@ -93,8 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("time_up", data)
     },
 
-    give_up_trigger(data) {
-      this.perform("give_up_trigger", data)
+    give_up(data) {
+      this.perform("give_up", data)
     },
 
     // location_flip_all(data) {
@@ -163,8 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       // ゲーム終了(投了により
-      give_up_trigger() {
-        App.battle.give_up_trigger({win_location_key: this.current_location.flip.key})
+      give_up() {
+        App.battle.give_up({win_location_key: this.current_location.flip.key})
         App.battle.chat_say("負けました", {mclass: "has-text-info"})
       },
 

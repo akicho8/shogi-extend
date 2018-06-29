@@ -53,8 +53,8 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   # 負ける人が申告する
-  def give_up_trigger(data)
-    battle.give_up_trigger(data)
+  def give_up(data)
+    battle.give_up(data)
   end
 
   # # 先後をまとめて反転する

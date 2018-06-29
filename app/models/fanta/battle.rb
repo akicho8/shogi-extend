@@ -329,7 +329,7 @@ module Fanta
         end
       end
 
-      def give_up_trigger(data)
+      def give_up(data)
         game_end(win_location_key: data["win_location_key"], last_action_key: "TORYO")
       end
 
