@@ -27,8 +27,6 @@ class BattleChannel < ApplicationCable::Channel
     battle.play_mode_long_sfen_set(data)
   end
 
-  # 発言
-  # chat_say("message" => '<span class="has-text-info">退室しました</span>')
   def chat_say(data)
     current_user.chat_say(battle, data["message"], data["msg_options"] || {})
   end
@@ -45,7 +43,6 @@ class BattleChannel < ApplicationCable::Channel
     battle.time_up(data)
   end
 
-  # 負ける人が申告する
   def give_up(data)
     battle.give_up(data)
   end
