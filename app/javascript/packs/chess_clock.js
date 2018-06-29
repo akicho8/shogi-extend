@@ -23,7 +23,7 @@ export default {
         if (this.current_location) {
           if (!this.second_p) {
             if (this.current_rest_counter1 <= 0) {
-              this.countdown_mode_on()
+              this.countdown_flag_on()
             }
           } else {
             if (this.current_rest_counter2 <= 0) {
@@ -114,10 +114,10 @@ export default {
       localStorage.setItem(js_battle.id, v)
     },
 
-    countdown_mode_on() {
+    countdown_flag_on() {
       this.countdown_flags[this.current_location.key] = true
       this.clock_counter_set(0)
-      App.battle.countdown_mode_on(this.current_location.key)
+      App.battle.countdown_flag_on(this.current_location.key)
     }
   },
 

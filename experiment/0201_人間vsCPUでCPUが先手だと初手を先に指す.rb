@@ -2,45 +2,45 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 module Fanta
-  user1 = User.create!(name: "人間", behavior_key: "ningen")
-  user2 = User.create!(name: "CPU", behavior_key: "yowai_cpu")
+  user1 = User.create!(name: "人間")
+  user2 = User.create!(name: "CPU", race_key: :robot)
   battle = user1.battle_with(user2)
   battle.reload
   tp battle.memberships
   tp battle
 end
-# >> D, [2018-06-29T14:23:53.538910 #76880] DEBUG -- : No serializer found for resource: #<Fanta::User id: 1, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:18:23", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p2vs2", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", behavior_key: nil, created_at: "2018-06-29 05:18:23", updated_at: "2018-06-29 05:18:23">
-# >> I, [2018-06-29T14:23:53.539826 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.8ms)
-# >> D, [2018-06-29T14:23:53.548543 #76880] DEBUG -- : No serializer found for resource: #<Fanta::User id: 1, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:18:23", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p2vs2", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", behavior_key: nil, created_at: "2018-06-29 05:18:23", updated_at: "2018-06-29 05:18:23">
-# >> I, [2018-06-29T14:23:53.549514 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.92ms)
-# >> D, [2018-06-29T14:23:53.604939 #76880] DEBUG -- : No serializer found for resource: #<Fanta::User id: 1, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:18:23", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p2vs2", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", behavior_key: nil, created_at: "2018-06-29 05:18:23", updated_at: "2018-06-29 05:18:23">
-# >> I, [2018-06-29T14:23:53.606018 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (1.02ms)
-# >> D, [2018-06-29T14:23:53.611638 #76880] DEBUG -- : No serializer found for resource: #<Fanta::User id: 1, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:18:23", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p2vs2", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", behavior_key: nil, created_at: "2018-06-29 05:18:23", updated_at: "2018-06-29 05:18:23">
-# >> I, [2018-06-29T14:23:53.612579 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.88ms)
-# >> D, [2018-06-29T14:23:53.677201 #76880] DEBUG -- : No serializer found for resource: #<Fanta::User id: 1, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:18:23", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p2vs2", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", behavior_key: nil, created_at: "2018-06-29 05:18:23", updated_at: "2018-06-29 05:18:23">
-# >> I, [2018-06-29T14:23:53.678273 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (1.01ms)
-# >> D, [2018-06-29T14:23:53.689548 #76880] DEBUG -- : No serializer found for resource: #<Fanta::User id: 1, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:18:23", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p2vs2", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", behavior_key: nil, created_at: "2018-06-29 05:18:23", updated_at: "2018-06-29 05:18:23">
-# >> I, [2018-06-29T14:23:53.690807 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (1.2ms)
-# >> D, [2018-06-29T14:23:53.707851 #76880] DEBUG -- : No serializer found for resource: #<Fanta::User id: 1, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:18:23", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p2vs2", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", behavior_key: nil, created_at: "2018-06-29 05:18:23", updated_at: "2018-06-29 05:18:23">
-# >> I, [2018-06-29T14:23:53.709132 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (1.2ms)
-# >> I, [2018-06-29T14:23:55.726884 #76880]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (1970.41ms)
+# >> D, [2018-06-29T14:47:40.420333 #77908] DEBUG -- : No serializer found for resource: #<Fanta::User id: 9, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:47:26", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p1vs1", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", race_key: nil, created_at: "2018-06-29 05:47:26", updated_at: "2018-06-29 05:47:26">
+# >> I, [2018-06-29T14:47:40.420912 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.43ms)
+# >> D, [2018-06-29T14:47:40.428003 #77908] DEBUG -- : No serializer found for resource: #<Fanta::User id: 9, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:47:26", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p1vs1", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", race_key: nil, created_at: "2018-06-29 05:47:26", updated_at: "2018-06-29 05:47:26">
+# >> I, [2018-06-29T14:47:40.428542 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.49ms)
+# >> D, [2018-06-29T14:47:40.485516 #77908] DEBUG -- : No serializer found for resource: #<Fanta::User id: 9, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:47:26", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p1vs1", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", race_key: nil, created_at: "2018-06-29 05:47:26", updated_at: "2018-06-29 05:47:26">
+# >> I, [2018-06-29T14:47:40.486132 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.55ms)
+# >> D, [2018-06-29T14:47:40.491259 #77908] DEBUG -- : No serializer found for resource: #<Fanta::User id: 9, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:47:26", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p1vs1", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", race_key: nil, created_at: "2018-06-29 05:47:26", updated_at: "2018-06-29 05:47:26">
+# >> I, [2018-06-29T14:47:40.491870 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.56ms)
+# >> D, [2018-06-29T14:47:40.557637 #77908] DEBUG -- : No serializer found for resource: #<Fanta::User id: 9, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:47:26", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p1vs1", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", race_key: nil, created_at: "2018-06-29 05:47:26", updated_at: "2018-06-29 05:47:26">
+# >> I, [2018-06-29T14:47:40.558167 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.47ms)
+# >> D, [2018-06-29T14:47:40.567340 #77908] DEBUG -- : No serializer found for resource: #<Fanta::User id: 9, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:47:26", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p1vs1", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", race_key: nil, created_at: "2018-06-29 05:47:26", updated_at: "2018-06-29 05:47:26">
+# >> I, [2018-06-29T14:47:40.568133 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.73ms)
+# >> D, [2018-06-29T14:47:40.583140 #77908] DEBUG -- : No serializer found for resource: #<Fanta::User id: 9, name: "野良1号", current_battle_id: nil, online_at: "2018-06-29 05:47:26", fighting_at: nil, matching_at: nil, lifetime_key: "lifetime_m5", platoon_key: "platoon_p1vs1", self_preset_key: "平手", oppo_preset_key: "平手", user_agent: "", race_key: nil, created_at: "2018-06-29 05:47:26", updated_at: "2018-06-29 05:47:26">
+# >> I, [2018-06-29T14:47:40.583720 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with Fanta::User::ActiveRecord_Relation (0.52ms)
+# >> I, [2018-06-29T14:47:42.529184 #77908]  INFO -- : Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (1898.44ms)
 # >> |-----+-----------+---------+------------+--------------+----------+---------------------------+---------------------------+------------+---------------------------+---------------------------|
 # >> | id  | battle_id | user_id | preset_key | location_key | position | standby_at                | fighting_at               | time_up_at | created_at                | updated_at                |
 # >> |-----+-----------+---------+------------+--------------+----------+---------------------------+---------------------------+------------+---------------------------+---------------------------|
-# >> | 153 |        52 |       7 | 平手       | black        |        0 | 2018-06-29 14:23:53 +0900 | 2018-06-29 14:23:53 +0900 |            | 2018-06-29 14:23:53 +0900 | 2018-06-29 14:23:53 +0900 |
-# >> | 154 |        52 |       6 | 平手       | white        |        1 |                           |                           |            | 2018-06-29 14:23:53 +0900 | 2018-06-29 14:23:53 +0900 |
+# >> | 159 |        55 |      12 | 平手       | black        |        0 | 2018-06-29 14:47:40 +0900 | 2018-06-29 14:47:40 +0900 |            | 2018-06-29 14:47:40 +0900 | 2018-06-29 14:47:40 +0900 |
+# >> | 160 |        55 |      11 | 平手       | white        |        1 |                           |                           |            | 2018-06-29 14:47:40 +0900 | 2018-06-29 14:47:40 +0900 |
 # >> |-----+-----------+---------+------------+--------------+----------+---------------------------+---------------------------+------------+---------------------------+---------------------------|
 # >> |---------------------+--------------------------------|
-# >> |                  id | 52                             |
+# >> |                  id | 55                             |
 # >> |    black_preset_key | 平手                           |
 # >> |    white_preset_key | 平手                           |
 # >> |        lifetime_key | lifetime_m5                    |
 # >> |         platoon_key | platoon_p1vs1                  |
-# >> |           full_sfen | position startpos moves 9i9h   |
+# >> |           full_sfen | position startpos moves 4i5h   |
 # >> |        clock_counts | {:black=>[1], :white=>[]}      |
-# >> | countdown_flags | {:black=>false, :white=>false} |
+# >> |     countdown_flags | {:black=>false, :white=>false} |
 # >> |            turn_max | 1                              |
-# >> |   battle_request_at | 2018-06-29 14:23:53 +0900      |
+# >> |   battle_request_at | 2018-06-29 14:47:40 +0900      |
 # >> |     auto_matched_at |                                |
 # >> |            begin_at |                                |
 # >> |              end_at |                                |
@@ -48,6 +48,6 @@ end
 # >> |    win_location_key |                                |
 # >> | current_users_count | 1                              |
 # >> |   watch_ships_count | 0                              |
-# >> |          created_at | 2018-06-29 14:23:53 +0900      |
-# >> |          updated_at | 2018-06-29 14:23:55 +0900      |
+# >> |          created_at | 2018-06-29 14:47:40 +0900      |
+# >> |          updated_at | 2018-06-29 14:47:42 +0900      |
 # >> |---------------------+--------------------------------|

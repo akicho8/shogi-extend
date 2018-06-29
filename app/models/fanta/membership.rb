@@ -3,21 +3,21 @@
 #
 # 対局と対局者の対応テーブル (fanta_memberships as Fanta::Membership)
 #
-# |--------------------+--------------------+-------------+-------------+------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照 | INDEX |
-# |--------------------+--------------------+-------------+-------------+------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | battle_id          | Battle             | integer(8)  | NOT NULL    |      | A     |
-# | user_id            | User               | integer(8)  | NOT NULL    |      | B     |
-# | preset_key         | Preset key         | string(255) | NOT NULL    |      |       |
-# | location_key       | Location key       | string(255) | NOT NULL    |      | C     |
-# | position           | 順序               | integer(4)  |             |      | D     |
-# | standby_at         | Standby at         | datetime    |             |      |       |
-# | fighting_at        | Fighting at        | datetime    |             |      |       |
-# | time_up_at | Time up trigger at | datetime    |             |      |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |      |       |
-# |--------------------+--------------------+-------------+-------------+------+-------|
+# |--------------+--------------+-------------+-------------+------+-------|
+# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX |
+# |--------------+--------------+-------------+-------------+------+-------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
+# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A     |
+# | user_id      | User         | integer(8)  | NOT NULL    |      | B     |
+# | preset_key   | Preset key   | string(255) | NOT NULL    |      |       |
+# | location_key | Location key | string(255) | NOT NULL    |      | C     |
+# | position     | 順序         | integer(4)  |             |      | D     |
+# | standby_at   | Standby at   | datetime    |             |      |       |
+# | fighting_at  | Fighting at  | datetime    |             |      |       |
+# | time_up_at   | Time up at   | datetime    |             |      |       |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
+# |--------------+--------------+-------------+-------------+------+-------|
 
 module Fanta
   class Membership < ApplicationRecord

@@ -150,7 +150,7 @@ module Fanta
 
     it "人間vsCPUのとき、CPUが先手なら最初に指した状態で始まる" do
       alice = User.create!
-      bob = User.create!(behavior_key: :yowai_cpu)
+      bob = User.create!(race_key: :robot)
       battle = alice.battle_with(bob)
 
       info = Warabi::Parser.parse(battle.full_sfen)

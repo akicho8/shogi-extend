@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
 
-    chat_say(message) {
-      this.perform("chat_say", {message: message})
+    chat_say(message, msg_options = {}) {
+      this.perform("chat_say", {message: message, msg_options: msg_options})
     },
 
     setting_save(data) {

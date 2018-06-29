@@ -64,7 +64,8 @@ javascript:
             td
               message_link_to(:user_to="e.user")
               = " "
-              | {{e.message}}
+              span(:class="e.msg_options.mclass")
+                | {{e.message}}
 
         / .field
         /   .control

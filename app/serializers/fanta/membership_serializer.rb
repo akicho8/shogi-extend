@@ -30,7 +30,7 @@ end
 # >>     :name=>"野良1号",
 # >>     :show_path=>"/online/users/139",
 # >>     :avatar_url=>
-# >>      "/assets/fallback_icons/0000_fallback_face_icon-11e320818eebd21b25499cba64b057c32b984346f4201b53d4c43a4032d0417b.png"}},
+# >>      "/assets/fallback_avatars/0000_fallback_face_icon-11e320818eebd21b25499cba64b057c32b984346f4201b53d4c43a4032d0417b.png"}},
 # >>  {:id=>216,
 # >>   :location_key=>"white",
 # >>   :preset_key=>"平手",
@@ -42,4 +42,4 @@ end
 # >>     :name=>"弱いCPU",
 # >>     :show_path=>"/online/users/142",
 # >>     :avatar_url=>
-# >>      "/assets/fallback_icons/0018_fallback_face_icon-223ef766c0fcfbf7987b4ce9213a5a29eb31ee97ac9922099e6a51c5a1784c39.png"}}]
+# >>      "/assets/fallback_avatars/0018_fallback_face_icon-223ef766c0fcfbf7987b4ce9213a5a29eb31ee97ac9922099e6a51c5a1784c39.png"}}]

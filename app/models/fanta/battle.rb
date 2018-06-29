@@ -11,9 +11,9 @@
 # | white_preset_key    | White preset key    | string(255) | NOT NULL            |      |       |
 # | lifetime_key        | Lifetime key        | string(255) | NOT NULL            |      |       |
 # | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
-# | full_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
+# | full_sfen           | Full sfen           | text(65535) | NOT NULL            |      |       |
 # | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
-# | countdown_flags | Countdown mode hash | text(65535) | NOT NULL            |      |       |
+# | countdown_flags     | Countdown flags     | text(65535) | NOT NULL            |      |       |
 # | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
 # | battle_request_at   | Battle request at   | datetime    |                     |      |       |
 # | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |
@@ -190,15 +190,15 @@ module Fanta
         #
         def validate_checkmate_ignore
           if mediator.opponent_player.mate_danger?
-            chat_say("message" => "<span class=\"has-text-info\">【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です</span>")
-            battle.judge_and_exit(win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
+            User.sysop.chat_say(self, "【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です", mclass: "has-text-danger")
+            battle.game_end_exit(win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
           end
         end
 
         # 次の手番の合法手がない = 詰ました = 勝ち
         def win_check
           if mediator.current_player.normal_all_hands.none? { |e| e.legal_move?(mediator) }
-            battle.judge_and_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
+            battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
           end
         end
 
@@ -214,7 +214,7 @@ module Fanta
           user = battle.user_by_turn(mediator.turn_info.turn_max)
 
           # 次に指す人が人間なら終わる
-          if !user.behavior_info.auto_sasu
+          if !user.race_info.auto_hand
             throw :loop_break
           end
 
@@ -228,7 +228,7 @@ module Fanta
           end
           hand = hands.sample
           unless hand
-            battle.judge_and_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
+            battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
           end
 
           mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
@@ -260,7 +260,7 @@ module Fanta
         end
       end
 
-      def saisyonisasu
+      def next_run
         catch :exit do
           brain_get(full_sfen).tap do |o|
             o.validate_checkmate_ignore
@@ -285,13 +285,15 @@ module Fanta
       end
 
       def brain_get(kifu_body)
-        Brain.new(self, Warabi::Parser.parse(kifu_body).mediator)
-      rescue Warabi::WarabiError => error
-        if !error.respond_to?(:mediator)
-          raise "must not happen: #{error}"
+        begin
+          Brain.new(self, Warabi::Parser.parse(kifu_body).mediator)
+        rescue Warabi::WarabiError => error
+          if !error.respond_to?(:mediator)
+            raise "must not happen: #{error}"
+          end
+          User.sysop.chat_say(self, error.message.lines.first.strip, mclass: "has-text-danger")
+          game_end_exit(win_location_key: error.mediator.win_player.location.key, last_action_key: "ILLEGAL_MOVE")
         end
-        chat_say("message" => "<span class=\"has-text-info\">#{error.message.lines.first.strip}</span>")
-        judge_and_exit(win_location_key: error.mediator.win_player.location.key, last_action_key: "ILLEGAL_MOVE")
       end
 
       def game_end(attributes)
@@ -299,7 +301,7 @@ module Fanta
         game_end_broadcast
       end
 
-      def judge_and_exit(attributes)
+      def game_end_exit(attributes)
         game_end(attributes)
         throw :exit
       end
@@ -325,6 +327,16 @@ module Fanta
         if memberships.where.not(time_up_at: nil).count >= battle.memberships.count
           game_end(win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
         end
+      end
+
+      def give_up_trigger(data)
+        game_end(win_location_key: data["win_location_key"], last_action_key: "TORYO")
+      end
+
+      def countdown_flag_on(data)
+        location = Warabi::Location.fetch(data["location_key"])
+        countdown_flags[location.key] = true
+        save!
       end
     end
 
@@ -363,6 +375,10 @@ module Fanta
             latest_list.limit(chat_window_size)
           end
         end
+      end
+
+      def chat_say(user, message, **msg_options)
+        user.chat_say(battle, message, msg_options)
       end
     end
   end

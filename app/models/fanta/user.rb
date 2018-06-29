@@ -7,37 +7,47 @@
 # | カラム名          | 意味            | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-----------------+-------------+-------------+------+-------|
 # | id                | ID              | integer(8)  | NOT NULL PK |      |       |
+# | key               | Key             | string(255) | NOT NULL    |      | A!    |
 # | name              | Name            | string(255) | NOT NULL    |      |       |
-# | current_battle_id | Current battle  | integer(8)  |             |      | A     |
+# | current_battle_id | Current battle  | integer(8)  |             |      | B     |
 # | online_at         | Online at       | datetime    |             |      |       |
 # | fighting_at       | Fighting at     | datetime    |             |      |       |
 # | matching_at       | Matching at     | datetime    |             |      |       |
-# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | B     |
-# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | C     |
-# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | D     |
-# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | E     |
+# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | C     |
+# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | D     |
+# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | E     |
+# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | F     |
 # | user_agent        | User agent      | string(255) | NOT NULL    |      |       |
+# | race_key          | Race key        | string(255) | NOT NULL    |      |       |
+# | cpu_brain_key     | Cpu brain key   | string(255) |             |      |       |
 # | created_at        | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時        | datetime    | NOT NULL    |      |       |
 # |-------------------+-----------------+-------------+-------------+------+-------|
 
 module Fanta
+  CpuBrainInfo
+
   class User < ApplicationRecord
     class << self
       def setup(options = {})
         super
 
+        destroy_all
+
+        create!(key: "sysop", name: "SYSOP")
+
+        CpuBrainInfo.each do |e|
+          create!(name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, cpu_brain_key: e.key)
+        end
+
         if Rails.env.development?
           2.times.collect do
             create!(online_at: Time.current, platoon_key: "platoon_p2vs2")
           end
-
-          create!(name: "弱いCPU", behavior_key: :yowai_cpu, online_at: Time.current)
         end
       end
     end
 
-    has_many :chat_messages, dependent: :destroy
     has_many :lobby_messages, dependent: :destroy
     has_many :memberships, dependent: :destroy
     has_many :battles, through: :memberships
@@ -49,12 +59,14 @@ module Fanta
     scope :random_order, -> { order(Arel.sql("rand()")) }
 
     before_validation on: :create do
+      self.key ||= SecureRandom.hex
       self.name ||= "野良#{User.count.next}号"
       self.self_preset_key ||= "平手"
       self.oppo_preset_key ||= "平手"
-      self.lifetime_key ||= "lifetime_m5"
-      self.platoon_key ||= "platoon_p1vs1"
+      self.lifetime_key ||= :lifetime_m5
+      self.platoon_key ||= :platoon_p1vs1
       self.user_agent ||= ""
+      self.race_key ||= :human
 
       if Rails.env.development?
         self.online_at ||= Time.current
@@ -85,28 +97,56 @@ module Fanta
       Rails.application.routes.url_helpers.url_for([self, only_path: true])
     end
 
-    concerning :BehaviorMethods do
-      def behavior_info
-        BehaviorInfo.fetch(behavior_key || :ningen)
+    concerning :ChatMessageMethods do
+      included do
+        has_many :chat_messages, dependent: :destroy
+      end
+
+      class_methods do
+        def sysop
+          find_by!(key: __method__)
+        end
+      end
+
+      def chat_say(battle, message, msg_options = {})
+        chat_message = chat_messages.create!(battle: battle, message: message, msg_options: msg_options)
+        ActionCable.server.broadcast(battle.channel_key, chat_message: ams_sr(chat_message))
+      end
+    end
+
+    concerning :RaceMethods do
+      def race_info
+        RaceInfo.fetch(race_key)
+      end
+    end
+
+    concerning :CpuBrainMethods do
+      def cpu_brain_info
+        CpuBrainInfo.fetch_if(cpu_brain_key)
       end
     end
 
     concerning :AvatarMethods do
       included do
         has_one_attached :avatar
+      end
 
-        cattr_accessor :icon_files do
-          relative_path = Rails.root.join("app/assets/images")
-          relative_path.join("fallback_icons").glob("0*.png").collect do |e| # Dir.glob(..., base: ) とする手もあるが文字列になってしまう
-            e.relative_path_from(relative_path)
-          end
+      class_methods do
+        def image_files(name)
+          @image_files ||= {}
+          @image_files[name] ||= -> {
+            root_dir = Rails.root.join("app/assets/images")
+            root_dir.join(name.to_s).glob("0*.png").collect do |e|
+              e.relative_path_from(root_dir)
+            end
+          }.call
         end
       end
 
       # FALLBACK_ICONS_DEBUG=1 foreman s
       def avatar_url
         if ENV["FALLBACK_ICONS_DEBUG"]
-          return ActionController::Base.helpers.asset_path(icon_files.sample)
+          return ActionController::Base.helpers.asset_path(self.class.image_files(:robot).sample)
         end
 
         if avatar.attached?
@@ -114,7 +154,8 @@ module Fanta
           # https://github.com/rails/rails/issues/32866
           Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true)
         else
-          file = icon_files[(id || self.class.count.next).modulo(icon_files.size)]
+          list = self.class.image_files(race_info.key)
+          file = list[(id || self.class.count.next).modulo(list.size)]
           ActionController::Base.helpers.asset_path(file)
         end
       end
@@ -207,10 +248,11 @@ module Fanta
         a = [self, opponent]
         case
         when rule_cop.same_rule?
-          if Rails.env.development?
-            a = a.reverse
-          else
+          if Rails.env.production?
             a = a.shuffle
+          else
+            # CPUを後手にするため
+            a = a.reverse
           end
         when rule_cop.teacher?
           a = a.reverse
@@ -235,7 +277,7 @@ module Fanta
 
         # 召集
         battle.users.each do |user|
-          if user.behavior_info.auto_iku
+          if user.race_info.auto_iku
             user.room_in(battle)
           else
             ActionCable.server.broadcast("single_notification_#{user.id}", {matching_establish: true, battle_show_path: battle.show_path}.merge(attributes))
@@ -243,7 +285,7 @@ module Fanta
         end
 
         # 最初の手番がCPUなら指す
-        battle.saisyonisasu
+        battle.next_run
 
         battle
       end
@@ -325,6 +367,8 @@ module Fanta
 
     concerning :BattleMethods do
       def room_in(battle)
+        chat_say(battle, "入室しました", mclass: "has-text-info")
+
         memberships ||= battle.memberships.where(user: self)
 
         # 自分から部屋に入ったらマッチングを解除する
@@ -374,6 +418,8 @@ module Fanta
       end
 
       def room_out(battle)
+        chat_say(battle, "退室しました", mclass: "has-text-info")
+
         memberships ||= battle.memberships.where(user: self)
 
         update!(current_battle_id: nil) # とる

@@ -7,7 +7,7 @@
 # | カラム名         | 意味             | タイプ      | 属性        | 参照 | INDEX |
 # |------------------+------------------+-------------+-------------+------+-------|
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key       | Battle key       | string(255) | NOT NULL    |      | A!    |
+# | key              | Key              | string(255) | NOT NULL    |      | A!    |
 # | battled_at       | Battled at       | datetime    |             |      |       |
 # | kifu_body        | Kifu body        | text(65535) | NOT NULL    |      |       |
 # | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |

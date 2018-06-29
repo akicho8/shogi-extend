@@ -8,16 +8,19 @@
 # | カラム名          | 意味            | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-----------------+-------------+-------------+------+-------|
 # | id                | ID              | integer(8)  | NOT NULL PK |      |       |
+# | key               | Key             | string(255) | NOT NULL    |      | A!    |
 # | name              | Name            | string(255) | NOT NULL    |      |       |
-# | current_battle_id | Current battle  | integer(8)  |             |      | A     |
+# | current_battle_id | Current battle  | integer(8)  |             |      | B     |
 # | online_at         | Online at       | datetime    |             |      |       |
 # | fighting_at       | Fighting at     | datetime    |             |      |       |
 # | matching_at       | Matching at     | datetime    |             |      |       |
-# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | B     |
-# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | C     |
-# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | D     |
-# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | E     |
+# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | C     |
+# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | D     |
+# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | E     |
+# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | F     |
 # | user_agent        | User agent      | string(255) | NOT NULL    |      |       |
+# | race_key          | Race key        | string(255) | NOT NULL    |      |       |
+# | cpu_brain_key     | Cpu brain key   | string(255) |             |      |       |
 # | created_at        | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時        | datetime    | NOT NULL    |      |       |
 # |-------------------+-----------------+-------------+-------------+------+-------|
@@ -30,7 +33,7 @@
 # | カラム名         | 意味             | タイプ      | 属性        | 参照 | INDEX |
 # |------------------+------------------+-------------+-------------+------+-------|
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key       | Battle key       | string(255) | NOT NULL    |      | A!    |
+# | key              | Key              | string(255) | NOT NULL    |      | A!    |
 # | battled_at       | Battled at       | datetime    |             |      |       |
 # | kifu_body        | Kifu body        | text(65535) | NOT NULL    |      |       |
 # | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |
@@ -62,7 +65,7 @@
 # | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | key        | Battle key        | string(255) | NOT NULL    |      | A!    |
+# | key               | Key               | string(255) | NOT NULL    |      | A!    |
 # | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
 # | rule_key          | Rule key          | string(255) | NOT NULL    |      | B     |
 # | csa_seq           | Csa seq           | text(65535) | NOT NULL    |      |       |
@@ -170,21 +173,21 @@
 #
 # 対局と対局者の対応テーブル (fanta_memberships as Fanta::Membership)
 #
-# |--------------------+--------------------+-------------+-------------+------+-------|
-# | カラム名           | 意味               | タイプ      | 属性        | 参照 | INDEX |
-# |--------------------+--------------------+-------------+-------------+------+-------|
-# | id                 | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | battle_id          | Battle             | integer(8)  | NOT NULL    |      | A     |
-# | user_id            | User               | integer(8)  | NOT NULL    |      | B     |
-# | preset_key         | Preset key         | string(255) | NOT NULL    |      |       |
-# | location_key       | Location key       | string(255) | NOT NULL    |      | C     |
-# | position           | 順序               | integer(4)  |             |      | D     |
-# | standby_at         | Standby at         | datetime    |             |      |       |
-# | fighting_at        | Fighting at        | datetime    |             |      |       |
-# | time_up_at | Time up trigger at | datetime    |             |      |       |
-# | created_at         | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at         | 更新日時           | datetime    | NOT NULL    |      |       |
-# |--------------------+--------------------+-------------+-------------+------+-------|
+# |--------------+--------------+-------------+-------------+------+-------|
+# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX |
+# |--------------+--------------+-------------+-------------+------+-------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
+# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A     |
+# | user_id      | User         | integer(8)  | NOT NULL    |      | B     |
+# | preset_key   | Preset key   | string(255) | NOT NULL    |      |       |
+# | location_key | Location key | string(255) | NOT NULL    |      | C     |
+# | position     | 順序         | integer(4)  |             |      | D     |
+# | standby_at   | Standby at   | datetime    |             |      |       |
+# | fighting_at  | Fighting at  | datetime    |             |      |       |
+# | time_up_at   | Time up at   | datetime    |             |      |       |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
+# |--------------+--------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -198,9 +201,9 @@
 # | white_preset_key    | White preset key    | string(255) | NOT NULL            |      |       |
 # | lifetime_key        | Lifetime key        | string(255) | NOT NULL            |      |       |
 # | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
-# | full_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
+# | full_sfen           | Full sfen           | text(65535) | NOT NULL            |      |       |
 # | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
-# | countdown_flags | Countdown mode hash | text(65535) | NOT NULL            |      |       |
+# | countdown_flags     | Countdown flags     | text(65535) | NOT NULL            |      |       |
 # | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
 # | battle_request_at   | Battle request at   | datetime    |                     |      |       |
 # | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |
@@ -218,30 +221,32 @@
 #
 # Lobby messageテーブル (fanta_lobby_messages as Fanta::LobbyMessage)
 #
-# |------------+----------+-------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | user_id    | User     | integer(8)  | NOT NULL    |      | A     |
-# | message    | Message  | text(65535) | NOT NULL    |      |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
+# |-------------+-------------+-------------+-------------+------+-------|
+# | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | user_id     | User        | integer(8)  | NOT NULL    |      | A     |
+# | message     | Message     | text(65535) | NOT NULL    |      |       |
+# | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
 # Chat messageテーブル (fanta_chat_messages as Fanta::ChatMessage)
 #
-# |------------+----------+-------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | battle_id  | Battle   | integer(8)  | NOT NULL    |      | A     |
-# | user_id    | User     | integer(8)  | NOT NULL    |      | B     |
-# | message    | Message  | text(65535) | NOT NULL    |      |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
+# |-------------+-------------+-------------+-------------+------+-------|
+# | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | battle_id   | Battle      | integer(8)  | NOT NULL    |      | A     |
+# | user_id     | User        | integer(8)  | NOT NULL    |      | B     |
+# | message     | Message     | text(65535) | NOT NULL    |      |       |
+# | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #

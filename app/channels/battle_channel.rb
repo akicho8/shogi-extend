@@ -15,7 +15,7 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   # 定期的に呼ぶ処理が書ける
-  periodically every: 30.seconds do
+  periodically every: 60.seconds do
     # 疑問: transmit(...) は ActionCable.server.broadcast(channel_key, ...)  と同じか？ → 違うっぽい。反応しないクライアントがある
     transmit action: :update_count, count: 1
   end
@@ -30,8 +30,7 @@ class BattleChannel < ApplicationCable::Channel
   # 発言
   # chat_say("message" => '<span class="has-text-info">退室しました</span>')
   def chat_say(data)
-    chat_message = current_user.chat_messages.create!(battle: battle, message: data["message"])
-    ActionCable.server.broadcast(channel_key, chat_message: ams_sr(chat_message))
+    current_user.chat_say(battle, data["message"], data["msg_options"] || {})
   end
 
   # わざわざ ruby 側に戻してブロードキャストする意味がない気がする
@@ -46,7 +45,6 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   def room_out(data)
-    chat_say("message" => '<span class="has-text-info">退室しました</span>')
     current_user.room_out(battle)
   end
 
@@ -56,7 +54,7 @@ class BattleChannel < ApplicationCable::Channel
 
   # 負ける人が申告する
   def give_up_trigger(data)
-    battle.game_end(win_location_key: data["win_location_key"], last_action_key: "TORYO")
+    battle.give_up_trigger(data)
   end
 
   # # 先後をまとめて反転する
@@ -65,11 +63,9 @@ class BattleChannel < ApplicationCable::Channel
   #   memberships_update
   # end
 
-  # 先後をまとめて反転する
-  def countdown_mode_on(data)
-    location = Warabi::Location.fetch(data["location_key"])
-    battle.countdown_flags[location.key] = true
-    battle.save!
+  # 持ち時間を使いきった時
+  def countdown_flag_on(data)
+    battle.countdown_flag_on(data)
   end
 
   private
@@ -86,10 +82,5 @@ class BattleChannel < ApplicationCable::Channel
 
   def battle
     @battle ||= Fanta::Battle.find(params[:battle_id])
-  end
-
-  # 自分対自分の場合もあるためメンバー情報は複数ある
-  def current_memberships
-    @current_memberships ||= battle.memberships.where(user: current_user)
   end
 end

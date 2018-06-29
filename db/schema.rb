@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.bigint "battle_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "message", null: false, comment: "発言"
+    t.text "msg_options", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_id"], name: "index_fanta_chat_messages_on_battle_id"
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
   create_table "fanta_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "message", null: false, comment: "発言"
+    t.text "msg_options", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_fanta_lobby_messages_on_user_id"
@@ -101,6 +103,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
   end
 
   create_table "fanta_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
     t.bigint "current_battle_id", comment: "現在入室している部屋"
     t.datetime "online_at", comment: "オンラインになった日時"
@@ -111,10 +114,12 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
     t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
-    t.string "behavior_key", comment: "動作"
+    t.string "race_key", null: false, comment: "種族"
+    t.string "cpu_brain_key", comment: "CPUだったときの挙動"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_battle_id"], name: "index_fanta_users_on_current_battle_id"
+    t.index ["key"], name: "index_fanta_users_on_key", unique: true
     t.index ["lifetime_key"], name: "index_fanta_users_on_lifetime_key"
     t.index ["oppo_preset_key"], name: "index_fanta_users_on_oppo_preset_key"
     t.index ["platoon_key"], name: "index_fanta_users_on_platoon_key"

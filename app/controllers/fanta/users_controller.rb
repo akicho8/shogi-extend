@@ -7,16 +7,19 @@
 # | カラム名          | 意味            | タイプ      | 属性        | 参照 | INDEX |
 # |-------------------+-----------------+-------------+-------------+------+-------|
 # | id                | ID              | integer(8)  | NOT NULL PK |      |       |
+# | key               | Key             | string(255) | NOT NULL    |      | A!    |
 # | name              | Name            | string(255) | NOT NULL    |      |       |
-# | current_battle_id | Current battle  | integer(8)  |             |      | A     |
+# | current_battle_id | Current battle  | integer(8)  |             |      | B     |
 # | online_at         | Online at       | datetime    |             |      |       |
 # | fighting_at       | Fighting at     | datetime    |             |      |       |
 # | matching_at       | Matching at     | datetime    |             |      |       |
-# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | B     |
-# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | C     |
-# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | D     |
-# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | E     |
+# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | C     |
+# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | D     |
+# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | E     |
+# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | F     |
 # | user_agent        | User agent      | string(255) | NOT NULL    |      |       |
+# | race_key          | Race key        | string(255) | NOT NULL    |      |       |
+# | cpu_brain_key     | Cpu brain key   | string(255) |             |      |       |
 # | created_at        | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時        | datetime    | NOT NULL    |      |       |
 # |-------------------+-----------------+-------------+-------------+------+-------|

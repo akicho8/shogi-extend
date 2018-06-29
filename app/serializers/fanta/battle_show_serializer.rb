@@ -77,7 +77,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>206,
 # >>     :location_key=>"white",
 # >>     :preset_key=>"平手",
@@ -89,7 +89,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}],
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}],
 # >>  :chat_messages=>
 # >>   [{:id=>3,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
@@ -99,7 +99,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>4,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:22:29 JST +09:00,
@@ -108,7 +108,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>5,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:17 JST +09:00,
@@ -117,7 +117,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>6,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:19 JST +09:00,
@@ -126,7 +126,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>7,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:52 JST +09:00,
@@ -135,7 +135,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>8,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:52 JST +09:00,
@@ -144,7 +144,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>9,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:05 JST +09:00,
@@ -153,7 +153,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>10,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:07 JST +09:00,
@@ -162,7 +162,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>11,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:09 JST +09:00,
@@ -171,7 +171,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>12,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:09 JST +09:00,
@@ -180,7 +180,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>13,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:10 JST +09:00,
@@ -189,7 +189,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>14,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:12 JST +09:00,
@@ -198,7 +198,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>15,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:13 JST +09:00,
@@ -207,7 +207,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>16,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:13 JST +09:00,
@@ -216,7 +216,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>17,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:14 JST +09:00,
@@ -225,7 +225,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>18,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:16 JST +09:00,
@@ -234,7 +234,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>19,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:18 JST +09:00,
@@ -243,7 +243,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>20,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:18 JST +09:00,
@@ -252,7 +252,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>21,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:19 JST +09:00,
@@ -261,7 +261,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>22,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:20 JST +09:00,
@@ -270,7 +270,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>23,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:25 JST +09:00,
@@ -279,7 +279,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>24,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:25 JST +09:00,
@@ -288,7 +288,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>25,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:25 JST +09:00,
@@ -297,7 +297,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>26,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:27 JST +09:00,
@@ -306,7 +306,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>27,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
@@ -315,7 +315,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>28,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
@@ -324,7 +324,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>29,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
@@ -333,7 +333,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>30,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:33 JST +09:00,
@@ -342,7 +342,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>31,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:27:14 JST +09:00,
@@ -351,7 +351,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>32,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:27:36 JST +09:00,
@@ -360,7 +360,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>33,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:27:37 JST +09:00,
@@ -369,7 +369,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>34,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:02 JST +09:00,
@@ -378,7 +378,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>35,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:03 JST +09:00,
@@ -387,7 +387,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>36,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:14 JST +09:00,
@@ -396,7 +396,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>37,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:16 JST +09:00,
@@ -405,7 +405,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>38,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:18 JST +09:00,
@@ -414,7 +414,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>39,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:20 JST +09:00,
@@ -423,7 +423,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>40,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:22 JST +09:00,
@@ -432,7 +432,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>41,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:28 JST +09:00,
@@ -441,7 +441,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>42,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:33 JST +09:00,
@@ -450,7 +450,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>43,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:37 JST +09:00,
@@ -459,7 +459,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>44,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:38 JST +09:00,
@@ -468,7 +468,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>45,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:33:09 JST +09:00,
@@ -477,7 +477,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>46,
 # >>     :message=>"<span class=\"has-text-info\">退室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:33:10 JST +09:00,
@@ -486,7 +486,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>47,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:33:12 JST +09:00,
@@ -495,7 +495,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
 # >>    {:id=>48,
 # >>     :message=>"<span class=\"has-text-info\">入室しました</span>",
 # >>     :created_at=>Tue, 12 Jun 2018 20:34:46 JST +09:00,
@@ -504,7 +504,7 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}],
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}],
 # >>  :watch_users=>[]}
 # >> I, [2018-06-12T20:36:01.406768 #38956]  INFO -- : Rendered BattleShowSerializer with ActiveModelSerializers::Adapter::Attributes (14.62ms)
 # >> {:id=>53,
@@ -549,7 +549,7 @@ end
 # >>       :name=>"野良12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
+# >>        "/assets/fallback_avatars/0012_fallback_face_icon-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
 # >>    {:id=>206,
 # >>     :location_key=>"white",
 # >>     :preset_key=>"平手",
@@ -561,4 +561,4 @@ end
 # >>       :name=>"野良11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
-# >>        "/assets/fallback_icons/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}]}
+# >>        "/assets/fallback_avatars/0011_fallback_face_icon-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}]}

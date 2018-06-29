@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }, {
     connected() {
       this.perform("room_in")
-      this.system_say("入室しました")
     },
 
     disconnected() {
@@ -86,12 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     },
 
-    chat_say(message) {
-      this.perform("chat_say", {message: message})
-    },
-
-    system_say(str) {
-      this.chat_say(`<span class="has-text-info">${str}</span>`)
+    chat_say(message, msg_options = {}) {
+      this.perform("chat_say", {message: message, msg_options: msg_options})
     },
 
     time_up_trigger(data) {
@@ -110,8 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("play_mode_long_sfen_set", data)
     },
 
-    countdown_mode_on(location_key) {
-      this.perform("countdown_mode_on", {location_key: location_key})
+    countdown_flag_on(location_key) {
+      this.perform("countdown_flag_on", {location_key: location_key})
     },
   })
 
@@ -170,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // ゲーム終了(投了により
       give_up_trigger() {
         App.battle.give_up_trigger({win_location_key: this.current_location.flip.key})
-        App.battle.system_say("負けました")
+        App.battle.chat_say("負けました", {mclass: "has-text-info"})
       },
 
       // 終了の通達があった
