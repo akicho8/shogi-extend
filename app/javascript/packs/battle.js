@@ -89,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("chat_say", {message: message, msg_options: msg_options})
     },
 
-    time_up_trigger(data) {
-      this.perform("time_up_trigger", data)
+    time_up(data) {
+      this.perform("time_up", data)
     },
 
     give_up_trigger(data) {

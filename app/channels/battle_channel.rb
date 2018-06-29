@@ -48,8 +48,8 @@ class BattleChannel < ApplicationCable::Channel
     current_user.room_out(battle)
   end
 
-  def time_up_trigger(data)
-    battle.time_up_trigger(data)
+  def time_up(data)
+    battle.time_up(data)
   end
 
   # 負ける人が申告する

@@ -9,7 +9,7 @@ export default {
       clock_counts: js_battle.clock_counts,
       clock_counter: parseInt(localStorage.getItem(js_battle.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
       countdown_flags: js_battle.countdown_flags,
-      time_up_trigger_count: 0, // time_up_trigger() 実行回数制限用
+      time_up_count: 0, // time_up() 実行回数制限用
     }
   },
 
@@ -27,7 +27,7 @@ export default {
             }
           } else {
             if (this.current_rest_counter2 <= 0) {
-              this.time_up_trigger()
+              this.time_up()
             }
           }
         }
@@ -44,13 +44,13 @@ export default {
 
   methods: {
     // ゲーム終了(時間切れにより・生き残っている全員で送信)
-    time_up_trigger() {
+    time_up() {
       if (this.member_p) {
-        if (this.time_up_trigger_count === 0) {
+        if (this.time_up_count === 0) {
           // ログが見やすいように1回だけコールする
-          App.battle.time_up_trigger({membership_ids: this.__my_membership_ids, win_location_key: this.current_location.flip.key})
+          App.battle.time_up({membership_ids: this.__my_membership_ids, win_location_key: this.current_location.flip.key})
         }
-        this.time_up_trigger_count += 1
+        this.time_up_count += 1
       }
     },
 

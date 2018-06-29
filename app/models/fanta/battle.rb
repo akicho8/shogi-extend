@@ -315,7 +315,7 @@ module Fanta
           })
       end
 
-      def time_up_trigger(data)
+      def time_up(data)
         # membership_ids は送ってきた人で対応するレコードにタイムアップ認定する
         memberships = memberships.where(id: data["membership_ids"])
         memberships.each do |e|
