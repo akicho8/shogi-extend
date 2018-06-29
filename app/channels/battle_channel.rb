@@ -51,17 +51,7 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   def time_up_trigger(data)
-    # membership_ids は送ってきた人で対応するレコードにタイムアップ認定する
-    memberships = battle.memberships.where(id: data["membership_ids"])
-    memberships.each do |e|
-      e.update!(time_up_trigger_at: Time.current)
-    end
-
-    # メンバー是認がタイムアップ認定したら全員にタイムアップ通知する
-    # こうすることで1秒残してタイムアップにならなくなる
-    if battle.memberships.where.not(time_up_trigger_at: nil).count >= battle.memberships.count
-      battle.game_end(win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
-    end
+    battle.time_up_trigger(data)
   end
 
   # 負ける人が申告する
@@ -78,7 +68,7 @@ class BattleChannel < ApplicationCable::Channel
   # 先後をまとめて反転する
   def countdown_mode_on(data)
     location = Warabi::Location.fetch(data["location_key"])
-    battle.countdown_mode_hash[location.key] = true
+    battle.countdown_flags[location.key] = true
     battle.save!
   end
 

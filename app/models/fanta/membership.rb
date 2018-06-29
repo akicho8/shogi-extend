@@ -14,7 +14,7 @@
 # | position           | 順序               | integer(4)  |             |      | D     |
 # | standby_at         | Standby at         | datetime    |             |      |       |
 # | fighting_at        | Fighting at        | datetime    |             |      |       |
-# | time_up_trigger_at | Time up trigger at | datetime    |             |      |       |
+# | time_up_at | Time up trigger at | datetime    |             |      |       |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |      |       |
 # |--------------------+--------------------+-------------+-------------+------+-------|

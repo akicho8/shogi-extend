@@ -13,7 +13,7 @@
 # | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
 # | full_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
 # | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
-# | countdown_mode_hash | Countdown mode hash | text(65535) | NOT NULL            |      |       |
+# | countdown_flags | Countdown mode hash | text(65535) | NOT NULL            |      |       |
 # | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
 # | battle_request_at   | Battle request at   | datetime    |                     |      |       |
 # | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |

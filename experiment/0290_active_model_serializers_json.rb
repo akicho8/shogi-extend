@@ -42,7 +42,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>  :win_location_key=>"black",
 # >>  :current_users_count=>-2,
 # >>  :watch_ships_count=>0,
-# >>  :countdown_mode_hash=>{:black=>false, :white=>false},
+# >>  :countdown_flags=>{:black=>false, :white=>false},
 # >>  :show_path=>"/online/battles/1",
 # >>  :handicap=>false,
 # >>  :human_kifu_text=>
@@ -61,7 +61,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>     :location_key=>"black",
 # >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>     :fighting_at=>nil,
-# >>     :time_up_trigger_at=>nil,
+# >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>1,
 # >>       :name=>"野良1号",
@@ -72,7 +72,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>     :location_key=>"white",
 # >>     :standby_at=>Sun, 27 May 2018 19:58:51 JST +09:00,
 # >>     :fighting_at=>nil,
-# >>     :time_up_trigger_at=>nil,
+# >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>1,
 # >>       :name=>"野良1号",

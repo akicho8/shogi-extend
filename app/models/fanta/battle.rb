@@ -13,7 +13,7 @@
 # | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
 # | full_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
 # | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
-# | countdown_mode_hash | Countdown mode hash | text(65535) | NOT NULL            |      |       |
+# | countdown_flags | Countdown mode hash | text(65535) | NOT NULL            |      |       |
 # | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
 # | battle_request_at   | Battle request at   | datetime    |                     |      |       |
 # | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |
@@ -61,7 +61,7 @@ module Fanta
     scope :st_battling, -> { where.not(begin_at: nil).where(end_at: nil) }
 
     serialize :clock_counts
-    serialize :countdown_mode_hash
+    serialize :countdown_flags
 
     before_validation on: :create do
       self.black_preset_key ||= "平手"
@@ -70,7 +70,7 @@ module Fanta
       self.platoon_key ||= :platoon_p1vs1
       self.turn_max ||= 0
       self.clock_counts ||= {black: [], white: []}
-      self.countdown_mode_hash ||= {black: false, white: false}
+      self.countdown_flags ||= {black: false, white: false}
     end
 
     before_validation do
@@ -173,120 +173,125 @@ module Fanta
         "battle_channel_#{id}"
       end
 
-      def saisyonisasu
-        catch :game_end do
-          mediator = mediator_get_by_kifu_body(full_sfen)
-          p ["#{__FILE__}:#{__LINE__}", __method__, full_sfen, mediator.turn_info.turn_max]
-          oute_houti_check(mediator)
-          tsumashita_check(mediator)
+      class Brain
+        attr_reader :battle, :mediator
+
+        def initialize(battle, mediator)
+          @battle = battle
+          @mediator = mediator
+        end
+
+        # 現局面で王手放置していたら指した人の負け
+        #
+        # - 王手放置は合法な手としてすにで指している
+        # - そのため王手放置で負けるのは前に指した opponent_player
+        # - 逆に勝つのは current_player
+        # - 指した直後にもかかわらず王手の状態になっている -> 王手放置 or 自らピンを外した(自滅)
+        #
+        def validate_checkmate_ignore
+          if mediator.opponent_player.mate_danger?
+            chat_say("message" => "<span class=\"has-text-info\">【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です</span>")
+            battle.judge_and_exit(win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
+          end
+        end
+
+        # 次の手番の合法手がない = 詰ました = 勝ち
+        def win_check
+          if mediator.current_player.normal_all_hands.none? { |e| e.legal_move?(mediator) }
+            battle.judge_and_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
+          end
+        end
+
+        def execute_loop
           catch :loop_break do
             loop do
-              sasimasu(mediator)
+              execute_one
             end
           end
-          p ["#{__FILE__}:#{__LINE__}", __method__, full_sfen]
+        end
+
+        def execute_one
+          user = battle.user_by_turn(mediator.turn_info.turn_max)
+
+          # 次に指す人が人間なら終わる
+          if !user.behavior_info.auto_sasu
+            throw :loop_break
+          end
+
+          time_start = Time.current
+
+          # 次に指すのはコンピュータ
+          hands = mediator.current_player.normal_all_hands.to_a
+          # if current_cpu_brain_info.legal_only
+          if true
+            hands = hands.find_all { |e| e.legal_move?(mediator) }
+          end
+          hand = hands.sample
+          unless hand
+            battle.judge_and_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
+          end
+
+          mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
+          validate_checkmate_ignore
+          clock_counts_update((Time.current - time_start).ceil)
+          mediator_broadcast
+          win_check
+        end
+
+        def clock_counts_update(clock_counter)
+          battle.clock_counts[mediator.opponent_player.location.key].push(clock_counter) # push でも AR は INSERT 対象になる
+          battle.save!
+        end
+
+        def mediator_broadcast
+          battle.full_sfen = mediator.to_sfen
+          battle.turn_max = mediator.turn_info.turn_max
+          battle.save!
+
+          broadcast_hash = {
+            :turn_max        => mediator.turn_info.turn_max,
+            :last_hand       => mediator.to_ki2_a.last, # FIXME: 使ってない？
+            :full_sfen       => battle.full_sfen,
+            :human_kifu_text => battle.human_kifu_text,
+            :clock_counts    => battle.clock_counts,
+          }
+
+          ActionCable.server.broadcast(battle.channel_key, broadcast_hash)
+        end
+      end
+
+      def saisyonisasu
+        catch :exit do
+          brain_get(full_sfen).tap do |o|
+            o.validate_checkmate_ignore
+            o.win_check
+            o.execute_loop
+          end
         end
       end
 
       # 人間が指した直後のトリガー
       def play_mode_long_sfen_set(data)
-        catch :game_end do
-          mediator = mediator_get_by_kifu_body(data["kifu_body"])
-          oute_houti_check(mediator)
-          # ここからは棋譜として正しい
-          # とりあえず人間が指した盤面をみんなと共有する
-          mediator_broadcast(mediator, clock_counter: data["clock_counter"].to_i)
-          tsumashita_check(mediator)
-          catch :loop_break do
-            loop do
-              sasimasu(mediator)
-            end
+        catch :exit do
+          brain_get(data["kifu_body"]).tap do |o|
+            o.validate_checkmate_ignore
+            # ここからは棋譜として正しい。とりあえず人間が指した盤面をみんなと共有する
+            o.clock_counts_update(data["clock_counter"].to_i)
+            o.mediator_broadcast
+            o.win_check
+            o.execute_loop
           end
         end
       end
 
-      def mediator_get_by_kifu_body(kifu_body)
-        # current_location = Warabi::Location.fetch(data["current_location_key"])
-        info = Warabi::Parser.parse(kifu_body)
-        mediator = nil
-        begin
-          mediator = info.mediator
-        rescue Warabi::WarabiError => error
-          if !error.respond_to?(:mediator)
-            raise "must not happen: #{error}"
-          end
-          chat_say("message" => "<span class=\"has-text-info\">#{error.message.lines.first.strip}</span>")
-          game_end2(win_location_key: error.mediator.win_player.location.key, last_action_key: "ILLEGAL_MOVE")
+      def brain_get(kifu_body)
+        Brain.new(self, Warabi::Parser.parse(kifu_body).mediator)
+      rescue Warabi::WarabiError => error
+        if !error.respond_to?(:mediator)
+          raise "must not happen: #{error}"
         end
-        mediator
-      end
-
-      def oute_houti_check(mediator)
-        # opponent_player: 今指した人
-        # current_player:  次に指す人
-        # 指した直後にもかかわらず王手の状態になっている -> 王手放置 or 自らピンを外した(自滅)
-        if mediator.opponent_player.mate_danger?
-          chat_say("message" => "<span class=\"has-text-info\">【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です</span>")
-          game_end2(win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
-        end
-      end
-
-      def tsumashita_check(mediator)
-        # 次に指す人の合法手がない場合 = 詰ました
-        hands = mediator.current_player.normal_all_hands.find_all { |e| e.legal_move?(mediator) }
-        if hands.empty?
-          game_end2(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
-        end
-      end
-
-      def sasimasu(mediator)
-        user = user_by_turn(mediator.turn_info.turn_max)
-
-        # 次に指す人が人間なら終わる
-        if !user.behavior_info.auto_sasu
-          throw :loop_break
-        end
-
-        time_start = Time.current
-
-        # 次に指すのはコンピュータ
-        hands = mediator.current_player.normal_all_hands.to_a
-        # if current_cpu_brain_info.legal_only
-        if true
-          hands = hands.find_all { |e| e.legal_move?(mediator) }
-        end
-        hand = hands.sample
-        unless hand
-          game_end2(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
-        end
-
-        # CPUの手を指す
-        mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
-        p ["#{__FILE__}:#{__LINE__}", __method__, hand]
-
-        oute_houti_check(mediator)
-
-        clock_counter = (Time.current - time_start).ceil
-        mediator_broadcast(mediator, clock_counter: clock_counter)
-
-        tsumashita_check(mediator)
-      end
-
-      def mediator_broadcast(mediator, clock_counter: 0)
-        self.full_sfen = mediator.to_sfen
-        self.clock_counts[mediator.opponent_player.location.key].push(clock_counter) # push でも AR は INSERT 対象になる
-        self.turn_max = mediator.turn_info.turn_max
-        save!
-
-        broadcast_hash = {
-          :turn_max        => mediator.turn_info.turn_max,
-          :last_hand       => mediator.to_ki2_a.last, # FIXME: 使ってない？
-          :full_sfen       => full_sfen,
-          :human_kifu_text => human_kifu_text,
-          :clock_counts    => clock_counts,
-        }
-
-        ActionCable.server.broadcast(channel_key, broadcast_hash)
+        chat_say("message" => "<span class=\"has-text-info\">#{error.message.lines.first.strip}</span>")
+        judge_and_exit(win_location_key: error.mediator.win_player.location.key, last_action_key: "ILLEGAL_MOVE")
       end
 
       def game_end(attributes)
@@ -294,9 +299,9 @@ module Fanta
         game_end_broadcast
       end
 
-      def game_end2(attributes)
+      def judge_and_exit(attributes)
         game_end(attributes)
-        throw :game_end
+        throw :exit
       end
 
       def game_end_broadcast
@@ -306,6 +311,20 @@ module Fanta
             last_action_key: last_action_key,
             human_kifu_text: human_kifu_text, # end_at が埋めこまれた棋譜で更新しておくため
           })
+      end
+
+      def time_up_trigger(data)
+        # membership_ids は送ってきた人で対応するレコードにタイムアップ認定する
+        memberships = memberships.where(id: data["membership_ids"])
+        memberships.each do |e|
+          e.update!(time_up_at: Time.current)
+        end
+
+        # メンバー全員がタイムアップ認定したら全員にタイムアップ通知する
+        # こうすることで1秒残してタイムアップにならなくなる
+        if memberships.where.not(time_up_at: nil).count >= battle.memberships.count
+          game_end(win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
+        end
       end
     end
 
@@ -318,11 +337,10 @@ module Fanta
 
       def user_by_turn(turn)
         position = turn.modulo(memberships.size)
-        membership = memberships.where(position: position).take
-        membership.user
+        memberships.find_by(position: position).user
       end
 
-      def active_user
+      def current_user
         user_by_turn(turn_max)
       end
     end

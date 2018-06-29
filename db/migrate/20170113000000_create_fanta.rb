@@ -13,7 +13,7 @@
 # | platoon_key             | Platoon key             | string(255) | NOT NULL            |      |       |
 # | full_sfen          | Kifu body sfen          | text(65535) | NOT NULL            |      |       |
 # | clock_counts            | Clock counts            | text(65535) | NOT NULL            |      |       |
-# | countdown_mode_hash     | Countdown mode hash     | text(65535) | NOT NULL            |      |       |
+# | countdown_flags     | Countdown mode hash     | text(65535) | NOT NULL            |      |       |
 # | turn_max                | Turn max                | integer(4)  | NOT NULL            |      |       |
 # | battle_request_at       | Battle request at       | datetime    |                     |      |       |
 # | auto_matched_at         | Auto matched at         | datetime    |                     |      |       |
@@ -53,7 +53,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.string :platoon_key,                          null: false,              comment: "人数"
       t.text :full_sfen,                         null: false,              comment: "USI形式棋譜"
       t.text :clock_counts,                           null: false,              comment: "対局時計情報"
-      t.text :countdown_mode_hash,                    null: false,              comment: "秒読み状態"
+      t.text :countdown_flags,                    null: false,              comment: "秒読み状態"
       t.integer :turn_max,                            null: false,              comment: "手番数"
       t.datetime :battle_request_at,                  null: true,               comment: "対局申し込みによる成立日時"
       t.datetime :auto_matched_at,                    null: true,               comment: "自動マッチングによる成立日時"
@@ -75,7 +75,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.integer :position,                  index: true,                        comment: "入室順序"
       t.datetime :standby_at,                                                   comment: "準備完了日時"
       t.datetime :fighting_at,                                              comment: "部屋に入った日時で抜けたり切断すると空"
-      t.datetime :time_up_trigger_at,                                           comment: "タイムアップしたのを検知した日時"
+      t.datetime :time_up_at,                                           comment: "タイムアップしたのを検知した日時"
       t.timestamps                                    null: false
     end
 

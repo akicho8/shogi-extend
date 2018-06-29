@@ -97,7 +97,7 @@ module Fanta
 
         cattr_accessor :icon_files do
           relative_path = Rails.root.join("app/assets/images")
-          relative_path.join("fallback_icons").glob("0*.png").collect do |e|
+          relative_path.join("fallback_icons").glob("0*.png").collect do |e| # Dir.glob(..., base: ) とする手もあるが文字列になってしまう
             e.relative_path_from(relative_path)
           end
         end

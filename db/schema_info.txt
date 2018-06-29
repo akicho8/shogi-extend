@@ -181,7 +181,7 @@
 # | position           | 順序               | integer(4)  |             |      | D     |
 # | standby_at         | Standby at         | datetime    |             |      |       |
 # | fighting_at        | Fighting at        | datetime    |             |      |       |
-# | time_up_trigger_at | Time up trigger at | datetime    |             |      |       |
+# | time_up_at | Time up trigger at | datetime    |             |      |       |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |      |       |
 # |--------------------+--------------------+-------------+-------------+------+-------|
@@ -200,7 +200,7 @@
 # | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
 # | full_sfen      | Kifu body sfen      | text(65535) | NOT NULL            |      |       |
 # | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
-# | countdown_mode_hash | Countdown mode hash | text(65535) | NOT NULL            |      |       |
+# | countdown_flags | Countdown mode hash | text(65535) | NOT NULL            |      |       |
 # | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
 # | battle_request_at   | Battle request at   | datetime    |                     |      |       |
 # | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |

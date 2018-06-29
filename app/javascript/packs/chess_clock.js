@@ -8,7 +8,7 @@ export default {
     return {
       clock_counts: js_battle.clock_counts,
       clock_counter: parseInt(localStorage.getItem(js_battle.id) || 3), // リロードしたときに戻す。ペナルティとして3秒進める
-      countdown_mode_hash: js_battle.countdown_mode_hash,
+      countdown_flags: js_battle.countdown_flags,
       time_up_trigger_count: 0, // time_up_trigger() 実行回数制限用
     }
   },
@@ -90,7 +90,7 @@ export default {
         location = location.flip
       }
 
-      if (!this.countdown_mode_hash[location.key]) {
+      if (!this.countdown_flags[location.key]) {
         const count1 = this.rest_counter1(location.key)
         let str = numeral(this.rest_counter1(location.key)).format("00:00:00") // 0:00:00 になってしまう
         str = str.replace(/^0:/, "")
@@ -115,7 +115,7 @@ export default {
     },
 
     countdown_mode_on() {
-      this.countdown_mode_hash[this.current_location.key] = true
+      this.countdown_flags[this.current_location.key] = true
       this.clock_counter_set(0)
       App.battle.countdown_mode_on(this.current_location.key)
     }
@@ -132,7 +132,7 @@ export default {
     },
 
     second_p() {
-      return this.countdown_mode_hash[this.current_location.key]
+      return this.countdown_flags[this.current_location.key]
     },
 
     current_rest_counter1() {

@@ -7,7 +7,7 @@ module Fanta
       :preset_key,
       :standby_at,
       :fighting_at,
-      :time_up_trigger_at,
+      :time_up_at,
     ]
 
     belongs_to :user, serializer: SimpleUserSerializer
@@ -24,7 +24,7 @@ end
 # >>   :preset_key=>"平手",
 # >>   :standby_at=>Wed, 27 Jun 2018 18:34:05 JST +09:00,
 # >>   :fighting_at=>Wed, 27 Jun 2018 18:34:06 JST +09:00,
-# >>   :time_up_trigger_at=>nil,
+# >>   :time_up_at=>nil,
 # >>   :user=>
 # >>    {:id=>139,
 # >>     :name=>"野良1号",
@@ -36,7 +36,7 @@ end
 # >>   :preset_key=>"平手",
 # >>   :standby_at=>nil,
 # >>   :fighting_at=>nil,
-# >>   :time_up_trigger_at=>nil,
+# >>   :time_up_at=>nil,
 # >>   :user=>
 # >>    {:id=>142,
 # >>     :name=>"弱いCPU",

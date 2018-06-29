@@ -35,6 +35,7 @@ chdir APP_ROOT do
   system! 'bin/rails db:drop:_unsafe'
   system! 'bin/rails db:migrate:reset'
   system! 'bin/rails db:seed'
+  system! 'bin/rails aam'
 
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'

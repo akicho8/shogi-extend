@@ -27,127 +27,138 @@
 
 require 'rails_helper'
 
-RSpec.describe Fanta::User, type: :model do
-  context "対戦リクエスト" do
-    it "自分vs自分" do
-      @user1 = create_user(:platoon_p4vs4, "平手", "平手")
-      battle = @user1.battle_with(@user1)
-      assert { battle }
-      assert { battle.black_preset_key == "平手" }
-      assert { battle.white_preset_key == "平手" }
-      assert { battle.users.sort == [@user1, @user1] }
+module Fanta
+  RSpec.describe User, type: :model do
+    context "対戦リクエスト" do
+      it "自分vs自分" do
+        @user1 = create_user(:platoon_p4vs4, "平手", "平手")
+        battle = @user1.battle_with(@user1)
+        assert { battle }
+        assert { battle.black_preset_key == "平手" }
+        assert { battle.white_preset_key == "平手" }
+        assert { battle.users.sort == [@user1, @user1] }
 
-      assert { battle.battle_request_at }
-      assert { battle.auto_matched_at == nil }
+        assert { battle.battle_request_at }
+        assert { battle.auto_matched_at == nil }
+      end
+
+      it "平手" do
+        @user1 = create_user(:platoon_p4vs4, "平手", "平手")
+        @user2 = create_user(:platoon_p4vs4, "平手", "二枚落ち")
+
+        battle = @user1.battle_with(@user2)
+        assert { battle }
+        assert { battle.black_preset_key == "平手" }
+        assert { battle.white_preset_key == "平手" }
+        assert { battle.users.sort == [@user1, @user2] }
+      end
+
+      it "駒落ち" do
+        @user1 = create_user(:platoon_p4vs4, "二枚落ち", "平手")
+        @user2 = create_user(:platoon_p4vs4, "平手", "平手")
+
+        battle = @user1.battle_with(@user2)
+        assert { battle }
+        assert { battle.black_preset_key == "平手" }
+        assert { battle.white_preset_key == "二枚落ち" }
+        assert { battle.memberships.black.collect(&:user) == [@user2] }
+        assert { battle.memberships.white.collect(&:user) == [@user1] }
+      end
+
+      it "両方駒落ち" do
+        @user1 = create_user(:platoon_p4vs4, "二枚落ち", "香落ち")
+        @user2 = create_user(:platoon_p4vs4, "平手", "平手")
+
+        battle = @user1.battle_with(@user2)
+        assert { battle }
+        assert { battle.black_preset_key == "香落ち" }
+        assert { battle.white_preset_key == "二枚落ち" }
+        assert { battle.memberships.black.collect(&:user) == [@user2] }
+        assert { battle.memberships.white.collect(&:user) == [@user1] }
+      end
     end
 
-    it "平手" do
-      @user1 = create_user(:platoon_p4vs4, "平手", "平手")
-      @user2 = create_user(:platoon_p4vs4, "平手", "二枚落ち")
+    context "マッチング" do
+      it "平手シングルス" do
+        @user1 = create_user(:platoon_p1vs1, "平手", "平手")
+        @user2 = create_user(:platoon_p1vs1, "平手", "平手")
 
-      battle = @user1.battle_with(@user2)
-      assert { battle }
-      assert { battle.black_preset_key == "平手" }
-      assert { battle.white_preset_key == "平手" }
-      assert { battle.users.sort == [@user1, @user2] }
+        @user1.matching_start
+        battle = @user2.matching_start
+        assert { battle }
+        assert { battle.users.sort == [@user1, @user2] }
+
+        assert { battle.battle_request_at == nil }
+        assert { battle.auto_matched_at }
+      end
+
+      it "平手ダブルス" do
+        @user1 = create_user(:platoon_p2vs2, "平手", "平手")
+        @user2 = create_user(:platoon_p2vs2, "平手", "平手")
+        @user3 = create_user(:platoon_p2vs2, "平手", "平手")
+        @user4 = create_user(:platoon_p2vs2, "平手", "平手")
+
+        @user1.matching_start
+        @user2.matching_start
+        @user3.matching_start
+
+        # 最後の1人
+        battle = @user4.matching_start
+        assert { battle }
+
+        assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
+        assert { battle.users.sort == [@user1, @user2, @user3, @user4] }
+      end
+
+      it "駒落ちシングルス" do
+        @user1 = create_user(:platoon_p1vs1, "平手", "飛車落ち")
+        @user2 = create_user(:platoon_p1vs1, "飛車落ち", "平手")
+
+        @user1.matching_start
+        battle = @user2.matching_start
+        assert { battle }
+      end
+
+      it "全員同じ駒落ちでのシングルス" do
+        @user1 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
+        @user2 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
+
+        @user1.matching_start
+        battle = @user2.matching_start
+
+        assert { battle }
+        assert { battle.users.sort == [@user1, @user2] }
+      end
+
+      it "駒落ちダブルス" do
+        @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
+        @user2 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
+        @user3 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
+        @user4 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
+
+        @user1.matching_start
+        @user2.matching_start
+        @user3.matching_start
+
+        battle = @user4.matching_start
+
+        assert { battle }
+        assert { battle.memberships.black.collect(&:user) == [@user1, @user2] }
+        assert { battle.memberships.white.collect(&:user) == [@user3, @user4] }
+      end
     end
 
-    it "駒落ち" do
-      @user1 = create_user(:platoon_p4vs4, "二枚落ち", "平手")
-      @user2 = create_user(:platoon_p4vs4, "平手", "平手")
+    it "人間vsCPUのとき、CPUが先手なら最初に指した状態で始まる" do
+      alice = User.create!
+      bob = User.create!(behavior_key: :yowai_cpu)
+      battle = alice.battle_with(bob)
 
-      battle = @user1.battle_with(@user2)
-      assert { battle }
-      assert { battle.black_preset_key == "平手" }
-      assert { battle.white_preset_key == "二枚落ち" }
-      assert { battle.memberships.black.collect(&:user) == [@user2] }
-      assert { battle.memberships.white.collect(&:user) == [@user1] }
+      info = Warabi::Parser.parse(battle.full_sfen)
+      assert { info.mediator.turn_info.turn_max == 1 }
     end
 
-    it "両方駒落ち" do
-      @user1 = create_user(:platoon_p4vs4, "二枚落ち", "香落ち")
-      @user2 = create_user(:platoon_p4vs4, "平手", "平手")
-
-      battle = @user1.battle_with(@user2)
-      assert { battle }
-      assert { battle.black_preset_key == "香落ち" }
-      assert { battle.white_preset_key == "二枚落ち" }
-      assert { battle.memberships.black.collect(&:user) == [@user2] }
-      assert { battle.memberships.white.collect(&:user) == [@user1] }
+    def create_user(platoon_key, self_preset_key, oppo_preset_key)
+      create(:fanta_user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key})
     end
-  end
-
-  context "マッチング" do
-    it "平手シングルス" do
-      @user1 = create_user(:platoon_p1vs1, "平手", "平手")
-      @user2 = create_user(:platoon_p1vs1, "平手", "平手")
-
-      @user1.matching_start
-      battle = @user2.matching_start
-      assert { battle }
-      assert { battle.users.sort == [@user1, @user2] }
-
-      assert { battle.battle_request_at == nil }
-      assert { battle.auto_matched_at }
-    end
-
-    it "平手ダブルス" do
-      @user1 = create_user(:platoon_p2vs2, "平手", "平手")
-      @user2 = create_user(:platoon_p2vs2, "平手", "平手")
-      @user3 = create_user(:platoon_p2vs2, "平手", "平手")
-      @user4 = create_user(:platoon_p2vs2, "平手", "平手")
-
-      @user1.matching_start
-      @user2.matching_start
-      @user3.matching_start
-
-      # 最後の1人
-      battle = @user4.matching_start
-      assert { battle }
-
-      assert { [@user1, @user2, @user3, @user4].none? { |e| e.reload.matching_at } }
-      assert { battle.users.sort == [@user1, @user2, @user3, @user4] }
-    end
-
-    it "駒落ちシングルス" do
-      @user1 = create_user(:platoon_p1vs1, "平手", "飛車落ち")
-      @user2 = create_user(:platoon_p1vs1, "飛車落ち", "平手")
-
-      @user1.matching_start
-      battle = @user2.matching_start
-      assert { battle }
-    end
-
-    it "全員同じ駒落ちでのシングルス" do
-      @user1 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
-      @user2 = create_user(:platoon_p1vs1, "飛車落ち", "飛車落ち")
-
-      @user1.matching_start
-      battle = @user2.matching_start
-
-      assert { battle }
-      assert { battle.users.sort == [@user1, @user2] }
-    end
-
-    it "駒落ちダブルス" do
-      @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
-      @user2 = create_user(:platoon_p2vs2, "平手", "飛車落ち")
-      @user3 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
-      @user4 = create_user(:platoon_p2vs2, "飛車落ち", "平手")
-
-      @user1.matching_start
-      @user2.matching_start
-      @user3.matching_start
-
-      battle = @user4.matching_start
-
-      assert { battle }
-      assert { battle.memberships.black.collect(&:user) == [@user1, @user2] }
-      assert { battle.memberships.white.collect(&:user) == [@user3, @user4] }
-    end
-  end
-
-  def create_user(platoon_key, self_preset_key, oppo_preset_key)
-    create(:fanta_user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key})
   end
 end

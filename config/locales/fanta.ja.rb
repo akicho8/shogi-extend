@@ -35,7 +35,7 @@
           :platoon_key          => "人数",
           :full_sfen       => "USI形式棋譜",
           :clock_counts         => "対局時計情報",
-          :countdown_mode_hash  => "秒読み状態",
+          :countdown_flags  => "秒読み状態",
           :turn_max             => "手番数",
           :battle_request_at    => "対局申し込みによる成立日時",
           :auto_matched_at      => "自動マッチングによる成立日時",
@@ -55,7 +55,7 @@
           :position            => "入室順序",
           :standby_at          => "準備完了日時",
           :fighting_at         => "部屋に入った日時で抜けたり切断すると空",
-          :time_up_trigger_at  => "タイムアップしたのを検知した日時",
+          :time_up_at  => "タイムアップしたのを検知した日時",
         },
 
         "fanta/watch_ships": {

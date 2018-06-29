@@ -5,7 +5,7 @@ module Fanta
     attributes :name, :show_path
     attributes :begin_at, :end_at
     attributes :battle_request_at, :auto_matched_at
-    attributes :clock_counts, :countdown_mode_hash
+    attributes :clock_counts, :countdown_flags
     attributes  :last_action_key, :win_location_key
 
     attributes *[
@@ -43,7 +43,7 @@ end
 # >>  :battle_request_at=>nil,
 # >>  :auto_matched_at=>Tue, 12 Jun 2018 20:22:26 JST +09:00,
 # >>  :clock_counts=>{:black=>[], :white=>[]},
-# >>  :countdown_mode_hash=>{:black=>false, :white=>false},
+# >>  :countdown_flags=>{:black=>false, :white=>false},
 # >>  :last_action_key=>nil,
 # >>  :win_location_key=>nil,
 # >>  :black_preset_key=>"平手",
@@ -71,7 +71,7 @@ end
 # >>     :preset_key=>"平手",
 # >>     :standby_at=>Tue, 12 Jun 2018 20:22:28 JST +09:00,
 # >>     :fighting_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
-# >>     :time_up_trigger_at=>nil,
+# >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>12,
 # >>       :name=>"野良12号",
@@ -83,7 +83,7 @@ end
 # >>     :preset_key=>"平手",
 # >>     :standby_at=>Tue, 12 Jun 2018 20:22:30 JST +09:00,
 # >>     :fighting_at=>Tue, 12 Jun 2018 20:34:46 JST +09:00,
-# >>     :time_up_trigger_at=>nil,
+# >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>11,
 # >>       :name=>"野良11号",
@@ -515,7 +515,7 @@ end
 # >>  :battle_request_at=>nil,
 # >>  :auto_matched_at=>Tue, 12 Jun 2018 20:22:26 JST +09:00,
 # >>  :clock_counts=>{:black=>[], :white=>[]},
-# >>  :countdown_mode_hash=>{:black=>false, :white=>false},
+# >>  :countdown_flags=>{:black=>false, :white=>false},
 # >>  :last_action_key=>nil,
 # >>  :win_location_key=>nil,
 # >>  :black_preset_key=>"平手",
@@ -543,7 +543,7 @@ end
 # >>     :preset_key=>"平手",
 # >>     :standby_at=>Tue, 12 Jun 2018 20:22:28 JST +09:00,
 # >>     :fighting_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
-# >>     :time_up_trigger_at=>nil,
+# >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>12,
 # >>       :name=>"野良12号",
@@ -555,7 +555,7 @@ end
 # >>     :preset_key=>"平手",
 # >>     :standby_at=>Tue, 12 Jun 2018 20:22:30 JST +09:00,
 # >>     :fighting_at=>Tue, 12 Jun 2018 20:34:46 JST +09:00,
-# >>     :time_up_trigger_at=>nil,
+# >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>11,
 # >>       :name=>"野良11号",

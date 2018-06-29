@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "platoon_key", null: false, comment: "人数"
     t.text "full_sfen", null: false, comment: "USI形式棋譜"
     t.text "clock_counts", null: false, comment: "対局時計情報"
-    t.text "countdown_mode_hash", null: false, comment: "秒読み状態"
+    t.text "countdown_flags", null: false, comment: "秒読み状態"
     t.integer "turn_max", null: false, comment: "手番数"
     t.datetime "battle_request_at", comment: "対局申し込みによる成立日時"
     t.datetime "auto_matched_at", comment: "自動マッチングによる成立日時"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.integer "position", comment: "入室順序"
     t.datetime "standby_at", comment: "準備完了日時"
     t.datetime "fighting_at", comment: "部屋に入った日時で抜けたり切断すると空"
-    t.datetime "time_up_trigger_at", comment: "タイムアップしたのを検知した日時"
+    t.datetime "time_up_at", comment: "タイムアップしたのを検知した日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["battle_id"], name: "index_fanta_memberships_on_battle_id"
