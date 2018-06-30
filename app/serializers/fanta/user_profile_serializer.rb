@@ -31,7 +31,7 @@ end
 # >>  :name=>"野良1号",
 # >>  :show_path=>"/online/users/1",
 # >>  :avatar_url=>
-# >>   "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png",
+# >>   "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png",
 # >>  :battles=>
 # >>   [{:id=>26,
 # >>     :name=>"#26",
@@ -52,7 +52,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>102,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -60,7 +60,7 @@ end
 # >>          :name=>"野良8号",
 # >>          :show_path=>"/online/users/8",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0008_fallback_face_icon-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
+# >>           "/assets/fallback_avatars/0008_fallback_header_avatar_image-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
 # >>       {:id=>103,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -68,7 +68,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
 # >>       {:id=>104,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -76,7 +76,7 @@ end
 # >>          :name=>"野良10号",
 # >>          :show_path=>"/online/users/10",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0010_fallback_face_icon-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}}]},
+# >>           "/assets/fallback_avatars/0010_fallback_header_avatar_image-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}}]},
 # >>    {:id=>27,
 # >>     :name=>"#27",
 # >>     :show_path=>"/online/battles/27",
@@ -96,7 +96,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>106,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -104,7 +104,7 @@ end
 # >>          :name=>"野良7号",
 # >>          :show_path=>"/online/users/7",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
+# >>           "/assets/fallback_avatars/0007_fallback_header_avatar_image-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
 # >>       {:id=>107,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -112,7 +112,7 @@ end
 # >>          :name=>"野良9号",
 # >>          :show_path=>"/online/users/9",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0009_fallback_face_icon-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
+# >>           "/assets/fallback_avatars/0009_fallback_header_avatar_image-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
 # >>       {:id=>108,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -120,7 +120,7 @@ end
 # >>          :name=>"野良10号",
 # >>          :show_path=>"/online/users/10",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0010_fallback_face_icon-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}}]},
+# >>           "/assets/fallback_avatars/0010_fallback_header_avatar_image-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}}]},
 # >>    {:id=>7,
 # >>     :name=>"#7",
 # >>     :show_path=>"/online/battles/7",
@@ -140,7 +140,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>26,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -148,7 +148,7 @@ end
 # >>          :name=>"野良9号",
 # >>          :show_path=>"/online/users/9",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0009_fallback_face_icon-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
+# >>           "/assets/fallback_avatars/0009_fallback_header_avatar_image-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
 # >>       {:id=>27,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -156,7 +156,7 @@ end
 # >>          :name=>"野良7号",
 # >>          :show_path=>"/online/users/7",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
+# >>           "/assets/fallback_avatars/0007_fallback_header_avatar_image-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
 # >>       {:id=>28,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -164,7 +164,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}}]},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}}]},
 # >>    {:id=>9,
 # >>     :name=>"#9",
 # >>     :show_path=>"/online/battles/9",
@@ -187,7 +187,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>34,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -195,7 +195,7 @@ end
 # >>          :name=>"野良7号",
 # >>          :show_path=>"/online/users/7",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
+# >>           "/assets/fallback_avatars/0007_fallback_header_avatar_image-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
 # >>       {:id=>35,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -203,7 +203,7 @@ end
 # >>          :name=>"野良9号",
 # >>          :show_path=>"/online/users/9",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0009_fallback_face_icon-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
+# >>           "/assets/fallback_avatars/0009_fallback_header_avatar_image-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
 # >>       {:id=>36,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -211,7 +211,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
 # >>    {:id=>11,
 # >>     :name=>"#11",
 # >>     :show_path=>"/online/battles/11",
@@ -234,7 +234,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>42,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -242,7 +242,7 @@ end
 # >>          :name=>"野良2号",
 # >>          :show_path=>"/online/users/2",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0002_fallback_face_icon-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
+# >>           "/assets/fallback_avatars/0002_fallback_header_avatar_image-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
 # >>       {:id=>43,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -250,7 +250,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>44,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -258,7 +258,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}}]},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}}]},
 # >>    {:id=>22,
 # >>     :name=>"#22",
 # >>     :show_path=>"/online/battles/22",
@@ -277,7 +277,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>86,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -285,7 +285,7 @@ end
 # >>          :name=>"野良10号",
 # >>          :show_path=>"/online/users/10",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0010_fallback_face_icon-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}},
+# >>           "/assets/fallback_avatars/0010_fallback_header_avatar_image-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}},
 # >>       {:id=>87,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -293,7 +293,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>88,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -301,7 +301,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}}]},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}}]},
 # >>    {:id=>23,
 # >>     :name=>"#23",
 # >>     :show_path=>"/online/battles/23",
@@ -321,7 +321,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>90,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -329,7 +329,7 @@ end
 # >>          :name=>"野良9号",
 # >>          :show_path=>"/online/users/9",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0009_fallback_face_icon-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
+# >>           "/assets/fallback_avatars/0009_fallback_header_avatar_image-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
 # >>       {:id=>91,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -337,7 +337,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>92,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -345,7 +345,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}}]},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}}]},
 # >>    {:id=>28,
 # >>     :name=>"#28",
 # >>     :show_path=>"/online/battles/28",
@@ -364,7 +364,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>110,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -372,7 +372,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>111,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -380,7 +380,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>112,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -388,7 +388,7 @@ end
 # >>          :name=>"野良2号",
 # >>          :show_path=>"/online/users/2",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0002_fallback_face_icon-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}}]},
+# >>           "/assets/fallback_avatars/0002_fallback_header_avatar_image-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}}]},
 # >>    {:id=>37,
 # >>     :name=>"#37",
 # >>     :show_path=>"/online/battles/37",
@@ -411,7 +411,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>146,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -419,7 +419,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>147,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -427,7 +427,7 @@ end
 # >>          :name=>"野良2号",
 # >>          :show_path=>"/online/users/2",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0002_fallback_face_icon-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
+# >>           "/assets/fallback_avatars/0002_fallback_header_avatar_image-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
 # >>       {:id=>148,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -435,7 +435,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}}]},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}}]},
 # >>    {:id=>3,
 # >>     :name=>"#3",
 # >>     :show_path=>"/online/battles/3",
@@ -455,7 +455,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>10,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -463,7 +463,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>11,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -471,7 +471,7 @@ end
 # >>          :name=>"野良7号",
 # >>          :show_path=>"/online/users/7",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
+# >>           "/assets/fallback_avatars/0007_fallback_header_avatar_image-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
 # >>       {:id=>12,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -479,7 +479,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
 # >>    {:id=>20,
 # >>     :name=>"#20",
 # >>     :show_path=>"/online/battles/20",
@@ -498,7 +498,7 @@ end
 # >>          :name=>"野良7号",
 # >>          :show_path=>"/online/users/7",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
+# >>           "/assets/fallback_avatars/0007_fallback_header_avatar_image-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
 # >>       {:id=>78,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -506,7 +506,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>79,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -514,7 +514,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>80,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -522,7 +522,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
 # >>    {:id=>25,
 # >>     :name=>"#25",
 # >>     :show_path=>"/online/battles/25",
@@ -542,7 +542,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
 # >>       {:id=>98,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -550,7 +550,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>99,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -558,7 +558,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
 # >>       {:id=>100,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -566,7 +566,7 @@ end
 # >>          :name=>"野良8号",
 # >>          :show_path=>"/online/users/8",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0008_fallback_face_icon-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}}]},
+# >>           "/assets/fallback_avatars/0008_fallback_header_avatar_image-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}}]},
 # >>    {:id=>45,
 # >>     :name=>"#45",
 # >>     :show_path=>"/online/battles/45",
@@ -586,7 +586,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
 # >>       {:id=>178,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -594,7 +594,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>179,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -602,7 +602,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>180,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -610,7 +610,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}}]},
 # >>    {:id=>12,
 # >>     :name=>"#12",
 # >>     :show_path=>"/online/battles/12",
@@ -633,7 +633,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>46,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -641,7 +641,7 @@ end
 # >>          :name=>"野良2号",
 # >>          :show_path=>"/online/users/2",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0002_fallback_face_icon-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
+# >>           "/assets/fallback_avatars/0002_fallback_header_avatar_image-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
 # >>       {:id=>47,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -649,7 +649,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}},
 # >>       {:id=>48,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -657,7 +657,7 @@ end
 # >>          :name=>"野良8号",
 # >>          :show_path=>"/online/users/8",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0008_fallback_face_icon-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}}]},
+# >>           "/assets/fallback_avatars/0008_fallback_header_avatar_image-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}}]},
 # >>    {:id=>33,
 # >>     :name=>"#33",
 # >>     :show_path=>"/online/battles/33",
@@ -677,7 +677,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>130,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -685,7 +685,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>131,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -693,7 +693,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
 # >>       {:id=>132,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -701,7 +701,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
 # >>    {:id=>34,
 # >>     :name=>"#34",
 # >>     :show_path=>"/online/battles/34",
@@ -720,7 +720,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
 # >>       {:id=>134,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -728,7 +728,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>135,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -736,7 +736,7 @@ end
 # >>          :name=>"野良8号",
 # >>          :show_path=>"/online/users/8",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0008_fallback_face_icon-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
+# >>           "/assets/fallback_avatars/0008_fallback_header_avatar_image-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
 # >>       {:id=>136,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -744,7 +744,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
 # >>    {:id=>47,
 # >>     :name=>"#47",
 # >>     :show_path=>"/online/battles/47",
@@ -764,7 +764,7 @@ end
 # >>          :name=>"野良8号",
 # >>          :show_path=>"/online/users/8",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0008_fallback_face_icon-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
+# >>           "/assets/fallback_avatars/0008_fallback_header_avatar_image-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
 # >>       {:id=>186,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -772,7 +772,7 @@ end
 # >>          :name=>"野良7号",
 # >>          :show_path=>"/online/users/7",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
+# >>           "/assets/fallback_avatars/0007_fallback_header_avatar_image-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
 # >>       {:id=>187,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -780,7 +780,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>188,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -788,7 +788,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
 # >>    {:id=>48,
 # >>     :name=>"#48",
 # >>     :show_path=>"/online/battles/48",
@@ -807,7 +807,7 @@ end
 # >>          :name=>"野良7号",
 # >>          :show_path=>"/online/users/7",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0007_fallback_face_icon-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
+# >>           "/assets/fallback_avatars/0007_fallback_header_avatar_image-f4865abaf4bbe1d91c592f11e5e78d97abcc7f76e4273e7d7995796b684cdba6.png"}},
 # >>       {:id=>190,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -815,7 +815,7 @@ end
 # >>          :name=>"野良9号",
 # >>          :show_path=>"/online/users/9",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0009_fallback_face_icon-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
+# >>           "/assets/fallback_avatars/0009_fallback_header_avatar_image-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
 # >>       {:id=>191,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -823,7 +823,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>192,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -831,7 +831,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
 # >>    {:id=>10,
 # >>     :name=>"#10",
 # >>     :show_path=>"/online/battles/10",
@@ -851,7 +851,7 @@ end
 # >>          :name=>"野良5号",
 # >>          :show_path=>"/online/users/5",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0005_fallback_face_icon-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
+# >>           "/assets/fallback_avatars/0005_fallback_header_avatar_image-23fef5e29f1f1e7a094d51913455532d6c7b47fd86af129ecdfde9b1f11ea6d3.png"}},
 # >>       {:id=>38,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -859,7 +859,7 @@ end
 # >>          :name=>"野良8号",
 # >>          :show_path=>"/online/users/8",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0008_fallback_face_icon-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
+# >>           "/assets/fallback_avatars/0008_fallback_header_avatar_image-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
 # >>       {:id=>39,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -867,7 +867,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
 # >>       {:id=>40,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -875,7 +875,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
 # >>    {:id=>14,
 # >>     :name=>"#14",
 # >>     :show_path=>"/online/battles/14",
@@ -898,7 +898,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
 # >>       {:id=>54,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -906,7 +906,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
 # >>       {:id=>55,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -914,7 +914,7 @@ end
 # >>          :name=>"野良2号",
 # >>          :show_path=>"/online/users/2",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0002_fallback_face_icon-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
+# >>           "/assets/fallback_avatars/0002_fallback_header_avatar_image-41f850da24dfc62d55b5cf6c99694552aaab1a61aaee8404fc20321364e7a3cf.png"}},
 # >>       {:id=>56,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -922,7 +922,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
 # >>    {:id=>18,
 # >>     :name=>"#18",
 # >>     :show_path=>"/online/battles/18",
@@ -942,7 +942,7 @@ end
 # >>          :name=>"野良4号",
 # >>          :show_path=>"/online/users/4",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0004_fallback_face_icon-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
+# >>           "/assets/fallback_avatars/0004_fallback_header_avatar_image-60d0ee5b89cc9af1271916611c205c0f7d5011e47fa0aad9331a019f7f0d531c.png"}},
 # >>       {:id=>70,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -950,7 +950,7 @@ end
 # >>          :name=>"野良3号",
 # >>          :show_path=>"/online/users/3",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0003_fallback_face_icon-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
+# >>           "/assets/fallback_avatars/0003_fallback_header_avatar_image-c9d62836ef5033a7019edd5d300b8c77b72d4388abc5233772ffd04f0652907b.png"}},
 # >>       {:id=>71,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -958,7 +958,7 @@ end
 # >>          :name=>"野良9号",
 # >>          :show_path=>"/online/users/9",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0009_fallback_face_icon-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
+# >>           "/assets/fallback_avatars/0009_fallback_header_avatar_image-503ddf1bd84dcf9df26a4d33a5400764ba760075823365979e20c5bd17211e54.png"}},
 # >>       {:id=>72,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -966,7 +966,7 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]},
 # >>    {:id=>19,
 # >>     :name=>"#19",
 # >>     :show_path=>"/online/battles/19",
@@ -985,7 +985,7 @@ end
 # >>          :name=>"野良10号",
 # >>          :show_path=>"/online/users/10",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0010_fallback_face_icon-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}},
+# >>           "/assets/fallback_avatars/0010_fallback_header_avatar_image-2d78a23f5dcbce94503a8c86ebb541a45db7a9955234eef64f6ca55d729d9014.png"}},
 # >>       {:id=>74,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -993,7 +993,7 @@ end
 # >>          :name=>"野良8号",
 # >>          :show_path=>"/online/users/8",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0008_fallback_face_icon-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
+# >>           "/assets/fallback_avatars/0008_fallback_header_avatar_image-fdb3f4b4f7d685257d6f0c141e0e7274c831d78c666c981d6871dcaadd4005b5.png"}},
 # >>       {:id=>75,
 # >>        :location_key=>"black",
 # >>        :user=>
@@ -1001,7 +1001,7 @@ end
 # >>          :name=>"野良6号",
 # >>          :show_path=>"/online/users/6",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0006_fallback_face_icon-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
+# >>           "/assets/fallback_avatars/0006_fallback_header_avatar_image-dcac8e0f473d06b96f052d464272bd7a5c048461f6abadc1cf54dfa311d77581.png"}},
 # >>       {:id=>76,
 # >>        :location_key=>"white",
 # >>        :user=>
@@ -1009,4 +1009,4 @@ end
 # >>          :name=>"野良1号",
 # >>          :show_path=>"/online/users/1",
 # >>          :avatar_url=>
-# >>           "/assets/fallback_avatars/0001_fallback_face_icon-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]}]}
+# >>           "/assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png"}}]}]}

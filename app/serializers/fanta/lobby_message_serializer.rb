@@ -16,5 +16,5 @@ end
 # >> |    message | a                                                                                                                                                                                  |
 # >> |   msg_options | {}                                                                                                                                                                                 |
 # >> | created_at | 2018-06-29 18:59:25 +0900                                                                                                                                                          |
-# >> |       user | {:id=>1, :name=>"SYSOP", :show_path=>"/online/users/1", :avatar_url=>"/assets/human/0030_fallback_face_icon-be08e49b2d7a08a5cd56200edc1c31b901847ba52392a4885ee632a9d0fe974d.png"} |
+# >> |       user | {:id=>1, :name=>"SYSOP", :show_path=>"/online/users/1", :avatar_url=>"/assets/human/0030_fallback_header_avatar_image-be08e49b2d7a08a5cd56200edc1c31b901847ba52392a4885ee632a9d0fe974d.png"} |
 # >> |------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
