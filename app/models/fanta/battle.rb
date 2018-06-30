@@ -190,7 +190,7 @@ module Fanta
         #
         def validate_checkmate_ignore
           if mediator.opponent_player.mate_danger?
-            User.sysop.chat_say(self, "【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です", mclass: "has-text-danger")
+            User.sysop.chat_say(self, "【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です", msg_class: "has-text-danger")
             battle.game_end_exit(win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
           end
         end
@@ -299,7 +299,7 @@ module Fanta
           if !error.respond_to?(:mediator)
             raise "must not happen: #{error}"
           end
-          User.sysop.chat_say(self, error.message.lines.first.strip, mclass: "has-text-danger")
+          User.sysop.chat_say(self, error.message.lines.first.strip, msg_class: "has-text-danger")
           game_end_exit(win_location_key: error.mediator.win_player.location.key, last_action_key: "ILLEGAL_MOVE")
         end
       end

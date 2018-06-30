@@ -379,7 +379,7 @@ module Fanta
 
     concerning :BattleMethods do
       def room_in(battle)
-        chat_say(battle, "入室しました", mclass: "has-text-info")
+        chat_say(battle, "入室しました", msg_class: "has-text-info")
 
         memberships ||= battle.memberships.where(user: self)
 
@@ -430,7 +430,7 @@ module Fanta
       end
 
       def room_out(battle)
-        chat_say(battle, "退室しました", mclass: "has-text-info")
+        chat_say(battle, "退室しました", msg_class: "has-text-info")
 
         memberships ||= battle.memberships.where(user: self)
 
