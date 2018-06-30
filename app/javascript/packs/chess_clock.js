@@ -84,7 +84,7 @@ export default {
     },
 
     // 指定手番(location_key)の残り時間の表示用
-    time_format(location_key) {
+    name_with_time_block(location_key) {
       let location = Location.fetch(location_key)
       if (this.flip) {
         location = location.flip

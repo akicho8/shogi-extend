@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
       App.system_notification_vm.puts("disconnected")
     },
 
-    rejected: function() {
+    rejected() {
       App.system_notification_vm.puts("rejected")
     },
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   App.system_notification_vm = new Vue({
     el: "#system_notification_app",
-    data: function() {
+    data() {
       return {
         system_logs: [],
       }

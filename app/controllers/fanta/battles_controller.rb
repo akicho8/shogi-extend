@@ -37,6 +37,10 @@ module Fanta
 
     def show
       @js_battle = ams_sr(current_record, serializer: BattleShowSerializer, include: {memberships: :user, chat_messages: :user, watch_users: nil})
+
+      if current_record.xstate_key != :st_done
+        @simple_layout = true
+      end
     end
 
     def redirect_to_where

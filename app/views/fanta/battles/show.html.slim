@@ -12,8 +12,7 @@ javascript:
           nav.level
             .level-left
               .level-item.has-text-centered
-                div
-                  p.title v-html="time_format('white')"
+                div(v-html="name_with_time_block('white')")
             template(v-if="battle_now_p")
               .level-item.has-text-centered
                 div
@@ -22,13 +21,7 @@ javascript:
                     button.button.is-primary.is-outlined(@click="hebokisin" :disabled="!button_active_p") ヘボ棋神
             .level-right
               .level-item.has-text-centered
-                div
-                  template v-html="time_format('black')"
-                  p.heading
-                  p.title v-html="time_format('black')"
-
-        - if Rails.env.development?
-            | clock_counter: {{clock_counter}}<br>
+                div(v-html="name_with_time_block('black')")
 
         shogi-player(
           :run_mode="run_mode"
@@ -55,7 +48,6 @@ javascript:
           | flip: {{flip}}<br>
 
       .virtual_box
-        .title.is-5= "棋譜"
         pre.pre-wrap(v-text="human_kifu_text")
 
     .column

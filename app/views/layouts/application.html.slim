@@ -33,123 +33,133 @@ html lang="ja"
 
     = yield :head
   body
-    nav.navbar.is-transparent.is-primary
-      .navbar-brand
-        = link_to(AppConfig[:app_name], :root, :class => "navbar-item")
-        .navbar-burger.burger(data-target="main_navar")
-          span
-          span
-          span
-      #main_navar.navbar-menu
-        .navbar-start
-          / ここでの is-active に意味はない
-          = link_to("ネット対戦", [:fanta, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("fanta/battles"))])
-          = link_to("CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
-          = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
-          .navbar-item.has-dropdown.is-hoverable
-            span.navbar-link その他
-            .navbar-dropdown.is-boxed
-              = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
-              = link_to("棋譜変換", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles"))])
-              = link_to("戦法トリガー辞典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
-              = link_to("盤面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
-              = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
-        #header_app.navbar-end(v-cloak)
-          - if current_user
-            .navbar-item
-              b-dropdown(hoverable)
-                span(slot="trigger")
-                  = link_to([current_user], class: "navbar-link") do
-                    = image_tag(current_user.avatar_url, class: "header_avatar_image")
-                    span.my_name
-                      = current_user.name
-                b-dropdown-item(:has-link="true" :paddingless="true")
-                  = link_to("プロフィール", [current_user], id: "header_profile_show")
-                b-dropdown-item(:has-link="true" :paddingless="true")
-                  = link_to("設定", [:edit, current_user])
-                b-dropdown-item(:has-link="true" :paddingless="true")
-                  = link_to("ログアウト", [:fanta, :session], method: :delete)
-          .navbar-item
-            | オンライン{{online_only_count}}人
-          .navbar-item
-            | 対局中{{fighter_only_count}}人
-
-    - if false
-      .nav.navbar.is-primary(role="navigation" aria-label="main navigation")
-        .navbar-brand
-          = link_to(AppConfig[:app_name], :root, :class => "navbar-item")
-
-      section.hero.is-primary.is-bold class=(controller_name == "battles" && params[:query].present? ? "is-small" : "")
-        .hero-head
-          nav.navbar
-            .container
-              .navbar-brand
-                / a.navbar-item
-                /   = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
-                span.navbar-burger.burger[data-target="navbarMenuHeroA"]
-                  span
-                  span
-                  span
-              #header_app.navbar-menu(v-cloak)
-                .navbar-end
-                  span.navbar-item
-                    = link_to("{{online_only_count}}", [:fanta, :battles], :class => ["button", "is-primary", "is-inverted"])
-              / #navbarMenuHeroA.navbar-menu
-              /   .navbar-end
-              /     a.navbar-item.is-active
-              /       |  Home
-              /     a.navbar-item
-              /       |  Examples
-              /     a.navbar-item
-              /       |  Documentation
-              /     span.navbar-item
-              /       a.button.is-primary.is-inverted
-              /         span.icon
-              /           i.fab.fa-github
-              /         span
-              /           | Download
-        .hero-body
-          .container.has-text-centered
-            = link_to(:root) do
-              h1.title= AppConfig[:app_name]
-            // h1.title
-            // h2.subtitle
-        .hero-foot
-          .tabs.is-boxed.is-centered
-            .container
-              ul
-                li class=("is-active" if params[:controller].start_with?("fanta/battles"))   = link_to("ネット対戦", [:fanta, :battles])
-                li class=("is-active" if params[:controller] == "cpu_battles")                = link_to("CPU対戦", :cpu_battles)
-                li class=("is-active" if params[:controller].start_with?("swars/battles"))   = link_to("将棋ウォーズ棋譜検索", [:swars, :w])
-                li class=("is-active" if params[:controller] == "tactic_notes")              = link_to("戦法トリガー辞典", :tactic_notes)
-                li class=("is-active" if params[:controller].start_with?("free_battles"))    = link_to("棋譜変換", [:new, :free_battle])
-                li class=("is-active" if params[:controller] == "position_editor")           = link_to("盤面編集", :position_editor)
-                li class=("is-active" if params[:controller] == "xy_game")                   = link_to("符号入力ゲーム", :xy)
-                li class=("is-active" if params[:controller].start_with?("general/battles")) = link_to("2ch棋譜検索", [:general, :s])
-    section.section
-      .container.is-fluid.main_container
+    - if @simple_layout
+      .container
         == flash_danger_notify_tag
         = yield
         == controller.eval_box
+      footer.footer
+        .container.is-fluid
+          .columns
+            .column.has-text-centered
+              #system_notification_app.has-text-grey-light
+                | ActionCable: {{latest_system_logs.join(" ")}}
+    - else
+      nav.navbar.is-transparent.is-primary
+        .navbar-brand
+          = link_to(AppConfig[:app_name], :root, :class => "navbar-item")
+          .navbar-burger.burger(data-target="main_navar")
+            span
+            span
+            span
+        #main_navar.navbar-menu
+          .navbar-start
+            / ここでの is-active に意味はない
+            = link_to("ネット対戦", [:fanta, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("fanta/battles"))])
+            = link_to("CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
+            = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
+            .navbar-item.has-dropdown.is-hoverable
+              span.navbar-link その他
+              .navbar-dropdown.is-boxed
+                = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
+                = link_to("棋譜変換", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles"))])
+                = link_to("戦法トリガー辞典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
+                = link_to("盤面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
+                = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
+          #header_app.navbar-end(v-cloak)
+            - if current_user
+              .navbar-item
+                b-dropdown(hoverable)
+                  span(slot="trigger")
+                    = link_to([current_user], class: "navbar-link") do
+                      = image_tag(current_user.avatar_url, class: "header_avatar_image")
+                      span.my_name
+                        = current_user.name
+                  b-dropdown-item(:has-link="true" :paddingless="true")
+                    = link_to("プロフィール", [current_user], id: "header_profile_show")
+                  b-dropdown-item(:has-link="true" :paddingless="true")
+                    = link_to("設定", [:edit, current_user])
+                  b-dropdown-item(:has-link="true" :paddingless="true")
+                    = link_to("ログアウト", [:fanta, :session], method: :delete)
+            .navbar-item
+              | オンライン{{online_only_count}}人
+            .navbar-item
+              | 対局中{{fighter_only_count}}人
 
-    footer.footer
-      .container.is-fluid
-        .columns
-          .column.has-text-centered
-            p
-              = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
-            div.content
-              =<> link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
-              =<> link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
-              =<> link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
-              br
-              =<> link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
-              =<> link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
-              br
-              br
-              = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
-            #system_notification_app.has-text-grey-light
-              | ActionCable: {{latest_system_logs.join(" ")}}
+      - if false
+        .nav.navbar.is-primary(role="navigation" aria-label="main navigation")
+          .navbar-brand
+            = link_to(AppConfig[:app_name], :root, :class => "navbar-item")
+
+        section.hero.is-primary.is-bold
+          .hero-head
+            nav.navbar
+              .container
+                .navbar-brand
+                  / a.navbar-item
+                  /   = link_to(AppConfig[:app_name], :root, class: "navbar-brand")
+                  span.navbar-burger.burger[data-target="navbarMenuHeroA"]
+                    span
+                    span
+                    span
+                #header_app.navbar-menu(v-cloak)
+                  .navbar-end
+                    span.navbar-item
+                      = link_to("{{online_only_count}}", [:fanta, :battles], :class => ["button", "is-primary", "is-inverted"])
+                / #navbarMenuHeroA.navbar-menu
+                /   .navbar-end
+                /     a.navbar-item.is-active
+                /       |  Home
+                /     a.navbar-item
+                /       |  Examples
+                /     a.navbar-item
+                /       |  Documentation
+                /     span.navbar-item
+                /       a.button.is-primary.is-inverted
+                /         span.icon
+                /           i.fab.fa-github
+                /         span
+                /           | Download
+          .hero-body
+            .container.has-text-centered
+              = link_to(:root) do
+                h1.title= AppConfig[:app_name]
+          .hero-foot
+            .tabs.is-boxed.is-centered
+              .container
+                ul
+                  li class=("is-active" if params[:controller].start_with?("fanta/battles"))   = link_to("ネット対戦", [:fanta, :battles])
+                  li class=("is-active" if params[:controller] == "cpu_battles")                = link_to("CPU対戦", :cpu_battles)
+                  li class=("is-active" if params[:controller].start_with?("swars/battles"))   = link_to("将棋ウォーズ棋譜検索", [:swars, :w])
+                  li class=("is-active" if params[:controller] == "tactic_notes")              = link_to("戦法トリガー辞典", :tactic_notes)
+                  li class=("is-active" if params[:controller].start_with?("free_battles"))    = link_to("棋譜変換", [:new, :free_battle])
+                  li class=("is-active" if params[:controller] == "position_editor")           = link_to("盤面編集", :position_editor)
+                  li class=("is-active" if params[:controller] == "xy_game")                   = link_to("符号入力ゲーム", :xy)
+                  li class=("is-active" if params[:controller].start_with?("general/battles")) = link_to("2ch棋譜検索", [:general, :s])
+      section.section
+        .container.is-fluid.main_container
+          == flash_danger_notify_tag
+          = yield
+          == controller.eval_box
+
+      footer.footer
+        .container.is-fluid
+          .columns
+            .column.has-text-centered
+              p
+                = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
+              div.content
+                =<> link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
+                =<> link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
+                =<> link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
+                br
+                =<> link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
+                =<> link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
+                br
+                br
+                = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
+              #system_notification_app.has-text-grey-light
+                | ActionCable: {{latest_system_logs.join(" ")}}
 
     #single_notification_app
 
