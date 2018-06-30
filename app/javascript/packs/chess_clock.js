@@ -89,16 +89,26 @@ export default {
       if (this.flip) {
         location = location.flip
       }
+      let html = ""
+      html += `<p class="heading">${this.__members_format_of_location(location)}</p>`
+      html += `<p class="title">${this.__time_format_of_location(location)}</p>`
+      return html
+    },
 
+    __time_format_of_location(location) {
       if (!this.countdown_flags[location.key]) {
         const count1 = this.rest_counter1(location.key)
         let str = numeral(this.rest_counter1(location.key)).format("00:00:00") // 0:00:00 になってしまう
         str = str.replace(/^0:/, "")
         return location.name + `<span class="digit_font">${str}</span>`
       }
-
       const count2 = this.rest_counter2(location.key)
       return location.name + `<span class="digit_font">${count2}</span>`
+    },
+
+    __members_format_of_location(location) {
+      let list = _.filter(this.memberships, e => (e.location_key === location.key))
+      return list.map(e => e.user.name).join(" ")
     },
 
     clock_counter_inc() {

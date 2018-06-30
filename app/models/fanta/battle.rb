@@ -212,27 +212,31 @@ module Fanta
         end
 
         def execute_one
-          # user = battle.user_by_turn(mediator.turn_info.turn_max)
-          # user = battle.current_user
-
-          time_start = Time.current
-
-          # 次に指すのはコンピュータ
-          hands = mediator.current_player.normal_all_hands.to_a
-          # if current_cpu_brain_info.legal_only
-          if true
-            hands = hands.find_all { |e| e.legal_move?(mediator) }
+          clock_counter = measure_time do
+            # 次に指すのはコンピュータ
+            hands = mediator.current_player.normal_all_hands.to_a
+            # if current_cpu_brain_info.legal_only
+            if true
+              hands = hands.find_all { |e| e.legal_move?(mediator) }
+            end
+            hand = hands.sample
+            unless hand
+              battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
+            end
+            mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
+            validate_checkmate_ignore
           end
-          hand = hands.sample
-          unless hand
-            battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
-          end
 
-          mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
-          validate_checkmate_ignore
-          clock_counts_update((Time.current - time_start).ceil)
+          clock_counts_update(clock_counter)
           mediator_broadcast
           win_check
+        end
+
+        def measure_time
+          Time.current.yield_self do |t|
+            yield
+            (Time.current - t).ceil
+          end
         end
 
         def clock_counts_update(clock_counter)
@@ -260,8 +264,6 @@ module Fanta
       def next_run_if_robot
         catch :exit do
           brain_get(full_sfen).tap do |o|
-            # o.validate_checkmate_ignore
-            # o.win_check
             o.execute_loop_if_robot
           end
         end
@@ -271,9 +273,9 @@ module Fanta
         catch :exit do
           brain_get(full_sfen).tap do |o|
             o.execute_one
+            o.execute_loop_if_robot
           end
         end
-        next_run_if_robot
       end
 
       # 人間が指した直後のトリガー
@@ -281,12 +283,11 @@ module Fanta
         catch :exit do
           brain_get(data["kifu_body"]).tap do |o|
             o.validate_checkmate_ignore
-            # ここからは棋譜として正しい。とりあえず人間が指した盤面をみんなと共有する
+
             o.clock_counts_update(data["clock_counter"].to_i)
             o.mediator_broadcast
             o.win_check
 
-            # CPUの手を続けて指す場合
             o.execute_loop_if_robot
           end
         end
@@ -305,6 +306,7 @@ module Fanta
       end
 
       def game_end(attributes)
+        p ["#{__FILE__}:#{__LINE__}", __method__, attributes]
         update!(attributes.merge(end_at: Time.current))
         game_end_broadcast
       end
@@ -324,15 +326,19 @@ module Fanta
       end
 
       def time_up(data)
-        # membership_ids は送ってきた人で対応するレコードにタイムアップ認定する
-        memberships = memberships.where(id: data["membership_ids"])
-        memberships.each do |e|
-          e.update!(time_up_at: Time.current)
-        end
+        if false
+          # membership_ids は送ってきた人で対応するレコードにタイムアップ認定する
+          memberships = self.memberships.where(id: data["membership_ids"])
+          memberships.each do |e|
+            e.update!(time_up_at: Time.current)
+          end
 
-        # メンバー全員がタイムアップ認定したら全員にタイムアップ通知する
-        # こうすることで1秒残してタイムアップにならなくなる
-        if memberships.where.not(time_up_at: nil).count >= battle.memberships.count
+          # メンバー全員がタイムアップ認定したら全員にタイムアップ通知する
+          # こうすることで1秒残してタイムアップにならなくなる
+          if memberships.where.not(time_up_at: nil).count >= self.memberships.count
+            game_end(win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
+          end
+        else
           game_end(win_location_key: data["win_location_key"], last_action_key: "TIME_UP")
         end
       end

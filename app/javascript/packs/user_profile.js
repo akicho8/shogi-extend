@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (_.isNil(battle.win_location_key)) {
           return "未決着"
         }
-        let list = _.filter(battle.memberships, e => (e.user.id == js_user_profile.id))
+        let list = _.filter(battle.memberships, e => (e.user.id === js_user_profile.id))
         list = _.uniqBy(list, e => e.location_key)
         if (list.length > 1) {
           str = "自己対局"
