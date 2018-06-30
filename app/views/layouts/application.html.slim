@@ -68,7 +68,7 @@ html lang="ja"
                 b-dropdown-item(:has-link="true" :paddingless="true")
                   = link_to("設定", [:edit, current_user])
                 b-dropdown-item(:has-link="true" :paddingless="true")
-                  = link_to("設定", [:edit, current_user])
+                  = link_to("ログアウト", [:fanta, :session], method: :delete)
           .navbar-item
             | オンライン{{online_only_count}}人
           .navbar-item

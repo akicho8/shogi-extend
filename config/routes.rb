@@ -69,6 +69,13 @@ Rails.application.routes.draw do
 
   match 'eval', to: "eval#run", via: [:get, :post, :put, :delete]
 
+  ################################################################################ ログアウト
+
+  namespace :fanta, path: "" do
+    resource :session
+    get "login" => "sessions#new"
+  end
+
   ################################################################################ 2ch棋譜検索
 
   namespace :general, path: "" do

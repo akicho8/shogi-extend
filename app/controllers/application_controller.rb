@@ -37,7 +37,36 @@ class ApplicationController < ActionController::Base
       def bot_regexp
         # ▼HTTP_USER_AGENTでbot,Browser,Deviceチェック - Qiita
         # https://qiita.com/haco99/items/c8321b2992080364d08c
-        @bot_regexp ||= Regexp.union("Googlebot", "Yahoo! Slurp", "Mediapartners-Google", "msnbot", "bingbot", "MJ12bot", "Ezooms", "pirst; MSIE 8.0;", "Google Web Preview", "ia_archiver", "Sogou web spider", "Googlebot-Mobile", "AhrefsBot", "YandexBot", "Purebot", "Baiduspider", "UnwindFetchor", "TweetmemeBot", "MetaURI", "PaperLiBot", "Showyoubot", "JS-Kit", "PostRank", "Crowsnest", "PycURL", "bitlybot", "Hatena", "facebookexternalhit")
+        @bot_regexp ||= Regexp.union(*[
+            "Googlebot",
+            "Yahoo! Slurp",
+            "Mediapartners-Google",
+            "msnbot",
+            "bingbot",
+            "MJ12bot",
+            "Ezooms",
+            "pirst; MSIE 8.0;",
+            "Google Web Preview",
+            "ia_archiver",
+            "Sogou web spider",
+            "Googlebot-Mobile",
+            "AhrefsBot",
+            "YandexBot",
+            "Purebot",
+            "Baiduspider",
+            "UnwindFetchor",
+            "TweetmemeBot",
+            "MetaURI",
+            "PaperLiBot",
+            "Showyoubot",
+            "JS-Kit",
+            "PostRank",
+            "Crowsnest",
+            "PycURL",
+            "bitlybot",
+            "Hatena",
+            "facebookexternalhit",
+          ])
       end
     end
 
@@ -66,9 +95,9 @@ class ApplicationController < ActionController::Base
       return nil if bot_agent?
 
       @current_user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
-      if Rails.env.development?
-        @current_user ||= Fanta::User.first
-      end
+      # if Rails.env.development?
+      #   @current_user ||= Fanta::User.first
+      # end
       @current_user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
       cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}
       @current_user
