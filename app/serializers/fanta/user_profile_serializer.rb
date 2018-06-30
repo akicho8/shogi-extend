@@ -174,7 +174,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fb4cd418cd0
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -221,7 +221,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fb4cd418cd0
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -398,7 +398,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fb4cd418cd0
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -620,7 +620,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fb4cd418cd0
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -885,7 +885,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fb4cd418cd0
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,

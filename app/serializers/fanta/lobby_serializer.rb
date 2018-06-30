@@ -6,7 +6,7 @@ module Fanta
     end
 
     has_many :battles, serializer: BattleEachSerializer do
-      Fanta::Battle.st_battling.latest_list
+      Fanta::Battle.st_battle_now.latest_list
     end
 
     has_many :lobby_messages do
@@ -32,7 +32,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -77,7 +77,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -122,7 +122,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -167,7 +167,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -212,7 +212,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -257,7 +257,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -302,7 +302,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -347,7 +347,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -392,7 +392,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -437,7 +437,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -482,7 +482,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -527,7 +527,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -572,7 +572,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,
@@ -617,7 +617,7 @@ end
 # >>     :xstate_info=>
 # >>      #<Fanta::XstateInfo:0x00007fea597d9448
 # >>       @attributes=
-# >>        {:key=>:st_battling,
+# >>        {:key=>:st_battle_now,
 # >>         :name=>"対局中",
 # >>         :color=>"has-text-danger",
 # >>         :code=>1}>,

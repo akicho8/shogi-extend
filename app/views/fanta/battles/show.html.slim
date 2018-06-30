@@ -10,21 +10,20 @@ javascript:
       .virtual_box
         div v-if="begin_at"
           nav.level
-            .level-item.has-text-centered
-              div
-                / p.heading 残り時間
-                p.title v-html="time_format('white')"
-            template v-if="!end_at && current_membership_is_self_p"
+            .level-left
               .level-item.has-text-centered
                 div
-                  .buttons
-                    button.button.is-primary.is-outlined(@click="give_up") 投了
-                    button.button.is-primary.is-outlined(@click="hebokisin") ヘボ棋神
-
+                  p.title v-html="time_format('white')"
             .level-item.has-text-centered
               div
-                / p.heading 残り時間
-                p.title v-html="time_format('black')"
+                .buttons
+                  button.button.is-primary.is-outlined(@click="give_up" :disabled="!button_active_p") 投了
+                  button.button.is-primary.is-outlined(@click="hebokisin" :disabled="!button_active_p") ヘボ棋神
+            .level-right
+              .level-item.has-text-centered
+                div
+                  p.heading
+                  p.title v-html="time_format('black')"
 
         - if Rails.env.development?
             | clock_counter: {{clock_counter}}<br>

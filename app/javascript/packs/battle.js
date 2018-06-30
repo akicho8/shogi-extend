@@ -186,14 +186,14 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       next_run_if_robot() {
-        if (this.host_p) {
+        if (this.host_player_p) {
           App.battle.next_run_if_robot()
         }
       },
 
       // 終了の通達があった
       battle_end_notice(data) {
-        if (this.xstate_key === "st_battling") {
+        if (this.xstate_key === "st_battle_now") {
           this.end_at = data["end_at"]
           this.win_location_key = data["win_location_key"]
           this.last_action_key = data["last_action_key"]
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       play_mode_long_sfen_set(v) {
-        if (this.xstate_key === "st_battling") {
+        if (this.xstate_key === "st_battle_now") {
           App.battle.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key, current_index: this.current_index})
         }
       },
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     computed: {
       // コントローラー類を非表示にする？
       any_controller_hide() {
-        return this.member_p && this.xstate_key === "st_battling"
+        return this.member_p && this.xstate_key === "st_battle_now"
       },
 
       // チャットに表示する最新メッセージたち
@@ -332,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // 操作する側を返す
       // 手番のメンバーが自分の場合に、自分の先後を返せばよい
       human_side_key() {
-        if (this.xstate_key === "st_battling") {
+        if (this.xstate_key === "st_battle_now") {
           if (this.current_membership_is_self_p) {
             return this.current_location.key
           }
@@ -387,21 +387,21 @@ document.addEventListener("DOMContentLoaded", () => {
         return this.my_uniq_locations.length == 1
       },
 
-      // リーダー (最初のブラウザを持っている人)
-      primary_member() {
+      // 対局者のなかから最初に登場する人間の情報
+      __primary_member() {
         return this.memberships.find(e => e.user.race_key === "human")
       },
 
       // 自分はホストなのか？
-      host_p() {
-        return _.includes(this.__my_memberships, this.primary_member)
+      host_player_p() {
+        return _.includes(this.__my_memberships, this.__primary_member)
       },
 
       run_mode() {
         if (this.xstate_key === "st_before") {
           return "play_mode"
         }
-        if (this.xstate_key === "st_battling") {
+        if (this.xstate_key === "st_battle_now") {
           if (this.member_p) {
             return "play_mode"
           } else {
@@ -420,14 +420,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.end_at) {
           return "st_done"
         }
-        return "st_battling"
+        return "st_battle_now"
       },
 
-      // 考え中？ (プレイ中？)
-      thinking_p() {
-        return this.xstate_key === "st_battling"
+      battle_now_p() {
+        return this.xstate_key === "st_battle_now"
       },
 
+      button_active_p() {
+        return this.battle_now_p && this.current_membership_is_self_p
+      },
+      
       // 勝った方
       win_location() {
         return Location.fetch(this.win_location_key)

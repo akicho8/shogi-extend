@@ -58,7 +58,7 @@ module Fanta
 
     scope :latest_list, -> { order(updated_at: :desc).limit(50) }
     scope :latest_list_for_profile, -> { order(updated_at: :desc).limit(25) }
-    scope :st_battling, -> { where.not(begin_at: nil).where(end_at: nil) }
+    scope :st_battle_now, -> { where.not(begin_at: nil).where(end_at: nil) }
 
     serialize :clock_counts
     serialize :countdown_flags
@@ -102,7 +102,7 @@ module Fanta
       if begin_at && end_at
         :st_done
       elsif begin_at
-        :st_battling
+        :st_battle_now
       else
         :st_before
       end

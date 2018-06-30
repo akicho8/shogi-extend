@@ -17,7 +17,7 @@ export default {
     console.log("DEBUG", "created", "clock_counter", this.clock_counter)
 
     setInterval(() => {
-      if (this.thinking_p) {
+      if (this.battle_now_p) {
         this.clock_counter_inc()
 
         if (this.current_location) {
