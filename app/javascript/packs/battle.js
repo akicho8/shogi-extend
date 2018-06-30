@@ -168,10 +168,17 @@ document.addEventListener("DOMContentLoaded", () => {
         this.clock_counter_reset()
       },
 
-      // ゲーム終了(投了により
       give_up() {
-        App.battle.give_up({win_location_key: this.current_location.flip.key})
-        App.battle.chat_say("負けました", {mclass: "has-text-info"})
+        Vue.prototype.$dialog.confirm({
+          title: "確認",
+          message: "本当に投了しますか？",
+          confirmText: "はい",
+          cancelText: "いいえ",
+          onConfirm: () => {
+            App.battle.give_up({win_location_key: this.current_location.flip.key})
+            App.battle.chat_say("負けました", {msg_class: "has-text-info"})
+          },
+        })
       },
 
       hebokisin() {
