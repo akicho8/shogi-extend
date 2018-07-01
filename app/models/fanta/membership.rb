@@ -27,7 +27,6 @@ module Fanta
     scope :black, -> { where(location_key: "black") }
     scope :white, -> { where(location_key: "white") }
 
-    scope :active, -> { where.not(location_key: nil) }       # 対局者
     scope :standby_enable, -> { where.not(standby_at: nil) } # 準備ができている
 
     acts_as_list top_of_list: 0, scope: :battle
