@@ -34,7 +34,7 @@ html lang="ja"
     = yield :head
   body
     - if @simple_layout
-      .container
+      .container.is-fluid
         == flash_danger_notify_tag
         = yield
         == controller.eval_box

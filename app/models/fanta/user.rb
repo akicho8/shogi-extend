@@ -61,7 +61,6 @@ module Fanta
 
     before_validation on: :create do
       self.key ||= SecureRandom.hex
-      self.name ||= "野良#{User.count.next}号"
       self.self_preset_key ||= "平手"
       self.oppo_preset_key ||= "平手"
       self.lifetime_key ||= :lifetime_m5
@@ -69,13 +68,19 @@ module Fanta
       self.user_agent ||= ""
       self.race_key ||= :human
 
+      if race_info.key == :human
+        self.name ||= "野良#{self.class.count.next}号"
+      else
+        self.name ||= "CPU#{self.class.robot_only.count.next}号"
+      end
+
       if Rails.env.development?
         self.online_at ||= Time.current
       end
     end
 
     after_commit do
-      ActionCable.server.broadcast("lobby_channel", online_users: ams_sr(self.class.online_only)) # 重い
+      # ActionCable.server.broadcast("lobby_channel", online_users: ams_sr(self.class.online_only)) # FIXME: 重い
     end
 
     def lifetime_info
@@ -217,28 +222,46 @@ module Fanta
       end
     end
 
-    concerning :MathingMethods do
+    concerning :MatchingMethods do
       included do
         scope :preset_scope, -> self_preset_key, oppo_preset_key { where(self_preset_key: self_preset_key).where(oppo_preset_key: oppo_preset_key) }
         scope :matching_scope, -> { online_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
+        scope :robot_only, -> { where(race_key: :robot) }
       end
 
-      def matching_start
+      def matching_start(**options)
+        options = {
+          with_robot: true,
+        }.merge(options)
+
         update!(matching_at: Time.current) # マッチング対象にして待つ
 
         s = matching_scope
 
         if rule_cop.same_rule?
           s = s.merge(preset_reverse)
-          if s.count < platoon_info.total_limit
+          rest = platoon_info.total_limit - s.count
+          users = s.random_order.limit(platoon_info.total_limit)
+
+          # 人数に達っしていなければロボットで補完を試みる
+          if rest >= 1
+            robots = self.class.robot_only.random_order.limit(rest) # rest数取得できているとは限らない
+            robots = robots.cycle.take(rest) # なので足りない部分は1人のボットが二役以上することになる
+            users = users + robots
+          end
+
+          # それでも人数に達っしていない場合は待つ
+          if users.size < platoon_info.total_limit
             matching_wait_notify
             return
           end
-          users = s.random_order.limit(platoon_info.total_limit) # 人数に達したのでそのメンバーをランダムで取得
+
           pair_list = users.each_slice(2).to_a
         else
           s1 = s.merge(preset_equal)   # 自分の味方を探す
+          s1 = s1.or(self.class.where(race_key: :robot))
           s2 = s.merge(preset_reverse) # 相手を探す
+          s2 = s2.or(self.class.where(race_key: :robot))
           if s1.count < platoon_info.half_limit || s2.count < platoon_info.half_limit
             matching_wait_notify
             return

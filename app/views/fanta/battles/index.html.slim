@@ -100,7 +100,7 @@ javascript:
         / .title.is-6= "プレイヤー"
         b-table(:data="online_users" :paginated="true" :per-page="10")
           template(slot-scope="props")
-            b-table-column(field="name" label="名前" sortable="sortable")
+            b-table-column(field="name" label="プレイヤー" sortable="sortable")
               message_link_to(:user_to="props.row")
               template(v-if="user_self_p(props.row)")
                 = " ★"

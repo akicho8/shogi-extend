@@ -19,6 +19,9 @@ javascript:
                   .buttons
                     button.button.is-primary.is-outlined(@click="give_up" :disabled="!button_active_p") 投了
                     button.button.is-primary.is-outlined(@click="hebokisin" :disabled="!button_active_p") ヘボ棋神
+            template(v-if="xstate_key === 'st_done'")
+              .level-item.has-text-centered
+                = link_to("ロビーに戻る", [:fanta, :battles], class: "button")
             .level-right
               .level-item.has-text-centered
                 div(v-html="name_with_time_block('black')")
@@ -38,14 +41,6 @@ javascript:
           :human_side_key="human_side_key"
           :flip="flip"
         )
-      - if Rails.env.development?
-        .virtual_box
-          | current_location: {{current_location.key}}<br>
-          | clock_counter: {{clock_counter}}<br>
-          | clock_counts: {{clock_counts}}<br>
-          | human_side_key: {{human_side_key}}<br>
-          | current_membership_is_self_p: {{current_membership_is_self_p}}<br>
-          | flip: {{flip}}<br>
 
       .virtual_box
         pre.pre-wrap(v-text="human_kifu_text")
@@ -118,6 +113,15 @@ javascript:
                 message_link_to :user_to="props.row"
                 template v-if="user_self_p(props.row)"
                   = " *"
+
+  - if Rails.env.development?
+    .virtual_box
+      | current_location: {{current_location.key}}<br>
+      | clock_counter: {{clock_counter}}<br>
+      | clock_counts: {{clock_counts}}<br>
+      | human_side_key: {{human_side_key}}<br>
+      | current_membership_is_self_p: {{current_membership_is_self_p}}<br>
+      | flip: {{flip}}<br>
 
   - if Rails.env.development?
     .columns
