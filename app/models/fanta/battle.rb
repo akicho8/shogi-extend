@@ -190,7 +190,7 @@ module Fanta
         #
         def validate_checkmate_ignore
           if mediator.opponent_player.mate_danger?
-            User.sysop.chat_say(self, "【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です", msg_class: "has-text-danger")
+            User.sysop.chat_say(battle, "【反則】#{mediator.to_ki2_a.last}としましたが王手放置または自滅です", msg_class: "has-text-danger")
             battle.game_end_exit(win_location_key: mediator.current_player.location.key, last_action_key: "ILLEGAL_MOVE")
           end
         end
@@ -198,6 +198,7 @@ module Fanta
         # 次の手番の合法手がない = 詰ました = 勝ち
         def win_check
           if mediator.current_player.normal_all_hands.none? { |e| e.legal_move?(mediator) }
+            User.sysop.chat_say(battle, "【詰み】#{mediator.current_player.call_name}はもう指す手がありません", msg_class: "has-text-danger")
             battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
           end
         end
@@ -306,7 +307,6 @@ module Fanta
       end
 
       def game_end(attributes)
-        p ["#{__FILE__}:#{__LINE__}", __method__, attributes]
         update!(attributes.merge(end_at: Time.current))
         game_end_broadcast
       end
