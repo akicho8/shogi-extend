@@ -231,7 +231,7 @@ module Fanta
 
       def matching_start(**options)
         options = {
-          with_robot: true,
+          with_robot: !Rails.env.test?,
         }.merge(options)
 
         update!(matching_at: Time.current) # マッチング対象にして待つ
@@ -243,11 +243,13 @@ module Fanta
           rest = platoon_info.total_limit - s.count
           users = s.random_order.limit(platoon_info.total_limit)
 
-          # 人数に達っしていなければロボットで補完を試みる
-          if rest >= 1
-            robots = self.class.robot_only.random_order.limit(rest) # rest数取得できているとは限らない
-            robots = robots.cycle.take(rest) # なので足りない部分は1人のボットが二役以上することになる
-            users = users + robots
+          if options[:with_robot]
+            # 人数に達っしていなければロボットで補完を試みる
+            if rest >= 1
+              robots = self.class.robot_only.random_order.limit(rest) # rest数取得できているとは限らない
+              robots = robots.cycle.take(rest) # なので足りない部分は1人のボットが二役以上することになる
+              users = users + robots
+            end
           end
 
           # それでも人数に達っしていない場合は待つ
@@ -259,9 +261,7 @@ module Fanta
           pair_list = users.each_slice(2).to_a
         else
           s1 = s.merge(preset_equal)   # 自分の味方を探す
-          s1 = s1.or(self.class.where(race_key: :robot))
           s2 = s.merge(preset_reverse) # 相手を探す
-          s2 = s2.or(self.class.where(race_key: :robot))
           if s1.count < platoon_info.half_limit || s2.count < platoon_info.half_limit
             matching_wait_notify
             return
