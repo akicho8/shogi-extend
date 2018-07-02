@@ -160,7 +160,7 @@ module Fanta
     end
 
     def create_user(platoon_key, self_preset_key, oppo_preset_key)
-      create(:fanta_user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key})
+      create(:fanta_user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key, robot_accept_key: :not_accept})
     end
   end
 end

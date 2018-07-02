@@ -109,13 +109,14 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "online_at", comment: "オンラインになった日時"
     t.datetime "fighting_at", comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
     t.datetime "matching_at", comment: "マッチング中(開始日時)"
+    t.string "cpu_brain_key", comment: "CPUだったときの挙動"
+    t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
     t.string "platoon_key", null: false, comment: "ルール・人数"
     t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
     t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
-    t.string "user_agent", null: false, comment: "ブラウザ情報"
+    t.string "robot_accept_key", null: false, comment: "CPUと対戦するかどうか"
     t.string "race_key", null: false, comment: "種族"
-    t.string "cpu_brain_key", comment: "CPUだったときの挙動"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_battle_id"], name: "index_fanta_users_on_current_battle_id"
@@ -123,6 +124,8 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["lifetime_key"], name: "index_fanta_users_on_lifetime_key"
     t.index ["oppo_preset_key"], name: "index_fanta_users_on_oppo_preset_key"
     t.index ["platoon_key"], name: "index_fanta_users_on_platoon_key"
+    t.index ["race_key"], name: "index_fanta_users_on_race_key"
+    t.index ["robot_accept_key"], name: "index_fanta_users_on_robot_accept_key"
     t.index ["self_preset_key"], name: "index_fanta_users_on_self_preset_key"
   end
 

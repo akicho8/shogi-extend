@@ -25,6 +25,7 @@
           :platoon_key          => "ルール・人数",
           :self_preset_key      => "ルール・自分の手合割",
           :oppo_preset_key      => "ルール・相手の手合割",
+          :robot_accept_key             => "CPUと対戦するかどうか",
           :user_agent           => "ブラウザ情報",
         },
 

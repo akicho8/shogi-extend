@@ -3,26 +3,27 @@
 #
 # ユーザーテーブル (fanta_users as Fanta::User)
 #
-# |-------------------+-----------------+-------------+-------------+------+-------|
-# | カラム名          | 意味            | タイプ      | 属性        | 参照 | INDEX |
-# |-------------------+-----------------+-------------+-------------+------+-------|
-# | id                | ID              | integer(8)  | NOT NULL PK |      |       |
-# | key               | Key             | string(255) | NOT NULL    |      | A!    |
-# | name              | Name            | string(255) | NOT NULL    |      |       |
-# | current_battle_id | Current battle  | integer(8)  |             |      | B     |
-# | online_at         | Online at       | datetime    |             |      |       |
-# | fighting_at       | Fighting at     | datetime    |             |      |       |
-# | matching_at       | Matching at     | datetime    |             |      |       |
-# | lifetime_key      | Lifetime key    | string(255) | NOT NULL    |      | C     |
-# | platoon_key       | Platoon key     | string(255) | NOT NULL    |      | D     |
-# | self_preset_key   | Self preset key | string(255) | NOT NULL    |      | E     |
-# | oppo_preset_key   | Oppo preset key | string(255) | NOT NULL    |      | F     |
-# | user_agent        | User agent      | string(255) | NOT NULL    |      |       |
-# | race_key          | Race key        | string(255) | NOT NULL    |      |       |
-# | cpu_brain_key     | Cpu brain key   | string(255) |             |      |       |
-# | created_at        | 作成日時        | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時        | datetime    | NOT NULL    |      |       |
-# |-------------------+-----------------+-------------+-------------+------+-------|
+# |-------------------+------------------+-------------+-------------+------+-------|
+# | カラム名          | 意味             | タイプ      | 属性        | 参照 | INDEX |
+# |-------------------+------------------+-------------+-------------+------+-------|
+# | id                | ID               | integer(8)  | NOT NULL PK |      |       |
+# | key               | Key              | string(255) | NOT NULL    |      | A!    |
+# | name              | Name             | string(255) | NOT NULL    |      |       |
+# | current_battle_id | Current battle   | integer(8)  |             |      | B     |
+# | online_at         | Online at        | datetime    |             |      |       |
+# | fighting_at       | Fighting at      | datetime    |             |      |       |
+# | matching_at       | Matching at      | datetime    |             |      |       |
+# | cpu_brain_key     | Cpu brain key    | string(255) |             |      |       |
+# | user_agent        | User agent       | string(255) | NOT NULL    |      |       |
+# | lifetime_key      | Lifetime key     | string(255) | NOT NULL    |      | C     |
+# | platoon_key       | Platoon key      | string(255) | NOT NULL    |      | D     |
+# | self_preset_key   | Self preset key  | string(255) | NOT NULL    |      | E     |
+# | oppo_preset_key   | Oppo preset key  | string(255) | NOT NULL    |      | F     |
+# | robot_accept_key  | Robot accept key | string(255) | NOT NULL    |      | G     |
+# | race_key          | Race key         | string(255) | NOT NULL    |      | H     |
+# | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
+# |-------------------+------------------+-------------+-------------+------+-------|
 
 module Fanta
   CpuBrainInfo
@@ -44,7 +45,7 @@ module Fanta
 
         if Rails.env.development?
           2.times.collect do
-            create!(online_at: Time.current, platoon_key: "platoon_p2vs2")
+            create!(platoon_key: "platoon_p2vs2")
           end
         end
       end
@@ -54,17 +55,13 @@ module Fanta
     has_many :battles, through: :memberships
     belongs_to :current_battle, class_name: "Battle", optional: true, counter_cache: :current_users_count # 今入っている部屋
 
-    has_many :watch_ships, dependent: :destroy                        # 自分が観戦している部屋たち(中間情報)
+    has_many :watch_ships, dependent: :destroy                    # 自分が観戦している部屋たち(中間情報)
     has_many :watch_rooms, through: :watch_ships, source: :battle # 自分が観戦している部屋たち
 
     scope :random_order, -> { order(Arel.sql("rand()")) }
 
     before_validation on: :create do
       self.key ||= SecureRandom.hex
-      self.self_preset_key ||= "平手"
-      self.oppo_preset_key ||= "平手"
-      self.lifetime_key ||= :lifetime_m5
-      self.platoon_key ||= :platoon_p1vs1
       self.user_agent ||= ""
       self.race_key ||= :human
 
@@ -79,24 +76,48 @@ module Fanta
       end
     end
 
-    def lifetime_info
-      LifetimeInfo.fetch(lifetime_key)
-    end
-
-    def platoon_info
-      PlatoonInfo.fetch(platoon_key)
-    end
-
-    def self_preset_info
-      Warabi::PresetInfo[self_preset_key]
-    end
-
-    def oppo_preset_info
-      Warabi::PresetInfo[oppo_preset_key]
-    end
-
     def show_path
       Rails.application.routes.url_helpers.url_for([self, only_path: true])
+    end
+
+    concerning :RuleMethods do
+      included do
+        before_validation on: :create do
+          self.self_preset_key ||= "平手"
+          self.oppo_preset_key ||= "平手"
+          self.lifetime_key ||= :lifetime_m5
+          self.platoon_key ||= :platoon_p1vs1
+          self.robot_accept_key ||= "accept"
+        end
+
+        with_options allow_blank: true do
+          validates :self_preset_key, inclusion: CustomPresetInfo.keys.collect(&:to_s)
+          validates :oppo_preset_key, inclusion: CustomPresetInfo.keys.collect(&:to_s)
+          validates :lifetime_key, inclusion: LifetimeInfo.keys.collect(&:to_s)
+          validates :platoon_key, inclusion: PlatoonInfo.keys.collect(&:to_s)
+          validates :robot_accept_key, inclusion: RobotAcceptInfo.keys.collect(&:to_s)
+        end
+      end
+
+      def lifetime_info
+        LifetimeInfo.fetch(lifetime_key)
+      end
+
+      def platoon_info
+        PlatoonInfo.fetch(platoon_key)
+      end
+
+      def self_preset_info
+        CustomPresetInfo.fetch(self_preset_key)
+      end
+
+      def oppo_preset_info
+        CustomPresetInfo.fetch(oppo_preset_key)
+      end
+
+      def robot_accept_info
+        RobotAcceptInfo.fetch(robot_accept_key)
+      end
     end
 
     concerning :ChatMessageMethods do
@@ -233,6 +254,16 @@ module Fanta
         scope :robot_only, -> { where(race_key: :robot) }
       end
 
+      def setting_save(data)
+        update!({
+            lifetime_key:     data["lifetime_key"],
+            platoon_key:      data["platoon_key"],
+            self_preset_key:  data["self_preset_key"],
+            oppo_preset_key:  data["oppo_preset_key"],
+            robot_accept_key: data["robot_accept_key"],
+          })
+      end
+
       def matching_start(**options)
         options = {
           with_robot: !Rails.env.test?,
@@ -297,6 +328,10 @@ module Fanta
           a = a.reverse
         end
         a
+      end
+
+      def matching_cancel
+        update!(matching_at: nil)
       end
 
       private

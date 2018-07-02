@@ -87,6 +87,7 @@ class ApplicationController < ActionController::Base
           :lifetime_infos      => Fanta::LifetimeInfo,
           :platoon_infos       => Fanta::PlatoonInfo,
           :custom_preset_infos => Fanta::CustomPresetInfo,
+          :robot_accept_infos  => Fanta::RobotAcceptInfo,
         }
       end
     end

@@ -161,8 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
     methods: {
       // バトル開始(トリガーから全体通知が来たときの処理)
       battle_setup(data) {
-        console.log("DEBUG", "battle_setup")
-
         this.begin_at = data["begin_at"]
         this.end_at = null
         this.clock_counter_reset()

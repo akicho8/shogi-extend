@@ -1,4 +1,3 @@
-# チャットルーム一覧
 class LobbyChannel < ApplicationCable::Channel
   def subscribed
     stream_from "lobby_channel" # ブロードキャストするにはこれが必要
@@ -13,12 +12,7 @@ class LobbyChannel < ApplicationCable::Channel
   end
 
   def setting_save(data)
-    current_user.update!({
-        lifetime_key:    data["lifetime_key"],
-        platoon_key:     data["platoon_key"],
-        self_preset_key: data["self_preset_key"],
-        oppo_preset_key: data["oppo_preset_key"],
-      })
+    current_user.setting_save(data)
   end
 
   def matching_start(data)
@@ -26,6 +20,6 @@ class LobbyChannel < ApplicationCable::Channel
   end
 
   def matching_cancel(data)
-    current_user.update!(matching_at: nil)
+    current_user.matching_cancel
   end
 end

@@ -102,25 +102,28 @@ document.addEventListener('DOMContentLoaded', () => {
         oppo_preset_key:       null,
         current_lifetime_key:  null,
         current_platoon_key:   null,
+        robot_accept_key:     null,
       }
     },
 
     created() {
-      this.current_hira_koma_key = this.hira_koma_default_key
-
       if (this.current_user) {
         console.assert("matching_at" in this.current_user)
         console.assert("self_preset_key" in this.current_user)
         console.assert("oppo_preset_key" in this.current_user)
         console.assert("lifetime_key" in this.current_user)
         console.assert("platoon_key" in this.current_user)
+        console.assert("robot_accept_key" in this.current_user)
 
         this.matching_at          = this.current_user.matching_at
         this.self_preset_key      = this.current_user.self_preset_key
         this.oppo_preset_key      = this.current_user.oppo_preset_key
         this.current_lifetime_key = this.current_user.lifetime_key
         this.current_platoon_key  = this.current_user.platoon_key
+        this.robot_accept_key     = this.current_user.robot_accept_key
       }
+
+      this.current_hira_koma_key = this.hira_koma_default_key
     },
 
     watch: {
@@ -171,10 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setting_save() {
         App.lobby.setting_save({
-          self_preset_key: this.current_self_preset_info.key,
-          oppo_preset_key: this.current_oppo_preset_info.key,
-          lifetime_key:    this.current_lifetime_key,
-          platoon_key:     this.current_platoon_key,
+          self_preset_key:  this.current_self_preset_info.key,
+          oppo_preset_key:  this.current_oppo_preset_info.key,
+          lifetime_key:     this.current_lifetime_key,
+          platoon_key:      this.current_platoon_key,
+          robot_accept_key: this.robot_accept_key,
         })
       },
 
@@ -228,6 +232,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       current_platoon_info() {
         return PlatoonInfo.fetch(this.current_platoon_key)
+      },
+
+      current_robot_accept_info() {
+        return RobotAcceptInfo.fetch(this.robot_accept_key)
       },
 
       // 現在選択されている手合割情報

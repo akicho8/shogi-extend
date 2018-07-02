@@ -65,6 +65,9 @@ Object.defineProperty(Vue.prototype, "CustomPresetInfo", {value: CustomPresetInf
 import { HiraKomaInfo } from "./hira_koma_info"
 Object.defineProperty(Vue.prototype, "HiraKomaInfo", {value: HiraKomaInfo})
 
+import { RobotAcceptInfo } from "./robot_accept_info"
+Object.defineProperty(Vue.prototype, "RobotAcceptInfo", {value: RobotAcceptInfo})
+
 //////////////////////////////////////////////////////////////////////////////// チャット関連コンポーネント
 
 import Messanger from "../message_link_to.vue"
