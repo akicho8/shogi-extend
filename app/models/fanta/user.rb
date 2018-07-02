@@ -63,10 +63,9 @@ module Fanta
     before_validation on: :create do
       self.key ||= SecureRandom.hex
       self.user_agent ||= ""
-      self.race_key ||= :human
 
       if race_info.key == :human
-        self.name ||= "野良#{self.class.count.next}号"
+        self.name ||= "野良#{self.class.human_only.count.next}号"
       else
         self.name ||= "CPU#{self.class.robot_only.count.next}号"
       end
@@ -83,28 +82,20 @@ module Fanta
     concerning :RuleMethods do
       included do
         before_validation on: :create do
-          self.self_preset_key ||= "平手"
-          self.oppo_preset_key ||= "平手"
-          self.lifetime_key ||= :lifetime_m5
-          self.platoon_key ||= :platoon_p1vs1
+          self.self_preset_key  ||= "平手"
+          self.oppo_preset_key  ||= "平手"
+          self.lifetime_key     ||= :lifetime_m5
+          self.platoon_key      ||= :platoon_p1vs1
           self.robot_accept_key ||= "accept"
         end
 
         with_options allow_blank: true do
-          validates :self_preset_key, inclusion: CustomPresetInfo.keys.collect(&:to_s)
-          validates :oppo_preset_key, inclusion: CustomPresetInfo.keys.collect(&:to_s)
-          validates :lifetime_key, inclusion: LifetimeInfo.keys.collect(&:to_s)
-          validates :platoon_key, inclusion: PlatoonInfo.keys.collect(&:to_s)
+          validates :self_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
+          validates :oppo_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
+          validates :lifetime_key,     inclusion: LifetimeInfo.keys.collect(&:to_s)
+          validates :platoon_key,      inclusion: PlatoonInfo.keys.collect(&:to_s)
           validates :robot_accept_key, inclusion: RobotAcceptInfo.keys.collect(&:to_s)
         end
-      end
-
-      def lifetime_info
-        LifetimeInfo.fetch(lifetime_key)
-      end
-
-      def platoon_info
-        PlatoonInfo.fetch(platoon_key)
       end
 
       def self_preset_info
@@ -113,6 +104,14 @@ module Fanta
 
       def oppo_preset_info
         CustomPresetInfo.fetch(oppo_preset_key)
+      end
+
+      def lifetime_info
+        LifetimeInfo.fetch(lifetime_key)
+      end
+
+      def platoon_info
+        PlatoonInfo.fetch(platoon_key)
       end
 
       def robot_accept_info
@@ -157,8 +156,14 @@ module Fanta
     end
 
     concerning :RaceMethods do
+      included do
+        before_validation on: :create do
+          self.race_key ||= race_info.key
+        end
+      end
+
       def race_info
-        RaceInfo.fetch(race_key)
+        RaceInfo.fetch(race_key || :human)
       end
     end
 
@@ -252,6 +257,7 @@ module Fanta
         scope :preset_scope, -> self_preset_key, oppo_preset_key { where(self_preset_key: self_preset_key).where(oppo_preset_key: oppo_preset_key) }
         scope :matching_scope, -> { online_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
         scope :robot_only, -> { where(race_key: :robot) }
+        scope :human_only, -> { where(race_key: :human) }
       end
 
       def setting_save(data)
