@@ -13,6 +13,8 @@
         header.modal-card-head
           p.modal-card-title
             template(v-if="user_to")
+              a(:href="user_to.show_path")
+                img.avatar_image_in_dialog(:src="user_to.avatar_url")
               a(:href="user_to.show_path") {{user_to.name}}
               | さんに送信
             template(v-else)

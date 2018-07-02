@@ -110,13 +110,16 @@ javascript:
               message_link_to(:user_to="props.row")
               template(v-if="user_self_p(props.row)")
                 = " ★"
-            b-table-column(label="状態")
+            b-table-column(label="ステイタス")
               template(v-if="props.row.matching_at")
-                = "マッチング中"
-              template(v-if="props.row.current_battle")
-                a(:href="props.row.current_battle.show_path")
-                  = "対局中 "
-                  | {{props.row.current_battle.name}}
+                span.has-text-danger
+                  = "マッチング中"
+              template(v-if="props.row.active_battles.length >= 1")
+                span.has-text-danger
+                  = "対局中"
+                  template(v-for="e in props.row.active_battles")
+                    a(:href="e.show_path")
+                      =<> "{{e.name}}"
 
         br
         message_link_to

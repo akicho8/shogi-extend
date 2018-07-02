@@ -32,7 +32,7 @@ module Fanta
     include ModulableCrud::All
 
     def index
-      @js_lobby = ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: nil})
+      @js_lobby = ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
     end
 
     def show

@@ -33,9 +33,7 @@ module Fanta
       def setup(options = {})
         super
 
-        unless find_by(key: "sysop")
-          create!(key: "sysop", name: "SYSOP")
-        end
+        sysop
 
         CpuBrainInfo.each do |e|
           unless find_by(key: e.key)
@@ -50,13 +48,6 @@ module Fanta
         end
       end
     end
-
-    has_many :memberships, dependent: :destroy
-    has_many :battles, through: :memberships
-    belongs_to :current_battle, class_name: "Battle", optional: true, counter_cache: :current_users_count # 今入っている部屋
-
-    has_many :watch_ships, dependent: :destroy                    # 自分が観戦している部屋たち(中間情報)
-    has_many :watch_rooms, through: :watch_ships, source: :battle # 自分が観戦している部屋たち
 
     scope :random_order, -> { order(Arel.sql("rand()")) }
 
@@ -126,7 +117,7 @@ module Fanta
 
       class_methods do
         def sysop
-          find_by!(key: __method__)
+          find_by(key: __method__) || create!(key: "sysop", name: "SYSOP")
         end
       end
 
@@ -146,7 +137,7 @@ module Fanta
       end
 
       def cud_broadcast(action)
-        ActionCable.server.broadcast("lobby_channel", user_cud: {action: action, user: ams_sr(self, serializer: ChatUserSerializer)})
+        ActionCable.server.broadcast("lobby_channel", user_cud: {action: action, user: ams_sr(self, serializer: OnlineUserSerializer)})
       end
 
       def lobby_chat_say(message, msg_options = {})
@@ -272,7 +263,7 @@ module Fanta
 
       def matching_start(**options)
         options = {
-          with_robot: !Rails.env.test?,
+          with_robot: (robot_accept_info.key == :accept),
         }.merge(options)
 
         update!(matching_at: Time.current) # マッチング対象にして待つ
@@ -446,6 +437,20 @@ module Fanta
     end
 
     concerning :BattleMethods do
+      included do
+        has_many :memberships, dependent: :destroy
+        has_many :battles, through: :memberships
+        belongs_to :current_battle, class_name: "Battle", optional: true, counter_cache: :current_users_count # 今入っている部屋
+
+        has_many :watch_ships, dependent: :destroy                    # 自分が観戦している部屋たち(中間情報)
+        has_many :watch_rooms, through: :watch_ships, source: :battle # 自分が観戦している部屋たち
+      end
+
+      # 今参加している対局
+      def active_battles
+        battles.merge(Membership.where.not(fighting_at: nil))
+      end
+
       def room_in(battle)
         chat_say(battle, "入室しました", msg_class: "has-text-info")
 
