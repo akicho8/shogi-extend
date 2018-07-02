@@ -79,10 +79,6 @@ module Fanta
       end
     end
 
-    after_commit do
-      # ActionCable.server.broadcast("lobby_channel", online_users: ams_sr(self.class.online_only)) # FIXME: 重い
-    end
-
     def lifetime_info
       LifetimeInfo.fetch(lifetime_key)
     end
@@ -120,9 +116,17 @@ module Fanta
       end
     end
 
-    concerning :LobbyMessageMethods do
+    concerning :LobbyMethods do
       included do
         has_many :lobby_messages, dependent: :destroy
+
+        after_create_commit  { broadcast_curd(:create)  }
+        after_update_commit  { broadcast_curd(:update)  }
+        after_destroy_commit { broadcast_curd(:destroy) }
+      end
+
+      def broadcast_curd(action)
+        ActionCable.server.broadcast("lobby_channel", user_cud: {action: action, user: ams_sr(self, serializer: ChatUserSerializer)})
       end
 
       def lobby_chat_say(message, msg_options = {})

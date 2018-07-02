@@ -14,17 +14,37 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["battle_created"]) {
         App.lobby_vm.battles = _.concat([data["battle_created"]], App.lobby_vm.battles)
       }
+
+      // バトル追加・更新・削除
       if (data["battles"]) {
         App.lobby_vm.battles = data["battles"]
       }
-      if (data["online_users"]) {
-        // App.lobby_vm.online_users = data["online_users"] // FIXME: indexにアクセスした直後に必ず呼ばれる
-      }
+
+      // マッチング中に変更
       if (data["matching_wait"]) {
         App.lobby_vm.matching_wait(data["matching_wait"])
       }
+
+      // ロビーでの発言追加
       if (data["lobby_message"]) {
         App.lobby_vm.lobby_messages.push(data["lobby_message"])
+      }
+
+      // ユーザー追加・更新・削除
+      const user_cud = data["user_cud"]
+      if (user_cud) {
+        const action = user_cud.action
+        const user = user_cud.user
+        if (action === "create") {
+          App.lobby_vm.online_users = _.concat([user], App.lobby_vm.online_users)
+        }
+        if (action === "update") {
+          const index = App.lobby_vm.online_users.findIndex(e => e.id === user.id)
+          Vue.set(App.lobby_vm.online_users, index, user)
+        }
+        if (action === "destroy") {
+          App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== user.id)
+        }
       }
     },
 

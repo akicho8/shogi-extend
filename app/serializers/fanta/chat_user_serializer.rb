@@ -17,14 +17,14 @@ module Fanta
     tp ams_sr(User.first, serializer: ChatUserSerializer)
   end
 end
-# >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
-# >> I, [2018-06-14T17:24:09.886332 #45422]  INFO -- : Rendered Fanta::ChatUserSerializer with ActiveModelSerializers::Adapter::Attributes (1579.39ms)
-# >> |---------------------+---------------------------------------------------------------------------------------------------------------------|
-# >> |                  id | 1                                                                                                                   |
-# >> |                name | 野良1号                                                                                                             |
-# >> |           show_path | /online/users/1                                                                                                     |
-# >> |          avatar_url | /assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png |
-# >> |         fighting_at |                                                                                                                     |
-# >> |         matching_at |                                                                                                                     |
-# >> | current_battle |                                                                                                                     |
-# >> |---------------------+---------------------------------------------------------------------------------------------------------------------|
+# >> I, [2018-07-02T12:14:26.623382 #1373]  INFO -- : Rendered Fanta::ChatUserSerializer with ActiveModelSerializers::Adapter::Attributes (3284.55ms)
+# >> |----------------+--------------------------------------------------------------------------------------------------------------|
+# >> |             id | 1                                                                                                            |
+# >> |           name | SYSOP                                                                                                        |
+# >> |      show_path | /online/users/1                                                                                              |
+# >> |     avatar_url | /assets/human/0013_fallback_avatar_icon-7ccc24e76f53875ea71137f6079ae8ad0657b15e80aeed6852501da430e757df.png |
+# >> |       race_key | human                                                                                                        |
+# >> |    fighting_at |                                                                                                              |
+# >> |    matching_at |                                                                                                              |
+# >> | current_battle |                                                                                                              |
+# >> |----------------+--------------------------------------------------------------------------------------------------------------|

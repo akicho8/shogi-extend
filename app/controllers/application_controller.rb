@@ -92,20 +92,24 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user
-      return nil if bot_agent?
+      @current_user ||= __current_user
+    end
 
-      @current_user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
-      # if Rails.env.development?
-      #   @current_user ||= Fanta::User.first
-      # end
-      @current_user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
-      cookies.signed[:user_id] = {value: @current_user.id, expires: 1.weeks.from_now}
-      @current_user
+    def __current_user
+      return nil if bot_agent?
+      user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
+      user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
+      cookies.signed[:user_id] = {value: user.id, expires: 1.weeks.from_now}
+      user
     end
 
     def current_user_set(user_id)
       @current_user = nil
       cookies.signed[:user_id] = user_id
+    end
+
+    def current_user_logout
+      cookies.delete(:user_id)
     end
   end
 
@@ -123,6 +127,7 @@ class ApplicationController < ActionController::Base
         [
           link_to_eval("ユーザーセットアップ") { "Fanta::User.setup" },
           link_to_eval("ユーザー全削除") { "Fanta::User.destroy_all" },
+          link_to_eval("ユーザー追加") { "Fanta::User.create!" },
           link_to_eval("1 + 2") { "1 + 2" },
           link_to_eval("1 / 0", redirect_to: root_path) { "1 / 0" },
           link_to_eval("find(0)", redirect_to: root_path) { "Fanta::User.find(0)" },
@@ -135,10 +140,11 @@ class ApplicationController < ActionController::Base
           row[:name] = link_to(e.name, e)
           row["操作"] = [
             link_to_eval("login") { "current_user_set(#{e.id})" },
-            link_to_eval("destroy") { "Fanta::User.find(#{e.id}).destroy" },
+            link_to_eval("削除") { "Fanta::User.find(#{e.id}).destroy!" },
             link_to_eval("online") { "Fanta::User.find(#{e.id}).update!(online_at: Time.current)" if !e.online_at },
             link_to_eval("offline") { "Fanta::User.find(#{e.id}).update!(online_at: nil)" if e.online_at },
             link_to_eval("logout") { "reset_session" if e == current_user },
+            link_to_eval("名前変更") { "Fanta::User.find(#{e.id}).update!(name: SecureRandom.hex)" },
           ].compact.join(" ").html_safe
         end
       end

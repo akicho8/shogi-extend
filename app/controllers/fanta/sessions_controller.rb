@@ -2,7 +2,7 @@ module Fanta
   class SessionsController < ApplicationController
     def destroy
       if current_user
-        cookies.delete(:user_id)
+        current_user_logout
         notice = "ログアウトしました。"
       else
         notice = "すでにログアウトしています。"
