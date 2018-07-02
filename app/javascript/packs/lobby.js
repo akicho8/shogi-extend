@@ -11,15 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     received(data) {
-      if (data["battle_created"]) {
-        App.lobby_vm.battles = _.concat([data["battle_created"]], App.lobby_vm.battles)
-      }
-
-      // バトル追加・更新・削除
-      if (data["battles"]) {
-        App.lobby_vm.battles = data["battles"]
-      }
-
       // マッチング中に変更
       if (data["matching_wait"]) {
         App.lobby_vm.matching_wait(data["matching_wait"])
@@ -30,20 +21,37 @@ document.addEventListener('DOMContentLoaded', () => {
         App.lobby_vm.lobby_messages.push(data["lobby_message"])
       }
 
+      // バトル追加・更新・削除
+      const battle_cud = data["battle_cud"]
+      if (battle_cud) {
+        const action = battle_cud.action
+        const record = battle_cud.record
+        if (action === "create") {
+          App.lobby_vm.battles = _.concat([record], App.lobby_vm.battles)
+        }
+        if (action === "update") {
+          const index = App.lobby_vm.battles.findIndex(e => e.id === record.id)
+          Vue.set(App.lobby_vm.battles, index, record)
+        }
+        if (action === "destroy") {
+          App.lobby_vm.battles = App.lobby_vm.battles.filter(e => e.id !== record.id)
+        }
+      }
+
       // ユーザー追加・更新・削除
       const user_cud = data["user_cud"]
       if (user_cud) {
         const action = user_cud.action
-        const user = user_cud.user
+        const record = user_cud.user
         if (action === "create") {
-          App.lobby_vm.online_users = _.concat([user], App.lobby_vm.online_users)
+          App.lobby_vm.online_users = _.concat([record], App.lobby_vm.online_users)
         }
         if (action === "update") {
-          const index = App.lobby_vm.online_users.findIndex(e => e.id === user.id)
-          Vue.set(App.lobby_vm.online_users, index, user)
+          const index = App.lobby_vm.online_users.findIndex(e => e.id === record.id)
+          Vue.set(App.lobby_vm.online_users, index, record)
         }
         if (action === "destroy") {
-          App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== user.id)
+          App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== record.id)
         }
       }
     },
@@ -162,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       setting_save() {
-        // alert("setting_save")
         App.lobby.setting_save({
           self_preset_key: this.current_self_preset_info.key,
           oppo_preset_key: this.current_oppo_preset_info.key,

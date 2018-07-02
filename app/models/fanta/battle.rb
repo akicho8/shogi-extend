@@ -132,19 +132,6 @@ module Fanta
       info.to_ki2
     end
 
-    # after_commit do
-    #   broadcast
-    # end
-
-    # def broadcast
-    #   # ActionCable.server.broadcast("lobby_channel", battles: JSON.load(self.class.latest_list.to_json(to_json_params)))
-    #   # ActionCable.server.broadcast("battle_channel_#{id}", battle: js_attributes) # FIXME: これは重いだけで使ってないのではずす
-    # end
-
-    # def js_attributes
-    #   JSON.load(to_json(to_json_params))
-    # end
-
     def show_path
       Rails.application.routes.url_helpers.url_for([self, only_path: true])
     end
@@ -157,6 +144,18 @@ module Fanta
       memberships.group_by(&:location_key).transform_values { |a| a.collect { |e| e.user.name }.join("・") }.symbolize_keys
     end
 
+    concerning :LobbyMethods do
+      included do
+        after_create_commit  { cud_broadcast(:create)  }
+        after_update_commit  { cud_broadcast(:update)  }
+        after_destroy_commit { cud_broadcast(:destroy) }
+      end
+
+      def cud_broadcast(action)
+        ActionCable.server.broadcast("lobby_channel", battle_cud: {action: action, battle: ams_sr(self, serializer: BattleEachSerializer)})
+      end
+    end
+
     concerning :BattleMethods do
       def battle_start
         update!(begin_at: Time.current)
@@ -165,7 +164,7 @@ module Fanta
       end
 
       # 部屋が抜けたときの状態も簡単に反映できるように全メンバー一気に送るのでよさそう
-      def memberships_update
+      def memberships_broadcast
         ActionCable.server.broadcast(channel_key, memberships: ams_sr(reload.memberships)) # 部屋を抜けたときの状態が反映されるように reload が必要
       end
 

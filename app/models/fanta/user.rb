@@ -120,12 +120,12 @@ module Fanta
       included do
         has_many :lobby_messages, dependent: :destroy
 
-        after_create_commit  { broadcast_curd(:create)  }
-        after_update_commit  { broadcast_curd(:update)  }
-        after_destroy_commit { broadcast_curd(:destroy) }
+        after_create_commit  { cud_broadcast(:create)  }
+        after_update_commit  { cud_broadcast(:update)  }
+        after_destroy_commit { cud_broadcast(:destroy) }
       end
 
-      def broadcast_curd(action)
+      def cud_broadcast(action)
         ActionCable.server.broadcast("lobby_channel", user_cud: {action: action, user: ams_sr(self, serializer: ChatUserSerializer)})
       end
 
@@ -453,7 +453,7 @@ module Fanta
           end
         end
 
-        battle.memberships_update
+        battle.memberships_broadcast
       end
 
       def room_out(battle)
@@ -476,7 +476,7 @@ module Fanta
           # ActionCable.server.broadcast(channel_key, watch_users: battle.watch_users)
         end
 
-        battle.memberships_update
+        battle.memberships_broadcast
       end
     end
   end
