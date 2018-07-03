@@ -5,7 +5,9 @@
 if defined?(ActiveModelSerializers)
   # xmpfilter 使用時はログに出さない
   if $0 == "-"
-    ActiveModelSerializers.logger = Logger.new(STDOUT)
+    if ENV["ACTIVE_MODEL_SERIALIZERS_LOGGER_STDOUT"]
+      ActiveModelSerializers.logger = Logger.new(STDOUT)
+    end
   end
 
   Kernel.module_eval do

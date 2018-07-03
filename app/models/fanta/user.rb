@@ -281,26 +281,28 @@ module Fanta
           with_robot: (robot_accept_info.key == :accept),
         }.merge(options)
 
+        total = platoon_info.total_limit
+        half = platoon_info.half_limit
+
         update!(matching_at: Time.current) # マッチング対象にして待つ
 
         s = matching_scope
 
         if rule_cop.same_rule?
           s = s.merge(preset_reverse)
-          rest = platoon_info.total_limit - s.count
-          users = s.random_order.limit(platoon_info.total_limit)
+          users = s.random_order.limit(total)
 
           if options[:with_robot]
             # 人数に達っしていなければロボットで補完を試みる
-            if rest >= 1
-              robots = self.class.robot_only.random_order.limit(rest) # rest数取得できているとは限らない
-              robots = robots.cycle.take(rest) # なので足りない部分は1人のボットが二役以上することになる
-              users = users + robots
-            end
+
+            # p ["#{__FILE__}:#{__LINE__}", __method__, users.collect(&:name)]
+            # p completion_robots(total - users.size).size
+
+            users += completion_robots(total - users.size)
           end
 
           # それでも人数に達っしていない場合は待つ
-          if users.size < platoon_info.total_limit
+          if users.size < total
             matching_wait_notify
             return
           end
@@ -309,16 +311,35 @@ module Fanta
         else
           s1 = s.merge(preset_equal)   # 自分の味方を探す
           s2 = s.merge(preset_reverse) # 相手を探す
-          if s1.count < platoon_info.half_limit || s2.count < platoon_info.half_limit
+
+          users1 = s1.random_order.limit(half)
+          users2 = s2.random_order.limit(half)
+
+          if options[:with_robot]
+            rest = total - (users1.size + users2.size)
+            if rest >= 1
+              robots = completion_robots(rest)
+
+              users1 += robots.shift(half - users1.size)
+              users2 += robots.shift(half - users2.size)
+            end
+          end
+
+          if users1.size < half || users2.size < half
             matching_wait_notify
             return
           end
-          users1 = s1.limit(platoon_info.half_limit)
-          users2 = s2.limit(platoon_info.half_limit)
+
           pair_list = users1.zip(users2)
         end
 
         battle_setup(pair_list, auto_matched_at: Time.current)
+      end
+
+      # 必ず count 数のロボットを得る。ただしロボットが１人もいない場合は空
+      def completion_robots(count)
+        robots = self.class.robot_only.random_order.limit(count) # count 数取得できているとは限らない
+        robots.cycle.take(count)                                 # なので足りない部分は1人のボットが二役以上することになる
       end
 
       def battle_with(opponent)
