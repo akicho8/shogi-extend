@@ -33,7 +33,6 @@ class CreateFanta < ActiveRecord::Migration[5.1]
     create_table :fanta_users, force: true do |t|
       t.string :key,                null: false, index: {unique: true}, comment: "キー"
       t.string :name,               null: false,              comment: "名前"
-      t.belongs_to :current_battle, null: true,               comment: "現在入室している部屋"
       t.datetime :online_at,        null: true,               comment: "オンラインになった日時"
       t.datetime :fighting_at,      null: true,               comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
       t.datetime :matching_at,      null: true,               comment: "マッチング中(開始日時)"
@@ -49,6 +48,13 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.string :race_key,           null: false, index: true, comment: "種族"
 
       t.timestamps                  null: false
+    end
+
+    # プロフィール
+    create_table :fanta_profiles, force: true do |t|
+      t.belongs_to :user,       null: false, comment: "ユーザー"
+      t.text :greeting_message, null: false, comment: "あいさつ"
+      t.timestamps              null: false
     end
 
     # 部屋

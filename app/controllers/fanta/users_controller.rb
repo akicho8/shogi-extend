@@ -3,27 +3,26 @@
 #
 # ユーザーテーブル (fanta_users as Fanta::User)
 #
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味             | タイプ      | 属性        | 参照 | INDEX |
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | id                | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key               | Key              | string(255) | NOT NULL    |      | A!    |
-# | name              | Name             | string(255) | NOT NULL    |      |       |
-# | current_battle_id | Current battle   | integer(8)  |             |      | B     |
-# | online_at         | Online at        | datetime    |             |      |       |
-# | fighting_at       | Fighting at      | datetime    |             |      |       |
-# | matching_at       | Matching at      | datetime    |             |      |       |
-# | cpu_brain_key     | Cpu brain key    | string(255) |             |      |       |
-# | user_agent        | User agent       | string(255) | NOT NULL    |      |       |
-# | lifetime_key      | Lifetime key     | string(255) | NOT NULL    |      | C     |
-# | platoon_key       | Platoon key      | string(255) | NOT NULL    |      | D     |
-# | self_preset_key   | Self preset key  | string(255) | NOT NULL    |      | E     |
-# | oppo_preset_key   | Oppo preset key  | string(255) | NOT NULL    |      | F     |
-# | robot_accept_key  | Robot accept key | string(255) | NOT NULL    |      | G     |
-# | race_key          | Race key         | string(255) | NOT NULL    |      | H     |
-# | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
-# |-------------------+------------------+-------------+-------------+------+-------|
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | カラム名         | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | id               | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
+# | key              | Key                                                                      | string(255) | NOT NULL    |      | A!    |
+# | name             | 名前                                                                     | string(255) | NOT NULL    |      |       |
+# | online_at        | オンラインになった日時                                                   | datetime    |             |      |       |
+# | fighting_at      | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |             |      |       |
+# | matching_at      | マッチング中(開始日時)                                                   | datetime    |             |      |       |
+# | cpu_brain_key    | Cpu brain key                                                            | string(255) |             |      |       |
+# | user_agent       | ブラウザ情報                                                             | string(255) | NOT NULL    |      |       |
+# | lifetime_key     | ルール・持ち時間                                                         | string(255) | NOT NULL    |      | B     |
+# | platoon_key      | ルール・人数                                                             | string(255) | NOT NULL    |      | C     |
+# | self_preset_key  | ルール・自分の手合割                                                     | string(255) | NOT NULL    |      | D     |
+# | oppo_preset_key  | ルール・相手の手合割                                                     | string(255) | NOT NULL    |      | E     |
+# | robot_accept_key | CPUと対戦するかどうか                                                    | string(255) | NOT NULL    |      | F     |
+# | race_key         | Race key                                                                 | string(255) | NOT NULL    |      | G     |
+# | created_at       | 作成日時                                                                 | datetime    | NOT NULL    |      |       |
+# | updated_at       | 更新日時                                                                 | datetime    | NOT NULL    |      |       |
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
 
 module Fanta
   class UsersController < ApplicationController

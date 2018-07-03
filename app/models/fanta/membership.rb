@@ -3,21 +3,21 @@
 #
 # 対局と対局者の対応テーブル (fanta_memberships as Fanta::Membership)
 #
-# |--------------+--------------+-------------+-------------+------+-------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX |
-# |--------------+--------------+-------------+-------------+------+-------|
-# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
-# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A     |
-# | user_id      | User         | integer(8)  | NOT NULL    |      | B     |
-# | preset_key   | Preset key   | string(255) | NOT NULL    |      |       |
-# | location_key | Location key | string(255) | NOT NULL    |      | C     |
-# | position     | 順序         | integer(4)  |             |      | D     |
-# | standby_at   | Standby at   | datetime    |             |      |       |
-# | fighting_at  | Fighting at  | datetime    |             |      |       |
-# | time_up_at   | Time up at   | datetime    |             |      |       |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
-# |--------------+--------------+-------------+-------------+------+-------|
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
+# | カラム名     | 意味                                   | タイプ      | 属性        | 参照 | INDEX |
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
+# | id           | ID                                     | integer(8)  | NOT NULL PK |      |       |
+# | battle_id    | 部屋ID                                 | integer(8)  | NOT NULL    |      | A     |
+# | user_id      | ユーザーID                             | integer(8)  | NOT NULL    |      | B     |
+# | preset_key   | 手合割                                 | string(255) | NOT NULL    |      |       |
+# | location_key | 先後                                   | string(255) | NOT NULL    |      | C     |
+# | position     | 入室順序                               | integer(4)  |             |      | D     |
+# | standby_at   | 準備完了日時                           | datetime    |             |      |       |
+# | fighting_at  | 部屋に入った日時で抜けたり切断すると空 | datetime    |             |      |       |
+# | time_up_at   | タイムアップしたのを検知した日時       | datetime    |             |      |       |
+# | created_at   | 作成日時                               | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時                               | datetime    | NOT NULL    |      |       |
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
 
 module Fanta
   class Membership < ApplicationRecord

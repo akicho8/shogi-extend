@@ -15,9 +15,9 @@
         "fanta/membership": "対局と対局者の対応",
       },
       attributes: {
-        "fanta/users": {
+        "fanta/user": {
           :name                 => "名前",
-          :current_battle       => "現在入室している部屋",
+          :avatar               => "アバター",
           :online_at            => "オンラインになった日時",
           :fighting_at          => "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる",
           :matching_at          => "マッチング中(開始日時)",
@@ -28,8 +28,11 @@
           :robot_accept_key             => "CPUと対戦するかどうか",
           :user_agent           => "ブラウザ情報",
         },
+        "fanta/profile": {
+          :greeting_message     => "対局開始時のあいさつ",
+        },
 
-        "fanta/battles": {
+        "fanta/battle": {
           :black_preset_key     => "▲手合割",
           :white_preset_key     => "△手合割",
           :lifetime_key         => "時間",
@@ -48,7 +51,7 @@
           :watch_ships_count    => "この部屋の観戦者数",
         },
 
-        "fanta/memberships": {
+        "fanta/membership": {
           :battle              => "部屋",
           :user                => "ユーザー",
           :preset_key          => "手合割",
@@ -59,18 +62,18 @@
           :time_up_at  => "タイムアップしたのを検知した日時",
         },
 
-        "fanta/watch_ships": {
+        "fanta/watch_ship": {
           :battle              => "部屋",
           :user                => "ユーザー",
         },
 
-        "fanta/chat_messages": {
+        "fanta/chat_message": {
           :battle              => "部屋",
           :user                => "ユーザー",
           :message             => "発言",
         },
 
-        "fanta/lobby_messages": {
+        "fanta/lobby_message": {
           :user                => "ユーザー",
           :message             => "発言",
         },

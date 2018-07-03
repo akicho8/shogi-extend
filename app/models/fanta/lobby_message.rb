@@ -7,8 +7,8 @@
 # | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | user_id     | User        | integer(8)  | NOT NULL    |      | A     |
-# | message     | Message     | text(65535) | NOT NULL    |      |       |
+# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | A     |
+# | message     | 発言        | text(65535) | NOT NULL    |      |       |
 # | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
 # | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |

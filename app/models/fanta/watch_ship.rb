@@ -3,15 +3,15 @@
 #
 # Watch shipテーブル (fanta_watch_ships as Fanta::WatchShip)
 #
-# |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
-# |------------+----------+------------+-------------+------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |      |       |
-# | battle_id  | Battle   | integer(8) | NOT NULL    |      | A     |
-# | user_id    | User     | integer(8) | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
-# |------------+----------+------------+-------------+------+-------|
+# |------------+------------+------------+-------------+------+-------|
+# | カラム名   | 意味       | タイプ     | 属性        | 参照 | INDEX |
+# |------------+------------+------------+-------------+------+-------|
+# | id         | ID         | integer(8) | NOT NULL PK |      |       |
+# | battle_id  | 部屋ID     | integer(8) | NOT NULL    |      | A     |
+# | user_id    | ユーザーID | integer(8) | NOT NULL    |      | B     |
+# | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
+# |------------+------------+------------+-------------+------+-------|
 
 module Fanta
   class WatchShip < ApplicationRecord

@@ -3,71 +3,86 @@
 #
 # ユーザーテーブル (fanta_users as Fanta::User)
 #
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味             | タイプ      | 属性        | 参照 | INDEX |
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | id                | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key               | Key              | string(255) | NOT NULL    |      | A!    |
-# | name              | Name             | string(255) | NOT NULL    |      |       |
-# | current_battle_id | Current battle   | integer(8)  |             |      | B     |
-# | online_at         | Online at        | datetime    |             |      |       |
-# | fighting_at       | Fighting at      | datetime    |             |      |       |
-# | matching_at       | Matching at      | datetime    |             |      |       |
-# | cpu_brain_key     | Cpu brain key    | string(255) |             |      |       |
-# | user_agent        | User agent       | string(255) | NOT NULL    |      |       |
-# | lifetime_key      | Lifetime key     | string(255) | NOT NULL    |      | C     |
-# | platoon_key       | Platoon key      | string(255) | NOT NULL    |      | D     |
-# | self_preset_key   | Self preset key  | string(255) | NOT NULL    |      | E     |
-# | oppo_preset_key   | Oppo preset key  | string(255) | NOT NULL    |      | F     |
-# | robot_accept_key  | Robot accept key | string(255) | NOT NULL    |      | G     |
-# | race_key          | Race key         | string(255) | NOT NULL    |      | H     |
-# | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
-# |-------------------+------------------+-------------+-------------+------+-------|
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | カラム名         | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | id               | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
+# | key              | Key                                                                      | string(255) | NOT NULL    |      | A!    |
+# | name             | 名前                                                                     | string(255) | NOT NULL    |      |       |
+# | online_at        | オンラインになった日時                                                   | datetime    |             |      |       |
+# | fighting_at      | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |             |      |       |
+# | matching_at      | マッチング中(開始日時)                                                   | datetime    |             |      |       |
+# | cpu_brain_key    | Cpu brain key                                                            | string(255) |             |      |       |
+# | user_agent       | ブラウザ情報                                                             | string(255) | NOT NULL    |      |       |
+# | lifetime_key     | ルール・持ち時間                                                         | string(255) | NOT NULL    |      | B     |
+# | platoon_key      | ルール・人数                                                             | string(255) | NOT NULL    |      | C     |
+# | self_preset_key  | ルール・自分の手合割                                                     | string(255) | NOT NULL    |      | D     |
+# | oppo_preset_key  | ルール・相手の手合割                                                     | string(255) | NOT NULL    |      | E     |
+# | robot_accept_key | CPUと対戦するかどうか                                                    | string(255) | NOT NULL    |      | F     |
+# | race_key         | Race key                                                                 | string(255) | NOT NULL    |      | G     |
+# | created_at       | 作成日時                                                                 | datetime    | NOT NULL    |      |       |
+# | updated_at       | 更新日時                                                                 | datetime    | NOT NULL    |      |       |
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
 
 module Fanta
   CpuBrainInfo
 
   class User < ApplicationRecord
-    class << self
-      def setup(options = {})
-        super
+    concerning :BasicMethods do
+      included do
+        scope :random_order, -> { order(Arel.sql("rand()")) }
 
-        sysop
+        before_validation on: :create do
+          self.key ||= SecureRandom.hex
+          self.user_agent ||= ""
 
-        CpuBrainInfo.each do |e|
-          unless find_by(key: e.key)
-            create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, cpu_brain_key: e.key)
+          if race_info.key == :human
+            self.name ||= "野良#{self.class.human_only.count.next}号"
+          else
+            self.name ||= "CPU#{self.class.robot_only.count.next}号"
+          end
+
+          if Rails.env.development?
+            self.online_at ||= Time.current
           end
         end
+      end
 
-        if Rails.env.development?
-          2.times.collect do
-            create!(platoon_key: "platoon_p2vs2")
+      class_methods do
+        def setup(options = {})
+          super
+
+          sysop
+
+          CpuBrainInfo.each do |e|
+            unless find_by(key: e.key)
+              create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, cpu_brain_key: e.key)
+            end
+          end
+
+          if Rails.env.development?
+            2.times.collect do
+              create!(platoon_key: "platoon_p2vs2")
+            end
           end
         end
+      end
+
+      def show_path
+        Rails.application.routes.url_helpers.url_for([self, only_path: true])
       end
     end
 
-    scope :random_order, -> { order(Arel.sql("rand()")) }
+    concerning :ProfileMethods do
+      included do
+        has_one :profile, dependent: :destroy
+        accepts_nested_attributes_for :profile
+        delegate :greeting_message, to: :profile
 
-    before_validation on: :create do
-      self.key ||= SecureRandom.hex
-      self.user_agent ||= ""
-
-      if race_info.key == :human
-        self.name ||= "野良#{self.class.human_only.count.next}号"
-      else
-        self.name ||= "CPU#{self.class.robot_only.count.next}号"
+        after_create do
+          create_profile
+        end
       end
-
-      if Rails.env.development?
-        self.online_at ||= Time.current
-      end
-    end
-
-    def show_path
-      Rails.application.routes.url_helpers.url_for([self, only_path: true])
     end
 
     concerning :RuleMethods do
@@ -440,7 +455,6 @@ module Fanta
       included do
         has_many :memberships, dependent: :destroy
         has_many :battles, through: :memberships
-        belongs_to :current_battle, class_name: "Battle", optional: true, counter_cache: :current_users_count # 今入っている部屋
 
         has_many :watch_ships, dependent: :destroy                    # 自分が観戦している部屋たち(中間情報)
         has_many :watch_rooms, through: :watch_ships, source: :battle # 自分が観戦している部屋たち
@@ -458,9 +472,6 @@ module Fanta
 
         # 自分から部屋に入ったらマッチングを解除する
         update!(matching_at: nil)
-
-        # どの部屋にいるか設定
-        update!(current_battle: battle) # FIXME: とる
 
         # 部屋のメンバーとして登録(マッチング済みの場合はもう登録されている)
         # unless battle.users.include?(current_user)
@@ -492,6 +503,9 @@ module Fanta
               memberships.each { |e|
                 e.update!(standby_at: Time.current)
               }
+
+              chat_say(battle, greeting_message)
+
               if battle.memberships.standby_enable.count >= battle.memberships.count
                 battle.battle_start
               end
@@ -506,8 +520,6 @@ module Fanta
         chat_say(battle, "退室しました", msg_class: "has-text-info")
 
         memberships ||= battle.memberships.where(user: self)
-
-        update!(current_battle_id: nil) # とる
 
         if memberships.present?
           # 対局者

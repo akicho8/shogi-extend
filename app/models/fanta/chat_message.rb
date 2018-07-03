@@ -7,9 +7,9 @@
 # | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | battle_id   | Battle      | integer(8)  | NOT NULL    |      | A     |
-# | user_id     | User        | integer(8)  | NOT NULL    |      | B     |
-# | message     | Message     | text(65535) | NOT NULL    |      |       |
+# | battle_id   | 部屋ID      | integer(8)  | NOT NULL    |      | A     |
+# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | B     |
+# | message     | 発言        | text(65535) | NOT NULL    |      |       |
 # | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
 # | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |

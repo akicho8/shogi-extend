@@ -102,10 +102,17 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["user_id"], name: "index_fanta_memberships_on_user_id"
   end
 
+  create_table "fanta_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.text "greeting_message", null: false, comment: "あいさつ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_fanta_profiles_on_user_id"
+  end
+
   create_table "fanta_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
-    t.bigint "current_battle_id", comment: "現在入室している部屋"
     t.datetime "online_at", comment: "オンラインになった日時"
     t.datetime "fighting_at", comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
     t.datetime "matching_at", comment: "マッチング中(開始日時)"
@@ -119,7 +126,6 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "race_key", null: false, comment: "種族"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["current_battle_id"], name: "index_fanta_users_on_current_battle_id"
     t.index ["key"], name: "index_fanta_users_on_key", unique: true
     t.index ["lifetime_key"], name: "index_fanta_users_on_lifetime_key"
     t.index ["oppo_preset_key"], name: "index_fanta_users_on_oppo_preset_key"

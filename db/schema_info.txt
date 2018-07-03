@@ -4,27 +4,26 @@
 #
 # ユーザーテーブル (fanta_users as Fanta::User)
 #
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味             | タイプ      | 属性        | 参照 | INDEX |
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | id                | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key               | Key              | string(255) | NOT NULL    |      | A!    |
-# | name              | Name             | string(255) | NOT NULL    |      |       |
-# | current_battle_id | Current battle   | integer(8)  |             |      | B     |
-# | online_at         | Online at        | datetime    |             |      |       |
-# | fighting_at       | Fighting at      | datetime    |             |      |       |
-# | matching_at       | Matching at      | datetime    |             |      |       |
-# | cpu_brain_key     | Cpu brain key    | string(255) |             |      |       |
-# | user_agent        | User agent       | string(255) | NOT NULL    |      |       |
-# | lifetime_key      | Lifetime key     | string(255) | NOT NULL    |      | C     |
-# | platoon_key       | Platoon key      | string(255) | NOT NULL    |      | D     |
-# | self_preset_key   | Self preset key  | string(255) | NOT NULL    |      | E     |
-# | oppo_preset_key   | Oppo preset key  | string(255) | NOT NULL    |      | F     |
-# | robot_accept_key  | Robot accept key | string(255) | NOT NULL    |      | G     |
-# | race_key          | Race key         | string(255) | NOT NULL    |      | H     |
-# | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
-# |-------------------+------------------+-------------+-------------+------+-------|
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | カラム名         | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | id               | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
+# | key              | Key                                                                      | string(255) | NOT NULL    |      | A!    |
+# | name             | 名前                                                                     | string(255) | NOT NULL    |      |       |
+# | online_at        | オンラインになった日時                                                   | datetime    |             |      |       |
+# | fighting_at      | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |             |      |       |
+# | matching_at      | マッチング中(開始日時)                                                   | datetime    |             |      |       |
+# | cpu_brain_key    | Cpu brain key                                                            | string(255) |             |      |       |
+# | user_agent       | ブラウザ情報                                                             | string(255) | NOT NULL    |      |       |
+# | lifetime_key     | ルール・持ち時間                                                         | string(255) | NOT NULL    |      | B     |
+# | platoon_key      | ルール・人数                                                             | string(255) | NOT NULL    |      | C     |
+# | self_preset_key  | ルール・自分の手合割                                                     | string(255) | NOT NULL    |      | D     |
+# | oppo_preset_key  | ルール・相手の手合割                                                     | string(255) | NOT NULL    |      | E     |
+# | robot_accept_key | CPUと対戦するかどうか                                                    | string(255) | NOT NULL    |      | F     |
+# | race_key         | Race key                                                                 | string(255) | NOT NULL    |      | G     |
+# | created_at       | 作成日時                                                                 | datetime    | NOT NULL    |      |       |
+# | updated_at       | 更新日時                                                                 | datetime    | NOT NULL    |      |       |
+# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -174,49 +173,49 @@
 #
 # 対局と対局者の対応テーブル (fanta_memberships as Fanta::Membership)
 #
-# |--------------+--------------+-------------+-------------+------+-------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX |
-# |--------------+--------------+-------------+-------------+------+-------|
-# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
-# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A     |
-# | user_id      | User         | integer(8)  | NOT NULL    |      | B     |
-# | preset_key   | Preset key   | string(255) | NOT NULL    |      |       |
-# | location_key | Location key | string(255) | NOT NULL    |      | C     |
-# | position     | 順序         | integer(4)  |             |      | D     |
-# | standby_at   | Standby at   | datetime    |             |      |       |
-# | fighting_at  | Fighting at  | datetime    |             |      |       |
-# | time_up_at   | Time up at   | datetime    |             |      |       |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
-# |--------------+--------------+-------------+-------------+------+-------|
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
+# | カラム名     | 意味                                   | タイプ      | 属性        | 参照 | INDEX |
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
+# | id           | ID                                     | integer(8)  | NOT NULL PK |      |       |
+# | battle_id    | 部屋ID                                 | integer(8)  | NOT NULL    |      | A     |
+# | user_id      | ユーザーID                             | integer(8)  | NOT NULL    |      | B     |
+# | preset_key   | 手合割                                 | string(255) | NOT NULL    |      |       |
+# | location_key | 先後                                   | string(255) | NOT NULL    |      | C     |
+# | position     | 入室順序                               | integer(4)  |             |      | D     |
+# | standby_at   | 準備完了日時                           | datetime    |             |      |       |
+# | fighting_at  | 部屋に入った日時で抜けたり切断すると空 | datetime    |             |      |       |
+# | time_up_at   | タイムアップしたのを検知した日時       | datetime    |             |      |       |
+# | created_at   | 作成日時                               | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時                               | datetime    | NOT NULL    |      |       |
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
 # 対局テーブル (fanta_battles as Fanta::Battle)
 #
-# |---------------------+---------------------+-------------+---------------------+------+-------|
-# | カラム名            | 意味                | タイプ      | 属性                | 参照 | INDEX |
-# |---------------------+---------------------+-------------+---------------------+------+-------|
-# | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
-# | black_preset_key    | Black preset key    | string(255) | NOT NULL            |      |       |
-# | white_preset_key    | White preset key    | string(255) | NOT NULL            |      |       |
-# | lifetime_key        | Lifetime key        | string(255) | NOT NULL            |      |       |
-# | platoon_key         | Platoon key         | string(255) | NOT NULL            |      |       |
-# | full_sfen           | Full sfen           | text(65535) | NOT NULL            |      |       |
-# | clock_counts        | Clock counts        | text(65535) | NOT NULL            |      |       |
-# | countdown_flags     | Countdown flags     | text(65535) | NOT NULL            |      |       |
-# | turn_max            | Turn max            | integer(4)  | NOT NULL            |      |       |
-# | battle_request_at   | Battle request at   | datetime    |                     |      |       |
-# | auto_matched_at     | Auto matched at     | datetime    |                     |      |       |
-# | begin_at            | Begin at            | datetime    |                     |      |       |
-# | end_at              | End at              | datetime    |                     |      |       |
-# | last_action_key     | Last action key     | string(255) |                     |      |       |
-# | win_location_key    | Win location key    | string(255) |                     |      |       |
-# | current_users_count | Current users count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | watch_ships_count   | Watch ships count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
-# | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
-# |---------------------+---------------------+-------------+---------------------+------+-------|
+# |---------------------+----------------------------------------------+-------------+---------------------+------+-------|
+# | カラム名            | 意味                                         | タイプ      | 属性                | 参照 | INDEX |
+# |---------------------+----------------------------------------------+-------------+---------------------+------+-------|
+# | id                  | ID                                           | integer(8)  | NOT NULL PK         |      |       |
+# | black_preset_key    | ▲手合割                                     | string(255) | NOT NULL            |      |       |
+# | white_preset_key    | △手合割                                     | string(255) | NOT NULL            |      |       |
+# | lifetime_key        | 時間                                         | string(255) | NOT NULL            |      |       |
+# | platoon_key         | 人数                                         | string(255) | NOT NULL            |      |       |
+# | full_sfen           | USI形式棋譜                                  | text(65535) | NOT NULL            |      |       |
+# | clock_counts        | 対局時計情報                                 | text(65535) | NOT NULL            |      |       |
+# | countdown_flags     | 秒読み状態                                   | text(65535) | NOT NULL            |      |       |
+# | turn_max            | 手番数                                       | integer(4)  | NOT NULL            |      |       |
+# | battle_request_at   | 対局申し込みによる成立日時                   | datetime    |                     |      |       |
+# | auto_matched_at     | 自動マッチングによる成立日時                 | datetime    |                     |      |       |
+# | begin_at            | メンバーたち部屋に入って対局開始になった日時 | datetime    |                     |      |       |
+# | end_at              | バトル終了日時                               | datetime    |                     |      |       |
+# | last_action_key     | 最後の状態                                   | string(255) |                     |      |       |
+# | win_location_key    | 勝った方の先後                               | string(255) |                     |      |       |
+# | current_users_count | この部屋にいる人数                           | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_ships_count   | この部屋の観戦者数                           | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at          | 作成日時                                     | datetime    | NOT NULL            |      |       |
+# | updated_at          | 更新日時                                     | datetime    | NOT NULL            |      |       |
+# |---------------------+----------------------------------------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
 #
@@ -226,8 +225,8 @@
 # | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | user_id     | User        | integer(8)  | NOT NULL    |      | A     |
-# | message     | Message     | text(65535) | NOT NULL    |      |       |
+# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | A     |
+# | message     | 発言        | text(65535) | NOT NULL    |      |       |
 # | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
 # | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
@@ -241,9 +240,9 @@
 # | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | battle_id   | Battle      | integer(8)  | NOT NULL    |      | A     |
-# | user_id     | User        | integer(8)  | NOT NULL    |      | B     |
-# | message     | Message     | text(65535) | NOT NULL    |      |       |
+# | battle_id   | 部屋ID      | integer(8)  | NOT NULL    |      | A     |
+# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | B     |
+# | message     | 発言        | text(65535) | NOT NULL    |      |       |
 # | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
 # | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
@@ -251,17 +250,31 @@
 
 # == Schema Information ==
 #
+# Profileテーブル (fanta_profiles as Fanta::Profile)
+#
+# |------------------+----------------------+-------------+-------------+------+-------|
+# | カラム名         | 意味                 | タイプ      | 属性        | 参照 | INDEX |
+# |------------------+----------------------+-------------+-------------+------+-------|
+# | id               | ID                   | integer(8)  | NOT NULL PK |      |       |
+# | user_id          | User                 | integer(8)  | NOT NULL    |      | A     |
+# | greeting_message | 対局開始時のあいさつ | text(65535) | NOT NULL    |      |       |
+# | created_at       | 作成日時             | datetime    | NOT NULL    |      |       |
+# | updated_at       | 更新日時             | datetime    | NOT NULL    |      |       |
+# |------------------+----------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Watch shipテーブル (fanta_watch_ships as Fanta::WatchShip)
 #
-# |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
-# |------------+----------+------------+-------------+------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |      |       |
-# | battle_id  | Battle   | integer(8) | NOT NULL    |      | A     |
-# | user_id    | User     | integer(8) | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
-# |------------+----------+------------+-------------+------+-------|
+# |------------+------------+------------+-------------+------+-------|
+# | カラム名   | 意味       | タイプ     | 属性        | 参照 | INDEX |
+# |------------+------------+------------+-------------+------+-------|
+# | id         | ID         | integer(8) | NOT NULL PK |      |       |
+# | battle_id  | 部屋ID     | integer(8) | NOT NULL    |      | A     |
+# | user_id    | ユーザーID | integer(8) | NOT NULL    |      | B     |
+# | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
+# |------------+------------+------------+-------------+------+-------|
 
 # == Schema Information ==
 #
