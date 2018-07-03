@@ -2,7 +2,7 @@ module Fanta
   class CpuBrainInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :level1, name: "ルール棋覚えたての", time_limit: nil,     depth_max_range: nil,  legal_only: false, mate_danger_check: false, }, # ランダムで王手でも逃げない
+      { key: :level1, name: "ルール覚えたての",   time_limit: nil,     depth_max_range: nil,  legal_only: false, mate_danger_check: false, }, # ランダムで王手でも逃げない
       { key: :level2, name: "あきれるほど弱い",   time_limit: nil,     depth_max_range: nil,  legal_only: false, mate_danger_check: true,  }, # ランダムだけど王手のときは逃げる
       { key: :level3, name: "ありえないほど弱い", time_limit: nil,     depth_max_range: nil,  legal_only: true,  mate_danger_check: true,  }, # 合法手のランダム
       { key: :level4, name: "めちゃくちゃ弱い",   time_limit: nil,     depth_max_range: 0..0, legal_only: true,  mate_danger_check: true,  }, # 最初の合法手リストを最善手順に並べたもの

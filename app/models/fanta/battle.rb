@@ -258,7 +258,7 @@ module Fanta
             unless hand
               hands = mediator.current_player.normal_all_hands.to_a
               legal = cpu_brain_info.legal_only
-              if mate_danger_check
+              if cpu_brain_info.mate_danger_check
                 legal ||= mediator.current_player.mate_danger?
               end
               if legal
