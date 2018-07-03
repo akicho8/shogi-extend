@@ -175,6 +175,9 @@ module Fanta
       class Brain
         attr_reader :battle, :mediator
 
+        delegate :current_user, to: :battle
+        delegate :cpu_brain_info, to: :current_user
+
         def initialize(battle, mediator)
           @battle = battle
           @mediator = mediator
@@ -196,7 +199,8 @@ module Fanta
 
         # 次の手番の合法手がない = 詰ました = 勝ち
         def win_check
-          if mediator.current_player.normal_all_hands.none? { |e| e.legal_move?(mediator) }
+          if mediator.current_player.legal_all_hands.none?
+            # if mediator.current_player.normal_all_hands.none? { |e| e.legal_move?(mediator) }
             User.sysop.chat_say(battle, "【詰み】#{mediator.current_player.call_name}はもう指す手がありません", msg_class: "has-text-danger")
             battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
           end
@@ -204,7 +208,7 @@ module Fanta
 
         def execute_loop_if_robot
           loop do
-            if !battle.current_user.race_info.auto_hand
+            if !current_user.race_info.auto_hand
               break
             end
             execute_one
@@ -213,16 +217,67 @@ module Fanta
 
         def execute_one
           clock_counter = measure_time do
-            # 次に指すのはコンピュータ
-            hands = mediator.current_player.normal_all_hands.to_a
-            # if current_cpu_brain_info.legal_only
-            if true
-              hands = hands.find_all { |e| e.legal_move?(mediator) }
+
+            # captured_soldier = mediator.opponent_player.executor.captured_soldier
+            # if captured_soldier
+            #   if captured_soldier.piece.key == :king
+            #     render json: {you_win_message: "玉を取って勝ちました！", sfen: mediator.to_sfen}
+            #     return
+            #   end
+            # end
+
+            hand = nil
+            puts mediator
+
+            # 先を読む
+            if cpu_brain_info.depth_max_range
+              brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
+              records = []
+
+              cpu_brain_info.time_limit.each.with_index(1) do |tl, i|
+                begin
+                  tp({i: "#{i}回目", time_limit: tl})
+                  __trace("#{cpu_brain_info.depth_max_range}手先まで最大#{tl}秒かけて読んでます")
+                  records = brain.iterative_deepening(time_limit: tl, depth_max_range: cpu_brain_info.depth_max_range)
+                  break
+                rescue Warabi::BrainProcessingHeavy
+                  __trace("無理でした")
+                end
+              end
+
+              unless records.empty?
+                tp Warabi::Brain.human_format(records)
+
+                record = records.first
+                tp record.keys
+                hand = record[:hand]
+
+                __trace("#{record[:best_pv].size}手先まで読んで#{hand}を指しました。評価値:#{record[:score2]} 読み筋:#{record[:best_pv].collect(&:to_s).join(' ')}")
+              end
             end
-            hand = hands.sample
+
+            # 読めなかった場合は合法手から選択する
+            unless hand
+              hands = mediator.current_player.normal_all_hands.to_a
+              if cpu_brain_info.legal_only
+                hands = hands.find_all { |e| e.legal_move?(mediator) }
+              end
+              hand = hands.sample
+
+              if hand
+                if cpu_brain_info.legal_only
+                  __trace("合法手から#{hand}")
+                else
+                  __trace("ランダムで#{hand}")
+                end
+              end
+            end
+
+            # 手がなければ詰まされている
             unless hand
               battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
             end
+
             mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
             validate_checkmate_ignore
           end
@@ -258,6 +313,11 @@ module Fanta
           }
 
           ActionCable.server.broadcast(battle.channel_key, broadcast_hash)
+        end
+
+        def __trace(message)
+          return if Rails.env.production?
+          current_user.chat_say(battle, message, msg_class: "has-text-danger")
         end
       end
 

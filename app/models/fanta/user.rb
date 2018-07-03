@@ -160,7 +160,7 @@ module Fanta
 
     concerning :CpuBrainMethods do
       def cpu_brain_info
-        CpuBrainInfo.fetch_if(cpu_brain_key)
+        CpuBrainInfo.fetch(cpu_brain_key || :level1)
       end
     end
 
