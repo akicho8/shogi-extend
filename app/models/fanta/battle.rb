@@ -254,16 +254,20 @@ module Fanta
               end
             end
 
-            # 読めなかった場合は合法手から選択する
+            # 読めなかった場合はランダムまたは合法手から選択する
             unless hand
               hands = mediator.current_player.normal_all_hands.to_a
-              if cpu_brain_info.legal_only
+              legal = cpu_brain_info.legal_only
+              if mate_danger_check
+                legal ||= mediator.current_player.mate_danger?
+              end
+              if legal
                 hands = hands.find_all { |e| e.legal_move?(mediator) }
               end
               hand = hands.sample
 
               if hand
-                if cpu_brain_info.legal_only
+                if legal
                   __trace("合法手から#{hand}")
                 else
                   __trace("ランダムで#{hand}")
