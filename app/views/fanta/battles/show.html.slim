@@ -6,47 +6,8 @@ javascript:
 
 #battle_app v-cloak="true"
   .columns
-    .column.is-two-thirds
-      .virtual_box
-        div v-if="begin_at"
-          nav.level
-            .level-left
-              .level-item.has-text-centered
-                div(v-html="name_with_time_block('white')")
-            template(v-if="battle_now_p")
-              .level-item.has-text-centered
-                div
-                  .buttons
-                    button.button.is-primary.is-outlined(@click="give_up" :disabled="!button_active_p") 投了
-                    button.button.is-primary.is-outlined(@click="hebokisin" :disabled="!button_active_p") ヘボ棋神
-            template(v-if="xstate_key === 'st_done'")
-              .level-item.has-text-centered
-                = link_to("ロビーに戻る", [:fanta, :battles], class: "button")
-            .level-right
-              .level-item.has-text-centered
-                div(v-html="name_with_time_block('black')")
-
-        shogi-player(
-          :run_mode="run_mode"
-          :kifu_body="full_sfen"
-          :key_event_capture="false"
-          :slider_show="!any_controller_hide"
-          :sfen_show="!any_controller_hide"
-          :controller_show="!any_controller_hide"
-          :theme="'real'"
-          :size="'x-large'"
-          :sound_effect="true"
-          :volume=AppConfig[:volume]
-          @update:play_mode_long_sfen="play_mode_long_sfen_set"
-          :human_side_key="human_side_key"
-          :flip="flip"
-        )
-
-      .virtual_box
-        pre.pre-wrap(v-text="human_kifu_text")
-
     .column
-      .virtual_box.chat_container
+      .virtual_box2.chat_container
         / .title.is-5= "チャット"
 
         table.table.is-narrow.is-fullwidth
@@ -88,7 +49,43 @@ javascript:
               /       input[type="checkbox"]
               /       |  Press enter to submit
 
-      .virtual_box
+    .column.is-half
+      .virtual_box2
+        div v-if="begin_at"
+          nav.level
+            .level-left
+              .level-item.has-text-centered
+                div(v-html="name_with_time_block('white')")
+            template(v-if="battle_now_p")
+              .level-item.has-text-centered
+                div
+                  .buttons
+                    button.button.is-primary.is-outlined(@click="give_up" :disabled="!button_active_p") 投了
+                    button.button.is-primary.is-outlined(@click="hebokisin" :disabled="!button_active_p") ヘボ棋神
+            template(v-if="xstate_key === 'st_done'")
+              .level-item.has-text-centered
+                = link_to("ロビーに戻る", [:fanta, :battles], class: "button")
+            .level-right
+              .level-item.has-text-centered
+                div(v-html="name_with_time_block('black')")
+
+        shogi-player(
+          :run_mode="run_mode"
+          :kifu_body="full_sfen"
+          :key_event_capture="false"
+          :slider_show="!any_controller_hide"
+          :sfen_show="!any_controller_hide"
+          :controller_show="!any_controller_hide"
+          :theme="'real'"
+          :size="'x-large'"
+          :sound_effect="true"
+          :volume=AppConfig[:volume]
+          @update:play_mode_long_sfen="play_mode_long_sfen_set"
+          :human_side_key="human_side_key"
+          :flip="flip"
+        )
+    .column
+      .virtual_box2
         b-table(:data="memberships")
           template slot-scope="props"
             b-table-column(label="対局者")
@@ -105,7 +102,7 @@ javascript:
               | {{location_mark(props.row)}}
 
       template(v-if="!_.isEmpty(watch_users)")
-        .virtual_box
+        .virtual_box2
           .title.is-5= "観戦者"
           b-table(:data="watch_users")
             template slot-scope="props"
@@ -113,6 +110,11 @@ javascript:
                 message_link_to :user_to="props.row"
                 template v-if="user_self_p(props.row)"
                   = " *"
+
+  .columns
+    .column
+      .virtual_box2
+        pre.pre-wrap(v-text="human_kifu_text")
 
   - if Rails.env.development?
     .virtual_box
