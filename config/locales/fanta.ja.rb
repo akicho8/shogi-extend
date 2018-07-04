@@ -29,7 +29,8 @@
           :user_agent           => "ブラウザ情報",
         },
         "fanta/profile": {
-          :greeting_message     => "対局開始時のあいさつ",
+          :begin_greeting_message     => "対局開始時のあいさつ",
+          :end_greeting_message    => "対局終了時のあいさつ",
         },
 
         "fanta/battle": {

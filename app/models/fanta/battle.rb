@@ -378,9 +378,12 @@ module Fanta
       end
 
       def game_end_broadcast
-        robots  = users.find_all { |e| e.race_info.key == :robot }.uniq
+        users.uniq.each do |e|
+          e.chat_say(self, e.end_greeting_message)
+        end
+
+        robots = users.find_all { |e| e.race_info.key == :robot }.uniq
         robots.each do |e|
-          e.chat_say(self, "負けました(T_T) ありがとうございました〜")
           e.room_out(self)
         end
 

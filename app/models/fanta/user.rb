@@ -77,7 +77,7 @@ module Fanta
       included do
         has_one :profile, dependent: :destroy
         accepts_nested_attributes_for :profile
-        delegate :greeting_message, to: :profile
+        delegate :begin_greeting_message, :end_greeting_message, to: :profile
 
         after_create do
           create_profile
@@ -527,7 +527,7 @@ module Fanta
                 e.update!(standby_at: Time.current)
               }
 
-              chat_say(battle, greeting_message)
+              chat_say(battle, begin_greeting_message)
 
               if battle.memberships.standby_enable.count >= battle.memberships.count
                 battle.battle_start

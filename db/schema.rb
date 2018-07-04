@@ -104,7 +104,8 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
 
   create_table "fanta_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
-    t.text "greeting_message", null: false, comment: "あいさつ"
+    t.text "begin_greeting_message", null: false, comment: "対局開始時のあいさつ"
+    t.text "end_greeting_message", null: false, comment: "対局終了時のあいさつ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_fanta_profiles_on_user_id"

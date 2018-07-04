@@ -52,9 +52,10 @@ class CreateFanta < ActiveRecord::Migration[5.1]
 
     # プロフィール
     create_table :fanta_profiles, force: true do |t|
-      t.belongs_to :user,       null: false, comment: "ユーザー"
-      t.text :greeting_message, null: false, comment: "あいさつ"
-      t.timestamps              null: false
+      t.belongs_to :user,        null: false, comment: "ユーザー"
+      t.text :begin_greeting_message,  null: false, comment: "対局開始時のあいさつ"
+      t.text :end_greeting_message, null: false, comment: "対局終了時のあいさつ"
+      t.timestamps               null: false
     end
 
     # 部屋
