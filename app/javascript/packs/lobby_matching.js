@@ -6,6 +6,7 @@ export default {
       matching_at:          null,
       matching_counter:     null,
       matching_interval_id: null,
+
       matching_counter_trigger: 2,
     }
   },
@@ -19,7 +20,7 @@ export default {
 
   methods: {
     matching_start() {
-      App.lobby.matching_start({})
+      App.lobby.matching_start()
     },
 
     matching_cancel() {

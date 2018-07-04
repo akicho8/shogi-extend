@@ -378,6 +378,12 @@ module Fanta
       end
 
       def game_end_broadcast
+        robots  = users.find_all { |e| e.race_info.key == :robot }.uniq
+        robots.each do |e|
+          e.chat_say(self, "負けました(T_T) ありがとうございました〜")
+          e.room_out(self)
+        end
+
         ActionCable.server.broadcast(channel_key, {
             end_at: end_at,
             win_location_key: win_location_key,
