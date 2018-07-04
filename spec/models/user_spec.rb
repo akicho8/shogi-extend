@@ -160,7 +160,7 @@ module Fanta
           assert { @user1.matching_start == nil }
           assert { @user2.matching_start == nil }
 
-          battle = @user1.matching_start_with_robot
+          battle = @user1.matching_start(with_robot: true)
 
           assert { battle }
           assert { battle.memberships.count == 4 }
@@ -178,7 +178,7 @@ module Fanta
           assert { @user1.matching_start == nil }
           assert { @user2.matching_start == nil }
 
-          battle = @user1.matching_start_with_robot
+          battle = @user1.matching_start(with_robot: true)
 
           assert { battle }
           assert { battle.memberships.count == 4 }

@@ -20,7 +20,7 @@ class LobbyChannel < ApplicationCable::Channel
   end
 
   def matching_start_with_robot(data)
-    current_user.matching_start_with_robot
+    current_user.matching_start(with_robot: true)
   end
 
   def matching_cancel(data)

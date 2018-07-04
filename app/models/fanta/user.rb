@@ -279,10 +279,6 @@ module Fanta
       end
 
       def matching_start(**options)
-        __matching_start(options)
-      end
-
-      def __matching_start(**options)
         options = {
           with_robot: false,
         }.merge(options)
@@ -340,10 +336,6 @@ module Fanta
         end
 
         battle_setup(pair_list, auto_matched_at: Time.current)
-      end
-
-      def matching_start_with_robot
-        __matching_start(with_robot: true)
       end
 
       # 必ず count 数のロボットを得る。ただしロボットが１人もいない場合は空

@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { CustomPresetInfo } from './custom_preset_info'
 import { HiraKomaInfo } from './hira_koma_info'
+import lobby_matching from './lobby_matching'
 
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
@@ -68,16 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("matching_start", data)
     },
 
+    matching_start_with_robot(data) {
+      this.perform("matching_start_with_robot", data)
+    },
+
     matching_cancel(data) {
       this.perform("matching_cancel", data)
     },
 
-    matching_start_with_robot(data) {
-      this.perform("matching_start_with_robot", data)
-    },
   })
 
   App.lobby_vm = new Vue({
+    mixins: [
+      lobby_matching,
+    ],
     el: "#lobby_app",
     data: function() {
       return {
@@ -106,23 +111,16 @@ document.addEventListener('DOMContentLoaded', () => {
         current_lifetime_key:  null,
         current_platoon_key:   null,
         robot_accept_key:     null,
-
-        matching_at:           null, // マッチングをサーバー側で受理した日時
-        matching_wait_count: 0,
-        matching_interval_id: null,
       }
     },
 
     created() {
       if (this.current_user) {
-        console.assert("matching_at" in this.current_user)
         console.assert("self_preset_key" in this.current_user)
         console.assert("oppo_preset_key" in this.current_user)
         console.assert("lifetime_key" in this.current_user)
         console.assert("platoon_key" in this.current_user)
         console.assert("robot_accept_key" in this.current_user)
-
-        this.matching_wait(this.current_user.matching_at)
 
         this.self_preset_key      = this.current_user.self_preset_key
         this.oppo_preset_key      = this.current_user.oppo_preset_key
@@ -188,35 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
           platoon_key:      this.current_platoon_key,
           robot_accept_key: this.robot_accept_key,
         })
-      },
-
-      matching_start() {
-        App.lobby.matching_start({})
-      },
-
-      matching_cancel() {
-        this.matching_at = null
-        this.matching_clear_interval()
-        App.lobby.matching_cancel()
-      },
-
-      matching_wait(time) {
-        this.matching_at = time
-        this.matching_wait_count = 1
-        this.matching_clear_interval()
-        this.matching_interval_id = setInterval(() => {
-          this.matching_wait_count++
-          if (this.matching_wait_count == 3) {
-            App.lobby.matching_start_with_robot()
-          }
-        }, 1000)
-      },
-
-      matching_clear_interval() {
-        if (!_.isNil(this.matching_interval_id)) {
-          clearInterval(this.matching_interval_id)
-          this.matching_interval_id = null
-        }
       },
 
       message_enter(value) {

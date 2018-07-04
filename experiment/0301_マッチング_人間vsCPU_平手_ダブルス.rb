@@ -16,7 +16,7 @@ module Fanta
   user2.matching_start          # => nil
 
   # 人間1がCPUも含めてマッチング開始
-  battle = user1.matching_start_with_robot
+  battle = user1.matching_start(with_robot: true)
 
   tp battle
   tp battle.users.collect(&:name).sort # => ["CPU", "CPU", "人間1", "人間2"]
