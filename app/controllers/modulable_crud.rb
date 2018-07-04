@@ -2,6 +2,26 @@
 # Basically all methods are designed to override.
 
 module ModulableCrud
+  concern :Lettable do
+    # https://gist.github.com/eric1234/375ad4a79972467d6f30af3bd0146584
+    def let(name, &block)
+      iv = "@#{name}"
+
+      define_method(name) do
+        if instance_variable_defined?(iv)
+          return instance_variable_get(iv)
+        end
+        instance_variable_set(iv, instance_eval(&block))
+      end
+      helper_method name
+
+      define_method(:"#{name}=") do |value|
+        instance_variable_set(iv, value)
+      end
+      private :"#{name}="
+    end
+  end
+
   concern :Base do
     included do
       if Rails.env.development?
@@ -274,6 +294,7 @@ module ModulableCrud
   concern :All do
     included do
       include Base
+      include Lettable
       include IndexMethods
       include ShowMethods
       include NewEditShareMethods
