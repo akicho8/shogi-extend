@@ -28,26 +28,26 @@ document.addEventListener('DOMContentLoaded', () => {
           return
         }
 
-        const handicap = !(e.from.self_preset_key === "平手" && e.from.oppo_preset_key === "平手")
+        const handicap = !(e.from.rule.self_preset_key === "平手" && e.from.rule.oppo_preset_key === "平手")
         const message_template = `
 <nav class="level">
   <div class="level-item has-text-centered">
     <div>
       <p class="heading">持ち時間</p>
-      <p class="title is-size-4">${LifetimeInfo.fetch(e.from.lifetime_key).name}</p>
+      <p class="title is-size-4">${LifetimeInfo.fetch(e.from.rule.lifetime_key).name}</p>
     </div>
   </div>
   <% if (handicap) { %>
     <div class="level-item has-text-centered">
       <div>
         <p class="heading">手合割(あなた)</p>
-        <p class="title is-size-4">${e.from.oppo_preset_key}</p>
+        <p class="title is-size-4">${e.from.rule.oppo_preset_key}</p>
       </div>
     </div>
     <div class="level-item has-text-centered">
       <div>
         <p class="heading">手合割(相手)</p>
-        <p class="title is-size-4">${e.from.self_preset_key}</p>
+        <p class="title is-size-4">${e.from.rule.self_preset_key}</p>
       </div>
     </div>
   <% } %>

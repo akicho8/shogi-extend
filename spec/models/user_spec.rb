@@ -204,7 +204,7 @@ module Fanta
     end
 
     def create_robot
-      create(:fanta_user, {race_key: :robot})
+      create(:fanta_user, {key: CpuBrainInfo.light_only.first.key, race_key: :robot})
     end
   end
 end
