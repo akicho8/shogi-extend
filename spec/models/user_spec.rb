@@ -199,8 +199,8 @@ module Fanta
       assert { info.mediator.turn_info.turn_max == 1 }
     end
 
-  def create_user(platoon_key, self_preset_key, oppo_preset_key, robot_accept_key = :not_accept)
-      create(:fanta_user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key, robot_accept_key: robot_accept_key})
+    def create_user(platoon_key, self_preset_key, oppo_preset_key, robot_accept_key = :not_accept)
+      create(:fanta_user, rule_attributes: {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key, robot_accept_key: robot_accept_key})
     end
 
     def create_robot

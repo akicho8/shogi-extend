@@ -38,7 +38,7 @@ module Fanta
       self.location_key ||= Warabi::Location.fetch(battle.users.count).key
 
       if user
-        self.preset_key ||= user.self_preset_key
+        self.preset_key ||= user.self_preset_info.key
       end
       self.preset_key ||= "平手"
     end

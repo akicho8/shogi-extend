@@ -4,26 +4,21 @@
 #
 # ユーザーテーブル (fanta_users as Fanta::User)
 #
-# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
-# | カラム名         | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
-# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
-# | id               | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
-# | key              | Key                                                                      | string(255) | NOT NULL    |      | A!    |
-# | name             | 名前                                                                     | string(255) | NOT NULL    |      |       |
-# | online_at        | オンラインになった日時                                                   | datetime    |             |      |       |
-# | fighting_at      | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |             |      |       |
-# | matching_at      | マッチング中(開始日時)                                                   | datetime    |             |      |       |
-# | cpu_brain_key    | Cpu brain key                                                            | string(255) |             |      |       |
-# | user_agent       | ブラウザ情報                                                             | string(255) | NOT NULL    |      |       |
-# | lifetime_key     | ルール・持ち時間                                                         | string(255) | NOT NULL    |      | B     |
-# | platoon_key      | ルール・人数                                                             | string(255) | NOT NULL    |      | C     |
-# | self_preset_key  | ルール・自分の手合割                                                     | string(255) | NOT NULL    |      | D     |
-# | oppo_preset_key  | ルール・相手の手合割                                                     | string(255) | NOT NULL    |      | E     |
-# | robot_accept_key | CPUと対戦するかどうか                                                    | string(255) | NOT NULL    |      | F     |
-# | race_key         | Race key                                                                 | string(255) | NOT NULL    |      | G     |
-# | created_at       | 作成日時                                                                 | datetime    | NOT NULL    |      |       |
-# | updated_at       | 更新日時                                                                 | datetime    | NOT NULL    |      |       |
-# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | カラム名      | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
+# |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | id            | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
+# | key           | Key                                                                      | string(255) | NOT NULL    |      | A!    |
+# | name          | 名前                                                                     | string(255) | NOT NULL    |      |       |
+# | online_at     | オンラインになった日時                                                   | datetime    |             |      |       |
+# | fighting_at   | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |             |      |       |
+# | matching_at   | マッチング中(開始日時)                                                   | datetime    |             |      |       |
+# | cpu_brain_key | Cpu brain key                                                            | string(255) |             |      |       |
+# | user_agent    | ブラウザ情報                                                             | string(255) | NOT NULL    |      |       |
+# | race_key      | Race key                                                                 | string(255) | NOT NULL    |      | B     |
+# | created_at    | 作成日時                                                                 | datetime    | NOT NULL    |      |       |
+# | updated_at    | 更新日時                                                                 | datetime    | NOT NULL    |      |       |
+# |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -231,6 +226,24 @@
 # | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
 # | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
 # |-------------+-------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Ruleテーブル (fanta_rules as Fanta::Rule)
+#
+# |------------------+------------------+-------------+-------------+------+-------|
+# | カラム名         | 意味             | タイプ      | 属性        | 参照 | INDEX |
+# |------------------+------------------+-------------+-------------+------+-------|
+# | id               | ID               | integer(8)  | NOT NULL PK |      |       |
+# | user_id          | User             | integer(8)  | NOT NULL    |      | A     |
+# | lifetime_key     | Lifetime key     | string(255) | NOT NULL    |      | B     |
+# | platoon_key      | Platoon key      | string(255) | NOT NULL    |      | C     |
+# | self_preset_key  | Self preset key  | string(255) | NOT NULL    |      | D     |
+# | oppo_preset_key  | Oppo preset key  | string(255) | NOT NULL    |      | E     |
+# | robot_accept_key | Robot accept key | string(255) | NOT NULL    |      | F     |
+# | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
+# | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
+# |------------------+------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #

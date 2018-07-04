@@ -116,17 +116,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     created() {
       if (this.current_user) {
-        console.assert("self_preset_key" in this.current_user)
-        console.assert("oppo_preset_key" in this.current_user)
-        console.assert("lifetime_key" in this.current_user)
-        console.assert("platoon_key" in this.current_user)
-        console.assert("robot_accept_key" in this.current_user)
+        console.assert("self_preset_key" in this.current_user.rule)
+        console.assert("oppo_preset_key" in this.current_user.rule)
+        console.assert("lifetime_key" in this.current_user.rule)
+        console.assert("platoon_key" in this.current_user.rule)
+        console.assert("robot_accept_key" in this.current_user.rule)
 
-        this.self_preset_key      = this.current_user.self_preset_key
-        this.oppo_preset_key      = this.current_user.oppo_preset_key
-        this.current_lifetime_key = this.current_user.lifetime_key
-        this.current_platoon_key  = this.current_user.platoon_key
-        this.robot_accept_key     = this.current_user.robot_accept_key
+        this.self_preset_key      = this.current_user.rule.self_preset_key
+        this.oppo_preset_key      = this.current_user.rule.oppo_preset_key
+        this.current_lifetime_key = this.current_user.rule.lifetime_key
+        this.current_platoon_key  = this.current_user.rule.platoon_key
+        this.robot_accept_key     = this.current_user.rule.robot_accept_key
       }
 
       this.current_hira_koma_key = this.hira_koma_default_key

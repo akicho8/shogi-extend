@@ -3,26 +3,21 @@
 #
 # ユーザーテーブル (fanta_users as Fanta::User)
 #
-# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
-# | カラム名         | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
-# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
-# | id               | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
-# | key              | Key                                                                      | string(255) | NOT NULL    |      | A!    |
-# | name             | 名前                                                                     | string(255) | NOT NULL    |      |       |
-# | online_at        | オンラインになった日時                                                   | datetime    |             |      |       |
-# | fighting_at      | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |             |      |       |
-# | matching_at      | マッチング中(開始日時)                                                   | datetime    |             |      |       |
-# | cpu_brain_key    | Cpu brain key                                                            | string(255) |             |      |       |
-# | user_agent       | ブラウザ情報                                                             | string(255) | NOT NULL    |      |       |
-# | lifetime_key     | ルール・持ち時間                                                         | string(255) | NOT NULL    |      | B     |
-# | platoon_key      | ルール・人数                                                             | string(255) | NOT NULL    |      | C     |
-# | self_preset_key  | ルール・自分の手合割                                                     | string(255) | NOT NULL    |      | D     |
-# | oppo_preset_key  | ルール・相手の手合割                                                     | string(255) | NOT NULL    |      | E     |
-# | robot_accept_key | CPUと対戦するかどうか                                                    | string(255) | NOT NULL    |      | F     |
-# | race_key         | Race key                                                                 | string(255) | NOT NULL    |      | G     |
-# | created_at       | 作成日時                                                                 | datetime    | NOT NULL    |      |       |
-# | updated_at       | 更新日時                                                                 | datetime    | NOT NULL    |      |       |
-# |------------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | カラム名      | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
+# |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
+# | id            | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
+# | key           | Key                                                                      | string(255) | NOT NULL    |      | A!    |
+# | name          | 名前                                                                     | string(255) | NOT NULL    |      |       |
+# | online_at     | オンラインになった日時                                                   | datetime    |             |      |       |
+# | fighting_at   | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |             |      |       |
+# | matching_at   | マッチング中(開始日時)                                                   | datetime    |             |      |       |
+# | cpu_brain_key | Cpu brain key                                                            | string(255) |             |      |       |
+# | user_agent    | ブラウザ情報                                                             | string(255) | NOT NULL    |      |       |
+# | race_key      | Race key                                                                 | string(255) | NOT NULL    |      | B     |
+# | created_at    | 作成日時                                                                 | datetime    | NOT NULL    |      |       |
+# | updated_at    | 更新日時                                                                 | datetime    | NOT NULL    |      |       |
+# |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
 
 module Fanta
   CpuBrainInfo
@@ -62,7 +57,7 @@ module Fanta
 
           if Rails.env.development?
             2.times.collect do
-              create!(platoon_key: "platoon_p2vs2")
+              create!(rule_attributes: {platoon_key: "platoon_p2vs2"})
             end
           end
         end
@@ -80,48 +75,21 @@ module Fanta
         delegate :begin_greeting_message, :end_greeting_message, to: :profile
 
         after_create do
-          create_profile
+          profile || create_profile
         end
       end
     end
 
     concerning :RuleMethods do
       included do
-        before_validation on: :create do
-          self.self_preset_key  ||= "平手"
-          self.oppo_preset_key  ||= "平手"
-          self.lifetime_key     ||= :lifetime_m5
-          self.platoon_key      ||= :platoon_p1vs1
-          self.robot_accept_key ||= "accept"
+        has_one :rule, dependent: :destroy
+        accepts_nested_attributes_for :rule
+        delegate :self_preset_info, :oppo_preset_info, :lifetime_info, :platoon_info, :robot_accept_info, to: :rule
+        delegate :self_preset_key, :oppo_preset_key, :lifetime_key, :platoon_key, :robot_accept_key, to: :rule
+
+        after_create do
+          rule || create_rule
         end
-
-        with_options allow_blank: true do
-          validates :self_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
-          validates :oppo_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
-          validates :lifetime_key,     inclusion: LifetimeInfo.keys.collect(&:to_s)
-          validates :platoon_key,      inclusion: PlatoonInfo.keys.collect(&:to_s)
-          validates :robot_accept_key, inclusion: RobotAcceptInfo.keys.collect(&:to_s)
-        end
-      end
-
-      def self_preset_info
-        CustomPresetInfo.fetch(self_preset_key)
-      end
-
-      def oppo_preset_info
-        CustomPresetInfo.fetch(oppo_preset_key)
-      end
-
-      def lifetime_info
-        LifetimeInfo.fetch(lifetime_key)
-      end
-
-      def platoon_info
-        PlatoonInfo.fetch(platoon_key)
-      end
-
-      def robot_accept_info
-        RobotAcceptInfo.fetch(robot_accept_key)
       end
     end
 
@@ -260,16 +228,17 @@ module Fanta
 
     concerning :MatchingMethods do
       included do
-        scope :preset_scope, -> self_preset_key, oppo_preset_key { where(self_preset_key: self_preset_key).where(oppo_preset_key: oppo_preset_key) }
+        scope :preset_scope, -> self_preset_key, oppo_preset_key { joins(:rule).merge(Rule.where(self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key)) }
         scope :matching_scope, -> { online_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
+        scope :same_rule_scope, -> e { joins(:rule).merge(Rule.same_rule_scope(e)) }
         scope :robot_only, -> { where(race_key: :robot) }
         scope :human_only, -> { where(race_key: :human) }
-        scope :with_robot_ok, -> { where(robot_accept_key: :accept) }     # CPUと対戦してもよい人たち
-        scope :with_robot_ng, -> { where(robot_accept_key: :not_accept) } # CPUと対戦したくない人たち
+        scope :with_robot_ok, -> { joins(:rule).merge(Rule.with_robot_ok) } # CPUと対戦してもよい人たち
+        scope :with_robot_ng, -> { joins(:rule).merge(Rule.with_robot_ng) } # CPUと対戦したくない人たち
       end
 
       def setting_save(data)
-        update!({
+        update!(rule_attributes: {
             lifetime_key:     data["lifetime_key"],
             platoon_key:      data["platoon_key"],
             self_preset_key:  data["self_preset_key"],
@@ -414,9 +383,7 @@ module Fanta
       end
 
       def matching_scope
-        s = self.class.matching_scope
-        s = s.where(lifetime_key: lifetime_key)   # 同じ持ち時間
-        s = s.where(platoon_key: platoon_key)     # 人数モード
+        self.class.matching_scope.same_rule_scope(self)
       end
 
       # 自分と同じ条件

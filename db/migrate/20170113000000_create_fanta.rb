@@ -38,15 +38,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.datetime :matching_at,      null: true,               comment: "マッチング中(開始日時)"
       t.string :cpu_brain_key,      null: true,               comment: "CPUだったときの挙動"
       t.string :user_agent,         null: false,              comment: "ブラウザ情報"
-
-      # ルール
-      t.string :lifetime_key,       null: false, index: true, comment: "ルール・持ち時間"
-      t.string :platoon_key,        null: false, index: true, comment: "ルール・人数"
-      t.string :self_preset_key,    null: false, index: true, comment: "ルール・自分の手合割"
-      t.string :oppo_preset_key,    null: false, index: true, comment: "ルール・相手の手合割"
-      t.string :robot_accept_key,   null: false, index: true, comment: "CPUと対戦するかどうか"
       t.string :race_key,           null: false, index: true, comment: "種族"
-
       t.timestamps                  null: false
     end
 
@@ -56,6 +48,17 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.text :begin_greeting_message,  null: false, comment: "対局開始時のあいさつ"
       t.text :end_greeting_message, null: false, comment: "対局終了時のあいさつ"
       t.timestamps               null: false
+    end
+
+    # 希望ルール
+    create_table :fanta_rules, force: true do |t|
+      t.belongs_to :user,         null: false,              comment: "ユーザー"
+      t.string :lifetime_key,     null: false, index: true, comment: "ルール・持ち時間"
+      t.string :platoon_key,      null: false, index: true, comment: "ルール・人数"
+      t.string :self_preset_key,  null: false, index: true, comment: "ルール・自分の手合割"
+      t.string :oppo_preset_key,  null: false, index: true, comment: "ルール・相手の手合割"
+      t.string :robot_accept_key, null: false, index: true, comment: "CPUと対戦するかどうか"
+      t.timestamps                null: false
     end
 
     # 部屋

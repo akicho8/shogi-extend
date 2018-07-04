@@ -111,6 +111,23 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["user_id"], name: "index_fanta_profiles_on_user_id"
   end
 
+  create_table "fanta_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
+    t.string "platoon_key", null: false, comment: "ルール・人数"
+    t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
+    t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
+    t.string "robot_accept_key", null: false, comment: "CPUと対戦するかどうか"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lifetime_key"], name: "index_fanta_rules_on_lifetime_key"
+    t.index ["oppo_preset_key"], name: "index_fanta_rules_on_oppo_preset_key"
+    t.index ["platoon_key"], name: "index_fanta_rules_on_platoon_key"
+    t.index ["robot_accept_key"], name: "index_fanta_rules_on_robot_accept_key"
+    t.index ["self_preset_key"], name: "index_fanta_rules_on_self_preset_key"
+    t.index ["user_id"], name: "index_fanta_rules_on_user_id"
+  end
+
   create_table "fanta_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
@@ -119,21 +136,11 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "matching_at", comment: "マッチング中(開始日時)"
     t.string "cpu_brain_key", comment: "CPUだったときの挙動"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
-    t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
-    t.string "platoon_key", null: false, comment: "ルール・人数"
-    t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
-    t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
-    t.string "robot_accept_key", null: false, comment: "CPUと対戦するかどうか"
     t.string "race_key", null: false, comment: "種族"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_fanta_users_on_key", unique: true
-    t.index ["lifetime_key"], name: "index_fanta_users_on_lifetime_key"
-    t.index ["oppo_preset_key"], name: "index_fanta_users_on_oppo_preset_key"
-    t.index ["platoon_key"], name: "index_fanta_users_on_platoon_key"
     t.index ["race_key"], name: "index_fanta_users_on_race_key"
-    t.index ["robot_accept_key"], name: "index_fanta_users_on_robot_accept_key"
-    t.index ["self_preset_key"], name: "index_fanta_users_on_self_preset_key"
   end
 
   create_table "fanta_watch_ships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
