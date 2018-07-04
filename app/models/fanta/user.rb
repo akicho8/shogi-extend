@@ -233,6 +233,7 @@ module Fanta
         scope :same_rule_scope, -> e { joins(:rule).merge(Rule.same_rule_scope(e)) }
         scope :robot_only, -> { where(race_key: :robot) }
         scope :human_only, -> { where(race_key: :human) }
+        scope :light_only, -> { where(key: CpuBrainInfo.light_only.collect(&:key)) }
         scope :with_robot_ok, -> { joins(:rule).merge(Rule.with_robot_ok) } # CPUと対戦してもよい人たち
         scope :with_robot_ng, -> { joins(:rule).merge(Rule.with_robot_ng) } # CPUと対戦したくない人たち
       end
@@ -309,7 +310,8 @@ module Fanta
 
       # 必ず count 数のロボットを得る。ただしロボットが１人もいない場合は空
       def completion_robots(count)
-        robots = self.class.robot_only.random_order.limit(count) # count 数取得できているとは限らない
+        s = self.class.robot_only.light_only
+        robots = s.random_order.limit(count) # count 数取得できているとは限らない
         robots.cycle.take(count)                                 # なので足りない部分は1人のボットが二役以上することになる
       end
 
