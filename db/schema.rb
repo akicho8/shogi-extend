@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "end_at", comment: "バトル終了日時"
     t.string "last_action_key", comment: "最後の状態"
     t.string "win_location_key", comment: "勝った方の先後"
-    t.integer "current_users_count", default: 0, null: false, comment: "この部屋にいる人数"
-    t.integer "watch_ships_count", default: 0, null: false, comment: "この部屋の観戦者数"
+    t.integer "memberships_count", default: 0, null: false, comment: "対局者総数"
+    t.integer "watch_ships_count", default: 0, null: false, comment: "観戦者数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

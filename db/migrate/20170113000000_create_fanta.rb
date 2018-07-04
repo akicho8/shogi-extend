@@ -74,8 +74,8 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.datetime :end_at,                         null: true,  comment: "バトル終了日時"
       t.string :last_action_key,                  null: true,  comment: "最後の状態"
       t.string :win_location_key,                 null: true,  comment: "勝った方の先後"
-      t.integer :current_users_count, default: 0, null: false, comment: "この部屋にいる人数"
-      t.integer :watch_ships_count, default: 0,   null: false, comment: "この部屋の観戦者数"
+      t.integer :memberships_count, default: 0,   null: false, comment: "対局者総数"
+      t.integer :watch_ships_count, default: 0,   null: false, comment: "観戦者数"
       t.timestamps                                null: false
     end
 

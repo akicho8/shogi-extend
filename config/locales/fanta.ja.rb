@@ -48,7 +48,7 @@
           :end_at               => "バトル終了日時",
           :last_action_key      => "最後の状態",
           :win_location_key     => "勝った方の先後",
-          :current_users_count  => "この部屋にいる人数",
+          :memberships_count    => "対局者総数",
           :watch_ships_count    => "この部屋の観戦者数",
         },
 

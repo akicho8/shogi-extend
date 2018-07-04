@@ -21,7 +21,7 @@
 
 module Fanta
   class Membership < ApplicationRecord
-    belongs_to :battle
+    belongs_to :battle, counter_cache: true
     belongs_to :user
 
     scope :location_eq, -> e { where(location_key: e) }

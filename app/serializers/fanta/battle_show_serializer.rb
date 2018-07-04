@@ -17,7 +17,8 @@ module Fanta
       :full_sfen,
       :turn_max,
 
-      :current_users_count, :watch_ships_count,
+      :memberships_count,
+      :watch_ships_count,
 
       :handicap,
 

@@ -2,7 +2,7 @@ require File.expand_path('../../../../config/environment', __FILE__) if $0 == __
 
 module Fanta
   class BattleEachSerializer < ApplicationSerializer
-    attributes :name, :show_path, :xstate_info, :turn_max, :watch_ships_count
+    attributes :name, :show_path, :xstate_info, :turn_max, :memberships_count, :watch_ships_count
 
     has_many :memberships
     class MembershipSerializer < ApplicationSerializer
