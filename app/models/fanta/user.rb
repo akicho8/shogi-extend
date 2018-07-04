@@ -264,6 +264,8 @@ module Fanta
         scope :matching_scope, -> { online_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
         scope :robot_only, -> { where(race_key: :robot) }
         scope :human_only, -> { where(race_key: :human) }
+        scope :with_robot_ok, -> { where(robot_accept_key: :accept) }     # CPUと対戦してもよい人たち
+        scope :with_robot_ng, -> { where(robot_accept_key: :not_accept) } # CPUと対戦したくない人たち
       end
 
       def setting_save(data)
@@ -277,8 +279,12 @@ module Fanta
       end
 
       def matching_start(**options)
+        __matching_start(options)
+      end
+
+      def __matching_start(**options)
         options = {
-          with_robot: (robot_accept_info.key == :accept),
+          with_robot: false,
         }.merge(options)
 
         total = platoon_info.total_limit
@@ -288,22 +294,22 @@ module Fanta
 
         s = matching_scope
 
+        if options[:with_robot]
+          s = s.with_robot_ok
+        end
+
         if rule_cop.same_rule?
           s = s.merge(preset_reverse)
           users = s.random_order.limit(total)
 
           if options[:with_robot]
             # 人数に達っしていなければロボットで補完を試みる
-
-            # p ["#{__FILE__}:#{__LINE__}", __method__, users.collect(&:name)]
-            # p completion_robots(total - users.size).size
-
             users += completion_robots(total - users.size)
           end
 
           # それでも人数に達っしていない場合は待つ
           if users.size < total
-            matching_wait_notify
+            matching_wait
             return
           end
 
@@ -326,7 +332,7 @@ module Fanta
           end
 
           if users1.size < half || users2.size < half
-            matching_wait_notify
+            matching_wait
             return
           end
 
@@ -334,6 +340,10 @@ module Fanta
         end
 
         battle_setup(pair_list, auto_matched_at: Time.current)
+      end
+
+      def matching_start_with_robot
+        __matching_start(with_robot: true)
       end
 
       # 必ず count 数のロボットを得る。ただしロボットが１人もいない場合は空
@@ -407,7 +417,7 @@ module Fanta
         end
       end
 
-      def matching_wait_notify
+      def matching_wait
         LobbyChannel.broadcast_to(self, {matching_wait: {matching_at: matching_at}})
       end
 

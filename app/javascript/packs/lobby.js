@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     received(data) {
       // マッチング中に変更
       if (data["matching_wait"]) {
-        App.lobby_vm.matching_wait(data["matching_wait"])
+        App.lobby_vm.matching_wait(data["matching_wait"]["matching_at"])
       }
 
       // ロビーでの発言追加
@@ -71,6 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
     matching_cancel(data) {
       this.perform("matching_cancel", data)
     },
+
+    matching_start_with_robot(data) {
+      this.perform("matching_start_with_robot", data)
+    },
   })
 
   App.lobby_vm = new Vue({
@@ -97,12 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         current_user: js_global_params.current_user,
 
-        matching_at:           null, // マッチングをサーバー側で受理した日時
         self_preset_key:       null,
         oppo_preset_key:       null,
         current_lifetime_key:  null,
         current_platoon_key:   null,
         robot_accept_key:     null,
+
+        matching_at:           null, // マッチングをサーバー側で受理した日時
+        matching_wait_count: 0,
+        matching_interval_id: null,
       }
     },
 
@@ -115,7 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.assert("platoon_key" in this.current_user)
         console.assert("robot_accept_key" in this.current_user)
 
-        this.matching_at          = this.current_user.matching_at
+        this.matching_wait(this.current_user.matching_at)
+
         this.self_preset_key      = this.current_user.self_preset_key
         this.oppo_preset_key      = this.current_user.oppo_preset_key
         this.current_lifetime_key = this.current_user.lifetime_key
@@ -188,11 +196,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
       matching_cancel() {
         this.matching_at = null
+        this.matching_clear_interval()
         App.lobby.matching_cancel()
       },
 
-      matching_wait(data) {
-        this.matching_at = data["matching_at"]
+      matching_wait(time) {
+        this.matching_at = time
+        this.matching_wait_count = 1
+        this.matching_clear_interval()
+        this.matching_interval_id = setInterval(() => {
+          this.matching_wait_count++
+          if (this.matching_wait_count == 3) {
+            App.lobby.matching_start_with_robot()
+          }
+        }, 1000)
+      },
+
+      matching_clear_interval() {
+        if (!_.isNil(this.matching_interval_id)) {
+          clearInterval(this.matching_interval_id)
+          this.matching_interval_id = null
+        }
       },
 
       message_enter(value) {

@@ -149,34 +149,43 @@ module Fanta
         end
       end
 
-      # context "人間vsロボット" do
-      #   it "平手ダブルス" do
-      #     @user1 = create_user(:platoon_p2vs2, "平手", "平手", :accept)
-      #     @user2 = create_user(:platoon_p2vs2, "平手", "平手", :accept)
-      #     @user3 = create_robot
-      #
-      #     @user1.matching_start
-      #     battle = @user2.matching_start
-      #
-      #     assert { battle }
-      #     assert { battle.memberships.count == 4 }
-      #
-      #     p battle.users.collect(&:name)
-      #   end
-      #
-      #   it "駒落ちダブルス" do
-      #     @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち", :accept)
-      #     @user2 = create_user(:platoon_p2vs2, "飛車落ち", "平手", :accept)
-      #     @user3 = create_robot
-      #
-      #     @user1.matching_start
-      #     battle = @user2.matching_start
-      #
-      #     assert { battle }
-      #     assert { battle.memberships.black.count == 2 }
-      #     assert { battle.memberships.white.count == 2 }
-      #   end
-      # end
+      context "人間vsロボット" do
+        it "平手ダブルス" do
+          @user0 = create_user(:platoon_p2vs2, "平手", "平手", :not_accept)
+          @user1 = create_user(:platoon_p2vs2, "平手", "平手", :accept)
+          @user2 = create_user(:platoon_p2vs2, "平手", "平手", :accept)
+          @user3 = create_robot
+
+          assert { @user0.matching_start == nil }
+          assert { @user1.matching_start == nil }
+          assert { @user2.matching_start == nil }
+
+          battle = @user1.matching_start_with_robot
+
+          assert { battle }
+          assert { battle.memberships.count == 4 }
+
+          assert { battle.users.collect(&:name).sort == ["CPU1号", "CPU1号", "野良2号", "野良3号"] }
+        end
+
+        it "駒落ちダブルス" do
+          @user0 = create_user(:platoon_p2vs2, "平手", "飛車落ち", :not_accept)
+          @user1 = create_user(:platoon_p2vs2, "平手", "飛車落ち", :accept)
+          @user2 = create_user(:platoon_p2vs2, "飛車落ち", "平手", :accept)
+          @user3 = create_robot
+
+          assert { @user0.matching_start == nil }
+          assert { @user1.matching_start == nil }
+          assert { @user2.matching_start == nil }
+
+          battle = @user1.matching_start_with_robot
+
+          assert { battle }
+          assert { battle.memberships.count == 4 }
+
+          assert { battle.users.collect(&:name).sort == ["CPU1号", "CPU1号", "野良2号", "野良3号"] }
+        end
+      end
     end
 
     it "最初に指した状態で始まるようにもできる" do
@@ -190,7 +199,7 @@ module Fanta
       assert { info.mediator.turn_info.turn_max == 1 }
     end
 
-    def create_user(platoon_key, self_preset_key, oppo_preset_key, robot_accept_key = :not_accept)
+  def create_user(platoon_key, self_preset_key, oppo_preset_key, robot_accept_key = :not_accept)
       create(:fanta_user, {platoon_key: platoon_key, self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key, robot_accept_key: robot_accept_key})
     end
 

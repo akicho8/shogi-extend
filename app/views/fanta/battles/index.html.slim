@@ -55,7 +55,7 @@ javascript:
         button.button.is-primary.is-large(@click.prevent="matching_start") バトル開始
         button.button.is-primary.is-large(@click.prevent="battle_setting_open_click") ルール設定
       template(v-else)
-        a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始
+        a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始{{matching_wait_count}}
 
       - if Rails.env.development? && false
         = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
