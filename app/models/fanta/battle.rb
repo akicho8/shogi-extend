@@ -150,7 +150,7 @@ module Fanta
       end
 
       def cud_broadcast(action)
-        ActionCable.server.broadcast("lobby_channel", battle_cud: {action: action, battle: ams_sr(self, serializer: BattleEachSerializer)})
+        ActionCable.server.broadcast("lobby_channel", battle_cud: {action: action, battle: ams_sr(self, serializer: BattleEachSerializer, include: {memberships: :user})})
       end
     end
 
