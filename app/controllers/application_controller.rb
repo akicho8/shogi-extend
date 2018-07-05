@@ -32,7 +32,9 @@ class ApplicationController < ActionController::Base
 
   concerning :BotCheckMethods do
     included do
-      helper_method :bot_agent?
+      let :bot_agent? do
+        request.user_agent.to_s.match?(self.class.bot_regexp)
+      end
     end
 
     class_methods do
@@ -71,10 +73,6 @@ class ApplicationController < ActionController::Base
           ])
       end
     end
-
-    def bot_agent?
-      @bot_agent ||= request.user_agent.to_s.match?(self.class.bot_regexp)
-    end
   end
 
   concerning :CurrentUserMethods do
@@ -92,11 +90,12 @@ class ApplicationController < ActionController::Base
       end
 
       let :current_user do
-        return nil if bot_agent?
-        user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
-        user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
-        cookies.signed[:user_id] = {value: user.id, expires: 1.weeks.from_now}
-        user
+        unless bot_agent?
+          user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
+          user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
+          cookies.signed[:user_id] = {value: user.id, expires: 1.weeks.from_now}
+          user
+        end
       end
     end
 
