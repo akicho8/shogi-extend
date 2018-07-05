@@ -205,12 +205,18 @@ module Fanta
         end
 
         def execute_loop_if_robot
+          p ["#{__FILE__}:#{__LINE__}", __method__, ]
           loop do
+            p ["#{__FILE__}:#{__LINE__}", __method__, active_user]
             if !active_user.race_info.auto_hand
+              p ["#{__FILE__}:#{__LINE__}", __method__, ]
               break
             end
+            p ["#{__FILE__}:#{__LINE__}", __method__, ]
             execute_one
+            p ["#{__FILE__}:#{__LINE__}", __method__, ]
           end
+          p ["#{__FILE__}:#{__LINE__}", __method__, ]
         end
 
         def execute_one
@@ -431,17 +437,24 @@ module Fanta
         has_many :users, through: :memberships
       end
 
-      def user_by_turn(turn)
-        position = turn.modulo(memberships.size)
-        memberships.find_by(position: position).user
-      end
-
       def active_user
         user_by_turn(turn_max)
       end
 
+      private
+
       def robot_player?
         active_user.race_info.key == :robot
+      end
+
+      def turn_info
+        Warabi::TurnInfo.new(handicap: handicap, counter: turn_max)
+      end
+
+      def user_by_turn(turn)
+        index = turn_info.base_location.code + turn # turn=0 のとき駒落ちなら index=1 になる
+        position = index.modulo(memberships.size)
+        memberships.find_by(position: position).user
       end
     end
 

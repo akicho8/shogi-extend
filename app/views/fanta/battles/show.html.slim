@@ -7,7 +7,7 @@ javascript:
 #battle_app v-cloak="true"
   .columns
     .column
-      .virtual_box2.chat_container
+      .virtual_box2.chat_container.is-size-7
         / .title.is-5= "チャット"
 
         table.table.is-narrow.is-fullwidth
@@ -77,7 +77,7 @@ javascript:
           :sfen_show="!any_controller_hide"
           :controller_show="!any_controller_hide"
           :theme="'real'"
-          :size="'x-large'"
+          :size="'xx-large'"
           :sound_effect="true"
           :volume=AppConfig[:volume]
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
@@ -85,7 +85,7 @@ javascript:
           :flip="flip"
         )
     .column
-      .virtual_box2
+      .virtual_box2.is-size-7
         b-table(:data="memberships")
           template slot-scope="props"
             b-table-column(label="対局者")
