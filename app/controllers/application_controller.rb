@@ -128,6 +128,9 @@ class ApplicationController < ActionController::Base
           link_to_eval("1 + 2") { "1 + 2" },
           link_to_eval("1 / 0", redirect_to: root_path) { "1 / 0" },
           link_to_eval("find(0)", redirect_to: root_path) { "Fanta::User.find(0)" },
+          link_to_eval("部屋作成") { "Fanta::Battle.create!" },
+          link_to_eval("部屋削除") { "Fanta::Battle.last&.destroy!" },
+          link_to_eval("部屋全削除") { "Fanta::Battle.destroy_all" },
         ].compact.join.html_safe
       end
 

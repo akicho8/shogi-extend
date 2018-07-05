@@ -87,7 +87,7 @@ javascript:
     .column
       .virtual_box2.is-size-7
         b-table(:data="memberships")
-          template slot-scope="props"
+          template(slot-scope="props")
             b-table-column(label="対局者")
               message_link_to(:user_to="props.row.user")
               = " "

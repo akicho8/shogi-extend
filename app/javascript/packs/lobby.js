@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const battle_cud = data["battle_cud"]
       if (battle_cud) {
         const action = battle_cud.action
-        const record = battle_cud.record
+        const record = battle_cud.battle
         if (action === "create") {
           App.lobby_vm.battles = _.concat([record], App.lobby_vm.battles)
         }
