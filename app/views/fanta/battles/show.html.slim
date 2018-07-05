@@ -87,21 +87,23 @@ javascript:
     .column
       .is-size-7
         .virtual_box2
-          b-table(:data="memberships")
+          b-table(:data="memberships" narrowed)
             template(slot-scope="props")
               b-table-column(label="対局者")
+                .line_container
+                  template(v-if="props.row.fighting_at")
+                    / https://buefy.github.io/#/documentation/icon
+                    b-icon(icon="access-point" class="has-text-success" custom-size="null")
+                  template(v-else)
+                    b-icon(icon="access-point" class="has-text-grey-lighter" custom-size="null")
 
-                template(v-if="props.row.fighting_at")
-                  b-icon(icon="access-point" class="has-text-success" custom-size="mdi-18px")
-                template(v-else)
-                  b-icon(icon="access-point" class="has-text-grey-lighter")
+                  = ""
+                  message_link_to(:user_to="props.row.user")
+                  = " "
 
-                = ""
+                  template(v-if="user_self_p(props.row.user)")
+                    = " ★"
 
-                message_link_to(:user_to="props.row.user")
-                = " "
-                template(v-if="user_self_p(props.row.user)")
-                  = " ★"
               b-table-column(label="手番")
                 | {{location_key_name(props.row)}}
                 | {{location_mark(props.row)}}
@@ -109,7 +111,7 @@ javascript:
         template(v-if="!_.isEmpty(watch_ships)")
           .virtual_box2
             / .title.is-5= "観戦者"
-            b-table(:data="watch_ships")
+            b-table(:data="watch_ships" narrowed)
               template slot-scope="props"
                 b-table-column(field="name" label="観戦者" sortable)
                   message_link_to :user_to="props.row.user"
