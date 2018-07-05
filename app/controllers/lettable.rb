@@ -5,7 +5,9 @@ module Lettable
 
     }.merge(options)
 
-    var_key = (options[:key] || name).to_s.gsub(/\?\z/, "_p")
+    var_key = (options[:key] || name).to_s
+    reader_only = var_key.end_with?("?")
+    var_key.gsub!(/\?\z/, "_p")
 
     iv = "@#{var_key}"
 
@@ -18,9 +20,11 @@ module Lettable
 
     helper_method name
 
-    define_method(:"#{name}=") do |value|
-      instance_variable_set(iv, value)
+    unless reader_only
+      define_method(:"#{name}=") do |value|
+        instance_variable_set(iv, value)
+      end
+      private :"#{name}="
     end
-    private :"#{name}="
   end
 end
