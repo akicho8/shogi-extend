@@ -36,7 +36,7 @@ module Fanta
     end
 
     let :js_battle do
-      ams_sr(current_record, serializer: BattleShowSerializer, include: {memberships: :user, chat_messages: :user, watch_users: nil})
+      ams_sr(current_record, serializer: BattleShowSerializer, include: {memberships: :user, watch_ships: :user, chat_messages: :user})
     end
 
     def show

@@ -18,9 +18,9 @@ module Fanta
     belongs_to :battle, counter_cache: true
     belongs_to :user
 
+    # 観戦者が入室/退出した瞬間にチャットルームに反映する
     after_commit do
-      # 観戦者が入室/退出した瞬間にチャットルームに反映する
-      ActionCable.server.broadcast("battle_channel_#{battle.id}", watch_users: battle.watch_users)
+      ActionCable.server.broadcast(battle.channel_key, watch_ships: ams_sr(battle.reload.watch_ships))
     end
   end
 end

@@ -465,11 +465,6 @@ module Fanta
         # 自分から部屋に入ったらマッチングを解除する
         update!(matching_at: nil)
 
-        # 部屋のメンバーとして登録(マッチング済みの場合はもう登録されている)
-        # unless battle.users.include?(current_user)
-        #   battle.users << current_user
-        # end
-
         if memberships.present?
           # 対局者
           memberships.each do |e|
@@ -477,9 +472,8 @@ module Fanta
           end
         else
           # 観戦者
-          if !battle.watch_users.include?(current_user)
-            battle.watch_users << current_user
-            battle.broadcast # counter_cache の watch_ships_count を反映させるため
+          if !battle.watch_users.include?(self)
+            battle.watch_users << self
           end
         end
 
@@ -504,8 +498,6 @@ module Fanta
             end
           end
         end
-
-        battle.memberships_broadcast
       end
 
       def room_out(battle)
@@ -522,11 +514,8 @@ module Fanta
           end
         else
           # 観戦者
-          battle.watch_users.destroy(current_user)
-          # ActionCable.server.broadcast(channel_key, watch_users: battle.watch_users)
+          battle.watch_users.destroy(self)
         end
-
-        battle.memberships_broadcast
       end
     end
   end

@@ -28,11 +28,11 @@ module Fanta
 
     has_many :memberships
     has_many :chat_messages
-    has_many :watch_users, each_serializer: SimpleUserSerializer
+    has_many :watch_ships
   end
 
   if $0 == __FILE__
-    pp ams_sr(Battle.last, serializer: BattleShowSerializer, include: {memberships: :user, chat_messages: :user, watch_users: nil})
+    pp ams_sr(Battle.last, serializer: BattleShowSerializer, include: {memberships: :user, chat_messages: :user, watch_ships: nil})
   end
 end
 # >> I, [2018-06-12T20:36:01.376431 #38956]  INFO -- : Rendered BattleShowSerializer with ActiveModelSerializers::Adapter::Attributes (1952.99ms)

@@ -22,17 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     received(data) {
-      if (data["watch_users"]) {
-        App.battle_vm.watch_users = data["watch_users"]
+      // 対局者たち更新
+      if (data["memberships"]) {
+        App.battle_vm.memberships = data["memberships"]
+      }
+
+      // 観戦者たち更新
+      if (data["watch_ships"]) {
+        App.battle_vm.watch_ships = data["watch_ships"]
       }
 
       if (data["begin_at"]) {
         App.battle_vm.battle_setup(data)
       }
-
-      // Called when there"s incoming data on the websocket for this channel
-      // console.log("received")
-      // console.table(data)
 
       if (data["turn_max"]) {
         App.battle_vm.turn_max = data["turn_max"]
@@ -41,28 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // App.battle_vm.next_run_if_robot() // ここでCPUに指してもらう手もある。これはブロードキャストされているのでここで呼んではいけない。
       }
 
+      // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
       if (data["full_sfen"]) {
-        // これはだめ
-        // if (!_.isNil(data["moved_user_id"]) && data["moved_user_id"] === js_global_params.current_user.id) {
-        //   // ブロードキャストに合わせて自分も更新すると駒音が重複してしまうため自分自身は更新しない
-        //   // (が、こうすると本当にまわりにブロードキャストされたのか不安ではある)
-        // } else {
-        // }
-
-        // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
         App.battle_vm.full_sfen = data["full_sfen"]
       }
 
-      // if (data["lifetime_key"]) {
-      //   App.battle_vm.current_lifetime_key = data["lifetime_key"]
-      // }
-
       if (data["human_kifu_text"]) {
         App.battle_vm.human_kifu_text = data["human_kifu_text"]
-      }
-
-      if (data["memberships"]) {
-        App.battle_vm.memberships = data["memberships"]
       }
 
       // 発言の反映
@@ -122,11 +109,13 @@ document.addEventListener("DOMContentLoaded", () => {
     el: "#battle_app",
     data() {
       assert(js_battle.memberships)
+      assert(js_battle.watch_ships)
       assert(js_battle.chat_messages)
 
       return {
         message: "",            // 発言
         memberships:          js_battle.memberships,
+        watch_ships:          js_battle.watch_ships,
         chat_messages:        js_battle.chat_messages,
         full_sfen:            js_battle.full_sfen,
         current_lifetime_key: js_battle.lifetime_key,
@@ -135,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
         end_at:               js_battle.end_at,
         win_location_key:     js_battle.win_location_key,
         last_action_key:      js_battle.last_action_key,
-        watch_users:          js_battle.watch_users,
         turn_max:             js_battle.turn_max,
         handicap:             js_battle.handicap,
         human_kifu_text:      js_battle.human_kifu_text,
@@ -432,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
       button_active_p() {
         return this.battle_now_p && this.current_membership_is_self_p
       },
-      
+
       // 勝った方
       win_location() {
         return Location.fetch(this.win_location_key)

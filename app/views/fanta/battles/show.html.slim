@@ -85,31 +85,36 @@ javascript:
           :flip="flip"
         )
     .column
-      .virtual_box2.is-size-7
-        b-table(:data="memberships")
-          template(slot-scope="props")
-            b-table-column(label="対局者")
-              message_link_to(:user_to="props.row.user")
-              = " "
-              template(v-if="props.row.fighting_at")
-                b-icon(icon="access-point" class="has-text-success" custom-size="mdi-18px")
-              template(v-else)
-                b-icon(icon="access-point" class="has-text-grey-lighter")
-              template(v-if="user_self_p(props.row.user)")
-                = " ★"
-            b-table-column(label="手番")
-              | {{location_key_name(props.row)}}
-              | {{location_mark(props.row)}}
-
-      template(v-if="!_.isEmpty(watch_users)")
+      .is-size-7
         .virtual_box2
-          .title.is-5= "観戦者"
-          b-table(:data="watch_users")
-            template slot-scope="props"
-              b-table-column(field="name" label="名前" sortable)
-                message_link_to :user_to="props.row"
-                template v-if="user_self_p(props.row)"
-                  = " *"
+          b-table(:data="memberships")
+            template(slot-scope="props")
+              b-table-column(label="対局者")
+
+                template(v-if="props.row.fighting_at")
+                  b-icon(icon="access-point" class="has-text-success" custom-size="mdi-18px")
+                template(v-else)
+                  b-icon(icon="access-point" class="has-text-grey-lighter")
+
+                = ""
+
+                message_link_to(:user_to="props.row.user")
+                = " "
+                template(v-if="user_self_p(props.row.user)")
+                  = " ★"
+              b-table-column(label="手番")
+                | {{location_key_name(props.row)}}
+                | {{location_mark(props.row)}}
+
+        template(v-if="!_.isEmpty(watch_ships)")
+          .virtual_box2
+            / .title.is-5= "観戦者"
+            b-table(:data="watch_ships")
+              template slot-scope="props"
+                b-table-column(field="name" label="観戦者" sortable)
+                  message_link_to :user_to="props.row.user"
+                  template v-if="user_self_p(props.row.user)"
+                    = " *"
 
   .columns
     .column
@@ -143,22 +148,3 @@ javascript:
 
   p
     = link_to("ロビーに戻る", [:fanta, :battles], :class => "button")
-
-/ br
-/ br
-/ .virtual_box
-/   .title.is-5= "@js_battle"
-/   = html_format(JSON.load(@js_battle.to_json))
-/
-/ .virtual_box
-/   = html_format({"cookies.signed[:user_id]" => cookies.signed[:user_id]})
-/
-/ .virtual_box
-/   .title.is-5= "Fanta::User"
-/   = html_format(current_record.users)
-/   .title.is-5= "Fanta::ChatMessage"
-/   = html_format(current_record.chat_messages)
-
-/ #lobby_app
-/   - if Rails.env.development?
-/     = "{{latest_status_list}}"

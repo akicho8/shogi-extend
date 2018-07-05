@@ -53,6 +53,10 @@ module Fanta
       end
     end
 
+    after_commit do
+      ActionCable.server.broadcast(battle.channel_key, memberships: ams_sr(battle.reload.memberships))
+    end
+
     def location
       Warabi::Location[location_key]
     end

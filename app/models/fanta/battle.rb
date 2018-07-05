@@ -161,11 +161,6 @@ module Fanta
         ActionCable.server.broadcast(channel_key, {begin_at: begin_at, human_kifu_text: human_kifu_text})
       end
 
-      # 部屋が抜けたときの状態も簡単に反映できるように全メンバー一気に送るのでよさそう
-      def memberships_broadcast
-        ActionCable.server.broadcast(channel_key, memberships: ams_sr(reload.memberships)) # 部屋を抜けたときの状態が反映されるように reload が必要
-      end
-
       def channel_key
         "battle_channel_#{id}"
       end
