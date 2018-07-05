@@ -25,12 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // オンラインの人数更新
       if (data["online_only_count"]) {
-        App.header_vm.online_only_count = data["online_only_count"]
+        if (App.header_vm) {
+          App.header_vm.online_only_count = data["online_only_count"]
+        }
       }
 
       // バトル中の人数更新
       if (data["fighter_only_count"]) {
-        App.header_vm.fighter_only_count = data["fighter_only_count"]
+        if (App.header_vm) {
+          App.header_vm.fighter_only_count = data["fighter_only_count"]
+        }
       }
     },
 
@@ -60,13 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
-  App.header_vm = new Vue({
-    el: "#header_app",
-    data() {
-      return {
-        online_only_count: js_global_params.online_only_count,
-        fighter_only_count: js_global_params.fighter_only_count,
-      }
-    },
-  })
+  if (document.querySelector("#header_app")) {
+    App.header_vm = new Vue({
+      el: "#header_app",
+      data() {
+        return {
+          online_only_count: js_global_params.online_only_count,
+          fighter_only_count: js_global_params.fighter_only_count,
+        }
+      },
+    })
+  }
 })
