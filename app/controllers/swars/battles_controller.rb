@@ -23,8 +23,92 @@
 
 module Swars
   class BattlesController < ApplicationController
-    include ModulableCrud::All
+    include LettableCrud::All
     include SharedMethods
+
+    let :current_records do
+      current_scope.page(params[:page]).per(params[:per] || 9)
+    end
+
+    let :rows do
+      current_records.collect(&method(:row_build))
+    end
+
+    let :current_swars_user do
+      User.find_by(user_key: current_user_key)
+    end
+
+    let :current_query_hash do
+      if e = [:query].find { |e| params[e].present? }
+        acc = {}
+        str = params[e].to_s.gsub(/\p{blank}/, " ").strip
+        str.split.each do |s|
+          if s.match?(/\A(tag):/i) || zenkaku_query?(s)
+            acc[:tags] ||= []
+            acc[:tags] << s.remove("tag:")
+          else
+            # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
+            # https://shogiwars.heroz.jp/users/foo                          -> foo
+            if true
+              if url = URI::Parser.new.extract(s).first
+                uri = URI(url)
+                if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
+                  s = md.captures.compact.first
+                end
+                logger.info([url, s].to_t)
+              end
+            end
+            acc[:user_key] ||= []
+            acc[:user_key] << s
+          end
+        end
+        acc
+      end
+    end
+
+    let :current_tags do
+      if v = current_query_hash
+        v[:tags]
+      end
+    end
+
+    let :current_user_key do
+      if v = current_query_hash
+        if v = v[:user_key]
+          v.first
+        end
+      end
+    end
+
+    let :current_form_search_value do
+      if current_query_hash
+        current_query_hash.values.join(" ")
+      end
+    end
+
+    let :current_scope do
+      s = current_model.all
+
+      if current_swars_user
+        s = s.joins(:memberships => :user)
+        s = s.merge(User.where(id: current_swars_user.id))
+      end
+
+      if current_tags
+        s = s.tagged_with(current_tags)
+      end
+
+      s.order(battled_at: :desc)
+    end
+
+    let :current_record do
+      if v = params[:id].presence
+        current_model.single_battle_import(v)
+        current_scope.find_by!(key: v)
+      else
+        current_scope.new
+      end
+    end
 
     def index
       unless bot_agent?
@@ -39,25 +123,24 @@ module Swars
 
         if current_user_key
           before_count = 0
-          if user = User.find_by(user_key: current_user_key)
-            before_count = user.battles.count
+          if current_swars_user
+            before_count = current_swars_user.battles.count
           end
 
           # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-          key = "basic_import_#{current_user_key}"
+          key = "basic_import_of_#{current_user_key}"
           if !Rails.cache.exist?(key)
             Rails.cache.write(key, true, expires_in: Rails.env.production? ? 30.seconds : 0.seconds)
             current_model.basic_import(user_key: current_user_key)
           end
 
-          @user = User.find_by(user_key: current_user_key)
-          if @user
-            count_diff = @user.battles.count - before_count
+          if current_swars_user
+            count_diff = current_swars_user.battles.count - before_count
             if count_diff.zero?
             else
               flash.now[:info] = "#{count_diff}件新しく見つかりました"
             end
-            @user.search_logs.create!
+            current_swars_user.search_logs.create!
           else
             flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
           end
@@ -68,64 +151,10 @@ module Swars
           return
         end
       end
-
-      self.current_records = current_scope.page(params[:page]).per(params[:per] || 9)
-
-      @rows = current_records.collect { |record| row_build(record) }
-    end
-
-    def current_query_hash
-      @current_query_hash ||= -> {
-        if e = [:query].find { |e| params[e].present? }
-          acc = {}
-          str = params[e].to_s.gsub(/\p{blank}/, " ").strip
-          str.split.each do |s|
-            if s.match?(/\A(tag):/i) || zenkaku_query?(s)
-              acc[:tags] ||= []
-              acc[:tags] << s.remove("tag:")
-            else
-              # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
-              # https://shogiwars.heroz.jp/users/foo                          -> foo
-              if true
-                if url = URI::Parser.new.extract(s).first
-                  uri = URI(url)
-                  if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
-                    s = md.captures.compact.first
-                  end
-                  logger.info([url, s].to_t)
-                end
-              end
-              acc[:user_key] ||= []
-              acc[:user_key] << s
-            end
-          end
-          acc
-        end
-      }.call
-    end
-
-    def current_tags
-      if v = current_query_hash
-        v[:tags]
-      end
-    end
-
-    def current_user_key
-      if v = current_query_hash
-        if v = v[:user_key]
-          v.first
-        end
-      end
     end
 
     def zenkaku_query?(s)
       s.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) # 長音符は無視
-    end
-
-    def current_form_search_value
-      if current_query_hash
-        current_query_hash.values.join(" ")
-      end
     end
 
     rescue_from "Mechanize::ResponseCodeError" do |exception|
@@ -137,30 +166,6 @@ module Swars
 
     def access_log_create
       current_record.access_logs.create!
-    end
-
-    def current_scope
-      s = super
-
-      if @user
-        s = s.joins(:memberships => :user)
-        s = s.merge(User.where(id: @user.id))
-      end
-
-      if current_tags
-        s = s.tagged_with(current_tags)
-      end
-
-      s.order(battled_at: :desc)
-    end
-
-    def raw_current_record
-      if v = params[:id].presence
-        current_model.single_battle_import(v)
-        current_scope.find_by!(key: v)
-      else
-        current_scope.new
-      end
     end
 
     def versus_tag(*list)
@@ -209,8 +214,8 @@ module Swars
         filename = -> {
           parts = []
           parts << "shogiwars"
-          if @user
-            parts << @user.user_key
+          if current_swars_user
+            parts << current_swars_user.user_key
           end
           parts << Time.current.strftime("%Y%m%d%H%M%S")
           if current_tags
@@ -236,9 +241,9 @@ module Swars
 
     def row_build(record)
       {}.tap do |row|
-        if @user
-          l_ship = record.myself(@user)
-          r_ship = record.rival(@user)
+        if current_swars_user
+          l_ship = record.myself(current_swars_user)
+          r_ship = record.rival(current_swars_user)
         else
           if record.win_user
             l_ship = record.memberships.judge_key_eq(:win)
@@ -249,7 +254,7 @@ module Swars
           end
         end
 
-        if @user
+        if current_swars_user
           row["対象プレイヤー"] = record.win_lose_str(l_ship.user).html_safe + " " + link_to(l_ship.name_with_grade, l_ship.user)
           row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + link_to(r_ship.name_with_grade, r_ship.user)
         else

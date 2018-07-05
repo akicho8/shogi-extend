@@ -79,12 +79,12 @@
                 = link_to("Tweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')", "class": "card-footer-item")
                 = link_to("詳細", [current_record], "class": "card-footer-item")
 
-- if @rows
+- if rows
   .columns
     .column
       br
       br
-      = @rows.to_html
+      = rows.to_html
 
 - if current_records
   .columns

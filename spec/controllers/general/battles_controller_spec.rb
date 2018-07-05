@@ -26,7 +26,14 @@ RSpec.describe General::BattlesController, type: :controller do
     @battle = General::Battle.first
   end
 
+  it "index" do
+    get :index
+    assert { controller.current_records }
+    expect(response).to have_http_status(:ok)
+  end
+
   it "show" do
     get :show, params: {id: @battle.to_param}
+    expect(response).to have_http_status(:ok)
   end
 end

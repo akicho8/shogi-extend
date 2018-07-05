@@ -1,7 +1,7 @@
 # This module is not a solid black boxed library.
 # Basically all methods are designed to override.
 
-module ModulableCrud
+module LettableCrud
   concern :Base do
     included do
       if Rails.env.development?
@@ -16,31 +16,45 @@ module ModulableCrud
         end
       end
 
-      before_action :record_load
+      # override according to the situation
+      #
+      # Examples
+      #   :foo
+      #   [:foo, :bar]
+      #   self.class.parent_name.underscore
+      #
+      let :ns_prefix do
+      end
 
-      helper_method :ns_prefix
-      helper_method :current_model
-      helper_method :current_record
-      helper_method :current_single_key
-    end
+      # override according to the situation
+      let :current_model do
+        controller_path.classify.constantize
+      end
 
-    # override according to the situation
-    #
-    # Examples
-    #   :foo
-    #   [:foo, :bar]
-    #   self.class.parent_name.underscore
-    #
-    def ns_prefix
-    end
+      let :current_scope do
+        current_model.all
+      end
 
-    # override according to the situation
-    def current_model
-      controller_path.classify.constantize
-    end
+      let :current_single_key do
+        current_model.model_name.singular.to_sym
+      end
 
-    def current_scope
-      current_model.all
+      let :current_param_key do
+        current_model.model_name.param_key
+      end
+
+      let :respond_to_destroy? do
+        respond_to?(:destroy)
+      end
+
+      let :respond_to_confirm? do
+        self.class.ancestors.include?(ConfirmMethods)
+      end
+
+      # override according to the situation
+      let :current_record do
+        current_scope.find_or_initialize_by(id: params[:id])
+      end
     end
 
     def _goto_confirm?
@@ -54,74 +68,28 @@ module ModulableCrud
     def _back_to_edit?
       params[:_back_to_edit].present?
     end
-
-    def current_single_key
-      current_model.model_name.singular.to_sym
-    end
-
-    def current_plural_key
-      current_model.model_name.plural.to_sym
-    end
-
-    def current_param_key
-      current_model.model_name.param_key
-    end
-
-    def current_record
-      instance_variable_get("@#{current_param_key}")
-    end
-
-    def current_record=(v)
-      instance_variable_set("@#{current_param_key}", v)
-    end
-
-    def record_load
-      self.current_record = raw_current_record
-    end
-
-    # override according to the situation
-    def raw_current_record
-      if v = params[:id].presence
-        current_scope.find(v)
-      else
-        current_scope.new
-      end
-    end
-
-    def respond_to_destroy?
-      respond_to?(:destroy)
-    end
-
-    def respond_to_confirm?
-      self.class.ancestors.include?(ConfirmMethods)
-    end
   end
 
   concern :IndexMethods do
     included do
-      helper_method :current_records
-      helper_method :current_plural_key
-    end
+      let :current_plural_key do
+        current_model.model_name.plural.to_sym
+      end
 
-    def index
-      self.current_records = current_scope.order(:id).reverse_order.page(params[:page])
-    end
-
-    def current_records
-      instance_variable_get("@#{current_plural_key}")
-    end
-
-    def current_records=(v)
-      instance_variable_set("@#{current_plural_key}", v)
+      let :current_records do
+        current_scope.order(:id).reverse_order.page(params[:page])
+      end
     end
   end
 
   concern :ShowMethods do
-    def show
+    included do
+      let :page_header_show_title do
+        "詳細: ##{current_record.to_param}"
+      end
     end
 
-    def page_header_show_title
-      "詳細: ##{current_record.to_param}"
+    def show
     end
   end
 
@@ -274,7 +242,6 @@ module ModulableCrud
   concern :All do
     included do
       include Base
-      include Lettable
       include IndexMethods
       include ShowMethods
       include NewEditShareMethods

@@ -29,22 +29,24 @@
 
 module Fanta
   class BattlesController < ApplicationController
-    include ModulableCrud::All
+    include LettableCrud::All
 
-    def index
-      @js_lobby = ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
+    let :js_lobby do
+      ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
+    end
+
+    let :js_battle do
+      ams_sr(current_record, serializer: BattleShowSerializer, include: {memberships: :user, chat_messages: :user, watch_users: nil})
     end
 
     def show
-      @js_battle = ams_sr(current_record, serializer: BattleShowSerializer, include: {memberships: :user, chat_messages: :user, watch_users: nil})
-
       if current_record.xstate_key != :st_done
         @simple_layout = true
       end
     end
 
     def redirect_to_where
-      [self.class.parent_name.underscore, current_record]
+      current_record
     end
   end
 end

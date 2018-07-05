@@ -18,14 +18,21 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 
 class FreeBattlesController < ApplicationController
-  include ModulableCrud::All
+  include LettableCrud::All
   include SharedMethods
 
-  def new
-    @js_preview_params = {
+  let :js_preview_params do
+    {
       path: url_for([:free_battles, format: "json"]),
     }
-    super
+  end
+
+  let :current_record do
+    if v = params[:id].presence
+      current_scope.find_by!(key: v)
+    else
+      current_scope.new
+    end
   end
 
   def create
@@ -57,14 +64,6 @@ class FreeBattlesController < ApplicationController
 
   def current_basename
     params[:basename].presence || "棋譜データ"
-  end
-
-  def raw_current_record
-    if v = params[:id].presence
-      current_scope.find_by!(key: v)
-    else
-      current_scope.new
-    end
   end
 
   def redirect_to_where

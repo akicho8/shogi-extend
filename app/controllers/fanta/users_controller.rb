@@ -21,7 +21,11 @@
 
 module Fanta
   class UsersController < ApplicationController
-    include ModulableCrud::All
+    include LettableCrud::All
+
+    let :js_user_profile do
+      ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
+    end
 
     before_action only: [:edit, :update, :destroy] do
       unless current_user == current_record
@@ -29,10 +33,6 @@ module Fanta
           redirect_to :root, alert: "アクセス権限がありません"
         end
       end
-    end
-
-    def show
-      @js_user_profile = ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
     end
 
     def redirect_to_where

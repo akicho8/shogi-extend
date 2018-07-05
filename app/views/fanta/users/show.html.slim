@@ -1,5 +1,5 @@
 javascript:
-  var js_user_profile = #{@js_user_profile.to_json.html_safe}
+  var js_user_profile = #{js_user_profile.to_json.html_safe}
 
 - content_for :head do
   = javascript_pack_tag("user_profile")

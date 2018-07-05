@@ -1,5 +1,5 @@
 javascript:
-  var js_battle = #{@js_battle.to_json.html_safe}
+  var js_battle = #{js_battle.to_json.html_safe}
 
 - content_for :head do
   = javascript_pack_tag("battle")

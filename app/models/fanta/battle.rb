@@ -173,8 +173,8 @@ module Fanta
       class Brain
         attr_reader :battle, :mediator
 
-        delegate :current_user, to: :battle
-        delegate :cpu_brain_info, to: :current_user
+        delegate :active_user, to: :battle
+        delegate :cpu_brain_info, to: :active_user
 
         def initialize(battle, mediator)
           @battle = battle
@@ -206,7 +206,7 @@ module Fanta
 
         def execute_loop_if_robot
           loop do
-            if !current_user.race_info.auto_hand
+            if !active_user.race_info.auto_hand
               break
             end
             execute_one
@@ -319,7 +319,7 @@ module Fanta
 
         def __trace(message)
           return if Rails.env.production?
-          current_user.chat_say(battle, message, msg_class: "has-text-danger")
+          active_user.chat_say(battle, message, msg_class: "has-text-danger")
         end
       end
 
@@ -436,12 +436,12 @@ module Fanta
         memberships.find_by(position: position).user
       end
 
-      def current_user
+      def active_user
         user_by_turn(turn_max)
       end
 
       def robot_player?
-        current_user.race_info.key == :robot
+        active_user.race_info.key == :robot
       end
     end
 

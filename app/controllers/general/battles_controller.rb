@@ -20,42 +20,84 @@
 
 module General
   class BattlesController < ApplicationController
-    include ModulableCrud::All
+    include LettableCrud::All
     include SharedMethods
 
-    def index
-      if true
-        if request.format.zip?
-          filename = -> {
-            parts = []
-            parts << "2chkifu"
-            if current_general_user
-              parts << current_general_user.name
-            end
-            parts << Time.current.strftime("%Y%m%d%H%M%S")
-            parts.concat(current_tags)
-            parts.compact.join("_") + ".zip"
-          }
+    let :current_record do
+      if v = params[:id].presence
+        current_scope.find_by!(key: v)
+      else
+        current_scope.new
+      end
+    end
 
-          zip_buffer = Zip::OutputStream.write_buffer do |zos|
-            current_scope.limit(params[:limit] || 512).each do |battle|
-              Warabi::KifuFormatInfo.each.with_index do |e|
-                if kd = battle.to_xxx(e.key)
-                  zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
-                  zos.write kd
-                end
-              end
-            end
-          end
+    let :current_tags do
+      s = params[:query].to_s.gsub(/[,\p{blank}]/, " ").strip
+      s = s.split
+      s.uniq
+    end
 
-          send_data(zip_buffer.string, type: Mime[params[:format]], filename: filename.call, disposition: "attachment")
-          return
+    let :current_plus_tags do
+      current_tags.find_all do |e|
+        !e.start_with?("-") && !e.match?(/[<>]/)
+      end
+    end
+
+    let :current_minus_tags do
+      current_tags.collect { |e|
+        if e.start_with?("-")
+          e.remove(/^-/)
+        end
+      }.compact
+    end
+
+    let :current_turn_max do
+      current_tags.collect { |e|
+        if md = e.match(/手数(?<op>[<>]=?)(?<number>\d+)/)
+          md.named_captures.symbolize_keys
+        end
+      }.compact
+    end
+
+    let :current_form_search_value do
+      current_tags.join(" ")
+    end
+
+    let :current_tactics do
+      current_tags.find_all { |e| Warabi::TacticInfo.any? { |e| e.model[e] } }
+    end
+
+    let :current_general_user do
+      if e = current_tags.find { |e| User.find_by(name: e) }
+        User.find_by(name: e)
+      end
+    end
+
+    let :current_scope do
+      s = current_model
+      if v = current_plus_tags.presence
+        s = s.tagged_with(v)
+      end
+
+      if v = current_minus_tags.presence
+        s = s.tagged_with(v, exclude: true)
+      end
+
+      if v = current_turn_max.presence
+        v.each do |v|
+          s = s.where("turn_max #{v[:op]} #{v[:number]}")
         end
       end
 
-      self.current_records = current_scope.page(params[:page]).per(params[:per])
+      s.order(battled_at: :desc)
+    end
 
-      @rows = current_records.collect do |battle|
+    let :current_records do
+      current_scope.page(params[:page]).per(params[:per])
+    end
+
+    let :rows do
+      current_records.collect do |battle|
         {}.tap do |row|
           row["ID"] = link_to("##{battle.to_param}", battle)
 
@@ -111,53 +153,33 @@ module General
       end
     end
 
-    def current_tags
-      @current_tags ||= -> {
-        s = params[:query].to_s.gsub(/[,\p{blank}]/, " ").strip
-        s = s.split
-        s.uniq
-      }.call
-    end
+    def index
+      if request.format.zip?
+        filename = -> {
+          parts = []
+          parts << "2chkifu"
+          if current_general_user
+            parts << current_general_user.name
+          end
+          parts << Time.current.strftime("%Y%m%d%H%M%S")
+          parts.concat(current_tags)
+          parts.compact.join("_") + ".zip"
+        }
 
-    def current_plus_tags
-      @current_plus_tags ||= current_tags.find_all do |e|
-        !e.start_with?("-") && !e.match?(/[<>]/)
-      end
-    end
-
-    def current_minus_tags
-      @current_minus_tags ||= current_tags.collect { |e|
-        if e.start_with?("-")
-          e.remove(/^-/)
-        end
-      }.compact
-    end
-
-    def current_turn_max
-      @current_turn_max ||= current_tags.collect { |e|
-        if md = e.match(/手数(?<op>[<>]=?)(?<number>\d+)/)
-          md.named_captures.symbolize_keys
-        end
-      }.compact
-    end
-
-    def current_form_search_value
-      current_tags.join(" ")
-    end
-
-    def current_tactics
-      @current_tactics ||= current_tags.find_all { |tag| Warabi::TacticInfo.any? { |e| e.model[tag] } }
-    end
-
-    def current_general_user
-      @current_general_user ||= nil.yield_self { |v|
-        current_tags.each do |e|
-          if v = User.find_by(name: e)
-            break v
+        zip_buffer = Zip::OutputStream.write_buffer do |zos|
+          current_scope.limit(params[:limit] || 512).each do |battle|
+            Warabi::KifuFormatInfo.each.with_index do |e|
+              if kd = battle.to_xxx(e.key)
+                zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
+                zos.write kd
+              end
+            end
           end
         end
-        v
-      }
+
+        send_data(zip_buffer.string, type: Mime[params[:format]], filename: filename.call, disposition: "attachment")
+        return
+      end
     end
 
     def membership_name(membership)
@@ -199,38 +221,10 @@ module General
       current_record.update!(last_accessd_at: Time.current)
     end
 
-    def current_scope
-      super.yield_self do |s|
-        if v = current_plus_tags.presence
-          s = s.tagged_with(v)
-        end
-
-        if v = current_minus_tags.presence
-          s = s.tagged_with(v, exclude: true)
-        end
-
-        if v = current_turn_max.presence
-          v.each do |v|
-            s = s.where("turn_max #{v[:op]} #{v[:number]}")
-          end
-        end
-
-        s.order(battled_at: :desc)
-      end
-    end
-
-    def raw_current_record
-      if v = params[:id].presence
-        current_scope.find_by!(key: v)
-      else
-        current_scope.new
-      end
-    end
-
     def versus_tag(*list)
       list = list.compact
       if list.present?
-        vs = tag.span(" vs ", :class => "text-muted")
+        vs = tag.span(" vs ")
         list.collect { |e| e || "不明" }.join(vs).html_safe
       end
     end

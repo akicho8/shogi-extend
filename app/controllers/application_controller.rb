@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  extend Lettable
+
   concerning :ActiveModelSerializerMethods do
     included do
       # 効かないのはなぜ……？
@@ -77,10 +79,8 @@ class ApplicationController < ActionController::Base
 
   concerning :CurrentUserMethods do
     included do
-      helper_method :current_user
-
-      before_action do
-        @js_global_params = {
+      let :js_global_params do
+        {
           :current_user        => current_user && ams_sr(current_user, serializer: Fanta::CurrentUserSerializer),
           :online_only_count   => Fanta::User.online_only.count,
           :fighter_only_count  => Fanta::User.fighter_only.count,
@@ -90,18 +90,14 @@ class ApplicationController < ActionController::Base
           :robot_accept_infos  => Fanta::RobotAcceptInfo,
         }
       end
-    end
 
-    def current_user
-      @current_user ||= __current_user
-    end
-
-    def __current_user
-      return nil if bot_agent?
-      user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
-      user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
-      cookies.signed[:user_id] = {value: user.id, expires: 1.weeks.from_now}
-      user
+      let :current_user do
+        return nil if bot_agent?
+        user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
+        user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
+        cookies.signed[:user_id] = {value: user.id, expires: 1.weeks.from_now}
+        user
+      end
     end
 
     def current_user_set(user_id)

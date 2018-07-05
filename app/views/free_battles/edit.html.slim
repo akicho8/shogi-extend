@@ -1,5 +1,5 @@
 javascript:
-  var js_preview_params = #{@js_preview_params.to_json.html_safe};
+  var js_preview_params = #{js_preview_params.to_json.html_safe};
 
 - content_for :head do
   = javascript_pack_tag("shogi_preview_app")
