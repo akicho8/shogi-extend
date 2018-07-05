@@ -469,7 +469,7 @@ module Fanta
     # チャット関連
     concerning :ChatMessageMethods do
       included do
-        cattr_accessor(:chat_window_size) { 20 }
+        cattr_accessor(:chat_window_size) { 25 }
 
         has_many :chat_messages, dependent: :destroy do
           def limited_latest_list

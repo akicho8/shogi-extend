@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
           cancelText: "いいえ",
           onConfirm: () => {
             App.battle.give_up({win_location_key: this.current_location.flip.key})
-            App.battle.chat_say("負けました", {msg_class: "has-text-info"})
+            App.battle.chat_say("負けました")
           },
         })
       },
@@ -216,11 +216,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
               } else {
                 // 負けた方
-                Vue.prototype.$dialog.alert({
-                  title: "敗北",
-                  message: "負けました",
-                  type: "is-primary",
-                })
+                if (this.last_action_key === "TORYO") {
+                  // 自ら投了した場合、負けは自明なので何も出さない
+                } else {
+                  Vue.prototype.$dialog.alert({
+                    title: "敗北",
+                    message: "負けました",
+                    type: "is-primary",
+                  })
+                }
               }
             }
           } else {
