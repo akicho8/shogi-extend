@@ -138,12 +138,6 @@ javascript:
             b-table-column(label="対局者")
               template(v-for="membership in props.row.memberships")
                 message_link_to(:user_to="membership.user")
-
-            / - if Rails.env.development?
-              / b-table-column field="users" label="全参加者" sortable="sortable" numeric="numeric"
-              /   | {{props.row.users.length}}
-              / b-table-column field="current_users_count" label="現参加者" sortable="sortable" numeric="numeric"
-              /   | {{props.row.current_users_count}}
             b-table-column field="watch_ships_count" label="観戦者" sortable="sortable" numeric="numeric"
               | {{props.row.watch_ships_count}}
             - if Rails.env.development? && false
