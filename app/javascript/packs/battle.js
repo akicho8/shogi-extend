@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (this.member_p) {
             // 対局者同士
-            if (this.double_team_p) {
+            if (this.double_member_p) {
               // 両方に所属している場合(自分対自分になっている場合)
               // 客観的な味方で報告
               this.last_action_notify_dialog_basic()
@@ -333,7 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // 盤面を反転するか？
       flip() {
         if (this.member_p) {
-          if (this.double_team_p) {
+          if (this.double_member_p) {
             // 自分対自分の場合
             if (this.current_membership_is_self_p) {
               return this.current_location.key === "white"
@@ -368,12 +368,12 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       // 1人で複数のチームに所属している？ (自分対自分の場合などになる)
-      double_team_p() {
+      double_member_p() {
         return this.my_uniq_locations.length >= 2
       },
 
       // 片方のチームのみに所属している？
-      single_team_p() {
+      single_member_p() {
         return this.my_uniq_locations.length == 1
       },
 
