@@ -118,7 +118,7 @@ Rails.application.configure do
   #   # config.action_cable.mount_path = ENV["RAILS_RELATIVE_URL_ROOT"] + "/cable" # /cable の 404 になるのを防ぐため
   #   # config.action_cable.mount_path = "/cable123"
   # end
-  config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28080"
+  config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
 
   # ################################################################################ エラーメール
 
