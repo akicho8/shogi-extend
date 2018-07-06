@@ -9,7 +9,7 @@ end
 # >> |  black_preset_key | 平手                           |
 # >> |  white_preset_key | 平手                           |
 # >> |      lifetime_key | lifetime_m5                    |
-# >> |       platoon_key | platoon_p1vs1                  |
+# >> |       team_key | team_p1vs1                  |
 # >> |         full_sfen | position startpos moves 2h4h   |
 # >> |      clock_counts | {:black=>[1], :white=>[]}      |
 # >> |   countdown_flags | {:black=>false, :white=>false} |

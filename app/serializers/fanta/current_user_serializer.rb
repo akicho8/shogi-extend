@@ -20,7 +20,7 @@ end
 # >>  :rule=>
 # >>   {:id=>1,
 # >>    :lifetime_key=>"lifetime_m5",
-# >>    :platoon_key=>"platoon_p1vs1",
+# >>    :team_key=>"team_p1vs1",
 # >>    :self_preset_key=>"平手",
 # >>    :oppo_preset_key=>"平手",
 # >>    :robot_accept_key=>"accept"}}

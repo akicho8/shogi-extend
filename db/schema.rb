@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.string "black_preset_key", null: false, comment: "▲手合割"
     t.string "white_preset_key", null: false, comment: "△手合割"
     t.string "lifetime_key", null: false, comment: "時間"
-    t.string "platoon_key", null: false, comment: "人数"
+    t.string "team_key", null: false, comment: "人数"
     t.text "full_sfen", null: false, comment: "USI形式棋譜"
     t.text "clock_counts", null: false, comment: "対局時計情報"
     t.text "countdown_flags", null: false, comment: "秒読み状態"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
   create_table "fanta_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
-    t.string "platoon_key", null: false, comment: "ルール・人数"
+    t.string "team_key", null: false, comment: "ルール・人数"
     t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
     t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
     t.string "robot_accept_key", null: false, comment: "CPUと対戦するかどうか"
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "updated_at", null: false
     t.index ["lifetime_key"], name: "index_fanta_rules_on_lifetime_key"
     t.index ["oppo_preset_key"], name: "index_fanta_rules_on_oppo_preset_key"
-    t.index ["platoon_key"], name: "index_fanta_rules_on_platoon_key"
+    t.index ["team_key"], name: "index_fanta_rules_on_team_key"
     t.index ["robot_accept_key"], name: "index_fanta_rules_on_robot_accept_key"
     t.index ["self_preset_key"], name: "index_fanta_rules_on_self_preset_key"
     t.index ["user_id"], name: "index_fanta_rules_on_user_id"

@@ -9,7 +9,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # require "fanta/lifetime_info"
 # require "fanta/lobby_message"
 # require "fanta/membership"
-# require "fanta/platoon_info"
+# require "fanta/team_info"
 require "fanta/user"
 # require "fanta/watch_ship"
 # require "fanta/xstate_info"

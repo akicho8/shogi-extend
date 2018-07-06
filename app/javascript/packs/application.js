@@ -53,8 +53,8 @@ Object.defineProperty(Vue.prototype, "VariationInfo", {value: VariationInfo})
 import { LifetimeInfo } from "./lifetime_info"
 Object.defineProperty(Vue.prototype, "LifetimeInfo", {value: LifetimeInfo})
 
-import { PlatoonInfo } from "./platoon_info"
-Object.defineProperty(Vue.prototype, "PlatoonInfo", {value: PlatoonInfo})
+import { TeamInfo } from "./team_info"
+Object.defineProperty(Vue.prototype, "TeamInfo", {value: TeamInfo})
 
 import { LastActionInfo } from "./last_action_info"
 Object.defineProperty(Vue.prototype, "LastActionInfo", {value: LastActionInfo})

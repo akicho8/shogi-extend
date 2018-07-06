@@ -12,7 +12,7 @@ module Fanta
       :black_preset_key,
       :white_preset_key,
       :lifetime_key,
-      :platoon_key,
+      :team_key,
 
       :full_sfen,
       :turn_max,
@@ -50,7 +50,7 @@ end
 # >>  :black_preset_key=>"平手",
 # >>  :white_preset_key=>"平手",
 # >>  :lifetime_key=>"lifetime_m5",
-# >>  :platoon_key=>"platoon_p1vs1",
+# >>  :team_key=>"team_p1vs1",
 # >>  :full_sfen=>
 # >>   "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
 # >>  :turn_max=>0,
@@ -522,7 +522,7 @@ end
 # >>  :black_preset_key=>"平手",
 # >>  :white_preset_key=>"平手",
 # >>  :lifetime_key=>"lifetime_m5",
-# >>  :platoon_key=>"platoon_p1vs1",
+# >>  :team_key=>"team_p1vs1",
 # >>  :full_sfen=>
 # >>   "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
 # >>  :turn_max=>0,

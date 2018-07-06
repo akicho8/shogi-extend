@@ -10,7 +10,7 @@
 # | black_preset_key        | Black preset key        | string(255) | NOT NULL            |      |       |
 # | white_preset_key        | White preset key        | string(255) | NOT NULL            |      |       |
 # | lifetime_key            | Lifetime key            | string(255) | NOT NULL            |      |       |
-# | platoon_key             | Platoon key             | string(255) | NOT NULL            |      |       |
+# | team_key             | Team key             | string(255) | NOT NULL            |      |       |
 # | full_sfen          | Kifu body sfen          | text(65535) | NOT NULL            |      |       |
 # | clock_counts            | Clock counts            | text(65535) | NOT NULL            |      |       |
 # | countdown_flags     | Countdown mode hash     | text(65535) | NOT NULL            |      |       |
@@ -54,7 +54,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
     create_table :fanta_rules, force: true do |t|
       t.belongs_to :user,         null: false,              comment: "ユーザー"
       t.string :lifetime_key,     null: false, index: true, comment: "ルール・持ち時間"
-      t.string :platoon_key,      null: false, index: true, comment: "ルール・人数"
+      t.string :team_key,      null: false, index: true, comment: "ルール・人数"
       t.string :self_preset_key,  null: false, index: true, comment: "ルール・自分の手合割"
       t.string :oppo_preset_key,  null: false, index: true, comment: "ルール・相手の手合割"
       t.string :robot_accept_key, null: false, index: true, comment: "CPUと対戦するかどうか"
@@ -66,7 +66,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.string :black_preset_key,                 null: false, comment: "▲手合割"
       t.string :white_preset_key,                 null: false, comment: "△手合割"
       t.string :lifetime_key,                     null: false, comment: "時間"
-      t.string :platoon_key,                      null: false, comment: "人数"
+      t.string :team_key,                      null: false, comment: "人数"
       t.text :full_sfen,                          null: false, comment: "USI形式棋譜"
       t.text :clock_counts,                       null: false, comment: "対局時計情報"
       t.text :countdown_flags,                    null: false, comment: "秒読み状態"

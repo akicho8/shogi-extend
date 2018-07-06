@@ -57,7 +57,7 @@ module Fanta
 
           if Rails.env.development?
             2.times.collect do
-              create!(rule_attributes: {platoon_key: "platoon_p2vs2"})
+              create!(rule_attributes: {team_key: "team_p2vs2"})
             end
           end
         end
@@ -84,8 +84,8 @@ module Fanta
       included do
         has_one :rule, dependent: :destroy
         accepts_nested_attributes_for :rule
-        delegate :self_preset_info, :oppo_preset_info, :lifetime_info, :platoon_info, :robot_accept_info, to: :rule
-        delegate :self_preset_key, :oppo_preset_key, :lifetime_key, :platoon_key, :robot_accept_key, to: :rule
+        delegate :self_preset_info, :oppo_preset_info, :lifetime_info, :team_info, :robot_accept_info, to: :rule
+        delegate :self_preset_key, :oppo_preset_key, :lifetime_key, :team_key, :robot_accept_key, to: :rule
 
         after_create do
           rule || create_rule
@@ -241,7 +241,7 @@ module Fanta
       def setting_save(data)
         update!(rule_attributes: {
             lifetime_key:     data["lifetime_key"],
-            platoon_key:      data["platoon_key"],
+            team_key:      data["team_key"],
             self_preset_key:  data["self_preset_key"],
             oppo_preset_key:  data["oppo_preset_key"],
             robot_accept_key: data["robot_accept_key"],
@@ -253,8 +253,8 @@ module Fanta
           with_robot: false,
         }.merge(options)
 
-        total = platoon_info.total_limit
-        half = platoon_info.half_limit
+        total = team_info.total_limit
+        half = team_info.half_limit
 
         update!(matching_at: Time.current) # マッチング対象にして待つ
 
@@ -373,7 +373,7 @@ module Fanta
       def battle_create(attributes = {})
         Battle.create! do |e|
           e.lifetime_key = lifetime_key
-          e.platoon_key = platoon_key
+          e.team_key = team_key
           e.attributes = [:black_preset_key, :white_preset_key].zip(rule_cop.to_a).to_h
           e.attributes = attributes
           e.save!

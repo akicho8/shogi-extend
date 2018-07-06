@@ -34,8 +34,8 @@ javascript:
 
       b 人数
       b-field
-        template(v-for="e in PlatoonInfo.values")
-          b-radio-button(v-model="current_platoon_key" :native-value="e.key") {{e.name}}
+        template(v-for="e in TeamInfo.values")
+          b-radio-button(v-model="current_team_key" :native-value="e.key") {{e.name}}
 
       b CPUと対戦
       b-field

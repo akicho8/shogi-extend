@@ -10,7 +10,7 @@
 # | black_preset_key  | ▲手合割                                     | string(255) | NOT NULL            |      |       |
 # | white_preset_key  | △手合割                                     | string(255) | NOT NULL            |      |       |
 # | lifetime_key      | 時間                                         | string(255) | NOT NULL            |      |       |
-# | platoon_key       | 人数                                         | string(255) | NOT NULL            |      |       |
+# | team_key       | 人数                                         | string(255) | NOT NULL            |      |       |
 # | full_sfen         | USI形式棋譜                                  | text(65535) | NOT NULL            |      |       |
 # | clock_counts      | 対局時計情報                                 | text(65535) | NOT NULL            |      |       |
 # | countdown_flags   | 秒読み状態                                   | text(65535) | NOT NULL            |      |       |
@@ -65,7 +65,7 @@ module Fanta
       self.black_preset_key ||= "平手"
       self.white_preset_key ||= "平手"
       self.lifetime_key ||= :lifetime_m5
-      self.platoon_key ||= :platoon_p1vs1
+      self.team_key ||= :team_p1vs1
       self.turn_max ||= 0
       self.clock_counts ||= {black: [], white: []}
       self.countdown_flags ||= {black: false, white: false}

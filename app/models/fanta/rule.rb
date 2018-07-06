@@ -9,7 +9,7 @@
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
 # | user_id          | User             | integer(8)  | NOT NULL    |      | A     |
 # | lifetime_key     | Lifetime key     | string(255) | NOT NULL    |      | B     |
-# | platoon_key      | Platoon key      | string(255) | NOT NULL    |      | C     |
+# | team_key      | Team key      | string(255) | NOT NULL    |      | C     |
 # | self_preset_key  | Self preset key  | string(255) | NOT NULL    |      | D     |
 # | oppo_preset_key  | Oppo preset key  | string(255) | NOT NULL    |      | E     |
 # | robot_accept_key | Robot accept key | string(255) | NOT NULL    |      | F     |
@@ -21,7 +21,7 @@ module Fanta
   class Rule < ApplicationRecord
     belongs_to :user
 
-    scope :same_rule_scope, -> e { where(lifetime_key: e.lifetime_key, platoon_key: e.platoon_key) }
+    scope :same_rule_scope, -> e { where(lifetime_key: e.lifetime_key, team_key: e.team_key) }
     scope :with_robot_ok, -> { where(robot_accept_key: :accept) }     # CPUと対戦してもよい人たち
     scope :with_robot_ng, -> { where(robot_accept_key: :not_accept) } # CPUと対戦したくない人たち
 
@@ -29,7 +29,7 @@ module Fanta
       self.self_preset_key  ||= "平手"
       self.oppo_preset_key  ||= "平手"
       self.lifetime_key     ||= :lifetime_m5
-      self.platoon_key      ||= :platoon_p1vs1
+      self.team_key      ||= :team_p1vs1
       self.robot_accept_key ||= "accept"
     end
 
@@ -37,7 +37,7 @@ module Fanta
       validates :self_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
       validates :oppo_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
       validates :lifetime_key,     inclusion: LifetimeInfo.keys.collect(&:to_s)
-      validates :platoon_key,      inclusion: PlatoonInfo.keys.collect(&:to_s)
+      validates :team_key,      inclusion: TeamInfo.keys.collect(&:to_s)
       validates :robot_accept_key, inclusion: RobotAcceptInfo.keys.collect(&:to_s)
     end
 
@@ -53,8 +53,8 @@ module Fanta
       LifetimeInfo.fetch(lifetime_key)
     end
 
-    def platoon_info
-      PlatoonInfo.fetch(platoon_key)
+    def team_info
+      TeamInfo.fetch(team_key)
     end
 
     def robot_accept_info

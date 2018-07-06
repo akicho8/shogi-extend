@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chat_messages:        js_battle.chat_messages,
         full_sfen:            js_battle.full_sfen,
         current_lifetime_key: js_battle.lifetime_key,
-        current_platoon_key:  js_battle.platoon_key,
+        current_team_key:  js_battle.team_key,
         begin_at:             js_battle.begin_at,
         end_at:               js_battle.end_at,
         win_location_key:     js_battle.win_location_key,

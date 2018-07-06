@@ -5,9 +5,9 @@ module Fanta
   User.destroy_all
   Battle.destroy_all
 
-  user0 = User.create!(name: "人間0", rule_attributes: {platoon_key: :platoon_p2vs2, robot_accept_key: :not_accept}) # 人間とだけ対戦したい人
-  user1 = User.create!(name: "人間1", rule_attributes: {platoon_key: :platoon_p2vs2})                                # CPUとも対戦可
-  user2 = User.create!(name: "人間2", rule_attributes: {platoon_key: :platoon_p2vs2})                                # CPUとも対戦可
+  user0 = User.create!(name: "人間0", rule_attributes: {team_key: :team_p2vs2, robot_accept_key: :not_accept}) # 人間とだけ対戦したい人
+  user1 = User.create!(name: "人間1", rule_attributes: {team_key: :team_p2vs2})                                # CPUとも対戦可
+  user2 = User.create!(name: "人間2", rule_attributes: {team_key: :team_p2vs2})                                # CPUとも対戦可
   user3 = User.create!(name: "CPU", race_key: :robot)
 
   # 人との対戦希望でマッチング開始
@@ -27,7 +27,7 @@ end
 # >> |  black_preset_key | 平手                                                                          |
 # >> |  white_preset_key | 平手                                                                          |
 # >> |      lifetime_key | lifetime_m5                                                                   |
-# >> |       platoon_key | platoon_p2vs2                                                                 |
+# >> |       team_key | team_p2vs2                                                                 |
 # >> |         full_sfen | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 |
 # >> |      clock_counts | {:black=>[], :white=>[]}                                                      |
 # >> |   countdown_flags | {:black=>false, :white=>false}                                                |

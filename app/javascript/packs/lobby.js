@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         self_preset_key:       null,
         oppo_preset_key:       null,
         current_lifetime_key:  null,
-        current_platoon_key:   null,
+        current_team_key:   null,
         robot_accept_key:     null,
       }
     },
@@ -119,13 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
         console.assert("self_preset_key" in this.current_user.rule)
         console.assert("oppo_preset_key" in this.current_user.rule)
         console.assert("lifetime_key" in this.current_user.rule)
-        console.assert("platoon_key" in this.current_user.rule)
+        console.assert("team_key" in this.current_user.rule)
         console.assert("robot_accept_key" in this.current_user.rule)
 
         this.self_preset_key      = this.current_user.rule.self_preset_key
         this.oppo_preset_key      = this.current_user.rule.oppo_preset_key
         this.current_lifetime_key = this.current_user.rule.lifetime_key
-        this.current_platoon_key  = this.current_user.rule.platoon_key
+        this.current_team_key  = this.current_user.rule.team_key
         this.robot_accept_key     = this.current_user.rule.robot_accept_key
       }
 
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
           self_preset_key:  this.current_self_preset_info.key,
           oppo_preset_key:  this.current_oppo_preset_info.key,
           lifetime_key:     this.current_lifetime_key,
-          platoon_key:      this.current_platoon_key,
+          team_key:      this.current_team_key,
           robot_accept_key: this.robot_accept_key,
         })
       },
@@ -223,8 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return LifetimeInfo.fetch(this.current_lifetime_key)
       },
 
-      current_platoon_info() {
-        return PlatoonInfo.fetch(this.current_platoon_key)
+      current_team_info() {
+        return TeamInfo.fetch(this.current_team_key)
       },
 
       current_robot_accept_info() {

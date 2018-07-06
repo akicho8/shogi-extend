@@ -137,8 +137,8 @@ export default {
       return LifetimeInfo.fetch(this.current_lifetime_key)
     },
 
-    current_platoon_info() {
-      return PlatoonInfo.fetch(this.current_platoon_key)
+    current_team_info() {
+      return TeamInfo.fetch(this.current_team_key)
     },
 
     second_p() {
