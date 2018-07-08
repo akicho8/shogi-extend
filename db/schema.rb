@@ -122,9 +122,9 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.datetime "updated_at", null: false
     t.index ["lifetime_key"], name: "index_fanta_rules_on_lifetime_key"
     t.index ["oppo_preset_key"], name: "index_fanta_rules_on_oppo_preset_key"
-    t.index ["team_key"], name: "index_fanta_rules_on_team_key"
     t.index ["robot_accept_key"], name: "index_fanta_rules_on_robot_accept_key"
     t.index ["self_preset_key"], name: "index_fanta_rules_on_self_preset_key"
+    t.index ["team_key"], name: "index_fanta_rules_on_team_key"
     t.index ["user_id"], name: "index_fanta_rules_on_user_id"
   end
 

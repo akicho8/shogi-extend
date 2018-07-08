@@ -99,13 +99,19 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def current_user_set(user_id)
-      @current_user = nil
-      cookies.signed[:user_id] = user_id
+    def current_user_set_id(user_id)
+      if instance_variable_defined?(:@current_user)
+        remove_instance_variable(:@current_user)
+      end
+      if user_id
+        cookies.signed[:user_id] = user_id
+      else
+        cookies.delete(:user_id)
+      end
     end
 
     def current_user_logout
-      cookies.delete(:user_id)
+      current_user_set_id(nil)
     end
   end
 
@@ -138,7 +144,7 @@ class ApplicationController < ActionController::Base
           row[:id] = link_to(e.id, e)
           row[:name] = link_to(e.name, e)
           row["操作"] = [
-            link_to_eval("login") { "current_user_set(#{e.id})" },
+            link_to_eval("login") { "current_user_set_id(#{e.id})" },
             link_to_eval("削除") { "Fanta::User.find(#{e.id}).destroy!" },
             link_to_eval("online") { "Fanta::User.find(#{e.id}).update!(online_at: Time.current)" if !e.online_at },
             link_to_eval("offline") { "Fanta::User.find(#{e.id}).update!(online_at: nil)" if e.online_at },

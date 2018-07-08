@@ -10,13 +10,12 @@ RSpec::Rails::ControllerExampleGroup.module_eval do
     def user_login
       create(:fanta_user).tap do |user|
         user_logout
-        cookies.signed[:user_id] = user.id
+        controller.current_user_set_id(user.id)
       end
     end
 
     def user_logout
-      @controller.instance_variable_set(:@current_user, nil)
-      cookies.signed[:user_id] = nil
+      controller.current_user_logout
     end
   end
 end

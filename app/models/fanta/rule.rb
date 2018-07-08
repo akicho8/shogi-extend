@@ -9,7 +9,7 @@
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
 # | user_id          | User             | integer(8)  | NOT NULL    |      | A     |
 # | lifetime_key     | Lifetime key     | string(255) | NOT NULL    |      | B     |
-# | team_key      | Team key      | string(255) | NOT NULL    |      | C     |
+# | team_key         | Team key         | string(255) | NOT NULL    |      | C     |
 # | self_preset_key  | Self preset key  | string(255) | NOT NULL    |      | D     |
 # | oppo_preset_key  | Oppo preset key  | string(255) | NOT NULL    |      | E     |
 # | robot_accept_key | Robot accept key | string(255) | NOT NULL    |      | F     |

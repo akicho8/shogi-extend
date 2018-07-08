@@ -2,7 +2,7 @@ module Lettable
   # https://gist.github.com/eric1234/375ad4a79972467d6f30af3bd0146584
   def let(name, **options, &block)
     options = {
-
+      return_value_if_exist: false,
     }.merge(options)
 
     var_key = (options[:key] || name).to_s
@@ -12,8 +12,14 @@ module Lettable
     iv = "@#{var_key}"
 
     define_method(name) do
-      if instance_variable_defined?(iv)
-        return instance_variable_get(iv)
+      if options[:return_value_if_exist]
+        if v = instance_variable_get(iv)
+          return v
+        end
+      else
+        if instance_variable_defined?(iv)
+          return instance_variable_get(iv)
+        end
       end
       instance_variable_set(iv, instance_eval(&block))
     end
