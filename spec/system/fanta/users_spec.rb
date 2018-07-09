@@ -71,16 +71,32 @@ RSpec.describe "対戦", type: :system do
         doc_image("user2_部屋移動")
       end
 
+      # 観戦者登場
+      if true
+        using_session(:user3) do
+          become_lobby
+          visit "/online/battles/#{Fanta::Battle.last.id}"
+          expect(page).to have_content "観戦者"
+          expect(page).to have_content "user3"
+          doc_image("user3_観戦者視点")
+        end
+      end
+
       battle = Fanta::Battle.last
       black_user_name = battle.memberships.black.first.user.name
       white_user_name = battle.memberships.white.first.user.name
 
       using_session(black_user_name) do
         click_on("投了")
-        doc_image("投了")
+        sleep(1)
+        doc_image("投了_確認")
+        click_on("はい")
+        sleep(1)
+        doc_image("投了_実行")
       end
 
       using_session(white_user_name) do
+        expect(page).to have_content "勝利"
         doc_image("勝ち")
       end
     end
