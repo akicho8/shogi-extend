@@ -3,7 +3,8 @@
     template(v-if="user_to")
       a.message_link_to(@click.prevent="modal_open" :class="`user_${user_to.id}`")
         img.avatar_image(:src="user_to.avatar_url")
-        | {{user_to.name}}
+        span.user_name
+          | {{user_to.name}}
     template(v-else)
       slot(name="notify_to_all")
         .button.is-primary(@click.prevent="modal_open") 全体通知

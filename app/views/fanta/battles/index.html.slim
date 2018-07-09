@@ -68,10 +68,11 @@ javascript:
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_lobby_messages"
             td
-              message_link_to(:user_to="e.user")
-              = " "
-              span(:class="e.msg_options.msg_class")
-                | {{e.message}}
+              .chat_one_line
+                message_link_to(:user_to="e.user")
+                = " "
+                .chat_message(:class="e.msg_options.msg_class")
+                  | {{e.message}}
 
         / .field
         /   .control
