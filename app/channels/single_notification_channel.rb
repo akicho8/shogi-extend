@@ -12,7 +12,7 @@ class SingleNotificationChannel < ApplicationCable::Channel
     e = data["battle_request"]
     from = Fanta::User.find(e["from_id"])
     to = Fanta::User.find(e["to_id"])
-    if to.race_info.auto_kotaeru
+    if to.race_info.auto_request_ok
       battle_match_ok(data)
     else
       data["battle_request"]["from"] = ams_sr(from, serializer: Fanta::CurrentUserSerializer) # 送信元ユーザーの最新の状態のルールを用いるため

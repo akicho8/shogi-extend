@@ -357,7 +357,7 @@ module Fanta
 
         # 召集
         battle.users.each do |user|
-          if user.race_info.auto_iku
+          if user.race_info.auto_jump
             user.room_in(battle)
           else
             ActionCable.server.broadcast("single_notification_#{user.id}", {matching_establish: true, battle_show_path: battle.show_path}.merge(attributes))
