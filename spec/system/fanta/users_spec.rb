@@ -33,6 +33,15 @@ RSpec.describe "対戦", type: :system do
       click_on("ルール設定")
       expect(page).to have_checked_field("チーム戦", visible: false)
     end
+
+    it "全体通知" do
+      click_on("全体通知")
+      find(".modal.is-active input").set(message)
+      find(".modal.is-active footer button").click # 「送信」
+      sleep(0.5)
+      expect(page).to have_content message
+      doc_image
+    end
   end
 
   # できればクリックしたい

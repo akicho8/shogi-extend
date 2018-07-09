@@ -70,8 +70,11 @@ Object.defineProperty(Vue.prototype, "RobotAcceptInfo", {value: RobotAcceptInfo}
 
 //////////////////////////////////////////////////////////////////////////////// チャット関連コンポーネント
 
-import Messanger from "../message_link_to.vue"
-Vue.component("message_link_to", Messanger)
+import MessageLinkTo from "../message_link_to.vue"
+Vue.component("message_link_to", MessageLinkTo)
+
+import GlobalMessageLink from "../global_message_link.vue"
+Vue.component("global_message_link", GlobalMessageLink)
 
 //////////////////////////////////////////////////////////////////////////////// lodash
 

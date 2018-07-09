@@ -121,9 +121,7 @@ javascript:
                   template(v-for="e in props.row.active_battles")
                     a(:href="e.show_path")
                       =<> "{{e.name}}"
-
-        br
-        message_link_to
+        global_message_link
 
   .columns
     .column
