@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_battles as FreeBattle)
+# 棋譜変換 (free_battles as FreeBattle)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
-# | カラム名   | 意味               | タイプ      | 属性        | 参照 | INDEX |
+# | name       | desc               | type        | opts        | refs | index |
 # |------------+--------------------+-------------+-------------+------+-------|
 # | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
 # | key        | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Search logテーブル (swars_search_logs as Swars::SearchLog)
+# Search log (swars_search_logs as Swars::SearchLog)
 #
 # |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# | name       | desc     | type       | opts        | refs | index |
 # |------------+----------+------------+-------------+------+-------|
 # | id         | ID       | integer(8) | NOT NULL PK |      |       |
 # | user_id    | User     | integer(8) | NOT NULL    |      | A     |

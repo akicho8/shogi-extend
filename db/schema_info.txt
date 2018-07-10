@@ -2,10 +2,10 @@
 
 # == Schema Information ==
 #
-# ユーザーテーブル (fanta_users as Fanta::User)
+# ユーザー (fanta_users as Fanta::User)
 #
 # |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
-# | カラム名      | 意味                                                                     | タイプ      | 属性        | 参照 | INDEX |
+# | name          | desc                                                                     | type        | opts        | refs | index |
 # |---------------+--------------------------------------------------------------------------+-------------+-------------+------+-------|
 # | id            | ID                                                                       | integer(8)  | NOT NULL PK |      |       |
 # | key           | Key                                                                      | string(255) | NOT NULL    |      | A!    |
@@ -22,10 +22,10 @@
 
 # == Schema Information ==
 #
-# Battleテーブル (general_battles as General::Battle)
+# Battle (general_battles as General::Battle)
 #
 # |------------------+------------------+-------------+-------------+------+-------|
-# | カラム名         | 意味             | タイプ      | 属性        | 参照 | INDEX |
+# | name             | desc             | type        | opts        | refs | index |
 # |------------------+------------------+-------------+-------------+------+-------|
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
 # | key              | Key              | string(255) | NOT NULL    |      | A!    |
@@ -41,10 +41,10 @@
 
 # == Schema Information ==
 #
-# Userテーブル (general_users as General::User)
+# User (general_users as General::User)
 #
 # |------------+----------+-------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# | name       | desc     | type        | opts        | refs | index |
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | name       | Name     | string(255) | NOT NULL    |      | A!    |
@@ -54,10 +54,10 @@
 
 # == Schema Information ==
 #
-# Battleテーブル (swars_battles as Swars::Battle)
+# Battle (swars_battles as Swars::Battle)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
+# | name              | desc              | type        | opts        | refs | index |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
 # | key               | Key               | string(255) | NOT NULL    |      | A!    |
@@ -76,10 +76,10 @@
 
 # == Schema Information ==
 #
-# Userテーブル (swars_users as Swars::User)
+# User (swars_users as Swars::User)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
+# | name              | desc              | type        | opts        | refs | index |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
 # | user_key          | User key          | string(255) | NOT NULL    |      | A!    |
@@ -92,10 +92,10 @@
 
 # == Schema Information ==
 #
-# Membershipテーブル (general_memberships as General::Membership)
+# Membership (general_memberships as General::Membership)
 #
 # |--------------+--------------+-------------+-------------+------+-------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX |
+# | name         | desc         | type        | opts        | refs | index |
 # |--------------+--------------+-------------+-------------+------+-------|
 # | id           | ID           | integer(8)  | NOT NULL PK |      |       |
 # | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B  |
@@ -108,10 +108,10 @@
 
 # == Schema Information ==
 #
-# Membershipテーブル (swars_memberships as Swars::Membership)
+# Membership (swars_memberships as Swars::Membership)
 #
 # |--------------+--------------+-------------+-------------+------+---------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX   |
+# | name         | desc         | type        | opts        | refs | index   |
 # |--------------+--------------+-------------+-------------+------+---------|
 # | id           | ID           | integer(8)  | NOT NULL PK |      |         |
 # | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B! C |
@@ -126,10 +126,10 @@
 
 # == Schema Information ==
 #
-# Gradeテーブル (swars_grades as Swars::Grade)
+# Grade (swars_grades as Swars::Grade)
 #
 # |------------+----------+-------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# | name       | desc     | type        | opts        | refs | index |
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | key        | Key      | string(255) | NOT NULL    |      | A!    |
@@ -140,10 +140,10 @@
 
 # == Schema Information ==
 #
-# Search logテーブル (swars_search_logs as Swars::SearchLog)
+# Search log (swars_search_logs as Swars::SearchLog)
 #
 # |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# | name       | desc     | type       | opts        | refs | index |
 # |------------+----------+------------+-------------+------+-------|
 # | id         | ID       | integer(8) | NOT NULL PK |      |       |
 # | user_id    | User     | integer(8) | NOT NULL    |      | A     |
@@ -153,10 +153,10 @@
 
 # == Schema Information ==
 #
-# Access logテーブル (swars_access_logs as Swars::AccessLog)
+# Access log (swars_access_logs as Swars::AccessLog)
 #
 # |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# | name       | desc     | type       | opts        | refs | index |
 # |------------+----------+------------+-------------+------+-------|
 # | id         | ID       | integer(8) | NOT NULL PK |      |       |
 # | battle_id  | Battle   | integer(8) | NOT NULL    |      | A     |
@@ -166,10 +166,10 @@
 
 # == Schema Information ==
 #
-# 対局と対局者の対応テーブル (fanta_memberships as Fanta::Membership)
+# 対局と対局者の対応 (fanta_memberships as Fanta::Membership)
 #
 # |--------------+----------------------------------------+-------------+-------------+------+-------|
-# | カラム名     | 意味                                   | タイプ      | 属性        | 参照 | INDEX |
+# | name         | desc                                   | type        | opts        | refs | index |
 # |--------------+----------------------------------------+-------------+-------------+------+-------|
 # | id           | ID                                     | integer(8)  | NOT NULL PK |      |       |
 # | battle_id    | 部屋ID                                 | integer(8)  | NOT NULL    |      | A     |
@@ -186,10 +186,10 @@
 
 # == Schema Information ==
 #
-# 対局テーブル (fanta_battles as Fanta::Battle)
+# 対局 (fanta_battles as Fanta::Battle)
 #
 # |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
-# | カラム名          | 意味                                         | タイプ      | 属性                | 参照 | INDEX |
+# | name              | desc                                         | type        | opts                | refs | index |
 # |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
 # | id                | ID                                           | integer(8)  | NOT NULL PK         |      |       |
 # | black_preset_key  | ▲手合割                                     | string(255) | NOT NULL            |      |       |
@@ -214,10 +214,10 @@
 
 # == Schema Information ==
 #
-# Lobby messageテーブル (fanta_lobby_messages as Fanta::LobbyMessage)
+# Lobby message (fanta_lobby_messages as Fanta::LobbyMessage)
 #
 # |-------------+-------------+-------------+-------------+------+-------|
-# | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
+# | name        | desc        | type        | opts        | refs | index |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
 # | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | A     |
@@ -229,10 +229,10 @@
 
 # == Schema Information ==
 #
-# Ruleテーブル (fanta_rules as Fanta::Rule)
+# Rule (fanta_rules as Fanta::Rule)
 #
 # |------------------+------------------+-------------+-------------+------+-------|
-# | カラム名         | 意味             | タイプ      | 属性        | 参照 | INDEX |
+# | name             | desc             | type        | opts        | refs | index |
 # |------------------+------------------+-------------+-------------+------+-------|
 # | id               | ID               | integer(8)  | NOT NULL PK |      |       |
 # | user_id          | User             | integer(8)  | NOT NULL    |      | A     |
@@ -247,10 +247,10 @@
 
 # == Schema Information ==
 #
-# Chat messageテーブル (fanta_chat_messages as Fanta::ChatMessage)
+# Chat message (fanta_chat_messages as Fanta::ChatMessage)
 #
 # |-------------+-------------+-------------+-------------+------+-------|
-# | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
+# | name        | desc        | type        | opts        | refs | index |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
 # | battle_id   | 部屋ID      | integer(8)  | NOT NULL    |      | A     |
@@ -263,10 +263,10 @@
 
 # == Schema Information ==
 #
-# Profileテーブル (fanta_profiles as Fanta::Profile)
+# Profile (fanta_profiles as Fanta::Profile)
 #
 # |------------------------+----------------------+-------------+-------------+------+-------|
-# | カラム名               | 意味                 | タイプ      | 属性        | 参照 | INDEX |
+# | name                   | desc                 | type        | opts        | refs | index |
 # |------------------------+----------------------+-------------+-------------+------+-------|
 # | id                     | ID                   | integer(8)  | NOT NULL PK |      |       |
 # | user_id                | User                 | integer(8)  | NOT NULL    |      | A     |
@@ -278,10 +278,10 @@
 
 # == Schema Information ==
 #
-# Watch shipテーブル (fanta_watch_ships as Fanta::WatchShip)
+# Watch ship (fanta_watch_ships as Fanta::WatchShip)
 #
 # |------------+------------+------------+-------------+------+-------|
-# | カラム名   | 意味       | タイプ     | 属性        | 参照 | INDEX |
+# | name       | desc       | type       | opts        | refs | index |
 # |------------+------------+------------+-------------+------+-------|
 # | id         | ID         | integer(8) | NOT NULL PK |      |       |
 # | battle_id  | 部屋ID     | integer(8) | NOT NULL    |      | A     |
@@ -292,10 +292,10 @@
 
 # == Schema Information ==
 #
-# 棋譜変換テーブル (free_battles as FreeBattle)
+# 棋譜変換 (free_battles as FreeBattle)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
-# | カラム名   | 意味               | タイプ      | 属性        | 参照 | INDEX |
+# | name       | desc               | type        | opts        | refs | index |
 # |------------+--------------------+-------------+-------------+------+-------|
 # | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
 # | key        | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |
@@ -310,17 +310,17 @@
 
 # == Schema Information ==
 #
-# 各種棋譜ファイル内容テーブル (converted_infos as ConvertedInfo)
+# 各種棋譜ファイル内容 (converted_infos as ConvertedInfo)
 #
-# |------------------+------------------+-------------+-------------+--------------------------+-------|
-# | カラム名         | 意味             | タイプ      | 属性        | 参照                     | INDEX |
-# |------------------+------------------+-------------+-------------+--------------------------+-------|
-# | id               | ID               | integer(8)  | NOT NULL PK |                          |       |
-# | convertable_type | Convertable type | string(255) | NOT NULL    | モデル名(polymorphic)    | A     |
-# | convertable_id   | Convertable      | integer(8)  | NOT NULL    | => (convertable_type)#id | A     |
-# | text_body        | 本体             | text(65535) | NOT NULL    |                          |       |
-# | text_format      | 種類             | string(255) | NOT NULL    |                          | B     |
-# | created_at       | 作成日時         | datetime    | NOT NULL    |                          |       |
-# | updated_at       | 更新日時         | datetime    | NOT NULL    |                          |       |
-# |------------------+------------------+-------------+-------------+--------------------------+-------|
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
+# | name             | desc             | type        | opts        | refs                       | index |
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
+# | id               | ID               | integer(8)  | NOT NULL PK |                            |       |
+# | convertable_type | Convertable type | string(255) | NOT NULL    | SpecificModel(polymorphic) | A     |
+# | convertable_id   | Convertable      | integer(8)  | NOT NULL    | => (convertable_type)#id   | A     |
+# | text_body        | 本体             | text(65535) | NOT NULL    |                            |       |
+# | text_format      | 種類             | string(255) | NOT NULL    |                            | B     |
+# | created_at       | 作成日時         | datetime    | NOT NULL    |                            |       |
+# | updated_at       | 更新日時         | datetime    | NOT NULL    |                            |       |
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
 

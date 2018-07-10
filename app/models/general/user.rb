@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Userテーブル (general_users as General::User)
+# User (general_users as General::User)
 #
 # |------------+----------+-------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ      | 属性        | 参照 | INDEX |
+# | name       | desc     | type        | opts        | refs | index |
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | name       | Name     | string(255) | NOT NULL    |      | A!    |

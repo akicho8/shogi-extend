@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Access logテーブル (swars_access_logs as Swars::AccessLog)
+# Access log (swars_access_logs as Swars::AccessLog)
 #
 # |------------+----------+------------+-------------+------+-------|
-# | カラム名   | 意味     | タイプ     | 属性        | 参照 | INDEX |
+# | name       | desc     | type       | opts        | refs | index |
 # |------------+----------+------------+-------------+------+-------|
 # | id         | ID       | integer(8) | NOT NULL PK |      |       |
 # | battle_id  | Battle   | integer(8) | NOT NULL    |      | A     |

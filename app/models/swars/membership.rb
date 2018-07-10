@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Membershipテーブル (swars_memberships as Swars::Membership)
+# Membership (swars_memberships as Swars::Membership)
 #
 # |--------------+--------------+-------------+-------------+------+---------|
-# | カラム名     | 意味         | タイプ      | 属性        | 参照 | INDEX   |
+# | name         | desc         | type        | opts        | refs | index   |
 # |--------------+--------------+-------------+-------------+------+---------|
 # | id           | ID           | integer(8)  | NOT NULL PK |      |         |
 # | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B! C |

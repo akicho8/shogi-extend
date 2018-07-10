@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Userテーブル (swars_users as Swars::User)
+# User (swars_users as Swars::User)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
+# | name              | desc              | type        | opts        | refs | index |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
 # | user_key          | User key          | string(255) | NOT NULL    |      | A!    |

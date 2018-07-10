@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対局と対局者の対応テーブル (fanta_memberships as Fanta::Membership)
+# 対局と対局者の対応 (fanta_memberships as Fanta::Membership)
 #
 # |--------------+----------------------------------------+-------------+-------------+------+-------|
-# | カラム名     | 意味                                   | タイプ      | 属性        | 参照 | INDEX |
+# | name         | desc                                   | type        | opts        | refs | index |
 # |--------------+----------------------------------------+-------------+-------------+------+-------|
 # | id           | ID                                     | integer(8)  | NOT NULL PK |      |       |
 # | battle_id    | 部屋ID                                 | integer(8)  | NOT NULL    |      | A     |

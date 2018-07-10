@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Lobby messageテーブル (fanta_lobby_messages as Fanta::LobbyMessage)
+# Lobby message (fanta_lobby_messages as Fanta::LobbyMessage)
 #
 # |-------------+-------------+-------------+-------------+------+-------|
-# | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
+# | name        | desc        | type        | opts        | refs | index |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
 # | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | A     |

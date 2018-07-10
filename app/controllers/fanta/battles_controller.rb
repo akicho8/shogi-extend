@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 対局テーブル (fanta_battles as Fanta::Battle)
+# 対局 (fanta_battles as Fanta::Battle)
 #
 # |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
-# | カラム名          | 意味                                         | タイプ      | 属性                | 参照 | INDEX |
+# | name              | desc                                         | type        | opts                | refs | index |
 # |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
 # | id                | ID                                           | integer(8)  | NOT NULL PK         |      |       |
 # | black_preset_key  | ▲手合割                                     | string(255) | NOT NULL            |      |       |

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Battleテーブル (swars_battles as Swars::Battle)
+# Battle (swars_battles as Swars::Battle)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
-# | カラム名          | 意味              | タイプ      | 属性        | 参照 | INDEX |
+# | name              | desc              | type        | opts        | refs | index |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
 # | key               | Key               | string(255) | NOT NULL    |      | A!    |

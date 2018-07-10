@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Watch shipテーブル (fanta_watch_ships as Fanta::WatchShip)
+# Watch ship (fanta_watch_ships as Fanta::WatchShip)
 #
 # |------------+------------+------------+-------------+------+-------|
-# | カラム名   | 意味       | タイプ     | 属性        | 参照 | INDEX |
+# | name       | desc       | type       | opts        | refs | index |
 # |------------+------------+------------+-------------+------+-------|
 # | id         | ID         | integer(8) | NOT NULL PK |      |       |
 # | battle_id  | 部屋ID     | integer(8) | NOT NULL    |      | A     |

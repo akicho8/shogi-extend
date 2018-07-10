@@ -50,6 +50,15 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.timestamps               null: false
     end
 
+    # 記録
+    create_table :fanta_chronicle, force: true do |t|
+      t.belongs_to :user,         null: false, comment: "ユーザー"
+      t.integer :win_count,       null: false, index: true, comment: "勝数"
+      t.integer :lose_count,      null: false, index: true, comment: "負数"
+      t.integer :draw_count,      null: false, index: true, comment: "引き分け数"
+      t.timestamps                null: false
+    end
+
     # 希望ルール
     create_table :fanta_rules, force: true do |t|
       t.belongs_to :user,         null: false,              comment: "ユーザー"

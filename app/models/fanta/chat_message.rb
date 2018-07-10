@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Chat messageテーブル (fanta_chat_messages as Fanta::ChatMessage)
+# Chat message (fanta_chat_messages as Fanta::ChatMessage)
 #
 # |-------------+-------------+-------------+-------------+------+-------|
-# | カラム名    | 意味        | タイプ      | 属性        | 参照 | INDEX |
+# | name        | desc        | type        | opts        | refs | index |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
 # | battle_id   | 部屋ID      | integer(8)  | NOT NULL    |      | A     |
