@@ -50,12 +50,10 @@ class CreateFanta < ActiveRecord::Migration[5.1]
       t.timestamps               null: false
     end
 
-    # 記録
-    create_table :fanta_chronicle, force: true do |t|
+    # 記録(永続的にするため部屋とは別にする)
+    create_table :fanta_chronicles, force: true do |t|
       t.belongs_to :user,         null: false, comment: "ユーザー"
-      t.integer :win_count,       null: false, index: true, comment: "勝数"
-      t.integer :lose_count,      null: false, index: true, comment: "負数"
-      t.integer :draw_count,      null: false, index: true, comment: "引き分け数"
+      t.string :judge_key,        null: false, index: true, comment: "結果"
       t.timestamps                null: false
     end
 
@@ -63,7 +61,7 @@ class CreateFanta < ActiveRecord::Migration[5.1]
     create_table :fanta_rules, force: true do |t|
       t.belongs_to :user,         null: false,              comment: "ユーザー"
       t.string :lifetime_key,     null: false, index: true, comment: "ルール・持ち時間"
-      t.string :team_key,      null: false, index: true, comment: "ルール・人数"
+      t.string :team_key,         null: false, index: true, comment: "ルール・人数"
       t.string :self_preset_key,  null: false, index: true, comment: "ルール・自分の手合割"
       t.string :oppo_preset_key,  null: false, index: true, comment: "ルール・相手の手合割"
       t.string :robot_accept_key, null: false, index: true, comment: "CPUと対戦するかどうか"
@@ -72,23 +70,23 @@ class CreateFanta < ActiveRecord::Migration[5.1]
 
     # 部屋
     create_table :fanta_battles, force: true do |t|
-      t.string :black_preset_key,                 null: false, comment: "▲手合割"
-      t.string :white_preset_key,                 null: false, comment: "△手合割"
-      t.string :lifetime_key,                     null: false, comment: "時間"
-      t.string :team_key,                      null: false, comment: "人数"
-      t.text :full_sfen,                          null: false, comment: "USI形式棋譜"
-      t.text :clock_counts,                       null: false, comment: "対局時計情報"
-      t.text :countdown_flags,                    null: false, comment: "秒読み状態"
-      t.integer :turn_max,                        null: false, comment: "手番数"
-      t.datetime :battle_request_at,              null: true,  comment: "対局申し込みによる成立日時"
-      t.datetime :auto_matched_at,                null: true,  comment: "自動マッチングによる成立日時"
-      t.datetime :begin_at,                       null: true,  comment: "メンバーたち部屋に入って対局開始になった日時"
-      t.datetime :end_at,                         null: true,  comment: "バトル終了日時"
-      t.string :last_action_key,                  null: true,  comment: "最後の状態"
-      t.string :win_location_key,                 null: true,  comment: "勝った方の先後"
-      t.integer :memberships_count, default: 0,   null: false, comment: "対局者総数"
-      t.integer :watch_ships_count, default: 0,   null: false, comment: "観戦者数"
-      t.timestamps                                null: false
+      t.string :black_preset_key,               null: false, comment: "▲手合割"
+      t.string :white_preset_key,               null: false, comment: "△手合割"
+      t.string :lifetime_key,                   null: false, comment: "時間"
+      t.string :team_key,                       null: false, comment: "人数"
+      t.text :full_sfen,                        null: false, comment: "USI形式棋譜"
+      t.text :clock_counts,                     null: false, comment: "対局時計情報"
+      t.text :countdown_flags,                  null: false, comment: "秒読み状態"
+      t.integer :turn_max,                      null: false, comment: "手番数"
+      t.datetime :battle_request_at,            null: true,  comment: "対局申し込みによる成立日時"
+      t.datetime :auto_matched_at,              null: true,  comment: "自動マッチングによる成立日時"
+      t.datetime :begin_at,                     null: true,  comment: "メンバーたち部屋に入って対局開始になった日時"
+      t.datetime :end_at,                       null: true,  comment: "バトル終了日時"
+      t.string :last_action_key,                null: true,  comment: "最後の状態"
+      t.string :win_location_key,               null: true,  comment: "勝った方の先後"
+      t.integer :memberships_count, default: 0, null: false, comment: "対局者総数"
+      t.integer :watch_ships_count, default: 0, null: false, comment: "観戦者数"
+      t.timestamps                              null: false
     end
 
     # 対局者

@@ -24,12 +24,12 @@ javascript:
           div
             p.heading 勝ち
             .title.is-size-4
-              = 0
+              = current_record.chronicles.judge_eq(:win).count
         .level-item.has-text-centered
           div
             p.heading 負け
             .title.is-size-4
-              = 0
+              = current_record.chronicles.judge_eq(:lose).count
 
       .virtual_box
         .title.is-4= "対局履歴"

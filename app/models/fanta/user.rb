@@ -68,6 +68,25 @@ module Fanta
       end
     end
 
+    concerning :ChronicleMethods do
+      included do
+        has_many :chronicles, dependent: :destroy
+
+        if Rails.env.development?
+          after_create do
+            rand(10).times do
+              judge_add(JudgeInfo.keys.sample)
+            end
+          end
+        end
+      end
+
+      def judge_add(key)
+        judge_info = JudgeInfo.fetch(key)
+        chronicles.create!(judge_key: judge_info.key)
+      end
+    end
+
     concerning :ProfileMethods do
       included do
         has_one :profile, dependent: :destroy

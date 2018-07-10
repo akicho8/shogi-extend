@@ -83,9 +83,10 @@ class ApplicationController < ActionController::Base
           :online_only_count   => Fanta::User.online_only.count,
           :fighter_only_count  => Fanta::User.fighter_only.count,
           :lifetime_infos      => Fanta::LifetimeInfo,
-          :team_infos       => Fanta::TeamInfo,
+          :team_infos          => Fanta::TeamInfo,
           :custom_preset_infos => Fanta::CustomPresetInfo,
           :robot_accept_infos  => Fanta::RobotAcceptInfo,
+          :last_action_infos   => Fanta::LastActionInfo,
         }
       end
 

@@ -76,6 +76,15 @@ ActiveRecord::Schema.define(version: 2018_05_27_071050) do
     t.index ["user_id"], name: "index_fanta_chat_messages_on_user_id"
   end
 
+  create_table "fanta_chronicles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "judge_key", null: false, comment: "結果"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["judge_key"], name: "index_fanta_chronicles_on_judge_key"
+    t.index ["user_id"], name: "index_fanta_chronicles_on_user_id"
+  end
+
   create_table "fanta_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "message", null: false, comment: "発言"

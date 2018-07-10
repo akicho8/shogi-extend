@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
               this.last_action_notify_dialog_basic()
             } else {
               // 片方に所属している場合
-              if (_.includes(this.my_uniq_locations, this.win_location)) {
+              if (_.includes(this.my_uniq_locations, this.win_location_info)) {
                 // 勝った方
                 Vue.prototype.$dialog.alert({
                   title: "勝利",
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
         Vue.prototype.$dialog.alert({
           type: "is-primary",
           title: "結果",
-          message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location)}の勝ち`,
+          message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location_info)}の勝ち`,
         })
       },
 
@@ -422,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       // 勝った方
-      win_location() {
+      win_location_info() {
         return Location.fetch(this.win_location_key)
       },
 
