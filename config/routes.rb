@@ -156,4 +156,19 @@ Rails.application.routes.draw do
   direct :youtube_search do |query|
     "https://www.youtube.com/results?search_query=#{query}&search=Search"
   end
+
+  ################################################################################ graphiql
+
+  if true
+    if Rails.env.development?
+      mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+    end
+    post "/graphql", to: "graphql#execute"
+
+    # namespace :api, { format: 'json' } do
+    #   namespace :v1 do
+    #     post "/graphql", to: "graphql#execute"
+    #   end
+    # end
+  end
 end

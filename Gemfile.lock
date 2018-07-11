@@ -158,6 +158,10 @@ GEM
       thor (~> 0.19.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    graphiql-rails (1.4.10)
+      railties
+      sprockets-rails
+    graphql (1.8.5)
     html_format (0.0.6)
       rails
       sass-rails
@@ -406,6 +410,8 @@ DEPENDENCIES
   faraday
   ffi (= 1.9.18)
   foreman
+  graphiql-rails
+  graphql
   html_format
   jbuilder (~> 2.5)
   kaminari

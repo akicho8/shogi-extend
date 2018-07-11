@@ -135,3 +135,8 @@ gem 'rack-cors',require: 'rack/cors'
 gem 'ffi', '1.9.18'             # 1.9.19 が転けるのでとりあえず
 
 gem 'active_model_serializers'
+
+gem 'graphql'
+group :development do
+  gem 'graphiql-rails' # graphqlのテスト画面
+end
