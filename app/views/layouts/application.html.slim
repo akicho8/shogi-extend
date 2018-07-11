@@ -148,7 +148,10 @@ html lang="ja"
             .column.has-text-centered
               p
                 = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
+              p
               div.content
+                =<> link_to("GraphQL API", :graphiql_rails, target: "_blank")
+                br
                 =<> link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
                 =<> link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
                 =<> link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
