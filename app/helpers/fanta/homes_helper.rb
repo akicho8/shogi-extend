@@ -1,0 +1,2 @@
+module Fanta::HomesHelper
+end

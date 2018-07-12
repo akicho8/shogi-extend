@@ -13,7 +13,7 @@ end
 # >> I, [2018-06-14T17:42:24.852453 #47405]  INFO -- : Rendered Fanta::SimpleUserSerializer with ActiveModelSerializers::Adapter::Attributes (1464.8ms)
 # >> |------------+---------------------------------------------------------------------------------------------------------------------|
 # >> |         id | 1                                                                                                                   |
-# >> |       name | 野良1号                                                                                                             |
+# >> |       name | 名無しの棋士1号                                                                                                             |
 # >> |  show_path | /online/users/1                                                                                                     |
 # >> | avatar_url | /assets/fallback_avatars/0001_fallback_header_avatar_image-284f2a88b11d10910bdb24966f6febeaaf7f38678452998c949b8aa69a101221.png |
 # >> |------------+---------------------------------------------------------------------------------------------------------------------|

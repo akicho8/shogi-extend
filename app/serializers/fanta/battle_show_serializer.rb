@@ -60,8 +60,8 @@ end
 # >>  :human_kifu_text=>
 # >>   "開始日時：2018/06/12 20:22:30\n" +
 # >>   "場所：http://localhost:3000/online/battles/53\n" +
-# >>   "先手：野良12号\n" +
-# >>   "後手：野良11号\n" +
+# >>   "先手：名無しの棋士12号\n" +
+# >>   "後手：名無しの棋士11号\n" +
 # >>   "手合割：平手\n" +
 # >>   "\n" +
 # >>   "まで0手で後手の勝ち\n",
@@ -75,7 +75,7 @@ end
 # >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -87,7 +87,7 @@ end
 # >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}],
@@ -97,7 +97,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:22:28 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -106,7 +106,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:22:29 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -115,7 +115,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:17 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -124,7 +124,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:19 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -133,7 +133,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:52 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -142,7 +142,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:24:52 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -151,7 +151,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:05 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -160,7 +160,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:07 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -169,7 +169,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:09 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -178,7 +178,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:09 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -187,7 +187,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:10 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -196,7 +196,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:12 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -205,7 +205,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:13 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -214,7 +214,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:13 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -223,7 +223,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:14 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -232,7 +232,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:16 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -241,7 +241,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:18 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -250,7 +250,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:18 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -259,7 +259,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:19 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -268,7 +268,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:20 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -277,7 +277,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:25 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -286,7 +286,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:25 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -295,7 +295,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:25 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -304,7 +304,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:27 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -313,7 +313,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -322,7 +322,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -331,7 +331,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:31 JST +09:00,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -340,7 +340,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:25:33 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -349,7 +349,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:27:14 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -358,7 +358,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:27:36 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -367,7 +367,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:27:37 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -376,7 +376,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:02 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -385,7 +385,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:03 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -394,7 +394,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:14 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -403,7 +403,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:16 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -412,7 +412,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:18 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -421,7 +421,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:28:20 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -430,7 +430,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:22 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -439,7 +439,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:28 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -448,7 +448,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:33 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -457,7 +457,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:37 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -466,7 +466,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:29:38 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -475,7 +475,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:33:09 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -484,7 +484,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:33:10 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -493,7 +493,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:33:12 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}},
@@ -502,7 +502,7 @@ end
 # >>     :created_at=>Tue, 12 Jun 2018 20:34:46 JST +09:00,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}],
@@ -532,8 +532,8 @@ end
 # >>  :human_kifu_text=>
 # >>   "開始日時：2018/06/12 20:22:30\n" +
 # >>   "場所：http://localhost:3000/online/battles/53\n" +
-# >>   "先手：野良12号\n" +
-# >>   "後手：野良11号\n" +
+# >>   "先手：名無しの棋士12号\n" +
+# >>   "後手：名無しの棋士11号\n" +
 # >>   "手合割：平手\n" +
 # >>   "\n" +
 # >>   "まで0手で後手の勝ち\n",
@@ -547,7 +547,7 @@ end
 # >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>12,
-# >>       :name=>"野良12号",
+# >>       :name=>"名無しの棋士12号",
 # >>       :show_path=>"/online/users/12",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0012_fallback_header_avatar_image-178e6778871d93f2ecc903e0fa22b878c89c0deaff8c2ea5fae7478d3e7210ff.png"}},
@@ -559,7 +559,7 @@ end
 # >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>11,
-# >>       :name=>"野良11号",
+# >>       :name=>"名無しの棋士11号",
 # >>       :show_path=>"/online/users/11",
 # >>       :avatar_url=>
 # >>        "/assets/fallback_avatars/0011_fallback_header_avatar_image-28288cf16f08dc2cfc1a1fb81818a3fd0b2bda49e0f1884d38cbdfe2328f6f0b.png"}}]}

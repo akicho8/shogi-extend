@@ -92,9 +92,21 @@ class ApplicationController < ActionController::Base
 
       let :current_user do
         unless bot_agent?
-          user ||= Fanta::User.find_by(id: params[:__user_id__] || cookies.signed[:user_id])
-          user ||= Fanta::User.create!(user_agent: request.user_agent, name: params[:__user_name__])
-          cookies.signed[:user_id] = {value: user.id, expires: 1.weeks.from_now}
+          user_id = nil
+          unless Rails.env.production?
+            user_id ||= params[:__user_id__]
+          end
+          user_id ||= cookies.signed[:user_id]
+
+          user ||= Fanta::User.find_by(id: user_id)
+
+          if Rails.env.test?
+            unless user
+              user = Fanta::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
+              current_user_set_id(user.id)
+            end
+          end
+
           user
         end
       end
@@ -105,7 +117,7 @@ class ApplicationController < ActionController::Base
         remove_instance_variable(:@current_user)
       end
       if user_id
-        cookies.signed[:user_id] = user_id
+        cookies.signed[:user_id] = {value: user_id, expires: 1.years.from_now}
       else
         cookies.delete(:user_id)
       end
@@ -113,6 +125,7 @@ class ApplicationController < ActionController::Base
 
     def current_user_logout
       current_user_set_id(nil)
+      sign_out(:xuser)
     end
   end
 

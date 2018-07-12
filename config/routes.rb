@@ -58,6 +58,11 @@
 #           rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
+  get "homes/show" => "fanta/homes#show"
+  devise_for :xusers, class_name: "Fanta::User", controllers: {omniauth_callbacks: "omniauth_callbacks"}
+
+  ################################################################################ 対戦
+
   namespace :fanta, path: "" do
     resources :battles, path: "online/battles"
     resources :users, path: "online/users"

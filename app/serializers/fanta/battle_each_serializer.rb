@@ -39,7 +39,7 @@ end
 # >>     :location_key=>"white",
 # >>     :user=>
 # >>      {:id=>13,
-# >>       :name=>"野良4号",
+# >>       :name=>"名無しの棋士4号",
 # >>       :show_path=>"/online/users/13",
 # >>       :avatar_url=>
 # >>        "/assets/human/0016_fallback_avatar_icon-c15c4bf3e3c30152976ee399650be92e6b405592cb0c713a6f517e69040d7e4b.png",

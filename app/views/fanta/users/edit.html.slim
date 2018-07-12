@@ -9,5 +9,11 @@ hr
       =<> form.submit(name: :_submit, class: "button is-primary")
 
 br
-br
-p= link_to("ロビーに戻る", [:fanta, :battles], class: "button")
+= link_to("ロビーに戻る", [:fanta, :battles], class: "button")
+/ br
+/ br
+/ 
+/ .content
+/   ul
+/     - if current_record.provider == "google"
+/       li= link_to("Googleアカウントとの結び付きを解除する", [:fanta, :session, reject: :google], method: :delete)

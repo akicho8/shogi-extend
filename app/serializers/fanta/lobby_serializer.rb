@@ -60,7 +60,7 @@ end
 # >>        :location_key=>"black",
 # >>        :user=>
 # >>         {:id=>12,
-# >>          :name=>"野良3号",
+# >>          :name=>"名無しの棋士3号",
 # >>          :show_path=>"/online/users/12",
 # >>          :avatar_url=>
 # >>           "/assets/human/0021_fallback_avatar_icon-35f7d2753708660f1028e234d7214edb783933bb8b41335c3cf9c1ba3bc171f2.png",
@@ -142,7 +142,7 @@ end
 # >>        :location_key=>"black",
 # >>        :user=>
 # >>         {:id=>11,
-# >>          :name=>"野良2号",
+# >>          :name=>"名無しの棋士2号",
 # >>          :show_path=>"/online/users/11",
 # >>          :avatar_url=>
 # >>           "/assets/human/0029_fallback_avatar_icon-b0ed0ceabf44431543557975f9b1653d14e2cf93e0ace0d981301c8adebcc57f.png",
@@ -251,7 +251,7 @@ end
 # >>        :location_key=>"white",
 # >>        :user=>
 # >>         {:id=>11,
-# >>          :name=>"野良2号",
+# >>          :name=>"名無しの棋士2号",
 # >>          :show_path=>"/online/users/11",
 # >>          :avatar_url=>
 # >>           "/assets/human/0029_fallback_avatar_icon-b0ed0ceabf44431543557975f9b1653d14e2cf93e0ace0d981301c8adebcc57f.png",
@@ -360,7 +360,7 @@ end
 # >>        :location_key=>"black",
 # >>        :user=>
 # >>         {:id=>11,
-# >>          :name=>"野良2号",
+# >>          :name=>"名無しの棋士2号",
 # >>          :show_path=>"/online/users/11",
 # >>          :avatar_url=>
 # >>           "/assets/human/0029_fallback_avatar_icon-b0ed0ceabf44431543557975f9b1653d14e2cf93e0ace0d981301c8adebcc57f.png",
@@ -410,7 +410,7 @@ end
 # >>        :location_key=>"black",
 # >>        :user=>
 # >>         {:id=>11,
-# >>          :name=>"野良2号",
+# >>          :name=>"名無しの棋士2号",
 # >>          :show_path=>"/online/users/11",
 # >>          :avatar_url=>
 # >>           "/assets/human/0029_fallback_avatar_icon-b0ed0ceabf44431543557975f9b1653d14e2cf93e0ace0d981301c8adebcc57f.png",
@@ -608,7 +608,7 @@ end
 # >>     :matching_at=>nil,
 # >>     :active_battles=>[]},
 # >>    {:id=>11,
-# >>     :name=>"野良2号",
+# >>     :name=>"名無しの棋士2号",
 # >>     :show_path=>"/online/users/11",
 # >>     :avatar_url=>
 # >>      "/assets/human/0029_fallback_avatar_icon-b0ed0ceabf44431543557975f9b1653d14e2cf93e0ace0d981301c8adebcc57f.png",
@@ -617,7 +617,7 @@ end
 # >>     :matching_at=>nil,
 # >>     :active_battles=>[]},
 # >>    {:id=>12,
-# >>     :name=>"野良3号",
+# >>     :name=>"名無しの棋士3号",
 # >>     :show_path=>"/online/users/12",
 # >>     :avatar_url=>
 # >>      "/assets/human/0021_fallback_avatar_icon-35f7d2753708660f1028e234d7214edb783933bb8b41335c3cf9c1ba3bc171f2.png",

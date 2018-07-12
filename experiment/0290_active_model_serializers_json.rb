@@ -6,7 +6,7 @@ pp ActiveModelSerializers::SerializableResource.new(LobbyMessage.first).as_json
 pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include: {memberships: :user}).as_json
 
 # >> {:id=>1,
-# >>  :name=>"野良1号",
+# >>  :name=>"名無しの棋士1号",
 # >>  :avatar_url=>
 # >>   "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8c3f3722c03a8b111db3ede72db9bc075d026871/51587037_p15_master1200.jpg",
 # >>  :online_at=>Fri, 01 Jun 2018 16:29:36 JST +09:00,
@@ -21,7 +21,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>  :created_at=>Tue, 29 May 2018 20:52:47 JST +09:00,
 # >>  :user=>
 # >>   {:id=>1,
-# >>    :name=>"野良1号",
+# >>    :name=>"名無しの棋士1号",
 # >>    :avatar_url=>
 # >>     "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8c3f3722c03a8b111db3ede72db9bc075d026871/51587037_p15_master1200.jpg"}}
 # >> {:id=>1,
@@ -29,7 +29,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>  :black_preset_key=>"平手",
 # >>  :white_preset_key=>"平手",
 # >>  :lifetime_key=>"lifetime_m5",
-# >>  :name=>"野良1号の対戦部屋 #1",
+# >>  :name=>"名無しの棋士1号の対戦部屋 #1",
 # >>  :full_sfen=>
 # >>   "position startpos moves 7g7f 5c5d 2g2f 8c8d 1g1f 9c9d 2h2g 9a9b 1i1h",
 # >>  :clock_counts=>{:black=>[3, 8, 6, 62, 3], :white=>[2, 43, 4, 20]},
@@ -49,8 +49,8 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>   "開始日時：2018/05/27 19:58:51\n" +
 # >>   "終了日時：2018/05/27 20:01:37\n" +
 # >>   "場所：http://localhost:3000/online/battles/1\n" +
-# >>   "先手：野良1号\n" +
-# >>   "後手：野良1号\n" +
+# >>   "先手：名無しの棋士1号\n" +
+# >>   "後手：名無しの棋士1号\n" +
 # >>   "手合割：平手\n" +
 # >>   "\n" +
 # >>   "▲７六歩 △５四歩 ▲２六歩 △８四歩 ▲１六歩 △９四歩 ▲２七飛 △９二香 ▲１八香\n" +
@@ -64,7 +64,7 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>1,
-# >>       :name=>"野良1号",
+# >>       :name=>"名無しの棋士1号",
 # >>       :avatar_url=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8c3f3722c03a8b111db3ede72db9bc075d026871/51587037_p15_master1200.jpg"}},
 # >>    {:id=>2,
@@ -75,6 +75,6 @@ pp ActiveModelSerializers::SerializableResource.new(Fanta::Battle.first, include
 # >>     :time_up_at=>nil,
 # >>     :user=>
 # >>      {:id=>1,
-# >>       :name=>"野良1号",
+# >>       :name=>"名無しの棋士1号",
 # >>       :avatar_url=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8c3f3722c03a8b111db3ede72db9bc075d026871/51587037_p15_master1200.jpg"}}]}

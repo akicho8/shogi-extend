@@ -165,7 +165,7 @@ module Fanta
           assert { battle }
           assert { battle.memberships.count == 4 }
 
-          assert { battle.users.collect(&:name).sort == ["CPU1号", "CPU1号", "野良2号", "野良3号"] }
+          assert { battle.users.collect(&:name).sort == ["CPU1号", "CPU1号", "名無しの棋士2号", "名無しの棋士3号"] }
         end
 
         it "駒落ちダブルス" do
@@ -183,7 +183,7 @@ module Fanta
           assert { battle }
           assert { battle.memberships.count == 4 }
 
-          assert { battle.users.collect(&:name).sort == ["CPU1号", "CPU1号", "野良2号", "野良3号"] }
+          assert { battle.users.collect(&:name).sort == ["CPU1号", "CPU1号", "名無しの棋士2号", "名無しの棋士3号"] }
         end
       end
     end

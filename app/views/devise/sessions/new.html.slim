@@ -1,0 +1,37 @@
+.columns
+  .column.is-one-quarter
+  .column.is-half
+    .card
+      .card-content
+        .title.is-4
+          = t('.sign_in', default: 'Sign in')
+        = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
+          .field
+            .control.has-icons-left.has-icons-right
+              = f.email_field(:email, autofocus: true, class: 'input', placeholder: "メールアドレス")
+              span.icon.is-small.is-left
+                i.fas.fa-envelope
+              span.icon.is-small.is-right
+                i.fas.fa-check
+
+          .field
+            .control.has-icons-left
+              = f.password_field :password, autocomplete: 'off', class: 'input', placeholder: "パスワード"
+              span.icon.is-small.is-left
+                i.fas.fa-lock
+
+          - if devise_mapping.rememberable?
+            .field
+              .control
+                .checkbox
+                  = f.label :remember_me do
+                    = f.check_box :remember_me
+                    =<> t('.remember_me', default: 'Remember me')
+
+          .field
+            .control
+              = f.submit t('.sign_in', default: 'Sign in'), class: 'button is-primary'
+
+        br
+        = render 'devise/shared/links'
+  .column.is-one-quarter

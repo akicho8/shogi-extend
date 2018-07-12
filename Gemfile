@@ -140,3 +140,14 @@ gem 'graphql'
 # group :development do
 gem 'graphiql-rails' # graphqlのテスト画面
 # end
+
+# -------------------------------------------------------------------------------- devise
+gem 'devise'
+gem 'devise-bootstrap-views'
+gem 'devise-i18n'
+gem 'devise-i18n-views'
+gem 'bcrypt'
+
+# omniauth
+gem 'omniauth'
+gem 'omniauth-google-oauth2'

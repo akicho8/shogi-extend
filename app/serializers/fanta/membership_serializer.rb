@@ -27,7 +27,7 @@ end
 # >>   :time_up_at=>nil,
 # >>   :user=>
 # >>    {:id=>139,
-# >>     :name=>"野良1号",
+# >>     :name=>"名無しの棋士1号",
 # >>     :show_path=>"/online/users/139",
 # >>     :avatar_url=>
 # >>      "/assets/fallback_avatars/0000_fallback_header_avatar_image-11e320818eebd21b25499cba64b057c32b984346f4201b53d4c43a4032d0417b.png"}},
