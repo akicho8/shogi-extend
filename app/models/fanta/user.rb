@@ -577,7 +577,9 @@ module Fanta
           logger.info(auth.to_t)
           logger.info(auth.to_hash)
 
-          user = find_by(provider: auth.provider, uid: auth.uid)
+          user = nil
+          user ||= find_by(provider: auth.provider, uid: auth.uid)
+          user ||= find_by(email: auth.info.email)
 
           unless user
             image = URI(auth.info.image)

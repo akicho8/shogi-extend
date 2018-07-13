@@ -90,34 +90,27 @@ class ApplicationController < ActionController::Base
         }
       end
 
-      if !Rails.env.test?
-        # devise 側のアカウントと current_user を同期
-        before_action do
-          if xuser_signed_in? && !current_user
-            current_user_set_id(current_xuser.id)
-          end
-        end
-      end
-
       let :current_user do
-        unless bot_agent?       # ブロックの中なので guard return してはいけない
-          user_id = nil
-          unless Rails.env.production?
-            user_id ||= params[:__user_id__]
-          end
-          user_id ||= cookies.signed[:user_id]
+        # # unless bot_agent?       # ブロックの中なので guard return してはいけない
+        # user_id = nil
+        # # unless Rails.env.production?
+        # #   user_id ||= params[:__user_id__]
+        # # end
+        # user_id ||=
 
-          user ||= Fanta::User.find_by(id: user_id)
+        user ||= Fanta::User.find_by(id: cookies.signed[:user_id])
+        user ||= current_xuser
 
-          if Rails.env.test?
-            unless user
-              user = Fanta::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
-              current_user_set_id(user.id)
-            end
-          end
-
-          user
+        if Rails.env.test?
+          user ||= Fanta::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
         end
+
+        if user
+          cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
+        end
+
+        user
+        # end
       end
     end
 
