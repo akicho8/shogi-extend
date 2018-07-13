@@ -61,7 +61,7 @@ ja:
         didn_t_receive_unlock_instructions: "アカウントの凍結解除方法のメールを受け取っていませんか?"
         forgot_your_password: "パスワードを忘れましたか?"
         sign_in: "ログイン"
-        sign_in_with_provider: "%{provider}でログイン"
+        sign_in_with_provider: "%{provider}アカウントでログイン"
         sign_up: "アカウント登録"
     unlocks:
       new:

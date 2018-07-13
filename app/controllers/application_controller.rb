@@ -90,6 +90,15 @@ class ApplicationController < ActionController::Base
         }
       end
 
+      if !Rails.env.test?
+        # devise 側のアカウントと current_user を同期
+        before_action do
+          if xuser_signed_in? && !current_user
+            current_user_set_id(current_xuser.id)
+          end
+        end
+      end
+
       let :current_user do
         if bot_agent?
           return

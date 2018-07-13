@@ -4,7 +4,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     auth = request.env["omniauth.auth"]
     user = Fanta::User.find_by_google(auth, user_agent: request.user_agent)
 
-    if user.new_record?
+    if user.invalid?
+      current_user_set_id(nil)
       session["devise.google_data"] = auth.except(:extra)
       redirect_to :new_xuser_registration, alert: user.errors.full_messages.join("\n")
       return
