@@ -258,18 +258,11 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
-  # http://localhost:3000/xusers/auth/google/callback
-  ENV['GOOGLE_CLIENT_ID'] = "74402213834-gir4hactl3q5klfj3dur09r9k3pbikv2.apps.googleusercontent.com"
-  ENV['GOOGLE_CLIENT_SECRET'] = "Hx_4D0Vhf9lQYJr6Zpd-wQb_"
-
-  if Rails.env.production?
-    # http://tk2-221-20341.vs.sakura.ne.jp/shogi/xusers/auth/google/callback
-    ENV['GOOGLE_CLIENT_ID'] = "811532851188-qisjhiikj3ctpsvqr6qepp75hc688bih.apps.googleusercontent.com"
-    ENV['GOOGLE_CLIENT_SECRET'] = "4f3WS08EfMiueG9DCMG8pTZw"
+  omniauth = Rails.application.credentials[Rails.env.to_sym]
+  if v = omniauth[:google]
+    # name が xxx なら http://localhost:3000/xusers/auth/xxx に対応する
+    config.omniauth :google_oauth2, v[:id], v[:secret], name: :google, scope: ["email"]
   end
-
-  # name のところは http://localhost:3000/xusers/auth/google_oauth2 ← このURLに影響するようだ
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], name: :google, scope: %w(email)
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

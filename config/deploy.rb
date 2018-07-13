@@ -23,7 +23,7 @@ set :deploy_to, -> { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml", "config/secrets.yml"
-append :linked_files, "config/secrets.yml.key"
+append :linked_files, "config/master.key"
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
@@ -233,11 +233,11 @@ namespace :deploy do
 end
 
 namespace :deploy do
-  # cap production deploy:upload_config_secrets_yml_key
-  desc "config/secrets.yml.key のアップロード"
-  task :upload_config_secrets_yml_key do
+  # cap production deploy:upload_config_master_key
+  desc "config/master.key のアップロード"
+  task :upload_config_master_key do
     on roles :all do
-      local_file = "config/secrets.yml.key"
+      local_file = "config/master.key"
       if Pathname(local_file).exist?
         server_file = shared_path.join(local_file)
         # unless test "[ -f #{server_file} ]"
@@ -246,10 +246,10 @@ namespace :deploy do
       end
     end
   end
-  before "deploy:check:linked_files", "deploy:upload_config_secrets_yml_key"
+  before "deploy:check:linked_files", "deploy:upload_config_master_key"
 
   # cap local deploy:upload_shared_config_database_yml
-  desc "config/secrets.yml.key のアップロード"
+  desc "database.production.yml のアップロード"
   task :upload_shared_config_database_yml do
     on roles :all do
       local_file = "config/database.#{fetch(:stage)}.yml"
