@@ -1,5 +1,7 @@
 module Fanta
   class ApplicationController < ::ApplicationController
-    before_action :authenticate_xuser!
+    unless Rails.env.test?
+      before_action :authenticate_xuser!
+    end
   end
 end

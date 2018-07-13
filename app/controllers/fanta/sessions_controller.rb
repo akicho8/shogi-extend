@@ -1,8 +1,5 @@
 module Fanta
   class SessionsController < ApplicationController
-    def new
-    end
-
     def destroy
       # if params[:reject]
       #   if current_user

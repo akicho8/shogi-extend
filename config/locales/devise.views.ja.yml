@@ -53,7 +53,7 @@ ja:
     sessions:
       new:
         sign_in: "ログイン"
-        remember_me: "ブラウザを閉じてもログイン情報を記憶する"
+        remember_me: "ブラウザを閉じてもログイン状態を保持する"
     shared:
       links:
         back: "戻る"

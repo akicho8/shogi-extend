@@ -2,7 +2,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # モデルで指定した omniauth_providers: [:google] の部分と合わせること
   def google
     auth = request.env["omniauth.auth"]
-    user = Fanta::User.find_by_google(auth)
+    user = Fanta::User.find_by_google(auth, user_agent: request.user_agent)
 
     if user.new_record?
       session["devise.google_data"] = auth.except(:extra)

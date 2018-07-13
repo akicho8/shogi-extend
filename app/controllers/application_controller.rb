@@ -91,24 +91,26 @@ class ApplicationController < ActionController::Base
       end
 
       let :current_user do
-        unless bot_agent?
-          user_id = nil
-          unless Rails.env.production?
-            user_id ||= params[:__user_id__]
-          end
-          user_id ||= cookies.signed[:user_id]
-
-          user ||= Fanta::User.find_by(id: user_id)
-
-          if Rails.env.test?
-            unless user
-              user = Fanta::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
-              current_user_set_id(user.id)
-            end
-          end
-
-          user
+        if bot_agent?
+          return
         end
+
+        user_id = nil
+        unless Rails.env.production?
+          user_id ||= params[:__user_id__]
+        end
+        user_id ||= cookies.signed[:user_id]
+
+        user ||= Fanta::User.find_by(id: user_id)
+
+        if Rails.env.test?
+          unless user
+            user = Fanta::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
+            current_user_set_id(user.id)
+          end
+        end
+
+        user
       end
     end
 

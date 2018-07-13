@@ -572,7 +572,7 @@ module Fanta
       end
 
       class_methods do
-        def find_by_google(auth)
+        def find_by_google(auth, **attributes)
           logger.info(auth)
           logger.info(auth.to_t)
           logger.info(auth.to_hash)
@@ -582,15 +582,15 @@ module Fanta
           unless user
             image = URI(auth.info.image)
 
-            user = create({
-                :provider  => auth.provider,
-                :uid       => auth.uid,
-                :name      => auth.info.name,
-                :email     => auth.info.email,
-                :password  => Devise.friendly_token(32),
-                :auth_info => auth.to_hash,
-                :avatar    => {io: image.open, filename: Pathname(image.path).basename, content_type: "image/png"},
-              })
+            user = create(attributes.merge({
+                  :provider  => auth.provider,
+                  :uid       => auth.uid,
+                  :name      => auth.info.name,
+                  :email     => auth.info.email,
+                  :password  => Devise.friendly_token(32),
+                  :auth_info => auth.to_hash,
+                  :avatar    => {io: image.open, filename: Pathname(image.path).basename, content_type: "image/png"},
+                }))
           end
 
           user
