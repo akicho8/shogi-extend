@@ -1,19 +1,24 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # モデルで指定した omniauth_providers: [:google] の部分と合わせること
-  def google
+  before_action on: [:google, :twitter] do
     auth = request.env["omniauth.auth"]
-    user = Fanta::User.find_by_google(auth, user_agent: request.user_agent)
+    user = Fanta::User.find_or_create_from_auth(auth, user_agent: request.user_agent)
 
     if user.invalid?
       current_user_set_id(nil)
-      session["devise.google_data"] = auth.except(:extra)
+      # session["devise.google_data"] = auth.except(:extra)
       redirect_to :new_xuser_registration, alert: user.errors.full_messages.join("\n")
       return
     end
 
     current_user_set_id(user.id)
-    flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "Google"
+    flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
     sign_in_and_redirect user, event: :authentication
+  end
+
+  def google
+  end
+
+  def twitter
   end
 
   # 失敗したときの遷移先 (Google+ API を有効にしなかったらこっちにくる)

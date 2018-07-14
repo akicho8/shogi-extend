@@ -36,7 +36,7 @@ ja:
         confirm_new_password: "確認用新しいパスワード"
         new_password: "新しいパスワード"
       new:
-        forgot_your_password: "パスワードを忘れましたか?"
+        forgot_your_password: "パスワードを忘れましたか？"
         send_me_reset_password_instructions: "パスワードの再設定方法を送信する"
     registrations:
       edit:

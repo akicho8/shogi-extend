@@ -6,9 +6,12 @@ html lang="ja"
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
     link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css"
+
     sass:
       [v-cloak]
-        display: none
+        /* important 指定しないと効かないのが謎 */
+        display: none ! important
+
     = favicon_link_tag
     = csrf_meta_tag
     title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
@@ -90,20 +93,33 @@ html lang="ja"
             /         = link_to("ログアウト", [:fanta, :session], method: :delete)
 
             - if current_user
-              .navbar-item
-                b-dropdown(hoverable)
-                  = link_to([current_user], class: "navbar-link", slot: "trigger") do
-                    = image_tag(current_user.avatar_url, class: "header_avatar_image")
-                    span.my_name
-                      = current_user.name
-                  b-dropdown-item(:has-link="true" :paddingless="true")
-                    = link_to("プロフィール", [current_user], id: "header_profile_show")
-                  b-dropdown-item(:has-link="true" :paddingless="true")
-                    = link_to("設定", [:edit, current_user])
-                  b-dropdown-item(:separator="true")
-                  b-dropdown-item(:has-link="true" :paddingless="true")
-                    = link_to("ログアウト", [:fanta, :session], method: :delete)
-                    / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
+              .navbar-item.has-dropdown.is-hoverable
+                = link_to([current_user], class: "navbar-link", slot: "trigger") do
+                  = image_tag(current_user.avatar_url, class: "header_avatar_image")
+                  span.my_name
+                    = current_user.name
+                .navbar-dropdown.is-boxed
+                  = link_to("プロフィール", [current_user], class: "navbar-item")
+                  = link_to("設定", [:edit, current_user], class: "navbar-item")
+                  .navbar-divider
+                  = link_to("ログアウト", [:fanta, :session], method: :delete, class: "navbar-item")
+                  / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
+
+              / こっちを使うと縦幅が大きくなってしまう
+              / span.navbar-item
+              /   b-dropdown(hoverable)
+              /     = link_to([current_user], class: "navbar-link", slot: "trigger") do
+              /       = image_tag(current_user.avatar_url, class: "header_avatar_image")
+              /       span.my_name
+              /         = current_user.name
+              /     b-dropdown-item(:has-link="true" :paddingless="true")
+              /       = link_to("プロフィール", [current_user], id: "header_profile_show")
+              /     b-dropdown-item(:has-link="true" :paddingless="true")
+              /       = link_to("設定", [:edit, current_user])
+              /     b-dropdown-item(:separator="true")
+              /     b-dropdown-item(:has-link="true" :paddingless="true")
+              /       = link_to("ログアウト", [:fanta, :session], method: :delete)
+              /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
             - if !current_user
               = link_to("ログイン", :new_xuser_session, class: "navbar-item")

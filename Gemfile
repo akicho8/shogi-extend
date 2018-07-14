@@ -151,3 +151,4 @@ gem 'bcrypt'
 # omniauth
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-twitter'

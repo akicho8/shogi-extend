@@ -263,6 +263,9 @@ Devise.setup do |config|
     # name が xxx なら http://localhost:3000/xusers/auth/xxx に対応する
     config.omniauth :google_oauth2, v[:id], v[:secret], name: :google, scope: ["email"]
   end
+  if v = omniauth[:twitter]
+    config.omniauth :twitter, v[:id], v[:secret]
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

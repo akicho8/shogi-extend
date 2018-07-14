@@ -139,7 +139,8 @@ class ApplicationController < ActionController::Base
     end
 
     def eval_box
-      return if Rails.env.production?
+      return unless Rails.env.development?
+
       out = []
       out << tag.div(:class => "buttons") do
         [
