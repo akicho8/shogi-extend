@@ -35,16 +35,20 @@ class AddDeviseToFantaUsers < ActiveRecord::Migration[5.2]
       # 元のモデルにタイムスタンプが含まれていない場合は、コメントを外してください。
       # t.timestamps null: false
 
-      ## omniauth
-      t.string :provider
-      t.string :uid
-      t.text :auth_info
+      t.index :email,                unique: true
+      t.index :reset_password_token, unique: true
+      t.index :confirmation_token,   unique: true
+      t.index :unlock_token,         unique: true
     end
 
-    add_index :fanta_users, :email,                unique: true
-    add_index :fanta_users, :reset_password_token, unique: true
-    add_index :fanta_users, :confirmation_token,   unique: true
-    add_index :fanta_users, :unlock_token,         unique: true
+    create_table :fanta_auth_infos do |t|
+      t.belongs_to :user, null: false, comment: "ユーザー"
+      t.string :provider, null: false
+      t.string :uid,      null: false
+      t.text :meta_info
+
+      t.index [:provider, :uid], unique: true
+    end
   end
 
   def self.down

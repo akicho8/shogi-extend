@@ -34,9 +34,6 @@
 # | failed_attempts        | Failed attempts                                                          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token                                                             | string(255) |                     |      | E!    |
 # | locked_at              | Locked at                                                                | datetime    |                     |      |       |
-# | provider               | Provider                                                                 | string(255) |                     |      |       |
-# | uid                    | Uid                                                                      | string(255) |                     |      |       |
-# | auth_info              | Auth info                                                                | text(65535) |                     |      |       |
 # |------------------------+--------------------------------------------------------------------------+-------------+---------------------+------+-------|
 
 module Fanta
@@ -566,9 +563,11 @@ module Fanta
 
     concerning :DeviseMethods do
       included do
+        has_many :auth_infos, dependent: :destroy
+        accepts_nested_attributes_for :auth_infos
+
         devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
         devise :omniauthable, omniauth_providers: [:google]
-        serialize :auth_info
       end
 
       class_methods do
@@ -578,20 +577,26 @@ module Fanta
           logger.info(auth.to_hash)
 
           user = nil
-          user ||= find_by(provider: auth.provider, uid: auth.uid)
+          if auth_info = AuthInfo.find_by(provider: auth.provider, uid: auth.uid)
+            user ||= auth_info.user
+          end
           user ||= find_by(email: auth.info.email)
 
           unless user
             image = URI(auth.info.image)
 
             user = create(attributes.merge({
-                  :provider  => auth.provider,
-                  :uid       => auth.uid,
                   :name      => auth.info.name,
                   :email     => auth.info.email,
                   :password  => Devise.friendly_token(32),
-                  :auth_info => auth.to_hash,
                   :avatar    => {io: image.open, filename: Pathname(image.path).basename, content_type: "image/png"},
+                  :auth_infos_attributes => [
+                    {
+                      :provider  => auth.provider,
+                      :uid       => auth.uid,
+                      :meta_info => auth.to_hash,
+                    },
+                  ],
                 }))
           end
 

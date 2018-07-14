@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.index ["text_format"], name: "index_converted_infos_on_text_format"
   end
 
+  create_table "fanta_auth_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.text "meta_info"
+    t.index ["provider", "uid"], name: "index_fanta_auth_infos_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_fanta_auth_infos_on_user_id"
+  end
+
   create_table "fanta_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "black_preset_key", null: false, comment: "▲手合割"
     t.string "white_preset_key", null: false, comment: "△手合割"
@@ -165,9 +174,6 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.string "provider"
-    t.string "uid"
-    t.text "auth_info"
     t.index ["confirmation_token"], name: "index_fanta_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fanta_users_on_email", unique: true
     t.index ["key"], name: "index_fanta_users_on_key", unique: true

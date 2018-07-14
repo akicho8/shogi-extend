@@ -35,9 +35,6 @@
 # | failed_attempts        | Failed attempts                                                          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token                                                             | string(255) |                     |      | E!    |
 # | locked_at              | Locked at                                                                | datetime    |                     |      |       |
-# | provider               | Provider                                                                 | string(255) |                     |      |       |
-# | uid                    | Uid                                                                      | string(255) |                     |      |       |
-# | auth_info              | Auth info                                                                | text(65535) |                     |      |       |
 # |------------------------+--------------------------------------------------------------------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
@@ -260,6 +257,20 @@
 # | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
 # | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
 # |-------------+-------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Auth info (fanta_auth_infos as Fanta::AuthInfo)
+#
+# |-----------+-----------+-------------+-------------+------+-------|
+# | name      | desc      | type        | opts        | refs | index |
+# |-----------+-----------+-------------+-------------+------+-------|
+# | id        | ID        | integer(8)  | NOT NULL PK |      |       |
+# | user_id   | User      | integer(8)  | NOT NULL    |      | B     |
+# | provider  | Provider  | string(255) | NOT NULL    |      | A!    |
+# | uid       | Uid       | string(255) | NOT NULL    |      | A!    |
+# | meta_info | Meta info | text(65535) |             |      |       |
+# |-----------+-----------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #

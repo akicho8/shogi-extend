@@ -34,9 +34,6 @@
 # | failed_attempts        | Failed attempts                                                          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token                                                             | string(255) |                     |      | E!    |
 # | locked_at              | Locked at                                                                | datetime    |                     |      |       |
-# | provider               | Provider                                                                 | string(255) |                     |      |       |
-# | uid                    | Uid                                                                      | string(255) |                     |      |       |
-# | auth_info              | Auth info                                                                | text(65535) |                     |      |       |
 # |------------------------+--------------------------------------------------------------------------+-------------+---------------------+------+-------|
 
 module Fanta
