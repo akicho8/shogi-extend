@@ -261,7 +261,7 @@ Devise.setup do |config|
   omniauth = Rails.application.credentials[Rails.env.to_sym]
   if v = omniauth[:google]
     # name が xxx なら http://localhost:3000/xusers/auth/xxx に対応する
-    config.omniauth :google_oauth2, v[:id], v[:secret], name: :google, scope: ["email"]
+    config.omniauth :google_oauth2, v[:id], v[:secret], name: "google", scope: ["email"]
   end
   if v = omniauth[:twitter]
     config.omniauth :twitter, v[:id], v[:secret]
