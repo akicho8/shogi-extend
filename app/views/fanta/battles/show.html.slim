@@ -16,7 +16,7 @@ javascript:
               .chat_one_line
                 message_link_to :user_to="e.user"
                 = " "
-                .chat_message(:class="e.msg_options.msg_class")
+                span.chat_message(:class="e.msg_options.msg_class")
                   | {{e.message}}
 
         / template v-for="e of latest_chat_messages"
