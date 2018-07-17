@@ -8,58 +8,26 @@ module ApplicationHelper
   end
 
   concerning :FlashMethods do
-    def legacy_types
-      {
-        notice: :success,
-        alert: :warning,
-        error: :danger,
-      }
-    end
+    delegate :normalized_flash, :flash_danger_notify_tag, :flash_light_notify, to: :flash_info
 
-    def tost_types
-      [:success, :info]
-    end
-
-    def normalized_flash
-      if params[:debug]
-        flash.now[:info] = "(info)"
-        flash.now[:danger] = "(danger)"
-      end
-
-      @normalized_flash ||= flash.to_h.transform_keys { |key| legacy_types.fetch(key.to_sym, key.to_sym) }
-    end
-
-    # :success, :info, :warning, :danger
-    def flash_danger_notify_tag
-      tag.div(id: "flash_danger_notify_tag") do
-        normalized_flash.except(*tost_types).collect { |key, message|
-          content_tag("b-notification", message.html_safe, type: "is-#{key}", ":has-icon": "false", ":closable": "true") + tag.br
-        }.join.html_safe
-      end
-    end
-
-    # 軽いもの success, info は toast で表示
-    def flash_light_notify
-      normalized_flash.slice(*tost_types)
+    def flash_info
+      @flash_info ||= FlashInfo.new(self)
     end
   end
 
   def bulma_devise_error_messages!
     return '' if resource.errors.empty?
 
-    messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
-    sentence = I18n.t('errors.messages.not_saved',
-      count: resource.errors.count,
-      resource: resource.class.model_name.human.downcase)
+    messages = resource.errors.full_messages.map { |e| content_tag(:li, e) }.join.html_safe
+    sentence = I18n.t('errors.messages.not_saved', count: resource.errors.count, resource: resource.class.model_name.human.downcase)
 
-    html = <<-HTML
-    <div class="alert alert-danger alert-block devise-bs">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <h5>#{sentence}</h5>
-      <ul>#{messages}</ul>
-    </div>
-    HTML
-
-    html.html_safe
+    tag.div(:class => ["notification", "is-warning"]) { |;out|
+      out = []
+      out << tag.h5(sentence)
+      out << tag.div(:class => "content") do
+        tag.ul(messages)
+      end
+      out.join.html_safe
+    }.html_safe
   end
 end

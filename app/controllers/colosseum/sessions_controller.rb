@@ -7,7 +7,7 @@ module Colosseum
       else
         notice = "すでにログアウトしています。"
       end
-      redirect_to :root, notice: notice
+      redirect_to :root, tost_notice: notice
     end
   end
 end

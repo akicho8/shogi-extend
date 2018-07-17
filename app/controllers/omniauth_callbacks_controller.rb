@@ -24,7 +24,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     current_user_set_id(user.id)
-    flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
+    flash[:tost_notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
     sign_in_and_redirect user, event: :authentication
   end
 

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   concerning :Choremethods do
     included do
-      add_flash_types :success, :info, :warning, :danger
+      add_flash_types *FlashInfo.flash_all_keys
       helper_method :submitted?
     end
 
