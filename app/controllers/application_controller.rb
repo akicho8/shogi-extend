@@ -45,7 +45,11 @@ class ApplicationController < ActionController::Base
         }
       end
 
-      let :current_user do
+      helper_method :current_user
+    end
+
+    def current_user
+      @current_user ||= -> {
         # # unless bot_agent?       # ブロックの中なので guard return してはいけない
         # user_id = nil
         # # unless Rails.env.production?
@@ -57,7 +61,9 @@ class ApplicationController < ActionController::Base
         user ||= current_xuser
 
         if Rails.env.test?
-          user ||= Colosseum::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
+          if params[:__create_user_name__]
+            user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
+          end
         end
 
         if user
@@ -66,7 +72,7 @@ class ApplicationController < ActionController::Base
 
         user
         # end
-      end
+      }.call
     end
 
     def current_user_set_id(user_id)

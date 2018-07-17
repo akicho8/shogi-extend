@@ -19,7 +19,7 @@ class FlashInfo
     }
   end
 
-  delegate :tag, :params, :flash, to: :view_context
+  delegate :tag, :params, :flash, :content_tag, to: :view_context
 
   attr_accessor :view_context
 
