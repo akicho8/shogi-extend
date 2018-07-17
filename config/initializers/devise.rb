@@ -261,10 +261,13 @@ Devise.setup do |config|
   omniauth = Rails.application.credentials[Rails.env.to_sym]
   if v = omniauth[:google]
     # name が xxx なら http://localhost:3000/xusers/auth/xxx に対応する
-    config.omniauth :google_oauth2, v[:id], v[:secret], name: "google", scope: ["email"]
+    config.omniauth :google_oauth2, v[:id], v[:secret], name: "google", scope: ["email"] # provider を文字列にしたいので name は文字列で指定
   end
   if v = omniauth[:twitter]
     config.omniauth :twitter, v[:id], v[:secret]
+  end
+  if v = omniauth[:github]
+    config.omniauth :github, v[:id], v[:secret]
   end
 
   # ==> Warden configuration

@@ -1,6 +1,19 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action on: [:google, :twitter] do
+  def google
+    auth_shared_process
+  end
+
+  def twitter
+    auth_shared_process
+  end
+
+  def github
+    auth_shared_process
+  end
+
+  def auth_shared_process
     auth = request.env["omniauth.auth"]
+    # raise auth.to_hash.inspect
     user = Fanta::User.find_or_create_from_auth(auth, user_agent: request.user_agent)
 
     if user.invalid?
@@ -13,12 +26,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     current_user_set_id(user.id)
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
     sign_in_and_redirect user, event: :authentication
-  end
-
-  def google
-  end
-
-  def twitter
   end
 
   # 失敗したときの遷移先 (Google+ API を有効にしなかったらこっちにくる)

@@ -567,7 +567,7 @@ module Fanta
         accepts_nested_attributes_for :auth_infos
 
         devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-        devise :omniauthable, omniauth_providers: [:google, :twitter]
+        devise :omniauthable, omniauth_providers: [:google, :twitter, :github]
       end
 
       class_methods do
@@ -584,9 +584,8 @@ module Fanta
 
           unless user
             image = URI(auth.info.image)
-
             user = create(attributes.merge({
-                  :name      => auth.info.name,
+                  :name      => auth.info.name.presence || auth.info.nickname.presence,
                   :email     => auth.info.email || "#{SecureRandom.hex}@localhost",
                   :password  => Devise.friendly_token(32),
                   :avatar    => {io: image.open, filename: Pathname(image.path).basename, content_type: "image/png"},
