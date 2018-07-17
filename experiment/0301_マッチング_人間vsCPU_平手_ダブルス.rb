@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-module Fanta
+module Colosseum
   User.destroy_all
   Battle.destroy_all
 

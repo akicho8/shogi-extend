@@ -1,0 +1,2 @@
+module Colosseum::HomesHelper
+end

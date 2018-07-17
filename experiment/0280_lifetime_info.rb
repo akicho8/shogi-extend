@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-tp Fanta::LifetimeInfo.as_json
+tp Colosseum::LifetimeInfo.as_json
 
 # >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
 # >> |-----------------+----------+---------------+---------+------|

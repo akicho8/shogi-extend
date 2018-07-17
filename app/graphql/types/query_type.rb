@@ -14,6 +14,6 @@ class Types::QueryType < Types::BaseObject
     argument :id, ID, "ユーザーID", required: true
   end
   def user(id:)
-    Fanta::User.find(id)
+    Colosseum::User.find(id)
   end
 end

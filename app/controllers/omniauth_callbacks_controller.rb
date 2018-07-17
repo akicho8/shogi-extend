@@ -14,7 +14,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def auth_shared_process
     auth = request.env["omniauth.auth"]
     # raise auth.to_hash.inspect
-    user = Fanta::User.find_or_create_from_auth(auth, user_agent: request.user_agent)
+    user = Colosseum::User.find_or_create_from_auth(auth, user_agent: request.user_agent)
 
     if user.invalid?
       current_user_set_id(nil)

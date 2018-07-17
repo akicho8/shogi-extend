@@ -2,7 +2,7 @@
 
 # == Schema Information ==
 #
-# ユーザー (fanta_users as Fanta::User)
+# ユーザー (colosseum_users as Colosseum::User)
 #
 # |------------------------+--------------------------------------------------------------------------+-------------+---------------------+------+-------|
 # | name                   | desc                                                                     | type        | opts                | refs | index |
@@ -18,7 +18,7 @@
 # | race_key               | Race key                                                                 | string(255) | NOT NULL            |      | F     |
 # | created_at             | 作成日時                                                                 | datetime    | NOT NULL            |      |       |
 # | updated_at             | 更新日時                                                                 | datetime    | NOT NULL            |      |       |
-# | email                  | Email                                                                    | string(255) | DEFAULT() NOT NULL  |      | B!    |
+# | email                  | メールアドレス                                                           | string(255) | DEFAULT() NOT NULL  |      | B!    |
 # | encrypted_password     | Encrypted password                                                       | string(255) | DEFAULT() NOT NULL  |      |       |
 # | reset_password_token   | Reset password token                                                     | string(255) |                     |      | C!    |
 # | reset_password_sent_at | Reset password sent at                                                   | datetime    |                     |      |       |
@@ -109,6 +109,160 @@
 
 # == Schema Information ==
 #
+# 対局と対局者の対応 (colosseum_memberships as Colosseum::Membership)
+#
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
+# | name         | desc                                   | type        | opts        | refs | index |
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
+# | id           | ID                                     | integer(8)  | NOT NULL PK |      |       |
+# | battle_id    | 部屋ID                                 | integer(8)  | NOT NULL    |      | A     |
+# | user_id      | ユーザーID                             | integer(8)  | NOT NULL    |      | B     |
+# | preset_key   | 手合割                                 | string(255) | NOT NULL    |      |       |
+# | location_key | 先後                                   | string(255) | NOT NULL    |      | C     |
+# | position     | 入室順序                               | integer(4)  |             |      | D     |
+# | standby_at   | 準備完了日時                           | datetime    |             |      |       |
+# | fighting_at  | 部屋に入った日時で抜けたり切断すると空 | datetime    |             |      |       |
+# | time_up_at   | タイムアップしたのを検知した日時       | datetime    |             |      |       |
+# | created_at   | 作成日時                               | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時                               | datetime    | NOT NULL    |      |       |
+# |--------------+----------------------------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 対局 (colosseum_battles as Colosseum::Battle)
+#
+# |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
+# | name              | desc                                         | type        | opts                | refs | index |
+# |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
+# | id                | ID                                           | integer(8)  | NOT NULL PK         |      |       |
+# | black_preset_key  | ▲手合割                                     | string(255) | NOT NULL            |      |       |
+# | white_preset_key  | △手合割                                     | string(255) | NOT NULL            |      |       |
+# | lifetime_key      | 時間                                         | string(255) | NOT NULL            |      |       |
+# | team_key          | 人数                                         | string(255) | NOT NULL            |      |       |
+# | full_sfen         | USI形式棋譜                                  | text(65535) | NOT NULL            |      |       |
+# | clock_counts      | 対局時計情報                                 | text(65535) | NOT NULL            |      |       |
+# | countdown_flags   | 秒読み状態                                   | text(65535) | NOT NULL            |      |       |
+# | turn_max          | 手番数                                       | integer(4)  | NOT NULL            |      |       |
+# | battle_request_at | 対局申し込みによる成立日時                   | datetime    |                     |      |       |
+# | auto_matched_at   | 自動マッチングによる成立日時                 | datetime    |                     |      |       |
+# | begin_at          | メンバーたち部屋に入って対局開始になった日時 | datetime    |                     |      |       |
+# | end_at            | バトル終了日時                               | datetime    |                     |      |       |
+# | last_action_key   | 最後の状態                                   | string(255) |                     |      |       |
+# | win_location_key  | 勝った方の先後                               | string(255) |                     |      |       |
+# | memberships_count | 対局者総数                                   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | watch_ships_count | この部屋の観戦者数                           | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at        | 作成日時                                     | datetime    | NOT NULL            |      |       |
+# | updated_at        | 更新日時                                     | datetime    | NOT NULL            |      |       |
+# |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
+# Chronicle (colosseum_chronicles as Colosseum::Chronicle)
+#
+# |------------+-----------+-------------+-------------+------+-------|
+# | name       | desc      | type        | opts        | refs | index |
+# |------------+-----------+-------------+-------------+------+-------|
+# | id         | ID        | integer(8)  | NOT NULL PK |      |       |
+# | user_id    | User      | integer(8)  | NOT NULL    |      | A     |
+# | judge_key  | Judge key | string(255) | NOT NULL    |      | B     |
+# | created_at | 作成日時  | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時  | datetime    | NOT NULL    |      |       |
+# |------------+-----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Lobby message (colosseum_lobby_messages as Colosseum::LobbyMessage)
+#
+# |-------------+-------------+-------------+-------------+------+-------|
+# | name        | desc        | type        | opts        | refs | index |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | A     |
+# | message     | 発言        | text(65535) | NOT NULL    |      |       |
+# | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Auth info (colosseum_auth_infos as Colosseum::AuthInfo)
+#
+# |-----------+-----------+-------------+-------------+------+-------|
+# | name      | desc      | type        | opts        | refs | index |
+# |-----------+-----------+-------------+-------------+------+-------|
+# | id        | ID        | integer(8)  | NOT NULL PK |      |       |
+# | user_id   | User      | integer(8)  | NOT NULL    |      | B     |
+# | provider  | Provider  | string(255) | NOT NULL    |      | A!    |
+# | uid       | Uid       | string(255) | NOT NULL    |      | A!    |
+# | meta_info | Meta info | text(65535) |             |      |       |
+# |-----------+-----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Rule (colosseum_rules as Colosseum::Rule)
+#
+# |------------------+------------------+-------------+-------------+------+-------|
+# | name             | desc             | type        | opts        | refs | index |
+# |------------------+------------------+-------------+-------------+------+-------|
+# | id               | ID               | integer(8)  | NOT NULL PK |      |       |
+# | user_id          | User             | integer(8)  | NOT NULL    |      | A     |
+# | lifetime_key     | Lifetime key     | string(255) | NOT NULL    |      | B     |
+# | team_key         | Team key         | string(255) | NOT NULL    |      | C     |
+# | self_preset_key  | Self preset key  | string(255) | NOT NULL    |      | D     |
+# | oppo_preset_key  | Oppo preset key  | string(255) | NOT NULL    |      | E     |
+# | robot_accept_key | Robot accept key | string(255) | NOT NULL    |      | F     |
+# | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
+# | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
+# |------------------+------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Chat message (colosseum_chat_messages as Colosseum::ChatMessage)
+#
+# |-------------+-------------+-------------+-------------+------+-------|
+# | name        | desc        | type        | opts        | refs | index |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | battle_id   | 部屋ID      | integer(8)  | NOT NULL    |      | A     |
+# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | B     |
+# | message     | 発言        | text(65535) | NOT NULL    |      |       |
+# | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Profile (colosseum_profiles as Colosseum::Profile)
+#
+# |------------------------+----------------------+-------------+-------------+------+-------|
+# | name                   | desc                 | type        | opts        | refs | index |
+# |------------------------+----------------------+-------------+-------------+------+-------|
+# | id                     | ID                   | integer(8)  | NOT NULL PK |      |       |
+# | user_id                | User                 | integer(8)  | NOT NULL    |      | A     |
+# | begin_greeting_message | 対局開始時のあいさつ | text(65535) | NOT NULL    |      |       |
+# | end_greeting_message   | 対局終了時のあいさつ | text(65535) | NOT NULL    |      |       |
+# | created_at             | 作成日時             | datetime    | NOT NULL    |      |       |
+# | updated_at             | 更新日時             | datetime    | NOT NULL    |      |       |
+# |------------------------+----------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Watch ship (colosseum_watch_ships as Colosseum::WatchShip)
+#
+# |------------+------------+------------+-------------+------+-------|
+# | name       | desc       | type       | opts        | refs | index |
+# |------------+------------+------------+-------------+------+-------|
+# | id         | ID         | integer(8) | NOT NULL PK |      |       |
+# | battle_id  | 部屋ID     | integer(8) | NOT NULL    |      | A     |
+# | user_id    | ユーザーID | integer(8) | NOT NULL    |      | B     |
+# | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
+# |------------+------------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Membership (general_memberships as General::Membership)
 #
 # |--------------+--------------+-------------+-------------+------+-------|
@@ -180,160 +334,6 @@
 # | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
 # |------------+----------+------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# 対局と対局者の対応 (fanta_memberships as Fanta::Membership)
-#
-# |--------------+----------------------------------------+-------------+-------------+------+-------|
-# | name         | desc                                   | type        | opts        | refs | index |
-# |--------------+----------------------------------------+-------------+-------------+------+-------|
-# | id           | ID                                     | integer(8)  | NOT NULL PK |      |       |
-# | battle_id    | 部屋ID                                 | integer(8)  | NOT NULL    |      | A     |
-# | user_id      | ユーザーID                             | integer(8)  | NOT NULL    |      | B     |
-# | preset_key   | 手合割                                 | string(255) | NOT NULL    |      |       |
-# | location_key | 先後                                   | string(255) | NOT NULL    |      | C     |
-# | position     | 入室順序                               | integer(4)  |             |      | D     |
-# | standby_at   | 準備完了日時                           | datetime    |             |      |       |
-# | fighting_at  | 部屋に入った日時で抜けたり切断すると空 | datetime    |             |      |       |
-# | time_up_at   | タイムアップしたのを検知した日時       | datetime    |             |      |       |
-# | created_at   | 作成日時                               | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時                               | datetime    | NOT NULL    |      |       |
-# |--------------+----------------------------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# 対局 (fanta_battles as Fanta::Battle)
-#
-# |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
-# | name              | desc                                         | type        | opts                | refs | index |
-# |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
-# | id                | ID                                           | integer(8)  | NOT NULL PK         |      |       |
-# | black_preset_key  | ▲手合割                                     | string(255) | NOT NULL            |      |       |
-# | white_preset_key  | △手合割                                     | string(255) | NOT NULL            |      |       |
-# | lifetime_key      | 時間                                         | string(255) | NOT NULL            |      |       |
-# | team_key          | 人数                                         | string(255) | NOT NULL            |      |       |
-# | full_sfen         | USI形式棋譜                                  | text(65535) | NOT NULL            |      |       |
-# | clock_counts      | 対局時計情報                                 | text(65535) | NOT NULL            |      |       |
-# | countdown_flags   | 秒読み状態                                   | text(65535) | NOT NULL            |      |       |
-# | turn_max          | 手番数                                       | integer(4)  | NOT NULL            |      |       |
-# | battle_request_at | 対局申し込みによる成立日時                   | datetime    |                     |      |       |
-# | auto_matched_at   | 自動マッチングによる成立日時                 | datetime    |                     |      |       |
-# | begin_at          | メンバーたち部屋に入って対局開始になった日時 | datetime    |                     |      |       |
-# | end_at            | バトル終了日時                               | datetime    |                     |      |       |
-# | last_action_key   | 最後の状態                                   | string(255) |                     |      |       |
-# | win_location_key  | 勝った方の先後                               | string(255) |                     |      |       |
-# | memberships_count | 対局者総数                                   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | watch_ships_count | この部屋の観戦者数                           | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at        | 作成日時                                     | datetime    | NOT NULL            |      |       |
-# | updated_at        | 更新日時                                     | datetime    | NOT NULL            |      |       |
-# |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
-
-# == Schema Information ==
-#
-# Chronicle (fanta_chronicles as Fanta::Chronicle)
-#
-# |------------+-----------+-------------+-------------+------+-------|
-# | name       | desc      | type        | opts        | refs | index |
-# |------------+-----------+-------------+-------------+------+-------|
-# | id         | ID        | integer(8)  | NOT NULL PK |      |       |
-# | user_id    | User      | integer(8)  | NOT NULL    |      | A     |
-# | judge_key  | Judge key | string(255) | NOT NULL    |      | B     |
-# | created_at | 作成日時  | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時  | datetime    | NOT NULL    |      |       |
-# |------------+-----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Lobby message (fanta_lobby_messages as Fanta::LobbyMessage)
-#
-# |-------------+-------------+-------------+-------------+------+-------|
-# | name        | desc        | type        | opts        | refs | index |
-# |-------------+-------------+-------------+-------------+------+-------|
-# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | A     |
-# | message     | 発言        | text(65535) | NOT NULL    |      |       |
-# | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
-# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
-# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
-# |-------------+-------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Auth info (fanta_auth_infos as Fanta::AuthInfo)
-#
-# |-----------+-----------+-------------+-------------+------+-------|
-# | name      | desc      | type        | opts        | refs | index |
-# |-----------+-----------+-------------+-------------+------+-------|
-# | id        | ID        | integer(8)  | NOT NULL PK |      |       |
-# | user_id   | User      | integer(8)  | NOT NULL    |      | B     |
-# | provider  | Provider  | string(255) | NOT NULL    |      | A!    |
-# | uid       | Uid       | string(255) | NOT NULL    |      | A!    |
-# | meta_info | Meta info | text(65535) |             |      |       |
-# |-----------+-----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Rule (fanta_rules as Fanta::Rule)
-#
-# |------------------+------------------+-------------+-------------+------+-------|
-# | name             | desc             | type        | opts        | refs | index |
-# |------------------+------------------+-------------+-------------+------+-------|
-# | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | user_id          | User             | integer(8)  | NOT NULL    |      | A     |
-# | lifetime_key     | Lifetime key     | string(255) | NOT NULL    |      | B     |
-# | team_key         | Team key         | string(255) | NOT NULL    |      | C     |
-# | self_preset_key  | Self preset key  | string(255) | NOT NULL    |      | D     |
-# | oppo_preset_key  | Oppo preset key  | string(255) | NOT NULL    |      | E     |
-# | robot_accept_key | Robot accept key | string(255) | NOT NULL    |      | F     |
-# | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
-# |------------------+------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Chat message (fanta_chat_messages as Fanta::ChatMessage)
-#
-# |-------------+-------------+-------------+-------------+------+-------|
-# | name        | desc        | type        | opts        | refs | index |
-# |-------------+-------------+-------------+-------------+------+-------|
-# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | battle_id   | 部屋ID      | integer(8)  | NOT NULL    |      | A     |
-# | user_id     | ユーザーID  | integer(8)  | NOT NULL    |      | B     |
-# | message     | 発言        | text(65535) | NOT NULL    |      |       |
-# | msg_options | Msg options | text(65535) | NOT NULL    |      |       |
-# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
-# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
-# |-------------+-------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Profile (fanta_profiles as Fanta::Profile)
-#
-# |------------------------+----------------------+-------------+-------------+------+-------|
-# | name                   | desc                 | type        | opts        | refs | index |
-# |------------------------+----------------------+-------------+-------------+------+-------|
-# | id                     | ID                   | integer(8)  | NOT NULL PK |      |       |
-# | user_id                | User                 | integer(8)  | NOT NULL    |      | A     |
-# | begin_greeting_message | 対局開始時のあいさつ | text(65535) | NOT NULL    |      |       |
-# | end_greeting_message   | 対局終了時のあいさつ | text(65535) | NOT NULL    |      |       |
-# | created_at             | 作成日時             | datetime    | NOT NULL    |      |       |
-# | updated_at             | 更新日時             | datetime    | NOT NULL    |      |       |
-# |------------------------+----------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Watch ship (fanta_watch_ships as Fanta::WatchShip)
-#
-# |------------+------------+------------+-------------+------+-------|
-# | name       | desc       | type       | opts        | refs | index |
-# |------------+------------+------------+-------------+------+-------|
-# | id         | ID         | integer(8) | NOT NULL PK |      |       |
-# | battle_id  | 部屋ID     | integer(8) | NOT NULL    |      | A     |
-# | user_id    | ユーザーID | integer(8) | NOT NULL    |      | B     |
-# | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
-# | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
-# |------------+------------+------------+-------------+------+-------|
 
 # == Schema Information ==
 #

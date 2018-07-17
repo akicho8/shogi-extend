@@ -79,14 +79,14 @@ class ApplicationController < ActionController::Base
     included do
       let :js_global_params do
         {
-          :current_user        => current_user && ams_sr(current_user, serializer: Fanta::CurrentUserSerializer),
-          :online_only_count   => Fanta::User.online_only.count,
-          :fighter_only_count  => Fanta::User.fighter_only.count,
-          :lifetime_infos      => Fanta::LifetimeInfo,
-          :team_infos          => Fanta::TeamInfo,
-          :custom_preset_infos => Fanta::CustomPresetInfo,
-          :robot_accept_infos  => Fanta::RobotAcceptInfo,
-          :last_action_infos   => Fanta::LastActionInfo,
+          :current_user        => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
+          :online_only_count   => Colosseum::User.online_only.count,
+          :fighter_only_count  => Colosseum::User.fighter_only.count,
+          :lifetime_infos      => Colosseum::LifetimeInfo,
+          :team_infos          => Colosseum::TeamInfo,
+          :custom_preset_infos => Colosseum::CustomPresetInfo,
+          :robot_accept_infos  => Colosseum::RobotAcceptInfo,
+          :last_action_infos   => Colosseum::LastActionInfo,
         }
       end
 
@@ -98,11 +98,11 @@ class ApplicationController < ActionController::Base
         # # end
         # user_id ||=
 
-        user ||= Fanta::User.find_by(id: cookies.signed[:user_id])
+        user ||= Colosseum::User.find_by(id: cookies.signed[:user_id])
         user ||= current_xuser
 
         if Rails.env.test?
-          user ||= Fanta::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
+          user ||= Colosseum::User.create!(name: params[:__user_name__], user_agent: request.user_agent)
         end
 
         if user
@@ -144,29 +144,29 @@ class ApplicationController < ActionController::Base
       out = []
       out << tag.div(:class => "buttons") do
         [
-          link_to_eval("ユーザーセットアップ") { "Fanta::User.setup" },
-          link_to_eval("ユーザー全削除") { "Fanta::User.destroy_all" },
-          link_to_eval("ユーザー追加") { "Fanta::User.create!" },
+          link_to_eval("ユーザーセットアップ") { "Colosseum::User.setup" },
+          link_to_eval("ユーザー全削除") { "Colosseum::User.destroy_all" },
+          link_to_eval("ユーザー追加") { "Colosseum::User.create!" },
           link_to_eval("1 + 2") { "1 + 2" },
           link_to_eval("1 / 0", redirect_to: root_path) { "1 / 0" },
-          link_to_eval("find(0)", redirect_to: root_path) { "Fanta::User.find(0)" },
-          link_to_eval("部屋作成") { "Fanta::Battle.create!" },
-          link_to_eval("部屋削除") { "Fanta::Battle.last&.destroy!" },
-          link_to_eval("部屋全削除") { "Fanta::Battle.destroy_all" },
+          link_to_eval("find(0)", redirect_to: root_path) { "Colosseum::User.find(0)" },
+          link_to_eval("部屋作成") { "Colosseum::Battle.create!" },
+          link_to_eval("部屋削除") { "Colosseum::Battle.last&.destroy!" },
+          link_to_eval("部屋全削除") { "Colosseum::Battle.destroy_all" },
         ].compact.join.html_safe
       end
 
-      list = Fanta::User.all.collect do |e|
+      list = Colosseum::User.all.collect do |e|
         {}.tap do |row|
           row[:id] = link_to(e.id, e)
           row[:name] = link_to(e.name, e)
           row["操作"] = [
             link_to_eval("login") { "current_user_set_id(#{e.id})" },
-            link_to_eval("削除") { "Fanta::User.find(#{e.id}).destroy!" },
-            link_to_eval("online") { "Fanta::User.find(#{e.id}).update!(online_at: Time.current)" if !e.online_at },
-            link_to_eval("offline") { "Fanta::User.find(#{e.id}).update!(online_at: nil)" if e.online_at },
+            link_to_eval("削除") { "Colosseum::User.find(#{e.id}).destroy!" },
+            link_to_eval("online") { "Colosseum::User.find(#{e.id}).update!(online_at: Time.current)" if !e.online_at },
+            link_to_eval("offline") { "Colosseum::User.find(#{e.id}).update!(online_at: nil)" if e.online_at },
             link_to_eval("logout") { "reset_session" if e == current_user },
-            link_to_eval("名前変更") { "Fanta::User.find(#{e.id}).update!(name: SecureRandom.hex)" },
+            link_to_eval("名前変更") { "Colosseum::User.find(#{e.id}).update!(name: SecureRandom.hex)" },
           ].compact.join(" ").html_safe
         end
       end

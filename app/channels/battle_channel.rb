@@ -67,6 +67,6 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   def battle
-    @battle ||= Fanta::Battle.find(params[:battle_id])
+    @battle ||= Colosseum::Battle.find(params[:battle_id])
   end
 end

@@ -10,6 +10,6 @@ class ChatMessageBroadcastJob < ApplicationJob
 
   # HTMLを作る
   def render_html(chat_message)
-    ApplicationController.renderer.render(partial: "fanta/battles/chat_message", locals: {chat_message: chat_message})
+    ApplicationController.renderer.render(partial: "colosseum/battles/chat_message", locals: {chat_message: chat_message})
   end
 end

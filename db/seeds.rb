@@ -3,8 +3,8 @@
   General::Battle,
   Swars::Grade,
   Swars::Battle,
-  Fanta::User,
-  Fanta::Battle,
+  Colosseum::User,
+  Colosseum::Battle,
 ].each do |e|
   e.setup
 end

@@ -5,23 +5,23 @@
 # success Folder in sync.
 # Done in 0.11s.
 #                         Prefix Verb   URI Pattern                                                                              Controller#Action
-#                  fanta_battles GET    /online/battles(.:format)                                                                fanta/battles#index
-#                                POST   /online/battles(.:format)                                                                fanta/battles#create
-#               new_fanta_battle GET    /online/battles/new(.:format)                                                            fanta/battles#new
-#              edit_fanta_battle GET    /online/battles/:id/edit(.:format)                                                       fanta/battles#edit
-#                   fanta_battle GET    /online/battles/:id(.:format)                                                            fanta/battles#show
-#                                PATCH  /online/battles/:id(.:format)                                                            fanta/battles#update
-#                                PUT    /online/battles/:id(.:format)                                                            fanta/battles#update
-#                                DELETE /online/battles/:id(.:format)                                                            fanta/battles#destroy
-#                    fanta_users GET    /online/users(.:format)                                                                  fanta/users#index
-#                                POST   /online/users(.:format)                                                                  fanta/users#create
-#                 new_fanta_user GET    /online/users/new(.:format)                                                              fanta/users#new
-#                edit_fanta_user GET    /online/users/:id/edit(.:format)                                                         fanta/users#edit
-#                     fanta_user GET    /online/users/:id(.:format)                                                              fanta/users#show
-#                                PATCH  /online/users/:id(.:format)                                                              fanta/users#update
-#                                PUT    /online/users/:id(.:format)                                                              fanta/users#update
-#                                DELETE /online/users/:id(.:format)                                                              fanta/users#destroy
-#                           root GET    /                                                                                        fanta/battles#index
+#                  colosseum_battles GET    /online/battles(.:format)                                                                colosseum/battles#index
+#                                POST   /online/battles(.:format)                                                                colosseum/battles#create
+#               new_colosseum_battle GET    /online/battles/new(.:format)                                                            colosseum/battles#new
+#              edit_colosseum_battle GET    /online/battles/:id/edit(.:format)                                                       colosseum/battles#edit
+#                   colosseum_battle GET    /online/battles/:id(.:format)                                                            colosseum/battles#show
+#                                PATCH  /online/battles/:id(.:format)                                                            colosseum/battles#update
+#                                PUT    /online/battles/:id(.:format)                                                            colosseum/battles#update
+#                                DELETE /online/battles/:id(.:format)                                                            colosseum/battles#destroy
+#                    colosseum_users GET    /online/users(.:format)                                                                  colosseum/users#index
+#                                POST   /online/users(.:format)                                                                  colosseum/users#create
+#                 new_colosseum_user GET    /online/users/new(.:format)                                                              colosseum/users#new
+#                edit_colosseum_user GET    /online/users/:id/edit(.:format)                                                         colosseum/users#edit
+#                     colosseum_user GET    /online/users/:id(.:format)                                                              colosseum/users#show
+#                                PATCH  /online/users/:id(.:format)                                                              colosseum/users#update
+#                                PUT    /online/users/:id(.:format)                                                              colosseum/users#update
+#                                DELETE /online/users/:id(.:format)                                                              colosseum/users#destroy
+#                           root GET    /                                                                                        colosseum/battles#index
 # general_battle_tag_cloud_index GET    /sr/:battle_id/tag_cloud(.:format)                                                       general/battles/tag_cloud#index
 #                general_battles GET    /sr(.:format)                                                                            general/battles#index
 #                 general_battle GET    /sr/:id(.:format)                                                                        general/battles#show
@@ -58,17 +58,23 @@
 #           rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
-  get "homes/show" => "fanta/homes#show"
-  devise_for :xusers, class_name: "Fanta::User", controllers: {omniauth_callbacks: "omniauth_callbacks"}
+  get "homes/show" => "colosseum/homes#show"
+  devise_for :xusers, {
+    class_name: "Colosseum::User",
+    controllers: {
+      omniauth_callbacks: "omniauth_callbacks",
+      # sessions: "users/sessions",
+    },
+  }
 
   ################################################################################ 対戦
 
-  namespace :fanta, path: "" do
-    resources :battles, path: "online/battles"
-    resources :users, path: "online/users"
+  namespace :colosseum do
+    resources :battles
+    resources :users
   end
 
-  root "fanta/battles#index"
+  root "colosseum/battles#index"
 
   ################################################################################ Debug
 
@@ -76,7 +82,7 @@ Rails.application.routes.draw do
 
   ################################################################################ ログアウト
 
-  namespace :fanta, path: "" do
+  namespace :colosseum, path: "" do
     resource :session
     get "login" => "sessions#new"
   end

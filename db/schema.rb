@@ -33,27 +33,16 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "converted_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "convertable_type", null: false
-    t.bigint "convertable_id", null: false, comment: "親"
-    t.text "text_body", null: false, comment: "棋譜内容"
-    t.string "text_format", null: false, comment: "棋譜形式"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
-    t.index ["text_format"], name: "index_converted_infos_on_text_format"
-  end
-
-  create_table "fanta_auth_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_auth_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "provider", null: false
     t.string "uid", null: false
     t.text "meta_info"
-    t.index ["provider", "uid"], name: "index_fanta_auth_infos_on_provider_and_uid", unique: true
-    t.index ["user_id"], name: "index_fanta_auth_infos_on_user_id"
+    t.index ["provider", "uid"], name: "index_colosseum_auth_infos_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_colosseum_auth_infos_on_user_id"
   end
 
-  create_table "fanta_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "black_preset_key", null: false, comment: "▲手合割"
     t.string "white_preset_key", null: false, comment: "△手合割"
     t.string "lifetime_key", null: false, comment: "時間"
@@ -74,36 +63,36 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "fanta_chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "message", null: false, comment: "発言"
     t.text "msg_options", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_id"], name: "index_fanta_chat_messages_on_battle_id"
-    t.index ["user_id"], name: "index_fanta_chat_messages_on_user_id"
+    t.index ["battle_id"], name: "index_colosseum_chat_messages_on_battle_id"
+    t.index ["user_id"], name: "index_colosseum_chat_messages_on_user_id"
   end
 
-  create_table "fanta_chronicles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_chronicles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "judge_key", null: false, comment: "結果"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["judge_key"], name: "index_fanta_chronicles_on_judge_key"
-    t.index ["user_id"], name: "index_fanta_chronicles_on_user_id"
+    t.index ["judge_key"], name: "index_colosseum_chronicles_on_judge_key"
+    t.index ["user_id"], name: "index_colosseum_chronicles_on_user_id"
   end
 
-  create_table "fanta_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "message", null: false, comment: "発言"
     t.text "msg_options", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_fanta_lobby_messages_on_user_id"
+    t.index ["user_id"], name: "index_colosseum_lobby_messages_on_user_id"
   end
 
-  create_table "fanta_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "preset_key", null: false, comment: "手合割"
@@ -114,22 +103,22 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.datetime "time_up_at", comment: "タイムアップしたのを検知した日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_id"], name: "index_fanta_memberships_on_battle_id"
-    t.index ["location_key"], name: "index_fanta_memberships_on_location_key"
-    t.index ["position"], name: "index_fanta_memberships_on_position"
-    t.index ["user_id"], name: "index_fanta_memberships_on_user_id"
+    t.index ["battle_id"], name: "index_colosseum_memberships_on_battle_id"
+    t.index ["location_key"], name: "index_colosseum_memberships_on_location_key"
+    t.index ["position"], name: "index_colosseum_memberships_on_position"
+    t.index ["user_id"], name: "index_colosseum_memberships_on_user_id"
   end
 
-  create_table "fanta_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.text "begin_greeting_message", null: false, comment: "対局開始時のあいさつ"
     t.text "end_greeting_message", null: false, comment: "対局終了時のあいさつ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_fanta_profiles_on_user_id"
+    t.index ["user_id"], name: "index_colosseum_profiles_on_user_id"
   end
 
-  create_table "fanta_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
     t.string "team_key", null: false, comment: "ルール・人数"
@@ -138,15 +127,15 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.string "robot_accept_key", null: false, comment: "CPUと対戦するかどうか"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["lifetime_key"], name: "index_fanta_rules_on_lifetime_key"
-    t.index ["oppo_preset_key"], name: "index_fanta_rules_on_oppo_preset_key"
-    t.index ["robot_accept_key"], name: "index_fanta_rules_on_robot_accept_key"
-    t.index ["self_preset_key"], name: "index_fanta_rules_on_self_preset_key"
-    t.index ["team_key"], name: "index_fanta_rules_on_team_key"
-    t.index ["user_id"], name: "index_fanta_rules_on_user_id"
+    t.index ["lifetime_key"], name: "index_colosseum_rules_on_lifetime_key"
+    t.index ["oppo_preset_key"], name: "index_colosseum_rules_on_oppo_preset_key"
+    t.index ["robot_accept_key"], name: "index_colosseum_rules_on_robot_accept_key"
+    t.index ["self_preset_key"], name: "index_colosseum_rules_on_self_preset_key"
+    t.index ["team_key"], name: "index_colosseum_rules_on_team_key"
+    t.index ["user_id"], name: "index_colosseum_rules_on_user_id"
   end
 
-  create_table "fanta_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
     t.datetime "online_at", comment: "オンラインになった日時"
@@ -174,21 +163,32 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.index ["confirmation_token"], name: "index_fanta_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_fanta_users_on_email", unique: true
-    t.index ["key"], name: "index_fanta_users_on_key", unique: true
-    t.index ["race_key"], name: "index_fanta_users_on_race_key"
-    t.index ["reset_password_token"], name: "index_fanta_users_on_reset_password_token", unique: true
-    t.index ["unlock_token"], name: "index_fanta_users_on_unlock_token", unique: true
+    t.index ["confirmation_token"], name: "index_colosseum_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_colosseum_users_on_email", unique: true
+    t.index ["key"], name: "index_colosseum_users_on_key", unique: true
+    t.index ["race_key"], name: "index_colosseum_users_on_race_key"
+    t.index ["reset_password_token"], name: "index_colosseum_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_colosseum_users_on_unlock_token", unique: true
   end
 
-  create_table "fanta_watch_ships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "colosseum_watch_ships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_id"], name: "index_fanta_watch_ships_on_battle_id"
-    t.index ["user_id"], name: "index_fanta_watch_ships_on_user_id"
+    t.index ["battle_id"], name: "index_colosseum_watch_ships_on_battle_id"
+    t.index ["user_id"], name: "index_colosseum_watch_ships_on_user_id"
+  end
+
+  create_table "converted_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "convertable_type", null: false
+    t.bigint "convertable_id", null: false, comment: "親"
+    t.text "text_body", null: false, comment: "棋譜内容"
+    t.string "text_format", null: false, comment: "棋譜形式"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
+    t.index ["text_format"], name: "index_converted_infos_on_text_format"
   end
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

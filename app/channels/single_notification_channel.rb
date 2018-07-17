@@ -10,12 +10,12 @@ class SingleNotificationChannel < ApplicationCable::Channel
 
   def battle_request_to(data)
     e = data["battle_request"]
-    from = Fanta::User.find(e["from_id"])
-    to = Fanta::User.find(e["to_id"])
+    from = Colosseum::User.find(e["from_id"])
+    to = Colosseum::User.find(e["to_id"])
     if to.race_info.auto_request_ok
       battle_match_ok(data)
     else
-      data["battle_request"]["from"] = ams_sr(from, serializer: Fanta::CurrentUserSerializer) # 送信元ユーザーの最新の状態のルールを用いるため
+      data["battle_request"]["from"] = ams_sr(from, serializer: Colosseum::CurrentUserSerializer) # 送信元ユーザーの最新の状態のルールを用いるため
       data["battle_request"]["to"] = ams_sr(to)
       ActionCable.server.broadcast("single_notification_#{to.id}", data)
     end
@@ -23,8 +23,8 @@ class SingleNotificationChannel < ApplicationCable::Channel
 
   def battle_match_ok(data)
     e = data["battle_request"]
-    from = Fanta::User.find(e["from_id"]) # 最初にリクエストを送った方
-    to = Fanta::User.find(e["to_id"])     # 承諾した方
+    from = Colosseum::User.find(e["from_id"]) # 最初にリクエストを送った方
+    to = Colosseum::User.find(e["to_id"])     # 承諾した方
     from.battle_with(to)
   end
 

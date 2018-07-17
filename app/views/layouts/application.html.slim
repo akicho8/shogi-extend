@@ -58,7 +58,7 @@ html lang="ja"
         #main_navar.navbar-menu
           .navbar-start
             / ここでの is-active に意味はない
-            = link_to("ネット対戦", [:fanta, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("fanta/battles"))])
+            = link_to("ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
             = link_to("CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
             = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
             .navbar-item.has-dropdown.is-hoverable
@@ -71,7 +71,7 @@ html lang="ja"
                 = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
           #header_app.navbar-end(v-cloak)
             / - unless current_user
-            /   = link_to("アカウント作成", [:new, :fanta, :session], class: "navbar-item")
+            /   = link_to("アカウント作成", [:new, :colosseum, :session], class: "navbar-item")
             /
             / - if current_user
             /   .navbar-item
@@ -90,7 +90,7 @@ html lang="ja"
             /           = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
             /       b-dropdown-item(:separator="true")
             /       b-dropdown-item(:has-link="true" :paddingless="true")
-            /         = link_to("ログアウト", [:fanta, :session], method: :delete)
+            /         = link_to("ログアウト", [:colosseum, :session], method: :delete)
 
             - if current_user
               .navbar-item.has-dropdown.is-hoverable
@@ -102,7 +102,7 @@ html lang="ja"
                   = link_to("プロフィール", [current_user], class: "navbar-item")
                   = link_to("設定", [:edit, current_user], class: "navbar-item")
                   .navbar-divider
-                  = link_to("ログアウト", [:fanta, :session], method: :delete, class: "navbar-item")
+                  = link_to("ログアウト", [:colosseum, :session], method: :delete, class: "navbar-item")
                   / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
               / こっちを使うと縦幅が大きくなってしまう
@@ -118,7 +118,7 @@ html lang="ja"
               /       = link_to("設定", [:edit, current_user])
               /     b-dropdown-item(:separator="true")
               /     b-dropdown-item(:has-link="true" :paddingless="true")
-              /       = link_to("ログアウト", [:fanta, :session], method: :delete)
+              /       = link_to("ログアウト", [:colosseum, :session], method: :delete)
               /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
             - if !current_user
@@ -154,7 +154,7 @@ html lang="ja"
                 #header_app.navbar-menu(v-cloak)
                   .navbar-end
                     span.navbar-item
-                      = link_to("{{online_only_count}}", [:fanta, :battles], :class => ["button", "is-primary", "is-inverted"])
+                      = link_to("{{online_only_count}}", [:colosseum, :battles], :class => ["button", "is-primary", "is-inverted"])
                 / #navbarMenuHeroA.navbar-menu
                 /   .navbar-end
                 /     a.navbar-item.is-active
@@ -177,7 +177,7 @@ html lang="ja"
             .tabs.is-boxed.is-centered
               .container
                 ul
-                  li class=("is-active" if params[:controller].start_with?("fanta/battles"))   = link_to("ネット対戦", [:fanta, :battles])
+                  li class=("is-active" if params[:controller].start_with?("colosseum/battles"))   = link_to("ネット対戦", [:colosseum, :battles])
                   li class=("is-active" if params[:controller] == "cpu_battles")                = link_to("CPU対戦", :cpu_battles)
                   li class=("is-active" if params[:controller].start_with?("swars/battles"))   = link_to("将棋ウォーズ棋譜検索", [:swars, :w])
                   li class=("is-active" if params[:controller] == "tactic_notes")              = link_to("戦法トリガー辞典", :tactic_notes)
