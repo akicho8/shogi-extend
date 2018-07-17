@@ -259,9 +259,9 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   # name が xxx なら http://localhost:3000/xusers/auth/xxx に対応する
   [
-    {:key :google,  auth_key: :google_oauth2, args: {name: "google", scope: ["email"]}}, # provider を文字列にしたいので name は文字列で指定
-    {:key :twitter, auth_key: nil,            args: {}},
-    {:key :github,  auth_key: nil,            args: {}},
+    {key: :google,  auth_key: :google_oauth2, args: {name: "google", scope: ["email"]}}, # provider を文字列にしたいので name は文字列で指定
+    {key: :twitter, auth_key: nil,            args: {}},
+    {key: :github,  auth_key: nil,            args: {}},
   ].each do |e|
     v = Rails.application.credentials[Rails.env.to_sym].fetch(e.key)
     config.omniauth((e[:auth_key] || e[:key]), v[:id], v[:secret], e[:args])
