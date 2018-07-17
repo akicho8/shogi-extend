@@ -5,8 +5,6 @@
 /node_modules
 /storage
 
-# Ignore encrypted secrets key file.
-/config/master.key
 /public/packs
 /public/packs-test
 
@@ -18,3 +16,6 @@
 yarn-debug.log*
 .yarn-integrity
 /spec/examples.txt
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

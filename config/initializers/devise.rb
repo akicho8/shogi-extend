@@ -8,7 +8,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = '0972e194e6f9ac2021bc92da4a9935a587fe252771a8a665bc2a3001e9a506b9e8848b2b933a9f377e153ed02700113badde6a1865dba035f1b60acecf1df02e'
+  # config.secret_key = '0972e194e6f9ac2021bc92da4a9935a587fe252771a8a665bc2a3001e9a506b9e8848b2b933a9f377e153ed02700113badde6a1865dba035f1b60acecf1df02e'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -263,8 +263,11 @@ Devise.setup do |config|
     {key: :twitter, auth_key: nil,            args: {}},
     {key: :github,  auth_key: nil,            args: {}},
   ].each do |e|
-    v = Rails.application.credentials[Rails.env.to_sym].fetch(e[:key])
-    config.omniauth((e[:auth_key] || e[:key]), v[:key], v[:secret], e[:args])
+    if info = Rails.application.credentials[Rails.env.to_sym]
+      if v = info[e[:key]]
+        config.omniauth((e[:auth_key] || e[:key]), v[:key], v[:secret], e[:args])
+      end
+    end
   end
 
   # ==> Warden configuration

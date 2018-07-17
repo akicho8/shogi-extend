@@ -30,51 +30,6 @@ class ApplicationController < ActionController::Base
     delegate :tag, :link_to, :icon_tag, to: :h
   end
 
-  concerning :BotCheckMethods do
-    included do
-      let :bot_agent? do
-        request.user_agent.to_s.match?(self.class.bot_regexp)
-      end
-    end
-
-    class_methods do
-      def bot_regexp
-        # ▼HTTP_USER_AGENTでbot,Browser,Deviceチェック - Qiita
-        # https://qiita.com/haco99/items/c8321b2992080364d08c
-        @bot_regexp ||= Regexp.union(*[
-            "Googlebot",
-            "Yahoo! Slurp",
-            "Mediapartners-Google",
-            "msnbot",
-            "bingbot",
-            "MJ12bot",
-            "Ezooms",
-            "pirst; MSIE 8.0;",
-            "Google Web Preview",
-            "ia_archiver",
-            "Sogou web spider",
-            "Googlebot-Mobile",
-            "AhrefsBot",
-            "YandexBot",
-            "Purebot",
-            "Baiduspider",
-            "UnwindFetchor",
-            "TweetmemeBot",
-            "MetaURI",
-            "PaperLiBot",
-            "Showyoubot",
-            "JS-Kit",
-            "PostRank",
-            "Crowsnest",
-            "PycURL",
-            "bitlybot",
-            "Hatena",
-            "facebookexternalhit",
-          ])
-      end
-    end
-  end
-
   concerning :CurrentUserMethods do
     included do
       let :js_global_params do
@@ -153,6 +108,7 @@ class ApplicationController < ActionController::Base
           link_to_eval("部屋作成") { "Colosseum::Battle.create!" },
           link_to_eval("部屋削除") { "Colosseum::Battle.last&.destroy!" },
           link_to_eval("部屋全削除") { "Colosseum::Battle.destroy_all" },
+          link_to_eval("flash確認", redirect_to: root_path(debug: "true")) { "" },
         ].compact.join.html_safe
       end
 
@@ -173,6 +129,51 @@ class ApplicationController < ActionController::Base
       out << list.to_html
 
       tag.br + out.join.html_safe
+    end
+  end
+
+  concerning :BotCheckMethods do
+    included do
+      let :bot_agent? do
+        request.user_agent.to_s.match?(self.class.bot_regexp)
+      end
+    end
+
+    class_methods do
+      def bot_regexp
+        # ▼HTTP_USER_AGENTでbot,Browser,Deviceチェック - Qiita
+        # https://qiita.com/haco99/items/c8321b2992080364d08c
+        @bot_regexp ||= Regexp.union(*[
+            "Googlebot",
+            "Yahoo! Slurp",
+            "Mediapartners-Google",
+            "msnbot",
+            "bingbot",
+            "MJ12bot",
+            "Ezooms",
+            "pirst; MSIE 8.0;",
+            "Google Web Preview",
+            "ia_archiver",
+            "Sogou web spider",
+            "Googlebot-Mobile",
+            "AhrefsBot",
+            "YandexBot",
+            "Purebot",
+            "Baiduspider",
+            "UnwindFetchor",
+            "TweetmemeBot",
+            "MetaURI",
+            "PaperLiBot",
+            "Showyoubot",
+            "JS-Kit",
+            "PostRank",
+            "Crowsnest",
+            "PycURL",
+            "bitlybot",
+            "Hatena",
+            "facebookexternalhit",
+          ])
+      end
     end
   end
 end
