@@ -264,7 +264,7 @@ Devise.setup do |config|
     {key: :github,  auth_key: nil,            args: {}},
   ].each do |e|
     v = Rails.application.credentials[Rails.env.to_sym].fetch(e[:key])
-    config.omniauth((e[:auth_key] || e[:key]), v[:id], v[:secret], e[:args])
+    config.omniauth((e[:auth_key] || e[:key]), v[:key], v[:secret], e[:args])
   end
 
   # ==> Warden configuration
