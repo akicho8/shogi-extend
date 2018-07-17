@@ -108,7 +108,7 @@ Rails.application.configure do
     port: 587,
     authentication: "plain",
     user_name: "pinpon.ikeda",
-    password: ENV["GMAIL_APP_PASSWORD"],
+    password: Rails.application.credentials[:gmail_smtp_password],
   }
 
   # ################################################################################ ActionCable
