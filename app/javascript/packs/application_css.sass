@@ -54,9 +54,9 @@ pre
     .image
       img
         border-radius: 5%
-        
+
 //////////////////////////////////////////////////////////////////////////////// message_link_to
-        
+
 a.message_link_to
   .avatar_image
     vertical-align: middle
@@ -65,13 +65,13 @@ a.message_link_to
   .user_name
     margin: 0 0.2em
     white-space: nowrap
-  
+
 .chat_one_line
   /* display: inline-flex
   /* align-items: center
   .chat_message
     margin-left: 0.0em
-  
+
 .avatar_image_in_dialog
   height: 3.0em
   vertical-align: middle
@@ -79,20 +79,20 @@ a.message_link_to
   border-radius: 5%
 
 ////////////////////////////////////////////////////////////////////////////// ヘッダーのアバター画像
-  
+
 .header_avatar_image
   vertical-align: middle
   border-radius: 50%
 
 .my_name
   margin-left: 0.5em
-  
+
 ////////////////////////////////////////////////////////////////////////////// .box のかわり
-  
+
 .virtual_box
   display: block
   padding: 1.25rem
-  
+
 ////////////////////////////////////////////////////////////////////////////// ヘッダー画像
 
 // .hero
@@ -161,12 +161,16 @@ $any_exist_soldiers: $grey-light
 ////////////////////////////////////////////////////////////////////////////// ログインボタン
 /* https://qiita.com/AcaiBowl/items/8ee0a5a6c994685fb1cd
 /* https://lab.syncer.jp/Document/Color/Brand-Color/
+
+@mixin social_button_define($name, $color)
+  &.#{$name}
+    background: $color ! important
+    &:hover
+      background: darken($color, 10%) ! important
+
 .social_login_button
   border: none ! important
   color: white ! important
-  &.twitter
-    background: rgb(85, 172, 238) ! important
-  &.google
-    background: rgb(221, 75, 57) ! important
-  &.github
-    background: rgb(51, 51, 51) ! important
+  @include social_button_define("twitter", rgb(85, 172, 238))
+  @include social_button_define("google",  rgb(221, 75,  57))
+  @include social_button_define("github",  rgb( 51, 51,  51))
