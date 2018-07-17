@@ -9,8 +9,14 @@ module Fanta
       { key: :level5, name: "かなり弱い",         depth_max_range: 1..1, time_limit: [10],    legal_only: true,  mate_danger_check: true,  light: false, }, # 相手の手を考慮する
       { key: :level6, name: "弱い",               depth_max_range: 2..2, time_limit: [15],    legal_only: true,  mate_danger_check: true,  light: false, }, # できれば3手先まで読む
       { key: :level7, name: "最大1分考える",      depth_max_range: 2..2, time_limit: [60],    legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して3手先まで読む
-      { key: :level8, name: "3分考える",          depth_max_range: 2..5, time_limit: [60*3],  legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
-      { key: :level9, name: "30分考える",         depth_max_range: 2..5, time_limit: [60*30], legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
+      *(
+        if !Rails.env.production?
+          [
+            { key: :level8, name: "3分考える",    depth_max_range: 2..5, time_limit: [60*3],  legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
+            { key: :level9, name: "30分考える",   depth_max_range: 2..5, time_limit: [60*30], legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
+          ]
+        end
+        )
     ]
 
     def self.light_only
