@@ -53,16 +53,14 @@ module Colosseum
     end
 
     def update
-      if params[:command] == "social_renkei"
-        # if auth_info = current_record.auth_infos.find_by(provider: params[:provider])
-        # else
+      if params[:command] == "social_connect"
         session[:return_to] = polymorphic_path([:edit, current_record])
-        redirect_to omniauth_authorize_path(:xuser, params[:provider])
+        redirect_to omniauth_authorize_path(:xuser, social_media_info.key)
         return
       end
 
-      if params[:command] == "social_reject"
-        current_record.auth_infos.where(provider: params[:provider]).destroy_all
+      if params[:command] == "social_disconnect"
+        current_record.auth_infos.where(provider: social_media_info.key).destroy_all
         redirect_to polymorphic_path([:edit, current_record]), notice: "連携を解除しました"
         return
       end
@@ -75,6 +73,12 @@ module Colosseum
       # [:edit, :colosseum, current_record]
       # [:edit, :colosseum, current_record]
       current_record
+    end
+
+    private
+
+    def social_media_info
+      SocialMediaInfo.fetch(params[:provider])
     end
   end
 end
