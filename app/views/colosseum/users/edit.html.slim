@@ -1,19 +1,41 @@
-.title.is-4= current_record.new_record? ? "作成" : "設定"
-hr
+.columns
+  .column
+    .title.is-4= current_record.new_record? ? "作成" : "設定"
+    hr
 
-= form_with(model: current_record) do |form|
-  = render partial: "error_messages", locals: {form: form}
-  = render partial: "form", locals: {form: form}
-  .field
-    .control
-      =<> form.submit(name: :_submit, class: "button is-primary")
+    = form_with(model: current_record) do |form|
+      = render partial: "error_messages", locals: {form: form}
+      = render partial: "form", locals: {form: form}
+      .field
+        .control
+          =<> form.submit(name: :_submit, class: "button is-primary")
 
-br
-= link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
-/ br
-/ br
-/ 
-/ .content
-/   ul
-/     - if current_record.provider == "google"
-/       li= link_to("Googleアカウントとの結び付きを解除する", [:colosseum, :session, reject: :google], method: :delete)
+    br
+    = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
+    / br
+    / br
+    / 
+    / .content
+    /   ul
+    /     - if current_record.provider == "google"
+    /       li= link_to("Googleアカウントとの結び付きを解除する", [:colosseum, :session, reject: :google], method: :delete)
+
+  - if current_record.persisted?
+    .column
+      .title.is-6
+        | アカウント連携
+      .content
+        - SocialMediaInfo.each do |e|
+          p
+            - if auth_info = current_record.auth_infos.find_by(provider: e.key)
+              = link_to([current_record, command: :social_reject, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "social_login_button", e.key]) do
+                span(class="icon is-medium")
+                  i(class="fab fa-#{e.key}")
+                span
+                  = "#{e.name} アカウントとの連携を解除する"
+            - else
+              = link_to([current_record, command: :social_renkei, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "social_login_button", e.key]) do
+                span(class="icon is-medium")
+                  i(class="fab fa-#{e.key}")
+                span
+                  = "#{e.name} アカウントと連携する"

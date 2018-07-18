@@ -571,35 +571,7 @@ module Colosseum
       end
 
       class_methods do
-        def find_or_create_from_auth(auth, **attributes)
-          logger.info(auth)
-          logger.info(auth.to_t)
-          logger.info(auth.to_hash)
-
-          user = nil
-          if auth_info = AuthInfo.find_by(provider: auth.provider, uid: auth.uid)
-            user ||= auth_info.user
-          end
-          user ||= find_by(email: auth.info.email)
-
-          unless user
-            image = URI(auth.info.image)
-            user = create(attributes.merge({
-                  :name      => auth.info.name.presence || auth.info.nickname.presence,
-                  :email     => auth.info.email || "#{SecureRandom.hex}@localhost",
-                  :password  => Devise.friendly_token(32),
-                  :avatar    => {io: image.open, filename: Pathname(image.path).basename, content_type: "image/png"},
-                  :auth_infos_attributes => [
-                    {
-                      :provider  => auth.provider,
-                      :uid       => auth.uid,
-                      :meta_info => auth.to_hash,
-                    },
-                  ],
-                }))
-          end
-
-          user
+        def find_or_create_from_auth(auth, user:, attributes:)
         end
       end
     end

@@ -81,6 +81,11 @@
           :user                => "ユーザー",
           :message             => "発言",
         },
+
+        "colosseum/auth_info": {
+          :uid              => "UID",
+          :provider         => "プロバイダー",
+        },
       },
     },
   },

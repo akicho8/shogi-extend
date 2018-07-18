@@ -52,6 +52,24 @@ module Colosseum
       end
     end
 
+    def update
+      if params[:command] == "social_renkei"
+        # if auth_info = current_record.auth_infos.find_by(provider: params[:provider])
+        # else
+        session[:return_to] = polymorphic_path([:edit, current_record])
+        redirect_to omniauth_authorize_path(:xuser, params[:provider])
+        return
+      end
+
+      if params[:command] == "social_reject"
+        current_record.auth_infos.where(provider: params[:provider]).destroy_all
+        redirect_to polymorphic_path([:edit, current_record]), notice: "連携を解除しました"
+        return
+      end
+
+      super
+    end
+
     def redirect_to_where
       # [:colosseum, :battles]
       # [:edit, :colosseum, current_record]

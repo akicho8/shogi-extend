@@ -14,12 +14,62 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def auth_shared_process
     auth = request.env["omniauth.auth"]
     # raise auth.to_hash.inspect
-    user = Colosseum::User.find_or_create_from_auth(auth, user_agent: request.user_agent)
+    # user = Colosseum::User.find_or_create_from_auth(auth, user: current_user, attributes: {user_agent: request.user_agent})
+
+    logger.info(auth)
+    logger.info(auth.to_t)
+    logger.info(auth.to_hash)
+
+    social_media_info = SocialMediaInfo.fetch(auth.provider)
+    message = nil
+
+    user = current_user
+
+    # ユーザーが特定できていないときは認証情報から復元する
+    unless user
+      if auth_info = AuthInfo.find_by(provider: auth.provider, uid: auth.uid)
+        user ||= auth_info.user
+      end
+      user ||= find_by(email: auth.info.email)
+    end
+
+    # 復元できないときは新規ユーザーを作成する
+    unless user
+      image = URI(auth.info.image)
+      user = create({
+          :name       => auth.info.name.presence || auth.info.nickname.presence,
+          :email      => auth.info.email || "#{SecureRandom.hex}@localhost",
+          :password   => Devise.friendly_token(32),
+          :avatar     => {io: image.open, filename: Pathname(image.path).basename, content_type: "image/png"},
+          :user_agent => request.user_agent,
+        })
+    end
+
+    # ユーザーに認証情報が含まれていなければ追加する
+    if user.valid?
+      unless user.auth_infos.find_by(provider: auth.provider, uid: auth.uid)
+        auth_info = user.auth_infos.create(auth: auth)
+        if auth_info.invalid?
+          return_to = session[:return_to] || :new_xuser_registration
+          session[:return_to] = nil
+          redirect_to return_to, alert: auth_info.errors.full_messages.join("\n")
+          return
+        end
+      end
+    end
 
     if user.invalid?
-      current_user_set_id(nil)
+      # current_user_set_id(nil)
       # session["devise.google_data"] = auth.except(:extra)
       redirect_to :new_xuser_registration, alert: user.errors.full_messages.join("\n")
+      return
+    end
+
+    if current_user
+      message = "#{social_media_info.name}アカウントと連携しました"
+      return_to = session[:return_to] || :new_xuser_registration
+      session[:return_to] = nil
+      redirect_to return_to, notice: message
       return
     end
 

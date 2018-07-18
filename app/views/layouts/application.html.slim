@@ -213,6 +213,9 @@ html lang="ja"
               #system_notification_app.has-text-grey-light
                 | ActionCable: {{latest_system_logs.join(" ")}}
 
+              - if Rails.env.development?
+                = "current_user: #{!!current_user}"
+
     #single_notification_app
 
     javascript:

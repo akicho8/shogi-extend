@@ -26,9 +26,8 @@
           span
             = t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}")
 
-- if devise_mapping.registerable? && controller_name != 'registrations'
-  = link_to("ゲストログイン", [:colosseum, :session], method: :post, class: ["button", "is-primary", "is-outlined"])
-  br
+    br
+    = link_to("ゲストログイン", [:colosseum, :session], method: :post, class: ["button", "is-primary", "is-outlined"])
 
 - if Rails.env.development?
   = debug(resource_class.omniauth_providers)

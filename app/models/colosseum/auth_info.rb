@@ -19,13 +19,23 @@ module Colosseum
 
     serialize :meta_info
 
+    attr_accessor :auth
+
+    before_validation do
+      if auth
+        self.provider  = auth.provider
+        self.uid       = auth.uid
+        self.meta_info = auth.to_hash
+      end
+    end
+
     with_options presence: true do
       validates :provider
       validates :uid
     end
 
     with_options allow_blank: true do
-      validates :uid, uniqueness: {scope: :provider}
+      validates :uid, uniqueness: {scope: :provider, message: "が重複しています。すでに他のアカウントと連携しているようです。いったんログアウトしてそのアカウントを使うか、そのアカウントとの連携を解除してからこちらと連携してみてください"}
     end
   end
 end
