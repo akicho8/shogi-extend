@@ -113,12 +113,9 @@ module ModulableCrud
     end
 
     # override according to the situation
+    # [ns_prefix, current_plural_key]
     def redirect_to_where
-      if false
-        [ns_prefix, current_record]
-      else
-        [ns_prefix, current_plural_key]
-      end
+      [ns_prefix, current_record]
     end
 
     def redirect_to_after_create_or_update

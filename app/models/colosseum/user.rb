@@ -17,8 +17,8 @@
 # | race_key               | Race key                                                                 | string(255) | NOT NULL            |      | F     |
 # | created_at             | 作成日時                                                                 | datetime    | NOT NULL            |      |       |
 # | updated_at             | 更新日時                                                                 | datetime    | NOT NULL            |      |       |
-# | email                  | メールアドレス                                                           | string(255) | DEFAULT() NOT NULL  |      | B!    |
-# | encrypted_password     | Encrypted password                                                       | string(255) | DEFAULT() NOT NULL  |      |       |
+# | email                  | メールアドレス                                                           | string(255) | NOT NULL            |      | B!    |
+# | encrypted_password     | Encrypted password                                                       | string(255) | NOT NULL            |      |       |
 # | reset_password_token   | Reset password token                                                     | string(255) |                     |      | C!    |
 # | reset_password_sent_at | Reset password sent at                                                   | datetime    |                     |      |       |
 # | remember_created_at    | Remember created at                                                      | datetime    |                     |      |       |
@@ -58,9 +58,7 @@ module Colosseum
             self.name ||= "CPU#{number}号"
             default_emal = "cpu-#{key}@localhost"
           end
-          if password.nil? && password_confirmation.nil?
-            self.email = email.presence || default_emal
-          end
+          self.email ||= default_emal
 
           if Rails.env.development?
             self.online_at ||= Time.current

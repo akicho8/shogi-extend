@@ -111,11 +111,11 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
 
   create_table "colosseum_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
-    t.text "begin_greeting_message", null: false, comment: "対局開始時のあいさつ"
-    t.text "end_greeting_message", null: false, comment: "対局終了時のあいさつ"
+    t.string "begin_greeting_message", null: false, comment: "対局開始時のあいさつ"
+    t.string "end_greeting_message", null: false, comment: "対局終了時のあいさつ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_colosseum_profiles_on_user_id"
+    t.index ["user_id"], name: "index_colosseum_profiles_on_user_id", unique: true
   end
 
   create_table "colosseum_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.index ["robot_accept_key"], name: "index_colosseum_rules_on_robot_accept_key"
     t.index ["self_preset_key"], name: "index_colosseum_rules_on_self_preset_key"
     t.index ["team_key"], name: "index_colosseum_rules_on_team_key"
-    t.index ["user_id"], name: "index_colosseum_rules_on_user_id"
+    t.index ["user_id"], name: "index_colosseum_rules_on_user_id", unique: true
   end
 
   create_table "colosseum_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -146,8 +146,8 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.string "race_key", null: false, comment: "種族"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.string "email", null: false
+    t.string "encrypted_password", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

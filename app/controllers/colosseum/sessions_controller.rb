@@ -1,9 +1,8 @@
 module Colosseum
   class SessionsController < ApplicationController
-    # skip_before_action :authenticate_action, on: [:create]
-
     def create
       user = User.create!
+      flash[:notice] = "ゲストアカウントを作成してログインしました。"
       sign_in_and_redirect user
     end
 
@@ -14,7 +13,7 @@ module Colosseum
       else
         notice = "すでにログアウトしています。"
       end
-      redirect_to :root, tost_notice: notice
+      redirect_to :root, notice: notice
     end
   end
 end

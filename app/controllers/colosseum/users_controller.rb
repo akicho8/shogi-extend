@@ -17,8 +17,8 @@
 # | race_key               | Race key                                                                 | string(255) | NOT NULL            |      | F     |
 # | created_at             | 作成日時                                                                 | datetime    | NOT NULL            |      |       |
 # | updated_at             | 更新日時                                                                 | datetime    | NOT NULL            |      |       |
-# | email                  | メールアドレス                                                           | string(255) | DEFAULT() NOT NULL  |      | B!    |
-# | encrypted_password     | Encrypted password                                                       | string(255) | DEFAULT() NOT NULL  |      |       |
+# | email                  | メールアドレス                                                           | string(255) | NOT NULL            |      | B!    |
+# | encrypted_password     | Encrypted password                                                       | string(255) | NOT NULL            |      |       |
 # | reset_password_token   | Reset password token                                                     | string(255) |                     |      | C!    |
 # | reset_password_sent_at | Reset password sent at                                                   | datetime    |                     |      |       |
 # | remember_created_at    | Remember created at                                                      | datetime    |                     |      |       |
@@ -40,8 +40,6 @@ module Colosseum
   class UsersController < ApplicationController
     include ModulableCrud::All
 
-    let :js_user_profile do
-      ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
     before_action only: [:index] do
       if current_user != User.sysop
         redirect_to :root, alert: "アクセス権限がありません"
@@ -54,6 +52,10 @@ module Colosseum
           redirect_to :root, alert: "アクセス権限がありません"
         end
       end
+    end
+
+    let :js_user_profile do
+      ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
     end
 
     def update

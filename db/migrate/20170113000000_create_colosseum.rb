@@ -44,10 +44,10 @@ class CreateColosseum < ActiveRecord::Migration[5.1]
 
     # プロフィール
     create_table :colosseum_profiles, force: true do |t|
-      t.belongs_to :user,        null: false, comment: "ユーザー"
-      t.text :begin_greeting_message,  null: false, comment: "対局開始時のあいさつ"
-      t.text :end_greeting_message, null: false, comment: "対局終了時のあいさつ"
-      t.timestamps               null: false
+      t.belongs_to :user,               null: false, index: {unique: true}, comment: "ユーザー"
+      t.string :begin_greeting_message, null: false,                        comment: "対局開始時のあいさつ"
+      t.string :end_greeting_message,   null: false,                        comment: "対局終了時のあいさつ"
+      t.timestamps                      null: false
     end
 
     # 記録(永続的にするため部屋とは別にする)
@@ -59,12 +59,12 @@ class CreateColosseum < ActiveRecord::Migration[5.1]
 
     # 希望ルール
     create_table :colosseum_rules, force: true do |t|
-      t.belongs_to :user,         null: false,              comment: "ユーザー"
-      t.string :lifetime_key,     null: false, index: true, comment: "ルール・持ち時間"
-      t.string :team_key,         null: false, index: true, comment: "ルール・人数"
-      t.string :self_preset_key,  null: false, index: true, comment: "ルール・自分の手合割"
-      t.string :oppo_preset_key,  null: false, index: true, comment: "ルール・相手の手合割"
-      t.string :robot_accept_key, null: false, index: true, comment: "CPUと対戦するかどうか"
+      t.belongs_to :user,         null: false, index: {unique: true}, comment: "ユーザー"
+      t.string :lifetime_key,     null: false, index: true,           comment: "ルール・持ち時間"
+      t.string :team_key,         null: false, index: true,           comment: "ルール・人数"
+      t.string :self_preset_key,  null: false, index: true,           comment: "ルール・自分の手合割"
+      t.string :oppo_preset_key,  null: false, index: true,           comment: "ルール・相手の手合割"
+      t.string :robot_accept_key, null: false, index: true,           comment: "CPUと対戦するかどうか"
       t.timestamps                null: false
     end
 
@@ -95,7 +95,7 @@ class CreateColosseum < ActiveRecord::Migration[5.1]
       t.belongs_to :user,     null: false,               comment: "ユーザー"
       t.string :preset_key,   null: false,               comment: "手合割"
       t.string :location_key, null: false, index: true,  comment: "先後"
-      t.integer :position,                  index: true, comment: "入室順序"
+      t.integer :position,                 index: true,  comment: "入室順序"
       t.datetime :standby_at,                            comment: "準備完了日時"
       t.datetime :fighting_at,                           comment: "部屋に入った日時で抜けたり切断すると空"
       t.datetime :time_up_at,                            comment: "タイムアップしたのを検知した日時"
@@ -114,16 +114,16 @@ class CreateColosseum < ActiveRecord::Migration[5.1]
       t.belongs_to :battle, null: false, comment: "部屋"
       t.belongs_to :user,   null: false, comment: "ユーザー"
       t.text :message,      null: false, comment: "発言"
-      t.text :msg_options,     null: false
+      t.text :msg_options,  null: false
       t.timestamps          null: false
     end
 
     # ロビーチャット発言
     create_table :colosseum_lobby_messages, force: true do |t|
-      t.belongs_to :user,   null: false, comment: "ユーザー"
-      t.text :message,      null: false, comment: "発言"
-      t.text :msg_options,     null: false
-      t.timestamps          null: false
+      t.belongs_to :user,  null: false, comment: "ユーザー"
+      t.text :message,     null: false, comment: "発言"
+      t.text :msg_options, null: false
+      t.timestamps         null: false
     end
   end
 end
