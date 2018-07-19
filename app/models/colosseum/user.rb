@@ -58,7 +58,9 @@ module Colosseum
             self.name ||= "CPU#{number}号"
             default_emal = "cpu-#{key}@localhost"
           end
-          self.email = email.presence || default_emal
+          if password.nil? && password_confirmation.nil?
+            self.email = email.presence || default_emal
+          end
 
           if Rails.env.development?
             self.online_at ||= Time.current
