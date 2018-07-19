@@ -61,7 +61,7 @@ module Colosseum
 
       if params[:command] == "social_disconnect"
         current_record.auth_infos.where(provider: social_media_info.key).destroy_all
-        redirect_to polymorphic_path([:edit, current_record]), notice: "連携を解除しました"
+        redirect_to polymorphic_path([:edit, current_record]), notice: "#{social_media_info.name} アカウントとの連携を解除しました"
         return
       end
 

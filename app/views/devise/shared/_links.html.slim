@@ -20,14 +20,14 @@
   .content
     - SocialMediaInfo.each do |e|
       p
-        = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-primary", "is-outlined", "social_login_button", e.key]) do
+        = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-primary", "is-outlined", "brand_button", e.key]) do
           span(class="icon is-medium")
             i(class="fab fa-#{e.key}")
           span
             = t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}")
 
     br
-    = link_to("ゲストログイン", [:colosseum, :session], method: :post, class: ["button", "is-primary", "is-outlined"])
+    = link_to("ゲストアカウントを作成してログイン", [:colosseum, :session], method: :post, class: ["button", "is-primary", "is-outlined"])
 
 - if Rails.env.development?
   = debug(resource_class.omniauth_providers)

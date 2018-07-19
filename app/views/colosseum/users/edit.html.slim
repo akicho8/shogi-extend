@@ -22,20 +22,21 @@
 
   - if current_record.persisted?
     .column
-      .title.is-6
-        | アカウント連携
-      .content
-        - SocialMediaInfo.each do |e|
-          p
-            - if auth_info = current_record.auth_infos.find_by(provider: e.key)
-              = link_to([current_record, command: :social_disconnect, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "social_login_button", e.key]) do
-                span(class="icon is-medium")
-                  i(class="fab fa-#{e.key}")
-                span
-                  = "#{e.name} アカウントとの連携を解除する"
-            - else
-              = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "social_login_button", e.key]) do
-                span(class="icon is-medium")
-                  i(class="fab fa-#{e.key}")
-                span
-                  = "#{e.name} アカウントと連携する"
+      .box
+        .title.is-6
+          | アカウント連携
+        .content
+          - SocialMediaInfo.each do |e|
+            p
+              - if auth_info = current_record.auth_infos.find_by(provider: e.key)
+                = "#{e.name} アカウントと連携済み"
+                = " - "
+                = link_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put)
+              - else
+                = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "brand_button", e.key]) do
+                  span(class="icon is-medium")
+                    i(class="fab fa-#{e.key}")
+                  span
+                    = "#{e.name} アカウントと連携する"
+          small
+            | アカウント連携を行うとソーシャルメディア経由で簡単にログインできるようになります

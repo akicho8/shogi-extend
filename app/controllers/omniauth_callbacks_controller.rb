@@ -66,7 +66,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if current_user
-      message = "#{social_media_info.name}アカウントと連携しました"
+      message = "#{social_media_info.name} アカウントと連携しました"
       return_to = session[:return_to] || :new_xuser_registration
       session[:return_to] = nil
       redirect_to return_to, notice: message
