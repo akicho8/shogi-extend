@@ -3,6 +3,7 @@ module Colosseum
     def create
       user = User.create!
       flash[:notice] = "即席アカウントを作成してログインしました。"
+      user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       sign_in_and_redirect user
     end
 

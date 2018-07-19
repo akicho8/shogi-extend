@@ -165,6 +165,7 @@ module Colosseum
         ActionCable.server.broadcast("lobby_channel", user_cud: {action: action, user: ams_sr(self, serializer: OnlineUserSerializer)})
       end
 
+      # user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       def lobby_chat_say(message, msg_options = {})
         lobby_message = lobby_messages.create!(message: message, msg_options: msg_options)
         ActionCable.server.broadcast("lobby_channel", lobby_message: ams_sr(lobby_message))
