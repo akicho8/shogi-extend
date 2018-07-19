@@ -18,7 +18,7 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 
 class FreeBattlesController < ApplicationController
-  include LettableCrud::All
+  include ModulableCrud::All
   include SharedMethods
 
   let :js_preview_params do
@@ -64,10 +64,6 @@ class FreeBattlesController < ApplicationController
 
   def current_basename
     params[:basename].presence || "棋譜データ"
-  end
-
-  def redirect_to_where
-    current_record
   end
 
   def notice_message

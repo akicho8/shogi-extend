@@ -23,7 +23,7 @@
 
 module Swars
   class BattlesController < ApplicationController
-    include LettableCrud::All
+    include ModulableCrud::All
     include SharedMethods
 
     let :current_records do

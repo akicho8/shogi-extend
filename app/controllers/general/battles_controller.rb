@@ -20,7 +20,7 @@
 
 module General
   class BattlesController < ApplicationController
-    include LettableCrud::All
+    include ModulableCrud::All
     include SharedMethods
 
     let :current_record do

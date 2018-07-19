@@ -29,7 +29,7 @@
 
 module Colosseum
   class BattlesController < ApplicationController
-    include LettableCrud::All
+    include ModulableCrud::All
 
     let :js_lobby do
       ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
@@ -43,10 +43,6 @@ module Colosseum
       if current_record.xstate_key != :st_done
         @simple_layout = true
       end
-    end
-
-    def redirect_to_where
-      current_record
     end
   end
 end

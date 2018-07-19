@@ -38,7 +38,7 @@
 
 module Colosseum
   class UsersController < ApplicationController
-    include LettableCrud::All
+    include ModulableCrud::All
 
     let :js_user_profile do
       ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
@@ -66,13 +66,6 @@ module Colosseum
       end
 
       super
-    end
-
-    def redirect_to_where
-      # [:colosseum, :battles]
-      # [:edit, :colosseum, current_record]
-      # [:edit, :colosseum, current_record]
-      current_record
     end
 
     private
