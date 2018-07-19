@@ -52,7 +52,7 @@ module Colosseum
           if race_info.key == :human
             number = self.class.human_only.count.next
             self.name ||= "名無しの棋士#{number}号"
-            default_emal = "guest-#{key}@localhost"
+            default_emal = "#{key}@localhost"
           else
             number = self.class.robot_only.count.next
             self.name ||= "CPU#{number}号"
