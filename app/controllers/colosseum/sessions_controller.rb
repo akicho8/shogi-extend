@@ -2,7 +2,7 @@ module Colosseum
   class SessionsController < ApplicationController
     def create
       user = User.create!
-      flash[:notice] = "ゲストアカウントを作成してログインしました。"
+      flash[:notice] = "即席アカウントを作成してログインしました。"
       sign_in_and_redirect user
     end
 
