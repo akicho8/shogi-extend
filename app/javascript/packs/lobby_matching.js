@@ -20,6 +20,9 @@ export default {
 
   methods: {
     matching_start() {
+      if (AppHelper.login_required()) {
+        return
+      }
       App.lobby.matching_start()
     },
 

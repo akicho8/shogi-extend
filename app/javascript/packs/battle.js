@@ -243,6 +243,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // メッセージ送信
       message_enter(value) {
+        if (AppHelper.login_required()) {
+          return
+        }
         if (this.message !== "") {
           App.battle.chat_say(this.message)
         }
@@ -251,7 +254,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // user は自分か？
       user_self_p(user) {
-        return user.id === js_global_params.current_user.id
+        if (js_global.current_user) {
+          return user.id === js_global.current_user.id
+        }
       },
 
       __membership_self_p(e) {

@@ -3,7 +3,7 @@ class SingleNotificationChannel < ApplicationCable::Channel
     stream_from "single_notification_#{current_user.id}"
   end
 
-  # App.single_notification.message_send_to({from: js_global_params.current_user, to: this.user_to, message: this.message})
+  # App.single_notification.message_send_to({from: js_global.current_user, to: this.user_to, message: this.message})
   def message_send_to(data)
     ActionCable.server.broadcast("single_notification_#{data['to']['id']}", data)
   end

@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::Base
   extend Lettable
 
+  before_action do
+    if params[:__redirect_to]
+      redirect_to params[:__redirect_to], params.permit![:__flash]
+    end
+  end
+
   concerning :ActiveModelSerializerMethods do
     included do
       # 効かないのはなぜ……？
@@ -32,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   concerning :CurrentUserMethods do
     included do
-      let :js_global_params do
+      let :js_global do
         {
           :current_user        => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
           :online_only_count   => Colosseum::User.online_only.count,
@@ -42,6 +48,7 @@ class ApplicationController < ActionController::Base
           :custom_preset_infos => Colosseum::CustomPresetInfo,
           :robot_accept_infos  => Colosseum::RobotAcceptInfo,
           :last_action_infos   => Colosseum::LastActionInfo,
+          :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「ゲストアカウントを作成してログイン」を使ってみてください。"}]),
         }
       end
 

@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
       el: "#header_app",
       data() {
         return {
-          online_only_count: js_global_params.online_only_count,
-          fighter_only_count: js_global_params.fighter_only_count,
+          online_only_count: js_global.online_only_count,
+          fighter_only_count: js_global.fighter_only_count,
         }
       },
     })

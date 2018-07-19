@@ -104,12 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         current_hira_koma_key: null,
 
-        current_user: js_global_params.current_user,
+        current_user: js_global.current_user,
 
-        self_preset_key:       null,
-        oppo_preset_key:       null,
-        current_lifetime_key:  null,
-        current_team_key:   null,
+        self_preset_key:      null,
+        oppo_preset_key:      null,
+        current_lifetime_key: null,
+        current_team_key:     null,
         robot_accept_key:     null,
       }
     },
@@ -171,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       battle_setting_open_click() {
+        if (AppHelper.login_required()) {
+          return
+        }
         this.setting_modal_p = true
       },
 
@@ -189,6 +192,9 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       message_enter(value) {
+        if (AppHelper.login_required()) {
+          return
+        }
         if (this.message !== "") {
           App.lobby.chat_say(this.message)
         }

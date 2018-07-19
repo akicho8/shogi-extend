@@ -49,17 +49,16 @@ javascript:
   / .title.is-6 ネット対戦・ロビー
   / hr
 
-  - if current_user
-    .buttons
-      template(v-if="!matching_at")
-        button.button.is-primary.is-large(@click.prevent="matching_start") バトル開始
-        button.button.is-primary.is-large(@click.prevent="battle_setting_open_click") ルール設定
-      template(v-else)
-        a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始{{matching_counter}}
+  .buttons
+    template(v-if="!matching_at")
+      button.button.is-primary.is-large(@click.prevent="matching_start") バトル開始
+      button.button.is-primary.is-large(@click.prevent="battle_setting_open_click") ルール設定
+    template(v-else)
+      a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始{{matching_counter}}
 
-      - if Rails.env.development? && false
-        = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
-        = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
+    - if Rails.env.development? && false
+      = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
+      = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
 
   .columns
     .column
@@ -81,11 +80,12 @@ javascript:
         /   .control
         /     button.button.is-primary(@click="message_enter") 送信
 
-        - if current_user
+        - if true
           article.media
-            figure.media-left
-              p.image.is-64x64
-                = image_tag current_user.avatar_url
+            - if current_user
+              figure.media-left
+                p.image.is-64x64
+                  = image_tag current_user.avatar_url
 
             .media-content
               .field

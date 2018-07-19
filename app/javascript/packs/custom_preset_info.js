@@ -2,7 +2,7 @@ import { MemoryRecord } from 'js-memory-record'
 
 class CustomPresetInfo extends MemoryRecord {
   static get define() {
-    return js_global_params.custom_preset_infos
+    return js_global.custom_preset_infos
   }
 }
 

@@ -48,3 +48,11 @@ export function clipboard_copy(str, __options = {}) {
     Vue.prototype.$toast.open({message: options["error_message"], position: "is-bottom", type: "is-danger"})
   }
 }
+
+// ログイン強制
+export function login_required() {
+  if (!js_global.current_user) {
+    location.href = js_global.login_path
+    return true
+  }
+}

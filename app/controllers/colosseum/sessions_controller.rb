@@ -1,6 +1,6 @@
 module Colosseum
   class SessionsController < ApplicationController
-    skip_before_action :authenticate_action, on: [:create]
+    # skip_before_action :authenticate_action, on: [:create]
 
     def create
       user = User.create!

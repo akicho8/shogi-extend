@@ -18,7 +18,7 @@ html lang="ja"
     = action_cable_meta_tag
 
     javascript:
-      var js_global_params = #{js_global_params.to_json.html_safe}
+      var js_global = #{js_global.to_json.html_safe}
 
     / sprockets
     = stylesheet_link_tag "application"

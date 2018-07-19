@@ -29,8 +29,11 @@ export default {
       this.$nextTick(() => this.$refs.message_input.focus())
     },
     message_enter() {
+      if (AppHelper.login_required()) {
+        return
+      }
       if (this.message !== "") {
-        App.system_notification.message_send_all({from: js_global_params.current_user, message: this.message})
+        App.system_notification.message_send_all({from: js_global.current_user, message: this.message})
       }
       this.message = ""
       this.$refs.message_input.focus()

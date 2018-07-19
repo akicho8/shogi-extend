@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "homes/show" => "colosseum/homes#show"
   devise_for :xusers, {
     class_name: "Colosseum::User",
     controllers: {
