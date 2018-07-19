@@ -42,6 +42,10 @@ module Colosseum
 
     let :js_user_profile do
       ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
+    before_action only: [:index] do
+      if current_user != User.sysop
+        redirect_to :root, alert: "アクセス権限がありません"
+      end
     end
 
     before_action only: [:edit, :update, :destroy] do
