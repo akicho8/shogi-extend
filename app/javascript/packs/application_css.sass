@@ -164,20 +164,13 @@ $any_exist_soldiers: $grey-light
 /* https://lab.syncer.jp/Document/Color/Brand-Color/
 
 @mixin brand_def($name, $color)
-  .brand_button
-    border: none ! important
-    color: white ! important
-    &.#{$name}
+  .#{$name}
+    &.brand_button
+      border: none ! important
+      color: white ! important
       background: $color ! important
       &:hover
-        background: darken($color, 10%) ! important
-  .brand_icon
-    display: inline-block
-    vertical-align: middle
-    line-height: 1em
-    color: white ! important
-    &.#{$name}
-      background: $color ! important
+      background: darken($color, 10%) ! important
 
 @include brand_def("twitter", rgb(85, 172, 238))
 @include brand_def("google",  rgb(221, 75,  57))
