@@ -194,27 +194,31 @@ html lang="ja"
       footer.footer
         .container.is-fluid
           .columns
-            .column.has-text-centered
-              p
-                = link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
-              p
-              div.content
-                =<> link_to("GraphQL API", :graphiql_rails, target: "_blank")
-                br
-                =<> link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
-                =<> link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
-                =<> link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
-                br
-                =<> link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
-                =<> link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
-                br
-                br
+            .column
+              ul
+                li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
+                li== "&nbsp;"
+                li= link_to("GraphQL API", :graphiql_rails, target: "_blank")
+            .column
+              ul
+                li= link_to("プライバシー", [:about, id: :privacy_policy])
+                li= link_to("利用規約", [:about, id: :terms])
+                - if Rails.env.development?
+                  li= link_to("特定商取引法に基づく表記", [:about, id: :asct])
+            .column
+              ul
+                ul= link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
+                ul= link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
+                ul= link_to("warabi", "https://github.com/akicho8/warabi", target: "_blank")
+                ul= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
+                ul= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
+          .column
+            .column
+              .has-text-centered
                 = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
-              #system_notification_app.has-text-grey-light
-                | ActionCable: {{latest_system_logs.join(" ")}}
 
-              - if Rails.env.development?
-                = "current_user: #{!!current_user}"
+                #system_notification_app.has-text-grey-light
+                  | ActionCable: {{latest_system_logs.join(" ")}}
 
     #single_notification_app
 
