@@ -2,7 +2,7 @@ module Colosseum
   class SessionsController < ApplicationController
     def create
       user = User.create!
-      flash[:notice] = "即席アカウントを作成してログインしました。"
+      flash[:notice] = "即席アカウントを作成してログインしました。あなたは「#{user.name}」です"
       user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       sign_in_and_redirect user
     end
