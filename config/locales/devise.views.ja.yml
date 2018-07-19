@@ -52,8 +52,8 @@ ja:
         message: "ログイン失敗が繰り返されたため、アカウントはロックされています。"
         subject: "アカウントの凍結解除について"
     omniauth_callbacks:
-      failure: "%{kind} アカウントによる認証に失敗しました。理由：（%{reason}）"
-      success: "%{kind} アカウントによる認証に成功しました。"
+      failure: "%{reason} のため %{kind} アカウントによる認証に失敗しました。"
+      success: "%{kind} アカウントでログインしました。"
     passwords:
       edit:
         change_my_password: "パスワードを変更する"
@@ -101,7 +101,7 @@ ja:
         didn_t_receive_unlock_instructions: "アカウントの凍結解除方法のメールを受け取っていませんか？"
         forgot_your_password: "パスワードを忘れましたか？"
         sign_in: "ログイン"
-        sign_in_with_provider: "%{provider}でログイン"
+        sign_in_with_provider: "%{provider} アカウントでログイン"
         sign_up: "アカウント登録"
     unlocks:
       new:

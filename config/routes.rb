@@ -1,68 +1,9 @@
-# == Route Map
-#
-# ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
-# yarn check v1.7.0
-# success Folder in sync.
-# Done in 0.11s.
-#                         Prefix Verb   URI Pattern                                                                              Controller#Action
-#                  colosseum_battles GET    /online/battles(.:format)                                                                colosseum/battles#index
-#                                POST   /online/battles(.:format)                                                                colosseum/battles#create
-#               new_colosseum_battle GET    /online/battles/new(.:format)                                                            colosseum/battles#new
-#              edit_colosseum_battle GET    /online/battles/:id/edit(.:format)                                                       colosseum/battles#edit
-#                   colosseum_battle GET    /online/battles/:id(.:format)                                                            colosseum/battles#show
-#                                PATCH  /online/battles/:id(.:format)                                                            colosseum/battles#update
-#                                PUT    /online/battles/:id(.:format)                                                            colosseum/battles#update
-#                                DELETE /online/battles/:id(.:format)                                                            colosseum/battles#destroy
-#                    colosseum_users GET    /online/users(.:format)                                                                  colosseum/users#index
-#                                POST   /online/users(.:format)                                                                  colosseum/users#create
-#                 new_colosseum_user GET    /online/users/new(.:format)                                                              colosseum/users#new
-#                edit_colosseum_user GET    /online/users/:id/edit(.:format)                                                         colosseum/users#edit
-#                     colosseum_user GET    /online/users/:id(.:format)                                                              colosseum/users#show
-#                                PATCH  /online/users/:id(.:format)                                                              colosseum/users#update
-#                                PUT    /online/users/:id(.:format)                                                              colosseum/users#update
-#                                DELETE /online/users/:id(.:format)                                                              colosseum/users#destroy
-#                           root GET    /                                                                                        colosseum/battles#index
-# general_battle_tag_cloud_index GET    /sr/:battle_id/tag_cloud(.:format)                                                       general/battles/tag_cloud#index
-#                general_battles GET    /sr(.:format)                                                                            general/battles#index
-#                 general_battle GET    /sr/:id(.:format)                                                                        general/battles#show
-#                 general_search GET    /s/:query(.:format)                                                                      general/battles#index
-#                      general_s GET    /s(.:format)                                                                             general/battles#index
-#                  general_cloud GET    /s-cloud(.:format)                                                                       general/battles/tag_cloud#index
-#   swars_battle_tag_cloud_index GET    /wr/:battle_id/tag_cloud(.:format)                                                       swars/battles/tag_cloud#index
-#                  swars_battles GET    /wr(.:format)                                                                            swars/battles#index
-#                   swars_battle GET    /wr/:id(.:format)                                                                        swars/battles#show
-#                   swars_search GET    /w/:query(.:format)                                                                      swars/battles#index
-#                        swars_w GET    /w(.:format)                                                                             swars/battles#index
-#                    swars_cloud GET    /w-cloud(.:format)                                                                       swars/battles/tag_cloud#index
-#                   free_battles GET    /x(.:format)                                                                             free_battles#index
-#                                POST   /x(.:format)                                                                             free_battles#create
-#                new_free_battle GET    /x/new(.:format)                                                                         free_battles#new
-#               edit_free_battle GET    /x/:id/edit(.:format)                                                                    free_battles#edit
-#                    free_battle GET    /x/:id(.:format)                                                                         free_battles#show
-#                                PATCH  /x/:id(.:format)                                                                         free_battles#update
-#                                PUT    /x/:id(.:format)                                                                         free_battles#update
-#                                DELETE /x/:id(.:format)                                                                         free_battles#destroy
-#                   tactic_notes GET    /tactics(.:format)                                                                       tactic_notes#index
-#                    tactic_note GET    /tactics/:id(.:format)                                                                   tactic_notes#show
-#                           tree GET    /tactics-tree(.:format)                                                                  tactic_notes#index {:mode=>"tree"}
-#                        fortune GET    /tactics-fortune(.:format)                                                               tactic_notes#index {:mode=>"fortune"}
-#                             xy GET    /xy(.:format)                                                                            xy_game#show
-#                position_editor GET    /position-editor(.:format)                                                               position_editor#show
-#                     cpu_battles GET    /cpu/versus(.:format)                                                                    cpu_battles#show
-#                                POST   /cpu/versus(.:format)                                                                    cpu_battles#create
-#                                GET    /cpu/battles(.:format)                                                                    cpu_battles#show
-#             rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
-#      rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
-#             rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
-#      update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
-#           rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
-
 Rails.application.routes.draw do
   get "homes/show" => "colosseum/homes#show"
   devise_for :xusers, {
     class_name: "Colosseum::User",
     controllers: {
-      omniauth_callbacks: "omniauth_callbacks",
+      omniauth_callbacks: "colosseum/omniauth_callbacks",
       # sessions: "users/sessions",
     },
   }
