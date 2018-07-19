@@ -2,8 +2,8 @@ module Colosseum
   class SessionsController < ApplicationController
     def create
       user = User.create!
-      flash[:notice] = "ゲストアカウントを作成してログインしました。"
-      sign_in_and_redirect user
+      sign_in(user)
+      redirect_to [:edit, user], notice: "即席アカウントを作成してログインしました。あとからでもよいのでソーシャルメディアとの連携を行っておくと継続して同じアカウントを使えるようになります"
     end
 
     def destroy
