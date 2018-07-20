@@ -31,8 +31,8 @@ html lang="ja"
     = render "google_analytics" if Rails.env.production?
 
     / ActionCable
+    = javascript_pack_tag("system_notification")
     - if current_user
-      = javascript_pack_tag("system_notification")
       = javascript_pack_tag("single_notification")
 
     = yield :head
