@@ -112,6 +112,17 @@ module Colosseum
         chronicles.judge_eq(:lose).count
       end
 
+      def win_rate
+        if total_count.zero?
+          return 0.0
+        end
+        win_count.fdiv(total_count).round(3)
+      end
+
+      def total_count
+        win_count + lose_count
+      end
+
       def judge_add(key)
         judge_info = JudgeInfo.fetch(key)
         chronicles.create!(judge_key: judge_info.key)

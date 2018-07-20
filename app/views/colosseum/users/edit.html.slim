@@ -1,8 +1,7 @@
+.title.is-4= current_record.new_record? ? "作成" : "設定"
+hr
 .columns
   .column
-    .title.is-4= current_record.new_record? ? "作成" : "設定"
-    hr
-
     = form_with(model: current_record) do |form|
       = render partial: "error_messages", locals: {form: form}
       = render partial: "form", locals: {form: form}
@@ -10,18 +9,8 @@
         .control
           =<> form.submit(name: :_submit, class: "button is-primary")
 
-    br
-    = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
-    / br
-    / br
-    / 
-    / .content
-    /   ul
-    /     - if current_record.provider == "google"
-    /       li= link_to("Googleアカウントとの結び付きを解除する", [:colosseum, :session, reject: :google], method: :delete)
-
   - if current_record.persisted?
-    .column
+    .column.is-4
       .box
         .title.is-6
           | アカウント連携
@@ -40,3 +29,6 @@
                     = "#{e.name} アカウントと連携する"
           small
             | アカウント連携を行うとソーシャルメディア経由で簡単にログインできるようになります
+hr
+= link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
+

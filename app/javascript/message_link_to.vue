@@ -11,8 +11,15 @@
           p.modal-card-title
             a(:href="user_to.show_path")
               img.avatar_image_in_dialog(:src="user_to.avatar_url")
-            a(:href="user_to.show_path") {{user_to.name}}
+            a(:href="user_to.show_path")
+              | {{user_to.name}}
             | さんに送信
+            span.is-pulled-right.is-size-7
+              | 勝率: {{user_to.win_rate}}
+              | &nbsp;
+              | 勝ち: {{user_to.win_count}}
+              | &nbsp;
+              | 負け: {{user_to.lose_count}}
         section.modal-card-body
           b-field(label="")
             input.input.is-large(type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input")
