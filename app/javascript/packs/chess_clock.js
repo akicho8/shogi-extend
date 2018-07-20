@@ -108,7 +108,11 @@ export default {
 
     __members_format_of_location(location) {
       let list = _.filter(this.memberships, e => (e.location_key === location.key))
-      return list.map(e => e.user.name).join(" ")
+      if (list.length === 1) {
+        return list.map(e => e.user.name).join(" ")
+      } else {
+        return `${location.name}組${list.length}人`
+      }
     },
 
     clock_counter_inc() {
