@@ -104,6 +104,14 @@ module Colosseum
         end
       end
 
+      def win_count
+        chronicles.judge_eq(:win).count
+      end
+
+      def lose_count
+        chronicles.judge_eq(:lose).count
+      end
+
       def judge_add(key)
         judge_info = JudgeInfo.fetch(key)
         chronicles.create!(judge_key: judge_info.key)
