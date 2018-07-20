@@ -318,6 +318,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    redcarpet (3.4.0)
     redis (3.3.5)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
@@ -484,6 +485,7 @@ DEPENDENCIES
   rails (~> 5.2.0)
   rails-erd
   rails_autolink
+  redcarpet
   redis (~> 3.0)
   rgb
   rspec-power_assert

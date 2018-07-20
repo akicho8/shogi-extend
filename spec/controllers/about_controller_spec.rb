@@ -10,9 +10,4 @@ RSpec.describe AboutController, type: :controller do
     get :show, params: {id: :terms}
     expect(response).to be_successful
   end
-
-  it "asct" do
-    get :show, params: {id: :asct}
-    expect(response).to be_successful
-  end
 end

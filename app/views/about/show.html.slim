@@ -1,0 +1,9 @@
+.columns
+  .column.is-one-fifth
+    ul
+      li= link_to("プライバシー", [:about, id: "privacy_policy"], class: ["button", "is-white", ("is-active" if params[:id] == "privacy_policy")])
+      li= link_to("利用規約", [:about, id: "terms"], class: ["button", "is-white", ("is-active" if params[:id] == "terms")])
+  .column
+    .content
+      = controller.markdown_render
+

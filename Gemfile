@@ -141,7 +141,7 @@ gem 'graphql'
 gem 'graphiql-rails' # graphqlのテスト画面
 # end
 
-# -------------------------------------------------------------------------------- devise
+# devise
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise-i18n'
@@ -155,3 +155,5 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 
+# markdown
+gem "redcarpet"

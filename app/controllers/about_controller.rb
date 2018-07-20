@@ -1,9 +1,17 @@
 class AboutController < ApplicationController
   def show
-    # render html: Rails.root.join("config/#{params[:id]}.txt").read.gsub(/\R/, "<br/>").html_safe, layout: true
-    # str = render_to_string(params[:id], layout: false)
-    # str = str.gsub(/\R/, "<br/>").html_safe
-    # render html: str
-    render params[:id]
+    # md = self.class.render(action: "#{params[:id]}.md", layout: false)
+    # renderer = Redcarpet::Render::HTML.new
+    # markdown = Redcarpet::Markdown.new(renderer)
+    # html = markdown.render(md)
+    # render html: html.html_safe, layout: true
+  end
+
+  def markdown_render
+    md = self.class.render(action: "#{params[:id]}.md", layout: false)
+    renderer = Redcarpet::Render::HTML.new
+    markdown = Redcarpet::Markdown.new(renderer)
+    html = markdown.render(md).html_safe
+    # render html: html.html_safe, layout: true
   end
 end
