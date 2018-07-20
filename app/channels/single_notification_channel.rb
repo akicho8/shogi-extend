@@ -1,6 +1,8 @@
 class SingleNotificationChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "single_notification_#{current_user.id}"
+    if current_user
+      stream_from "single_notification_#{current_user.id}"
+    end
   end
 
   # App.single_notification.message_send_to({from: js_global.current_user, to: this.user_to, message: this.message})

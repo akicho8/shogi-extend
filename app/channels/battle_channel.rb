@@ -1,7 +1,9 @@
 class BattleChannel < ApplicationCable::Channel
   def subscribed
     stream_from channel_key
-    stream_for current_user
+    if current_user
+      stream_for current_user
+    end
   end
 
   # js 側では無理でも ruby 側だと接続切れの処理が書ける
@@ -28,15 +30,21 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   def chat_say(data)
-    current_user.chat_say(battle, data["message"], data["msg_options"] || {})
+    if current_user
+      current_user.chat_say(battle, data["message"], data["msg_options"] || {})
+    end
   end
 
   def room_in(data)
-    current_user.room_in(battle)
+    if current_user
+      current_user.room_in(battle)
+    end
   end
 
   def room_out(data)
-    current_user.room_out(battle)
+    if current_user
+      current_user.room_out(battle)
+    end
   end
 
   def time_up(data)

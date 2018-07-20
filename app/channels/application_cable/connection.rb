@@ -4,7 +4,9 @@ module ApplicationCable
 
     def connect
       self.current_user = find_verified_user
-      logger.add_tags current_user.name
+      if current_user
+        logger.add_tags current_user.name
+      end
     end
 
     def disconnect
@@ -14,15 +16,16 @@ module ApplicationCable
     private
 
     def find_verified_user
-      verified_user = Colosseum::User.find_by(id: cookies.signed[:user_id])
-      # unless verified_user
-      #   verified_user = Colosseum::User.create!(name: "#{User.count.next}さん")
-      # end
-      unless verified_user
-        reject_unauthorized_connection
+      if cookies.signed[:user_id]
+        user = Colosseum::User.find_by(id: cookies.signed[:user_id])
+        #
+        # ここで reject するとログインしていない人が観戦できなくる
+        # unless user
+        #   reject_unauthorized_connection
+        # end
+        #
+        user
       end
-      # cookies.signed[:user_id] = verified_user.id
-      verified_user
     end
   end
 end
