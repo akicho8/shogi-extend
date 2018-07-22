@@ -4,7 +4,7 @@
       b-tabs v-model="kifuActiveTab"
         - Warabi::KifuFormatInfo.each do |e|
           b-tab-item(label=e.name)
-            - if s = current_record.to_xxx(e.key)
+            - if s = current_record.to_s_kifu(e.key)
               pre.pre-wrap= s
 
 javascript:

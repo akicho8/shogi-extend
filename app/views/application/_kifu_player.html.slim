@@ -4,7 +4,7 @@
   .columns
     ////////////////////////////////////////////////////////////////////////////////
     .column
-      - if sfen = current_record.to_xxx(:sfen)
+      - if sfen = current_record.to_s_kifu(:sfen)
         shogi-player(
           :kifu_body="'#{sfen}'"
           :key_event_capture="true"

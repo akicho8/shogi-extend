@@ -19,7 +19,7 @@ module ConvertMethods
     end
   end
 
-  def to_xxx(key)
+  def to_s_kifu(key)
     if use_redis
       Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? 1.days : 0) do
         parsed_info.public_send("to_#{key}", compact: true)

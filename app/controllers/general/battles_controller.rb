@@ -169,7 +169,7 @@ module General
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           current_scope.limit(params[:limit] || 512).each do |battle|
             Warabi::KifuFormatInfo.each.with_index do |e|
-              if kd = battle.to_xxx(e.key)
+              if kd = battle.to_s_kifu(e.key)
                 zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
                 zos.write kd
               end
