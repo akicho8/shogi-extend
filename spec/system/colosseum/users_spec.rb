@@ -16,11 +16,6 @@ RSpec.describe "対戦", type: :system do
       visit "/xusers/password/new"
       doc_image
     end
-
-    it "ランキング" do
-      visit "/colosseum/rankings"
-      doc_image
-    end
   end
 
   context "ロビー" do
