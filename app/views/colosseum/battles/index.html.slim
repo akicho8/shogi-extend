@@ -60,6 +60,8 @@ javascript:
       = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
       = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
 
+    = link_to("ランキング", [:colosseum, :rankings], class: "button is-primary is-large")
+      
   .columns
     .column
       .virtual_box.chat_container

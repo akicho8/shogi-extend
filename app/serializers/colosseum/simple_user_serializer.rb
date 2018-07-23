@@ -3,7 +3,7 @@ require File.expand_path('../../../../config/environment', __FILE__) if $0 == __
 module Colosseum
   class SimpleUserSerializer < ApplicationSerializer
     attributes :name, :show_path, :avatar_url, :race_key
-    attributes :win_count, :lose_count, :win_rate
+    attributes :win_count, :lose_count, :win_ratio
   end
 
   if $0 == __FILE__
@@ -18,5 +18,5 @@ end
 # >> |   race_key | human                                                                                                        |
 # >> |  win_count | 1                                                                                                            |
 # >> | lose_count | 1                                                                                                            |
-# >> |   win_rate | 0.5                                                                                                          |
+# >> |   win_ratio | 0.5                                                                                                          |
 # >> |------------+--------------------------------------------------------------------------------------------------------------|

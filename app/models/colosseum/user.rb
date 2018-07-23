@@ -95,7 +95,7 @@ module Colosseum
       included do
         has_many :chronicles, dependent: :destroy
 
-        if Rails.env.development?
+        if Rails.env.development? && false
           after_create do
             rand(10).times do
               judge_add(JudgeInfo.keys.sample)
@@ -112,7 +112,7 @@ module Colosseum
         chronicles.judge_eq(:lose).count
       end
 
-      def win_rate
+      def win_ratio
         if total_count.zero?
           return 0.0
         end

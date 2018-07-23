@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   namespace :colosseum do
     resources :battles
     resources :users
+    resources :rankings, only: :index
   end
 
   root "colosseum/battles#index"

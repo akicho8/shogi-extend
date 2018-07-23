@@ -15,7 +15,7 @@
               | {{user_to.name}}
             | さんに送信
             span.is-pulled-right.is-size-7
-              | 勝率: {{user_to.win_rate}}
+              | 勝率: {{user_to.win_ratio}}
               | &nbsp;
               | 勝ち: {{user_to.win_count}}
               | &nbsp;
