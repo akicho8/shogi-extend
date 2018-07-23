@@ -150,9 +150,11 @@ RSpec.describe "対戦", type: :system do
       matching_set("user6", "チーム戦")
       matching_set("user7", "チーム戦")
 
-      tp Colosseum::User.all
-      tp Colosseum::Rule.all
-      tp Colosseum::Battle.all
+      if ENV["CI"]
+        tp Colosseum::User.all
+        tp Colosseum::Rule.all
+        tp Colosseum::Battle.all
+      end
 
       using_session("user8") do
         __choise_rule_and_start("チーム戦")
