@@ -133,11 +133,7 @@ RSpec.describe "対戦", type: :system do
       matching_set("user3", "ダブルス")
 
       using_session("user4") do
-        visit_and_login
-        click_on("ルール設定")
-        choose("ダブルス")
-        click_on("閉じる")
-        click_on("バトル開始")
+        __choise_rule_and_start("ダブルス")
         sleep(2)
         assert { current_path == polymorphic_path(Colosseum::Battle.last) }
         doc_image("成立")
@@ -154,12 +150,12 @@ RSpec.describe "対戦", type: :system do
       matching_set("user6", "チーム戦")
       matching_set("user7", "チーム戦")
 
+      tp Colosseum::User.all
+      tp Colosseum::Rule.all
+      tp Colosseum::Battle.all
+
       using_session("user8") do
-        visit_and_login
-        click_on("ルール設定")
-        choose("チーム戦")
-        click_on("閉じる")
-        click_on("バトル開始")
+        __choise_rule_and_start("チーム戦")
         sleep(2)
         assert { current_path == polymorphic_path([Colosseum::Battle.last]) }
         doc_image("成立")
@@ -241,13 +237,17 @@ RSpec.describe "対戦", type: :system do
 
   def matching_set(name, rule)
     using_session(name) do
-      visit_and_login
-      click_on("ルール設定")
-      choose(rule)
-      click_on("閉じる")
-      click_on("バトル開始")
+      __choise_rule_and_start(rule)
       expect(page).to have_content "マッチング開始"
     end
+  end
+
+  def __choise_rule_and_start(rule)
+    visit_and_login
+    click_on("ルール設定")
+    choose(rule)
+    click_on("閉じる")
+    click_on("バトル開始")
   end
 
   def visit_and_login
