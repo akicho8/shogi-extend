@@ -254,6 +254,11 @@ RSpec.describe "対戦", type: :system do
 
   def visit_and_login
     visit "/colosseum/battles?__create_user_name__=#{Capybara.session_name}"
+
+    # Travis CI の場合ランダムに転けるので余裕を持って待つ
+    if ENV["CI"]
+      sleep(3)
+    end
   end
 
   def message
