@@ -1,57 +1,37 @@
 sudo: required
 dist: trusty
-
 addons:
   code_climate:
     repo_token: 9d29c9321ce417d4527021094652f5fe47ccc2ab3e099ff201bf3fab507a2031
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
-
+    - google-chrome-stable
 language: ruby
-
 rvm: 2.5.1
-
-# なくても動いている
-# services:
-#   - mysql
-
 cache:
   directories:
-    - vendor/bundle
-    - node_modules
-    - $HOME/.npm
-    - $HOME/.cache
-
+  - vendor/bundle
+  - node_modules
+  - "$HOME/.npm"
+  - "$HOME/.cache"
 before_install:
   - pwd
   - whoami
   - ls -al
   - env
-
-  # LoadError: cannot load such file -- bundler/dep_proxy 対策
-  # https://github.com/travis-ci/travis-ci/issues/8978
   - gem update --system
-
-  # Other
   - cp -av config/database.travis.yml config/database.yml
-
-bundler_args: --without production --deployment
-
+bundler_args: "--without production --deployment"
 before_script:
-  # E2Eテスト用
-  # https://github.com/travis-ci/travis-ci/issues/7650#issuecomment-306909354
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-
   - bin/yarn
   - bundle exec rake db:create
   - bundle exec rake db:migrate
-
-script:
-  bundle exec rspec -f d
-
+script: bundle exec rspec -f d
 after_success:
   - env
+env:
+  secure: gCm6/4WJkO1dA1PucXD2SXgXGPQcU3srRFxNg04iFhwN9O5MOh1La/BTXRvwpDXVKDlp150+v4m7DAW+7C+3iuxCW3a0CcPvmiKttG7PEcONJ+uMY1/w6g53GwzBNE0xZ49KUUAm4/81G/f/tiK5MPvaePUv0ROuypmknvnkzutL/RyLK6M5cd7SEmP72DxEcSANSHOMKjNFTEvSIhLEQY+k43GVUk+ybDaiYC//FcIhNXwb3ssRQYwGzWoReGHPJwHISV42FQdKW8VCHImLa6jaeimyD+IYjUXUPt6wiDi34YK7pWggH3ex/gB29IMCS96Z6H6c8VYefd72SExobjGpOyujsggP9TY3BRzwsgnpoNXYnd8MMrOo1F9+wjNESBgcTEItNSRr11llpk2DODmR53/UGG9ENijzEBMAmWj+qfMDcJX6iPeZy4eYrSJ6YLujl6beBJebusRg1SxfiY9+AjxFvmTR9Wob36MssbVYwV8Cv9pSzaR8MgJvpFVz9GT+vq0yj8KA9PQt62JkPpiVoriXDKPp5VeDpO7mSZoSKTcSPMssu2wudCi3wm/EAQra7/hdfyZIhguybtN5x+w0CeyK8EAsWWFr6PoplMbV2/w4Xg76N/fkjhboXg17Rz1NTd8ljzEVBpKsg4sE/73+UcSSEGuqi3/E7ZnZWS0=
