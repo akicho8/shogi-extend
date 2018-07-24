@@ -15,5 +15,8 @@ table.table.is-fullwidth
       - user = Colosseum::User.find(record[:user_id])
       tr
         td= record[:rank]
-        td= link_to(user.name, user)
+        td
+          = link_to(user) do
+            = image_tag(user.avatar_url, class: "ranking_avatar")
+            = user.name
         td= record[:win_ratio]

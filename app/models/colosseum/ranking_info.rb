@@ -8,7 +8,7 @@ module Colosseum
       { key: :month, name: "月間", begin_at: -> { Time.current.beginning_of_month }, end_at: -> { Time.current.beginning_of_month.next_month }, },
     ]
 
-    cattr_accessor(:rank_limit) { 2 } # 位まで表示
+    cattr_accessor(:rank_limit) { 50 } # 位まで表示
     cattr_accessor(:accuracy)  { 1000 }
 
     def all
@@ -55,23 +55,5 @@ module Colosseum
       scope = scope.select("user_id, sum(case when judge_key = 'win' then 1 else 0 end) as win, sum(case when judge_key='lose' then 1 else 0 end) as lose")
       scope = scope.group("user_id")
     end
-  end
-
-  if $0 == __FILE__
-    User.destroy_all
-
-    user = User.create!
-
-    user = User.create!
-    user.judge_add(:win)
-    user.judge_add(:lose)
-
-    user = User.create!
-    user.judge_add(:win)
-    user.judge_add(:win)
-
-    aggregator = Aggregator.new
-    aggregator.aggregate
-    tp aggregator.all
   end
 end
