@@ -1,0 +1,19 @@
+ruby:
+  ranking_info = Colosseum::RankingInfo.fetch(ranking_key)
+
+.title.is-6
+  | #{ranking_info.name}
+
+table.table.is-fullwidth
+  thead
+    tr
+      th ランク
+      th プレイヤー
+      th 勝率
+  tbody
+    - ranking_info.all.each do |record|
+      - user = Colosseum::User.find(record[:user_id])
+      tr
+        td= record[:rank]
+        td= link_to(user.name, user)
+        td= record[:win_ratio]

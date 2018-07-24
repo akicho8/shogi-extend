@@ -1,23 +1,17 @@
-ruby:
-  ranking_cop.aggregate_run
+.title.is-4
+  | ランキング
+hr
 
-.container
-  .title.is-4
-    | ランキング
+.columns
+  .column
+    = render partial: "show", locals: {ranking_key: :total}
+  .column
+    = render partial: "show", locals: {ranking_key: :day}
+.columns
+  .column
+    = render partial: "show", locals: {ranking_key: :week}
+  .column
+    = render partial: "show", locals: {ranking_key: :month}
 
-  table.table.is-hoverable.is-striped.is-fullwidth
-    thead
-      tr
-        th ランク
-        th プレイヤー
-        th 勝率
-    tbody
-      - ranking_cop.all_rows.each do |row|
-        - user = Colosseum::User.find(row[:user_id])
-        tr
-          td= row[:rank]
-          td= link_to(user.name, user)
-          td= row[:win_ratio]
-
-  p
-    = link_to("ロビーに戻る", [:colosseum, :battles], :class => "button")
+p
+  = link_to("ロビーに戻る", [:colosseum, :battles], :class => "button")
