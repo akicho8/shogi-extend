@@ -2,9 +2,9 @@ module SharedMethods
   extend ActiveSupport::Concern
 
   included do
-    if Rails.env.production?
-      if v = ENV["HTTP_BASIC_AUTHENTICATE"].presence
-        http_basic_authenticate_with Hash[[:name, :password].zip(v.split(/:/))].merge(only: [:edit, :update, :destroy])
+    before_action only: [:edit, :update, :destroy] do
+      unless sysop?
+        redirect_to :root, alert: "アクセス権限がありません"
       end
     end
 
