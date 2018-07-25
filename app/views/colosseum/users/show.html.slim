@@ -21,7 +21,7 @@ javascript:
               =<> link_to("削除", [current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
 
     .column
-      nav.level.virtual_box.box
+      nav.level.non_style_box.box
         .level-item.has-text-centered
           div
             p.heading 勝率
@@ -38,7 +38,7 @@ javascript:
             .title.is-size-4
               = current_record.lose_count
 
-      .virtual_box
+      .non_style_box
         .title.is-4= "対局履歴"
         b-table(:data="battles" :paginated="true" :per-page="30")
           template(slot-scope="props")

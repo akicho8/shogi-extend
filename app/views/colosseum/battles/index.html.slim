@@ -22,7 +22,7 @@ javascript:
           b-radio-button(v-model="current_hira_koma_key" :native-value="e.key") {{e.name}}
 
       template(v-if="current_hira_koma_key === 'koma'")
-        .virtual_box
+        .non_style_box
           .is-size-6 自分
           b-field
             template(v-for="e in CustomPresetInfo.values")
@@ -64,7 +64,7 @@ javascript:
       
   .columns
     .column
-      .virtual_box.chat_container
+      .non_style_box.chat_container
         / .title.is-6= "チャット"
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_lobby_messages"
@@ -105,7 +105,7 @@ javascript:
                 /       |  Press enter to submit
 
     .column
-      .virtual_box
+      .non_style_box
         / .title.is-6= "プレイヤー"
         b-table(:data="online_users" :paginated="true" :per-page="10")
           template(slot-scope="props")
@@ -127,7 +127,7 @@ javascript:
 
   .columns
     .column
-      .virtual_box
+      .non_style_box
         / .title.is-6= "観戦"
         b-table(:data="battles" :paginated="true" :per-page="10")
           template slot-scope="props"

@@ -126,7 +126,7 @@ javascript:
         pre.pre-wrap(v-text="human_kifu_text")
 
   - if Rails.env.development?
-    .virtual_box
+    .non_style_box
       | current_location: {{current_location.key}}<br>
       | clock_counter: {{clock_counter}}<br>
       | clock_counts: {{clock_counts}}<br>
@@ -137,13 +137,13 @@ javascript:
   - if Rails.env.development?
     .columns
       .column
-        .virtual_box
+        .non_style_box
           .title.is-5 Vue Internal Variables
           table.table(border=1)
             tr(v-for="(value, key) in $data")
               th v-text="key"
               td v-text="value"
-        .virtual_box
+        .non_style_box
           .title.is-5 Vue Computed Results
           table.table(border=1)
             tr(v-for="(e, key) in _computedWatchers")
