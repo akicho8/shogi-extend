@@ -52,6 +52,10 @@ class ApplicationController < ActionController::Base
         }
       end
 
+      let :sysop? do
+        current_user && current_user.sysop?
+      end
+
       helper_method :current_user
     end
 

@@ -41,7 +41,7 @@ module Colosseum
     include ModulableCrud::All
 
     before_action only: [:index] do
-      if current_user != User.sysop
+      unless sysop?
         redirect_to :root, alert: "アクセス権限がありません"
       end
     end

@@ -159,15 +159,21 @@ module Colosseum
         has_many :chat_messages, dependent: :destroy
       end
 
-      class_methods do
-        def sysop
-          find_by(key: __method__) || create!(key: "sysop", name: "SYSOP", email: "sysop@localhost")
-        end
-      end
-
       def chat_say(battle, message, msg_options = {})
         chat_message = chat_messages.create!(battle: battle, message: message, msg_options: msg_options)
         ActionCable.server.broadcast(battle.channel_key, chat_message: ams_sr(chat_message))
+      end
+    end
+
+    concerning :SysopMethods do
+      class_methods do
+        def sysop
+          find_by(key: __method__) || create!(key: "sysop", name: "運営", email: "sysop@localhost")
+        end
+      end
+
+      def sysop?
+        key == "sysop"
       end
     end
 
