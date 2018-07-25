@@ -57,11 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
         App.battle_vm.chat_messages.push(data["chat_message"])
       }
 
-      // 部屋名の共有
-      if (data["room_name"]) {
-        App.battle_vm.room_name = data["room_name"]
-      }
-
       // 終了
       if (data["end_at"]) {
         App.battle_vm.battle_end_notice(data)
