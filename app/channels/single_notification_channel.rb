@@ -1,13 +1,14 @@
 class SingleNotificationChannel < ApplicationCable::Channel
   def subscribed
     if current_user
-      stream_from "single_notification_#{current_user.id}"
+      stream_for current_user
     end
   end
 
   # App.single_notification.message_send_to({from: js_global.current_user, to: this.user_to, message: this.message})
   def message_send_to(data)
-    ActionCable.server.broadcast("single_notification_#{data['to']['id']}", data)
+    user = Colosseum::User.find(data["to"]["id"])
+    self.class.broadcast_to(user, data)
   end
 
   def battle_request_to(data)
@@ -19,7 +20,7 @@ class SingleNotificationChannel < ApplicationCable::Channel
     else
       data["battle_request"]["from"] = ams_sr(from, serializer: Colosseum::CurrentUserSerializer) # 送信元ユーザーの最新の状態のルールを用いるため
       data["battle_request"]["to"] = ams_sr(to)
-      ActionCable.server.broadcast("single_notification_#{to.id}", data)
+      self.class.broadcast_to(to, data)
     end
   end
 

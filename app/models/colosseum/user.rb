@@ -428,7 +428,7 @@ module Colosseum
           if user.race_info.auto_jump
             user.room_in(battle)
           else
-            ActionCable.server.broadcast("single_notification_#{user.id}", {matching_establish: true, battle_show_path: battle.show_path}.merge(attributes))
+            SingleNotificationChannel.broadcast_to(user, {matching_establish: true, battle_show_path: battle.show_path}.merge(attributes))
           end
         end
 
@@ -528,6 +528,11 @@ module Colosseum
       def room_in(battle)
         chat_say(battle, "入室しました", msg_class: "has-text-info")
 
+        if battle.end_at
+          # もう対局は終わっている
+          return
+        end
+
         memberships ||= battle.memberships.where(user: self)
 
         # 自分から部屋に入ったらマッチングを解除する
@@ -545,24 +550,20 @@ module Colosseum
           end
         end
 
-        if battle.end_at
-          # もう対局は終わっている
-        else
-          # 自分が対局者の場合
-          if memberships.present?
-            if memberships.all? { |e| e.standby_at }
-              # 入り直した場合
-            else
-              # 新規の場合
-              memberships.each { |e|
-                e.update!(standby_at: Time.current)
-              }
+        # 自分が対局者の場合
+        if memberships.present?
+          if memberships.all? { |e| e.standby_at }
+            # 入り直した場合
+          else
+            # 新規の場合
+            memberships.each { |e|
+              e.update!(standby_at: Time.current)
+            }
 
-              chat_say(battle, begin_greeting_message)
+            chat_say(battle, begin_greeting_message)
 
-              if battle.memberships.standby_enable.count >= battle.memberships.count
-                battle.battle_start
-              end
+            if battle.memberships.standby_enable.count >= battle.memberships.count
+              battle.battle_start
             end
           end
         end

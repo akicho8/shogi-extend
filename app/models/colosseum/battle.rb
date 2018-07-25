@@ -156,9 +156,11 @@ module Colosseum
 
     concerning :BattleMethods do
       def battle_start
-        update!(begin_at: Time.current)
-        # human_kifu_text まで入れているのは開始日時が埋められた最新の状態にしたいため
-        ActionCable.server.broadcast(channel_key, {begin_at: begin_at, human_kifu_text: human_kifu_text})
+        unless begin_at
+          update!(begin_at: Time.current)
+          # human_kifu_text まで入れているのは開始日時が埋められた最新の状態にしたいため
+          ActionCable.server.broadcast(channel_key, {begin_at: begin_at, human_kifu_text: human_kifu_text})
+        end
       end
 
       def channel_key

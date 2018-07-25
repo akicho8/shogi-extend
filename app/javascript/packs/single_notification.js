@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const from = data["from"]
         const to = data["to"]
         const str = `${from.name}: ${message}`
-        Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 2})
+        Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
       }
 
       // 対局リクエスト
@@ -77,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["matching_establish"]) {
         assert(data["battle_show_path"])
         if (data["auto_matched_at"]) {
-          Vue.prototype.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 2})
+          Vue.prototype.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
         }
         if (data["battle_request_at"]) {
-          Vue.prototype.$toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 2})
+          Vue.prototype.$toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
         }
         location.href = data["battle_show_path"]
       }
