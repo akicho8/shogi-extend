@@ -157,7 +157,7 @@ module Colosseum
     concerning :BattleMethods do
       def battle_start
         update!(begin_at: Time.current)
-        # 開始日時が埋められた棋譜で更新したいため
+        # human_kifu_text まで入れているのは開始日時が埋められた最新の状態にしたいため
         ActionCable.server.broadcast(channel_key, {begin_at: begin_at, human_kifu_text: human_kifu_text})
       end
 

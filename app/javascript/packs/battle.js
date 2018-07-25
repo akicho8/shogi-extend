@@ -105,9 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
     el: "#battle_app",
     data() {
-      assert(js_battle.memberships)
-      assert(js_battle.watch_ships)
-      assert(js_battle.chat_messages)
+      console.assert("memberships" in js_battle)
+      console.assert("watch_ships" in js_battle)
+      console.assert("chat_messages" in js_battle)
 
       return {
         message: "",            // 発言
