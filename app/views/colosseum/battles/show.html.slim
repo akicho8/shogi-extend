@@ -7,9 +7,7 @@ javascript:
 #battle_app(v-cloak="true")
   .columns
     .column
-      .virtual_box2.chat_container.is-size-7
-        / .title.is-5= "チャット"
-
+      .non_style_box.chat_container.is-size-7
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_chat_messages"
             td
@@ -18,17 +16,6 @@ javascript:
                 = " "
                 span.chat_message(:class="e.msg_options.msg_class")
                   | {{e.message}}
-
-        / template v-for="e of latest_chat_messages"
-        /   article.media
-        /     figure.media-left
-        /       p.image.is-16x16
-        /         img(:src="e.user.avatar_url")
-        /     .media-content
-        /       .field
-        /         p.control
-        /           = "{{e.user.name}}： "
-        /           span(v-html="e.message")
 
         article.media
           figure.media-left
@@ -45,14 +32,9 @@ javascript:
                 .level-item
                   button.button.is-primary(@click="message_enter")
                     | 送信
-              / .level-right
-              /   .level-item
-              /     label.checkbox
-              /       input[type="checkbox"]
-              /       |  Press enter to submit
 
     .column.is-half
-      .virtual_box2
+      .non_style_box
         div v-if="begin_at"
           nav.level
             .level-left
@@ -88,7 +70,7 @@ javascript:
         )
     .column
       .is-size-7
-        .virtual_box2
+        .non_style_box
           b-table(:data="memberships" narrowed)
             template(slot-scope="props")
               b-table-column(label="対局者")
@@ -111,7 +93,7 @@ javascript:
                 | {{location_mark(props.row)}}
 
         template(v-if="!_.isEmpty(watch_ships)")
-          .virtual_box2
+          .non_style_box
             / .title.is-5= "観戦者"
             b-table(:data="watch_ships" narrowed)
               template slot-scope="props"
@@ -122,11 +104,11 @@ javascript:
 
   .columns
     .column
-      .virtual_box2
+      .non_style_box
         pre.pre-wrap(v-text="human_kifu_text")
 
   - if Rails.env.development?
-    .non_style_box
+    .non_border_box
       | current_location: {{current_location.key}}<br>
       | clock_counter: {{clock_counter}}<br>
       | clock_counts: {{clock_counts}}<br>
@@ -137,13 +119,13 @@ javascript:
   - if Rails.env.development?
     .columns
       .column
-        .non_style_box
+        .non_border_box
           .title.is-5 Vue Internal Variables
           table.table(border=1)
             tr(v-for="(value, key) in $data")
               th v-text="key"
               td v-text="value"
-        .non_style_box
+        .non_border_box
           .title.is-5 Vue Computed Results
           table.table(border=1)
             tr(v-for="(e, key) in _computedWatchers")

@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         App.battle_vm.watch_ships = data["watch_ships"]
       }
 
+      // バトル開始
       if (data["begin_at"]) {
         App.battle_vm.battle_setup(data)
       }
@@ -48,11 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
         App.battle_vm.full_sfen = data["full_sfen"]
       }
 
+      // 下の棋譜(KI2)の反映。これはなくても対局には支障ない
       if (data["human_kifu_text"]) {
         App.battle_vm.human_kifu_text = data["human_kifu_text"]
       }
 
-      // 発言の反映
+      // チャットの発言の追加
       if (data["chat_message"]) {
         App.battle_vm.chat_messages.push(data["chat_message"])
       }
@@ -114,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chat_messages:        js_battle.chat_messages,
         full_sfen:            js_battle.full_sfen,
         current_lifetime_key: js_battle.lifetime_key,
-        current_team_key:  js_battle.team_key,
+        current_team_key:     js_battle.team_key,
         begin_at:             js_battle.begin_at,
         end_at:               js_battle.end_at,
         win_location_key:     js_battle.win_location_key,
@@ -126,19 +128,19 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     created() {
-      setTimeout(() => this.next_run_if_robot(), 1000)
+      setTimeout(this.next_run_if_robot, 1000)
     },
 
     watch: {
       // 【使うな危険】
-      // 使うとブロードキャストの無限ループを考慮する必要がでてきてカオスになる
+      // 使うとブロードキャストの無限ループを考慮しないといけなくなってカオスになる
       // ちょっとバグっただけで無限ループになる
       // 遠回りだが @input にフックしてサーバー側に送って返ってきた値で更新する
-      // 遠回りだと「更新」するのが遅くなると思うかもしれないがブロードキャストする側の画面は切り替わっているので問題ない
+      // 遠回りだと更新するのが遅くなると思うかもしれないがブロードキャストする側の画面は切り替わっているので問題ない
       // ただしチャットのメッセージは除く
       // チャットの場合は入力を即座にチャット一覧に反映していないため
       // このように一概にどう扱うのがよいのか判断が難しい
-      // とりあえず基本として watch は使うな
+      // が、とりあえず watch は使うな
     },
 
     methods: {
