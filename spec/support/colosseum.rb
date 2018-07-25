@@ -7,8 +7,8 @@ RSpec::Rails::ControllerExampleGroup.module_eval do
       end
     end
 
-    def user_login
-      create(:colosseum_user).tap do |user|
+    def user_login(attributes = {})
+      create(:colosseum_user, attributes).tap do |user|
         user_logout
         controller.current_user_set_id(user.id)
       end

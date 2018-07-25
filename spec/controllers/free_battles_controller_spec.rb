@@ -21,6 +21,8 @@ require 'rails_helper'
 
 RSpec.describe FreeBattlesController, type: :controller do
   before do
+    user_login(key: "sysop")
+
     @free_battle = FreeBattle.create!
   end
 
