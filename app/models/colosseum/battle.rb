@@ -281,6 +281,7 @@ module Colosseum
             validate_checkmate_ignore
           end
 
+          tactic_notify
           clock_counts_update(clock_counter)
           mediator_broadcast
           win_check
@@ -290,6 +291,17 @@ module Colosseum
           Time.current.yield_self do |t|
             yield
             (Time.current - t).ceil
+          end
+        end
+
+        # 戦法を自動発言
+        def tactic_notify
+          if hand = mediator.hand_logs.last
+            message = hand.skill_set.each do |e|
+              e.each do |e|
+                active_user.chat_say(battle, e.name, msg_class: "has-text-info")
+              end
+            end
           end
         end
 
@@ -343,6 +355,7 @@ module Colosseum
           brain_get(data["kifu_body"]).tap do |o|
             o.validate_checkmate_ignore
 
+            o.tactic_notify
             o.clock_counts_update(data["clock_counter"].to_i)
             o.mediator_broadcast
             o.win_check
