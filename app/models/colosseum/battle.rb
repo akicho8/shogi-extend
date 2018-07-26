@@ -501,7 +501,7 @@ module Colosseum
               if win_location_info
                 memberships.each do |e|
                   if e.location.key == win_location_info.key
-                    judge_key = :draw
+                    judge_key = :win
                   else
                     judge_key = :lose
                   end
