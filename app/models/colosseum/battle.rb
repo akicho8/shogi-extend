@@ -54,9 +54,9 @@ module Colosseum
       end
     end
 
-    scope :latest_list, -> { order(updated_at: :desc).limit(50) }
+    scope :latest_list,             -> { order(updated_at: :desc).limit(50) }
     scope :latest_list_for_profile, -> { order(updated_at: :desc).limit(25) }
-    scope :st_battle_now, -> { where.not(begin_at: nil).where(end_at: nil) }
+    scope :st_battle_now,           -> { where.not(begin_at: nil).where(end_at: nil) }
 
     serialize :clock_counts
     serialize :countdown_flags
@@ -64,11 +64,11 @@ module Colosseum
     before_validation on: :create do
       self.black_preset_key ||= "平手"
       self.white_preset_key ||= "平手"
-      self.lifetime_key ||= :lifetime_m5
-      self.team_key ||= :team_p1vs1
-      self.turn_max ||= 0
-      self.clock_counts ||= {black: [], white: []}
-      self.countdown_flags ||= {black: false, white: false}
+      self.lifetime_key     ||= :lifetime_m5
+      self.team_key         ||= :team_p1vs1
+      self.turn_max         ||= 0
+      self.clock_counts     ||= {black: [], white: []}
+      self.countdown_flags  ||= {black: false, white: false}
     end
 
     before_validation do
@@ -83,17 +83,20 @@ module Colosseum
     end
 
     def name
-      # if users.present?
-      #   users.collect(&:name).join(" vs ")
-      # else
-      #   names = []
-      #   if room_owner
-      #     names << "#{room_owner.name}の"
-      #   end
-      #   names << "対戦部屋 ##{Battle.count.next}"
-      #   names.join
-      # end
-      "##{id}"
+      if false
+        if users.present?
+          users.collect(&:name).join(" vs ")
+        else
+          names = []
+          if room_owner
+            names << "#{room_owner.name}の"
+          end
+          names << "対戦部屋 ##{Battle.count.next}"
+          names.join
+        end
+      else
+        "##{id}"
+      end
     end
 
     def xstate_key
@@ -212,15 +215,6 @@ module Colosseum
 
         def execute_one
           clock_counter = measure_time do
-
-            # captured_soldier = mediator.opponent_player.executor.captured_soldier
-            # if captured_soldier
-            #   if captured_soldier.piece.key == :king
-            #     render json: {you_win_message: "玉を取って勝ちました！", sfen: mediator.to_sfen}
-            #     return
-            #   end
-            # end
-
             hand = nil
             puts mediator
 
@@ -317,7 +311,7 @@ module Colosseum
 
           broadcast_hash = {
             :turn_max        => mediator.turn_info.turn_max,
-            :last_hand       => mediator.to_ki2_a.last, # FIXME: 使ってない？
+            :last_hand       => mediator.to_ki2_a.last, # 使ってない
             :full_sfen       => battle.full_sfen,
             :human_kifu_text => battle.human_kifu_text,
             :clock_counts    => battle.clock_counts,
@@ -465,7 +459,7 @@ module Colosseum
     # 観戦者
     concerning :WatchUserMethods do
       included do
-        has_many :watch_ships, dependent: :destroy                        # 観戦中の人たち(中間情報)
+        has_many :watch_ships, dependent: :destroy                  # 観戦中の人たち(中間情報)
         has_many :watch_users, through: :watch_ships, source: :user # 観戦中の人たち
       end
     end

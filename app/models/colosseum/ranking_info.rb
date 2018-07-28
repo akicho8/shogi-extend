@@ -41,18 +41,24 @@ module Colosseum
     end
 
     def win_ratio_scope
-      ActiveRecord::Base.connection.select_all("
-      SELECT user_id, FLOOR((win * #{accuracy}) / (win + lose)) AS win_ratio
-      FROM (#{chronicle_scope.to_sql}) AS chronicles
-      ORDER BY win_ratio DESC")
+      ActiveRecord::Base.connection.select_all(
+        "SELECT user_id, FLOOR((win * #{accuracy}) / (win + lose)) AS win_ratio"
+        " FROM (#{chronicle_scope.to_sql}) AS chronicles"
+        " ORDER BY win_ratio DESC")
     end
 
     def chronicle_scope
       scope = Chronicle.all
+
       if begin_at && end_at
         scope = scope.where(created_at: begin_at.call...end_at.call)
       end
-      scope = scope.select("user_id, SUM(CASE WHEN judge_key = 'win' THEN 1 ELSE 0 END) AS win, SUM(CASE WHEN judge_key = 'lose' THEN 1 ELSE 0 END) AS lose")
+
+      scope = scope.select(
+        "user_id, "
+        "SUM(CASE WHEN judge_key = 'win'  THEN 1 ELSE 0 END) AS win,"
+        "SUM(CASE WHEN judge_key = 'lose' THEN 1 ELSE 0 END) AS lose")
+
       scope = scope.group("user_id")
     end
   end

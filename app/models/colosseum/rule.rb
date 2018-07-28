@@ -22,14 +22,14 @@ module Colosseum
     belongs_to :user
 
     scope :same_rule_scope, -> e { where(lifetime_key: e.lifetime_key, team_key: e.team_key) }
-    scope :with_robot_ok, -> { where(robot_accept_key: :accept) }     # CPUと対戦してもよい人たち
-    scope :with_robot_ng, -> { where(robot_accept_key: :not_accept) } # CPUと対戦したくない人たち
+    scope :with_robot_ok,   -> { where(robot_accept_key: :accept) }     # CPUと対戦してもよい人たち
+    scope :with_robot_ng,   -> { where(robot_accept_key: :not_accept) } # CPUと対戦したくない人たち
 
     before_validation on: :create do
       self.self_preset_key  ||= "平手"
       self.oppo_preset_key  ||= "平手"
       self.lifetime_key     ||= :lifetime_m5
-      self.team_key      ||= :team_p1vs1
+      self.team_key         ||= :team_p1vs1
       self.robot_accept_key ||= "accept"
     end
 
@@ -37,7 +37,7 @@ module Colosseum
       validates :self_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
       validates :oppo_preset_key,  inclusion: CustomPresetInfo.keys.collect(&:to_s)
       validates :lifetime_key,     inclusion: LifetimeInfo.keys.collect(&:to_s)
-      validates :team_key,      inclusion: TeamInfo.keys.collect(&:to_s)
+      validates :team_key,         inclusion: TeamInfo.keys.collect(&:to_s)
       validates :robot_accept_key, inclusion: RobotAcceptInfo.keys.collect(&:to_s)
     end
 

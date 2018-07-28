@@ -432,8 +432,9 @@ module Colosseum
           end
         end
 
-        # 最初の手番がCPUなら指す。しかしここで動かしてしまうと音がでない。なので battle.js のトリガーで指すようにした。
-        # battle.next_run_if_robot
+        # ここで battle.next_run_if_robot とすれば最初の手番がCPUなら指す
+        # しかしここで動かしてしまうと音がでない
+        # なので battle.js のトリガーで指すようにしている
 
         battle
       end
@@ -441,9 +442,9 @@ module Colosseum
       def battle_create(attributes = {})
         Battle.create! do |e|
           e.lifetime_key = lifetime_key
-          e.team_key = team_key
-          e.attributes = [:black_preset_key, :white_preset_key].zip(rule_cop.to_a).to_h
-          e.attributes = attributes
+          e.team_key     = team_key
+          e.attributes   = [:black_preset_key, :white_preset_key].zip(rule_cop.to_a).to_h
+          e.attributes   = attributes
           e.save!
         end
       end
@@ -595,11 +596,6 @@ module Colosseum
 
         devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
         devise :omniauthable, omniauth_providers: [:google, :twitter, :github]
-      end
-
-      class_methods do
-        def find_or_create_from_auth(auth, user:, attributes:)
-        end
       end
     end
   end

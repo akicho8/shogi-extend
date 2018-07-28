@@ -25,6 +25,7 @@ module Colosseum
     belongs_to :user
 
     scope :location_eq, -> e { where(location_key: e) }
+
     scope :black, -> { location_eq(:black) }
     scope :white, -> { location_eq(:white) }
 

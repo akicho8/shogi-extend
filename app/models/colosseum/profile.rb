@@ -20,7 +20,7 @@ module Colosseum
 
     before_validation do
       self.begin_greeting_message = begin_greeting_message.presence || "よろしくお願いします"
-      self.end_greeting_message = end_greeting_message.presence || "ありがとうございました"
+      self.end_greeting_message   = end_greeting_message.presence || "ありがとうございました"
     end
 
     with_options presence: true do
