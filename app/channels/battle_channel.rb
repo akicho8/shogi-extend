@@ -55,7 +55,7 @@ class BattleChannel < ApplicationCable::Channel
     battle.give_up(data)
   end
 
-  def hebokisin(data)
+  def fool_god(data)
     battle.next_run
   end
 

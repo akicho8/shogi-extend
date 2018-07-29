@@ -45,7 +45,7 @@ javascript:
                 div
                   .buttons
                     button.button.is-primary.is-outlined(@click="give_up" :disabled="!button_active_p") 投了
-                    button.button.is-primary.is-outlined(@click="hebokisin" :disabled="!button_active_p") ヘボ棋神
+                    button.button.is-primary.is-outlined(@click="fool_god" :disabled="!button_active_p") ヘボ棋神
             template(v-if="xstate_key === 'st_done'")
               .level-item.has-text-centered
                 = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")

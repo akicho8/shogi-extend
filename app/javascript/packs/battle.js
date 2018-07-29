@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
       this.perform("give_up", data)
     },
 
-    hebokisin(data) {
-      this.perform("hebokisin", data)
+    fool_god(data) {
+      this.perform("fool_god", data)
     },
 
     play_mode_long_sfen_set(data) {
@@ -164,8 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       },
 
-      hebokisin() {
-        App.battle.hebokisin()
+      fool_god() {
+        App.battle.fool_god()
       },
 
       next_run_if_robot() {
