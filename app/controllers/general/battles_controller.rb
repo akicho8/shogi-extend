@@ -3,20 +3,20 @@
 #
 # Battle (general_battles as General::Battle)
 #
-# |------------------+------------------+-------------+-------------+------+-------|
-# | name             | desc             | type        | opts        | refs | index |
-# |------------------+------------------+-------------+-------------+------+-------|
-# | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key              | Key              | string(255) | NOT NULL    |      | A!    |
-# | battled_at       | Battled at       | datetime    |             |      |       |
-# | kifu_body        | Kifu body        | text(65535) | NOT NULL    |      |       |
-# | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |
-# | turn_max         | Turn max         | integer(4)  | NOT NULL    |      |       |
-# | meta_info        | Meta info        | text(65535) | NOT NULL    |      |       |
-# | last_accessd_at  | Last accessd at  | datetime    | NOT NULL    |      |       |
-# | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
-# |------------------+------------------+-------------+-------------+------+-------|
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | key             | Key             | string(255) | NOT NULL    |      | A!    |
+# | battled_at      | Battled at      | datetime    |             |      |       |
+# | kifu_body       | Kifu body       | text(65535) | NOT NULL    |      |       |
+# | final_key       | Final key       | string(255) | NOT NULL    |      | B     |
+# | turn_max        | Turn max        | integer(4)  | NOT NULL    |      |       |
+# | meta_info       | Meta info       | text(65535) | NOT NULL    |      |       |
+# | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
 
 module General
   class BattlesController < ApplicationController
@@ -105,7 +105,7 @@ module General
             l_ship = battle.myself(current_general_user)
             r_ship = battle.rival(current_general_user)
           else
-            if battle.gstate_info.draw
+            if battle.final_info.draw
               l_ship = battle.memberships.black
               r_ship = battle.memberships.white
             else
@@ -118,7 +118,7 @@ module General
             row["対象棋士"] = battle.win_lose_str(l_ship).html_safe + " " + membership_name(l_ship)
             row["対戦相手"] = battle.win_lose_str(r_ship).html_safe + " " + membership_name(r_ship)
           else
-            if battle.gstate_info.draw
+            if battle.final_info.draw
               row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(l_ship)
               row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(r_ship)
             else
@@ -127,7 +127,7 @@ module General
             end
           end
 
-          row["結果"] = gstate_info_decorate(battle)
+          row["結果"] = final_info_decorate(battle)
 
           if false
             row["手合割"] = battle.preset_link(h, battle.meta_info[:header]["手合割"])
@@ -250,11 +250,11 @@ module General
       end
     end
 
-    def gstate_info_decorate(battle)
-      name = battle.gstate_info.name
+    def final_info_decorate(battle)
+      name = battle.final_info.name
       str = name
-      gstate_info = battle.gstate_info
-      if v = gstate_info.label_key
+      final_info = battle.final_info
+      if v = final_info.label_key
         str = tag.span(str, "class": "text-#{v}")
       end
       link_to(str, general_search_path(name))

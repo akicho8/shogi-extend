@@ -11,7 +11,7 @@
 # | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
 # | rule_key          | Rule key          | string(255) | NOT NULL    |      | B     |
 # | csa_seq           | Csa seq           | text(65535) | NOT NULL    |      |       |
-# | battle_state_key  | Battle state key  | string(255) | NOT NULL    |      | C     |
+# | final_key         | Final key         | string(255) | NOT NULL    |      | C     |
 # | win_user_id       | Win user          | integer(8)  |             |      | D     |
 # | turn_max          | Turn max          | integer(4)  | NOT NULL    |      |       |
 # | meta_info         | Meta info         | text(65535) | NOT NULL    |      |       |
@@ -63,7 +63,7 @@ module Swars
       validates :key
       validates :battled_at
       validates :rule_key
-      validates :battle_state_key
+      validates :final_key
     end
 
     with_options allow_blank: true do
@@ -85,7 +85,7 @@ module Swars
     end
 
     def final_info
-      FinalInfo.fetch(battle_state_key)
+      FinalInfo.fetch(final_key)
     end
 
     concerning :ConvertHookMethos do
@@ -358,7 +358,7 @@ module Swars
 
           # # 引き分けを考慮すると急激に煩雑になるため取り込まない
           # # ここで DRAW_SENNICHI も弾く
-          # unless info[:__battle_state_key].match?(/(SENTE|GOTE)_WIN/)
+          # unless info[:__final_key].match?(/(SENTE|GOTE)_WIN/)
           #   return
           # end
 
@@ -379,12 +379,12 @@ module Swars
               csa_seq: info[:csa_seq],
             })
 
-          if md = info[:__battle_state_key].match(/\A(?<prefix>\w+)_WIN_(?<battle_state_key>\w+)/)
+          if md = info[:__final_key].match(/\A(?<prefix>\w+)_WIN_(?<final_key>\w+)/)
             winner_index = md[:prefix] == "SENTE" ? 0 : 1
-            battle.battle_state_key = md[:battle_state_key]
+            battle.final_key = md[:final_key]
           else
             winner_index = nil
-            battle.battle_state_key = info[:__battle_state_key]
+            battle.final_key = info[:__final_key]
           end
 
           info[:user_infos].each.with_index do |e, i|

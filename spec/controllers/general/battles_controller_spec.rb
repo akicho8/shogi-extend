@@ -3,20 +3,20 @@
 #
 # Battle (general_battles as General::Battle)
 #
-# |------------------+------------------+-------------+-------------+------+-------|
-# | name             | desc             | type        | opts        | refs | index |
-# |------------------+------------------+-------------+-------------+------+-------|
-# | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key              | Key              | string(255) | NOT NULL    |      | A!    |
-# | battled_at       | Battled at       | datetime    |             |      |       |
-# | kifu_body        | Kifu body        | text(65535) | NOT NULL    |      |       |
-# | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |
-# | turn_max         | Turn max         | integer(4)  | NOT NULL    |      |       |
-# | meta_info        | Meta info        | text(65535) | NOT NULL    |      |       |
-# | last_accessd_at  | Last accessd at  | datetime    | NOT NULL    |      |       |
-# | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
-# |------------------+------------------+-------------+-------------+------+-------|
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | key             | Key             | string(255) | NOT NULL    |      | A!    |
+# | battled_at      | Battled at      | datetime    |             |      |       |
+# | kifu_body       | Kifu body       | text(65535) | NOT NULL    |      |       |
+# | final_key       | Final key       | string(255) | NOT NULL    |      | B     |
+# | turn_max        | Turn max        | integer(4)  | NOT NULL    |      |       |
+# | meta_info       | Meta info       | text(65535) | NOT NULL    |      |       |
+# | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
 
 require 'rails_helper'
 

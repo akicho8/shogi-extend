@@ -11,7 +11,7 @@
 # | battled_at                            | Battled at                            | datetime    | NOT NULL    |                       |       |
 # | rule_key                       | Battle rule key                       | string(255) | NOT NULL    |                       | B     |
 # | csa_seq                               | Csa seq                               | text(65535) | NOT NULL    |                       |       |
-# | battle_state_key                      | Battle state key                      | string(255) | NOT NULL    |                       | C     |
+# | final_key                      | Battle state key                      | string(255) | NOT NULL    |                       | C     |
 # | win_user_id              | Win swars battle user                 | integer(8)  |             | => Swars::User#id | D     |
 # | turn_max                              | 手数                                  | integer(4)  | NOT NULL    |                       |       |
 # | meta_info                             | 棋譜ヘッダー                          | text(65535) | NOT NULL    |                       |       |
@@ -41,7 +41,7 @@ class CreateSwars < ActiveRecord::Migration[5.1]
       t.datetime :battled_at, null: false, comment: "対局開始日時"
       t.string :rule_key, null: false, index: true, comment: "ルール"
       t.text :csa_seq, null: false, comment: "棋譜の断片"
-      t.string :battle_state_key, null: false, index: true, comment: "結果詳細"
+      t.string :final_key, null: false, index: true, comment: "結果詳細"
       t.belongs_to :win_user, comment: "勝者(ショートカット用)"
 
       t.integer :turn_max, null: false, comment: "手数"

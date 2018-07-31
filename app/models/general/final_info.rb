@@ -1,5 +1,5 @@
 module General
-  class GstateInfo
+  class FinalInfo
     include ApplicationMemoryRecord
     memory_record [
       {key: "ILLEGAL_MOVE",  name: "反則",   label_key: :danger,   draw: false, },

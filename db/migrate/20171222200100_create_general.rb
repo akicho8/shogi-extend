@@ -10,7 +10,7 @@
 # | key               | 対局キー        | string(255) | NOT NULL    |      | A!    |
 # | battled_at               | 対局日          | datetime    |             |      |       |
 # | kifu_body                | 棋譜内容        | text(65535) | NOT NULL    |      |       |
-# | battle_state_key | 結果            | string(255) | NOT NULL    |      | B     |
+# | final_key | 結果            | string(255) | NOT NULL    |      | B     |
 # | turn_max                 | 手数            | integer(4)  | NOT NULL    |      |       |
 # | meta_info                | 棋譜ヘッダー    | text(65535) | NOT NULL    |      |       |
 # | mountain_url             | 将棋山脈URL     | string(255) |             |      |       |
@@ -30,7 +30,7 @@ class CreateGeneral < ActiveRecord::Migration[5.1]
       t.string   :key,       null: false, index: {unique: true}, comment: "対局識別子"
       t.datetime :battled_at,       null: true,                         comment: "対局開始日時"
       t.text     :kifu_body,        null: false,                        comment: "棋譜の断片"
-      t.string   :battle_state_key, null: false, index: true,           comment: "結果詳細"
+      t.string   :final_key, null: false, index: true,           comment: "結果詳細"
       t.integer  :turn_max,         null: false,                        comment: "手数"
       t.text     :meta_info,        null: false,                        comment: "棋譜メタ情報"
       t.datetime :last_accessd_at,  null: false,                        comment: "最終参照日時"

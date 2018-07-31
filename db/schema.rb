@@ -207,13 +207,13 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.string "key", null: false, comment: "対局識別子"
     t.datetime "battled_at", comment: "対局開始日時"
     t.text "kifu_body", null: false, comment: "棋譜の断片"
-    t.string "battle_state_key", null: false, comment: "結果詳細"
+    t.string "final_key", null: false, comment: "結果詳細"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_state_key"], name: "index_general_battles_on_battle_state_key"
+    t.index ["final_key"], name: "index_general_battles_on_final_key"
     t.index ["key"], name: "index_general_battles_on_key", unique: true
   end
 
@@ -250,7 +250,7 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.datetime "battled_at", null: false, comment: "対局開始日時"
     t.string "rule_key", null: false, comment: "ルール"
     t.text "csa_seq", null: false, comment: "棋譜の断片"
-    t.string "battle_state_key", null: false, comment: "結果詳細"
+    t.string "final_key", null: false, comment: "結果詳細"
     t.bigint "win_user_id", comment: "勝者(ショートカット用)"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
@@ -258,7 +258,7 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.integer "access_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["battle_state_key"], name: "index_swars_battles_on_battle_state_key"
+    t.index ["final_key"], name: "index_swars_battles_on_final_key"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"

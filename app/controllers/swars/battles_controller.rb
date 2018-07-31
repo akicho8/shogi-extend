@@ -11,7 +11,7 @@
 # | battled_at        | Battled at        | datetime    | NOT NULL    |      |       |
 # | rule_key          | Rule key          | string(255) | NOT NULL    |      | B     |
 # | csa_seq           | Csa seq           | text(65535) | NOT NULL    |      |       |
-# | battle_state_key  | Battle state key  | string(255) | NOT NULL    |      | C     |
+# | final_key         | Final key         | string(255) | NOT NULL    |      | C     |
 # | win_user_id       | Win user          | integer(8)  |             |      | D     |
 # | turn_max          | Turn max          | integer(4)  | NOT NULL    |      |       |
 # | meta_info         | Meta info         | text(65535) | NOT NULL    |      |       |

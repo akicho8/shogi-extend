@@ -22,7 +22,7 @@ tp battle.convert_infos.count  # =>
 # >> |       key | 7b1ecf917e29fee02b11b6a76b194f5e                                                                     |
 # >> |       battled_at | 0001-01-01 00:00:00 +0900                                                                            |
 # >> |        kifu_body |                                                                                                      |
-# >> | battle_state_key | TORYO                                                                                                |
+# >> | final_key | TORYO                                                                                                |
 # >> |         turn_max | 0                                                                                                    |
 # >> |        meta_info | {:header=>{"手合割"=>"平手"}, :detail_names=>[[], []], :simple_names=>[[], []], :skill_set_hash=>{}} |
 # >> |  last_accessd_at | 2018-06-17 22:54:24 +0900                                                                            |
@@ -41,7 +41,7 @@ tp battle.convert_infos.count  # =>
 # >> |       key | b39df6093c7baaad97708a025a1cb5d7                                                                                                                     |
 # >> |       battled_at | 0001-01-01 00:00:00 +0900                                                                                                                            |
 # >> |        kifu_body | ６八銀                                                                                                                                               |
-# >> | battle_state_key | TORYO                                                                                                                                                |
+# >> | final_key | TORYO                                                                                                                                                |
 # >> |         turn_max | 1                                                                                                                                                    |
 # >> |        meta_info | {:header=>{"先手の戦型"=>"嬉野流", "手合割"=>"平手"}, :detail_names=>[[], []], :simple_names=>[[], []], :skill_set_hash=>{"先手の戦型"=>["嬉野流"]}} |
 # >> |  last_accessd_at | 2018-06-17 22:54:24 +0900                                                                                                                            |

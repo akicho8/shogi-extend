@@ -3,20 +3,20 @@
 #
 # Battle (general_battles as General::Battle)
 #
-# |------------------+------------------+-------------+-------------+------+-------|
-# | name             | desc             | type        | opts        | refs | index |
-# |------------------+------------------+-------------+-------------+------+-------|
-# | id               | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key              | Key              | string(255) | NOT NULL    |      | A!    |
-# | battled_at       | Battled at       | datetime    |             |      |       |
-# | kifu_body        | Kifu body        | text(65535) | NOT NULL    |      |       |
-# | battle_state_key | Battle state key | string(255) | NOT NULL    |      | B     |
-# | turn_max         | Turn max         | integer(4)  | NOT NULL    |      |       |
-# | meta_info        | Meta info        | text(65535) | NOT NULL    |      |       |
-# | last_accessd_at  | Last accessd at  | datetime    | NOT NULL    |      |       |
-# | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
-# |------------------+------------------+-------------+-------------+------+-------|
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | key             | Key             | string(255) | NOT NULL    |      | A!    |
+# | battled_at      | Battled at      | datetime    |             |      |       |
+# | kifu_body       | Kifu body       | text(65535) | NOT NULL    |      |       |
+# | final_key       | Final key       | string(255) | NOT NULL    |      | B     |
+# | turn_max        | Turn max        | integer(4)  | NOT NULL    |      |       |
+# | meta_info       | Meta info       | text(65535) | NOT NULL    |      |       |
+# | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
 
 require "matrix"
 
@@ -28,8 +28,8 @@ module General
 
     before_validation on: :create do
       self.last_accessd_at ||= Time.current
-      self.key ||= SecureRandom.hex
-      self.kifu_body ||= ""
+      self.key             ||= SecureRandom.hex
+      self.kifu_body       ||= ""
     end
 
     before_validation do
@@ -41,7 +41,7 @@ module General
     with_options presence: true do
       validates :key
       validates :battled_at
-      validates :battle_state_key
+      validates :final_key
     end
 
     with_options allow_blank: true do
@@ -50,7 +50,7 @@ module General
 
     validate do
       if memberships.size != 2
-        errors.add(:base, "対局者が2人いません : #{memberships.size}")
+        errors.add(:base, "対局者が2人いません。実際の人数:#{memberships.size}")
       end
     end
 
@@ -58,8 +58,8 @@ module General
       key
     end
 
-    def gstate_info
-      GstateInfo.fetch(battle_state_key)
+    def final_info
+      FinalInfo.fetch(final_key)
     end
 
     concerning :ConvertHookMethos do
@@ -157,8 +157,8 @@ module General
       end
 
       def parser_exec_after(info)
-        self.battle_state_key = info.last_action_info.key
-        other_tag_list << gstate_info.name
+        self.final_key = info.last_action_info.key
+        other_tag_list << final_info.name
 
         other_tag_list << key
 
@@ -176,7 +176,7 @@ module General
 
         info.mediator.players.each.with_index do |player, i|
           judge_key = :draw
-          unless gstate_info.draw
+          unless final_info.draw
             judge_key = player.judge_key
           end
 
@@ -193,7 +193,7 @@ module General
 
     concerning :HelperMethods do
       def win_lose_str(membership)
-        if gstate_info.draw
+        if final_info.draw
           Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
         else
           if membership.judge_key == "win"

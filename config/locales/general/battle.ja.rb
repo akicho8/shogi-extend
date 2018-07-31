@@ -21,7 +21,7 @@
           key:               "対局キー",
           battled_at:               "対局日",
           kifu_body:                "棋譜内容",
-          battle_state_key: "結果",
+          final_key: "結果",
           key:               "ユニークなハッシュ",
           turn_max:                 "手数",
           meta_info:                "棋譜ヘッダー",
