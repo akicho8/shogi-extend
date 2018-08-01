@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: Rails.env.production? ? "pinpon.ikeda@gmail.com" : "alice@localhost"
+  default from: AppConfig[:admin_email]
   layout "mailer"
 end

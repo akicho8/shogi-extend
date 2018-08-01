@@ -113,18 +113,18 @@ Rails.application.configure do
 
   # ################################################################################ ActionCable
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
-  # if ENV["RAILS_RELATIVE_URL_ROOT"]
-  #   # config.action_cable.mount_path = ENV["RAILS_RELATIVE_URL_ROOT"] + "/cable" # /cable の 404 になるのを防ぐため
-  #   # config.action_cable.mount_path = "/cable123"
-  # end
   config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
 
   # ################################################################################ エラーメール
-
   config.middleware.use(ExceptionNotification::Rack,
     :email => {
       :email_prefix         => "[shogi_web] ",
       :sender_address       => "pinpon.ikeda@gmail.com",
       :exception_recipients => %w{pinpon.ikeda@gmail.com},
+    })
+
+  # ################################################################################ AppConfig
+  config.app_config.deep_merge!({
+      admin_email: "pinpon.ikeda@gmail.com",
     })
 end
