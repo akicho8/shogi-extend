@@ -3,38 +3,38 @@
 #
 # ユーザー (colosseum_users as Colosseum::User)
 #
-# |------------------------+--------------------------------------------------------------------------+-------------+---------------------+------+-------|
-# | name                   | desc                                                                     | type        | opts                | refs | index |
-# |------------------------+--------------------------------------------------------------------------+-------------+---------------------+------+-------|
-# | id                     | ID                                                                       | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | Key                                                                      | string(255) | NOT NULL            |      | A!    |
-# | name                   | 名前                                                                     | string(255) | NOT NULL            |      |       |
-# | online_at              | オンラインになった日時                                                   | datetime    |                     |      |       |
-# | fighting_at            | memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる | datetime    |                     |      |       |
-# | matching_at            | マッチング中(開始日時)                                                   | datetime    |                     |      |       |
-# | cpu_brain_key          | Cpu brain key                                                            | string(255) |                     |      |       |
-# | user_agent             | ブラウザ情報                                                             | string(255) | NOT NULL            |      |       |
-# | race_key               | Race key                                                                 | string(255) | NOT NULL            |      | F     |
-# | created_at             | 作成日時                                                                 | datetime    | NOT NULL            |      |       |
-# | updated_at             | 更新日時                                                                 | datetime    | NOT NULL            |      |       |
-# | email                  | メールアドレス                                                           | string(255) | NOT NULL            |      | B!    |
-# | encrypted_password     | Encrypted password                                                       | string(255) | NOT NULL            |      |       |
-# | reset_password_token   | Reset password token                                                     | string(255) |                     |      | C!    |
-# | reset_password_sent_at | Reset password sent at                                                   | datetime    |                     |      |       |
-# | remember_created_at    | Remember created at                                                      | datetime    |                     |      |       |
-# | sign_in_count          | Sign in count                                                            | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | current_sign_in_at     | Current sign in at                                                       | datetime    |                     |      |       |
-# | last_sign_in_at        | Last sign in at                                                          | datetime    |                     |      |       |
-# | current_sign_in_ip     | Current sign in ip                                                       | string(255) |                     |      |       |
-# | last_sign_in_ip        | Last sign in ip                                                          | string(255) |                     |      |       |
-# | confirmation_token     | Confirmation token                                                       | string(255) |                     |      | D!    |
-# | confirmed_at           | Confirmed at                                                             | datetime    |                     |      |       |
-# | confirmation_sent_at   | Confirmation sent at                                                     | datetime    |                     |      |       |
-# | unconfirmed_email      | Unconfirmed email                                                        | string(255) |                     |      |       |
-# | failed_attempts        | Failed attempts                                                          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | unlock_token           | Unlock token                                                             | string(255) |                     |      | E!    |
-# | locked_at              | Locked at                                                                | datetime    |                     |      |       |
-# |------------------------+--------------------------------------------------------------------------+-------------+---------------------+------+-------|
+# |------------------------+--------------------------+-------------+---------------------+------+-------|
+# | name                   | desc                     | type        | opts                | refs | index |
+# |------------------------+--------------------------+-------------+---------------------+------+-------|
+# | id                     | ID                       | integer(8)  | NOT NULL PK         |      |       |
+# | key                    | Key                      | string(255) | NOT NULL            |      | A!    |
+# | name                   | 名前                     | string(255) | NOT NULL            |      |       |
+# | online_at              | オンラインになった日時   | datetime    |                     |      |       |
+# | fighting_at            | 入室しているなら入室日時 | datetime    |                     |      |       |
+# | matching_at            | マッチング中(開始日時)   | datetime    |                     |      |       |
+# | cpu_brain_key          | CPUの思考タイプ          | string(255) |                     |      |       |
+# | user_agent             | ブラウザ情報             | string(255) | NOT NULL            |      |       |
+# | race_key               | 種族                     | string(255) | NOT NULL            |      | F     |
+# | created_at             | 作成日時                 | datetime    | NOT NULL            |      |       |
+# | updated_at             | 更新日時                 | datetime    | NOT NULL            |      |       |
+# | email                  | メールアドレス           | string(255) | NOT NULL            |      | B!    |
+# | encrypted_password     | Encrypted password       | string(255) | NOT NULL            |      |       |
+# | reset_password_token   | Reset password token     | string(255) |                     |      | C!    |
+# | reset_password_sent_at | Reset password sent at   | datetime    |                     |      |       |
+# | remember_created_at    | Remember created at      | datetime    |                     |      |       |
+# | sign_in_count          | Sign in count            | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | current_sign_in_at     | Current sign in at       | datetime    |                     |      |       |
+# | last_sign_in_at        | Last sign in at          | datetime    |                     |      |       |
+# | current_sign_in_ip     | Current sign in ip       | string(255) |                     |      |       |
+# | last_sign_in_ip        | Last sign in ip          | string(255) |                     |      |       |
+# | confirmation_token     | Confirmation token       | string(255) |                     |      | D!    |
+# | confirmed_at           | Confirmed at             | datetime    |                     |      |       |
+# | confirmation_sent_at   | Confirmation sent at     | datetime    |                     |      |       |
+# | unconfirmed_email      | Unconfirmed email        | string(255) |                     |      |       |
+# | failed_attempts        | Failed attempts          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | unlock_token           | Unlock token             | string(255) |                     |      | E!    |
+# | locked_at              | Locked at                | datetime    |                     |      |       |
+# |------------------------+--------------------------+-------------+---------------------+------+-------|
 
 module Colosseum
   CpuBrainInfo
@@ -145,8 +145,9 @@ module Colosseum
       included do
         has_one :rule, dependent: :destroy
         accepts_nested_attributes_for :rule
+
         delegate :self_preset_info, :oppo_preset_info, :lifetime_info, :team_info, :robot_accept_info, to: :rule
-        delegate :self_preset_key, :oppo_preset_key, :lifetime_key, :team_key, :robot_accept_key, to: :rule
+        delegate :self_preset_key, :oppo_preset_key, :lifetime_key, :team_key, :robot_accept_key,      to: :rule
 
         after_create do
           rule || create_rule
@@ -296,12 +297,15 @@ module Colosseum
 
     concerning :MatchingMethods do
       included do
-        scope :preset_scope, -> self_preset_key, oppo_preset_key { joins(:rule).merge(Rule.where(self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key)) }
-        scope :matching_scope, -> { online_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
+        scope :preset_scope,    -> self_preset_key, oppo_preset_key { joins(:rule).merge(Rule.where(self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key)) }
+        scope :matching_scope,  -> { online_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
         scope :same_rule_scope, -> e { joins(:rule).merge(Rule.same_rule_scope(e)) }
+
         scope :robot_only, -> { where(race_key: :robot) }
         scope :human_only, -> { where(race_key: :human) }
+
         scope :light_only, -> { where(key: CpuBrainInfo.light_only.collect(&:key)) }
+
         scope :with_robot_ok, -> { joins(:rule).merge(Rule.with_robot_ok) } # CPUと対戦してもよい人たち
         scope :with_robot_ng, -> { joins(:rule).merge(Rule.with_robot_ng) } # CPUと対戦したくない人たち
       end
@@ -309,7 +313,7 @@ module Colosseum
       def setting_save(data)
         update!(rule_attributes: {
             lifetime_key:     data["lifetime_key"],
-            team_key:      data["team_key"],
+            team_key:         data["team_key"],
             self_preset_key:  data["self_preset_key"],
             oppo_preset_key:  data["oppo_preset_key"],
             robot_accept_key: data["robot_accept_key"],
@@ -380,7 +384,7 @@ module Colosseum
       def completion_robots(count)
         s = self.class.robot_only.light_only
         robots = s.random_order.limit(count) # count 数取得できているとは限らない
-        robots.cycle.take(count)                                 # なので足りない部分は1人のボットが二役以上することになる
+        robots.cycle.take(count)             # なので足りない部分は1人のボットが二役以上することになる
       end
 
       def battle_with(opponent)

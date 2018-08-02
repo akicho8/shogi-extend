@@ -8,8 +8,8 @@ module Colosseum
       { key: :month, name: "月間", begin_at: -> { Time.current.beginning_of_month }, end_at: -> { Time.current.beginning_of_month.next_month }, },
     ]
 
-    cattr_accessor(:rank_limit) { 50 } # 位まで表示
-    cattr_accessor(:accuracy)  { 1000 }
+    cattr_accessor(:rank_limit) { 50 }  # 位まで表示
+    cattr_accessor(:accuracy)  { 1000 } # 精度
 
     def all
       current_clean
