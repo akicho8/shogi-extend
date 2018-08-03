@@ -402,6 +402,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    timecop (0.9.1)
     tree_support (0.1.3)
       activesupport
     tzinfo (1.2.5)
@@ -498,6 +499,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   table_format
+  timecop
   tree_support
   tzinfo-data
   uglifier (>= 1.3.0)

@@ -95,6 +95,7 @@ end
 group :test do
   gem 'chromedriver-helper'     # for SystemTestCase
   gem 'database_cleaner'
+  gem 'timecop'
 end
 
 # gem 'activerecord-session_store'
