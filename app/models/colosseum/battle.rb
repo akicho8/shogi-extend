@@ -41,6 +41,9 @@ module Colosseum
             list.each do |e|
               battle.users << e
             end
+            users.sample(2).each do |e|
+              battle.watch_users << e
+            end
             if rand(2).zero?
               battle.update!(begin_at: Time.current)
               if rand(2).zero?

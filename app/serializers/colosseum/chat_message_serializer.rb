@@ -7,14 +7,20 @@ module Colosseum
   end
 
   if $0 == __FILE__
-    tp ams_sr(ChatMessage.first, serializer: ChatMessageSerializer)
+    pp ams_sr(ChatMessage.first, serializer: ChatMessageSerializer)
   end
 end
-# >> I, [2018-06-29T16:16:07.567988 #81172]  INFO -- : Rendered Colosseum::ChatMessageSerializer with ActiveModelSerializers::Adapter::Attributes (2133.06ms)
-# >> |------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |         id | 1                                                                                                                                                                                             |
-# >> |    message | <span class="has-text-info">入室しました</span>                                                                                                                                               |
-# >> |   msg_options | {}                                                                                                                                                                                            |
-# >> | created_at | 2018-06-29 16:07:44 +0900                                                                                                                                                                     |
-# >> |       user | {:id=>1, :name=>"名無しの棋士1号", :show_path=>"/online/users/1", :avatar_url=>"/assets/fallback_avatars/0030_fallback_header_avatar_image-be08e49b2d7a08a5cd56200edc1c31b901847ba52392a4885ee632a9d0fe974d.png"} |
-# >> |------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+# >> {:id=>1,
+# >>  :message=>"(message)",
+# >>  :msg_options=>{},
+# >>  :created_at=>Sat, 04 Aug 2018 15:08:37 JST +09:00,
+# >>  :user=>
+# >>   {:id=>1,
+# >>    :name=>"運営",
+# >>    :show_path=>"/colosseum/users/1",
+# >>    :avatar_url=>
+# >>     "/assets/human/0013_fallback_avatar_icon-7ccc24e76f53875ea71137f6079ae8ad0657b15e80aeed6852501da430e757df.png",
+# >>    :race_key=>"human",
+# >>    :win_count=>0,
+# >>    :lose_count=>0,
+# >>    :win_ratio=>0.0}}

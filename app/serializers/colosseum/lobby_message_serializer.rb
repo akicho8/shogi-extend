@@ -7,14 +7,20 @@ module Colosseum
   end
 
   if $0 == __FILE__
-    tp ams_sr(LobbyMessage.first, serializer: LobbyMessageSerializer)
+    pp ams_sr(LobbyMessage.first, serializer: LobbyMessageSerializer)
   end
 end
-# >> I, [2018-06-29T19:00:56.594844 #91357]  INFO -- : Rendered Colosseum::LobbyMessageSerializer with ActiveModelSerializers::Adapter::Attributes (1989.53ms)
-# >> |------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |         id | 1                                                                                                                                                                                  |
-# >> |    message | a                                                                                                                                                                                  |
-# >> |   msg_options | {}                                                                                                                                                                                 |
-# >> | created_at | 2018-06-29 18:59:25 +0900                                                                                                                                                          |
-# >> |       user | {:id=>1, :name=>"SYSOP", :show_path=>"/online/users/1", :avatar_url=>"/assets/human/0030_fallback_header_avatar_image-be08e49b2d7a08a5cd56200edc1c31b901847ba52392a4885ee632a9d0fe974d.png"} |
-# >> |------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+# >> {:id=>1,
+# >>  :message=>"(message)",
+# >>  :msg_options=>{},
+# >>  :created_at=>Sat, 04 Aug 2018 15:12:31 JST +09:00,
+# >>  :user=>
+# >>   {:id=>1,
+# >>    :name=>"運営",
+# >>    :show_path=>"/colosseum/users/1",
+# >>    :avatar_url=>
+# >>     "/assets/human/0013_fallback_avatar_icon-7ccc24e76f53875ea71137f6079ae8ad0657b15e80aeed6852501da430e757df.png",
+# >>    :race_key=>"human",
+# >>    :win_count=>0,
+# >>    :lose_count=>0,
+# >>    :win_ratio=>0.0}}

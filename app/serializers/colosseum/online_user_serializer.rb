@@ -8,25 +8,21 @@ module Colosseum
     ]
 
     has_many :active_battles, serializer: ActiveBattleEachSerializer
-
-    # belongs_to :current_battle
-    # class BattleSerializer < ApplicationSerializer
-    #   attributes :name, :show_path
-    # end
   end
 
   if $0 == __FILE__
-    tp ams_sr(User.last, serializer: OnlineUserSerializer, include: [:active_battles])
+    pp ams_sr(User.last, serializer: OnlineUserSerializer, include: [:active_battles])
   end
 end
-# >> I, [2018-07-02T18:37:11.699622 #19414]  INFO -- : Rendered Colosseum::OnlineUserSerializer with ActiveModelSerializers::Adapter::Attributes (1873.38ms)
-# >> |----------------+------------------------------------------------------------------------------------------------------------------------|
-# >> |             id | 46                                                                                                                     |
-# >> |           name | CPU4号                                                                                                                 |
-# >> |      show_path | /online/users/46                                                                                                       |
-# >> |     avatar_url | /assets/robot/0100_robot-66c73ea6ee9d1d87bad3f3b22739b74cbe9bdba17b06e9f65a8f7f63b6fb2467.png                          |
-# >> |       race_key | robot                                                                                                                  |
-# >> |    fighting_at | 2018-07-02 18:37:02 +0900                                                                                              |
-# >> |    matching_at |                                                                                                                        |
-# >> | active_battles | [{:id=>67, :name=>"#67", :show_path=>"/online/battles/67"}, {:id=>68, :name=>"#68", :show_path=>"/online/battles/68"}] |
-# >> |----------------+------------------------------------------------------------------------------------------------------------------------|
+# >> {:id=>12,
+# >>  :name=>"名無しの棋士3号",
+# >>  :show_path=>"/colosseum/users/12",
+# >>  :avatar_url=>
+# >>   "/assets/human/0021_fallback_avatar_icon-35f7d2753708660f1028e234d7214edb783933bb8b41335c3cf9c1ba3bc171f2.png",
+# >>  :race_key=>"human",
+# >>  :win_count=>0,
+# >>  :lose_count=>0,
+# >>  :win_ratio=>0.0,
+# >>  :fighting_at=>nil,
+# >>  :matching_at=>nil,
+# >>  :active_battles=>[]}

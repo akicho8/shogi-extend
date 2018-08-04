@@ -17,6 +17,16 @@
 
 module Colosseum
   class ChatMessage < ApplicationRecord
+    class << self
+      def setup(options = {})
+        if Rails.env.development?
+          user = User.first
+          battle = Battle.first
+          user.chat_say(battle, "(message)")
+        end
+      end
+    end
+
     belongs_to :user
     belongs_to :battle
 

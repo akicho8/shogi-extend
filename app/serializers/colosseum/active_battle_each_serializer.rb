@@ -9,5 +9,4 @@ module Colosseum
     pp ams_sr(Battle.first, serializer: ActiveBattleEachSerializer)
   end
 end
-# >> I, [2018-07-02T18:20:13.467933 #17284]  INFO -- : Rendered Colosseum::ActiveBattleEachSerializer with ActiveModelSerializers::Adapter::Attributes (2.86ms)
-# >> {:id=>52, :name=>"#52", :show_path=>"/online/battles/52"}
+# >> {:id=>1, :name=>"#1", :show_path=>"/colosseum/battles/1"}

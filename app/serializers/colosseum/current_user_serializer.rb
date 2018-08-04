@@ -11,11 +11,14 @@ module Colosseum
   end
 end
 # >> {:id=>1,
-# >>  :name=>"SYSOP",
-# >>  :show_path=>"/online/users/1",
+# >>  :name=>"運営",
+# >>  :show_path=>"/colosseum/users/1",
 # >>  :avatar_url=>
 # >>   "/assets/human/0013_fallback_avatar_icon-7ccc24e76f53875ea71137f6079ae8ad0657b15e80aeed6852501da430e757df.png",
 # >>  :race_key=>"human",
+# >>  :win_count=>0,
+# >>  :lose_count=>0,
+# >>  :win_ratio=>0.0,
 # >>  :matching_at=>nil,
 # >>  :rule=>
 # >>   {:id=>1,

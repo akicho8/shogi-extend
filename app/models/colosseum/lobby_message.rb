@@ -16,6 +16,15 @@
 
 module Colosseum
   class LobbyMessage < ApplicationRecord
+    class << self
+      def setup(options = {})
+        if Rails.env.development?
+          user = User.first
+          user.lobby_chat_say("(message)")
+        end
+      end
+    end
+
     belongs_to :user
 
     serialize :msg_options
