@@ -30,20 +30,20 @@
             b-dropdown-item(:has-link="true" :paddingless="true")
               = link_to(e.name, "", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([current_record, format: e.key])})
         b-dropdown :hoverable="true"
-          button class="button" slot="trigger"
+          button(class="button" slot="trigger")
             span ダウンロード
             b-icon icon="menu-down"
           - Warabi::KifuFormatInfo.each do |e|
             = link_to([current_record, format: e.key]) do
               b-dropdown-item= e.name
         - if current_record.kind_of?(Swars::Battle)
-          b-dropdown :hoverable="true"
+          b-dropdown(:hoverable="true")
             button class="button" slot="trigger"
               span リンク
               b-icon icon="menu-down"
-              = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
-              b-dropdown-item :has-link="true" :paddingless="true"
-                = link_to("ウォーズTweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')")
+            = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
+            b-dropdown-item :has-link="true" :paddingless="true"
+              = link_to("ウォーズTweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')")
 
 = render :partial => "kifu_player_tabs_div"
 
