@@ -3,7 +3,9 @@ module Colosseum
     def create
       user = User.create!
       flash[:notice] = "即席アカウントを作成してログインしました。あなたは「#{user.name}」です"
-      user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
+      unless Rails.env.production?
+        user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
+      end
       sign_in_and_redirect user
     end
 
