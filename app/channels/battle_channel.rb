@@ -16,10 +16,16 @@ class BattleChannel < ApplicationCable::Channel
   def receive(data)
   end
 
-  # 定期的に呼ぶ処理が書ける
+  # 疑問: transmit(...) は ActionCable.server.broadcast(channel_key, ...)  と同じか？ → 違うっぽい。反応しないクライアントがある
+
+  # transmit action: :update_count, count: 1 とすると
+  # data["action"] // => "update_count"
+  # data["count"]  // => 1
+  # で参照できる
+
+  # 死活監視
   periodically every: 60.seconds do
-    # 疑問: transmit(...) は ActionCable.server.broadcast(channel_key, ...)  と同じか？ → 違うっぽい。反応しないクライアントがある
-    transmit action: :update_count, count: 1
+    transmit action: :custom_ping
   end
 
   ################################################################################
@@ -66,6 +72,11 @@ class BattleChannel < ApplicationCable::Channel
 
   def next_run_if_robot
     battle.next_run_if_robot
+  end
+
+  def custom_pong(data)
+    user = Colosseum::User.find(data["user_id"])
+    logger.info("#{user.name}さんは生きています")
   end
 
   private

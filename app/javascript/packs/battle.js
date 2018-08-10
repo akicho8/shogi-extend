@@ -64,9 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
         App.battle_vm.battle_end_notice(data)
       }
 
-      // 定期的に呼ぶ場合
-      if (data["action"] === "update_count") {
-        console.log(data["count"])
+      // 生存確認されたときに返事をする
+      if (data["action"] === "custom_ping") {
+        this.perform("custom_pong", {user_id: js_global.current_user.id})
       }
     },
 
