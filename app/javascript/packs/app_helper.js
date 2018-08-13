@@ -5,9 +5,10 @@ export function kifu_copy_hook_all() {
   const elems = document.querySelectorAll(".kif_clipboard_copy_button")
   elems.forEach(el => {
     el.addEventListener("click", e => {
+      e.stopPropagation()
+      e.preventDefault()
       const url = e.target.dataset[_.camelCase("kif_direct_access_path")]
       kifu_copy_exec(url)
-      e.preventDefault()
     })
   })
 }
