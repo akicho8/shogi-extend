@@ -1,6 +1,4 @@
 server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
-server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{app web}
-server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{db}
 
 # 最初にアプリ削除する？
 if ENV["APP_RESET"] == "1"

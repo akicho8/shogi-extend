@@ -1,11 +1,11 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.10.1"
 
-set :application, 'shogi_web'
-set :repo_url, "git@github.com:akicho8/#{Pathname(__dir__).dirname.basename}.git"
+set :application, Pathname(__dir__).dirname.basename.to_s
+set :repo_url, -> { "git@github.com:akicho8/#{fetch(:application)}.git" }
 
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, ENV["BRANCH"] || `git rev-parse --abbrev-ref HEAD`.strip
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"

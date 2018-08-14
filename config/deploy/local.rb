@@ -2,8 +2,6 @@
 # /var/www/shogi_web_local (RAILS_ENV: production)
 
 server 'localhost', user: 'deploy', roles: %w{app db web}
-server 'localhost', user: 'deploy', roles: %w{app web}
-server 'localhost', user: 'deploy', roles: %w{db}
 
 # yarnpkg がないと言われるため deploy でも yarnpkg が見えるようにする
 # また、これとは別で /Users/deploy/.bashrc に以下も設定している
@@ -16,6 +14,5 @@ set :default_env, { path: '/opt/nodebrew/current/bin:$PATH' }
 set :rails_env, 'production'
 
 # config/database.local.yml を使う設定
-set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+append :linked_files, 'config/database.yml'
 before 'deploy:check:linked_files', 'deploy:upload_shared_config_database_yml'
-
