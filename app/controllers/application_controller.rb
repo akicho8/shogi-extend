@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
           :custom_preset_infos => Colosseum::CustomPresetInfo,
           :robot_accept_infos  => Colosseum::RobotAcceptInfo,
           :last_action_infos   => Colosseum::LastActionInfo,
-          :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「即席アカウントを作成してログイン」を使ってみてください。"}]),
+          :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「名無しのアカウントを作成してログイン」を使ってみてください。"}]),
         }
       end
 

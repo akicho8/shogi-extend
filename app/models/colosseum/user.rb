@@ -64,6 +64,10 @@ module Colosseum
             self.online_at ||= Time.current
           end
         end
+
+        after_create do
+          ApplicationMailer.user_created(self).deliver_now
+        end
       end
 
       class_methods do

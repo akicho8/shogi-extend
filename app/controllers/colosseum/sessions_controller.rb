@@ -2,7 +2,7 @@ module Colosseum
   class SessionsController < ApplicationController
     def create
       user = User.create!
-      flash[:notice] = "即席アカウントを作成してログインしました。あなたは「#{user.name}」です"
+      flash[:notice] = "名無しのアカウントを作成してログインしました。あなたは「#{user.name}」です"
       unless Rails.env.production?
         user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       end
