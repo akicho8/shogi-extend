@@ -239,11 +239,9 @@ namespace :deploy do
   desc "config/master.key のアップロード"
   task :upload_config_master_key do
     on roles :all do
-      local_file = "config/master.key"
-      if Pathname(local_file).exist?
-        server_file = shared_path.join(local_file)
-        upload! local_file.open, server_file.to_s
-      end
+      local_file = Pathname("config/master.key")
+      server_file = shared_path.join(local_file)
+      upload! local_file.open, server_file.to_s
     end
   end
   before "deploy:check:linked_files", "deploy:upload_config_master_key"
@@ -252,12 +250,10 @@ namespace :deploy do
   desc "database.production.yml のアップロード"
   task :upload_shared_config_database_yml do
     on roles :all do
-      local_file = "config/database.#{fetch(:stage)}.yml"
-      if Pathname(local_file).exist?
+      local_file = Pathname("config/database.#{fetch(:stage)}.yml")
+      if local_file.exist?
         server_file = shared_path.join("config/database.yml")
-        # unless test "[ -f #{server_file} ]"
-        upload! File.open(local_file), server_file.to_s
-        # end
+        upload! local_file.open, server_file.to_s
       end
     end
   end
@@ -367,35 +363,19 @@ namespace :deploy do
       files = (ENV["FILES"] || "").split(",").collect { |f| Dir[f.strip] }.flatten.collect { |e| Pathname(e) }
       files.each do |src_file|
         server_file = release_path.join(src_file)
-        upload! File.open(local_file), server_file.to_s
+        upload! src_file.open, server_file.to_s
       end
     end
   end
 end
 
-# namespace :deploy do
-#   # cap staging deploy:upload_database_yml
-#   desc "database.production.yml のアップロード"
-#   task :upload_database_yml do
-#     on roles :all do
-#       local_file = Pathname("config/database.#{fetch(:stage)}.yml")
-#       unless local_file.exist?
-#         local_file = Pathname("config/database.production.yml") # for staging
-#       end
-#       server_file = shared_path.join("config/database.yml")
-#       upload! File.open(local_file), server_file.to_s
-#     end
-#   end
-#   before 'deploy:check:linked_files', 'deploy:upload_database_yml'
-# end
-
 # cap local deploy:assets:precompile
-desc "ローカルで rails assets:precompile してデプロイ先にコピーする"
 Rake::Task["deploy:assets:precompile"].clear
+desc "ローカルで rails assets:precompile してデプロイ先にコピーする"
 task "deploy:assets:precompile" do
-  precompiled_output_paths = ['public/assets', 'public/packs']
   tmpdir = "/tmp/__git_clone_app"
-  master_key_path = "#{__dir__}/master.key"
+
+  precompiled_paths = ["assets", "packs"]
 
   run_locally do
     execute :rm, "-fr #{tmpdir}"
@@ -403,15 +383,15 @@ task "deploy:assets:precompile" do
     within tmpdir do
       execute :pwd
       execute :yarn
-      # execute :cp, "config/database.production.yml config/database.yml"
-      execute :cp, "-v", master_key_path, "config"
-      with stage: fetch(:stage) do
-        with rails_env: fetch(:rails_env), node_env: fetch(:rails_env), rails_groups: fetch(:rails_assets_groups) do
-          rake "assets:precompile"
-        end
+      execute :cp, "-v", "#{__dir__}/database.precompile.yml", "config/database.yml"
+      execute :cp, "-v", "#{__dir__}/master.key", "config"
+      with stage: fetch(:stage), rails_env: fetch(:rails_env), node_env: fetch(:rails_env) do
+        rake "assets:precompile"
       end
+    end
+    within "#{tmpdir}/public" do
       roles(:web).each do |e|
-        execute :rsync, "-avu --delete -e ssh #{precompiled_output_paths.join(' ')} #{e.user}@#{e.hostname}:#{release_path}/public"
+        execute :rsync, "-avu --delete -e ssh #{precompiled_paths.join(" ")} #{e.user}@#{e.hostname}:#{release_path}/public"
       end
     end
     execute :rm, "-fr #{tmpdir}"
