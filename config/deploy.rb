@@ -242,9 +242,7 @@ namespace :deploy do
       local_file = "config/master.key"
       if Pathname(local_file).exist?
         server_file = shared_path.join(local_file)
-        # unless test "[ -f #{server_file} ]"
-        upload! File.open(local_file), server_file.to_s
-        # end
+        upload! local_file.open, server_file.to_s
       end
     end
   end
@@ -360,4 +358,62 @@ namespace :cable_puma do
     end
   end
   after "deploy:restart", "cable_puma:status"
+end
+
+namespace :deploy do
+  desc "ファイルアップロード"
+  task :upload do
+    on roles :all do
+      files = (ENV["FILES"] || "").split(",").collect { |f| Dir[f.strip] }.flatten.collect { |e| Pathname(e) }
+      files.each do |src_file|
+        server_file = release_path.join(src_file)
+        upload! File.open(local_file), server_file.to_s
+      end
+    end
+  end
+end
+
+# namespace :deploy do
+#   # cap staging deploy:upload_database_yml
+#   desc "database.production.yml のアップロード"
+#   task :upload_database_yml do
+#     on roles :all do
+#       local_file = Pathname("config/database.#{fetch(:stage)}.yml")
+#       unless local_file.exist?
+#         local_file = Pathname("config/database.production.yml") # for staging
+#       end
+#       server_file = shared_path.join("config/database.yml")
+#       upload! File.open(local_file), server_file.to_s
+#     end
+#   end
+#   before 'deploy:check:linked_files', 'deploy:upload_database_yml'
+# end
+
+# cap local deploy:assets:precompile
+desc "ローカルで rails assets:precompile してデプロイ先にコピーする"
+Rake::Task["deploy:assets:precompile"].clear
+task "deploy:assets:precompile" do
+  precompiled_output_paths = ['public/assets', 'public/packs']
+  tmpdir = "/tmp/__git_clone_app"
+  master_key_path = "#{__dir__}/master.key"
+
+  run_locally do
+    execute :rm, "-fr #{tmpdir}"
+    execute "git clone #{fetch(:repo_url)} --depth 1 --branch #{fetch(:branch)} #{tmpdir}"
+    within tmpdir do
+      execute :pwd
+      execute :yarn
+      # execute :cp, "config/database.production.yml config/database.yml"
+      execute :cp, "-v", master_key_path, "config"
+      with stage: fetch(:stage) do
+        with rails_env: fetch(:rails_env), node_env: fetch(:rails_env), rails_groups: fetch(:rails_assets_groups) do
+          rake "assets:precompile"
+        end
+      end
+      roles(:web).each do |e|
+        execute :rsync, "-avu --delete -e ssh #{precompiled_output_paths.join(' ')} #{e.user}@#{e.hostname}:#{release_path}/public"
+      end
+    end
+    execute :rm, "-fr #{tmpdir}"
+  end
 end

@@ -16,3 +16,8 @@ set :rails_env, 'production'
 # config/database.local.yml を使う設定
 append :linked_files, 'config/database.yml'
 before 'deploy:check:linked_files', 'deploy:upload_shared_config_database_yml'
+
+# for local
+set :rbenv_ruby, File.read('.ruby-version').strip
+set :rbenv_path, '/usr/local/var/rbenv'
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} rbenv exec"
