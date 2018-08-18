@@ -118,7 +118,7 @@ Rails.application.configure do
   # ################################################################################ エラーメール
   config.middleware.use(ExceptionNotification::Rack,
     :email => {
-      :email_prefix         => "[shogi_web] ",
+      :email_prefix         => "[shogi_web #{Rails.env}] ",
       :sender_address       => "pinpon.ikeda@gmail.com",
       :exception_recipients => %w{pinpon.ikeda@gmail.com},
     })
