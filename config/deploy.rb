@@ -11,6 +11,8 @@ set :branch, ENV["BRANCH"] || `git rev-parse --abbrev-ref HEAD`.strip
 # set :deploy_to, "/var/www/my_app_name"
 set :deploy_to, -> { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 
+set :git_shallow_clone, 1
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
@@ -45,11 +47,12 @@ set :keep_releases, 1
 ################################################################################ rbenv
 
 set :rbenv_type, :system # or :system, depends on your rbenv setup
+set :rbenv_ruby, File.read('.ruby-version').strip
 
 ################################################################################ bundler
 
 # set :bundle_path, nil
-set :bundle_flags, '--deployment'
+# set :bundle_flags, '--deployment'
 # ▼capistrano3.3.xでbin以下に配備されなくなる - Qiita
 # https://qiita.com/yuuna/items/27a561a14399c5343d2f
 set :bundle_binstubs, -> { shared_path.join('bin') }
@@ -117,10 +120,9 @@ desc "cap production deploy:upload FILES=config/schedule.rb"
 namespace :deploy do
   task :upload do
     on roles :all do |host|
-      files = ENV["FILES"].split(/[,\s]+/).collect { |e| Pathname(e) }
+      files = (ENV["FILES"] || "").split(",").collect { |f| Dir[f.strip] }.flat_map { |e| Pathname(e) }
       rows = files.collect do |file|
-        raise "ファイルが見つかりません : #{file}" unless file.exist?
-        server_file = current_path.join(file)
+        server_file = release_path.join(file)
         upload! file.open, server_file.to_s
         {"Host" => host.hostname, "転送元" => file, "転送先" => server_file}
       end
@@ -356,44 +358,32 @@ namespace :cable_puma do
   after "deploy:restart", "cable_puma:status"
 end
 
-namespace :deploy do
-  desc "ファイルアップロード"
-  task :upload do
-    on roles :all do
-      files = (ENV["FILES"] || "").split(",").collect { |f| Dir[f.strip] }.flatten.collect { |e| Pathname(e) }
-      files.each do |src_file|
-        server_file = release_path.join(src_file)
-        upload! src_file.open, server_file.to_s
-      end
-    end
-  end
-end
+unless ENV["REMOTE_BUILD"] == "1"
+  # cap production deploy:assets:precompile
+  # cap local deploy:assets:precompile
+  Rake::Task["deploy:assets:precompile"].clear
+  desc "ローカルで rails assets:precompile してデプロイ先にコピーする"
+  task "deploy:assets:precompile" do
+    tmpdir = "/tmp/__git_clone_app"
 
-# cap local deploy:assets:precompile
-Rake::Task["deploy:assets:precompile"].clear
-desc "ローカルで rails assets:precompile してデプロイ先にコピーする"
-task "deploy:assets:precompile" do
-  tmpdir = "/tmp/__git_clone_app"
-
-  precompiled_paths = ["assets", "packs"]
-
-  run_locally do
-    execute :rm, "-fr #{tmpdir}"
-    execute "git clone #{fetch(:repo_url)} --depth 1 --branch #{fetch(:branch)} #{tmpdir}"
-    within tmpdir do
-      execute :pwd
-      execute :yarn
-      execute :cp, "-v", "#{__dir__}/database.precompile.yml", "config/database.yml"
-      execute :cp, "-v", "#{__dir__}/master.key", "config"
-      with stage: fetch(:stage), rails_env: fetch(:rails_env), node_env: fetch(:rails_env) do
-        rake "assets:precompile"
+    run_locally do
+      execute :rm, "-fr #{tmpdir}"
+      execute "git clone #{fetch(:repo_url)} --depth 1 --branch #{fetch(:branch)} #{tmpdir}"
+      within tmpdir do
+        execute :yarn
+        execute :cp, "-v", "#{__dir__}/database.precompile.yml", "config/database.yml"
+        execute :cp, "-v", "#{__dir__}/master.key", "config"
+        with stage: fetch(:stage), rails_env: fetch(:rails_env), node_env: fetch(:rails_env) do
+          execute :sh, "-c 'pwd && env | grep ENV'"
+          execute :sh, "-c 'bundle exec rails -t assets:precompile'"
+        end
       end
-    end
-    within "#{tmpdir}/public" do
-      roles(:web).each do |e|
-        execute :rsync, "-avu --delete -e ssh #{precompiled_paths.join(" ")} #{e.user}@#{e.hostname}:#{release_path}/public"
+      within "#{tmpdir}/public" do
+        roles(:web).each do |e|
+          execute :rsync, "-au --delete -e ssh assets packs #{e.user}@#{e.hostname}:#{release_path}/public"
+        end
       end
+      execute :rm, "-fr #{tmpdir}"
     end
-    execute :rm, "-fr #{tmpdir}"
   end
 end

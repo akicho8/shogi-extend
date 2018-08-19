@@ -18,9 +18,8 @@ append :linked_files, 'config/database.yml'
 before 'deploy:check:linked_files', 'deploy:upload_shared_config_database_yml'
 
 # for local
-set :rbenv_ruby, File.read('.ruby-version').strip
-set :rbenv_path, '/usr/local/var/rbenv'
-set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} rbenv exec"
+set :rbenv_path, -> { '/usr/local/var/rbenv' }
+set :rbenv_prefix, -> { "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} rbenv exec" }
 
 # 毎回DBを作る
 before 'deploy:migrate', 'deploy:db_reset'
