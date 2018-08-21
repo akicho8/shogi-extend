@@ -405,3 +405,10 @@ unless ENV["REMOTE_BUILD"] == "1"
     end
   end
 end
+
+desc "間違わないようにバナー表示"
+before "deploy:starting", :banner do
+  label = "#{fetch(:branch)} to #{fetch(:stage)}".gsub(/[_\W]+/, " ")
+  puts Artii::Base.new(font: "slant").output(label)
+  system "say '#{label}'"
+end

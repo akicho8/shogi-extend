@@ -75,6 +75,8 @@ group :development, :test do
   gem 'capistrano-yarn'
   gem "capistrano-rails-console"
 
+  gem 'artii'
+
   gem 'rspec-rails'
   # gem 'test-unit'      # 入れなくても rspec-rails が minitest などを入れているせいで assert は使える (が、そのせいで test-unit 経由で power_assert が使えない)
   # gem 'minitest-power_assert'
