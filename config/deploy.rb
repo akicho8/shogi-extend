@@ -412,3 +412,20 @@ before "deploy:starting", :banner do
   puts Artii::Base.new(font: "slant").output(label)
   system "say '#{label}'"
 end
+
+# desc "サーバー起動確認"
+# after "deploy:finished", :heartbeat do
+#   # puts `curl --silent -I http://tk2-221-20341.vs.sakura.ne.jp/shogi | grep HTTP`.strip
+# end
+
+desc "デプロイ失敗"
+task "deploy:failed" do
+  system "say 'デプロイに失敗しました'"
+end
+
+desc "デプロイ成功"
+after "deploy:finished", :finished do
+  label = "#{fetch(:branch)} to #{fetch(:stage)} deploy finished".gsub(/[_\W]+/, " ")
+  puts Artii::Base.new(font: "slant").output(label)
+  system "say '#{label}'"
+end
