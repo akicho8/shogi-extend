@@ -44,7 +44,7 @@ export default {
               Vue.prototype.$dialog.confirm({
                 title: "確認",
                 message: "相手がいないのでCPUと対局しますか？",
-                confirmText: "はい",
+                confirmText: "CPUと対局する",
                 cancelText: "いいえ",
                 onConfirm: () => {
                   App.lobby.matching_start_with_robot()

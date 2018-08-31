@@ -155,8 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
         Vue.prototype.$dialog.confirm({
           title: "確認",
           message: "本当に投了しますか？",
-          confirmText: "はい",
-          cancelText: "いいえ",
+          confirmText: "投了する",
+          cancelText: "キャンセル",
           onConfirm: () => {
             App.battle.give_up({win_location_key: this.current_location.flip.key})
             App.battle.chat_say("負けました")
