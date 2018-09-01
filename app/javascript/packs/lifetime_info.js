@@ -1,4 +1,4 @@
-import { MemoryRecord } from 'js-memory-record'
+import MemoryRecord from 'js-memory-record'
 
 class LifetimeInfo extends MemoryRecord {
   static get define() {

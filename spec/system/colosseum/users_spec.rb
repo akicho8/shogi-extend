@@ -116,7 +116,7 @@ RSpec.describe "対戦", type: :system do
         click_on("投了")
         sleep(1)
         doc_image("投了_確認")
-        click_on("はい")
+        click_on("投了する")
         sleep(1)
         doc_image("投了_実行")
       end

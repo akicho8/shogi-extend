@@ -29,7 +29,7 @@ RSpec.describe "CPU対戦", type: :system do
     sleep(0.5)
     doc_image("3手目")
     expect(page).to have_content "成りますか？"
-    click_on("成")
+    click_on("成る")
     sleep(0.5)
 
     expect(page).to have_content "反則負け"
