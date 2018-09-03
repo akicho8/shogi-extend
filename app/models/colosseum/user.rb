@@ -65,8 +65,8 @@ module Colosseum
           end
         end
 
-        if Rails.env.production?
-          after_create do
+        after_create do
+          if Rails.env.production? || Rails.env.test?
             UserMailer.user_created(self).deliver_now
           end
         end
