@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       location: null,
     },
 
-    created: function() {
+    created() {
       let start = window.performance.now()
       const loop = () => {
         const now = window.performance.now()
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     watch: {
-      timerCount: function() {
+      timerCount() {
         if (this.restTime <= 0) {
           this.mode = "goal"
           this.timerRun = false
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     computed: {
-      restTime: function() {
+      restTime() {
         let v = (this.limitSeconds * 1000) - this.timerCount
         if (v < 0) {
           v = 0
@@ -52,14 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return v
       },
 
-      timeFormat: function() {
+      timeFormat() {
         const seconds = this.restTime / 1000
         return numeral(seconds).format("0.00")
       },
     },
 
     methods: {
-      enterFunc (e) {
+      enterFunc(e) {
         if (this.mode != "running") return
         this.inputKeys.push(e.key)
         if (this.inputKeys.length >= 2) {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
 
-      readyGo () {
+      readyGo() {
         this.timerRun = true
         this.timerCount = 0
         this.answerdCount = 0
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.reset()
       },
 
-      reset () {
+      reset() {
         this.currentX = this.posRandom()
         this.currentY = this.posRandom()
         this.piece = this.pieceRandom()
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
 
-      cellClass (x, y) {
+      cellClass(x, y) {
         let str = null
         if (this.isActive(x, y)) {
           str = ["current", `location_${this.location}`]
@@ -109,15 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return str
       },
 
-      isActive (x, y) {
+      isActive(x, y) {
         return this.currentX == x && this.currentY == y
       },
 
-      posRandom () {
+      posRandom() {
         return this.rand(this.boardSize)
       },
 
-      pieceRandom () {
+      pieceRandom() {
         const chars = "玉飛龍角馬金銀全桂圭香杏歩と".split("")
         return chars[this.rand(chars.length)]
       },
