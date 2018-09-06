@@ -67,7 +67,7 @@ module Colosseum
     before_validation on: :create do
       self.black_preset_key ||= "平手"
       self.white_preset_key ||= "平手"
-      self.lifetime_key     ||= :lifetime_m5
+      self.lifetime_key     ||= :lifetime_m10
       self.team_key         ||= :team_p1vs1
       self.turn_max         ||= 0
       self.clock_counts     ||= {black: [], white: []}

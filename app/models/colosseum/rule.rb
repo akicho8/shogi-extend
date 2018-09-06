@@ -28,7 +28,7 @@ module Colosseum
     before_validation on: :create do
       self.self_preset_key  ||= "平手"
       self.oppo_preset_key  ||= "平手"
-      self.lifetime_key     ||= :lifetime_m5
+      self.lifetime_key     ||= :lifetime_m10
       self.team_key         ||= :team_p1vs1
       self.robot_accept_key ||= "accept"
     end
