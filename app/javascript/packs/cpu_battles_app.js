@@ -2,7 +2,7 @@ import _ from "lodash"
 import * as AppHelper from "./app_helper.js"
 import axios from "axios"
 
-import { CpuBrainInfo } from "./cpu_brain_info.js"
+import CpuBrainInfo from "./cpu_brain_info.js"
 Object.defineProperty(Vue.prototype, "CpuBrainInfo", {value: CpuBrainInfo})
 
 document.addEventListener('DOMContentLoaded', () => {

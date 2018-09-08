@@ -1,5 +1,5 @@
 import assert from "assert"
-import { LifetimeInfo } from "./lifetime_info"
+import LifetimeInfo from "./lifetime_info"
 
 document.addEventListener('DOMContentLoaded', () => {
   App.single_notification = App.cable.subscriptions.create({channel: "SingleNotificationChannel"}, {

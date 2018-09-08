@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-class HiraKomaInfo extends MemoryRecord {
+export default class HiraKomaInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "hira", name: "平手",   },
@@ -8,5 +8,3 @@ class HiraKomaInfo extends MemoryRecord {
     ]
   }
 }
-
-export { HiraKomaInfo }

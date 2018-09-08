@@ -1,6 +1,6 @@
 import _ from "lodash"
-import { CustomPresetInfo } from './custom_preset_info'
-import { HiraKomaInfo } from './hira_koma_info'
+import CustomPresetInfo from './custom_preset_info'
+import HiraKomaInfo from './hira_koma_info'
 import lobby_matching from './lobby_matching'
 
 document.addEventListener('DOMContentLoaded', () => {

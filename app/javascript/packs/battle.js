@@ -3,9 +3,9 @@ import assert from "assert"
 import axios from "axios"
 import chess_clock from "./chess_clock"
 
-import { PresetInfo } from "shogi-player/src/preset_info"
-import { Location } from "shogi-player/src/location"
-import { LastActionInfo } from "./last_action_info"
+import PresetInfo from "shogi-player/src/preset_info"
+import Location from "shogi-player/src/location"
+import LastActionInfo from "./last_action_info"
 
 document.addEventListener("DOMContentLoaded", () => {
   App.battle = App.cable.subscriptions.create({
