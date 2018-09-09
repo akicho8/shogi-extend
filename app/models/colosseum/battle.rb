@@ -302,7 +302,21 @@ module Colosseum
           end
         end
 
+        # 時間が元に戻る不具合に対応するための案
+        # 1. battle_channel.rb で battle をメモ化しない
+        # 2. clock_counts_update のところで reload する
+        # 3. clock_counts をまるごと送る
         def clock_counts_update(clock_counter)
+          Rails.logger.tagged("clock_counts_update") do
+            if Rails.env.development?
+              if battle.turn_max >= 2
+                if battle.clock_counts.values.any? { |e| e.size.zero? }
+                  raise "2手進んでいるにもかかわらずチェスクロックの片方の手番の情報が入っていない : #{battle.clock_counts}"
+                end
+              end
+              Rails.logger.debug([mediator.opponent_player.location.key, clock_counter, battle.clock_counts])
+            end
+          end
           battle.clock_counts[mediator.opponent_player.location.key].push(clock_counter) # push でも AR は INSERT 対象になる
           battle.save!
         end

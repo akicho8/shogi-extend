@@ -86,6 +86,8 @@ class BattleChannel < ApplicationCable::Channel
   end
 
   def battle
-    @battle ||= Colosseum::Battle.find(params[:battle_id])
+    # メモ化してはいけない
+    # メモ化すると play_mode_long_sfen_set のときに clock_counts_update のなかで battle.clock_counts が片方の情報しか持ってない状態になり、相手の情報が毎回が元に戻ってしまう
+    Colosseum::Battle.find(params[:battle_id])
   end
 end
