@@ -158,7 +158,7 @@ RSpec.describe "対戦", type: :system do
 
       using_session("user8") do
         __choise_rule_and_start("チーム戦")
-        sleep(2)
+        sleep(4)
         assert { current_path == polymorphic_path([Colosseum::Battle.last]) }
         doc_image("成立")
       end
