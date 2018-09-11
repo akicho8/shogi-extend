@@ -160,3 +160,6 @@ gem 'omniauth-github'
 
 # markdown
 gem "redcarpet"
+
+# 音声で朗読
+gem "aws-sdk-polly"
