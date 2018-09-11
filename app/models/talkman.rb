@@ -1,6 +1,10 @@
 class Talkman
-  cattr_accessor :default_options do
+  cattr_accessor :default_polly_params do
     {
+      output_format: "mp3",
+      sample_rate: "16000",
+      text_type: "text",
+      voice_id: "Mizuki",
     }
   end
 
@@ -51,14 +55,7 @@ class Talkman
     direct_file_path.dirname.mkpath
 
     FileUtils.makedirs(direct_file_path.dirname)
-    resp = client.synthesize_speech(default_options.merge({
-          text: text,
-          response_target: direct_file_path.to_s,
-          output_format: "mp3",
-          sample_rate: "16000",
-          text_type: "text",
-          voice_id: "Mizuki",
-        }))
+    resp = client.synthesize_speech(default_polly_params.merge(text: text, response_target: direct_file_path.to_s))
     tp resp.to_h
     # >> |-------------+----------------------------------------|
     # >> |      region | us-west-2                              |
