@@ -1,5 +1,7 @@
 // どこに書いたらいいかわからない機能シリーズ
 
+import axios from "axios"
+
 // .kif_clipboard_copy_button の要素を一括でアレする
 export function kifu_copy_hook_all() {
   const elems = document.querySelectorAll(".kif_clipboard_copy_button")
@@ -55,4 +57,23 @@ export function login_required() {
     location.href = js_global.login_path
     return true
   }
+}
+
+// ログイン強制
+export function hatugen(str) {
+  // const params = new URLSearchParams()
+  // params.append("naiyou", str)
+  // axios.post(js_global.hatugens_path, params).then((response) => {
+  axios.get(js_global.hatugens_path, {params: {naiyou: str}}).then((response) => {
+    alert(response.data)
+    // if (response.data.error_message) {
+    //   Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+    // }
+    // if (response.data.sfen) {
+    //   this.full_sfen = response.data.sfen
+    // }
+  }).catch((error) => {
+    console.table([error.response])
+    Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+  })
 }

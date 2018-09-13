@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :about, only: :show
 
+  resource :hatugens
+
   devise_for :xusers, {
     class_name: "Colosseum::User",
     controllers: {

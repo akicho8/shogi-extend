@@ -34,7 +34,7 @@ class Talkman
   end
 
   def filename
-    "#{@hash_key}.mp3"
+    "#{hash_key}.mp3"
   end
 
   def hash_key
@@ -53,8 +53,6 @@ class Talkman
 
   def force_generate
     direct_file_path.dirname.mkpath
-
-    FileUtils.makedirs(direct_file_path.dirname)
     resp = client.synthesize_speech(default_polly_params.merge(text: text, response_target: direct_file_path.to_s))
     tp resp.to_h
     # >> |-------------+----------------------------------------|

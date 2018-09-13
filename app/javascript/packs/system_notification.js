@@ -41,6 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     message_send_all(data) {
       this.perform("message_send_all", data)
     },
+
+    // hatugen(data) {
+    //   this.perform("hatugen", data)
+    // },
   })
 
   App.system_notification_vm = new Vue({
@@ -49,6 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         system_logs: [],
       }
+    },
+
+    created() {
+      // App.system_notification.hatugen({naiyou: "こんにちは"})
+      AppHelper.hatugen("こんにちは")
     },
 
     methods: {
