@@ -18,8 +18,4 @@ class SystemNotificationChannel < ApplicationCable::Channel
   def message_send_all(data)
     ActionCable.server.broadcast("system_notification_channel", data)
   end
-
-  def message_send_all(data)
-    ActionCable.server.broadcast("system_notification_channel", data)
-  end
 end

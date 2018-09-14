@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = data["message"]
         const from = data["from"]
         const str = `${from.name}: ${message}`
+        AppHelper.hatugen(message)
         Vue.prototype.$toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
       }
 
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     created() {
       // App.system_notification.hatugen({naiyou: "こんにちは"})
-      AppHelper.hatugen("こんにちは")
+      // AppHelper.hatugen("こんにちは")
     },
 
     methods: {

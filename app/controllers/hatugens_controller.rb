@@ -1,6 +1,6 @@
 class HatugensController < ApplicationController
   def show
-    render json: params
+    render json: Talkman.new(params[:naiyou])
   end
 
   def create

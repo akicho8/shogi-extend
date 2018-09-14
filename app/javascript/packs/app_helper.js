@@ -64,16 +64,11 @@ export function hatugen(str) {
   // const params = new URLSearchParams()
   // params.append("naiyou", str)
   // axios.post(js_global.hatugens_path, params).then((response) => {
-  axios.get(js_global.hatugens_path, {params: {naiyou: str}}).then((response) => {
-    alert(response.data)
-    // if (response.data.error_message) {
-    //   Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
-    // }
-    // if (response.data.sfen) {
-    //   this.full_sfen = response.data.sfen
-    // }
+  axios.get(js_global.hatugens_path, {params: {naiyou: str}}).then(response => {
+    const audio = new Audio()
+    audio.src = response.data.service_path
+    audio.play()
   }).catch((error) => {
-    console.table([error.response])
     Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
   })
 }
