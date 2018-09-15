@@ -217,7 +217,12 @@ module General
       end
 
       def memberships_of_index(index)
-        memberships.includes(:taggings)[index]
+        begin
+          memberships.includes(:taggings)[index]
+        rescue => error
+          ExceptionNotifier.notify_exception(error, :data => {:record => inspect})
+          raise error
+        end
       end
     end
   end
