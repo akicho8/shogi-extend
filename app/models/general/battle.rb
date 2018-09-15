@@ -216,12 +216,11 @@ module General
         memberships_of_index(index)
       end
 
+      private
+
       def memberships_of_index(index)
-        begin
+        if index
           memberships.includes(:taggings)[index]
-        rescue => error
-          ExceptionNotifier.notify_exception(error, :data => {:record => inspect})
-          raise error
         end
       end
     end

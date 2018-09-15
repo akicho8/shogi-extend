@@ -101,30 +101,36 @@ module General
         {}.tap do |row|
           row["ID"] = link_to("##{battle.to_param}", battle)
 
+          mode = nil
           if current_general_user
             l_ship = battle.myself(current_general_user)
             r_ship = battle.rival(current_general_user)
-          else
+            if l_ship && r_ship
+              mode = :current_general_user
+            end
+          end
+          unless mode
             if battle.final_info.draw
               l_ship = battle.memberships.black
               r_ship = battle.memberships.white
+              mode = :draw
             else
               l_ship = battle.memberships.judge_key_eq(:win)
               r_ship = battle.memberships.judge_key_eq(:lose)
+              mode = :win_lose
             end
           end
 
-          if current_general_user
+          case mode
+          when :current_general_user
             row["対象棋士"] = battle.win_lose_str(l_ship).html_safe + " " + membership_name(l_ship)
             row["対戦相手"] = battle.win_lose_str(r_ship).html_safe + " " + membership_name(r_ship)
+          when :draw
+            row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(l_ship)
+            row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(r_ship)
           else
-            if battle.final_info.draw
-              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(l_ship)
-              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(r_ship)
-            else
-              row["勝ち"] = icon_tag(:far, :circle) + membership_name(l_ship)
-              row["負け"] = icon_tag(:fas, :times)  + membership_name(r_ship)
-            end
+            row["勝ち"] = icon_tag(:far, :circle) + membership_name(l_ship)
+            row["負け"] = icon_tag(:fas, :times)  + membership_name(r_ship)
           end
 
           row["結果"] = final_info_decorate(battle)
