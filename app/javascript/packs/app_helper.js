@@ -60,11 +60,11 @@ export function login_required() {
 }
 
 // ログイン強制
-export function hatugen(str) {
+export function speeker(source_text) {
   // const params = new URLSearchParams()
-  // params.append("naiyou", str)
-  // axios.post(js_global.hatugens_path, params).then((response) => {
-  axios.get(js_global.hatugens_path, {params: {naiyou: str}}).then(response => {
+  // params.append("source_text", source_text)
+  // axios.post(js_global.speeker_path, params).then((response) => {
+  axios.get(js_global.speeker_path, {params: {source_text: source_text}}).then(response => {
     const audio = new Audio()
     audio.src = response.data.service_path
     audio.play()

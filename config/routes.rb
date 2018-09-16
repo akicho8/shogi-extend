@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :about, only: :show
 
-  resource :hatugens
+  get "speeker", to: "speeker#show", as: :speeker
 
   devise_for :xusers, {
     class_name: "Colosseum::User",

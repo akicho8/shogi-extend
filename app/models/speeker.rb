@@ -1,4 +1,4 @@
-class Talkman
+class Speeker
   cattr_accessor :default_polly_params do
     {
       output_format: "mp3",
@@ -9,14 +9,12 @@ class Talkman
   end
 
   attr_accessor :source_text
-  attr_accessor :options
+  attr_accessor :params
 
-  def initialize(source_text, **options)
-    @options = {
+  def initialize(**params)
+    @params = {
       polly_params: {},
-    }.merge(options)
-
-    @source_text = source_text
+    }.merge(params)
   end
 
   # QRコード画像のURLを返す(画像は必ずある)
@@ -38,6 +36,10 @@ class Talkman
   end
 
   private
+
+  def source_text
+    params[:source_text].to_s
+  end
 
   # QRコード画像の実際のパス
   def direct_file_path
@@ -63,7 +65,7 @@ class Talkman
   end
 
   def force_generate
-    params = default_polly_params.merge(@options[:polly_params]).merge(text: source_text, response_target: direct_file_path.to_s)
+    params = default_polly_params.merge(@params[:polly_params]).merge(text: source_text, response_target: direct_file_path.to_s)
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
     tp resp.to_h

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = data["message"]
         const from = data["from"]
         const str = `${from.name}: ${message}`
-        AppHelper.hatugen(message)
+        AppHelper.speeker(message)
         Vue.prototype.$toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
       }
 
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
       this.perform("message_send_all", data)
     },
 
-    // hatugen(data) {
-    //   this.perform("hatugen", data)
+    // speeker(data) {
+    //   this.perform("speeker", data)
     // },
   })
 
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     created() {
-      // App.system_notification.hatugen({naiyou: "こんにちは"})
-      // AppHelper.hatugen("こんにちは")
+      // App.system_notification.speeker({source_text: "こんにちは"})
+      // AppHelper.speeker("こんにちは")
     },
 
     methods: {
