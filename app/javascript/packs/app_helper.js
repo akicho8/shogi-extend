@@ -66,6 +66,7 @@ export function speeker(source_text) {
   // axios.post(js_global.speeker_path, params).then((response) => {
   axios.get(js_global.speeker_path, {params: {source_text: source_text}}).then(response => {
     const audio = new Audio()
+    audio.pause()
     audio.src = response.data.service_path
     audio.play()
   }).catch((error) => {

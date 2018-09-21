@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // バトル開始
       if (data["begin_at"]) {
+        AppHelper.speeker("対戦開始")
         App.battle_vm.battle_setup(data)
       }
 
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // チャットの発言の追加
       if (data["chat_message"]) {
+        AppHelper.speeker(data["chat_message"].message)
         App.battle_vm.chat_messages.push(data["chat_message"])
       }
 
@@ -199,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   icon: "crown",
                   iconPack: "mdi",
                 })
+                AppHelper.speeker("勝ちました")
               } else {
                 // 負けた方
                 if (this.last_action_key === "TORYO") {
@@ -209,6 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     message: "負けました",
                     type: "is-primary",
                   })
+                  AppHelper.speeker("負けました")
                 }
               }
             }
@@ -221,11 +225,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 客観的結果通知
       last_action_notify_dialog_basic() {
+        const message = `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location_info)}の勝ち`
         Vue.prototype.$dialog.alert({
           type: "is-primary",
           title: "結果",
-          message: `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location_info)}の勝ち`,
+          message: message,
         })
+        AppHelper.speeker(message)
       },
 
       location_key_name(membership) {
