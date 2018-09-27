@@ -49,12 +49,17 @@ class ApplicationController < ActionController::Base
           :robot_accept_infos  => Colosseum::RobotAcceptInfo,
           :last_action_infos   => Colosseum::LastActionInfo,
           :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「名無しのアカウントを作成してログイン」を使ってみてください。"}]),
-          :speeker_path       => speeker_path,
+          :speeker_path        => speeker_path,
+          :session_hash        => session_hash, # CPU対戦で対局者を特定するため(こうしなくてもセッションで httponly: false にすると document.cookie から取れるらしいが危険)
         }
       end
 
       let :sysop? do
         current_user && current_user.sysop?
+      end
+
+      let :session_hash do
+        Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
       end
 
       helper_method :current_user

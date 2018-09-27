@@ -79,6 +79,9 @@ module ModulableCrud
       let :current_records do
         current_scope.order(:id).reverse_order.page(params[:page])
       end
+
+      def index
+      end
     end
   end
 
@@ -178,25 +181,25 @@ module ModulableCrud
           render :edit
           return
         end
-        # 確認画面から戻ったとき用の属性を作っておく
-        # ファイルアップロードしたときなどは current_session_attributes のなかで、そのキーを抜いておくこと
+        # Make an attribute for when returning from the confirmation screen
+        # When uploading a file etc, please leave that key in current_session_attributes
         session[current_single_key] = current_session_attributes
         render :confirm
       when _submit_from_confirm?
-        # 確認画面からsubmit
-        current_record.assign_attributes(session[current_single_key]) # 復元
+        # From the confirmation screen submit
+        current_record.assign_attributes(session[current_single_key]) # Restoration
         save_and_redirect
       when _back_to_edit?
-        # 確認画面から編集に戻る
-        current_record.assign_attributes(session[current_single_key]) # 復元
+        # Return to edit from confirmation screen
+        current_record.assign_attributes(session[current_single_key]) # Restoration
         render :edit
       else
-        # 通常処理
+        # Normal processing
         super
       end
     end
 
-    # 確認画面から戻ったときに復元するデータ
+    # Data to restore when returning from the confirmation screen
     def current_session_attributes
       current_record_params
     end

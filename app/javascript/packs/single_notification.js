@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     },
     received(data) {
+      // 発音の受信
+      if (data["kifuyomi"]) {
+        AppHelper.speeker(data["kifuyomi"])
+      }
+
       // 個別メッセージの受信
       if (data["message"]) {
         const message = data["message"]

@@ -35,6 +35,8 @@ class CpuBattlesController < ApplicationController
         return
       end
 
+      ActionCable.server.broadcast("cpu_battle_channel_#{session_hash}", kifuyomi: mediator.hand_logs.last.to_kifuyomi)
+
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
@@ -84,11 +86,12 @@ class CpuBattlesController < ApplicationController
 
       # CPUの手を指す
       mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
+      response = { sfen: mediator.to_sfen, kifuyomi: mediator.hand_logs.last.to_kifuyomi }
 
       if true
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
-          render json: {you_lose_message: "CPUの勝ちです", sfen: mediator.to_sfen}
+          render json: response.merege(you_lose_message: "CPUの勝ちです")
           return
         end
       end
@@ -96,12 +99,12 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          render json: {you_lose_message: "玉を取られました", sfen: mediator.to_sfen}
+          render json: response.merege(you_lose_message: "玉を取られました")
           return
         end
       end
 
-      render json: {sfen: mediator.to_sfen}
+      render json: response
       return
     end
   end

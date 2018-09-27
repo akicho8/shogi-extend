@@ -55,6 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
         App.battle_vm.human_kifu_text = data["human_kifu_text"]
       }
 
+      // 読み上げ
+      if (data["kifuyomi"]) {
+        AppHelper.speeker(data["kifuyomi"])
+      }
+
       // チャットの発言の追加
       if (data["chat_message"]) {
         AppHelper.speeker(data["chat_message"].message)

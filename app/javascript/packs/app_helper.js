@@ -59,16 +59,50 @@ export function login_required() {
   }
 }
 
-// ログイン強制
+var global_audio = null
+var global_src_stack = []
+
 export function speeker(source_text) {
   // const params = new URLSearchParams()
   // params.append("source_text", source_text)
   // axios.post(js_global.speeker_path, params).then((response) => {
   axios.get(js_global.speeker_path, {params: {source_text: source_text}}).then(response => {
-    const audio = new Audio()
-    audio.pause()
-    audio.src = response.data.service_path
-    audio.play()
+    // すぐに発声する場合
+    if (false) {
+      const audio = new Audio()
+      audio.src = response.data.service_path
+      audio.play()
+    }
+
+    // 最後に来た音声のみ発声
+    if (false) {
+      if (!global_audio) {
+        global_audio = new Audio()
+      }
+      global_audio.src = response.data.service_path
+      global_audio.play()
+    }
+
+    // FIFO 形式で順次発声
+    if (true) {
+      global_src_stack.push(response.data.service_path)
+
+      if (global_audio === null) {
+        const service_path = global_src_stack.shift()
+        global_audio = new Audio()
+        global_audio.src = response.data.service_path
+        global_audio.play()
+        global_audio.addEventListener("ended", function() {
+          if (global_src_stack.length >= 1) {
+            global_audio.src = global_src_stack.shift()
+            global_audio.play()
+          } else {
+            global_audio = null
+          }
+        }, false)
+      }
+    }
+
   }).catch((error) => {
     Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
   })

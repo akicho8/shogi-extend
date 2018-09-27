@@ -127,4 +127,11 @@ Rails.application.routes.draw do
     #   end
     # end
   end
+
+  ################################################################################ admin
+
+  # namespace :admin do
+  #   resources :users
+  #   root "users#index"
+  # end
 end

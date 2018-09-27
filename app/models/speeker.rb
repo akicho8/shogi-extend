@@ -66,6 +66,7 @@ class Speeker
 
   def force_generate
     params = default_polly_params.merge(@params[:polly_params]).merge(text: source_text, response_target: direct_file_path.to_s)
+    tp params
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
     tp resp.to_h

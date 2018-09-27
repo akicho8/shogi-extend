@@ -332,6 +332,7 @@ module Colosseum
             :full_sfen       => battle.full_sfen,
             :human_kifu_text => battle.human_kifu_text,
             :clock_counts    => battle.clock_counts,
+            :kifuyomi        => mediator.hand_logs.last.to_kifuyomi,
           }
 
           ActionCable.server.broadcast(battle.channel_key, broadcast_hash)
