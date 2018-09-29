@@ -58,10 +58,6 @@ class ApplicationController < ActionController::Base
         current_user && current_user.sysop?
       end
 
-      let :session_hash do
-        Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
-      end
-
       helper_method :current_user
     end
 
@@ -106,6 +102,20 @@ class ApplicationController < ActionController::Base
     def current_user_logout
       current_user_set_id(nil)
       sign_out(:xuser)
+    end
+  end
+
+  concerning :SpeekerMethods do
+    included do
+      let :session_hash do
+        Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
+      end
+
+      helper_method :speeker
+    end
+
+    def speeker(str)
+      ActionCable.server.broadcast("light_session_channel_#{session_hash}", yomiage: str)
     end
   end
 
