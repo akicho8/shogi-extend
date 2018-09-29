@@ -1,7 +1,6 @@
 // どこに書いたらいいかわからない機能シリーズ
 
 import axios from "axios"
-import no_sound from "./no_sound.mp3"
 
 // .kif_clipboard_copy_button の要素を一括でアレする
 export function kifu_copy_hook_all() {
@@ -62,41 +61,6 @@ export function login_required() {
   }
 }
 
-// こうするとグローバル変数にできる
-// var で定義するとグローバルにはなってない
-window.global_audio = new Audio()
-window.global_audio_counter = 0
-window.global_audio_standby_mode = true
-window.global_src_stack = []
-
-document.addEventListener("touchstart", () => {
-  global_audio_play(no_sound)
-})
-
-global_audio.addEventListener("ended", () => {
-  // console.log(`global_audio.ended:${JSON.stringify(global_audio.ended)}`)
-  if (global_src_stack.length == 0) {
-    global_audio_standby_mode = true
-  } else {
-    global_audio_play_next()
-  }
-}, false)
-
-function global_audio_play_next() {
-  if (global_src_stack.length >= 1) {
-    global_audio_standby_mode = false
-    global_audio.src = global_src_stack.shift()
-    global_audio.play()
-  }
-}
-
-function global_audio_play(audio_file_path) {
-  global_src_stack.push(audio_file_path)
-  if (global_audio_standby_mode) {
-    global_audio_play_next()
-  }
-}
-
 export function talk(source_text) {
   // const params = new URLSearchParams()
   // params.append("source_text", source_text)
@@ -111,16 +75,16 @@ export function talk(source_text) {
 
     // 最後に来た音声のみ発声
     if (false) {
-      if (!global_audio) {
-        global_audio = new Audio()
+      if (!audio) {
+        audio = new Audio()
       }
-      global_audio.src = response.data.service_path
-      global_audio.play()
+      audio.src = response.data.service_path
+      audio.play()
     }
 
     // FIFO 形式で順次発声
     if (true) {
-      global_audio_play(response.data.service_path)
+      audio_queue.media_push(response.data.service_path)
     }
 
   }).catch((error) => {
