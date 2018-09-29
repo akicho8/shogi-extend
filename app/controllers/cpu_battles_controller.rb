@@ -91,7 +91,7 @@ class CpuBattlesController < ApplicationController
       if true
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
-          render json: response.merege(you_lose_message: "CPUの勝ちです")
+          render json: response.merge(you_lose_message: "CPUの勝ちです")
           return
         end
       end
@@ -99,7 +99,7 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          render json: response.merege(you_lose_message: "玉を取られました")
+          render json: response.merge(you_lose_message: "玉を取られました")
           return
         end
       end
