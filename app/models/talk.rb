@@ -56,7 +56,7 @@ class Talk
 
   def generate_if_not_exist
     if direct_file_path.exist?
-      if Rails.env.production?
+      if Rails.env.production? || Rails.env.test?
         return
       end
     end
