@@ -213,7 +213,7 @@ module Swars
 
         def old_record_destroy(**params)
           params = {
-            time: 2.weeks.ago,
+            time: 1.months.ago,
           }.merge(params)
 
           all.where(arel_table[:last_accessd_at].lteq(params[:time])).destroy_all
