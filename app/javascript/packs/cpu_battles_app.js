@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     created() {
-      setTimeout(() => AppHelper.speeker("よろしくお願いします。あなたのてばんです"), 1000 * 1)
+      setTimeout(() => AppHelper.talk("よろしくお願いします。あなたのてばんです"), 1000 * 1)
     },
 
     computed: {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     watch: {
       cpu_brain_key() {
-        AppHelper.speeker(this.cpu_brain_info.name)
+        AppHelper.talk(this.cpu_brain_info.name)
       },
     },
 
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
               icon: 'times-circle',
               iconPack: 'fa',
             })
-            AppHelper.speeker("反則負けです")
+            AppHelper.talk("反則負けです")
 
             // Vue.prototype.$dialog.alert({
             //   message: response.data["normal_message"],
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
               icon: 'crown',
               iconPack: 'mdi',
             })
-            AppHelper.speeker("勝ちました")
+            AppHelper.talk("勝ちました")
           }
 
           if (response.data["you_lose_message"]) {
@@ -105,12 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
               message: response.data["you_lose_message"],
               type: 'is-primary',
             })
-            AppHelper.speeker("負けました")
+            AppHelper.talk("負けました")
           }
 
           // CPUの指し手を読み上げる
           if (response.data["kifuyomi"]) {
-            AppHelper.speeker(response.data["kifuyomi"])
+            AppHelper.talk(response.data["kifuyomi"])
           }
 
           if (response.data["sfen"]) {

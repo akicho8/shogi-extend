@@ -158,7 +158,8 @@ module Swars
     end
 
     rescue_from "Mechanize::ResponseCodeError" do |exception|
-      flash.now[:danger] = %(<div class="has-text-weight-bold">該当のユーザーが見つからないか混み合っています</div><br/>#{exception.class.name}<br/>#{exception.message}<br/><br/>#{exception.backtrace.take(8).join("<br/>")}).html_safe
+      message = "該当のユーザーが見つからないか混み合っています"
+      flash.now[:danger] = %(<div class="has-text-weight-bold">#{message}</div><br/>#{exception.class.name}<br/>#{exception.message}<br/><br/>#{exception.backtrace.take(8).join("<br/>")}).html_safe
       render :index
     end
 

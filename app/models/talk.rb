@@ -1,4 +1,7 @@
-class Speeker
+#
+# Talk.new(source_text: "こんにちは")
+#
+class Talk
   cattr_accessor :default_polly_params do
     {
       output_format: "mp3",
@@ -17,13 +20,11 @@ class Speeker
     }.merge(params)
   end
 
-  # QRコード画像のURLを返す(画像は必ずある)
   def service_path
     generate_if_not_exist
     relative_path
   end
 
-  # QRコード画像のファイルパスを返す(画像は必ずある)
   def real_path
     generate_if_not_exist
     direct_file_path
@@ -41,7 +42,6 @@ class Speeker
     params[:source_text].to_s
   end
 
-  # QRコード画像の実際のパス
   def direct_file_path
     Rails.public_path.join("system", self.class.name.underscore, *dir_parts, filename)
   end

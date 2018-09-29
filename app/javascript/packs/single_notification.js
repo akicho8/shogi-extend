@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     received(data) {
       // 発音の受信(ログインしているときは LightSessionChannel ではなくこちらでも利用できる)
       if (data["yomiage"]) {
-        AppHelper.speeker(data["yomiage"])
+        AppHelper.talk(data["yomiage"])
       }
 
       // 個別メッセージの受信
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const to = data["to"]
         const str = `${from.name}: ${message}`
         Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
+        AppHelper.talk(message)
       }
 
       // 対局リクエスト
@@ -60,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
 `
         const message = _.template(message_template)({handicap: handicap})
 
+        AppHelper.talk(`${e.from.name}さんからの挑戦状が届きました`)
+
         this.battle_request_dialog_showing = true
         Vue.prototype.$dialog.confirm({
           title: `${e.from.name}さんからの挑戦状`,
@@ -72,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.perform("battle_match_ok", data)
           },
           onCancel: () => {
+            AppHelper.talk(`断りました`)
             this.battle_request_dialog_showing = false
             this.perform("battle_match_ng", data)
           },

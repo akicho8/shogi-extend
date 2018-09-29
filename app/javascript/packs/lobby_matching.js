@@ -41,13 +41,18 @@ export default {
           this.matching_counter++
           if (this.robot_accept_key === "accept") {
             if (this.matching_counter === this.matching_counter_trigger) {
+              const message = "相手がいないのでCPUと対局しますか？"
+              AppHelper.talk(message)
               Vue.prototype.$dialog.confirm({
                 title: "確認",
-                message: "相手がいないのでCPUと対局しますか？",
+                message: message,
                 confirmText: "CPUと対局する",
                 cancelText: "いいえ",
                 onConfirm: () => {
                   App.lobby.matching_start_with_robot()
+                },
+                onCancel: () => {
+                  AppHelper.talk("誰か来るまで待ちます")
                 },
               })
             }

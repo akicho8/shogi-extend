@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // ロビーでの発言追加
       if (data["lobby_message"]) {
-        AppHelper.speeker(data["lobby_message"].message)
+        AppHelper.talk(data["lobby_message"].message)
         App.lobby_vm.lobby_messages.push(data["lobby_message"])
       }
 

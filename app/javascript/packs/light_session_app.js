@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, {
     received(data) {
       if (data["yomiage"]) {
-        AppHelper.speeker(data["yomiage"])
+        AppHelper.talk(data["yomiage"])
       }
     },
   })

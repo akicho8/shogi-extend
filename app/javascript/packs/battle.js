@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // バトル開始
       if (data["begin_at"]) {
-        AppHelper.speeker("対戦開始")
+        AppHelper.talk("対戦開始")
         App.battle_vm.battle_setup(data)
       }
 
@@ -57,12 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 読み上げ(この部屋のすべての人が受信する)
       if (data["kifuyomi"]) {
-        AppHelper.speeker(data["kifuyomi"])
+        AppHelper.talk(data["kifuyomi"])
       }
 
       // チャットの発言の追加
       if (data["chat_message"]) {
-        AppHelper.speeker(data["chat_message"].message)
+        AppHelper.talk(data["chat_message"].message)
         App.battle_vm.chat_messages.push(data["chat_message"])
       }
 
@@ -159,9 +159,11 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       give_up() {
+        const message = "本当に投了しますか？"
+        AppHelper.talk(message)
         Vue.prototype.$dialog.confirm({
           title: "確認",
-          message: "本当に投了しますか？",
+          message: message,
           confirmText: "投了する",
           cancelText: "キャンセル",
           onConfirm: () => {
@@ -206,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   icon: "crown",
                   iconPack: "mdi",
                 })
-                AppHelper.speeker("勝ちました")
+                AppHelper.talk("勝ちました")
               } else {
                 // 負けた方
                 if (this.last_action_key === "TORYO") {
@@ -217,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     message: "負けました",
                     type: "is-primary",
                   })
-                  AppHelper.speeker("負けました")
+                  AppHelper.talk("負けました")
                 }
               }
             }
@@ -236,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
           title: "結果",
           message: message,
         })
-        AppHelper.speeker(message)
+        AppHelper.talk(message)
       },
 
       location_key_name(membership) {

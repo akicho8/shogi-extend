@@ -45,8 +45,10 @@ export function clipboard_copy(str, __options = {}) {
   document.body.removeChild(elem)
 
   if (success) {
+    talk(options["success_message"])
     Vue.prototype.$toast.open({message: options["success_message"], position: "is-bottom", type: "is-success"})
   } else {
+    talk(options["error_message"])
     Vue.prototype.$toast.open({message: options["error_message"], position: "is-bottom", type: "is-danger"})
   }
 }
@@ -64,11 +66,11 @@ export function login_required() {
 window.global_audio = null
 window.global_src_stack = []
 
-export function speeker(source_text) {
+export function talk(source_text) {
   // const params = new URLSearchParams()
   // params.append("source_text", source_text)
-  // axios.post(js_global.speeker_path, params).then((response) => {
-  axios.get(js_global.speeker_path, {params: {source_text: source_text}}).then(response => {
+  // axios.post(js_global.talk_path, params).then((response) => {
+  axios.get(js_global.talk_path, {params: {source_text: source_text}}).then(response => {
     // すぐに発声する場合
     if (false) {
       const audio = new Audio()
