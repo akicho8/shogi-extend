@@ -1,4 +1,4 @@
-// import * as AppHelper from "./app_helper.js"
+// import no_sound from "./no_sound.mp3"
 
 document.addEventListener('DOMContentLoaded', () => {
   App.cable.subscriptions.create({
@@ -11,4 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
   })
+
+  // const audio = new Audio()
+  // audio.src = no_sound
+  // audio.play()
 })

@@ -9,7 +9,7 @@ const publicPath = {
 }[process.env.NODE_ENV]
 
 module.exports = {
-  test: /\.(wav|jpg|jpeg|png|gif|tiff|ico|svg|eot|otf|ttf|woff|woff2)$/i,
+  test: /\.(mp3|wav|jpg|jpeg|png|gif|tiff|ico|svg|eot|otf|ttf|woff|woff2)$/i,
   use: [
     {
       loader: 'file-loader', // http://devdocs.io/webpack/loaders/file-loader
