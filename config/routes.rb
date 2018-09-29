@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :about, only: :show
 
-  get "speeker", to: "speeker#show", as: :speeker
+  get "talk", to: "talk#show", as: :talk
 
   devise_for :xusers, {
     class_name: "Colosseum::User",
@@ -28,8 +28,7 @@ Rails.application.routes.draw do
   ################################################################################ ログアウト
 
   namespace :colosseum, path: "" do
-    resource :session
-    get "login" => "sessions#new"
+    resource :session, only: [:create, :destroy]
   end
 
   ################################################################################ 2ch棋譜検索
