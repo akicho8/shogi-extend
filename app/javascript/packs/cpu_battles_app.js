@@ -6,24 +6,6 @@ import CpuBrainInfo from "./cpu_brain_info.js"
 Object.defineProperty(Vue.prototype, "CpuBrainInfo", {value: CpuBrainInfo})
 
 document.addEventListener('DOMContentLoaded', () => {
-  // axios だと人間側が指した手の読み上げをするのにCPUが指すまで待たないといけないため結局専用の ActionCable を用意してCPUが考える前に指し手を発声させる
-  App.cpu_battle = App.cable.subscriptions.create({
-    channel: "CpuBattleChannel",
-    session_hash: js_global.session_hash,
-  }, {
-    connected() {
-    },
-
-    disconnected() {
-    },
-
-    received(data) {
-      if (data["kifuyomi"]) {
-        AppHelper.speeker(data["kifuyomi"])
-      }
-    },
-  })
-
   const cpu_battles_app = new Vue({
     el: '#cpu_battles_app',
     data() {
@@ -33,7 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
 
+    created() {
+      setTimeout(() => AppHelper.speeker("よろしくお願いします。あなたのてばんです"), 1000 * 1)
+    },
+
     computed: {
+      cpu_brain_info() {
+        return CpuBrainInfo.fetch(this.cpu_brain_key)
+      },
+    },
+
+    watch: {
+      cpu_brain_key() {
+        AppHelper.speeker(this.cpu_brain_info.name)
+      },
     },
 
     methods: {
@@ -81,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
               iconPack: 'fa',
             })
             AppHelper.speeker("反則負けです")
-            AppHelper.speeker(response.data["error_message"])
 
             // Vue.prototype.$dialog.alert({
             //   message: response.data["normal_message"],

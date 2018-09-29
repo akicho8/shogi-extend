@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     },
     received(data) {
-      // 発音の受信
-      if (data["kifuyomi"]) {
-        AppHelper.speeker(data["kifuyomi"])
+      // 発音の受信(ログインしているときは LightSessionChannel ではなくこちらでも利用できる)
+      if (data["yomiage"]) {
+        AppHelper.speeker(data["yomiage"])
       }
 
       // 個別メッセージの受信

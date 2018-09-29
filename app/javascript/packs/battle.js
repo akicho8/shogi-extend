@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         App.battle_vm.human_kifu_text = data["human_kifu_text"]
       }
 
-      // 読み上げ
+      // 読み上げ(この部屋のすべての人が受信する)
       if (data["kifuyomi"]) {
         AppHelper.speeker(data["kifuyomi"])
       }

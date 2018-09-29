@@ -59,8 +59,10 @@ export function login_required() {
   }
 }
 
-var global_audio = null
-var global_src_stack = []
+// こうするとグローバル変数にできる
+// var で定義するとグローバルにはなってない
+window.global_audio = null
+window.global_src_stack = []
 
 export function speeker(source_text) {
   // const params = new URLSearchParams()
@@ -88,11 +90,10 @@ export function speeker(source_text) {
       global_src_stack.push(response.data.service_path)
 
       if (global_audio === null) {
-        const service_path = global_src_stack.shift()
         global_audio = new Audio()
-        global_audio.src = response.data.service_path
+        global_audio.src = global_src_stack.shift()
         global_audio.play()
-        global_audio.addEventListener("ended", function() {
+        global_audio.addEventListener("ended", () => {
           if (global_src_stack.length >= 1) {
             global_audio.src = global_src_stack.shift()
             global_audio.play()

@@ -35,7 +35,7 @@ class CpuBattlesController < ApplicationController
         return
       end
 
-      ActionCable.server.broadcast("cpu_battle_channel_#{session_hash}", kifuyomi: mediator.hand_logs.last.to_kifuyomi)
+      speeker(mediator.hand_logs.last.to_kifuyomi)
 
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
