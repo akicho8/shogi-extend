@@ -168,6 +168,16 @@ task :mail_log do
   end
 end
 
+desc "cap production yarn_cache_clean"
+task :yarn_cache_clean do
+  on roles :all do
+    # execute "ls -al ~/.cache/yarn/v1"
+    execute "yarn cache clean"
+    # execute "ls -al ~/.cache/yarn/v1"
+  end
+end
+after "deploy:finished", :yarn_cache_clean
+
 namespace :deploy do
   # desc 'Restart application'
   # task :restart do
@@ -407,16 +417,16 @@ unless ENV["REMOTE_BUILD"] == "1"
 end
 
 desc "間違わないようにバナー表示"
-before "deploy:starting", :banner do
-  label = "#{fetch(:branch)} to #{fetch(:stage)}".gsub(/[_\W]+/, " ")
+before "deploy:starting", :starting_banner do
+  label = "#{fetch(:application)} #{fetch(:branch)} to #{fetch(:stage)}".gsub(/[_\W]+/, " ")
   puts Artii::Base.new(font: "slant").output(label)
   system "say '#{label}'"
 end
 
-# desc "サーバー起動確認"
-# after "deploy:finished", :heartbeat do
-#   # puts `curl --silent -I http://tk2-221-20341.vs.sakura.ne.jp/shogi | grep HTTP`.strip
-# end
+desc "サーバー起動確認"
+after "deploy:finished", :hb do
+  puts `curl --silent -I http://tk2-221-20341.vs.sakura.ne.jp/shogi | grep HTTP`.strip
+end
 
 desc "デプロイ失敗"
 task "deploy:failed" do
@@ -424,7 +434,7 @@ task "deploy:failed" do
 end
 
 desc "デプロイ成功"
-after "deploy:finished", :finished do
+after "deploy:finished", :finished_banner do # finished にすると動かない
   label = "#{fetch(:branch)} to #{fetch(:stage)} deploy finished".gsub(/[_\W]+/, " ")
   puts Artii::Base.new(font: "slant").output(label)
   system "say '#{label}'"
