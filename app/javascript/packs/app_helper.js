@@ -45,10 +45,10 @@ export function clipboard_copy(str, __options = {}) {
   document.body.removeChild(elem)
 
   if (success) {
-    talk(options["success_message"])
+    talk("コピーしました")
     Vue.prototype.$toast.open({message: options["success_message"], position: "is-bottom", type: "is-success"})
   } else {
-    talk(options["error_message"])
+    talk("失敗しました")
     Vue.prototype.$toast.open({message: options["error_message"], position: "is-bottom", type: "is-danger"})
   }
 }
