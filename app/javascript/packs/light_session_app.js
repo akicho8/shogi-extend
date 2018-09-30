@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["yomiage"]) {
         AppHelper.talk(data["yomiage"])
       }
+      // Rails側で翻訳できている場合はショートカットして再生することもできる
+      if (data["talk"]) {
+        audio_queue.media_push(data["talk"]["service_path"])
+      }
     },
   })
 

@@ -117,6 +117,10 @@ class ApplicationController < ActionController::Base
     def talk(str)
       ActionCable.server.broadcast("light_session_channel_#{session_hash}", yomiage: str)
       str
+    def direct_talk(str)
+      str.tap do
+        ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(source_text: str))
+      end
     end
   end
 
