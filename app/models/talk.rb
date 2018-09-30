@@ -8,6 +8,7 @@ class Talk
       sample_rate: "16000",
       text_type: "text",
       voice_id: "Mizuki",
+      # voice_id: "Takumi",
     }
   end
 
@@ -51,7 +52,11 @@ class Talk
   end
 
   def unique_key
-    @unique_key ||= Digest::MD5.hexdigest(source_text)
+    @unique_key ||= Digest::MD5.hexdigest(unique_source_value)
+  end
+
+  def unique_source_value
+    [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
   end
 
   def generate_if_not_exist
@@ -65,7 +70,7 @@ class Talk
   end
 
   def force_generate
-    params = default_polly_params.merge(@params[:polly_params]).merge(text: source_text, response_target: direct_file_path.to_s)
+    params = polly_params.merge(text: source_text, response_target: direct_file_path.to_s)
     tp params
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
@@ -81,6 +86,10 @@ class Talk
     # >> |--------------------+-----------------------------------------------------|
 
     Rails.logger.info("#{__method__}: #{source_text} => #{direct_file_path}")
+  end
+
+  def polly_params
+    default_polly_params.merge(@params[:polly_params])
   end
 
   def relative_path
