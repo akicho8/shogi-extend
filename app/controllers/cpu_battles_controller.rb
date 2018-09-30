@@ -5,6 +5,11 @@ class CpuBattlesController < ApplicationController
       cpu_brain_infos: CpuBrainInfo,
       cpu_brain_key: current_cpu_brain_key,
     }
+
+    if false
+      talk("talk")
+      direct_talk("direct_talk")
+    end
   end
 
   def create

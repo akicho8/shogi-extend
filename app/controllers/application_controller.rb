@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
           :last_action_infos   => Colosseum::LastActionInfo,
           :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「名無しのアカウントを作成してログイン」を使ってみてください。"}]),
           :talk_path           => talk_path,
-          :session_hash        => session_hash, # CPU対戦で対局者を特定するため(こうしなくてもセッションで httponly: false にすると document.cookie から取れるらしいが危険)
+          :custom_session_id        => custom_session_id, # CPU対戦で対局者を特定するため(こうしなくてもセッションで httponly: false にすると document.cookie から取れるらしいが危険)
         }
       end
 
@@ -107,16 +107,34 @@ class ApplicationController < ActionController::Base
 
   concerning :TalkMethods do
     included do
-      let :session_hash do
+      let :custom_session_id do
         Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
       end
 
       helper_method :talk
     end
 
+    # talk("こんにちは")
+    #
+    # 実行順序
+    #
+    #   light_session_channel.rb
+    #     light_session_app.js
+    #       app_helper.js (talk)
+    #         axios
+    #           talk_controller.rb
+    #         Audio#play
+    #
+    # ショートカットする方法
+    #
+    #   ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(source_text: "こんにちは").as_json)
+    #
     def talk(str)
-      ActionCable.server.broadcast("light_session_channel_#{session_hash}", yomiage: str)
-      str
+      str.tap do
+        ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", yomiage: str)
+      end
+    end
+
     def direct_talk(str)
       str.tap do
         ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(source_text: str))

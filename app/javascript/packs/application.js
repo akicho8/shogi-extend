@@ -13,8 +13,8 @@ Rails.start()
 import "./application_css.sass"
 import "./modulable_crud.coffee"
 import "./bulma.js"
-import "./light_session_app"
-import "./audio_queue"
+import "./light_session_app.js"
+import "./audio_queue.js"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
