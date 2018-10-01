@@ -138,7 +138,7 @@ module Swars
             count_diff = current_swars_user.battles.count - before_count
             if count_diff.zero?
             else
-              flash.now[:info] = "#{count_diff}件新しく見つかりました"
+              flash.now[:info] = talk("#{count_diff}件新しく見つかりました")
             end
             current_swars_user.search_logs.create!
           else
