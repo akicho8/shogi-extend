@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     battle_id: js_battle.id,
   }, {
     connected() {
+      // alert("room_in")
       this.perform("room_in")
     },
 

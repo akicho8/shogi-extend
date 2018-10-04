@@ -90,6 +90,12 @@ namespace :rails do
       execute "tailf #{shared_path}/log/#{fetch(:rails_env)}.log"
     end
   end
+  desc "cap production rails:log:download"
+  task "log:download" do
+    on roles(:app) do
+      download! "#{shared_path}/log/#{fetch(:rails_env)}.log", "log"
+    end
+  end
   desc "cap production rails:cron_log"
   task :cron_log do
     on roles(:app) do
