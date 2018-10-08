@@ -13,4 +13,12 @@ end
 set :rails_env, 'production'    # 必要
 
 append :linked_files, 'config/database.yml'
-before 'deploy:check:linked_files', 'deploy:upload_shared_config_database_yml'
+
+# 専用の database.yml を転送
+before 'deploy:check:linked_files', 'deploy:database_yml_upload'
+
+# さくらサーバーの容量がないため yarn のパッケージのキャッシュはクリアする
+after "deploy:finished", :yarn_cache_clean
+
+# 起動確認
+set :my_heartbeat_urls, "http://tk2-221-20341.vs.sakura.ne.jp/shogi"

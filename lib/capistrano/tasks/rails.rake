@@ -17,9 +17,9 @@ namespace :deploy do
     end
   end
 
-  # cap local deploy:upload_shared_config_database_yml
+  # cap local deploy:database_yml_upload
   desc "database.production.yml があれば database.yml としてアップロード"
-  task :upload_shared_config_database_yml do
+  task :database_yml_upload do
     on roles(:all) do
       local_file = Pathname("config/database.#{fetch(:stage)}.yml")
       if local_file.exist?

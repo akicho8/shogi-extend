@@ -1,5 +1,3 @@
-################################################################################ 独自タスク
-
 desc "cap production crontab"
 task :crontab do
   on roles(:all) do
@@ -7,10 +5,23 @@ task :crontab do
   end
 end
 
-desc "cap production error_log"
-task :error_log do
-  on roles(:all) do
-    execute "sudo tailf /var/log/httpd/error_log"
+[
+  [:error_log, :error_log_file_path, "/var/log/httpd/error_log"],
+].each do |key, var_key, default|
+  file = fetch(var_key, default)
+
+  desc "tailf #{file}"
+  task key do
+    on roles(:all) do
+      execute :sudo, :tailf, file
+    end
+  end
+
+  desc "download #{file}"
+  task "#{key}:download" do
+    on roles(:all) do
+      download! file, "log"
+    end
   end
 end
 
@@ -43,7 +54,6 @@ task :yarn_cache_clean do
     # execute "ls -al ~/.cache/yarn/v1"
   end
 end
-after "deploy:finished", :yarn_cache_clean
 
 namespace :deploy do
   # desc 'Restart application'
@@ -122,7 +132,9 @@ end
 
 desc "サーバー起動確認"
 after "deploy:finished", :hb do
-  puts `curl --silent -I http://tk2-221-20341.vs.sakura.ne.jp/shogi | grep HTTP`.strip
+  Array(fetch(:my_heartbeat_urls)).each do |url|
+    puts `curl --silent -I #{url} | grep HTTP`.strip
+  end
 end
 
 desc "デプロイ失敗"

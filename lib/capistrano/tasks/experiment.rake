@@ -6,7 +6,6 @@ task :env do
     execute :env
   end
 end
-# before "deploy:check", "deploy:check:env"
 
 task :t do
   on roles(:all) do
@@ -30,5 +29,18 @@ task :v do
         'fetch(:current_path)': fetch(:current_path),
         'fetch(:release_path)': fetch(:release_path),
       })
+  end
+end
+
+namespace :rails do
+  desc "Run Rails console"
+  task :console2 do
+    run_interactively primary(:app) do
+      within current_path do
+        # as user: :foobar do
+        execute(:rails, :console)
+        # end
+      end
+    end
   end
 end
