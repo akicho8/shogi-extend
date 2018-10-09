@@ -5,47 +5,6 @@ task :crontab do
   end
 end
 
-[
-  [:error_log, :error_log_file_path, "/var/log/httpd/error_log"],
-].each do |key, var_key, default|
-  file = fetch(var_key, default)
-
-  desc "tailf #{file}"
-  task key do
-    on roles(:all) do
-      execute :sudo, :tailf, file
-    end
-  end
-
-  desc "download #{file}"
-  task "#{key}:download" do
-    on roles(:all) do
-      download! file, "log"
-    end
-  end
-end
-
-desc "cap production access_log"
-task :access_log do
-  on roles(:all) do
-    execute "sudo tailf /var/log/httpd/access_log"
-  end
-end
-
-desc "cap production cron_log"
-task :cron_log do
-  on roles(:all) do
-    execute "sudo tailf /var/log/cron"
-  end
-end
-
-desc "cap production mail_log"
-task :mail_log do
-  on roles(:all) do
-    execute "sudo tailf /var/log/maillog"
-  end
-end
-
 desc "cap production yarn_cache_clean"
 task :yarn_cache_clean do
   on roles(:all) do
