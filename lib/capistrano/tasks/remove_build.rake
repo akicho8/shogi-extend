@@ -20,7 +20,7 @@ unless ENV["REMOTE_BUILD"] == "1"
         execute :cp, "-v", "config/database.precompile.yml", "config/database.yml"
 
         # master.key も必要に応じてコピーする
-        execute :cp, "-v", "config/master.key", "config"
+        execute :cp, "-v", "#{__dir__}/../../../config/master.key", "config"
 
         # ないとは思うけどもし NODE_ENV=production な環境でビルドするときは
         # devDependencies が対象にならないので --production=false の引数をつけとくといい
