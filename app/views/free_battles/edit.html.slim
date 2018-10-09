@@ -28,7 +28,7 @@ ruby:
         = render partial: "form", locals: {form: form}
         .field
           p.control
-            =<> form.submit(name: :_submit, class: "button is-primary")
+            =<> form.submit(name: :_submit_and_redirect_to_show, class: "button is-primary")
     .column
       .non_border_box
         shogi-player(
