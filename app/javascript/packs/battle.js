@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 読み上げ(この部屋のすべての人が受信する)
-      if (data["kifuyomi"]) {
-        AppHelper.talk(data["kifuyomi"])
+      if (data["yomiage"]) {
+        AppHelper.talk(data["yomiage"])
       }
 
       // チャットの発言の追加

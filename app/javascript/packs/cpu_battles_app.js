@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           // CPUの指し手を読み上げる
-          if (response.data["kifuyomi"]) {
-            AppHelper.talk(response.data["kifuyomi"])
+          if (response.data["yomiage"]) {
+            AppHelper.talk(response.data["yomiage"])
           }
 
           if (response.data["sfen"]) {
