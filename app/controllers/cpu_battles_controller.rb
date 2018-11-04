@@ -40,7 +40,7 @@ class CpuBattlesController < ApplicationController
         return
       end
 
-      talk(mediator.hand_logs.last.to_kifuyomi)
+      talk(mediator.hand_logs.last.yomiage)
 
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
@@ -94,7 +94,7 @@ class CpuBattlesController < ApplicationController
       response = { sfen: mediator.to_sfen }
 
       # CPUの手を読み上げる
-      talk(mediator.hand_logs.last.to_kifuyomi)
+      talk(mediator.hand_logs.last.yomiage)
 
       if true
         # 人間側の合法手が生成できなければ人間側の負け
