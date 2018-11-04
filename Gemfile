@@ -74,6 +74,7 @@ group :development, :test do
   gem 'capistrano-rbenv'
   gem 'capistrano-yarn'
   gem "capistrano-rails-console"
+  gem "slackistrano"
 
   gem 'artii'
 
