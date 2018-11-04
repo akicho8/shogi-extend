@@ -1698,6 +1698,13 @@ buefy@^0.6.6:
   dependencies:
     bulma "^0.7.1"
 
+buefy@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.0.tgz#9c040bfa7ed7495de9ffc932434205249c8149b0"
+  integrity sha512-1SA7x6GimoJPYGJurNj7LfWdBl86zEd8g+ff6sm8yMkkDcn9P8UbAOIW7QRY3yR4V7Gde8ml7OZvvmgNQMGKbg==
+  dependencies:
+    bulma "0.7.1"
+
 buffer-indexof@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/buffer-indexof/-/buffer-indexof-1.1.1.tgz#52fabcc6a606d1a00302802648ef68f639da268c"
@@ -1727,15 +1734,20 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
+bulma@0.7.1, bulma@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.1.tgz#73c2e3b2930c90cc272029cbd19918b493fca486"
+  integrity sha512-wRSO2LXB+qI9Pyz2id+uZr4quz5aftSN7Ay1ysr1+krzVp3utD+Ci4CeKuZdrYGc800t65b7heXBL6qw2Wo/lQ==
+
 bulma@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.6.2.tgz#f4b1d11d5acc51a79644eb0a2b0b10649d3d71f5"
   integrity sha1-9LHRHVrMUaeWROsKKwsQZJ09cfU=
 
-bulma@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.1.tgz#73c2e3b2930c90cc272029cbd19918b493fca486"
-  integrity sha512-wRSO2LXB+qI9Pyz2id+uZr4quz5aftSN7Ay1ysr1+krzVp3utD+Ci4CeKuZdrYGc800t65b7heXBL6qw2Wo/lQ==
+bulma@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.2.tgz#8e944377b74c7926558830d38d8e19eaf49f5fb6"
+  integrity sha512-6JHEu8U/1xsyOst/El5ImLcZIiE2JFXgvrz8GGWbnDLwTNRPJzdAM0aoUM1Ns0avALcVb6KZz9NhzmU53dGDcQ==
 
 bytes@3.0.0:
   version "3.0.0"
@@ -4321,6 +4333,14 @@ js-memory-record@^0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.10.tgz#6bde2568c313ba6f66d5b4106de8a16b055e391d"
   integrity sha512-IqbYtosQPQ55vd4d9FzympkosjhdYpeougFvhLBGaFWSHkJ4dsPjGU9A8aKE2qIc6QKXDyynBcZbbfDBw876oQ==
+  dependencies:
+    babel-core "^6.22.1"
+    lodash "^4.17.4"
+
+js-memory-record@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.11.tgz#cdf5da13bf9f9a9e01003dac804363217fa7beb2"
+  integrity sha512-/JSw+rlqKpuFh1SeNielDVS7GHtQ5kQYG70TwRwx1c0p4UtJ+S07o+pJzFK6qA2PUFNdqSoBoO7a9TXPfx88Cg==
   dependencies:
     babel-core "^6.22.1"
     lodash "^4.17.4"
