@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.self_preset_key      = this.current_user.rule.self_preset_key
         this.oppo_preset_key      = this.current_user.rule.oppo_preset_key
         this.current_lifetime_key = this.current_user.rule.lifetime_key
-        this.current_team_key  = this.current_user.rule.team_key
+        this.current_team_key     = this.current_user.rule.team_key
         this.robot_accept_key     = this.current_user.rule.robot_accept_key
       }
 
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
           self_preset_key:  this.current_self_preset_info.key,
           oppo_preset_key:  this.current_oppo_preset_info.key,
           lifetime_key:     this.current_lifetime_key,
-          team_key:      this.current_team_key,
+          team_key:         this.current_team_key,
           robot_accept_key: this.robot_accept_key,
         })
       },
