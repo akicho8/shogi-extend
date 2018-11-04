@@ -36,5 +36,13 @@ module Colosseum
     before_validation on: :create do
       self.msg_options ||= {}
     end
+
+    after_create do
+      if Rails.env.production? || Rails.env.development?
+        Slack::Web::Client.new.tap do |client|
+          client.chat_postMessage(channel: "#general", text: "【ロビー発言】#{user.name}: #{message}")
+        end
+      end
+    end
   end
 end
