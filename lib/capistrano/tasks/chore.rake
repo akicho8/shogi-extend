@@ -1,3 +1,9 @@
+desc "credentials"
+task :credentials do
+  credentials = YAML.load(`rails credentials:show`)
+  pp credentials
+end
+
 desc "cap production crontab"
 task :crontab do
   on roles(:all) do
