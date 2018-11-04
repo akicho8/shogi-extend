@@ -1,5 +1,6 @@
 set :slackistrano, {
-  channel: '#general',
-  team: 'automatic-agent',
-  webhook: 'https://hooks.slack.com/services/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',
+  channel: "#general",
+  team: "automatic-agent",
+  webhook: YAML.load(`rails credentials:show`).dig("slack_webhook_url"),
 }
+
