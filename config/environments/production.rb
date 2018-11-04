@@ -113,11 +113,17 @@ Rails.application.configure do
   config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
 
   # ################################################################################ エラーメール
-  config.middleware.use(ExceptionNotification::Rack,
-    :email => {
-      :email_prefix         => "[shogi_web #{Rails.env}] ",
-      :sender_address       => "pinpon.ikeda@gmail.com",
-      :exception_recipients => %w{pinpon.ikeda@gmail.com},
+  config.middleware.use(ExceptionNotification::Rack, {
+      email: {
+        :email_prefix         => "[shogi_web #{Rails.env}] ",
+        :sender_address       => "pinpon.ikeda@gmail.com",
+        :exception_recipients => %w{pinpon.ikeda@gmail.com},
+      },
+      slack: {
+        webhook_url: Rails.application.credentials.dig(:slack_webhook_url),
+        channel: '#general',
+        additional_parameters: { mrkdwn: true },
+      },
     })
 
   # ################################################################################ AppConfig

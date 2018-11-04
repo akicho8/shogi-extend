@@ -130,8 +130,6 @@ gem 'rubyzip', require: "zip"
 
 gem 'whenever', "0.9.7", require: false
 
-gem 'exception_notification'
-
 gem 'codecov', require: false, group: :test
 
 gem 'rack-cors',require: 'rack/cors'
@@ -144,6 +142,12 @@ gem 'graphql'
 # group :development do
 gem 'graphiql-rails' # graphqlのテスト画面
 # end
+
+gem 'slack-ruby-client'
+
+# for error
+gem 'exception_notification'
+gem 'slack-notifier'
 
 # devise
 gem 'devise'

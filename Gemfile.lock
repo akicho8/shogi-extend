@@ -176,9 +176,12 @@ GEM
       railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.12.2)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
     foreman (0.84.0)
       thor (~> 0.19.1)
+    gli (2.18.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     graphiql-rails (1.4.10)
@@ -383,6 +386,14 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    slack-notifier (2.3.2)
+    slack-ruby-client (0.13.1)
+      activesupport
+      faraday (>= 0.9)
+      faraday_middleware
+      gli
+      hashie
+      websocket-driver
     slackistrano (3.8.3)
       capistrano (>= 3.8.1)
     slim (3.0.9)
@@ -511,6 +522,8 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 5.0)
   selenium-webdriver
+  slack-notifier
+  slack-ruby-client
   slackistrano
   slim-rails
   spring
