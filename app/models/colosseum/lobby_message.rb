@@ -38,11 +38,7 @@ module Colosseum
     end
 
     after_create do
-      if Rails.env.production? || Rails.env.development?
-        Slack::Web::Client.new.tap do |client|
-          client.chat_postMessage(channel: "#general", text: "【ロビー発言】#{user.name}: #{message}")
-        end
-      end
+      SlackAgent.chat_post_message(key: "ロビー発言", body: "#{user.name}: #{message}")
     end
   end
 end

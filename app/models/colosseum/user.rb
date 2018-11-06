@@ -76,14 +76,7 @@ module Colosseum
             UserMailer.user_created(self).deliver_now
           end
 
-          if Rails.env.production? || Rails.env.development?
-            Slack::Web::Client.new.tap do |client|
-              client.chat_postMessage({
-                  channel: "#general",
-                  text: "【新規登録】#{name}: #{attributes.inspect}",
-                })
-            end
-          end
+          SlackAgent.chat_post_message(key: "新規登録", body: "#{name}: #{attributes.inspect}")
         end
       end
 

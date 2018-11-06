@@ -121,7 +121,7 @@ Rails.application.configure do
       },
       slack: {
         webhook_url: Rails.application.credentials.dig(:slack_webhook_url),
-        channel: '#general',
+        channel: '#exception',
         additional_parameters: { mrkdwn: true },
       },
     })

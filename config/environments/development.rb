@@ -81,7 +81,7 @@ Rails.application.configure do
     config.middleware.use(ExceptionNotification::Rack, {
         slack: {
           webhook_url: Rails.application.credentials.dig(:slack_webhook_url),
-          channel: '#general',
+          channel: '#exception',
           additional_parameters: { mrkdwn: true },
         },
       })

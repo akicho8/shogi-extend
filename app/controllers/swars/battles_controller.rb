@@ -146,14 +146,8 @@ module Swars
             flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
           end
 
-          Slack::Web::Client.new.tap do |client|
-            client.chat_postMessage({
-                channel: "#general",
-                text: {
-                  current_swars_user: current_swars_user,
-                  hit_count: hit_count,
-                }.inspect,
-              })
+          if current_user_key
+            SlackAgent.chat_post_message(key: "ウォーズ棋譜検索", body: "#{current_user_key}: #{hit_count}件")
           end
         end
 
