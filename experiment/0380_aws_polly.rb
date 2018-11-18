@@ -12,16 +12,32 @@ require File.expand_path('../../config/environment', __FILE__)
 #   })
 # tp resp.to_h
 
-obj = Talk.new("あ")
-obj.service_path                # => "/system/talk/8c/0c/8c0c3027e3cfc3d644caab3847a505b0.mp3"
-obj.real_path                   # => #<Pathname:/Users/ikeda/src/shogi_web/public/system/talk/8c/0c/8c0c3027e3cfc3d644caab3847a505b0.mp3>
+obj = Talk.new(source_text: "あ")
+obj.service_path                # => "/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3"
+obj.real_path                   # => #<Pathname:/Users/ikeda/src/shogi_web/public/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3>
+# >> |-----------------+------------------------------------------------------------------------------------------|
+# >> |   output_format | mp3                                                                                      |
+# >> |     sample_rate | 16000                                                                                    |
+# >> |       text_type | text                                                                                     |
+# >> |        voice_id | Mizuki                                                                                   |
+# >> |            text | あ                                                                                       |
+# >> | response_target | /Users/ikeda/src/shogi_web/public/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3 |
+# >> |-----------------+------------------------------------------------------------------------------------------|
 # >> |--------------------+-----------------------------------------------------|
-# >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007f9b335cb608> |
+# >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007fa2b9c35f88> |
 # >> |       content_type | audio/mpeg                                          |
 # >> | request_characters | 1                                                   |
 # >> |--------------------+-----------------------------------------------------|
+# >> |-----------------+------------------------------------------------------------------------------------------|
+# >> |   output_format | mp3                                                                                      |
+# >> |     sample_rate | 16000                                                                                    |
+# >> |       text_type | text                                                                                     |
+# >> |        voice_id | Mizuki                                                                                   |
+# >> |            text | あ                                                                                       |
+# >> | response_target | /Users/ikeda/src/shogi_web/public/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3 |
+# >> |-----------------+------------------------------------------------------------------------------------------|
 # >> |--------------------+-----------------------------------------------------|
-# >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007f9b337f34a8> |
+# >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007fa2bd92d2d8> |
 # >> |       content_type | audio/mpeg                                          |
 # >> | request_characters | 1                                                   |
 # >> |--------------------+-----------------------------------------------------|

@@ -129,25 +129,27 @@ module Swars
 
           # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
           key = "basic_import_of_#{current_user_key}"
-          if !Rails.cache.exist?(key)
+          if Rails.cache.exist?(key)
+            flash.now[:warning] = talk("#{current_user_key} さんのデータはさっき取得したばかりです")
+          else
             Rails.cache.write(key, true, expires_in: Rails.env.production? ? 30.seconds : 0.seconds)
             current_model.basic_import(user_key: current_user_key)
-          end
 
-          hit_count = 0
-          if current_swars_user
-            hit_count = current_swars_user.battles.count - before_count
-            if hit_count.zero?
+            hit_count = 0
+            if current_swars_user
+              hit_count = current_swars_user.battles.count - before_count
+              if hit_count.zero?
+              else
+                flash.now[:info] = talk("#{hit_count}件新しく見つかりました")
+              end
+              current_swars_user.search_logs.create!
             else
-              flash.now[:info] = talk("#{hit_count}件新しく見つかりました")
+              flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
             end
-            current_swars_user.search_logs.create!
-          else
-            flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
-          end
 
-          if current_user_key
-            SlackAgent.chat_post_message(key: "ウォーズ棋譜検索", body: "#{current_user_key}: #{hit_count}件")
+            if hit_count >= 1
+              SlackAgent.chat_post_message(key: "将棋ウォーズ棋譜検索", body: "#{current_user_key}: #{hit_count}件")
+            end
           end
         end
 
