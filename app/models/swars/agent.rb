@@ -30,8 +30,14 @@ module Swars
         end
 
         # $().html("xxx") となっているので xxx の部分を取り出して Nokogiri が解釈できる程度に整える
-        md = js_str.match(/html\("(.*)"\)/)
-        str = too_escaped_html_normalize(md.captures.first)
+        # puts js_str
+
+        if md = js_str.match(/html\("(.*)"\)/)
+          str = too_escaped_html_normalize(md.captures.first)
+        else
+          # puts js_str
+          str = js_str
+        end
 
         doc = Nokogiri.HTML(str)
         doc.search(".contents").collect do |elem|
@@ -45,6 +51,12 @@ module Swars
           if true
             row[:user_infos] = elem.search(".history_prof").collect do |e|
               [:user_key, :grade_key].zip(e.inner_text.scan(/\S+/)).to_h
+            end
+          end
+
+          if row[:user_infos].blank?
+            row[:user_infos] = elem.text.scan(/(\w+)\p{blank}+(.[級段])/).collect do |e|
+              [:user_key, :grade_key].zip(e).to_h
             end
           end
 
@@ -152,13 +164,15 @@ module Swars
   end
 
   if $0 == __FILE__
-    tp Agent.new.legend_user_keys
-    tp Agent.new.index_get(gtype: "",  user_key: "Apery8")
-    tp Agent.new.index_get(gtype: "",  user_key: "Apery8", page_index: 1)
+    tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "kinakom0chi")
 
-    # tp Agent.new.index_get(gtype: "sb",  user_key: "Apery8")
-    # tp Agent.new.index_get(gtype: "s1",  user_key: "Apery8")
-    tp Agent.new.record_get("hanairobiyori-ispt-20171104_220810")
+    # tp Agent.new.legend_user_keys
+    # tp Agent.new.index_get(gtype: "",  user_key: "Apery8")
+    # tp Agent.new.index_get(gtype: "",  user_key: "Apery8", page_index: 1)
+    #
+    # # tp Agent.new.index_get(gtype: "sb",  user_key: "Apery8")
+    # # tp Agent.new.index_get(gtype: "s1",  user_key: "Apery8")
+    # tp Agent.new.record_get("hanairobiyori-ispt-20171104_220810")
 
     # |--------------------------------------------+----------------------------------------------------------------------------------------------------|
     # | key                                 | user_infos                                                                                    |
