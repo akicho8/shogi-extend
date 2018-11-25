@@ -147,8 +147,8 @@ module Swars
               flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
             end
 
-            if hit_count >= 1
-              SlackAgent.chat_post_message(key: "将棋ウォーズ棋譜検索", body: "#{current_user_key}: #{hit_count}件")
+            if hit_count.nonzero?
+              SlackAgent.chat_post_message(key: "ウォーズ検索", body: "#{current_user_key}: #{hit_count}件")
             end
           end
         end
