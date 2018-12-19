@@ -112,20 +112,6 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
   config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
 
-  # ################################################################################ エラーメール
-  config.middleware.use(ExceptionNotification::Rack, {
-      email: {
-        :email_prefix         => "[shogi_web #{Rails.env}] ",
-        :sender_address       => "pinpon.ikeda@gmail.com",
-        :exception_recipients => %w{pinpon.ikeda@gmail.com},
-      },
-      slack: {
-        webhook_url: Rails.application.credentials.dig(:slack_webhook_url),
-        channel: '#exception',
-        additional_parameters: { mrkdwn: true },
-      },
-    })
-
   # ################################################################################ AppConfig
   config.app_config.deep_merge!({
       admin_email: "pinpon.ikeda@gmail.com",
