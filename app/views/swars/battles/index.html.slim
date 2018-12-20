@@ -32,7 +32,7 @@
                 = link_to(tag, [:tactic_note, id: tag], class: "button is-success")
 
 - if current_records
-  #shogi_player_app v-cloak="true"
+  #shogi_player_app(v-cloak="true")
     - content_for :head do
       = javascript_pack_tag("shogi_player_app")
     - current_records.each_slice(3) do |current_records|
@@ -70,7 +70,7 @@
                       :slider_show="true"
                       :sfen_show="false"
                       :controller_show="false"
-                      :theme="'real'"
+                      :theme="'simple'"
                       :sound_effect="true"
                       :volume=AppConfig[:volume]
                     )
