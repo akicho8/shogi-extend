@@ -50,8 +50,12 @@ module Swars
           # href = elem.at("a[href*=games]").attr(:href)
           # row[:key] = battle_key_from_url("http:#{href}")
 
-          md = elem.to_s.match(/appAnalysis\('(.*?)'\)/)
+          md = elem.to_s.match(/game_id=([\w-]+)/)
           row[:key] = md.captures.first
+          # puts elem.to_s.match(/kif-pona.heroz.jp/games/masaya0918a-naga2168-20190108_013313/)
+
+          # md = elem.to_s.match(/appAnalysis\('(.*?)'\)/)
+          # row[:key] = md.captures.first
 
           # key から行けるページで次の情報もとれるのでここで取得しなくてもいい
           # と思ったが、指定の段位以上の人だけ取り込みたいとき、対局ページにGETする前に判断することができるので取っといた方がいい
@@ -173,6 +177,7 @@ module Swars
 
   if $0 == __FILE__
     tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "kinakom0chi")
+    # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "masaya0918a")
 
     # tp Agent.new.legend_user_keys
     # tp Agent.new.index_get(gtype: "",  user_key: "Apery8")
