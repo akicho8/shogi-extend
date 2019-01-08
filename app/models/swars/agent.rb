@@ -17,14 +17,18 @@ module Swars
         if run_remote?
           q = {
             gtype: params[:gtype],
-            locale: "ja",
+            # locale: "ja",
           }
           if params[:page_index].nonzero?
             q[:start] = params[:page_index] * 10
           end
-          url = "https://shogiwars.heroz.jp/users/history/#{params[:user_key]}?#{q.to_query}"
-          page = agent.get(url)
-          js_str = page.body
+
+          # url = "https://shogiwars.heroz.jp/users/history/#{params[:user_key]}?#{q.to_query}"
+          # page = agent.get(url)
+          # js_str = page.body
+
+          url = "https://shogiwars.heroz.jp/games/history?user_id=#{params[:user_key]}&#{q.to_query}"
+          js_str = `curl --silent '#{url}' -H 'authority: shogiwars.heroz.jp' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Mobile Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6,zh-TW;q=0.5' -H '#{Rails.application.credentials.cookie_for_agent}' --compressed`
         else
           js_str = local_html("https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja")
         end
@@ -43,8 +47,11 @@ module Swars
         doc.search(".contents").collect do |elem|
           row = {}
 
-          href = elem.at("a[href*=games]").attr(:href)
-          row[:key] = battle_key_from_url("http:#{href}")
+          # href = elem.at("a[href*=games]").attr(:href)
+          # row[:key] = battle_key_from_url("http:#{href}")
+
+          md = elem.to_s.match(/appAnalysis\('(.*?)'\)/)
+          row[:key] = md.captures.first
 
           # key から行けるページで次の情報もとれるのでここで取得しなくてもいい
           # と思ったが、指定の段位以上の人だけ取り込みたいとき、対局ページにGETする前に判断することができるので取っといた方がいい
@@ -150,7 +157,8 @@ module Swars
     def agent
       @agent ||= Mechanize.new.tap do |e|
         e.log = Rails.logger
-        e.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
+        # e.user_agent_alias = Mechanize::AGENT_ALIASES.keys.grep_v(/\b(Mechanize|Linux|Mac)\b/i).sample
+        e.user_agent_alias = 'iPhone'
       end
     end
 
@@ -172,7 +180,10 @@ module Swars
     #
     # # tp Agent.new.index_get(gtype: "sb",  user_key: "Apery8")
     # # tp Agent.new.index_get(gtype: "s1",  user_key: "Apery8")
+
     # tp Agent.new.record_get("hanairobiyori-ispt-20171104_220810")
+
+    # tp Agent.new.record_get("masaya0918a-kinakom0chi-20190108_012942")
 
     # |--------------------------------------------+----------------------------------------------------------------------------------------------------|
     # | key                                 | user_infos                                                                                    |

@@ -56,7 +56,8 @@ module SharedMethods
       else
         disposition = "attachment"
       end
-      send_data(text_body, type: Mime[params[:format]], filename: current_filename.encode(current_encode), disposition: disposition)
+      require "kconv"
+      send_data(text_body, type: Mime[params[:format]], filename: current_filename.public_send("to#{current_encode}"), disposition: disposition)
     end
   end
 
@@ -66,9 +67,9 @@ module SharedMethods
 
   def current_encode_default
     if request.user_agent.to_s.match(/Windows/i)
-      "Shift_JIS"
+      "sjis"
     else
-      "UTF-8"
+      "utf8"
     end
   end
 
