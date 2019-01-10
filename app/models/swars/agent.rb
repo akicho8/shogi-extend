@@ -44,13 +44,17 @@ module Swars
         end
 
         doc = Nokogiri.HTML(str)
-        doc.search(".contents").collect do |elem|
+        doc.search(".contents").collect { |elem|
           row = {}
 
           # href = elem.at("a[href*=games]").attr(:href)
           # row[:key] = battle_key_from_url("http:#{href}")
 
           md = elem.to_s.match(/game_id=([\w-]+)/)
+          unless md
+            next
+          end
+
           row[:key] = md.captures.first
           # puts elem.to_s.match(/kif-pona.heroz.jp/games/masaya0918a-naga2168-20190108_013313/)
 
@@ -72,7 +76,7 @@ module Swars
           end
 
           row
-        end
+        }.compact
       end
 
       private
