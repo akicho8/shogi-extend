@@ -2,6 +2,7 @@ module Swars
   class GradeInfo
     include ApplicationMemoryRecord
     memory_record [
+      {key: "十段", },
       {key: "九段", },
       {key: "八段", },
       {key: "七段", },

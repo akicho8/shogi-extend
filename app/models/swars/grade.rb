@@ -19,10 +19,19 @@ module Swars
       def setup(options = {})
         super
 
-        unless exists?
-          GradeInfo.each { |e| create!(key: e.key) }
-          if Rails.env.development?
-            tp self
+        if true
+          # これなら新しい段位が生まれても GradeInfo と同期できる
+          GradeInfo.each do |e|
+            record = find_or_create_by(key: e.key)
+            record.priority = e.priority
+            record.save!
+          end
+        else
+          unless exists?
+            GradeInfo.each { |e| create!(key: e.key) }
+            if Rails.env.development?
+              tp self
+            end
           end
         end
       end
