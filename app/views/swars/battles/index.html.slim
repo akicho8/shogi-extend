@@ -24,8 +24,6 @@
 
       .field
         - if controller.current_query_hash
-          - if current_records && current_records.exists?
-            =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-info")
           - if tags = controller.current_tags.presence
             - tags.each do |tag|
               - if Warabi::TacticInfo.any? { |e| e.model[tag] }
@@ -95,6 +93,10 @@
 
   - content_for :head do
     = rel_next_prev_link_tags current_records
+
+- if current_records && current_records.exists?
+  p
+    =<> link_to("#{controller.current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-info")
 
 - if Rails.env.development? && false
   = Swars::User.to_html
