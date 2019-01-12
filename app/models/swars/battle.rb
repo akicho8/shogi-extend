@@ -19,6 +19,7 @@
 # | access_logs_count | Access logs count | integer(4)  | DEFAULT(0)  |      |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
+# | preset_key        | Preset key        | string(255) | NOT NULL    |      |       |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 
 require "matrix"
@@ -64,16 +65,12 @@ module Swars
       validates :battled_at
       validates :rule_key
       validates :final_key
+      validates :preset_key
     end
 
     with_options allow_blank: true do
       validates :key, uniqueness: true
-    end
-
-    validate do
-      if memberships.size != 2
-        errors.add(:base, "対局者が2人いません : #{memberships.size}")
-      end
+      validates :preset_key, inclusion: Warabi::PresetInfo.keys.collect(&:to_s)
     end
 
     def to_param
@@ -86,6 +83,10 @@ module Swars
 
     def final_info
       FinalInfo.fetch(final_key)
+    end
+
+    def preset_info
+      Warabi::PresetInfo.fetch(preset_key)
     end
 
     concerning :ConvertHookMethos do
@@ -109,19 +110,31 @@ module Swars
           players = memberships
         end
 
+        type = [rule_info.long_name]
+        if players.any? { |e| e.grade.grade_info.key == :"十段" }
+          type << "指導対局"
+        end
+        if preset_info.handicap
+          type << preset_info.name
+        end
+
         s = []
         s << ["N+", players.first.name_with_grade].join
         s << ["N-", players.second.name_with_grade].join
         s << ["$START_TIME", battled_at.to_s(:csa_ymdhms)] * ":"
-        s << ["$EVENT", "将棋ウォーズ(#{rule_info.long_name})"] * ":"
+        s << ["$EVENT", "将棋ウォーズ(#{type.join(' ')})"] * ":"
         s << ["$TIME_LIMIT", rule_info.csa_time_limit] * ":"
 
         # $OPENING は 戦型 のことで、これが判明するのはパースの後なのでいまはわからない。
         # それに自動的にあとから埋められるのでここは指定しなくてよい
         # s << "$OPENING:不明"
 
-        # 平手なので先手から
-        s << "+"
+        if preset_info.handicap
+          s << preset_info.to_board.to_csa.strip
+          s << "-"
+        else
+          s << "+"
+        end
 
         # 残り時間の並びから使用時間を求めつつ指し手と一緒に並べていく
         life = [rule_info.life_time] * memberships.size
@@ -150,6 +163,14 @@ module Swars
             membership.defense_tag_list = player.skill_set.defense_infos.normalize.collect(&:key)
             membership.attack_tag_list  = player.skill_set.attack_infos.normalize.collect(&:key)
           end
+        end
+
+        if memberships.any? { |e| e.user.grade.grade_info.key == :"十段" }
+          other_tag_list << "指導対局"
+        end
+
+        if preset_info.handicap
+          other_tag_list << preset_info.name
         end
 
         other_tag_list << rule_info.name
@@ -373,10 +394,13 @@ module Swars
             end
           end
 
+          preset_info = PresetInfo.fetch("__handicap_embed__#{info[:preset_dirty_code]}").real_preset_info
+
           battle = Battle.new({
               key: info[:key],
               rule_key: info.dig(:gamedata, :gtype),
               csa_seq: info[:csa_seq],
+              preset_key: preset_info.key,
             })
 
           if md = info[:__final_key].match(/\A(?<prefix>\w+)_WIN_(?<final_key>\w+)/)

@@ -19,6 +19,7 @@
 # | access_logs_count | Access logs count | integer(4)  | DEFAULT(0)  |      |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
+# | preset_key        | Preset key        | string(255) | NOT NULL    |      |       |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 
 module Swars

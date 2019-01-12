@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_12_043012) do
+ActiveRecord::Schema.define(version: 2019_01_12_154800) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 2018_07_12_043012) do
     t.integer "access_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "preset_key", null: false
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
