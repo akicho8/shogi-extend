@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html>
-
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
@@ -8,7 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
-    <title>将棋ウォーズ棋譜(hanairobiyori27級対ispt3級)</title>
+    <title>将棋ウォーズ棋譜(hanairobiyori2級対Ito_Asuka十段)</title>
     <link rel="stylesheet" href="/stylesheets/games.css" />
     <link rel="stylesheet" href="/stylesheets/games-pc-s.css" />
     <link rel="stylesheet" href="/stylesheets/games-pc-375.css" media="only screen and (min-width: 375px) and (min-height: 447px)" />
@@ -19,6 +18,7 @@
     <link rel="stylesheet" href="/stylesheets/games-pc-800.css" media="only screen and (min-width: 800px) and (min-height: 955px)" />
   </head>
  <script src="/javascripts/localize.js"></script>
+  <script src="/javascripts/utility.js"></script>
  <script>
 
      Localize.setLocale("ja");
@@ -32,7 +32,7 @@
     <div id="audience">
     </div>
     <div id="tweetbutton">
-      <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-url="https://kif-pona.heroz.jp/games/hanairobiyori-ispt-20171104_220810?tw=1" data-hashtags="shogiwars">ツイート</a>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-url="https://kif-pona.heroz.jp/games/hanairobiyori-Ito_Asuka-20190111_084942?tw=1" data-hashtags="shogiwars">ツイート</a>
     </div>
     <br clear="all">
   </div>
@@ -301,29 +301,33 @@
     <select id="moveBox"></select>
     <img id="reverse_button">
   </div>
-  <form id="send-message">
-    <input type="text" id="messageBox" />
-    <input type="submit" id="chatsubmit" value="chat"/>
-    <img src="//image-pona.heroz.jp/kif/chat_on.png" id="commentoffbutton" />
-    <input type="hidden" id="chatUser" value="" />
-  </form>
+  <!--<form id="send-message">-->
+    <!--<input type="text" id="messageBox" />-->
+    <!--<input type="submit" id="chatsubmit" value="chat"/>-->
+    <!--<img src="//image-pona.heroz.jp/kif/chat_on.png" id="commentoffbutton" />-->
+    <!--<input type="hidden" id="chatUser" value="" />-->
+  <!--</form>-->
 
   <div align="center" style="padding-top: 20px">
 
-        <a href="//shogiwars.heroz.jp/topics/59f7f610b671d13aec00257b" onclick="javascript:_gaq.push(['_trackPageview', '/_click/300million_purchase/s/watch']);">
-          <img src="//shogiwars.heroz.jp/images/banner/300million_purchase.png"
-               width="320" height="64">
-        </a>
-
-  </div>
-
-  <div align="center" style="padding-top: 10px">
-    <a href="http://bit.ly/KjoPx6" target="_blank"><img src="//shogiwars.heroz.jp/images/top/btn_download2.png" alt="Available on the App Store" width="115" /></a>
-    <a href="http://bit.ly/LzmUFh" target="_blank"><img src="//shogiwars.heroz.jp/images/top/btn_download.png" alt="Availale on the Google Play" width="115" /></a>
-    <a href="//shogiwars.heroz.jp">
-    <img src="//image-pona.heroz.jp/kif/icon64.png" width="33" height="33" alt="将棋ウォーズ" >
+    <a href="http://goo.gl/EmABvZ" id="banner_ios" style="display: none;" target="_blank">
+      <img width="300" height="50">
+    </a>
+    <a href="http://goo.gl/rXDpwW" id="banner_android" style="display: none;" target="_blank">
+      <img width="300" height="50">
+    </a>
+    <a href="https://pr.heroz.jp/igowars" id="banner_other" style="display: none;" target="_blank">
+      <img width="300" height="50">
     </a>
   </div>
+
+    <div align="center" style="padding-top: 10px">
+      <a href="http://bit.ly/KjoPx6" target="_blank"><img src="//shogiwars-cdn.heroz.jp/images/top/btn_download2.png" alt="Available on the App Store" width="115" /></a>
+      <a href="http://bit.ly/LzmUFh" target="_blank"><img src="//shogiwars-cdn.heroz.jp/images/top/btn_download.png" alt="Availale on the Google Play" width="115" /></a>
+      <a href="//shogiwars.heroz.jp/web_app/standard/" target="_blank">
+      <img src="//image-pona.heroz.jp/kif/icon64.png" width="33" height="33" alt="将棋ウォーズ" >
+      </a>
+    </div>
 
   <div align="center">
     <span style="font-size: 12px;">©HEROZ, Inc. All Rights Reserved.</span>
@@ -385,61 +389,95 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/shogi-common.js"></script>
+  <script src="/javascripts/handicap.js"></script>
     <script src="/javascripts/kifu.js" charset="UTF-8"></script>
     <script src="/javascripts/query-parse.js" charset="UTF-8"></script>
     <script src="/javascripts/socket_main.js" charset="UTF-8"></script>
     <script>
-    var chatUser = "";
-    if(chatUser == ""){
-     $("#messageBox").css("visibility", "hidden");
-     $("#chatsubmit").css("visibility", "hidden");
-    }
+    //var chatUser = "";
+    //if(chatUser == ""){
+    //  $("#messageBox").css("visibility", "hidden");
+    //  $("#chatsubmit").css("visibility", "hidden");
+    //}
 
       /**
        * サーバから将棋盤初期化時に呼び出す
        */
       function initializeBoard(black, white) {
+          var handicap = 5;
+
           // 対戦者の設定
           var bPlayer = $("#area_sente");
           bPlayer.append($("<span>").attr("id", "black-time"));
           bPlayer.append($("<span>").addClass("sign").append("▲"));
-          bPlayer.append($("<a>").attr("href", "//shogiwars.heroz.jp/users/" + black.split(" ")[0] + "?game=hanairobiyori-ispt-20171104_220810&locale=ja").text(black));
+          bPlayer.append($("<a>").attr("href", "//shogiwars.heroz.jp/users/" + black.split(" ")[0] + "?game=hanairobiyori-Ito_Asuka-20190111_084942&locale=ja&version=0.0.0").text(black));
 
           var wPlayer = $("#area_gote");
           wPlayer.append($("<span>").addClass("sign").append("△"));
-          wPlayer.append($("<a>").attr("href", "//shogiwars.heroz.jp/users/" + white.split(" ")[0] + "?game=hanairobiyori-ispt-20171104_220810&locale=ja").text(white));
+          wPlayer.append($("<a>").attr("href", "//shogiwars.heroz.jp/users/" + white.split(" ")[0] + "?game=hanairobiyori-Ito_Asuka-20190111_084942&locale=ja&version=0.0.0").text(white));
           wPlayer.append($("<span>").attr("id", "white-time"));
-
+          wPlayer.append($("<span>").attr("id", "handicap").append(Localize.getHandcap(handicap)));
           var csa_text = "N+" + black + "\n" + "N-" + white + "\n";
-          makeBoardHandler("shogi", 0, csa_text, true);
+          makeBoardHandler("shogi", 0, csa_text, handicap, true);
 
           setNavigation();
       }
       // avatarsを見て画像を表示する
       function displayAvatar(reverse){
-          var img_sente = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[reverse?1:0]+'-r.png').addClass("avatar");
-          var img_gote = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[reverse?0:1]+'-l.png').addClass("avatar");
+          var img_sente = $("<img>").attr("src", "//shogiwars-cdn.heroz.jp/images/avatar/"+avatars[reverse?1:0]+'-r.png').addClass("avatar");
+          var img_gote = $("<img>").attr("src", "//shogiwars-cdn.heroz.jp/images/avatar/"+avatars[reverse?0:1]+'-l.png').addClass("avatar");
           $("#avatar-sente").empty().append(img_sente);
           $("#avatar-gote").empty().append(img_gote);
       }
+
+      function setBannerLink() {
+          if(isIOS()) {
+              $("#banner_ios").css("display", "inline");
+              $("#banner_android").css("display", "none");
+              $("#banner_other").css("display", "none");
+          } else if(isAndroid()) {
+              $("#banner_ios").css("display", "none");
+              $("#banner_android").css("display", "inline");
+              $("#banner_other").css("display", "none");
+          }else {
+              $("#banner_ios").css("display", "none");
+              $("#banner_android").css("display", "none");
+              $("#banner_other").css("display", "inline");
+          }
+      }
+
+      function setRandomBannerImg(imgFiles, googleTagName) {
+          var randomIdx = Math.floor(imgFiles.length * Math.random());
+          var anchorIds = ["ios", "android", "other"];
+          for(var i = 0; i < anchorIds.length; i++) {
+              var anchor = $("#banner_" + anchorIds[i]);
+
+              (function() {
+                  var ii = i;
+                  anchor.click(function() {
+                      _gaq.push(["_trackPageview", "/_click/" + googleTagName + "/s/kansen/" + anchorIds[ii] + "/" + randomIdx]);
+                  })
+              })();
+              var img = anchor.find("img")[0];
+              img.src = "//shogiwars-cdn.heroz.jp/images/banner/" + imgFiles[randomIdx] + ".png";
+          }
+      }
+
+      // function anchorClick(index) {
+      //
+      // }
     </script>
     <script>
     var gtype;
     $(function() {
-       /**
-        * get display size
-        */
-        //$("body").append("<div>w: " + screen.width + " h: " + screen.height + "</div>");
-        //$("body").append("<div>dpr: " + devicePixelRatio + "</div>");
-        //$("body").append("<div>user-agent: " + navigator.userAgent + "</div>");
 
   var gamedata = {
-    name: "hanairobiyori-ispt-20171104_220810",
-    avatar0: "_e1708s4c",
-    avatar1: "mc8",
-    dan0: "27級",
-    dan1: "3級",
-    gtype: "sb"
+    name: "hanairobiyori-Ito_Asuka-20190111_084942",
+    avatar0: "_e1812s10c",
+    avatar1: "coach04",
+    dan0: "2級",
+    dan1: "十段",
+    gtype: ""
   };
         gtype = gamedata.gtype;
   if (gamedata.name.match(/(\w+)-(\w+)-(\w+)/)) {
@@ -450,9 +488,12 @@
     $("#logo_area .wars_logo").wrap("<a href=\"http://shogiwars.heroz.jp\" target=\"_top\"></a>")
   }
 
+        setBannerLink();
+        setRandomBannerImg(["igo_wars_board9_avatar1", "igo_wars_board9_avatar2"], "igo_wars");
+
         $("#loading").remove();
         $("#send-message").remove();
-        receiveMove("+7968GI,L179 -3334FU,L180  +5756FU,L178  -4132KI,L177  +6857GI,L177  -1314FU,L176  +1716FU,L175  -8384FU,L175  +8879KA,L174  -8485FU,L174  +6978KI,L173  -3142GI,L173  +3948GI,L171  -4233GI,L172  +2726FU,L170  -5152OU,L171  +2625FU,L169  -2231KA,L170  +5969OU,L168  -3142KA,L170  +3736FU,L167  -7162GI,L169  +5746GI,L166  -6172KI,L166  +3635FU,L162  -3435FU,L164  +4635GI,L161  -0034FU,L163  +2524FU,L160  -2324FU,L162  +3524GI,L159  -3324GI,L162  +7924KA,L158  -4224KA,L161  +2824HI,L156  -0023FU,L155  +2428HI,L154  -8586FU,L149  +8786FU,L153  -8286HI,L147  +0087FU,L147  -8656HI,L146  +0057GI,L145  -5636HI,L141  +0037FU,L142  -3635HI,L139  +5746GI,L132  -3585HI,L135  +3736FU,L128  -0033GI,L130  +0068KA,L124  -5354FU,L125  +3635FU,L121  -3435FU,L124  +4635GI,L121  -0034FU,L120  +0024FU,L119  -2324FU,L117  +3524GI,L118  -3324GI,L116  +6824KA,L117  -0023FU,L113  +2468KA,L114  -0033GI,L109  +4958KI,L113  -9394FU,L107  +9796FU,L111  -6253GI,L100  +6979OU,L108  -5344GI,L99 +4857GI,L104  -4435GI,L97 +5746GI,L102  -3546GI,L95 +6846KA,L101  -0039KA,L93 +2818HI,L92 -3975UM,L83 +0076GI,L89 -7576UM,L81 +7776FU,L89 -0055GI,L78 +4668KA,L86 -8582HI,L72 +7988OU,L82 -0027GI,L70 +1848HI,L80 -2736NG,L66 +0037FU,L78 -3627NG,L64 +4849HI,L77 -2738NG,L61 +4979HI,L75 -5556GI,L57 +0057FU,L73 -5645GI,L56 +0077GI,L67 -3435FU,L54 +6766FU,L66 -3536FU,L53 +3736FU,L64 -4536GI,L52 +0037FU,L62 -3627NG,L50 +5756FU,L61 -2728NG,L48 +5867KI,L60 -3829NG,L47 +3736FU,L59 -2919NG,L46 +6846KA,L59 -0044KY,L42 +4628KA,L57 -1918NG,L40 +2839KA,L53 -4447NY,L38 +7949HI,L47 -4737NY,L35 +0048GI,L44 -3738NY,L34 +4959HI,L40 -3839NY,L33 +4839GI,L39 -0037KA,L31 +5979HI,L37 -3726UM,L29 +7768GI,L34 -1817NG,L28 +3938GI,L32 -2636UM,L27 +3849GI,L31 -0037FU,L25 +0048KY,L28 -1727NG,L24 +0047KA,L26 -3635UM,L22 +4758KA,L25 -3738TO,L20 +4847KY,L24 -3849TO,L18 +5849KA,L23 -2737NG,L18 +4958KA,L22 -0038FU,L17 +5869KA,L21 -3839TO,L16 +6857GI,L20 -3536UM,L13 +5746GI,L19 -3747NG,L12 +4657GI,L18 -3949TO,L9  +5768GI,L16 -4948TO,L7  +6877GI,L14 -0046KE,L6  +6947KA,L13 -3647UM,L5  +7919HI,L12 -4858TO,L4  +0079GI,L10 -5857TO,L3  +8898OU,L9  -5767TO,L2  +7867KI,L8  -4658NK,L1  +7788GI,L7  SENTE_WIN_TIMEOUT");
+        receiveMove("-7162GI,L599 +2726FU,L597  -4132KI,L598  +6978KI,L590  -5354FU,L596  +3948GI,L588  -6253GI,L595  +9796FU,L582  -9394FU,L594  +7776FU,L568  -4344FU,L592  +7968GI,L563  -5162OU,L589  +6877GI,L552  -6172KI,L587  +6766FU,L550  -7374FU,L582  +4958KI,L548  -3142GI,L573  +5867KI,L541  -5455FU,L572  +4746FU,L538  -4243GI,L566  +4847GI,L536  -4354GI,L552  +3736FU,L517  -3334FU,L544  +2625FU,L504  -3233KI,L543  +2937KE,L489  -1314FU,L536  +1716FU,L479  -7273KI,L525  +4645FU,L462  -3435FU,L504  +5756FU,L430  -5556FU,L490  +6756KI,L426  -3536FU,L475  +4736GI,L421  -0035FU,L473  +3647GI,L413  -0055FU,L467  +5646KI,L400  -3334KI,L465  +2524FU,L385  -4445FU,L445  +3745KE,L379  -5445GI,L442  +2423TO,L369  -4546GI,L419  +4746GI,L365  -0025FU,L410  +0044FU,L323  -0047KI,L368  +4443TO,L298  -5364GI,L350  +8879KA,L267  -0036KE,L346  +2818HI,L231  -5556FU,L345  +4635GI,L191  -5657TO,L341  +0049FU,L143  -3435KI,L337  +6665FU,L118  -0058GI,L334  GOTE_WIN_TORYO");
 
         $("#reverse_button").on("click", function(){manager.reverse()});
 

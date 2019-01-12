@@ -187,15 +187,17 @@ module Swars
     end
 
     def local_html(key)
-      Pathname("#{__dir__}/html/#{key}.html").read
+      Pathname("#{File.dirname(__FILE__)}/html/#{key}.html").read
     end
   end
 
   if $0 == __FILE__
-    tp Agent.new(run_remote: true).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
+    tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "Ito_Asuka")
+    tp Agent.new(run_remote: false).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
+
+    # tp Agent.new(run_remote: true).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
     exit
 
-    tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "Ito_Asuka")
 
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "kinakom0chi")
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "masaya0918a")
@@ -242,7 +244,7 @@ end
 # >> |               url | http://kif-pona.heroz.jp/games/MinoriChihara-Ito_Asuka-20190111_084942?locale=ja                                                                                                                                                                                    |
 # >> |        battled_at | 20190111_084942                                                                                                                                                                                                                                                     |
 # >> | preset_dirty_code | 5                                                                                                                                                                                                                                                                   |
-# >> |          gamedata | {:name=>"MinoriChihara-Ito_Asuka-20190111_084942", :avatar0=>"_e1812s10c", :avatar1=>"coach04", :dan0=>"2級", :dan1=>"十段", :gtype=>""}                                                                                                                            |
+# >> |          gamedata | {:name=>"hanairobiyori-Ito_Asuka-20190111_084942", :avatar0=>"_e1812s10c", :avatar1=>"coach04", :dan0=>"2級", :dan1=>"十段", :gtype=>""}                                                                                                                            |
 # >> |        user_infos | [{:user_key=>"MinoriChihara", :grade_key=>"2級"}, {:user_key=>"Ito_Asuka", :grade_key=>"十段"}]                                                                                                                                                                     |
 # >> |       __final_key | GOTE_WIN_TORYO                                                                                                                                                                                                                                                      |
 # >> |           csa_seq | [["-7162GI", 599], ["+2726FU", 597], ["-4132KI", 598], ["+6978KI", 590], ["-5354FU", 596], ["+3948GI", 588], ["-6253GI", 595], ["+9796FU", 582], ["-9394FU", 594], ["+7776FU", 568], ["-4344FU", 592], ["+7968GI", 563], ["-5162OU", 589], ["+6877GI", 552], ["-... |
