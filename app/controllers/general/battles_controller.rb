@@ -265,5 +265,9 @@ module General
       end
       link_to(str, general_search_path(name))
     end
+
+    rescue_from "ActiveRecord::RecordNotFound" do |exception|
+      redirect_to [:general, :battles], alert: "見つかりませんでした"
+    end
   end
 end
