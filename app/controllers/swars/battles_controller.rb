@@ -143,7 +143,7 @@ module Swars
             if current_swars_user
               hit_count = current_swars_user.battles.count - before_count
               if hit_count.zero?
-                flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
+                # flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
               else
                 flash.now[:info] = talk("#{hit_count}件新しく見つかりました")
               end
