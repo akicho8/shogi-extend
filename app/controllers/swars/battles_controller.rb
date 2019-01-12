@@ -128,23 +128,27 @@ module Swars
           end
 
           # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-          key = "basic_import_of_#{current_user_key}"
-          if Rails.cache.exist?(key)
-            flash.now[:warning] = talk("#{current_user_key} さんのデータはさっき取得したばかりです")
+          cache_key = "basic_import_of_#{current_user_key}"
+          seconds = Rails.env.production? ? 30.seconds : 0.seconds
+          if Rails.cache.exist?(cache_key)
+            # development でここが通らない
+            # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
+            flash.now[:warning] = talk("#{current_user_key} さんの棋譜はさっき取得したばかりです。#{seconds} 秒後にお試しください。")
           else
-            Rails.cache.write(key, true, expires_in: Rails.env.production? ? 30.seconds : 0.seconds)
+            Rails.cache.write(cache_key, true, expires_in: seconds)
             current_model.basic_import(user_key: current_user_key)
 
             hit_count = 0
             if current_swars_user
               hit_count = current_swars_user.battles.count - before_count
               if hit_count.zero?
+                flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
               else
                 flash.now[:info] = talk("#{hit_count}件新しく見つかりました")
               end
               current_swars_user.search_logs.create!
             else
-              flash.now[:warning] = "#{current_user_key} さんのデータは見つかりませんでした"
+              flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
             end
 
             if hit_count.nonzero?
