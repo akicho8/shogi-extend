@@ -70,7 +70,7 @@ module Swars
           end
 
           if row[:user_infos].blank?
-            row[:user_infos] = elem.text.scan(/(\w+)\p{blank}+(.[級段])/).collect do |e|
+            row[:user_infos] = elem.text.scan(/(\w+)\p{blank}+(.*?[級段])/).collect do |e|
               [:user_key, :grade_key].zip(e).to_h
             end
           end
