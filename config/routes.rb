@@ -50,13 +50,13 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :swars, path: "" do
-    resources :battles, path: "wr", only: [:index, :show] do
-      resources :tag_cloud, :only => :index, :module => :battles
-    end
+    resources :battles, path: "wr", only: [:index, :show]
+    resources :tag_clouds, :only => :index
+    resources :player_infos, :only => :index, path: "w-user-stat"
 
     get "w/:query", to: "battles#index", as: :search
     get "w",        to: "battles#index"
-    get "w-cloud",  to: "battles/tag_cloud#index", as: :cloud
+    get "w-cloud",  to: "tag_clouds#index", as: :cloud
   end
 
   resolve "Swars::User" do |user, options|
