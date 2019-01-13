@@ -26,30 +26,45 @@ export function kifu_copy_exec(url) {
     async: false, // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
   }).responseText
 
-  clipboard_copy(kifu_text)
+  clipboard_copy(kifu_text, {success_message: "棋譜をクリップボードにコピーしました"})
 }
 
 // str をクリップボードにコピー
-export function clipboard_copy(str, __options = {}) {
-  const options = Object.assign({}, {
+export function clipboard_copy(str, options = {}) {
+  const options2 = Object.assign({}, {
     success_message: "クリップボードにコピーしました",
     error_message: "クリップボードへのコピーに失敗しました",
-  }, __options)
+  }, options)
 
-  // クリップボード関連ライブラリを使わなくてもこれだけで動作する
-  const elem = document.createElement("textarea")
-  elem.value = str
-  document.body.appendChild(elem)
-  elem.select()
-  const success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
-  document.body.removeChild(elem)
+  let success = null
+  if (false) {
+    // 注意: PC でしか動かない
+    // クリップボード関連ライブラリを使わなくてもこれだけで動作する
+    const elem = document.createElement("textarea")
+    elem.value = str
+    document.body.appendChild(elem)
+    elem.select()
+    success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
+    document.body.removeChild(elem)
+  } else {
+    const elem = document.createElement("textarea")
+    elem.value = str
+    document.body.appendChild(elem)
+
+    // const copytext = document.getElementById(copyid)
+    const range = document.createRange()
+    range.selectNode(elem)
+    window.getSelection().addRange(range)
+    success = document.execCommand("copy")
+    document.body.removeChild(elem)
+  }
 
   if (success) {
     talk("コピーしました")
-    Vue.prototype.$toast.open({message: options["success_message"], position: "is-bottom", type: "is-success"})
+    Vue.prototype.$toast.open({message: options2["success_message"], position: "is-bottom", type: "is-success"})
   } else {
     talk("失敗しました")
-    Vue.prototype.$toast.open({message: options["error_message"], position: "is-bottom", type: "is-danger"})
+    Vue.prototype.$toast.open({message: options2["error_message"], position: "is-bottom", type: "is-danger"})
   }
 }
 
