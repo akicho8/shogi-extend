@@ -37,27 +37,24 @@ export function clipboard_copy(str, options = {}) {
   }, options)
 
   let success = null
-  if (false) {
-    // 注意: PC でしか動かない
-    // クリップボード関連ライブラリを使わなくてもこれだけで動作する
-    const elem = document.createElement("textarea")
-    elem.value = str
-    document.body.appendChild(elem)
-    elem.select()
-    success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
-    document.body.removeChild(elem)
-  } else {
-    const elem = document.createElement("textarea")
-    elem.value = str
-    document.body.appendChild(elem)
 
-    // const copytext = document.getElementById(copyid)
+  const elem = document.createElement("textarea")
+  elem.value = str
+  document.body.appendChild(elem)
+  elem.select() // この方法は Windows Chrome でのみ動く
+  success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
+  console.log(`クリップボードコピー試行1: select => ${success}`)
+
+  if (!success) {
+    // この方法は iPhone と Mac の Chrome で動く。Mac の Safari では未検証
     const range = document.createRange()
     range.selectNode(elem)
     window.getSelection().addRange(range)
     success = document.execCommand("copy")
-    document.body.removeChild(elem)
+    console.log(`クリップボードコピー試行2: selectNode => ${success}`)
   }
+
+  document.body.removeChild(elem)
 
   if (success) {
     talk("コピーしました")
