@@ -26,4 +26,10 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     expect(page).to have_content "Rails"
     doc_image
   end
+
+  it "プレイヤー情報" do
+    visit "/w-user-stat?user_key=hanairobiyori"
+    expect(page).to have_content "Rails"
+    doc_image
+  end
 end

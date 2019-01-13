@@ -48,5 +48,73 @@ module Swars
     def to_param
       user_key
     end
+
+    concerning :StatMethods do
+      def stat1
+        stat = Hash.new(0)
+
+        stat["集計した直近の対局数"] = memberships.count
+        stat["勝ち"] = 0
+        stat["負け"] = 0
+
+        # lose_count = memberships.count { |e| membership.battle.win_user_id && membership.battle.win_user != self }
+
+        memberships.each do |membership|
+          battle = membership.battle
+          key1 = "#{battle.final_info.name}で"
+
+          if battle.win_user_id
+            if battle.win_user == self
+              win_or_lose = "勝ち"
+            else
+              win_or_lose = "負け"
+            end
+          else
+            win_or_lose = "引き分け"
+          end
+
+          key = "#{key1}#{win_or_lose}"
+          key = {
+            "投了で勝ち" => "相手の投了で勝ち",
+            "投了で負け" => "自分の投了で負け",
+          }.fetch(key, key)
+
+          stat["#{win_or_lose}"] += 1
+          stat["#{key}"] += 1
+
+          #
+          #   membership = ships[i]
+          #   membership.defense_tag_list = player.skill_set.defense_infos.normalize.collect(&:key)
+          #   membership.attack_tag_list  = player.skill_set.attack_infos.normalize.collect(&:key)
+          # end
+
+          # info = battle.parsed_info
+          # defense_tag_list << info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+          # attack_tag_list  << info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+        end
+
+        stat["切断率"] = parcentage(stat["切断で負け"], stat["負け"])
+        stat["投了率"] = parcentage(stat["自分の投了で負け"], stat["負け"])
+
+        stat
+      end
+
+      def stat2
+        stat = Hash.new(0)
+        memberships.each do |membership|
+          membership.attack_tag_list.each { |e| stat[e] += 1 }
+          membership.defense_tag_list.each { |e| stat[e] += 1 }
+        end
+        Hash[stat.sort_by { |k, v| -v }]
+      end
+
+      def parcentage(numerator, denominator)
+        if denominator.zero?
+          return ""
+        end
+        rate = numerator.fdiv(denominator).round(2) * 100
+        "#{rate} %"
+      end
+    end
   end
 end

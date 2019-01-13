@@ -62,6 +62,7 @@ html lang="ja"
             = link_to("ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
             = link_to("CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
             = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
+            = link_to("将棋ウォーズプレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link その他
               .navbar-dropdown.is-boxed
