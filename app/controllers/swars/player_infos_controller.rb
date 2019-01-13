@@ -3,10 +3,13 @@ module Swars
     def index
       if current_user_key
         Battle.basic_import(user_key: current_user_key, page_max: 3)
-        if current_swars_user
-          @stat1 = current_swars_user.stat1
-          @stat2 = current_swars_user.stat2
+        unless current_swars_user
+          flash.now[:warning] = "#{current_user_key} さんの情報は見つかりませんでした"
+          return
         end
+        SlackAgent.chat_post_message(key: "Wプレイヤー情報", body: "#{current_swars_user.user_key}")
+        @stat1 = current_swars_user.stat1
+        @stat2 = current_swars_user.stat2
       end
     end
 
