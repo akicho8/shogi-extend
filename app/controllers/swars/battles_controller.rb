@@ -138,12 +138,13 @@ module Swars
           else
             Rails.cache.write(cache_key, true, expires_in: seconds)
             current_model.basic_import(user_key: current_user_key)
+            remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
 
             hit_count = 0
             if current_swars_user
               hit_count = current_swars_user.battles.count - before_count
               if hit_count.zero?
-                # flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
+                flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
               else
                 flash.now[:info] = talk("#{hit_count}件新しく見つかりました")
               end
