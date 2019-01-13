@@ -232,6 +232,22 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  concerning :MobileMethods do
+    included do
+      let :access_from_mobile? do
+        request.user_agent.to_s.match?(self.class.mobile_regexp)
+      end
+    end
+
+    class_methods do
+      def mobile_regexp
+        @mobile_regexp ||= Regexp.union(*[
+            /iPhone|iPad/,
+            /Android.*Mobile/,
+          ])
+      end
+    end
+  end
   concerning :ShowiPlayerMethods do
     included do
       let :current_shogi_player_theme do
