@@ -232,4 +232,18 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  concerning :ShowiPlayerMethods do
+    included do
+      let :current_shogi_player_theme do
+        if access_from_mobile?
+          "simple"
+        else
+          "real"
+        end
+      end
+    end
+
+    class_methods do
+    end
+  end
 end
