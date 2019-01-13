@@ -1,0 +1,12 @@
+= tag.datalist(id: "user_key_list") do
+  - user_keys = []
+  / 利用者
+  - user_keys.concat Swars::User.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(64).pluck(:user_key)
+  / 最近取り込んだ人たち
+  - user_keys.concat Swars::User.order(updated_at: :desc).limit(32).pluck(:user_key)
+  / すごい人たち
+  - user_keys.concat Swars::User.joins(:grade).order("#{Swars::Grade.table_name}.priority desc").order(:updated_at => :desc).limit(32).pluck(:user_key)
+  - user_keys.uniq.each do |e|
+    = tag.option(value: e)
+  - Warabi::TacticInfo.all_elements.each do |e|
+    = tag.option(value: e.name)
