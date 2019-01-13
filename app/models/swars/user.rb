@@ -75,8 +75,12 @@ module Swars
 
           key = "#{key1}#{win_or_lose}"
           key = {
-            "投了で勝ち" => "相手の投了で勝ち",
-            "投了で負け" => "自分の投了で負け",
+            "投了で勝ち" => "相手が投了した",
+            "投了で負け" => "自分が投了した",
+            "切断で勝ち" => "相手が切断した",
+            "切断で負け" => "自分が切断した",
+            "詰みで負け" => "詰まされて負けた",
+            "詰みで勝ち" => "詰まして勝った",
           }.fetch(key, key)
 
           stat["#{win_or_lose}"] += 1
@@ -93,8 +97,8 @@ module Swars
           # attack_tag_list  << info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
         end
 
-        stat["切断率"] = parcentage(stat["切断で負け"], stat["負け"])
-        stat["投了率"] = parcentage(stat["自分の投了で負け"], stat["負け"])
+        stat["投了率"] = parcentage(stat["自分が投了した"], stat["負け"])
+        stat["切断率"] = parcentage(stat["自分が切断した"], stat["負け"])
 
         stat
       end
@@ -112,7 +116,7 @@ module Swars
         if denominator.zero?
           return ""
         end
-        rate = numerator.fdiv(denominator).round(2) * 100
+        rate = (numerator * 100).fdiv(denominator).round(2)
         "#{rate} %"
       end
     end
