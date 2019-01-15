@@ -25,6 +25,8 @@ module Swars
 
     acts_as_list top_of_list: 0, scope: :battle
 
+    default_scope { order(:position) }
+
     scope :judge_key_eq, -> v { where(judge_key: v).take }
 
     # 先手/後手側の対局時の情報

@@ -30,7 +30,7 @@ module Swars
 
     belongs_to :win_user, class_name: "User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
 
-    has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
+    has_many :memberships, dependent: :destroy, inverse_of: :battle
     delegate :rival, :myself, to: :memberships
 
     has_many :access_logs, dependent: :destroy # アクセスログみたいもの
@@ -104,14 +104,8 @@ module Swars
       end
 
       def kifu_body
-        if persisted?
-          players = memberships.order(:position)
-        else
-          players = memberships
-        end
-
         type = [rule_info.long_name]
-        if players.any? { |e| e.grade.grade_info.key == :"十段" }
+        if memberships.any? { |e| e.grade.grade_info.key == :"十段" }
           type << "指導対局"
         end
         if preset_info.handicap
@@ -119,8 +113,8 @@ module Swars
         end
 
         s = []
-        s << ["N+", players.first.name_with_grade].join
-        s << ["N-", players.second.name_with_grade].join
+        s << ["N+", memberships.first.name_with_grade].join
+        s << ["N-", memberships.second.name_with_grade].join
         s << ["$START_TIME", battled_at.to_s(:csa_ymdhms)] * ":"
         s << ["$EVENT", "将棋ウォーズ(#{type.join(' ')})"] * ":"
         s << ["$TIME_LIMIT", rule_info.csa_time_limit] * ":"
@@ -153,15 +147,11 @@ module Swars
       def parser_exec_after(info)
         # 囲い対決などに使う
         if true
-          if persisted?
-            ships = memberships.order(:position)
-          else
-            ships = memberships
-          end
           info.mediator.players.each.with_index do |player, i|
-            membership = ships[i]
-            membership.defense_tag_list = player.skill_set.defense_infos.normalize.collect(&:key)
-            membership.attack_tag_list  = player.skill_set.attack_infos.normalize.collect(&:key)
+            memberships[i].tap do |e|
+              e.defense_tag_list = player.skill_set.defense_infos.normalize.collect(&:key)
+              e.attack_tag_list  = player.skill_set.attack_infos.normalize.collect(&:key)
+            end
           end
         end
 
