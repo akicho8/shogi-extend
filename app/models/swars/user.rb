@@ -94,9 +94,9 @@ module Swars
               base = Warabi::TurnInfo.new(handicap: battle.preset_info.handicap).base_location.code # 置き換える
               use_times = battle.parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(Warabi::Location.count) == base }.collect { |e| e[:used_seconds] }
               # list = use_times.each_cons(2).collect { |a, b| (a - b).abs }
-              if use_times.last(kishin_count) <= kishin_time_max
-                # stat["棋神"] += 1
-              end
+              # if use_times.last(kishin_count) <= kishin_time_max
+              #   # stat["棋神"] += 1
+              # end
             end
           end
 
