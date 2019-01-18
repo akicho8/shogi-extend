@@ -290,7 +290,7 @@ module Swars
             end
           end
           s = s.group(:user_id).select(:user_id)
-          s = s.joins(:battle).order("max(#{Battle.table_name}.battled_at) desc")
+          s = s.joins(:battle).reorder("max(#{Battle.table_name}.battled_at) desc")
           s = s.limit(params[:limit] || 1)
           # SELECT  `memberships`.`user_id` FROM `memberships` INNER JOIN `users` ON `users`.`id` = `memberships`.`user_id` INNER JOIN `grades` ON `grades`.`id` = `users`.`grade_id` INNER JOIN `battles` ON `battles`.`id` = `memberships`.`battle_id` WHERE (`grades`.`priority` <= 8) GROUP BY `memberships`.`user_id` ORDER BY max(battles.battled_at) desc LIMIT 1
           user_ids = s.pluck(:user_id)
