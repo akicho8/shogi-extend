@@ -305,6 +305,17 @@ module Swars
           end
         end
 
+        def debounce_basic_import(**params)
+          cache_key = "basic_import_of_#{params[:user_key]}"
+          seconds = Rails.env.production? ? 15.seconds : 0.seconds
+          if Rails.cache.exist?(cache_key)
+            return false
+          end
+          Rails.cache.write(cache_key, true, expires_in: seconds)
+          basic_import(params)
+          true
+        end
+
         # Battle.basic_import(user_key: "DarkPonamin9")
         # Battle.basic_import(user_key: "micro77")
         # Battle.basic_import(user_key: "micro77", page_max: 3)

@@ -2,7 +2,7 @@ module Swars
   class PlayerInfosController < ApplicationController
     def index
       if current_user_key
-        Battle.basic_import(user_key: current_user_key, page_max: 3)
+        Battle.debounce_basic_import(user_key: current_user_key, page_max: 3)
         unless current_swars_user
           flash.now[:warning] = "#{current_user_key} さんの情報は見つかりませんでした"
           return
@@ -19,6 +19,14 @@ module Swars
 
     let :current_swars_user do
       User.find_by(user_key: current_user_key)
+    end
+
+    rescue_from "ActiveRecord::RecordInvalid" do |exception|
+      if exception.message.match?(/重複/)
+        redirect_to [:swars, :player_infos], alert: "調べているところなので連打しないでください(^^)"
+      else
+        raise exception
+      end
     end
   end
 end

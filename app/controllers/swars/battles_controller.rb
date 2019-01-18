@@ -129,17 +129,14 @@ module Swars
           end
 
           # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-          cache_key = "basic_import_of_#{current_user_key}"
-          seconds = Rails.env.production? ? 15.seconds : 0.seconds
-          if Rails.cache.exist?(cache_key)
+          success = Battle.debounce_basic_import(user_key: current_user_key)
+          if !success
             # development でここが通らない
             # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
             flash.now[:warning] = "#{current_user_key} さんの棋譜はさっき取得したばかりです。#{seconds} 秒後にお試しください。"
-          else
-            Rails.cache.write(cache_key, true, expires_in: seconds)
-            current_model.basic_import(user_key: current_user_key)
+          end
+          if success
             remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
-
             hit_count = 0
             if current_swars_user
               hit_count = current_swars_user.battles.count - before_count
