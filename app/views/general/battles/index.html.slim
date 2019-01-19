@@ -6,8 +6,8 @@
       = form_with(url: [:general, :s], method: :get, skip_enforcing_utf8: true, id: "search_form") do |form|
         .field.has-addons
           .control.is-expanded
-            = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "user_key_list", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
-            = tag.datalist(id: "user_key_list") do
+            = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "search_field_query_completion", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
+            = tag.datalist(id: "search_field_query_completion") do
               - Warabi::TacticInfo.all_elements.each do |e|
                 = tag.option(value: e.name)
           .control
