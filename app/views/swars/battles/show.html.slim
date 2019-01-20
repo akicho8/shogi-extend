@@ -11,3 +11,11 @@ hr
 
 .has-text-centered
   = render :partial => "kifu_player"
+
+- if !Rails.env.production? || params[:kishin_info]
+  .section
+    .title.is-2.yumincho 棋神召喚疑惑判定
+    hr
+
+    - current_record.memberships.each do |membership|
+      = membership.kishin_info.to_html(title: membership.user.user_key)

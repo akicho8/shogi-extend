@@ -51,9 +51,6 @@ module Swars
 
     concerning :StatMethods do
       def stat1
-        kishin_count = 5
-        kishin_time_max = 10
-
         stat = Hash.new(0)
 
         stat["集計した直近の対局数"] = memberships.count
@@ -89,30 +86,20 @@ module Swars
           stat["#{win_or_lose}"] += 1
           stat["#{key}"] += 1
 
-          if battle.win_user_id
-            if battle.win_user == self
-              base = Warabi::TurnInfo.new(handicap: battle.preset_info.handicap).base_location.code # 置き換える
-              use_times = battle.parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(Warabi::Location.count) == base }.collect { |e| e[:used_seconds] }
-              # list = use_times.each_cons(2).collect { |a, b| (a - b).abs }
-              # if use_times.last(kishin_count) <= kishin_time_max
-              #   # stat["棋神"] += 1
-              # end
+          if battle.rule_info.key == :ten_min
+            if membership.kishin_used?
+              if membership.winner?
+                if membership.kishin_used?
+                  stat["棋神召喚疑惑"] += 1
+                end
+              end
             end
           end
-
-          #   membership = ships[i]
-          #   membership.defense_tag_list = player.skill_set.defense_infos.normalize.collect(&:key)
-          #   membership.attack_tag_list  = player.skill_set.attack_infos.normalize.collect(&:key)
-          # end
-
-          # info = battle.parsed_info
-          # defense_tag_list << info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-          # attack_tag_list  << info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
         end
 
         stat["投了率"] = parcentage(stat["投了した"], stat["負け"])
         stat["切断率"] = parcentage(stat["切断した"], stat["負け"])
-        # stat["棋神使用率"] = parcentage(stat["棋神"], stat["勝ち"])
+        stat["棋神召喚疑惑率"] = parcentage(stat["棋神召喚疑惑"], stat["勝ち"])
 
         stat
       end
