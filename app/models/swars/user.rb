@@ -50,7 +50,7 @@ module Swars
     end
 
     concerning :StatMethods do
-      def stat1
+      def win_lose_stat
         stat = Hash.new(0)
 
         stat["集計した直近の対局数"] = memberships.count
@@ -104,13 +104,11 @@ module Swars
         stat
       end
 
-      def stat2
-        stat = Hash.new(0)
-        memberships.each do |membership|
-          membership.attack_tag_list.each { |e| stat[e] += 1 }
-          membership.defense_tag_list.each { |e| stat[e] += 1 }
-        end
-        Hash[stat.sort_by { |k, v| -v }]
+      def stat_for(key)
+        v = memberships.flat_map(&:"#{key}_tag_list")
+        v = v.group_by(&:itself).transform_values(&:size)
+        v = v.sort_by { |k, v| -v }
+        Hash[v]
       end
 
       def parcentage(numerator, denominator)

@@ -8,8 +8,6 @@ module Swars
           return
         end
         SlackAgent.chat_post_message(key: "Wプレイヤー情報", body: "#{current_swars_user.user_key}")
-        @stat1 = current_swars_user.stat1
-        @stat2 = current_swars_user.stat2
       end
     end
 

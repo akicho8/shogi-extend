@@ -10,14 +10,22 @@
       = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
 br
 
-.columns
-  - if @stat1
-    .column
-      .field
-        .title.yumincho.is-4 勝敗
-        == @stat1.to_html(table_class: "table is-fullwidth is-narrow")
-  - if @stat2
-    .column
-      .field
-        .title.yumincho.is-4 戦型・囲い
-        == @stat2.to_html(table_class: "table is-fullwidth is-narrow")
+- if current_swars_user
+  .columns
+    - if stat = current_swars_user.win_lose_stat
+      .column
+        .field
+          .title.yumincho.is-4 勝敗
+          == stat.to_html(table_class: "table is-fullwidth is-narrow")
+
+    - if stat = current_swars_user.stat_for(:attack)
+      .column
+        .field
+          .title.yumincho.is-4 戦型
+          == stat.to_html(table_class: "table is-fullwidth is-narrow")
+
+    - if stat = current_swars_user.stat_for(:defense)
+      .column
+        .field
+          .title.yumincho.is-4 囲い
+          == stat.to_html(table_class: "table is-fullwidth is-narrow")
