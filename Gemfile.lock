@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: e4d20553b401e4b86657df9c065654cbb8d8af67
+  revision: 205757cba2816a876be9fecebd8b80146442db7d
   specs:
     warabi (0.0.1)
       actionview
@@ -194,7 +194,7 @@ GEM
       sass-rails
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.5.1)
+    i18n (1.5.2)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
     jbuilder (2.7.0)
@@ -258,7 +258,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.2.0)
     nio4r (2.3.1)
-    nokogiri (1.10.0)
+    nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
     ntlm-http (0.1.1)
     oauth (0.5.4)
