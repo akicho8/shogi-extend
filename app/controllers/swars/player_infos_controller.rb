@@ -22,9 +22,10 @@ module Swars
     rescue_from "ActiveRecord::RecordInvalid" do |exception|
       if exception.message.match?(/重複/)
         redirect_to [:swars, :player_infos], alert: "調べているところなので連打しないでください(^^)"
-      else
-        raise exception
+        return
       end
+
+      raise exception
     end
   end
 end

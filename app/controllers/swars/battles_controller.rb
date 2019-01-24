@@ -173,6 +173,14 @@ module Swars
       render :index
     end
 
+    rescue_from "ActiveRecord::RecordInvalid" do |exception|
+      if exception.message.match?(/重複/)
+        redirect_to [:swars, :battles], alert: "調べているところなので連打しないでください(^^)"
+        return
+      end
+      raise exception
+    end
+
     private
 
     def access_log_create
