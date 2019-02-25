@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: 205757cba2816a876be9fecebd8b80146442db7d
+  revision: 1002790042d0e4abecf561b9602a336d42b5ec63
   specs:
     warabi (0.0.1)
       actionview
@@ -194,7 +194,7 @@ GEM
       sass-rails
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.5.2)
+    i18n (1.5.3)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
     jbuilder (2.7.0)
