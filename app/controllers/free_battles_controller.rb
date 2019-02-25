@@ -32,15 +32,13 @@ class FreeBattlesController < ApplicationController
     if request.format.json?
       if v = params[:kifu_body]
         info = Warabi::Parser.parse(v, typical_error_case: :embed)
-        render json: {sfen: info.to_sfen}
+        render json: { sfen: info.to_sfen, kifu_infos: Warabi::KifuFormatInfo.collect { |e| { name: e.name, value: info.public_send("to_#{e.key}") } } }
         return
       end
     end
 
     if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
-      url
-      if url.match?(%r{https?://kif-pona.heroz.jp/games/})
-        key = URI(url).path.split("/").last
+      if key = Swars::Battle.extraction_key_from_dirty_string(url)
         redirect_to [:swars, :battle, id: key]
         return
       end
@@ -50,8 +48,13 @@ class FreeBattlesController < ApplicationController
 
   private
 
+  def current_record_save
+    current_record.owner_user ||= current_user
+    super
+  end
+
   def current_filename
-    Time.current.strftime("#{current_basename}_%Y_%m_%d_%H%M%S.#{params[:format]}")
+    Time.current.strftime("#{current_basename}_%Y%m%d_%H%M%S.#{params[:format]}")
   end
 
   def current_basename

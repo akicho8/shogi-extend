@@ -7,16 +7,19 @@ import axios from "axios"
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: '#shogi_preview_app',
-    data: function () {
+    data() {
       return {
         kifu_body: "",
-        full_sfen: "position sfen startpos",
+        // full_sfen: "position sfen startpos", // shogi-player に渡すための変数
+        full_sfen: null, // shogi-player に渡すための変数
         update_delay: 1000 * 1, // 指定ms入力がなくなってからプレビューする
+        kifu_active_tab: 0,
+        kifu_infos: null,
       }
     },
 
     watch: {
-      kifu_body: function (v) {
+      kifu_body(v) {
         this.preview_update()
       },
     },
@@ -31,6 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           if (response.data.sfen) {
             this.full_sfen = response.data.sfen
+          }
+          if (response.data.kifu_infos) {
+            this.kifu_infos = response.data.kifu_infos
           }
         }).catch((error) => {
           console.table([error.response])

@@ -115,8 +115,7 @@ module Swars
       unless bot_agent?
         # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
         if query = params[:query].presence
-          if query.match?(%r{https?://kif-pona.heroz.jp/games/})
-            key = URI(query).path.split("/").last
+          if key = Battle.extraction_key_from_dirty_string(query)
             redirect_to [:swars, :battle, id: key]
             return
           end

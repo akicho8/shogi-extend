@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  concerning :Choremethods do
+  concerning :ChoreMethods do
     included do
       add_flash_types *FlashInfo.flash_all_keys
       helper_method :submitted?
@@ -58,7 +58,20 @@ class ApplicationController < ActionController::Base
         current_user && current_user.sysop?
       end
 
+      helper_method :editable_record?
       helper_method :current_user
+    end
+
+    def editable_record?(record)
+      sysop? || current_user_is_owner_of?(record)
+    end
+
+    def current_user_is_owner_of?(record)
+      if record
+        if record.respond_to?(:owner_user)
+          record.owner_user == current_user
+        end
+      end
     end
 
     def current_user

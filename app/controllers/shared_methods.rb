@@ -3,7 +3,7 @@ module SharedMethods
 
   included do
     before_action only: [:edit, :update, :destroy] do
-      unless sysop?
+      unless editable_record?(current_record)
         redirect_to :root, alert: "アクセス権限がありません"
       end
     end

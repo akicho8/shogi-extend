@@ -38,7 +38,15 @@ class FreeBattle < ApplicationRecord
 
   has_one_attached :kifu_file
 
+  belongs_to :owner_user, :class_name => "Colosseum::User", :foreign_key => "colosseum_user_id", required: false
+
+  def safe_title
+    title.presence || "#{self.class.count.next}番目の何かの棋譜"
+  end
+
   before_validation do
+    self.title = safe_title
+
     self.kifu_body ||= ""
 
     if kifu_file.attached?

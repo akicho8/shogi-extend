@@ -11,4 +11,9 @@
 .field
   = form.label(:kifu_file, class: "label")
   .control
-    = form.file_field(:kifu_file, class: "input")
+    = form.file_field(:kifu_file)
+
+.field
+  = form.label(:title, class: "label")
+  .control
+    = form.text_field(:title, class: "input", placeholder: "空でかまいません")

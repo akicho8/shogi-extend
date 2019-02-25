@@ -169,6 +169,16 @@ module Swars
     end
 
     concerning :HelperMethods do
+      class_methods do
+        def extraction_key_from_dirty_string(str)
+          if str.match?(%r{https?://kif-pona.heroz.jp/games/})
+            # コピペで空白を入れる人がいるため strip でもいいがいっそのことURLだけを抽出する
+            url = str.match(URI.regexp(["http", "https"])).to_s
+            URI(url).path.split("/").last
+          end
+        end
+      end
+
       def winner_desuka?(user)
         if win_user
           win_user == user
@@ -198,6 +208,7 @@ module Swars
         url = Rails.application.routes.url_helpers.swars_real_battle_url(self, tw: 1)
         "将棋ウォーズ棋譜(#{vs}) #{url} #shogiwars #将棋"
       end
+
     end
 
     concerning :ImportMethods do

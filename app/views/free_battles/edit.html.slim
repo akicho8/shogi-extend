@@ -10,7 +10,7 @@ ruby:
 #shogi_preview_app
   nav.breadcrumb
     ul
-      li= link_to("一覧", current_plural_key)
+      li= link_to("棋譜一覧", current_plural_key)
       li.is-active
         - if current_record.id
           = link_to("#{label} ##{current_record.id}", current_record)
@@ -29,18 +29,33 @@ ruby:
         .field
           p.control
             =<> form.submit(name: :_submit_and_redirect_to_show, class: "button is-primary")
-    .column
-      .non_border_box
-        shogi-player(
-          :kifu_body="full_sfen"
-          :start_turn="-1"
-          :debug_mode="false"
-          :key_event_capture="true"
-          :slider_show="true"
-          :sfen_show="false"
-          :controller_show="false"
-          :theme="'simple'"
-          :size="'default'"
-          :sound_effect="true"
-          :volume=AppConfig[:volume]
-          )
+          p.has-text-grey.is-size-7
+            | ログインしてから固定URL化すると再編集できます
+
+    template(v-if="kifu_infos")
+      .column
+        .columns
+          .column.has-text-left
+            b-tabs(v-model="kifu_active_tab")
+              template(v-for="e in kifu_infos")
+                b-tab-item(:label="e.name")
+                  pre.pre-wrap
+                    small
+                      | {{e.value}}
+
+    template(v-if="full_sfen")
+      .column
+        .non_border_box
+          shogi-player(
+            :kifu_body="full_sfen"
+            :start_turn="-1"
+            :debug_mode="false"
+            :key_event_capture="true"
+            :slider_show="true"
+            :sfen_show="false"
+            :controller_show="true"
+            :theme="'simple'"
+            :size="'default'"
+            :sound_effect="true"
+            :volume=AppConfig[:volume]
+            )
