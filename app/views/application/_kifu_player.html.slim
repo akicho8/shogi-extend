@@ -47,6 +47,14 @@
             / b-dropdown-item(href=piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"]))) ぴよ将棋
 
         = link_to(image_tag("piyo_shogi_app.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])))
+          b-dropdown(:hoverable="true")
+            button.button.is-small(slot="trigger")
+              span 直リンク
+              b-icon(icon="menu-down")
+            - Warabi::KifuFormatInfo.each do |e|
+              = link_to([current_record, format: e.key, plain: true]) do
+                b-dropdown-item
+                  = e.name
 
 = render :partial => "kifu_player_tabs_div"
 
