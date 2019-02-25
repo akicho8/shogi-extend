@@ -63,7 +63,7 @@ Rails.application.routes.draw do
     swars_search_path(query: user.to_param)
   end
 
-  ################################################################################ 棋譜変換
+  ################################################################################ 棋譜入力
 
   resources :free_battles, path: "x"
 

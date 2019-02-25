@@ -1,4 +1,4 @@
-// 棋譜変換用
+// 棋譜入力用
 
 import _ from "lodash"
 import * as AppHelper from "./app_helper.js"

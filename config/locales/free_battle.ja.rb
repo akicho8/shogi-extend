@@ -5,14 +5,14 @@
     helpers: {
       submit: {
         free_battle: {
-          create: "変換",
+          create: "固定URL化",
           update: nil,
         },
       },
     },
     activerecord: {
       models: {
-        free_battle: "棋譜変換",
+        free_battle: "棋譜入力",
       },
       attributes: {
         free_battle: {

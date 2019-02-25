@@ -41,6 +41,8 @@ module SharedMethods
     "#{current_record.key}.#{params[:format]}"
   end
 
+  # curl -I http://localhost:3000/x/1.kif?inline=1
+  # curl -I http://localhost:3000/x/1.kif?plain=1
   def kifu_send_data
     text_body = current_record.to_s_kifu(params[:format])
 
@@ -50,23 +52,24 @@ module SharedMethods
 
     if params[:plain].present?
       render plain: text_body
-    else
-      if params[:inline].present?
-        disposition = "inline"
-      else
-        disposition = "attachment"
-
-        # ↓これをやるとコピーのときに sjis 化されてぴよで読み込めなくなる
-        #
-        # iPhone で「ダウンロード」としたときだけ文字化けする対策(sjisなら文字化けない)
-        # if access_from_mobile?
-        #   text_body = text_body.tosjis
-        # end
-      end
-
-      require "kconv"
-      send_data(text_body, type: Mime[params[:format]], filename: current_filename.public_send("to#{current_encode}"), disposition: disposition)
+      return
     end
+
+    if params[:inline].present?
+      disposition = "inline"
+    else
+      disposition = "attachment"
+
+      # ↓これをやるとコピーのときに sjis 化されてぴよで読み込めなくなる
+      #
+      # iPhone で「ダウンロード」としたときだけ文字化けする対策(sjisなら文字化けない)
+      # if access_from_mobile?
+      #   text_body = text_body.tosjis
+      # end
+    end
+
+    require "kconv"
+    send_data(text_body, type: Mime[params[:format]], filename: current_filename.public_send("to#{current_encode}"), disposition: disposition)
   end
 
   def current_encode

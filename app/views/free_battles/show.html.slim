@@ -3,7 +3,7 @@ nav.breadcrumb
     li= link_to("一覧", current_plural_key)
     li.is-active= link_to("##{current_record.id}", current_record)
 
-.title.is-3.yumincho= "変換結果"
+.title.is-3.yumincho= "棋譜 ##{current_record.id}"
 hr
 
 .has-text-centered

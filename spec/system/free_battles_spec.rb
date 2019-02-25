@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "棋譜変換", type: :system do
+RSpec.describe "棋譜入力", type: :system do
   before do
     @free_battle = FreeBattle.create!
   end
