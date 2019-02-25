@@ -12,7 +12,7 @@ hr
 .has-text-centered
   = render :partial => "kifu_player"
 
-- if !Rails.env.production? || params[:kishin_info]
+- if !Rails.env.production? || params[:kishin_info] || true
   .section
     .title.is-2.yumincho 棋神召喚疑惑判定
     hr
