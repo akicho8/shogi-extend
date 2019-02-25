@@ -10,7 +10,7 @@ RSpec.describe "棋譜入力", type: :system do
     expect(page).to have_content "一覧"
   end
 
-  it "変換" do
+  it "固定URL化" do
     visit "/x/new"
 
     expect(page).to have_field "free_battle[kifu_body]"
@@ -20,7 +20,7 @@ RSpec.describe "棋譜入力", type: :system do
     fill_in "free_battle[kifu_body]", with: "68銀"
     sleep(3)
     doc_image("入力")
-    click_button "変換"
+    click_button "固定URL化"
 
     expect(page).to have_content "結果"
     expect(page).to have_content "▲６八銀"
