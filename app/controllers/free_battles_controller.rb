@@ -27,14 +27,6 @@ class FreeBattlesController < ApplicationController
     }
   end
 
-  let :current_record do
-    if v = params[:id].presence
-      current_scope.find_by!(key: v)
-    else
-      current_scope.new
-    end
-  end
-
   def create
     # プレビュー用
     if request.format.json?

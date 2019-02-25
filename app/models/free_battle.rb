@@ -72,10 +72,6 @@ class FreeBattle < ApplicationRecord
     end
   end
 
-  def to_param
-    key
-  end
-
   concerning :TagMethods do
     included do
       acts_as_ordered_taggable_on :defense_tags
