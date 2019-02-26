@@ -3,19 +3,25 @@
 #
 # 棋譜入力 (free_battles as FreeBattle)
 #
-# |------------+--------------------+-------------+-------------+------+-------|
-# | name       | desc               | type        | opts        | refs | index |
-# |------------+--------------------+-------------+-------------+------+-------|
-# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |
-# | kifu_url   | 棋譜URL            | string(255) |             |      |       |
-# | kifu_body  | 棋譜内容           | text(65535) | NOT NULL    |      |       |
-# | turn_max   | 手数               | integer(4)  | NOT NULL    |      |       |
-# | meta_info  | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
-# | battled_at | Battled at         | datetime    | NOT NULL    |      |       |
-# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
-# |------------+--------------------+-------------+-------------+------+-------|
+# |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
+# | name              | desc               | type        | opts        | refs                              | index |
+# |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
+# | id                | ID                 | integer(8)  | NOT NULL PK |                                   |       |
+# | key               | ユニークなハッシュ | string(255) | NOT NULL    |                                   | A!    |
+# | kifu_url          | 棋譜URL            | string(255) |             |                                   |       |
+# | kifu_body         | 棋譜               | text(65535) | NOT NULL    |                                   |       |
+# | turn_max          | 手数               | integer(4)  | NOT NULL    |                                   |       |
+# | meta_info         | 棋譜ヘッダー       | text(65535) | NOT NULL    |                                   |       |
+# | battled_at        | Battled at         | datetime    | NOT NULL    |                                   |       |
+# | created_at        | 作成日時           | datetime    | NOT NULL    |                                   |       |
+# | updated_at        | 更新日時           | datetime    | NOT NULL    |                                   |       |
+# | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
+# | title             | タイトル           | string(255) |             |                                   |       |
+# |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# 【警告:リレーション欠如】Colosseum::Userモデルで has_many :free_battles, :foreign_key => :colosseum_user_id されていません
+#--------------------------------------------------------------------------------
 
 class FreeBattlesController < ApplicationController
   include ModulableCrud::All
@@ -31,8 +37,11 @@ class FreeBattlesController < ApplicationController
     # プレビュー用
     if request.format.json?
       if v = params[:kifu_body]
-        info = Warabi::Parser.parse(v, typical_error_case: :embed)
-        render json: { sfen: info.to_sfen, kifu_infos: Warabi::KifuFormatInfo.collect { |e| { name: e.name, value: info.public_send("to_#{e.key}") } } }
+        parsed_info = Warabi::Parser.parse(v, typical_error_case: :embed)
+        render json: {
+          sfen: parsed_info.to_sfen,
+          kifu_infos: Warabi::KifuFormatInfo.collect { |e| { name: e.name, value: parsed_info.public_send("to_#{e.key}", compact: true) } } + [{name: "BOD", value: parsed_info.to_bod}],
+        }
         return
       end
     end
