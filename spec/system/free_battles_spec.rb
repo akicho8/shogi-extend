@@ -22,9 +22,9 @@ RSpec.describe "棋譜入力", type: :system do
     doc_image("入力")
     click_button "固定URL化"
 
-    expect(page).to have_content "結果"
+    expect(page).to have_content "嬉野流"
     expect(page).to have_content "▲６八銀"
 
-    doc_image("結果")
+    doc_image("詳細")
   end
 end
