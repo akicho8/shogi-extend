@@ -10,4 +10,9 @@ RSpec.describe AboutController, type: :controller do
     get :show, params: {id: :terms}
     expect(response).to be_successful
   end
+
+  it "credit" do
+    get :show, params: {id: :credit}
+    expect(response).to be_successful
+  end
 end
