@@ -52,7 +52,7 @@ module ConvertMethods
 
     if kifu_cache_enable
     else
-      Warabi::KifuFormatInfo.each do |e|
+      KifuFormatWithBodInfo.each do |e|
         converted_info = converted_infos.text_format_eq(e.key).take || converted_infos.build
         converted_info.text_body = info.public_send("to_#{e.key}", compact: true)
         converted_info.text_format = e.key

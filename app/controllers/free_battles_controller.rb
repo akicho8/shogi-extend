@@ -40,7 +40,7 @@ class FreeBattlesController < ApplicationController
         parsed_info = Warabi::Parser.parse(v, typical_error_case: :embed)
         render json: {
           sfen: parsed_info.to_sfen,
-          kifu_infos: Warabi::KifuFormatInfo.collect { |e| { name: e.name, value: parsed_info.public_send("to_#{e.key}", compact: true) } } + [{name: "BOD", value: parsed_info.to_bod}],
+          kifu_infos: KifuFormatWithBodInfo.collect { |e| { name: e.name, value: parsed_info.public_send("to_#{e.key}", compact: true) } },
         }
         return
       end

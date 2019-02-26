@@ -1,7 +1,7 @@
 .field
   = form.label(:kifu_body, class: "label")
   .control
-    = form.text_area(:kifu_body, rows: 12, class: "textarea", autofocus: true, placeholder: "#{Warabi::KifuFormatInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "kifu_body")
+    = form.text_area(:kifu_body, rows: 12, class: "textarea", autofocus: true, placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "kifu_body")
 
 .field
   = form.label(:kifu_url, class: "label")
