@@ -2,7 +2,8 @@ module ConvertMethods
   extend ActiveSupport::Concern
 
   included do
-    cattr_accessor(:use_redis) { true }
+    cattr_accessor(:kifu_cache_enable)     { true }
+    cattr_accessor(:kifu_cache_expires_in) { 1.days }
 
     acts_as_ordered_taggable_on :defense_tags
     acts_as_ordered_taggable_on :attack_tags
@@ -20,8 +21,8 @@ module ConvertMethods
   end
 
   def to_s_kifu(key)
-    if use_redis
-      Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? 1.days : 0) do
+    if kifu_cache_enable
+      Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
         parsed_info.public_send("to_#{key}", compact: true)
       end
     else
@@ -49,7 +50,7 @@ module ConvertMethods
     info = parsed_info
     converted_infos.destroy_all if options[:destroy_all]
 
-    if use_redis
+    if kifu_cache_enable
     else
       Warabi::KifuFormatInfo.each do |e|
         converted_info = converted_infos.text_format_eq(e.key).take || converted_infos.build
