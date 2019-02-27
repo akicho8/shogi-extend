@@ -1,6 +1,8 @@
-User-agent: bingbot
-Disallow:
-Crawl-delay: 30
-
-User-Agent: *
-Disallow:
+# サブディレクトリにデプロイするのでこれ意味ない
+# 
+# User-agent: bingbot
+# Disallow:
+# Crawl-delay: 30
+# 
+# User-Agent: *
+# Disallow:
