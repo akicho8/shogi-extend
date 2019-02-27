@@ -112,53 +112,55 @@ module Swars
     end
 
     def index
-      unless bot_agent?
-        # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
-        if query = params[:query].presence
-          if key = Battle.extraction_key_from_dirty_string(query)
-            redirect_to [:swars, :battle, id: key]
-            return
-          end
-        end
+      if bot_agent?
+        return
+      end
 
-        if current_user_key && params[:page].blank?
-          before_count = 0
-          if current_swars_user
-            before_count = current_swars_user.battles.count
-          end
-
-          # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-          success = Battle.debounce_basic_import(user_key: current_user_key)
-          if !success
-            # development でここが通らない
-            # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-            flash.now[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
-          end
-          if success
-            remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
-            hit_count = 0
-            if current_swars_user
-              hit_count = current_swars_user.battles.count - before_count
-              if hit_count.zero?
-                flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
-              else
-                flash.now[:info] = "#{hit_count}件新しく見つかりました"
-              end
-              current_swars_user.search_logs.create!
-            else
-              flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
-            end
-
-            if hit_count.nonzero?
-              SlackAgent.chat_post_message(key: "ウォーズ検索", body: "#{current_user_key}: #{hit_count}件")
-            end
-          end
-        end
-
-        perform_zip_download
-        if performed?
+      # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
+      if query = params[:query].presence
+        if key = Battle.extraction_key_from_dirty_string(query)
+          redirect_to [:swars, :battle, id: key]
           return
         end
+      end
+
+      if current_user_key && params[:page].blank?
+        before_count = 0
+        if current_swars_user
+          before_count = current_swars_user.battles.count
+        end
+
+        # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
+        success = Battle.debounce_basic_import(user_key: current_user_key)
+        if !success
+          # development でここが通らない
+          # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
+          flash.now[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
+        end
+        if success
+          remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
+          hit_count = 0
+          if current_swars_user
+            hit_count = current_swars_user.battles.count - before_count
+            if hit_count.zero?
+              flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
+            else
+              flash.now[:info] = "#{hit_count}件新しく見つかりました"
+            end
+            current_swars_user.search_logs.create!
+          else
+            flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+          end
+
+          if hit_count.nonzero?
+            SlackAgent.chat_post_message(key: "ウォーズ検索", body: "#{current_user_key}: #{hit_count}件")
+          end
+        end
+      end
+
+      perform_zip_download
+      if performed?
+        return
       end
     end
 
