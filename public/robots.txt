@@ -1,1 +1,6 @@
-# User-agent: *
+User-agent: bingbot
+Disallow:
+Crawl-delay: 30
+
+User-Agent: *
+Disallow:
