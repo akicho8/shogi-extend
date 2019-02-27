@@ -171,10 +171,11 @@ module Swars
     concerning :HelperMethods do
       class_methods do
         def extraction_key_from_dirty_string(str)
-          if str.match?(%r{https?://kif-pona.heroz.jp/games/})
-            # コピペで空白を入れる人がいるため strip でもいいがいっそのことURLだけを抽出する
-            url = str.match(URI.regexp(["http", "https"])).to_s
-            URI(url).path.split("/").last
+          # コピペで空白を入れる人がいるため strip でもいいがいっそのことURLだけを抽出する
+          if url = URI.extract(str, ["http", "https"]).first
+            if url.include?("kif-pona.heroz.jp/games") # FIXME
+              URI(url).path.split("/").last
+            end
           end
         end
       end
