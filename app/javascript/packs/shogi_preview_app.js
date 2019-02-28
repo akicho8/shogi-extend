@@ -4,22 +4,22 @@ import _ from "lodash"
 import * as AppHelper from "./app_helper.js"
 import axios from "axios"
 
-document.addEventListener('DOMContentLoaded', () => {
+const UPDATE_DELAY = 1000 * 0.5 // 指定ms入力がなくなってからプレビューする
+
+document.addEventListener("DOMContentLoaded", () => {
   new Vue({
-    el: '#shogi_preview_app',
+    el: "#shogi_preview_app",
     data() {
       return {
-        kifu_body: "",
-        // full_sfen: "position sfen startpos", // shogi-player に渡すための変数
-        full_sfen: null, // shogi-player に渡すための変数
-        update_delay: 1000 * 1, // 指定ms入力がなくなってからプレビューする
-        kifu_active_tab: 0,
-        kifu_infos: null,
+        kifu_body: "",          // 入力された棋譜
+        full_sfen: null,        // shogi-player に渡すための変数。"position sfen startpos" を入れておくと最初に平手を表示する
+        kifu_infos: null,       //
+        kifu_active_tab: 0,     //
       }
     },
 
     watch: {
-      kifu_body(v) {
+      kifu_body() {
         this.preview_update()
       },
     },
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.table([error.response])
           Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })
-      }, this.update_delay),
+      }, UPDATE_DELAY),
     },
   })
 })
