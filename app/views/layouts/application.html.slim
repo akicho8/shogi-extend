@@ -14,7 +14,7 @@ html lang="ja"
 
     = favicon_link_tag
     = csrf_meta_tag
-    title= content_for?(:title) ? yield(:title) : AppConfig[:app_name]
+    title= html_title
     = action_cable_meta_tag
 
     javascript:
