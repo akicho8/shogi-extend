@@ -27,9 +27,11 @@ class FreeBattlesController < ApplicationController
   include ModulableCrud::All
   include SharedMethods
 
+  # shogi_preview_app.js の引数用
   let :js_preview_params do
     {
-      path: url_for([:free_battles, format: "json"]),
+      post_path: url_for([:free_battles, format: "json"]),
+      record_attributes: current_record.as_json,
     }
   end
 

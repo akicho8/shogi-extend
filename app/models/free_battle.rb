@@ -64,12 +64,13 @@ class FreeBattle < ApplicationRecord
     if changes[:kifu_url]
       if v = kifu_url.presence
         self.kifu_body = open(v, &:read).toutf8
+        self.kifu_url = nil
       end
     end
 
     if changes[:kifu_body]
       if v = kifu_body.to_s.strip.presence
-        if v.match?("http")
+        if v.start_with?("http")
           self.kifu_body = open(v, &:read).toutf8
         end
       end

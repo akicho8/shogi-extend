@@ -7,12 +7,13 @@ nav.breadcrumb
 
 .title.is-3.yumincho
   = current_record.safe_title
+  - if editable_record?(current_record)
+    = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-small is-primary is-pulled-right")
 hr
-
-- if editable_record?(current_record)
-.buttons
-  = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-small")
-  = link_to("削除", [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
 
 .has-text-centered
   = render :partial => "kifu_player"
+
+- if editable_record?(current_record)
+  .buttons
+    = link_to("削除", [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})

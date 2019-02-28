@@ -1,11 +1,7 @@
-javascript:
-  var js_preview_params = #{js_preview_params.to_json.html_safe};
+- @page_title ||= current_record.new_record? ? "棋譜入力" : "#{current_record.safe_title}の編集"
 
 - content_for :head do
   = javascript_pack_tag("shogi_preview_app")
-
-ruby:
-  label = current_record.new_record? ? "棋譜入力" : "編集"
 
 #shogi_preview_app
   nav.breadcrumb
@@ -15,12 +11,12 @@ ruby:
         li= link_to(current_record.safe_title, current_record)
       li.is-active
         - if current_record.persisted?
-          = link_to(label, [:edit, current_record])
+          = link_to("編集", [:edit, current_record])
         - else
-          a= label
+          a= "新規"
 
   p.title.is-2.yumincho
-    = label
+    = @page_title
   hr
 
   .columns
@@ -31,8 +27,9 @@ ruby:
         .field
           p.control
             =<> form.submit(name: :_submit_and_redirect_to_show, class: "button is-primary")
-          p.has-text-grey.is-size-7
-            | ログインしてから固定URL化すると再編集できます
+          - if current_record.new_record?
+            p.has-text-grey.is-size-7
+              | ログインしてから固定URL化すると再編集できます
 
     template(v-if="kifu_infos")
       .column
@@ -61,3 +58,8 @@ ruby:
             :sound_effect="true"
             :volume=AppConfig[:volume]
             )
+
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    new ShogiPreviewApp(#{js_preview_params.to_json.html_safe}).$mount("#shogi_preview_app")
+  })
