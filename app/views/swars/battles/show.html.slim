@@ -1,3 +1,9 @@
+ruby:
+  @page_title ||= [
+    current_record.memberships.black.name_with_grade,
+    current_record.memberships.white.name_with_grade,
+  ].join(" vs ")
+
 .has-text-centered
   .title.is-2.yumincho
     = current_record.memberships.black.name_with_grade

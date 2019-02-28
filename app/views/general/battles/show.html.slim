@@ -1,3 +1,9 @@
+ruby:
+  @page_title ||= [
+    controller.membership_name(current_record.memberships.black),
+    controller.membership_name(current_record.memberships.white),
+  ].join(" vs ")
+
 .has-text-left
   .title.is-4.yumincho
     = controller.membership_name(current_record.memberships.black)

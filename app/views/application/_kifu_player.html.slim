@@ -1,3 +1,7 @@
+- current_url = full_url_for([ns_prefix, current_record])
+- tweet_body = [@page_title, current_url].compact.join("\n")
+- tweet_url = "https://twitter.com/intent/tweet?text=#{u(tweet_body)}"
+
 #shogi_player_app
   - content_for :head do
     = javascript_pack_tag("shogi_player_app")
@@ -61,6 +65,7 @@
               / b-dropdown-item(href=piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"]))) ぴよ将棋
 
           = link_to(image_tag("piyo_shogi_app.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])))
+          a.button.is-info.is-small.tweet_button(href=tweet_url target="_blank") ツイート
 
 = render :partial => "kifu_player_tabs_div"
 

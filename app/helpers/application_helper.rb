@@ -4,7 +4,8 @@ module ApplicationHelper
   delegate :icon_tag, to: Fa
 
   def html_title
-    [AppConfig[:app_name], @page_title].compact.reverse.join(" - ")
+    titles = [AppConfig[:app_name], content_for(:page_title), @page_title]
+    titles.compact.reverse.join(" - ")
   end
 
   concerning :FlashMethods do
