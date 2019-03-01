@@ -1,19 +1,22 @@
+.breadcrumb
+  ul
+    li= link_to("一覧", :tactic_notes)
+    li.is-active= link_to(current_record.name, "#")
+
+.has-text-centered
+  .title.is-2.yumincho= current_record.name
+hr
+
 .columns
   ////////////////////////////////////////////////////////////////////////////////
   .column
-    .breadcrumb
-      ul
-        li= link_to("一覧", :tactic_notes)
-        li.is-active= link_to(current_record.name, "#")
     = @left_right_link
     = @detail_hash.to_html(table_class: "table is-fullwidth")
   ////////////////////////////////////////////////////////////////////////////////
   .column
-    .has-text-centered
-      .title.is-2.yumincho= current_record.name
     #shogi_player_app
       shogi-player(
-        :kifu_body="'#{@sample_kifu_body}'"
+        :kifu_body="'#{sample_kifu_body[:sfen]}'"
         :start_turn="0"
         :key_event_capture="true"
         :slider_show="true"
@@ -36,6 +39,24 @@
         .board_wrap
           .board_outer
             = @board_table
+
+.columns
+  .column
+    #kifu_format_tab_app
+      b-tabs(v-model="kifu_active_tab")
+        - sample_kifu_body.each do |key, value|
+          b-tab-item(label=KifuFormatWithBodInfo[key].name)
+            pre.pre-wrap= value
+
+javascript:
+  document.addEventListener("DOMContentLoaded", () => {
+    new Vue({
+      el: "#kifu_format_tab_app",
+      data: {
+        kifu_active_tab: 0,
+      }
+    })
+  })
 
 / .has-text-centered
 / - count = General::Membership.tagged_with(current_record.name).count

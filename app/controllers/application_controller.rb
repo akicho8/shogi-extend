@@ -245,6 +245,7 @@ class ApplicationController < ActionController::Base
             "bitlybot",
             "Hatena",
             "facebookexternalhit",
+            "MauiBot",
           ])
       end
     end

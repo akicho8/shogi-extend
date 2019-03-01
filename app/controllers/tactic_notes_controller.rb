@@ -116,9 +116,15 @@ class TacticNotesController < ApplicationController
       end
     end
 
-    @sample_kifu_body = Rails.cache.fetch("#{__method__}_#{current_record.hash}", :expires_in => 1.week) do
+  end
+
+  let :sample_kifu_body do
+    Rails.cache.fetch("#{__method__}_#{current_record.key}", :expires_in => 1.week) do
       file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
-      Warabi::Parser.file_parse(file).to_sfen
+      parsed_info = Warabi::Parser.file_parse(file)
+      Warabi::KifuFormatInfo.inject({}) do |a, e|
+        a.merge(e.key => parsed_info.public_send("to_#{e.key}"))
+      end
     end
   end
 
@@ -136,6 +142,10 @@ class TacticNotesController < ApplicationController
 
   private
 
+  def sep
+    " / "
+  end
+
   def row_build(e)
     row = {}
 
@@ -144,7 +154,7 @@ class TacticNotesController < ApplicationController
       row["名前"] = link_to(e.key, [:tactic_note, id: e.key])
     end
     row["種類"] = e.tactic_info.name
-    row["別名"] = e.alias_names.join(", ")
+    row["別名"] = e.alias_names.join(sep)
 
     if detail?
       root = e.root
@@ -161,10 +171,10 @@ class TacticNotesController < ApplicationController
       end
     else
       row["親"] = e.parent ? link_to(e.parent.name, [:tactic_note, id: e.parent.key]) : nil
-      row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(" ").html_safe
-      row["派生"] = e.children.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(" ").html_safe
+      row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
+      row["派生"] = e.children.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
     end
-    row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(" ").html_safe
+    row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
 
     row["手数制限"] = e.turn_limit ? "#{e.turn_limit}手以内" : nil
     row["手数限定"] = e.turn_eq ? "#{e.turn_eq}手目" : nil
