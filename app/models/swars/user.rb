@@ -53,7 +53,7 @@ module Swars
       def win_lose_stat
         stat = Hash.new(0)
 
-        stat["集計した直近の対局数"] = memberships.count
+        stat["取得できた直近の対局数"] = memberships.count
         stat["勝ち"] = 0
         stat["負け"] = 0
 
