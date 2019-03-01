@@ -17,9 +17,14 @@ foreman s
 open http://localhost:3000/
 #+END_SRC
 
-* テスト
+** 実際にオンラインでクロールする場合
 
 #+BEGIN_SRC shell
+RUN_REMOTE=1 foreman s
+#+END_SRC
+
+* テスト
+
 #+BEGIN_SRC shell
 rake
 #+END_SRC
