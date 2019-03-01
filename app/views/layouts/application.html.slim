@@ -68,7 +68,7 @@ html lang="ja"
               .navbar-dropdown.is-boxed
                 = link_to("棋譜入力", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles"))])
                 = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
-                = link_to("戦法トリガー辞典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
+                = link_to("戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
                 = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
                 = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
           #header_app.navbar-end(v-cloak)
@@ -182,7 +182,7 @@ html lang="ja"
                   li class=("is-active" if params[:controller].start_with?("colosseum/battles"))   = link_to("ネット対戦", [:colosseum, :battles])
                   li class=("is-active" if params[:controller] == "cpu_battles")                = link_to("CPU対戦", :cpu_battles)
                   li class=("is-active" if params[:controller].start_with?("swars/battles"))   = link_to("将棋ウォーズ棋譜検索", [:swars, :w])
-                  li class=("is-active" if params[:controller] == "tactic_notes")              = link_to("戦法トリガー辞典", :tactic_notes)
+                  li class=("is-active" if params[:controller] == "tactic_notes")              = link_to("戦法トリガー事典", :tactic_notes)
                   li class=("is-active" if params[:controller].start_with?("free_battles"))    = link_to("棋譜入力", [:new, :free_battle])
                   li class=("is-active" if params[:controller] == "position_editor")           = link_to("局面編集", :position_editor)
                   li class=("is-active" if params[:controller] == "xy_game")                   = link_to("符号入力ゲーム", :xy)

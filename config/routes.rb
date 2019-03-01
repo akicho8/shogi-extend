@@ -71,7 +71,7 @@ Rails.application.routes.draw do
     [ns_prefix, free_battle, options]
   end
 
-  ################################################################################ 戦法トリガー辞典
+  ################################################################################ 戦法トリガー事典
 
   resources :tactic_notes, path: "tactics", only: [:index, :show]
 
