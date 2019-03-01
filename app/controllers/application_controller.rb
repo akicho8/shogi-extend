@@ -67,9 +67,13 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user_is_owner_of?(record)
-      if record
-        if record.respond_to?(:owner_user)
-          record.owner_user == current_user
+      if current_user
+        if record
+          if record.respond_to?(:owner_user)
+            if record.owner_user
+              record.owner_user == current_user
+            end
+          end
         end
       end
     end
