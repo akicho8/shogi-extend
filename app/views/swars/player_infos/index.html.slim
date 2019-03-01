@@ -22,10 +22,10 @@ br
       .column
         .field
           .title.yumincho.is-4 戦型
-          == stat.to_html(table_class: "table is-fullwidth is-narrow")
+          == stat.transform_keys { |e| link_to(e, [:tactic_note, id: e]) }.to_html(table_class: "table is-fullwidth is-narrow")
 
     - if stat = current_swars_user.stat_for(:defense)
       .column
         .field
           .title.yumincho.is-4 囲い
-          == stat.to_html(table_class: "table is-fullwidth is-narrow")
+          == stat.transform_keys { |e| link_to(e, [:tactic_note, id: e]) }.to_html(table_class: "table is-fullwidth is-narrow")
