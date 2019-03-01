@@ -37,6 +37,10 @@ module SharedMethods
 
   private
 
+  def zip_download_limit
+    (params[:limit].presence || AppConfig[:zip_download_limit_default]).to_i.clamp(0, AppConfig[:zip_download_limit_max])
+  end
+
   def current_filename
     "#{current_record.key}.#{params[:format]}"
   end
