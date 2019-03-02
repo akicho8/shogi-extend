@@ -22,6 +22,7 @@ window.ShogiPreviewApp = Vue.extend({
 
   mounted() {
     this.kifu_body = this.record.kifu_body // 元の棋譜を復元
+    this.$refs.kifu_body.focus()           // HTMLの方で autofocus を指定しても Vue.js と組み合わせる外れるためこちらで指定
   },
 
   watch: {
