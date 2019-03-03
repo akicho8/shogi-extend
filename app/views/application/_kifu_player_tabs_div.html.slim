@@ -4,7 +4,7 @@
       b-tabs(v-model="kifu_active_tab")
         - KifuFormatWithBodInfo.each do |e|
           b-tab-item(label=e.name)
-            - if s = current_record.to_s_kifu(e.key)
+            - if s = current_record.to_cached_kifu(e.key)
               pre.pre-wrap= s
 
 javascript:

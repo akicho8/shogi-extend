@@ -247,7 +247,7 @@ module Swars
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           current_scope.limit(zip_download_limit).each do |battle|
             KifuFormatWithBodInfo.each.with_index do |e|
-              if kd = battle.to_s_kifu(e.key)
+              if kd = battle.to_cached_kifu(e.key)
                 zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
                 zos.write kd
               end

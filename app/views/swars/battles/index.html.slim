@@ -57,7 +57,7 @@
                     =<> ship.grade.name
 
               .card-content
-                - if sfen = current_record.to_s_kifu(:sfen)
+                - if sfen = current_record.to_cached_kifu(:sfen)
                     shogi-player(
                       :kifu_body="'#{sfen}'"
                       :key_event_capture="false"

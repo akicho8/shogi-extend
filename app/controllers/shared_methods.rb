@@ -48,7 +48,7 @@ module SharedMethods
   # curl -I http://localhost:3000/x/1.kif?inline=1
   # curl -I http://localhost:3000/x/1.kif?plain=1
   def kifu_send_data
-    text_body = current_record.to_s_kifu(params[:format])
+    text_body = current_record.to_cached_kifu(params[:format])
 
     if params[:shift_jis].present? || params[:sjis].present?
       text_body = text_body.tosjis
