@@ -31,33 +31,37 @@
             p.has-text-grey.is-size-7
               | ログインしてから固定URL化すると再編集できます
 
-    template(v-if="kifu_infos")
+    template(v-if="kifus_hash")
       .column
         .columns
           .column.has-text-left
             b-tabs(v-model="kifu_active_tab")
-              template(v-for="e in kifu_infos")
+              template(v-for="e in kifus_hash")
                 b-tab-item(:label="e.name")
                   small
                     pre.pre-wrap
                       | {{e.value}}
 
-    template(v-if="full_sfen")
+    template(v-if="kifus_hash")
       .column
-        .non_border_box
-          shogi-player(
-            :kifu_body="full_sfen"
-            :start_turn="-1"
-            :debug_mode="false"
-            :key_event_capture="true"
-            :slider_show="true"
-            :sfen_show="false"
-            :controller_show="true"
-            :theme="'simple'"
-            :size="'default'"
-            :sound_effect="true"
-            :volume=AppConfig[:volume]
-            )
+        .card
+          header.card-header
+            p.card-header-title.is-size-7
+              | プレビュー
+          .card-content
+            shogi-player(
+              :kifu_body="kifus_hash['sfen']['value']"
+              :start_turn="-1"
+              :debug_mode="false"
+              :key_event_capture="true"
+              :slider_show="true"
+              :sfen_show="true"
+              :controller_show="true"
+              :theme="'simple'"
+              :size="'small'"
+              :sound_effect="true"
+              :volume=AppConfig[:volume]
+              )
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {

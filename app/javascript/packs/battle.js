@@ -274,6 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return this.user_self_p(e.user)
       },
 
+      // 操作の結果を受け取る
       play_mode_long_sfen_set(v) {
         if (this.xstate_key === "st_battle_now") {
           App.battle.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key, current_index: this.current_index})
@@ -284,6 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return location.any_name(this.handicap)
       },
     },
+
     computed: {
       // コントローラー類を非表示にする？
       any_controller_hide() {

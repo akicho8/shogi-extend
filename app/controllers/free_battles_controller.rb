@@ -32,18 +32,27 @@ class FreeBattlesController < ApplicationController
     {
       post_path: url_for([:free_battles, format: "json"]),
       record_attributes: current_record.as_json,
+      kifus_hash: kifus_hash,
     }
+  end
+
+  let :current_kifu_body do
+    params[:kifu_body].to_s
+  end
+
+  let :parsed_info do
+    Warabi::Parser.parse(current_kifu_body, typical_error_case: :embed)
+  end
+
+  let :kifus_hash do
+    KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { name: e.name, value: parsed_info.public_send("to_#{e.key}", compact: true) }) }
   end
 
   def create
     # プレビュー用
     if request.format.json?
       if v = params[:kifu_body]
-        parsed_info = Warabi::Parser.parse(v, typical_error_case: :embed)
-        render json: {
-          sfen: parsed_info.to_sfen,
-          kifu_infos: KifuFormatWithBodInfo.collect { |e| { name: e.name, value: parsed_info.public_send("to_#{e.key}", compact: true) } },
-        }
+        render json: { kifus_hash: kifus_hash }
         return
       end
     end
