@@ -29,7 +29,7 @@
             =<> form.submit(name: :_submit_and_redirect_to_show, class: "button is-primary")
           - if current_record.new_record?
             p.has-text-grey.is-size-7
-              | ログインしてから固定URL化すると再編集できます
+              | ログインしてから保存すると再編集できます
 
     template(v-if="kifus_hash")
       .column

@@ -5,7 +5,7 @@
     helpers: {
       submit: {
         free_battle: {
-          create: "固定URL化",
+          create: "保存 (固定URL化)",
           update: nil,
         },
       },
