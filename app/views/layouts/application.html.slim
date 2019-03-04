@@ -64,7 +64,7 @@ html lang="ja"
             = link_to("将棋ウォーズ棋譜検索", [:swars, :w], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
             = link_to("将棋ウォーズプレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
             .navbar-item.has-dropdown.is-hoverable
-              span.navbar-link その他
+              span.navbar-link もっと見る
               .navbar-dropdown.is-boxed
                 = link_to("棋譜入力", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles"))])
                 = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
