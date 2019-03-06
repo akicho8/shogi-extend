@@ -7,7 +7,8 @@
     li class=("is-active" if params["mode"] == "fortune") = link_to("今日の戦法占い", :fortune)
 
 - if params[:mode] == "list"
-  == @rows.to_html(table_class: "table is-hoverable is-striped is-fullwidth is-bordered is-narrow")
+  small
+    == @rows.to_html(table_class: "table is-hoverable is-striped is-fullwidth is-bordered is-narrow")
 
 - if params[:mode] == "tree"
   pre

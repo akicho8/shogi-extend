@@ -153,8 +153,6 @@ class TacticNotesController < ApplicationController
     else
       row["名前"] = link_to(e.key, [:tactic_note, id: e.key])
     end
-    row["種類"] = e.tactic_info.name
-    row["別名"] = e.alias_names.join(sep)
 
     if detail?
       root = e.root
@@ -169,12 +167,7 @@ class TacticNotesController < ApplicationController
           }.html_safe
         end
       end
-    else
-      row["親"] = e.parent ? link_to(e.parent.name, [:tactic_note, id: e.parent.key]) : nil
-      row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
-      row["派生"] = e.children.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
     end
-    row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
 
     row["手数制限"] = e.turn_limit ? "#{e.turn_limit}手以内" : nil
     row["手数限定"] = e.turn_eq ? "#{e.turn_eq}手目" : nil
@@ -195,6 +188,17 @@ class TacticNotesController < ApplicationController
     row["持駒が空"] = e.hold_piece_empty ? checked : nil
     row["持駒一致"] = e.hold_piece_eq ? e.hold_piece_eq.to_s : nil
     row["歩以外不所持"] = e.not_have_anything_except_pawn ? checked : nil
+
+    row["種類"] = e.tactic_info.name
+    row["別名"] = e.alias_names.join(sep)
+
+    unless detail?
+      row["親"] = e.parent ? link_to(e.parent.name, [:tactic_note, id: e.parent.key]) : nil
+      row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
+      row["派生"] = e.children.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
+    end
+
+    row["別親"] = Array(e.other_parents).collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
 
     # if e.compare_condition
     #   row["比較"] = e.compare_condition == :include ? "含まれる" : "完全一致"
