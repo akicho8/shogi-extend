@@ -87,6 +87,10 @@ class FreeBattle < ApplicationRecord
     end
   end
 
+  after_create do
+    SlackAgent.chat_post_message(key: "棋譜入力", body: "#{title}")
+  end
+
   concerning :TagMethods do
     included do
       acts_as_ordered_taggable_on :defense_tags
