@@ -22,7 +22,7 @@
               | 負け: {{user_to.lose_count}}
         section.modal-card-body
           b-field(label="")
-            input.input.is-large(type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input")
+            input.input.is-large(type="text" v-model.trim="message" @keydown.enter.meta.ctrl="message_enter" autocomplete="off" ref="message_input")
         footer.modal-card-foot
           button.button(@click="message_enter") 送信
           button.button(@click="battle_request_to") 対局申し込み

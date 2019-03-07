@@ -10,7 +10,7 @@
             | 全体通知
         section.modal-card-body
           b-field(label="")
-            input.input.is-large(type="text" v-model.trim="message" @keydown.enter="message_enter" autocomplete="off" ref="message_input")
+            input.input.is-large(type="text" v-model.trim="message" @keydown.enter.meta.ctrl="message_enter" autocomplete="off" ref="message_input")
         footer.modal-card-foot
           button.button(@click="message_enter") 送信
 </template>
