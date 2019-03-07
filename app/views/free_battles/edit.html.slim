@@ -21,7 +21,7 @@
 
   .columns
     .column
-      = form_with(model: [ns_prefix, current_record]) do |form|
+      = form_with(model: [ns_prefix, current_record], html: {"@submit": "kifu_body_storage_clear"}) do |form|
         = render partial: "error_messages", locals: {form: form}
         = render partial: "form", locals: {form: form}
         .field
