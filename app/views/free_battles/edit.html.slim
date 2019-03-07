@@ -20,7 +20,7 @@
   hr
 
   .columns
-    .column
+    .column.is-half
       = form_with(model: [ns_prefix, current_record], html: {"@submit": "kifu_body_storage_clear"}) do |form|
         = render partial: "error_messages", locals: {form: form}
         = render partial: "form", locals: {form: form}
@@ -44,24 +44,24 @@
 
     template(v-if="kifus_hash")
       .column
-        .card
-          header.card-header
-            p.card-header-title.is-size-7
-              | プレビュー
-          .card-content
-            shogi-player(
-              :kifu_body="kifus_hash['sfen']['value']"
-              :start_turn="-1"
-              :debug_mode="false"
-              :key_event_capture="true"
-              :slider_show="true"
-              :sfen_show="true"
-              :controller_show="true"
-              :theme="'simple'"
-              :size="'small'"
-              :sound_effect="true"
-              :volume=AppConfig[:volume]
-              )
+        / .card
+        /   header.card-header
+        /     p.card-header-title.is-size-7
+        .title.is-6 プレビュー
+        / .card-content
+        shogi-player(
+          :kifu_body="kifus_hash['sfen']['value']"
+          :start_turn="-1"
+          :debug_mode="false"
+          :key_event_capture="true"
+          :slider_show="true"
+          :sfen_show="true"
+          :controller_show="true"
+          :theme="'simple'"
+          :size="'x-small'"
+          :sound_effect="true"
+          :volume=AppConfig[:volume]
+          )
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
