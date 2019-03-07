@@ -77,7 +77,7 @@ javascript:
 
         / .field
         /   .control
-        /     input.input.is-large.is-primary(type="text" autocomplete="off" v-model.trim="message" @keydown.enter.meta.ctrl="message_enter")
+        /     input.input.is-large.is-primary(type="text" autocomplete="off" v-model.trim="message" @keydown.prevent.enter.meta="message_enter")
         / .field
         /   .control
         /     button.button.is-primary(@click="message_enter") 送信
@@ -92,7 +92,7 @@ javascript:
             .media-content
               .field
                 p.control
-                  input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter.meta.ctrl="message_enter" ref="message_input")
+                  input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.prevent.enter.meta="message_enter" ref="message_input")
               nav.level
                 .level-left
                   .level-item

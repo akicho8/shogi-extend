@@ -26,7 +26,7 @@ javascript:
           .media-content
             .field
               p.control
-                input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.enter.meta.ctrl="message_enter")
+                input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.prevent.enter.meta="message_enter")
             nav.level
               .level-left
                 .level-item
