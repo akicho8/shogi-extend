@@ -48,6 +48,17 @@ class FreeBattlesController < ApplicationController
     KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { name: e.name, value: parsed_info.public_send("to_#{e.key}", compact: true) }) }
   end
 
+  def new
+    if id = params[:source_id]
+      record = FreeBattle.find(id)
+      flash[:source_id] = record.id
+      redirect_to [:new, ns_prefix, current_single_key], notice: "#{record.title}の棋譜をコピペしました"
+      return
+    end
+
+    super
+  end
+
   def create
     # プレビュー用
     if request.format.json?
@@ -67,6 +78,16 @@ class FreeBattlesController < ApplicationController
   end
 
   private
+
+  def current_record_params
+    v = super
+    if id = flash[:source_id]
+      record = FreeBattle.find(id)
+      v[:kifu_body] = record.kifu_body
+      v[:title] = "#{record.title}のコピー"
+    end
+    v
+  end
 
   def current_record_save
     current_record.owner_user ||= current_user

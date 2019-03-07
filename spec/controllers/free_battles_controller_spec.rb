@@ -47,6 +47,11 @@ RSpec.describe FreeBattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
+  it "新規でコピペ" do
+    get :new, params: {source_id: @free_battle.id}
+    expect(response).to have_http_status(:redirect)
+  end
+
   it "create" do
     post :create, params: {}
     expect(response).to have_http_status(:redirect)

@@ -5,10 +5,17 @@ nav.breadcrumb
     li= link_to("棋譜一覧", current_plural_key)
     li.is-active= link_to(current_record.safe_title, current_record)
 
-.title.is-3.yumincho
-  = current_record.safe_title
-  - if editable_record?(current_record)
-    = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-small is-primary is-pulled-right")
+.level
+  .level-left
+    .level-item.has-text-left
+      .title.is-3.yumincho
+        = current_record.safe_title
+  .level-right
+    .level-item
+      .buttons
+        - if editable_record?(current_record)
+          = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-small is-primary")
+        = link_to("新規でコピペ", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button is-small")
 hr
 
 .has-text-centered

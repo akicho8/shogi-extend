@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "棋譜入力", type: :system do
   before do
-    @free_battle = FreeBattle.create!
+    @free_battle = FreeBattle.create!(kifu_body: "48玉")
   end
 
   it "一覧" do
@@ -26,5 +26,17 @@ RSpec.describe "棋譜入力", type: :system do
     expect(page).to have_content "６八銀"
 
     doc_image("詳細")
+  end
+
+  it "新規でコピペ" do
+    visit "/x/#{@free_battle.id}"
+    click_on "新規でコピペ"
+    expect(page).to have_content "48玉"
+    doc_image
+  end
+
+  it "詳細" do
+    visit "/x/#{@free_battle.id}"
+    expect(page).to have_content "新米長玉"
   end
 end
