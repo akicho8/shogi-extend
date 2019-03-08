@@ -101,10 +101,10 @@ module Swars
             ships = memberships.find_all { |e| e.battle.rule_info == rule_info }
             if ships.present?
               sec = ships.collect { |e| e.sec_list.max }.compact.max
-              sec_set(stat, "【#{rule_info.name}】最大長考", sec, yabai: sec >= rule_info.leave_alone_limit)
+              sec_set(stat, "【#{rule_info.name}】最大長考", sec, yabai: sec && sec >= rule_info.leave_alone_limit)
 
               sec = ships.collect { |e| e.sec_list.last }.compact.max
-              sec_set(stat, "【#{rule_info.name}】最後の着手の最長", sec, yabai: sec >= rule_info.leave_alone_limit)
+              sec_set(stat, "【#{rule_info.name}】最後の着手の最長", sec, yabai: sec && sec >= rule_info.leave_alone_limit)
 
               count = ships.count { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit }
               count_set(stat, "【#{rule_info.name}】最後の着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負けた", count, yabai: count.nonzero?)
@@ -114,11 +114,11 @@ module Swars
 
               scope = ships.find_all { |e| e.summary_key == "詰ました" }
               sec = scope.collect { |e| e.sec_list.last }.compact.max
-              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, yabai: sec >= rule_info.leave_alone_limit)
+              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, yabai: sec && sec >= rule_info.leave_alone_limit)
 
               scope = ships.find_all { |e| e.summary_key == "切れ負け" }
               sec = scope.collect { |e| e.rest_sec }.max
-              sec_set(stat, "【#{rule_info.name}】切れ負けたときの最長残り時間", sec, yabai: sec >= rule_info.leave_alone_limit)
+              sec_set(stat, "【#{rule_info.name}】切れ負けたときの最長残り時間", sec, yabai: sec && sec >= rule_info.leave_alone_limit)
 
               count = ships.count { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
               count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上考えたまま切れ負けた", count, yabai: count.nonzero?)
