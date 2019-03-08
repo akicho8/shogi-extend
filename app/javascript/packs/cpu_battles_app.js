@@ -12,16 +12,31 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         full_sfen: "position startpos",
         cpu_brain_key: js_cpu_battle.cpu_brain_key,
+        current_user: js_global.current_user, // 名前を読み上げるため
       }
     },
 
     created() {
-      setTimeout(() => AppHelper.talk("よろしくお願いします。あなたのてばんです"), 1000 * 1)
+      setTimeout(() => AppHelper.talk(`よろしくお願いします。${this.current_call_name}のてばんです`), 1000 * 1)
     },
 
     computed: {
       cpu_brain_info() {
         return CpuBrainInfo.fetch(this.cpu_brain_key)
+      },
+
+      // 対戦者の名前
+      current_call_name() {
+        let str = null
+        if (!str) {
+          if (this.current_user) {
+            str = `${this.current_user.name}さん`
+          }
+        }
+        if (!str) {
+          str = "あなた"
+        }
+        return str
       },
     },
 
@@ -40,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         axios({
           method: "post",
           timeout: 1000 * 60 * 10,
-          headers: {"X-TAISEN": true},
+          headers: {"X-TAISEN": true}, // 入れてみただけ
           url: js_cpu_battle.player_mode_moved_path,
           data: params,
         }).then((response) => {
