@@ -52,7 +52,7 @@ RSpec.configure do |config|
   # テストの中で使う便利メソッド
   config.include Module.new {
     def swars_battle_setup
-      Swars::Grade.setup
+      Swars.setup
       Swars::Battle.basic_import(user_key: "hanairobiyori")
     end
 

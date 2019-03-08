@@ -47,8 +47,6 @@ module Swars
     end
 
     before_validation on: :create do
-      self.last_accessd_at ||= Time.current
-
       # "" から ten_min への変換
       if rule_key
         self.rule_key = RuleInfo.fetch(rule_key).key
@@ -57,6 +55,16 @@ module Swars
       # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
       if key
         self.battled_at ||= Time.zone.parse(key.split("-").last)
+      end
+
+      self.last_accessd_at ||= Time.current
+
+      if Rails.env.development? || Rails.env.test?
+        self.key ||= SecureRandom.hex
+        self.battled_at ||= Time.current
+        self.rule_key ||= :ten_min
+        self.final_key ||= :TORYO
+        self.preset_key ||= :"平手"
       end
     end
 
@@ -71,6 +79,7 @@ module Swars
     with_options allow_blank: true do
       validates :key, uniqueness: true
       validates :preset_key, inclusion: Warabi::PresetInfo.keys.collect(&:to_s)
+      validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
     end
 
     def to_param
@@ -407,7 +416,8 @@ module Swars
             end
           end
 
-          preset_info = PresetInfo.fetch("__handicap_embed__#{info[:preset_dirty_code]}").real_preset_info
+          # 将棋ウォーズのコードがマジックナンバーなため見当つけて変換する
+          preset_info = DirtyPresetInfo.fetch("__handicap_embed__#{info[:preset_dirty_code]}").real_preset_info
 
           battle = Battle.new({
               key: info[:key],
@@ -439,9 +449,9 @@ module Swars
 
           # SQLをシンプルにするために勝者だけ、所有者的な意味で、Battle 自体に入れとく
           # いらんかったらあとでとる
-          if winner_index
-            battle.win_user = battle.memberships[winner_index].user
-          end
+          # if winner_index
+          #   battle.win_user = battle.memberships[winner_index].user
+          # end
 
           begin
             battle.save!

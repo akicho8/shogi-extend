@@ -12,19 +12,19 @@ br
 
 - if current_swars_user
   .columns
-    - if stat = current_swars_user.win_lose_stat
+    - if stat = current_swars_user.main_summary
       .column
         .field
           .title.yumincho.is-4 勝敗
           == stat.to_html(table_class: "table is-fullwidth is-narrow")
 
-    - if stat = current_swars_user.stat_for(:attack)
+    - if stat = current_swars_user.summary_of(:attack)
       .column
         .field
           .title.yumincho.is-4 戦型
           == stat.transform_keys { |e| link_to(e, [:tactic_note, id: e]) }.to_html(table_class: "table is-fullwidth is-narrow")
 
-    - if stat = current_swars_user.stat_for(:defense)
+    - if stat = current_swars_user.summary_of(:defense)
       .column
         .field
           .title.yumincho.is-4 囲い

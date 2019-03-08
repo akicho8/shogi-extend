@@ -143,8 +143,8 @@ module Swars
           # CSA形式の棋譜
           # 開始直後に切断している場合は空文字列になる
           # だから空ではないチェックをしてはいけない
-          info[:csa_seq] = md[:__csa_data].scan(/([+-]\d{4}[A-Z]{2}),L(\d+)/).collect do |v, rest_seconds|
-            [v, rest_seconds.to_i]
+          info[:csa_seq] = md[:__csa_data].scan(/([+-]\d{4}[A-Z]{2}),L(\d+)/).collect do |v, rest_sec|
+            [v, rest_sec.to_i]
           end
 
           # 対局完了？

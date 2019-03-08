@@ -23,6 +23,7 @@ module Swars
     has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
 
     before_validation do
+      self.user_key ||= SecureRandom.hex
       self.grade ||= Grade.last
 
       # Grade が下がらないようにする
@@ -49,76 +50,134 @@ module Swars
       user_key
     end
 
-    concerning :StatMethods do
-      def win_lose_stat
-        stat = Hash.new(0)
+    concerning :SummaryMethods do
+      included do
+        delegate :main_summary, :summary_of, to: :summary_info
+      end
 
-        stat["取得できた直近の対局数"] = memberships.count
-        stat["勝ち"] = 0
-        stat["負け"] = 0
+      def summary_info
+        @summary_info ||= SummaryInfo.new(self)
+      end
 
-        # lose_count = memberships.count { |e| membership.battle.win_user_id && membership.battle.win_user != self }
+      class SummaryInfo
+        attr_reader :user
 
-        memberships.each do |membership|
-          battle = membership.battle
-          key1 = "#{battle.final_info.name}で"
+        def initialize(user)
+          @user = user
+        end
 
-          if battle.win_user_id
-            if battle.win_user == self
-              win_or_lose = "勝ち"
+        def main_summary
+          stat = Hash.new(0)
+
+          stat["取得できた直近の対局数"] = memberships.count.to_s
+          stat["勝ち"] = 0
+          stat["負け"] = 0
+
+          memberships.each { |e| e.summary_store_to(stat) }
+
+          [:ten_min, :three_min].each do |rule_key|
+            rule_info = RuleInfo.fetch(rule_key)
+            ships = memberships.find_all { |e| e.battle.rule_info == rule_info }
+            if ships.present?
+              sec = ships.collect { |e| e.sec_list.max }.compact.max
+              sec_set(stat, "【#{rule_info.name}】最大長考", sec)
+
+              sec = ships.collect { |e| e.sec_list.last }.compact.max
+              sec_set(stat, "【#{rule_info.name}】最終着手の最長", sec)
+
+              scope = ships.find_all { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit }
+              count_set(stat, "【#{rule_info.name}】最後の着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負けた", scope.count)
+
+              scope = ships.find_all { |e| e.summary_key == "切れ負け" }
+              sec = scope.collect { |e| e.rest_sec }.max
+              sec_set(stat, "【#{rule_info.name}】切れ負けたときの最長残り時間", sec)
+
+              scope = ships.find_all { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
+              count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上考えたまま切れ負けた", scope.count)
+
+              scope = ships.find_all { |e| e.summary_key == "詰ました" }
+              sec = scope.collect { |e| e.sec_list.last }.compact.max
+              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec)
+            end
+          end
+
+          parcentage_set(stat, "投了率", stat["投了した"], stat["負け"])
+          parcentage_set(stat, "切断率", stat["切断した"], stat["負け"])
+          parcentage_set(stat, "棋神召喚疑惑率", stat["棋神召喚疑惑"], stat["勝ち"])
+
+          stat = stat.transform_values do |e|
+            if e.kind_of? Integer
+              "#{e}回"
             else
-              win_or_lose = "負け"
+              e
             end
-          else
-            win_or_lose = "引き分け"
           end
 
-          key = "#{key1}#{win_or_lose}"
-          key = {
-            "投了で勝ち"     => "投了された",
-            "投了で負け"     => "投了した",
-            "切断で勝ち"     => "切断された",
-            "切断で負け"     => "切断した",
-            "詰みで負け"     => "詰まされた",
-            "詰みで勝ち"     => "詰ました",
-            "時間切れで負け" => "切れ負け",
-            "時間切れで勝ち" => "切れ勝ち",
-          }.fetch(key, key)
+          stat
+        end
 
-          stat["#{win_or_lose}"] += 1
-          stat["#{key}"] += 1
+        def summary_of(key)
+          v = memberships.flat_map(&:"#{key}_tag_list")
+          v = v.group_by(&:itself).transform_values(&:size) # TODO: ruby 2.6 の新しいメソッドで置き換えれるはず
+          v = v.sort_by { |k, v| -v }
+          Hash[v]
+        end
 
-          if battle.rule_info.key == :ten_min
-            if membership.kishin_used?
-              if membership.winner?
-                if membership.kishin_used?
-                  stat["棋神召喚疑惑"] += 1
-                end
-              end
-            end
+        private
+
+        def memberships
+          @memberships ||= user.memberships.to_a
+        end
+
+        def count_set(stat, key, value)
+          if value.nonzero?
+            stat[key] = value
           end
         end
 
-        stat["投了率"] = parcentage(stat["投了した"], stat["負け"])
-        stat["切断率"] = parcentage(stat["切断した"], stat["負け"])
-        stat["棋神召喚疑惑率"] = parcentage(stat["棋神召喚疑惑"], stat["勝ち"])
+        def sec_set(stat, key, value)
+          value = sec_to_human(value)
 
-        stat
-      end
+          if value.blank?
+            return
+          end
 
-      def stat_for(key)
-        v = memberships.flat_map(&:"#{key}_tag_list")
-        v = v.group_by(&:itself).transform_values(&:size)
-        v = v.sort_by { |k, v| -v }
-        Hash[v]
-      end
-
-      def parcentage(numerator, denominator)
-        if denominator.zero?
-          return ""
+          stat[key] = value
         end
-        rate = (numerator * 100).fdiv(denominator).round(2)
-        "#{rate} %"
+
+        def parcentage_set(stat, key, numerator, denominator)
+          value = parcentage(numerator, denominator)
+
+          if value.blank?
+            return
+          end
+
+          stat[key] = value
+        end
+
+        def parcentage(numerator, denominator)
+          if denominator.zero?
+            return ""
+          end
+          rate = (numerator * 100).fdiv(denominator).round(2)
+          "#{rate} %"
+        end
+
+        def sec_to_human(v)
+          if v.nil?
+            return ""
+          end
+
+          min, sec = v.divmod(1.minutes)
+          list = []
+          if min.nonzero?
+            list << "#{min}分"
+          end
+          if sec.nonzero?
+            list << "#{sec}秒"
+          end
+          list.join
+        end
       end
     end
   end

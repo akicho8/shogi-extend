@@ -45,9 +45,16 @@ module Swars
     acts_as_ordered_taggable_on :attack_tags
 
     before_validation do
-      # 無かったときだけ入れる(絶対あるんだけど)
       if user
+        # 無かったときだけ入れる(絶対あるんだけど)
         self.grade ||= user.grade
+
+        # 簡単にするため battle の方に勝者を入れておく
+        if judge_key
+          if judge_info.key == :win
+            battle.win_user ||= user
+          end
+        end
       end
     end
 
@@ -71,6 +78,53 @@ module Swars
       Warabi::Location.fetch(location_key)
     end
 
+    def judge_info
+      JudgeInfo.fetch(judge_key)
+    end
+
+    concerning :SummaryMethods do
+      def summary_key
+        key = "#{battle.final_info.name}で#{judge_info.name}"
+        summary_key_traslate_hash.fetch(key, key)
+      end
+
+      def summary_store_to(stat)
+        stat[judge_info.name] += 1
+        stat[summary_key] += 1
+
+        if kishin_10min_winner_used?
+          stat["棋神召喚疑惑"] += 1
+        end
+
+        stat
+      end
+
+      # 使用時間
+      def total_seconds
+        @total_seconds ||= sec_list.sum
+      end
+
+      # 残した秒数
+      def rest_sec
+        @rest_sec ||= battle.rule_info.life_time - total_seconds
+      end
+
+      private
+
+      def summary_key_traslate_hash
+        @summary_key_traslate_hash ||= {
+          "投了で勝ち"     => "投了された",
+          "投了で負け"     => "投了した",
+          "切断で勝ち"     => "切断された",
+          "切断で負け"     => "切断した",
+          "詰みで負け"     => "詰まされた",
+          "詰みで勝ち"     => "詰ました",
+          "時間切れで負け" => "切れ負け",
+          "時間切れで勝ち" => "切れ勝ち",
+        }
+      end
+    end
+
     concerning :KishinInfoMethods do
       included do
         cattr_accessor(:kishin_move_getq)  { 60 } # お互い合わせて何手以上で
@@ -79,27 +133,27 @@ module Swars
         cattr_accessor(:kishin_time_limit) { 9  } # 5手がN秒以内なら
       end
 
-      def move_second_list
-        @move_second_list ||= -> {
+      def sec_list
+        @sec_list ||= -> {
           base = battle.preset_info.to_turn_info.base_location.code
           battle.parsed_info.move_infos.find_all.with_index(base) { |e, i| i.modulo(Warabi::Location.count) == position }.collect { |e| e[:used_seconds] }
         }.call
       end
 
-      def kishin_used?
+      def kishin_level1_used?
         if battle.parsed_info.move_infos.size >= kishin_move_getq
-          list = move_second_list.last(kishin_last_n)
+          list = sec_list.last(kishin_last_n)
           if list.size >= kishin_hand_times
             list.each_cons(kishin_hand_times).any? { |list| list.sum <= kishin_time_limit }
           end
         end
       end
 
-      def kishin_used2?
+      def kishin_10min_winner_used?
         if battle.rule_info.key == :ten_min
-          if kishin_used?
-            if winner?
-              if kishin_used?
+          if kishin_level1_used?
+            if judge_info.key == :win
+              if kishin_level1_used?
                 true
               end
             end
@@ -108,13 +162,14 @@ module Swars
       end
 
       def winner?
-        battle.win_user == user
+        # battle.win_user == user
+        judge_info.key == :win
       end
 
       def kishin_info
         {
-          "判定"         => kishin_used2? ? "80 %" : "0 %",
-          "指し手の秒数" => move_second_list,
+          "判定"         => kishin_10min_winner_used? ? "80 %" : "0 %",
+          "指し手の秒数" => sec_list,
           "結果"         => winner? ? "勝ち" : "",
         }
       end
