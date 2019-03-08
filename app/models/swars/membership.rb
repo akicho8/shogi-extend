@@ -89,12 +89,9 @@ module Swars
       end
 
       def summary_store_to(stat)
-        stat[judge_info.name] += 1
-        stat[summary_key] += 1
+        # stat[judge_info.name] += 1
 
-        if kishin_10min_winner_used?
-          stat["棋神召喚疑惑"] += 1
-        end
+        stat[summary_key] += 1
 
         stat
       end
