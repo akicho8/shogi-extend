@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# User (swars_users as Swars::User)
+# 将棋ウォーズユーザー (swars_users as Swars::User)
 #
 # |-------------------+-------------------+-------------+-------------+------+-------|
 # | name              | desc              | type        | opts        | refs | index |

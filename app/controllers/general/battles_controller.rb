@@ -3,20 +3,20 @@
 #
 # Battle (general_battles as General::Battle)
 #
-# |-----------------+-----------------+-------------+-------------+------+-------|
-# | name            | desc            | type        | opts        | refs | index |
-# |-----------------+-----------------+-------------+-------------+------+-------|
-# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
-# | key             | Key             | string(255) | NOT NULL    |      | A!    |
-# | battled_at      | Battled at      | datetime    |             |      |       |
-# | kifu_body       | Kifu body       | text(65535) | NOT NULL    |      |       |
-# | final_key       | Final key       | string(255) | NOT NULL    |      | B     |
-# | turn_max        | Turn max        | integer(4)  | NOT NULL    |      |       |
-# | meta_info       | Meta info       | text(65535) | NOT NULL    |      |       |
-# | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
-# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
-# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
-# |-----------------+-----------------+-------------+-------------+------+-------|
+# |-----------------+--------------------+-------------+-------------+------+-------|
+# | name            | desc               | type        | opts        | refs | index |
+# |-----------------+--------------------+-------------+-------------+------+-------|
+# | id              | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key             | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |
+# | battled_at      | 対局日             | datetime    |             |      |       |
+# | kifu_body       | 棋譜内容           | text(65535) | NOT NULL    |      |       |
+# | final_key       | 結果               | string(255) | NOT NULL    |      | B     |
+# | turn_max        | 手数               | integer(4)  | NOT NULL    |      |       |
+# | meta_info       | 棋譜ヘッダー       | text(65535) | NOT NULL    |      |       |
+# | last_accessd_at | Last accessd at    | datetime    | NOT NULL    |      |       |
+# | created_at      | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時           | datetime    | NOT NULL    |      |       |
+# |-----------------+--------------------+-------------+-------------+------+-------|
 
 module General
   class BattlesController < ApplicationController

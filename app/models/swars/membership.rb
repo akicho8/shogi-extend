@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Membership (swars_memberships as Swars::Membership)
+# 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
 # |--------------+--------------+-------------+-------------+------+---------|
 # | name         | desc         | type        | opts        | refs | index   |
 # |--------------+--------------+-------------+-------------+------+---------|
 # | id           | ID           | integer(8)  | NOT NULL PK |      |         |
-# | battle_id    | Battle       | integer(8)  | NOT NULL    |      | A! B! C |
-# | user_id      | User         | integer(8)  | NOT NULL    |      | B! D    |
-# | grade_id     | Grade        | integer(8)  | NOT NULL    |      | E       |
-# | judge_key    | Judge key    | string(255) | NOT NULL    |      | F       |
-# | location_key | Location key | string(255) | NOT NULL    |      | A! G    |
+# | battle_id    | 対局共通情報 | integer(8)  | NOT NULL    |      | A! B! C |
+# | user_id      | ユーザー     | integer(8)  | NOT NULL    |      | B! D    |
+# | grade_id     | 棋力         | integer(8)  | NOT NULL    |      | E       |
+# | judge_key    | 結果         | string(255) | NOT NULL    |      | F       |
+# | location_key | 先手or後手   | string(255) | NOT NULL    |      | A! G    |
 # | position     | 順序         | integer(4)  |             |      | H       |
 # | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
 # | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
