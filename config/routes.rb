@@ -119,9 +119,7 @@ Rails.application.routes.draw do
   ################################################################################ graphiql
 
   if true
-    if Rails.env.development? || true
-      mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
-    end
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "#{ActionController::Base.relative_url_root}/graphql"
     post "/graphql", to: "graphql#execute"
 
     # namespace :api, { format: 'json' } do
