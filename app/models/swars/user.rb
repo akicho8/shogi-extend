@@ -88,11 +88,11 @@ module Swars
         def main_summary2
           stat = Hash.new(0)
 
-          parcentage_set(stat, "切断率", __stat["切断した"], judge_count_of(:lose), yabai: __stat["切断した"].nonzero?)
           count_set(stat, "切断回数", __stat["切断した"], yabai: __stat["切断した"].nonzero?)
+          parcentage_set(stat, "切断率", __stat["切断した"], judge_count_of(:lose), yabai: __stat["切断した"].nonzero?)
 
-          parcentage_set(stat, "棋神召喚疑惑率", kishin_hsoukan_giwaku_count, judge_count_of(:win), yabai: kishin_hsoukan_giwaku_count.nonzero?)
           count_set(stat, "棋神召喚疑惑", kishin_hsoukan_giwaku_count, yabai: kishin_hsoukan_giwaku_count.nonzero?)
+          parcentage_set(stat, "棋神召喚疑惑率", kishin_hsoukan_giwaku_count, judge_count_of(:win), yabai: kishin_hsoukan_giwaku_count.nonzero?)
 
           parcentage_set(stat, "投了率", __stat["投了した"], judge_count_of(:lose), yabai: __stat["投了した"].zero?)
 
@@ -118,10 +118,10 @@ module Swars
 
               scope = ships.find_all { |e| e.summary_key == "切れ負け" }
               sec = scope.collect { |e| e.rest_sec }.max
-              sec_set(stat, "【#{rule_info.name}】切れ負けたときの最長残り時間", sec, yabai: sec && sec >= rule_info.leave_alone_limit)
+              sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, yabai: sec && sec >= rule_info.leave_alone_limit)
 
               count = ships.count { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
-              count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上考えたまま切れ負けた", count, yabai: count.nonzero?)
+              count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負けた", count, yabai: count.nonzero?)
             end
           end
 
