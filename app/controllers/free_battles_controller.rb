@@ -95,11 +95,16 @@ class FreeBattlesController < ApplicationController
   end
 
   def current_filename
-    Time.current.strftime("#{current_basename}_%Y%m%d_%H%M%S.#{params[:format]}")
+    "#{current_record.download_filename}.#{params[:format]}"
+    # Time.current.strftime("#{current_basename}_%Y%m%d_%H%M%S.#{params[:format]}")
   end
 
   def current_basename
-    params[:basename].presence || "棋譜データ"
+    params[:basename].presence || current_basename_default
+  end
+
+  def current_basename_default
+    "棋譜データ"
   end
 
   def notice_message

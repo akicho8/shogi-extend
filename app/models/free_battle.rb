@@ -38,14 +38,18 @@ class FreeBattle < ApplicationRecord
         end
       end
 
-      Pathname.glob(Rails.root.join("config/app_data/free_battles/*")).each do |file|
-        if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<title>.*)/)
-          record = find_by(key: md["key"]) || new(key: md["key"])
-          record.owner_user = Colosseum::User.find_by(name: "きなこもち") || Colosseum::User.sysop
-          record.kifu_body = file.read
-          record.title = md["title"].gsub(/_/, " ")
-          record.save!
-        end
+      Pathname.glob(Rails.root.join("config/app_data/free_battles/*")).each { |file| file_import(file) }
+    end
+
+    def file_import(file)
+      if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<title>.*)/)
+        record = find_by(key: md["key"]) || new(key: md["key"])
+        record.owner_user = Colosseum::User.find_by(name: "きなこもち") || Colosseum::User.sysop
+        record.kifu_body = file.read
+        record.title = md["title"].gsub(/_/, " ")
+        record.save!
+
+        p [record.id, record.title]
       end
     end
   end
@@ -56,8 +60,18 @@ class FreeBattle < ApplicationRecord
 
   belongs_to :owner_user, :class_name => "Colosseum::User", :foreign_key => "colosseum_user_id", required: false
 
+  class << self
+    def generate_unique_secure_token
+      SecureRandom.hex
+    end
+  end
+
   def safe_title
     title.presence || "#{self.class.count.next}番目の何かの棋譜"
+  end
+
+  def download_filename
+    [("%04d" % id), key, title.gsub(/\p{Blank}+/, "_")].join("_")
   end
 
   before_validation do
