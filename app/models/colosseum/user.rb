@@ -183,7 +183,7 @@ module Colosseum
     concerning :SysopMethods do
       class_methods do
         def sysop
-          find_by(key: __method__) || create!(key: "sysop", name: "運営", email: "sysop@localhost")
+          find_by(key: __method__) || create!(key: __method__, name: "運営", email: "#{__method__}@localhost")
         end
       end
 

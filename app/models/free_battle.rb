@@ -29,12 +29,22 @@ class FreeBattle < ApplicationRecord
   include ConvertMethods
 
   class << self
-    def setup(options = {})
+    def setup(**options)
       super
 
       if Rails.env.development?
         unless exists?
           30.times { create!(kifu_body: "") }
+        end
+      end
+
+      Pathname.glob(Rails.root.join("config/app_data/free_battles/*")).each do |file|
+        if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<title>.*)/)
+          record = find_by(key: md["key"]) || new(key: md["key"])
+          record.owner_user = Colosseum::User.find_by(name: "きなこもち") || Colosseum::User.sysop
+          record.kifu_body = file.read
+          record.title = md["title"].gsub(/_/, " ")
+          record.save!
         end
       end
     end
