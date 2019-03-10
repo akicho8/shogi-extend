@@ -5,6 +5,21 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+if true
+  # 1. Colosseum::UsersController の spec で次のようになっているとき user_login 内で controller を参照する
+  # 2. このタイミングで app/controllers/swars/battles_controller.rb の親クラスの参照がおかしなる
+  # 3. "< ApplicationController" で ::Swars::ApplicationController ではなく ::ApplicationController を読まれる
+  # 4. 結果、::Swars::ApplicationController の before_action が発動しない
+  # 5. これまで ::Swars::ApplicationController に何も書いてなかったので気付かなかった
+  # 6. これは RSpec の不具合？ Ruby の仕様に起因？
+  # 7. 対応策として明示的に参照して先にロードする
+  ::Swars::ApplicationController
+  # 8. これにはまると原因を調べるのに半日かかるため念のため他のもロードしておく
+  ::Colosseum::ApplicationController
+  ::General::ApplicationController
+  # 9. 新しい Ruby だと参照の順序がかわるらしいのでそれに期待。あとで調べて直ってたらこれは消す
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
