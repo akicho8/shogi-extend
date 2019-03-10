@@ -21,8 +21,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     doc_image
   end
 
-  it "検索を連打と仮定" do
-    visit "/w?query=hanairobiyori&slow_processing=1"
+  it "連打対策" do
+    visit "/w?query=hanairobiyori&raise_duplicate_key_error=1"
     expect(page).to have_content "データ収集中なのであと15秒ぐらいしてからお試しください"
     doc_image
   end
