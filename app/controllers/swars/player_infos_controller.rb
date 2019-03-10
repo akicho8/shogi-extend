@@ -1,6 +1,10 @@
 module Swars
   class PlayerInfosController < ApplicationController
     def index
+      if params[:stop_processing_because_it_is_too_heavy]
+        return
+      end
+
       if current_user_key
         Battle.debounce_basic_import(user_key: current_user_key, page_max: 3)
         unless current_swars_user
@@ -19,13 +23,10 @@ module Swars
       User.find_by(user_key: current_user_key)
     end
 
-    rescue_from "ActiveRecord::RecordInvalid" do |exception|
-      if exception.message.match?(/重複/)
-        redirect_to [:swars, :player_infos], alert: "調べているところなので連打しないでください(^^)"
-        return
-      end
+    private
 
-      raise exception
+    def slow_processing_error_redirect_url
+      [:swars, :player_infos, user_key: current_user_key, stop_processing_because_it_is_too_heavy: 1]
     end
   end
 end

@@ -21,14 +21,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     doc_image
   end
 
-  it "戦法クラウド" do
-    visit "/w-cloud"
-    expect(page).to have_content "Rails"
+  it "検索を連打と仮定" do
+    visit "/w?query=hanairobiyori&slow_processing=1"
+    expect(page).to have_content "データ収集中なのであと15秒ぐらいしてからお試しください"
     doc_image
   end
 
-  it "プレイヤー情報" do
-    visit "/w-user-stat?user_key=hanairobiyori"
+  it "戦法クラウド" do
+    visit "/w-cloud"
     expect(page).to have_content "Rails"
     doc_image
   end

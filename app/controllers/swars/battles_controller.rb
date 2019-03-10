@@ -116,6 +116,10 @@ module Swars
         return
       end
 
+      if params[:stop_processing_because_it_is_too_heavy]
+        return
+      end
+
       # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
       if query = params[:query].presence
         if key = Battle.extraction_key_from_dirty_string(query)
@@ -172,14 +176,6 @@ module Swars
       message = "該当のユーザーが見つからないか混み合っています"
       flash.now[:danger] = %(<div class="has-text-weight-bold">#{message}</div><br/>#{exception.class.name}<br/>#{exception.message}<br/><br/>#{exception.backtrace.take(8).join("<br/>")}).html_safe
       render :index
-    end
-
-    rescue_from "ActiveRecord::RecordInvalid" do |exception|
-      if exception.message.match?(/重複/)
-        redirect_to [:swars, :battles], alert: "調べているところなので連打しないでください(^^)"
-        return
-      end
-      raise exception
     end
 
     private
@@ -307,6 +303,10 @@ module Swars
 
         row[""] = row_links(record)
       end
+    end
+
+    def slow_processing_error_redirect_url
+      [:swars, :w, query: current_form_search_value, stop_processing_because_it_is_too_heavy: 1]
     end
   end
 end
