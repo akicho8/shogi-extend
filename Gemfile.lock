@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/warabi.git
-  revision: f4a91625d4d838d0af1771ded3bd33ad1c3c3b35
+  revision: c20986010b51481f6d1dbbcdc3aab2322b8ce106
   specs:
     warabi (0.0.1)
       actionview
@@ -147,7 +147,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.4)
+    concurrent-ruby (1.1.5)
     crass (1.0.4)
     database_cleaner (1.7.0)
     devise (4.4.3)
@@ -543,4 +543,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.6
+   1.17.3
