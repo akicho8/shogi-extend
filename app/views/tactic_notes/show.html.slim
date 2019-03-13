@@ -29,14 +29,16 @@ hr
     - content_for :head do
       = javascript_pack_tag("shogi_player_app")
       / = stylesheet_pack_tag("shogi_player_app")
+
   ////////////////////////////////////////////////////////////////////////////////
-  .column
-    br
-    .shogi-player.theme-simple.size-default
-      .board_container
-        .board_wrap
-          .board_outer
-            = @board_table
+  - if @board_table
+    .column
+      br
+      .shogi-player.theme-simple.size-default
+        .board_container
+          .board_wrap
+            .board_outer
+              = @board_table
 
 .columns
   .column

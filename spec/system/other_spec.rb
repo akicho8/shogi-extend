@@ -31,6 +31,12 @@ RSpec.describe "その他", type: :system do
     doc_image
   end
 
+  it "手筋詳細" do
+    visit "/tactics/パンツを脱ぐ"
+    expect(page).to have_content "Rails"
+    doc_image
+  end
+
   it "戦法ツリー" do
     visit "/tactics-tree"
     expect(page).to have_content "Rails"
