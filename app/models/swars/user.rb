@@ -69,7 +69,6 @@ module Swars
         def main_summary
           stat = Hash.new(0)
 
-
           stat["取得できた直近の対局数"] = memberships.count.to_s
 
           JudgeInfo.each do |e|
@@ -99,6 +98,7 @@ module Swars
           [:ten_min, :three_min].each do |rule_key|
             rule_info = RuleInfo.fetch(rule_key)
             ships = memberships.find_all { |e| e.battle.rule_info == rule_info }
+
             if ships.present?
               sec = ships.collect { |e| e.sec_list.max }.compact.max
               sec_set(stat, "【#{rule_info.name}】最大長考", sec, yabai: sec && sec >= rule_info.leave_alone_limit)

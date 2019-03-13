@@ -146,7 +146,7 @@ module Swars
           used = life[i] - t
           life[i] = t
           s << "#{op}"
-          s << "T#{used}"
+          s << "T#{used}" # 将棋ウォーズの不具合で時間がマイナスになることがある
         end
 
         s << "%#{final_info.last_action_key}"
