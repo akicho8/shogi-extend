@@ -184,8 +184,9 @@ module General
           membership.attributes = {
             judge_key: judge_key,
             location_key: player.location.key,
-            defense_tag_list: player.skill_set.defense_infos.normalize.collect(&:key),
-            attack_tag_list: player.skill_set.attack_infos.normalize.collect(&:key),
+            defense_tag_list:   player.skill_set.defense_infos.normalize.collect(&:key),
+            attack_tag_list:    player.skill_set.attack_infos.normalize.collect(&:key),
+            technique_tag_list: player.skill_set.technique_infos.normalize.collect(&:key),
           }
         end
       end

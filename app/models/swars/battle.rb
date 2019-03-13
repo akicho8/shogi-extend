@@ -158,8 +158,9 @@ module Swars
         if true
           info.mediator.players.each.with_index do |player, i|
             memberships[i].tap do |e|
-              e.defense_tag_list = player.skill_set.defense_infos.normalize.collect(&:key)
-              e.attack_tag_list  = player.skill_set.attack_infos.normalize.collect(&:key)
+              e.defense_tag_list   = player.skill_set.defense_infos.normalize.collect(&:key)
+              e.attack_tag_list    = player.skill_set.attack_infos.normalize.collect(&:key)
+              e.technique_tag_list = player.skill_set.technique_infos.normalize.collect(&:key)
             end
           end
         end

@@ -119,6 +119,7 @@ class FreeBattle < ApplicationRecord
     included do
       acts_as_ordered_taggable_on :defense_tags
       acts_as_ordered_taggable_on :attack_tags
+      acts_as_ordered_taggable_on :technique_tags
       acts_as_ordered_taggable_on :other_tags
     end
   end

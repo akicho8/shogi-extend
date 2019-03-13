@@ -43,6 +43,7 @@ module Swars
 
     acts_as_ordered_taggable_on :defense_tags
     acts_as_ordered_taggable_on :attack_tags
+    acts_as_ordered_taggable_on :technique_tags
 
     before_validation do
       if user
