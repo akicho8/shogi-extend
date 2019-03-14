@@ -252,6 +252,7 @@ module Swars
           all.where(arel_table[:last_accessd_at].lteq(params[:time])).destroy_all
         end
 
+        # cap production rails:runner CODE='Swars::Battle.import(:remake)'
         def remake(**params)
           params = {
             limit: 256,
