@@ -26,6 +26,11 @@ class TacticNotesController < ApplicationController
   end
 
   def show
+    unless current_record
+      redirect_to :tactic_notes, alert: "#{params[:id].inspect} は見つかりませんでした"
+      return
+    end
+
     # ○ 何もない
     # ● 何かある
     # ☆ 移動元ではない
