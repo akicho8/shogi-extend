@@ -66,7 +66,7 @@ namespace :rails do
     on roles(:all) do
       code = ENV["CODE"]
       nohup = ENV["NOHUP"] == "1"
-      command = "rails runner"
+      command = "bin/rails runner"
       execute "cd #{current_path} && #{nohup ? 'nohup' : ''} RAILS_ENV=#{fetch(:rails_env)} #{command} '#{code}' #{nohup ? '&' : ''}"
     end
   end
@@ -75,7 +75,7 @@ namespace :rails do
   task :index do
     on roles(:all) do
       command = 'ActiveRecord::Base.connection.tables.sort.each { |e| tp ActiveRecord::Base.connection.indexes(e).collect(&:to_h) }'
-      execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} rails runner '#{command}'"
+      execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner '#{command}'"
     end
   end
 end
