@@ -16,25 +16,20 @@ br
       .column
         - stat = current_swars_user.main_summary2
         .field
-          .title.yumincho.is-4 振る舞い
+          .title.yumincho.is-4 作法
           - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
           == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
-      .column.is-one-fifth
+      .column
         - stat = current_swars_user.main_summary
         .field
           .title.yumincho.is-4 勝敗
           - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
           == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
-      .column.is-one-fifth
-        .field
-          .title.yumincho.is-4 戦型
-          - stat = current_swars_user.summary_of(:attack)
-          == stat.transform_keys { |e| link_to(e, [:tactic_note, id: e]) }.to_html(table_class: "table is-fullwidth is-narrow")
-
-      .column.is-one-fifth
-        .field
-          .title.yumincho.is-4 囲い
-          - stat = current_swars_user.summary_of(:defense)
-          == stat.transform_keys { |e| link_to(e, [:tactic_note, id: e]) }.to_html(table_class: "table is-fullwidth is-narrow")
+      - Warabi::TacticInfo.each do |tactic_info|
+        - if stat = current_swars_user.summary_of(tactic_info.key).presence
+          .column
+            .field
+              .title.yumincho.is-4= tactic_info.name
+              == stat.transform_keys { |e| link_to(e, [:tactic_note, id: e]) }.to_html(table_class: "table is-fullwidth is-narrow")

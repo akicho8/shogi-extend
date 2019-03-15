@@ -138,15 +138,7 @@ class TacticNotesController < ApplicationController
   end
 
   def current_record
-    @current_record ||= -> {
-      v = nil
-      Warabi::TacticInfo.each do |e|
-        if v = e.model.lookup(params[:id])
-          break
-        end
-      end
-      v
-    }.call
+    @current_record ||= Warabi::TacticInfo.flat_lookup(params[:id])
   end
 
   private

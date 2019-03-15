@@ -131,8 +131,7 @@ module Swars
         def summary_of(key)
           v = memberships.flat_map(&:"#{key}_tag_list")
           v = v.group_by(&:itself).transform_values(&:size) # TODO: ruby 2.6 の新しいメソッドで置き換えれるはず
-          v = v.sort_by { |k, v| -v }
-          Hash[v]
+          v.sort_by { |k, v| -v }.to_h
         end
 
         private
