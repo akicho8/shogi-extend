@@ -37,9 +37,9 @@ class TacticNotesController < ApplicationController
 
     if current_record.shape_info
       @board_table = tag.table(:class => "board_inner") do
-        Warabi::Dimension::Xplace.dimension.times.collect { |y|
+        Warabi::Dimension::Yplace.dimension.times.collect { |y|
           tag.tr {
-            Warabi::Dimension::Yplace.dimension.times.collect { |x|
+            Warabi::Dimension::Xplace.dimension.times.collect { |x|
               outer_class = []
               inner_class = []
 
