@@ -16,6 +16,8 @@ import "./bulma_burger.js"
 import "./light_session_app.js"
 import "./audio_queue.js"
 
+import "css-browser-selector"
+
 //////////////////////////////////////////////////////////////////////////////// Vue
 
 import Vue from "vue/dist/vue.esm"

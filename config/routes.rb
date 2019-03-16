@@ -51,16 +51,20 @@ Rails.application.routes.draw do
 
   namespace :swars, path: "" do
     resources :battles, path: "wr", only: [:index, :show]
-    resources :tag_clouds, :only => :index
     resources :player_infos, :only => :index, path: "w-user-stat"
 
     get "w/:query", to: "battles#index", as: :search
-    get "w",        to: "battles#index"
-    get "w-cloud",  to: "tag_clouds#index", as: :cloud
+    get "w",        to: "battles#index", as: :basic
+    get "w-cloud",  to: "battles#index", as: :cloud, defaults: {mode: :cloud}
+    get "w-light",  to: "battles#index", as: :light, defaults: {mode: :light}
   end
 
   resolve "Swars::User" do |user, options|
-    swars_search_path(query: user.to_param)
+    if options[:current_mode] == :basic
+      swars_search_path(query: user.to_param)
+    else
+      swars_light_path(query: user.to_param)
+    end
   end
 
   ################################################################################ 棋譜入力
@@ -75,7 +79,7 @@ Rails.application.routes.draw do
 
   resources :tactic_notes, path: "tactics", only: [:index, :show]
 
-  get "tactics-tree", to: "tactic_notes#index", defaults: {mode: "tree"}, as: :tree
+  get "tactics-tree",    to: "tactic_notes#index", defaults: {mode: "tree"},    as: :tree
   get "tactics-fortune", to: "tactic_notes#index", defaults: {mode: "fortune"}, as: :fortune
 
   ################################################################################ 符号入力ゲーム
