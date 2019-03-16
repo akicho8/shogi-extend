@@ -31,6 +31,10 @@ module Swars
       (params[:mode].presence || "basic").to_sym
     end
 
+    let :current_placeholder do
+      "ウォーズID・対局URL・タグのどれかを入力してください"
+    end
+
     let :current_records do
       current_scope.page(params[:page]).per(params[:per] || default_per)
     end
@@ -269,31 +273,8 @@ module Swars
 
     def row_build_for_basic(record)
       {}.tap do |row|
-        if current_swars_user
-          l_ship = record.myself(current_swars_user)
-          r_ship = record.rival(current_swars_user)
-        else
-          if record.win_user
-            l_ship = record.memberships.judge_key_eq(:win)
-            r_ship = record.memberships.judge_key_eq(:lose)
-          else
-            l_ship = record.memberships.black
-            r_ship = record.memberships.white
-          end
-        end
-
-        if current_swars_user
-          row["対象プレイヤー"] = record.win_lose_str(l_ship.user).html_safe + " " + user_link2(l_ship)
-          row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + user_link2(r_ship)
-        else
-          if record.win_user
-            row["勝ち"] = icon_tag(:far, :circle) + user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :times)  + user_link2(r_ship)
-          else
-            row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
-          end
-        end
+        l_ship, r_ship = left_right_pairs(record)
+        left_right_pairs2(row, record, l_ship, r_ship)
 
         row["結果"] = link_to(final_info_decorate(record), swars_search_path(record.final_info.name))
 
@@ -319,53 +300,43 @@ module Swars
 
     def row_build_for_light(record)
       {}.tap do |row|
-        row[""] = link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([record, format: "kif"])))
-
-        if current_swars_user
-          l_ship = record.myself(current_swars_user)
-          r_ship = record.rival(current_swars_user)
-        else
-          if record.win_user
-            l_ship = record.memberships.judge_key_eq(:win)
-            r_ship = record.memberships.judge_key_eq(:lose)
-          else
-            l_ship = record.memberships.black
-            r_ship = record.memberships.white
-          end
-        end
-
-        if current_swars_user
-          row["対象プレイヤー"] = record.win_lose_str(l_ship.user).html_safe + " " + user_link2(l_ship)
-          row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + user_link2(r_ship)
-        else
-          if record.win_user
-            row["勝ち"] = icon_tag(:far, :circle) + user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :times)  + user_link2(r_ship)
-          else
-            row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
-          end
-        end
-
-        # row["結果"] = link_to(final_info_decorate(record), swars_search_path(record.final_info.name))
-        #
-        # if false
-        #   row["戦法"] = record.tag_list.collect { |e| link_to(e, swars_search_path(e)) }.join(" ").html_safe
-        # else
-        #   # row["戦型"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-        #   # row["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
-        # end
-        #
-        # row["手数"] = record.turn_max
-        # row["種類"] = link_to(record.rule_info.name, swars_search_path(record.rule_info.name))
-        #
-        # key = :battle_long
-        # if record.battled_at >= Time.current.midnight
-        #   key = :battle_short
-        # end
         row["日時"] = record.battled_at.to_s(:battle_short)
 
-        # row[""] = row_links(record)
+        l_ship, r_ship = left_right_pairs(record)
+        left_right_pairs2(row, record, l_ship, r_ship)
+
+        row[""] = link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([record, format: "kif"])))
+      end
+    end
+
+    def left_right_pairs(record)
+      if current_swars_user
+        l_ship = record.myself(current_swars_user)
+        r_ship = record.rival(current_swars_user)
+      else
+        if record.win_user
+          l_ship = record.memberships.judge_key_eq(:win)
+          r_ship = record.memberships.judge_key_eq(:lose)
+        else
+          l_ship = record.memberships.black
+          r_ship = record.memberships.white
+        end
+      end
+      [l_ship, r_ship]
+    end
+
+    def left_right_pairs2(row, record, l_ship, r_ship)
+      if current_swars_user
+        row["対象プレイヤー"] = record.win_lose_str(l_ship.user).html_safe + " " + user_link2(l_ship)
+        row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + user_link2(r_ship)
+      else
+        if record.win_user
+          row["勝ち"] = icon_tag(:far, :circle) + user_link2(l_ship)
+          row["負け"] = icon_tag(:fas, :times)  + user_link2(r_ship)
+        else
+          row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
+          row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
+        end
       end
     end
 
