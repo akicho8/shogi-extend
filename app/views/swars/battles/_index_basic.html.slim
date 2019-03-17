@@ -17,8 +17,7 @@
             - tags.each do |tag|
               - if Warabi::TacticInfo.any? { |e| e.model[tag] }
                 = link_to(tag, [:tactic_note, id: tag], class: "button is-success")
-        - if current_swars_user
-          = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-primary is-small")
+        = render partial: "search_bottom_share_links"
 
 - if current_records
   #shogi_player_app(v-cloak="true")

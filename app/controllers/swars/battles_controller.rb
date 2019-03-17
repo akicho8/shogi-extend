@@ -173,7 +173,7 @@ module Swars
           end
 
           if hit_count.nonzero?
-            SlackAgent.chat_post_message(key: "ウォーズ検索", body: "#{current_user_key}: #{hit_count}件")
+            SlackAgent.chat_post_message(key: "ウォーズ検索#{current_mode.upcase[0]}", body: "#{current_user_key} #{hit_count}件")
           end
         end
       end
@@ -181,6 +181,18 @@ module Swars
       perform_zip_download
       if performed?
         return
+      end
+
+      if current_swars_user
+        @page_title ||= ["将棋ウォーズ棋譜検索", current_swars_user.user_key]
+      end
+
+      if latest_open_index = params[:latest_open_index].presence
+        limit = [latest_open_index.to_i.abs, 10].min.next
+        if record = current_scope.order(battled_at: :desc).limit(limit).last
+          url = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
+          redirect_to url
+        end
       end
     end
 

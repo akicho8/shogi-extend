@@ -5,7 +5,7 @@ module ApplicationHelper
 
   def html_title
     titles = [AppConfig[:app_name], content_for(:page_title), @page_title]
-    titles.compact.reverse.join(" - ")
+    titles.flatten.compact.reverse.join(" - ")
   end
 
   concerning :FlashMethods do

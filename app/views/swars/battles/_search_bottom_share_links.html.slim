@@ -1,0 +1,5 @@
+- if current_swars_user
+  .field
+    .buttons
+      = link_to("最新の対局をぴよ将棋で開く", [:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-info is-small")
+      = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-info is-small")
