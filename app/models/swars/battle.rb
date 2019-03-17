@@ -205,9 +205,9 @@ module Swars
       def win_lose_str(user)
         if win_user
           if winner_desuka?(user)
-            Fa.icon_tag(:far, :circle)
+            Fa.icon_tag(:fas, :crown, class: :icon_o)
           else
-            Fa.icon_tag(:fas, :times)
+            Fa.icon_tag(:fas, :times, class: :icon_x)
           end
         else
           Fa.icon_tag(:fas, :minus, :class => "icon_hidden")

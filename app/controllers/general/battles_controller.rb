@@ -129,8 +129,8 @@ module General
             row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(l_ship)
             row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(r_ship)
           else
-            row["勝ち"] = icon_tag(:far, :circle) + membership_name(l_ship)
-            row["負け"] = icon_tag(:fas, :times)  + membership_name(r_ship)
+            row["勝ち"] = icon_tag(:fas, :crown, class: :icon_o) + membership_name(l_ship)
+            row["負け"] = icon_tag(:fas, :times, class: :icon_x)  + membership_name(r_ship)
           end
 
           row["結果"] = final_info_decorate(battle)

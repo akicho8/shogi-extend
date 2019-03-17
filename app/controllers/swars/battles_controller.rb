@@ -339,8 +339,8 @@ module Swars
         row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + user_link2(r_ship)
       else
         if record.win_user
-          row["勝ち"] = icon_tag(:far, :circle) + user_link2(l_ship)
-          row["負け"] = icon_tag(:fas, :times)  + user_link2(r_ship)
+          row["勝ち"] = icon_tag(:fas, :crown, class: :icon_o) + user_link2(l_ship)
+          row["負け"] = icon_tag(:fas, :times, class: :icon_x) + user_link2(r_ship)
         else
           row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
           row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
