@@ -288,11 +288,7 @@ module Swars
         row["手数"] = record.turn_max
         row["種類"] = link_to(record.rule_info.name, swars_search_path(record.rule_info.name))
 
-        key = :battle_long
-        if record.battled_at >= Time.current.midnight
-          key = :battle_short
-        end
-        row["日時"] = record.battled_at.to_s(key)
+        row["日時"] = record.battled_at.to_s(:battle_time)
 
         row[""] = row_links(record)
       end
@@ -300,7 +296,7 @@ module Swars
 
     def row_build_for_light(record)
       {}.tap do |row|
-        row["日時"] = record.battled_at.to_s(:battle_short)
+        row["日時"] = record.battled_at.to_s(:battle_time)
 
         l_ship, r_ship = left_right_pairs(record)
         left_right_pairs2(row, record, l_ship, r_ship)
