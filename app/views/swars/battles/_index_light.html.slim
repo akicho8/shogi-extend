@@ -19,10 +19,18 @@
   - if rows
     .columns
       .column
-        = rows.to_html
+        = rows.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
 
   - if current_records
     .columns
       .column
           .has-text-centered
             = paginate current_records
+
+  - if current_swars_user && params[:page].to_i <= 1
+    .columns
+      .column
+        article.message.is-info
+          .message-body.has-text-left
+            small
+              | このページをブックマークしておくと毎回入力する手間が省けます
