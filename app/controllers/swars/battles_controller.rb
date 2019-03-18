@@ -159,6 +159,7 @@ module Swars
         end
         if success
           remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
+
           hit_count = 0
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
@@ -176,6 +177,16 @@ module Swars
             SlackAgent.chat_post_message(key: "ウォーズ検索#{current_mode.upcase[0]}", body: "#{current_user_key} #{hit_count}件")
           end
         end
+
+        if latest_open_index = params[:latest_open_index].presence
+          limit = [latest_open_index.to_i.abs, 10].min.next
+          if record = current_scope.order(battled_at: :desc).limit(limit).last
+            url = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
+            SlackAgent.chat_post_message(key: "最新ぴよ将棋", body: current_user_key)
+            redirect_to url
+            return
+          end
+        end
       end
 
       perform_zip_download
@@ -185,14 +196,6 @@ module Swars
 
       if current_swars_user
         @page_title ||= ["将棋ウォーズ棋譜検索", current_swars_user.user_key]
-      end
-
-      if latest_open_index = params[:latest_open_index].presence
-        limit = [latest_open_index.to_i.abs, 10].min.next
-        if record = current_scope.order(battled_at: :desc).limit(limit).last
-          url = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
-          redirect_to url
-        end
       end
     end
 
@@ -340,16 +343,16 @@ module Swars
       else
         if record.win_user
           row["勝ち"] = icon_tag(:fas, :crown, class: :icon_o) + user_link2(l_ship)
-          row["負け"] = icon_tag(:fas, :times, class: :icon_x) + user_link2(r_ship)
-        else
-          row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
-          row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
+            row["負け"] = icon_tag(:fas, :times, class: :icon_x) + user_link2(r_ship)
+            else
+              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
+              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
+            end
+          end
+        end
+
+        def slow_processing_error_redirect_url
+          [:swars, :basic, query: current_form_search_value, stop_processing_because_it_is_too_heavy: 1]
         end
       end
     end
-
-    def slow_processing_error_redirect_url
-      [:swars, :basic, query: current_form_search_value, stop_processing_because_it_is_too_heavy: 1]
-    end
-  end
-end
