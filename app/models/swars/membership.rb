@@ -86,14 +86,11 @@ module Swars
     concerning :SummaryMethods do
       def summary_key
         key = "#{battle.final_info.name}で#{judge_info.name}"
-        summary_key_traslate_hash.fetch(key, key)
+        summary_key_translate_hash.fetch(key, key)
       end
 
       def summary_store_to(stat)
-        # stat[judge_info.name] += 1
-
         stat[summary_key] += 1
-
         stat
       end
 
@@ -109,8 +106,8 @@ module Swars
 
       private
 
-      def summary_key_traslate_hash
-        @summary_key_traslate_hash ||= {
+      def summary_key_translate_hash
+        @summary_key_translate_hash ||= {
           "投了で勝ち"     => "投了された",
           "投了で負け"     => "投了した",
           "切断で勝ち"     => "切断された",
@@ -125,10 +122,10 @@ module Swars
 
     concerning :KishinInfoMethods do
       included do
-        cattr_accessor(:kishin_move_getq)  { 60 } # お互い合わせて何手以上で
-        cattr_accessor(:kishin_last_n)     { 10 } # 最後の片方の手の N 手内に
-        cattr_accessor(:kishin_hand_times) { 5  } # 棋神は1回でN手指される
-        cattr_accessor(:kishin_time_limit) { 9  } # 5手がN秒以内なら
+        cattr_accessor(:swgod_move_getq)  { 60 } # お互い合わせて何手以上で
+        cattr_accessor(:swgod_last_n)     { 10 } # 最後の片方の手の N 手内に
+        cattr_accessor(:swgod_hand_times) { 5  } # 棋神は1回でN手指される
+        cattr_accessor(:swgod_time_limit) { 9  } # 5手がN秒以内なら
       end
 
       def sec_list
@@ -138,20 +135,20 @@ module Swars
         }.call
       end
 
-      def kishin_level1_used?
-        if battle.parsed_info.move_infos.size >= kishin_move_getq
-          list = sec_list.last(kishin_last_n)
-          if list.size >= kishin_hand_times
-            list.each_cons(kishin_hand_times).any? { |list| list.sum <= kishin_time_limit }
+      def swgod_level1_used?
+        if battle.parsed_info.move_infos.size >= swgod_move_getq
+          list = sec_list.last(swgod_last_n)
+          if list.size >= swgod_hand_times
+            list.each_cons(swgod_hand_times).any? { |list| list.sum <= swgod_time_limit }
           end
         end
       end
 
-      def kishin_10min_winner_used?
+      def swgod_10min_winner_used?
         if battle.rule_info.key == :ten_min
-          if kishin_level1_used?
+          if swgod_level1_used?
             if judge_info.key == :win
-              if kishin_level1_used?
+              if swgod_level1_used?
                 true
               end
             end
@@ -164,9 +161,9 @@ module Swars
         judge_info.key == :win
       end
 
-      def kishin_info
+      def swgod_info
         {
-          "判定"         => kishin_10min_winner_used? ? "80 %" : "0 %",
+          "判定"         => swgod_10min_winner_used? ? "80 %" : "0 %",
           "指し手の秒数" => sec_list,
           "結果"         => winner? ? "勝ち" : "",
         }

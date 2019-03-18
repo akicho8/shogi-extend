@@ -20,10 +20,10 @@ module Swars
       battle.memberships.build(user: @user2, judge_key: :win,  location_key: :white)
       battle.save!
 
-      tp @user1.main_summary
-      tp @user2.main_summary
+      tp @user1.secret_summary
+      tp @user2.secret_summary
 
-      #       @user1.main_summary.to_t.should == <<~EOS
+      #       @user1.secret_summary.to_t.should == <<~EOS
       # |-----------------------------------------+---------|
       # |                  取得できた直近の対局数 | 1       |
       # |                                    勝ち | 0回     |
@@ -41,7 +41,7 @@ module Swars
       # |-----------------------------------------+---------|
       # EOS
       #
-      #       @user2.main_summary.to_t.should == <<~EOS
+      #       @user2.secret_summary.to_t.should == <<~EOS
       # |-----------------------------------------+-------|
       # |                  取得できた直近の対局数 | 1     |
       # |                                    勝ち | 1回   |
@@ -71,10 +71,10 @@ module Swars
       battle.memberships.build(user: @user2, judge_key: :lose, location_key: :white)
       battle.save!
 
-      tp @user1.main_summary
-      tp @user2.main_summary
+      tp @user1.secret_summary
+      tp @user2.secret_summary
 
-      #       @user1.main_summary.to_t.should == <<~EOS
+      #       @user1.secret_summary.to_t.should == <<~EOS
       # |----------------------------------------+-------|
       # |                 取得できた直近の対局数 | 1     |
       # |                                   勝ち | 1回   |
@@ -92,7 +92,7 @@ module Swars
       # |----------------------------------------+-------|
       # EOS
       #
-      #       @user2.main_summary.to_t.should == <<~EOS
+      #       @user2.secret_summary.to_t.should == <<~EOS
       # |----------------------------------------+--------|
       # |                 取得できた直近の対局数 | 1      |
       # |                                   勝ち | 0回    |

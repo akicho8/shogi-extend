@@ -24,12 +24,12 @@ module Swars
   tp battle
 
   battle.memberships.first.sec_list # => [0, 1, 2, 1, 0, 1, 2, 1, 1, 1, 0, 1, 1, 3, 5, 6, 6, 1, 6, 2, 9, 5, 8, 4, 2, 18, 31, 6, 5, 25, 2, 10, 1, 16, 1, 1, 11, 4, 2, 19, 2, 8, 2, 2, 14, 2, 1, 1, 11, 1, 3, 1, 4, 4, 3]
-  battle.memberships.first.kishin_level1_used?     # => false
+  battle.memberships.first.swgod_level1_used?     # => false
   battle.memberships.last.sec_list  # => [0, 3, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 4, 2, 10, 2, 2, 1, 4, 5, 2, 2, 2, 8, 1, 14, 4, 2, 5, 4, 6, 1, 7, 2, 1, 5, 4, 2, 29, 3, 3, 4, 22, 7, 1, 2, 15, 2, 2, 14, 2, 4, 3, 2, 7]
-  battle.memberships.last.kishin_level1_used?      # => false
+  battle.memberships.last.swgod_level1_used?      # => false
 
-  tp user1.main_summary
-  tp user2.main_summary
+  tp user1.basic_summary
+  tp user2.basic_summary
 end
 # >> |-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |                id | 75                                                                                                                                                                                                                                                                                                                                   |
