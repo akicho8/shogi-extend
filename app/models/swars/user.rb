@@ -113,6 +113,7 @@ module Swars
           stat = Hash.new(0)
 
           stat["取得できた直近の対局数"] = memberships.count.to_s
+          parcentage_set(stat, "勝率", judge_count_of(:win), judge_count_of(:win) + judge_count_of(:lose), alert_p: (0.3...0.7).exclude?(win_rate))
 
           JudgeInfo.each do |e|
             stat[e.name] = judge_count_of(e.key)
@@ -158,8 +159,13 @@ module Swars
         end
 
         def judge_count_of(key)
+          judge_info = JudgeInfo.fetch(key)
           @judge_count_of ||= {}
-          @judge_count_of[key] ||= memberships.count { |e| e.judge_info.key == key }
+          @judge_count_of[key] ||= memberships.count { |e| e.judge_info == judge_info }
+        end
+
+        def win_rate
+          @win_rate ||= judge_count_of(:win).fdiv(judge_count_of(:win) + judge_count_of(:lose))
         end
 
         def count_set(stat, key, value, **options)
