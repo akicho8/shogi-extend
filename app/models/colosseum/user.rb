@@ -47,7 +47,12 @@ module Colosseum
         before_validation on: :create do
           self.key ||= SecureRandom.hex
           self.user_agent ||= ""
-          self.password ||= "password"
+
+          if Rails.env.production?
+            self.password ||= Devise.friendly_token(32)
+          else
+            self.password ||= "password"
+          end
 
           if race_info.key == :human
             number = self.class.human_only.count.next
@@ -183,7 +188,7 @@ module Colosseum
     concerning :SysopMethods do
       class_methods do
         def sysop
-          find_by(key: __method__) || create!(key: __method__, name: "運営", email: "#{__method__}@localhost")
+          find_by(key: __method__) || create!(key: __method__, name: "運営", email: "#{__method__}@localhost", password: Rails.application.credentials.sysop_password)
         end
       end
 

@@ -31,7 +31,6 @@ module Colosseum
         user = User.create({
             :name       => auth.info.name.presence || auth.info.nickname.presence,
             :email      => auth.info.email || "#{SecureRandom.hex}@localhost",
-            :password   => Devise.friendly_token(32),
             :avatar     => {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"},
             :user_agent => request.user_agent,
           })
