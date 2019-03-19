@@ -104,12 +104,23 @@ Rails.application.routes.draw do
     "http://kif-pona.heroz.jp/games/#{battle.key}?#{options.to_query}"
   end
 
+  direct :swars_home do |user, **options|
+    options = {
+      locale: "ja",
+    }.merge(options)
+    "https://shogiwars.heroz.jp/users/mypage/#{user.user_key}?#{options.to_query}"
+  end
+
   direct :piyo_shogi_app do |url|
     "piyoshogi://?url=#{url}"
   end
 
   direct :google_search do |query|
     "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&q=#{query}"
+  end
+
+  direct :twitter_search do |query|
+    "https://search.yahoo.co.jp/realtime/search?p=#{query}&ei=UTF-8"
   end
 
   direct :google_maps do |query|

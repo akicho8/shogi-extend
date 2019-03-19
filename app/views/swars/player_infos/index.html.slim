@@ -1,17 +1,24 @@
 .title.yumincho.is-2
   = "将棋ウォーズプレイヤー情報"
 
-= form_with(url: [:swars, :player_infos], method: :get, skip_enforcing_utf8: true) do |form|
-  .field.has-addons
-    .control.is-expanded
-      = form.search_field(:user_key, class: "input", value: current_user_key, placeholder: "ウォーズのIDを入力してください", list: "search_field_query_completion", autofocus: current_user_key.blank?)
-      = render partial: "swars/battles/search_field_query_completion"
-    .control
-      = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
-br
+.columns
+  .column
+    = form_with(url: [:swars, :player_infos], method: :get, skip_enforcing_utf8: true) do |form|
+      .field.has-addons
+        .control.is-expanded
+          = form.search_field(:user_key, class: "input", value: current_user_key, placeholder: "ウォーズのIDを入力してください", list: "search_field_query_completion", autofocus: current_user_key.blank?)
+          = render partial: "swars/battles/search_field_query_completion"
+        .control
+          = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
 
 - if current_swars_user
   small
+    .columns
+      .column
+        .buttons
+          = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, target: "blank", class: "button is-small")
+          = link_to("ぐぐる", google_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
+          = link_to("Twitterで探す", twitter_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
     .columns
       .column
         - stat = current_swars_user.secret_summary

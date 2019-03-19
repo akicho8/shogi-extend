@@ -50,6 +50,10 @@ module Swars
       user_key
     end
 
+    def swars_home_url
+      Rails.application.routes.url_helpers.swars_home_url(self)
+    end
+
     concerning :SummaryMethods do
       included do
         delegate :basic_summary, :secret_summary, :tactic_summary_for, to: :summary_info
