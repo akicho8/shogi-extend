@@ -1,5 +1,8 @@
 .swars_battles_index_light
   - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
+    javascript:
+      document.title = "最新の対局をぴよ将棋で開く"
+
     .columns
       .column
         article.message.is-info.is-size-7
