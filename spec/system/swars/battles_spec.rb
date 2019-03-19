@@ -29,6 +29,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     doc_image
   end
 
+  it "アプリ起動できるブックマーク可能なページに飛ぶ" do
+    visit "/w-light?query=hanairobiyori"
+    click_on "こちら"
+    expect(page).to have_content "あと一歩"
+    doc_image
+  end
+
   it "連打対策" do
     visit "/w?query=hanairobiyori&raise_duplicate_key_error=1"
     expect(page).to have_content "データ収集中なのであと15秒ぐらいしてからお試しください"

@@ -136,6 +136,12 @@ module Swars
         return
       end
 
+      if params[:redirect_to_bookmarkable_page]
+        flash[:external_app_exec_skip_once] = true # ブックマークできるように一時的にぴよ将棋に飛ばないようにする
+        redirect_to [:swars, current_mode, query: current_swars_user, latest_open_index: params[:latest_open_index]]
+        return
+      end
+
       # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
       if query = params[:query].presence
         if key = Battle.extraction_key_from_dirty_string(query)
@@ -178,13 +184,15 @@ module Swars
           end
         end
 
-        if latest_open_index = params[:latest_open_index].presence
-          limit = [latest_open_index.to_i.abs, 10].min.next
-          if record = current_scope.order(battled_at: :desc).limit(limit).last
-            url = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
-            SlackAgent.chat_post_message(key: "最新ぴよ将棋", body: current_user_key)
-            redirect_to url
-            return
+        unless flash[:external_app_exec_skip_once]
+          if latest_open_index = params[:latest_open_index].presence
+            limit = [latest_open_index.to_i.abs, 10].min.next
+            if record = current_scope.order(battled_at: :desc).limit(limit).last
+              url = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
+              SlackAgent.chat_post_message(key: "最新ぴよ将棋", body: current_user_key)
+              redirect_to url
+              return
+            end
           end
         end
       end
