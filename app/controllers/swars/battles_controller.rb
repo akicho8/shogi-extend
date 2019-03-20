@@ -180,7 +180,7 @@ module Swars
           end
 
           if hit_count.nonzero?
-            SlackAgent.chat_post_message(key: "ウォーズ検索#{current_mode.upcase[0]}", body: "#{current_user_key} #{hit_count}件")
+            SlackAgent.chat_post_message(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
           end
         end
 

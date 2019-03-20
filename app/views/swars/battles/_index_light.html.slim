@@ -55,7 +55,7 @@
             .message-body.has-text-left
               .content
                 ol
-                  li このページをブックマークしておくと毎回入力する手間が省けます
+                  li このページをブックマークしておくとウォーズのIDを毎回入力する手間が省けます
                   li
                     / - url = full_url_for([:swars, current_mode, query: current_swars_user, latest_open_index: 0])
                     / | また上の<b>最新の対局をぴよ将棋で開く</b>のリンク
@@ -66,4 +66,4 @@
                     | また
                     b
                       = link_to " こちら ", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-                    | をタップしたあと<b>ブックマークに追加</b>または<b>ホーム画面に追加</b>に登録すると、このページを経由しなくても、最新の対局をぴよ将棋で開けるようになります (おすすめ)
+                    | をタップしたあと「ブックマークに追加」または「ホーム画面に追加」に登録すると、このページを経由しなくても、#{current_swars_user.user_key} さんの最新の対局をぴよ将棋で開けるようになります (おすすめ)

@@ -182,6 +182,7 @@ class ApplicationController < ActionController::Base
           link_to_eval("部屋削除") { "Colosseum::Battle.last&.destroy!" },
           link_to_eval("部屋全削除") { "Colosseum::Battle.destroy_all" },
           link_to_eval("flash確認", redirect_to: root_path(debug: "true")) { "" },
+          link_to_eval("Swars::Battle.destroy_all") { "Swars::Battle.destroy_all" },
         ].compact.join.html_safe
       end
 
