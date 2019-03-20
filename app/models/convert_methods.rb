@@ -38,6 +38,10 @@ module ConvertMethods
     @parsed_info ||= Warabi::Parser.parse(kifu_body, typical_error_case: :embed)
   end
 
+  # def total_seconds
+  #   @total_seconds ||= parsed_info.move_infos.sum { |e| e[:used_seconds] }
+  # end
+
   # 更新方法
   # ActiveRecord::Base.logger = nil
   # Swars::Battle.find_each { |e| e.tap(&:parser_exec).save! }

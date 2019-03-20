@@ -219,7 +219,6 @@ module Swars
         url = Rails.application.routes.url_helpers.swars_real_battle_url(self, tw: 1)
         "将棋ウォーズ棋譜(#{vs}) #{url} #shogiwars #将棋"
       end
-
     end
 
     concerning :ImportMethods do

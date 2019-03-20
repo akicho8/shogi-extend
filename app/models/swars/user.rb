@@ -81,36 +81,69 @@ module Swars
 
           parcentage_set(stat, "投了率", memberships_stat["投了した"], judge_count_of(:lose), alert_p: memberships_stat["投了した"].zero?)
 
-          RuleInfo.find_all(&:player_info_show).each do |rule_info|
+          # turn = memberships.collect { |e| e.battle.turn_max }.max
+          # count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手")
+
+          RuleInfo.each do |rule_info|
             ships = memberships.find_all { |e| e.battle.rule_info == rule_info }
 
             if ships.present?
-              sec = ships.collect { |e| e.sec_list.max }.compact.max
-              sec_set(stat, "【#{rule_info.name}】最大長考", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
+              if rule_info.related_time_p
+                sec = ships.collect { |e| e.sec_list.max }.compact.max
+                sec_set(stat, "【#{rule_info.name}】最大長考", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
 
-              sec = ships.collect { |e| e.sec_list.last }.compact.max
-              sec_set(stat, "【#{rule_info.name}】最後の着手の最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
+                sec = ships.collect { |e| e.sec_list.last }.compact.max
+                sec_set(stat, "【#{rule_info.name}】最後の着手の最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
 
-              count = ships.count { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit }
-              count_set(stat, "【#{rule_info.name}】最後の着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負けた", count, alert_p: count.nonzero?)
+                count = ships.count { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit }
+                count_set(stat, "【#{rule_info.name}】最後の着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負けた", count, alert_p: count.nonzero?)
 
-              count = ships.count { |e| e.summary_key == "詰ました" && e.sec_list.last >= rule_info.leave_alone_limit }
-              count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ました", count, alert_p: count.nonzero?)
+                count = ships.count { |e| e.summary_key == "詰ました" && e.sec_list.last >= rule_info.leave_alone_limit }
+                count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ました", count, alert_p: count.nonzero?)
 
-              scope = ships.find_all { |e| e.summary_key == "詰ました" }
-              sec = scope.collect { |e| e.sec_list.last }.compact.max
-              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
+                scope = ships.find_all { |e| e.summary_key == "詰ました" }
+                sec = scope.collect { |e| e.sec_list.last }.compact.max
+                sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
 
-              scope = ships.find_all { |e| e.summary_key == "切れ負け" }
-              sec = scope.collect { |e| e.rest_sec }.max
-              sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
+                scope = ships.find_all { |e| e.summary_key == "切れ負け" }
+                sec = scope.collect { |e| e.rest_sec }.max
+                sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit)
 
-              count = ships.count { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
-              count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負けた", count, alert_p: count.nonzero?)
+                count = ships.count { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
+                count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負けた", count, alert_p: count.nonzero?)
+              end
+
+              # summary_key == "投了した" || e.summary_key == "詰まされた" }.presence
+              if scope = ships.find_all { |e| e.judge_info.key == :lose }
+                if turn = scope.collect { |e| e.battle.turn_max }.min
+                  count_set(stat, "【#{rule_info.name}】(負け)最短手数", turn, alert_p: turn && turn <= rule_info.most_min_turn_max_limit, suffix: "手")
+                end
+                if sec = scope.collect { |e| e.total_seconds }.min
+                  sec_set(stat, "【#{rule_info.name}】(負け)最短時間", sec, alert_p: sec && sec <= rule_info.resignation_limit)
+                end
+              end
+
+              if scope = ships.find_all { |e| e.judge_info.key == :win }
+                if turn = scope.collect { |e| e.battle.turn_max }.max
+                  count_set(stat, "【#{rule_info.name}】(勝ち)最長手数", turn, alert_p: turn && turn >= 200, suffix: "手")
+                end
+                if rule_info.key == :ten_sec
+                  if sec = scope.collect { |e| e.total_seconds }.max
+                    sec_set(stat, "【#{rule_info.name}】(勝ち)最超時間", sec, alert_p: sec && sec >= 10.minutes)
+                  end
+                end
+              end
+
+              turn = ships.collect { |e| e.battle.turn_max }.max
+              count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手")
+
+              # scope = ships.find_all { |e| e.summary_key == "投了した" }
+              # most_min_turn_max = scope.collect { |e| e.sec_total }.min
+              # sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, alert_p: sec && sec < rule_info.resignation_limit)
             end
           end
 
-          suffix_add(stat)
+          stat
         end
 
         def basic_summary
@@ -120,14 +153,14 @@ module Swars
           parcentage_set(stat, "勝率", judge_count_of(:win), judge_count_of(:win) + judge_count_of(:lose), alert_p: (0.3...0.7).exclude?(win_rate))
 
           JudgeInfo.each do |e|
-            stat[e.name] = judge_count_of(e.key)
+            stat[e.name] = judge_count_of(e.key).to_s + "回"
           end
 
-          stat.update(memberships_stat)
+          stat.update(memberships_stat.transform_values { |e| "#{e}回" })
 
           stat.delete("切断した")
 
-          suffix_add(stat)
+          # suffix_add(stat)
 
           stat
         end
@@ -152,15 +185,16 @@ module Swars
           @cheat_count ||= memberships.count { |e| e.swgod_10min_winner_used? }
         end
 
-        def suffix_add(stat)
-          stat.transform_values do |e|
-            if e.kind_of? Integer
-              "#{e}回"
-            else
-              e
-            end
-          end
-        end
+        # def suffix_add(stat)
+        #   stat
+        #   # stat.transform_values do |e|
+        #   #   if e.kind_of? Integer
+        #   #     "#{e}回"
+        #   #   else
+        #   #     e
+        #   #   end
+        #   # end
+        # end
 
         def judge_count_of(key)
           judge_info = JudgeInfo.fetch(key)
@@ -173,11 +207,15 @@ module Swars
         end
 
         def count_set(stat, key, value, **options)
+          options = {
+            suffix: "回",
+          }.merge(options)
+
           if value.zero? && false
             return
           end
 
-          stat[key_wrap(key, options)] = value
+          stat[key_wrap(key, options)] = "#{value}#{options[:suffix]}"
         end
 
         def sec_set(stat, key, value, **options)
