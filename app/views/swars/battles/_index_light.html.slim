@@ -1,7 +1,9 @@
 .swars_battles_index_light
   - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
-    javascript:
-      document.title = "最新の対局をぴよ将棋で開く"
+    - @override_page_title = "最新開くぴよ"
+
+    .title.yumincho.is-2
+      = "最新の対局をぴよ将棋で開くページ"
 
     .columns
       .column
@@ -12,6 +14,8 @@
             .content
               | このページを<b>ブックマークに追加</b>または<b>ホーム画面に追加</b>してください
 
+    .columns
+      .column
         = link_to "← 前のページにもどる", [:swars, current_mode, query: current_swars_user], class: "button is-primary is-small"
   - else
     = render partial: "header"
@@ -58,5 +62,6 @@
                     /   = url
                     / br
                     | また
-                    b= link_to " こちら ", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-                    | をタップした先のページを<b>ブックマークに追加</b>または<b>ホーム画面に追加</b>に登録しておくと、このページを経由しなくても、最新の対局をぴよ将棋で開けるようになります (おすすめ)
+                    b
+                      = link_to " こちら ", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
+                    | をタップしたあと<b>ブックマークに追加</b>または<b>ホーム画面に追加</b>に登録すると、このページを経由しなくても、最新の対局をぴよ将棋で開けるようになります (おすすめ)

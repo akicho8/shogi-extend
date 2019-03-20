@@ -4,6 +4,10 @@ module ApplicationHelper
   delegate :icon_tag, to: Fa
 
   def html_title
+    @override_page_title || full_html_title
+  end
+
+  def full_html_title
     titles = [AppConfig[:app_name], content_for(:page_title), @page_title]
     titles.flatten.compact.reverse.join(" - ")
   end
