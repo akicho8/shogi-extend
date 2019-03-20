@@ -1,6 +1,7 @@
 .swars_battles_index_light
   - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
-    - @override_page_title = "最新開くぴよ"
+    - @override_page_title ||= "最新開くぴよ"
+    - @apple_touch_icon ||= "apple-touch-icon-piyo.png"
 
     .title.yumincho.is-2
       = "最新の対局をぴよ将棋で開くページ"
@@ -18,6 +19,7 @@
       .column
         = link_to "← 前のページにもどる", [:swars, current_mode, query: current_swars_user], class: "button is-primary is-small"
   - else
+    - @override_page_title ||= "将棋ウ棋譜検索"
     = render partial: "header"
 
     .columns

@@ -189,7 +189,7 @@ module Swars
             limit = [latest_open_index.to_i.abs, 10].min.next
             if record = current_scope.order(battled_at: :desc).limit(limit).last
               url = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
-              SlackAgent.chat_post_message(key: "最新ぴよ将棋", body: current_user_key)
+              SlackAgent.chat_post_message(key: "最新開くぴよ", body: current_user_key)
               redirect_to url
               return
             end
