@@ -189,10 +189,15 @@ module Swars
           if latest_open_index = params[:latest_open_index].presence
             limit = [latest_open_index.to_i.abs, 10].min.next
             if record = current_scope.order(battled_at: :desc).limit(limit).last
-              url = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
+              @redirect_url_by_js = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
               SlackAgent.chat_post_message(key: "最新開くぴよ", body: current_user_key)
-              redirect_to url
-              return
+              if false
+                # この方法だと動くけど白紙のページが開いてしまう
+                redirect_to @redirect_url_by_js
+                return
+              else
+                # なのでページを開いてから遷移する
+              end
             end
           end
         end

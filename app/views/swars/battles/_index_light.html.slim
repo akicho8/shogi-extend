@@ -1,8 +1,16 @@
+/ @redirect_url_by_js のときも変更しているのはアイコンが元に戻ってしまうのを回避するため
+- if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once] || @redirect_url_by_js
+  - @override_page_title ||= "最新開くぴよ"
+  - @apple_touch_icon ||= "apple-touch-icon-piyo.png"
+
+- if @redirect_url_by_js
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => {
+      location.href = "#{@redirect_url_by_js}"
+    })
+
 .swars_battles_index_light
   - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
-    - @override_page_title ||= "最新開くぴよ"
-    - @apple_touch_icon ||= "apple-touch-icon-piyo.png"
-
     .title.yumincho.is-2
       = "最新の対局をぴよ将棋で開くページ"
 
@@ -13,10 +21,11 @@
             | あと一歩
           .message-body.has-text-left
             .content
-              | このページを<b>ブックマークに追加</b>または<b>ホーム画面に追加</b>してください
+              | このページを<b>ホーム画面に追加</b>してください
 
     .columns
       .column
+        br
         = link_to "← 前のページにもどる", [:swars, current_mode, query: current_swars_user], class: "button is-primary is-small"
   - else
     - @override_page_title ||= "将棋ウ棋譜検索"
@@ -66,4 +75,4 @@
                     | また
                     b
                       = link_to " こちら ", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-                    | をタップしたあと「ブックマークに追加」または「ホーム画面に追加」に登録すると、このページを経由しなくても、#{current_swars_user.user_key} さんの最新の対局をぴよ将棋で開けるようになります (おすすめ)
+                    | をタップしたあと「ホーム画面に追加」しておくと、上の「最新の対局をぴよ将棋で開く」のリンクを自動的に押したことにできます (おすすめ)
