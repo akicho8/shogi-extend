@@ -253,7 +253,9 @@ module Swars
           if v.nil?
             return ""
           end
-
+          if v.zero?
+            return "0秒"
+          end
           min, sec = v.divmod(1.minutes)
           list = []
           if min.nonzero?
