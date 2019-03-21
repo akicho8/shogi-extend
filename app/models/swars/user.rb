@@ -76,16 +76,16 @@ module Swars
           if ms_a = ms_group["切断した"] || []
             c = ms_a.size
             count_set(stat, "切断回数", c, alert_p: c.nonzero?, memberships: ms_a)
-            parcentage_set(stat, "切断率", c, judge_count_of(:lose), alert_p: c.nonzero?)
+            parcentage_set(stat, "切断率", c, judge_count_for(:lose), alert_p: c.nonzero?)
           end
 
           c = cheat_memberships.size
           count_set(stat, "棋神召喚疑惑", c, alert_p: c.nonzero?, memberships: cheat_memberships)
-          parcentage_set(stat, "棋神召喚疑惑率", c, judge_count_of(:win), alert_p: c.nonzero?)
+          parcentage_set(stat, "棋神召喚疑惑率", c, judge_count_for(:win), alert_p: c.nonzero?)
 
           ms_a = ms_group["投了した"] || []
           c = ms_a.size
-          parcentage_set(stat, "投了率", c, judge_count_of(:lose), alert_p: c.zero?)
+          parcentage_set(stat, "投了率", c, judge_count_for(:lose), alert_p: c.zero?)
 
           # turn = memberships.collect { |e| e.battle.turn_max }.max
           # count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手")
@@ -171,11 +171,12 @@ module Swars
         def basic_summary
           stat = Hash.new(0)
 
-          stat["取得できた直近の対局数"] = memberships.count.to_s
-          parcentage_set(stat, "勝率", judge_count_of(:win), judge_count_of(:win) + judge_count_of(:lose), alert_p: (0.3...0.7).exclude?(win_rate))
+          count_set(stat, "取得できた直近の対局数", memberships.count, url: query_path("tag:#{user.user_key}"))
+
+          parcentage_set(stat, "勝率", judge_count_for(:win), win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate))
 
           JudgeInfo.each do |e|
-            ms_a = judge_count_of2(e.key)
+            ms_a = judge_group_memberships(e.key)
             c = ms_a.size
             count_set(stat, e.name, c, memberships: ms_a)
           end
@@ -195,7 +196,10 @@ module Swars
         def tactic_summary_for(key)
           v = memberships.flat_map(&:"#{key}_tag_list")
           v = v.group_by(&:itself).transform_values(&:size) # TODO: ruby 2.6 の新しいメソッドで置き換えれるはず
-          v.sort_by { |k, v| -v }.to_h
+          v = v.sort_by { |k, v| -v }
+          v.inject({}) do |a, (k, v)|
+            a.merge(k => h.link_to(v, query_path("tag:#{user.user_key} tag:#{k}")))
+          end
         end
 
         private
@@ -227,30 +231,31 @@ module Swars
         #   # end
         # end
 
-        def judge_count_of(key)
-          judge_count_of2(key).size
+        def judge_count_for(key)
+          judge_group_memberships(key).size
         end
 
-        def judge_count_of2(key)
+        def judge_group_memberships(key)
           judge_info = JudgeInfo.fetch(key)
-          @judge_count_of2 ||= {}
-          @judge_count_of2[key] ||= memberships.find_all { |e| e.judge_info == judge_info }
+          @judge_group_memberships ||= {}
+          @judge_group_memberships[key] ||= memberships.find_all { |e| e.judge_info == judge_info }
         end
 
         def win_rate
-          @win_rate ||= judge_count_of(:win).fdiv(judge_count_of(:win) + judge_count_of(:lose))
+          @win_rate ||= judge_count_for(:win).fdiv(win_lose_total_count)
+        end
+
+        def win_lose_total_count
+          @win_lose_total_count ||= judge_count_for(:win) + judge_count_for(:lose)
         end
 
         def count_set(stat, key, value, **options)
-          options = {
-            suffix: "回",
-          }.merge(options)
-
           if value.zero? && false
             return
           end
 
-          value = "#{value}#{options[:suffix]}"
+          options[:suffix] ||= "回"
+          value = [value, options[:suffix]].join
           value = link_set(value, options)
 
           stat[key_wrap(key, options)] = value
@@ -269,8 +274,11 @@ module Swars
 
         def link_set(value, **options)
           ids = nil
+          url = nil
 
           case
+          when v = options[:url]
+            url = v
           when membership = options[:membership]
             ids = [membership.battle.id]
           when memberships = options[:memberships].presence
@@ -279,11 +287,18 @@ module Swars
 
           if ids
             ids = ids.join(",")
-            url = Rails.application.routes.url_helpers.url_for([:swars, :basic, query: ["ids", ids].join(":"), only_path: true, per: Kaminari.config.max_per_page])
+            url = query_path("ids:#{ids}")
+          end
+
+          if url
             value = h.link_to(value, url)
           end
 
           value
+        end
+
+        def query_path(query)
+          Rails.application.routes.url_helpers.url_for([:swars, :basic, query: query, only_path: true, per: Kaminari.config.max_per_page])
         end
 
         def parcentage_set(stat, key, numerator, denominator, **options)
@@ -291,7 +306,10 @@ module Swars
             return
           end
 
-          stat[key_wrap(key, options)] = parcentage(numerator, denominator)
+          value = parcentage(numerator, denominator)
+          value = link_set(value, options)
+
+          stat[key_wrap(key, options)] = value
         end
 
         def key_wrap(key, **options)

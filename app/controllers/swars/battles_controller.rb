@@ -170,52 +170,54 @@ module Swars
       end
 
       if current_user_key && params[:page].blank?
-        before_count = 0
-        if current_swars_user
-          before_count = current_swars_user.battles.count
-        end
-
-        # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-        success = Battle.debounce_basic_import(user_key: current_user_key)
-        if !success
-          # development でここが通らない
-          # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-          flash.now[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
-        end
-        if success
-          remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
-
-          hit_count = 0
+        unless params[:import_skip]
+          before_count = 0
           if current_swars_user
-            hit_count = current_swars_user.battles.count - before_count
-            if hit_count.zero?
-              # flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
-            else
-              flash.now[:info] = "#{hit_count}件新しく見つかりました"
-            end
-            current_swars_user.search_logs.create!
-          else
-            flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+            before_count = current_swars_user.battles.count
           end
 
-          if hit_count.nonzero?
-            SlackAgent.chat_post_message(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
+          # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
+          success = Battle.debounce_basic_import(user_key: current_user_key)
+          if !success
+            # development でここが通らない
+            # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
+            flash.now[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
+          end
+          if success
+            remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
+
+            hit_count = 0
+            if current_swars_user
+              hit_count = current_swars_user.battles.count - before_count
+              if hit_count.zero?
+                # flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
+              else
+                flash.now[:info] = "#{hit_count}件新しく見つかりました"
+              end
+              current_swars_user.search_logs.create!
+            else
+              flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+            end
+
+            if hit_count.nonzero?
+              SlackAgent.chat_post_message(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
+            end
           end
         end
+      end
 
-        unless flash[:external_app_exec_skip_once]
-          if latest_open_index = params[:latest_open_index].presence
-            limit = [latest_open_index.to_i.abs, 10].min.next
-            if record = current_scope.order(battled_at: :desc).limit(limit).last
-              @redirect_url_by_js = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
-              SlackAgent.chat_post_message(key: "最新開くぴよ", body: current_user_key)
-              if false
-                # この方法だと動くけど白紙のページが開いてしまう
-                redirect_to @redirect_url_by_js
-                return
-              else
-                # なのでページを開いてから遷移する
-              end
+      unless flash[:external_app_exec_skip_once]
+        if latest_open_index = params[:latest_open_index].presence
+          limit = [latest_open_index.to_i.abs, 10].min.next
+          if record = current_scope.order(battled_at: :desc).limit(limit).last
+            @redirect_url_by_js = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
+            SlackAgent.chat_post_message(key: "最新開くぴよ", body: current_user_key)
+            if false
+              # この方法だと動くけど白紙のページが開いてしまう
+              redirect_to @redirect_url_by_js
+              return
+            else
+              # なのでページを開いてから遷移する
             end
           end
         end
