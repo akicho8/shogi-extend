@@ -2,6 +2,7 @@ import _ from "lodash"
 import CustomPresetInfo from './custom_preset_info'
 import HiraKomaInfo from './hira_koma_info'
 import lobby_matching from './lobby_matching'
+import message_form_shared from './message_form_shared'
 
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb
@@ -83,13 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
   App.lobby_vm = new Vue({
     mixins: [
       lobby_matching,
+      message_form_shared,
     ],
     el: "#lobby_app",
-    data: function() {
+    data() {
       return {
         // 発言
         lobby_messages: js_lobby.lobby_messages, // 発言一覧
-        message: "",                                               // 発言
 
         // 部屋一覧
         battles: js_lobby.battles,
@@ -162,12 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       },
-
-      message() {
-        if (AppHelper.login_required()) {
-          return
-        }
-      },
     },
 
     methods: {
@@ -198,15 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       },
 
-      message_enter(value) {
-        if (AppHelper.login_required()) {
-          return
-        }
-        if (this.message !== "") {
-          App.lobby.chat_say(this.message)
-        }
-        this.message = ""
-        this.$refs.message_input.focus()
+      message_send_process() {
+        App.lobby.chat_say(this.message)
       },
 
       memberships_format(battle) {

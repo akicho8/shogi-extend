@@ -26,11 +26,11 @@ javascript:
           .media-content
             .field
               p.control
-                input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.prevent.enter.meta="message_enter")
+                textarea.textarea(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_enter_handle" ref="message_input" rows="2")
             nav.level
               .level-left
                 .level-item
-                  button.button.is-primary(@click="message_enter")
+                  button.button.is-primary(@click="message_post_button_handle")
                     | 送信
 
     .column.is-half

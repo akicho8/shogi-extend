@@ -29,7 +29,7 @@ RSpec.describe "対戦", type: :system do
     end
 
     it "チャットでメッセージ送信" do
-      find(".chat_container input[type=text]").set(message)
+      find(".chat_container textarea").set(message)
       click_on("送信")
       expect(page).to have_content message
 
@@ -53,7 +53,7 @@ RSpec.describe "対戦", type: :system do
 
     it "全体通知" do
       click_on("全体通知")
-      find(".modal.is-active input").set(message)
+      find(".modal.is-active textarea").set(message)
       find(".modal.is-active footer button").click # 「送信」
       sleep(0.5)
       expect(page).to have_content message
@@ -217,7 +217,7 @@ RSpec.describe "対戦", type: :system do
       find(".message_link_to.user_#{Colosseum::User.last.id}").click
       within(".modal-card") do
         expect(page).to have_content "対局申し込み"
-        find("input[type=text]").set(message)
+        find("textarea").set(message)
         click_on("送信")
       end
       expect(page).to have_content message
@@ -230,7 +230,7 @@ RSpec.describe "対戦", type: :system do
       find(".message_link_to.user_#{@alice.id}").click
       expect(page).to have_content "対局申し込み"
       within(".modal-card") do
-        find("input[type=text]").set(message)
+        find("textarea").set(message)
         click_on("送信")
       end
       doc_image("送信直後")

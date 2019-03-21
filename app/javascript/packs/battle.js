@@ -7,6 +7,8 @@ import PresetInfo from "shogi-player/src/preset_info"
 import Location from "shogi-player/src/location"
 import LastActionInfo from "./last_action_info"
 
+import message_form_shared from './message_form_shared'
+
 document.addEventListener("DOMContentLoaded", () => {
   App.battle = App.cable.subscriptions.create({
     channel: "BattleChannel",
@@ -110,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
   App.battle_vm = new Vue({
     mixins: [
       chess_clock,
+      message_form_shared,
     ],
     el: "#battle_app",
     data() {
@@ -118,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.assert("chat_messages" in js_battle)
 
       return {
-        message: "",            // 発言
         memberships:          js_battle.memberships,
         watch_ships:          js_battle.watch_ships,
         chat_messages:        js_battle.chat_messages,
@@ -253,14 +255,8 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       // メッセージ送信
-      message_enter(value) {
-        if (AppHelper.login_required()) {
-          return
-        }
-        if (this.message !== "") {
-          App.battle.chat_say(this.message)
-        }
-        this.message = ""
+      message_send_process() {
+        App.battle.chat_say(this.message)
       },
 
       // user は自分か？

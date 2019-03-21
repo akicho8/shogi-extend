@@ -22,14 +22,20 @@
               | 負け: {{user_to.lose_count}}
         section.modal-card-body
           b-field(label="")
-            input.input.is-large(type="text" v-model.trim="message" @keydown.prevent.enter.meta="message_enter" autocomplete="off" ref="message_input")
+            textarea.textarea(v-model.trim="message" @keydown.enter="message_enter_handle" autocomplete="off" ref="message_input" rows="3")
         footer.modal-card-foot
-          button.button(@click="message_enter") 送信
+          button.button(@click="message_post_button_handle") 送信
           button.button(@click="battle_request_to") 対局申し込み
 </template>
 
 <script>
+import message_form_shared from './packs/message_form_shared'
+
 export default {
+  mixins: [
+    message_form_shared,
+  ],
+
   props: {
     user_to: {
       required: true,
@@ -39,7 +45,6 @@ export default {
   data() {
     return {
       modal_p: false,
-      message: "",
     }
   },
 
@@ -48,16 +53,9 @@ export default {
       this.modal_p = true
       this.$nextTick(() => this.$refs.message_input.focus())
     },
-    message_enter() {
-      if (AppHelper.login_required()) {
-        return
-      }
-      if (this.message !== "") {
-        App.single_notification.message_send_to({from: js_global.current_user, to: this.user_to, message: this.message})
-        Vue.prototype.$toast.open({message: "送信OK", position: "is-top", type: "is-info", duration: 500})
-      }
-      this.message = ""
-      this.$refs.message_input.focus()
+    message_send_process() {
+      App.single_notification.message_send_to({from: js_global.current_user, to: this.user_to, message: this.message})
+      Vue.prototype.$toast.open({message: "送信OK", position: "is-top", type: "is-info", duration: 500})
     },
     battle_request_to() {
       if (AppHelper.login_required()) {

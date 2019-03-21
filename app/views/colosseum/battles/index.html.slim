@@ -77,10 +77,10 @@ javascript:
 
         / .field
         /   .control
-        /     input.input.is-large.is-primary(type="text" autocomplete="off" v-model.trim="message" @keydown.prevent.enter.meta="message_enter")
+        /     input.input.is-large.is-primary(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_post_button_handle")
         / .field
         /   .control
-        /     button.button.is-primary(@click="message_enter") 送信
+        /     button.button.is-primary(@click="message_post_button_handle") 送信
 
         - if true
           article.media
@@ -92,17 +92,18 @@ javascript:
             .media-content
               .field
                 p.control
-                  input.input.is-large(type="text" autocomplete="off" v-model.trim="message" @keydown.prevent.enter.meta="message_enter" ref="message_input")
-              nav.level
-                .level-left
-                  .level-item
-                    button.button.is-primary(@click="message_enter")
-                      | 送信
-                / .level-right
-                /   .level-item
-                /     label.checkbox
-                /       input[type="checkbox"]
-                /       |  Press enter to submit
+                  textarea.textarea(autocomplete="off" v-model.trim="message" @keydown.enter="message_enter_handle" ref="message_input" rows="2")
+              template(v-if="message || true")
+                nav.level
+                  .level-left
+                    .level-item
+                      button.button.is-primary(@click="message_post_button_handle")
+                        | 送信
+                  / .level-right
+                  /   .level-item
+                  /     label.checkbox
+                  /       input[type="checkbox"]
+                  /       |  Press enter to submit
 
     .column
       .non_border_box

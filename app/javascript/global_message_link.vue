@@ -10,40 +10,30 @@
             | 全体通知
         section.modal-card-body
           b-field(label="")
-            input.input.is-large(type="text" v-model.trim="message" @keydown.prevent.enter.meta="message_enter" autocomplete="off" ref="message_input")
+            textarea.textarea(v-model.trim="message" @keydown.enter="message_enter_handle" autocomplete="off" ref="message_input")
         footer.modal-card-foot
-          button.button(@click="message_enter") 送信
+          button.button(@click="message_post_button_handle") 送信
 </template>
 
 <script>
+import message_form_shared from './packs/message_form_shared'
+
 export default {
+  mixins: [
+    message_form_shared,
+  ],
   data() {
     return {
       modal_p: false,
-      message: "",
     }
-  },
-  watch: {
-    message() {
-      if (AppHelper.login_required()) {
-        return
-      }
-    },
   },
   methods: {
     modal_open() {
       this.modal_p = true
       this.$nextTick(() => this.$refs.message_input.focus())
     },
-    message_enter() {
-      if (AppHelper.login_required()) {
-        return
-      }
-      if (this.message !== "") {
-        App.system_notification.message_send_all({from: js_global.current_user, message: this.message})
-      }
-      this.message = ""
-      this.$refs.message_input.focus()
+    message_send_process() {
+      App.system_notification.message_send_all({from: js_global.current_user, message: this.message})
     },
   },
 }
