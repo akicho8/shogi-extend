@@ -75,29 +75,29 @@ module ConvertMethods
       :skill_set_hash  => info.skill_set_hash,
     }
 
-    self.defense_tags.clear
-    self.attack_tags.clear
-    self.technique_tags.clear
-    self.note_tags.clear
-    self.other_tags.clear
-    self.secret_tags.clear
+    self.defense_tag_list = ""
+    self.attack_tag_list = ""
+    self.technique_tag_list = ""
+    self.note_tag_list = ""
+    self.other_tag_list = ""
+    self.secret_tag_list = ""
 
-    defense_tag_list   << info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-    attack_tag_list    << info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-    technique_tag_list << info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-    note_tag_list << info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+    attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
 
-    other_tag_list << info.header["棋戦"]
-    other_tag_list << info.header["持ち時間"]
-    other_tag_list << tournament_list
-    other_tag_list << Splitter.split(info.header["掲載"].to_s)
-    other_tag_list << Splitter.split(info.header["備考"].to_s)
-    other_tag_list << info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
-    other_tag_list << info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}"])     }
-    other_tag_list << place_list
+    other_tag_list.add info.header["棋戦"]
+    other_tag_list.add info.header["持ち時間"]
+    other_tag_list.add tournament_list
+    other_tag_list.add Splitter.split(info.header["掲載"].to_s)
+    other_tag_list.add Splitter.split(info.header["備考"].to_s)
+    other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
+    other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}"])     }
+    other_tag_list.add place_list
 
     if v = info.header["開始日時"].presence
-      other_tag_list << date_to_tags(v)
+      other_tag_list.add date_to_tags(v)
 
       if t = (Time.zone.parse(v) rescue nil)
         self.battled_at = t
@@ -115,8 +115,8 @@ module ConvertMethods
       self.battled_at = Time.zone.parse("0001/01/01")
     end
 
-    other_tag_list << turn_max
-    other_tag_list << info.header["手合割"]
+    other_tag_list.add turn_max
+    other_tag_list.add info.header["手合割"]
 
     parser_exec_after(info)
     @parser_executed = true

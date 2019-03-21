@@ -158,9 +158,9 @@ module General
 
       def parser_exec_after(info)
         self.final_key = info.last_action_info.key
-        other_tag_list << final_info.name
+        other_tag_list.add final_info.name
 
-        other_tag_list << key
+        other_tag_list.add key
 
         meta_info[:simple_names].each do |pair|
           pair.each do |names|

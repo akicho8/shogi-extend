@@ -11,16 +11,20 @@ module Swars
   battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
   battle.save!                  # => true
 
+  battle.reload
   puts battle.to_cached_kifu(:kif)
   battle.note_tag_list     # => ["入玉", "相入玉"]
-  battle.memberships[0].note_tag_list # => ["入玉", "相入玉"]
-  battle.memberships[1].note_tag_list # => ["入玉", "相入玉"]
+  battle.memberships[0].reload.note_tag_list # => ["入玉", "相入玉"]
+  battle.memberships[1].reload.note_tag_list # => ["入玉", "相入玉"]
+
+  user1.tactic_summary_for(:note) # => {"入玉"=>"<a href=\"/w?per=500&amp;query=tag%3A3b903a111e407f7315f2a26625e0442a+tag%3A%E5%85%A5%E7%8E%89\">1</a>", "相入玉"=>"<a href=\"/w?per=500&amp;query=tag%3A3b903a111e407f7315f2a26625e0442a+tag%3A%E7%9B%B8%E5%85%A5%E7%8E%89\">1</a>"}
+  user2.tactic_summary_for(:note) # => {"入玉"=>"<a href=\"/w?per=500&amp;query=tag%3Afdf1ee0d24b3e182f294e2016cdb4fc5+tag%3A%E5%85%A5%E7%8E%89\">1</a>", "相入玉"=>"<a href=\"/w?per=500&amp;query=tag%3Afdf1ee0d24b3e182f294e2016cdb4fc5+tag%3A%E7%9B%B8%E5%85%A5%E7%8E%89\">1</a>"}
 
   tp Battle.last
 end
-# >> 先手：d5756b4aff6028ca7351f3b400d79532 30級
-# >> 後手：c2c9a4f7aea9b2be37e944e2d6ee6f16 30級
-# >> 開始日時：2019/03/21 18:57:44
+# >> 先手：3b903a111e407f7315f2a26625e0442a 30級
+# >> 後手：fdf1ee0d24b3e182f294e2016cdb4fc5 30級
+# >> 開始日時：2019/03/21 20:22:21
 # >> 棋戦：将棋ウォーズ(10分切れ負け)
 # >> 持ち時間：10分
 # >> 先手の備考：入玉
@@ -46,19 +50,19 @@ end
 # >>   15 投了
 # >> まで14手で後手の勝ち
 # >> |--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |                 id | 98                                                                                                                                                                                                                                                                                                           |
-# >> |                key | a2c2f8fac7789e68a43c76d93134f695                                                                                                                                                                                                                                                                             |
-# >> |         battled_at | 2019-03-21 18:57:44 +0900                                                                                                                                                                                                                                                                                    |
+# >> |                 id | 45                                                                                                                                                                                                                                                                                                           |
+# >> |                key | b3d7db533fcd3a970f7cf0ab8b598f45                                                                                                                                                                                                                                                                             |
+# >> |         battled_at | 2019-03-21 20:22:21 +0900                                                                                                                                                                                                                                                                                    |
 # >> |           rule_key | ten_min                                                                                                                                                                                                                                                                                                      |
 # >> |            csa_seq | [["+5756FU", 0], ["-5354FU", 0], ["+5958OU", 0], ["-5152OU", 0], ["+5857OU", 0], ["-5253OU", 0], ["+5746OU", 0], ["-5364OU", 0], ["+4645OU", 0], ["-6465OU", 0], ["+4544OU", 0], ["-6566OU", 0], ["+4453OU", 0], ["-6657OU", 0]]                                                                             |
 # >> |          final_key | TORYO                                                                                                                                                                                                                                                                                                        |
-# >> |        win_user_id | 67                                                                                                                                                                                                                                                                                                           |
+# >> |        win_user_id | 55                                                                                                                                                                                                                                                                                                           |
 # >> |           turn_max | 14                                                                                                                                                                                                                                                                                                           |
-# >> |          meta_info | {:header=>{"先手"=>"d5756b4aff6028ca7351f3b400d79532 30級", "後手"=>"c2c9a4f7aea9b2be37e944e2d6ee6f16 30級", "開始日時"=>"2019/03/21 18:57:44", "棋戦"=>"将棋ウォーズ(10分切れ負け)", "持ち時間"=>"00:10+00", "先手の備考"=>"入玉", "後手の備考"=>"入玉"}, :detail_names=>[[], []], :simple_names=>[[["d5... |
-# >> |    last_accessd_at | 2019-03-21 18:57:44 +0900                                                                                                                                                                                                                                                                                    |
+# >> |          meta_info | {:header=>{"先手"=>"3b903a111e407f7315f2a26625e0442a 30級", "後手"=>"fdf1ee0d24b3e182f294e2016cdb4fc5 30級", "開始日時"=>"2019/03/21 20:22:21", "棋戦"=>"将棋ウォーズ(10分切れ負け)", "持ち時間"=>"00:10+00", "先手の備考"=>"入玉", "後手の備考"=>"入玉"}, :detail_names=>[[], []], :simple_names=>[[["3b... |
+# >> |    last_accessd_at | 2019-03-21 20:22:21 +0900                                                                                                                                                                                                                                                                                    |
 # >> |  access_logs_count | 0                                                                                                                                                                                                                                                                                                            |
-# >> |         created_at | 2019-03-21 18:57:45 +0900                                                                                                                                                                                                                                                                                    |
-# >> |         updated_at | 2019-03-21 18:57:45 +0900                                                                                                                                                                                                                                                                                    |
+# >> |         created_at | 2019-03-21 20:22:22 +0900                                                                                                                                                                                                                                                                                    |
+# >> |         updated_at | 2019-03-21 20:22:22 +0900                                                                                                                                                                                                                                                                                    |
 # >> |         preset_key | 平手                                                                                                                                                                                                                                                                                                         |
 # >> |   defense_tag_list |                                                                                                                                                                                                                                                                                                              |
 # >> |    attack_tag_list |                                                                                                                                                                                                                                                                                                              |
