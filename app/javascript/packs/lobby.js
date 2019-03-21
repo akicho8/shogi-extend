@@ -162,6 +162,12 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       },
+
+      message() {
+        if (AppHelper.login_required()) {
+          return
+        }
+      },
     },
 
     methods: {

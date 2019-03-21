@@ -23,6 +23,13 @@ export default {
       message: "",
     }
   },
+  watch: {
+    message() {
+      if (AppHelper.login_required()) {
+        return
+      }
+    },
+  },
   methods: {
     modal_open() {
       this.modal_p = true
