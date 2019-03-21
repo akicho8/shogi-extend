@@ -198,7 +198,7 @@ module Swars
           v = v.group_by(&:itself).transform_values(&:size) # TODO: ruby 2.6 の新しいメソッドで置き換えれるはず
           v = v.sort_by { |k, v| -v }
           v.inject({}) do |a, (k, v)|
-            a.merge(k => h.link_to(v, query_path("tag:#{user.user_key} tag:#{k}")))
+            a.merge(k => h.link_to(v, query_path("muser:#{user.user_key} mtag:#{k}")))
           end
         end
 

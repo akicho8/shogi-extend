@@ -65,21 +65,32 @@ module Swars
         str = params[e].to_s.gsub(/\p{blank}/, " ").strip
         str.split.each do |s|
           case
-          when md = s.match(/\A(ids):(?<ids>.*)/i)
+          when md = s.match(/\A(ids):(?<ids>\S+)/i)
             acc[:ids] = md["ids"].scan(/\d+/)
-          when s.match?(/\A(tag):/i) || zenkaku_query?(s)
+          when md = s.match(/\A(mtag):(?<mtag>\S+)/i)
+            acc[:mtags] ||= []
+            acc[:mtags].concat(md["mtag"].split(","))
+          when md = s.match(/\A(muser):(?<muser>\S+)/i)
+            acc[:musers] ||= []
+            acc[:musers].concat(md["muser"].split(","))
+          when md = s.match(/\A(tag):(?<tag>\S+)/i)
             acc[:tags] ||= []
-            acc[:tags] << s.remove("tag:")
+            acc[:tags].concat(md["tag"].split(","))
+          when zenkaku_query?(s)
+            acc[:tags] ||= []
+            acc[:tags] << s
           else
             # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
             # https://shogiwars.heroz.jp/users/foo                          -> foo
             if true
               if url = URI::Parser.new.extract(s).first
                 uri = URI(url)
-                if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
-                  s = md.captures.compact.first
+                if uri.path
+                  if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
+                    s = md.captures.compact.first
+                  end
+                  logger.info([url, s].to_t)
                 end
-                logger.info([url, s].to_t)
               end
             end
             acc[:user_key] ||= []
@@ -93,6 +104,18 @@ module Swars
     let :current_tags do
       if v = current_query_hash
         v[:tags]
+      end
+    end
+
+    let :current_musers do
+      if v = current_query_hash
+        v[:musers]
+      end
+    end
+
+    let :current_mtags do
+      if v = current_query_hash
+        v[:mtags]
       end
     end
 
@@ -119,14 +142,25 @@ module Swars
 
     let :current_scope do
       s = current_model.all
+      s = s.joins(:memberships => :user)
 
       if current_swars_user
-        s = s.joins(:memberships => :user)
         s = s.merge(User.where(id: current_swars_user.id))
       end
 
       if current_tags
         s = s.tagged_with(current_tags)
+      end
+
+      # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
+      # tag:username だと対戦相手が「角換わり」したのも出てきてしまう
+      if current_mtags
+        m = Membership.all
+        if current_musers
+          m = m.where(user: User.where(user_key: current_musers))
+        end
+        m = m.tagged_with(current_mtags)
+        s = s.merge(m)
       end
 
       if current_ids
