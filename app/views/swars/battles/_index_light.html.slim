@@ -49,11 +49,7 @@
         .column
           = rows.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
 
-    - if current_records
-      .columns
-        .column
-            .has-text-centered
-              = paginate current_records
+    = render partial: "index_footer"
 
     - if current_swars_user && params[:page].to_i <= 1
       .columns

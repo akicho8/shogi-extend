@@ -1,0 +1,13 @@
+- if current_records
+  .columns
+    .column
+      = paginate current_records
+
+  .columns
+    .column
+      - [50, 100, 200, 400].each do |per|
+        = link_to(" #{per} ", params.to_unsafe_h.merge(per: per))
+      | 件ずつ表示
+
+  - content_for :head do
+    = rel_next_prev_link_tags current_records

@@ -19,7 +19,7 @@
                 = link_to(tag, [:tactic_note, id: tag], class: "button is-success")
         = render partial: "search_bottom_share_links"
 
-- if current_records
+- if current_records && current_records.size <= 9
   #shogi_player_app(v-cloak="true")
     - content_for :head do
       = javascript_pack_tag("shogi_player_app")
@@ -77,18 +77,9 @@
 - if rows
   .columns
     .column
-      br
-      br
       = rows.to_html
 
-- if current_records
-  .columns
-    .column
-        .has-text-centered
-          = paginate current_records
-
-  - content_for :head do
-    = rel_next_prev_link_tags current_records
+= render partial: "index_footer"
 
 - if current_records && current_records.exists?
   p
