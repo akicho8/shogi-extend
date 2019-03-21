@@ -36,7 +36,7 @@ module Swars
     end
 
     let :current_records do
-      current_scope.page(params[:page]).per(params[:per] || default_per)
+      current_scope.page(params[:page]).per(current_per)
     end
 
     let :default_per do
@@ -45,6 +45,10 @@ module Swars
       else
         50
       end
+    end
+
+    let :current_per do
+      params[:per].presence || default_per
     end
 
     let :rows do
@@ -60,7 +64,10 @@ module Swars
         acc = {}
         str = params[e].to_s.gsub(/\p{blank}/, " ").strip
         str.split.each do |s|
-          if s.match?(/\A(tag):/i) || zenkaku_query?(s)
+          case
+          when md = s.match(/\A(ids):(?<ids>.*)/i)
+            acc[:ids] = md["ids"].scan(/\d+/)
+          when s.match?(/\A(tag):/i) || zenkaku_query?(s)
             acc[:tags] ||= []
             acc[:tags] << s.remove("tag:")
           else
@@ -89,6 +96,12 @@ module Swars
       end
     end
 
+    let :current_ids do
+      if v = current_query_hash
+        v[:ids]
+      end
+    end
+
     let :current_user_key do
       if v = current_query_hash
         if v = v[:user_key]
@@ -98,9 +111,10 @@ module Swars
     end
 
     let :current_form_search_value do
-      if current_query_hash
-        current_query_hash.values.join(" ")
-      end
+      params[:query].presence
+      # if current_query_hash
+      #   current_query_hash.values.join(" ")
+      # end
     end
 
     let :current_scope do
@@ -113,6 +127,10 @@ module Swars
 
       if current_tags
         s = s.tagged_with(current_tags)
+      end
+
+      if current_ids
+        s = s.where(id: current_ids)
       end
 
       s.order(battled_at: :desc)
@@ -238,7 +256,7 @@ module Swars
 
     def tag_links(tag_list)
       if tag_list.present?
-        tag_list.collect { |e| link_to(e, swars_search_path(e)) }.join(" ").html_safe
+        tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
       end
     end
 
@@ -305,17 +323,17 @@ module Swars
         l_ship, r_ship = left_right_pairs(record)
         left_right_pairs2(row, record, l_ship, r_ship)
 
-        row["結果"] = link_to(final_info_decorate(record), swars_search_path(record.final_info.name))
+        row["結果"] = link_to(final_info_decorate(record), swars_tag_search_path(record.final_info.name))
 
         if false
-          row["戦法"] = record.tag_list.collect { |e| link_to(e, swars_search_path(e)) }.join(" ").html_safe
+          row["戦法"] = record.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
         else
           # row["戦型"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
           # row["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
 
         row["手数"] = record.turn_max
-        row["種類"] = link_to(record.rule_info.name, swars_search_path(record.rule_info.name))
+        row["種類"] = link_to(record.rule_info.name, swars_tag_search_path(record.rule_info.name))
 
         row["日時"] = record.battled_at.to_s(:battle_time)
 
@@ -356,17 +374,21 @@ module Swars
         row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + user_link2(r_ship)
       else
         if record.win_user
-          row["勝ち"] = icon_tag(:fas, :crown, class: :icon_o) + user_link2(l_ship)
-            row["負け"] = icon_tag(:fas, :times, class: :icon_x) + user_link2(r_ship)
-            else
-              row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
-              row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
-            end
-          end
-        end
-
-        def slow_processing_error_redirect_url
-          [:swars, :basic, query: current_form_search_value, stop_processing_because_it_is_too_heavy: 1]
+          row["勝ち"] = icon_tag(:fas, :crown, :class => :icon_o) + user_link2(l_ship)
+          row["負け"] = icon_tag(:fas, :times, :class => :icon_x) + user_link2(r_ship)
+        else
+          row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
+          row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
         end
       end
     end
+
+    def slow_processing_error_redirect_url
+      [:swars, :basic, query: current_form_search_value, stop_processing_because_it_is_too_heavy: 1]
+    end
+
+    def swars_tag_search_path(e)
+      [:swars, current_mode, query: "tag:#{e}"]
+    end
+  end
+end
