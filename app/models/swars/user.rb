@@ -198,7 +198,7 @@ module Swars
           v = v.group_by(&:itself).transform_values(&:size) # TODO: ruby 2.6 の新しいメソッドで置き換えれるはず
           v = v.sort_by { |k, v| -v }
           v.inject({}) do |a, (k, v)|
-            a.merge(k => h.link_to(v, query_path("muser:#{user.user_key} mtag:#{k}")))
+            a.merge(k => h.link_to(v, query_path("#{user.user_key} muser:#{user.user_key} mtag:#{k}", import_skip: true)))
           end
         end
 
@@ -297,8 +297,8 @@ module Swars
           value
         end
 
-        def query_path(query)
-          Rails.application.routes.url_helpers.url_for([:swars, :basic, query: query, only_path: true, per: Kaminari.config.max_per_page])
+        def query_path(query, **options)
+          Rails.application.routes.url_helpers.url_for([:swars, :basic, options.merge(query: query, only_path: true, per: Kaminari.config.max_per_page)])
         end
 
         def parcentage_set(stat, key, numerator, denominator, **options)
