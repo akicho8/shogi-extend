@@ -13,7 +13,7 @@ hr
 
 .tags
   - current_record.showable_tag_list.each do |e|
-   span.tag= link_to(e, swars_search_path(e))
+   span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])
 
 .has-text-centered
   = render :partial => "kifu_player"
