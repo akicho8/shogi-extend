@@ -8,6 +8,7 @@ module ConvertMethods
     acts_as_ordered_taggable_on :defense_tags
     acts_as_ordered_taggable_on :attack_tags
     acts_as_ordered_taggable_on :technique_tags
+    acts_as_ordered_taggable_on :note_tags
     acts_as_ordered_taggable_on :other_tags
     acts_as_ordered_taggable_on :secret_tags
 
@@ -77,12 +78,14 @@ module ConvertMethods
     self.defense_tags.clear
     self.attack_tags.clear
     self.technique_tags.clear
+    self.note_tags.clear
     self.other_tags.clear
     self.secret_tags.clear
 
     defense_tag_list   << info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
     attack_tag_list    << info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
     technique_tag_list << info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    note_tag_list << info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
 
     other_tag_list << info.header["棋戦"]
     other_tag_list << info.header["持ち時間"]
@@ -196,7 +199,13 @@ module ConvertMethods
   end
 
   def showable_tag_list
-    attack_tag_list + defense_tag_list + technique_tag_list + other_tag_list
+    [
+      *attack_tag_list,
+      *defense_tag_list,
+      *technique_tag_list,
+      *note_tag_list,
+      *other_tag_list,
+    ]
   end
 
   def place_list

@@ -40,5 +40,21 @@ module Swars
       battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
       assert { battle.save! }
     end
+
+    it "相入玉タグ" do
+      user1 = User.create!
+      user2 = User.create!
+
+      battle = Battle.new
+      battle.csa_seq = [["+5756FU", 0],["-5354FU", 0],["+5958OU", 0],["-5152OU", 0],["+5857OU", 0],["-5253OU", 0],["+5746OU", 0],["-5364OU", 0],["+4645OU", 0],["-6465OU", 0],["+4544OU", 0],["-6566OU", 0],["+4453OU", 0],["-6657OU", 0]]
+      battle.memberships.build(user: user1, judge_key: :win,  location_key: :black)
+      battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
+      battle.save!                  # => true
+
+      # puts battle.to_cached_kifu(:kif)
+      assert { battle.note_tag_list                == ["入玉", "相入玉"] }
+      assert { battle.memberships[0].note_tag_list == ["入玉", "相入玉"] }
+      assert { battle.memberships[1].note_tag_list == ["入玉", "相入玉"] }
+    end
   end
 end

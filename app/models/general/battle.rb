@@ -187,6 +187,7 @@ module General
             defense_tag_list:   player.skill_set.defense_infos.normalize.collect(&:key),
             attack_tag_list:    player.skill_set.attack_infos.normalize.collect(&:key),
             technique_tag_list: player.skill_set.technique_infos.normalize.collect(&:key),
+            note_tag_list:      player.skill_set.note_infos.normalize.collect(&:key),
           }
         end
       end

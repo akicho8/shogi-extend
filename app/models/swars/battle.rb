@@ -161,12 +161,23 @@ module Swars
               e.defense_tag_list   = player.skill_set.defense_infos.normalize.collect(&:key)
               e.attack_tag_list    = player.skill_set.attack_infos.normalize.collect(&:key)
               e.technique_tag_list = player.skill_set.technique_infos.normalize.collect(&:key)
+              e.note_tag_list = player.skill_set.note_infos.normalize.collect(&:key)
             end
+          end
+
+          if memberships.all? { |e| e.note_tag_list.include?("入玉") }
+            memberships.each do |e|
+              e.note_tag_list << "相入玉"
+            end
+            note_tag_list << "相入玉"
           end
         end
 
-        if memberships.any? { |e| e.user.grade.grade_info.key == :"十段" }
-          other_tag_list << "指導対局"
+        memberships.each do |e|
+          if e.user.grade.grade_info.key == :"十段"
+            e.note_tag_list << "指導対局"
+            note_tag_list << "指導対局"
+          end
         end
 
         if preset_info.handicap
