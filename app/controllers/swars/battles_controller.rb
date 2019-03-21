@@ -142,9 +142,9 @@ module Swars
 
     let :current_scope do
       s = current_model.all
-      s = s.joins(:memberships => :user)
 
       if current_swars_user
+        s = s.joins(:memberships => :user) # ここでOK。上のに混ぜるとレコードが2倍に増えてしまうので注意
         s = s.merge(User.where(id: current_swars_user.id))
       end
 
