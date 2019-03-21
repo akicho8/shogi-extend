@@ -5,6 +5,7 @@ if defined?(Kaminari)
     else
       config.default_per_page = 50
     end
+    config.max_per_page = 500
     # config.max_per_page = nil
     config.window = 1             # 左右1個
     config.outer_window = 1       # 端から1個
