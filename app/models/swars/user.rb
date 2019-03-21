@@ -171,7 +171,7 @@ module Swars
         def basic_summary
           stat = Hash.new(0)
 
-          count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"))
+          count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
 
           parcentage_set(stat, "勝率", judge_count_for(:win), win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate))
 
