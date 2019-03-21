@@ -91,10 +91,11 @@ module Swars
         }.call
       end
 
-      def summary_store_to(stat)
-        stat[summary_key] += 1
-        stat
-      end
+      # def summary_store_to(stat)
+      #   stat[summary_key] ||= []
+      #   stat[summary_key] << self
+      #   stat
+      # end
 
       # 使用時間
       def total_seconds
