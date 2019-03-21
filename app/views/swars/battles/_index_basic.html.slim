@@ -45,7 +45,7 @@
                   - ship = current_record.memberships.black
                   - user = ship.user
                   = "☗"
-                  = link_to(user.user_key, user)
+                  = link_to(user.user_key, polymorphic_path(user, current_mode: current_mode))
                   span.grade_name
                     =<> ship.grade.name
                   span.versus.has-text-grey= "vs"
@@ -53,7 +53,7 @@
                   - ship = current_record.memberships.white
                   - user = ship.user
                   = "☖"
-                  == link_to(user.user_key, user)
+                  = link_to(user.user_key, polymorphic_path(user, current_mode: current_mode))
                   span.grade_name
                     =<> ship.grade.name
 

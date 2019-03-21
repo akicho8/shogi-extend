@@ -60,10 +60,10 @@ Rails.application.routes.draw do
   end
 
   resolve "Swars::User" do |user, options|
-    if options[:current_mode] == :basic
-      swars_search_path(query: user.to_param)
-    else
+    if options[:current_mode] == :light
       swars_light_path(query: user.to_param)
+    else
+      swars_search_path(query: user.to_param)
     end
   end
 
