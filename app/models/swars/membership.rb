@@ -85,8 +85,10 @@ module Swars
 
     concerning :SummaryMethods do
       def summary_key
-        key = "#{battle.final_info.name}で#{judge_info.name}"
-        summary_key_translate_hash.fetch(key, key)
+        @summary_key ||= -> {
+          key = "#{battle.final_info.name}で#{judge_info.name}"
+          summary_key_translate_hash.fetch(key, key)
+        }.call
       end
 
       def summary_store_to(stat)
