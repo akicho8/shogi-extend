@@ -113,13 +113,14 @@ module Swars
                 count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負けた", count, alert_p: count.nonzero?)
               end
 
-              # summary_key == "投了した" || e.summary_key == "詰まされた" }.presence
-              if scope = ships.find_all { |e| e.judge_info.key == :lose }
+              # e.summary_key == "投了した" || e.summary_key == "詰まされた" }.presence
+              # if scope = ships.find_all { |e| e.judge_info.key == :lose }
+              if scope = ships.find_all { |e| e.summary_key == "投了した" || e.summary_key == "詰まされた" } # { |e| e.judge_info.key == :lose } の判定だと切断負けも含まれてしまう
                 if turn = scope.collect { |e| e.battle.turn_max }.min
-                  count_set(stat, "【#{rule_info.name}】(負け)最短手数", turn, alert_p: turn && turn <= rule_info.most_min_turn_max_limit, suffix: "手")
+                  count_set(stat, "【#{rule_info.name}】(投了したor詰まされた)最短手数", turn, alert_p: turn && turn <= rule_info.most_min_turn_max_limit, suffix: "手")
                 end
                 if sec = scope.collect { |e| e.total_seconds }.min
-                  sec_set(stat, "【#{rule_info.name}】(負け)最短時間", sec, alert_p: sec && sec <= rule_info.resignation_limit)
+                  sec_set(stat, "【#{rule_info.name}】(投了したor詰まされた)最短時間", sec, alert_p: sec && sec <= rule_info.resignation_limit)
                 end
               end
 
