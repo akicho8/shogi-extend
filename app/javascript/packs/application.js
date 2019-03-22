@@ -12,7 +12,6 @@ Rails.start()
 
 import "./application_css.sass"
 import "./modulable_crud.coffee"
-import "./bulma_burger.js"
 import "./light_session_app.js"
 import "./audio_queue.js"
 
@@ -28,8 +27,12 @@ Vue.use(Vuex)
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
+import "./buefy.scss"
+import "./bulma_burger.js"
+
 import Buefy from "buefy"
-import "buefy/src/scss/buefy-build.scss"
+// import "buefy/src/scss/buefy-build.scss" // これか
+// import 'buefy/dist/buefy.css'            // これを入れると buefy の初期値に戻ってしまうので注意
 Vue.use(Buefy)
 
 //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
