@@ -27,158 +27,6 @@ module Swars
     include ModulableCrud::All
     include SharedMethods
 
-    let :current_mode do
-      (params[:mode].presence || "basic").to_sym
-    end
-
-    let :current_placeholder do
-      "ウォーズID・対局URL・タグのどれかを入力してください"
-    end
-
-    let :current_records do
-      current_scope.page(params[:page]).per(current_per)
-    end
-
-    let :default_per do
-      if current_mode == :basic
-        9
-      else
-        50
-      end
-    end
-
-    let :current_per do
-      params[:per].presence || default_per
-    end
-
-    let :rows do
-      current_records.collect(&method("row_build_for_#{current_mode}"))
-    end
-
-    let :current_swars_user do
-      User.find_by(user_key: current_user_key)
-    end
-
-    let :current_query_hash do
-      if e = [:query].find { |e| params[e].present? }
-        acc = {}
-        str = params[e].to_s.gsub(/\p{blank}/, " ").strip
-        str.split.each do |s|
-          case
-          when md = s.match(/\A(ids):(?<ids>\S+)/i)
-            acc[:ids] = md["ids"].scan(/\d+/)
-          when md = s.match(/\A(mtag):(?<mtag>\S+)/i)
-            acc[:mtags] ||= []
-            acc[:mtags].concat(md["mtag"].split(","))
-          when md = s.match(/\A(muser):(?<muser>\S+)/i)
-            acc[:musers] ||= []
-            acc[:musers].concat(md["muser"].split(","))
-          when md = s.match(/\A(tag):(?<tag>\S+)/i)
-            acc[:tags] ||= []
-            acc[:tags].concat(md["tag"].split(","))
-          when zenkaku_query?(s)
-            acc[:tags] ||= []
-            acc[:tags] << s
-          else
-            # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
-            # https://shogiwars.heroz.jp/users/foo                          -> foo
-            if true
-              if url = URI::Parser.new.extract(s).first
-                uri = URI(url)
-                if uri.path
-                  if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
-                    s = md.captures.compact.first
-                  end
-                  logger.info([url, s].to_t)
-                end
-              end
-            end
-            acc[:user_key] ||= []
-            acc[:user_key] << s
-          end
-        end
-        acc
-      end
-    end
-
-    let :current_tags do
-      if v = current_query_hash
-        v[:tags]
-      end
-    end
-
-    let :current_musers do
-      if v = current_query_hash
-        v[:musers]
-      end
-    end
-
-    let :current_mtags do
-      if v = current_query_hash
-        v[:mtags]
-      end
-    end
-
-    let :current_ids do
-      if v = current_query_hash
-        v[:ids]
-      end
-    end
-
-    let :current_user_key do
-      if v = current_query_hash
-        if v = v[:user_key]
-          v.first
-        end
-      end
-    end
-
-    let :current_form_search_value do
-      params[:query].presence
-      # if current_query_hash
-      #   current_query_hash.values.join(" ")
-      # end
-    end
-
-    let :current_scope do
-      s = current_model.all
-
-      if current_swars_user
-        s = s.joins(:memberships => :user) # ここでOK。上のに混ぜるとレコードが2倍に増えてしまうので注意
-        s = s.merge(User.where(id: current_swars_user.id))
-      end
-
-      if current_tags
-        s = s.tagged_with(current_tags)
-      end
-
-      # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
-      # tag:username だと対戦相手が「角換わり」したのも出てきてしまう
-      if current_mtags
-        m = Membership.all
-        if current_musers
-          m = m.where(user: User.where(user_key: current_musers))
-        end
-        m = m.tagged_with(current_mtags)
-        s = s.merge(m)
-      end
-
-      if current_ids
-        s = s.where(id: current_ids)
-      end
-
-      s.order(battled_at: :desc)
-    end
-
-    let :current_record do
-      if v = params[:id].presence
-        current_model.single_battle_import(v)
-        current_scope.find_by!(key: v)
-      else
-        current_scope.new
-      end
-    end
-
     def index
       if bot_agent?
         return
@@ -423,6 +271,158 @@ module Swars
 
     def swars_tag_search_path(e)
       [:swars, current_mode, query: "tag:#{e}"]
+    end
+
+    let :current_mode do
+      (params[:mode].presence || "basic").to_sym
+    end
+
+    let :current_placeholder do
+      "ウォーズID・対局URL・タグのどれかを入力してください"
+    end
+
+    let :current_records do
+      current_scope.page(params[:page]).per(current_per)
+    end
+
+    let :default_per do
+      if current_mode == :basic
+        9
+      else
+        50
+      end
+    end
+
+    let :current_per do
+      params[:per].presence || default_per
+    end
+
+    let :rows do
+      current_records.collect(&method("row_build_for_#{current_mode}"))
+    end
+
+    let :current_swars_user do
+      User.find_by(user_key: current_user_key)
+    end
+
+    let :current_query_hash do
+      if e = [:query].find { |e| params[e].present? }
+        acc = {}
+        str = params[e].to_s.gsub(/\p{blank}/, " ").strip
+        str.split.each do |s|
+          case
+          when md = s.match(/\A(ids):(?<ids>\S+)/i)
+            acc[:ids] = md["ids"].scan(/\d+/)
+          when md = s.match(/\A(mtag):(?<mtag>\S+)/i)
+            acc[:mtags] ||= []
+            acc[:mtags].concat(md["mtag"].split(","))
+          when md = s.match(/\A(muser):(?<muser>\S+)/i)
+            acc[:musers] ||= []
+            acc[:musers].concat(md["muser"].split(","))
+          when md = s.match(/\A(tag):(?<tag>\S+)/i)
+            acc[:tags] ||= []
+            acc[:tags].concat(md["tag"].split(","))
+          when zenkaku_query?(s)
+            acc[:tags] ||= []
+            acc[:tags] << s
+          else
+            # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
+            # https://shogiwars.heroz.jp/users/foo                          -> foo
+            if true
+              if url = URI::Parser.new.extract(s).first
+                uri = URI(url)
+                if uri.path
+                  if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
+                    s = md.captures.compact.first
+                  end
+                  logger.info([url, s].to_t)
+                end
+              end
+            end
+            acc[:user_key] ||= []
+            acc[:user_key] << s
+          end
+        end
+        acc
+      end
+    end
+
+    let :current_tags do
+      if v = current_query_hash
+        v[:tags]
+      end
+    end
+
+    let :current_musers do
+      if v = current_query_hash
+        v[:musers]
+      end
+    end
+
+    let :current_mtags do
+      if v = current_query_hash
+        v[:mtags]
+      end
+    end
+
+    let :current_ids do
+      if v = current_query_hash
+        v[:ids]
+      end
+    end
+
+    let :current_user_key do
+      if v = current_query_hash
+        if v = v[:user_key]
+          v.first
+        end
+      end
+    end
+
+    let :current_form_search_value do
+      params[:query].presence
+      # if current_query_hash
+      #   current_query_hash.values.join(" ")
+      # end
+    end
+
+    let :current_scope do
+      s = current_model.all
+
+      if current_swars_user
+        s = s.joins(:memberships => :user) # ここでOK。上のに混ぜるとレコードが2倍に増えてしまうので注意
+        s = s.merge(User.where(id: current_swars_user.id))
+      end
+
+      if current_tags
+        s = s.tagged_with(current_tags)
+      end
+
+      # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
+      # tag:username だと対戦相手が「角換わり」したのも出てきてしまう
+      if current_mtags
+        m = Membership.all
+        if current_musers
+          m = m.where(user: User.where(user_key: current_musers))
+        end
+        m = m.tagged_with(current_mtags)
+        s = s.merge(m)
+      end
+
+      if current_ids
+        s = s.where(id: current_ids)
+      end
+
+      s.order(battled_at: :desc)
+    end
+
+    let :current_record do
+      if v = params[:id].presence
+        current_model.single_battle_import(v)
+        current_scope.find_by!(key: v)
+      else
+        current_scope.new
+      end
     end
   end
 end

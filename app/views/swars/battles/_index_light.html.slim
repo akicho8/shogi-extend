@@ -1,14 +1,3 @@
-/ @redirect_url_by_js のときも変更しているのはアイコンが元に戻ってしまうのを回避するため
-- if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once] || params[:latest_open_index]
-  - @override_page_title ||= "最新開くぴよ"
-  - @apple_touch_icon ||= "apple-touch-icon-piyo.png"
-
-- if @redirect_url_by_js
-  javascript:
-    document.addEventListener('DOMContentLoaded', () => {
-      location.href = "#{@redirect_url_by_js}"
-    })
-
 .swars_battles_index_light
   - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
     .title.yumincho.is-2
