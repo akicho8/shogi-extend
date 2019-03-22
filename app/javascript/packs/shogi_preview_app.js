@@ -67,6 +67,11 @@ window.ShogiPreviewApp = Vue.extend({
       }
     },
 
+    kifu_body_clear() {
+      this.kifu_body = ""
+      this.$refs.kifu_body.focus()
+    },
+
     // 保持していた入力内容を破棄する
     // これは form の submit のタイミングで呼ばれる
     kifu_body_storage_clear() {

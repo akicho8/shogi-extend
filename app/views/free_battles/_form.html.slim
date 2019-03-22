@@ -5,15 +5,19 @@
         = form.label(:kifu_body, class: "label")
         = form.text_area(:kifu_body, rows: 12, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "kifu_body", ref: "kifu_body")
 
-      - if Rails.env.development?
-        .buttons.is-size-7
+      - if Rails.env.development? || true
+        .is-size-7
           | 変換後の棋譜から
           | &nbsp;
           a.is-small(@click="copy_to_kifu_body('kif')") KIF
           | &nbsp;
           a.is-small(@click="copy_to_kifu_body('ki2')") KI2
           | &nbsp;
-          | を逆にコピーする
+          | を逆にコピー
+          | &nbsp;
+          | /
+          | &nbsp;
+          a.is-small(@click="kifu_body_clear") クリア
 
     b-tab-item(label="操作入力")
       .non_border_box
