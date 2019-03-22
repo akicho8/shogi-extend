@@ -33,7 +33,11 @@ import "./bulma_burger.js"
 import Buefy from "buefy"
 // import "buefy/src/scss/buefy-build.scss" // これか
 // import 'buefy/dist/buefy.css'            // これを入れると buefy の初期値に戻ってしまうので注意
-Vue.use(Buefy)
+Vue.use(Buefy, {
+  // https://buefy.org/documentation/constructor-options/
+  defaultTooltipType: "is-black",
+  defaultTooltipAnimated: true,
+})
 
 //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
 
