@@ -53,6 +53,7 @@
                   - ship = current_record.memberships.white
                   - user = ship.user
                   = "☖"
+
                   = link_to(user.user_key, polymorphic_path(user, current_mode: current_mode))
                   span.grade_name
                     =<> ship.grade.name

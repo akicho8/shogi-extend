@@ -37,5 +37,11 @@ module Swars
     def csa_key
       last_action_key
     end
+
+    def has_text_color_if_lose
+      if label_key
+        "has-text-#{label_key}"
+      end
+    end
   end
 end

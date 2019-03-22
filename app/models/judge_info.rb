@@ -1,9 +1,9 @@
 class JudgeInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: :win,  name: "勝ち",     },
-    { key: :lose, name: "負け",     },
-    { key: :draw, name: "引き分け", },
+    { key: :win,  name: "勝ち",     icon_args: [:fas, :crown], :icon_class => :icon_o,      },
+    { key: :lose, name: "負け",     icon_args: [:fas, :times], :icon_class => :icon_x,      },
+    { key: :draw, name: "引き分け", icon_args: [:fas, :minus], :icon_class => :icon_hidden, },
   ]
 
   def swars_memberships

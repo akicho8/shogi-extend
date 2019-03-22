@@ -201,30 +201,6 @@ module Swars
         end
       end
 
-      def winner_desuka?(user)
-        if win_user
-          win_user == user
-        end
-      end
-
-      def lose_desuka?(user)
-        if win_user
-          win_user != user
-        end
-      end
-
-      def win_lose_str(user)
-        if win_user
-          if winner_desuka?(user)
-            Fa.icon_tag(:fas, :crown, class: :icon_o)
-          else
-            Fa.icon_tag(:fas, :times, class: :icon_x)
-          end
-        else
-          Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
-        end
-      end
-
       def wars_tweet_body
         vs = memberships.collect(&:name_with_grade).join(" 対 ")
         url = Rails.application.routes.url_helpers.swars_real_battle_url(self, tw: 1)

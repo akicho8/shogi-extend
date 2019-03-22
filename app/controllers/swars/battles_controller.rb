@@ -317,11 +317,11 @@ module Swars
 
     def final_info_decorate(record)
       e = record.final_info
-      str = e.name
-      if v = e.label_key
-        str = tag.span(str, "class": "text-#{v}")
+      name = e.name
+      if v = e.has_text_color_if_lose
+        name = tag.span(name, :class => v)
       end
-      str
+      name
     end
 
     def perform_zip_download
@@ -405,17 +405,15 @@ module Swars
     end
 
     def left_right_pairs2(row, record, l_ship, r_ship)
+      l = l_ship.icon_html + user_link2(l_ship)
+      r = r_ship.icon_html + user_link2(r_ship)
+
       if current_swars_user
-        row["対象プレイヤー"] = record.win_lose_str(l_ship.user).html_safe + " " + user_link2(l_ship)
-        row["対戦相手"]       = record.win_lose_str(r_ship.user).html_safe + " " + user_link2(r_ship)
+        row["対象プレイヤー"] = l
+        row["対戦相手"]       = r
       else
-        if record.win_user
-          row["勝ち"] = icon_tag(:fas, :crown, :class => :icon_o) + user_link2(l_ship)
-          row["負け"] = icon_tag(:fas, :times, :class => :icon_x) + user_link2(r_ship)
-        else
-          row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(l_ship)
-          row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + user_link2(r_ship)
-        end
+        row["勝ち"] = l
+        row["負け"] = r
       end
     end
 

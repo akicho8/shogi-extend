@@ -123,8 +123,8 @@ module General
 
           case mode
           when :current_general_user
-            row["対象棋士"] = battle.win_lose_str(l_ship).html_safe + " " + membership_name(l_ship)
-            row["対戦相手"] = battle.win_lose_str(r_ship).html_safe + " " + membership_name(r_ship)
+            row["対象棋士"] = battle.icon_html(l_ship).html_safe + " " + membership_name(l_ship)
+            row["対戦相手"] = battle.icon_html(r_ship).html_safe + " " + membership_name(r_ship)
           when :draw
             row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(l_ship)
             row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(r_ship)

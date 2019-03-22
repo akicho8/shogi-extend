@@ -194,7 +194,7 @@ module General
     end
 
     concerning :HelperMethods do
-      def win_lose_str(membership)
+      def icon_html(membership)
         if final_info.draw
           Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
         else

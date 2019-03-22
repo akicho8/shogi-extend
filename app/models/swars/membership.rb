@@ -84,6 +84,16 @@ module Swars
       JudgeInfo.fetch(judge_key)
     end
 
+    concerning :HelperMethods do
+      def icon_html
+        klass = [judge_info.icon_class]
+        if judge_info.key == :lose
+          klass << battle.final_info.has_text_color_if_lose
+        end
+        Fa.icon_tag(*judge_info.icon_args, :class => klass)
+      end
+    end
+
     concerning :SummaryMethods do
       def summary_key
         @summary_key ||= -> {
