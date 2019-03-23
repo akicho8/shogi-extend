@@ -266,7 +266,7 @@ module Swars
     end
 
     def slow_processing_error_redirect_url
-      [:swars, :basic, query: current_form_search_value, stop_processing_because_it_is_too_heavy: 1]
+      [:swars, :basic, query: current_query, stop_processing_because_it_is_too_heavy: 1]
     end
 
     def swars_tag_search_path(e)
@@ -379,7 +379,7 @@ module Swars
       end
     end
 
-    let :current_form_search_value do
+    let :current_query do
       params[:query].presence
       # if current_query_hash
       #   current_query_hash.values.join(" ")

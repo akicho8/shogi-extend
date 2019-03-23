@@ -6,7 +6,7 @@
       = form_with(url: [:general, :s], method: :get, skip_enforcing_utf8: true, id: "search_form") do |form|
         .field.has-addons
           .control.is-expanded
-            = form.search_field(:query, class: "input", value: controller.current_form_search_value, placeholder: "", list: "search_field_query_completion", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
+            = form.search_field(:query, class: "input", value: controller.current_query, placeholder: "", list: "search_field_query_completion", autofocus: controller.current_tags.blank?, "v-model" => "query", :ref => "main_field")
             = tag.datalist(id: "search_field_query_completion") do
               - Warabi::TacticInfo.all_elements.each do |e|
                 = tag.option(value: e.name)
@@ -17,7 +17,7 @@
             - current_tactics.each do |e|
               =<> link_to(e, [:tactic_note, id: e], :class => "button is-text")
           - if controller.current_tags.present? && current_records.exists?
-            =<> link_to("#{current_form_search_value} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-info")
+            =<> link_to("#{current_query} ZIP ダウンロード", params.to_unsafe_h.merge(format: "zip"), class: "button is-info")
           = link_to("詳細検索", "#", "@click.stop" => "open = !open", ":class" => "['button', 'is-text', {'is-active': open}]")
 
         template v-if="open"

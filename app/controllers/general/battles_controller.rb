@@ -59,7 +59,7 @@ module General
       }.compact
     end
 
-    let :current_form_search_value do
+    let :current_query do
       current_tags.join(" ")
     end
 
