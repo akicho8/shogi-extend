@@ -92,6 +92,12 @@ module Swars
         end
         Fa.icon_tag(*judge_info.icon_args, :class => klass)
       end
+
+      def winner_only_icon_html
+        if judge_info.key == :win
+          Fa.icon_tag(*judge_info.icon_args, :class => judge_info.icon_class)
+        end
+      end
     end
 
     concerning :SummaryMethods do

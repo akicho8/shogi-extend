@@ -125,6 +125,10 @@ module Swars
       render :index
     end
 
+    def user_link2(membership)
+      link_to(membership.name_with_grade, polymorphic_path(membership.user, current_mode: current_mode))
+    end
+
     private
 
     def access_log_create
@@ -157,10 +161,6 @@ module Swars
       if membership = record.memberships.judge_key_eq(judge_key)
         user_link2(membership)
       end
-    end
-
-    def user_link2(membership)
-      link_to(membership.name_with_grade, polymorphic_path(membership.user, current_mode: current_mode))
     end
 
     def final_info_decorate(record)

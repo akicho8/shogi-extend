@@ -44,22 +44,16 @@
                       = link_to("#{e.user.user_key} 情報", [:swars, :player_infos, user_key: e.user.user_key])
 
                 //////////////////////////////////////////////////////////////////////////////// 対局者名
-                p.card-header-title.is-size-7
+                p.card-header-title.is-size-7.nowrap
                   - ship = current_record.memberships.black
-                  - user = ship.user
-                  = "☗"
-                  = link_to(user.user_key, polymorphic_path(user, current_mode: current_mode))
-                  span.grade_name
-                    =<> ship.grade.name
-                  span.versus.has-text-grey= "vs"
+                  = ship.winner_only_icon_html
+                  = controller.user_link2(ship)
+
+                  span.versus.has-text-grey-lighter= "vs"
 
                   - ship = current_record.memberships.white
-                  - user = ship.user
-                  = "☖"
-
-                  = link_to(user.user_key, polymorphic_path(user, current_mode: current_mode))
-                  span.grade_name
-                    =<> ship.grade.name
+                  = ship.winner_only_icon_html
+                  = controller.user_link2(ship)
 
               .card-content
                 - if sfen = current_record.to_cached_kifu(:sfen)
