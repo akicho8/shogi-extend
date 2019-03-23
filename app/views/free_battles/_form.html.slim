@@ -36,6 +36,7 @@
           :volume=AppConfig[:volume]
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
           )
+          = render partial: "sfen_link"
 
       b-switch(v-model="auto_copy_to_kifu_body_disable_p" size="is-small" type="is-danger") 指し手をテキスト入力の方に反映しない(※保存されないので注意)
 

@@ -23,7 +23,7 @@ import axios from "axios"
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: '#shogi_player_app',
-    data: function() {
+    data() {
       return {
       }
     },
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         AppHelper.clipboard_copy(wars_tweet_body)
       },
 
-      kifu_copy_exec_click: function(e) {
+      kifu_copy_exec_click(e) {
         AppHelper.kifu_copy_exec(e.target.dataset[_.camelCase("kif_direct_access_path")])
       },
     },

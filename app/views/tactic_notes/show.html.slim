@@ -25,7 +25,9 @@ hr
         :theme="'#{current_shogi_player_theme}'"
         :sound_effect="true"
         :volume=AppConfig[:volume]
-      )
+        )
+        = render partial: "sfen_link"
+
     - content_for :head do
       = javascript_pack_tag("shogi_player_app")
       / = stylesheet_pack_tag("shogi_player_app")
