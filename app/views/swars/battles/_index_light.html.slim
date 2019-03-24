@@ -1,16 +1,19 @@
 .swars_battles_index_light
   - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
-    .title.yumincho.is-2
-      = "最新の対局をぴよ将棋で開くページ"
+    javascript:
+      document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$dialog.alert({message: "<b>ホーム画面に追加</b>してください", type: 'is-primary'}) })
 
-    .columns
-      .column
-        article.message.is-info.is-size-7
-          .message-header
-            | あと一歩
-          .message-body.has-text-left
-            .content
-              | このページを<b>ホーム画面に追加</b>してください
+    / .title.yumincho.is-2
+    /   = "最新の対局をぴよ将棋で開くページ"
+    /
+    / .columns
+    /   .column
+    /     article.message.is-info.is-size-7
+    /       .message-header
+    /         | あと一歩
+    /       .message-body.has-text-left
+    /         .content
+    /           | このページを<b>ホーム画面に追加</b>してください
 
     .columns
       .column
@@ -60,4 +63,4 @@
                     | また
                     b
                       = link_to " こちら ", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-                    | をタップしたあと「ホーム画面に追加」しておくと、上の「最新の対局をぴよ将棋で開く」のリンクを自動的に押したことにできます (おすすめ)
+                    | をタップしたあと「ホーム画面に追加」しておくと、上の「最新の対局をぴよ将棋で開く」のリンクを自動的に押したことにできます

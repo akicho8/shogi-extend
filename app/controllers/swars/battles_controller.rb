@@ -39,6 +39,7 @@ module Swars
       if params[:redirect_to_bookmarkable_page]
         SlackAgent.chat_post_message(key: "ブクマ移動", body: current_user_key)
         flash[:external_app_exec_skip_once] = true # ブックマークできるように一時的にぴよ将棋に飛ばないようにする
+        # flash[:primary] = "この状態で「ホーム画面に追加」しておくと開くと同時に最新の対局をぴよ将棋で開けるようになります"
         redirect_to [:swars, current_mode, query: current_swars_user, latest_open_index: params[:latest_open_index]]
         return
       end
