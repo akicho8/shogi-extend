@@ -7,8 +7,22 @@ class SingleNotificationChannel < ApplicationCable::Channel
 
   # App.single_notification.message_send_to({from: js_global.current_user, to: this.user_to, message: this.message})
   def message_send_to(data)
-    user = Colosseum::User.find(data["to"]["id"])
-    self.class.broadcast_to(user, data)
+    to   = Colosseum::User.find(data["to"]["id"])
+    from = Colosseum::User.find(data["from"]["id"])
+
+    # CPU同士の会話は無限ループになるため禁止
+    if to.race_info.auto_message_response && from.race_info.auto_message_response
+      return
+    end
+
+    # 受信者がCPUなら自動的に返事をする
+    if to.race_info.auto_message_response
+      message_send_to({"from" => to, "to" => from, "message" => "#{from.name}さんは#{data["message"]}なんですね"})
+      return
+    end
+
+    # 相手が人間
+    self.class.broadcast_to(to, data)
   end
 
   def battle_request_to(data)

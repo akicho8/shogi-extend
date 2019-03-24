@@ -235,6 +235,21 @@ RSpec.describe "対戦", type: :system do
       end
       doc_image("送信直後")
     end
+
+    it "常駐CPUに送信" do
+      Colosseum::User.setup     # ロボットたちを準備
+
+      visit_and_login
+      find(".message_link_to.user_#{cpu_level1.id}").click
+      expect(page).to have_content "対局申し込み"
+      within(".modal-card") do
+        find("textarea").set(message)
+        click_on("送信")
+      end
+      sleep(3)                             # 待ち時間が微妙
+      expect(page).to have_content message # オウム返し
+      doc_image("返信")
+    end
   end
 
   def matching_set(name, rule)
@@ -263,5 +278,9 @@ RSpec.describe "対戦", type: :system do
 
   def message
     "おーい！対戦しようぜ！"
+  end
+
+  def cpu_level1
+    Colosseum::User.find_by!(key: Colosseum::CpuBrainInfo[:level1].key)
   end
 end
