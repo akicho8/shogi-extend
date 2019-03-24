@@ -52,39 +52,37 @@ module Swars
         end
       end
 
-      if current_user_key && params[:page].blank?
-        unless params[:import_skip]
-          before_count = 0
+      if current_user_key && params[:page].blank? && !params[:import_skip]
+        before_count = 0
+        if current_swars_user
+          before_count = current_swars_user.battles.count
+        end
+
+        # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
+        success = Battle.debounce_basic_import(user_key: current_user_key)
+        if !success
+          # development でここが通らない
+          # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
+          flash.now[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
+        end
+        if success
+          remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
+
+          hit_count = 0
           if current_swars_user
-            before_count = current_swars_user.battles.count
-          end
-
-          # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-          success = Battle.debounce_basic_import(user_key: current_user_key)
-          if !success
-            # development でここが通らない
-            # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-            flash.now[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
-          end
-          if success
-            remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
-
-            hit_count = 0
-            if current_swars_user
-              hit_count = current_swars_user.battles.count - before_count
-              if hit_count.zero?
-                # flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
-              else
-                flash.now[:info] = "#{hit_count}件新しく見つかりました"
-              end
-              current_swars_user.search_logs.create!
+            hit_count = current_swars_user.battles.count - before_count
+            if hit_count.zero?
+              # flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
             else
-              flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+              flash.now[:info] = "#{hit_count}件新しく見つかりました"
             end
+            current_swars_user.search_logs.create!
+          else
+            flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+          end
 
-            if hit_count.nonzero?
-              SlackAgent.chat_post_message(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
-            end
+          if hit_count.nonzero?
+            SlackAgent.chat_post_message(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
           end
         end
       end
@@ -158,11 +156,11 @@ module Swars
       list.compact.join(" ").html_safe
     end
 
-    def user_link(record, judge_key)
-      if membership = record.memberships.judge_key_eq(judge_key)
-        user_link2(membership)
-      end
-    end
+    # def user_link(record, judge_key)
+    #   if membership = record.memberships.judge_key_eq(judge_key)
+    #     user_link2(membership)
+    #   end
+    # end
 
     def final_info_decorate(record)
       e = record.final_info
