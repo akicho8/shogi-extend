@@ -1,42 +1,52 @@
-.title.yumincho.is-2
-  = "将棋ウォーズプレイヤー情報"
+#player_infos_index
+  .title.yumincho.is-2
+    = "将棋ウォーズプレイヤー情報"
 
-.columns
-  .column
-    = form_with(url: [:swars, :player_infos], method: :get, skip_enforcing_utf8: true) do |form|
-      .field.has-addons
-        .control.is-expanded
-          = form.search_field(:user_key, class: "input", value: current_user_key, placeholder: "ウォーズのIDを入力してください", list: "search_field_query_completion", autofocus: current_user_key.blank?)
-          = render partial: "swars/battles/search_field_query_completion"
-        .control
-          = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
+  .columns
+    .column
+      = form_with(url: [:swars, :player_infos], method: :get, skip_enforcing_utf8: true) do |form|
+        .field.has-addons
+          .control.is-expanded
+            = form.search_field(:user_key, class: "input", value: current_user_key, placeholder: "ウォーズのIDを入力してください", list: "search_field_query_completion", autofocus: current_user_key.blank?)
+            = render partial: "swars/battles/search_field_query_completion"
+          .control
+            = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
 
-- if current_swars_user
-  small
-    .columns
-      .column
-        .buttons
-          = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, target: "blank", class: "button is-small")
-          = link_to("ぐぐる", google_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
-          = link_to("Twitterで探す", twitter_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
-    .columns
-      .column
-        - stat = current_swars_user.secret_summary
-        .field
-          .title.yumincho.is-4 作法
-          - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
-          == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
+  - if current_swars_user
+    small
+      .columns
+        .column
+          .buttons
+            = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, target: "blank", class: "button is-small")
+            = link_to("ぐぐる", google_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
+            = link_to("Twitterで探す", twitter_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
+      .columns
+        .column
+          - stat = current_swars_user.secret_summary
+          .field
+            .title.yumincho.is-4 作法
+            - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
+            == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
-      .column
-        - stat = current_swars_user.basic_summary
-        .field
-          .title.yumincho.is-4 勝敗
-          - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
-          == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
+        .column
+          - stat = current_swars_user.basic_summary
+          .field
+            .title.yumincho.is-4 勝敗
+            - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
+            == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
-      - Warabi::TacticInfo.each do |tactic_info|
-        - if stat = current_swars_user.tactic_summary_for(tactic_info.key).presence
-          .column
-            .field
-              .title.yumincho.is-4= tactic_info.name
-              == stat.transform_keys { |e| Warabi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e]) : e }.to_html(table_class: "table is-fullwidth is-narrow")
+        - Warabi::TacticInfo.each do |tactic_info|
+          - if stat = current_swars_user.tactic_summary_for(tactic_info.key).presence
+            .column
+              .field
+                .title.yumincho.is-4= tactic_info.name
+                == stat.transform_keys { |e| Warabi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e]) : e }.to_html(table_class: "table is-fullwidth is-narrow")
+
+javascript:
+  document.addEventListener("DOMContentLoaded", () => {
+    new Vue({
+      el: "#player_infos_index",
+      data: {
+      },
+    })
+  })

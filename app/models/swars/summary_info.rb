@@ -12,7 +12,7 @@ module Swars
       if ms_a = ms_group["切断した"] || []
         c = ms_a.size
         count_set(stat, "切断回数", c, alert_p: c.nonzero?, memberships: ms_a)
-        parcentage_set(stat, "切断率", c, judge_count_for(:lose), alert_p: c.nonzero?)
+        parcentage_set(stat, "切断率", c, judge_count_for(:lose), alert_p: c.nonzero?, tooltip: "切断回数 / 負け数")
       end
 
       c = cheat_memberships.size
@@ -21,7 +21,7 @@ module Swars
 
       ms_a = ms_group["投了した"] || []
       c = ms_a.size
-      parcentage_set(stat, "投了率", c, judge_count_for(:lose), alert_p: c.zero?)
+      parcentage_set(stat, "投了率", c, judge_count_for(:lose), alert_p: c.zero?, tooltip: "投了回数 / 負け数")
 
       # turn = memberships.collect { |e| e.battle.turn_max }.max
       # count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手")
@@ -250,6 +250,10 @@ module Swars
     end
 
     def key_wrap(key, **options)
+      if v = options[:tooltip]
+        # key = h.content_tag("b-tooltip", key, label: "あいうえお", position: "is-left", size: "is-small")
+        key = h.content_tag("b-tooltip", key, label: v, position: "is-left", size: "is-small") # multilined: false
+      end
       if options[:alert_p]
         key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
       end
