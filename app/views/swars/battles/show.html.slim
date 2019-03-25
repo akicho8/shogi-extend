@@ -1,8 +1,5 @@
 ruby:
-  @page_title ||= [
-    current_record.memberships.black.name_with_grade,
-    current_record.memberships.white.name_with_grade,
-  ].join(" vs ")
+  @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
 
 .has-text-centered
   .title.is-2.yumincho
@@ -20,8 +17,26 @@ hr
 
 - if !Rails.env.production? || params[:swgod_info] || true
   .section
-    .title.is-2.yumincho 棋神召喚疑惑判定
+    .title.is-3.yumincho 棋神召喚疑惑判決
     hr
 
-    - current_record.memberships.each do |membership|
-      = membership.swgod_info.to_html(title: membership.user.user_key)
+    .field
+      - content_for :head do
+        = javascript_pack_tag("swars_battle_show_app")
+      javascript:
+        document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShowApp(#{js_swars_battle_show_app_params.to_json.html_safe}).$mount("#swars_battle_show_app") })
+
+      #swars_battle_show_app
+        canvas(ref="swars_battle_show_canvas")
+
+      - if Rails.env.development? && false
+        = current_record.parsed_info.move_infos.take(4).to_html
+
+        - current_record.memberships.each do |membership|
+          = membership.chartjs_data.take(2).to_html
+
+    .columns
+      - current_record.memberships.each do |membership|
+        .column
+          .box.is-size-7
+            = membership.swgod_info.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")

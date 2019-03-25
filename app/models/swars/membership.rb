@@ -101,11 +101,12 @@ module Swars
     end
 
     concerning :SummaryMethods do
+      def raw_summary_key
+        @raw_summary_key ||= "#{battle.final_info.name}で#{judge_info.name}"
+      end
+
       def summary_key
-        @summary_key ||= -> {
-          key = "#{battle.final_info.name}で#{judge_info.name}"
-          summary_key_translate_hash.fetch(key, key)
-        }.call
+        @summary_key ||= summary_key_translate_hash.fetch(raw_summary_key, raw_summary_key)
       end
 
       # def summary_store_to(stat)
@@ -150,8 +151,18 @@ module Swars
 
       def sec_list
         @sec_list ||= -> {
-          base = battle.preset_info.to_turn_info.base_location.code
-          battle.parsed_info.move_infos.find_all.with_index(base) { |e, i| i.modulo(Warabi::Location.count) == position }.collect { |e| e[:used_seconds] }
+          c = Warabi::Location.count
+          pos = battle.preset_info.to_turn_info.current_location(position).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
+          v = battle.parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
+          v.collect { |e| e[:used_seconds] }
+        }.call
+      end
+
+      def chartjs_data
+        @chartjs_data ||= -> {
+          c = Warabi::Location.count
+          loc = battle.preset_info.to_turn_info.current_location(position)
+          sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
         }.call
       end
 
@@ -168,9 +179,7 @@ module Swars
         if battle.rule_info.key == :ten_min
           if swgod_level1_used?
             if judge_info.key == :win
-              if swgod_level1_used?
-                true
-              end
+              swgod_level1_used?
             end
           end
         end
@@ -183,9 +192,11 @@ module Swars
 
       def swgod_info
         {
-          "判定"         => swgod_10min_winner_used? ? "80 %" : "0 %",
-          "指し手の秒数" => sec_list,
-          "結果"         => winner? ? "勝ち" : "",
+          "被告"   => name_with_grade,
+          "指し手" => sec_list,
+          "結末"   => summary_key,
+          "一審"   => swgod_level1_used? ? "有罪" : "無罪",
+          "二審"   => swgod_10min_winner_used? ? "有罪" : "無罪",
         }
       end
     end
