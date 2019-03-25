@@ -73,6 +73,7 @@ export function login_required() {
   }
 }
 
+// しゃべる
 export function talk(source_text) {
   // const params = new URLSearchParams()
   // params.append("source_text", source_text)
@@ -94,7 +95,7 @@ export function talk(source_text) {
       audio.play()
     }
 
-    // FIFO 形式で順次発声
+    // FIFO形式で順次発声
     if (true) {
       audio_queue.media_push(response.data.service_path)
     }

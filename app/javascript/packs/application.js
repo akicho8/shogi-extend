@@ -15,11 +15,11 @@ import "./modulable_crud.coffee"
 import "./light_session_app.js"
 import "./audio_queue.js"
 
-import "css-browser-selector"
+import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
-import Vue from "vue/dist/vue.esm"
+import Vue from "vue/dist/vue.esm" // esm版はvueのtemplateをパースできる
 window.Vue = Vue
 
 import Vuex from "vuex"
@@ -35,11 +35,11 @@ import Buefy from "buefy"
 // import 'buefy/dist/buefy.css'            // これを入れると buefy の初期値に戻ってしまうので注意
 Vue.use(Buefy, {
   // https://buefy.org/documentation/constructor-options/
-  defaultTooltipType: "is-black",
-  defaultTooltipAnimated: true,
+  defaultTooltipType: "is-black", // デフォルトは背景が明るいため黒くしておく
+  defaultTooltipAnimated: true,   // ←効いてなくね？
 })
 
-//////////////////////////////////////////////////////////////////////////////// ShogiPlayer
+//////////////////////////////////////////////////////////////////////////////// ShogiPlayer の静的情報 (TODO: できればライブラリ側で定義したいけどどうやる？)
 
 import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
 Vue.component("shogi-player", ShogiPlayer)
@@ -59,7 +59,7 @@ Object.defineProperty(Vue.prototype, "SizeInfo", {value: SizeInfo})
 import VariationInfo from "shogi-player/src/variation_info"
 Object.defineProperty(Vue.prototype, "VariationInfo", {value: VariationInfo})
 
-//////////////////////////////////////////////////////////////////////////////// 静的情報
+//////////////////////////////////////////////////////////////////////////////// ShogiWeb側の静的情報
 
 import LifetimeInfo from "./lifetime_info"
 Object.defineProperty(Vue.prototype, "LifetimeInfo", {value: LifetimeInfo})
@@ -96,6 +96,11 @@ Object.defineProperty(Vue.prototype, "_", {value: _})
 
 import moment from "moment"
 Object.defineProperty(Vue.prototype, "moment", {value: moment})
+
+//////////////////////////////////////////////////////////////////////////////// Chart.js
+
+import Chart from "chart.js"
+window.Chart = Chart
 
 //////////////////////////////////////////////////////////////////////////////// アプリ用の雑多なライブラリ
 
