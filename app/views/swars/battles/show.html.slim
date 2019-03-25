@@ -21,7 +21,7 @@ hr
   hr
 
   .columns
-    - current_record.memberships.each do |membership|
+    - current_record.memberships.each do |e|
       .column
-        .box.is-size-7
-          = membership.swgod_info.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
+        .box.is-size-7.hash_value_only_nowrap
+          = e.swgod_info.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
