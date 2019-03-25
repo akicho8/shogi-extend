@@ -51,7 +51,7 @@
               span 直リンク
               b-icon(icon="menu-down")
             - KifuFormatWithBodInfo.each do |e|
-              = link_to([current_record, format: e.key, plain: true]) do
+              = link_to([current_record, format: e.key, plain: true], target: "_blank") do
                 b-dropdown-item
                   = e.name
 
