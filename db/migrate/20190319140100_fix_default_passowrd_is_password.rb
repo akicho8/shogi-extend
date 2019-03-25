@@ -12,6 +12,10 @@ class FixDefaultPassowrdIsPassword < ActiveRecord::Migration[5.2]
         raise if Rails.env.production?
       end
     end
-    Colosseum::User.sysop.update!(password: Rails.application.credentials.sysop_password)
+    if user = Colosseum::User.find_by(key: :sysop)
+      if user.valid_password?("password")
+        user.update!(password: Rails.application.credentials.sysop_password)
+      end
+    end
   end
 end
