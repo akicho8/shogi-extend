@@ -1,6 +1,25 @@
 class FlashInfo
+  # flash[:xxx] で使うキー
+  # https://buefy.org/documentation/notification
   cattr_accessor :notify_keys do
-    [:default, :primary, :link, :info, :success, :warning, :danger]
+    [
+      :default,
+      :primary,
+      :link,
+      :info,
+      :success,
+      :warning,
+      :danger,
+    ]
+  end
+
+  # Rails から Buefy のキーに置き換える
+  cattr_accessor :rails_default_keys do
+    {
+      "notice" => "success",
+      "alert"  => "warning",
+      "error"  => "danger",
+    }
   end
 
   cattr_accessor :tost_keys do
@@ -9,14 +28,6 @@ class FlashInfo
 
   cattr_accessor :flash_all_keys do
     notify_keys + tost_keys
-  end
-
-  cattr_accessor :rails_default_keys do
-    {
-      "notice" => "success",
-      "alert"  => "warning",
-      "error"  => "danger",
-    }
   end
 
   delegate :tag, :params, :flash, :content_tag, to: :view_context
@@ -39,6 +50,7 @@ class FlashInfo
     end
   end
 
+  # 危険通知は notification を使う
   def flash_danger_notify_tag
     tag.div(:class => "content") do
       tag.p do
@@ -51,7 +63,7 @@ class FlashInfo
     end
   end
 
-  # 軽いもの success, info は toast で表示
+  # 軽いもの success, info は toast を使う
   def flash_light_notify
     normalized_flash.slice(*tost_keys).transform_keys { |e| e.to_s.remove(/^tost_/) }
   end
