@@ -7302,10 +7302,10 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shogi-player@^0.0.100:
-  version "0.0.100"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.100.tgz#7c44404afabff72b0ec9a42a256640b51f110d3a"
-  integrity sha512-CYlWbYXbwfoPBcIs2awRskYprbnzhkFZkIsri3tu1SQ8wLq4uHNJxNB4P7rwz36yxJlAgo/6xXD9BTDKHOKiug==
+shogi-player@^0.0.101:
+  version "0.0.101"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.101.tgz#79d659add452d40f209fd959f42d41b986184748"
+  integrity sha512-Pb78ZrFtfM+U5/tRbda72bd4y2GGp1dGlrt/ZVJlerXGMs9CogTlSNZCBPnV+0OY0I1F2aF0efQnd4VXB8ONQQ==
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
@@ -7327,6 +7327,7 @@ shogi-player@^0.0.100:
     babel-register "^6.22.0"
     buefy "^0.6.6"
     bulma "^0.6.2"
+    css-browser-selector "^0.6.5"
     debug "^3.1.0"
     js-memory-record "^0.0.10"
     lodash "^4.17.4"
