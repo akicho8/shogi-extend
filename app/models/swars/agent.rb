@@ -4,6 +4,8 @@ end
 
 module Swars
   class Agent
+    cattr_accessor(:items_per_page) { 10 }
+
     def initialize(**options)
       @options = {
         run_remote: false,

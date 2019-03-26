@@ -371,6 +371,11 @@ module Swars
               single_battle_import(key)
               sleep(params[:sleep].to_i)
             end
+
+            # アクセス数を減らすために10件未満なら終了する
+            if list.size < Agent.items_per_page
+              break
+            end
           end
         end
 
