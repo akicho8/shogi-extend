@@ -52,7 +52,7 @@ module Swars
         end
       end
 
-      import_process
+      import_process(flash.now)
 
       unless flash[:external_app_exec_skip_once]
         if latest_open_index = params[:latest_open_index].presence
@@ -82,7 +82,7 @@ module Swars
     end
 
     def create
-      import_process
+      import_process(flash)
       flash[:import_skip] = true
       redirect_to [:swars, current_mode, query: current_swars_user]
     end
@@ -99,7 +99,7 @@ module Swars
 
     private
 
-    def import_process
+    def import_process(flash)
       if import_enable?
         before_count = 0
         if current_swars_user
@@ -111,7 +111,7 @@ module Swars
         if !success
           # development でここが通らない
           # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-          flash.now[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
+          flash[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
         end
         if success
           remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
@@ -120,13 +120,13 @@ module Swars
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
             if hit_count.zero?
-              # flash.now[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
+              # flash[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
             else
-              flash.now[:info] = "#{hit_count}件新しく見つかりました"
+              flash[:info] = "#{hit_count}件新しく見つかりました"
             end
             current_swars_user.search_logs.create!
           else
-            flash.now[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+            flash[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
           end
 
           if hit_count.nonzero?
