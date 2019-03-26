@@ -23,8 +23,13 @@ module Swars
             gtype: params[:gtype],
             # locale: "ja",
           }
+
+          # if params[:page_index].nonzero?
+          #   q[:start] = params[:page_index] * 10
+          # end
+
           if params[:page_index].nonzero?
-            q[:start] = params[:page_index] * 10
+            q[:page] = params[:page_index].next
           end
 
           # url = "https://shogiwars.heroz.jp/users/history/#{params[:user_key]}?#{q.to_query}"
@@ -32,7 +37,9 @@ module Swars
           # js_str = page.body
 
           url = "https://shogiwars.heroz.jp/games/history?user_id=#{params[:user_key]}&#{q.to_query}"
-          js_str = `curl --silent '#{url}' -H 'authority: shogiwars.heroz.jp' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Mobile Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6,zh-TW;q=0.5' -H '#{Rails.application.credentials.cookie_for_agent}' --compressed`
+          command = "curl --silent '#{url}' -H 'authority: shogiwars.heroz.jp' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Mobile Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6,zh-TW;q=0.5' -H '#{Rails.application.credentials.cookie_for_agent}' --compressed"
+          # puts command
+          js_str = `#{command}`
         else
           js_str = local_html("https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja")
         end
@@ -192,12 +199,14 @@ module Swars
   end
 
   if $0 == __FILE__
-    tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "Ito_Asuka")
-    tp Agent.new(run_remote: false).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
+    tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 0)
+    tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 1)
+
+    # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "Ito_Asuka")
+    # tp Agent.new(run_remote: false).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
 
     # tp Agent.new(run_remote: true).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
     exit
-
 
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "kinakom0chi")
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "masaya0918a")
