@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :swars, path: "" do
-    resources :battles, path: "wr", only: [:index, :show]
+    resources :battles, path: "wr", only: [:index, :show, :create]
     resources :player_infos, :only => :index, path: "w-user-stat"
 
     get "w/:query", to: "battles#index", as: :search
