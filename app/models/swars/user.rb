@@ -17,6 +17,8 @@
 
 module Swars
   class User < ApplicationRecord
+    alias_attribute :key, :user_key
+
     has_many :memberships, dependent: :destroy # 対局時の情報(複数)
     has_many :battles, through: :memberships   # 対局(複数)
     belongs_to :grade                          # すべてのモードのなかで一番よい段級位
