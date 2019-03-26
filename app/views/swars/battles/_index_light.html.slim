@@ -1,7 +1,11 @@
 .swars_battles_index_light
   - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
     javascript:
-      document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$dialog.alert({message: "<b>ホーム画面に追加</b>してください", type: 'is-primary'}) })
+      document.addEventListener("DOMContentLoaded", () => {
+        Vue.prototype.$dialog.alert({message: "<b>ホーム画面に追加</b>してください", type: 'is-primary'})
+        // これモバイルだとクリックトリガーがないため読まれない
+        AppHelper.talk("ホーム画面に追加したアイコンから起動すると最新の対局をぴよ将棋で開けます")
+      })
 
     / .title.yumincho.is-2
     /   = "最新の対局をぴよ将棋で開くページ"
@@ -62,5 +66,5 @@
                     / br
                     | また
                     b
-                      = link_to " こちら ", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
+                      = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
                     | をタップしたあと「ホーム画面に追加」しておくと、上の「最新の対局をぴよ将棋で開く」のリンクを自動的に押したことにできます
