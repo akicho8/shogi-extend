@@ -123,8 +123,60 @@ module Swars
         count_set(stat, summary_key, c, memberships: ms_a)
       end
 
-      stat.delete("切断した")
+      ms_a = memberships.find_all { |e| e.judge_info.key == :win && e.grade.priority > e.opponent.grade.priority }
+      c = ms_a.size
+      count_set(stat, "格上に勝ち", c, memberships: ms_a)
 
+      ms_a = memberships.find_all { |e| e.judge_info.key == :lose && e.grade.priority < e.opponent.grade.priority }
+      c = ms_a.size
+      count_set(stat, "格下に負け", c, memberships: ms_a)
+
+      # stat.delete("切断した")
+
+      # suffix_add(stat)
+
+      stat
+    end
+
+    def basic_summary
+      stat = Hash.new(0)
+
+      count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
+
+      parcentage_set(stat, "勝率", judge_count_for(:win), win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate))
+
+      [
+        { label1: "格上", op: :>,  label2: "勝った", key: :win,  },
+        { label1: "格上", op: :>,  label2: "負けた", key: :lose, },
+        { label1: "同格", op: :==, label2: "勝った", key: :win,  },
+        { label1: "同格", op: :==, label2: "負けた", key: :lose, },
+        { label1: "格下", op: :<,  label2: "勝った", key: :win,  },
+        { label1: "格下", op: :<,  label2: "負けた", key: :lose, },
+      ].each do |args|
+        # 格上 or 格下
+        scope = memberships.find_all { |e| e.grade.priority.public_send(args[:op], e.opponent.grade.priority) }
+        ms_a = scope.find_all { |e| e.judge_info.key == args[:key] }
+        count_set(stat, "#{args[:label1]}に#{args[:label2]}数", ms_a.size, memberships: ms_a)
+        if args[:key] == :win
+          if scope.size >= 1
+            alert_p = args[:op] >= :> && ms_a.size.fdiv(scope.size) >= 0.6 # 格上への勝率が異常に高い
+            parcentage_set(stat, "#{args[:label1]}に#{args[:label2]}率", ms_a.size, scope.size, tooltip: "#{args[:label2]}数 / #{args[:label1]}との対局数", alert_p: alert_p)
+          end
+        end
+      end
+
+      JudgeInfo.each do |e|
+        ms_a = judge_group_memberships(e.key)
+        c = ms_a.size
+        count_set(stat, e.name, c, memberships: ms_a)
+      end
+
+      ms_group.each do |summary_key, ms_a|
+        c = ms_a.size
+        count_set(stat, summary_key, c, memberships: ms_a)
+      end
+
+      # stat.delete("切断した")
       # suffix_add(stat)
 
       stat
@@ -140,6 +192,11 @@ module Swars
     end
 
     private
+
+    # def win_a_superior(key, op)
+    #   @win_a_superior = {}
+    #   @win_a_superior[[key, op]] = memberships.find_all { |e| e.judge_info.key == key && e.grade.priority.public_send(op, e.opponent.grade.priority) }
+    # end
 
     def memberships
       @memberships ||= user.memberships.to_a

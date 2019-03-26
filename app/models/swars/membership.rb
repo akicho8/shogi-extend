@@ -84,6 +84,11 @@ module Swars
       JudgeInfo.fetch(judge_key)
     end
 
+    # 対戦相手
+    def opponent
+      @opponent ||= battle.memberships.where.not(position: position).take
+    end
+
     concerning :HelperMethods do
       def icon_html
         klass = [judge_info.icon_class]
