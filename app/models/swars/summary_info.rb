@@ -31,11 +31,11 @@ module Swars
 
         if ships.present?
           if rule_info.related_time_p
-            ms = ships.max { |e| e.sec_list.max.to_i }
+            ms = ships.max_by { |e| e.sec_list.max.to_i }
             sec = ms.sec_list.max.to_i
             sec_set(stat, "【#{rule_info.name}】最大長考", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
 
-            ms = ships.max { |e| e.sec_list.last.to_i }
+            ms = ships.max_by { |e| e.sec_list.last.to_i }
             sec = ms.sec_list.last.to_i
             sec_set(stat, "【#{rule_info.name}】最後の着手の最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
 
@@ -48,13 +48,13 @@ module Swars
             count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ました", count, alert_p: count.nonzero?, memberships: ms_a)
 
             scope = ships.find_all { |e| e.summary_key == "詰ました" }
-            if ms = scope.max { |e| e.sec_list.last.to_i }
+            if ms = scope.max_by { |e| e.sec_list.last.to_i }
               sec = ms.sec_list.last.to_i
               sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
             end
 
             scope = ships.find_all { |e| e.summary_key == "切れ負け" }
-            if ms = scope.max { |e| e.rest_sec }
+            if ms = scope.max_by { |e| e.rest_sec }
               sec = ms.rest_sec.to_i
               sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
             end
@@ -68,30 +68,30 @@ module Swars
           # if scope = ships.find_all { |e| e.judge_info.key == :lose }
           scope = ships.find_all { |e| e.summary_key == "投了した" || e.summary_key == "詰まされた" }.presence # { |e| e.judge_info.key == :lose } の判定だと切断負けも含まれてしまう
           if scope
-            if ms = scope.min { |e| e.battle.turn_max }
+            if ms = scope.min_by { |e| e.battle.turn_max }
               turn = ms.battle.turn_max
               count_set(stat, "【#{rule_info.name}】(投了したor詰まされた)最短手数", turn, alert_p: turn && turn <= rule_info.most_min_turn_max_limit, suffix: "手", membership: ms)
             end
-            if ms = scope.min { |e| e.total_seconds }
+            if ms = scope.min_by { |e| e.total_seconds }
               sec = ms.total_seconds
               sec_set(stat, "【#{rule_info.name}】(投了したor詰まされた)最短時間", sec, alert_p: sec && sec <= rule_info.resignation_limit, membership: ms)
             end
           end
 
           if scope = ships.find_all { |e| e.judge_info.key == :win }.presence
-            if ms = scope.max { |e| e.battle.turn_max }
+            if ms = scope.max_by { |e| e.battle.turn_max }
               turn = ms.battle.turn_max
               count_set(stat, "【#{rule_info.name}】(勝ち)最長手数", turn, alert_p: turn && turn >= 200, suffix: "手", membership: ms)
             end
             if rule_info.key == :ten_sec
-              if ms = scope.max { |e| e.total_seconds }
+              if ms = scope.max_by { |e| e.total_seconds }
                 sec = ms.total_seconds
                 sec_set(stat, "【#{rule_info.name}】(勝ち)最長時間", sec, alert_p: sec && sec >= 10.minutes, membership: ms)
               end
             end
           end
 
-          if ms = ships.max { |e| e.battle.turn_max }
+          if ms = ships.max_by { |e| e.battle.turn_max }
             turn = ms.battle.turn_max
             count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手", membership: ms)
           end
