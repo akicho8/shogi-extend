@@ -4,7 +4,7 @@ ruby:
 .has-text-centered
   .title.is-3.yumincho
     = current_record.memberships.black.name_with_grade
-    span.versus.has-text-grey-light= "vs"
+    span.versus.has-text-grey-light= " vs "
     = current_record.memberships.white.name_with_grade
 hr
 
@@ -16,9 +16,9 @@ hr
 = render :partial => "kifu_clock_chart"
 = render :partial => "kifu_player_tabs_div"
 
+hr
 .section
   .title.is-4.yumincho 棋神召喚疑惑判決
-  hr
 
   .columns
     - current_record.memberships.each do |e|
