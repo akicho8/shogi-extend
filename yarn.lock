@@ -4362,14 +4362,6 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
   integrity sha512-H7ErYLM34CvDMto3GbD6xD0JLUGYXR3QTcH6B/tr4Hi/QpSThnCsIp+Sy5FRTw3B0d6py4HcNkW7nO/wdtGWEw==
 
-js-memory-record@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.10.tgz#6bde2568c313ba6f66d5b4106de8a16b055e391d"
-  integrity sha512-IqbYtosQPQ55vd4d9FzympkosjhdYpeougFvhLBGaFWSHkJ4dsPjGU9A8aKE2qIc6QKXDyynBcZbbfDBw876oQ==
-  dependencies:
-    babel-core "^6.22.1"
-    lodash "^4.17.4"
-
 js-memory-record@^0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.11.tgz#cdf5da13bf9f9a9e01003dac804363217fa7beb2"
@@ -7302,10 +7294,10 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shogi-player@^0.0.103:
-  version "0.0.103"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.103.tgz#46d2b8617548098dfe87d35cd4423ec5878b875f"
-  integrity sha512-eWgFKXZUsfO2OHstexsnDohVyAEX/YlRZy0q2dsOOjRZtu3LrXpRRGZkmrtreR6MFAfGBZNynBjvN85gPyoBzg==
+shogi-player@^0.0.104:
+  version "0.0.104"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.104.tgz#6812a175d2e92817a4c54b343ab6d42f94cfaab4"
+  integrity sha512-QvAH0XlbFEfo+f2BiPZfE3rMEq5T9K3ZOFQP31HmzRcsI0isyMLAX3ARmTkesm35dPW7GCZDe8MC38jVecm7hw==
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
@@ -7329,7 +7321,7 @@ shogi-player@^0.0.103:
     bulma "^0.6.2"
     css-browser-selector "^0.6.5"
     debug "^3.1.0"
-    js-memory-record "^0.0.10"
+    js-memory-record "^0.0.11"
     lodash "^4.17.4"
     minimalistic-assert "^1.0.0"
     node-sass "^4.7.2"
