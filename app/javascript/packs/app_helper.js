@@ -38,31 +38,81 @@ export function clipboard_copy(str, options = {}) {
 
   let success = null
 
-  const elem = document.createElement("textarea")
-  elem.value = str
-  document.body.appendChild(elem)
-  elem.select() // この方法は Windows Chrome でのみ動く
-  success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
-  console.log(`クリップボードコピー試行1: select => ${success}`)
+  // この方法は iPhone で動かない。先に elem.select() を実行した時点で iPhone の方が作動しなくなる
+  if (false) {
+    const elem = document.createElement("textarea")
+    elem.value = str
+    document.body.appendChild(elem)
+    elem.select() // この方法は Windows Chrome でのみ動く
+    success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
+    console.log(`クリップボードコピー試行1: select => ${success}`)
+
+    if (!success) {
+      // この方法は iPhone と Mac の Chrome で動く。Mac の Safari では未検証
+      const range = document.createRange()
+      range.selectNode(elem)
+      window.getSelection().addRange(range)
+      success = document.execCommand("copy")
+      console.log(`クリップボードコピー試行2: selectNode => ${success}`)
+    }
+
+    document.body.removeChild(elem)
+  }
+
+  // https://marmooo.blogspot.com/2018/02/javascript.html
+  if (true) {
+    const elem = document.createElement('textarea')
+    document.body.appendChild(elem)
+    elem.value = str
+    success = copyToClipboard(elem)
+    document.body.removeChild(elem)
+  }
 
   if (!success) {
-    // この方法は iPhone と Mac の Chrome で動く。Mac の Safari では未検証
-    const range = document.createRange()
-    range.selectNode(elem)
-    window.getSelection().addRange(range)
-    success = document.execCommand("copy")
-    console.log(`クリップボードコピー試行2: selectNode => ${success}`)
-  }
-
-  document.body.removeChild(elem)
-
-  if (success) {
-    talk("コピーしました")
-    Vue.prototype.$toast.open({message: options2["success_message"], position: "is-bottom", type: "is-success"})
-  } else {
     talk("失敗しました")
     Vue.prototype.$toast.open({message: options2["error_message"], position: "is-bottom", type: "is-danger"})
+    return
   }
+
+  talk("コピーしました")
+  Vue.prototype.$toast.open({message: options2["success_message"], position: "is-bottom", type: "is-success"})
+}
+
+// https://marmooo.blogspot.com/2018/02/javascript.html
+function copyToClipboard(el) {
+  // resolve the element
+  el = (typeof el === 'string') ? document.querySelector(el) : el
+
+  // handle iOS as a special case
+  if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+
+    // save current contentEditable/readOnly status
+    const editable = el.contentEditable
+    const readOnly = el.readOnly
+
+    // convert to editable with readonly to stop iOS keyboard opening
+    el.contentEditable = true
+    el.readOnly = true
+
+    // create a selectable range
+    const range = document.createRange()
+    range.selectNodeContents(el)
+
+    // select the range
+    const selection = window.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(range)
+    el.setSelectionRange(0, 999999)
+
+    // restore contentEditable/readOnly to original state
+    el.contentEditable = editable
+    el.readOnly = readOnly
+  } else {
+    el.select()
+  }
+
+  // execute copy command
+  return document.execCommand('copy')
 }
 
 // ログイン強制
