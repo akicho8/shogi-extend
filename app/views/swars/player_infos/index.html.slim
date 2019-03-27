@@ -17,9 +17,9 @@
       .columns
         .column
           .buttons
-            = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, target: "blank", class: "button is-small")
-            = link_to("ぐぐる", google_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
-            = link_to("Twitterで探す", twitter_search_url(current_swars_user.user_key), target: "blank", class: "button is-small")
+            = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, target: "blank", class: "button is-small is-rounded")
+            = link_to(icon_tag(:fab, :twitter) + "Twitterで探す", twitter_search_url(current_swars_user.user_key), target: "blank", class: "button is-small is-rounded is-info")
+            = link_to(icon_tag(:fab, :google) + "ぐぐる", google_search_url(current_swars_user.user_key), target: "blank", class: "button is-small is-rounded is-danger")
       .columns
         .column
           - stat = current_swars_user.secret_summary
