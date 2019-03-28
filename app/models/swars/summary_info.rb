@@ -9,19 +9,24 @@ module Swars
     def secret_summary
       stat = Hash.new(0)
 
-      if ms_a = ms_group["切断した"] || []
-        c = ms_a.size
-        count_set(stat, "切断回数", c, alert_p: c.nonzero?, memberships: ms_a)
-        parcentage_set(stat, "切断率", c, judge_count_for(:lose), alert_p: c.nonzero?, tooltip: "切断回数 / 負け数")
+      ms_a = ms_group["切断した"] || []
+      c = ms_a.size
+      count_set(stat, "切断回数", c, alert_p: c.nonzero?, memberships: ms_a)
+      if (d = judge_count_for(:lose)).nonzero?
+        parcentage_set(stat, "切断率", c, d, alert_p: c.nonzero?, tooltip: "切断回数 / 負け数")
       end
 
       c = cheat_memberships.size
       count_set(stat, "棋神召喚疑惑", c, alert_p: c.nonzero?, memberships: cheat_memberships)
-      parcentage_set(stat, "棋神召喚疑惑率", c, judge_count_for(:win), alert_p: c.nonzero?)
+      if (d = judge_count_for(:win)).nonzero?
+        parcentage_set(stat, "棋神召喚疑惑率", c, d, alert_p: c.nonzero?)
+      end
 
-      ms_a = ms_group["投了した"] || []
-      c = ms_a.size
-      parcentage_set(stat, "投了率", c, judge_count_for(:lose), alert_p: c.zero?, tooltip: "投了回数 / 負け数")
+      if (d = judge_count_for(:lose)).nonzero?
+        ms_a = ms_group["投了した"] || []
+        c = ms_a.size
+        parcentage_set(stat, "投了率", c, d, alert_p: c.fdiv(d) < 0.25, tooltip: "投了回数 / 負け数")
+      end
 
       # turn = memberships.collect { |e| e.battle.turn_max }.max
       # count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手")
@@ -112,39 +117,6 @@ module Swars
 
       parcentage_set(stat, "勝率", judge_count_for(:win), win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate))
 
-      JudgeInfo.each do |e|
-        ms_a = judge_group_memberships(e.key)
-        c = ms_a.size
-        count_set(stat, e.name, c, memberships: ms_a)
-      end
-
-      ms_group.each do |summary_key, ms_a|
-        c = ms_a.size
-        count_set(stat, summary_key, c, memberships: ms_a)
-      end
-
-      ms_a = memberships.find_all { |e| e.judge_info.key == :win && e.grade.priority > e.opponent.grade.priority }
-      c = ms_a.size
-      count_set(stat, "格上に勝ち", c, memberships: ms_a)
-
-      ms_a = memberships.find_all { |e| e.judge_info.key == :lose && e.grade.priority < e.opponent.grade.priority }
-      c = ms_a.size
-      count_set(stat, "格下に負け", c, memberships: ms_a)
-
-      # stat.delete("切断した")
-
-      # suffix_add(stat)
-
-      stat
-    end
-
-    def basic_summary
-      stat = Hash.new(0)
-
-      count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
-
-      parcentage_set(stat, "勝率", judge_count_for(:win), win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate))
-
       [
         { label1: "格上", op: :>,  label2: "勝った", key: :win,  },
         { label1: "格上", op: :>,  label2: "負けた", key: :lose, },
@@ -162,6 +134,15 @@ module Swars
             alert_p = args[:op] >= :> && ms_a.size.fdiv(scope.size) >= 0.6 # 格上への勝率が異常に高い
             parcentage_set(stat, "#{args[:label1]}に#{args[:label2]}率", ms_a.size, scope.size, tooltip: "#{args[:label2]}数 / #{args[:label1]}との対局数", alert_p: alert_p)
           end
+        end
+      end
+
+      [0, 50, 100, 150, 200, Float::INFINITY].each_cons(2) do |s, e|
+        range = s...e
+        ms_a = memberships.find_all { |e| range.cover?(e.battle.turn_max) }
+        c = ms_a.size
+        if c.nonzero?
+          count_set(stat, s.zero? ? "#{e}手未満" : "#{s}手以上", c, memberships: ms_a)
         end
       end
 
