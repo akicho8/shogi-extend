@@ -1,8 +1,9 @@
-- content_for :head do
-  = javascript_pack_tag("swars_player_info_app")
+- if current_swars_user
+  - content_for :head do
+    = javascript_pack_tag("swars_player_info_app")
 
-javascript:
-  document.addEventListener('DOMContentLoaded', () => { new SwarsPlayerInfoApp(#{js_swars_player_info_app_params.to_json.html_safe}).$mount("#swars_player_info_app") })
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new SwarsPlayerInfoApp(#{js_swars_player_info_app_params.to_json.html_safe}).$mount("#swars_player_info_app") })
 
 #swars_player_info_app
   .title.yumincho.is-2
@@ -47,7 +48,6 @@ javascript:
               .field
                 .title.yumincho.is-4= tactic_info.name
                 == stat.transform_keys { |e| Warabi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e]) : e }.to_html(table_class: "table is-fullwidth is-narrow")
-
       .columns
         .column
           .field
