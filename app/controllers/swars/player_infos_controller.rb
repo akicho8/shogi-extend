@@ -38,7 +38,7 @@ module Swars
             ].collect { |e|
               {
                 label: e[:label],
-                data: current_swars_user.memberships.find_all(&e[:scope]).collect { |e| { t: e.battle.battled_at.to_date.to_s, y: e.battle.battled_at.hour * 60 + e.battle.battled_at.min } },
+                data: current_swars_user.memberships.find_all(&e[:scope]).collect { |e| { t: e.battle.battled_at.to_s(:ymd), y: e.battle.battled_at.hour * 60 + e.battle.battled_at.min } },
                 backgroundColor: e[:backgroundColor],
                 borderColor: e[:borderColor],
                 pointRadius: 8,           # 点半径

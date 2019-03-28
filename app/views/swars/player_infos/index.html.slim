@@ -53,3 +53,6 @@
           .field
             .title.is-4.yumincho 対局時間
             canvas(ref="swars_player_info_canvas")
+            - if Rails.env.development?
+              == debug js_swars_player_info_app_params.as_json
+

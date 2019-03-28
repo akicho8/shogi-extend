@@ -21,8 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
             scales: {
               xAxes: [
                 {
+                  type: 'time',
                   time: {
                     unit: "day",
+                    displayFormats: {
+                      day: "M/D",
+                    },
                   },
                 },
               ],
