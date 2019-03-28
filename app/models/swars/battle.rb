@@ -165,12 +165,12 @@ module Swars
             end
           end
 
-          if memberships.all? { |e| e.note_tag_list.include?("入玉") }
-            memberships.each do |e|
-              e.note_tag_list.add "相入玉"
-            end
-            note_tag_list.add "相入玉"
-          end
+          # if memberships.all? { |e| e.note_tag_list.include?("入玉") }
+          #   memberships.each do |e|
+          #     e.note_tag_list.add "相入玉"
+          #   end
+          #   note_tag_list.add "相入玉"
+          # end
         end
 
         memberships.each do |e|
