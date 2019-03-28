@@ -17,6 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return Object.assign({}, this.chartjs_params, {
 
           options: {
+            // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
+            layout: {
+              padding: {
+                // left: 0,
+                right: 12,
+                // top: 0,
+                // bottom: 0
+              },
+            },
+
             // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
             scales: {
               xAxes: [

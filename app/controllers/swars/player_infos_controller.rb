@@ -24,27 +24,30 @@ module Swars
     end
 
     let :js_swars_player_info_app_params do
-      s, e = current_swars_user.memberships.minmax_by { |e| e.battle.battled_at }
-      labels = (s.battle.battled_at.to_date..e.battle.battled_at.to_date).to_a
+      # s, e = current_swars_user.memberships.minmax_by { |e| e.battle.battled_at }
+      # labels = (s.battle.battled_at.to_date..e.battle.battled_at.to_date).to_a
+
+      # 直近100件としとこう
+      memberships = current_swars_user.memberships.reorder(created_at: :desc).take(100)
 
       {
         chartjs_params: {
           type: "line",
           data: {
-            labels: labels,
+            # labels: labels,
             datasets: [
               { label: "勝ち", scope: -> e { e.judge_key == "win" }, borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
               { label: "負け", scope: -> e { e.judge_key != "win" }, borderColor: "hsl(348, 100%, 61%, 0.5)", backgroundColor: "hsl(348, 100%, 61%, 0.1)", },
             ].collect { |e|
               {
                 label: e[:label],
-                data: current_swars_user.memberships.find_all(&e[:scope]).collect { |e| { t: e.battle.battled_at.to_s(:ymd), y: e.battle.battled_at.hour * 60 + e.battle.battled_at.min } },
+                data: memberships.find_all(&e[:scope]).collect { |e| { t: e.battle.battled_at.to_s(:ymdhms), y: e.battle.battled_at.hour * 60 + e.battle.battled_at.min } },
                 backgroundColor: e[:backgroundColor],
                 borderColor: e[:borderColor],
-                pointRadius: 8,           # 点半径
-                borderWidth: 3,           # 点枠の太さ
-                pointHoverRadius: 9,      # 点半径(アクティブ時)
-                pointHoverBorderWidth: 4, # 点枠の太さ(アクティブ時)
+                pointRadius: 7,           # 点半径
+                borderWidth: 2,           # 点枠の太さ
+                pointHoverRadius: 8,      # 点半径(アクティブ時)
+                pointHoverBorderWidth: 3, # 点枠の太さ(アクティブ時)
                 fill: false,
                 showLine: false,          # 線で繋げない
               }
