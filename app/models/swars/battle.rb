@@ -126,6 +126,7 @@ module Swars
         s << ["N-", memberships.second.name_with_grade].join
         s << ["$START_TIME", battled_at.to_s(:csa_ymdhms)] * ":"
         s << ["$EVENT", "将棋ウォーズ(#{type.join(' ')})"] * ":"
+        s << ["$SITE", wars_url] * ":"
         s << ["$TIME_LIMIT", rule_info.csa_time_limit] * ":"
 
         # $OPENING は 戦型 のことで、これが判明するのはパースの後なのでいまはわからない。
@@ -203,8 +204,15 @@ module Swars
 
       def wars_tweet_body
         vs = memberships.collect(&:name_with_grade).join(" 対 ")
-        url = Rails.application.routes.url_helpers.swars_real_battle_url(self, tw: 1)
-        "将棋ウォーズ棋譜(#{vs}) #{url} #shogiwars #将棋"
+        "将棋ウォーズ棋譜(#{vs}) #{wars_url} #shogiwars #将棋"
+      end
+
+      def wars_url
+        Rails.application.routes.url_helpers.swars_real_battle_url(self)
+      end
+
+      def header_detail(h)
+        super.merge("場所" => h.link_to(key, wars_url, target: "_blank"))
       end
     end
 

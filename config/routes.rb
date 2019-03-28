@@ -98,10 +98,12 @@ Rails.application.routes.draw do
   ################################################################################ 外部リンク
 
   direct :swars_real_battle do |battle, **options|
-    options = {
-      locale: "ja",
-    }.merge(options)
-    "http://kif-pona.heroz.jp/games/#{battle.key}?#{options.to_query}"
+    # options = {
+    #   locale: "ja",
+    # }.merge(options)
+    # 
+    # "http://kif-pona.heroz.jp/games/#{battle.key}?#{options.to_query}"
+    "http://kif-pona.heroz.jp/games/#{battle.key}"
   end
 
   direct :swars_home do |user, **options|

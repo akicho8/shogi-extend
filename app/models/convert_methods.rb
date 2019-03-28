@@ -210,6 +210,9 @@ module ConvertMethods
 
   def place_list
     v = meta_info[:header]["場所"].to_s
+    if v.start_with?("http")
+      return []
+    end
     if md = v.match(/(.*)「(.*?)」/)
       v = md.captures
     end

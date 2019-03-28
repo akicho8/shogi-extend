@@ -25,7 +25,7 @@
     ////////////////////////////////////////////////////////////////////////////////
     .column.has-text-left
       .field
-        = current_record.header_detail(self).to_html(table_class: "table is-fullwidth is-narrow")
+        == current_record.header_detail(self).to_html(table_class: "table is-fullwidth is-narrow")
 
       .field
         .buttons(v-cloak="true")
