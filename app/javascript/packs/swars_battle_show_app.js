@@ -16,6 +16,38 @@ document.addEventListener("DOMContentLoaded", () => {
       chartjs_all_params() {
         return Object.assign({}, this.chartjs_params, {
           options: {
+            // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
+            scales: {
+              xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: "手数",
+                },
+                // ticks: {
+                //   // suggestedMin: 0,
+                //   // suggestedMax: 100,
+                //   // stepSize: 10,
+                //   // callback(value, index, values){
+                //   //   return value + '手'
+                //   // }
+                // }
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: "消費",
+                },
+                ticks: {
+                  // suggestedMax: 100,
+                  // suggestedMin: 0,
+                  // stepSize: 10,
+                  callback(value, index, values) {
+                    return Math.abs(value) +  "秒"
+                  }
+                }
+              }]
+            },
+
             // https://tr.you84815.space/chartjs/configuration/tooltip.html
             legend: {
               display: false,
