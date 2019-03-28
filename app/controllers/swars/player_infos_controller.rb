@@ -23,7 +23,7 @@ module Swars
       User.find_by(user_key: current_user_key)
     end
 
-    let :js_swars_battle_show2_app_params do
+    let :js_swars_player_info_app_params do
       s, e = current_swars_user.memberships.minmax_by { |e| e.battle.battled_at }
       labels = (s.battle.battled_at.to_date..e.battle.battled_at.to_date).to_a
 
@@ -31,7 +31,6 @@ module Swars
         chartjs_params: {
           type: "line",
           data: {
-            # labels: (1..current_record.memberships.map{|e|e.sec_list.size}.max).to_a,
             labels: labels,
             datasets: [
               { label: "勝ち", scope: -> e { e.judge_key == "win" }, borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
@@ -51,29 +50,11 @@ module Swars
               }
             },
             options: {
-              # https://misc.0o0o.org/chartjs-doc-ja/general/responsive.html
-              # responsive: true,
-              # maintainAspectRatio: true,
-              # elements: {
-              #   line: {
-              #     tension: 0, # ベジェ曲線無効
-              #   },
-              # },
-              # animation: {
-              #   duration: 0, # 一般的なアニメーションの時間
-              # },
+              # JavaScript 側で定義
             },
           },
         },
       }
-    end
-
-    let :theme_info do
-      [
-        { borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
-        # { borderColor: "hsl(204,  86%, 53%, 0.5)", backgroundColor: "hsl(204,  86%, 53%, 0.05)", },
-        { borderColor: "hsl(348, 100%, 61%, 0.5)", backgroundColor: "hsl(348, 100%, 61%, 0.1)", },
-      ]
     end
 
     private

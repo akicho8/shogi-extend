@@ -1,7 +1,7 @@
 // Vue.js にする必要ない気がするけど今後膨らむかもしれないのでこれでいい
 
 document.addEventListener("DOMContentLoaded", () => {
-  window.SwarsBattleShow2App = Vue.extend({
+  window.SwarsPlayerInfoApp = Vue.extend({
     data() {
       return {
         chartjs_params: this.$options.chartjs_params,
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     mounted() {
-      new Chart(this.$refs.swars_battle_show_canvas2, this.chartjs_all_params)
+      new Chart(this.$refs.swars_player_info_canvas, this.chartjs_all_params)
     },
 
     computed: {

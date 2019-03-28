@@ -1,10 +1,10 @@
 - content_for :head do
-  = javascript_pack_tag("swars_battle_show2_app")
+  = javascript_pack_tag("swars_player_info_app")
 
 javascript:
-  document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShow2App(#{js_swars_battle_show2_app_params.to_json.html_safe}).$mount("#swars_battle_show2_app") })
+  document.addEventListener('DOMContentLoaded', () => { new SwarsPlayerInfoApp(#{js_swars_player_info_app_params.to_json.html_safe}).$mount("#swars_player_info_app") })
 
-#swars_battle_show2_app
+#swars_player_info_app
   .title.yumincho.is-2
     = "将棋ウォーズプレイヤー情報"
 
@@ -52,4 +52,4 @@ javascript:
         .column
           .field
             .title.is-4.yumincho 対局時間
-            canvas(ref="swars_battle_show_canvas2")
+            canvas(ref="swars_player_info_canvas")
