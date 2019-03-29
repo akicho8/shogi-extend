@@ -49,7 +49,7 @@ html(lang="ja")
         .container.is-fluid
           .columns
             .column.has-text-centered
-              #system_notification_app.has-text-grey-lighter
+              #system_notification_app.has-text-grey-lighter.is-size-7
                 | ActionCable: {{latest_system_logs.join(" ")}}
     - else
       nav.navbar.is-transparent.is-primary
@@ -206,7 +206,7 @@ html(lang="ja")
           .columns
             .column
               ul
-                li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
+                li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io", target: "_blank")
                 li== "&nbsp;"
                 li= link_to("GraphQL API", :graphiql_rails, target: "_blank")
             .column
@@ -229,7 +229,7 @@ html(lang="ja")
                 = " and "
                 = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank", :class => "no-decoration")
 
-                #system_notification_app.has-text-grey-lighter
+                #system_notification_app.has-text-grey-lighter.is-size-7
                   | ActionCable: {{latest_system_logs.join(" ")}}
 
     #single_notification_app
