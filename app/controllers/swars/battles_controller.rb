@@ -397,7 +397,7 @@ module Swars
     let :current_user_key do
       if v = current_query_hash
         if v = v[:user_key]
-          v.first
+          ERB::Util.html_escape(v.first)
         end
       end
     end
