@@ -1,8 +1,8 @@
 GIT
-  remote: https://github.com/akicho8/warabi.git
-  revision: 5b91d3300e27addf60529e17b22037d3c77cdbdc
+  remote: https://github.com/akicho8/bioshogi.git
+  revision: aa92a0dc75ca47ce52c7c96fbcbfc95b40a97bdf
   specs:
-    warabi (0.0.1)
+    bioshogi (0.0.1)
       actionview
       activesupport
       memory_record
@@ -471,6 +471,7 @@ DEPENDENCIES
   artii
   aws-sdk-polly
   bcrypt
+  bioshogi!
   bootsnap (>= 1.1.0)
   byebug
   capistrano (= 3.11.0)
@@ -534,7 +535,6 @@ DEPENDENCIES
   tree_support
   tzinfo-data
   uglifier (>= 1.3.0)
-  warabi!
   web-console (>= 3.3.0)
   webpacker (= 3.2.0)
   whenever (= 0.9.7)

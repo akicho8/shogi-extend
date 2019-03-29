@@ -77,7 +77,7 @@ module Colosseum
     before_validation do
       if changes_to_save[:black_preset_key] || changes_to_save[:white_preset_key]
         if black_preset_key && white_preset_key
-          mediator = Warabi::Mediator.new
+          mediator = Bioshogi::Mediator.new
           mediator.board.placement_from_hash(black: black_preset_key, white: white_preset_key)
           mediator.turn_info.handicap = handicap
           self.full_sfen = "position #{mediator.to_long_sfen}"
@@ -117,7 +117,7 @@ module Colosseum
     end
 
     def human_kifu_text
-      info = Warabi::Parser.parse(full_sfen, typical_error_case: :embed)
+      info = Bioshogi::Parser.parse(full_sfen, typical_error_case: :embed)
       begin
         mediator = info.mediator
       rescue => error
@@ -223,7 +223,7 @@ module Colosseum
 
             # 先を読む
             if cpu_brain_info.depth_max_range
-              brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
+              brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: Bioshogi::EvaluatorAdvance)
               records = []
 
               cpu_brain_info.time_limit.each.with_index(1) do |tl, i|
@@ -232,13 +232,13 @@ module Colosseum
                   __trace("#{cpu_brain_info.depth_max_range}手先まで最大#{tl}秒かけて読んでます")
                   records = brain.iterative_deepening(time_limit: tl, depth_max_range: cpu_brain_info.depth_max_range)
                   break
-                rescue Warabi::BrainProcessingHeavy
+                rescue Bioshogi::BrainProcessingHeavy
                   __trace("無理でした")
                 end
               end
 
               unless records.empty?
-                tp Warabi::Brain.human_format(records)
+                tp Bioshogi::Brain.human_format(records)
 
                 record = records.first
                 tp record.keys
@@ -274,7 +274,7 @@ module Colosseum
               battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
             end
 
-            mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
+            mediator.execute(hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
             validate_checkmate_ignore
           end
 
@@ -379,8 +379,8 @@ module Colosseum
 
       def brain_get(kifu_body)
         begin
-          Brain.new(self, Warabi::Parser.parse(kifu_body).mediator)
-        rescue Warabi::WarabiError => error
+          Brain.new(self, Bioshogi::Parser.parse(kifu_body).mediator)
+        rescue Bioshogi::BioshogiError => error
           if !error.respond_to?(:mediator)
             raise "must not happen: #{error}"
           end
@@ -440,7 +440,7 @@ module Colosseum
       end
 
       def countdown_flag_on(data)
-        location = Warabi::Location.fetch(data["location_key"])
+        location = Bioshogi::Location.fetch(data["location_key"])
         countdown_flags[location.key] = true
         save!
       end
@@ -464,7 +464,7 @@ module Colosseum
       end
 
       def turn_info
-        Warabi::TurnInfo.new(handicap: handicap, counter: turn_max)
+        Bioshogi::TurnInfo.new(handicap: handicap, counter: turn_max)
       end
 
       def user_by_turn(turn)
@@ -503,7 +503,7 @@ module Colosseum
     concerning :ChronicleMethods do
       included do
         with_options allow_blank: true do
-          validates :win_location_key, inclusion: Warabi::Location.keys.collect(&:to_s)
+          validates :win_location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
           validates :last_action_key, inclusion: LastActionInfo.keys.collect(&:to_s)
         end
 
@@ -526,7 +526,7 @@ module Colosseum
       end
 
       def win_location_info
-        Warabi::Location.fetch_if(win_location_key)
+        Bioshogi::Location.fetch_if(win_location_key)
       end
 
       def last_action_info

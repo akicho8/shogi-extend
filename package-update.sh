@@ -6,4 +6,4 @@ ncu /pug/ -a
 ncu /js-memory-record/ -a
 yarn
 
-bundle update warabi
+bundle update bioshogi

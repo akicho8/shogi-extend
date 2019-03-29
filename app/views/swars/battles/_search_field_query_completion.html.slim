@@ -14,5 +14,5 @@
   - user_keys.uniq.each do |e|
     = tag.option(value: e)
 
-  - Warabi::TacticInfo.all_elements.each do |e|
+  - Bioshogi::TacticInfo.all_elements.each do |e|
     = tag.option(value: e.name)

@@ -8,11 +8,11 @@ class TacticNotesController < ApplicationController
 
     case params[:mode]
     when "list"
-      @rows = Warabi::TacticInfo.flat_map do |group|
+      @rows = Bioshogi::TacticInfo.flat_map do |group|
         group.model.collect { |e| row_build(e) }
       end
     when "tree"
-      @tree = Warabi::TacticInfo.flat_map do |group|
+      @tree = Bioshogi::TacticInfo.flat_map do |group|
         group.model.find_all(&:root?).collect { |root|
           root.to_s_tree do |e|
             link_to(e.name, [:tactic_note, id: e.key])
@@ -20,8 +20,8 @@ class TacticNotesController < ApplicationController
         }.join
       end
     when "fortune"
-      @attack_info = Warabi::AttackInfo.to_a.sample
-      @defense_info = Warabi::DefenseInfo.to_a.sample
+      @attack_info = Bioshogi::AttackInfo.to_a.sample
+      @defense_info = Bioshogi::DefenseInfo.to_a.sample
     end
   end
 
@@ -37,13 +37,13 @@ class TacticNotesController < ApplicationController
 
     if current_record.shape_info
       @board_table = tag.table(:class => "board_inner") do
-        Warabi::Dimension::Yplace.dimension.times.collect { |y|
+        Bioshogi::Dimension::Yplace.dimension.times.collect { |y|
           tag.tr {
-            Warabi::Dimension::Xplace.dimension.times.collect { |x|
+            Bioshogi::Dimension::Xplace.dimension.times.collect { |x|
               outer_class = []
               inner_class = []
 
-              place = Warabi::Place.fetch([x, y])
+              place = Bioshogi::Place.fetch([x, y])
               str = nil
 
               # トリガー駒
@@ -112,7 +112,7 @@ class TacticNotesController < ApplicationController
     end
     @detail_hash = row.transform_values(&:presence).compact
 
-    all_records = Warabi::TacticInfo.all_elements
+    all_records = Bioshogi::TacticInfo.all_elements
     if index = all_records.find_index(current_record)
       @left_right_link = tag.navi(:class => "pagination is-right", role: "navigation", "aria-label": "pagination") do
         [
@@ -130,15 +130,15 @@ class TacticNotesController < ApplicationController
   let :sample_kifu_body do
     Rails.cache.fetch("#{__method__}_#{current_record.key}", :expires_in => 1.week) do
       file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
-      parsed_info = Warabi::Parser.file_parse(file)
-      Warabi::KifuFormatInfo.inject({}) do |a, e|
+      parsed_info = Bioshogi::Parser.file_parse(file)
+      Bioshogi::KifuFormatInfo.inject({}) do |a, e|
         a.merge(e.key => parsed_info.public_send("to_#{e.key}"))
       end
     end
   end
 
   def current_record
-    @current_record ||= Warabi::TacticInfo.flat_lookup(params[:id])
+    @current_record ||= Bioshogi::TacticInfo.flat_lookup(params[:id])
   end
 
   private

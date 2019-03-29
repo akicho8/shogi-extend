@@ -14,7 +14,7 @@ class CpuBattlesController < ApplicationController
 
   def create
     if v = params[:kifu_body]
-      info = Warabi::Parser.parse(v)
+      info = Bioshogi::Parser.parse(v)
       begin
         mediator = info.mediator
       rescue => error
@@ -32,8 +32,8 @@ class CpuBattlesController < ApplicationController
 
         # info.move_infos.size - 0
 
-        # before_sfen = Warabi::Parser.parse(v, turn_limit: 1).mediator.to_sfen
-        # before_sfen = Warabi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
+        # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).mediator.to_sfen
+        # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
         # render json: {error_message: error_message, before_sfen: before_sfen}
 
         render json: {error_message: error_message}
@@ -52,18 +52,18 @@ class CpuBattlesController < ApplicationController
 
       puts mediator
       if current_cpu_brain_info.depth_max_range
-        brain = mediator.current_player.brain(diver_class: Warabi::NegaScoutDiver, evaluator_class: Warabi::EvaluatorAdvance)
+        brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: Bioshogi::EvaluatorAdvance)
         records = []
         time_limit = current_cpu_brain_info.time_limit
 
         begin
           records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
-        rescue Warabi::BrainProcessingHeavy
+        rescue Bioshogi::BrainProcessingHeavy
           time_limit += 1
           p [:retry, {time_limit: time_limit}]
           retry
         end
-        tp Warabi::Brain.human_format(records)
+        tp Bioshogi::Brain.human_format(records)
 
         if records.empty?
           render json: {you_win_message: "CPUが投了しました", sfen: mediator.to_sfen}
@@ -71,7 +71,7 @@ class CpuBattlesController < ApplicationController
         end
 
         record = records.first
-        if record[:score] <= -Warabi::INF_MAX
+        if record[:score] <= -Bioshogi::INF_MAX
           render json: {you_win_message: "CPUが降参しました", sfen: mediator.to_sfen}
           return
         end
@@ -90,7 +90,7 @@ class CpuBattlesController < ApplicationController
       end
 
       # CPUの手を指す
-      mediator.execute(hand.to_sfen, executor_class: Warabi::PlayerExecutorCpu)
+      mediator.execute(hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
       response = { sfen: mediator.to_sfen }
 
       # CPUの手を読み上げる

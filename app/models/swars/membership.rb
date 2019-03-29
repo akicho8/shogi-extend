@@ -69,7 +69,7 @@ module Swars
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
       validates :user_id, uniqueness: {scope: :battle_id}
       validates :location_key, uniqueness: {scope: :battle_id}
-      validates :location_key, inclusion: Warabi::Location.keys.collect(&:to_s)
+      validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
     end
 
     def name_with_grade
@@ -77,7 +77,7 @@ module Swars
     end
 
     def location
-      Warabi::Location.fetch(location_key)
+      Bioshogi::Location.fetch(location_key)
     end
 
     def judge_info
@@ -156,7 +156,7 @@ module Swars
 
       def sec_list
         @sec_list ||= -> {
-          c = Warabi::Location.count
+          c = Bioshogi::Location.count
           pos = battle.preset_info.to_turn_info.current_location(position).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
           v = battle.parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
           v.collect { |e| e[:used_seconds] }
@@ -165,7 +165,7 @@ module Swars
 
       def chartjs_data
         @chartjs_data ||= -> {
-          c = Warabi::Location.count
+          c = Bioshogi::Location.count
           loc = battle.preset_info.to_turn_info.current_location(position)
           sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
         }.call

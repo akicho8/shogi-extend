@@ -13,7 +13,7 @@
 # | 10以上 | 六枚落ち         | 上手が飛車と角行、両方の香車と桂馬を落とす |
 # |--------+------------------+--------------------------------------------|
 module Colosseum
-  class CustomPresetInfo < Warabi::PresetInfo
+  class CustomPresetInfo < Bioshogi::PresetInfo
     memory_record_reset superclass.find_all { |e|
       e.name.in?([
           "平手",

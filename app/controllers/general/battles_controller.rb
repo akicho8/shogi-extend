@@ -64,7 +64,7 @@ module General
     end
 
     let :current_tactics do
-      current_tags.find_all { |e| Warabi::TacticInfo.any? { |e| e.model[e] } }
+      current_tags.find_all { |e| Bioshogi::TacticInfo.any? { |e| e.model[e] } }
     end
 
     let :current_general_user do

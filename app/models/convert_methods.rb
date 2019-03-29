@@ -36,7 +36,7 @@ module ConvertMethods
   end
 
   def parsed_info
-    @parsed_info ||= Warabi::Parser.parse(kifu_body, typical_error_case: :embed)
+    @parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed)
   end
 
   # def total_seconds

@@ -42,12 +42,12 @@
             - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
             == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
-        - Warabi::TacticInfo.each do |tactic_info|
+        - Bioshogi::TacticInfo.each do |tactic_info|
           - if stat = current_swars_user.tactic_summary_for(tactic_info.key).presence
             .column
               .field
                 .title.yumincho.is-4= tactic_info.name
-                == stat.transform_keys { |e| Warabi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e]) : e }.to_html(table_class: "table is-fullwidth is-narrow")
+                == stat.transform_keys { |e| Bioshogi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e]) : e }.to_html(table_class: "table is-fullwidth is-narrow")
       .columns
         .column
           .field

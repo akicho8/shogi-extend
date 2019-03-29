@@ -78,7 +78,7 @@ module Swars
 
     with_options allow_blank: true do
       validates :key, uniqueness: true
-      validates :preset_key, inclusion: Warabi::PresetInfo.keys.collect(&:to_s)
+      validates :preset_key, inclusion: Bioshogi::PresetInfo.keys.collect(&:to_s)
       validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
     end
 
@@ -95,7 +95,7 @@ module Swars
     end
 
     def preset_info
-      Warabi::PresetInfo.fetch(preset_key)
+      Bioshogi::PresetInfo.fetch(preset_key)
     end
 
     concerning :ConvertHookMethos do
@@ -449,7 +449,7 @@ module Swars
               judge_key = :draw
             end
 
-            battle.memberships.build(user:  user, grade: grade, judge_key: judge_key, location_key: Warabi::Location.fetch(i).key)
+            battle.memberships.build(user:  user, grade: grade, judge_key: judge_key, location_key: Bioshogi::Location.fetch(i).key)
           end
 
           # SQLをシンプルにするために勝者だけ、所有者的な意味で、Battle 自体に入れとく

@@ -36,7 +36,7 @@ module Colosseum
     acts_as_list top_of_list: 0, scope: :battle
 
     before_validation on: :create do
-      self.location_key ||= Warabi::Location.fetch(battle.users.count).key
+      self.location_key ||= Bioshogi::Location.fetch(battle.users.count).key
 
       if user
         self.preset_key ||= user.self_preset_info.key
@@ -45,7 +45,7 @@ module Colosseum
     end
 
     with_options allow_blank: true do
-      validates :location_key, inclusion: Warabi::Location.keys.collect(&:to_s)
+      validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
     end
 
     after_save do
@@ -59,7 +59,7 @@ module Colosseum
     end
 
     def location
-      Warabi::Location[location_key]
+      Bioshogi::Location[location_key]
     end
   end
 end

@@ -8,7 +8,7 @@ module SharedMethods
       end
     end
 
-    rescue_from "Warabi::WarabiError" do |exception|
+    rescue_from "Bioshogi::BioshogiError" do |exception|
       if request.format.json?
         render json: {error_message: exception.message.lines.first.strip}
       else

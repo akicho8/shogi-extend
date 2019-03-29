@@ -15,7 +15,7 @@ module Swars
     ]
 
     def real_preset_info
-      Warabi::PresetInfo.fetch(beauty_key)
+      Bioshogi::PresetInfo.fetch(beauty_key)
     end
   end
 end

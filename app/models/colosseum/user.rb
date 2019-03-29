@@ -504,11 +504,11 @@ module Colosseum
         end
 
         def self_preset_info
-          Warabi::PresetInfo[self_preset_key]
+          Bioshogi::PresetInfo[self_preset_key]
         end
 
         def oppo_preset_info
-          Warabi::PresetInfo[oppo_preset_key]
+          Bioshogi::PresetInfo[oppo_preset_key]
         end
 
         def same_rule?

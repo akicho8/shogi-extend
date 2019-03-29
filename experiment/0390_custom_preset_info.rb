@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-tp Warabi::PresetInfo.as_json
+tp Bioshogi::PresetInfo.as_json
 
 tp CustomPresetInfo.as_json
 

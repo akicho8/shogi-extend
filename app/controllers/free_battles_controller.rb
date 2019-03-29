@@ -41,7 +41,7 @@ class FreeBattlesController < ApplicationController
   end
 
   let :parsed_info do
-    Warabi::Parser.parse(current_kifu_body, typical_error_case: :embed)
+    Bioshogi::Parser.parse(current_kifu_body, typical_error_case: :embed)
   end
 
   let :kifus_hash do

@@ -114,7 +114,7 @@ gem 'tree_support'
 gem 'table_format'
 gem 'html_format'
 gem "aam"
-gem 'warabi', github: 'akicho8/warabi'
+gem 'bioshogi', github: 'akicho8/bioshogi'
 
 # for Swars::Agent
 gem 'nokogiri'

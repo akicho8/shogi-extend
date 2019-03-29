@@ -195,7 +195,7 @@ module Colosseum
 
       battle.next_run
 
-      info = Warabi::Parser.parse(battle.full_sfen)
+      info = Bioshogi::Parser.parse(battle.full_sfen)
       assert { info.mediator.turn_info.turn_max == 1 }
     end
 

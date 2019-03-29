@@ -2,7 +2,7 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 `rm -fr __tactic_infos`
-Warabi::TacticInfo.all_elements.each do |e|
+Bioshogi::TacticInfo.all_elements.each do |e|
   record = General::Battle.tagged_with(e.name, on: "#{e.tactic_info.key}_tags").order(:turn_max).take
   if record
     if converted_info = record.converted_infos.text_format_eq(:kif).take
@@ -20,7 +20,7 @@ end
 # cd /var/www/shogi_web_production/current
 # RAILS_ENV=production rails c
 # 上のをコピペ
-# rsync -avz s:/var/www/shogi_web_production/current/__tactic_infos/ ~/src/warabi/experiment/
+# rsync -avz s:/var/www/shogi_web_production/current/__tactic_infos/ ~/src/bioshogi/experiment/
 # >> hit: 高美濃囲い
 # >> hit: 銀冠穴熊
 # >> hit: 横歩取り

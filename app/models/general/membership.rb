@@ -40,11 +40,11 @@ module General
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
       validates :location_key, uniqueness: {scope: :battle_id}
-      validates :location_key, inclusion: Warabi::Location.keys.collect(&:to_s)
+      validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
     end
 
     def location
-      Warabi::Location.fetch(location_key)
+      Bioshogi::Location.fetch(location_key)
     end
   end
 end
