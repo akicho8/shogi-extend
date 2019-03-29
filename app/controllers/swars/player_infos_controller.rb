@@ -36,12 +36,12 @@ module Swars
           data: {
             # labels: labels,
             datasets: [
-              { label: "勝ち", scope: -> e { e.judge_key == "win" }, borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
-              { label: "負け", scope: -> e { e.judge_key != "win" }, borderColor: "hsl(348, 100%, 61%, 0.5)", backgroundColor: "hsl(348, 100%, 61%, 0.1)", },
+              { label: "勝ち", scope: -> e { e.judge_key == "win"  }, borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
+              { label: "負け", scope: -> e { e.judge_key == "lose" }, borderColor: "hsl(348, 100%, 61%, 0.5)", backgroundColor: "hsl(348, 100%, 61%, 0.1)", },
             ].collect { |e|
               {
                 label: e[:label],
-                data: memberships.find_all(&e[:scope]).collect { |e| { t: e.battle.battled_at.to_s(:ymdhms), y: e.battle.battled_at.hour * 60 + e.battle.battled_at.min } },
+                data: memberships.find_all(&e[:scope]).collect { |e| { t: e.battle.battled_at.to_s(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
                 backgroundColor: e[:backgroundColor],
                 borderColor: e[:borderColor],
                 pointRadius: 7,           # 点半径
