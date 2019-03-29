@@ -3,9 +3,7 @@ ruby:
 
 .has-text-centered
   .title.is-3.yumincho
-    = current_record.memberships.black.name_with_grade
-    span.has-text-grey-light= " vs "
-    = current_record.memberships.white.name_with_grade
+    == current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + e.name_with_grade }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
 hr
 
 .tags

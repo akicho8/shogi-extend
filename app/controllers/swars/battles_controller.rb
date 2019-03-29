@@ -254,19 +254,25 @@ module Swars
     end
 
     def left_right_pairs(record)
+      l, r = record.memberships
       if current_swars_user
-        l_ship = record.myself(current_swars_user)
-        r_ship = record.rival(current_swars_user)
+        if l.user == current_swars_user
+          [l, r]
+        else
+          [r, l]
+        end
       else
         if record.win_user
-          l_ship = record.memberships.judge_key_eq(:win)
-          r_ship = record.memberships.judge_key_eq(:lose)
+          if l.judge_key == "win"
+            [l, r]
+          else
+            [r, l]
+          end
         else
-          l_ship = record.memberships.black
-          r_ship = record.memberships.white
+          # 引き分け
+          [l, r]
         end
       end
-      [l_ship, r_ship]
     end
 
     def left_right_pairs2(row, record, l_ship, r_ship)
@@ -405,10 +411,11 @@ module Swars
 
     let :current_scope do
       s = current_model.all
+      s = s.includes(win_user: nil, memberships: [:user, :grade])
 
       if current_swars_user
-        s = s.joins(:memberships => :user) # ここでOK。上のに混ぜるとレコードが2倍に増えてしまうので注意
-        s = s.merge(User.where(id: current_swars_user.id))
+        # s = s.where(memberships: Membership.where(user: current_swars_user))
+        s = s.joins(:memberships).merge(Membership.where(user: current_swars_user))
       end
 
       if current_tags

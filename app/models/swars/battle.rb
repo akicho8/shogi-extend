@@ -30,14 +30,14 @@ module Swars
 
     belongs_to :win_user, class_name: "User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
 
-    has_many :memberships, dependent: :destroy, inverse_of: :battle
-    delegate :rival, :myself, to: :memberships
+    has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
+    delegate :rival, :myself, to: :memberships # FIXME: 使用禁止
 
     has_many :access_logs, dependent: :destroy # アクセスログみたいもの
 
     has_many :users, through: :memberships do
       # 先手/後手プレイヤー
-      def black
+      def black                 # FIXME: 仕様禁止
         first
       end
 
@@ -348,53 +348,64 @@ module Swars
 
         # Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
         def multiple_battle_import(**params)
+          keys = []
           (params[:page_max] || 1).times do |i|
             list = agent.index_get(params.merge(page_index: i))
 
             # もうプレイしていない人のページは履歴が空なのでクロールを完全にやめる (もしくは過去のページに行きすぎたので中断)
-            if list.empty?
-              break
-            end
+            # if list.empty?
+            #   break
+            # end
 
-            list.each do |history|
-              key = history[:key]
-
-              # すでに取り込んでいるならスキップ
-              if Battle.where(key: key).exists?
-                next
-              end
-
-              # # フィルタ機能
-              # if true
-              #   # 初段以上の指定がある場合
-              #   if v = params[:grade_key_gteq]
-              #     v = GradeInfo.fetch(v)
-              #     # 取得してないときもあるため
-              #     if user_infos = history[:user_infos]
-              #       # 両方初段以上ならOK
-              #       if user_infos.all? { |e| GradeInfo.fetch(e[:grade_key]).priority <= v.priority }
-              #       else
-              #         next
-              #       end
-              #     end
-              #   end
-              # end
-
-              single_battle_import(key)
-              sleep(params[:sleep].to_i)
-            end
+            keys += list.collect { |e| e[:key] }
 
             # アクセス数を減らすために10件未満なら終了する
             if list.size < Agent.items_per_page
               break
             end
+
+            sleep(params[:sleep].to_i)
+
+            # if Battle.where(key: key).exists?
+
+            # list.each do |history|
+            #   key = history[:key]
+            #
+            #   # すでに取り込んでいるならスキップ
+            #   if Battle.where(key: key).exists?
+            #     next
+            #   end
+
+            # # フィルタ機能
+            # if true
+            #   # 初段以上の指定がある場合
+            #   if v = params[:grade_key_gteq]
+            #     v = GradeInfo.fetch(v)
+            #     # 取得してないときもあるため
+            #     if user_infos = history[:user_infos]
+            #       # 両方初段以上ならOK
+            #       if user_infos.all? { |e| GradeInfo.fetch(e[:grade_key]).priority <= v.priority }
+            #       else
+            #         next
+            #       end
+            #     end
+            #   end
+            # end
+          end
+
+          new_keys = keys - where(key: keys).pluck(:key)
+          new_keys.each do |key|
+            single_battle_import(key, validate_skip: true)
+            sleep(params[:sleep].to_i)
           end
         end
 
-        def single_battle_import(key)
+        def single_battle_import(key, **options)
           # 登録済みなのでスキップ
-          if Battle.where(key: key).exists?
-            return
+          unless options[:validate_skip]
+            if Battle.where(key: key).exists?
+              return
+            end
           end
 
           info = agent.record_get(key)

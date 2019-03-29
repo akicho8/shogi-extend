@@ -45,15 +45,7 @@
 
                 //////////////////////////////////////////////////////////////////////////////// 対局者名
                 p.card-header-title.is-size-7.nowrap
-                  - ship = current_record.memberships.black
-                  = ship.winner_only_icon_html
-                  = controller.user_link2(ship)
-
-                  span.versus.has-text-grey-lighter= " vs "
-
-                  - ship = current_record.memberships.white
-                  = ship.winner_only_icon_html
-                  = controller.user_link2(ship)
+                  == current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + controller.user_link2(e) }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
 
               .card-content
                 - if sfen = current_record.to_cached_kifu(:sfen)

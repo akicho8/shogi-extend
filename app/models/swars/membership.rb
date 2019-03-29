@@ -25,10 +25,11 @@ module Swars
 
     acts_as_list top_of_list: 0, scope: :battle
 
-    default_scope { order(:position) }
+    # default_scope { order(:position) }
 
     scope :judge_key_eq, -> v { where(judge_key: v).take }
 
+    # FIXME: 重いので基本使うな
     # 先手/後手側の対局時の情報
     scope :black, -> { where(location_key: "black").take! }
     scope :white, -> { where(location_key: "white").take! }
@@ -37,6 +38,7 @@ module Swars
     # scope :win,  -> { judge_key_eq(:win)  }
     # scope :lose, -> { judge_key_eq(:lose) }
 
+    # FIXME: 重いので基本使うな
     # user に対する自分/相手
     scope :myself, -> user { where(user_id: user.id).take!     }
     scope :rival,  -> user { where.not(user_id: user.id).take! }
