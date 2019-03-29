@@ -101,7 +101,7 @@ Rails.application.routes.draw do
     # options = {
     #   locale: "ja",
     # }.merge(options)
-    # 
+    #
     # "http://kif-pona.heroz.jp/games/#{battle.key}?#{options.to_query}"
     "http://kif-pona.heroz.jp/games/#{battle.key}"
   end
@@ -131,6 +131,10 @@ Rails.application.routes.draw do
 
   direct :youtube_search do |query|
     "https://www.youtube.com/results?search_query=#{query}&search=Search"
+  end
+
+  direct :production_app do
+    "http://tk2-221-20341.vs.sakura.ne.jp/shogi"
   end
 
   ################################################################################ graphiql
