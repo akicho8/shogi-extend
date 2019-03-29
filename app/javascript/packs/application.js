@@ -10,7 +10,8 @@
 import Rails from "rails-ujs"
 Rails.start()
 
-import "./application_css.sass"
+import "./general.sass"
+import "./application_dependent.sass"
 import "./modulable_crud.coffee"
 import "./light_session_app.js"
 import "./audio_queue.js"

@@ -49,7 +49,7 @@ html(lang="ja")
         .container.is-fluid
           .columns
             .column.has-text-centered
-              #system_notification_app.has-text-grey-light
+              #system_notification_app.has-text-grey-lighter
                 | ActionCable: {{latest_system_logs.join(" ")}}
     - else
       nav.navbar.is-transparent.is-primary
@@ -223,10 +223,13 @@ html(lang="ja")
                 ul= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
           .column
             .column
-              .has-text-centered
-                = "Powered by Rails #{Rails.version} and Ruby #{RUBY_VERSION}"
+              .has-text-centered.no-decoration
+                = "Powered by "
+                = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/", target: "_blank", :class => "no-decoration")
+                = " and "
+                = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank", :class => "no-decoration")
 
-                #system_notification_app.has-text-grey-light
+                #system_notification_app.has-text-grey-lighter
                   | ActionCable: {{latest_system_logs.join(" ")}}
 
     #single_notification_app
