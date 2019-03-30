@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     computed: {
       // チャットに表示する最新メッセージたち
       latest_lobby_messages() {
-        return _.takeRight(this.lobby_messages, 10)
+        return _.takeRight(this.lobby_messages, js_global.chat_window_size)
       },
 
       // 選択中の持ち時間項目

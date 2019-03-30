@@ -29,7 +29,7 @@ module Colosseum
 
     serialize :msg_options
 
-    cattr_accessor(:chat_window_size) { 10 }
+    cattr_accessor(:chat_window_size) { 14 }
 
     scope :latest_list, -> { order(created_at: :desc).limit(chat_window_size) } # 実際に使うときは昇順表示なので reverse しよう
 
