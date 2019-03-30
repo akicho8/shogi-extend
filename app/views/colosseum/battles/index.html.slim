@@ -61,19 +61,27 @@ javascript:
       = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
 
     = link_to("ランキング", [:colosseum, :rankings], class: "button is-primary is-large")
-      
+
   .columns
     .column
       .non_border_box.chat_container
-        / .title.is-6= "チャット"
-        table.table.is-narrow.is-fullwidth
-          tr v-for="e of latest_lobby_messages"
-            td
-              .chat_one_line
-                message_link_to(:user_to="e.user")
-                = " "
-                span.chat_message(:class="e.msg_options.msg_class")
-                  | {{e.message}}
+        - if true
+          .media.is-paddingless.is-marginless(v-for="e of latest_lobby_messages")
+            .media-left
+              message_link_to(:user_to="e.user")
+            .media-content
+              p.content.chat_message(:class="e.msg_options.msg_class")
+                | {{e.message}}
+
+        / / .title.is-6= "チャット"
+        / table.table.is-narrow.is-fullwidth
+        /   tr v-for="e of latest_lobby_messages"
+        /     td
+        /       .chat_one_line
+        /         message_link_to(:user_to="e.user")
+        /         = " "
+        /         span.chat_message(:class="e.msg_options.msg_class")
+        /           | {{e.message}}
 
         / .field
         /   .control
@@ -90,9 +98,8 @@ javascript:
                   = image_tag current_user.avatar_url
 
             .media-content
-              .field
-                p.control
-                  textarea.textarea(autocomplete="off" v-model.trim="message" @keydown.enter="message_enter_handle" ref="message_input" rows="2")
+              p.content
+                textarea.textarea(autocomplete="off" v-model.trim="message" @keydown.enter="message_enter_handle" ref="message_input" rows="2")
               template(v-if="message || true")
                 nav.level
                   .level-left
