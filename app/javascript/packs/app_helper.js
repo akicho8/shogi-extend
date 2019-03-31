@@ -64,7 +64,7 @@ export function clipboard_copy(str, options = {}) {
     const elem = document.createElement('textarea')
     document.body.appendChild(elem)
     elem.value = str
-    success = copyToClipboard(elem)
+    success = corresponded_to_ios_pc_android_copy_to_clipboard(elem)
     document.body.removeChild(elem)
   }
 
@@ -79,7 +79,7 @@ export function clipboard_copy(str, options = {}) {
 }
 
 // https://marmooo.blogspot.com/2018/02/javascript.html
-function copyToClipboard(el) {
+function corresponded_to_ios_pc_android_copy_to_clipboard(el) {
   // resolve the element
   el = (typeof el === 'string') ? document.querySelector(el) : el
 
