@@ -4,7 +4,7 @@ class AboutController < ApplicationController
 
   def markdown_render
     md = self.class.render(action: "#{params[:id]}.md", layout: false)
-    renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
+    renderer = Redcarpet::Render::HTML.new(hard_wrap: true, link_attributes: {target: "_blank"})
     markdown = Redcarpet::Markdown.new(renderer, autolink: true)
     markdown.render(md).html_safe
   end

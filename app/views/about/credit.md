@@ -1,6 +1,12 @@
 # クレジット
 <hr>
 
+ぴよ将棋
+https://www.studiok-i.net/ios/piyo_shogi.html
+
+将棋ウォーズ
+https://shogiwars.heroz.jp/
+
 ## 利用素材
 
 将棋駒と将棋盤 画像フリー素材 | 無料素材倶楽部
