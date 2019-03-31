@@ -37,7 +37,7 @@ module Swars
       end
 
       if params[:redirect_to_bookmarkable_page]
-        SlackAgent.chat_post_message(key: "ブクマ移動", body: current_user_key)
+        SlackAgent.message_send(key: "ブクマ移動", body: current_user_key)
         flash[:external_app_exec_skip_once] = true # ブックマークできるように一時的にぴよ将棋に飛ばないようにする
         # flash[:primary] = "この状態で「ホーム画面に追加」しておくと開くと同時に最新の対局をぴよ将棋で開けるようになります"
         redirect_to [:swars, current_mode, query: current_swars_user, latest_open_index: params[:latest_open_index]]
@@ -59,7 +59,7 @@ module Swars
           limit = [latest_open_index.to_i.abs, 10].min.next
           if record = current_scope.order(battled_at: :desc).limit(limit).last
             @redirect_url_by_js = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
-            SlackAgent.chat_post_message(key: "最新開くぴよ", body: current_user_key)
+            SlackAgent.message_send(key: "最新開くぴよ", body: current_user_key)
             if false
               # この方法だと動くけど白紙のページが開いてしまう
               redirect_to @redirect_url_by_js
@@ -130,7 +130,7 @@ module Swars
           end
 
           if hit_count.nonzero?
-            SlackAgent.chat_post_message(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
+            SlackAgent.message_send(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
           end
         end
       end

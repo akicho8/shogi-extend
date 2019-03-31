@@ -11,7 +11,7 @@ module Swars
           flash.now[:warning] = "#{current_user_key} さんの情報は見つかりませんでした"
           return
         end
-        SlackAgent.chat_post_message(key: "Wプレイヤー情報", body: "#{current_swars_user.user_key}")
+        SlackAgent.message_send(key: "Wプレイヤー情報", body: "#{current_swars_user.user_key}")
       end
     end
 

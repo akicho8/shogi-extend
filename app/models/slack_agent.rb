@@ -1,7 +1,7 @@
 module SlackAgent
   extend self
 
-  def chat_post_message(key:, body:)
+  def message_send(key:, body:)
     if Rails.env.test?
       return
     end

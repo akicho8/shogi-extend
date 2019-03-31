@@ -38,7 +38,7 @@ module Colosseum
     end
 
     after_create do
-      SlackAgent.chat_post_message(key: "ロビー発言", body: "#{user.name}: #{message}")
+      SlackAgent.message_send(key: "ロビー発言", body: "#{user.name}: #{message}")
     end
   end
 end

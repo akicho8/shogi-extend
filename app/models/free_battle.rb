@@ -112,7 +112,7 @@ class FreeBattle < ApplicationRecord
   end
 
   after_create do
-    SlackAgent.chat_post_message(key: "棋譜入力", body: "#{title}")
+    SlackAgent.message_send(key: "棋譜入力", body: "#{title}")
   end
 
   concerning :TagMethods do
