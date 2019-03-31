@@ -47,7 +47,7 @@
             .column
               .field
                 .title.yumincho.is-4= tactic_info.name
-                == stat.transform_keys { |e| Bioshogi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e]) : e }.to_html(table_class: "table is-fullwidth is-narrow")
+                == stat.transform_keys { |e| Bioshogi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e], :class => "no-decoration") : e }.to_html(table_class: "table is-fullwidth is-narrow")
       .columns
         .column
           .field
