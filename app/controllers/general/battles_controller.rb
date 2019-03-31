@@ -243,7 +243,7 @@ module General
 
     def row_links(battle)
       list = []
-      list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([battle, format: "kif"])})
+      list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kif_direct_access_path: url_for([battle, format: "kif", copy_trigger: true])})
       list << link_to("詳細", [battle], "class": "button is-small")
       # list << link_to("山", [ns_prefix, battle, mountain: true], "class": "button is-small", remote: true, data: {toggle: :tooltip, title: "将棋山脈"})
       # list << link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, battle, format: "kif"])))

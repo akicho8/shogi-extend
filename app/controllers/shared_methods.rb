@@ -50,6 +50,10 @@ module SharedMethods
   def kifu_send_data
     text_body = current_record.to_cached_kifu(params[:format])
 
+    if params[:copy_trigger]
+      SlackAgent.chat_post_message(key: "#{params[:format]}コピー", body: current_record.key)
+    end
+
     if params[:shift_jis].present? || params[:sjis].present?
       text_body = text_body.tosjis
     end
