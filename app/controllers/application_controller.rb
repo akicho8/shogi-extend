@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
   extend Lettable
 
+  # http://localhost:3000/?force_error=1
+  # http://tk2-221-20341.vs.sakura.ne.jp/shogi?force_error=1
+  prepend_before_action do
+    if params[:force_error]
+      1 / 0
+    end
+  end
+
   before_action do
     if params[:__redirect_to]
       redirect_to params[:__redirect_to], params.permit![:__flash]
