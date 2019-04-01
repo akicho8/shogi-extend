@@ -4,18 +4,22 @@ document.addEventListener("DOMContentLoaded", () => {
   window.SwarsBattleShowApp = Vue.extend({
     data() {
       return {
-        chartjs_params: this.$options.chartjs_params,
       }
     },
 
     mounted() {
-      new Chart(this.$refs.swars_battle_show_canvas, this.chartjs_all_params)
+      new Chart(this.$refs.think_canvas, this.think_chart_params)
     },
 
     computed: {
-      chartjs_all_params() {
-        return Object.assign({}, this.chartjs_params, {
+      think_chart_params() {
+        return Object.assign({}, this.$options.think_chart_params, {
           options: {
+            title: {
+              display: true,
+              text: "消費時間",
+            },
+
             // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
             scales: {
               xAxes: [{
@@ -33,10 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 // }
               }],
               yAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: "消費",
-                },
+                // scaleLabel: {
+                //   display: true,
+                //   labelString: "消費",
+                // },
                 ticks: {
                   // suggestedMax: 100,
                   // suggestedMin: 0,

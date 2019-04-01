@@ -451,7 +451,7 @@ module Swars
 
     let :js_swars_battle_show_app_params do
       {
-        chartjs_params: {
+        think_chart_params: {
           type: "line",
           data: {
             # labels: (1..current_record.memberships.map{|e|e.sec_list.size}.max).to_a,
@@ -466,19 +466,19 @@ module Swars
                 fill: true,
               }
             },
-            options: {
-              # https://misc.0o0o.org/chartjs-doc-ja/general/responsive.html
-              # responsive: true,
-              # maintainAspectRatio: true,
-              # elements: {
-              #   line: {
-              #     tension: 0, # ベジェ曲線無効
-              #   },
-              # },
-              # animation: {
-              #   duration: 0, # 一般的なアニメーションの時間
-              # },
-            },
+          },
+          options: {
+            # https://misc.0o0o.org/chartjs-doc-ja/general/responsive.html
+            # responsive: true,
+            # maintainAspectRatio: true,
+            # elements: {
+            #   line: {
+            #     tension: 0, # ベジェ曲線無効
+            #   },
+            # },
+            # animation: {
+            #   duration: 0, # 一般的なアニメーションの時間
+            # },
           },
         },
       }
@@ -487,8 +487,8 @@ module Swars
     let :theme_info do
       [
         { borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
-        # { borderColor: "hsl(204,  86%, 53%, 0.5)", backgroundColor: "hsl(204,  86%, 53%, 0.05)", },
         { borderColor: "hsl(348, 100%, 61%, 0.5)", backgroundColor: "hsl(348, 100%, 61%, 0.1)", },
+        { borderColor: "hsl(204,  86%, 53%, 0.5)", backgroundColor: "hsl(204,  86%, 53%, 0.05)", },
       ]
     end
   end

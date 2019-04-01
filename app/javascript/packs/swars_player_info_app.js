@@ -1,22 +1,35 @@
 // Vue.js にする必要ない気がするけど今後膨らむかもしれないのでこれでいい
 
+import * as GooglePalette from 'google-palette'
+
 document.addEventListener("DOMContentLoaded", () => {
   window.SwarsPlayerInfoApp = Vue.extend({
     data() {
       return {
-        chartjs_params: this.$options.chartjs_params,
       }
     },
 
     mounted() {
-      new Chart(this.$refs.swars_player_info_canvas, this.chartjs_all_params)
+      new Chart(this.$refs.battle_canvas, this.battle_chart_params)
+      new Chart(this.$refs.rule_canvas, this.rule_chart_params)
+    },
+
+    methods: {
+      color_generate(size) {
+        // http://google.github.io/palette.js/
+        return GooglePalette("cb-Pastel2", size).map(hex => "#" + hex)
+      },
     },
 
     computed: {
-      chartjs_all_params() {
-        return Object.assign({}, this.chartjs_params, {
-
+      battle_chart_params() {
+        return Object.assign({}, this.$options.battle_chart_params, {
           options: {
+            title: {
+              display: true,
+              text: "対局日時",
+            },
+
             // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
             layout: {
               padding: {
@@ -62,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
             legend: {
               display: true,
             },
+
             tooltips: {
               callbacks: {
                 title(tooltipItems, data) {
@@ -77,7 +91,20 @@ document.addEventListener("DOMContentLoaded", () => {
             },
           },
         })
-      }
+      },
+
+      rule_chart_params() {
+        const v = Object.assign({}, this.$options.rule_chart_params, {
+          options: {
+            title: {
+              display: true,
+              text: "対局モード",
+            },
+          },
+        })
+        v.data.datasets[0].backgroundColor = this.color_generate(v.data.datasets[0].data.length)
+        return v
+      },
     },
   })
 })

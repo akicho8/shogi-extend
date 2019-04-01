@@ -50,9 +50,10 @@
                 == stat.transform_keys { |e| Bioshogi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e], :class => "no-decoration") : e }.to_html(table_class: "table is-fullwidth is-narrow")
       .columns
         .column
-          .field
-            .title.is-4.yumincho 対局日時
-            canvas(ref="swars_player_info_canvas")
-            - if Rails.env.development?
-              == debug js_swars_player_info_app_params.as_json
+          canvas(ref="battle_canvas")
+          - if Rails.env.development?
+            == debug js_swars_player_info_app_params.as_json
+        .column
+          canvas(ref="rule_canvas")
+
 

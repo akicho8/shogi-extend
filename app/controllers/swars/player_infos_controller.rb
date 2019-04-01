@@ -23,6 +23,10 @@ module Swars
       User.find_by(user_key: current_user_key)
     end
 
+    let :memberships_rule_key_group do
+      current_swars_user.battles.group("rule_key").count
+    end
+
     let :js_swars_player_info_app_params do
       # s, e = current_swars_user.memberships.minmax_by { |e| e.battle.battled_at }
       # labels = (s.battle.battled_at.to_date..e.battle.battled_at.to_date).to_a
@@ -31,7 +35,7 @@ module Swars
       memberships = current_swars_user.memberships.reorder(created_at: :desc).take(100)
 
       {
-        chartjs_params: {
+        battle_chart_params: {
           type: "line",
           data: {
             # labels: labels,
@@ -52,9 +56,18 @@ module Swars
                 showLine: false,          # 線で繋げない
               }
             },
-            options: {
-              # JavaScript 側で定義
-            },
+          },
+        },
+        rule_chart_params: {
+          type: "pie",
+          data: {
+            labels: RuleInfo.collect { |e| e.name },
+            datasets: [
+              {
+                data: RuleInfo.collect { |e| memberships_rule_key_group[e.key.to_s] || 0 },
+                # backgroundColor: RuleInfo.values.each_index.collect { |i| PaletteInfo[i].css_color },
+              },
+            ],
           },
         },
       }

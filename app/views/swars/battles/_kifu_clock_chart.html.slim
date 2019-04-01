@@ -7,9 +7,8 @@ javascript:
 #swars_battle_show_app
   hr
   .section
-    .title.is-4.yumincho 消費時間
-
-    canvas(ref="swars_battle_show_canvas")
+    / .title.is-4.yumincho 消費時間
+    canvas(ref="think_canvas")
 
   - if Rails.env.development? && false
     = current_record.parsed_info.move_infos.take(4).to_html
