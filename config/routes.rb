@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :about, only: :show
 
+  get "health" => HealthResponder
+
   get "talk", to: "talk#show", as: :talk
 
   devise_for :xusers, {
