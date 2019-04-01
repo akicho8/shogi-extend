@@ -7,4 +7,4 @@
         | で開く
       / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
       = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-primary is-small is-rounded")
-      = link_to("古い対局も取り込む", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 10], class: "button is-success is-small is-rounded", method: :post)
+      = link_to("古い対局も取り込む", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 10], class: "button is-success is-small is-rounded", method: :post, data: {confirm: "1分以上かかる場合がありますがよろしいですか？"})
