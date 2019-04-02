@@ -12,7 +12,7 @@ battle.csa_seq.each do |e|
   p e
 end
 
-battle.parsed_info.move_infos.each do |e|
+battle.heavy_parsed_info.move_infos.each do |e|
   p e
 end
 

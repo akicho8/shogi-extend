@@ -160,7 +160,7 @@ module Swars
         @sec_list ||= -> {
           c = Bioshogi::Location.count
           pos = battle.preset_info.to_turn_info.current_location(position).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
-          v = battle.parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
+          v = battle.fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
           v.collect { |e| e[:used_seconds] }
         }.call
       end
@@ -174,7 +174,7 @@ module Swars
       end
 
       def swgod_level1_used?
-        if battle.parsed_info.move_infos.size >= swgod_move_getq
+        if battle.fast_parsed_info.move_infos.size >= swgod_move_getq
           list = sec_list.last(swgod_last_n)
           if list.size >= swgod_hand_times
             list.each_cons(swgod_hand_times).any? { |list| list.sum <= swgod_time_limit }

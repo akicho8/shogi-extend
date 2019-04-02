@@ -26,7 +26,7 @@ module ConvertMethods
   def to_cached_kifu(key)
     if kifu_cache_enable
       Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
-        parsed_info.public_send("to_#{key}", compact: true)
+        heavy_parsed_info.public_send("to_#{key}", compact: true)
       end
     else
       if e = converted_infos.text_format_eq(key).take
@@ -35,12 +35,24 @@ module ConvertMethods
     end
   end
 
-  def parsed_info
-    @parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed)
+  # KI2変換可能だけど重い
+  def heavy_parsed_info
+    @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed)
+  end
+
+  # バリデーションをはずして KI2 への変換もしない前提の軽い版
+  # ヘッダーやタグが欲しいとき用
+  def fast_parsed_info
+    @fast_parsed_info ||= Bioshogi::Parser.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parsed_options))
+  end
+
+  # オプションはサブクラスで渡してもらう
+  def fast_parsed_options
+    {}
   end
 
   # def total_seconds
-  #   @total_seconds ||= parsed_info.move_infos.sum { |e| e[:used_seconds] }
+  #   @total_seconds ||= heavy_parsed_info.move_infos.sum { |e| e[:used_seconds] }
   # end
 
   # 更新方法
@@ -54,11 +66,12 @@ module ConvertMethods
       destroy_all: false,
     }.merge(options)
 
-    info = parsed_info
+    info = fast_parsed_info
     converted_infos.destroy_all if options[:destroy_all]
 
     if kifu_cache_enable
     else
+      # くそ重くなるのでこれはやってはいけない
       KifuFormatWithBodInfo.each do |e|
         converted_info = converted_infos.text_format_eq(e.key).take || converted_infos.build
         converted_info.text_body = info.public_send("to_#{e.key}", compact: true)

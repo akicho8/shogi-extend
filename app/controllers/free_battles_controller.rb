@@ -40,12 +40,12 @@ class FreeBattlesController < ApplicationController
     params[:kifu_body].to_s
   end
 
-  let :parsed_info do
+  let :heavy_parsed_info do
     Bioshogi::Parser.parse(current_kifu_body, typical_error_case: :embed)
   end
 
   let :kifus_hash do
-    KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { name: e.name, value: parsed_info.public_send("to_#{e.key}", compact: true) }) }
+    KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
   end
 
   def new

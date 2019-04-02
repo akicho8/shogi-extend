@@ -130,9 +130,9 @@ class TacticNotesController < ApplicationController
   let :sample_kifu_body do
     Rails.cache.fetch("#{__method__}_#{current_record.key}", :expires_in => 1.week) do
       file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
-      parsed_info = Bioshogi::Parser.file_parse(file)
+      heavy_parsed_info = Bioshogi::Parser.file_parse(file)
       Bioshogi::KifuFormatInfo.inject({}) do |a, e|
-        a.merge(e.key => parsed_info.public_send("to_#{e.key}"))
+        a.merge(e.key => heavy_parsed_info.public_send("to_#{e.key}"))
       end
     end
   end

@@ -11,7 +11,7 @@ javascript:
     canvas(ref="think_canvas")
 
   - if Rails.env.development? && false
-    = current_record.parsed_info.move_infos.take(4).to_html
+    = current_record.fast_parsed_info.move_infos.take(4).to_html
 
     - current_record.memberships.each do |membership|
       = membership.chartjs_data.take(2).to_html

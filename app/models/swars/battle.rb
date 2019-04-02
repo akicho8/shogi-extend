@@ -154,6 +154,13 @@ module Swars
         s.join("\n") + "\n"
       end
 
+      def fast_parsed_options
+        {
+          validate_skip: true,
+          candidate_skip: true,
+        }
+      end
+
       def parser_exec_after(info)
         # 囲い対決などに使う
         if true
