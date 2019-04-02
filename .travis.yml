@@ -9,7 +9,7 @@ addons:
     packages:
     - google-chrome-stable
 language: ruby
-rvm: 2.5.1
+rvm: 2.6.1
 cache:
   directories:
   - vendor/bundle
