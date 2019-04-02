@@ -96,7 +96,9 @@ group :development do
 end
 
 group :test do
-  gem 'chromedriver-helper'     # for SystemTestCase
+  # gem 'webdrivers'              # for SystemTestCase https://qiita.com/jnchito/items/f9c3be449fd164176efa
+  gem 'chromedriver-helper'
+
   gem 'database_cleaner'
   gem 'timecop'
 end

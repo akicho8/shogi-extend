@@ -30,6 +30,7 @@ before_script:
   - bin/yarn
   - bundle exec rake db:create
   - bundle exec rake db:migrate
+  - bundle exec chromedriver-update 2.46
 script: bundle exec rspec -f d
 after_success:
   - env
