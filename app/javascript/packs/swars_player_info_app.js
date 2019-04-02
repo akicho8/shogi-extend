@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     mounted() {
       new Chart(this.$refs.battle_canvas, this.battle_chart_params)
+      new Chart(this.$refs.week_canvas, this.week_chart_params)
       new Chart(this.$refs.rule_canvas, this.rule_chart_params)
+      new Chart(this.$refs.grouper_canvas, this.grouper_chart_params)
+      new Chart(this.$refs.faction_canvas, this.faction_chart_params)
     },
 
     methods: {
@@ -19,15 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // http://google.github.io/palette.js/
         return GooglePalette("cb-Pastel2", size).map(hex => "#" + hex)
       },
-    },
 
-    computed: {
-      battle_chart_params() {
-        return Object.assign({}, this.$options.battle_chart_params, {
+      battle_chart_js_options(text) {
+        return {
           options: {
             title: {
               display: true,
-              text: "対局日時",
+              text: text,
             },
 
             // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
@@ -90,7 +91,17 @@ document.addEventListener("DOMContentLoaded", () => {
               },
             },
           },
-        })
+        }
+      },
+    },
+
+    computed: {
+      battle_chart_params() {
+        return Object.assign({}, this.$options.battle_chart_params, this.battle_chart_js_options("対局日時"))
+      },
+
+      week_chart_params() {
+        return Object.assign({}, this.$options.week_chart_params, this.battle_chart_js_options("直近1週間"))
       },
 
       rule_chart_params() {
@@ -98,7 +109,33 @@ document.addEventListener("DOMContentLoaded", () => {
           options: {
             title: {
               display: true,
-              text: "対局モード",
+              text: "種類",
+            },
+          },
+        })
+        v.data.datasets[0].backgroundColor = this.color_generate(v.data.datasets[0].data.length)
+        return v
+      },
+
+      grouper_chart_params() {
+        const v = Object.assign({}, this.$options.grouper_chart_params, {
+          options: {
+            title: {
+              display: true,
+              text: "組手",
+            },
+          },
+        })
+        v.data.datasets[0].backgroundColor = this.color_generate(v.data.datasets[0].data.length)
+        return v
+      },
+
+      faction_chart_params() {
+        const v = Object.assign({}, this.$options.faction_chart_params, {
+          options: {
+            title: {
+              display: true,
+              text: "党派",
             },
           },
         })
