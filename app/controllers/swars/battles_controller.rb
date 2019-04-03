@@ -463,10 +463,16 @@ module Swars
     end
 
     let :current_record do
-      if v = params[:id].presence
-        unless bot_agent?
-          current_model.single_battle_import(v)
+      if bot_agent?
+        if v = params[:id].presence
+          unless current_scope.where(key: v).exists?
+            raise ActionController::RoutingError, "ページが見つかりません(for bot)"
+          end
         end
+      end
+
+      if v = params[:id].presence
+        current_model.single_battle_import(v)
         current_scope.find_by!(key: v)
       else
         current_scope.new
