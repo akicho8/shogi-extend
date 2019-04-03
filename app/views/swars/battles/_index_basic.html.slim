@@ -25,30 +25,33 @@
       = javascript_pack_tag("shogi_player_app")
     - current_records.each_slice(3) do |current_records|
       .columns
-        - current_records.each do |current_record|
+        - current_records.each do |record|
           .column
             .card
               header.card-header
                 //////////////////////////////////////////////////////////////////////////////// 右端ドロップダウン
                 b-dropdown(hoverable)
-                  a class="card-header-icon" slot="trigger"
-                    b-icon pack="fas" icon="angle-down" size="is-small"
-                  b-dropdown-item :has-link="true" :paddingless="true"
-                    = link_to("ウォーズに移動", swars_real_battle_url(current_record), target: "_blank")
-                  b-dropdown-item :has-link="true" :paddingless="true"
-                    = link_to("KI2 コピー", "#", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([current_record, format: "ki2", copy_trigger: true])})
-                  b-dropdown-item :has-link="true" :paddingless="true"
-                    = link_to("Tweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')")
-                  - current_record.memberships.each do |e|
+                  - record.memberships.each do |e|
                     b-dropdown-item :has-link="true" :paddingless="true"
                       = link_to("#{e.user.user_key} 情報", [:swars, :player_infos, user_key: e.user.user_key])
+                  b-dropdown-item(:separator="true")
+                  b-dropdown-item(:has-link="true" :paddingless="true")
+                    = link_to("KIF ダウンロード", [record, format: "kif"])
+                  b-dropdown-item :has-link="true" :paddingless="true"
+                    = link_to("KI2 コピー", "#", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([record, format: "ki2", copy_trigger: true])})
+                  a(class="card-header-icon" slot="trigger")
+                    b-icon(pack="fas" icon="angle-down" size="is-small")
+                  b-dropdown-item :has-link="true" :paddingless="true"
+                    = link_to("ウォーズに移動", swars_real_battle_url(record), target: "_blank")
+                  b-dropdown-item :has-link="true" :paddingless="true"
+                    = link_to("Tweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{record.wars_tweet_body}')")
 
                 //////////////////////////////////////////////////////////////////////////////// 対局者名
                 p.card-header-title.is-size-7.nowrap
-                  == current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + controller.user_link2(e) }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
+                  == record.memberships.collect { |e| e.winner_only_icon_html.to_s + controller.user_link2(e) }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
 
               .card-content
-                - if sfen = current_record.to_cached_kifu(:sfen)
+                - if sfen = record.to_cached_kifu(:sfen)
                     shogi-player(
                       :kifu_body="'#{sfen}'"
                       :key_event_capture="false"
@@ -60,9 +63,9 @@
                       :volume=AppConfig[:volume]
                     )
               footer.card-footer
-                = link_to("コピー", "#", "class": "card-footer-item", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([current_record, format: "kif", copy_trigger: true])})
-                = link_to("詳細", [current_record], "class": "card-footer-item")
-                = link_to(image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([current_record, format: "kif"])), "class": "card-footer-item")
+                = link_to("コピー", "#", "class": "card-footer-item", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([record, format: "kif", copy_trigger: true])})
+                = link_to("詳細", [record], "class": "card-footer-item")
+                = link_to(image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([record, format: "kif"])), "class": "card-footer-item")
 
 - if rows
   .columns
