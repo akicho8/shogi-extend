@@ -191,6 +191,8 @@ module Swars
 
     def perform_zip_download
       if request.format.zip?
+        require "kconv"
+
         filename = -> {
           parts = []
           parts << "shogiwars"
@@ -198,18 +200,20 @@ module Swars
             parts << current_swars_user.user_key
           end
           parts << Time.current.strftime("%Y%m%d%H%M%S")
+          parts << current_encode
           if current_tags
             parts.concat(current_tags)
           end
-          parts.compact.join("_") + ".zip"
+          str = parts.compact.join("_") + ".zip"
+          str.public_send("to#{current_encode}")
         }
 
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           current_scope.limit(zip_download_limit).each do |battle|
-            KifuFormatWithBodInfo.each.with_index do |e|
-              if kd = battle.to_cached_kifu(e.key)
+            Bioshogi::KifuFormatInfo.each.with_index do |e|
+              if str = battle.to_cached_kifu(e.key)
                 zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
-                zos.write kd
+                zos.write(str.public_send("to#{current_encode}"))
               end
             end
           end

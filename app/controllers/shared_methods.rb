@@ -48,15 +48,15 @@ module SharedMethods
   # curl -I http://localhost:3000/x/1.kif?inline=1
   # curl -I http://localhost:3000/x/1.kif?plain=1
   def kifu_send_data
+    require "kconv"
+
     text_body = current_record.to_cached_kifu(params[:format])
 
     if params[:copy_trigger]
       SlackAgent.message_send(key: "#{params[:format]}コピー", body: current_record.key)
     end
 
-    if params[:shift_jis].present? || params[:sjis].present?
-      text_body = text_body.tosjis
-    end
+    text_body = text_body.public_send("to#{current_encode}")
 
     if params[:plain].present?
       render plain: text_body
@@ -76,7 +76,6 @@ module SharedMethods
       # end
     end
 
-    require "kconv"
     send_data(text_body, type: Mime[params[:format]], filename: current_filename.public_send("to#{current_encode}"), disposition: disposition)
   end
 
@@ -85,11 +84,15 @@ module SharedMethods
   end
 
   def current_encode_default
-    if request.user_agent.to_s.match(/Windows/i)
+    if sjis_p?
       "sjis"
     else
       "utf8"
     end
+  end
+
+  def sjis_p?
+    request.user_agent.to_s.match(/Windows/i) || params[:shift_jis].present? || params[:sjis].present?
   end
 
   def behavior_after_rescue(message)
