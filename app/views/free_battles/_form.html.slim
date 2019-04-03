@@ -1,26 +1,5 @@
 .field
-  b-tabs(v-model="current_input_tab")
-    b-tab-item(label="テキスト入力")
-      .control
-        = form.label(:kifu_body, class: "label")
-        = form.text_area(:kifu_body, rows: 12, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "kifu_body", ref: "kifu_body")
-
-      - if Rails.env.development? || true
-        .is-size-7
-          | 変換後の棋譜から
-          | &nbsp;
-          a.is-small(@click="copy_to_kifu_body('kif')") KIF
-          | &nbsp;
-          a.is-small(@click="copy_to_kifu_body('ki2')") KI2
-          | &nbsp;
-          a.is-small(@click="copy_to_kifu_body('bod')") BOD
-          | &nbsp;
-          | を逆にコピー
-          | &nbsp;
-          | /
-          | &nbsp;
-          a.is-small(@click="kifu_body_clear") クリア
-
+  b-tabs(v-model="current_tab_index" expanded)
     b-tab-item(label="操作入力")
       .non_border_box
         shogi-player(
@@ -41,6 +20,27 @@
           = render partial: "sfen_link"
 
       b-switch(v-model="auto_copy_to_kifu_body_disable_p" size="is-small" type="is-danger") 指し手をテキスト入力の方に反映しない(※保存されないので注意)
+
+    b-tab-item(label="テキスト入力")
+      .control
+        = form.label(:kifu_body, class: "label")
+        = form.text_area(:kifu_body, rows: 12, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "kifu_body", ref: "kifu_body")
+
+      - if Rails.env.development? || true
+        .is-size-7
+          | 変換後の棋譜から
+          | &nbsp;
+          a.is-small(@click="copy_to_kifu_body('kif')") KIF
+          | &nbsp;
+          a.is-small(@click="copy_to_kifu_body('ki2')") KI2
+          | &nbsp;
+          a.is-small(@click="copy_to_kifu_body('bod')") BOD
+          | &nbsp;
+          | を逆にコピー
+          | &nbsp;
+          | /
+          | &nbsp;
+          a.is-small(@click="kifu_body_clear") クリア
 
 .field
   = form.label(:kifu_url, class: "label")

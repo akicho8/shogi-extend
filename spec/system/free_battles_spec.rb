@@ -13,6 +13,8 @@ RSpec.describe "棋譜入力", type: :system do
   it "入力" do
     visit "/x/new"
 
+    text_input_click
+
     expect(page).to have_field "free_battle[kifu_body]"
     expect(page).to have_field "free_battle[kifu_url]"
     expect(page).to have_field "free_battle[kifu_file]"
@@ -31,6 +33,7 @@ RSpec.describe "棋譜入力", type: :system do
   it "新規でコピペ" do
     visit "/x/#{@free_battle.id}"
     click_on "新規でコピペ"
+    text_input_click
     expect(page).to have_content "48玉"
     doc_image
   end
@@ -38,5 +41,10 @@ RSpec.describe "棋譜入力", type: :system do
   it "詳細" do
     visit "/x/#{@free_battle.id}"
     expect(page).to have_content "新米長玉"
+  end
+
+  # 「テキスト入力」をクリック
+  def text_input_click
+    find("form nav li:nth-child(2) a").click
   end
 end

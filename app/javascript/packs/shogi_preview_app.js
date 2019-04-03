@@ -14,9 +14,14 @@ window.ShogiPreviewApp = Vue.extend({
       kifu_body: null,        // 入力された棋譜
       // full_sfen: null,        // shogi-player に渡すための変数。"position sfen startpos" を入れておくと最初に平手を表示する
       auto_copy_to_kifu_body_disable_p: false,      //
-      current_input_tab: 0,     // 入力タブ切り替え
+      current_tab_index: 0,     // 入力タブ切り替え
       kifus_hash: this.$options.kifus_hash,       // 変換後の棋譜
       kifu_active_tab: 0,       // 変換後の棋譜の切り替え
+
+      tab_list: [
+        "操作入力",
+        "テキスト入力",
+      ],
     }
   },
 
@@ -35,6 +40,12 @@ window.ShogiPreviewApp = Vue.extend({
     },
   },
 
+  computed: {
+    current_tab_name() {
+      return this.tab_list[this.current_tab_index]
+    },
+  },
+  
   methods: {
     preview_update_from_kifu_body: _.debounce(function() {
       this.play_mode_long_sfen_set(this.kifu_body)
@@ -50,7 +61,7 @@ window.ShogiPreviewApp = Vue.extend({
         if (response.data.kifus_hash) {
           this.kifus_hash = response.data.kifus_hash
           if (!this.auto_copy_to_kifu_body_disable_p) {
-            if (this.current_input_tab !== 0) { // FIXME: マジックナンバーをどうにかならんのか？
+            if (this.current_tab_name !== "テキスト入力") {
               this.copy_to_kifu_body("kif")
             }
           }
