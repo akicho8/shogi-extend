@@ -56,7 +56,10 @@ module SharedMethods
       SlackAgent.message_send(key: "#{params[:format]}コピー", body: current_record.key)
     end
 
-    text_body = text_body.public_send("to#{current_encode}")
+    # 激指ではクリップボードは UTF8 でないと読めない
+    # if sjis_p?
+    #   text_body = text_body.tosjis
+    # end
 
     if params[:plain].present?
       render plain: text_body
