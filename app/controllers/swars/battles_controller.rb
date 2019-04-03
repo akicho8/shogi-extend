@@ -81,6 +81,20 @@ module Swars
       end
     end
 
+    def show
+      # クローラーが古いURLの /w/(user_key) 形式で跳んできたとき対策
+      # http://localhost:3000/w/devuser1
+      if v = params[:id].presence
+        if User.where(user_key: v).exists?
+          flash[:import_skip] = true
+          redirect_to [:swars, current_mode, query: v], alert: "URLを変更したのでトップにリダイレクトしました。お手数ですが新しい棋譜を取り込むには再度検索してください"
+          return
+        end
+      end
+
+      super
+    end
+
     def create
       import_process(flash)
       flash[:import_skip] = true
@@ -149,6 +163,10 @@ module Swars
     end
 
     def access_log_create
+      if bot_agent?
+        return
+      end
+
       current_record.access_logs.create!
     end
 
@@ -446,7 +464,9 @@ module Swars
 
     let :current_record do
       if v = params[:id].presence
-        current_model.single_battle_import(v)
+        unless bot_agent?
+          current_model.single_battle_import(v)
+        end
         current_scope.find_by!(key: v)
       else
         current_scope.new
