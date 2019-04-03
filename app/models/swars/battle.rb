@@ -229,7 +229,7 @@ module Swars
           super
 
           if Rails.env.development?
-            basic_import(user_key: "hanairobiyori")
+            basic_import(user_key: "devuser1")
             reception_import
             expert_import
             conditional_import(grade_key_gteq: '三段')

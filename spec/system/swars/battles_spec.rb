@@ -15,7 +15,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
   it "検索" do
     visit "/w"
-    fill_in "query", with: "hanairobiyori"
+    fill_in "query", with: "devuser1"
     click_button "検索"
     expect(page).to have_content "対戦相手"
     doc_image
@@ -23,21 +23,21 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
   it "ぴよ将棋専用" do
     visit "/w-light"
-    fill_in "query", with: "hanairobiyori"
+    fill_in "query", with: "devuser1"
     click_button "検索"
     expect(page).to have_content "対戦相手"
     doc_image
   end
 
   it "アプリ起動できるブックマーク可能なページに飛ぶ" do
-    visit "/w-light?query=hanairobiyori"
+    visit "/w-light?query=devuser1"
     click_on "こちら"
     expect(page).to have_content "ホーム画面に追加してください"
     doc_image
   end
 
   it "連打対策" do
-    visit "/w?query=hanairobiyori&raise_duplicate_key_error=1"
+    visit "/w?query=devuser1&raise_duplicate_key_error=1"
     expect(page).to have_content "データ収集中なのであと15秒ぐらいしてからお試しください"
     doc_image
   end

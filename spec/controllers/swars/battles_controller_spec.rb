@@ -34,7 +34,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
     get :index
     expect(response).to have_http_status(:ok)
 
-    get :index, params: {query: "hanairobiyori"}
+    get :index, params: {query: "devuser1"}
     expect(response).to have_http_status(:ok)
   end
 

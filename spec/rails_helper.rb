@@ -68,7 +68,7 @@ RSpec.configure do |config|
   config.include Module.new {
     def swars_battle_setup
       Swars.setup
-      Swars::Battle.basic_import(user_key: "hanairobiyori")
+      Swars::Battle.basic_import(user_key: "devuser1")
     end
 
     def general_battle_setup

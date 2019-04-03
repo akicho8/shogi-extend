@@ -1,6 +1,6 @@
 # if Rails.env.development? || Rails.env.test?
-#   WebMock::API.stub_request(:any, %r{shogiwars.heroz.jp/users/history/}).to_return(body: Rails.root.join("config/https___shogiwars_heroz_jp_users_history_hanairobiyori_gtype_sb_locale_ja.html").read)
-#   WebMock::API.stub_request(:any, %r{kif-pona.heroz.jp/games/}).to_return(body: Rails.root.join("config/http___kif_pona_heroz_jp_games_hanairobiyori_ispt_20171104_220810_locale_ja.html").read)
+#   WebMock::API.stub_request(:any, %r{shogiwars.heroz.jp/users/history/}).to_return(body: Rails.root.join("config/https___shogiwars_heroz_jp_users_history_devuser1_gtype_sb_locale_ja.html").read)
+#   WebMock::API.stub_request(:any, %r{kif-pona.heroz.jp/games/}).to_return(body: Rails.root.join("config/http___kif_pona_heroz_jp_games_devuser1_ispt_20171104_220810_locale_ja.html").read)
 #
 #   # 上記を有効にする (他は禁止)
 #   WebMock.enable!
