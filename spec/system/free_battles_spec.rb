@@ -43,8 +43,8 @@ RSpec.describe "棋譜入力", type: :system do
     expect(page).to have_content "新米長玉"
   end
 
-  # 「テキスト入力」をクリック
+  # click_on("テキスト入力") 相当
   def text_input_click
-    find("form nav li:nth-child(2) a").click
+    find(".input_method_tabs .tabs li:nth-child(2)").click
   end
 end
