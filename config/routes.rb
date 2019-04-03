@@ -52,10 +52,12 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :swars, path: "" do
-    resources :battles, path: "wr", only: [:index, :show, :create]
+    resources :battles, path: "w", only: [:index, :show, :create]
     resources :player_infos, :only => :index, path: "w-user-stat"
 
-    get "w/:query", to: "battles#index", as: :search
+    get "wr/:id",   to: "battles#show" # 互換性のため
+
+    # get "w/:query", to: "battles#index", as: :search
     get "w",        to: "battles#index", as: :basic
     get "w-cloud",  to: "battles#index", as: :cloud, defaults: {mode: :cloud}
     get "w-light",  to: "battles#index", as: :light, defaults: {mode: :light}
@@ -65,7 +67,7 @@ Rails.application.routes.draw do
     if options[:current_mode] == :light
       swars_light_path(query: user.to_param)
     else
-      swars_search_path(query: user.to_param)
+      swars_basic_path(query: user.to_param)
     end
   end
 
