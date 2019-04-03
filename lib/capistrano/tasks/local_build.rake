@@ -4,6 +4,9 @@ unless ENV["REMOTE_BUILD"] == "1"
   # 元のタスクの内容は消しておく
   Rake::Task["deploy:assets:precompile"].clear
 
+  # yarn も実行する必要がない
+  Rake::Task["yarn:install"].clear
+
   # 新しく定義
   desc "ローカルで assets:precompile してコピー"
   task "deploy:assets:precompile" do
