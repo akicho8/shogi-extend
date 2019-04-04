@@ -185,8 +185,13 @@ module Swars
       v = memberships.flat_map(&:"#{key}_tag_list")
       v = v.group_by(&:itself).transform_values(&:size) # TODO: ruby 2.6 の新しいメソッドで置き換えれるはず
       v = v.sort_by { |k, v| -v }
-      v.inject({}) do |a, (k, v)|
-        a.merge(k => h.link_to(v, query_path("#{user.user_key} muser:#{user.user_key} mtag:#{k}", import_skip: true)))
+      v.inject({}) do |a, (key, val)|
+        path = query_path("#{user.user_key} muser:#{user.user_key} mtag:#{key}", import_skip: true)
+        if Bioshogi::TacticInfo.flat_lookup(key)
+          key = h.link_to(key, Rails.application.routes.url_helpers.url_for([:tactic_note, id: key, only_path: true]), :class => "no-decoration")
+        end
+        val = h.link_to(val, path)
+        a.merge(key => val)
       end
     end
 

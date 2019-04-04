@@ -42,12 +42,19 @@
             - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
             == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
-        - Bioshogi::TacticInfo.each do |tactic_info|
-          - if stat = current_swars_user.tactic_summary_for(tactic_info.key).presence
+        - if false
+          - Bioshogi::TacticInfo.each do |tactic_info|
             .column
-              .field
-                .title.yumincho.is-4= tactic_info.name
-                == stat.transform_keys { |e| Bioshogi::TacticInfo.flat_lookup(e) ? link_to(e, [:tactic_note, id: e], :class => "no-decoration") : e }.to_html(table_class: "table is-fullwidth is-narrow")
+              = render partial: "tactic_info_block", locals: { key: tactic_info.key }
+        - else
+          .column
+            = render partial: "tactic_info_block", locals: { key: :attack    }
+          .column
+            = render partial: "tactic_info_block", locals: { key: :defense   }
+          .column
+            = render partial: "tactic_info_block", locals: { key: :technique }
+            = render partial: "tactic_info_block", locals: { key: :note      }
+
       .columns
         .column
           canvas(ref="rule_canvas")
