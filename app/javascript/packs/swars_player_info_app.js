@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
       new Chart(this.$refs.rule_canvas, this.rule_chart_params)
       new Chart(this.$refs.grouper_canvas, this.grouper_chart_params)
       new Chart(this.$refs.faction_canvas, this.faction_chart_params)
+
+      this.$options.type1_chart_params_list.forEach(e => { new Chart(this.$refs[e.canvas_id], e.chart_params) })
     },
 
     methods: {

@@ -31,6 +31,8 @@ module Swars
 
         week_chart_params: battle_chart_params_for(scope.where(Battle.arel_table[:battled_at].between(7.days.ago..Float::INFINITY))),
 
+        type1_chart_params_list: ChartTagInfo.collect { |e| e.chart_params_for(current_swars_user) } + type2_chart_params_list,
+
         rule_chart_params: {
           type: "pie",
           options: {
@@ -101,6 +103,36 @@ module Swars
 
     let :faction_keys do
       ["居飛車", "振り飛車"]
+    end
+
+    let :attack_tags_tops do
+      current_swars_user.memberships.tag_counts_on(:attack_tags, :order => "count desc", limit: 4)
+    end
+
+    let :type2_chart_params_list do
+      attack_tags_tops.collect.with_index do |tag, i|
+        {
+          canvas_id: "type2_chart_canvas#{i}",
+          chart_params: {
+            type: "pie",
+            options: {
+              title: {
+                display: true,
+                text: tag.name,
+              },
+            },
+            data: {
+              labels: ["勝ち", "負け"],
+              datasets: [
+                {
+                  data: [:win, :lose].collect { |judge_key| current_swars_user.memberships.tagged_with(tag.name, on: :attack_tags).where(judge_key: judge_key).count },
+                  backgroundColor: [:win, :lose].collect.with_index { |e, i| PaletteInfo[i].pie_color },
+                },
+              ],
+            },
+          },
+        }
+      end
     end
 
     private

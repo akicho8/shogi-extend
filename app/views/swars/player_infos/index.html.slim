@@ -57,6 +57,16 @@
           canvas(ref="grouper_canvas")
 
       .columns
+        - Swars::ChartTagInfo.each do |e|
+          .column
+            canvas(ref=e.canvas_id)
+
+      .columns
+        - type2_chart_params_list.each do |e|
+          .column
+            canvas(ref=e[:canvas_id])
+
+      .columns
         .column
           canvas(ref="battle_canvas")
         .column

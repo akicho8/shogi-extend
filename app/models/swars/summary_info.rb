@@ -9,23 +9,29 @@ module Swars
     def secret_summary
       stat = Hash.new(0)
 
-      ms_a = ms_group["切断した"] || []
-      c = ms_a.size
-      count_set(stat, "切断回数", c, alert_p: c.nonzero?, memberships: ms_a)
       if (d = judge_count_for(:lose)).nonzero?
-        parcentage_set(stat, "切断率", c, d, alert_p: c.nonzero?, tooltip: "切断回数 / 負け数")
+        ms_a = ms_group["切断した"] || []
+        c = ms_a.size
+        # count_set(stat, "切断回数", c, alert_p: c.nonzero?, memberships: ms_a)
+        parcentage_set(stat, "切断率", c, d, alert_p: c.nonzero?, tooltip: "切断回数 / 負け数", memberships: ms_a)
       end
 
-      c = cheat_memberships.size
-      count_set(stat, "棋神召喚疑惑", c, alert_p: c.nonzero?, memberships: cheat_memberships)
       if (d = judge_count_for(:win)).nonzero?
-        parcentage_set(stat, "棋神召喚疑惑率", c, d, alert_p: c.nonzero?)
+        ms_a = cheat_memberships
+        c = ms_a.size
+        # count_set(stat, "棋神召喚疑惑", c, alert_p: c.nonzero?, memberships: cheat_memberships)
+        parcentage_set(stat, "棋神召喚疑惑率", c, d, alert_p: c.nonzero?, memberships: ms_a)
       end
 
       if (d = judge_count_for(:lose)).nonzero?
         ms_a = ms_group["投了した"] || []
         c = ms_a.size
-        parcentage_set(stat, "投了率", c, d, alert_p: c.fdiv(d) < 0.25, tooltip: "投了回数 / 負け数")
+        parcentage_set(stat, "投了率", c, d, alert_p: c.fdiv(d) < 0.25, tooltip: "投了回数 / 負け数", memberships: ms_a)
+      end
+
+      if memberships.present?
+        c = memberships.sum { |e| e.battle.turn_max }.fdiv(memberships.size).round
+        count_set(stat, "平均手数", c, alert_p: c < 70, suffix: "手")
       end
 
       # turn = memberships.collect { |e| e.battle.turn_max }.max
@@ -46,13 +52,13 @@ module Swars
 
             ms_a = ships.find_all { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】最後の着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負けた", count, alert_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】最後の着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負け", count, alert_p: count.nonzero?, memberships: ms_a)
 
-            ms_a = ships.find_all { |e| e.summary_key == "詰ました" && e.sec_list.last >= rule_info.leave_alone_limit }
+            ms_a = ships.find_all { |e| e.summary_key == "詰ます" && e.sec_list.last >= rule_info.leave_alone_limit }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ました", count, alert_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ます", count, alert_p: count.nonzero?, memberships: ms_a)
 
-            scope = ships.find_all { |e| e.summary_key == "詰ました" }
+            scope = ships.find_all { |e| e.summary_key == "詰ます" }
             if ms = scope.max_by { |e| e.sec_list.last.to_i }
               sec = ms.sec_list.last.to_i
               sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
@@ -66,7 +72,7 @@ module Swars
 
             ms_a = ships.find_all { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負けた", count, alert_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負け", count, alert_p: count.nonzero?, memberships: ms_a)
           end
 
           # e.summary_key == "投了した" || e.summary_key == "詰まされた" }.presence
@@ -115,25 +121,37 @@ module Swars
 
       count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
 
-      parcentage_set(stat, "勝率", judge_count_for(:win), win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate))
+      ms_a = judge_group_memberships(:win)
+      parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate), memberships: ms_a)
+
+      ["居飛車", "振り飛車", "相振り飛車", "対抗型", "相居飛車"].each do |tag|
+        scope = main_scope.tagged_with(tag, on: :note_tags)
+        d = scope.count
+        if d >= 1
+          ms_a = scope.where(judge_key: "win")
+          c = ms_a.count
+          rate = c.fdiv(d)
+          parcentage_set(stat, "#{tag}の勝率", c, d, alert_p: (0.3...0.8).exclude?(rate), memberships: ms_a)
+        end
+      end
 
       [
-        { label1: "格上", op: :>,  label2: "勝った", key: :win,  },
-        { label1: "格上", op: :>,  label2: "負けた", key: :lose, },
-        { label1: "同格", op: :==, label2: "勝った", key: :win,  },
-        { label1: "同格", op: :==, label2: "負けた", key: :lose, },
-        { label1: "格下", op: :<,  label2: "勝った", key: :win,  },
-        { label1: "格下", op: :<,  label2: "負けた", key: :lose, },
+        { label1: "格上", op: :>,  label2: "勝ち", key: "win",  },
+        { label1: "同格", op: :==, label2: "勝ち", key: "win",  },
+        { label1: "格下", op: :<,  label2: "勝ち", key: "win",  },
+        { label1: "格上", op: :>,  label2: "負け", key: "lose", },
+        { label1: "同格", op: :==, label2: "負け", key: "lose", },
+        { label1: "格下", op: :<,  label2: "負け", key: "lose", },
       ].each do |args|
         # 格上 or 格下
         scope = memberships.find_all { |e| e.grade.priority.public_send(args[:op], e.opponent.grade.priority) }
-        ms_a = scope.find_all { |e| e.judge_info.key == args[:key] }
-        count_set(stat, "#{args[:label1]}に#{args[:label2]}数", ms_a.size, memberships: ms_a)
-        if args[:key] == :win
-          if scope.size >= 1
-            alert_p = args[:op] >= :> && ms_a.size.fdiv(scope.size) >= 0.6 # 格上への勝率が異常に高い
-            parcentage_set(stat, "#{args[:label1]}に#{args[:label2]}率", ms_a.size, scope.size, tooltip: "#{args[:label2]}数 / #{args[:label1]}との対局数", alert_p: alert_p)
-          end
+        d = scope.size
+        if d >= 1
+          ms_a = scope.find_all { |e| e.judge_key == args[:key] }
+          # count_set(stat, "#{args[:label1]}に#{args[:label2]}数", ms_a.size, memberships: ms_a)
+          # if args[:key] == :win
+          alert_p = args[:op] >= :> && ms_a.size.fdiv(d) >= 0.6 # 格上への勝率が異常に高い
+          parcentage_set(stat, "#{args[:label1]}に#{args[:label2]}率", ms_a.size, d, tooltip: "#{args[:label2]}数 / #{args[:label1]}との対局数", alert_p: alert_p, memberships: ms_a)
         end
       end
 
@@ -179,8 +197,12 @@ module Swars
     #   @win_a_superior[[key, op]] = memberships.find_all { |e| e.judge_info.key == key && e.grade.priority.public_send(op, e.opponent.grade.priority) }
     # end
 
+    def main_scope
+      user.memberships.includes(:battle, :user, :grade)
+    end
+
     def memberships
-      @memberships ||= user.memberships.to_a
+      @memberships ||= main_scope.to_a
     end
 
     def ms_group
@@ -211,9 +233,8 @@ module Swars
     end
 
     def judge_group_memberships(key)
-      judge_info = JudgeInfo.fetch(key)
-      @judge_group_memberships ||= {}
-      @judge_group_memberships[key] ||= memberships.find_all { |e| e.judge_info == judge_info }
+      @judge_group_memberships ||= memberships.group_by(&:judge_key)
+      @judge_group_memberships[key.to_s] || []
     end
 
     def win_rate
@@ -299,11 +320,19 @@ module Swars
     end
 
     def parcentage(numerator, denominator)
-      if denominator.zero?
-        return
+      if denominator.nonzero?
+        # if numerator.zero?
+        #   "0%"
+        # else
+        v = parcentage_rate(numerator, denominator)
+        "#{v}% (#{numerator}/#{denominator})"
       end
-      rate = (numerator * 100).fdiv(denominator).round(2)
-      "#{rate} %"
+    end
+
+    def parcentage_rate(numerator, denominator)
+      if denominator.nonzero?
+        (numerator * 100).fdiv(denominator).round(2)
+      end
     end
 
     def sec_to_human(v)
