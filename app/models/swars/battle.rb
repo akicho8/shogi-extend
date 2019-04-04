@@ -261,11 +261,19 @@ module Swars
 
           c = Hash.new(0)
           all.order(last_accessd_at: :desc).limit(params[:limit]).find_each do |e|
+            before_tags = e.taggings.collect{|e|e.tag.name}.sort
+
             e.parser_exec
-            c[e.changed?] += 1
-            print(e.changed? ? 'U' : '.')
             e.save!
+
+            after_tags = e.taggings.collect{|e|e.tag.name}.sort
+            flag = before_tags != after_tags
+
+            c[flag] += 1  # タグの変更は e.changed? では関知できない
+
+            print(flag ? 'U' : '.')
           end
+          puts
           p c
         end
 
