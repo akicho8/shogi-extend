@@ -1,7 +1,3 @@
-// Vue.js にする必要ない気がするけど今後膨らむかもしれないのでこれでいい
-
-import * as GooglePalette from 'google-palette'
-
 document.addEventListener("DOMContentLoaded", () => {
   window.SwarsPlayerInfoApp = Vue.extend({
     data() {
@@ -18,11 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     methods: {
-      color_generate(size) {
-        // http://google.github.io/palette.js/
-        return GooglePalette("cb-Pastel2", size).map(hex => "#" + hex)
-      },
-
       battle_chart_js_options(text) {
         return {
           options: {
@@ -105,42 +96,15 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       rule_chart_params() {
-        const v = Object.assign({}, this.$options.rule_chart_params, {
-          options: {
-            title: {
-              display: true,
-              text: "種類",
-            },
-          },
-        })
-        v.data.datasets[0].backgroundColor = this.color_generate(v.data.datasets[0].data.length)
-        return v
+        return Object.assign({}, this.$options.rule_chart_params, {})
       },
 
       grouper_chart_params() {
-        const v = Object.assign({}, this.$options.grouper_chart_params, {
-          options: {
-            title: {
-              display: true,
-              text: "組手",
-            },
-          },
-        })
-        v.data.datasets[0].backgroundColor = this.color_generate(v.data.datasets[0].data.length)
-        return v
+        return Object.assign({}, this.$options.grouper_chart_params, {})
       },
 
       faction_chart_params() {
-        const v = Object.assign({}, this.$options.faction_chart_params, {
-          options: {
-            title: {
-              display: true,
-              text: "党派",
-            },
-          },
-        })
-        v.data.datasets[0].backgroundColor = this.color_generate(v.data.datasets[0].data.length)
-        return v
+        return Object.assign({}, this.$options.faction_chart_params, {})
       },
     },
   })

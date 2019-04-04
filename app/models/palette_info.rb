@@ -1,11 +1,30 @@
 class PaletteInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: :primary, css_color: "hsl(171, 100%, 41%)", },
-    { key: :info,    css_color: "hsl(204, 86%, 53%)",  },
-    { key: :link,    css_color: "hsl(217, 71%, 53%)",  },
-    { key: :success, css_color: "hsl(141, 71%, 48%)",  },
-    { key: :warning, css_color: "hsl(48, 100%, 67%)",  },
-    { key: :danger,  css_color: "hsl(348, 100%, 61%)", },
+    # https://bulma.io/documentation/modifiers/color-helpers/
+    { key: :primary, hsl: [171 / 360.0, 1.00, 0.41], },
+    { key: :danger,  hsl: [348 / 360.0, 1.00, 0.61], },
+    { key: :link,    hsl: [217 / 360.0, 0.71, 0.53], },
+    { key: :warning, hsl: [ 48 / 360.0, 1.00, 0.67], },
+    { key: :info,    hsl: [204 / 360.0, 0.86, 0.53], },
+    { key: :success, hsl: [141 / 360.0, 0.71, 0.48], },
   ]
+
+  def pie_color
+    @pie_color ||= color.css_rgba(0.6)
+  end
+
+  def border_color
+    @border_color ||= color.css_rgba(0.5)
+  end
+
+  def background_color
+    @background_color ||= color.css_rgba(0.1)
+  end
+
+  private
+
+  def color
+    @color ||= Color::HSL.from_fraction(*hsl)
+  end
 end

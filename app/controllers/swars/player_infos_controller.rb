@@ -24,23 +24,28 @@ module Swars
     end
 
     let :js_swars_player_info_app_params do
-      # s, e = current_swars_user.memberships.minmax_by { |e| e.battle.battled_at }
-      # labels = (s.battle.battled_at.to_date..e.battle.battled_at.to_date).to_a
-
       scope = current_swars_user.memberships.joins(:battle).includes(:battle).reorder(created_at: :desc)
 
       {
-        battle_chart_params: battle_chart_params(scope.take(100)),
-        week_chart_params: battle_chart_params(scope.where(Battle.arel_table[:battled_at].between(7.days.ago..Float::INFINITY))),
+        battle_chart_params: battle_chart_params_for(scope.take(100)),
+
+        week_chart_params: battle_chart_params_for(scope.where(Battle.arel_table[:battled_at].between(7.days.ago..Float::INFINITY))),
 
         rule_chart_params: {
           type: "pie",
+          options: {
+            title: {
+              display: true,
+              text: "種類",
+            },
+          },
           data: {
             labels: RuleInfo.collect { |e| e.name },
             datasets: [
               {
                 data: RuleInfo.collect { |e| memberships_rule_key_group[e.key.to_s] || 0 },
-                # backgroundColor: RuleInfo.values.each_index.collect { |i| PaletteInfo[i].css_color },
+                backgroundColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
+                # borderColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].border_color },
               },
             ],
           },
@@ -48,11 +53,18 @@ module Swars
 
         grouper_chart_params: {
           type: "pie",
+          options: {
+            title: {
+              display: true,
+              text: "組手",
+            },
+          },
           data: {
             labels: grouper_keys,
             datasets: [
               {
                 data: grouper_keys.collect { |e| current_swars_user.memberships.tagged_with(e, on: :note_tags).count },
+                backgroundColor: grouper_keys.collect.with_index { |e, i| PaletteInfo[i].pie_color },
               },
             ],
           },
@@ -60,11 +72,18 @@ module Swars
 
         faction_chart_params: {
           type: "pie", # doughnut
+          options: {
+            title: {
+              display: true,
+              text: "党派",
+            },
+          },
           data: {
             labels: faction_keys,
             datasets: [
               {
                 data: faction_keys.collect { |e| current_swars_user.memberships.tagged_with(e, on: :note_tags).count },
+                backgroundColor: faction_keys.collect.with_index { |e, i| PaletteInfo[i].pie_color },
               },
             ],
           },
@@ -86,20 +105,20 @@ module Swars
 
     private
 
-    def battle_chart_params(memberships)
+    def battle_chart_params_for(memberships)
       {
         type: "line",
         data: {
           # labels: labels,
           datasets: [
-            { label: "勝ち", scope: -> e { e.judge_key == "win"  }, borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
-            { label: "負け", scope: -> e { e.judge_key == "lose" }, borderColor: "hsl(348, 100%, 61%, 0.5)", backgroundColor: "hsl(348, 100%, 61%, 0.1)", },
-          ].collect { |e|
+            { label: "勝ち", scope: -> e { e.judge_key == "win"  }, },
+            { label: "負け", scope: -> e { e.judge_key == "lose" }, },
+          ].collect.with_index { |e, i|
             {
               label: e[:label],
               data: memberships.find_all(&e[:scope]).collect { |e| { t: e.battle.battled_at.to_s(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
-              backgroundColor: e[:backgroundColor],
-              borderColor: e[:borderColor],
+              backgroundColor: PaletteInfo[i].background_color,
+              borderColor: PaletteInfo[i].border_color,
               pointRadius: 7,           # 点半径
               borderWidth: 2,           # 点枠の太さ
               pointHoverRadius: 8,      # 点半径(アクティブ時)

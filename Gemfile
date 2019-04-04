@@ -85,8 +85,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   # gem 'webmock' # rack-proxy と干渉するため外す
 
-  gem "rgb"
-
   gem "rails-erd"
 end
 
@@ -170,3 +168,6 @@ gem "redcarpet"
 
 # 音声で朗読
 gem "aws-sdk-polly"
+
+# Palette
+gem "color"

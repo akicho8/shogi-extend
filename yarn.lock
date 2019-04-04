@@ -3560,11 +3560,6 @@ gonzales-pe@^4.0.3:
   dependencies:
     minimist "1.1.x"
 
-google-palette@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/google-palette/-/google-palette-1.1.0.tgz#37e508568b8ca904e57976dfe28d92f701624a9a"
-  integrity sha512-rg4XQMVYQ83fQUylt2qrzCQ0C06ZrGl3+gh0XIXanyX+7SOkDCtFIn7gV3UMumg/R9HUL1zHtz5Myw3Z5BHCPg==
-
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"

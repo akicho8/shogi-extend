@@ -36,6 +36,7 @@ module Swars
         end
       end
     end
+
     def index
       if bot_agent?
         return
@@ -485,14 +486,13 @@ module Swars
         think_chart_params: {
           type: "line",
           data: {
-            # labels: (1..current_record.memberships.map{|e|e.sec_list.size}.max).to_a,
             labels: (1..current_record.turn_max).to_a,
             datasets: current_record.memberships.collect.with_index { |e, i|
               {
                 label: e.name_with_grade,
                 data: e.chartjs_data,
-                backgroundColor: theme_info[i][:backgroundColor],
-                borderColor: theme_info[i][:borderColor],
+                borderColor: PaletteInfo[i].border_color,
+                backgroundColor: PaletteInfo[i].background_color,
                 borderWidth: 3,
                 fill: true,
               }
@@ -513,14 +513,6 @@ module Swars
           },
         },
       }
-    end
-
-    let :theme_info do
-      [
-        { borderColor: "hsl(171, 100%, 41%, 0.5)", backgroundColor: "hsl(171, 100%, 41%, 0.1)", },
-        { borderColor: "hsl(348, 100%, 61%, 0.5)", backgroundColor: "hsl(348, 100%, 61%, 0.1)", },
-        { borderColor: "hsl(204,  86%, 53%, 0.5)", backgroundColor: "hsl(204,  86%, 53%, 0.05)", },
-      ]
     end
   end
 end
