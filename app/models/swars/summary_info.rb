@@ -128,6 +128,10 @@ module Swars
       ms_a = judge_group_memberships(:win)
       parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, alert_p: (0.25...0.75).exclude?(win_rate), memberships: ms_a)
 
+      win_range_for(stat, win_range_key: "格上", key: :win)
+      win_range_for(stat, win_range_key: "同格", key: :win)
+      win_range_for(stat, win_range_key: "格下", key: :win)
+
       ChartTagInfo.each do |e|
         scope = main_scope.tagged_with(e.name, on: :note_tags)
         d = scope.count
@@ -139,26 +143,9 @@ module Swars
         end
       end
 
-      [
-        { label1: "格上", label2: "勝ち", key: "win",  },
-        { label1: "同格", label2: "勝ち", key: "win",  },
-        { label1: "格下", label2: "勝ち", key: "win",  },
-        { label1: "格上", label2: "負け", key: "lose", },
-        { label1: "同格", label2: "負け", key: "lose", },
-        { label1: "格下", label2: "負け", key: "lose", },
-      ].each do |args|
-        # 格上 or 格下
-        win_range_info = WinRangeInfo.fetch(args[:label1])
-        scope = memberships.find_all { |e| e.grade.priority.public_send(win_range_info.op, e.opponent.grade.priority) }
-        d = scope.size
-        if d >= 1
-          ms_a = scope.find_all { |e| e.judge_key == args[:key] }
-          # count_set(stat, "#{args[:label1]}に#{args[:label2]}数", ms_a.size, memberships: ms_a)
-          rate = ms_a.size.fdiv(d)
-          alert_p = args[:key] == "win" && !win_range_info.win_range.cover?(rate) || args[:key] == "lose" && win_range_info.win_range.cover?(rate)
-          parcentage_set(stat, "#{args[:label1]}に#{args[:label2]}率", ms_a.size, d, tooltip: "#{args[:label2]}数 / #{args[:label1]}との対局数", alert_p: alert_p, memberships: ms_a)
-        end
-      end
+      win_range_for(stat, win_range_key: "格上", key: :lose)
+      win_range_for(stat, win_range_key: "同格", key: :lose)
+      win_range_for(stat, win_range_key: "格下", key: :lose)
 
       [0, 50, 100, 150, 200, Float::INFINITY].each_cons(2) do |s, e|
         range = s...e
@@ -201,6 +188,25 @@ module Swars
     end
 
     private
+
+    def win_range_for(stat, **params)
+      # 格上 or 格下
+      win_range_info = WinRangeInfo.fetch(params[:win_range_key])
+      win_lose_info = WinLoseInfo.fetch(params[:key])
+
+      scope = memberships.find_all { |e| e.grade.priority.public_send(win_range_info.op, e.opponent.grade.priority) }
+      d = scope.size
+      if d >= 1
+        ms_a = scope.find_all { |e| e.judge_key == win_lose_info.key.to_s }
+        if win_lose_info.key == :win
+          rate = ms_a.size.fdiv(d)
+          alert_p = win_lose_info.key == :win && !win_range_info.win_range.cover?(rate) || win_lose_info.key == :lose && win_range_info.win_range.cover?(rate)
+          parcentage_set(stat, "【#{win_range_info.name}】勝率", ms_a.size, d, tooltip: "#{win_lose_info.name}数 / #{win_range_info.name}との対局数", alert_p: alert_p, memberships: ms_a)
+        else
+          count_set(stat, "【#{win_range_info.name}】#{win_lose_info.name}数", ms_a.size, memberships: ms_a)
+        end
+      end
+    end
 
     # def win_a_superior(key, op)
     #   @win_a_superior = {}
