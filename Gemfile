@@ -143,9 +143,10 @@ gem 'graphql'
 gem 'graphiql-rails' # graphqlのテスト画面
 # end
 
+# application 用
 gem 'slack-ruby-client'
 
-# for error
+# capistrano 用
 gem 'exception_notification'
 gem 'slack-notifier'
 
