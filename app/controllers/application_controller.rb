@@ -256,6 +256,7 @@ class ApplicationController < ActionController::Base
             "Hatena",
             "facebookexternalhit",
             "MauiBot",
+            "archive.org_bot", # "Mozilla/5.0 (compatible; archive.org_bot +http://archive.org/details/archive.org_bot)"
           ])
       end
     end
