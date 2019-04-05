@@ -140,21 +140,22 @@ module Swars
       end
 
       [
-        { label1: "格上", op: :>,  label2: "勝ち", key: "win",  },
-        { label1: "同格", op: :==, label2: "勝ち", key: "win",  },
-        { label1: "格下", op: :<,  label2: "勝ち", key: "win",  },
-        { label1: "格上", op: :>,  label2: "負け", key: "lose", },
-        { label1: "同格", op: :==, label2: "負け", key: "lose", },
-        { label1: "格下", op: :<,  label2: "負け", key: "lose", },
+        { label1: "格上", label2: "勝ち", key: "win",  },
+        { label1: "同格", label2: "勝ち", key: "win",  },
+        { label1: "格下", label2: "勝ち", key: "win",  },
+        { label1: "格上", label2: "負け", key: "lose", },
+        { label1: "同格", label2: "負け", key: "lose", },
+        { label1: "格下", label2: "負け", key: "lose", },
       ].each do |args|
         # 格上 or 格下
-        scope = memberships.find_all { |e| e.grade.priority.public_send(args[:op], e.opponent.grade.priority) }
+        win_range_info = WinRangeInfo.fetch(args[:label1])
+        scope = memberships.find_all { |e| e.grade.priority.public_send(win_range_info.op, e.opponent.grade.priority) }
         d = scope.size
         if d >= 1
           ms_a = scope.find_all { |e| e.judge_key == args[:key] }
           # count_set(stat, "#{args[:label1]}に#{args[:label2]}数", ms_a.size, memberships: ms_a)
-          # if args[:key] == :win
-          alert_p = args[:op] >= :> && ms_a.size.fdiv(d) >= 0.6 # 格上への勝率が異常に高い
+          rate = ms_a.size.fdiv(d)
+          alert_p = args[:key] == "win" && !win_range_info.win_range.cover?(rate) || args[:key] == "lose" && win_range_info.win_range.cover?(rate)
           parcentage_set(stat, "#{args[:label1]}に#{args[:label2]}率", ms_a.size, d, tooltip: "#{args[:label2]}数 / #{args[:label1]}との対局数", alert_p: alert_p, memberships: ms_a)
         end
       end
