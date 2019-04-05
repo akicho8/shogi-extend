@@ -138,6 +138,16 @@ module ConvertMethods
   def parser_exec_after(info)
   end
 
+  def remake(**options)
+    b = taggings.collect { |e| e.tag.name }.sort
+    parser_exec
+    save!
+    a = taggings.collect { |e| e.tag.name }.sort
+    flag = a != b # タグの変更は e.changed? では関知できない
+    print(flag ? "U" : ".")
+    flag
+  end
+
   def header_detail(h)
     meta_info[:header]
   end
