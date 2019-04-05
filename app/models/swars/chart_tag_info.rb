@@ -2,11 +2,12 @@ module Swars
   class ChartTagInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "ibisha",       name: "居飛車",      },
-      { key: "furibisha",    name: "振り飛車",    },
-      { key: "sou_furibisha",name: "相振り飛車",  },
-      { key: "taikou_kata",  name: "対抗型",      },
-      { key: "sou_ibisha",   name: "相居飛車",    },
+      { key: "ibisha",    name: "居飛車",      },
+      { key: "furibisha", name: "振り飛車",    },
+
+      { key: "ai_ibisha", name: "相居飛車",    },
+      { key: "taikoukei", name: "対抗型",      },
+      { key: "aifuri",    name: "相振り",      },
     ]
 
     def canvas_id

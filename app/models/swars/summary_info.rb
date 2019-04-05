@@ -124,14 +124,17 @@ module Swars
       ms_a = judge_group_memberships(:win)
       parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate), memberships: ms_a)
 
-      ["居飛車", "振り飛車", "相振り飛車", "対抗型", "相居飛車"].each do |tag|
+      [
+        "居飛車", "振り飛車",
+        "相居飛車", "対抗型", "相振り",
+      ].each do |tag|
         scope = main_scope.tagged_with(tag, on: :note_tags)
         d = scope.count
         if d >= 1
           ms_a = scope.where(judge_key: "win")
           c = ms_a.count
           rate = c.fdiv(d)
-          parcentage_set(stat, "#{tag}の勝率", c, d, alert_p: (0.3...0.8).exclude?(rate), memberships: ms_a)
+          parcentage_set(stat, "#{tag}の勝率", c, d, alert_p: (0.3...0.7).exclude?(rate), memberships: ms_a)
         end
       end
 
