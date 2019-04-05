@@ -1,17 +1,22 @@
 module Swars
   class PlayerInfosController < ApplicationController
     def index
+      if bot_agent?
+        return
+      end
+
       if params[:stop_processing_because_it_is_too_heavy]
         return
       end
 
       if current_user_key
         Battle.debounce_basic_import(user_key: current_user_key, page_max: 5)
+        let_cache_remove(:current_swars_user)
         unless current_swars_user
           flash.now[:warning] = "#{current_user_key} さんの情報は見つかりませんでした"
           return
         end
-        SlackAgent.message_send(key: "Wプレイヤー情報", body: "#{current_swars_user.user_key}")
+        SlackAgent.message_send(key: "プレイヤー情報", body: current_swars_user.user_key)
       end
     end
 

@@ -138,7 +138,7 @@ module Swars
           flash[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
         end
         if success
-          remove_instance_variable(:@current_swars_user) # 【重要】 let のキャッシュを破棄するため
+          let_cache_remove(:current_swars_user)
 
           hit_count = 0
           if current_swars_user

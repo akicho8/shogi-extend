@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  extend Lettable
+  include Lettable
 
   # http://localhost:3000/?force_error=1
   # http://tk2-221-20341.vs.sakura.ne.jp/shogi?force_error=1
