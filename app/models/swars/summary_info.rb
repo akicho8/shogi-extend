@@ -94,6 +94,10 @@ module Swars
               turn = ms.battle.turn_max
               count_set(stat, "【#{rule_info.name}】(勝ち)最長手数", turn, alert_p: turn && turn >= 200, suffix: "手", membership: ms)
             end
+            if ms = scope.min_by { |e| e.battle.turn_max }
+              turn = ms.battle.turn_max
+              count_set(stat, "【#{rule_info.name}】(勝ち)最短手数", turn, alert_p: false, suffix: "手", membership: ms)
+            end
             if rule_info.key == :ten_sec
               if ms = scope.max_by { |e| e.total_seconds }
                 sec = ms.total_seconds
@@ -122,19 +126,16 @@ module Swars
       count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
 
       ms_a = judge_group_memberships(:win)
-      parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, alert_p: (0.3...0.7).exclude?(win_rate), memberships: ms_a)
+      parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, alert_p: (0.25...0.75).exclude?(win_rate), memberships: ms_a)
 
-      [
-        "居飛車", "振り飛車",
-        "相居飛車", "対抗型", "相振り",
-      ].each do |tag|
-        scope = main_scope.tagged_with(tag, on: :note_tags)
+      ChartTagInfo.each do |e|
+        scope = main_scope.tagged_with(e.name, on: :note_tags)
         d = scope.count
         if d >= 1
           ms_a = scope.where(judge_key: "win")
           c = ms_a.count
           rate = c.fdiv(d)
-          parcentage_set(stat, "#{tag}の勝率", c, d, alert_p: (0.3...0.7).exclude?(rate), memberships: ms_a)
+          parcentage_set(stat, "#{e.name}の勝率", c, d, alert_p: (0.25...0.75).exclude?(rate), memberships: ms_a)
         end
       end
 
@@ -319,7 +320,7 @@ module Swars
     def key_wrap(key, **options)
       if v = options[:tooltip]
         # key = h.content_tag("b-tooltip", key, label: "あいうえお", position: "is-left", size: "is-small")
-        key = h.content_tag("b-tooltip", key, label: v, position: "is-left", size: "is-small") # multilined: false
+        key = h.content_tag("b-tooltip", key, label: v, position: "is-top", size: "is-small") # multilined: false
       end
       if options[:alert_p]
         key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
