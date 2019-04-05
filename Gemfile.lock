@@ -386,7 +386,6 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    slack-notifier (2.3.2)
     slack-ruby-client (0.13.1)
       activesupport
       faraday (>= 0.9)
@@ -523,7 +522,6 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 5.0)
   selenium-webdriver
-  slack-notifier
   slack-ruby-client
   slackistrano
   slim-rails

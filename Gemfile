@@ -74,7 +74,7 @@ group :development, :test do
   gem 'capistrano-rbenv'
   gem 'capistrano-yarn'
   gem "capistrano-rails-console"
-  gem "slackistrano"
+  gem "slackistrano"            # for cap production slack:deploy:test
 
   gem 'artii'
 
@@ -146,9 +146,7 @@ gem 'graphiql-rails' # graphqlのテスト画面
 # application 用
 gem 'slack-ruby-client'
 
-# capistrano 用
 gem 'exception_notification'
-gem 'slack-notifier'
 
 # devise
 gem 'devise'
