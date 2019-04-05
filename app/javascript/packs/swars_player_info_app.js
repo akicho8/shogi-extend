@@ -6,22 +6,17 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     mounted() {
-      new Chart(this.$refs.battle_canvas, this.battle_chart_params)
-      new Chart(this.$refs.week_canvas, this.week_chart_params)
-      new Chart(this.$refs.rule_canvas, this.rule_chart_params)
-      new Chart(this.$refs.grouper_canvas, this.grouper_chart_params)
-      new Chart(this.$refs.faction_canvas, this.faction_chart_params)
-
-      this.$options.type1_chart_params_list.forEach(e => { new Chart(this.$refs[e.canvas_id], e.chart_params) })
+      this.$options.time_chart_params_list.forEach(e => new Chart(this.$refs[e.canvas_id], this.days_chart_js_options(e)))
+      this.$options.any_chart_params_list.forEach(e => new Chart(this.$refs[e.canvas_id], e.chart_params))
     },
 
     methods: {
-      battle_chart_js_options(text) {
-        return {
+      days_chart_js_options(params) {
+        return Object.assign({}, params.chart_params, {
           options: {
             title: {
               display: true,
-              text: text,
+              text: params.name,
             },
 
             // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
@@ -84,29 +79,17 @@ document.addEventListener("DOMContentLoaded", () => {
               },
             },
           },
-        }
+        })
       },
     },
 
     computed: {
-      battle_chart_params() {
-        return Object.assign({}, this.$options.battle_chart_params, this.battle_chart_js_options("対局日時"))
+      days_chart_params() {
+        return Object.assign({}, this.$options.days_chart_params, this.days_chart_js_options("対局日時"))
       },
 
       week_chart_params() {
-        return Object.assign({}, this.$options.week_chart_params, this.battle_chart_js_options("直近1週間"))
-      },
-
-      rule_chart_params() {
-        return Object.assign({}, this.$options.rule_chart_params, {})
-      },
-
-      grouper_chart_params() {
-        return Object.assign({}, this.$options.grouper_chart_params, {})
-      },
-
-      faction_chart_params() {
-        return Object.assign({}, this.$options.faction_chart_params, {})
+        return Object.assign({}, this.$options.week_chart_params, this.days_chart_js_options("直近1週間"))
       },
     },
   })

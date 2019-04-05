@@ -55,13 +55,17 @@
             = render partial: "tactic_info_block", locals: { key: :technique }
             = render partial: "tactic_info_block", locals: { key: :note      }
 
+      hr
+
       .columns
         .column
           canvas(ref="rule_canvas")
         .column
           canvas(ref="faction_canvas")
         .column
-          canvas(ref="grouper_canvas")
+          canvas(ref="combination_canvas")
+
+      hr
 
       .columns
         - Swars::ChartTagInfo.each do |e|
@@ -69,15 +73,21 @@
             canvas(ref=e.canvas_id)
 
       .columns
-        - type2_chart_params_list.each do |e|
+        - attack_chart_params_list.each do |e|
           .column
             canvas(ref=e[:canvas_id])
 
       .columns
-        .column
-          canvas(ref="battle_canvas")
-        .column
-          canvas(ref="week_canvas")
+        - defense_chart_params_list.each do |e|
+          .column
+            canvas(ref=e[:canvas_id])
+
+      hr
+
+      .columns
+        - js_swars_player_info_app_params[:time_chart_params_list].each do |e|
+          .column
+            canvas(ref=e[:canvas_id])
 
       - if Rails.env.development?
         .columns
