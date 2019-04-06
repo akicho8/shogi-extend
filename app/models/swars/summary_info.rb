@@ -26,12 +26,7 @@ module Swars
       if (d = judge_count_for(:lose)).nonzero?
         ms_a = ms_group["投了した"] || []
         c = ms_a.size
-        parcentage_set(stat, "投了率", c, d, alert_p: c.fdiv(d) < 0.25, tooltip: "投了回数 / 負け数", memberships: ms_a)
-      end
-
-      if memberships.present?
-        c = memberships.sum { |e| e.battle.turn_max }.fdiv(memberships.size).round
-        count_set(stat, "平均手数", c, alert_p: c < 70, suffix: "手")
+        parcentage_set(stat, "投了率", c, d, warn_p: c.fdiv(d) < 0.25, tooltip: "投了回数 / 負け数", memberships: ms_a)
       end
 
       # turn = memberships.collect { |e| e.battle.turn_max }.max
@@ -92,28 +87,28 @@ module Swars
           if scope = ships.find_all { |e| e.judge_info.key == :win }.presence
             if ms = scope.max_by { |e| e.battle.turn_max }
               turn = ms.battle.turn_max
-              count_set(stat, "【#{rule_info.name}】(勝ち)最長手数", turn, alert_p: turn && turn >= 200, suffix: "手", membership: ms)
+              count_set(stat, "【#{rule_info.name}】(勝ち)最長手数", turn, warn_p: turn && turn >= 200, suffix: "手", membership: ms)
             end
             if ms = scope.min_by { |e| e.battle.turn_max }
               turn = ms.battle.turn_max
-              count_set(stat, "【#{rule_info.name}】(勝ち)最短手数", turn, alert_p: false, suffix: "手", membership: ms)
+              count_set(stat, "【#{rule_info.name}】(勝ち)最短手数", turn, warn_p: false, suffix: "手", membership: ms)
             end
             if rule_info.key == :ten_sec
               if ms = scope.max_by { |e| e.total_seconds }
                 sec = ms.total_seconds
-                sec_set(stat, "【#{rule_info.name}】(勝ち)最長時間", sec, alert_p: sec && sec >= 10.minutes, membership: ms)
+                sec_set(stat, "【#{rule_info.name}】(勝ち)最長時間", sec, warn_p: sec && sec >= 10.minutes, membership: ms)
               end
             end
           end
 
           if ms = ships.max_by { |e| e.battle.turn_max }
             turn = ms.battle.turn_max
-            count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手", membership: ms)
+            count_set(stat, "【#{rule_info.name}】最長手数", turn, warn_p: turn && turn >= 200, suffix: "手", membership: ms)
           end
 
           # scope = ships.find_all { |e| e.summary_key == "投了した" }
           # most_min_turn_max = scope.collect { |e| e.sec_total }.min
-          # sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, alert_p: sec && sec < rule_info.resignation_limit)
+          # sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, warn_p: sec && sec < rule_info.resignation_limit)
         end
       end
 
@@ -126,7 +121,7 @@ module Swars
       count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
 
       ms_a = judge_group_memberships(:win)
-      parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, alert_p: (0.25...0.75).exclude?(win_rate), memberships: ms_a)
+      parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, warn_p: (0.25...0.75).exclude?(win_rate), memberships: ms_a)
 
       win_range_for(stat, win_range_key: "格上", key: :win)
       win_range_for(stat, win_range_key: "同格", key: :win)
@@ -139,13 +134,18 @@ module Swars
           ms_a = scope.where(judge_key: "win")
           c = ms_a.count
           rate = c.fdiv(d)
-          parcentage_set(stat, "#{e.name}の勝率", c, d, alert_p: (0.25...0.75).exclude?(rate), memberships: ms_a)
+          parcentage_set(stat, "#{e.name}の勝率", c, d, warn_p: (0.25...0.75).exclude?(rate), memberships: ms_a)
         end
       end
 
       win_range_for(stat, win_range_key: "格上", key: :lose)
       win_range_for(stat, win_range_key: "同格", key: :lose)
       win_range_for(stat, win_range_key: "格下", key: :lose)
+
+      if memberships.present?
+        c = memberships.sum { |e| e.battle.turn_max }.fdiv(memberships.size).round
+        count_set(stat, "平均手数", c, warn_p: c < 70, suffix: "手")
+      end
 
       [0, 50, 100, 150, 200, Float::INFINITY].each_cons(2) do |s, e|
         range = s...e
@@ -200,8 +200,8 @@ module Swars
         ms_a = scope.find_all { |e| e.judge_key == win_lose_info.key.to_s }
         if win_lose_info.key == :win
           rate = ms_a.size.fdiv(d)
-          alert_p = win_lose_info.key == :win && !win_range_info.win_range.cover?(rate) || win_lose_info.key == :lose && win_range_info.win_range.cover?(rate)
-          parcentage_set(stat, "【#{win_range_info.name}】勝率", ms_a.size, d, tooltip: "#{win_lose_info.name}数 / #{win_range_info.name}との対局数", alert_p: alert_p, memberships: ms_a)
+          warn_p = win_lose_info.key == :win && !win_range_info.win_range.cover?(rate) || win_lose_info.key == :lose && win_range_info.win_range.cover?(rate)
+          parcentage_set(stat, "【#{win_range_info.name}】勝率", ms_a.size, d, tooltip: "#{win_lose_info.name}数 / #{win_range_info.name}との対局数", warn_p: warn_p, memberships: ms_a)
         else
           count_set(stat, "【#{win_range_info.name}】#{win_lose_info.name}数", ms_a.size, memberships: ms_a)
         end
@@ -331,6 +331,9 @@ module Swars
       end
       if options[:alert_p]
         key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
+      end
+      if options[:warn_p]
+        key = Fa.icon_tag(:fas, :exclamation_triangle, :class => "has-text-warning") + key
       end
       key
     end
