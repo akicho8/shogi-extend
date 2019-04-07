@@ -265,6 +265,9 @@ module Swars
           # row["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
 
+        if params[:handicap]
+          row["手合"] = link_to(record.preset_info.name, swars_tag_search_path(record.preset_info.name))
+        end
         row["手数"] = record.turn_max
         row["種類"] = link_to(record.rule_info.name, swars_tag_search_path(record.rule_info.name))
 
@@ -467,6 +470,19 @@ module Swars
 
       if current_ids
         s = s.where(id: current_ids)
+      end
+
+      if v = params[:turn_max_gteq]
+        s = s.where(Battle.arel_table[:turn_max].gteq(v))
+      end
+
+      if v = params[:turn_max_lt]
+        s = s.where(Battle.arel_table[:turn_max].lt(v))
+      end
+
+      # 平手以外
+      if params[:handicap]
+        s = s.tagged_with("平手", exclude: true)
       end
 
       s.order(battled_at: :desc)
