@@ -6,7 +6,7 @@ module Swars
 
   ENV["RUN_REMOTE"] = "1"
   Battle.find_by(key: "Yosikawakun-soybean-20190226_095952")&.destroy
-  Battle.single_battle_import("Yosikawakun-soybean-20190226_095952")
+  Battle.single_battle_import(key: "Yosikawakun-soybean-20190226_095952")
   battle = Battle.last
 
   battle.note_tag_list     # => ["入玉", "相入玉", "指導対局"]

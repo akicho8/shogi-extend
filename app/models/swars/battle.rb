@@ -182,7 +182,7 @@ module Swars
         end
 
         memberships.each do |e|
-          if e.user.grade.grade_info.key == :"十段"
+          if e.grade.grade_info.key == :"十段"
             e.note_tag_list.add "指導対局"
             note_tag_list.add "指導対局"
           end
@@ -295,7 +295,7 @@ module Swars
         # Battle.expert_import
         # Battle.expert_import(page_max: 3, sleep: 5)
         def expert_import(**params)
-          agent.legend_user_keys.each do |user_key|
+          Agent.new(params).legend_user_keys.each do |user_key|
             basic_import(params.merge(user_key: user_key))
           end
         end
@@ -355,7 +355,7 @@ module Swars
         def multiple_battle_import(**params)
           keys = []
           (params[:page_max] || 1).times do |i|
-            list = agent.index_get(params.merge(page_index: i))
+            list = Agent.new(params).index_get(params.merge(page_index: i))
 
             # もうプレイしていない人のページは履歴が空なのでクロールを完全にやめる (もしくは過去のページに行きすぎたので中断)
             # if list.empty?
@@ -400,20 +400,20 @@ module Swars
 
           new_keys = keys - where(key: keys).pluck(:key)
           new_keys.each do |key|
-            single_battle_import(key, validate_skip: true)
+            single_battle_import(params.merge(key: key, validate_skip: true))
             sleep(params[:sleep].to_i)
           end
         end
 
-        def single_battle_import(key, **options)
+        def single_battle_import(**params)
           # 登録済みなのでスキップ
-          unless options[:validate_skip]
-            if Battle.where(key: key).exists?
+          unless params[:validate_skip]
+            if Battle.where(key: params[:key]).exists?
               return
             end
           end
 
-          info = agent.record_get(key)
+          info = Agent.new(params).record_get(params[:key])
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
           unless info[:st_done]
@@ -478,12 +478,6 @@ module Swars
             battle.save!
           rescue ActiveRecord::RecordNotUnique
           end
-        end
-
-        private
-
-        def agent
-          @agent ||= Agent.new
         end
       end
     end

@@ -192,6 +192,7 @@ class ApplicationController < ActionController::Base
           link_to_eval("部屋全削除") { "Colosseum::Battle.destroy_all" },
           link_to_eval("flash確認", redirect_to: root_path(debug: "true")) { "" },
           link_to_eval("Swars::Battle.destroy_all") { "Swars::Battle.destroy_all" },
+          link_to_eval("リモート取り込み") { "Swars::Battle.basic_import(user_key: 'kinakom0chi', run_remote: true)" },
         ].compact.join.html_safe
       end
 
