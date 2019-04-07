@@ -188,8 +188,9 @@ module Swars
           end
         end
 
+        other_tag_list.add preset_info.name
         if preset_info.handicap
-          other_tag_list.add preset_info.name
+          other_tag_list.add "駒落ち"
         end
 
         other_tag_list.add rule_info.name
