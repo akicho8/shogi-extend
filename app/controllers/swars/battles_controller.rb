@@ -265,7 +265,7 @@ module Swars
           # row["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
 
-        if params[:handicap]
+        if params[:handicap] || (current_tags && current_tags.include?("指導対局"))
           row["手合"] = link_to(record.preset_info.name, swars_tag_search_path(record.preset_info.name))
         end
         row["手数"] = record.turn_max
