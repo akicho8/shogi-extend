@@ -485,7 +485,13 @@ module Swars
       #   s = s.tagged_with("平手", exclude: true)
       # end
 
-      s.order(battled_at: :desc)
+      s = s.order(battled_at: :desc)
+      
+      if v = params[:order_column]
+        s = s.reorder(v => params[:order_arrow] || :asc)
+      end
+
+      s
     end
 
     let :current_record do

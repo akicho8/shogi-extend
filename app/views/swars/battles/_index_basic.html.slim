@@ -29,6 +29,9 @@
       = link_to("50手未満", params.to_unsafe_h.merge(turn_max_lt: 50),       :class => "button is-info is-outlined")
       = link_to("駒落ち", params.to_unsafe_h.merge(query: "tag:駒落ち"), :class => "button is-info is-outlined")
       = link_to("指導対局", params.to_unsafe_h.merge(query: "tag:指導対局"), :class => "button is-info is-outlined")
+      = link_to("駒柱", params.to_unsafe_h.merge(query: "tag:駒柱"), :class => "button is-info is-outlined")
+      = link_to("手数多い順", params.to_unsafe_h.merge(order_column: :turn_max, order_arrow: :desc), :class => "button is-light")
+      = link_to("手数少ない順", params.to_unsafe_h.merge(order_column: :turn_max, order_arrow: :asc), :class => "button is-light")
 
 - if current_records && (current_records.size <= 9 || params[:shogi_player_show_all])
   #shogi_player_app(v-cloak="true")
