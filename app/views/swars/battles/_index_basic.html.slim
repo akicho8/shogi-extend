@@ -1,7 +1,7 @@
 = render partial: "header"
 
 .columns
-  .column.is-half
+  .column
     = form_with(url: [:swars, :basic], method: :get, skip_enforcing_utf8: true) do |form|
       .field.has-addons
         .control.is-expanded

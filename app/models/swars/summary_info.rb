@@ -13,7 +13,7 @@ module Swars
         ms_a = ms_group["切断した"] || []
         c = ms_a.size
         # count_set(stat, "切断回数", c, alert_p: c.nonzero?, memberships: ms_a)
-        parcentage_set(stat, "切断率", c, d, alert_p: c.nonzero?, tooltip: "切断回数 / 負け数", memberships: ms_a)
+        parcentage_set(stat, "切断率", c, d, danger_p: c.nonzero?, tooltip: "切断回数 / 負け数", memberships: ms_a)
       end
 
       if (d = judge_count_for(:win)).nonzero?
@@ -53,60 +53,61 @@ module Swars
 
             ms = ships.max_by { |e| e.sec_list.last.to_i }
             sec = ms.sec_list.last.to_i
-            sec_set(stat, "【#{rule_info.name}】最後の着手の最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
+            sec_set(stat, "【#{rule_info.name}】最終着手の最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
 
             ms_a = ships.find_all { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】最後の着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負け", count, alert_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】最終着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負け", count, danger_p: count.nonzero?, memberships: ms_a)
 
             ms_a = ships.find_all { |e| e.summary_key == "詰ます" && e.sec_list.last >= rule_info.leave_alone_limit }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ます", count, alert_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ます", count, danger_p: count.nonzero?, memberships: ms_a)
 
             scope = ships.find_all { |e| e.summary_key == "詰ます" }
             if ms = scope.max_by { |e| e.sec_list.last.to_i }
               sec = ms.sec_list.last.to_i
-              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
+              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
             end
 
             scope = ships.find_all { |e| e.summary_key == "切れ負け" }
             if ms = scope.max_by { |e| e.rest_sec }
               sec = ms.rest_sec.to_i
-              sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
+              sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
             end
 
             ms_a = ships.find_all { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負け", count, alert_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負け", count, danger_p: count.nonzero?, memberships: ms_a)
           end
 
           # e.summary_key == "投了した" || e.summary_key == "詰まされた" }.presence
           # if scope = ships.find_all { |e| e.judge_info.key == :lose }
           scope = ships.find_all { |e| e.summary_key == "投了した" || e.summary_key == "詰まされた" }.presence # { |e| e.judge_info.key == :lose } の判定だと切断負けも含まれてしまう
+          tooltip = "切断を除く"
           if scope
             if ms = scope.min_by { |e| e.battle.turn_max }
               turn = ms.battle.turn_max
-              count_set(stat, "【#{rule_info.name}】(投了したor詰まされた)最短手数", turn, alert_p: turn && turn <= rule_info.most_min_turn_max_limit, suffix: "手", membership: ms)
+              count_set(stat, "【#{rule_info.name}】負け最短手数", turn, alert_p: turn && turn <= rule_info.most_min_turn_max_limit, suffix: "手", membership: ms, tooltip: tooltip)
             end
             if ms = scope.min_by { |e| e.total_seconds }
               sec = ms.total_seconds
-              sec_set(stat, "【#{rule_info.name}】(投了したor詰まされた)最短時間", sec, alert_p: sec && sec <= rule_info.resignation_limit, membership: ms)
+              sec_set(stat, "【#{rule_info.name}】負け最短時間", sec, alert_p: sec && sec <= rule_info.resignation_limit, membership: ms, tooltip: tooltip)
             end
           end
 
           if scope = ships.find_all { |e| e.judge_info.key == :win }.presence
             if ms = scope.max_by { |e| e.battle.turn_max }
               turn = ms.battle.turn_max
-              count_set(stat, "【#{rule_info.name}】(勝ち)最長手数", turn, warn_p: turn && turn >= 200, suffix: "手", membership: ms)
+              count_set(stat, "【#{rule_info.name}】勝ち最長手数", turn, warn_p: turn && turn >= 200, suffix: "手", membership: ms)
             end
             if ms = scope.min_by { |e| e.battle.turn_max }
               turn = ms.battle.turn_max
-              count_set(stat, "【#{rule_info.name}】(勝ち)最短手数", turn, warn_p: false, suffix: "手", membership: ms)
+              count_set(stat, "【#{rule_info.name}】勝ち最短手数", turn, warn_p: false, suffix: "手", membership: ms)
             end
             if rule_info.key == :ten_sec
               if ms = scope.max_by { |e| e.total_seconds }
                 sec = ms.total_seconds
-                sec_set(stat, "【#{rule_info.name}】(勝ち)最長時間", sec, warn_p: sec && sec >= 10.minutes, membership: ms)
+                sec_set(stat, "【#{rule_info.name}】勝ち最長時間", sec, warn_p: sec && sec >= 10.minutes, membership: ms)
               end
             end
           end
@@ -118,7 +119,7 @@ module Swars
 
           # scope = ships.find_all { |e| e.summary_key == "投了した" }
           # most_min_turn_max = scope.collect { |e| e.sec_total }.min
-          # sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手までの最長", sec, warn_p: sec && sec < rule_info.resignation_limit)
+          # sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手最長", sec, warn_p: sec && sec < rule_info.resignation_limit)
         end
       end
 
@@ -162,7 +163,7 @@ module Swars
         ms_a = memberships.find_all { |e| range.cover?(e.battle.turn_max) }
         c = ms_a.size
         if c.nonzero?
-          count_set(stat, s.zero? ? "#{e}手未満" : "#{s}手以上", c, memberships: ms_a, great_p: e >= 200)
+          count_set(stat, s.zero? ? "#{e}手未満" : "#{s}手以上", c, memberships: ms_a, great_p: s >= 200)
         end
       end
 
@@ -339,16 +340,27 @@ module Swars
         # key = h.content_tag("b-tooltip", key, label: "あいうえお", position: "is-left", size: "is-small")
         key = h.content_tag("b-tooltip", key, label: v, position: "is-top", size: "is-small") # multilined: false
       end
-      if options[:alert_p]
-        # key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
-        key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
+
+      if false
+        if options[:alert_p]
+          # key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
+          key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
+        end
+        if options[:great_p]
+          key = Fa.icon_tag(:fas, :exclamation, :class => "has-text-danger") + key
+        end
+        if options[:warn_p]
+          key = Fa.icon_tag(:fas, :exclamation_triangle, :class => "has-text-warning") + key
+        end
+      else
+        if options[:alert_p] || options[:great_p] || options[:warn_p]
+          key = Fa.icon_tag(:fas, :exclamation, :class => "has-text-danger") + key
+        end
+        if options[:danger_p]
+          key = Fa.icon_tag(:fas, :skull, :class => "has-text-danger") + key
+        end
       end
-      if options[:great_p]
-        key = Fa.icon_tag(:fas, :exclamation, :class => "has-text-danger") + key
-      end
-      if options[:warn_p]
-        key = Fa.icon_tag(:fas, :exclamation_triangle, :class => "has-text-warning") + key
-      end
+
       key
     end
 
