@@ -126,12 +126,12 @@ module Swars
         canvas_id: "#{key}_canvas",
         chart_params: {
           type: "line",
-          options: {
-            title: {
-              display: true,
-              text: "a",
-            },
-          },
+          # options: {
+          #   title: {
+          #     display: true,
+          #     text: "a",
+          #   },
+          # },
           data: {
             datasets: WinLoseInfo.collect.with_index { |wl, i|
               {

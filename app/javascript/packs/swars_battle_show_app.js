@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // https://tr.you84815.space/chartjs/configuration/tooltip.html
             legend: {
-              display: false,
+              display: true,
             },
             tooltips: {
               callbacks: {
