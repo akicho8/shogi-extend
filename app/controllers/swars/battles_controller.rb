@@ -340,7 +340,7 @@ module Swars
     end
 
     let :current_records do
-      current_scope.page(params[:page]).per(current_per)
+      current_scope.select(Battle.column_names - ["meta_info"]).page(params[:page]).per(current_per)
     end
 
     let :default_per do
