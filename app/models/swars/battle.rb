@@ -37,7 +37,7 @@ module Swars
 
     has_many :users, through: :memberships do
       # 先手/後手プレイヤー
-      def black                 # FIXME: 仕様禁止
+      def black                 # FIXME: 使用禁止
         first
       end
 
