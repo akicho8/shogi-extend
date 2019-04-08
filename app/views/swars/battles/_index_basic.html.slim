@@ -65,7 +65,7 @@
                   == record.memberships.collect { |e| e.winner_only_icon_html.to_s + controller.user_link2(e) }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
 
               .card-content
-                - if sfen = record.to_cached_kifu(:sfen)
+                - if sfen = record.to_cached_sfen
                     shogi-player(
                       :kifu_body="'#{sfen}'"
                       :key_event_capture="false"

@@ -35,6 +35,12 @@ module ConvertMethods
     end
   end
 
+  def to_cached_sfen
+    Rails.cache.fetch([cache_key, "sfen"].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
+      fast_parsed_info.to_sfen
+    end
+  end
+
   # KI2変換可能だけど重い
   def heavy_parsed_info
     @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed)
