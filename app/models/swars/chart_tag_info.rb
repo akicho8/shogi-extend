@@ -26,7 +26,7 @@ module Swars
             },
           },
           data: {
-            labels: ["勝ち", "負け"],
+            labels: WinLoseInfo.collect(&:name),
             datasets: [
               {
                 data: [:win, :lose].collect { |judge_key| user.memberships.tagged_with(name, on: :note_tags).where(judge_key: judge_key).count },

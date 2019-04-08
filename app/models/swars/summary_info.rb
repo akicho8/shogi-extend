@@ -32,6 +32,16 @@ module Swars
       # turn = memberships.collect { |e| e.battle.turn_max }.max
       # count_set(stat, "【#{rule_info.name}】最長手数", turn, alert_p: turn && turn >= 200, suffix: "手")
 
+      if true
+        # latest_record = user.battles.reorder(created_at: :desc).take
+        # t = latest_record.created_at
+        t = Time.current
+        n_days = 7
+        range = t.ago(n_days.days)..t
+        avg = user.battles.where(created_at: range).count.fdiv(n_days).round(2)
+        count_set(stat, "直近1週間での1日平均対局数", avg, great_p: avg >= 10, suffix: "戦")
+      end
+
       RuleInfo.each do |rule_info|
         ships = memberships.find_all { |e| e.battle.rule_info == rule_info }
 
