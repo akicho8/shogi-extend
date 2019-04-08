@@ -66,16 +66,16 @@
 
               .card-content
                 - if sfen = record.to_cached_sfen
-                    shogi-player(
-                      :kifu_body="'#{sfen}'"
-                      :key_event_capture="false"
-                      :slider_show="true"
-                      :sfen_show="false"
-                      :controller_show="false"
-                      :theme="'simple'"
-                      :sound_effect="true"
-                      :volume=AppConfig[:volume]
-                    )
+                  shogi-player(
+                    :kifu_body="'#{sfen}'"
+                    :key_event_capture="false"
+                    :slider_show="true"
+                    :sfen_show="false"
+                    :controller_show="false"
+                    :theme="'simple'"
+                    :sound_effect="true"
+                    :volume=AppConfig[:volume]
+                  )
               footer.card-footer
                 = link_to("コピー", "#", "class": "card-footer-item", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([record, format: "kif", copy_trigger: true])})
                 = link_to("詳細", [record], "class": "card-footer-item")
