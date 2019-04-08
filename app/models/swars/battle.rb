@@ -222,6 +222,10 @@ module Swars
       def header_detail(h)
         super.merge("場所" => h.link_to(key, wars_url, target: "_blank"))
       end
+
+      def kif_data_name
+        memberships.collect(&:name_with_grade).join(" 対 ")
+      end
     end
 
     concerning :ImportMethods do

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
 
       kifu_copy_exec_click(e) {
-        AppHelper.kifu_copy_exec(e.target.dataset[_.camelCase("kif_direct_access_path")])
+        AppHelper.kifu_copy_exec(e.target.dataset[_.camelCase("kif_direct_access_path")], {kif_data_name: e.target.dataset[_.camelCase("kif_data_name")]})
       },
     },
   })

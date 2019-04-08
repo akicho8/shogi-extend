@@ -15,7 +15,7 @@ export function kifu_copy_hook_all() {
 }
 
 // 指定 URL の結果をクリップボードにコピー
-export function kifu_copy_exec(url) {
+export function kifu_copy_exec(url, options = {}) {
   if (!url) {
     alert("棋譜のURLが不明です")
   }
@@ -26,7 +26,17 @@ export function kifu_copy_exec(url) {
     async: false, // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
   }).responseText
 
-  clipboard_copy(kifu_text, {success_message: "棋譜をクリップボードにコピーしました"})
+  const options2 = {
+    ...options,
+    success_message: "棋譜をクリップボードにコピーしました",
+  }
+
+  const kif_data_name = options["kif_data_name"]
+  if (kif_data_name) {
+    options2["success_talk_str"]= `${kif_data_name}の棋譜をコピーしました`
+  }
+
+  clipboard_copy(kifu_text, options2)
 }
 
 // str をクリップボードにコピー
@@ -34,6 +44,8 @@ export function clipboard_copy(str, options = {}) {
   const options2 = Object.assign({}, {
     success_message: "クリップボードにコピーしました",
     error_message: "クリップボードへのコピーに失敗しました",
+    success_talk_str: "コピーしました",
+    error_talk_str: "失敗しました",
   }, options)
 
   let success = null
@@ -69,12 +81,12 @@ export function clipboard_copy(str, options = {}) {
   }
 
   if (!success) {
-    talk("失敗しました")
+    talk(options2["error_talk_str"])
     Vue.prototype.$toast.open({message: options2["error_message"], position: "is-bottom", type: "is-danger"})
     return
   }
 
-  talk("コピーしました")
+  talk(options2["success_talk_str"])
   Vue.prototype.$toast.open({message: options2["success_message"], position: "is-bottom", type: "is-success"})
 }
 
