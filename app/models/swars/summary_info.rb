@@ -121,7 +121,7 @@ module Swars
       count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
 
       ms_a = judge_group_memberships(:win)
-      parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, warn_p: (0.25...0.75).exclude?(win_rate), memberships: ms_a)
+      parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, great_p: win_rate >= 0.6, memberships: ms_a)
 
       win_range_for(stat, win_range_key: "格上", key: :win)
       win_range_for(stat, win_range_key: "同格", key: :win)
@@ -134,7 +134,7 @@ module Swars
           ms_a = scope.where(judge_key: "win")
           c = ms_a.count
           rate = c.fdiv(d)
-          parcentage_set(stat, "#{e.name}の勝率", c, d, warn_p: (0.25...0.75).exclude?(rate), memberships: ms_a)
+          parcentage_set(stat, "#{e.name}の勝率", c, d, great_p: rate >= 0.6, memberships: ms_a)
         end
       end
 
@@ -152,7 +152,7 @@ module Swars
         ms_a = memberships.find_all { |e| range.cover?(e.battle.turn_max) }
         c = ms_a.size
         if c.nonzero?
-          count_set(stat, s.zero? ? "#{e}手未満" : "#{s}手以上", c, memberships: ms_a)
+          count_set(stat, s.zero? ? "#{e}手未満" : "#{s}手以上", c, memberships: ms_a, great_p: e >= 200)
         end
       end
 
@@ -200,10 +200,10 @@ module Swars
         ms_a = scope.find_all { |e| e.judge_key == win_lose_info.key.to_s }
         if win_lose_info.key == :win
           rate = ms_a.size.fdiv(d)
-          warn_p = win_lose_info.key == :win && !win_range_info.win_range.cover?(rate) || win_lose_info.key == :lose && win_range_info.win_range.cover?(rate)
-          parcentage_set(stat, "【#{win_range_info.name}】勝率", ms_a.size, d, tooltip: "#{win_lose_info.name}数 / #{win_range_info.name}との対局数", warn_p: warn_p, memberships: ms_a)
+          # warn_p = win_lose_info.key == :win && !win_range_info.win_range.cover?(rate) || win_lose_info.key == :lose && win_range_info.win_range.cover?(rate)
+          parcentage_set(stat, "【対#{win_range_info.name}】勝率", ms_a.size, d, tooltip: "#{win_lose_info.name}数 / #{win_range_info.name}との対局数", great_p: rate >= win_range_info.rate_max, memberships: ms_a)
         else
-          count_set(stat, "【#{win_range_info.name}】#{win_lose_info.name}数", ms_a.size, memberships: ms_a)
+          count_set(stat, "【対#{win_range_info.name}】#{win_lose_info.name}数", ms_a.size, memberships: ms_a)
         end
       end
     end
@@ -330,7 +330,11 @@ module Swars
         key = h.content_tag("b-tooltip", key, label: v, position: "is-top", size: "is-small") # multilined: false
       end
       if options[:alert_p]
+        # key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
         key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
+      end
+      if options[:great_p]
+        key = Fa.icon_tag(:fas, :exclamation, :class => "has-text-danger") + key
       end
       if options[:warn_p]
         key = Fa.icon_tag(:fas, :exclamation_triangle, :class => "has-text-warning") + key
