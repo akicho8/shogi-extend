@@ -3,7 +3,7 @@ javascript:
     new Vue({
       el: "#app",
       data: {
-        kifu_active_tab: 0,
+        kifu_type_tab_index: 0,
       },
     })
   })
@@ -54,7 +54,7 @@ javascript:
 
   .columns
     .column
-      b-tabs(v-model="kifu_active_tab")
+      b-tabs(v-model="kifu_type_tab_index")
         - sample_kifu_body.each do |key, value|
           b-tab-item(label=KifuFormatWithBodInfo[key].name)
             pre.pre-wrap= value

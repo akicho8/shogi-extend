@@ -16,7 +16,7 @@ window.ShogiPreviewApp = Vue.extend({
       auto_copy_to_kifu_body_disable_p: false,      //
       current_tab_index: 0,     // 入力タブ切り替え
       kifus_hash: this.$options.kifus_hash,       // 変換後の棋譜
-      kifu_active_tab: 0,       // 変換後の棋譜の切り替え
+      kifu_type_tab_index: 0,       // 変換後の棋譜の切り替え
 
       tab_list: [
         "操作入力",

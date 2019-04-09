@@ -35,7 +35,7 @@
       .column
         .columns
           .column.has-text-left
-            b-tabs(v-model="kifu_active_tab")
+            b-tabs(v-model="kifu_type_tab_index")
               template(v-for="e in kifus_hash")
                 b-tab-item(:label="e.name")
                   small
