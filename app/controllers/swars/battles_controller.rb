@@ -85,8 +85,9 @@ module Swars
         return
       end
 
+      @page_title = ["将棋ウォーズ棋譜検索"]
       if current_swars_user
-        @page_title ||= ["将棋ウォーズ棋譜検索", current_swars_user.user_key]
+        @page_title << current_swars_user
       end
     end
 
