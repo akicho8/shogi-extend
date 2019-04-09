@@ -350,7 +350,7 @@ module Swars
         def debounce_basic_import(**params)
           # キャッシュの有効時間のみ利用して連続実行を防ぐ
           if true
-            seconds = Rails.env.production? ? 30.seconds : 0.seconds
+            seconds = Rails.env.production? ? 3.minutes : 0.seconds
             cache_key = ["debounce_basic_import", params[:user_key], params[:page_max]].join("/")
             if Rails.cache.exist?(cache_key)
               return false
