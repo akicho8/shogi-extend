@@ -135,7 +135,7 @@ module Swars
         if !success
           # development でここが通らない
           # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-          flash[:warning] = "#{current_user_key} さんの棋譜は数秒前に取得したばかりです"
+          flash[:warning] = "#{current_user_key} さんの棋譜はさっき取得したばかりです"
         end
         if success
           let_cache_remove(:current_swars_user)
