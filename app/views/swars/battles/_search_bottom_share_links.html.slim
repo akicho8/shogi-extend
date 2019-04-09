@@ -9,5 +9,5 @@
         / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
         = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-primary is-small is-rounded")
 
-        = link_to("古い対局も取り込む", "#", class: "button is-success is-small is-rounded", "@click" => "heavy_import_handle")
-        = link_to("(invisible)", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "heavy_import_link")
+        = link_to("古い対局も取り込む", "#", class: "button is-success is-small is-rounded", "@click" => "many_import_handle")
+        = link_to("(invisible)", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "many_import_link")

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     methods: {
-      heavy_import_handle(e) {
+      many_import_handle(e) {
         Vue.prototype.$dialog.confirm({
           // title: "どうする？",
           message: "1分ぐらいかかる場合がありますがよろしいですか？",
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
           focusOn: "cancel",
           onConfirm: () => {
             this.process_now()
-            this.$refs.heavy_import_link.click()
+            this.$refs.many_import_link.click()
           },
           onCancel: () => {
             AppHelper.talk("やめときました")
