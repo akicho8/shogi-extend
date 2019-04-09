@@ -142,6 +142,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 Vue.mixin({
   methods: {
+    process_now() {
+
+      // this.$modal.open()
+
+      this.$dialog.alert({
+        title: "処理中",
+        message: "しばらくお待ちください",
+        type: "is-primary",
+        // hasIcon: true,
+        // icon: "crown",
+        // iconPack: "mdi",
+      })
+
+      this.$loading.open()
+    },
+
     wars_tweet_copy_click(wars_tweet_body) {
       AppHelper.clipboard_copy(wars_tweet_body)
     },

@@ -10,15 +10,25 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     methods: {
-      form_submited(e) {
-        Vue.prototype.$dialog.alert({
-          title: "処理中",
-          message: "しばらくお待ちください",
-          type: "is-primary",
-          // hasIcon: true,
-          // icon: "crown",
-          // iconPack: "mdi",
+      heavy_import_handle(e) {
+        Vue.prototype.$dialog.confirm({
+          // title: "どうする？",
+          message: "1分ぐらいかかる場合がありますがよろしいですか？",
+          confirmText: "実行する",
+          cancelText: "やめとく",
+          focusOn: "cancel",
+          onConfirm: () => {
+            this.process_now()
+            this.$refs.heavy_import_link.click()
+          },
+          onCancel: () => {
+            AppHelper.talk("やめときました")
+          },
         })
+      },
+
+      form_submited(e) {
+        this.process_now()
 
         this.submited = true
       },
