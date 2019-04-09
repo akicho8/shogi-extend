@@ -29,7 +29,7 @@
 
     .columns
       .column
-        = form_with(url: [:swars, :light], method: :get, skip_enforcing_utf8: true) do |form|
+        = form_with(url: [:swars, :light], method: :get, skip_enforcing_utf8: true, html: {"@submit" => "form_submited"}) do |form|
           .field.has-addons
             .control.is-expanded
               = form.search_field(:query, class: "input", value: controller.current_query, placeholder: current_placeholder, list: "search_field_query_completion", autofocus: controller.current_query_hash.blank?)
