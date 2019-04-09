@@ -65,9 +65,8 @@ module Swars
       import_process(flash.now)
 
       unless flash[:external_app_exec_skip_once]
-        if latest_open_index = params[:latest_open_index].presence
-          limit = [latest_open_index.to_i.abs, 10].min.next
-          if record = current_scope.order(battled_at: :desc).limit(limit).last
+        if latest_open_limit
+          if record = current_scope.order(battled_at: :desc).limit(latest_open_limit).last
             @redirect_url_by_js = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
             SlackAgent.message_send(key: "最新開くぴよ", body: current_user_key)
             if false
@@ -486,7 +485,7 @@ module Swars
       # end
 
       s = s.order(battled_at: :desc)
-      
+
       if v = params[:order_column]
         s = s.reorder(v => params[:order_arrow] || :asc)
       end
@@ -535,6 +534,12 @@ module Swars
           },
         },
       }
+    end
+
+    let :latest_open_limit do
+      if v = params[:latest_open_index].presence
+        [v.to_i.abs, 10].min.next
+      end
     end
   end
 end
