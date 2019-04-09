@@ -228,13 +228,16 @@ module Swars
     end
 
     concerning :ImportMethods do
+      included do
+      end
+
       class_methods do
         def setup(options = {})
           super
 
           if Rails.env.development?
             basic_import(user_key: "devuser1")
-            reception_import
+            regular_import
             expert_import
             conditional_import(grade_key_gteq: '三段')
             find_each do |e|
@@ -289,9 +292,15 @@ module Swars
           end
         end
 
-        # Battle.reception_import(limit: 10, sleep: 5)
-        def reception_import(**params)
-          User.where.not(last_reception_at: nil).order(last_reception_at: :desc).limit(params[:limit] || 1).each do |user|
+        # Battle.regular_import
+        def regular_import(**params)
+          params = {
+            limit: 32,
+            sleep: Rails.env.production? ? 4 : 0,
+            page_max: 256,
+          }.merge(params)
+
+          User.regular_only.limit(params[:limit]).each do |user|
             basic_import(params.merge(user_key: user.user_key))
           end
         end
@@ -299,7 +308,14 @@ module Swars
         # Battle.expert_import
         # Battle.expert_import(page_max: 3, sleep: 5)
         def expert_import(**params)
-          Agent.new(params).legend_user_keys.each do |user_key|
+          params = {
+            user_keys: Rails.application.credentials[:expert_import_user_keys],
+            sleep: Rails.env.production? ? 4 : 0,
+            page_max: 256,
+          }.merge(params)
+
+          # Agent.new(params).legend_user_keys.each do |user_key|
+          params[:user_keys].each do |user_key|
             basic_import(params.merge(user_key: user_key))
           end
         end
