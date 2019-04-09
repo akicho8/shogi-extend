@@ -1,18 +1,7 @@
 .columns
   .column.has-text-left
-    #kifu_player_tabs_div
-      b-tabs(v-model="kifu_active_tab")
-        - KifuFormatWithBodInfo.each do |e|
-          b-tab-item(label=e.name)
-            - if s = current_record.to_cached_kifu(e.key)
-              pre.pre-wrap= s
-
-javascript:
-  document.addEventListener('DOMContentLoaded', () => {
-    new Vue({
-      el: "#kifu_player_tabs_div",
-      data: {
-        kifu_active_tab: 0,
-      }
-    })
-  })
+    b-tabs(v-model="kifu_active_tab")
+      - KifuFormatWithBodInfo.each do |e|
+        b-tab-item(label=e.name)
+          - if s = current_record.to_cached_kifu(e.key)
+            pre.pre-wrap= s

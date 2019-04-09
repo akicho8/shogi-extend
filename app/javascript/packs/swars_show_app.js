@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.SwarsBattleShowApp = Vue.extend({
     data() {
       return {
+        kifu_active_tab: 0,
       }
     },
 

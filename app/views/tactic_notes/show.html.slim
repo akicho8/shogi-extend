@@ -1,20 +1,30 @@
-.breadcrumb
-  ul
-    li= link_to("一覧", :tactic_notes)
-    li.is-active= link_to(current_record.name, "#")
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    new Vue({
+      el: "#app",
+      data: {
+        kifu_active_tab: 0,
+      },
+    })
+  })
 
-.has-text-centered
-  .title.is-2.yumincho= current_record.name
-hr
+#app
+  .breadcrumb
+    ul
+      li= link_to("一覧", :tactic_notes)
+      li.is-active= link_to(current_record.name, "#")
 
-.columns
-  ////////////////////////////////////////////////////////////////////////////////
-  .column
-    = @left_right_link
-    = @detail_hash.to_html(table_class: "table is-fullwidth")
-  ////////////////////////////////////////////////////////////////////////////////
-  .column
-    #shogi_player_app
+  .has-text-centered
+    .title.is-2.yumincho= current_record.name
+  hr
+
+  .columns
+    ////////////////////////////////////////////////////////////////////////////////
+    .column
+      = @left_right_link
+      = @detail_hash.to_html(table_class: "table is-fullwidth")
+    ////////////////////////////////////////////////////////////////////////////////
+    .column
       shogi-player(
         :kifu_body="'#{sample_kifu_body[:sfen]}'"
         :start_turn="0"
@@ -28,43 +38,32 @@ hr
         )
         = render partial: "sfen_link"
 
-    - content_for :head do
-      = javascript_pack_tag("shogi_player_app")
-      / = stylesheet_pack_tag("shogi_player_app")
+      / - content_for :head do
+        / = javascript_pack_tag("shogi_player_app")
+        / = stylesheet_pack_tag("shogi_player_app")
 
-  ////////////////////////////////////////////////////////////////////////////////
-  - if @board_table
+    ////////////////////////////////////////////////////////////////////////////////
+    - if @board_table
+      .column
+        br
+        .shogi-player.theme-simple.size-default
+          .board_container
+            .board_wrap
+              .board_outer
+                = @board_table
+
+  .columns
     .column
-      br
-      .shogi-player.theme-simple.size-default
-        .board_container
-          .board_wrap
-            .board_outer
-              = @board_table
-
-.columns
-  .column
-    #kifu_format_tab_app
       b-tabs(v-model="kifu_active_tab")
         - sample_kifu_body.each do |key, value|
           b-tab-item(label=KifuFormatWithBodInfo[key].name)
             pre.pre-wrap= value
 
-javascript:
-  document.addEventListener("DOMContentLoaded", () => {
-    new Vue({
-      el: "#kifu_format_tab_app",
-      data: {
-        kifu_active_tab: 0,
-      }
-    })
-  })
-
-/ .has-text-centered
-/ - count = General::Membership.tagged_with(current_record.name).count
-/ - if count >= 1
- /   =<> link_to("2ch棋譜検索".html_safe + tag.span(count, class: "badge"), [:general_search, query: current_record.key])
-/ - count = Swars::Battle.tagged_with(current_record.name).count
-/ - if count >= 1
-/   =<> link_to("将棋ウォーズ棋譜検索".html_safe +  tag.span(count, class: "badge"), [:swars_search, query: current_record.key])
-/ b-pagination :total="total" :current.sync="current" :order="order" :size="size" :simple="false" :per-page="perPage"
+  / .has-text-centered
+  / - count = General::Membership.tagged_with(current_record.name).count
+  / - if count >= 1
+   /   =<> link_to("2ch棋譜検索".html_safe + tag.span(count, class: "badge"), [:general_search, query: current_record.key])
+  / - count = Swars::Battle.tagged_with(current_record.name).count
+  / - if count >= 1
+  /   =<> link_to("将棋ウォーズ棋譜検索".html_safe +  tag.span(count, class: "badge"), [:swars_search, query: current_record.key])
+  / b-pagination :total="total" :current.sync="current" :order="order" :size="size" :simple="false" :per-page="perPage"

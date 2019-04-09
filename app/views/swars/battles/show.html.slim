@@ -1,28 +1,34 @@
-ruby:
-  @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
+- content_for :head do
+  = javascript_pack_tag("swars_show_app")
 
-.has-text-centered
-  .title.is-3.yumincho
-    == current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + e.name_with_grade }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
-hr
+javascript:
+  document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShowApp(#{js_swars_show_app_params.to_json.html_safe}).$mount("#app") })
 
-.tags
-  - current_record.showable_tag_list.each do |e|
-   span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])
+#app
+  - @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
 
-= render :partial => "kifu_player"
-= render :partial => "kifu_clock_chart"
-= render :partial => "kifu_player_tabs_div"
-
-details
-  summary.has-text-white-ter
-    | 棋神召喚疑惑判決
+  .has-text-centered
+    .title.is-3.yumincho
+      == current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + e.name_with_grade }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
   hr
-  .section
-    .title.is-4.yumincho 棋神召喚疑惑判決
 
-    .columns
-      - current_record.memberships.each do |e|
-        .column
-          .box.is-size-7.hash_value_only_nowrap
-            = e.swgod_info.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
+  .tags
+    - current_record.showable_tag_list.each do |e|
+     span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])
+
+  = render :partial => "kifu_player"
+  = render :partial => "kifu_clock_chart"
+  = render :partial => "kifu_player_tabs_div"
+
+  details
+    summary.has-text-white-ter
+      | 棋神召喚疑惑判決
+    hr
+    .section
+      .title.is-4.yumincho 棋神召喚疑惑判決
+
+      .columns
+        - current_record.memberships.each do |e|
+          .column
+            .box.is-size-7.hash_value_only_nowrap
+              = e.swgod_info.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")

@@ -1,10 +1,4 @@
-- content_for :head do
-  = javascript_pack_tag("swars_battle_show_app")
-
-javascript:
-  document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShowApp(#{js_swars_battle_show_app_params.to_json.html_safe}).$mount("#swars_battle_show_app") })
-
-#swars_battle_show_app
+.swars_show_app
   hr
   .section
     / .title.is-4.yumincho 消費時間

@@ -1,19 +1,30 @@
-ruby:
-  @page_title ||= [
-    controller.membership_name(current_record.memberships.black),
-    controller.membership_name(current_record.memberships.white),
-  ].join(" vs ")
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    new Vue({
+      el: "#app",
+      data: {
+        kifu_active_tab: 0,
+      },
+    })
+  })
 
-.has-text-left
-  .title.is-4.yumincho
-    = controller.membership_name(current_record.memberships.black)
-    span.versus.has-text-grey-lighter =<> "vs"
-    = controller.membership_name(current_record.memberships.white)
-hr
+#app
+  ruby:
+    @page_title ||= [
+      controller.membership_name(current_record.memberships.black),
+      controller.membership_name(current_record.memberships.white),
+    ].join(" vs ")
 
-.tags
-  - current_record.showable_tag_list.each do |e|
-    span.tag= link_to(e, general_search_path(e))
+  .has-text-left
+    .title.is-4.yumincho
+      = controller.membership_name(current_record.memberships.black)
+      span.versus.has-text-grey-lighter =<> "vs"
+      = controller.membership_name(current_record.memberships.white)
+  hr
 
-= render :partial => "kifu_player"
-= render :partial => "kifu_player_tabs_div"
+  .tags
+    - current_record.showable_tag_list.each do |e|
+      span.tag= link_to(e, general_search_path(e))
+
+  = render :partial => "kifu_player"
+  = render :partial => "kifu_player_tabs_div"

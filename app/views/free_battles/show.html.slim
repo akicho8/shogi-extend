@@ -1,28 +1,39 @@
-- @page_title ||= current_record.safe_title
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    new Vue({
+      el: "#app",
+      data: {
+        kifu_active_tab: 0,
+      },
+    })
+  })
 
-nav.breadcrumb
-  ul
-    li= link_to("棋譜一覧", current_plural_key)
-    / li.is-active= link_to(current_record.safe_title, current_record)
-    li.is-active= link_to("##{current_record.id}", current_record)
+#app
+  - @page_title ||= current_record.safe_title
 
-.level
-  .level-left
-    .level-item.has-text-left
-      .title.is-3.yumincho
-        = current_record.safe_title
-  .level-right
-    .level-item
-      .buttons
-        - if editable_record?(current_record)
-          = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-small is-primary")
-        = link_to("新規でコピペ", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button is-small")
-hr
+  nav.breadcrumb
+    ul
+      li= link_to("棋譜一覧", current_plural_key)
+      / li.is-active= link_to(current_record.safe_title, current_record)
+      li.is-active= link_to("##{current_record.id}", current_record)
 
-.has-text-centered
-  = render :partial => "kifu_player"
-  = render :partial => "kifu_player_tabs_div"
+  .level
+    .level-left
+      .level-item.has-text-left
+        .title.is-3.yumincho
+          = current_record.safe_title
+    .level-right
+      .level-item
+        .buttons
+          - if editable_record?(current_record)
+            = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-small is-primary")
+          = link_to("新規でコピペ", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button is-small")
+  hr
 
-- if editable_record?(current_record)
-  .buttons
-    = link_to("削除", [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
+  .has-text-centered
+    = render :partial => "kifu_player"
+    = render :partial => "kifu_player_tabs_div"
+
+  - if editable_record?(current_record)
+    .buttons
+      = link_to("削除", [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})

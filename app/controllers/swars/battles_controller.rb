@@ -503,7 +503,7 @@ module Swars
       end
     end
 
-    let :js_swars_battle_show_app_params do
+    let :js_swars_show_app_params do
       {
         think_chart_params: {
           type: "line",

@@ -138,6 +138,21 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
+//////////////////////////////////////////////////////////////////////////////// どこからでも使いたい
+
+Vue.mixin({
+  methods: {
+    wars_tweet_copy_click(wars_tweet_body) {
+      AppHelper.clipboard_copy(wars_tweet_body)
+    },
+
+    kifu_copy_exec_click(e) {
+      const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
+      AppHelper.kifu_copy_exec(params)
+    },
+  },
+})
+
 //////////////////////////////////////////////////////////////////////////////// 確認用
 
 if (typeof(jQuery) != "undefined") {
