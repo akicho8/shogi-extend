@@ -23,7 +23,7 @@ if (typeof(jQuery) != "undefined") {
 //   // const buttons = document.querySelectorAll(".kif_clipboard_copy_button")
 //   // for (let i = 0; i < buttons.length; i++) {
 //   //   buttons[i].addEventListener("click", (e) => {
-//   //     const url = e.target.dataset.kifDirectAccessPath // kif_direct_access_path
+//   //     const url = e.target.dataset.kifDirectAccessPath // kc_url
 //   //
 //   //     if (!url) {
 //   //       alert("棋譜のURLが不明です")

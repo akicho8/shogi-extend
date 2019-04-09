@@ -251,4 +251,19 @@ module ConvertMethods
   def tournament_list
     Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
   end
+
+  def to_kifu_copy_params(h, **options)
+    options = {
+      format: "kif",
+      copy_trigger: true,
+    }.merge(options)
+
+    {
+      kc_url: h.url_for([self, options]),
+      kc_title: to_title,
+    }
+  end
+
+  def to_title
+  end
 end

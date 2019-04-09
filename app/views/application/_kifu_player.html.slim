@@ -35,7 +35,7 @@
               b-icon(icon="menu-down")
             - KifuFormatWithBodInfo.each do |e|
               b-dropdown-item(:has-link="true" :paddingless="true")
-                = link_to(e.name, "", "@click.prevent" => "kifu_copy_exec_click", data: {kif_direct_access_path: url_for([current_record, format: e.key, copy_trigger: true])})
+                = link_to(e.name, "", "@click.prevent" => "kifu_copy_exec_click", data: {kifu_copy_params: current_record.to_kifu_copy_params(self, format: e.key).to_json})
 
           b-dropdown(:hoverable="true")
             button.button.is-small(slot="trigger")

@@ -7,53 +7,53 @@ export function kifu_copy_hook_all() {
   const elems = document.querySelectorAll(".kif_clipboard_copy_button")
   elems.forEach(el => {
     el.addEventListener("click", e => {
-      const url = e.target.dataset[_.camelCase("kif_direct_access_path")]
-      kifu_copy_exec(url)
+      const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
+      kifu_copy_exec(params)
       e.preventDefault()
     })
   })
 }
 
 // 指定 URL の結果をクリップボードにコピー
-export function kifu_copy_exec(url, options = {}) {
-  if (!url) {
-    alert("棋譜のURLが不明です")
-  }
-
-  const kifu_text = $.ajax({
-    type: "GET",
-    url: url,
-    async: false, // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
-  }).responseText
-
-  const options2 = {
-    ...options,
+export function kifu_copy_exec(params) {
+  params = Object.assign({}, {
     success_message: "棋譜をクリップボードにコピーしました",
+  }, params)
+
+  const kc_url = params["kc_url"]
+  if (kc_url) {
+    const kifu_text = $.ajax({ // このためだけに jQuery 使用
+      type: "GET",
+      url: kc_url,
+      async: false, // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
+    }).responseText
+
+    params["text"] = kifu_text
   }
 
-  const kif_data_name = options["kif_data_name"]
-  if (kif_data_name) {
-    options2["success_talk_str"]= `${kif_data_name}の棋譜をコピーしました`
+  const kc_title = params["kc_title"]
+  if (kc_title) {
+    params["success_yomiage"]= `${kc_title}の棋譜をコピーしました`
   }
 
-  clipboard_copy(kifu_text, options2)
+  clipboard_copy(params)
 }
 
 // str をクリップボードにコピー
-export function clipboard_copy(str, options = {}) {
-  const options2 = Object.assign({}, {
+export function clipboard_copy(params) {
+  params = Object.assign({}, {
     success_message: "クリップボードにコピーしました",
     error_message: "クリップボードへのコピーに失敗しました",
-    success_talk_str: "コピーしました",
-    error_talk_str: "失敗しました",
-  }, options)
+    success_yomiage: "コピーしました",
+    error_yomiage: "失敗しました",
+  }, params)
 
   let success = null
 
   // この方法は iPhone で動かない。先に elem.select() を実行した時点で iPhone の方が作動しなくなる
   if (false) {
     const elem = document.createElement("textarea")
-    elem.value = str
+    elem.value = params["text"]
     document.body.appendChild(elem)
     elem.select() // この方法は Windows Chrome でのみ動く
     success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
@@ -75,19 +75,19 @@ export function clipboard_copy(str, options = {}) {
   if (true) {
     const elem = document.createElement('textarea')
     document.body.appendChild(elem)
-    elem.value = str
+    elem.value = params["text"]
     success = corresponded_to_ios_pc_android_copy_to_clipboard(elem)
     document.body.removeChild(elem)
   }
 
   if (!success) {
-    talk(options2["error_talk_str"])
-    Vue.prototype.$toast.open({message: options2["error_message"], position: "is-bottom", type: "is-danger"})
+    talk(params["error_yomiage"])
+    Vue.prototype.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
     return
   }
 
-  talk(options2["success_talk_str"])
-  Vue.prototype.$toast.open({message: options2["success_message"], position: "is-bottom", type: "is-success"})
+  talk(params["success_yomiage"])
+  Vue.prototype.$toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
 }
 
 // https://marmooo.blogspot.com/2018/02/javascript.html
