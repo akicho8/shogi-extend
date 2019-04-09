@@ -29,81 +29,83 @@ module Swars
     end
 
     let :js_swars_player_info_app_params do
-      scope = current_swars_user.memberships.joins(:battle).includes(:battle).reorder(created_at: :desc)
+      if current_swars_user
+        scope = current_swars_user.memberships.joins(:battle).includes(:battle).reorder(created_at: :desc)
 
-      {
-        time_chart_params_list: [
-          days_chart_params_for("days", "対局日時", scope.take(100)),
-          days_chart_params_for("month", "直近1ヶ月", scope.where(Battle.arel_table[:battled_at].between(1.month.ago..Float::INFINITY))),
-          days_chart_params_for("week", "直近1週間", scope.where(Battle.arel_table[:battled_at].between(7.days.ago..Float::INFINITY))),
-        ],
-        any_chart_params_list: ChartTagInfo.collect { |e| e.chart_params_for(current_swars_user) } + attack_chart_params_list + defense_chart_params_list + [
-          {
-            canvas_id: "rule_canvas",
-            chart_params: {
-              type: "pie",
-              options: {
-                title: {
-                  display: true,
-                  text: "種類",
+        {
+          time_chart_params_list: [
+            days_chart_params_for("days", "対局日時", scope.take(100)),
+            days_chart_params_for("month", "直近1ヶ月", scope.where(Battle.arel_table[:battled_at].between(1.month.ago..Float::INFINITY))),
+            days_chart_params_for("week", "直近1週間", scope.where(Battle.arel_table[:battled_at].between(7.days.ago..Float::INFINITY))),
+          ],
+          any_chart_params_list: ChartTagInfo.collect { |e| e.chart_params_for(current_swars_user) } + attack_chart_params_list + defense_chart_params_list + [
+            {
+              canvas_id: "rule_canvas",
+              chart_params: {
+                type: "pie",
+                options: {
+                  title: {
+                    display: true,
+                    text: "種類",
+                  },
+                },
+                data: {
+                  labels: RuleInfo.collect { |e| e.name },
+                  datasets: [
+                    {
+                      data: RuleInfo.collect { |e| memberships_rule_key_group[e.key.to_s] || 0 },
+                      backgroundColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
+                      # borderColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].border_color },
+                    },
+                  ],
                 },
               },
-              data: {
-                labels: RuleInfo.collect { |e| e.name },
-                datasets: [
-                  {
-                    data: RuleInfo.collect { |e| memberships_rule_key_group[e.key.to_s] || 0 },
-                    backgroundColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
-                    # borderColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].border_color },
-                  },
-                ],
-              },
             },
-          },
-          {
-            canvas_id: "combination_canvas",
-            chart_params: {
-              type: "pie",
-              options: {
-                title: {
-                  display: true,
-                  text: "組手",
+            {
+              canvas_id: "combination_canvas",
+              chart_params: {
+                type: "pie",
+                options: {
+                  title: {
+                    display: true,
+                    text: "組手",
+                  },
+                },
+                data: {
+                  labels: CombinationInfo.keys,
+                  datasets: [
+                    {
+                      data: CombinationInfo.collect { |e| current_swars_user.memberships.tagged_with(e.key, on: :note_tags).count },
+                      backgroundColor: CombinationInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
+                    },
+                  ],
                 },
               },
-              data: {
-                labels: CombinationInfo.keys,
-                datasets: [
-                  {
-                    data: CombinationInfo.collect { |e| current_swars_user.memberships.tagged_with(e.key, on: :note_tags).count },
-                    backgroundColor: CombinationInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
-                  },
-                ],
-              },
             },
-          },
-          {
-            canvas_id: "faction_canvas",
-            chart_params: {
-              type: "pie", # doughnut
-              options: {
-                title: {
-                  display: true,
-                  text: "党派",
+            {
+              canvas_id: "faction_canvas",
+              chart_params: {
+                type: "pie", # doughnut
+                options: {
+                  title: {
+                    display: true,
+                    text: "党派",
+                  },
+                },
+                data: {
+                  labels: FactionInfo.keys,
+                  datasets: [
+                    {
+                      data: FactionInfo.collect { |e| current_swars_user.memberships.tagged_with(e.key, on: :note_tags).count },
+                      backgroundColor: FactionInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
+                    },
+                  ],
                 },
               },
-              data: {
-                labels: FactionInfo.keys,
-                datasets: [
-                  {
-                    data: FactionInfo.collect { |e| current_swars_user.memberships.tagged_with(e.key, on: :note_tags).count },
-                    backgroundColor: FactionInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
-                  },
-                ],
-              },
             },
-          },
-        ],
-      }
+          ],
+        }
+      end
     end
 
     let :memberships_rule_key_group do

@@ -2,15 +2,33 @@ document.addEventListener("DOMContentLoaded", () => {
   window.SwarsPlayerInfoApp = Vue.extend({
     data() {
       return {
+        submited: false,
       }
     },
 
     mounted() {
-      this.$options.time_chart_params_list.forEach(e => new Chart(this.$refs[e.canvas_id], this.days_chart_js_options(e)))
-      this.$options.any_chart_params_list.forEach(e => new Chart(this.$refs[e.canvas_id], e.chart_params))
+      if (this.$options.time_chart_params_list) {
+        this.$options.time_chart_params_list.forEach(e => new Chart(this.$refs[e.canvas_id], this.days_chart_js_options(e)))
+      }
+      if (this.$options.any_chart_params_list) {
+        this.$options.any_chart_params_list.forEach(e => new Chart(this.$refs[e.canvas_id], e.chart_params))
+      }
     },
 
     methods: {
+      form_submited(e) {
+        Vue.prototype.$dialog.alert({
+          title: "処理中",
+          message: "しばらくお待ちください",
+          type: "is-primary",
+          // hasIcon: true,
+          // icon: "crown",
+          // iconPack: "mdi",
+        })
+
+        this.submited = true
+      },
+
       days_chart_js_options(params) {
         return Object.assign({}, params.chart_params, {
           options: {

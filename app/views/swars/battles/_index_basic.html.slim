@@ -34,6 +34,13 @@
       = link_to("手数多い順", args.merge(order_column: :turn_max, order_arrow: :desc), :class => "button is-light")
       = link_to("手数少ない順", args.merge(order_column: :turn_max, order_arrow: :asc), :class => "button is-light")
 
+- unless current_records.exists?
+  .columns
+    .column
+      .message
+        .message-body
+          | 見つかりませんでした
+
 - if current_records && (current_records.size <= 9 || params[:shogi_player_show_all])
   #shogi_player_app(v-cloak="true")
     - content_for :head do
