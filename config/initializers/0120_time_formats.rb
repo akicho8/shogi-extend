@@ -42,20 +42,21 @@ Time::DATE_FORMATS.update({
     # :diff => proc {|time| time.to_s(:distance)},
     #
     # "3日"
-    :battle_time => proc {|time|
-      d = (time.to_i - Time.current.to_i)
+    :battle_time => proc { |time|
+      d = time - Time.current
+      suffix = d.negative? ? '前' : '後'
       t = d.abs
-      before_after = (d <= 0 ? '前' : '後')
       case
-      when time >= Time.current.midnight
+        # when time >= Time.current.midnight
+      when time >= 1.days.ago
         time.to_s(:battle_short)
-      when t < 1.minute.to_i then "#{t / 1.second.to_i}秒#{before_after}"
-      when t < 1.hour.to_i   then "#{t / 1.minute.to_i}分#{before_after}"
-      when t < 1.day.to_i    then "#{t / 1.hour.to_i}時間#{before_after}"
-      # when t < 1.week.to_i   then "#{t / 1.day.to_i}日#{before_after}"
-      when t < 1.month.to_i  then "#{t / 1.day.to_i}日#{before_after}"
-      when t < 1.year.to_i   then "#{t / 1.month.to_i}ヶ月#{before_after}"
-      else                        "#{t / 1.year.to_i}年#{before_after}"
+      when t < 1.minute then "#{t.div(1.second)}秒#{suffix}"
+      when t < 1.hour   then "#{t.div(1.minute)}分#{suffix}"
+      when t < 1.day    then "#{t.div(1.hour)}時間#{suffix}"
+        # when t < 1.week   then "#{t.div(1.day}日#{suffix}"
+      when t < 1.month  then "#{t.div(1.day)}日#{suffix}"
+      when t < 1.year   then "#{t.div(1.month)}ヶ月#{suffix}"
+      else                  "#{t.div(1.year)}年#{suffix}"
       end
     },
     #
