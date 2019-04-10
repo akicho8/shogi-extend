@@ -46,7 +46,7 @@
   /   - content_for :head do
   /     = javascript_pack_tag("shogi_player_app")
   - current_records.each_slice(3) do |current_records|
-    .columns
+    .columns(v-cloak)
       - current_records.each do |record|
         .column
           .card
