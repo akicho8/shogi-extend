@@ -39,7 +39,7 @@ html(lang="ja")
       = javascript_pack_tag("single_notification")
 
     - unless content_for?(:twitter_card_tag)
-      - twitter_card_tag(title: AppConfig[:app_name], description: "将棋に関連するプログラムの実験的なサイトです。ネット対戦・CPU対戦・将棋ウォーズ棋譜検索・棋譜変換などができます", image: "swars_battles_index.png")
+      - twitter_card_tag(description: "将棋に関連するプログラムの実験的なサイトです。ネット対戦・CPU対戦・将棋ウォーズ棋譜検索・棋譜変換などができます", image: "swars_battles_index.png")
     = yield(:twitter_card_tag)
 
     = yield :head

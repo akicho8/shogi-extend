@@ -37,11 +37,17 @@ module ApplicationHelper
   end
 
   def twitter_card_tag(**options)
+    provide(:twitter_card_tag, __twitter_card_tag(options))
+  end
+
+  def __twitter_card_tag(**options)
     options = {
       card: "summary_large_image",
-      site: "@kinakom0chi",
-      creator: "@kinakom0chi",
+      site: "@sgkinakomochi",
+      title: AppConfig[:app_name],
+      creator: "@sgkinakomochi",
       url: request.url,
+      image: "apple-touch-icon.png",
     }.merge(options)
 
     o = []
@@ -67,6 +73,6 @@ module ApplicationHelper
       o << tag.meta(property: "og:image", content: image_url(v))
     end
 
-    provide(:twitter_card_tag, o.join.html_safe)
+    o.join.html_safe
   end
 end
