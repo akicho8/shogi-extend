@@ -38,6 +38,10 @@ html(lang="ja")
     - if current_user
       = javascript_pack_tag("single_notification")
 
+    - unless content_for?(:twitter_card_tag)
+      - twitter_card_tag(title: AppConfig[:app_name], description: "ネット対戦・CPU対戦・将棋ウォーズ棋譜検索・棋譜変換など将棋に関係するプログラムの実験的なサイトです", image: "swars_index.png")
+    = yield(:twitter_card_tag)
+
     = yield :head
   body
     - if @simple_layout

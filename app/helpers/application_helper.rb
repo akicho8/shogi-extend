@@ -36,7 +36,7 @@ module ApplicationHelper
     }.html_safe
   end
 
-  def twitter_card_meta_tag(**options)
+  def twitter_card_tag(**options)
     options = {
       card: "summary_large_image",
       site: "@kinakom0chi",
@@ -67,6 +67,6 @@ module ApplicationHelper
       o << tag.meta(property: "og:image", content: image_url(v))
     end
 
-    provide(:head, o.join.html_safe)
+    provide(:twitter_card_tag, o.join.html_safe)
   end
 end
