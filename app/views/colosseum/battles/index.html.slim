@@ -4,7 +4,7 @@ javascript:
 - content_for :head do
   = javascript_pack_tag("lobby")
 
-#lobby_app
+#lobby_app(v-cloak)
   b-modal(:active.sync="setting_modal_p")
     template(v-if="true")
       header.modal-card-head
