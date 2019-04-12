@@ -35,4 +35,38 @@ module ApplicationHelper
       out.join.html_safe
     }.html_safe
   end
+
+  def twitter_card_meta_tag(**options)
+    options = {
+      card: "summary_large_image",
+      site: "@kinakom0chi",
+      creator: "@kinakom0chi",
+      url: request.url,
+    }.merge(options)
+
+    o = []
+    if v = options[:card]
+      o << tag.meta(name: "twitter:card", content: v)
+    end
+    if v = options[:site]
+      o << tag.meta(name: "twitter:site", content: v)
+    end
+    if v = options[:creator]
+      o << tag.meta(name: "twitter:creator", content: v)
+    end
+    if v = options[:url]
+      o << tag.meta(property: "og:url", content: v)
+    end
+    if v = options[:title]
+      o << tag.meta(property: "og:title", content: v)
+    end
+    if v = options[:description]
+      o << tag.meta(property: "og:description", content: v)
+    end
+    if v = options[:image]
+      o << tag.meta(property: "og:image", content: image_url(v))
+    end
+
+    provide(:head, o.join.html_safe)
+  end
 end
