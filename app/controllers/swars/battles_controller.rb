@@ -208,15 +208,6 @@ module Swars
     #   end
     # end
 
-    def final_info_decorate(record)
-      e = record.final_info
-      name = e.name
-      if v = e.has_text_color_if_lose
-        name = tag.span(name, :class => v)
-      end
-      name
-    end
-
     def perform_zip_download
       if request.format.zip?
         require "kconv"
@@ -256,7 +247,7 @@ module Swars
         l_ship, r_ship = left_right_pairs(record)
         left_right_pairs2(row, record, l_ship, r_ship)
 
-        row["結果"] = link_to(final_info_decorate(record), swars_tag_search_path(record.final_info.name))
+        row["結果"] = link_to(record.final_info.name, swars_tag_search_path(record.final_info.name), :class => record.final_info.has_text_color)
 
         if false
           row["戦法"] = record.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe

@@ -95,7 +95,7 @@ module Swars
       def icon_html
         klass = [judge_info.icon_class]
         if judge_info.key == :lose
-          klass << battle.final_info.has_text_color_if_lose
+          klass << battle.final_info.has_text_color
         end
         Fa.icon_tag(*judge_info.icon_args, :class => klass)
       end
