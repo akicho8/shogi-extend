@@ -33,7 +33,7 @@ export function kifu_copy_exec(params) {
 
   const kc_title = params["kc_title"]
   if (kc_title) {
-    params["success_yomiage"]= `${kc_title}の棋譜をコピーしました`
+    params["success_yomiage"]= `${kc_title}の棋譜をクリップボードにコピーしました`
   }
 
   clipboard_copy(params)
