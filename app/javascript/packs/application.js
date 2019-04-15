@@ -24,7 +24,7 @@ import Vue from "vue/dist/vue.esm" // esm版はvueのtemplateをパースでき�
 window.Vue = Vue
 
 import Vuex from "vuex"
-Vue.use(Vuex)
+Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
@@ -40,45 +40,10 @@ Vue.use(Buefy, {
   defaultTooltipAnimated: true,   // ←効いてなくね？
 })
 
-//////////////////////////////////////////////////////////////////////////////// ShogiPlayer の静的情報 (TODO: できればライブラリ側で定義したいけどどうやる？)
+//////////////////////////////////////////////////////////////////////////////// ShogiPlayer
 
-import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
-Vue.component("shogi-player", ShogiPlayer)
-
-import PresetInfo from "shogi-player/src/preset_info"
-Object.defineProperty(Vue.prototype, "PresetInfo", {value: PresetInfo})
-
-import RunModeInfo from "shogi-player/src/run_mode_info"
-Object.defineProperty(Vue.prototype, "RunModeInfo", {value: RunModeInfo})
-
-import ThemeInfo from "shogi-player/src/theme_info"
-Object.defineProperty(Vue.prototype, "ThemeInfo", {value: ThemeInfo})
-
-import SizeInfo from "shogi-player/src/size_info"
-Object.defineProperty(Vue.prototype, "SizeInfo", {value: SizeInfo})
-
-import VariationInfo from "shogi-player/src/variation_info"
-Object.defineProperty(Vue.prototype, "VariationInfo", {value: VariationInfo})
-
-//////////////////////////////////////////////////////////////////////////////// ShogiWeb側の静的情報
-
-import LifetimeInfo from "./lifetime_info"
-Object.defineProperty(Vue.prototype, "LifetimeInfo", {value: LifetimeInfo})
-
-import TeamInfo from "./team_info"
-Object.defineProperty(Vue.prototype, "TeamInfo", {value: TeamInfo})
-
-import LastActionInfo from "./last_action_info"
-Object.defineProperty(Vue.prototype, "LastActionInfo", {value: LastActionInfo})
-
-import CustomPresetInfo from "./custom_preset_info"
-Object.defineProperty(Vue.prototype, "CustomPresetInfo", {value: CustomPresetInfo})
-
-import HiraKomaInfo from "./hira_koma_info"
-Object.defineProperty(Vue.prototype, "HiraKomaInfo", {value: HiraKomaInfo})
-
-import RobotAcceptInfo from "./robot_accept_info"
-Object.defineProperty(Vue.prototype, "RobotAcceptInfo", {value: RobotAcceptInfo})
+// import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
+// Vue.component("shogi-player", ShogiPlayer)
 
 //////////////////////////////////////////////////////////////////////////////// チャット関連コンポーネント
 
@@ -140,7 +105,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい
 
+import LifetimeInfo from "./lifetime_info"
+import TeamInfo from "./team_info"
+import LastActionInfo from "./last_action_info"
+import CustomPresetInfo from "./custom_preset_info"
+import HiraKomaInfo from "./hira_koma_info"
+import RobotAcceptInfo from "./robot_accept_info"
+
+import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
+
 Vue.mixin({
+  components: {
+    ShogiPlayer,
+  },
+
+  data() {
+    return {
+      LifetimeInfo,
+      TeamInfo,
+      LastActionInfo,
+      CustomPresetInfo,
+      HiraKomaInfo,
+      RobotAcceptInfo,
+    }
+  },
+
   methods: {
     process_now() {
 
