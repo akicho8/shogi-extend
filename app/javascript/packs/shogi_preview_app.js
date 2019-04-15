@@ -30,7 +30,7 @@ window.ShogiPreviewApp = Vue.extend({
     if (!this.kifu_body) {
       this.kifu_body = localStorage.getItem("free_battle.kifu_body")
     }
-    this.$refs.kifu_body.focus()           // HTMLの方で autofocus を指定しても Vue.js と組み合わせる外れるためこちらで指定
+    this.kifu_body_focus()
   },
 
   watch: {
@@ -45,7 +45,7 @@ window.ShogiPreviewApp = Vue.extend({
       return this.tab_list[this.current_tab_index]
     },
   },
-  
+
   methods: {
     preview_update_from_kifu_body: _.debounce(function() {
       this.play_mode_long_sfen_set(this.kifu_body)
@@ -80,7 +80,13 @@ window.ShogiPreviewApp = Vue.extend({
 
     kifu_body_clear() {
       this.kifu_body = ""
-      this.$refs.kifu_body.focus()
+      this.kifu_body_focus()
+    },
+
+    kifu_body_focus() {
+      if (this.$refs.kifu_body) {
+        this.$refs.kifu_body.focus()
+      }
     },
 
     // 保持していた入力内容を破棄する
