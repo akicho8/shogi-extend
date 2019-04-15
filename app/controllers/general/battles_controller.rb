@@ -129,8 +129,8 @@ module General
             row["勝ち"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(l_ship)
             row["負け"] = icon_tag(:fas, :minus, :class => "icon_hidden") + membership_name(r_ship)
           else
-            row["勝ち"] = icon_tag(:fas, :crown, class: :icon_o) + membership_name(l_ship)
-            row["負け"] = icon_tag(:fas, :times, class: :icon_x)  + membership_name(r_ship)
+            row["勝ち"] = icon_tag(:fas, :crown, :class => :icon_o) + membership_name(l_ship)
+            row["負け"] = icon_tag(:fas, :times, :class => :icon_x) + membership_name(r_ship)
           end
 
           row["結果"] = final_info_decorate(battle)
@@ -151,7 +151,8 @@ module General
           end
 
           turn_max = battle.turn_max
-          row["手数"] = link_to(turn_max, general_search_path("手数>=#{(turn_max - 5).clamp(0, Float::INFINITY)} 手数<=#{turn_max + 5}"))
+          # row["手数"] = link_to(turn_max, general_search_path("手数>=#{(turn_max - 5).clamp(0, Float::INFINITY)} 手数<=#{turn_max + 5}"))
+          row["手数"] = turn_max
 
           row["日時"] = battle.date_link(h, battle.meta_info[:header]["開始日時"])
           row[""] = row_links(battle)

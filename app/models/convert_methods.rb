@@ -116,8 +116,6 @@ module ConvertMethods
     other_tag_list.add place_list
 
     if v = info.header["開始日時"].presence
-      other_tag_list.add date_to_tags(v)
-
       if t = (Time.zone.parse(v) rescue nil)
         self.battled_at = t
       else
@@ -134,7 +132,6 @@ module ConvertMethods
       self.battled_at = Time.zone.parse("0001/01/01")
     end
 
-    other_tag_list.add turn_max
     other_tag_list.add info.header["手合割"]
 
     parser_exec_after(info)
@@ -163,60 +160,7 @@ module ConvertMethods
       return
     end
 
-    list = []
-
-    if v.kind_of?(String)
-      y, m, d, *other = v.scan(/\d+/).collect(&:to_i)
-    else
-      y, m, d, *other = v.year, v.month, v.day, v.hour, v.min
-    end
-
-    if y.nonzero?
-      list << h.link_to(("%04d" % y), h.general_search_path("%04d" % y))
-    else
-      list << "????"
-    end
-
-    if m.nonzero?
-      list << h.link_to(("%02d" % m), h.general_search_path("%04d/%02d" % [y, m]))
-    else
-      list << "??"
-    end
-
-    if d.nonzero?
-      list << h.link_to(("%02d" % d), h.general_search_path("%04d/%02d/%02d" % [y, m, d]))
-    else
-      list << "??"
-    end
-
-    other = other.take(2)
-    if other.all?(&:zero?)
-      other.clear
-    end
-    list.join("/").html_safe + " " + other.collect { |e| "%02d" % e }.join(":").html_safe
-  end
-
-  def date_to_tags(v)
-    list = []
-
-    values = v.scan(/\d+/).collect(&:to_i).take(3)
-    list.concat(values)
-
-    y, m, d = values
-
-    if y.nonzero?
-      list << "%04d" % y
-    end
-
-    if m.nonzero?
-      list << "%04d/%02d" % [y, m]
-    end
-
-    if d.nonzero?
-      list << "%04d/%02d/%02d" % [y, m, d]
-    end
-
-    list
+    Time.zone.parse(v.to_s).to_s(:ymd) rescue v
   end
 
   def preset_link(h, name)
