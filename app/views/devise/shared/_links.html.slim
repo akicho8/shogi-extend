@@ -26,8 +26,21 @@
           span
             = t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}")
 
-    br
-    = link_to("名無しのアカウントを作成してログイン", [:colosseum, :session], method: :post, class: "button is-primary is-outlined")
+        - if v = session[:provider_remember]
+          - if v["provider"] == e.key.to_s
+            span.is-size-6.has-text-primary
+              == "←"
+
+    - if v = session[:provider_remember]
+      - s = SocialMediaInfo[v["provider"]]
+      p.has-text-grey-light.is-size-7
+        = v["user_name"]
+        = "さんは以前"
+        = s.name
+        = "でログインしました"
+    p
+      = link_to("名無しのアカウントを作成してログイン", [:colosseum, :session], method: :post, class: "button is-primary is-outlined")
 
 - if Rails.env.development?
   = debug(resource_class.omniauth_providers)
+  = debug(session[:provider_remember])

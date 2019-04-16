@@ -54,6 +54,9 @@ module Colosseum
         return
       end
 
+      # 何でログインしたかを最低限残す
+      session[:provider_remember] = { user_name: user.name, provider: social_media_info.key.to_s } # 参照するときキーは文字列になるので注意
+
       # 元々ユーザーが存在していればアカウント連携しようとしたことになる
       if current_user
         message = "#{social_media_info.name} アカウントと連携しました"
