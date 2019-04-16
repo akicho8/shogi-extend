@@ -295,7 +295,7 @@ module Swars
         # Battle.regular_import
         def regular_import(**params)
           params = {
-            limit: 32,
+            limit: Rails.env.production? ? 32 : 1,
             sleep: Rails.env.production? ? 4 : 0,
             page_max: 256,
           }.merge(params)
@@ -309,9 +309,9 @@ module Swars
         # Battle.expert_import(page_max: 3, sleep: 5)
         def expert_import(**params)
           params = {
-            user_keys: Rails.application.credentials[:expert_import_user_keys],
+            user_keys: Rails.env.production? ? Rails.application.credentials[:expert_import_user_keys] : ["devuser1"],
             sleep: Rails.env.production? ? 4 : 0,
-            page_max: 256,
+            page_max: Rails.env.production? ? 1 : 256,
           }.merge(params)
 
           # Agent.new(params).legend_user_keys.each do |user_key|
@@ -322,29 +322,29 @@ module Swars
 
         # Battle.conditional_import(limit: 10, page_max: 3, sleep: 5, grade_key_gteq: "初段") # (10 * (3*10) * 5) / 60 = 25 min
         def conditional_import(**params)
-          # 最近対局した初段以上のプレイヤー limit 人取得
-          s = Membership.all
-          # 初段以上の場合
-          if true
-            if v = params[:grade_key_gteq]
-              priority = GradeInfo.fetch(v).priority
-              s = s.joins(user: :grade).where(Grade.arel_table[:priority].lteq(priority))
-            end
-          end
-          s = s.group(:user_id).select(:user_id)
-          s = s.joins(:battle).reorder("max(#{Battle.table_name}.battled_at) desc")
-          s = s.limit(params[:limit] || 1)
-          # SELECT  `memberships`.`user_id` FROM `memberships` INNER JOIN `users` ON `users`.`id` = `memberships`.`user_id` INNER JOIN `grades` ON `grades`.`id` = `users`.`grade_id` INNER JOIN `battles` ON `battles`.`id` = `memberships`.`battle_id` WHERE (`grades`.`priority` <= 8) GROUP BY `memberships`.`user_id` ORDER BY max(battles.battled_at) desc LIMIT 1
-          user_ids = s.pluck(:user_id)
-
-          # 最近取り込んだプレイヤー limit 人取得
-          # user_ids = Membership.group(:user_id).select(:user_id).order("max(created_at) desc").limit(params[:limit] || 1).pluck(:user_id)
-
-          users = User.find(user_ids)
-
-          users.each do |user|
-            basic_import(params.merge(user_key: user.user_key))
-          end
+          # # 最近対局した初段以上のプレイヤー limit 人取得
+          # s = Membership.all
+          # # 初段以上の場合
+          # if true
+          #   if v = params[:grade_key_gteq]
+          #     priority = GradeInfo.fetch(v).priority
+          #     s = s.joins(user: :grade).where(Grade.arel_table[:priority].lteq(priority))
+          #   end
+          # end
+          # s = s.group(:user_id).select(:user_id)
+          # s = s.joins(:battle).reorder("max(#{Battle.table_name}.battled_at) desc")
+          # s = s.limit(params[:limit] || 1)
+          # # SELECT  `memberships`.`user_id` FROM `memberships` INNER JOIN `users` ON `users`.`id` = `memberships`.`user_id` INNER JOIN `grades` ON `grades`.`id` = `users`.`grade_id` INNER JOIN `battles` ON `battles`.`id` = `memberships`.`battle_id` WHERE (`grades`.`priority` <= 8) GROUP BY `memberships`.`user_id` ORDER BY max(battles.battled_at) desc LIMIT 1
+          # user_ids = s.pluck(:user_id)
+          # 
+          # # 最近取り込んだプレイヤー limit 人取得
+          # # user_ids = Membership.group(:user_id).select(:user_id).order("max(created_at) desc").limit(params[:limit] || 1).pluck(:user_id)
+          # 
+          # users = User.find(user_ids)
+          # 
+          # users.each do |user|
+          #   basic_import(params.merge(user_key: user.user_key))
+          # end
         end
 
         def debounce_basic_import(**params)
