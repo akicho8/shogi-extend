@@ -52,9 +52,9 @@ module Swars
       battle.save!                  # => true
 
       # puts battle.to_cached_kifu(:kif)
-      assert { battle.note_tag_list                == ["入玉", "相入玉", "居飛車", "相居飛車"] }
-      assert { battle.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
-      assert { battle.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
+      assert { battle.note_tag_list                == ["入玉", "相入玉"] }
+      assert { battle.memberships[0].note_tag_list == ["入玉", "相入玉"] }
+      assert { battle.memberships[1].note_tag_list == ["入玉", "相入玉"] }
     end
   end
 end
