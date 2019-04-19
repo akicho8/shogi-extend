@@ -60,22 +60,7 @@ Rails.application.configure do
 
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  if false
-    # ################################################################################ ActionMailer
-    config.action_mailer.show_previews = true
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.raise_delivery_errors = true
-    config.action_mailer.perform_caching = true
-    config.action_mailer.smtp_settings = {
-      enable_starttls_auto: true,
-      address: "smtp.gmail.com",
-      domain: "smtp.gmail.com",
-      port: 587,
-      authentication: "plain",
-      user_name: "pinpon.ikeda",
-      password: Rails.application.credentials[:gmail_smtp_password],
-    }
-
+  if true
     # ################################################################################ エラー通知
     config.consider_all_requests_local = false
     # config.middleware.use(ExceptionNotification::Rack, {

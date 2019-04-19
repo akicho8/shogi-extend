@@ -92,22 +92,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # ################################################################################ ActionMailer
-  config.action_mailer.show_previews = true
-  config.action_mailer.default_url_options = { host: "tk2-221-20341.vs.sakura.ne.jp" }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.perform_caching = true
-  config.action_mailer.smtp_settings = {
-    enable_starttls_auto: true,
-    address: "smtp.gmail.com",
-    domain: "smtp.gmail.com",
-    port: 587,
-    authentication: "plain",
-    user_name: "pinpon.ikeda",
-    password: Rails.application.credentials[:gmail_smtp_password],
-  }
-
   # ################################################################################ ActionCable
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
   config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
