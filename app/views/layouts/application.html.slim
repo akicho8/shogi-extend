@@ -66,11 +66,11 @@ html(lang="ja")
         #main_navar.navbar-menu
           .navbar-start
             / ここでの is-active に意味はない
-            = link_to("ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
-            = link_to("CPUと練習対局", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
-            = link_to("将棋ウォーズ棋譜検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
-            = link_to("将棋ウォーズプレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
-            = link_to("棋譜入力", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
+            = link_to(icon_tag(:fas, :play) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
+            = link_to(icon_tag(:fas, :bolt) + "CPUと練習対局", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
+            = link_to(icon_tag(:fas, :search) + "将棋ウォーズ棋譜検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
+            = link_to(icon_tag(:fas, :user) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
+            = link_to(icon_tag(:fas, :edit) + "棋譜入力", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link もっと見る
               .navbar-dropdown.is-boxed

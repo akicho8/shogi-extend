@@ -51,16 +51,16 @@ javascript:
 
   .buttons
     template(v-if="!matching_at")
-      button.button.is-primary.is-large(@click.prevent="matching_start") バトル開始
-      button.button.is-primary.is-large(@click.prevent="battle_setting_open_click") ルール設定
+      button.button.is-primary.is-large(@click.prevent="matching_start") = icon_tag(:fas, :play) + "バトル開始"
+      button.button.is-large(@click.prevent="battle_setting_open_click") = icon_tag(:fas, :cog) + "ルール設定"
     template(v-else)
-      a.button.is-danger.is-large(@click.prevent="matching_cancel") マッチング開始{{matching_counter}}
+      a.button.is-large(@click.prevent="matching_cancel") マッチング開始{{matching_counter}}
 
     - if Rails.env.development? && false
       = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
       = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
 
-    = link_to("ランキング", [:colosseum, :rankings], class: "button is-primary is-large")
+    = link_to(icon_tag(:fas, :crown) + "ランキング", [:colosseum, :rankings], class: "button is-large")
 
   .columns
     .column
