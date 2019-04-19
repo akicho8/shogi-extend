@@ -2,7 +2,7 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-Swars::Battle.basic_import(user_key: "Ito_Asuka")
+Swars::Battle.user_import(user_key: "Ito_Asuka")
 
 tp Swars::Battle
 

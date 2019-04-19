@@ -192,9 +192,10 @@ class ApplicationController < ActionController::Base
           link_to_eval("部屋全削除") { "Colosseum::Battle.destroy_all" },
           link_to_eval("flash確認", redirect_to: root_path(debug: "true")) { "" },
           link_to_eval("Swars::Battle.destroy_all") { "Swars::Battle.destroy_all" },
-          link_to_eval("リモート取り込み") { "Swars::Battle.basic_import(user_key: 'kinakom0chi', run_remote: true)" },
-          link_to_eval("指導対局リモート取り込み") { "Swars::Battle.basic_import(user_key: 'Aikawa_Haruka', run_remote: true)" },
+          link_to_eval("リモート取り込み") { "Swars::Battle.user_import(user_key: 'kinakom0chi', run_remote: true)" },
+          link_to_eval("指導対局リモート取り込み") { "Swars::Battle.user_import(user_key: 'Aikawa_Haruka', run_remote: true)" },
           link_to_eval("メール書式確認", redirect_to: "/rails/mailers") { "" },
+          link_to_eval("RegularCrawler") { "Swars::Crawler::RegularCrawler.new.run" },
         ].compact.join.html_safe
       end
 

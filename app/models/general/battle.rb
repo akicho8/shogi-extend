@@ -121,12 +121,12 @@ module General
             Battle.destroy_all
           end
           files.each do |file|
-            basic_import(params.merge(file: file))
+            user_import(params.merge(file: file))
             STDOUT.flush
           end
         end
 
-        def basic_import(**params)
+        def user_import(**params)
           key = params[:file].basename(".*").to_s
           record = find_or_initialize_by(key: key)
           record.kifu_body = params[:file].read.toutf8

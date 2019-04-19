@@ -56,6 +56,10 @@ module Swars
       Rails.application.routes.url_helpers.swars_home_url(self)
     end
 
+    def name_with_grade
+      "#{user_key} #{grade.name}"
+    end
+
     concerning :SummaryMethods do
       included do
         delegate :basic_summary, :secret_summary, :tactic_summary_for, to: :summary_info

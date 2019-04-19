@@ -1,9 +1,8 @@
-Rails.application.configure do
-  if Rails.env.production?
+if Rails.env.production? || Rails.env.development?
+  Rails.application.configure do
+    config.app_config.deep_merge!({admin_email: "pinpon.ikeda@gmail.com"})
     config.action_mailer.default_url_options = { host: "tk2-221-20341.vs.sakura.ne.jp" }
-  end
 
-  if Rails.env.production? || Rails.env.development?
     config.action_mailer.show_previews = true
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.raise_delivery_errors = true

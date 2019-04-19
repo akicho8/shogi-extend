@@ -59,6 +59,11 @@ Time::DATE_FORMATS.update({
       else                  "#{t.div(1.year)}年#{suffix}"
       end
     },
+
+    :battle_time_detail => proc { |time|
+      "#{time.to_s(:ymdhm)} (#{time.to_s(:battle_time)})"
+    },
+
     #
     # # "12:34" ※1日以内なら「時間」のみ、1年以内なら「月日」、1年以上なら「年月日」
     # :gmail_index_like => proc {|time|

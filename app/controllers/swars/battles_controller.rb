@@ -131,7 +131,7 @@ module Swars
         end
 
         # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-        success = Battle.debounce_basic_import(user_key: current_user_key, page_max: current_page_max)
+        success = Battle.sometimes_user_import(user_key: current_user_key, page_max: current_page_max)
         if !success
           # development でここが通らない
           # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？

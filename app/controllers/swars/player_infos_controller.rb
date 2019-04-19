@@ -10,7 +10,7 @@ module Swars
       end
 
       if current_user_key
-        Battle.debounce_basic_import(user_key: current_user_key, page_max: 5)
+        Battle.sometimes_user_import(user_key: current_user_key, page_max: 5)
         let_cache_remove(:current_swars_user)
         unless current_swars_user
           flash.now[:warning] = "#{current_user_key} さんの情報は見つかりませんでした"
