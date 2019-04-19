@@ -4,6 +4,11 @@ class ApplicationMailer < ActionMailer::Base
 
   layout "mailer"
 
+  # ApplicationMailer.developper_notice.deliver_now
+  def developper_notice(**params)
+    mail(subject: [subject_prefix, " ", params[:subject]].join, body: params[:body].to_s)
+  end
+
   private
 
   def subject_prefix
