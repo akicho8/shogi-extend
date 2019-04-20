@@ -5,7 +5,6 @@ module Swars
       def default_params
         {
           limit: Rails.env.production? ? 32 : 1,
-          sleep: Rails.env.production? ? 4 : 0,
           page_max: Rails.env.production? ? 256 : 3,
         }
       end
