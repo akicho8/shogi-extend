@@ -18,28 +18,33 @@ module Swars
           gtype: "",    # 空:10分 sb:3分 s1:10秒
           user_key: nil,
           page_index: 0,
+          verbose: true,
         }.merge(params)
 
+        q = {
+          gtype: params[:gtype],
+          # locale: "ja",
+        }
+
+        # if params[:page_index].nonzero?
+        #   q[:start] = params[:page_index] * 10
+        # end
+
+        if params[:page_index].nonzero?
+          q[:page] = params[:page_index].next
+        end
+
+        # url = "https://shogiwars.heroz.jp/users/history/#{params[:user_key]}?#{q.to_query}"
+        # page = agent.get(url)
+        # js_str = page.body
+
+        url = "https://shogiwars.heroz.jp/games/history?user_id=#{params[:user_key]}&#{q.to_query}"
+        command = "curl --silent '#{url}' -H 'authority: shogiwars.heroz.jp' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Mobile Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6,zh-TW;q=0.5' -H '#{Rails.application.credentials.cookie_for_agent}' --compressed"
+        if params[:verbose]
+          tp url
+        end
+
         if run_remote?
-          q = {
-            gtype: params[:gtype],
-            # locale: "ja",
-          }
-
-          # if params[:page_index].nonzero?
-          #   q[:start] = params[:page_index] * 10
-          # end
-
-          if params[:page_index].nonzero?
-            q[:page] = params[:page_index].next
-          end
-
-          # url = "https://shogiwars.heroz.jp/users/history/#{params[:user_key]}?#{q.to_query}"
-          # page = agent.get(url)
-          # js_str = page.body
-
-          url = "https://shogiwars.heroz.jp/games/history?user_id=#{params[:user_key]}&#{q.to_query}"
-          command = "curl --silent '#{url}' -H 'authority: shogiwars.heroz.jp' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Mobile Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: ja,en-US;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6,zh-TW;q=0.5' -H '#{Rails.application.credentials.cookie_for_agent}' --compressed"
           # puts command
           js_str = `#{command}`
         else
@@ -116,11 +121,16 @@ module Swars
       def record_get(key)
         info = {
           key: key,
+          verbose: true,
         }
 
         info[:url] = battle_key_to_url(key)
         url_info = [:black, :white, :battled_at].zip(key.split("-")).to_h
         info[:battled_at] = url_info[:battled_at]
+
+        if params[:verbose]
+          tp info[:url]
+        end
 
         if run_remote?
           page = agent.get(info[:url])

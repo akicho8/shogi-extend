@@ -297,6 +297,10 @@ module Swars
 
         # Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
         def multiple_battle_import(**params)
+          params = {
+            verbose: true,
+          }.merge(params)
+          
           keys = []
           (params[:page_max] || 1).times do |i|
             list = Agent.new(params).index_get(params.merge(page_index: i))
@@ -313,7 +317,7 @@ module Swars
               break
             end
 
-            sleep(params[:sleep].to_i)
+            __sleep(params)
 
             # if Battle.where(key: key).exists?
 
@@ -345,11 +349,15 @@ module Swars
           new_keys = keys - where(key: keys).pluck(:key)
           new_keys.each do |key|
             single_battle_import(params.merge(key: key, validate_skip: true))
-            sleep(params[:sleep].to_i)
+            __sleep(params)
           end
         end
 
         def single_battle_import(**params)
+          params = {
+            verbose: true,
+          }.merge(params)
+          
           # 登録済みなのでスキップ
           unless params[:validate_skip]
             if Battle.where(key: params[:key]).exists?
@@ -421,6 +429,18 @@ module Swars
           begin
             battle.save!
           rescue ActiveRecord::RecordNotUnique
+          end
+        end
+
+        private
+
+        def __sleep(params)
+          if v = params[:sleep]
+            v = v.to_f
+            if params[:verbose]
+              tp "sleep: #{v}"
+            end
+            sleep(v)
           end
         end
       end

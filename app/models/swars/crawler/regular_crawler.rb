@@ -6,7 +6,7 @@ module Swars
         {
           limit: Rails.env.production? ? 32 : 1,
           sleep: Rails.env.production? ? 4 : 0,
-          page_max: 256,
+          page_max: Rails.env.production? ? 256 : 3,
         }
       end
 
