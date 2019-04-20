@@ -304,6 +304,7 @@ module Swars
           keys = []
           (params[:page_max] || 1).times do |i|
             list = Agent.new(params).index_get(params.merge(page_index: i))
+            __sleep(params)
 
             # もうプレイしていない人のページは履歴が空なのでクロールを完全にやめる (もしくは過去のページに行きすぎたので中断)
             # if list.empty?
@@ -316,8 +317,6 @@ module Swars
             if list.size < Agent.items_per_page
               break
             end
-
-            __sleep(params)
 
             # if Battle.where(key: key).exists?
 
