@@ -128,7 +128,7 @@ gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on', branch: 'maste
 
 gem 'rubyzip', require: "zip"
 
-gem 'whenever', "0.9.7", require: false
+gem 'whenever', require: false
 
 gem 'codecov', require: false, group: :test
 
