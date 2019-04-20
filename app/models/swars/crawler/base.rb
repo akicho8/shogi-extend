@@ -24,6 +24,9 @@ module Swars
         if params[:developper_notice]
           ApplicationMailer.developper_notice(subject: subject, body: rows.to_t).deliver_now
         end
+        if Rails.env.development?
+          puts @rows.to_t
+        end
         self
       end
 
@@ -64,10 +67,13 @@ module Swars
         end
 
         begin
+          if ENV["EXECUTE_ERROR_PURPOSE"]
+            1 / 0
+          end
           yield
         rescue => error
           ExceptionNotifier.notify_exception(error)
-          rows[:error] = "#{error.class.name}: #{error.message}"
+          row["エラー"] = error.inspect
         end
 
         if user = lookup(user_key)
