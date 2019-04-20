@@ -5,7 +5,8 @@ module Swars
       def default_params
         {
           user_keys: Rails.env.production? ? Rails.application.credentials[:expert_import_user_keys] : ["devuser1"],
-          page_max: Rails.env.production? ? 256 : 1,
+          page_max: Rails.env.production? ? 256 : 3,
+          if_new_thing_is_not_found_in_the_first_page_break: true,
         }
       end
 

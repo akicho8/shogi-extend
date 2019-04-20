@@ -298,9 +298,10 @@ module Swars
         # Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
         def multiple_battle_import(**params)
           params = {
-            verbose: true,
+            verbose: Rails.env.development?,
+            if_new_thing_is_not_found_in_the_first_page_break: false, # 1ページ目で新しいものが見つからなければ終わる
           }.merge(params)
-          
+
           keys = []
           (params[:page_max] || 1).times do |i|
             list = Agent.new(params).index_get(params.merge(page_index: i))
@@ -311,11 +312,26 @@ module Swars
             #   break
             # end
 
-            keys += list.collect { |e| e[:key] }
+            page_keys = list.collect { |e| e[:key] }
+            keys += page_keys
 
             # アクセス数を減らすために10件未満なら終了する
-            if list.size < Agent.items_per_page
+            if page_keys.size < Agent.items_per_page
+              if params[:verbose]
+                tp "#{page_keys.size} < #{Agent.items_per_page}"
+              end
               break
+            end
+
+            if params[:if_new_thing_is_not_found_in_the_first_page_break]
+              # 1ページ目で新しいものがなければ終わる
+              new_keys = page_keys - where(key: page_keys).pluck(:key)
+              if params[:verbose]
+                tp "#{i}ページの新しいレコード数: #{new_keys.size}"
+              end
+              if new_keys.empty?
+                break
+              end
             end
 
             # if Battle.where(key: key).exists?
@@ -354,9 +370,9 @@ module Swars
 
         def single_battle_import(**params)
           params = {
-            verbose: true,
+            verbose: Rails.env.development?,
           }.merge(params)
-          
+
           # 登録済みなのでスキップ
           unless params[:validate_skip]
             if Battle.where(key: params[:key]).exists?
