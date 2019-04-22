@@ -36,10 +36,14 @@ class AudioQueue {
     if (this.audio.ended || this.audio.currentTime === 0) { // TODO: 発声中かどうかのもっと簡単なメソッドはないのか？
       if (this.queue.length >= 1) {
         this.audio.src = this.queue.shift()
-        const play_resp = this.audio.play()
-        if (false) {
-          play_resp.catch(e => alert(e))
-        }
+        // setTimeout(() => {}, 0) で囲むと Uncaught (in promise) DOMException エラーを抑制できる(謎)
+        // https://qiita.com/eryuus1/items/aed32c8ab43a61111fed
+        setTimeout(() => {
+          const play_resp = this.audio.play()
+          if (false) {
+            play_resp.catch(e => alert(e))
+          }
+        }, 0)
         console.log(`play:${this.audio.src}`)
       }
     }
