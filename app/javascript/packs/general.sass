@@ -30,6 +30,7 @@ pre
   &.pre-wrap
     white-space: pre-wrap         // 折り返す
     word-break: break-all         // 1行のCSAを意地でも折り返す
+    overflow-x: visible           // b-tooltip が消えないようにするため
 
   a.clipboard_copy
     position: relative
@@ -38,7 +39,7 @@ pre
     color: $grey-light
     &:hover
       color: $primary
-
+      
 ////////////////////////////////////////////////////////////////////////////// エラーメッセージ内のPRE相当
 
 .error_message_pre

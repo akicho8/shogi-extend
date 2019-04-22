@@ -40,8 +40,9 @@
                 b-tab-item(:label="e.name")
                   small
                     pre.pre-wrap
-                      a.is-pulled-right.clipboard_copy(@click.stop.prevent="kifu_copy(e)")
-                        b-icon(pack="far" icon="clipboard" size="is-small")
+                      a.is-pulled-right.clipboard_copy(@click.stop.prevent="kifu_copy(e)" title="zksdfjkfsdfsdak")
+                        b-tooltip(label="クリップボードにコピー" position="is-top" size="is-small")
+                          b-icon(pack="far" icon="clipboard" size="is-small")
                       | {{e.value}}
               b-tab-item(:label="'盤面'")
                 template(v-if="output_kifs")
