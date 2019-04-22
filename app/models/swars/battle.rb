@@ -299,18 +299,16 @@ module Swars
         def multiple_battle_import(**params)
           params = {
             verbose: Rails.env.development?,
-            if_new_thing_is_not_found_in_the_first_page_break: false, # 1ページ目で新しいものが見つからなければ終わる
+            early_break: false, # 1ページ目で新しいものが見つからなければ終わる
           }.merge(params)
 
           keys = []
           (params[:page_max] || 1).times do |i|
-            list = Agent.new(params).index_get(params.merge(page_index: i))
-            __sleep(params)
-
-            # もうプレイしていない人のページは履歴が空なのでクロールを完全にやめる (もしくは過去のページに行きすぎたので中断)
-            # if list.empty?
-            #   break
-            # end
+            list = []
+            if params[:real_run]
+              list = Agent.new(params).index_get(params.merge(page_index: i))
+            end
+            sleep_on(params)
 
             page_keys = list.collect { |e| e[:key] }
             keys += page_keys
@@ -323,7 +321,7 @@ module Swars
               break
             end
 
-            if params[:if_new_thing_is_not_found_in_the_first_page_break]
+            if params[:early_break]
               # 1ページ目で新しいものがなければ終わる
               new_keys = page_keys - where(key: page_keys).pluck(:key)
               if params[:verbose]
@@ -364,7 +362,7 @@ module Swars
           new_keys = keys - where(key: keys).pluck(:key)
           new_keys.each do |key|
             single_battle_import(params.merge(key: key, validate_skip: true))
-            __sleep(params)
+            sleep_on(params)
           end
         end
 
@@ -449,13 +447,17 @@ module Swars
 
         private
 
-        def __sleep(params)
-          if v = params[:sleep]
-            v = v.to_f
-            if params[:verbose]
-              tp "sleep: #{v}"
+        def sleep_on(params)
+          if params[:real_run]
+            if v = params[:sleep]
+              v = v.to_f
+              if v.positive?
+                if params[:verbose]
+                  tp "sleep: #{v}"
+                end
+                sleep(v)
+              end
             end
-            sleep(v)
           end
         end
       end

@@ -72,7 +72,8 @@ module Swars
 
     concerning :ScopeMethods do
       included do
-        scope :regular_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc) }                      # よく使ってくれる人
+        scope :regular_only1, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc) } # よく使ってくれる人
+        scope :regular_only2, -> { order(search_logs_count: :desc) }                                  # よく使ってくれる人
         scope :great_only, -> { joins(:grade).order(Swars::Grade.arel_table[:priority].desc).order(:updated_at => :desc) } # すごい人
       end
 
@@ -81,7 +82,7 @@ module Swars
           user_keys = []
 
           # 利用者
-          user_keys += regular_only.limit(16).pluck(:user_key)
+          user_keys += regular_only1.limit(16).pluck(:user_key)
 
           # 最近取り込んだ人たち
           user_keys += all.order(updated_at: :desc).limit(16).pluck(:user_key)

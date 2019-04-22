@@ -12,6 +12,7 @@ module Swars
 
       def initialize(**params)
         @params = {
+          real_run: !Rails.env.production?,
           developper_notice: true,
           sleep: Rails.env.production? ? 8 : 0,
         }.merge(default_params, params)
@@ -23,15 +24,23 @@ module Swars
         @rows.clear
         perform
         if params[:developper_notice]
-          ApplicationMailer.developper_notice(subject: subject, body: rows.to_t).deliver_now
+          ApplicationMailer.developper_notice(subject: subject, body: mail_body).deliver_now
         end
         if Rails.env.development?
+          puts params.to_t
           puts @rows.to_t
         end
         self
       end
 
       private
+
+      def mail_body
+        body = []
+        body << params.to_t
+        body << rows.to_t
+        body.join
+      end
 
       def default_params
         raise NotImplementedError, "#{__method__} is not implemented"
@@ -45,11 +54,12 @@ module Swars
         self.class.name.demodulize
       end
 
-      def difference_report_for(user_key)
+      def report_for(user_key)
         row = {
           "日時"       => Time.current.to_s(:ymdhms),
           "ID"         => nil,
           "ユーザー名" => user_key,
+          "段級"       => nil,
           "前"         => nil,
           "後"         => nil,
           "差分"       => nil,
@@ -61,7 +71,7 @@ module Swars
 
         if user = lookup(user_key)
           row["ID"]         = user.id
-          row["ユーザー名"] = user.name_with_grade
+          row["段級"]       = user.grade.name
           row["前"]         = user.battles.count
           row["最終検索"]   = user.last_reception_at&.to_s(:battle_time)
           row["検索回数"]   = user.search_logs.count

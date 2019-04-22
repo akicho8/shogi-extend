@@ -4,15 +4,15 @@ module Swars
     class RegularCrawler < Base
       def default_params
         {
-          limit: Rails.env.production? ? 32 : 1,
+          limit: Rails.env.production? ? 50 : 1,
           page_max: Rails.env.production? ? 256 : 3,
-          if_new_thing_is_not_found_in_the_first_page_break: true,
+          early_break: true,
         }
       end
 
       def perform
-        User.regular_only.limit(params[:limit]).each do |user|
-          difference_report_for(user.user_key) do
+        User.regular_only2.limit(params[:limit]).each do |user|
+          report_for(user.user_key) do
             Battle.user_import(params.merge(user_key: user.user_key))
           end
         end
