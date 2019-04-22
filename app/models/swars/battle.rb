@@ -298,6 +298,7 @@ module Swars
         # Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
         def multiple_battle_import(**params)
           params = {
+            real_run: !Rails.env.production?,
             verbose: Rails.env.development?,
             early_break: false, # 1ページ目で新しいものが見つからなければ終わる
           }.merge(params)
