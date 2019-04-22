@@ -148,7 +148,7 @@ Vue.mixin({
     },
 
     wars_tweet_copy_click(wars_tweet_body) {
-      AppHelper.clipboard_copy(wars_tweet_body)
+      AppHelper.clipboard_copy({text: wars_tweet_body})
     },
 
     kifu_copy_exec_click(e) {
