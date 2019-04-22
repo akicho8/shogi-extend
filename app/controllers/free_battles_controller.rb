@@ -27,12 +27,12 @@ class FreeBattlesController < ApplicationController
   include ModulableCrud::All
   include SharedMethods
 
-  # shogi_preview_app.js の引数用
-  let :js_preview_params do
+  # free_battle_edit.js の引数用
+  let :js_edit_params do
     {
       post_path: url_for([:free_battles, format: "json"]),
       record_attributes: current_record.as_json,
-      kifus_hash: kifus_hash,
+      output_kifs: output_kifs,
     }
   end
 
@@ -44,8 +44,8 @@ class FreeBattlesController < ApplicationController
     Bioshogi::Parser.parse(current_kifu_body, typical_error_case: :embed)
   end
 
-  let :kifus_hash do
-    KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
+  let :output_kifs do
+    KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
   end
 
   def new
@@ -63,7 +63,7 @@ class FreeBattlesController < ApplicationController
     # プレビュー用
     if request.format.json?
       if v = params[:kifu_body]
-        render json: { kifus_hash: kifus_hash }
+        render json: { output_kifs: output_kifs }
         return
       end
     end

@@ -1,3 +1,5 @@
+@import "bulma_variables"
+
 // 汎用的スタイル
 
 ////////////////////////////////////////////////////////////////////////////// Vue
@@ -25,9 +27,17 @@ details
 pre
   @extend .fixed_font
 
-.pre-wrap
-  white-space: pre-wrap         // 折り返す
-  word-break: break-all         // 1行のCSAを意地でも折り返す
+  &.pre-wrap
+    white-space: pre-wrap         // 折り返す
+    word-break: break-all         // 1行のCSAを意地でも折り返す
+
+  a.clipboard_copy
+    position: relative
+    top: -15px
+    right: -19px
+    color: $grey-light
+    &:hover
+      color: $primary
 
 ////////////////////////////////////////////////////////////////////////////// エラーメッセージ内のPRE相当
 

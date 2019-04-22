@@ -1,10 +1,10 @@
 .field
-  b-tabs.input_method_tabs(v-model="current_tab_index" expanded)
+  b-tabs.input_method_tabs(v-model="input_active_tab" expanded)
     b-tab-item(label="操作入力")
       .non_border_box
         shogi-player(
           :run_mode="'play_mode'"
-          :kifu_body="kifus_hash ? kifus_hash['sfen']['value'] : ''"
+          :kifu_body="output_kifs ? output_kifs['sfen']['value'] : ''"
           :start_turn="-1"
           :debug_mode="false"
           :key_event_capture="false"

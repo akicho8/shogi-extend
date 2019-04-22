@@ -22,7 +22,7 @@ RSpec.describe "棋譜入力", type: :system do
     fill_in "free_battle[kifu_body]", with: "68銀"
     sleep(3)
     doc_image("入力")
-    click_button "保存 (固定URL化)"
+    click_button "保存"
 
     expect(page).to have_content "嬉野流"
     expect(page).to have_content "６八銀"
