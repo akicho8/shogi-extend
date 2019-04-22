@@ -38,7 +38,7 @@ class FreeBattle < ApplicationRecord
         end
       end
 
-      Pathname.glob(Rails.root.join("config/app_data/free_battles/*")).each { |file| file_import(file) }
+      Pathname.glob(Rails.root.join("config/app_data/free_battles/0*.kif")).each { |file| file_import(file) }
     end
 
     def file_import(file)
