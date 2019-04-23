@@ -13,10 +13,11 @@ window.FreeBattleEdit = Vue.extend({
 
       input_text: null,                         // 入力された棋譜
       auto_copy_to_input_text_disable_p: false, // true: 指し手をテキスト入力の方に反映しないようにする
-      input_active_tab: 0,                     // 入力タブ切り替え
-      output_kifs: this.$options.output_kifs,    // 変換後の棋譜
-      input_sfen: "",                         // 操作入力に渡す棋譜
-      output_active_tab: 0,                    // 変換後の棋譜の切り替え
+      input_active_tab: 0,                      // 入力タブ切り替え(テキスト入力で開始したければ1にする)
+      output_kifs: this.$options.output_kifs,   // 変換後の棋譜
+      input_sfen: "",                           // 操作入力に渡す棋譜
+      output_active_tab: 0,                     // 変換後の棋譜の切り替え
+      last_action: null,                        // 「操作入力」と「テキスト入力」のどちらで最後に入力したかわかる
 
       tab_names: [
         "操作入力",
@@ -49,23 +50,32 @@ window.FreeBattleEdit = Vue.extend({
   methods: {
     // テキスト入力の場合のみ入力が終わるまで少し待つ
     preview_update_from_input_text: _.debounce(function() {
-      this.play_mode_long_sfen_set(this.input_text)
+      this.last_action = "テキスト入力"
+      this.kifu_convert(this.input_text)
     }, 1000 * TEXT_INPUT_UPDATE_DELAY),
 
     // 操作入力の場合は即時反映
     play_mode_long_sfen_set(play_mode_long_sfen) {
+      this.last_action = "操作入力"
+      this.kifu_convert(play_mode_long_sfen)
+    },
+
+    // 操作入力の場合は即時反映
+    kifu_convert(input_any_kifu) {
       const params = new URLSearchParams()
-      params.append("input_any_kifu", play_mode_long_sfen)
+      params.append("input_any_kifu", input_any_kifu)
       axios.post(this.$options.post_path, params).then((response) => {
         if (response.data.error_message) {
           Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
         }
         if (response.data.output_kifs) {
           this.output_kifs = response.data.output_kifs
-          if (this.input_active_tab_name !== "操作入力") {
-            // 操作入力の場合は、入力内容が先祖返りするのを防ぐために、いまが「操作入力入力」でない場合のみ上書きするようにしている
+          // if (this.input_active_tab_name !== "操作入力") {
+          // 操作入力の場合は、入力内容が先祖返りするのを防ぐために、いまが「操作入力入力」でない場合のみ上書きするようにしている
+          if (this.last_action === null || this.last_action !== "操作入力") {
             this.input_sfen = response.data.output_kifs["sfen"]["value"]
           }
+          // }
           if (!this.auto_copy_to_input_text_disable_p) {
             // テキスト入力時は、入力内容が先祖返りするのを防ぐために、いまが「テキスト入力」でない場合のみ上書きするようにしている
             if (this.input_active_tab_name !== "テキスト入力") {
