@@ -61,14 +61,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   if true
-    # ################################################################################ エラー通知
-    config.consider_all_requests_local = false
-    # config.middleware.use(ExceptionNotification::Rack, {
-    #     slack: {
-    #       webhook_url: Rails.application.credentials.dig(:slack_webhook_url),
-    #       channel: '#exception',
-    #       additional_parameters: { mrkdwn: true },
-    #     },
-    #   })
+    # 有効にすると本番開発のようになりメール通知する
+    # config.consider_all_requests_local = false
   end
 end

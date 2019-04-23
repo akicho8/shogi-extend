@@ -74,6 +74,7 @@ class FreeBattlesController < ApplicationController
         return
       end
     end
+
     super
   end
 
@@ -81,11 +82,17 @@ class FreeBattlesController < ApplicationController
 
   def current_record_params
     v = super
+
     if id = flash[:source_id]
       record = FreeBattle.find(id)
       v[:kifu_body] = record.kifu_body
       v[:title] = "「#{record.title}」のコピー"
     end
+
+    if hidden_kifu_body = v.delete(:hidden_kifu_body)
+      v[:kifu_body] = hidden_kifu_body
+    end
+
     v
   end
 
