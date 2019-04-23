@@ -298,7 +298,6 @@ module Swars
         # Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
         def multiple_battle_import(**params)
           params = {
-            real_run: !Rails.env.production?,
             verbose: Rails.env.development?,
             early_break: false, # 1ページ目で新しいものが見つからなければ終わる
           }.merge(params)
@@ -306,7 +305,7 @@ module Swars
           keys = []
           (params[:page_max] || 1).times do |i|
             list = []
-            if params[:real_run]
+            unless params[:dry_run]
               list = Agent.new(params).index_get(params.merge(page_index: i))
             end
             sleep_on(params)
@@ -449,15 +448,17 @@ module Swars
         private
 
         def sleep_on(params)
-          if params[:real_run]
-            if v = params[:sleep]
-              v = v.to_f
-              if v.positive?
-                if params[:verbose]
-                  tp "sleep: #{v}"
-                end
-                sleep(v)
+          if params[:dry_run]
+            return
+          end
+
+          if v = params[:sleep]
+            v = v.to_f
+            if v.positive?
+              if params[:verbose]
+                tp "sleep: #{v}"
               end
+              sleep(v)
             end
           end
         end

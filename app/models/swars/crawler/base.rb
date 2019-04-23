@@ -12,7 +12,6 @@ module Swars
 
       def initialize(**params)
         @params = {
-          real_run: !Rails.env.production?,
           developper_notice: true,
           sleep: Rails.env.production? ? 8 : 0,
         }.merge(default_params, params)
