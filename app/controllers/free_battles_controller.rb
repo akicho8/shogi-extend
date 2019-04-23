@@ -84,7 +84,7 @@ class FreeBattlesController < ApplicationController
     if id = flash[:source_id]
       record = FreeBattle.find(id)
       v[:kifu_body] = record.kifu_body
-      v[:title] = "#{record.title}のコピー"
+      v[:title] = "「#{record.title}」のコピー"
     end
     v
   end
