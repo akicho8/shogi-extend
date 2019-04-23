@@ -170,3 +170,6 @@ gem "aws-sdk-polly"
 
 # Palette
 gem "color"
+
+# 検索
+gem "ransack"

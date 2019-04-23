@@ -35,6 +35,10 @@ module ConvertMethods
     end
   end
 
+  def sfen
+    to_cached_sfen
+  end
+
   def to_cached_sfen
     Rails.cache.fetch([cache_key, "sfen"].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
       fast_parsed_info.to_sfen

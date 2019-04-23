@@ -48,6 +48,44 @@ class FreeBattlesController < ApplicationController
     KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
   end
 
+  let :current_query do
+    params[:query].presence
+  end
+
+  let :current_placeholder do
+    ""
+  end
+
+  let :current_scope do
+    if s = current_ransack
+      s = s.result
+    else
+      s = current_model.all
+    end
+    s.order(created_at: :desc)
+  end
+
+  let :current_ransack do
+    if current_query
+      current_model.ransack(title_cont: current_query)
+    end
+  end
+
+  let :current_records do
+    current_scope.select(current_model.column_names - ["meta_info"]).page(params[:page]).per(current_per)
+  end
+
+  let :current_per do
+    (params[:per].presence || 50).to_i
+  end
+
+  let :js_free_battles_index_app_params do
+    {
+      query: current_query,
+      records: current_records.collect { |e| e.as_json(methods: [:sfen]) },
+    }
+  end
+
   def new
     if id = params[:source_id]
       record = FreeBattle.find(id)
