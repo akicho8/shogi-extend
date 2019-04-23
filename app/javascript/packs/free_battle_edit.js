@@ -4,17 +4,18 @@ import _ from "lodash"
 import * as AppHelper from "./app_helper.js"
 import axios from "axios"
 
-const UPDATE_DELAY = 0.5 // プレビューするまでの遅延時間(秒)
+const TEXT_INPUT_UPDATE_DELAY = 0.5 // プレビューするまでの遅延時間(秒)
 
 window.FreeBattleEdit = Vue.extend({
   data() {
     return {
       record: this.$options.record_attributes,
 
-      kifu_body: null,                         // 入力された棋譜
-      auto_copy_to_kifu_body_disable_p: false, // true: 指し手をテキスト入力の方に反映しないようにする
+      input_text: null,                         // 入力された棋譜
+      auto_copy_to_input_text_disable_p: false, // true: 指し手をテキスト入力の方に反映しないようにする
       input_active_tab: 0,                     // 入力タブ切り替え
       output_kifs: this.$options.output_kifs,    // 変換後の棋譜
+      input_sfen: "",                         // 操作入力に渡す棋譜
       output_active_tab: 0,                    // 変換後の棋譜の切り替え
 
       tab_names: [
@@ -25,17 +26,17 @@ window.FreeBattleEdit = Vue.extend({
   },
 
   mounted() {
-    this.kifu_body = this.record.kifu_body // 元の棋譜を復元
-    if (!this.kifu_body) {
-      this.kifu_body = localStorage.getItem("free_battle.kifu_body")
+    this.input_text = this.record.kifu_body // 元の棋譜を復元
+    if (!this.input_text) {
+      this.input_text = localStorage.getItem("free_battle.input_text")
     }
-    this.kifu_body_focus()
+    this.input_text_focus()
   },
 
   watch: {
-    kifu_body() {
-      this.preview_update_from_kifu_body()
-      localStorage.setItem("free_battle.kifu_body", this.kifu_body)
+    input_text() {
+      this.preview_update_from_input_text()
+      localStorage.setItem("free_battle.input_text", this.input_text)
     },
   },
 
@@ -46,22 +47,29 @@ window.FreeBattleEdit = Vue.extend({
   },
 
   methods: {
-    preview_update_from_kifu_body: _.debounce(function() {
-      this.play_mode_long_sfen_set(this.kifu_body)
-    }, 1000 * UPDATE_DELAY),
+    // テキスト入力の場合のみ入力が終わるまで少し待つ
+    preview_update_from_input_text: _.debounce(function() {
+      this.play_mode_long_sfen_set(this.input_text)
+    }, 1000 * TEXT_INPUT_UPDATE_DELAY),
 
+    // 操作入力の場合は即時反映
     play_mode_long_sfen_set(play_mode_long_sfen) {
       const params = new URLSearchParams()
-      params.append("kifu_body", play_mode_long_sfen)
+      params.append("input_any_kifu", play_mode_long_sfen)
       axios.post(this.$options.post_path, params).then((response) => {
         if (response.data.error_message) {
           Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
         }
         if (response.data.output_kifs) {
           this.output_kifs = response.data.output_kifs
-          if (!this.auto_copy_to_kifu_body_disable_p) {
+          if (this.input_active_tab_name !== "操作入力") {
+            // 操作入力の場合は、入力内容が先祖返りするのを防ぐために、いまが「操作入力入力」でない場合のみ上書きするようにしている
+            this.input_sfen = response.data.output_kifs["sfen"]["value"]
+          }
+          if (!this.auto_copy_to_input_text_disable_p) {
+            // テキスト入力時は、入力内容が先祖返りするのを防ぐために、いまが「テキスト入力」でない場合のみ上書きするようにしている
             if (this.input_active_tab_name !== "テキスト入力") {
-              this.copy_to_kifu_body("kif")
+              this.copy_to_input_text("kif")
             }
           }
         }
@@ -71,27 +79,27 @@ window.FreeBattleEdit = Vue.extend({
       })
     },
 
-    copy_to_kifu_body(key) {
+    copy_to_input_text(key) {
       if (this.output_kifs) {
-        this.kifu_body = this.output_kifs[key]["value"]
+        this.input_text = this.output_kifs[key]["value"]
       }
     },
 
-    kifu_body_clear() {
-      this.kifu_body = ""
-      this.kifu_body_focus()
+    input_text_clear() {
+      this.input_text = ""
+      this.input_text_focus()
     },
 
-    kifu_body_focus() {
-      if (this.$refs.kifu_body) {
-        this.$refs.kifu_body.focus()
+    input_text_focus() {
+      if (this.$refs.input_text) {
+        this.$refs.input_text.focus()
       }
     },
 
     // 保持していた入力内容を破棄する
     // これは form の submit のタイミングで呼ばれる
-    kifu_body_storage_clear() {
-      localStorage.removeItem("free_battle.kifu_body")
+    input_text_storage_clear() {
+      localStorage.removeItem("free_battle.input_text")
     },
 
     kifu_copy(e) {

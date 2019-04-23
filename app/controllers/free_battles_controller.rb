@@ -36,12 +36,12 @@ class FreeBattlesController < ApplicationController
     }
   end
 
-  let :current_kifu_body do
-    params[:kifu_body].to_s
+  let :current_input_any_kifu do
+    params[:input_any_kifu].to_s
   end
 
   let :heavy_parsed_info do
-    Bioshogi::Parser.parse(current_kifu_body, typical_error_case: :embed)
+    Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed)
   end
 
   let :output_kifs do
@@ -62,7 +62,7 @@ class FreeBattlesController < ApplicationController
   def create
     # プレビュー用
     if request.format.json?
-      if v = params[:kifu_body]
+      if v = params[:input_any_kifu]
         render json: { output_kifs: output_kifs }
         return
       end

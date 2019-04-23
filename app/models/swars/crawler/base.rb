@@ -34,19 +34,19 @@ module Swars
 
       private
 
-      def mail_body
-        body = []
-        body << params.to_t
-        body << rows.to_t
-        body.join
-      end
-
       def default_params
         raise NotImplementedError, "#{__method__} is not implemented"
       end
 
       def perform
         raise NotImplementedError, "#{__method__} is not implemented"
+      end
+
+      def mail_body
+        body = []
+        body << params.to_t
+        body << rows.to_t
+        body.join
       end
 
       def subject

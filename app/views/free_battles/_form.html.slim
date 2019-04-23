@@ -4,7 +4,7 @@
       .non_border_box
         shogi-player(
           :run_mode="'play_mode'"
-          :kifu_body="output_kifs ? output_kifs['sfen']['value'] : ''"
+          :kifu_body="input_sfen"
           :start_turn="-1"
           :debug_mode="false"
           :key_event_capture="false"
@@ -19,28 +19,28 @@
           )
           = render partial: "sfen_link"
 
-      b-switch(v-model="auto_copy_to_kifu_body_disable_p" size="is-small" type="is-danger") 指し手をテキスト入力の方に反映しない(※保存されないので注意)
+      b-switch(v-model="auto_copy_to_input_text_disable_p" size="is-small" type="is-danger") 指し手をテキスト入力の方に反映しない(※保存されないので注意)
 
     b-tab-item(label="テキスト入力")
       .control
         = form.label(:kifu_body, class: "label")
-        = form.text_area(:kifu_body, rows: 12, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "kifu_body", ref: "kifu_body")
+        = form.text_area(:kifu_body, rows: 12, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "input_text", ref: "input_text")
 
       - if Rails.env.development? || true
         .is-size-7
           | 変換後の棋譜から
           | &nbsp;
-          a.is-small(@click="copy_to_kifu_body('kif')") KIF
+          a.is-small(@click="copy_to_input_text('kif')") KIF
           | &nbsp;
-          a.is-small(@click="copy_to_kifu_body('ki2')") KI2
+          a.is-small(@click="copy_to_input_text('ki2')") KI2
           | &nbsp;
-          a.is-small(@click="copy_to_kifu_body('bod')") BOD
+          a.is-small(@click="copy_to_input_text('bod')") BOD
           | &nbsp;
           | を逆にコピー
           | &nbsp;
           | /
           | &nbsp;
-          a.is-small(@click="kifu_body_clear") クリア
+          a.is-small(@click="input_text_clear") クリア
 
 .field
   = form.label(:kifu_url, class: "label")
