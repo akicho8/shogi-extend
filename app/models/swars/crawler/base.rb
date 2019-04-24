@@ -77,12 +77,13 @@ module Swars
         end
 
         begin
+          # EXECUTE_ERROR_PURPOSE=1 rails r Swars::Crawler::RegularCrawler.run
           if ENV["EXECUTE_ERROR_PURPOSE"]
             1 / 0
           end
           yield
         rescue => error
-          ExceptionNotifier.notify_exception(error)
+          ExceptionNotifier.notify_exception(error, data: { user_key: user_key })
           row["エラー"] = error.inspect
         end
 

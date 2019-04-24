@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::Base
   include Lettable
 
+  before_action do
+    request.env["exception_notifier.exception_data"] = {
+      current_user: current_user,
+    }
+  end
+
   # http://localhost:3000/?force_error=1
   # http://tk2-221-20341.vs.sakura.ne.jp/shogi?force_error=1
   prepend_before_action do
