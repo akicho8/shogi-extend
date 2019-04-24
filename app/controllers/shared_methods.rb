@@ -53,7 +53,7 @@ module SharedMethods
     text_body = current_record.to_cached_kifu(params[:format])
 
     if params[:copy_trigger]
-      SlackAgent.message_send(key: "#{params[:format]}コピー", body: current_record.key)
+      SlackAgent.message_send(key: "#{params[:format]}コピー", body: current_record.to_title)
     end
 
     # 激指ではクリップボードは UTF8 でないと読めない

@@ -213,5 +213,6 @@ module ConvertMethods
   end
 
   def to_title
+    to_param
   end
 end

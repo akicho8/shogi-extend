@@ -73,6 +73,10 @@ class FreeBattle < ApplicationRecord
     title.presence || "#{self.class.count.next}番目の何かの棋譜"
   end
 
+  def to_title
+    title
+  end
+
   def download_filename
     [("%04d" % id), key, title.gsub(/\p{Blank}+/, "_")].join("_")
   end

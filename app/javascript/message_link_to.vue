@@ -23,7 +23,7 @@
         section.modal-card-body
           b-field(label="")
             textarea.textarea(v-model.trim="message" @keydown.enter="message_enter_handle" autocomplete="off" ref="message_input" rows="3")
-        footer.modal-card-foot
+        footer.modal-card-foot.space_between
           button.button(@click="message_post_button_handle") 送信
           button.button(@click="battle_request_to") 対局申し込み
 </template>

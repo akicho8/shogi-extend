@@ -30,7 +30,7 @@
             .box.is-size-7
               | {{current_record.description}}
 
-        footer.modal-card-foot
+        footer.modal-card-foot.space_between
           = link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle", :class => "button")
           button.button(@click="modal_p = false") 閉じる
           = " "
