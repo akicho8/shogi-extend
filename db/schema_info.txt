@@ -354,7 +354,7 @@
 # | updated_at        | 更新日時           | datetime    | NOT NULL    |                                   |       |
 # | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
-# | description       | Description        | text(65535) | NOT NULL    |                                   |       |
+# | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

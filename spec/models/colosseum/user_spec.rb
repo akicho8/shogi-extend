@@ -43,6 +43,7 @@ module Colosseum
     context "リレーション" do
       user = User.create!
       assert { user.free_battles.to_a }
+      user.destroy!
     end
 
     context "対戦リクエスト" do
