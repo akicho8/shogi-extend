@@ -17,10 +17,11 @@
 # | updated_at        | 更新日時           | datetime    | NOT NULL    |                                   |       |
 # | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
+# | description       | Description        | text(65535) | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# 【警告:リレーション欠如】Colosseum::Userモデルで has_many :free_battles, :foreign_key => :colosseum_user_id されていません
+# Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
 require "open-uri"
@@ -42,14 +43,16 @@ class FreeBattle < ApplicationRecord
     end
 
     def file_import(file)
-      if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<title>.*)/)
+      if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<title_with_desc>.*)/)
+        title, description = md["title_with_desc"].split("__")
         record = find_by(key: md["key"]) || new(key: md["key"])
-        record.owner_user = Colosseum::User.find_by(name: "きなこもち") || Colosseum::User.sysop
+        record.owner_user = Colosseum::User.find_by(name: Rails.application.credentials.production_my_user_name) || Colosseum::User.sysop
         record.kifu_body = file.read
-        record.title = md["title"].gsub(/_/, " ")
+        record.title = title.gsub(/_/, " ")
+        record.description = description.to_s.gsub(/_/, " ")
         record.save!
 
-        p [record.id, record.title]
+        p [record.id, record.title, record.description]
       end
     end
   end
@@ -76,6 +79,7 @@ class FreeBattle < ApplicationRecord
 
   before_validation do
     self.title = safe_title
+    self.description ||= ""
 
     self.kifu_body ||= ""
 
@@ -112,7 +116,7 @@ class FreeBattle < ApplicationRecord
   end
 
   after_create do
-    SlackAgent.message_send(key: "棋譜入力", body: "#{title}")
+    SlackAgent.message_send(key: "棋譜入力", body: title)
   end
 
   concerning :TagMethods do

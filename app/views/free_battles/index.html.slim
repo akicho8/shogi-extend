@@ -1,34 +1,39 @@
 - twitter_card_tag(title: "棋譜一覧")
 
 - content_for :head do
-  = javascript_pack_tag("free_battles_index_app")
+  = javascript_pack_tag("free_battle_index")
 
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new FreeBattlesIndexApp(#{js_free_battles_index_app_params.to_json.html_safe}).$mount("#free_battles_index_app") })
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleIndex(#{js_free_battles_index_app_params.to_json.html_safe}).$mount("#free_battle_index") })
 
-#free_battles_index_app
+#free_battle_index
   b-modal(:active.sync="modal_p" has-modal-card)
-    .modal-card
-      / header.modal-card-head
-      /   p.modal-card-title
-      /     | {{current_record_card_title}}
-      section.modal-card-body
-        .content
-          small
-            | {{current_record_card_title}}
-          hr
-        shogi-player(
-          :kifu_body="current_record_sfen"
-          :key_event_capture="true"
-          :slider_show="true"
-          :sfen_show="false"
-          :controller_show="true"
-          :theme="'simple'"
-          :sound_effect="true"
-          :volume=AppConfig[:volume]
-        )
-      / footer.modal-card-foot
-      /   button.button(@click="modal_p = false") 閉じる
+    template(v-if="current_record_sp_sfen")
+      .modal-card
+        header.modal-card-head
+          p.modal-card-title
+            | {{current_record.title}}
+          button(class="delete" aria-label="close" @click="modal_p = false")
+        section.modal-card-body
+          shogi-player(
+            :kifu_body="current_record_sp_sfen"
+            :key_event_capture="true"
+            :slider_show="true"
+            :sfen_show="false"
+            :controller_show="true"
+            :theme="'#{current_shogi_player_theme}'"
+            :sound_effect="true"
+            :volume=AppConfig[:volume]
+          )
+
+          template(v-if="current_record.description")
+            .box.is-size-7
+              | {{current_record.description}}
+
+        footer.modal-card-foot
+          = link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle", :class => "button")
+          button.button(@click="modal_p = false") 閉じる
+          = " "
 
   .title.is-2.yumincho= "棋譜一覧"
   hr
@@ -38,7 +43,7 @@
       = form_with(url: :free_battles, method: :get, skip_enforcing_utf8: true) do |form|
         .field.has-addons
           .control.is-expanded
-            = form.search_field(:query, class: "input is-half", value: controller.current_query, placeholder: current_placeholder, autofocus: current_query.blank?, "v-model" => "query")
+            = form.search_field(:query, class: "input is-half", value: controller.current_query, placeholder: current_placeholder, autofocus: current_query.blank?, "v-model" => "query", ref: "main_field")
           .control
             = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: { disable_with: icon_tag(:fas, :sync, :spin) })
             = form.submit("検索") if Rails.env.test?
@@ -46,15 +51,15 @@
   ruby:
     rows = current_records.collect { |e|
       {
-        "ID" => link_to("##{e.id}", [ns_prefix, e]),
-        "タイトル" => link_to(e.safe_title, [ns_prefix, e], "@click.stop.prevent" => "ositazo(#{e.id})"),
+        # "ID" => link_to("##{e.id}", [ns_prefix, e]),
+        "タイトル" => link_to(e.safe_title, [ns_prefix, e], "@click.stop.prevent" => "show_handle(#{e.id})") + " " + tag.span(e.description, :class => "has-text-grey is-size-7"),
         # "先手" => e.meta_info["先手"],
         # "後手" => e.meta_info["後手"],
         "手数" => e.turn_max,
         "所有者" => e.owner_user ? link_to(e.owner_user.name, e.owner_user) : "",
         "作成日時" => time_ago_in_words(e.created_at) + "前",
         "操作" => [
-          # link_to("詳細", [ns_prefix, e]),
+          link_to("詳細", [ns_prefix, e], class: "button is-small"),
           (link_to("編集", [:edit, ns_prefix, e], class: "button is-small") if editable_record?(e)),
           # (link_to("削除", [ns_prefix, e], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}) if editable_record?(e)),
         ].compact.join(" ").html_safe,

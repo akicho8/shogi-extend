@@ -110,6 +110,12 @@ module Colosseum
       end
     end
 
+    concerning :FreeBattleMethods do
+      included do
+        has_many :free_battles, foreign_key: :colosseum_user_id, dependent: :destroy
+      end
+    end
+
     concerning :ChronicleMethods do
       included do
         has_many :chronicles, dependent: :destroy

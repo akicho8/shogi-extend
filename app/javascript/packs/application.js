@@ -155,6 +155,12 @@ Vue.mixin({
       const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
       AppHelper.kifu_copy_exec(params)
     },
+
+    debug_alert(message) {
+      if (process.env.NODE_ENV === "development") {
+        this.$toast.open({message: message, position: "is-bottom", type: "is-danger"})
+      }
+    },
   },
 })
 

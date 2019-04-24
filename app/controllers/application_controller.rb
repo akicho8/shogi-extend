@@ -202,6 +202,8 @@ class ApplicationController < ActionController::Base
           link_to_eval("指導対局リモート取り込み") { "Swars::Battle.user_import(user_key: 'Aikawa_Haruka', run_remote: true)" },
           link_to_eval("メール書式確認", redirect_to: "/rails/mailers") { "" },
           link_to_eval("RegularCrawler") { "Swars::Crawler::RegularCrawler.new.run" },
+          link_to_eval("FreeBattle.destroy_all") { "FreeBattle.destroy_all" },
+          link_to_eval("FreeBattle.setup") { "FreeBattle.setup" },
         ].compact.join.html_safe
       end
 

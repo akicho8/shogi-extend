@@ -17,10 +17,11 @@
 # | updated_at        | 更新日時           | datetime    | NOT NULL    |                                   |       |
 # | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
+# | description       | Description        | text(65535) | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# 【警告:リレーション欠如】Colosseum::Userモデルで has_many :free_battles, :foreign_key => :colosseum_user_id されていません
+# Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
 class FreeBattlesController < ApplicationController
@@ -82,7 +83,12 @@ class FreeBattlesController < ApplicationController
   let :js_free_battles_index_app_params do
     {
       query: current_query,
-      records: current_records.collect { |e| e.as_json(methods: [:sfen]) },
+      records: current_records.collect { |e|
+        e.as_json(methods: []).merge({
+            get_path: polymorphic_path(e, format: "json"),
+            kifu_copy_params: e.to_kifu_copy_params(view_context),
+          })
+      },
     }
   end
 
@@ -111,6 +117,15 @@ class FreeBattlesController < ApplicationController
         redirect_to [:swars, :battle, id: key]
         return
       end
+    end
+
+    super
+  end
+
+  def show
+    if request.format.json?
+      render json: { sp_sfen: current_record.sfen }
+      return
     end
 
     super

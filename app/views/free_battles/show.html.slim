@@ -22,8 +22,12 @@ javascript:
   .level
     .level-left
       .level-item.has-text-left
-        .title.is-3.yumincho
+        p.title.is-3.yumincho
           = current_record.safe_title
+          - if current_record.description.present?
+            == "&nbsp;"
+            .is-5
+              = current_record.description
     .level-right
       .level-item
         .buttons
