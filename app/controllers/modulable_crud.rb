@@ -79,8 +79,12 @@ module ModulableCrud
       let :current_records do
         current_scope.order(:id).reverse_order.page(params[:page])
       end
+    end
 
-      def index
+    def index
+      respond_to do |format|
+        format.html
+        format.json { render json: current_records }
       end
     end
   end
