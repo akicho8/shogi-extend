@@ -64,7 +64,7 @@ window.FreeBattleEdit = Vue.extend({
     kifu_convert(input_any_kifu) {
       const params = new URLSearchParams()
       params.append("input_any_kifu", input_any_kifu)
-      axios.post(this.$options.post_path, params).then((response) => {
+      axios.post(this.$options.post_path, params, {headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response) => {
         if (response.data.error_message) {
           Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
         }
