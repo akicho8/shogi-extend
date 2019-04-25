@@ -68,7 +68,7 @@ class FreeBattlesController < ApplicationController
 
   let :current_ransack do
     if current_query
-      current_model.ransack(title_cont: current_query)
+      current_model.ransack(title_or_description_cont: current_query)
     end
   end
 
