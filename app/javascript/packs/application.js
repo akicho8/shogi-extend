@@ -135,14 +135,14 @@ Vue.mixin({
 
       // this.$modal.open()
 
-      this.$dialog.alert({
-        title: "処理中",
-        message: "しばらくお待ちください",
-        type: "is-primary",
-        // hasIcon: true,
-        // icon: "crown",
-        // iconPack: "mdi",
-      })
+      // this.$dialog.alert({
+      //   title: "処理中",
+      //   message: "しばらくお待ちください",
+      //   type: "is-primary",
+      //   // hasIcon: true,
+      //   // icon: "crown",
+      //   // iconPack: "mdi",
+      // })
 
       this.$loading.open()
     },

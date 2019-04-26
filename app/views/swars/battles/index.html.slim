@@ -12,10 +12,10 @@
     })
 
 - content_for :head do
-  = javascript_pack_tag("swars_index_app")
+  = javascript_pack_tag("swars_battle_index")
 
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new SwarsIndexApp(#{{}.to_json.html_safe}).$mount("#app") })
+    document.addEventListener('DOMContentLoaded', () => { new SwarsBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#swars_battle_index") })
 
-#app
+#swars_battle_index(v-cloak)
   = render partial: "index_#{current_mode}"

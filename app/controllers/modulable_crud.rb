@@ -82,6 +82,11 @@ module ModulableCrud
     end
 
     def index
+      if request.xhr?
+        render json: js_current_records
+        return
+      end
+
       respond_to do |format|
         format.html
         format.json { render json: current_records }

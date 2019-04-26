@@ -54,6 +54,11 @@ module Swars
         return
       end
 
+      if request.xhr?
+        render json: js_current_records
+        return
+      end
+
       # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
       if query = params[:query].presence
         if key = Battle.extraction_key_from_dirty_string(query)
@@ -195,11 +200,19 @@ module Swars
 
     def row_links(current_record)
       list = []
-      list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kifu_copy_params: current_record.to_kifu_copy_params(self).to_json})
-      list << link_to("ウォーズ", swars_real_battle_url(current_record), "class": "button is-small", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
+
+      # list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kifu_copy_params: current_record.to_kifu_copy_params(self).to_json})
+
+      # list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kifu_copy_params: current_record.to_kifu_copy_params(self).to_json})
+      # list << link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button")
+      # list << link_to("コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button is-small")
+
+      # list << link_to("ウォーズ", swars_real_battle_url(current_record), "class": "button is-small", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
       list << link_to("詳細", [current_record], "class": "button is-small")
-      list << link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([current_record, format: "kif"])))
-      list.compact.join(" ").html_safe
+      if access_from_mobile?
+        list << link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([current_record, format: "kif"])))
+      end
+      list.join(" ")
     end
 
     # def user_link(record, judge_key)
@@ -326,17 +339,9 @@ module Swars
       (params[:mode].presence || "basic").to_sym
     end
 
-    let :current_placeholder do
-      "ウォーズID・対局URL・タグのどれかを入力してください"
-    end
-
-    let :current_records do
-      current_scope.select(current_model.column_names - ["meta_info"]).page(params[:page]).per(current_per)
-    end
-
     let :default_per do
       if current_mode == :basic
-        9
+        25
       else
         50
       end
@@ -428,63 +433,6 @@ module Swars
       end
     end
 
-    let :current_query do
-      params[:query].presence
-      # if current_query_hash
-      #   current_query_hash.values.join(" ")
-      # end
-    end
-
-    let :current_scope do
-      s = current_model.all
-      s = s.includes(win_user: nil, memberships: [:user, :grade])
-
-      if current_swars_user
-        # s = s.where(memberships: Membership.where(user: current_swars_user))
-        s = s.joins(:memberships).merge(Membership.where(user: current_swars_user))
-      end
-
-      if current_tags
-        s = s.tagged_with(current_tags)
-      end
-
-      # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
-      # tag:username だと対戦相手が「角換わり」したのも出てきてしまう
-      if current_mtags
-        m = Membership.all
-        if current_musers
-          m = m.where(user: User.where(user_key: current_musers))
-        end
-        m = m.tagged_with(current_mtags)
-        s = s.merge(m)
-      end
-
-      if current_ids
-        s = s.where(id: current_ids)
-      end
-
-      if v = params[:turn_max_gteq]
-        s = s.where(Battle.arel_table[:turn_max].gteq(v))
-      end
-
-      if v = params[:turn_max_lt]
-        s = s.where(Battle.arel_table[:turn_max].lt(v))
-      end
-
-      # # 平手以外
-      # if params[:handicap]
-      #   s = s.tagged_with("平手", exclude: true)
-      # end
-
-      s = s.order(battled_at: :desc)
-
-      if v = params[:order_column]
-        s = s.reorder(v => params[:order_arrow] || :asc)
-      end
-
-      s
-    end
-
     let :current_record do
       if v = params[:id].presence
         current_model.single_battle_import(key: v)
@@ -533,5 +481,128 @@ module Swars
         [v.to_i.abs, 10].min.next
       end
     end
+
+    include FreeBattlesController::IndexSharedMethods
+
+    concerning :IndexCustomMethods do
+      included do
+        let :current_placeholder do
+          "ウォーズID・対局URL・タグのどれかを入力してください"
+        end
+
+        let :pure_current_scope do
+          s = current_model.all
+
+          s = s.includes(win_user: nil, memberships: [:user, :grade])
+
+          if current_swars_user
+            # s = s.where(memberships: Membership.where(user: current_swars_user))
+            s = s.joins(:memberships).merge(Membership.where(user: current_swars_user))
+          end
+
+          if current_tags
+            s = s.tagged_with(current_tags)
+          end
+
+          # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
+          # tag:username だと対戦相手が「角換わり」したのも出てきてしまう
+          if current_mtags
+            m = Membership.all
+            if current_musers
+              m = m.where(user: User.where(user_key: current_musers))
+            end
+            m = m.tagged_with(current_mtags)
+            s = s.merge(m)
+          end
+
+          if current_ids
+            s = s.where(id: current_ids)
+          end
+
+          if v = params[:turn_max_gteq]
+            s = s.where(Battle.arel_table[:turn_max].gteq(v))
+          end
+
+          if v = params[:turn_max_lt]
+            s = s.where(Battle.arel_table[:turn_max].lt(v))
+          end
+
+          # # 平手以外
+          # if params[:handicap]
+          #   s = s.tagged_with("平手", exclude: true)
+          # end
+          # s = s.order(battled_at: :desc)
+
+          s
+        end
+
+        let :default_sort_column do
+          "battled_at"
+        end
+
+        let :current_ransack do
+          if current_query
+            # current_model.ransack(title_or_description_cont: current_query)
+          end
+        end
+
+        let :table_columns_hash do
+          {
+            "結果": { label: "結果", visible: table_columns_visible_default, },
+            "種類": { label: "種類", visible: table_columns_visible_default, },
+            "手数": { label: "手数", visible: table_columns_visible_default, },
+            "手合": { label: "手合", visible: table_columns_visible_default || teai_p, },
+            "日時": { label: "日時", visible: table_columns_visible_default, },
+          }
+        end
+
+        let :table_columns_visible_default do
+          Rails.env.development?
+        end
+
+        let :js_current_records do
+          current_records.collect do |e|
+            e.as_json.tap do |a|
+              a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
+              a[:xhr_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+
+              l_ship, r_ship = left_right_pairs(e)
+              left_right_pairs2(a, e, l_ship, r_ship)
+
+              a["title"] = e.to_title
+              a["結果"] = link_to(e.final_info.name, swars_tag_search_path(e.final_info.name), :class => e.final_info.has_text_color, "@click.stop" => true)
+
+              if false
+                a["戦法"] = e.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
+              else
+                # a["戦型"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
+                # a["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
+              end
+
+              a["手合"] = link_to(e.preset_info.name, swars_tag_search_path(e.preset_info.name), "@click.stop" => true)
+              a["種類"] = link_to(e.rule_info.name, swars_tag_search_path(e.rule_info.name), "@click.stop" => true)
+              a["日時"] = e.battled_at.to_s(:battle_time)
+              
+              a[:show_path] = polymorphic_path([ns_prefix, e])
+              a[:piyo_path] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+              
+              a["memberships"] = e.memberships.collect do |e|
+                {
+                  key: e.user.user_key,
+                  url: url_for([:swars, :player_infos, user_key: e.user.user_key]),
+                }
+              end
+              
+              a["swars_real_battle_url"] = swars_real_battle_url(current_record)
+            end
+          end
+        end
+
+        let :teai_p do
+          current_tags && (current_tags.include?("駒落ち") || current_tags.include?("指導対局"))
+        end
+      end
+    end
+
   end
 end
