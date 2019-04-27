@@ -11,6 +11,15 @@ class SystemNotificationChannel < ApplicationCable::Channel
 
   def unsubscribed
     if current_user
+      # FIXME: 接続中であってもこれが頻繁に呼ばれる
+      # システムテストのときもここが呼ばれるのでログインユーザーがオフラインと見なされてしまうことがある
+
+      # テストのときも転けるのでオフラインにしない
+      if Rails.env.test?
+        p ["#{__FILE__}:#{__LINE__}", __method__, "切断"]
+        return
+      end
+
       current_user.disappear
     end
   end

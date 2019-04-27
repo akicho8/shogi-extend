@@ -5,7 +5,7 @@
     = form_with(url: [:swars, :basic], method: :get, skip_enforcing_utf8: true, html: {"@submit" => "form_submited"}) do |form|
       .field.has-addons
         .control.is-expanded
-          = form.search_field(:query, class: "input is-half", value: controller.current_query, placeholder: current_placeholder, list: "search_field_query_completion", autofocus: controller.current_query_hash.blank?)
+          = form.search_field(:query, class: "input", value: current_query, placeholder: current_placeholder, list: "search_field_query_completion", autofocus: current_query.blank?, "v-model" => "query", ref: "main_field")
           = render partial: "search_field_query_completion"
         .control
           = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: {disable_with: icon_tag(:fas, :sync, :spin)})
@@ -24,72 +24,87 @@
   .column
     .buttons.are-small
       - args = params.to_unsafe_h.merge(page: nil)
-      = link_to("相入玉", args.merge(query: "tag:相入玉"),     :class => "button is-info is-outlined")
-      = link_to("相居玉", args.merge(query: "tag:相居玉"),     :class => "button is-info is-outlined")
-      = link_to("200手以上", args.merge(turn_max_gteq: 200),   :class => "button is-info is-outlined")
-      = link_to("50手未満", args.merge(turn_max_lt: 50),       :class => "button is-info is-outlined")
-      = link_to("駒落ち", args.merge(query: "tag:駒落ち"), :class => "button is-info is-outlined")
-      = link_to("指導対局", args.merge(query: "tag:指導対局"), :class => "button is-info is-outlined")
-      = link_to("駒柱", args.merge(query: "tag:駒柱"), :class => "button is-info is-outlined")
-      = link_to("手数多い順", args.merge(order_column: :turn_max, order_arrow: :desc), :class => "button is-light")
-      = link_to("手数少ない順", args.merge(order_column: :turn_max, order_arrow: :asc), :class => "button is-light")
+      = link_to("相入玉",    args.merge(query: "tag:相入玉"),        :class => "button is-info is-outlined")
+      = link_to("相居玉",    args.merge(query: "tag:相居玉"),        :class => "button is-info is-outlined")
+      = link_to("200手以上", args.merge(query: "turn_max_gteq:200"), :class => "button is-info is-outlined")
+      = link_to("50手未満",  args.merge(query: "turn_max_lt:50"),    :class => "button is-info is-outlined")
+      = link_to("駒落ち",    args.merge(query: "tag:駒落ち"),        :class => "button is-info is-outlined")
+      = link_to("指導対局",  args.merge(query: "tag:指導対局"),      :class => "button is-info is-outlined")
+      = link_to("駒柱",      args.merge(query: "tag:駒柱"),          :class => "button is-info is-outlined")
+      / = link_to("手数多い順", args.merge(sort_column: :turn_max, sort_order: :desc), :class => "button is-light")
+      / = link_to("手数少ない順", args.merge(sort_column: :turn_max, sort_order: :asc), :class => "button is-light")
 
-- unless current_records.exists?
-  .columns
-    .column
-      .message
-        .message-body
-          | 見つかりませんでした
+.columns
+  .column
+    = render partial: "modal_shogi_player"
 
-- if current_records && (current_records.size <= 9 || params[:shogi_player_show_all])
-  / #shogi_player_app(v-cloak="true")
-  /   - content_for :head do
-  /     = javascript_pack_tag("shogi_player_app")
-  - current_records.each_slice(3) do |current_records|
-    .columns(v-cloak)
-      - current_records.each do |record|
-        .column
-          .card
-            header.card-header
-              //////////////////////////////////////////////////////////////////////////////// 右端ドロップダウン
-              b-dropdown(hoverable)
-                - record.memberships.each do |e|
-                  b-dropdown-item :has-link="true" :paddingless="true"
-                    = link_to("#{e.user.user_key} 情報", [:swars, :player_infos, user_key: e.user.user_key])
-                b-dropdown-item(:separator="true")
-                b-dropdown-item(:has-link="true" :paddingless="true")
-                  = link_to("KIF ダウンロード", [record, format: "kif"])
-                b-dropdown-item :has-link="true" :paddingless="true"
-                  = link_to("KI2 コピー", "#", "@click.prevent" => "kifu_copy_exec_click", data: {kifu_copy_params: record.to_kifu_copy_params(self, format: "ki2").to_json})
-                a(class="card-header-icon" slot="trigger")
-                  b-icon(pack="fas" icon="angle-down" size="is-small")
-                b-dropdown-item :has-link="true" :paddingless="true"
-                  = link_to("ウォーズに移動", swars_real_battle_url(record), target: "_blank")
-                b-dropdown-item :has-link="true" :paddingless="true"
-                  = link_to("Tweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{record.wars_tweet_body}')")
+    b-field(grouped group-multiline)
+      div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
+        b-checkbox(v-model="value.visible")
+          | {{value.label}}
 
-              //////////////////////////////////////////////////////////////////////////////// 対局者名
-              p.card-header-title.is-size-7.nowrap
-                == record.memberships.collect { |e| e.winner_only_icon_html.to_s + controller.user_link2(e) }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
+    b-table(
+      hoverable
 
-            .card-content
-              - if sfen = record.to_cached_sfen
-                shogi-player(
-                  :kifu_body="'#{sfen}'"
-                  :key_event_capture="false"
-                  :slider_show="true"
-                  :sfen_show="false"
-                  :controller_show="false"
-                  :theme="'simple'"
-                  :sound_effect="true"
-                  :volume=AppConfig[:volume]
-                )
-            footer.card-footer
-              = link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "class": "card-footer-item", "@click.prevent" => "kifu_copy_exec_click", data: {kifu_copy_params: record.to_kifu_copy_params(self).to_json})
-              = link_to(icon_tag(:fas, :info) + "詳細", [record], "class": "card-footer-item")
-              = link_to(image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([record, format: "kif"])), "class": "card-footer-item")
+      :loading="loading"
 
-- if rows
+      paginated
+      backend-pagination
+      pagination-simple
+      :current-page="page"
+      :data="records"
+      :total="total"
+      :per-page="per"
+      @page-change="page_change_handle"
+
+      backend-sorting
+      :default-sort-direction="$options.sort_order_default"
+      :default-sort="[sort_column, sort_order]"
+      @sort="sort_handle"
+
+      ref="table"
+      :opened-detailed="defaultOpenedDetails"
+      detailed
+      detail-key="id"
+      @details-open="details_open_handle"
+      :show-detail-icon="showDetailIcon"
+
+      @click="show_handle"
+      )
+
+      / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
+
+      = render partial: "table_empty"
+
+      template(slot-scope="props")
+        = render partial: "row"
+
+      template(slot="detail" slot-scope="props")
+        .buttons
+          template(v-for="e in props.row.memberships")
+            a.button.is-small(:href="e.player_info_url")
+              | {{e.name_with_grade}} 情報
+          a.button.is-small(:href="props.row.ki2_download_path") KI2 ダウンロード
+          a.button.is-small(:href="props.row.swars_real_battle_url" target="_blank") ウォーズに移動
+          a.button.is-small(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)") Tweetコピー
+
+        template(v-if="props.row.sp_sfen")
+          shogi-player(
+            :kifu_body="props.row.sp_sfen"
+            :key_event_capture="true"
+            :slider_show="true"
+            :sfen_show="false"
+            :controller_show="true"
+            :theme="'simple'"
+            :sound_effect="true"
+            :volume=AppConfig[:volume]
+          )
+          / .columns
+          /   .column
+          /     .buttons
+          /       / = link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button is-small")
+
+- if rows && false
   .columns
     .column
       = rows.to_html

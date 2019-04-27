@@ -1,0 +1,52 @@
+b-table-column(field="id" label="ID" sortable numeric)
+  a(@click.stop :href="props.row.show_path")
+    | #
+    | {{props.row.id}}
+
+template(v-if="false")
+  b-table-column(field="key" label="盤面")
+    a(@click.stop.prevent="show_handle(props.row)")
+      b-icon(pack="fas" icon="chess-board")
+
+template(v-for="m in props.row.memberships")
+  b-table-column(:label="m.label")
+    span(v-html="m.icon_html")
+    a(@click.stop :href="m.query_user_url")
+      | {{m.name_with_grade}}
+    template(v-if="table_columns_hash['attack_tag_list'].visible")
+      template(v-for="tag in m.attack_tag_list")
+        span.has-text-grey.is-size-7
+          | &nbsp;
+          | {{tag}}
+    template(v-if="table_columns_hash['defense_tag_list'].visible")
+      template(v-for="tag in m.defense_tag_list")
+        span.has-text-grey.is-size-7
+          | &nbsp;
+          | {{tag}}
+
+b-table-column(field="final_key" :label="table_columns_hash['final_info'].label" :visible="table_columns_hash['final_info'].visible" sortable)
+  a(@click.stop :href="props.row['final_info'].url" :class="props.row['final_info'].class")
+    | {{props.row['final_info'].name}}
+
+b-table-column(field="turn_max" :label="table_columns_hash['turn_max'].label" :visible="table_columns_hash['turn_max'].visible" sortable numeric)
+  | {{props.row['turn_max']}}
+
+b-table-column(field="rule_key" :label="table_columns_hash['rule_info'].label" :visible="table_columns_hash['rule_info'].visible" sortable)
+  a(@click.stop :href="props.row['rule_info'].url")
+    | {{props.row['rule_info'].name}}
+
+b-table-column(field="preset_key" :label="table_columns_hash['preset_info'].label" :visible="table_columns_hash['preset_info'].visible" sortable)
+  a(@click.stop :href="props.row['preset_info'].url")
+    | {{props.row['preset_info'].name}}
+
+b-table-column(field="battled_at" :label="table_columns_hash['battled_at'].label" :visible="table_columns_hash['battled_at'].visible" sortable)
+  | {{props.row['battled_at']}}
+
+b-table-column(label="操作")
+  .buttons
+    a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row)")
+      b-icon(pack="far" icon="clipboard" size="is-small")
+      | &nbsp;コピー
+    - if access_from_mobile? || Rails.env.development?
+      a(@click.stop :href="props.row.piyo_shogi_app_url")
+        = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
