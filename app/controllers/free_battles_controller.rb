@@ -193,7 +193,7 @@ class FreeBattlesController < ApplicationController
           sort_order_default: "desc", # カラムをクリックしたときの最初の向き
           # records: js_current_records,
           records: [],
-          table_columns_hash: table_columns_hash,
+          table_columns_hash: Rails.env.production? ? table_columns_hash : table_columns_hash.transform_values { |e| e.merge(visible: true) },
         }
       end
     end

@@ -268,7 +268,7 @@ module Swars
           # row["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
 
-        if current_tags && (current_tags.include?("駒落ち") || current_tags.include?("指導対局"))
+        if teai_p
           row["手合"] = link_to(record.preset_info.name, swars_tag_search_path(record.preset_info.name))
         end
         row["手数"] = record.turn_max
@@ -460,7 +460,7 @@ module Swars
     concerning :IndexCustomMethods do
       included do
         let :current_placeholder do
-          "ウォーズID・対局URL・タグのどれかを入力してください"
+          "ウォーズIDまたは対局URLを入力してください"
         end
 
         let :pure_current_scope do
@@ -521,16 +521,14 @@ module Swars
 
         let :table_columns_hash do
           {
-            final_info:  { label: "結果", visible: table_columns_visible_default, },
-            rule_info:   { label: "種類", visible: table_columns_visible_default, },
-            turn_max:    { label: "手数", visible: table_columns_visible_default, },
-            preset_info: { label: "手合", visible: table_columns_visible_default || teai_p, },
-            battled_at:  { label: "日時", visible: table_columns_visible_default, },
+            final_info:       { label: "結果", visible: false,  },
+            rule_info:        { label: "種類", visible: false,  },
+            turn_max:         { label: "手数", visible: false,  },
+            preset_info:      { label: "手合", visible: teai_p, },
+            battled_at:       { label: "日時", visible: false,  },
+            attack_tag_list:  { label: "戦型", visible: false,  },
+            defense_tag_list: { label: "囲い", visible: false,  },
           }
-        end
-
-        let :table_columns_visible_default do
-          Rails.env.development?
         end
 
         let :js_current_records do
@@ -565,6 +563,8 @@ module Swars
                   icon_html: e.icon_html,
                   name_with_grade: e.name_with_grade,
                   query_user_url: polymorphic_path(e.user, current_mode: current_mode),
+                  attack_tag_list: e.attack_tag_list,
+                  defense_tag_list: e.defense_tag_list,
                 }
               end
             end

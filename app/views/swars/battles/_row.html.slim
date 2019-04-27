@@ -13,6 +13,16 @@ template(v-for="m in props.row.memberships")
     span(v-html="m.icon_html")
     a(@click.stop :href="m.query_user_url")
       | {{m.name_with_grade}}
+    template(v-if="table_columns_hash['attack_tag_list'].visible")
+      template(v-for="tag in m.attack_tag_list")
+        span.has-text-grey.is-size-7
+          | &nbsp;
+          | {{tag}}
+    template(v-if="table_columns_hash['defense_tag_list'].visible")
+      template(v-for="tag in m.defense_tag_list")
+        span.has-text-grey.is-size-7
+          | &nbsp;
+          | {{tag}}
 
 b-table-column(field="final_key" :label="table_columns_hash['final_info'].label" :visible="table_columns_hash['final_info'].visible" sortable)
   a(@click.stop :href="props.row['final_info'].url" :class="props.row['final_info'].class")
@@ -34,7 +44,9 @@ b-table-column(field="battled_at" :label="table_columns_hash['battled_at'].label
 
 b-table-column(label="操作")
   .buttons
-    a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row)") コピー
+    a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row)")
+      b-icon(pack="far" icon="clipboard" size="is-small")
+      | &nbsp;コピー
     - if access_from_mobile? || Rails.env.development?
       a(@click.stop :href="props.row.piyo_shogi_app_url")
         = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")

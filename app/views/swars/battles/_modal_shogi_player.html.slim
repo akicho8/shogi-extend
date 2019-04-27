@@ -1,0 +1,29 @@
+b-modal(:active.sync="modal_p" has-modal-card)
+  template(v-if="current_record")
+    .modal-card(style="width:auto")
+      header.modal-card-head
+        p.modal-card-title
+          | {{current_record.title}}
+        button(class="delete" aria-label="close" @click="modal_p = false")
+      section.modal-card-body
+        shogi-player(
+          :kifu_body="current_record.sp_sfen"
+          :key_event_capture="true"
+          :slider_show="true"
+          :sfen_show="false"
+          :controller_show="true"
+          :theme="'#{current_shogi_player_theme}'"
+          :size="'large'"
+          :sound_effect="true"
+          :volume=AppConfig[:volume]
+        )
+
+        template(v-if="current_record.description")
+          .box.is-size-7
+            | {{current_record.description}}
+
+      footer.modal-card-foot.space_between
+        / b-icon(pack="far" icon="clipboard" size="is-small")
+        / | &nbsp;コピー
+        / = link_to(icon_tag(:far, :clipboard) + "コピー", "#", "@click.prevent" => "kifu_copy_handle(current_record)", :class => "button")
+        button.button(@click="modal_p = false") 閉じる

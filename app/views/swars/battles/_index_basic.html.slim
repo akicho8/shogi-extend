@@ -34,93 +34,9 @@
       / = link_to("手数多い順", args.merge(sort_column: :turn_max, sort_order: :desc), :class => "button is-light")
       / = link_to("手数少ない順", args.merge(sort_column: :turn_max, sort_order: :asc), :class => "button is-light")
 
-/ - unless current_records.exists?
-/   .columns
-/     .column
-/       .message
-/         .message-body
-/           | 見つかりませんでした
-
-/ - if current_records && (current_records.size <= 9 || params[:shogi_player_show_all])
-/   / #shogi_player_app(v-cloak="true")
-/   /   - content_for :head do
-/   /     = javascript_pack_tag("shogi_player_app")
-/   - current_records.each_slice(3) do |current_records|
-/     .columns(v-cloak)
-/       - current_records.each do |record|
-/         .column
-/           .card
-/             header.card-header
-/               //////////////////////////////////////////////////////////////////////////////// 右端ドロップダウン
-/               b-dropdown(hoverable)
-/                 - record.memberships.each do |e|
-/                   b-dropdown-item :has-link="true" :paddingless="true"
-/                     = link_to("#{e.user.user_key} 情報", [:swars, :player_infos, user_key: e.user.user_key])
-/                 b-dropdown-item(:separator="true")
-/                 b-dropdown-item(:has-link="true" :paddingless="true")
-/                   = link_to("KIF ダウンロード", [record, format: "kif"])
-/                 b-dropdown-item :has-link="true" :paddingless="true"
-/                   = link_to("KI2 コピー", "#", "@click.prevent" => "kifu_copy_exec_click", data: {kifu_copy_params: record.to_kifu_copy_params(self, format: "ki2").to_json})
-/                 a(class="card-header-icon" slot="trigger")
-/                   b-icon(pack="fas" icon="angle-down" size="is-small")
-/                 b-dropdown-item :has-link="true" :paddingless="true"
-/                   = link_to("ウォーズに移動", swars_real_battle_url(record), target: "_blank")
-/                 b-dropdown-item :has-link="true" :paddingless="true"
-/                   = link_to("Tweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{record.wars_tweet_body}')")
-/
-/               //////////////////////////////////////////////////////////////////////////////// 対局者名
-/               p.card-header-title.is-size-7.nowrap
-/                 == record.memberships.collect { |e| e.winner_only_icon_html.to_s + controller.user_link2(e) }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
-/
-/             .card-content
-/               - if sfen = record.to_cached_sfen
-/                 shogi-player(
-/                   :kifu_body="'#{sfen}'"
-/                   :key_event_capture="false"
-/                   :slider_show="true"
-/                   :sfen_show="false"
-/                   :controller_show="false"
-/                   :theme="'simple'"
-/                   :sound_effect="true"
-/                   :volume=AppConfig[:volume]
-/                 )
-/             footer.card-footer
-
-/               = link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "class": "card-footer-item", "@click.prevent" => "kifu_copy_exec_click", data: {kifu_copy_params: record.to_kifu_copy_params(self).to_json})
-/               = link_to(icon_tag(:fas, :info) + "詳細", [record], "class": "card-footer-item")
-/               = link_to(image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([record, format: "kif"])), "class": "card-footer-item")
-
 .columns
   .column
-
-    b-modal(:active.sync="modal_p" has-modal-card)
-      template(v-if="current_record")
-        .modal-card(style="width:auto")
-          header.modal-card-head
-            p.modal-card-title
-              | {{current_record.title}}
-            button(class="delete" aria-label="close" @click="modal_p = false")
-          section.modal-card-body
-            shogi-player(
-              :kifu_body="current_record.sp_sfen"
-              :key_event_capture="true"
-              :slider_show="true"
-              :sfen_show="false"
-              :controller_show="true"
-              :theme="'#{current_shogi_player_theme}'"
-              :size="'large'"
-              :sound_effect="true"
-              :volume=AppConfig[:volume]
-            )
-
-            template(v-if="current_record.description")
-              .box.is-size-7
-                | {{current_record.description}}
-
-          footer.modal-card-foot.space_between
-            = link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle(current_record)", :class => "button")
-            button.button(@click="modal_p = false") 閉じる
-            = " "
+    = render partial: "modal_shogi_player"
 
     b-field(grouped group-multiline)
       div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
