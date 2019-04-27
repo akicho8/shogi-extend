@@ -25,6 +25,8 @@ export default {
 
       defaultOpenedDetails: [], // 最初から開いておく id を入れられる
       showDetailIcon: true,
+
+      fetched_count: 0,
     }
   },
 
@@ -74,6 +76,7 @@ export default {
       }).then(response => {
         this.loading = false
         this.records = response.data
+        this.fetched_count += 1
         console.table(this.records)
       }).catch((error) => {
         console.table([error.response])
