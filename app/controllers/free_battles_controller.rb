@@ -199,7 +199,7 @@ class FreeBattlesController < ApplicationController
     end
 
     def show
-      if request.xhr?
+      if request.format.json?
         render json: { sp_sfen: current_record.sfen }
         return
       end

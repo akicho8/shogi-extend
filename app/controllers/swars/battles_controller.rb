@@ -54,7 +54,7 @@ module Swars
         return
       end
 
-      if request.xhr?
+      if request.format.json?
         render json: js_current_records.to_json # 【重要】 明示的に to_json することで ActiveModelSerializer での変換の試みを回避する
         return
       end
