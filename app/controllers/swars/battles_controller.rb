@@ -521,13 +521,13 @@ module Swars
 
         let :table_columns_hash do
           {
-            final_info:       { label: "結果", visible: false,  },
-            rule_info:        { label: "種類", visible: false,  },
-            turn_max:         { label: "手数", visible: false,  },
-            preset_info:      { label: "手合", visible: teai_p, },
-            battled_at:       { label: "日時", visible: false,  },
             attack_tag_list:  { label: "戦型", visible: false,  },
             defense_tag_list: { label: "囲い", visible: false,  },
+            final_info:       { label: "結果", visible: false,  },
+            turn_max:         { label: "手数", visible: false,  },
+            rule_info:        { label: "種類", visible: false,  },
+            preset_info:      { label: "手合", visible: teai_p, },
+            battled_at:       { label: "日時", visible: false,  },
           }
         end
 

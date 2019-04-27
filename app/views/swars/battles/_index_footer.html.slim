@@ -1,7 +1,8 @@
 - if current_records
-  .columns
-    .column
-      = paginate current_records
+  - if Rails.env.development?
+    .columns
+      .column
+        = paginate current_records
 
   .columns
     .column

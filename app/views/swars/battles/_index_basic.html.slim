@@ -72,12 +72,8 @@
       @click="show_handle"
       )
 
-      / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
-
       = render partial: "table_empty"
-
       = render partial: "row"
-
       = render partial: "detail"
 
 - if rows && false
