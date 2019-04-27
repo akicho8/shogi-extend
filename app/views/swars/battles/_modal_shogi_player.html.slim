@@ -6,24 +6,28 @@ b-modal(:active.sync="modal_p" has-modal-card)
           | {{current_record.title}}
         button(class="delete" aria-label="close" @click="modal_p = false")
       section.modal-card-body
-        shogi-player(
-          :kifu_body="current_record.sp_sfen"
-          :key_event_capture="true"
-          :slider_show="true"
-          :sfen_show="false"
-          :controller_show="true"
-          :theme="'#{current_shogi_player_theme}'"
-          :size="'large'"
-          :sound_effect="true"
-          :volume=AppConfig[:volume]
-        )
+        b-loading(:is-full-page="false" :active="!current_record.sp_sfen" :can-cancel="true")
 
-        template(v-if="current_record.description")
-          .box.is-size-7
-            | {{current_record.description}}
+        template(v-if="current_record.sp_sfen")
+          shogi-player(
+            :kifu_body="current_record.sp_sfen"
+            :key_event_capture="true"
+            :slider_show="true"
+            :sfen_show="false"
+            :controller_show="true"
+            :theme="'#{current_shogi_player_theme}'"
+            :size="'large'"
+            :sound_effect="true"
+            :volume=AppConfig[:volume]
+          )
 
       footer.modal-card-foot.space_between
-        / b-icon(pack="far" icon="clipboard" size="is-small")
-        / | &nbsp;コピー
-        / = link_to(icon_tag(:far, :clipboard) + "コピー", "#", "@click.prevent" => "kifu_copy_handle(current_record)", :class => "button")
-        button.button(@click="modal_p = false") 閉じる
+        a.button(@click.stop.prevent="kifu_copy_handle(current_record)")
+          b-icon(pack="far" icon="clipboard" size="is-small")
+          | &nbsp;コピー
+
+        - if access_from_mobile? || Rails.env.development?
+          a(@click.stop :href="current_record.piyo_shogi_app_url")
+            = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
+
+        a.button(@click="modal_p = false") 閉じる
