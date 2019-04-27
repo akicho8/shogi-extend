@@ -76,11 +76,6 @@
       = render partial: "row"
       = render partial: "detail"
 
-- if rows && false
-  .columns
-    .column
-      = rows.to_html
-
 = render partial: "index_footer"
 
 - if current_records && current_records.exists?

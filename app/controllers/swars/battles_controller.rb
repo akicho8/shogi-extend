@@ -55,7 +55,7 @@ module Swars
       end
 
       if request.xhr?
-        render json: js_current_records
+        render json: js_current_records.to_json # 【重要】 明示的に to_json することで ActiveModelSerializer での変換の試みを回避する
         return
       end
 
@@ -290,7 +290,7 @@ module Swars
 
     def left_right_pairs(record)
       row = {}
-      l, r = record.memberships
+      l, r = record.memberships.includes(:user, :attack_tags, :defense_tags)
       if current_swars_user
         if l.user == current_swars_user
           row["対象プレイヤー"] = l
@@ -300,7 +300,7 @@ module Swars
           row["対戦相手"]       = l
         end
       else
-        if record.win_user
+        if record.win_user_id
           if l.judge_key == "win"
             row["勝ち"] = l
             row["負け"] = r
@@ -358,7 +358,7 @@ module Swars
     let :current_query_info do
       QueryInfo.parse(current_query)
     end
-      
+
     let :current_query_hash do
       current_query_info.attributes
     end
@@ -466,6 +466,8 @@ module Swars
         let :pure_current_scope do
           s = current_model.all
 
+          s = s.joins(memberships: [:user, :grade])
+          # tag_refs = [:defense_tags, :attack_tags, :technique_tags, :note_tags, :other_tags, :secret_tags]
           s = s.includes(win_user: nil, memberships: [:user, :grade])
 
           if current_swars_user
@@ -533,41 +535,43 @@ module Swars
 
         let :js_current_records do
           current_records.collect do |e|
-            e.as_json.tap do |a|
-              a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
-              a[:xhr_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+            a = e.attributes
 
-              a[:title] = e.to_title
-              a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
+            a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
+            a[:xhr_get_path] = polymorphic_path([ns_prefix, e], format: "json")
 
-              if false
-                a["戦法"] = e.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
-              else
-                # a["戦型"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-                # a["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
-              end
+            a[:title] = e.to_title
+            a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
 
-              a[:battled_at] = e.battled_at.to_s(:battle_time)
-              a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
-              a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
-              a[:show_path] = polymorphic_path([ns_prefix, e])
-              a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-              a[:swars_real_battle_url] = swars_real_battle_url(current_record)
-              a[:ki2_download_path] = polymorphic_path([ns_prefix, e], format: "ki2")
-              a[:wars_tweet_body] = e.wars_tweet_body
-
-              a[:memberships] = left_right_pairs(e).collect do |label, e|
-                {
-                  label: label,
-                  player_info_url: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
-                  icon_html: e.icon_html,
-                  name_with_grade: e.name_with_grade,
-                  query_user_url: polymorphic_path(e.user, current_mode: current_mode),
-                  attack_tag_list: e.attack_tag_list,
-                  defense_tag_list: e.defense_tag_list,
-                }
-              end
+            if false
+              a["戦法"] = e.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
+            else
+              # a["戦型"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
+              # a["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
             end
+
+            a[:battled_at] = e.battled_at.to_s(:battle_time)
+            a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
+            a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
+            a[:show_path] = polymorphic_path([ns_prefix, e])
+            a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+            a[:swars_real_battle_url] = swars_real_battle_url(current_record)
+            a[:ki2_download_path] = polymorphic_path([ns_prefix, e], format: "ki2")
+            a[:wars_tweet_body] = e.wars_tweet_body
+
+            a[:memberships] = left_right_pairs(e).collect do |label, e|
+              {
+                label: label,
+                player_info_url: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
+                icon_html: e.icon_html,
+                name_with_grade: e.name_with_grade,
+                query_user_url: polymorphic_path(e.user, current_mode: current_mode),
+                attack_tag_list: e.attack_tags.pluck(:name),
+                defense_tag_list: e.defense_tags.pluck(:name),
+              }
+            end
+
+            a
           end
         end
 

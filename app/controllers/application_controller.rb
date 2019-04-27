@@ -102,7 +102,10 @@ class ApplicationController < ActionController::Base
         # # end
         # user_id ||=
 
-        user ||= Colosseum::User.find_by(id: cookies.signed[:user_id])
+        user = nil
+        if id = cookies.signed[:user_id]
+          user ||= Colosseum::User.find_by(id: id)
+        end
         user ||= current_xuser
 
         if Rails.env.test?
