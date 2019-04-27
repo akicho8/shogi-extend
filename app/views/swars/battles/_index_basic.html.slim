@@ -79,12 +79,38 @@
 = render partial: "index_footer"
 
 - if current_records && current_records.exists?
-  p
-    =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-info") do
-      = icon_tag(:fas, :download)
-      - if controller.current_query
-        | この検索条件で
-      = "ZIPダウンロード"
+.columns
+  .column
+    p
+      =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-info") do
+        = icon_tag(:fas, :download)
+        - if controller.current_query
+          | この検索条件で
+        = "ZIPダウンロード"
+
+.columns
+  .column
+    article.message.is-primary.is-size-7
+      .message-header
+        | 便利な使い方
+      .message-body.has-text-left
+        .content
+          ol
+            li 行をクリックすると盤面が開きます
+            li IDの番号をクリックすると詳細画面(固定URL)に移動します
+            li 自分のウォーズIDで検索したページをそのままブックマークしておくと毎回ウォーズのIDを入力する手間が省けます
+            / li
+            /   / - url = full_url_for([:swars, current_mode, query: current_swars_user, latest_open_index: 0])
+            /   / | また上の<b>最新の対局をぴよ将棋で開く</b>のリンク
+            /   / br
+            /   / span.has-text-grey
+            /   /   = url
+            /   / br
+            / 
+            /   / | また
+            /   / b
+            /   /   = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
+            /   / | をタップしたあと「ホーム画面に追加」しておくと、上の「最新の対局をぴよ将棋で開く」のリンクを自動的に押したことにできます
 
 - if Rails.env.development? && false
   = Swars::User.to_html
