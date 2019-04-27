@@ -1,0 +1,28 @@
+template(slot="detail" slot-scope="props")
+  .buttons
+    template(v-for="e in props.row.memberships")
+      a.button.is-small(:href="e.player_info_url")
+        | {{e.name_with_grade}} 情報
+    a.button.is-small(:href="props.row.ki2_download_path")
+      | KI2 ダウンロード
+    a.button.is-small(:href="props.row.swars_real_battle_url" target="_blank")
+      | ウォーズに移動
+    a.button.is-small(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)")
+      | Tweetコピー
+
+  - if Rails.env.development?
+    template(v-if="props.row.sp_sfen")
+      shogi-player(
+        :kifu_body="props.row.sp_sfen"
+        :key_event_capture="true"
+        :slider_show="true"
+        :sfen_show="false"
+        :controller_show="true"
+        :theme="'simple'"
+        :sound_effect="true"
+        :volume=AppConfig[:volume]
+      )
+      / .columns
+      /   .column
+      /     .buttons
+      /       / = link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button is-small")
