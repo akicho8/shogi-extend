@@ -466,13 +466,11 @@ module Swars
         let :pure_current_scope do
           s = current_model.all
 
-          s = s.joins(memberships: [:user, :grade])
-          # tag_refs = [:defense_tags, :attack_tags, :technique_tags, :note_tags, :other_tags, :secret_tags]
           s = s.includes(win_user: nil, memberships: [:user, :grade])
 
           if current_swars_user
             # s = s.where(memberships: Membership.where(user: current_swars_user))
-            s = s.joins(:memberships).merge(Membership.where(user: current_swars_user))
+            s = s.joins(memberships: [:user, :grade]).merge(Membership.where(user: current_swars_user))
           end
 
           if current_tags
