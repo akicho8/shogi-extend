@@ -132,6 +132,12 @@ RSpec.describe "対戦", type: :system do
       matching_set("user2", "ダブルス")
       matching_set("user3", "ダブルス")
 
+      if ENV["CI"]
+        tp Colosseum::User.all
+        tp Colosseum::Rule.all
+        tp Colosseum::Battle.all
+      end
+
       using_session("user4") do
         __choise_rule_and_start("ダブルス")
         sleep(2)
@@ -150,7 +156,7 @@ RSpec.describe "対戦", type: :system do
       matching_set("user6", "チーム戦")
       matching_set("user7", "チーム戦")
 
-      if ENV["CI"] || true
+      if ENV["CI"]
         tp Colosseum::User.all
         tp Colosseum::Rule.all
         tp Colosseum::Battle.all
@@ -158,11 +164,7 @@ RSpec.describe "対戦", type: :system do
 
       using_session("user8") do
         __choise_rule_and_start("チーム戦")
-        sleep(10)
-        p current_path
-        p Colosseum::Battle.last
-        p polymorphic_path([Colosseum::Battle.last])
-
+        sleep(4)
         assert { current_path == polymorphic_path([Colosseum::Battle.last]) }
         doc_image("成立")
       end
@@ -261,6 +263,8 @@ RSpec.describe "対戦", type: :system do
       __choise_rule_and_start(rule)
       expect(page).to have_content "マッチング開始"
     end
+
+    assert { Colosseum::User.all.all?(&:online_at) }
   end
 
   def __choise_rule_and_start(rule)
@@ -268,6 +272,7 @@ RSpec.describe "対戦", type: :system do
     click_on("ルール設定")
     choose(rule)
     click_on("閉じる")
+    sleep(2)
     click_on("バトル開始")
   end
 
