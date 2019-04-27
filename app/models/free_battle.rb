@@ -50,10 +50,14 @@ class FreeBattle < ApplicationRecord
         record.kifu_body = file.read
         record.title = title.gsub(/_/, " ")
         record.description = description.to_s.gsub(/_/, " ")
-        if record.invalid?
-          p [record.id, record.title, record.description, record.errors.full_messages]
+        begin
+          record.save!
+        rescue => error
+          pp record
+          pp record.errors.full_messages
+          pp error
+          raise error
         end
-        record.save!
 
         p [record.id, record.title, record.description]
       end
