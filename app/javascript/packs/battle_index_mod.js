@@ -122,7 +122,9 @@ export default {
   },
 
   mounted() {
-    this.$refs.main_field.focus()
+    if (!this.query) {
+      this.$refs.main_field.focus()
+    }
     this.async_records_load()
   },
 

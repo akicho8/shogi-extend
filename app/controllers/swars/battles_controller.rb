@@ -257,8 +257,7 @@ module Swars
 
     def row_build_for_basic(record)
       {}.tap do |row|
-        l_ship, r_ship = left_right_pairs(record)
-        left_right_pairs2(row, record, l_ship, r_ship)
+        row.update(left_right_pairs2(left_right_pairs(record)))
 
         row["結果"] = link_to(record.final_info.name, swars_tag_search_path(record.final_info.name), :class => record.final_info.has_text_color)
 
@@ -284,46 +283,43 @@ module Swars
     def row_build_for_light(record)
       {}.tap do |row|
         row["日時"] = record.battled_at.to_s(:battle_time)
-
-        l_ship, r_ship = left_right_pairs(record)
-        left_right_pairs2(row, record, l_ship, r_ship)
-
+        row.update(left_right_pairs2(left_right_pairs(record)))
         row[""] = link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([record, format: "kif"])))
       end
     end
 
     def left_right_pairs(record)
+      row = {}
       l, r = record.memberships
       if current_swars_user
         if l.user == current_swars_user
-          [l, r]
+          row["対象プレイヤー"] = l
+          row["対戦相手"]       = r
         else
-          [r, l]
+          row["対象プレイヤー"] = r
+          row["対戦相手"]       = l
         end
       else
         if record.win_user
           if l.judge_key == "win"
-            [l, r]
+            row["勝ち"] = l
+            row["負け"] = r
           else
-            [r, l]
+            row["勝ち"] = r
+            row["負け"] = l
           end
         else
           # 引き分け
-          [l, r]
+          row["勝ち"] = l
+          row["負け"] = r
         end
       end
+      row
     end
 
-    def left_right_pairs2(row, record, l_ship, r_ship)
-      l = l_ship.icon_html + user_link2(l_ship)
-      r = r_ship.icon_html + user_link2(r_ship)
-
-      if current_swars_user
-        row["対象プレイヤー"] = l
-        row["対戦相手"]       = r
-      else
-        row["勝ち"] = l
-        row["負け"] = r
+    def left_right_pairs2(row)
+      row.transform_values do |e|
+        e.icon_html + user_link2(e)
       end
     end
 
@@ -332,7 +328,7 @@ module Swars
     end
 
     def swars_tag_search_path(e)
-      [:swars, current_mode, query: "tag:#{e}"]
+      url_for([:swars, current_mode, query: "tag:#{e}", only_path: true])
     end
 
     let :current_mode do
@@ -359,63 +355,29 @@ module Swars
       User.find_by(user_key: current_user_key)
     end
 
+    let :current_query_info do
+      QueryInfo.parse(current_query)
+    end
+      
     let :current_query_hash do
-      if e = [:query].find { |e| params[e].present? }
-        acc = {}
-        str = params[e].to_s.gsub(/\p{blank}/, " ").strip
-        str.split.each do |s|
-          case
-          when md = s.match(/\A(ids):(?<ids>\S+)/i)
-            acc[:ids] = md["ids"].scan(/\d+/)
-          when md = s.match(/\A(mtag):(?<mtag>\S+)/i)
-            acc[:mtags] ||= []
-            acc[:mtags].concat(md["mtag"].split(","))
-          when md = s.match(/\A(muser):(?<muser>\S+)/i)
-            acc[:musers] ||= []
-            acc[:musers].concat(md["muser"].split(","))
-          when md = s.match(/\A(tag):(?<tag>\S+)/i)
-            acc[:tags] ||= []
-            acc[:tags].concat(md["tag"].split(","))
-          when zenkaku_query?(s)
-            acc[:tags] ||= []
-            acc[:tags] << s
-          else
-            # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
-            # https://shogiwars.heroz.jp/users/foo                          -> foo
-            if true
-              if url = URI::Parser.new.extract(s).first
-                uri = URI(url)
-                if uri.path
-                  if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
-                    s = md.captures.compact.first
-                  end
-                  logger.info([url, s].to_t)
-                end
-              end
-            end
-            acc[:user_key] ||= []
-            acc[:user_key] << s
-          end
-        end
-        acc
-      end
+      current_query_info.attributes
     end
 
     let :current_tags do
       if v = current_query_hash
-        v[:tags]
+        v[:tag]
       end
     end
 
     let :current_musers do
       if v = current_query_hash
-        v[:musers]
+        v[:muser]
       end
     end
 
     let :current_mtags do
       if v = current_query_hash
-        v[:mtags]
+        v[:mtag]
       end
     end
 
@@ -426,10 +388,21 @@ module Swars
     end
 
     let :current_user_key do
-      if v = current_query_hash
-        if v = v[:user_key]
-          ERB::Util.html_escape(v.first)
+      if s = (current_query_info.values + current_query_info.urls).first
+        # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
+        # https://shogiwars.heroz.jp/users/foo                          -> foo
+        if true
+          if url = URI::Parser.new.extract(s).first
+            uri = URI(url)
+            if uri.path
+              if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
+                s = md.captures.compact.first
+              end
+              logger.info([url, s].to_t)
+            end
+          end
         end
+        ERB::Util.html_escape(s)
       end
     end
 
@@ -519,11 +492,11 @@ module Swars
             s = s.where(id: current_ids)
           end
 
-          if v = params[:turn_max_gteq]
+          if v = current_query_hash[:turn_max_gteq]
             s = s.where(Battle.arel_table[:turn_max].gteq(v))
           end
 
-          if v = params[:turn_max_lt]
+          if v = current_query_hash[:turn_max_lt]
             s = s.where(Battle.arel_table[:turn_max].lt(v))
           end
 
@@ -548,11 +521,11 @@ module Swars
 
         let :table_columns_hash do
           {
-            "結果": { label: "結果", visible: table_columns_visible_default, },
-            "種類": { label: "種類", visible: table_columns_visible_default, },
-            "手数": { label: "手数", visible: table_columns_visible_default, },
-            "手合": { label: "手合", visible: table_columns_visible_default || teai_p, },
-            "日時": { label: "日時", visible: table_columns_visible_default, },
+            final_info:  { label: "結果", visible: table_columns_visible_default, },
+            rule_info:   { label: "種類", visible: table_columns_visible_default, },
+            turn_max:    { label: "手数", visible: table_columns_visible_default, },
+            preset_info: { label: "手合", visible: table_columns_visible_default || teai_p, },
+            battled_at:  { label: "日時", visible: table_columns_visible_default, },
           }
         end
 
@@ -566,11 +539,8 @@ module Swars
               a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
               a[:xhr_get_path] = polymorphic_path([ns_prefix, e], format: "json")
 
-              l_ship, r_ship = left_right_pairs(e)
-              left_right_pairs2(a, e, l_ship, r_ship)
-
-              a["title"] = e.to_title
-              a["結果"] = link_to(e.final_info.name, swars_tag_search_path(e.final_info.name), :class => e.final_info.has_text_color, "@click.stop" => true)
+              a[:title] = e.to_title
+              a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
 
               if false
                 a["戦法"] = e.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
@@ -579,21 +549,24 @@ module Swars
                 # a["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
               end
 
-              a["手合"] = link_to(e.preset_info.name, swars_tag_search_path(e.preset_info.name), "@click.stop" => true)
-              a["種類"] = link_to(e.rule_info.name, swars_tag_search_path(e.rule_info.name), "@click.stop" => true)
-              a["日時"] = e.battled_at.to_s(:battle_time)
-              
+              a[:battled_at] = e.battled_at.to_s(:battle_time)
+              a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
+              a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
               a[:show_path] = polymorphic_path([ns_prefix, e])
-              a[:piyo_path] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-              
-              a["memberships"] = e.memberships.collect do |e|
+              a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+              a[:swars_real_battle_url] = swars_real_battle_url(current_record)
+              a[:ki2_download_path] = polymorphic_path([ns_prefix, e], format: "ki2")
+              a[:wars_tweet_body] = e.wars_tweet_body
+
+              a[:memberships] = left_right_pairs(e).collect do |label, e|
                 {
-                  key: e.user.user_key,
-                  url: url_for([:swars, :player_infos, user_key: e.user.user_key]),
+                  label: label,
+                  player_info_url: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
+                  icon_html: e.icon_html,
+                  name_with_grade: e.name_with_grade,
+                  query_user_url: polymorphic_path(e.user, current_mode: current_mode),
                 }
               end
-              
-              a["swars_real_battle_url"] = swars_real_battle_url(current_record)
             end
           end
         end
@@ -603,6 +576,5 @@ module Swars
         end
       end
     end
-
   end
 end

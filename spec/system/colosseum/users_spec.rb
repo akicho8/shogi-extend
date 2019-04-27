@@ -150,7 +150,7 @@ RSpec.describe "対戦", type: :system do
       matching_set("user6", "チーム戦")
       matching_set("user7", "チーム戦")
 
-      if ENV["CI"]
+      if ENV["CI"] || true
         tp Colosseum::User.all
         tp Colosseum::Rule.all
         tp Colosseum::Battle.all
@@ -158,7 +158,11 @@ RSpec.describe "対戦", type: :system do
 
       using_session("user8") do
         __choise_rule_and_start("チーム戦")
-        sleep(4)
+        sleep(10)
+        p current_path
+        p Colosseum::Battle.last
+        p polymorphic_path([Colosseum::Battle.last])
+
         assert { current_path == polymorphic_path([Colosseum::Battle.last]) }
         doc_image("成立")
       end

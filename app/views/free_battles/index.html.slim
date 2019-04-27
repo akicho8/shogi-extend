@@ -87,6 +87,8 @@
 
         / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
 
+        = render partial: "table_empty"
+
         template(slot-scope="props")
           b-table-column(field="title" label="タイトル" sortable)
             a(@click.stop.prevent="show_handle(props.row)")

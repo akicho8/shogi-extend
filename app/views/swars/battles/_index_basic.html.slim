@@ -24,13 +24,13 @@
   .column
     .buttons.are-small
       - args = params.to_unsafe_h.merge(page: nil)
-      = link_to("相入玉", args.merge(query: "tag:相入玉"),     :class => "button is-info is-outlined")
-      = link_to("相居玉", args.merge(query: "tag:相居玉"),     :class => "button is-info is-outlined")
-      = link_to("200手以上", args.merge(turn_max_gteq: 200),   :class => "button is-info is-outlined")
-      = link_to("50手未満", args.merge(turn_max_lt: 50),       :class => "button is-info is-outlined")
-      = link_to("駒落ち", args.merge(query: "tag:駒落ち"), :class => "button is-info is-outlined")
-      = link_to("指導対局", args.merge(query: "tag:指導対局"), :class => "button is-info is-outlined")
-      = link_to("駒柱", args.merge(query: "tag:駒柱"), :class => "button is-info is-outlined")
+      = link_to("相入玉",    args.merge(query: "tag:相入玉"),        :class => "button is-info is-outlined")
+      = link_to("相居玉",    args.merge(query: "tag:相居玉"),        :class => "button is-info is-outlined")
+      = link_to("200手以上", args.merge(query: "turn_max_gteq:200"), :class => "button is-info is-outlined")
+      = link_to("50手未満",  args.merge(query: "turn_max_lt:50"),    :class => "button is-info is-outlined")
+      = link_to("駒落ち",    args.merge(query: "tag:駒落ち"),        :class => "button is-info is-outlined")
+      = link_to("指導対局",  args.merge(query: "tag:指導対局"),      :class => "button is-info is-outlined")
+      = link_to("駒柱",      args.merge(query: "tag:駒柱"),          :class => "button is-info is-outlined")
       / = link_to("手数多い順", args.merge(sort_column: :turn_max, sort_order: :desc), :class => "button is-light")
       / = link_to("手数少ない順", args.merge(sort_column: :turn_max, sort_order: :asc), :class => "button is-light")
 
@@ -158,60 +158,19 @@
 
       / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
 
+      = render partial: "table_empty"
+
       template(slot-scope="props")
-        b-table-column(field="id" label="ID" sortable numeric)
-          a(:href="props.row.show_path" @click.stop)
-            | #
-            | {{props.row.id}}
-
-        / b-table-column(field="key" label="盤面")
-        /   a(@click.stop.prevent="show_handle(props.row)")
-        /     b-icon(pack="fas" icon="chess-board")
-
-        - if current_swars_user
-          b-table-column(label="対象プレイヤー")
-            span(v-html="props.row['対象プレイヤー']")
-          b-table-column(label="対戦相手")
-            span(v-html="props.row['対戦相手']")
-        - else
-          b-table-column(label="勝ち")
-            span(v-html="props.row['勝ち']")
-          b-table-column(label="負け")
-            span(v-html="props.row['負け']")
-
-        b-table-column(field="final_key" :label="table_columns_hash['結果'].label" :visible="table_columns_hash['結果'].visible" sortable)
-          span(v-html="props.row['結果']")
-        b-table-column(field="turn_max" :label="table_columns_hash['手数'].label" :visible="table_columns_hash['手数'].visible" sortable numeric)
-          span(v-html="props.row['turn_max']")
-        b-table-column(field="rule_key" :label="table_columns_hash['種類'].label" :visible="table_columns_hash['種類'].visible" sortable)
-          span(v-html="props.row['種類']")
-        b-table-column(field="preset_key" :label="table_columns_hash['手合'].label" :visible="table_columns_hash['手合'].visible" sortable)
-          span(v-html="props.row['手合']")
-        b-table-column(field="battled_at" :label="table_columns_hash['日時'].label" :visible="table_columns_hash['日時'].visible" sortable)
-          span(v-html="props.row['日時']")
-
-        / b-table-column(field="title" label="タイトル" sortable)
-        /   a(@click.stop.prevent="show_handle(props.row)")
-        /     | {{props.row.title}}
-        /   template(v-if="props.row.description")
-        /     == "&nbsp;"
-        /     span.has-text-grey.is-size-7
-        /       | {{props.row.description}}
-        / b-table-column(field="created_at" :label="table_columns_hash.created_at.label" :visible="table_columns_hash.created_at.visible" sortable v-html="props.row.created_at_html")
-        / b-table-column(field="colosseum_user_id" :label="table_columns_hash.colosseum_user_id.label" :visible="table_columns_hash.colosseum_user_id.visible" sortable v-html="props.row.owner_user_link_html")
-        b-table-column(label="操作")
-          .buttons
-            a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row)") コピー
-            - if access_from_mobile? || Rails.env.development?
-              a(:href="props.row.piyo_path" @click.stop)
-                = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
+        = render partial: "row"
 
       template(slot="detail" slot-scope="props")
         .buttons
           template(v-for="e in props.row.memberships")
-            a.button.is-small(:href="e.url")
-              | {{e.key}} 情報
-          a.button.is-small(:href="props.row.swars_real_battle_url" target="_blank") ウォーズ
+            a.button.is-small(:href="e.player_info_url")
+              | {{e.name_with_grade}} 情報
+          a.button.is-small(:href="props.row.ki2_download_path") KI2 ダウンロード
+          a.button.is-small(:href="props.row.swars_real_battle_url" target="_blank") ウォーズに移動
+          a.button.is-small(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)") Tweetコピー
 
         template(v-if="props.row.sp_sfen")
           shogi-player(
