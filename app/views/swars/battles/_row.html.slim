@@ -14,16 +14,11 @@ template(slot-scope="props")
       span(v-html="m.icon_html")
       a(@click.stop :href="m.query_user_url")
         | {{m.name_with_grade}}
-      template(v-if="table_columns_hash['attack_tag_list'].visible")
-        template(v-for="tag in m.attack_tag_list")
-          span.has-text-grey.is-size-7
+      template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
+        template(v-if="table_columns_hash[key].visible")
+          template(v-for="tag in m[key]")
             | &nbsp;
-            | {{tag}}
-      template(v-if="table_columns_hash['defense_tag_list'].visible")
-        template(v-for="tag in m.defense_tag_list")
-          span.has-text-grey.is-size-7
-            | &nbsp;
-            | {{tag}}
+            a.has-text-grey.is-size-7(@click.stop :href="tag.url") {{tag.name}}
 
   b-table-column(field="final_key" :label="table_columns_hash['final_info'].label" :visible="table_columns_hash['final_info'].visible" sortable)
     a(@click.stop :href="props.row['final_info'].url" :class="props.row['final_info'].class")

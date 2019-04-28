@@ -561,15 +561,17 @@ module Swars
             a[:wars_tweet_body] = e.wars_tweet_body
 
             a[:memberships] = left_right_pairs(e).collect do |label, e|
-              {
+              attrs = {
                 label: label,
                 player_info_url: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
                 icon_html: e.icon_html,
                 name_with_grade: e.name_with_grade,
                 query_user_url: polymorphic_path(e.user, current_mode: current_mode),
-                attack_tag_list: e.attack_tags.pluck(:name),
-                defense_tag_list: e.defense_tags.pluck(:name),
               }
+              [:attack, :defense].each do |key|
+                attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect { |e| {name: e, url: swars_tag_search_path(e) } }
+              end
+              attrs
             end
 
             a
