@@ -45,7 +45,7 @@ chdir APP_ROOT do
 
   puts "\n== Production log download =="
   system! "cap production access_log:download"
-  system! "cap production cron_log:download"
+  # system! "cap production cron_log:download"
   system! "cap production error_log:download"
   # system! "cap production mail_log:download"
   system! "cap production rails:log:download"
