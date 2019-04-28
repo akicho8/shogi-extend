@@ -79,11 +79,15 @@ module ModulableCrud
       let :current_records do
         current_scope.order(:id).reverse_order.page(params[:page])
       end
+
+      let :js_current_records do
+        current_records
+      end
     end
 
     def index
-      if request.xhr?
-        render json: js_current_records
+      if request.xhr? && request.format.json?
+        render json: js_current_records.to_json
         return
       end
 

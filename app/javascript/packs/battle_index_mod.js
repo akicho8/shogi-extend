@@ -106,7 +106,7 @@ export default {
         axios({
           method: "get",
           timeout: 1000 * 60 * 10,
-          url: row.xhr_get_path,
+          url: row.sp_sfen_get_path,
           headers: {"X-Requested-With": "XMLHttpRequest"},
         }).then(response => {
           this.$set(row, "sp_sfen", response.data["sp_sfen"])

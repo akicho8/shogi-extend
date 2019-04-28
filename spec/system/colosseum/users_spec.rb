@@ -140,7 +140,7 @@ RSpec.describe "対戦", type: :system do
 
       using_session("user4") do
         __choise_rule_and_start("ダブルス")
-        sleep(2)
+        sleep(5)
         assert { current_path == polymorphic_path(Colosseum::Battle.last) }
         doc_image("成立")
         # TODO: 4人そろっていることを確認したい
@@ -164,7 +164,7 @@ RSpec.describe "対戦", type: :system do
 
       using_session("user8") do
         __choise_rule_and_start("チーム戦")
-        sleep(4)
+        sleep(5)
         assert { current_path == polymorphic_path([Colosseum::Battle.last]) }
         doc_image("成立")
       end

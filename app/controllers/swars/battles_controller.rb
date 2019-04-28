@@ -26,6 +26,7 @@ module Swars
   class BattlesController < ApplicationController
     include ModulableCrud::All
     include SharedMethods
+    include BuefyTableMethods
 
     prepend_before_action only: :show do
       if bot_agent?
@@ -455,7 +456,9 @@ module Swars
       end
     end
 
-    include FreeBattlesController::IndexSharedMethods
+    let :exclude_column_names do
+      ["meta_info", "csa_seq"]
+    end
 
     concerning :IndexCustomMethods do
       included do
@@ -536,7 +539,7 @@ module Swars
             a = e.attributes
 
             a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
-            a[:xhr_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+            a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
 
             a[:title] = e.to_title
             a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
