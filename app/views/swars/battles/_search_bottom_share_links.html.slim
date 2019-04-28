@@ -2,10 +2,11 @@
   .columns
     .column
       .buttons
-        = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
-          | 最新の対局を
-          = image_tag("piyo_shogi_app.png", "class": "piyo_icon_in_button")
-          | で開く
+        - if mobile_agent_or_development?
+          = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
+            | 最新の対局を
+            = image_tag("piyo_shogi_app.png", "class": "piyo_icon_in_button")
+            | で開く
         / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
         = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-primary is-small is-rounded")
 

@@ -11,11 +11,20 @@
       location.href = "#{@redirect_url_by_js}"
     })
 
-- content_for :head do
-  = javascript_pack_tag("swars_battle_index")
-
+- if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once]
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new SwarsBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#swars_battle_index") })
+    document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$dialog.alert({message: "<b>ホーム画面に追加</b>してください", type: 'is-primary'}) })
 
-#swars_battle_index(v-cloak)
-  = render partial: "index_#{current_mode}"
+  .columns
+    .column
+      br
+      = link_to "← 前のページにもどる", [:swars, current_mode, query: current_swars_user], class: "button is-primary is-small"
+- else
+  - content_for :head do
+    = javascript_pack_tag("swars_battle_index")
+
+    javascript:
+      document.addEventListener('DOMContentLoaded', () => { new SwarsBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#swars_battle_index") })
+
+  #swars_battle_index(v-cloak)
+    = render partial: "index_#{current_mode}"

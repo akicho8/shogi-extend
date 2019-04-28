@@ -74,7 +74,7 @@ module SharedMethods
       # ↓これをやるとコピーのときに sjis 化されてぴよで読み込めなくなる
       #
       # iPhone で「ダウンロード」としたときだけ文字化けする対策(sjisなら文字化けない)
-      # if access_from_mobile?
+      # if mobile_agent?
       #   text_body = text_body.tosjis
       # end
     end

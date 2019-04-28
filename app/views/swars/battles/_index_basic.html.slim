@@ -1,3 +1,6 @@
+- if mobile_agent?
+  - @override_page_title ||= "将棋ウ棋譜検索"
+
 = render partial: "header"
 
 .columns
@@ -97,20 +100,13 @@
         .content
           ol
             li 行をクリックすると盤面がポップアップします
-            li IDをクリックすると詳細ページに移動します
-            li 検索後のページをそのままブックマークしておくと毎回ウォーズIDを入力する手間が省けます
-            / li
-            /   / - url = full_url_for([:swars, current_mode, query: current_swars_user, latest_open_index: 0])
-            /   / | また上の<b>最新の対局をぴよ将棋で開く</b>のリンク
-            /   / br
-            /   / span.has-text-grey
-            /   /   = url
-            /   / br
-            / 
-            /   / | また
-            /   / b
-            /   /   = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-            /   / | をタップしたあと「ホーム画面に追加」しておくと、上の「最新の対局をぴよ将棋で開く」のリンクを自動的に押したことにできます
+            - if current_swars_user && params[:page].to_i <= 1
+              li 検索後のページをブクマしておくと毎回ウォーズIDを入力する手間が省けます
+              - if mobile_agent_or_development?
+                li
+                  b
+                    = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
+                  | をタップしたあと「ホーム画面に追加」しておくとアイコンから最新の対局をぴよ将棋で開けるようになります
 
 - if Rails.env.development? && false
   = Swars::User.to_html

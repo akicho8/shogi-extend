@@ -279,17 +279,18 @@ class ApplicationController < ActionController::Base
 
   concerning :MobileMethods do
     included do
-      let :access_from_mobile? do
+      let :mobile_agent? do
         request.user_agent.to_s.match?(self.class.mobile_regexp)
+      end
+
+      let :mobile_agent_or_development? do
+        mobile_agent? || Rails.env.development? || Rails.env.test?
       end
     end
 
     class_methods do
       def mobile_regexp
-        @mobile_regexp ||= Regexp.union(*[
-            /iPhone|iPad/,
-            /Android.*Mobile/,
-          ])
+        @mobile_regexp ||= Regexp.union([/iPhone|iPad/i, /Android.*Mobile/i])
       end
     end
   end
@@ -297,7 +298,7 @@ class ApplicationController < ActionController::Base
   concerning :ShowiPlayerMethods do
     included do
       let :current_shogi_player_theme do
-        if access_from_mobile?
+        if mobile_agent?
           "simple"
         else
           "real"
