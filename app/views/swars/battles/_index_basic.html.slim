@@ -46,7 +46,7 @@
         b-checkbox(v-model="value.visible")
           | {{value.label}}
 
-    b-table(
+    b-table.is_row_clickable(
       hoverable
 
       :loading="loading"

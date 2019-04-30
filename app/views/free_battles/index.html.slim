@@ -58,7 +58,7 @@
           b-checkbox(v-model="value.visible")
             | {{value.label}}
 
-      b-table(
+      b-table.is_row_clickable(
         hoverable
 
         :loading="loading"
@@ -83,6 +83,8 @@
         detail-key="id"
         @details-open="details_open_handle"
         :show-detail-icon="showDetailIcon"
+
+        @click="show_handle"
         )
 
         / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
@@ -90,13 +92,21 @@
         = render partial: "table_empty"
 
         template(slot-scope="props")
+          / b-table-column(field="title" label="タイトル" sortable)
+          /   a(@click.stop.prevent="show_handle(props.row)")
+          /     | {{props.row.title}}
+          /   template(v-if="props.row.description")
+          /     == "&nbsp;"
+          /     span.has-text-grey.is-size-7
+          /       | {{props.row.description}}
+
           b-table-column(field="title" label="タイトル" sortable)
-            a(@click.stop.prevent="show_handle(props.row)")
-              | {{props.row.title}}
+            | {{props.row.title}}
             template(v-if="props.row.description")
               == "&nbsp;"
               span.has-text-grey.is-size-7
                 | {{props.row.description}}
+
           b-table-column(field="created_at" :label="table_columns_hash.created_at.label" :visible="table_columns_hash.created_at.visible" sortable)
             span(v-html="props.row.created_at_html")
           b-table-column(field="turn_max" :label="table_columns_hash.turn_max.label" :visible="table_columns_hash.turn_max.visible" sortable numeric)
