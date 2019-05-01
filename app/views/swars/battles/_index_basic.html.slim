@@ -37,48 +37,8 @@
       / = link_to("手数多い順", args.merge(sort_column: :turn_max, sort_order: :desc), :class => "button is-light")
       / = link_to("手数少ない順", args.merge(sort_column: :turn_max, sort_order: :asc), :class => "button is-light")
 
-.columns
-  .column
-    = render partial: "modal_shogi_player"
-
-    b-field(grouped group-multiline)
-      div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
-        b-checkbox(v-model="value.visible")
-          | {{value.label}}
-
-    b-table.is_row_clickable(
-      hoverable
-
-      :loading="loading"
-
-      paginated
-      backend-pagination
-      pagination-simple
-      :current-page="page"
-      :data="records"
-      :total="total"
-      :per-page="per"
-      @page-change="page_change_handle"
-
-      backend-sorting
-      :default-sort-direction="$options.sort_order_default"
-      :default-sort="[sort_column, sort_order]"
-      @sort="sort_handle"
-
-      ref="table"
-      :opened-detailed="defaultOpenedDetails"
-      detailed
-      detail-key="id"
-      @details-open="details_open_handle"
-      :show-detail-icon="showDetailIcon"
-
-      @click="show_handle"
-      )
-
-      = render partial: "table_empty"
-      = render partial: "row"
-      = render partial: "detail"
-
+= render partial: "free_battles/modal_shogi_player"
+= render partial: "free_battles/table"
 = render partial: "index_footer"
 
 - if current_records && current_records.exists?

@@ -7,33 +7,7 @@
     document.addEventListener('DOMContentLoaded', () => { new FreeBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#free_battle_index") })
 
 #free_battle_index(v-cloak)
-  b-modal(:active.sync="modal_p" has-modal-card)
-    template(v-if="current_record")
-      .modal-card
-        header.modal-card-head
-          p.modal-card-title
-            | {{current_record.title}}
-          button(class="delete" aria-label="close" @click="modal_p = false")
-        section.modal-card-body
-          shogi-player(
-            :kifu_body="current_record.sp_sfen"
-            :key_event_capture="true"
-            :slider_show="true"
-            :sfen_show="false"
-            :controller_show="true"
-            :theme="'#{current_shogi_player_theme}'"
-            :sound_effect="true"
-            :volume=AppConfig[:volume]
-          )
-
-          template(v-if="current_record.description")
-            .box.is-size-7
-              | {{current_record.description}}
-
-        footer.modal-card-foot.space_between
-          = link_to(icon_tag(:far, :clipboard) + "コピー", "#", "@click.prevent" => "kifu_copy_handle(current_record)", :class => "button")
-          button.button(@click="modal_p = false") 閉じる
-          = " "
+  = render partial: "modal_shogi_player"
 
   .title.is-2.yumincho= "棋譜一覧"
   hr
@@ -48,114 +22,7 @@
             = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: { disable_with: icon_tag(:fas, :sync, :spin) })
             = form.submit("検索") if Rails.env.test?
 
-  .columns
-    .column
-      - if Rails.env.development?
-        | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} $options.sort_order_default={{$options.sort_order_default}}
-
-      b-field(grouped group-multiline)
-        div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
-          b-checkbox(v-model="value.visible")
-            | {{value.label}}
-
-      b-table.is_row_clickable(
-        hoverable
-
-        :loading="loading"
-
-        paginated
-        backend-pagination
-        pagination-simple
-        :current-page="page"
-        :data="records"
-        :total="total"
-        :per-page="per"
-        @page-change="page_change_handle"
-
-        backend-sorting
-        :default-sort-direction="$options.sort_order_default"
-        :default-sort="[sort_column, sort_order]"
-        @sort="sort_handle"
-
-        ref="table"
-        :opened-detailed="defaultOpenedDetails"
-        detailed
-        detail-key="id"
-        @details-open="details_open_handle"
-        :show-detail-icon="showDetailIcon"
-
-        @click="show_handle"
-        )
-
-        / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
-
-        = render partial: "table_empty"
-
-        template(slot-scope="props")
-          / b-table-column(field="title" label="タイトル" sortable)
-          /   a(@click.stop.prevent="show_handle(props.row)")
-          /     | {{props.row.title}}
-          /   template(v-if="props.row.description")
-          /     == "&nbsp;"
-          /     span.has-text-grey.is-size-7
-          /       | {{props.row.description}}
-
-          b-table-column(field="title" label="タイトル" sortable)
-            | {{props.row.title}}
-            template(v-if="props.row.description")
-              == "&nbsp;"
-              span.has-text-grey.is-size-7
-                | {{props.row.description}}
-
-          b-table-column(field="created_at" :label="table_columns_hash.created_at.label" :visible="table_columns_hash.created_at.visible" sortable)
-            span(v-html="props.row.created_at_html")
-          b-table-column(field="turn_max" :label="table_columns_hash.turn_max.label" :visible="table_columns_hash.turn_max.visible" sortable numeric)
-            | {{props.row.turn_max}}
-          b-table-column(field="colosseum_user_id" :label="table_columns_hash.colosseum_user_id.label" :visible="table_columns_hash.colosseum_user_id.visible" sortable)
-            span(v-html="props.row.owner_user_link_html")
-          b-table-column(label="操作")
-            span(v-html="props.row.controls_html")
-
-        template(slot="detail" slot-scope="props")
-          template(v-if="props.row.sp_sfen")
-            shogi-player(
-              :kifu_body="props.row.sp_sfen"
-              :key_event_capture="true"
-              :slider_show="true"
-              :sfen_show="false"
-              :controller_show="true"
-              :theme="'simple'"
-              :sound_effect="true"
-              :volume=AppConfig[:volume]
-            )
-
-            template(v-if="props.row.description")
-              .box.is-size-7
-                | {{props.row.description}}
-
-            = link_to(icon_tag(:far, :clipboard) + "コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button")
-
-          / <article class="media">
-          /           <figure class="media-left">
-          /               <p class="image is-64x64">
-          /                   <img src="/static/img/placeholder-128x128.png">
-          /               </p>
-          /           </figure>
-          /           <div class="media-content">
-          /               <div class="content">
-          /                   <p>
-          /                       <strong>{{ props.row.user.first_name }} {{ props.row.user.last_name }}</strong>
-          /                       <small>@{{ props.row.user.first_name }}</small>
-          /                       <small>31m</small>
-          /                       <br>
-          /                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          /                       Proin ornare magna eros, eu pellentesque tortor vestibulum ut.
-          /                       Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
-          /                   </p>
-          /               </div>
-          /           </div>
-          /       </article>
-          /   </template>
+  = render partial: "table"
 
   .columns
     .column

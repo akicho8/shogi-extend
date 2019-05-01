@@ -146,6 +146,7 @@ class FreeBattlesController < ApplicationController
           a = e.attributes
           a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
           a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+          a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
 
           if e.owner_user
             a[:owner_user_link_html] = link_to(e.owner_user.name, e.owner_user)

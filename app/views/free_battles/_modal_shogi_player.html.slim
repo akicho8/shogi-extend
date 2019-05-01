@@ -21,6 +21,10 @@ b-modal(:active.sync="modal_p" has-modal-card)
             :volume=AppConfig[:volume]
           )
 
+        template(v-if="current_record.description")
+          .box.is-size-7
+            | {{current_record.description}}
+
       footer.modal-card-foot.space_between
         a.button(@click.stop.prevent="kifu_copy_handle(current_record)")
           b-icon(pack="far" icon="clipboard" size="is-small")
