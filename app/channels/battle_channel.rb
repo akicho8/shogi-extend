@@ -8,6 +8,12 @@ class BattleChannel < ApplicationCable::Channel
 
   # js 側では無理でも ruby 側だと接続切れの処理が書ける
   def unsubscribed
+
+    if Rails.env.test?
+      p ["#{__FILE__}:#{__LINE__}", __method__, "room_out しない"]
+      return
+    end
+
     room_out({})
   end
 

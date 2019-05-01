@@ -55,7 +55,7 @@ chdir APP_ROOT do
 
   puts "\n== Testing =="
   system! "rm -fr doc/images montage*.png"
-  system! 'bin/rails spec'
+  system 'bin/rails spec'
   system! 'bin/rails create_montage'
   # system! 'open montage.png'
 end

@@ -128,6 +128,7 @@ RSpec.describe "対戦", type: :system do
     end
 
     it "ダブルス" do
+      refresh
       matching_set("user1", "ダブルス")
       matching_set("user2", "ダブルス")
       matching_set("user3", "ダブルス")
@@ -274,7 +275,7 @@ RSpec.describe "対戦", type: :system do
     click_on("閉じる")
     sleep(5)
     click_on("バトル開始")
-    sleep(5
+    sleep(2)
   end
 
   def visit_and_login
