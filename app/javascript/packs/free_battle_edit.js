@@ -117,5 +117,15 @@ window.FreeBattleEdit = Vue.extend({
         AppHelper.clipboard_copy({text: this.output_kifs[e.key]["value"]})
       }
     },
+
+    kifu_clone_and_new_tab_oepn_handle() {
+      if (this.output_kifs) {
+        // const sfen = this.output_kifs["sfen"]["value"]
+        const sfen = this.input_sfen
+        const key = encodeURIComponent("free_battle[kifu_body]")
+        const url = `${this.$options.new_path}?${key}=${sfen}`
+        window.open(url, "_blank")
+      }
+    },
   },
 })

@@ -22,7 +22,10 @@
           )
           = render partial: "sfen_link"
 
-      b-switch(v-model="auto_copy_to_input_text_disable_p" size="is-small" type="is-danger") 指し手をテキスト入力の方に反映しない(※保存されないので注意)
+      .field
+        a.button.is-small(@click="kifu_clone_and_new_tab_oepn_handle") 入力中の棋譜を持って新しいタブで開く
+      .field
+        b-switch(v-model="auto_copy_to_input_text_disable_p" size="is-small" type="is-danger") 指し手をテキスト入力の方に反映しない(※保存されないので注意)
 
     b-tab-item(label="テキスト入力")
       .control

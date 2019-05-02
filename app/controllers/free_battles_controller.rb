@@ -112,6 +112,7 @@ class FreeBattlesController < ApplicationController
           post_path: url_for([:free_battles, format: "json"]),
           record_attributes: current_record.as_json,
           output_kifs: output_kifs,
+          new_path: polymorphic_path([:new, :free_battle]),
         }
       end
 
