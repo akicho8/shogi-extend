@@ -24,7 +24,7 @@ class QueryInfo
   end
 
   def parse
-    str = query.to_s.gsub(/\p{blank}+/, " ").strip
+    str = query.to_s.gsub(/\p{Space}+/, " ").strip
     str.split.each do |s|
       parse_one_part(s)
     end

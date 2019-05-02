@@ -6,6 +6,12 @@ module BuefyTableMethods
       params[:query].presence
     end
 
+    let :current_queries do
+      if current_query
+        current_query.scan(/\P{Space}+/)
+      end
+    end
+
     let :current_records do
       current_scope.select(current_model.column_names - exclude_column_names).page(params[:page]).per(current_per)
     end
@@ -51,8 +57,8 @@ module BuefyTableMethods
     end
 
     let :current_ransack do
-      if current_query
-        current_model.ransack(title_or_description_cont: current_query)
+      if current_queries
+        current_model.ransack(title_or_description_cont_all: current_queries)
       end
     end
 

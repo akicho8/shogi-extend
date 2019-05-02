@@ -85,7 +85,7 @@ class FreeBattle < ApplicationRecord
   end
 
   def download_filename
-    [("%04d" % id), key, title.gsub(/\p{Blank}+/, "_")].join("_")
+    [("%04d" % id), key, title.gsub(/\p{Space}+/, "_")].join("_")
   end
 
   before_validation do
