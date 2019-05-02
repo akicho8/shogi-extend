@@ -291,7 +291,7 @@ module Swars
 
     def left_right_pairs(record)
       row = {}
-      l, r = record.memberships.includes(:user, :attack_tags, :defense_tags)
+      l, r = record.memberships
       if current_swars_user
         if l.user == current_swars_user
           row["対象プレイヤー"] = l
@@ -469,11 +469,10 @@ module Swars
         let :pure_current_scope do
           s = current_model.all
 
-          s = s.includes(win_user: nil, memberships: [:user, :grade])
+          s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
 
           if current_swars_user
-            # s = s.where(memberships: Membership.where(user: current_swars_user))
-            s = s.joins(memberships: [:user, :grade]).merge(Membership.where(user: current_swars_user))
+            s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
           end
 
           if current_tags
