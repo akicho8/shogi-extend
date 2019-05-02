@@ -523,6 +523,7 @@ module Swars
 
         let :table_columns_hash do
           {
+            id:               { label: "ID",   visible: false,  },
             attack_tag_list:  { label: "戦型", visible: false,  },
             defense_tag_list: { label: "囲い", visible: false,  },
             final_info:       { label: "結果", visible: false,  },

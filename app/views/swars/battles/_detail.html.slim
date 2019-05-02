@@ -1,13 +1,19 @@
 template(slot="detail" slot-scope="props")
-  .buttons
+  .buttons.are-small
+    a.button(:href="props.row.show_path")
+      | 詳細
+
     template(v-for="e in props.row.memberships")
-      a.button.is-small(:href="e.player_info_url")
+      a.button(:href="e.player_info_url")
         | {{e.name_with_grade}} 情報
-    a.button.is-small(:href="props.row.ki2_download_path")
+
+    a.button(:href="props.row.ki2_download_path")
       | KI2 ダウンロード
-    a.button.is-small(:href="props.row.swars_real_battle_url" target="_blank")
+
+    a.button(:href="props.row.swars_real_battle_url" target="_blank")
       | ウォーズに移動
-    a.button.is-small(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)")
+
+    a.button(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)")
       | Tweetコピー
 
   - if Rails.env.development?

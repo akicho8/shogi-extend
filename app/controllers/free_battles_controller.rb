@@ -136,6 +136,7 @@ class FreeBattlesController < ApplicationController
     included do
       let :table_columns_hash do
         {
+          id:                { label: "ID",       visible: false, },
           created_at:        { label: "作成日時", visible: false, },
           turn_max:          { label: "手数",     visible: false, },
           colosseum_user_id: { label: "所有者",   visible: false, },
