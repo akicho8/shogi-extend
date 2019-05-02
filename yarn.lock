@@ -1706,17 +1706,10 @@ browserslist@^2.0.0, browserslist@^2.1.2, browserslist@^2.11.3:
     caniuse-lite "^1.0.30000792"
     electron-to-chromium "^1.3.30"
 
-buefy@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.3.tgz#3008a20e624416e9d800d8775563afdb766e27d7"
-  integrity sha512-6PHKyDzU9BeExv9w5qcZJkjl9v73RWHeevWDRIZWD5TS4+dbmbzQ6z2EQc0sgbNHYesAgbX2Qd+xu5/KqDMFng==
-  dependencies:
-    bulma "0.7.4"
-
-buefy@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.4.tgz#ed7b9de1b20c060df667d036a94ba62e4bdb32f2"
-  integrity sha512-XrG525fZTDYpjery5dloOyjH95HgZK3tnCc5XBSbY4Q/2GV+gRX18WDPk/duzDluSKGeN7E2at9dxIDfBqZypA==
+buefy@^0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.5.tgz#d25fcbb69beeb898849b47b52be78dfd2849452f"
+  integrity sha512-p6yz4XKbfXZd4f9d5rLHXCZWl9Y+8bN7gTaFQ4VdLXh7bdo4WYkPYyFyUFE+fIXhx/VEzSh2TeCEYqn/e8xY8w==
   dependencies:
     bulma "0.7.4"
 
@@ -7454,10 +7447,10 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shogi-player@^0.0.112:
-  version "0.0.112"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.112.tgz#08c6e59f13a421b3474d3a8413e7ce9c50f9c0a4"
-  integrity sha512-8RfJqSgVMjTL4g9fpUeUW2LAeY2bCvAMUtOh8pm5twJDKYn/DYT07ECq2hnvKbNpDD9qB1AraoUajuOc/ldTwQ==
+shogi-player@^0.0.114:
+  version "0.0.114"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.114.tgz#9d1f827e54169e9ba9f35125e2daaf933f943dfe"
+  integrity sha512-UshUccjHZcfgmPUvCY/WaA1u5+d9KjVh6on/KJJHqGYUCH1NBRHRcr5s33rIdcrRxO2yaF5ZNYserujM3dwr7g==
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
@@ -7477,19 +7470,18 @@ shogi-player@^0.0.112:
     babel-preset-es2015 "^6.24.1"
     babel-preset-stage-2 "^6.22.0"
     babel-register "^6.22.0"
-    buefy "^0.7.3"
+    buefy "^0.7.5"
     bulma "^0.7.4"
     css-browser-selector "^0.6.5"
     debug "^3.1.0"
     js-memory-record "^0.0.11"
     lodash "^4.17.4"
     minimalistic-assert "^1.0.0"
-    node-sass "^4.7.2"
     pug "^2.0.3"
     sass-loader "^6.0.6"
     vue "^2.5.17"
     vue-router "^3.0.1"
-    vuex "^3.0.1"
+    vuex "^3.1.0"
     xregexp "^4.0.0"
 
 signal-exit@^3.0.0:
@@ -8445,10 +8437,10 @@ vue@^2.5.17:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
-vuex@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
-  integrity sha512-wLoqz0B7DSZtgbWL1ShIBBCjv22GV5U+vcBFox658g6V0s4wZV9P4YjCNyoHSyIBpj1f29JBoNQIqD82cR4O3w==
+vuex@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.0.tgz#634b81515cf0cfe976bd1ffe9601755e51f843b9"
+  integrity sha512-mdHeHT/7u4BncpUZMlxNaIdcN/HIt1GsGG5LKByArvYG/v6DvHcOxvDCts+7SRdCoIRGllK8IMZvQtQXLppDYg==
 
 watchpack@^1.4.0:
   version "1.5.0"

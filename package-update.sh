@@ -1,9 +1,9 @@
 #!/bin/sh
-ncu /shogi-player/ -a
-ncu /buefy/ -a
-ncu /bulma/ -a
-ncu /pug/ -a
-ncu /js-memory-record/ -a
+ncu /shogi-player/ -u
+ncu /buefy/ -u
+ncu /bulma/ -u
+ncu /pug/ -u
+ncu /js-memory-record/ -u
 yarn
 
 bundle update bioshogi
