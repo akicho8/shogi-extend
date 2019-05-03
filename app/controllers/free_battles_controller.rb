@@ -151,17 +151,17 @@ class FreeBattlesController < ApplicationController
           a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
 
           if e.owner_user
-            a[:owner_user_link_html] = link_to(e.owner_user.name, e.owner_user)
+            a[:owner_info] = { name: e.owner_user.name, url: url_for(e.owner_user) }
           end
 
-          a[:created_at_html] = h.time_ago_in_words(e.created_at) + "前"
+          a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
 
-          list = []
-          list << link_to("詳細", [ns_prefix, e], :class => "button is-small")
+          a[:show_url_info] = { name: "詳細", url: polymorphic_path([ns_prefix, e]) }
+
           if editable_record?(e) || Rails.env.development?
-            list << link_to("編集", [:edit, ns_prefix, e], :class => "button is-small")
+            a[:edit_url_info] = { name: "編集", url: polymorphic_path([:edit, ns_prefix, e]) }
           end
-          a[:controls_html] = list.join(" ")
+
           a
         end
       end
