@@ -40,18 +40,15 @@
 = render partial: "free_battles/modal_shogi_player"
 = render partial: "free_battles/table"
 = render partial: "index_footer"
-
-.columns
-  .column
-    p
-      a.button.is-small(:href="permalink_url") パーマリンク
+= render partial: "free_battles/parmalink"
 
 - if current_records && current_records.exists?
 .columns
   .column
     p
-      =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-info") do
-        = icon_tag(:fas, :download)
+      =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-info is-small") do
+        b-icon(pack="fas" icon="download" size="is-small")
+        | &nbsp;&nbsp;
         - if controller.current_query
           | この検索条件で
         = "ZIPダウンロード"

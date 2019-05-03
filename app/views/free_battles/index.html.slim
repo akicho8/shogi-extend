@@ -28,9 +28,7 @@
     .column
       = link_to("作成", [:new, ns_prefix, current_single_key], class: "button is-primary")
 
-  .columns
-    .column
-      a.button.is-small(:href="permalink_url") パーマリンク
+  = render partial: "parmalink"
 
   / - if Rails.env.development?
   /   .columns
