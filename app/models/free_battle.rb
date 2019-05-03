@@ -120,6 +120,8 @@ class FreeBattle < ApplicationRecord
     if changes[:kifu_body]
       kifu_file.purge
 
+      raise kifu_body.inspect
+      
       if kifu_body
         parser_exec
       end

@@ -121,7 +121,7 @@ window.FreeBattleEdit = Vue.extend({
     kifu_clone_and_new_tab_oepn_handle() {
       if (this.output_kifs) {
         // const sfen = this.output_kifs["sfen"]["value"]
-        const sfen = this.input_sfen
+        const sfen = encodeURIComponent(this.input_sfen) // + をエスケープしないと空白になってしまうため
         const key = encodeURIComponent("free_battle[kifu_body]")
         const url = `${this.$options.new_path}?${key}=${sfen}`
         window.open(url, "_blank")
