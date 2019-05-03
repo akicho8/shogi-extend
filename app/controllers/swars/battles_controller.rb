@@ -557,7 +557,6 @@ module Swars
             a[:show_path] = polymorphic_path([ns_prefix, e])
             a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
             a[:swars_real_battle_url] = swars_real_battle_url(current_record)
-            a[:ki2_download_path] = polymorphic_path([ns_prefix, e], format: "ki2")
             a[:wars_tweet_body] = e.wars_tweet_body
 
             a[:memberships] = left_right_pairs(e).collect do |label, e|

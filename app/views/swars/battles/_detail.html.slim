@@ -7,7 +7,10 @@ template(slot="detail" slot-scope="props")
       a.button(:href="e.player_info_url")
         | {{e.name_with_grade}} 情報
 
-    a.button(:href="props.row.ki2_download_path")
+    a.button(:href="`${props.row.show_path}.kif`")
+      | KIF ダウンロード
+
+    a.button(:href="`${props.row.show_path}.ki2`")
       | KI2 ダウンロード
 
     a.button(:href="props.row.swars_real_battle_url" target="_blank")
