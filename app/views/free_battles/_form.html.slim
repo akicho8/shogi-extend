@@ -28,6 +28,7 @@
           b-icon(pack="fas" icon="copy" size="is-small")
           | &nbsp;
           | 入力中の棋譜を複製して新しいタブで開く
+
       .field
         b-switch(v-model="auto_copy_to_input_text_disable_p" size="is-small" type="is-danger") 指し手をテキスト入力の方に反映しない(※保存されないので注意)
 
@@ -70,4 +71,4 @@
 .field
   = form.label(:description, class: "label")
   .control
-    = form.text_area(:description, class: "input")
+    = form.text_area(:description, class: "textarea", placeholder: "空でかまいません", rows: 2)
