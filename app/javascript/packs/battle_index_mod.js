@@ -23,10 +23,11 @@ export default {
 
       table_columns_hash: this.$options.table_columns_hash,
 
+      detailed: true,           // 行の下に開くやつを使う？
       defaultOpenedDetails: [], // 最初から開いておく id を入れられる
-      showDetailIcon: true,
+      showDetailIcon: true,     // 行の下に開くやつ用のアイコンを表示する？
 
-      fetched_count: 0,
+      fetched_count: 0,         // fetch した回数で 1 以上でレコード配列が空だったらデータがありませんを表示する
     }
   },
 

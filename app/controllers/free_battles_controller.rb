@@ -162,6 +162,8 @@ class FreeBattlesController < ApplicationController
             a[:edit_url_info] = { name: "編集", url: polymorphic_path([:edit, ns_prefix, e]) }
           end
 
+          a[:new_and_copy] = { name: "新規でコピペ", url: url_for([:new, ns_prefix, current_single_key, source_id: e.id]) }
+
           a
         end
       end

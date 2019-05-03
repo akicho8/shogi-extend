@@ -5,6 +5,7 @@ window.FreeBattleIndex = Vue.extend({
 
   data() {
     return {
+      detailed: false,           // 行の下に開くやつを使う？
     }
   },
 })

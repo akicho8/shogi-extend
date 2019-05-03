@@ -31,6 +31,10 @@ b-modal(:active.sync="modal_p" has-modal-card)
           b-icon(pack="far" icon="clipboard" size="is-small")
           | &nbsp;コピー
 
+        template(v-if="current_record.new_and_copy")
+          a.button(@click.stop :href="current_record.new_and_copy.url")
+            | {{current_record.new_and_copy.name}}
+
         - if mobile_agent_or_development?
           a(@click.stop :href="current_record.piyo_shogi_app_url")
             = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
