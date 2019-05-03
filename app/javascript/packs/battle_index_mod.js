@@ -71,7 +71,7 @@ export default {
       axios({
         method: "get",
         timeout: 1000 * 60 * 10,
-        url: `${this.$options.xhr_index_path}?${this.async_records_load_url_params}`,
+        url: this.async_records_load_url,
         headers: {"X-Requested-With": "XMLHttpRequest"},
       }).then(response => {
         this.loading = false
@@ -133,13 +133,21 @@ export default {
 
   computed: {
     async_records_load_url_params() {
-      return [
-        `query=${this.query}`,
-        `page=${this.page}`,
-        `per=${this.per}`,
-        `sort_column=${this.sort_column}`,
-        `sort_order=${this.sort_order}`,
-      ].join("&")
+      return _.map({
+        query:       this.query,
+        page:        this.page,
+        per:         this.per,
+        sort_column: this.sort_column,
+        sort_order:  this.sort_order,
+      }, (v, k) => `${k}=${v}`).join("&")
+    },
+
+    async_records_load_url() {
+      return `${this.$options.xhr_index_path}.json?${this.async_records_load_url_params}`
+    },
+
+    permalink_url() {
+      return `${this.$options.xhr_index_path}?${this.async_records_load_url_params}`
     },
 
     // id ですぐに引けるハッシュ

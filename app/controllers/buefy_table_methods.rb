@@ -65,7 +65,7 @@ module BuefyTableMethods
     let :js_index_options do
       {
         query: current_query || "",
-        xhr_index_path: polymorphic_path([ns_prefix, current_plural_key], format: "json"),
+        xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
         total: current_records.total_count,
         page: current_records.current_page,
         per: current_per,

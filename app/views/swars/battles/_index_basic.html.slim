@@ -41,6 +41,11 @@
 = render partial: "free_battles/table"
 = render partial: "index_footer"
 
+.columns
+  .column
+    p
+      a.button.is-small(:href="permalink_url") パーマリンク
+
 - if current_records && current_records.exists?
 .columns
   .column
