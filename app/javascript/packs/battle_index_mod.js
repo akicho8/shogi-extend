@@ -135,11 +135,12 @@ export default {
   computed: {
     async_records_load_url_params() {
       return _.map({
-        query:       this.query,
-        page:        this.page,
-        per:         this.per,
-        sort_column: this.sort_column,
-        sort_order:  this.sort_order,
+        query:           this.query,
+        page:            this.page,
+        per:             this.per,
+        sort_column:     this.sort_column,
+        sort_order:      this.sort_order,
+        visible_columns: this.visible_columns.join(",")
       }, (v, k) => `${k}=${v}`).join("&")
     },
 
@@ -168,6 +169,17 @@ export default {
       if (this.current_record) {
         return this.current_record.sp_sfen
       }
+    },
+
+    // 表示している列のカラム名の配列
+    visible_columns() {
+      let columns
+      columns = _.map(this.table_columns_hash, (attrs, key) => {
+        if (attrs.visible) {
+          return key
+        }
+      })
+      return _.compact(columns)
     },
   },
 }

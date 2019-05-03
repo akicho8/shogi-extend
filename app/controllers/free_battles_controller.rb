@@ -135,12 +135,12 @@ class FreeBattlesController < ApplicationController
   concerning :IndexCustomMethods do
     included do
       let :table_columns_hash do
-        {
-          id:                { label: "ID",       visible: false, },
-          created_at:        { label: "作成日時", visible: false, },
-          turn_max:          { label: "手数",     visible: false, },
-          colosseum_user_id: { label: "所有者",   visible: false, },
-        }
+        [
+          { key: :id,                label: "ID",       visible: false, },
+          { key: :created_at,        label: "作成日時", visible: false, },
+          { key: :turn_max,          label: "手数",     visible: false, },
+          { key: :colosseum_user_id, label: "所有者",   visible: false, },
+        ]
       end
 
       let :js_current_records do

@@ -1,8 +1,5 @@
 .columns
   .column
-    - if Rails.env.development?
-      | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} $options.sort_order_default={{$options.sort_order_default}}
-
     b-field(grouped group-multiline)
       div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
         b-checkbox(v-model="value.visible")
@@ -42,3 +39,13 @@
       = render partial: "table_empty"
       = render partial: "row"
       = render partial: "detail"
+
+    - if Rails.env.development?
+      .box
+        p
+          | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} $options.sort_order_default={{$options.sort_order_default}}
+        p
+          | visible_columns: {{visible_columns}}
+        p
+          | permalink_url: {{permalink_url}}
+

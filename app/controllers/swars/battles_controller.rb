@@ -522,16 +522,16 @@ module Swars
         end
 
         let :table_columns_hash do
-          {
-            id:               { label: "ID",   visible: false,          },
-            attack_tag_list:  { label: "戦型", visible: !mobile_agent?, },
-            defense_tag_list: { label: "囲い", visible: false,          },
-            final_info:       { label: "結果", visible: false,          },
-            turn_max:         { label: "手数", visible: false,          },
-            rule_info:        { label: "種類", visible: false,          },
-            preset_info:      { label: "手合", visible: teai_p,         },
-            battled_at:       { label: "日時", visible: !mobile_agent?, },
-          }
+          [
+            { key: :id,               label: "ID",   visible: false,          },
+            { key: :attack_tag_list,  label: "戦型", visible: !mobile_agent?, },
+            { key: :defense_tag_list, label: "囲い", visible: false,          },
+            { key: :final_info,       label: "結果", visible: false,          },
+            { key: :turn_max,         label: "手数", visible: false,          },
+            { key: :rule_info,        label: "種類", visible: false,          },
+            { key: :preset_info,      label: "手合", visible: teai_p,         },
+            { key: :battled_at,       label: "日時", visible: !mobile_agent?, },
+          ]
         end
 
         let :js_current_records do

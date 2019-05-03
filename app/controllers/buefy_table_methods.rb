@@ -74,8 +74,25 @@ module BuefyTableMethods
         sort_order_default: "desc", # カラムをクリックしたときの最初の向き
         # records: js_current_records,
         records: [],
-        table_columns_hash: Rails.env.production? ? table_columns_hash : table_columns_hash.transform_values { |e| e.merge(visible: true) },
+        table_columns_hash: js_table_columns_hash,
       }
+    end
+
+    let :js_table_columns_hash do
+      table_columns_hash.inject({}) do |a, e|
+        visible = e[:visible]
+        if visible_columns
+          visible = visible_columns.include?(e[:key].to_s)
+        end
+        visible ||= !Rails.env.production?
+        a.merge(e[:key] => e.merge(visible: visible))
+      end
+    end
+
+    let :visible_columns do
+      if v = params[:visible_columns]
+        v.scan(/\w+/).to_set
+      end
     end
   end
 
