@@ -1,4 +1,4 @@
-- twitter_card_tag(title: "棋譜一覧")
+- twitter_card_tag(title: "普通の棋譜一覧")
 
 - content_for :head do
   = javascript_pack_tag("free_battle_index")
@@ -9,7 +9,7 @@
 #free_battle_index(v-cloak)
   = render partial: "modal_shogi_player"
 
-  .title.is-2.yumincho= "棋譜一覧"
+  .title.is-2.yumincho= "普通の棋譜一覧"
   hr
 
   .columns

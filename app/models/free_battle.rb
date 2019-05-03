@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜入力 (free_battles as FreeBattle)
+# 棋譜投稿 (free_battles as FreeBattle)
 #
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 # | name              | desc               | type        | opts        | refs                              | index |
@@ -126,7 +126,7 @@ class FreeBattle < ApplicationRecord
   end
 
   after_create do
-    SlackAgent.message_send(key: "棋譜入力", body: title)
+    SlackAgent.message_send(key: "棋譜投稿", body: title)
   end
 
   concerning :TagMethods do

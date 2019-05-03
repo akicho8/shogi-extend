@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# 棋譜入力 (free_battles as FreeBattle)
+# 棋譜投稿 (free_battles as FreeBattle)
 #
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 # | name              | desc               | type        | opts        | refs                              | index |

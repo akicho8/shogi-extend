@@ -12,7 +12,7 @@
     },
     activerecord: {
       models: {
-        free_battle: "棋譜入力",
+        free_battle: "棋譜投稿",
       },
       attributes: {
         free_battle: {
