@@ -4,4 +4,4 @@
 
   = cache do
     - Bioshogi::TacticInfo.all_elements.each do |e|
-      = tag.option(value: e.name)
+      = tag.option(value: "tag:#{e.name}")
