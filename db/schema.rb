@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_135600) do
+ActiveRecord::Schema.define(version: 2019_05_04_143800) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -205,7 +205,6 @@ ActiveRecord::Schema.define(version: 2019_05_04_135600) do
     t.text "description", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
-    t.index ["key", "battled_at"], name: "index_free_battles_on_key_and_battled_at", unique: true
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
   end
@@ -222,7 +221,6 @@ ActiveRecord::Schema.define(version: 2019_05_04_135600) do
     t.datetime "updated_at", null: false
     t.index ["battled_at"], name: "index_general_battles_on_battled_at"
     t.index ["final_key"], name: "index_general_battles_on_final_key"
-    t.index ["key", "battled_at"], name: "index_general_battles_on_key_and_battled_at", unique: true
     t.index ["key"], name: "index_general_battles_on_key", unique: true
     t.index ["turn_max"], name: "index_general_battles_on_turn_max"
   end
@@ -271,7 +269,6 @@ ActiveRecord::Schema.define(version: 2019_05_04_135600) do
     t.string "preset_key", null: false
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
-    t.index ["key", "battled_at"], name: "index_swars_battles_on_key_and_battled_at", unique: true
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"

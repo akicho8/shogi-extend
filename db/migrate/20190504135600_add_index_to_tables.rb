@@ -1,19 +1,11 @@
 class AddIndexToTables < ActiveRecord::Migration[5.2]
   def change
-    change_table :swars_battles do |t|
-      t.index [:key, :battled_at], unique: true
-      t.index :battled_at
-      t.index :turn_max
-    end
-    change_table :free_battles do |t|
-      t.index [:key, :battled_at], unique: true
-      t.index :battled_at
-      t.index :turn_max
-    end
-    change_table :general_battles do |t|
-      t.index [:key, :battled_at], unique: true
-      t.index :battled_at
-      t.index :turn_max
+    [:swars_battles, :free_battles, :general_battles].each do |table|
+      change_table table do |t|
+        t.index [:key, :battled_at], unique: true
+        t.index :battled_at
+        t.index :turn_max
+      end
     end
   end
 end
