@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 require "securerandom"
 
-# title = "実戦詰筋事典"
-title = "極限早繰り銀"
+title = "実戦詰筋事典000"
+# title = "極限早繰り銀"
 
 base = "09000"
 (ARGV.first || 1).to_i.times do |i|
