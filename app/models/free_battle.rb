@@ -100,14 +100,14 @@ class FreeBattle < ApplicationRecord
       self.kifu_body = v
     end
 
-    if changes[:kifu_url]
+    if changes_to_save[:kifu_url]
       if v = kifu_url.presence
         self.kifu_body = open(v, &:read).toutf8
         self.kifu_url = nil
       end
     end
 
-    if changes[:kifu_body]
+    if changes_to_save[:kifu_body]
       if v = kifu_body.to_s.strip.presence
         if v.start_with?("http")
           self.kifu_body = open(v, &:read).toutf8
@@ -117,7 +117,7 @@ class FreeBattle < ApplicationRecord
   end
 
   before_save do
-    if changes[:kifu_body]
+    if changes_to_save[:kifu_body]
       kifu_file.purge
       if kifu_body
         parser_exec

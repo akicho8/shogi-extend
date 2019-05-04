@@ -33,7 +33,7 @@ module General
     end
 
     before_validation do
-      if changes[:kifu_body]
+      if changes_to_save[:kifu_body]
         parser_exec
       end
     end

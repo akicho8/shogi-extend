@@ -30,8 +30,8 @@ module Swars
 
       # Grade が下がらないようにする
       # 例えば10分メインの人が3分を1回やっただけで30級に戻らないようにする
-      if changes[:grade_id]
-        ov, nv = changes[:grade_id]
+      if changes_to_save[:grade_id]
+        ov, nv = changes_to_save[:grade_id]
         if ov && nv
           if Grade.find(ov).priority < Grade.find(nv).priority
             self.grade_id = ov

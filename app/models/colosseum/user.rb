@@ -65,7 +65,7 @@ module Colosseum
           end
           self.email ||= default_emal
 
-          if changes[:name] && name
+          if changes_to_save[:name] && name
             # 絵文字があると MySQL が死ぬ
             # Mysql2::Error: Incorrect string value: '\xF0\x9F\xA6\x90b' になる
             self.name = name.encode('EUC-JP', 'UTF-8', invalid: :replace, undef: :replace, replace: '(絵文字)').encode('UTF-8')

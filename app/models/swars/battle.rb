@@ -106,7 +106,7 @@ module Swars
         end
 
         before_save do
-          if changes[:csa_seq] && csa_seq
+          if changes_to_save[:csa_seq] && csa_seq
             parser_exec
           end
         end
