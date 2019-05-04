@@ -33,11 +33,11 @@ class FreeBattle < ApplicationRecord
     def setup(**options)
       super
 
-      if Rails.env.development?
-        unless exists?
-          30.times { create!(kifu_body: "") }
-        end
-      end
+      # if Rails.env.development?
+      #   unless exists?
+      #     30.times { create!(kifu_body: "") }
+      #   end
+      # end
 
       Pathname.glob(Rails.root.join("config/app_data/free_battles/0*.kif")).each { |file| file_import(file) }
     end
@@ -50,7 +50,9 @@ class FreeBattle < ApplicationRecord
         record.kifu_body = file.read
         record.title = title.gsub(/_/, " ")
         record.description = description.to_s.gsub(/_/, " ")
+        # record.public_send("#{:kifu_body}_will_change!") # 強制的にパースさせるため
         begin
+          record.parser_exec    # かならずパースする
           record.save!
         rescue => error
           pp record
