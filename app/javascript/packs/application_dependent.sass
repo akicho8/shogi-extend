@@ -1,8 +1,15 @@
+@import "bulma_variables"
+
 ////////////////////////////////////////////////////////////////////////////// フッターまでの最低限の縦幅
 
 .main_container
   min-height: 70vmin
 
+////////////////////////////////////////////////////////////////////////////// 最初の section の上の隙間が多すぎるので減らす
+
+body > section:first-of-type
+  padding-top: $gap * 2
+  
 ////////////////////////////////////////////////////////////////////////////// html_formatのなかでtooltipが途切れる
 
 #swars_player_info_app
@@ -150,8 +157,6 @@ $sp_assets_dir: "../../../node_modules/shogi-player/src/assets"
 @import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
 
 ////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
-
-@import "bulma_variables"
 
 $cell_blank_bg:      $grey
 $something_exist_bg: $green
