@@ -4,7 +4,7 @@
 
 # 独自のパーサーを使うようにする
 ActsAsTaggableOn.setup do |c|
-  c.remove_unused_tags = true
+  c.remove_unused_tags = false  # true すると FreeBattle.setup の更新でこける
   # c.default_parser = SoftParser
   # さらに tag_list.to_s のときのセパレーターを設定する
   # 次のようにすると警告を出そうとして「それが原因」で転ける

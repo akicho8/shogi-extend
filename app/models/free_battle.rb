@@ -59,7 +59,7 @@ class FreeBattle < ApplicationRecord
           pp record
           pp record.errors.full_messages
           pp error
-          # raise error
+          raise error
         end
 
         p [record.id, record.title, record.description, error]
