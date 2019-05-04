@@ -7,13 +7,13 @@
 # | name              | desc             | type        | opts        | refs | index |
 # |-------------------+------------------+-------------+-------------+------+-------|
 # | id                | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key               | 対局ユニークキー | string(255) | NOT NULL    |      | A! B! |
-# | battled_at        | 対局日時         | datetime    | NOT NULL    |      | B! F  |
-# | rule_key          | ルール           | string(255) | NOT NULL    |      | C     |
+# | key               | 対局ユニークキー | string(255) | NOT NULL    |      | A!    |
+# | battled_at        | 対局日時         | datetime    | NOT NULL    |      | E     |
+# | rule_key          | ルール           | string(255) | NOT NULL    |      | B     |
 # | csa_seq           | 棋譜             | text(65535) | NOT NULL    |      |       |
-# | final_key         | 結末             | string(255) | NOT NULL    |      | D     |
-# | win_user_id       | 勝者             | integer(8)  |             |      | E     |
-# | turn_max          | 手数             | integer(4)  | NOT NULL    |      | G     |
+# | final_key         | 結末             | string(255) | NOT NULL    |      | C     |
+# | win_user_id       | 勝者             | integer(8)  |             |      | D     |
+# | turn_max          | 手数             | integer(4)  | NOT NULL    |      | F     |
 # | meta_info         | メタ情報         | text(65535) | NOT NULL    |      |       |
 # | last_accessd_at   | 最終アクセス日時 | datetime    | NOT NULL    |      |       |
 # | access_logs_count | アクセス数       | integer(4)  | DEFAULT(0)  |      |       |

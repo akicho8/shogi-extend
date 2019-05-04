@@ -9,10 +9,10 @@
 # | id                | ID                | integer(8)  | NOT NULL PK |      |       |
 # | user_key          | User key          | string(255) | NOT NULL    |      | A!    |
 # | grade_id          | Grade             | integer(8)  | NOT NULL    |      | B     |
-# | last_reception_at | Last reception at | datetime    |             |      |       |
+# | last_reception_at | Last reception at | datetime    |             |      | C     |
 # | search_logs_count | Search logs count | integer(4)  | DEFAULT(0)  |      |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL    |      | D     |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 
 module Swars
@@ -79,18 +79,20 @@ module Swars
 
       class_methods do
         def search_form_datalist
-          user_keys = []
+          Rails.cache.fetch("search_form_datalist", expires_in: Rails.env.production? ? 1.days : 0) do
+            user_keys = []
 
-          # 利用者
-          user_keys += recently_only.limit(16).pluck(:user_key)
+            # 利用者
+            user_keys += recently_only.limit(16).pluck(:user_key)
 
-          # 最近取り込んだ人たち
-          user_keys += all.order(updated_at: :desc).limit(16).pluck(:user_key)
+            # 最近取り込んだ人たち
+            user_keys += all.order(updated_at: :desc).limit(16).pluck(:user_key)
 
-          # すごい人たち
-          user_keys += Rails.cache.fetch("great_only", expires_in: Rails.env.production? ? 1.hour : 0) { great_only.limit(32).pluck(:user_key) }
+            # すごい人たち
+            user_keys += Rails.cache.fetch("great_only", expires_in: Rails.env.production? ? 1.days : 0) { great_only.limit(32).pluck(:user_key) }
 
-          user_keys.uniq
+            user_keys.uniq
+          end
         end
       end
     end
