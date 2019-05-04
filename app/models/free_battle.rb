@@ -51,17 +51,18 @@ class FreeBattle < ApplicationRecord
         record.title = title.gsub(/_/, " ")
         record.description = description.to_s.gsub(/_/, " ")
         # record.public_send("#{:kifu_body}_will_change!") # 強制的にパースさせるため
+        error = nil
         begin
-          record.parser_exec    # かならずパースする
+          # record.parser_exec    # かならずパースする
           record.save!
         rescue => error
           pp record
           pp record.errors.full_messages
           pp error
-          raise error
+          # raise error
         end
 
-        p [record.id, record.title, record.description]
+        p [record.id, record.title, record.description, error]
       end
     end
   end
