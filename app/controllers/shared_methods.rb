@@ -33,12 +33,7 @@ module SharedMethods
 
     respond_to do |format|
       format.html
-      format.png {
-        object = current_record.thumbnail_image
-        key = object.variant(resize: "1200x630>", type: :grayscale).processed.key
-        path = ActiveStorage::Blob.service.path_for(key)
-        send_file path, type: object.content_type, disposition: :inline, filename: "#{current_record.id}.png"
-      }
+      format.png { send_png_file }
       format.any { kifu_send_data }
     end
   end
@@ -46,7 +41,7 @@ module SharedMethods
   def update
     if params[:canvas_image_base64_data_url]
       current_record.canvas_data_save(params)
-      render json: { message: "OK" }
+      render json: { message: "画像化しました" }
       return
     end
 
@@ -54,6 +49,13 @@ module SharedMethods
   end
 
   private
+
+  def send_png_file
+    object = current_record.thumbnail_image
+    key = object.variant(resize: "1200x630!", quality: 100, normalize: true).processed.key
+    path = ActiveStorage::Blob.service.path_for(key)
+    send_file path, type: object.content_type, disposition: :inline, filename: "#{current_record.id}.png"
+  end
 
   def zip_download_limit
     (params[:limit].presence || AppConfig[:zip_download_limit_default]).to_i.clamp(0, AppConfig[:zip_download_limit_max])

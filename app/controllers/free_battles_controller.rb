@@ -144,7 +144,7 @@ class FreeBattlesController < ApplicationController
 
       let :twitter_staitc_image_url do
         if current_record.thumbnail_image.attached?
-          # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale))
+          # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
           # とした場合はリダイレクトするURLになってしまうため使えない
           # 固定URL化する
           polymorphic_url([ns_prefix, current_record], format: "png")

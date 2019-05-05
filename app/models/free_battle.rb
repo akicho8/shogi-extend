@@ -129,7 +129,9 @@ class FreeBattle < ApplicationRecord
   end
 
   after_create do
-    SlackAgent.message_send(key: "棋譜投稿", body: title)
+    if Rails.env.production? || Rails.env.test?
+      SlackAgent.message_send(key: "棋譜投稿", body: title)
+    end
   end
 
   concerning :TagMethods do

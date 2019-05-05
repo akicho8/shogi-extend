@@ -1,18 +1,31 @@
 sass:
   #capture_dom
+    .piece_inner.promoted_false
+      color: black
+    table
+      // border-color: red
+      // background: #888
+    padding: 20px 0
+    .turn_area
+      display: none
+    .modal_trigger_dots
+      display: none
     td
-      padding: 5px 15px ! important
-      font-size: 50px ! important
+      width: 80px
+      height: 80px
+      // padding: 5px 15px
+      font-size: 56px
     .piece_stand_outer
-      padding-left: 10px ! important
+      padding-left: 20px
       .location_mark
-        font-size: 40px ! important
+        font-size: 50px
       .piece_stand
         .piece_outer
           .piece_inner
-            font-size: 40px ! important
+            font-size: 50px
         .piece_count
-          font-size: 30px ! important
+          color: #888
+          font-size: 30px
   .confirm_image_box
     img
       border: 1px solid red
@@ -73,7 +86,7 @@ sass:
       .box.confirm_image_box
         = image_tag current_record.thumbnail_image
       .box.confirm_image_box
-        = image_tag current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)
+        = image_tag current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale, quality: 100)
       .box.confirm_image_box
         = image_tag polymorphic_path([ns_prefix, current_record], format: "png")
       .box
@@ -86,7 +99,7 @@ sass:
             polymorphic_path: polymorphic_path(current_record.thumbnail_image),
             rails_blob_path: rails_blob_path(current_record.thumbnail_image),
             url_for: url_for(current_record.thumbnail_image),
-            rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)),
-            rails_representation_url: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)),
+            rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
+            rails_representation_url: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
           }
         = list.to_html
