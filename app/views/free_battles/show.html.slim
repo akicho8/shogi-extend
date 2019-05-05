@@ -57,16 +57,15 @@ sass:
     - if Rails.env.development?
       = link_to_eval("サムネ削除", redirect_to: polymorphic_path([ns_prefix, current_record])) { "FreeBattle.find(#{current_record.id}).thumbnail_image.purge" }
 
-  - if Rails.env.development?
-    <div id="capture" style="padding: 10px; background: #f5da55">
-      <h4 style="color: #000; ">Hello world!</h4>
-    </div>
+  - if sfen = current_record.to_cached_kifu(:sfen)
+    shogi-player#capture_dom(:kifu_body="'#{sfen}'" :theme="'simple'")
 
-    - if sfen = current_record.to_cached_kifu(:sfen)
-      shogi-player#capture_dom(:kifu_body="'#{sfen}'" :theme="'simple'")
+  <div id="capture" style="padding: 10px; background: #f5da55">
+    <h4 style="color: #000; ">Hello world!</h4>
+  </div>
 
-    - if current_record.thumbnail_image.attached?
-      .confirm_image_box
-        = image_tag current_record.thumbnail_image
-      .box
-        = rails_blob_url(current_record.thumbnail_image)
+  - if current_record.thumbnail_image.attached?
+    .confirm_image_box
+      = image_tag current_record.thumbnail_image
+    .box
+      = rails_blob_url(current_record.thumbnail_image)
