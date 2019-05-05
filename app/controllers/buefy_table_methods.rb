@@ -13,7 +13,13 @@ module BuefyTableMethods
     end
 
     let :current_records do
-      current_scope.select(current_model.column_names - exclude_column_names).page(params[:page]).per(current_per)
+      s = current_scope
+      s = s.select(current_model.column_names - exclude_column_names)
+      if current_sort_column && current_sort_order
+        s = s.order(current_sort_column => current_sort_order)
+      end
+      s = s.order(id: :desc)
+      s.page(params[:page]).per(current_per)
     end
 
     let :exclude_column_names do
@@ -49,10 +55,6 @@ module BuefyTableMethods
       if r = current_ransack
         s = s.merge(r.result)
       end
-      if current_sort_column && current_sort_order
-        s = s.order(current_sort_column => current_sort_order)
-      end
-      s = s.order(id: :desc)
       s
     end
 
@@ -93,6 +95,12 @@ module BuefyTableMethods
       if v = params[:visible_columns]
         v.scan(/\w+/).to_set
       end
+    end
+
+    let :js_show_options do
+      {
+        canvas_post_path: url_for([ns_prefix, current_record, format: "json"]),
+      }
     end
   end
 
