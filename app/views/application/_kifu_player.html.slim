@@ -2,11 +2,7 @@
 - tweet_body = [@page_title, current_url].compact.join("\n")
 - tweet_url = "https://twitter.com/intent/tweet?text=#{u(tweet_body)}"
 
-/ #shogi_player_app
-  / - content_for :head do
-  /   = javascript_pack_tag("shogi_player_app")
 .columns
-  ////////////////////////////////////////////////////////////////////////////////
   .column
     - if sfen = current_record.to_cached_kifu(:sfen)
       shogi-player(
@@ -68,16 +64,6 @@
         = link_to(image_tag("piyo_shogi_app.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])))
         a.button.is-info.is-small.is-rounded.tweet_button(href=tweet_url target="_blank")
           = icon_tag(:fab, :twitter) + "ツイート"
-
-/ ////////////////////////////////////////////////////////////////////////////////
-/ .columns
-/   .column.column.has-text-left
-/     .field
-/       label.label= "パーマリンク"
-/     .control
-/       input.input type="text" readonly="true" value=polymorphic_url([current_record])
-
-////////////////////////////////////////////////////////////////////////////////
 
 - if !Rails.env.production? && false
   .columns
