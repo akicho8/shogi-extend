@@ -134,13 +134,21 @@ class FreeBattlesController < ApplicationController
     included do
       let :twitter_options do
         options = { title: current_record.safe_title, description: current_record&.description }
-        if current_record.thumbnail_image.attached?
-          # options.update(image: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)))
-          options.update(image: "rails.png")
+        if twitter_staitc_image_url
+          options.update(image: twitter_staitc_image_url)
         else
           options.update(card: "summary")
         end
         options
+      end
+
+      let :twitter_staitc_image_url do
+        if current_record.thumbnail_image.attached?
+          # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale))
+          # とした場合はリダイレクトするURLになってしまうため使えない
+          # 固定URL化する
+          polymorphic_url([ns_prefix, current_record], format: "png")
+        end
       end
     end
   end

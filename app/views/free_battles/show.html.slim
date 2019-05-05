@@ -74,9 +74,13 @@ sass:
         = image_tag current_record.thumbnail_image
       .box.confirm_image_box
         = image_tag current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)
+      .box.confirm_image_box
+        = image_tag polymorphic_path([ns_prefix, current_record], format: "png")
       .box
         ruby:
+          ActiveStorage::Current.host = request.base_url
           list = {
+            foo: current_record.thumbnail_image.blob.service_url,
             polymorphic_url: polymorphic_url(current_record.thumbnail_image),
             rails_blob_url: rails_blob_url(current_record.thumbnail_image),
             polymorphic_path: polymorphic_path(current_record.thumbnail_image),

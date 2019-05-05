@@ -183,7 +183,9 @@ module Swars
         return
       end
 
-      current_record.access_logs.create!
+      if request.format.html?
+        current_record.access_logs.create!
+      end
     end
 
     def versus_tag(*list)

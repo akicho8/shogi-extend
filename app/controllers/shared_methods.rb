@@ -33,6 +33,12 @@ module SharedMethods
 
     respond_to do |format|
       format.html
+      format.png {
+        object = current_record.thumbnail_image
+        key = object.variant(resize: "1200x630>", type: :grayscale).processed.key
+        path = ActiveStorage::Blob.service.path_for(key)
+        send_file path, type: object.content_type, disposition: :inline, filename: "#{current_record.id}.png"
+      }
       format.any { kifu_send_data }
     end
   end
