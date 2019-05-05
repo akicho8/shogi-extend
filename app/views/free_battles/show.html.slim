@@ -14,7 +14,8 @@ sass:
         .piece_count
           font-size: 30px ! important
   .confirm_image_box
-    border: 1px solid #eee
+    img
+      border: 1px solid red
 
 - twitter_card_tag(twitter_options)
 
@@ -57,15 +58,31 @@ sass:
     - if Rails.env.development?
       = link_to_eval("サムネ削除", redirect_to: polymorphic_path([ns_prefix, current_record])) { "FreeBattle.find(#{current_record.id}).thumbnail_image.purge" }
 
+  - if Rails.env.development?
+    <div id="capture" style="padding: 10px; background: #f5da55">
+      <h4 style="color: #000; ">Hello world!</h4>
+    </div>
+
   - if sfen = current_record.to_cached_kifu(:sfen)
     shogi-player#capture_dom(:kifu_body="'#{sfen}'" :theme="'simple'")
 
-  <div id="capture" style="padding: 10px; background: #f5da55">
-    <h4 style="color: #000; ">Hello world!</h4>
-  </div>
-
-  - if current_record.thumbnail_image.attached?
-    .confirm_image_box
-      = image_tag current_record.thumbnail_image
-    .box
-      = rails_blob_url(current_record.thumbnail_image)
+  details(open=(!Rails.env.production? && false))
+    summary
+      | デバッグ情報
+    - if current_record.thumbnail_image.attached?
+      .box.confirm_image_box
+        = image_tag current_record.thumbnail_image
+      .box.confirm_image_box
+        = image_tag current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)
+      .box
+        ruby:
+          list = {
+            polymorphic_url: polymorphic_url(current_record.thumbnail_image),
+            rails_blob_url: rails_blob_url(current_record.thumbnail_image),
+            polymorphic_path: polymorphic_path(current_record.thumbnail_image),
+            rails_blob_path: rails_blob_path(current_record.thumbnail_image),
+            url_for: url_for(current_record.thumbnail_image),
+            rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)),
+            rails_representation_url: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)),
+          }
+        = list.to_html
