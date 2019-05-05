@@ -134,13 +134,11 @@ class FreeBattlesController < ApplicationController
     included do
       let :twitter_options do
         options = { title: current_record.safe_title, description: current_record&.description }
-        if current_record.thumbnail_image.attached?
-          # options.update(image: rails_blob_url(current_record.thumbnail_image))
-          options.update(image: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)))
-          # options.update(image: rails_blob_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)))
-        else
-          options.update(card: "summary")
-        end
+        # if current_record.thumbnail_image.attached?
+        #   options.update(image: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630>", type: :grayscale)))
+        # else
+        options.update(card: "summary")
+        # end
         options
       end
     end
