@@ -130,6 +130,20 @@ class FreeBattlesController < ApplicationController
     end
   end
 
+  concerning :ShowMethods do
+    included do
+      let :twitter_options do
+        options = { title: current_record.safe_title, description: current_record&.description }
+        if current_record.thumbnail_image.attached?
+          options.update(image: rails_blob_url(current_record.thumbnail_image))
+        else
+          options.update(card: "summary")
+        end
+        options
+      end
+    end
+  end
+
   include BuefyTableMethods
 
   concerning :IndexCustomMethods do

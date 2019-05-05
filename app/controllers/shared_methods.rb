@@ -3,8 +3,10 @@ module SharedMethods
 
   included do
     before_action only: [:edit, :update, :destroy] do
-      unless editable_record?(current_record)
-        redirect_to :root, alert: "アクセス権限がありません"
+      if request.format.html?
+        unless editable_record?(current_record)
+          redirect_to :root, alert: "アクセス権限がありません"
+        end
       end
     end
 
@@ -33,6 +35,16 @@ module SharedMethods
       format.html
       format.any { kifu_send_data }
     end
+  end
+
+  def update
+    if params[:canvas_image_base64_data_url]
+      current_record.canvas_data_save(params)
+      render json: { message: "OK" }
+      return
+    end
+
+    super
   end
 
   private

@@ -178,6 +178,10 @@ class ApplicationController < ActionController::Base
   end
 
   concerning :EvalMethods do
+    included do
+      helper_method :link_to_eval
+    end
+
     def link_to_eval(name, options = {}, &block)
       if code = block.call
         link_to(name, eval_path(options.merge(code: code)), method: :put, :class => "button is-small")

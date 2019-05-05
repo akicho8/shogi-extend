@@ -141,4 +141,18 @@ class FreeBattle < ApplicationRecord
       acts_as_ordered_taggable_on :other_tags
     end
   end
+
+  concerning :CanvasDataSaveMethods do
+    included do
+      has_one_attached :thumbnail_image
+    end
+
+    def canvas_data_save(params)
+      if v = params[:canvas_image_base64_data_url]
+        v = v.remove(/\A.*,/)
+        v = Base64.decode64(v)
+        thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+      end
+    end
+  end
 end

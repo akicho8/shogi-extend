@@ -1,16 +1,30 @@
-- twitter_card_tag(card: "summary", title: current_record.safe_title)
+sass:
+  #capture_dom
+    td
+      padding: 5px 15px ! important
+      font-size: 50px ! important
+    .piece_stand_outer
+      padding-left: 10px ! important
+      .location_mark
+        font-size: 40px ! important
+      .piece_stand
+        .piece_outer
+          .piece_inner
+            font-size: 40px ! important
+        .piece_count
+          font-size: 30px ! important
+  .confirm_image_box
+    border: 1px solid #eee
 
-javascript:
-  document.addEventListener('DOMContentLoaded', () => {
-    new Vue({
-      el: "#app",
-      data: {
-        kifu_type_tab_index: 0,
-      },
-    })
-  })
+- twitter_card_tag(twitter_options)
 
-#app
+- content_for :head do
+  = javascript_pack_tag("free_battle_show")
+
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
+
+#show_app(v-cloak)
   - @page_title ||= current_record.safe_title
 
   nav.breadcrumb
@@ -32,10 +46,27 @@ javascript:
 
   .has-text-centered
     = render :partial => "kifu_player"
-    = render :partial => "kifu_player_tabs_div"
+    / = render :partial => "kifu_player_tabs_div"
 
   .buttons.are-small
     = link_to("新規でコピペ", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
     - if editable_record?(current_record)
       = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-primary")
       = link_to("削除", [ns_prefix, current_record], class: "button is-danger", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
+
+    - if Rails.env.development?
+      = link_to_eval("サムネ削除", redirect_to: polymorphic_path([ns_prefix, current_record])) { "FreeBattle.find(#{current_record.id}).thumbnail_image.purge" }
+
+  - if Rails.env.development?
+    <div id="capture" style="padding: 10px; background: #f5da55">
+      <h4 style="color: #000; ">Hello world!</h4>
+    </div>
+
+    - if sfen = current_record.to_cached_kifu(:sfen)
+      shogi-player#capture_dom(:kifu_body="'#{sfen}'" :theme="'simple'")
+
+    - if current_record.thumbnail_image.attached?
+      .confirm_image_box
+        = image_tag current_record.thumbnail_image
+      .box
+        = rails_blob_url(current_record.thumbnail_image)

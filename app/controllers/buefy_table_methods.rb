@@ -99,7 +99,8 @@ module BuefyTableMethods
 
     let :js_show_options do
       {
-        canvas_post_path: url_for([ns_prefix, current_record, format: "json"]),
+        xhr_put_path: url_for([ns_prefix, current_record, format: "json"]),
+        kifu_canvas_image_attached: current_record.thumbnail_image.attached?,
       }
     end
   end

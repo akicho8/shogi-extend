@@ -1,3 +1,8 @@
+# if Rails.env.development?
+#   # https://github.com/rails/rails/pull/32350#issuecomment-380091447
+#   Rails.application.routes.default_url_options[:host] = "localhost:3000"
+# end
+
 if Rails.env.production? || Rails.env.development?
   Rails.application.configure do
     config.app_config.deep_merge!({admin_email: "pinpon.ikeda@gmail.com"})
