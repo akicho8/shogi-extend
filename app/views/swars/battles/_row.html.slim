@@ -43,6 +43,5 @@ template(slot-scope="props")
       a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row)")
         b-icon(pack="far" icon="clipboard" size="is-small")
         | &nbsp;コピー
-      - if mobile_agent_or_development?
-        a(@click.stop :href="props.row.piyo_shogi_app_url")
-          = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
+      a.touch_only(@click.stop :href="props.row.piyo_shogi_app_url")
+        = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")

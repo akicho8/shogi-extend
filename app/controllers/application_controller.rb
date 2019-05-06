@@ -290,10 +290,6 @@ class ApplicationController < ActionController::Base
       let :mobile_agent? do
         request.user_agent.to_s.match?(self.class.mobile_regexp)
       end
-
-      let :mobile_agent_or_development? do
-        mobile_agent? || Rails.env.development? || Rails.env.test?
-      end
     end
 
     class_methods do

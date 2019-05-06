@@ -20,15 +20,12 @@
       .level-item.has-text-left
         p.title.is-5.yumincho
           = current_record.safe_title
-          / - if current_record.description.present?
-          /   == "&nbsp;"
-          /   .is-5
-          /     = current_record.description
   hr
 
   .has-text-centered
     = render :partial => "kifu_player"
-    = render :partial => "kifu_player_tabs_div"
+    .desktop_over
+      = render :partial => "kifu_player_tabs_div"
 
   .columns
     .column

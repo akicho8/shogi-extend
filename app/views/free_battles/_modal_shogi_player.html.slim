@@ -35,8 +35,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
           a.button(@click.stop :href="current_record.new_and_copy.url")
             | {{current_record.new_and_copy.name}}
 
-        - if mobile_agent_or_development?
-          a(@click.stop :href="current_record.piyo_shogi_app_url")
-            = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
+        a.touch_only(@click.stop :href="current_record.piyo_shogi_app_url")
+          = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
 
         a.button(@click="modal_p = false") 閉じる
