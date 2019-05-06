@@ -215,4 +215,61 @@ module ConvertMethods
   def to_title
     to_param
   end
+
+  concerning :TwitterMethods do
+    included do
+      has_one_attached :thumbnail_image
+    end
+
+    def tweet_page_url
+      Rails.application.routes.url_helpers.full_url_for(self)
+    end
+
+    def tweet_body
+      out = []
+      out << to_title
+      out << tweet_page_url
+      if respond_to?(:description) && description.present?
+        out << description
+      end
+      out.compact.join("\n")
+    end
+
+    def tweet_window_url
+      "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_body)}"
+    end
+
+    def tweet_image
+      if thumbnail_image.attached?
+        thumbnail_image.variant(resize: "1200x630!", quality: 100, normalize: true)
+      end
+    end
+
+    def tweet_image_url
+      if tweet_image
+        Rails.application.routes.url_helpers.rails_representation_url(tweet_image)
+      end
+    end
+
+    def canvas_data_save(params)
+      if v = params[:canvas_image_base64_data_url]
+        v = v.remove(/\A.*,/)
+        v = Base64.decode64(v)
+        thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+        {
+          message: "OGP画像を作成しました",
+          # https://edgeguides.rubyonrails.org/active_storage_overview.html
+          # Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
+          tweet_image_url: tweet_image_url,
+        }
+      end
+    end
+
+    def canvas_data_save2(params)
+      thumbnail_image.purge
+      {
+        message: "削除しました",
+      }
+    end
+  end
 end

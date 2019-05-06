@@ -1,35 +1,3 @@
-sass:
-  #capture_dom
-    .piece_inner.promoted_false
-      color: black
-    table
-      // border-color: red
-      // background: #888
-    padding: 60px 0
-    .turn_area
-      display: none
-    .modal_trigger_dots
-      display: none
-    td
-      width: 86px
-      height: 80px
-      // padding: 5px 15px
-      font-size: 58px
-    .piece_stand_outer
-      padding-left: 20px
-      .location_mark
-        font-size: 50px
-      .piece_stand
-        .piece_outer
-          .piece_inner
-            font-size: 50px
-        .piece_count
-          color: #888
-          font-size: 40px
-  .confirm_image_box
-    img
-      border: 1px solid red
-
 - twitter_card_tag(twitter_options)
 
 - content_for :head do
@@ -38,7 +6,7 @@ sass:
   javascript:
     document.addEventListener('DOMContentLoaded', () => { new FreeBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
-#show_app(v-cloak)
+#show_app
   - @page_title ||= current_record.safe_title
 
   nav.breadcrumb
@@ -50,56 +18,24 @@ sass:
   .level
     .level-left
       .level-item.has-text-left
-        p.title.is-4.yumincho
+        p.title.is-5.yumincho
           = current_record.safe_title
-          - if current_record.description.present?
-            == "&nbsp;"
-            .is-5
-              = current_record.description
+          / - if current_record.description.present?
+          /   == "&nbsp;"
+          /   .is-5
+          /     = current_record.description
   hr
 
   .has-text-centered
     = render :partial => "kifu_player"
-    / = render :partial => "kifu_player_tabs_div"
+    = render :partial => "kifu_player_tabs_div"
 
-  .buttons.are-small
-    = link_to("新規でコピペ", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
-    - if editable_record?(current_record)
-      = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-primary")
-      = link_to("削除", [ns_prefix, current_record], class: "button is-danger", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
+  .columns
+    .column
+      .buttons.are-small
+        = link_to("新規でコピペ", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
+        - if editable_record?(current_record)
+          = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-primary")
+          = link_to("削除", [ns_prefix, current_record], class: "button is-danger", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
 
-    - if Rails.env.development?
-      = link_to_eval("サムネ削除", redirect_to: polymorphic_path([ns_prefix, current_record])) { "FreeBattle.find(#{current_record.id}).thumbnail_image.purge" }
-
-  - if Rails.env.development?
-    <div id="capture" style="padding: 10px; background: #f5da55">
-      <h4 style="color: #000; ">Hello world!</h4>
-    </div>
-
-  - if sfen = current_record.to_cached_kifu(:sfen)
-    shogi-player#capture_dom(:kifu_body="'#{sfen}'" :theme="'simple'")
-
-  details(open=(!Rails.env.production? && false))
-    summary
-      | デバッグ情報
-    - if current_record.thumbnail_image.attached?
-      .box.confirm_image_box
-        = image_tag current_record.thumbnail_image
-      .box.confirm_image_box
-        = image_tag current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale, quality: 100)
-      .box.confirm_image_box
-        = image_tag polymorphic_path([ns_prefix, current_record], format: "png")
-      .box
-        ruby:
-          ActiveStorage::Current.host = request.base_url
-          list = {
-            foo: current_record.thumbnail_image.blob.service_url,
-            polymorphic_url: polymorphic_url(current_record.thumbnail_image),
-            rails_blob_url: rails_blob_url(current_record.thumbnail_image),
-            polymorphic_path: polymorphic_path(current_record.thumbnail_image),
-            rails_blob_path: rails_blob_path(current_record.thumbnail_image),
-            url_for: url_for(current_record.thumbnail_image),
-            rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
-            rails_representation_url: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
-          }
-        = list.to_html
+  = render partial: "ogp_image_set"

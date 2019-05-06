@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   include Lettable
 
   before_action do
+    ActiveStorage::Current.host = request.base_url
+  end
+
+  before_action do
     request.env["exception_notifier.exception_data"] = {
       current_user: current_user,
     }
@@ -184,7 +188,7 @@ class ApplicationController < ActionController::Base
 
     def link_to_eval(name, options = {}, &block)
       if code = block.call
-        link_to(name, eval_path(options.merge(code: code)), method: :put, :class => "button is-small")
+        link_to(name, eval_path(options.merge(code: code)), method: :put, :class => "button is-small is-danger")
       end
     end
 
@@ -302,11 +306,12 @@ class ApplicationController < ActionController::Base
   concerning :ShowiPlayerMethods do
     included do
       let :current_shogi_player_theme do
-        if mobile_agent?
-          "simple"
-        else
-          "real"
-        end
+        # if mobile_agent?
+        #   "simple"
+        # else
+        #   "real"
+        # end
+        "simple"
       end
     end
 

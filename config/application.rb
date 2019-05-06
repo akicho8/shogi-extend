@@ -26,6 +26,8 @@ module ShogiWeb
 
     if Rails.env.development? || Rails.env.test?
       config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+      # https://github.com/rails/rails/issues/32500
+      Rails.application.routes.default_url_options[:host] = "localhost:3000"
     end
 
     config.action_view.field_error_proc = proc { |html_tag, instance|

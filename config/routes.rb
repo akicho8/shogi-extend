@@ -75,9 +75,9 @@ Rails.application.routes.draw do
 
   resources :free_battles, path: "x"
 
-  resolve "FreeBattle" do |free_battle, options|
-    [ns_prefix, free_battle, options]
-  end
+  # resolve "FreeBattle" do |free_battle, options|
+  #   [ns_prefix, free_battle, options]
+  # end
 
   ################################################################################ 戦法トリガー事典
 

@@ -1,10 +1,6 @@
-- current_url = full_url_for([ns_prefix, current_record])
-- tweet_body = [@page_title, current_url].compact.join("\n")
-- tweet_url = "https://twitter.com/intent/tweet?text=#{u(tweet_body)}"
-
 .columns
   .column
-    - if sfen = current_record.to_cached_kifu(:sfen)
+    - if sfen = current_record.to_cached_sfen
       shogi-player(
         :kifu_body="'#{sfen}'"
         :key_event_capture="true"
@@ -18,8 +14,13 @@
         )
         = render partial: "sfen_link"
 
-  ////////////////////////////////////////////////////////////////////////////////
-  .column.has-text-left
+      - if current_record.respond_to?(:description) && current_record.description.present?
+        .message.is-size-7
+          .message-body
+            = current_record.description
+
+.columns
+  .column
     .field
       == current_record.header_detail(self).to_html(table_class: "table is-fullwidth is-narrow")
 
@@ -62,7 +63,7 @@
             / b-dropdown-item(href=piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"]))) ぴよ将棋
 
         = link_to(image_tag("piyo_shogi_app.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])))
-        a.button.is-info.is-small.is-rounded.tweet_button(href=tweet_url target="_blank")
+        a.button.is-info.is-small.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
           = icon_tag(:fab, :twitter) + "ツイート"
 
 - if !Rails.env.production? && false

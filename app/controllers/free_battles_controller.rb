@@ -133,7 +133,7 @@ class FreeBattlesController < ApplicationController
   concerning :ShowMethods do
     included do
       let :twitter_options do
-        options = { title: current_record.safe_title, description: current_record&.description }
+        options = { title: current_record.safe_title, description: current_record.respond_to?(:description) ? current_record.description : "", }
         if twitter_staitc_image_url
           options.update(image: twitter_staitc_image_url)
         else

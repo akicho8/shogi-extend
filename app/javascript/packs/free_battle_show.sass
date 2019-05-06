@@ -1,0 +1,38 @@
+@import "bulma_variables"
+
+#capture_container
+  width: 1200px
+  height: 630px
+  .shogi-player
+    .piece_inner.promoted_false
+      color: black
+    table
+      // border-color: red
+      // background: #888
+    padding: 22px 0
+    .turn_area
+      display: none
+    .modal_trigger_dots
+      display: none
+    td
+      width: 60px
+      height: 40px
+      // padding: 5px 15px
+      font-size: 42px
+      &.current
+        animation: none
+    .piece_stand_outer
+      padding-left: 10px
+      .location_mark
+        font-size: 38px
+      .piece_stand
+        .piece_outer
+          .piece_inner
+            font-size: 38px
+        .piece_count
+          color: #888
+          font-size: 30px
+
+.img_box
+  img
+    border: 1px solid $primary

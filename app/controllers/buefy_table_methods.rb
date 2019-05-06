@@ -101,6 +101,7 @@ module BuefyTableMethods
       {
         xhr_put_path: url_for([ns_prefix, current_record, format: "json"]),
         kifu_canvas_image_attached: current_record.thumbnail_image.attached?,
+        tweet_image_url: current_record.tweet_image_url,
       }
     end
   end

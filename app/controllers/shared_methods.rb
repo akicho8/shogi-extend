@@ -40,8 +40,12 @@ module SharedMethods
 
   def update
     if params[:canvas_image_base64_data_url]
-      current_record.canvas_data_save(params)
-      render json: { message: "画像化しました" }
+      render json: current_record.canvas_data_save(params)
+      return
+    end
+
+    if params[:og_image_destroy]
+      render json: current_record.canvas_data_save2(params)
       return
     end
 
@@ -51,10 +55,9 @@ module SharedMethods
   private
 
   def send_png_file
-    object = current_record.thumbnail_image
-    key = object.variant(resize: "1200x630!", quality: 100, normalize: true).processed.key
+    key = current_record.tweet_image.processed.key
     path = ActiveStorage::Blob.service.path_for(key)
-    send_file path, type: object.content_type, disposition: :inline, filename: "#{current_record.id}.png"
+    send_file path, type: current_record.thumbnail_image.content_type, disposition: :inline, filename: "#{current_record.id}.png"
   end
 
   def zip_download_limit
