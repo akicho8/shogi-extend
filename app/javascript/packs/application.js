@@ -12,7 +12,8 @@ Rails.start()
 
 import "./general.sass"
 import "./application_dependent.sass"
-import "./free_battle_show.sass"
+import "./free_battle_show2.sass"
+
 import "./modulable_crud.coffee"
 import "./light_session_app.js"
 import "./audio_queue.js"
