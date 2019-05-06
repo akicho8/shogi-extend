@@ -95,4 +95,7 @@ Rails.application.configure do
   # ################################################################################ ActionCable
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
   config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
+
+  # ################################################################################ ActiveStorage
+  Rails.application.routes.default_url_options[:host] = "tk2-221-20341.vs.sakura.ne.jp"
 end
