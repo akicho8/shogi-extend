@@ -9,17 +9,19 @@
     table
       // border-color: red
       // background: #888
-    padding: 22px 0
+    padding: 20px 0
     .turn_area
       display: none
     .modal_trigger_dots
       display: none
     td
-      width: 60px
-      height: 40px
+      width: 62px
       // padding: 5px 15px
       font-size: 42px
+      &.origin_place
+        background: #eee
       &.current
+        background: #eee
         animation: none
     .piece_stand_outer
       padding-left: 10px
@@ -31,8 +33,9 @@
             font-size: 38px
         .piece_count
           color: #888
+          padding-left: 5px
           font-size: 30px
 
-.img_box
+.img_size_check
   img
     border: 1px solid $primary

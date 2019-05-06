@@ -147,7 +147,7 @@ class FreeBattlesController < ApplicationController
           # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
           # とした場合はリダイレクトするURLになってしまうため使えない
           # 固定URL化する
-          polymorphic_url([ns_prefix, current_record], format: "png")
+          polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
         end
       end
     end
@@ -186,6 +186,8 @@ class FreeBattlesController < ApplicationController
           end
 
           a[:new_and_copy] = { name: "新規でコピペ", url: url_for([:new, ns_prefix, current_single_key, source_id: e.id]) }
+
+          a[:tweet_image_url] = e.tweet_image_url
 
           a
         end

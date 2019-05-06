@@ -9,7 +9,7 @@
 
 body > section:first-of-type
   padding-top: $gap * 2
-  
+
 ////////////////////////////////////////////////////////////////////////////// html_formatのなかでtooltipが途切れる
 
 #swars_player_info_app
@@ -28,6 +28,13 @@ body > section:first-of-type
 .piyo_icon_in_button
   height: 1.0rem
 
+////////////////////////////////////////////////////////////////////////////// 普通の棋譜のtwitter用画像の小さいの
+  
+.mini_img
+  height: 24px
+  width: 24px
+  border: 1px solid $primary
+  
 ////////////////////////////////////////////////////////////////////////////// 段級位
 
 .versus
@@ -214,19 +221,9 @@ $any_exist_soldiers: $grey-light
       &:hover
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
         cursor: zoom-in
-  
+
 //////////////////////////////////////////////////////////////////////////////
 
-  
-
-  
-
-  
-  
-  
-  
-  
-  
 // .mobile
 //   body
 //     font-size: 50%
@@ -263,4 +260,3 @@ $any_exist_soldiers: $grey-light
   .swars_battles_index_light
     .table
       font-size: 90%
-      

@@ -12,7 +12,7 @@ Rails.start()
 
 import "./general.sass"
 import "./application_dependent.sass"
-import "./free_battle_show2.sass"
+import "./free_battle_show_css.sass"
 
 import "./modulable_crud.coffee"
 import "./light_session_app.js"

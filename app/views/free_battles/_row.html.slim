@@ -33,3 +33,8 @@ template(slot-scope="props")
         a.button(@click.stop :href="props.row.edit_url_info.url")
           b-tooltip(:label="props.row.edit_url_info.name")
             b-icon(pack="far" icon="edit")
+
+      template(v-if="props.row.tweet_image_url")
+        b-tooltip(label="OGP画像")
+          a(@click.stop :href="props.row.tweet_image_url" target="_blank")
+            img.mini_img(:src="props.row.tweet_image_url")
