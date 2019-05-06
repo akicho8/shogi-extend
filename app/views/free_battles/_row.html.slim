@@ -1,6 +1,6 @@
 template(slot-scope="props")
   b-table-column(field="id" :label="table_columns_hash.id.label" :visible="table_columns_hash.id.visible" sortable numeric)
-    a(@click.stop :href="props.row.show_path")
+    a(@click.stop :href="props.row.show_url_info.url")
       | #
       | {{props.row.id}}
 
