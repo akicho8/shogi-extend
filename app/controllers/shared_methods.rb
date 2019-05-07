@@ -5,9 +5,11 @@ module SharedMethods
     before_action only: [:edit, :update, :destroy] do
       if request.format.html?
         unless editable_record?(current_record)
-          if Rails.env.production?
-            redirect_to :root, alert: "アクセス権限がありません"
+          message = ["アクセス権限がありません"]
+          if Rails.env.development?
+            message << "(フッターのデバッグリンクから任意のユーザーまたは sysop でログインしてください)"
           end
+          redirect_to :root, alert: message
         end
       end
     end
