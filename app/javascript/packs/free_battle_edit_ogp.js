@@ -8,6 +8,10 @@ window.FreeBattleEditOgp = Vue.extend({
     }
   },
 
+  mounted() {
+    this.$nextTick(() => this.$refs.custom_turn_slider.focus())
+  },
+
   methods: {
     capture_dom_save() {
 

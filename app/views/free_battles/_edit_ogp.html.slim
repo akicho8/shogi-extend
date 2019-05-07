@@ -23,7 +23,7 @@
 
   template(v-if="$refs.main_sp")
     .has-text-centered
-      input.ogp_slider(type="range" :value="$refs.main_sp.real_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="turn_slider2")
+      input.ogp_slider(type="range" :value="$refs.main_sp.real_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="custom_turn_slider")
       span.is-size-7
         | {{$refs.main_sp.real_turn}}
 
