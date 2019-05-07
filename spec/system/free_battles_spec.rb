@@ -16,8 +16,8 @@ RSpec.describe "棋譜投稿", type: :system do
     text_input_click
 
     expect(page).to have_field "free_battle[kifu_body]"
-    expect(page).to have_field "free_battle[kifu_url]"
-    expect(page).to have_field "free_battle[kifu_file]"
+    # expect(page).to have_field "free_battle[kifu_url]"
+    # expect(page).to have_field "free_battle[kifu_file]"
 
     fill_in "free_battle[kifu_body]", with: "68銀"
     sleep(3)

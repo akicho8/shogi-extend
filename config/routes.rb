@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :swars, path: "" do
-    resources :battles, path: "w", only: [:index, :show, :create]
+    resources :battles, path: "w"
     resources :player_infos, :only => :index, path: "w-user-stat"
 
     get "wr/:id",   to: "battles#show" # 互換性のため

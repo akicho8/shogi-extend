@@ -536,10 +536,7 @@ module Swars
       end
 
       def js_current_records_one(e)
-        a = e.attributes
-
-        a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
-        a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+        a = super
 
         a[:title] = e.to_title
         a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
@@ -551,12 +548,9 @@ module Swars
           # a["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
         end
 
-        a[:battled_at] = e.battled_at.to_s(:battle_time)
         a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
         a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
-        a[:show_path] = polymorphic_path([ns_prefix, e])
-        a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-        a[:swars_real_battle_url] = swars_real_battle_url(current_record)
+        a[:swars_real_battle_url] = swars_real_battle_url(e)
         a[:wars_tweet_body] = e.wars_tweet_body
 
         a[:memberships] = left_right_pairs(e).collect do |label, e|

@@ -86,7 +86,7 @@ module ModulableCrud
     end
 
     def js_current_records_one(e)
-      e.attribute
+      e.attributes
     end
 
     def index

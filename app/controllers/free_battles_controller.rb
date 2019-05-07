@@ -172,26 +172,14 @@ class FreeBattlesController < ApplicationController
     end
 
     def js_current_records_one(e)
-      a = e.attributes
-      a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
-      a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
-      a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+      a = super
 
       if e.owner_user
         a[:owner_info] = { name: e.owner_user.name, url: url_for(e.owner_user) }
       end
 
       a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
-
-      a[:show_url_info] = { name: "詳細", url: polymorphic_path([ns_prefix, e]) }
-
-      if editable_record?(e) || Rails.env.development?
-        a[:edit_url_info] = { name: "編集", url: polymorphic_path([:edit, ns_prefix, e]) }
-      end
-
       a[:new_and_copy] = { name: "新規でコピペ", url: url_for([:new, ns_prefix, current_single_key, source_id: e.id]) }
-
-      a[:tweet_image_url] = e.tweet_image_url
 
       a
     end

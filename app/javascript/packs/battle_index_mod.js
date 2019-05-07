@@ -161,13 +161,13 @@ export default {
       return this.records.reduce((a, e, i) => ({...a, [e.id]: {code: i, ...e}}), {})
     },
 
-    // modal_record に対応するレコード
-    modal_record() {
-      return this.modal_record
-      // if (this.modal_record) {
-      //   return this.records_hash[this.modal_record]
-      // }
-    },
+    // // modal_record に対応するレコード
+    // modal_record() {
+    //   return this.modal_record
+    //   // if (this.modal_record) {
+    //   //   return this.records_hash[this.modal_record]
+    //   // }
+    // },
 
     // modal_record に対応する sfen
     // modal_record_sp_sfen() {

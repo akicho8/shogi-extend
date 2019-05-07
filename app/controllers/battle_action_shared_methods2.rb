@@ -130,4 +130,18 @@ module BattleActionSharedMethods2
 
     super
   end
+
+  def js_current_records_one(e)
+    a = e.attributes
+    a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
+    a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+    a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+    a[:battled_at] = e.battled_at.to_s(:battle_time)
+    a[:show_path] = polymorphic_path([ns_prefix, e])
+    a[:tweet_image_url] = e.tweet_image_url
+    if editable_record?(e) || Rails.env.development?
+      a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
+    end
+    a
+  end
 end

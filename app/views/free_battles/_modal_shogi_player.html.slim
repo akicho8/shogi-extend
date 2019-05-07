@@ -39,9 +39,9 @@ b-modal(:active.sync="modal_p" has-modal-card)
         a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
           = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
 
-        template(v-if="modal_record.show_url_info")
-          a.button.is-small(@click.stop :href="modal_record.show_url_info.url")
-            | {{modal_record.show_url_info.name}}
+        template(v-if="modal_record.show_path")
+          a.button.is-small(@click.stop :href="modal_record.show_path")
+            | 詳細
 
         template(v-if="false")
           a.button.is-small(@click="modal_p = false") 閉じる
