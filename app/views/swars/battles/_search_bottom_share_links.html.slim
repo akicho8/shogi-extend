@@ -2,7 +2,7 @@
   .columns
     .column
       .buttons
-        .touch_only
+        .is-hidden-desktop
           = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
             | 最新の対局を
             = image_tag("piyo_shogi_app.png", "class": "piyo_icon_in_button")

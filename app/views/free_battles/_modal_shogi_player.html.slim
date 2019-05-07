@@ -36,7 +36,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
           a.button.is-small(@click.stop :href="current_record.new_and_copy.url")
             | {{current_record.new_and_copy.name}}
 
-        a.touch_only(@click.stop :href="current_record.piyo_shogi_app_url")
+        a.is-hidden-desktop(@click.stop :href="current_record.piyo_shogi_app_url")
           = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
 
         template(v-if="current_record.show_url_info")

@@ -62,7 +62,7 @@
               = link_to("ウォーズTweetコピー", "#", "@click.prevent" => "wars_tweet_copy_click('#{current_record.wars_tweet_body}')")
             / b-dropdown-item(href=piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"]))) ぴよ将棋
 
-        = link_to(image_tag("piyo_shogi_app.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])), :class => "touch_only")
+        = link_to(image_tag("piyo_shogi_app.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])), :class => "is-hidden-desktop")
         a.button.is-info.is-small.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
           = icon_tag(:fab, :twitter) + "ツイート"
 

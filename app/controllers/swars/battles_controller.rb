@@ -212,7 +212,7 @@ module Swars
 
       # list << link_to("ウォーズ", swars_real_battle_url(current_record), "class": "button is-small", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
       list << link_to("詳細", [current_record], "class": "button is-small")
-      list << link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([current_record, format: "kif"])), :class => "touch_only")
+      list << link_to(h.image_tag("piyo_shogi_app.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([current_record, format: "kif"])), :class => "is-hidden-desktop")
       list.join(" ")
     end
 
