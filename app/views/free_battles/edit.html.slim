@@ -33,6 +33,12 @@
             p.has-text-grey.is-size-7
               | 保存すると固定URL化できます。またログインしてから保存したときは再編集できます
 
+        - if editable_record?(current_record)
+          - if current_record.persisted?
+            .field
+              b-tooltip(label="削除")
+                = link_to(icon_tag(:fas, :trash), [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
+
     template(v-if="output_kifs")
       .column
         .columns

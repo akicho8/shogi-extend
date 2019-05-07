@@ -32,6 +32,5 @@
         = link_to("新規でコピペ", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
         - if editable_record?(current_record)
           = link_to("編集", [:edit, ns_prefix, current_record], class: "button is-primary")
-          = link_to("削除", [ns_prefix, current_record], class: "button is-danger", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
 
   = render partial: "ogp_image_set"
