@@ -2,7 +2,7 @@
   .column
     b-field(grouped group-multiline)
       div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
-        b-checkbox(v-model="value.visible")
+        b-checkbox.is-small(v-model="value.visible")
           | {{value.label}}
 
     b-table.is_row_clickable(
