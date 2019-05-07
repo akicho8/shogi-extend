@@ -1,4 +1,4 @@
-module BuefyTableMethods
+module BattleActionSharedMethods2
   extend ActiveSupport::Concern
 
   included do
@@ -77,7 +77,15 @@ module BuefyTableMethods
         # records: js_current_records,
         records: [],
         table_columns_hash: js_table_columns_hash,
+        popup_record: popup_record,
       }
+    end
+
+    let :popup_record do
+      if v = params[:popup_id]
+        record = current_scope.find(v)
+        js_current_records_one(record)
+      end
     end
 
     let :js_table_columns_hash do
@@ -103,6 +111,14 @@ module BuefyTableMethods
         kifu_canvas_image_attached: current_record.thumbnail_image.attached?,
         tweet_image_url: current_record.tweet_image_url,
       }
+    end
+
+    let :js_edit_ogp_options do
+      js_show_options
+    end
+
+    let :current_mode do
+      (params[:mode].presence || :basic).to_sym
     end
   end
 

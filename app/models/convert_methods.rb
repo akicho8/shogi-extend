@@ -225,18 +225,22 @@ module ConvertMethods
       Rails.application.routes.url_helpers.full_url_for(self)
     end
 
-    def tweet_body
+    def tweet_page_url2
+      Rails.application.routes.url_helpers.full_url_for([self.class, popup_id: id])
+    end
+
+    def tweet_body(**options)
       out = []
       out << to_title
-      out << tweet_page_url
+      out << (options[:url] || tweet_page_url)
       if respond_to?(:description) && description.present?
         out << description
       end
       out.compact.join("\n")
     end
 
-    def tweet_window_url
-      "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_body)}"
+    def tweet_window_url(**options)
+      "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_body(options))}"
     end
 
     def tweet_image
@@ -257,7 +261,7 @@ module ConvertMethods
         v = Base64.decode64(v)
         thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
         {
-          message: "OGP画像を作成しました",
+          message: "OGP画像を設定しました",
           # https://edgeguides.rubyonrails.org/active_storage_overview.html
           # Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
           tweet_image_url: tweet_image_url,

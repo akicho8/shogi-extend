@@ -8,7 +8,7 @@ export default {
     return {
       query: this.$options.query,     // 検索文字列
       modal_p: false,                 // モーダルを開くフラグ
-      current_id: null,               // 選択したレコードID
+      modal_record: null,               // 選択したレコードID
 
       loading: false,
 
@@ -33,16 +33,15 @@ export default {
 
   methods: {
     show_handle(row) {
-      this.current_id = row.id
-      // const row = this.records_hash[id]
+      this.modal_record = row
 
-      if (row.sp_sfen) {
+      if (this.modal_record.sp_sfen) {
         this.debug_alert("棋譜はすでにある")
         this.modal_show()
         return
       }
 
-      this.record_fetch_to(row, () => this.modal_show())
+      this.record_fetch_to(this.modal_record, () => this.modal_show())
     },
 
     modal_show() {
@@ -94,7 +93,7 @@ export default {
     },
 
     details_open_handle(row) {
-      this.record_fetch_to(row)
+      this.record_fetch_to(row) // ポップアップしないけどデータだけ取得している
     },
 
     // row の棋譜がなければ取得して block があれば呼ぶ
@@ -114,7 +113,7 @@ export default {
           if (block) {
             block("success")
           }
-          // const record = this.records.find(e => e.id === this.current_id)
+          // const record = this.records.find(e => e.id === this.modal_record)
           // this.$set(record, "sp_sfen", response.data["sp_sfen"])
           // this.modal_show()
         }).catch((error) => {
@@ -129,6 +128,11 @@ export default {
     if (!this.query) {
       this.$refs.main_field.focus()
     }
+
+    if (this.$options.popup_record) {
+      this.show_handle(this.$options.popup_record)
+    }
+
     this.async_records_load()
   },
 
@@ -157,19 +161,20 @@ export default {
       return this.records.reduce((a, e, i) => ({...a, [e.id]: {code: i, ...e}}), {})
     },
 
-    // current_id に対応するレコード
-    current_record() {
-      if (this.current_id) {
-        return this.records_hash[this.current_id]
-      }
+    // modal_record に対応するレコード
+    modal_record() {
+      return this.modal_record
+      // if (this.modal_record) {
+      //   return this.records_hash[this.modal_record]
+      // }
     },
 
-    // current_id に対応する sfen
-    current_record_sp_sfen() {
-      if (this.current_record) {
-        return this.current_record.sp_sfen
-      }
-    },
+    // modal_record に対応する sfen
+    // modal_record_sp_sfen() {
+    //   if (this.modal_record) {
+    //     return this.modal_record.sp_sfen
+    //   }
+    // },
 
     // 表示している列のカラム名の配列
     visible_columns() {

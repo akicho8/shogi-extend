@@ -21,7 +21,7 @@
 module General
   class BattlesController < ApplicationController
     include ModulableCrud::All
-    include SharedMethods
+    include BattleActionSharedMethods1
 
     let :current_record do
       if v = params[:id].presence

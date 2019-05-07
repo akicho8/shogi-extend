@@ -2,9 +2,13 @@
 @import "~bulma/sass/utilities/mixins"
 
 #capture_container
+  margin: 0 auto
+  
   // https://bulma.io/documentation/overview/responsiveness/
   width: 1200px
   height: 630px
+  box-sizing: content-box
+  border: 1px solid $primary
   .shogi-player
     .piece_inner.promoted_false
       color: black
@@ -41,3 +45,6 @@
 .img_size_check
   img
     border: 1px solid $primary
+
+.ogp_slider
+  width: 25%

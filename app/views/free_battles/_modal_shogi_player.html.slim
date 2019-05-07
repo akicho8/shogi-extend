@@ -1,18 +1,18 @@
 b-modal(:active.sync="modal_p" has-modal-card)
-  template(v-if="current_record")
+  template(v-if="modal_record")
     .modal-card(style="width:auto")
       header.modal-card-head
         p.modal-card-title.is-size-5
-          | {{current_record.title}}
+          | {{modal_record.title}}
         button(class="delete" aria-label="close" @click="modal_p = false")
 
       section.modal-card-body
-        b-loading(:is-full-page="false" :active="!current_record.sp_sfen" :can-cancel="true")
+        b-loading(:is-full-page="false" :active="!modal_record.sp_sfen" :can-cancel="true")
 
-        template(v-if="current_record.sp_sfen")
+        template(v-if="modal_record.sp_sfen")
           shogi-player(
             :start_turn="0"
-            :kifu_body="current_record.sp_sfen"
+            :kifu_body="modal_record.sp_sfen"
             :key_event_capture="true"
             :slider_show="true"
             :sfen_show="false"
@@ -23,25 +23,25 @@ b-modal(:active.sync="modal_p" has-modal-card)
             :volume=AppConfig[:volume]
           )
 
-        template(v-if="current_record.description")
+        template(v-if="modal_record.description")
           .box.is-size-7
-            | {{current_record.description}}
+            | {{modal_record.description}}
 
       footer.modal-card-foot.space_between
-        a.button.is-small(@click.stop.prevent="kifu_copy_handle(current_record)")
+        a.button.is-small(@click.stop.prevent="kifu_copy_handle(modal_record)")
           b-icon(pack="far" icon="clipboard" size="is-small")
           | &nbsp;コピー
 
-        template(v-if="current_record.new_and_copy")
-          a.button.is-small(@click.stop :href="current_record.new_and_copy.url")
-            | {{current_record.new_and_copy.name}}
+        template(v-if="modal_record.new_and_copy")
+          a.button.is-small(@click.stop :href="modal_record.new_and_copy.url")
+            | {{modal_record.new_and_copy.name}}
 
-        a.is-hidden-desktop(@click.stop :href="current_record.piyo_shogi_app_url")
+        a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
           = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
 
-        template(v-if="current_record.show_url_info")
-          a.button.is-small(@click.stop :href="current_record.show_url_info.url")
-            | {{current_record.show_url_info.name}}
+        template(v-if="modal_record.show_url_info")
+          a.button.is-small(@click.stop :href="modal_record.show_url_info.url")
+            | {{modal_record.show_url_info.name}}
 
         template(v-if="false")
           a.button.is-small(@click="modal_p = false") 閉じる

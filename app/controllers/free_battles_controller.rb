@@ -26,9 +26,7 @@
 
 class FreeBattlesController < ApplicationController
   include ModulableCrud::All
-  include SharedMethods
-
-  cattr_accessor(:saisyoniload) { false }
+  include BattleActionSharedMethods1
 
   def new
     if id = params[:source_id]
@@ -133,7 +131,13 @@ class FreeBattlesController < ApplicationController
   concerning :ShowMethods do
     included do
       let :twitter_options do
-        options = { title: current_record.safe_title, description: current_record.respond_to?(:description) ? current_record.description : "", }
+        options = {
+          title: current_record.safe_title,
+          url: current_record.tweet_page_url2,
+        }
+        if current_record.respond_to?(:description) && v = current_record.description.presence
+          options[:description] = v
+        end
         if twitter_staitc_image_url
           options.update(image: twitter_staitc_image_url)
         else
@@ -153,7 +157,7 @@ class FreeBattlesController < ApplicationController
     end
   end
 
-  include BuefyTableMethods
+  include BattleActionSharedMethods2
 
   concerning :IndexCustomMethods do
     included do
@@ -165,33 +169,31 @@ class FreeBattlesController < ApplicationController
           { key: :colosseum_user_id, label: "所有者",   visible: false, },
         ]
       end
+    end
 
-      let :js_current_records do
-        current_records.collect do |e|
-          a = e.attributes
-          a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
-          a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
-          a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+    def js_current_records_one(e)
+      a = e.attributes
+      a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
+      a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+      a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
 
-          if e.owner_user
-            a[:owner_info] = { name: e.owner_user.name, url: url_for(e.owner_user) }
-          end
-
-          a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
-
-          a[:show_url_info] = { name: "詳細", url: polymorphic_path([ns_prefix, e]) }
-
-          if editable_record?(e) || Rails.env.development?
-            a[:edit_url_info] = { name: "編集", url: polymorphic_path([:edit, ns_prefix, e]) }
-          end
-
-          a[:new_and_copy] = { name: "新規でコピペ", url: url_for([:new, ns_prefix, current_single_key, source_id: e.id]) }
-
-          a[:tweet_image_url] = e.tweet_image_url
-
-          a
-        end
+      if e.owner_user
+        a[:owner_info] = { name: e.owner_user.name, url: url_for(e.owner_user) }
       end
+
+      a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
+
+      a[:show_url_info] = { name: "詳細", url: polymorphic_path([ns_prefix, e]) }
+
+      if editable_record?(e) || Rails.env.development?
+        a[:edit_url_info] = { name: "編集", url: polymorphic_path([:edit, ns_prefix, e]) }
+      end
+
+      a[:new_and_copy] = { name: "新規でコピペ", url: url_for([:new, ns_prefix, current_single_key, source_id: e.id]) }
+
+      a[:tweet_image_url] = e.tweet_image_url
+
+      a
     end
   end
 end

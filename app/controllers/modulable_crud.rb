@@ -81,8 +81,12 @@ module ModulableCrud
       end
 
       let :js_current_records do
-        current_records
+        current_records.collect { |e| js_current_records_one(e) }
       end
+    end
+
+    def js_current_records_one(e)
+      e.attribute
     end
 
     def index
@@ -109,7 +113,7 @@ module ModulableCrud
     end
   end
 
-  concern :NewEditShareMethods do
+  concern :NewEditSharedMethods do
     def create_or_update
       current_record.assign_attributes(current_record_params)
       save_and_redirect
@@ -264,7 +268,7 @@ module ModulableCrud
       include Base
       include IndexMethods
       include ShowMethods
-      include NewEditShareMethods
+      include NewEditSharedMethods
       include NewMethods
       include EditMethods
       include DestroyMethods

@@ -1,0 +1,71 @@
+- @page_title = "#{current_record.safe_title}のOGP画像設定"
+
+- content_for :head do
+  = javascript_pack_tag("free_battle_edit_ogp")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleEditOgp(#{js_edit_ogp_options.to_json.html_safe}).$mount("#free_battle_edit_ogp") })
+
+#free_battle_edit_ogp
+  nav.breadcrumb
+    ul
+      li= link_to("普通の棋譜一覧", [ns_prefix, current_plural_key])
+      li= link_to("##{current_record.id}", [ns_prefix, current_record])
+      li= link_to("編集", [:edit, ns_prefix, current_record])
+      li.is-active
+        = link_to("OGP画像設定", "#")
+
+  p.title.is-5.yumincho
+    = @page_title
+  hr
+
+  #capture_container
+    shogi-player(:kifu_body="'#{current_record.to_cached_sfen}'" :theme="'simple'" ref="main_sp" :key_event_capture="true")
+
+  template(v-if="$refs.main_sp")
+    .has-text-centered
+      input.ogp_slider(type="range" :value="$refs.main_sp.real_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="turn_slider2")
+      span.is-size-7
+        | {{$refs.main_sp.real_turn}}
+
+  .has-text-centered
+    .buttons.is-inline
+      a.button.is-primary(@click="og_image_create") 設定
+
+  .has-text-centered
+    .section
+      .title.is-6.paddingless 現在のOGP画像
+      template(v-if="tweet_image_url")
+        .img_size_check
+          a(:href="tweet_image_url" target="_blank")
+            img(:src="tweet_image_url" width="600")
+        a.button.is-danger(@click="og_image_destroy") 削除
+
+      template(v-else="tweet_image_url")
+        | なし
+
+      br
+      br
+      a.is-size-7(href="https://cards-dev.twitter.com/validator" target="_blank") Twitter Card validator
+      br
+      a.is-size-7(href="https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image" target="_blank") 仕様
+
+  / - if current_record.thumbnail_image.attached? && false
+  /   .box.img_size_check
+  /     = image_tag current_record.thumbnail_image, size: "200"
+  /   .box.img_size_check
+  /     = image_tag current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale, quality: 100)
+  /   .box.img_size_check
+  /     = image_tag polymorphic_path([ns_prefix, current_record], format: "png")
+  /   .box
+  /     ruby:
+  /       list = {
+  /         service_url: current_record.thumbnail_image.blob.service_url,
+  /         polymorphic_url: polymorphic_url(current_record.thumbnail_image),
+  /         rails_blob_url: rails_blob_url(current_record.thumbnail_image),
+  /         polymorphic_path: polymorphic_path(current_record.thumbnail_image),
+  /         rails_blob_path: rails_blob_path(current_record.thumbnail_image),
+  /         url_for: url_for(current_record.thumbnail_image),
+  /         rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
+  /         rails_representation_url: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
+  /       }
+  /     = list.to_html

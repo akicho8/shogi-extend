@@ -25,9 +25,9 @@
       == current_record.header_detail(self).to_html(table_class: "table is-fullwidth is-narrow")
 
     .field
-      .buttons(v-cloak="true")
+      .buttons.are-small(v-cloak="true")
         b-dropdown(:hoverable="true")
-          button.button.is-small(slot="trigger")
+          button.button(slot="trigger")
             span コピー
             b-icon(icon="menu-down")
           - KifuFormatWithBodInfo.each do |e|
@@ -35,7 +35,7 @@
               = link_to(e.name, "", "@click.prevent" => "kifu_copy_exec_click", data: {kifu_copy_params: current_record.to_kifu_copy_params(self, format: e.key).to_json})
 
         b-dropdown(:hoverable="true")
-          button.button.is-small(slot="trigger")
+          button.button(slot="trigger")
             span ダウンロード
             b-icon(icon="menu-down")
           - KifuFormatWithBodInfo.each do |e|
@@ -44,7 +44,7 @@
                 = e.name
 
         b-dropdown(:hoverable="true")
-          button.button.is-small(slot="trigger")
+          button.button(slot="trigger")
             span 直リンク
             b-icon(icon="menu-down")
           - KifuFormatWithBodInfo.each do |e|
@@ -54,7 +54,7 @@
 
         - if current_record.kind_of?(Swars::Battle)
           b-dropdown(:hoverable="true")
-            button.button.is-small(slot="trigger")
+            button.button(slot="trigger")
               span ウォーズ関連
               b-icon icon="menu-down"
             = content_tag("b-dropdown-item", "将棋ウォーズ", href: swars_real_battle_url(current_record), target: "_blank")
@@ -63,8 +63,12 @@
             / b-dropdown-item(href=piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"]))) ぴよ将棋
 
         = link_to(image_tag("piyo_shogi_app.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])), :class => "is-hidden-desktop")
-        a.button.is-info.is-small.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
+
+        | &nbsp;
+        a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
           = icon_tag(:fab, :twitter) + "ツイート"
+
+        = link_to("一覧でポップアップするURL", [ns_prefix, current_plural_key, popup_id: current_record.id], class: "button is-small")
 
 - if !Rails.env.production? && false
   .columns
