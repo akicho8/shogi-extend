@@ -55,16 +55,6 @@
           a.is-small(@click="input_text_clear") クリア
 
 .field
-  = form.label(:kifu_url, class: "label")
-  .control
-    = form.url_field(:kifu_url, class: "input", placeholder: "別のサイトにある場合は URL で指定できます。ウォーズの対局URLでも可です")
-
-.field
-  = form.label(:kifu_file, class: "label")
-  .control
-    = form.file_field(:kifu_file)
-
-.field
   = form.label(:title, class: "label")
   .control
     = form.text_field(:title, class: "input", placeholder: "空でかまいません")
@@ -73,3 +63,16 @@
   = form.label(:description, class: "label")
   .control
     = form.text_area(:description, class: "textarea", placeholder: "空でかまいません", rows: 2)
+
+.field
+  details
+    summary その他
+    .field
+      = form.label(:kifu_url, class: "label")
+      .control
+        = form.url_field(:kifu_url, class: "input", placeholder: "別のサイトにある場合は URL で指定できます。ウォーズの対局URLでも可です")
+
+    .field
+      = form.label(:kifu_file, class: "label")
+      .control
+        = form.file_field(:kifu_file)
