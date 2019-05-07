@@ -61,6 +61,9 @@ module ApplicationHelper
       o << tag.meta(name: "twitter:creator", content: v)
     end
     if v = options[:url]
+      o << tag.meta(name: "twitter:url", content: v)
+    end
+    if v = options[:url]
       o << tag.meta(property: "og:url", content: v)
     end
     if v = options[:title]
