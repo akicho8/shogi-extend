@@ -2,6 +2,8 @@
 
 - content_for :head do
   = javascript_pack_tag("free_battle_edit")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleEdit(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
   nav.breadcrumb
@@ -87,8 +89,3 @@
     /       :volume=AppConfig[:volume]
     /       )
     /       = render partial: "sfen_link"
-
-javascript:
-  document.addEventListener('DOMContentLoaded', () => {
-    new FreeBattleEdit(#{js_edit_options.to_json.html_safe}).$mount("#app")
-  })

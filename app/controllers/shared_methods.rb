@@ -5,7 +5,9 @@ module SharedMethods
     before_action only: [:edit, :update, :destroy] do
       if request.format.html?
         unless editable_record?(current_record)
-          redirect_to :root, alert: "アクセス権限がありません"
+          if Rails.env.production?
+            redirect_to :root, alert: "アクセス権限がありません"
+          end
         end
       end
     end
