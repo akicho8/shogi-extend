@@ -3,6 +3,5 @@
 
 .tabs
   ul
-    li class=("is-active" if params["controller"] == "swars/battles" && current_mode == :basic) = link_to("通常検索", [:swars, :basic, query: current_query])
-    li class=("is-active" if params["controller"] == "swars/battles" && current_mode == :light) = link_to("ぴよ将棋専用", [:swars, :light, query: current_query])
+    li class=("is-active" if params["controller"] == "swars/battles" && current_mode == :basic || current_mode == :light) = link_to("検索", [:swars, :basic, query: current_query])
     li class=("is-active" if params["controller"] == "swars/battles" && current_mode == :cloud) = link_to("タグクラウド", [:swars, :cloud])
