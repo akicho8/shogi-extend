@@ -15,7 +15,7 @@
 # | battled_at        | Battled at         | datetime    | NOT NULL    |                                   | C     |
 # | created_at        | 作成日時           | datetime    | NOT NULL    |                                   |       |
 # | updated_at        | 更新日時           | datetime    | NOT NULL    |                                   |       |
-# | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
+# | colosseum_user_id | 所有者ID           | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
 # | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
 # | start_turn        | 開始手数           | integer(4)  | NOT NULL    |                                   |       |
@@ -44,7 +44,7 @@ class FreeBattlesController < ApplicationController
     # プレビュー用
     if request.format.json?
       if v = params[:input_any_kifu]
-        render json: { output_kifs: output_kifs }
+        render json: { output_kifs: output_kifs, turn_max: turn_max }
         return
       end
     end
@@ -132,6 +132,10 @@ class FreeBattlesController < ApplicationController
 
       let :heavy_parsed_info do
         Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed)
+      end
+
+      let :turn_max do
+        heavy_parsed_info.mediator.turn_info.turn_max
       end
 
       let :output_kifs do

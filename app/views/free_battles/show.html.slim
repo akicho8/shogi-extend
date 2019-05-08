@@ -32,6 +32,10 @@
           = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
           = link_to("OGP画像設定", [:edit, ns_prefix, current_record, mode: "ogp"], class: "button")
 
+  .columns
+    .column
+      = render :partial => "uzai_pulldown"
+          
   .columns.is-hidden-touch
     .column
       = render :partial => "kifu_player_tabs_div"

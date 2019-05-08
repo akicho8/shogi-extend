@@ -16,6 +16,7 @@
       },
       attributes: {
         free_battle: {
+          colosseum_user: "所有者",
         },
       },
     },

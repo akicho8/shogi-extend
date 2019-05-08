@@ -8,7 +8,7 @@
         shogi-player(
           :run_mode="'play_mode'"
           :kifu_body="input_sfen"
-          :start_turn.sync="record.start_turn"
+          :start_turn="default_start_turn"
           :debug_mode="false"
           :key_event_capture="true"
           :slider_show="true"
@@ -19,6 +19,7 @@
           :sound_effect="true"
           :volume=AppConfig[:volume]
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
+          @update:start_turn="seek_to"
           )
           = render partial: "sfen_link"
 
@@ -57,17 +58,17 @@
 .field
   = form.label(:start_turn, class: "label")
   .control
-    = form.number_field(:start_turn, class: "input", placeholder: "", "v-model.number": "record.start_turn")
+    = form.number_field(:start_turn, class: "input is-small", placeholder: "", "v-model.number": "record.start_turn", "min": "0", ":max": "record.turn_max", ":readonly": "!text_input_mode_p")
 
 .field
   = form.label(:title, class: "label")
   .control
-    = form.text_field(:title, class: "input", placeholder: "空でかまいません")
+    = form.text_field(:title, class: "input is-small", placeholder: "空でかまいません")
 
 .field
   = form.label(:description, class: "label")
   .control
-    = form.text_area(:description, class: "textarea", placeholder: "空でかまいません", rows: 2)
+    = form.text_area(:description, class: "textarea is-small", placeholder: "空でかまいません", rows: 2)
 
 .field
   details
@@ -75,7 +76,7 @@
     .field
       = form.label(:kifu_url, class: "label")
       .control
-        = form.url_field(:kifu_url, class: "input", placeholder: "別のサイトにある場合は URL で指定できます。ウォーズの対局URLでも可です")
+        = form.url_field(:kifu_url, class: "input is-small", placeholder: "別のサイトにある場合は URL で指定できます。ウォーズの対局URLでも可です")
 
     .field
       = form.label(:kifu_file, class: "label")

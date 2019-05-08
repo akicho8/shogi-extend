@@ -15,7 +15,7 @@
 # | battled_at        | Battled at         | datetime    | NOT NULL    |                                   | C     |
 # | created_at        | 作成日時           | datetime    | NOT NULL    |                                   |       |
 # | updated_at        | 更新日時           | datetime    | NOT NULL    |                                   |       |
-# | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
+# | colosseum_user_id | 所有者ID           | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
 # | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
 # | start_turn        | 開始手数           | integer(4)  | NOT NULL    |                                   |       |
@@ -27,11 +27,11 @@
 
 class AddStartTurnToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    # [:swars_battles, :free_battles, :general_battles].each do |table|
-    #   change_table table do |t|
-    #     t.integer :start_turn, null: false, index: true
-    #   end
-    # end
+    [:swars_battles, :free_battles, :general_battles].each do |table|
+      change_table table do |t|
+        t.integer :start_turn, null: false, index: true
+      end
+    end
 
     # MySQL では null: false にすると既存レコードには 0 が入る
     # [Swars::Battle, General::Battle, FreeBattle].each do |model|
