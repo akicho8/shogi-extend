@@ -68,6 +68,8 @@ class FreeBattlesController < ApplicationController
       record = FreeBattle.find(id)
       v[:kifu_body] = record.kifu_body
       v[:title] = "「#{record.title}」のコピー"
+      v[:description] = record.description
+      v[:start_turn] = record.start_turn
     end
 
     if hidden_kifu_body = v.delete(:hidden_kifu_body)
