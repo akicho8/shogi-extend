@@ -222,21 +222,15 @@ module ConvertMethods
     end
 
     def tweet_page_url
-      Rails.application.routes.url_helpers.full_url_for(self)
-    end
-
-    def tweet_page_url2
-      Rails.application.routes.url_helpers.full_url_for([self.class, popup_id: id])
+      Rails.application.routes.url_helpers.full_url_for([self.class, modal_id: id])
     end
 
     def tweet_body(**options)
       out = []
       out << to_title
-      out << (options[:url] || tweet_page_url)
-      if respond_to?(:description) && description.present?
-        out << description
-      end
-      out.compact.join("\n")
+      out << description
+      out << (options[:url] || tweet_page_url) # URLは最後にすることでURLの表示がツイート内容から隠せる
+      out.reject(&:blank?).join("\n")
     end
 
     def tweet_window_url(**options)

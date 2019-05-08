@@ -128,35 +128,6 @@ class FreeBattlesController < ApplicationController
     end
   end
 
-  concerning :ShowMethods do
-    included do
-      let :twitter_options do
-        options = {
-          title: current_record.safe_title,
-          url: current_record.tweet_page_url2,
-        }
-        if current_record.respond_to?(:description) && v = current_record.description.presence
-          options[:description] = v
-        end
-        if twitter_staitc_image_url
-          options.update(image: twitter_staitc_image_url)
-        else
-          options.update(card: "summary")
-        end
-        options
-      end
-
-      let :twitter_staitc_image_url do
-        if current_record.thumbnail_image.attached?
-          # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
-          # とした場合はリダイレクトするURLになってしまうため使えない
-          # 固定URL化する
-          polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
-        end
-      end
-    end
-  end
-
   include BattleActionSharedMethods2
 
   concerning :IndexCustomMethods do
@@ -171,7 +142,7 @@ class FreeBattlesController < ApplicationController
       end
     end
 
-    def js_current_records_one(e)
+    def js_record_for(e)
       a = super
 
       if e.owner_user

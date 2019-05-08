@@ -68,7 +68,7 @@
         a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
           = icon_tag(:fab, :twitter) + "ツイート"
 
-        = link_to("一覧でポップアップするURL", [ns_prefix, current_plural_key, popup_id: current_record.id], class: "button is-small")
+        = link_to("一覧でポップアップするURL", [ns_prefix, current_plural_key, modal_id: current_record.id], class: "button is-small")
 
 - if !Rails.env.production? && false
   .columns

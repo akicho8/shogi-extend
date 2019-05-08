@@ -81,11 +81,11 @@ module ModulableCrud
       end
 
       let :js_current_records do
-        current_records.collect { |e| js_current_records_one(e) }
+        current_records.collect { |e| js_record_for(e) }
       end
     end
 
-    def js_current_records_one(e)
+    def js_record_for(e)
       e.attributes
     end
 

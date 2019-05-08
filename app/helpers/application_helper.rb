@@ -60,9 +60,10 @@ module ApplicationHelper
     if v = options[:creator]
       o << tag.meta(name: "twitter:creator", content: v)
     end
-    if v = options[:url]
-      o << tag.meta(name: "twitter:url", content: v)
-    end
+    # twitter は投稿時に指定された URL を見ているだけで og:url や twitter:url を見ていない
+    # if v = options[:url]
+    #   o << tag.meta(name: "twitter:url", content: v)
+    # end
     if v = options[:url]
       o << tag.meta(property: "og:url", content: v)
     end

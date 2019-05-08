@@ -8,7 +8,7 @@ export default {
     return {
       query: this.$options.query,     // 検索文字列
       modal_p: false,                 // モーダルを開くフラグ
-      modal_record: null,               // 選択したレコードID
+      modal_record: null,             // 選択したレコード
 
       loading: false,
 
@@ -77,7 +77,6 @@ export default {
         this.loading = false
         this.records = response.data
         this.fetched_count += 1
-        console.table(this.records)
       }).catch((error) => {
         console.table([error.response])
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
@@ -129,8 +128,8 @@ export default {
       this.$refs.main_field.focus()
     }
 
-    if (this.$options.popup_record) {
-      this.show_handle(this.$options.popup_record)
+    if (this.$options.modal_record) {
+      this.show_handle(this.$options.modal_record)
     }
 
     this.async_records_load()

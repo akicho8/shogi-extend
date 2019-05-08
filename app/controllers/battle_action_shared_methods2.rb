@@ -74,17 +74,21 @@ module BattleActionSharedMethods2
         sort_column: current_sort_column,
         sort_order: current_sort_order,
         sort_order_default: "desc", # カラムをクリックしたときの最初の向き
-        # records: js_current_records,
-        records: [],
+        records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
         table_columns_hash: js_table_columns_hash,
-        popup_record: popup_record,
+        modal_record: js_modal_record,
       }
     end
 
-    let :popup_record do
-      if v = params[:popup_id]
-        record = current_scope.find(v)
-        js_current_records_one(record)
+    let :js_modal_record do
+      if modal_record
+        js_record_for(modal_record)
+      end
+    end
+
+    let :modal_record do
+      if v = params[:modal_id]
+        current_scope.find_by(id: v)
       end
     end
 
@@ -120,6 +124,45 @@ module BattleActionSharedMethods2
     let :current_mode do
       (params[:mode].presence || :basic).to_sym
     end
+
+    let :show_twitter_options do
+      options = {
+        title: current_record.safe_title,
+        url: current_record.tweet_page_url,
+      }
+      if v = current_record.description
+        options[:description] = v
+      end
+      if twitter_staitc_image_url
+        options.update(image: twitter_staitc_image_url)
+      else
+        options.update(card: "summary")
+      end
+      options
+    end
+
+    let :modal_record_twitter_options do
+      if e = modal_record
+        options = {}
+        options[:title]       = e.safe_title
+        options[:url]         = e.tweet_page_url
+        options[:description] = e.description
+
+        if e.thumbnail_image.attached?
+          options[:image] = polymorphic_url([ns_prefix, e], format: "png", updated_at: e.updated_at.to_i)
+        end
+        options
+      end
+    end
+
+    let :twitter_staitc_image_url do
+      if current_record.thumbnail_image.attached?
+        # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
+        # とした場合はリダイレクトするURLになってしまうため使えない
+        # 固定URL化する
+        polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
+      end
+    end
   end
 
   def show
@@ -131,7 +174,7 @@ module BattleActionSharedMethods2
     super
   end
 
-  def js_current_records_one(e)
+  def js_record_for(e)
     a = e.attributes
     a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
     a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")

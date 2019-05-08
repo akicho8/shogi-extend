@@ -5,14 +5,24 @@ window.FreeBattleEditOgp = Vue.extend({
   data() {
     return {
       tweet_image_url: this.$options.tweet_image_url,
+      turn_min: null,
+      turn_max: null,
+      real_turn: null,
     }
   },
 
   mounted() {
-    this.$nextTick(() => this.$refs.custom_turn_slider.focus())
+    this.turn_min = this.$refs.main_sp.turn_min
+    this.turn_max = this.$refs.main_sp.turn_max
+    this.real_turn = this.$refs.main_sp.real_turn
+    this.$nextTick(() => this.$refs.ogp_turn_slider.focus())
   },
 
   methods: {
+    current_turn_set(v) {
+      this.$refs.main_sp.current_turn_set(v)
+    },
+
     capture_dom_save() {
 
       const options = {
@@ -86,7 +96,6 @@ window.FreeBattleEditOgp = Vue.extend({
         url: this.$options.xhr_put_path,
         data: params,
       }).then((response) => {
-        console.log(response.data)
         this.$toast.open({message: response.data.message})
         this.tweet_image_url = null
       }).catch((error) => {

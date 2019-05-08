@@ -1,4 +1,9 @@
-- twitter_card_tag(title: "普通の棋譜一覧")
+- @page_title ||= "普通の棋譜一覧"
+
+- if v = modal_record_twitter_options
+  - twitter_card_tag(v)
+- else
+  - twitter_card_tag(title: @page_title)
 
 - content_for :head do
   = javascript_pack_tag("free_battle_index")
@@ -8,15 +13,15 @@
 #free_battle_index(v-cloak)
   = render partial: "modal_shogi_player"
 
-  .title.is-2.yumincho= "普通の棋譜一覧"
+  .title.is-2.yumincho= @page_title
   hr
 
   .columns
     .column
-      = form_with(url: :free_battles, method: :get, skip_enforcing_utf8: true) do |form|
+      = form_with(url: [ns_prefix, current_plural_key], method: :get, skip_enforcing_utf8: true) do |form|
         .field.has-addons
           .control.is-expanded
-            = form.search_field(:query, class: "input is-half", value: controller.current_query, placeholder: current_placeholder, autofocus: current_query.blank?, "v-model" => "query", ref: "main_field")
+            = form.search_field(:query, class: "input is-half", value: controller.current_query, placeholder: current_placeholder, autofocus: current_query.blank?, "v-model": "query", ref: "main_field")
           .control
             = form.button(icon_tag(:fas, :search), name: nil, class: "button is-info", data: { disable_with: icon_tag(:fas, :sync, :spin) })
             = form.submit("検索") if Rails.env.test?

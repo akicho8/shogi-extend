@@ -35,6 +35,8 @@ module Swars
 
     has_many :access_logs, dependent: :destroy # アクセスログみたいもの
 
+    attribute :description      # インターフェイスを統一するため
+
     has_many :users, through: :memberships do
       # 先手/後手プレイヤー
       def black                 # FIXME: 使用禁止

@@ -535,7 +535,7 @@ module Swars
         end
       end
 
-      def js_current_records_one(e)
+      def js_record_for(e)
         a = super
 
         a[:title] = e.to_title
