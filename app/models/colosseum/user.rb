@@ -7,7 +7,7 @@
 # | name                   | desc                     | type        | opts                | refs | index |
 # |------------------------+--------------------------+-------------+---------------------+------+-------|
 # | id                     | ID                       | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | Key                      | string(255) | NOT NULL            |      | A!    |
+# | key                    | ユニークなハッシュ       | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                     | string(255) | NOT NULL            |      |       |
 # | online_at              | オンラインになった日時   | datetime    |                     |      |       |
 # | fighting_at            | 入室しているなら入室日時 | datetime    |                     |      |       |

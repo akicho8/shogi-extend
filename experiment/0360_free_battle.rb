@@ -20,13 +20,13 @@ tp free_battle
 # >>    (0.3ms)  BEGIN
 # >>   ↳ /usr/local/var/rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
 # >>   ActsAsTaggableOn::Tag Update All (0.2ms)  UPDATE `tags` SET `taggings_count` = COALESCE(`taggings_count`, 0) - 1 WHERE 1=0
-# >>   ↳ app/models/convert_methods.rb:47
+# >>   ↳ app/models/battle_model_shared_methods.rb:47
 # >>   ActsAsTaggableOn::Tag Update All (0.2ms)  UPDATE `tags` SET `taggings_count` = COALESCE(`taggings_count`, 0) - 1 WHERE 1=0
-# >>   ↳ app/models/convert_methods.rb:48
+# >>   ↳ app/models/battle_model_shared_methods.rb:48
 # >>   ActsAsTaggableOn::Tag Update All (0.3ms)  UPDATE `tags` SET `taggings_count` = COALESCE(`taggings_count`, 0) - 1 WHERE 1=0
-# >>   ↳ app/models/convert_methods.rb:49
+# >>   ↳ app/models/battle_model_shared_methods.rb:49
 # >>   ActsAsTaggableOn::Tag Update All (0.2ms)  UPDATE `tags` SET `taggings_count` = COALESCE(`taggings_count`, 0) - 1 WHERE 1=0
-# >>   ↳ app/models/convert_methods.rb:50
+# >>   ↳ app/models/battle_model_shared_methods.rb:50
 # >>   FreeBattle Create (0.4ms)  INSERT INTO `free_battles` (`key`, `kifu_body`, `turn_max`, `meta_info`, `battled_at`, `created_at`, `updated_at`) VALUES ('qKTyHfgjnRnzpFwD5P97QCWw', '', 0, '---\n:header:\n  手合割: 平手\n:detail_names:\n- []\n- []\n:simple_names:\n- []\n- []\n:skill_set_hash: {}\n', '0000-12-31 15:00:00', '2018-06-17 13:55:46', '2018-06-17 13:55:46')
 # >>   ↳ /usr/local/var/rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.0/lib/active_record/log_subscriber.rb:98
 # >>   ConvertedInfo Create (0.3ms)  INSERT INTO `converted_infos` (`convertable_type`, `convertable_id`, `text_body`, `text_format`, `created_at`, `updated_at`) VALUES ('FreeBattle', 31, '手合割：平手\n\nまで0手で後手の勝ち\n', 'ki2', '2018-06-17 13:55:46', '2018-06-17 13:55:46')

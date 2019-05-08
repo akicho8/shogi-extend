@@ -8,7 +8,7 @@
         shogi-player(
           :run_mode="'play_mode'"
           :kifu_body="input_sfen"
-          :start_turn="-1"
+          :start_turn.sync="record.start_turn"
           :debug_mode="false"
           :key_event_capture="true"
           :slider_show="true"
@@ -53,6 +53,11 @@
           | /
           | &nbsp;
           a.is-small(@click="input_text_clear") クリア
+
+.field
+  = form.label(:start_turn, class: "label")
+  .control
+    = form.number_field(:start_turn, class: "input", placeholder: "", "v-model.number": "record.start_turn")
 
 .field
   = form.label(:title, class: "label")

@@ -16,13 +16,16 @@
 # | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# | start_turn      | 開始手数        | integer(4)  | NOT NULL    |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 
 require "matrix"
 
 module General
   class Battle < ApplicationRecord
-    include ConvertMethods
+    include BattleModelSharedMethods
+
+    attribute :description      # インターフェイスを統一するため
 
     has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
 

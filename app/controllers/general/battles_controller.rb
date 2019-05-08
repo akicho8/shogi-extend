@@ -16,12 +16,13 @@
 # | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# | start_turn      | 開始手数        | integer(4)  | NOT NULL    |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 
 module General
   class BattlesController < ApplicationController
     include ModulableCrud::All
-    include BattleActionSharedMethods1
+    include BattleControllerSharedMethods1
 
     let :current_record do
       if v = params[:id].presence

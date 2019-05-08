@@ -18,6 +18,7 @@
 # | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
 # | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
+# | start_turn        | 開始手数           | integer(4)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -26,7 +27,7 @@
 
 class FreeBattlesController < ApplicationController
   include ModulableCrud::All
-  include BattleActionSharedMethods1
+  include BattleControllerSharedMethods1
 
   def new
     if id = params[:source_id]
@@ -137,7 +138,7 @@ class FreeBattlesController < ApplicationController
     end
   end
 
-  include BattleActionSharedMethods2
+  include BattleControllerSharedMethods2
 
   concerning :IndexCustomMethods do
     included do

@@ -20,13 +20,14 @@
 # | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
 # | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
+# | start_turn        | 開始手数         | integer(4)  | NOT NULL    |      |       |
 # |-------------------+------------------+-------------+-------------+------+-------|
 
 module Swars
   class BattlesController < ApplicationController
     include ModulableCrud::All
-    include BattleActionSharedMethods1
-    include BattleActionSharedMethods2
+    include BattleControllerSharedMethods1
+    include BattleControllerSharedMethods2
 
     prepend_before_action only: :show do
       if bot_agent?

@@ -16,6 +16,7 @@
 # | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# | start_turn      | 開始手数        | integer(4)  | NOT NULL    |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 
 require 'rails_helper'

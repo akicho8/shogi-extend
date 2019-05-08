@@ -35,6 +35,7 @@
 
         - if editable_record?(current_record)
           - if current_record.persisted?
+            hr
             .field
               .buttons
                 = link_to("OGP画像設定", [:edit, ns_prefix, current_record, mode: "ogp"], class: "button is-small")

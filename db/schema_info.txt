@@ -8,7 +8,7 @@
 # | name                   | desc                     | type        | opts                | refs | index |
 # |------------------------+--------------------------+-------------+---------------------+------+-------|
 # | id                     | ID                       | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | Key                      | string(255) | NOT NULL            |      | A!    |
+# | key                    | ユニークなハッシュ       | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                     | string(255) | NOT NULL            |      |       |
 # | online_at              | オンラインになった日時   | datetime    |                     |      |       |
 # | fighting_at            | 入室しているなら入室日時 | datetime    |                     |      |       |
@@ -54,6 +54,7 @@
 # | last_accessd_at | Last accessd at | datetime    | NOT NULL    |      |       |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# | start_turn      | 開始手数        | integer(4)  | NOT NULL    |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
@@ -90,6 +91,7 @@
 # | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
 # | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
+# | start_turn        | 開始手数         | integer(4)  | NOT NULL    |      |       |
 # |-------------------+------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
@@ -196,7 +198,7 @@
 # | user_id   | User         | integer(8)  | NOT NULL    |      | B     |
 # | provider  | プロバイダー | string(255) | NOT NULL    |      | A!    |
 # | uid       | UID          | string(255) | NOT NULL    |      | A!    |
-# | meta_info | Meta info    | text(65535) |             |      |       |
+# | meta_info | 棋譜ヘッダー | text(65535) |             |      |       |
 # |-----------+--------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
@@ -300,15 +302,15 @@
 #
 # Grade (swars_grades as Swars::Grade)
 #
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | Key      | string(255) | NOT NULL    |      | A!    |
-# | priority   | Priority | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      | A!    |
+# | priority   | Priority           | integer(4)  | NOT NULL    |      | B     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -355,6 +357,7 @@
 # | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
 # | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
+# | start_turn        | 開始手数           | integer(4)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

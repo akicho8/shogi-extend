@@ -26,6 +26,13 @@ window.FreeBattleEdit = Vue.extend({
     }
   },
 
+  created() {
+    if (this.record.start_turn === null) {
+      // this.record.start_turn = this.record.turn_max
+      this.record.start_turn = -1
+    }
+  },
+
   mounted() {
     this.input_text = this.record.kifu_body // 元の棋譜を復元
     if (!this.input_text) {

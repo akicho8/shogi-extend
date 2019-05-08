@@ -11,7 +11,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
 
         template(v-if="modal_record.sp_sfen")
           shogi-player(
-            :start_turn="0"
+            :start_turn="modal_record.start_turn"
             :kifu_body="modal_record.sp_sfen"
             :key_event_capture="true"
             :slider_show="true"

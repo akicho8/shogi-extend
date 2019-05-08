@@ -10,7 +10,7 @@
 # | user_id   | User         | integer(8)  | NOT NULL    |      | B     |
 # | provider  | プロバイダー | string(255) | NOT NULL    |      | A!    |
 # | uid       | UID          | string(255) | NOT NULL    |      | A!    |
-# | meta_info | Meta info    | text(65535) |             |      |       |
+# | meta_info | 棋譜ヘッダー | text(65535) |             |      |       |
 # |-----------+--------------+-------------+-------------+------+-------|
 
 module Colosseum

@@ -19,18 +19,22 @@
   hr
 
   #capture_container
-    shogi-player(:kifu_body="'#{current_record.to_cached_sfen}'" :theme="'simple'" ref="main_sp" :key_event_capture="true")
+    shogi-player(:kifu_body="'#{current_record.to_cached_sfen}'" :theme="'simple'" ref="main_sp" :key_event_capture="true" :start_turn.sync="start_turn")
 
   template(v-if="slider_show")
     .has-text-centered
       / FIXME: view で $refs を使ってはいけないらしいけど、かわりにどうすれば？
-      input.ogp_slider(type="range" :value="$refs.main_sp.real_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="ogp_turn_slider")
+      / input.ogp_slider(type="range" :value="$refs.main_sp.real_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="ogp_turn_slider")
+      / input.ogp_slider(type="range" :value="start_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="ogp_turn_slider")
+      input.ogp_slider(type="range" v-model.number="start_turn" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="ogp_turn_slider")
       span.is-size-7
         | {{$refs.main_sp.real_turn}}
 
   .has-text-centered
     .buttons.is-inline
-      a.button.is-primary(@click="og_image_create") 設定
+      a.button.is-primary(@click="og_image_create") 保存
+      p.has-text-grey-light.is-size-7
+        | 開始手数も同時に保存します
 
   .has-text-centered
     .section

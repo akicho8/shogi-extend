@@ -18,6 +18,7 @@
 # | colosseum_user_id | Colosseum user     | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
 # | title             | タイトル           | string(255) |             |                                   |       |
 # | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
+# | start_turn        | 開始手数           | integer(4)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -27,7 +28,7 @@
 require "open-uri"
 
 class FreeBattle < ApplicationRecord
-  include ConvertMethods
+  include BattleModelSharedMethods
 
   class << self
     def setup(**options)

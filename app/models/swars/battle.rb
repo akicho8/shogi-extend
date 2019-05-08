@@ -20,13 +20,14 @@
 # | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
 # | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
+# | start_turn        | 開始手数         | integer(4)  | NOT NULL    |      |       |
 # |-------------------+------------------+-------------+-------------+------+-------|
 
 require "matrix"
 
 module Swars
   class Battle < ApplicationRecord
-    include ConvertMethods
+    include BattleModelSharedMethods
 
     belongs_to :win_user, class_name: "User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
 

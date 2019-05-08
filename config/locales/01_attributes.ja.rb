@@ -9,6 +9,17 @@
       type: "所属モデル",
       position: "順序",
       lock_version: "排他制御用",
+
+      # free_battles
+      key: "ユニークなハッシュ",
+      kifu_file: "棋譜ファイル",
+      kifu_url: "棋譜URL",
+      kifu_body: "棋譜",
+      title: "タイトル",
+      description: "備考",
+      turn_max: "手数",
+      start_turn: "開始手数",
+      meta_info: "棋譜ヘッダー",
     },
   },
 }
