@@ -27,14 +27,15 @@
 
 class AddStartTurnToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles, :general_battles].each do |table|
-      change_table table do |t|
-        t.integer :start_turn, null: false, index: true
-      end
-    end
+    # [:swars_battles, :free_battles, :general_battles].each do |table|
+    #   change_table table do |t|
+    #     t.integer :start_turn, null: false, index: true
+    #   end
+    # end
 
-    [Swars::Battle, General::Battle, FreeBattle].each do |model|
-      model.find_each(&:save!)
-    end
+    # MySQL では null: false にすると既存レコードには 0 が入る
+    # [Swars::Battle, General::Battle, FreeBattle].each do |model|
+    #   model.find_each(&:save!)
+    # end
   end
 end
