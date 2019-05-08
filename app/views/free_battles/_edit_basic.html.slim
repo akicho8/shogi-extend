@@ -31,7 +31,7 @@
             =<> form.submit(name: :_submit_and_redirect_to_show, class: "button is-primary")
           - if current_record.new_record?
             p.has-text-grey.is-size-7
-              | 保存すると固定URL化できます。またログインしてから保存したときは再編集できます
+              | 保存すると固定URL化できます。ログインしてから保存したときのみ再編集やOGP画像の設定ができます
 
         - if editable_record?(current_record)
           - if current_record.persisted?

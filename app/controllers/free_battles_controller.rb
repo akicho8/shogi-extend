@@ -94,12 +94,21 @@ class FreeBattlesController < ApplicationController
     "棋譜データ"
   end
 
-  def notice_message
-  end
-
   def behavior_after_rescue(message)
     flash.now[:danger] = message
     render :edit
+  end
+
+  def redirect_to_where
+    if current_record.saved_changes[:id]
+      if editable_record?(current_record)
+        if !mobile_agent?
+          return [:edit, ns_prefix, current_record, mode: :ogp]
+        end
+      end
+    end
+
+    super
   end
 
   concerning :EditCustomMethods do
