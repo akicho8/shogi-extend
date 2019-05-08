@@ -56,3 +56,19 @@
   /         }
   /       = rows.to_html
   /       = paginate current_records
+
+  .columns
+    .column
+      article.message.is-primary.is-size-7
+        .message-header
+          | 使い方など
+        .message-body.has-text-left
+          .content
+            ol
+              li 「普通の棋譜」は勝手には消しません
+              li 行をクリックすると盤面がポップアップします
+              li
+                | ログインしてから投稿すると次のことができます
+                ol
+                  li 再編集や削除
+                  li OGP画像設定 (ツイッター投稿時の表示画像)
