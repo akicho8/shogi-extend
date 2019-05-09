@@ -28,10 +28,30 @@ export default {
       showDetailIcon: true,     // 行の下に開くやつ用のアイコンを表示する？
 
       fetched_count: 0,         // fetch した回数で 1 以上でレコード配列が空だったらデータがありませんを表示する
+
+      sp_run_mode: "view_mode",
     }
   },
 
+  watch: {
+    sp_run_mode(v) {
+      if (v === "play_mode") {
+        this.$toast.open({message: "駒を操作できます", position: "is-top", type: "is-info", duration: 1000 * 1})
+      } else {
+        this.$toast.open({message: "元に戻しました", position: "is-top", type: "is-info", duration: 1000 * 1})
+      }
+    },
+  },
+
   methods: {
+    toggle_run_mode() {
+      if (this.sp_run_mode === "view_mode") {
+        this.sp_run_mode = "play_mode"
+      } else {
+        this.sp_run_mode = "view_mode"
+      }
+    },
+
     show_handle(row) {
       this.modal_record = row
 

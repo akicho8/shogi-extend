@@ -166,7 +166,7 @@ class FreeBattlesController < ApplicationController
       end
 
       a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
-      a[:new_and_copy] = { name: "新規でコピペ", url: url_for([:new, ns_prefix, current_single_key, source_id: e.id]) }
+      a[:new_and_copy] = { name: "コピペ新規", url: url_for([:new, ns_prefix, current_single_key, source_id: e.id]) }
 
       a
     end

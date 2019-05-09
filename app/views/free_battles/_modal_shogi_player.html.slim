@@ -11,6 +11,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
 
         template(v-if="modal_record.sp_sfen")
           shogi-player(
+            :run_mode.sync="sp_run_mode"
             :start_turn="modal_record.start_turn"
             :kifu_body="modal_record.sp_sfen"
             :key_event_capture="true"
@@ -28,13 +29,18 @@ b-modal(:active.sync="modal_p" has-modal-card)
             | {{modal_record.description}}
 
       footer.modal-card-foot.space_between
-        a.button.is-small(@click.stop.prevent="kifu_copy_handle(modal_record)")
-          b-icon(pack="far" icon="clipboard" size="is-small")
-          | &nbsp;コピー
+        b-tooltip(label="棋譜をクリップボードにコピー")
+          a.button.is-small(@click.stop.prevent="kifu_copy_handle(modal_record)")
+            b-icon(pack="far" icon="clipboard" size="is-small")
+            | &nbsp;コピー
+
+        b-tooltip(label="この局面から自分で操作")
+          b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode" size="is-small") 継盤
 
         template(v-if="modal_record.new_and_copy")
-          a.button.is-small(@click.stop :href="modal_record.new_and_copy.url")
-            | {{modal_record.new_and_copy.name}}
+          b-tooltip(label="棋譜を複製して新規作成")
+            a.button.is-small(@click.stop :href="modal_record.new_and_copy.url")
+              | {{modal_record.new_and_copy.name}}
 
         a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
           = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")

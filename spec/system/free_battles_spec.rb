@@ -30,9 +30,9 @@ RSpec.describe "棋譜投稿", type: :system do
     doc_image("詳細")
   end
 
-  it "新規でコピペ" do
+  it "コピペ新規" do
     visit "/x/#{@free_battle.id}"
-    click_on "新規でコピペ"
+    click_on "コピペ新規"
     text_input_click
     expect(page).to have_content "48玉"
     doc_image
