@@ -88,8 +88,20 @@ class FreeBattle < ApplicationRecord
     title
   end
 
+  # 01060_77dacfcf0a24e8315ddd51e86152d3b2_横歩取り_急戦1__飛車先を受けずに互いに攻め合うと封じ込まれて後手有利.kif
+  # のような形式にする
   def download_filename
-    [("%04d" % id), key, title.gsub(/\p{Space}+/, "_")].join("_")
+    parts = []
+    parts << "%05d" % id
+    parts << "_"
+    parts << key
+    parts << "_"
+    parts << title.gsub(/\p{Space}+/, "_")
+    if description.present?
+      parts << "__"
+      parts << description.truncate(80, omission: "").gsub(/\p{Space}+/, "_")
+    end
+    parts.join
   end
 
   before_validation do
