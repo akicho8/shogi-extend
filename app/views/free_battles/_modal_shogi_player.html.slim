@@ -35,7 +35,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
             | &nbsp;コピー
 
         b-tooltip(label="この局面から自分で操作")
-          b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode" size="is-small") 継盤
+          b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode") 継盤
 
         template(v-if="modal_record.new_and_copy")
           b-tooltip(label="棋譜を複製して新規作成")
