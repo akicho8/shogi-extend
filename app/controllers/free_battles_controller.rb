@@ -131,7 +131,7 @@ class FreeBattlesController < ApplicationController
       end
 
       let :heavy_parsed_info do
-        Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed)
+        Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: true)
       end
 
       let :turn_max do
