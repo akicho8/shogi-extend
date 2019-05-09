@@ -62,8 +62,9 @@ window.FreeBattleEdit = Vue.extend({
 
   methods: {
     // フォーム側に反映する(フォームの方は readonly にしてある、とういか hidden_field でよくね？)
+    // 連動すると使いにくいのでやめた
     seek_to(v) {
-      this.record.start_turn = v
+      // this.record.start_turn = v
     },
 
     // テキスト入力の場合のみ入力が終わるまで少し待つ

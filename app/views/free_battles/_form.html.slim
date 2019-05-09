@@ -20,6 +20,7 @@
           :volume=AppConfig[:volume]
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
           @update:start_turn="seek_to"
+          ref="main_sp"
           )
           = render partial: "sfen_link"
 
@@ -58,7 +59,8 @@
 .field
   = form.label(:start_turn, class: "label")
   .control
-    = form.number_field(:start_turn, class: "input is-small", placeholder: "", "v-model.number": "record.start_turn", "min": "0", ":max": "record.turn_max", ":readonly": "!text_input_mode_p")
+    = form.number_field(:start_turn, class: "input is-small", placeholder: "", "v-model.number": "record.start_turn", "min": "0", ":max": "record.turn_max")
+    a.is-size-7(@click="record.start_turn = $refs.main_sp.mediator.real_turn") 操作入力の手数を入力
 
 .field
   = form.label(:title, class: "label")
