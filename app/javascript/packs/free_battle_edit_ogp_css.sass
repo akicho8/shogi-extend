@@ -24,7 +24,6 @@
       
     td
       width: 64px
-      height: 64px              // Window Chrome のために入れてみるテスト
       // padding: 5px 15px
       font-size: 42px
       &.origin_place
@@ -61,8 +60,8 @@
   width: 25%
 
 // Windows の Google Chrome だと mac とちがって駒が下りすぎる対策
-.win
-  $sp_simple_piece_inner_transform_y: 0px
+.mac
+  $sp_simple_piece_inner_transform_y: -5px
   #capture_container
     .board_inner
       .piece_outer
