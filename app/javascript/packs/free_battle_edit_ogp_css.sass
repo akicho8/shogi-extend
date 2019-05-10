@@ -20,6 +20,7 @@
       display: none
     .modal_trigger_dots
       display: none
+      
     td
       width: 62px
       // padding: 5px 15px
@@ -29,6 +30,7 @@
       &.current
         background: #eee
         animation: none
+        
     .piece_stand_outer
       padding-left: 10px
       .location_mark
@@ -48,3 +50,15 @@
 
 .ogp_slider
   width: 25%
+
+// Windows の Google Chrome だと mac とちがって駒が下りすぎる対策
+.win
+  $sp_simple_piece_inner_transform_y: 0px
+  #capture_container
+    .board_inner
+      .piece_outer
+        .piece_inner
+          &.location_black
+            transform: translateY($sp_simple_piece_inner_transform_y)
+          &.location_white
+            transform: rotate(180deg) translateY($sp_simple_piece_inner_transform_y)
