@@ -10,33 +10,36 @@
   box-sizing: content-box
   border: 1px solid $primary
   .shogi-player
+    padding: 12px 0
+    
     .piece_inner.promoted_false
-      color: black
+      color: #222
     table
-      // border-color: red
-      // background: #888
-    padding: 20px 0
+      border-color: #888        // 外枠
+      background: #999          // 罫線
     .turn_area
       display: none
     .modal_trigger_dots
       display: none
       
     td
-      width: 62px
+      width: 64px
+      height: 64px              // Window Chrome のために入れてみるテスト
       // padding: 5px 15px
       font-size: 42px
       &.origin_place
-        background: #eee
+        background: hsl(0,0%,94%)
       &.current
-        background: #eee
+        background: hsl(0,0%,94%)
         animation: none
         
     .piece_stand_outer
-      padding-left: 10px
+      padding-left: 12px
       .location_mark
         font-size: 38px
       .piece_stand
         .piece_outer
+          background: none
           .piece_inner
             font-size: 38px
         .piece_count
@@ -44,6 +47,12 @@
           padding-left: 5px
           font-size: 30px
 
+    .turn_active
+      .location_mark
+        // color: hsl(0, 50%, 10%)
+        text-shadow: 0 0 2rem hsl(0,50%,50%)
+          
+          
 .img_size_check
   img
     border: 1px solid $primary
