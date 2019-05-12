@@ -47,10 +47,11 @@ javascript:
       .column
         br
         .shogi-player.theme-simple.size-default
-          .board_container
-            .board_wrap
-              .board_outer
-                = @board_table
+          .board_container.font_size_base
+            .flippable
+              .board_wrap
+                .board_outer
+                  = @board_table
 
   .columns
     .column

@@ -22,7 +22,7 @@ window.FreeBattleEditOgp = Vue.extend({
         // scale: 2,
         // dpi: 144,
       }
-      const dom = document.querySelector("#capture_container .shogi-player")
+      const dom = document.querySelector("#capture_main")
       if (!dom) {
         alert("キャプチャ対象が見つかりません")
         return

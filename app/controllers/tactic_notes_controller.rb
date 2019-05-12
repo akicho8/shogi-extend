@@ -40,21 +40,21 @@ class TacticNotesController < ApplicationController
         Bioshogi::Dimension::Yplace.dimension.times.collect { |y|
           tag.tr {
             Bioshogi::Dimension::Xplace.dimension.times.collect { |x|
-              outer_class = []
-              inner_class = []
+              back_class = []
+              fore_class = []
 
               place = Bioshogi::Place.fetch([x, y])
               str = nil
 
               # トリガー駒
               if soldier = trigger_soldiers.place_as_key_table[place]
-                inner_class << "location_#{soldier.location.key}"
-                outer_class << "current"
+                fore_class << "location_#{soldier.location.key}"
+                back_class << "current"
                 str = soldier.any_name
               else
                 # トリガーではない駒
                 if soldier = soldiers.place_as_key_table[place]
-                  inner_class << "location_#{soldier.location.key}"
+                  fore_class << "location_#{soldier.location.key}"
                   str = soldier.any_name
                 end
               end
@@ -62,41 +62,43 @@ class TacticNotesController < ApplicationController
               # 何もない
               if v = other_objects_hash["○"]
                 if v[place]
-                  outer_class << "cell_blank"
+                  back_class << "cell_blank"
                 end
               end
 
               # 何かある
               if v = other_objects_hash["●"]
                 if v[place]
-                  outer_class << "something_exist"
+                  back_class << "something_exist"
                 end
               end
 
               # 移動元
               if v = other_objects_hash["★"]
                 if v[place]
-                  outer_class << "origin_place"
+                  back_class << "origin_place"
                 end
               end
 
               # 移動元ではない
               if v = other_objects_hash["☆"]
                 if v[place]
-                  outer_class << "not_any_from_place"
+                  back_class << "not_any_from_place"
                   str = icon_tag(:fab, :times)
                 end
               end
 
               # どれかの駒がある
               if soldier = any_exist_soldiers.find {|e| e.place == place }
-                inner_class << "location_#{soldier.location.key}"
-                outer_class << "any_exist_soldiers"
+                fore_class << "location_#{soldier.location.key}"
+                back_class << "any_exist_soldiers"
                 str = soldier.any_name
               end
 
-              tag.td(:class => ["piece_outer", *outer_class]) do
-                tag.span(str, :class => ["piece_inner", *inner_class])
+              tag.td do
+                tag.div(:class => ["piece_back", *back_class]) do
+                  tag.div(str, :class => ["piece_fore", *fore_class])
+                end
               end
             }.join.html_safe
           }
