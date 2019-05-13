@@ -25,7 +25,7 @@ module Colosseum
       if auth
         self.provider  = auth.provider
         self.uid       = auth.uid
-        self.meta_info = auth.to_hash
+        self.meta_info = auth.to_hash # ここで allocator undefined for Proc がでている……？？？ 出ないときもある。よくわからん
       end
     end
 

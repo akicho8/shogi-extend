@@ -5,6 +5,7 @@
     "apollo-boost": "^0.1.10",
     "assert": "^1.4.1",
     "autoprefixer": "^7.1.2",
+    "axios": "^0.18.0",
     "babel": "^6.23.0",
     "babel-core": "^6.25.0",
     "babel-loader": "7.x",
