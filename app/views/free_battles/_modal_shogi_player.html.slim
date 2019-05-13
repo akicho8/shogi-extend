@@ -1,6 +1,6 @@
 b-modal(:active.sync="modal_p" has-modal-card)
   template(v-if="modal_record")
-    .modal-card(style="width:auto")
+    .modal-card.is-shogi-player-modal-card(style="width:auto")
       header.modal-card-head
         p.modal-card-title.is-size-5
           | {{modal_record.title}}
@@ -12,6 +12,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
         template(v-if="modal_record.sp_sfen")
           shogi-player(
             :run_mode.sync="sp_run_mode"
+            :debug_mode="false"
             :start_turn="modal_record.start_turn"
             :kifu_body="modal_record.sp_sfen"
             :key_event_capture="true"
