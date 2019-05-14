@@ -26,12 +26,16 @@ b-modal(:active.sync="modal_p" has-modal-card)
           )
 
         template(v-if="modal_record.description")
-          .field.is-size-6.has-text-grey
+          .modal_sp_description.is-size-6.has-text-grey
             | {{modal_record.description}}
 
-        .has-text-centered
+        .modal_sp_bottom_links
+          template(v-if="modal_record.tweet_window_url")
+            a.button.is-info.is-rounded.modal_sp_tweet_icon(@click.stop :href="modal_record.tweet_window_url" target="_blank")
+              b-icon(pack="fab" icon="twitter")
+
           a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
-            = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
+            = image_tag("piyo_shogi_app.png", "class": "modal_piyo_link")
 
           b-tooltip(label="この局面から自分で操作")
             b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode") 継盤

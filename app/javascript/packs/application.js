@@ -10,6 +10,7 @@
 import Rails from "rails-ujs"
 Rails.start()
 
+import "./helper.sass"
 import "./general.sass"
 import "./application_dependent.sass"
 import "./free_battle_edit_ogp_css.sass"

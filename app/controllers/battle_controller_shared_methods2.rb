@@ -179,6 +179,7 @@ module BattleControllerSharedMethods2
     a[:battled_at] = e.battled_at.to_s(:battle_time)
     a[:show_path] = polymorphic_path([ns_prefix, e])
     a[:tweet_image_url] = e.tweet_image_url
+    a[:tweet_window_url] = e.tweet_window_url
     a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?
     if editable_record?(e) || Rails.env.development?
       a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])

@@ -1,5 +1,6 @@
 @import "bulma_variables"
 @import "~bulma/sass/utilities/mixins"
+@import "helper"
 
 ////////////////////////////////////////////////////////////////////////////// フッターまでの最低限の縦幅
 
@@ -24,11 +25,14 @@ body > section:first-of-type
   height: 1.4rem
 
 .row_piyo_link
-  padding: 0 1em
+  margin: 0 1em
   height: 1.4rem
 
 .piyo_icon_in_button
   height: 1.0rem
+
+.modal_piyo_link
+  height: 1.4em
 
 ////////////////////////////////////////////////////////////////////////////// 普通の棋譜のtwitter用画像の小さいの
 
@@ -200,7 +204,7 @@ $any_exist_soldiers: $grey-light
 /* https://qiita.com/AcaiBowl/items/8ee0a5a6c994685fb1cd
 /* https://lab.syncer.jp/Document/Color/Brand-Color/
 
-@mixin brand_def($name, $color)
+=brand_def($name, $color)
   .#{$name}
     &.brand_button
       border: none ! important
@@ -209,9 +213,9 @@ $any_exist_soldiers: $grey-light
     &:hover
       background: darken($color, 10%) ! important
 
-@include brand_def("twitter", rgb(85, 172, 238))
-@include brand_def("google",  rgb(221, 75,  57))
-@include brand_def("github",  rgb( 51, 51,  51))
++brand_def("twitter", rgb(85, 172, 238))
++brand_def("google",  rgb(221, 75,  57))
++brand_def("github",  rgb( 51, 51,  51))
 
 ////////////////////////////////////////////////////////////////////////////// クリックできる行を GMail 風にする
 
@@ -222,12 +226,24 @@ $any_exist_soldiers: $grey-light
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
         cursor: zoom-in
 
+////////////////////////////////////////////////////////////////////////////// for _modal_shogi_player.html.slim
+
+.modal_sp_tweet_icon
+  font-size: 0.75em !important
+
+.modal_sp_bottom_links
+  @extend %side_by_side_evenly
+  margin-top: 0.8em
+
+.modal_sp_description
+  margin: 0em 1em
+
 //////////////////////////////////////////////////////////////////////////////
-  
+
 +mobile
   html
     font-size: 80% !important
-  
+
   .section
     margin: 1em 0 !important
     padding: 0 !important
