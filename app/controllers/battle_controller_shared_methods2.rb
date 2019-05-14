@@ -140,7 +140,7 @@ module BattleControllerSharedMethods2
     let :modal_record_twitter_options do
       if e = modal_record
         options = {}
-        options[:title]       = e.safe_title
+        options[:title]       = e.to_title
         options[:url]         = e.tweet_page_url
         options[:description] = e.description
 
