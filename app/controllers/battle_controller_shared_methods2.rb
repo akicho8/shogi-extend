@@ -122,18 +122,17 @@ module BattleControllerSharedMethods2
     end
 
     let :show_twitter_options do
-      options = {
-        title: current_record.safe_title,
-        url: current_record.tweet_page_url,
-      }
-      if v = current_record.description
-        options[:description] = v
-      end
+      options = {}
+      options[:title] = current_record.to_title
+      options[:url] = current_record.tweet_page_url
+      options[:description] = current_record.description
+
       if twitter_staitc_image_url
-        options.update(image: twitter_staitc_image_url)
+        options[:image] = twitter_staitc_image_url
       else
-        options.update(card: "summary")
+        options[:card] = "summary"
       end
+
       options
     end
 
@@ -146,7 +145,10 @@ module BattleControllerSharedMethods2
 
         if e.thumbnail_image.attached?
           options[:image] = polymorphic_url([ns_prefix, e], format: "png", updated_at: e.updated_at.to_i)
+        else
+          options[:card] = "summary"
         end
+
         options
       end
     end

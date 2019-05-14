@@ -36,8 +36,6 @@ module Swars
 
     has_many :access_logs, dependent: :destroy # アクセスログみたいもの
 
-    attribute :description      # インターフェイスを統一するため
-
     has_many :users, through: :memberships do
       # 先手/後手プレイヤー
       def black                 # FIXME: 使用禁止
@@ -227,6 +225,15 @@ module Swars
 
       def to_title
         memberships.collect(&:name_with_grade).join(" 対 ")
+      end
+
+      def description
+        out = []
+        out << "将棋ウォーズ"
+        out << rule_info.long_name
+        out << final_info.name
+        out.concat(memberships.flat_map{|e|e.attack_tag_list}.uniq)
+        out.join(" ")
       end
     end
 
