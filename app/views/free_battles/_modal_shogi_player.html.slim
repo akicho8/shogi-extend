@@ -26,8 +26,15 @@ b-modal(:active.sync="modal_p" has-modal-card)
           )
 
         template(v-if="modal_record.description")
-          .box.is-size-6
+          .field.is-size-6.has-text-grey
             | {{modal_record.description}}
+
+        .has-text-centered
+          a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
+            = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
+
+          b-tooltip(label="この局面から自分で操作")
+            b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode") 継盤
 
       footer.modal-card-foot.space_between
         b-tooltip(label="棋譜をクリップボードにコピー")
@@ -35,16 +42,10 @@ b-modal(:active.sync="modal_p" has-modal-card)
             b-icon(pack="far" icon="clipboard" size="is-small")
             | &nbsp;コピー
 
-        b-tooltip(label="この局面から自分で操作")
-          b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode") 継盤
-
         template(v-if="modal_record.new_and_copy")
           b-tooltip(label="棋譜を複製して新規作成")
             a.button.is-small(@click.stop :href="modal_record.new_and_copy.url")
               | {{modal_record.new_and_copy.name}}
-
-        a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
-          = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
 
         template(v-if="modal_record.show_path")
           a.button.is-small(@click.stop :href="modal_record.show_path")
