@@ -229,10 +229,9 @@ module Swars
 
       def description
         out = []
-        out << "将棋ウォーズ"
-        out << rule_info.long_name
-        out << final_info.name
-        out.concat(memberships.flat_map{|e|e.attack_tag_list}.uniq)
+        out << "将棋ウォーズ#{rule_info.long_name}"
+        # out << final_info.name
+        out << memberships.collect { |e| (e.attack_tag_list.presence || ["その他"]).join(" ") }.join(" vs ")
         out.join(" ")
       end
     end
