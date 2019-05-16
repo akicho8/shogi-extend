@@ -19,6 +19,7 @@ window.FreeBattleEdit = Vue.extend({
       output_active_tab: 0,                     // 変換後の棋譜の切り替え
       last_action: null,                        // 「操作入力」と「テキスト入力」のどちらで最後に入力したかわかる
       default_start_turn: null,                 // 最初の start_turn の指定
+      run_mode: "play_mode",                    // 操作入力時のモード
 
       tab_names: [
         "操作入力",
