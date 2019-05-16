@@ -31,7 +31,7 @@ window.FreeBattleEditOgp = Vue.extend({
         const loading_instance = this.$loading.open()
         const params = new URLSearchParams()
         params.append("canvas_image_base64_data_url", canvas.toDataURL("image/png"))
-        params.append("start_turn", this.start_turn)
+        // params.append("start_turn", this.start_turn)
         axios({
           method: "put",
           timeout: 1000 * 60 * 10,

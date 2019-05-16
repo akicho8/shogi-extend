@@ -34,8 +34,8 @@
   .has-text-centered
     .buttons.is-inline
       a.button.is-primary(@click="og_image_create") 保存
-      p.has-text-grey-light.is-size-7
-        | 開始手数も同時に保存します
+      / p.has-text-grey-light.is-size-7
+      /   | 開始手数も同時に保存します
 
   .has-text-centered
     .section
@@ -44,7 +44,9 @@
         .img_size_check
           a(:href="tweet_image_url" target="_blank")
             img(:src="tweet_image_url" width="600")
-        a.button.is-danger(@click="og_image_destroy") 削除
+        b-tooltip(label="削除")
+          a.button.is-danger(@click="og_image_destroy")
+            b-icon(pack="fas" icon="trash")
 
       template(v-else="tweet_image_url")
         | なし

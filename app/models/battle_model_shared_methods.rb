@@ -256,12 +256,14 @@ module BattleModelSharedMethods
         v = Base64.decode64(v)
         thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
 
-        if v = params[:start_turn]
-          update!(start_turn: v)
+        if false
+          if v = params[:start_turn]
+            update!(start_turn: v)
+          end
         end
 
         {
-          message: "OGP画像を設定しました (開始手数:#{start_turn})",
+          message: "OGP画像を設定しました",
           # https://edgeguides.rubyonrails.org/active_storage_overview.html
           # Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
           tweet_image_url: tweet_image_url,
