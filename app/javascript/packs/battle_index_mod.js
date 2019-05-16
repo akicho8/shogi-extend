@@ -58,15 +58,24 @@ export default {
       if (this.modal_record.sp_sfen) {
         this.debug_alert("棋譜はすでにある")
         this.modal_show()
-        return
+      } else {
+        this.modal_show()
+        this.record_fetch_to(this.modal_record, () => this.turn_slider_focus())
       }
-
-      this.record_fetch_to(this.modal_record, () => this.modal_show())
     },
 
     modal_show() {
       this.modal_p = true
-      this.$nextTick(() => document.querySelector(".turn_slider").focus())
+      this.turn_slider_focus()
+    },
+
+    turn_slider_focus() {
+      this.$nextTick(() => {
+        const dom = document.querySelector(".turn_slider")
+        if (dom) {
+          dom.focus()
+        }
+      })
     },
 
     kifu_copy_handle(row) {

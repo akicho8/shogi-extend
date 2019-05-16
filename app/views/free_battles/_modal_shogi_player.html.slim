@@ -7,8 +7,6 @@ b-modal(:active.sync="modal_p" has-modal-card)
         button(class="delete" aria-label="close" @click="modal_p = false")
 
       section.modal-card-body
-        b-loading(:is-full-page="false" :active="!modal_record.sp_sfen" :can-cancel="true")
-
         template(v-if="modal_record.sp_sfen")
           shogi-player(
             :run_mode.sync="sp_run_mode"
@@ -25,13 +23,18 @@ b-modal(:active.sync="modal_p" has-modal-card)
             :volume=AppConfig[:volume]
           )
 
-        template(v-if="modal_record.description")
-          .modal_sp_description.is-size-6.has-text-grey
-            | {{modal_record.description}}
+          template(v-if="modal_record.description")
+            .modal_sp_description.is-size-6.has-text-grey
+              | {{modal_record.description}}
 
-        .side_by_side_evenly.modal_sp_bottom_links
-          b-tooltip(label="この局面から自分で操作する")
-            b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode" size="is-small") 継盤
+          .side_by_side_evenly.modal_sp_bottom_links
+            b-tooltip(label="この局面から自分で操作する")
+              b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode" size="is-small") 継盤
+        template(v-else)
+          br
+          br
+          br
+          b-loading(:is-full-page="false" :active="!modal_record.sp_sfen" :can-cancel="true")
 
       footer.modal-card-foot.space_between
 
