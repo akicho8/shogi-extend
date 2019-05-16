@@ -17,7 +17,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     visit "/w"
     fill_in "query", with: "devuser1"
     click_button "検索"
-    expect(page).to have_content "対戦相手"
+    expect(page).to have_content "相手"
     doc_image
   end
 
@@ -25,7 +25,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     visit "/w-light"
     fill_in "query", with: "devuser1"
     click_button "検索"
-    expect(page).to have_content "対戦相手"
+    expect(page).to have_content "相手"
     doc_image
   end
 

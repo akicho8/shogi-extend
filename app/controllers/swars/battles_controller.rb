@@ -295,11 +295,11 @@ module Swars
       l, r = record.memberships
       if current_swars_user
         if l.user == current_swars_user
-          row["対象プレイヤー"] = l
-          row["対戦相手"]       = r
+          row["対象"] = l
+          row["相手"]       = r
         else
-          row["対象プレイヤー"] = r
-          row["対戦相手"]       = l
+          row["対象"] = r
+          row["相手"]       = l
         end
       else
         if record.win_user_id
@@ -477,7 +477,7 @@ module Swars
           end
 
           # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
-          # tag:username だと対戦相手が「角換わり」したのも出てきてしまう
+          # tag:username だと相手が「角換わり」したのも出てきてしまう
           if current_mtags
             m = Membership.all
             if current_musers
