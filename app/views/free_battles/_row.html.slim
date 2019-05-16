@@ -25,7 +25,7 @@ template(slot-scope="props")
   b-table-column(label="")
     .buttons.are-small
       a.is-hidden-desktop(@click.stop :href="props.row.piyo_shogi_app_url")
-        = image_tag("piyo_shogi_app.png", "class": "row_piyo_link")
+        = image_tag("piyo_shogi_icon.png", "class": "row_piyo_link")
 
       template(v-if="props.row.show_path")
         a.button(@click.stop :href="props.row.show_path")

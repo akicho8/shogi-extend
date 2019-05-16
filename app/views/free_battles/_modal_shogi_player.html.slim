@@ -41,12 +41,12 @@ b-modal(:active.sync="modal_p" has-modal-card)
             | &nbsp;コピー
 
         a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
-          = image_tag("piyo_shogi_app.png", "class": "modal_piyo_link")
+          = image_tag("piyo_shogi_icon.png", "class": "modal_piyo_link")
 
-        b-dropdown(:hoverable="true" position="is-top-left")
+        b-dropdown(:hoverable="false" position="is-top-left")
           button.button.is-small(slot="trigger")
-            span もっと見る
-            b-icon(icon="menu-down")
+            / span もっと見る
+            b-icon(icon="menu-up")
 
           template(v-if="modal_record.show_path")
             b-dropdown-item(:has-link="true" :paddingless="true")
@@ -71,8 +71,8 @@ b-modal(:active.sync="modal_p" has-modal-card)
           template(v-if="modal_record.tweet_window_url")
             b-dropdown-item(:has-link="true" :paddingless="true")
               a(@click.stop :href="modal_record.tweet_window_url" target="_blank")
-                b-icon(pack="fab" icon="twitter" size="is-small")
-                | &nbsp;
+                / b-icon(pack="fab" icon="twitter" size="is-small")
+                / | &nbsp;
                 | ツイート
 
         template(v-if="false")
