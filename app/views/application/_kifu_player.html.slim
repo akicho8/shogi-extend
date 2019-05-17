@@ -3,7 +3,7 @@
     - if sfen = current_record.to_cached_sfen
       shogi-player(
         :kifu_body="'#{sfen}'"
-        :start_turn="#{current_record.start_turn}"
+        :start_turn="#{current_record.start_turn_or_critical_turn}"
         :key_event_capture="true"
         :slider_show="true"
         :sfen_show="true"
