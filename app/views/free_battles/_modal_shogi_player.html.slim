@@ -2,7 +2,11 @@ b-modal(:active.sync="modal_p" has-modal-card)
   template(v-if="modal_record")
     .modal-card.is-shogi-player-modal-card(style="width:auto")
       header.modal-card-head
-        p.modal-card-title.is-size-5
+        p.modal-card-title.is-size-5.yumincho
+          template(v-if="modal_record.saturn_key === 'private'")
+            b-icon.has-text-grey-light(pack="fas" icon="lock" size="is-small")
+            | &nbsp;
+            | &nbsp;
           | {{modal_record.title}}
         button(class="delete" aria-label="close" @click="modal_p = false")
 
@@ -35,61 +39,61 @@ b-modal(:active.sync="modal_p" has-modal-card)
             b-loading(:is-full-page="false" :active="!modal_record.sp_sfen" :can-cancel="true")
 
       footer.modal-card-foot.space_between
+        template(v-if="modal_record.sp_sfen")
+          b-tooltip(label="棋譜をクリップボードにコピーする" position="is-right")
+            a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
+              b-icon(pack="far" icon="clipboard" size="is-small")
+              | &nbsp;コピー
 
-        b-tooltip(label="棋譜をクリップボードにコピーする" position="is-right")
-          a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
-            b-icon(pack="far" icon="clipboard" size="is-small")
-            | &nbsp;コピー
+          a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
+            = image_tag("piyo_shogi_icon.png", "class": "modal_piyo_link")
 
-        a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
-          = image_tag("piyo_shogi_icon.png", "class": "modal_piyo_link")
+          b-dropdown(:hoverable="false" position="is-top-left")
+            button.button.is-small(slot="trigger")
+              / span もっと見る
+              b-icon(icon="menu-up")
 
-        b-dropdown(:hoverable="false" position="is-top-left")
-          button.button.is-small(slot="trigger")
-            / span もっと見る
-            b-icon(icon="menu-up")
+            template(v-if="modal_record.show_path")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="modal_record.show_path")
+                  | 詳細
 
-          template(v-if="modal_record.show_path")
-            b-dropdown-item(:has-link="true" :paddingless="true")
-              a(@click.stop :href="modal_record.show_path")
-                | 詳細
+            template(v-if="modal_record.edit_path")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="modal_record.edit_path")
+                  | 編集
 
-          template(v-if="modal_record.edit_path")
-            b-dropdown-item(:has-link="true" :paddingless="true")
-              a(@click.stop :href="modal_record.edit_path")
-                | 編集
+            template(v-if="modal_record.edit_path")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="`${modal_record.edit_path}?mode=ogp`")
+                  | OGP画像設定
 
-          template(v-if="modal_record.edit_path")
-            b-dropdown-item(:has-link="true" :paddingless="true")
-              a(@click.stop :href="`${modal_record.edit_path}?mode=ogp`")
-                | OGP画像設定
+            template(v-if="modal_record.new_and_copy")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="modal_record.new_and_copy.url")
+                  | {{modal_record.new_and_copy.name}}
 
-          template(v-if="modal_record.new_and_copy")
-            b-dropdown-item(:has-link="true" :paddingless="true")
-              a(@click.stop :href="modal_record.new_and_copy.url")
-                | {{modal_record.new_and_copy.name}}
+            template(v-if="modal_record.kifu_copy_params")
+              b-dropdown-item(:has-link="true" :paddingless="false")
+                a(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'ki2'})")
+                  | KI2 コピー
 
-          template(v-if="modal_record.kifu_copy_params")
-            b-dropdown-item(:has-link="true" :paddingless="false")
-              a(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'ki2'})")
-                | KI2 コピー
+            template(v-if="modal_record.show_path")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="`${modal_record.show_path}.kif`")
+                  | KIF ダウンロード
 
-          template(v-if="modal_record.show_path")
-            b-dropdown-item(:has-link="true" :paddingless="true")
-              a(@click.stop :href="`${modal_record.show_path}.kif`")
-                | KIF ダウンロード
+            template(v-if="modal_record.show_path")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="`${modal_record.show_path}.ki2`")
+                  | KI2 ダウンロード
 
-          template(v-if="modal_record.show_path")
-            b-dropdown-item(:has-link="true" :paddingless="true")
-              a(@click.stop :href="`${modal_record.show_path}.ki2`")
-                | KI2 ダウンロード
+            template(v-if="modal_record.tweet_window_url")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="modal_record.tweet_window_url" target="_blank")
+                  / b-icon(pack="fab" icon="twitter" size="is-small")
+                  / | &nbsp;
+                  | ツイート
 
-          template(v-if="modal_record.tweet_window_url")
-            b-dropdown-item(:has-link="true" :paddingless="true")
-              a(@click.stop :href="modal_record.tweet_window_url" target="_blank")
-                / b-icon(pack="fab" icon="twitter" size="is-small")
-                / | &nbsp;
-                | ツイート
-
-        template(v-if="false")
-          a.button.is-small(@click="modal_p = false") 閉じる
+          template(v-if="false")
+            a.button.is-small(@click="modal_p = false") 閉じる

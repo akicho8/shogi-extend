@@ -201,10 +201,11 @@ module BattleModelSharedMethods
     Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
   end
 
-  def to_kifu_copy_params(h)
+  def to_kifu_copy_params(h, **options)
     {
       kc_url: h.url_for(self),
       kc_title: to_title,
+      **options,
     }
   end
 
@@ -214,6 +215,18 @@ module BattleModelSharedMethods
 
   def start_turn_or_critical_turn
     start_turn || critical_turn || 0
+  end
+
+  concerning :SaturnMethods do
+    included do
+      before_validation do
+        self.saturn_key ||= "public"
+      end
+    end
+
+    def saturn_info
+      SaturnInfo.fetch(saturn_key)
+    end
   end
 
   concerning :TwitterMethods do

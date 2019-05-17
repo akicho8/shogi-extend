@@ -20,6 +20,7 @@
 # | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
 # | start_turn        | 開始手数           | integer(4)  |             |                                   |       |
 # | critical_turn     | 開戦               | integer(4)  |             |                                   |       |
+# | saturn_key        | Saturn key         | string(255) | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -61,6 +62,22 @@ class FreeBattlesController < ApplicationController
   end
 
   private
+
+  let :current_record do
+    if params[:id]
+      record = current_model.find(params[:id])
+    else
+      record = current_model.new
+    end
+    record.tap do |e|
+      # 初期値設定
+      if current_user
+        e.saturn_key ||= SaturnInfo.fetch(:private).key
+      else
+        e.saturn_key ||= SaturnInfo.fetch(:public).key
+      end
+    end
+  end
 
   def current_record_params
     v = super
@@ -106,9 +123,7 @@ class FreeBattlesController < ApplicationController
   def redirect_to_where
     if current_record.saved_changes[:id]
       if editable_record?(current_record)
-        if !mobile_agent?
-          return [:edit, ns_prefix, current_record, mode: :ogp]
-        end
+        return [:edit, ns_prefix, current_record, mode: :ogp]
       end
     end
 
@@ -124,6 +139,7 @@ class FreeBattlesController < ApplicationController
           record_attributes: current_record.as_json,
           output_kifs: output_kifs,
           new_path: polymorphic_path([:new, :free_battle]),
+          saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
         }
       end
 

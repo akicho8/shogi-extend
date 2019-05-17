@@ -22,6 +22,7 @@
 # | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
 # | start_turn        | 開始手数         | integer(4)  |             |      |       |
 # | critical_turn     | 開戦             | integer(4)  |             |      |       |
+# | saturn_key        | Saturn key       | string(255) | NOT NULL    |      |       |
 # |-------------------+------------------+-------------+-------------+------+-------|
 
 require 'rails_helper'

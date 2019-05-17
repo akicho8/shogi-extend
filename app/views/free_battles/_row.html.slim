@@ -5,6 +5,9 @@ template(slot-scope="props")
       | {{props.row.id}}
 
   b-table-column(field="title" label="タイトル" sortable)
+    template(v-if="props.row.saturn_key === 'private'")
+      b-icon.has-text-grey-light(pack="fas" icon="lock" size="is-small")
+      | &nbsp;
     | {{props.row.title}}
     template(v-if="props.row.description")
       == "&nbsp;"
@@ -21,6 +24,10 @@ template(slot-scope="props")
     template(v-if="props.row.owner_info")
       a(@click.stop :href="props.row.owner_info.url")
         | {{props.row.owner_info.name}}
+
+  - unless Rails.env.production?
+    b-table-column(field="saturn_key" label="公開設定" sortable)
+      | {{props.row.saturn_key}}
 
   b-table-column(label="")
     .buttons.are-small

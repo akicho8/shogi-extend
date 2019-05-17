@@ -53,7 +53,12 @@ module ModulableCrud
 
       # override according to the situation
       let :current_record do
-        current_scope.find_or_initialize_by(id: params[:id])
+        # current_scope.find_or_initialize_by(id: params[:id]) は危険
+        if params[:id]
+          current_scope.find(params[:id])
+        else
+          current_scope.new
+        end
       end
     end
 

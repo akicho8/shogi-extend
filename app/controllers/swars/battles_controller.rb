@@ -22,6 +22,7 @@
 # | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
 # | start_turn        | 開始手数         | integer(4)  |             |      |       |
 # | critical_turn     | 開戦             | integer(4)  |             |      |       |
+# | saturn_key        | Saturn key       | string(255) | NOT NULL    |      |       |
 # |-------------------+------------------+-------------+-------------+------+-------|
 
 module Swars
@@ -514,9 +515,6 @@ module Swars
         end
 
         let :current_ransack do
-          if current_query
-            # current_model.ransack(title_or_description_cont: current_query)
-          end
         end
 
         let :table_columns_hash do

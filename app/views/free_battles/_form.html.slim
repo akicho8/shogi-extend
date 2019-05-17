@@ -75,6 +75,11 @@
   .control
     = form.text_area(:description, class: "textarea is-small", placeholder: "空でかまいません", rows: 2)
 
+- if current_user
+  b-field
+    template(v-for="e in $options.saturn_info")
+      b-radio-button(v-model="record.saturn_key" :native-value="e.key" name="free_battle[saturn_key]") {{e.name}}
+
 .field
   details
     summary その他

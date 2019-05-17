@@ -14,7 +14,12 @@
   = render partial: "modal_shogi_player"
 
   .title.is-2.yumincho= @page_title
-  hr
+
+  .tabs
+    ul
+      - SearchScopeInfo.each do |e|
+        li class=("is-active" if params["controller"] == "free_battles" && current_search_scope_key == e.key)
+          = link_to(e.name, [:free_battles, query: current_query, search_scope_key: e.key])
 
   .columns
     .column

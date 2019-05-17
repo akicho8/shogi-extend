@@ -7,6 +7,8 @@ export default {
   data() {
     return {
       query: this.$options.query,     // 検索文字列
+      search_scope_key: this.$options.search_scope_key,     // スコープ
+
       modal_p: false,                 // モーダルを開くフラグ
       modal_record: null,             // 選択したレコード
 
@@ -167,12 +169,13 @@ export default {
   computed: {
     async_records_load_url_params() {
       return _.map({
-        query:           this.query,
-        page:            this.page,
-        per:             this.per,
-        sort_column:     this.sort_column,
-        sort_order:      this.sort_order,
-        visible_columns: this.visible_columns.join(",")
+        query:             this.query,
+        search_scope_key:       this.search_scope_key,
+        page:              this.page,
+        per:               this.per,
+        sort_column:       this.sort_column,
+        sort_order:        this.sort_order,
+        visible_columns:   this.visible_columns.join(",")
       }, (v, k) => `${k}=${v}`).join("&")
     },
 

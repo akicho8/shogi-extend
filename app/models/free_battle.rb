@@ -20,6 +20,7 @@
 # | description       | 備考               | text(65535) | NOT NULL    |                                   |       |
 # | start_turn        | 開始手数           | integer(4)  |             |                                   |       |
 # | critical_turn     | 開戦               | integer(4)  |             |                                   |       |
+# | saturn_key        | Saturn key         | string(255) | NOT NULL    |                                   |       |
 # |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -45,7 +46,7 @@ class FreeBattle < ApplicationRecord
     end
 
     def file_import(file)
-      if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<title_with_desc>.*)/)
+      if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<saturn_key>.)_(?<title_with_desc>.*)/)
         title, description = md["title_with_desc"].split("__")
         record = find_by(key: md["key"]) || new(key: md["key"])
         record.owner_user = Colosseum::User.find_by(name: Rails.application.credentials.production_my_user_name) || Colosseum::User.sysop
@@ -53,6 +54,14 @@ class FreeBattle < ApplicationRecord
         record.title = title.gsub(/_/, " ")
         record.description = description.to_s.gsub(/_/, " ")
         # record.public_send("#{:kifu_body}_will_change!") # 強制的にパースさせるため
+
+        if md["saturn_key"] == "0"
+          record.saturn_key = :private
+        end
+        if md["saturn_key"] == "1"
+          record.saturn_key = :public
+        end
+
         error = nil
         begin
           # record.parser_exec    # かならずパースする

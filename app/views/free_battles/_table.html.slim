@@ -32,6 +32,9 @@
       :show-detail-icon="showDetailIcon"
 
       @click="show_handle"
+
+      :row-class="(row, index) => row.saturn_key"
+
       )
 
       / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
@@ -48,4 +51,3 @@
           | visible_columns: {{visible_columns}}
         p
           | permalink_url: {{permalink_url}}
-

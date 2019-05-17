@@ -52,23 +52,54 @@ module BattleControllerSharedMethods2
 
     let :current_scope do
       s = pure_current_scope
-      if r = current_ransack
-        s = s.merge(r.result)
+
+      case current_search_scope_key
+      when :ss_public
+        s = s.where(saturn_key: :public)
+      when :ss_my_public
+        s = s.where(saturn_key: :public)
+        s = s.where(owner_user: current_user)
+        unless current_user
+          s = s.none
+        end
+      when :ss_my_private
+        s = s.where(saturn_key: :private)
+        s = s.where(owner_user: current_user)
+        unless current_user
+          s = s.none
+        end
+      when :ss_my_all
+        s = s.where(owner_user: current_user)
+        unless current_user
+          s = s.none
+        end
       end
+
+      if r = current_ransack
+        s = s.merge(current_model.ransack(r).result)
+      end
+
+      # if current_user
+      #   current_user
+      # end
+
       s
     end
 
     let :current_ransack do
       if current_queries
-        current_model.ransack(title_or_description_cont_all: current_queries)
+        {
+          title_or_description_cont_all: current_queries,
+        }
       end
     end
 
     let :js_index_options do
       {
         query: current_query || "",
+        search_scope_key: current_search_scope_key,
         xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
-        total: current_records.total_count,
+        total: current_records.total_count, # ここで事前にSQLが走るのは仕方ない
         page: current_records.current_page,
         per: current_per,
         sort_column: current_sort_column,
@@ -160,6 +191,10 @@ module BattleControllerSharedMethods2
         # 固定URL化する
         polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
       end
+    end
+
+    let :current_search_scope_key do
+      (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
     end
   end
 
