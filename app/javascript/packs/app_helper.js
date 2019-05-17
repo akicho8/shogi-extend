@@ -22,9 +22,10 @@ export function kifu_copy_exec(params) {
 
   const kc_url = params["kc_url"]
   if (kc_url) {
+    const kc_format = params["kc_format"] || "kif"
     const kifu_text = $.ajax({ // このためだけに jQuery 使用
       type: "GET",
-      url: kc_url,
+      url: `${kc_url}.${kc_format}?copy_trigger=true`,
       async: false, // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
     }).responseText
 

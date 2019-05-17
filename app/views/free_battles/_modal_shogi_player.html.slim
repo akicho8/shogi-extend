@@ -37,7 +37,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
       footer.modal-card-foot.space_between
 
         b-tooltip(label="棋譜をクリップボードにコピーする" position="is-right")
-          a.button.is-small(@click.stop.prevent="kifu_copy_handle(modal_record)")
+          a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
             b-icon(pack="far" icon="clipboard" size="is-small")
             | &nbsp;コピー
 
@@ -68,6 +68,11 @@ b-modal(:active.sync="modal_p" has-modal-card)
             b-dropdown-item(:has-link="true" :paddingless="true")
               a(@click.stop :href="modal_record.new_and_copy.url")
                 | {{modal_record.new_and_copy.name}}
+
+          template(v-if="modal_record.kifu_copy_params")
+            b-dropdown-item(:has-link="true" :paddingless="false")
+              a(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'ki2'})")
+                | KI2 コピー
 
           template(v-if="modal_record.show_path")
             b-dropdown-item(:has-link="true" :paddingless="true")

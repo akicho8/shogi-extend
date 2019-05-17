@@ -79,9 +79,8 @@ export default {
       })
     },
 
-    kifu_copy_handle(row) {
-      this.debug_alert(row.kifu_copy_params)
-      AppHelper.kifu_copy_exec(row.kifu_copy_params)
+    kifu_copy_handle(params) {
+      AppHelper.kifu_copy_exec(params)
     },
 
     sort_handle(column, order) {

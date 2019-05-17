@@ -15,7 +15,7 @@ template(slot="detail" slot-scope="props")
   /     .box.is-size-7
   /       | {{props.row.description}}
   /
-  /   = link_to(icon_tag(:far, :clipboard) + "コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button")
+  /   = link_to(icon_tag(:far, :clipboard) + "コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row.kifu_copy_params)", :class => "button")
 
   / <article class="media">
   /           <figure class="media-left">

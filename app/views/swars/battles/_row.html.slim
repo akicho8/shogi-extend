@@ -43,8 +43,9 @@ template(slot-scope="props")
 
   b-table-column(label="")
     .buttons
-      a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row)")
+      a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row.kifu_copy_params)")
         b-icon(pack="far" icon="clipboard" size="is-small")
         | &nbsp;コピー
       a.is-hidden-desktop(@click.stop :href="props.row.piyo_shogi_app_url")
         = image_tag("piyo_shogi_icon.png", "class": "row_piyo_link")
+

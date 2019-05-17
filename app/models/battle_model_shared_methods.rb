@@ -201,14 +201,9 @@ module BattleModelSharedMethods
     Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
   end
 
-  def to_kifu_copy_params(h, **options)
-    options = {
-      format: "kif",
-      copy_trigger: true,
-    }.merge(options)
-
+  def to_kifu_copy_params(h)
     {
-      kc_url: h.url_for([self, options]),
+      kc_url: h.url_for(self),
       kc_title: to_title,
     }
   end
