@@ -20,7 +20,8 @@
 # | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
 # | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
-# | start_turn        | 開始手数         | integer(4)  | NOT NULL    |      |       |
+# | start_turn        | 開始手数         | integer(4)  |             |      |       |
+# | critical_turn     | Critical turn    | integer(4)  |             |      |       |
 # |-------------------+------------------+-------------+-------------+------+-------|
 
 require 'rails_helper'

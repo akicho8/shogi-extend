@@ -19,7 +19,6 @@ module BattleModelSharedMethods
     before_validation do
       self.meta_info ||= {}
       self.turn_max ||= 0
-      self.start_turn ||= 0
     end
   end
 
@@ -91,6 +90,7 @@ module BattleModelSharedMethods
     end
 
     self.turn_max = info.mediator.turn_info.turn_max
+    self.critical_turn = info.mediator.critical_turn
 
     self.meta_info = {
       :header          => info.header.to_h,
@@ -215,6 +215,10 @@ module BattleModelSharedMethods
 
   def to_title
     to_param
+  end
+
+  def start_turn_or_critical_turn
+    start_turn || critical_turn || 0
   end
 
   concerning :TwitterMethods do

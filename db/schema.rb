@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_08_171900) do
+ActiveRecord::Schema.define(version: 2019_05_17_103100) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -203,7 +203,8 @@ ActiveRecord::Schema.define(version: 2019_05_08_171900) do
     t.bigint "colosseum_user_id"
     t.string "title"
     t.text "description", null: false
-    t.integer "start_turn", null: false
+    t.integer "start_turn"
+    t.integer "critical_turn"
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
@@ -220,7 +221,8 @@ ActiveRecord::Schema.define(version: 2019_05_08_171900) do
     t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "start_turn", null: false
+    t.integer "start_turn"
+    t.integer "critical_turn"
     t.index ["battled_at"], name: "index_general_battles_on_battled_at"
     t.index ["final_key"], name: "index_general_battles_on_final_key"
     t.index ["key"], name: "index_general_battles_on_key", unique: true
@@ -269,7 +271,8 @@ ActiveRecord::Schema.define(version: 2019_05_08_171900) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "preset_key", null: false
-    t.integer "start_turn", null: false
+    t.integer "start_turn"
+    t.integer "critical_turn"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true

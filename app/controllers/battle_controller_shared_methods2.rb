@@ -173,7 +173,7 @@ module BattleControllerSharedMethods2
   end
 
   def js_record_for(e)
-    a = e.attributes
+    a = e.as_json(methods: [:start_turn_or_critical_turn])
     a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
     a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
     a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ

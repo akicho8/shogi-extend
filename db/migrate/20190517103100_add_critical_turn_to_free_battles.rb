@@ -26,16 +26,15 @@
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+class AddCriticalTurnToFreeBattles < ActiveRecord::Migration[5.2]
+  def change
+    [:swars_battles, :free_battles, :general_battles].each do |table|
+      change_table table do |t|
+        t.change :start_turn, :integer, null: true, index: true
+        t.integer :critical_turn, null: true, index: true
+      end
+    end
 
-RSpec.describe FreeBattle, type: :model do
-  before do
-    @kifu_file = {io: StringIO.new("68S"), filename: "嬉野流.kif", content_type: "application/octet-stream"}
-  end
-
-  it "ファイルアップロードして変換" do
-    free_battle = FreeBattle.create!(kifu_file: @kifu_file)
-    assert { free_battle.kifu_body == "68S" }
-    assert { free_battle.kifu_file.attached? == false }
+    Swars::Battle.where(start_turn: 0).update_all(start_turn: nil)
   end
 end

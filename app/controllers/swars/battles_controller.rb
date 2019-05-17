@@ -20,7 +20,8 @@
 # | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
 # | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
-# | start_turn        | 開始手数         | integer(4)  | NOT NULL    |      |       |
+# | start_turn        | 開始手数         | integer(4)  |             |      |       |
+# | critical_turn     | Critical turn    | integer(4)  |             |      |       |
 # |-------------------+------------------+-------------+-------------+------+-------|
 
 module Swars
@@ -525,6 +526,7 @@ module Swars
             { key: :defense_tag_list, label: "囲い", visible: false,          },
             { key: :final_info,       label: "結果", visible: false,          },
             { key: :turn_max,         label: "手数", visible: false,          },
+            { key: :critical_turn,    label: "開戦", visible: false,          },
             { key: :rule_info,        label: "種類", visible: false,          },
             { key: :preset_info,      label: "手合", visible: teai_p,         },
             { key: :battled_at,       label: "日時", visible: !mobile_agent?, },
