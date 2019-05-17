@@ -40,6 +40,7 @@ export default {
       } else {
         this.$toast.open({message: "元に戻しました", position: "is-top", type: "is-info", duration: 1000 * 1})
       }
+      this.turn_slider_focus()
     },
   },
 
