@@ -6,7 +6,6 @@ b-modal(:active.sync="modal_p" has-modal-card)
           template(v-if="modal_record.saturn_key === 'private'")
             b-icon.has-text-grey-light(pack="fas" icon="lock" size="is-small")
             | &nbsp;
-            | &nbsp;
           | {{modal_record.title}}
         button(class="delete" aria-label="close" @click="modal_p = false")
 
@@ -34,6 +33,10 @@ b-modal(:active.sync="modal_p" has-modal-card)
           .side_by_side_evenly.modal_sp_bottom_links
             b-tooltip(label="この局面から自分で操作する")
               b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode") 継盤
+
+            / b-tooltip(label="開戦")
+            /   b-button(size="is-small") 開戦
+
         template(v-else)
           .modal_loading_content
             b-loading(:is-full-page="false" :active="!modal_record.sp_sfen" :can-cancel="true")

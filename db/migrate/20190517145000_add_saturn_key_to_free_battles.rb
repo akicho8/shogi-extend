@@ -46,5 +46,8 @@ class AddSaturnKeyToFreeBattles < ActiveRecord::Migration[5.2]
         t.change :saturn_key, :string, null: false, index: true
       end
     end
+
+    FreeBattle.reset_column_information
+    FreeBattle.find_each(&:remake)
   end
 end
