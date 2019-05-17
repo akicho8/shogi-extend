@@ -54,6 +54,16 @@ b-modal(:active.sync="modal_p" has-modal-card)
               a(@click.stop :href="modal_record.show_path")
                 | 詳細
 
+          template(v-if="modal_record.edit_path")
+            b-dropdown-item(:has-link="true" :paddingless="true")
+              a(@click.stop :href="modal_record.edit_path")
+                | 編集
+
+          template(v-if="modal_record.edit_path")
+            b-dropdown-item(:has-link="true" :paddingless="true")
+              a(@click.stop :href="`${modal_record.edit_path}?mode=ogp`")
+                | OGP画像設定
+
           template(v-if="modal_record.new_and_copy")
             b-dropdown-item(:has-link="true" :paddingless="true")
               a(@click.stop :href="modal_record.new_and_copy.url")
