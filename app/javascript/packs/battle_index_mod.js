@@ -32,6 +32,8 @@ export default {
       fetched_count: 0,         // fetch した回数で 1 以上でレコード配列が空だったらデータがありませんを表示する
 
       sp_run_mode: "view_mode",
+
+      real_pos: null,           // 現在表示している手数
     }
   },
 
@@ -47,6 +49,10 @@ export default {
   },
 
   methods: {
+    seek_to(pos) {
+      this.real_pos = pos
+    },
+
     toggle_run_mode() {
       if (this.sp_run_mode === "view_mode") {
         this.sp_run_mode = "play_mode"
@@ -57,6 +63,7 @@ export default {
 
     show_handle(row) {
       this.modal_record = row
+      this.real_pos = this.start_turn
 
       if (this.modal_record.sp_sfen) {
         this.debug_alert("棋譜はすでにある")
@@ -216,6 +223,17 @@ export default {
         }
       })
       return _.compact(columns)
+    },
+
+    start_turn() {
+      if (this.modal_record) {
+        if ("force_turn" in this.modal_record) {
+          return this.modal_record.force_turn
+        } else {
+          alert(this.modal_record.start_turn_or_critical_turn)
+          return this.modal_record.start_turn_or_critical_turn
+        }
+      }
     },
   },
 }

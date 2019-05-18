@@ -113,7 +113,7 @@ module BattleControllerSharedMethods2
 
     let :js_modal_record do
       if modal_record
-        js_record_for(modal_record)
+        js_modal_record_for(modal_record)
       end
     end
 
@@ -141,7 +141,7 @@ module BattleControllerSharedMethods2
     end
 
     let :js_show_options do
-      js_record_for(current_record)
+      js_modal_record_for(current_record)
     end
 
     let :js_edit_ogp_options do
@@ -208,19 +208,33 @@ module BattleControllerSharedMethods2
   end
 
   def js_record_for(e)
-    a = e.as_json(methods: [:start_turn_or_critical_turn])
-    a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
-    a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
-    a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ
-    a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-    a[:battled_at] = e.battled_at.to_s(:battle_time)
-    a[:show_path] = polymorphic_path([ns_prefix, e])
-    a[:tweet_image_url] = e.tweet_image_url
-    a[:tweet_window_url] = e.tweet_window_url
-    a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?
-    if editable_record?(e) || Rails.env.development?
-      a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
+    e.as_json(methods: [:start_turn_or_critical_turn]).tap do |a|
+      a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
+      a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
+      a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ
+      a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+      a[:battled_at] = e.battled_at.to_s(:battle_time)
+      a[:show_path] = polymorphic_path([ns_prefix, e])
+      a[:tweet_image_url] = e.tweet_image_url
+      a[:tweet_window_url] = e.tweet_window_url
+      a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?
+      if editable_record?(e) || Rails.env.development?
+        a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
+      end
     end
-    a
+  end
+
+  def js_modal_record_for(e)
+    js_record_for(e).tap do |a|
+      if v = current_force_turn
+        a[:force_turn] = v
+      end
+    end
+  end
+
+  def current_force_turn
+    if v = (params[:force_turn] || params[:turn]).presence
+      v.to_i
+    end
   end
 end
