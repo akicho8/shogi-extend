@@ -68,15 +68,17 @@ b-modal(:active.sync="modal_p" has-modal-card)
                 a(@click.stop :href="modal_record.edit_path")
                   | 編集
 
-            template(v-if="modal_record.edit_path")
-              b-dropdown-item(:has-link="true" :paddingless="true")
-                a(@click.stop :href="`${modal_record.edit_path}?mode=ogp`")
-                  | OGP画像設定
-
             template(v-if="modal_record.new_and_copy")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="modal_record.new_and_copy.url")
                   | {{modal_record.new_and_copy.name}}
+
+            b-dropdown-item(:separator="true")
+
+            template(v-if="modal_record.show_path")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="`${modal_record.show_path}.kif`")
+                  | KIF ダウンロード
 
             template(v-if="modal_record.kifu_copy_params")
               b-dropdown-item(:has-link="true" :paddingless="true")
@@ -85,13 +87,10 @@ b-modal(:active.sync="modal_p" has-modal-card)
 
             template(v-if="modal_record.show_path")
               b-dropdown-item(:has-link="true" :paddingless="true")
-                a(@click.stop :href="`${modal_record.show_path}.kif`")
-                  | KIF ダウンロード
-
-            template(v-if="modal_record.show_path")
-              b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="`${modal_record.show_path}.ki2`")
                   | KI2 ダウンロード
+
+            b-dropdown-item(:separator="true")
 
             template(v-if="modal_record.tweet_modal_url")
               b-dropdown-item(:has-link="true" :paddingless="true")
@@ -102,6 +101,13 @@ b-modal(:active.sync="modal_p" has-modal-card)
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop.prevent="modal_url_with_turn_copy")
                   | 現在の手数のURLをコピー
+
+            b-dropdown-item(:separator="true")
+
+            template(v-if="modal_record.edit_path")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="`${modal_record.edit_path}?mode=ogp`")
+                  | OGP画像設定
 
             template(v-if="modal_record.tweet_window_url")
               b-dropdown-item(:has-link="true" :paddingless="true")
