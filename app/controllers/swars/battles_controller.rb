@@ -204,27 +204,6 @@ module Swars
       end
     end
 
-    def row_links(current_record)
-      list = []
-
-      # list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kifu_copy_params: current_record.to_kifu_copy_params(self).to_json})
-
-      # list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kifu_copy_params: current_record.to_kifu_copy_params(self).to_json})
-      # list << link_to(icon_tag(:far, :clipboard) + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button")
-      # list << link_to("コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button is-small")
-
-      # list << link_to("ウォーズ", swars_real_battle_url(current_record), "class": "button is-small", target: "_blank", data: {toggle: :tooltip, title: "将棋ウォーズ"})
-      list << link_to("詳細", [current_record], "class": "button is-small")
-      list << link_to(h.image_tag("piyo_shogi_icon.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([current_record, format: "kif"])), :class => "is-hidden-desktop")
-      list.join(" ")
-    end
-
-    # def user_link(record, judge_key)
-    #   if membership = record.memberships.judge_key_eq(judge_key)
-    #     user_link2(membership)
-    #   end
-    # end
-
     def perform_zip_download
       if request.format.zip?
         require "kconv"
@@ -259,66 +238,23 @@ module Swars
       end
     end
 
-    def row_build_for_basic(record)
-      {}.tap do |row|
-        row.update(left_right_pairs2(left_right_pairs(record)))
-
-        row["結果"] = link_to(record.final_info.name, swars_tag_search_path(record.final_info.name), :class => record.final_info.has_text_color)
-
-        if false
-          row["戦法"] = record.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
-        else
-          # row["戦型"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-          # row["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
-        end
-
-        if teai_p
-          row["手合"] = link_to(record.preset_info.name, swars_tag_search_path(record.preset_info.name))
-        end
-        row["手数"] = record.turn_max
-        row["種類"] = link_to(record.rule_info.name, swars_tag_search_path(record.rule_info.name))
-
-        row["日時"] = record.battled_at.to_s(:battle_time)
-
-        row[""] = row_links(record)
-      end
-    end
-
-    def row_build_for_light(record)
-      {}.tap do |row|
-        row["日時"] = record.battled_at.to_s(:battle_time)
-        row.update(left_right_pairs2(left_right_pairs(record)))
-        row[""] = link_to(h.image_tag("piyo_shogi_icon.png", "class": "row_piyo_link"), piyo_shogi_app_url(full_url_for([record, format: "kif"])))
-      end
-    end
-
     def left_right_pairs(record)
       row = {}
-      l, r = record.memberships
+      a = record.memberships.to_a
       if current_swars_user
-        if l.user == current_swars_user
-          row["対象"] = l
-          row["相手"]       = r
-        else
-          row["対象"] = r
-          row["相手"]       = l
+        labels = ["対象", "相手"]
+        if a.last.user == current_swars_user
+          a = a.reverse
         end
       else
+        labels = ["勝ち", "負け"]
         if record.win_user_id
-          if l.judge_key == "win"
-            row["勝ち"] = l
-            row["負け"] = r
-          else
-            row["勝ち"] = r
-            row["負け"] = l
+          if a.last.judge_key == "win"
+            a = a.reverse
           end
-        else
-          # 引き分け
-          row["勝ち"] = l
-          row["負け"] = r
         end
       end
-      row
+      labels.zip(a)
     end
 
     def left_right_pairs2(row)
@@ -345,10 +281,6 @@ module Swars
 
     let :current_per do
       params[:per].presence || default_per
-    end
-
-    let :rows do
-      current_records.collect(&method("row_build_for_#{current_mode}"))
     end
 
     let :current_swars_user do
@@ -538,22 +470,12 @@ module Swars
 
       def js_record_for(e)
         a = super
-
         a[:title] = e.to_title
         a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
-
-        if false
-          a["戦法"] = e.tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
-        else
-          # a["戦型"] = versus_tag(tag_links(l_ship.attack_tag_list), tag_links(r_ship.attack_tag_list))
-          # a["囲い"] = versus_tag(tag_links(l_ship.defense_tag_list), tag_links(r_ship.defense_tag_list))
-        end
-
         a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
         a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
         a[:swars_real_battle_url] = swars_real_battle_url(e)
         a[:wars_tweet_body] = e.wars_tweet_body
-
         a[:memberships] = left_right_pairs(e).collect do |label, e|
           attrs = {
             label: label,
@@ -563,11 +485,12 @@ module Swars
             query_user_url: polymorphic_path(e.user, current_mode: current_mode),
           }
           [:attack, :defense].each do |key|
-            attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect { |e| {name: e, url: swars_tag_search_path(e) } }
+            attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
+              { name: e, url: swars_tag_search_path(e) }
+            end
           end
           attrs
         end
-
         a
       end
     end
