@@ -11,12 +11,4 @@ RSpec.describe "2ch棋譜", type: :system do
     expect(page).to have_field "query"
     doc_image
   end
-
-  it "検索" do
-    visit "/s"
-    find("#search_form input[type=search]").set("一太郎")
-    find("#search_form button").click
-    expect(page).to have_content "一太郎 ZIP ダウンロード"
-    doc_image
-  end
 end

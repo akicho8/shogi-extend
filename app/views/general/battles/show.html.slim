@@ -10,16 +10,11 @@ javascript:
 
 #app
   ruby:
-    @page_title ||= [
-      controller.membership_name(current_record.memberships.black),
-      controller.membership_name(current_record.memberships.white),
-    ].join(" vs ")
+    @page_title ||= current_record.memberships.collect{|e|controller.membership_name(e)}.join(" vs ")
 
   .has-text-left
     .title.is-4.yumincho
-      = controller.membership_name(current_record.memberships.black)
-      span.versus.has-text-grey-lighter =<> "vs"
-      = controller.membership_name(current_record.memberships.white)
+      == @page_title
   hr
 
   .tags

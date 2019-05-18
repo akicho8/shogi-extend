@@ -24,8 +24,8 @@ module General
     scope :judge_key_eq, -> v { where(judge_key: v).take }
 
     # 先手/後手側の対局時の情報
-    scope :black, -> { where(location_key: "black").take! }
-    scope :white, -> { where(location_key: "white").take! }
+    # scope :black, -> { where(location_key: "black").take! }
+    # scope :white, -> { where(location_key: "white").take! }
 
     acts_as_ordered_taggable_on :defense_tags
     acts_as_ordered_taggable_on :attack_tags

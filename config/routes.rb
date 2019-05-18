@@ -36,13 +36,10 @@ Rails.application.routes.draw do
   ################################################################################ 2ch棋譜検索
 
   namespace :general, path: "" do
-    resources :battles, path: "sr", only: [:index, :show] do
-      resources :tag_cloud, :only => :index, :module => :battles
-    end
+    resources :battles, path: "sr", only: [:index, :show]
 
     get "s?query=:query", to: "battles#index", as: :search # s/:query だと s/a%2Fb が s/a/b と解釈されて Apache (or Passenger) でエラーになってしまうため query=:query 形式にしている
     get "s",        to: "battles#index"
-    get "s-cloud",  to: "battles/tag_cloud#index", as: :cloud
   end
 
   resolve "General::User" do |user, options|

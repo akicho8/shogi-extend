@@ -198,12 +198,6 @@ module Swars
       end
     end
 
-    def tag_links(tag_list)
-      if tag_list.present?
-        tag_list.collect { |e| link_to(e, swars_tag_search_path(e)) }.join(" ").html_safe
-      end
-    end
-
     def perform_zip_download
       if request.format.zip?
         require "kconv"
