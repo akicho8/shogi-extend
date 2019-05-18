@@ -256,7 +256,7 @@ module BattleModelSharedMethods
 
     def tweet_image
       if thumbnail_image.attached?
-        thumbnail_image.variant(resize: "1200x630!", quality: 100) # , normalize: true)
+        thumbnail_image.variant(resize: "1200x630!", quality: 100, normalize: true)
       end
     end
 
