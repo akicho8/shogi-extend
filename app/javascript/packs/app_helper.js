@@ -2,18 +2,6 @@
 
 import axios from "axios"
 
-// .kif_clipboard_copy_button の要素を一括でアレする
-export function kifu_copy_hook_all() {
-  const elems = document.querySelectorAll(".kif_clipboard_copy_button")
-  elems.forEach(el => {
-    el.addEventListener("click", e => {
-      const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
-      kifu_copy_exec(params)
-      e.preventDefault()
-    })
-  })
-}
-
 // 指定 URL の結果をクリップボードにコピー
 export function kifu_copy_exec(params) {
   params = Object.assign({}, {

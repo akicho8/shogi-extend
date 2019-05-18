@@ -79,7 +79,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
                   | {{modal_record.new_and_copy.name}}
 
             template(v-if="modal_record.kifu_copy_params")
-              b-dropdown-item(:has-link="true" :paddingless="false")
+              b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'ki2'})")
                   | KI2 コピー
 
@@ -92,6 +92,16 @@ b-modal(:active.sync="modal_p" has-modal-card)
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="`${modal_record.show_path}.ki2`")
                   | KI2 ダウンロード
+
+            template(v-if="modal_record.tweet_modal_url")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop.prevent="modal_url_copy")
+                  | URLをコピー
+
+            template(v-if="modal_record.tweet_modal_url")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop.prevent="modal_url_with_turn_copy")
+                  | 現在の手数のURLをコピー
 
             template(v-if="modal_record.tweet_window_url")
               b-dropdown-item(:has-link="true" :paddingless="true")

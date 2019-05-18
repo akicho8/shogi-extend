@@ -84,7 +84,6 @@ module General
 
     def row_links(battle)
       list = []
-      list << link_to("コピー".html_safe, "#", "class": "button is-small kif_clipboard_copy_button", data: {kifu_copy_params: battle.to_kifu_copy_params(self).to_json})
       list << link_to("詳細", [battle], "class": "button is-small")
       list.compact.join(" ").html_safe
     end

@@ -155,7 +155,7 @@ module BattleControllerSharedMethods2
     let :show_twitter_options do
       options = {}
       options[:title] = current_record.to_title
-      options[:url] = current_record.tweet_page_url
+      options[:url] = current_record.tweet_modal_url
       options[:description] = current_record.description
 
       if twitter_staitc_image_url
@@ -170,8 +170,19 @@ module BattleControllerSharedMethods2
     let :modal_record_twitter_options do
       if e = modal_record
         options = {}
-        options[:title]       = e.to_title
-        options[:url]         = e.tweet_page_url
+
+        if v = current_force_turn
+          options[:title] = "#{e.to_title}【#{v}手目】"
+        else
+          options[:title] = e.to_title
+        end
+
+        if v = current_force_turn
+          options[:url] = e.tweet_modal_url(turn: v)
+        else
+          options[:url] = e.tweet_modal_url
+        end
+
         options[:description] = e.description
 
         if e.thumbnail_image.attached?
@@ -217,6 +228,7 @@ module BattleControllerSharedMethods2
       a[:show_path] = polymorphic_path([ns_prefix, e])
       a[:tweet_image_url] = e.tweet_image_url
       a[:tweet_window_url] = e.tweet_window_url
+      a[:tweet_modal_url] = e.tweet_modal_url
       a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?
       if editable_record?(e) || Rails.env.development?
         a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])

@@ -92,6 +92,18 @@ export default {
       AppHelper.kifu_copy_exec(params)
     },
 
+    modal_url_copy() {
+      if (this.modal_record) {
+        AppHelper.clipboard_copy({text: this.modal_record.tweet_modal_url})
+      }
+    },
+
+    modal_url_with_turn_copy() {
+      if (this.modal_record) {
+        AppHelper.clipboard_copy({text: `${this.modal_record.tweet_modal_url}&turn=${this.real_pos}` })
+      }
+    },
+
     sort_handle(column, order) {
       this.sort_column = column
       this.sort_order = order
@@ -225,12 +237,14 @@ export default {
       return _.compact(columns)
     },
 
+    // 開始手数
+    // force_turn start_turn critical_turn の順に見る
+    // force_turn は $options.modal_record にのみ入っている
     start_turn() {
       if (this.modal_record) {
         if ("force_turn" in this.modal_record) {
           return this.modal_record.force_turn
         } else {
-          alert(this.modal_record.start_turn_or_critical_turn)
           return this.modal_record.start_turn_or_critical_turn
         }
       }

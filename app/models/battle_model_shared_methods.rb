@@ -234,18 +234,22 @@ module BattleModelSharedMethods
       has_one_attached :thumbnail_image
     end
 
-    def tweet_page_url
-      Rails.application.routes.url_helpers.full_url_for([self.class, modal_id: id])
+    def tweet_modal_url(**params)
+      params = {
+        modal_id: id,
+      }.merge(params)
+      Rails.application.routes.url_helpers.full_url_for([self.class, params])
     end
 
     def tweet_body(**options)
       out = []
       out << to_title
       out << description
-      out << (options[:url] || tweet_page_url) # URLは最後にすることでURLの表示がツイート内容から隠せる
+      out << (options[:url] || tweet_modal_url) # URLは最後にすることでURLの表示がツイート内容から隠せる
       out.reject(&:blank?).join("\n")
     end
 
+    # FIXME: これは js の方に書くべき
     def tweet_window_url(**options)
       "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_body(options))}"
     end

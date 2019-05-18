@@ -92,12 +92,6 @@ window.AppHelper = AppHelper    // こうしとけばどこからでも直接使
 //   })
 // })
 
-//////////////////////////////////////////////////////////////////////////////// 最初からあるDOMに kifu_copy_hook_all 適用
-
-document.addEventListener("DOMContentLoaded", () => {
-  AppHelper.kifu_copy_hook_all()
-})
-
 //////////////////////////////////////////////////////////////////////////////// 通知
 
 document.addEventListener("DOMContentLoaded", () => {
