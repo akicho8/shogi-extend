@@ -272,10 +272,8 @@ module BattleModelSharedMethods
         v = Base64.decode64(v)
         thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
 
-        if false
-          if v = params[:start_turn]
-            update!(start_turn: v)
-          end
+        if v = params[:start_turn]
+          update!(start_turn: v)
         end
 
         {
