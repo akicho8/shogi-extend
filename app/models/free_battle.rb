@@ -55,11 +55,8 @@ class FreeBattle < ApplicationRecord
         record.description = description.to_s.gsub(/_/, " ")
         # record.public_send("#{:kifu_body}_will_change!") # 強制的にパースさせるため
 
-        if md["saturn_key"] == "0"
-          record.saturn_key = :private
-        end
-        if md["saturn_key"] == "1"
-          record.saturn_key = :public
+        if saturn_info = SaturnInfo.find { |e| e.char_key == md["saturn_key"] }
+          record.saturn_key = saturn_info.key
         end
 
         error = nil
@@ -105,6 +102,8 @@ class FreeBattle < ApplicationRecord
     parts << "%05d" % id
     parts << "_"
     parts << key
+    parts << "_"
+    parts << saturn_info.char_key
     parts << "_"
     parts << title.gsub(/\p{Space}+/, "_")
     if description.present?
