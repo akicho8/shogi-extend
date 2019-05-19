@@ -7,60 +7,49 @@
 #colosseum_battle_show(v-cloak)
   .columns
     .column.is-half
-      .non_style_box
-        div(v-if="begin_at")
-          .box
-            nav.level
-              .level-left
-                .level-item.has-text-centered
-                  div(v-html="name_with_time_block('white')")
-              template(v-if="battle_now_p")
-                .level-item.has-text-centered
-                  div
-                    .buttons
-                      button.button.is-primary.is-outlined(@click="give_up" :disabled="!button_active_p") 投了
-                      button.button.is-primary.is-outlined(@click="fool_god" :disabled="!button_active_p") ヘボ棋神
-              template(v-if="xstate_key === 'st_done'")
-                .level-item.has-text-centered
-                  = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
-              .level-right
-                .level-item.has-text-centered
-                  div(v-html="name_with_time_block('black')")
+      template(v-if="begin_at")
+        .box
+          .iikanjino_yoko
+            .iikanjino_tate(v-html="name_with_time_block('white')")
+            template(v-if="battle_now_p")
+              .buttons
+                button.button.is-primary.is-outlined(@click="give_up" :disabled="!button_active_p") 投了
+                button.button.is-primary.is-outlined(@click="fool_god" :disabled="!button_active_p") ヘボ棋神
+            template(v-if="xstate_key === 'st_done'")
+              = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
+            .iikanjino_tate(v-html="name_with_time_block('black')")
       .box
-          shogi-player(
-            :run_mode="run_mode"
-            :kifu_body="full_sfen"
-            :key_event_capture="false"
-            :slider_show="!any_controller_hide"
-            :sfen_show="!any_controller_hide"
-            :controller_show="!any_controller_hide"
-            :theme="'#{current_shogi_player_theme}'"
-            :size="'large'"
-            :sound_effect="true"
-            :volume=AppConfig[:volume]
-            @update:play_mode_long_sfen="play_mode_long_sfen_set"
-            :human_side_key="human_side_key"
-            :flip="flip"
-          )
+        shogi-player(
+          :run_mode="run_mode"
+          :kifu_body="full_sfen"
+          :key_event_capture="false"
+          :slider_show="!any_controller_hide"
+          :sfen_show="!any_controller_hide"
+          :controller_show="!any_controller_hide"
+          :theme="'#{current_shogi_player_theme}'"
+          :size="'medium'"
+          :sound_effect="true"
+          :volume=AppConfig[:volume]
+          @update:play_mode_long_sfen="play_mode_long_sfen_set"
+          :human_side_key="human_side_key"
+          :flip="flip"
+        )
 
     .column
       .box.is-size-7
         b-table(:data="memberships" narrowed)
           template(slot-scope="props")
             b-table-column(label="対局者")
-              .line_container
-                template(v-if="props.row.fighting_at")
-                  / https://buefy.github.io/#/documentation/icon
-                  b-icon(icon="access-point" class="has-text-success" custom-size="null")
-                template(v-else)
-                  b-icon(icon="access-point" class="has-text-grey-lighter" custom-size="null")
+              template(v-if="props.row.fighting_at")
+                / https://buefy.github.io/#/documentation/icon
+                b-icon(icon="access-point" class="has-text-success" custom-size="null")
+              template(v-else)
+                b-icon(icon="access-point" class="has-text-grey-lighter" custom-size="null")
 
-                = ""
-                message_link_to(:user_to="props.row.user")
-                = " "
-
+              = ""
+              message_link_to(:user_to="props.row.user")
                 template(v-if="user_self_p(props.row.user)")
-                  = " ★"
+                  | ★
 
             b-table-column(label="手番")
               | {{location_key_name(props.row)}}
@@ -79,10 +68,8 @@
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_chat_messages"
             td
-              .chat_one_line
-                message_link_to :user_to="e.user"
-                = " "
-                span.chat_message(:class="e.msg_options.msg_class")
+              message_link_to :user_to="e.user"
+                .chat_message(:class="e.msg_options.msg_class")
                   | {{e.message}}
 
         article.media

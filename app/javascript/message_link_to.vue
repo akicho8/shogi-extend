@@ -1,9 +1,10 @@
 <template lang="pug">
-  span
-    a.message_link_to(@click.prevent="modal_open" :class="`user_${user_to.id}`")
+  .inline_iikanjino_yoko_ljust
+    a.message_link_to.iikanjino_yoko_ljust(@click.prevent="modal_open" :class="`user_${user_to.id}`")
       img.avatar_image(:src="user_to.avatar_url")
-      span.user_name
+      .user_name
         | {{user_to.name}}
+    slot
 
     b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card

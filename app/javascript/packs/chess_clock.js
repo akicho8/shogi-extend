@@ -91,7 +91,7 @@ export default {
       }
       let html = ""
       html += `<p class="heading">${this.__members_format_of_location(location)}</p>`
-      html += `<p class="title">${this.__time_format_of_location(location)}</p>`
+      html += `<p class="title is-6">${this.__time_format_of_location(location)}</p>`
       return html
     },
 
