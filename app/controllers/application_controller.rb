@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
           :last_action_infos   => Colosseum::LastActionInfo,
           :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「名無しのアカウントを作成してログイン」を使ってみてください。"}]),
           :talk_path           => talk_path,
-          :custom_session_id   => custom_session_id, # CPUと練習対局で対局者を特定するため(こうしなくてもセッションで httponly: false にすると document.cookie から取れるらしいが危険)
+          :custom_session_id   => custom_session_id, # CPU対戦で対局者を特定するため(こうしなくてもセッションで httponly: false にすると document.cookie から取れるらしいが危険)
           :chat_window_size => Colosseum::LobbyMessage.chat_window_size,
         }
       end

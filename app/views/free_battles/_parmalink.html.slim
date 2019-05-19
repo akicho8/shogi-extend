@@ -1,6 +1,7 @@
 .columns
   .column
     p
-      a.button.is-small(:href="permalink_url")
-        b-icon(pack="fas" icon="link" size="is-small")
-        | &nbsp; パーマリンク
+      b-tooltip(label="現在の検索条件の固定URL" position="is-right")
+        a.button.is-small(:href="permalink_url")
+          b-icon(icon="link" size="is-small")
+          | &nbsp; パーマリンク

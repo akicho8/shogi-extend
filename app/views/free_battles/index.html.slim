@@ -35,7 +35,7 @@
 
   .columns
     .column
-      = link_to("作成", [:new, ns_prefix, current_single_key], class: "button is-primary")
+      = link_to("投稿", [:new, ns_prefix, current_single_key], class: "button is-primary")
 
   = render partial: "parmalink"
 
@@ -43,12 +43,12 @@
     .column
       article.message.is-primary.is-size-7
         .message-header
-          | 使い方など
+          | 使い方
         .message-body.has-text-left
           .content
             ol
-              li 「普通の棋譜」は勝手には消しません
               li 行をクリックすると盤面がポップアップします
+              li 普通の棋譜はウォーズの棋譜と違って古くなって消しません
               li
                 | ログインしてから投稿すると次のことができます
                 ol

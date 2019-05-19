@@ -47,7 +47,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
         template(v-if="modal_record.sp_sfen")
           b-tooltip(label="棋譜をクリップボードにコピーする" position="is-right")
             a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
-              b-icon(pack="far" icon="clipboard" size="is-small")
+              b-icon(icon="clipboard-outline" size="is-small")
               | &nbsp;コピー
 
           a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")

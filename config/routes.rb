@@ -91,7 +91,7 @@ Rails.application.routes.draw do
 
   get "position-editor", to: "position_editor#show", as: :position_editor
 
-  ################################################################################ CPUと練習対局
+  ################################################################################ CPU対戦
 
   resource :cpu_battles, path: "cpu/battles", only: [:show, :create]
   get "cpu/battles", to: "cpu_battles#show"

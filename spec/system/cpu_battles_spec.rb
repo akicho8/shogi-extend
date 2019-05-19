@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "CPUと練習対局", type: :system do
+RSpec.describe "CPU対戦", type: :system do
   it "トップ" do
     visit "/cpu/battles"
     expect(page).to have_content "CPUの強さ"

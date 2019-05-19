@@ -67,14 +67,14 @@ html(lang="ja")
           .navbar-start
             / ここでの is-active に意味はない
             = link_to(icon_tag(:fas, :play) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
-            = link_to(icon_tag(:fas, :bolt) + "CPUと練習対局", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
-            = link_to(icon_tag(:fas, :search) + "将棋ウォーズ棋譜検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
-            = link_to(icon_tag(:fas, :user) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
-            = link_to(icon_tag(:fas, :edit) + "棋譜投稿", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
+            = link_to(icon_tag(:fas, :bolt) + "CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
+            = link_to(icon_tag(:fas, :search) + "ウォーズ棋譜検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
+            = link_to("普通の棋譜一覧", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link もっと見る
               .navbar-dropdown.is-boxed
-                = link_to("普通の棋譜一覧", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
+                = link_to(icon_tag(:fas, :edit) + "棋譜投稿", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
+                = link_to(icon_tag(:fas, :user) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
                 = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")]) if !Rails.env.production?
                 = link_to("戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
                 = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
@@ -144,9 +144,15 @@ html(lang="ja")
               /     = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
 
             .navbar-item
-              | オンライン{{online_only_count}}人
+              b-tooltip(label="オンラインの人数" position="is-bottom")
+                b-icon(icon="access-point")
+                | &nbsp;
+                | {{online_only_count}}
             .navbar-item
-              | 対局中{{fighter_only_count}}人
+              b-tooltip(label="対局中の人数" position="is-left")
+                b-icon(icon="play-circle")
+                | &nbsp;
+                | {{fighter_only_count}}
 
       - if false
         .nav.navbar.is-primary(role="navigation" aria-label="main navigation")
@@ -191,7 +197,7 @@ html(lang="ja")
               .container
                 ul
                   li class=("is-active" if params[:controller].start_with?("colosseum/battles"))   = link_to("ネット対戦", [:colosseum, :battles])
-                  li class=("is-active" if params[:controller] == "cpu_battles")                = link_to("CPUと練習対局", :cpu_battles)
+                  li class=("is-active" if params[:controller] == "cpu_battles")                = link_to("CPU対戦", :cpu_battles)
                   li class=("is-active" if params[:controller].start_with?("swars/battles"))   = link_to("将棋ウォーズ棋譜検索", [:swars, :basic])
                   li class=("is-active" if params[:controller] == "tactic_notes")              = link_to("戦法トリガー事典", :tactic_notes)
                   li class=("is-active" if params[:controller].start_with?("free_battles"))    = link_to("棋譜投稿", [:new, :free_battle])
@@ -238,9 +244,8 @@ html(lang="ja")
                 = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/", target: "_blank", :class => "no-decoration")
                 = " and "
                 = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank", :class => "no-decoration")
-
-                #system_notification_app.has-text-grey-lighter.is-size-7
-                  | ActionCable: {{latest_system_logs.join(" ")}}
+              #system_notification_app.has-text-grey-lighter.is-size-7
+                | ActionCable: {{latest_system_logs.join(" ")}}
 
     #single_notification_app
 

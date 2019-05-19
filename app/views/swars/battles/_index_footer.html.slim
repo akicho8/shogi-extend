@@ -7,7 +7,7 @@
   .columns
     .column
       - args = params.to_unsafe_h.except(:latest_open_index)
-      = [9, 50, 100, 200, 300, 400, Kaminari.config.max_per_page].collect { |per| link_to(" #{per} ", args.merge(per: per)) }.join(tag.span(" / ", :class => "has-text-grey-lighter")).html_safe
+      = [50, 100, 200, 300, 400, Kaminari.config.max_per_page].collect { |per| link_to(" #{per} ", args.merge(per: per)) }.join(tag.span(" / ", :class => "has-text-grey-lighter")).html_safe
       span.has-text-grey
         | 件ずつ表示
 
