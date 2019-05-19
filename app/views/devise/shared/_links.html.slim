@@ -29,7 +29,7 @@
         - if v = session[:provider_remember]
           - if v["provider"] == e.key.to_s
             span.is-size-6.has-text-primary
-              == "←"
+              == "★"
 
     - if v = session[:provider_remember]
       - s = SocialMediaInfo[v["provider"]]
