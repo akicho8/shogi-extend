@@ -32,7 +32,7 @@ b-modal(:active.sync="modal_p" has-modal-card)
             .modal_sp_description.is-size-6.has-text-grey
               | {{modal_record.description}}
 
-          .side_by_side_evenly.modal_sp_bottom_links
+          .iikanjino_yoko.modal_sp_bottom_links
             b-tooltip(label="この局面から自分で操作する")
               b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode") 継盤
 

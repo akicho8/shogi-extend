@@ -35,7 +35,7 @@ module Colosseum
       ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
     end
 
-    let :js_battle do
+    let :js_show_options do
       ams_sr(current_record, serializer: BattleShowSerializer, include: {memberships: :user, watch_ships: :user, chat_messages: :user})
     end
 
