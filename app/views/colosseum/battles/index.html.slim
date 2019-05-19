@@ -52,7 +52,7 @@
     template(v-if="!matching_at")
       button.button.is-primary.is-large(@click.prevent="matching_start")
         = icon_tag(:fas, :play) + "バトル開始"
-      button.button.is-large(@click.prevent="battle_setting_open_click")
+      button.button.is-large(@click.prevent="battle_setting_open_click" id="rule_set_dialog_button")
         b-tooltip(label="ルール設定")
           b-icon(pack="fas" icon="cog")
       = link_to([:colosseum, :rankings], class: "button is-large") do

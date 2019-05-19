@@ -39,7 +39,7 @@ RSpec.describe "対戦", type: :system do
     end
 
     it "ルール設定の変更" do
-      click_on("ルール設定")
+      find("#rule_set_dialog_button").click
       expect(page).to have_content "人数"
       choose("チーム戦")
       expect(page).to have_checked_field("チーム戦", visible: false) # FIXME: visible: false を付ける必要はないはず
@@ -47,7 +47,7 @@ RSpec.describe "対戦", type: :system do
       refresh
 
       # 反映されている
-      click_on("ルール設定")
+      find("#rule_set_dialog_button").click
       expect(page).to have_checked_field("チーム戦", visible: false)
     end
 
@@ -270,7 +270,7 @@ RSpec.describe "対戦", type: :system do
 
   def __choise_rule_and_start(rule)
     visit_and_login
-    click_on("ルール設定")
+    find("#rule_set_dialog_button").click
     choose(rule)
     click_on("閉じる")
     sleep(5)
