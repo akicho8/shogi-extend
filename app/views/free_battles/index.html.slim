@@ -46,7 +46,7 @@
   /         rows = current_records.collect { |e|
   /           {
   /             # "ID" => link_to("##{e.id}", [ns_prefix, e]),
-  /             "タイトル" => link_to(e.safe_title, [ns_prefix, e], "@click.stop.prevent" => "show_handle(#{e.id})") + " " + tag.span(e.description, :class => "has-text-grey is-size-7"),
+  /             "題名" => link_to(e.safe_title, [ns_prefix, e], "@click.stop.prevent" => "show_handle(#{e.id})") + " " + tag.span(e.description, :class => "has-text-grey is-size-7"),
   /             # "先手" => e.meta_info["先手"],
   /             # "後手" => e.meta_info["後手"],
   /             "手数" => e.turn_max,

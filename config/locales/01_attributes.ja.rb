@@ -15,7 +15,7 @@
       kifu_file: "棋譜ファイル",
       kifu_url: "棋譜URL",
       kifu_body: "棋譜",
-      title: "タイトル",
+      title: "題名",
       description: "備考",
       turn_max: "手数",
       start_turn: "開始手数",

@@ -4,7 +4,7 @@ template(slot-scope="props")
       | #
       | {{props.row.id}}
 
-  b-table-column(field="title" label="タイトル" sortable)
+  b-table-column(field="title" label="題名" sortable)
     template(v-if="props.row.saturn_key === 'private'")
       b-icon.has-text-grey-light(pack="fas" icon="lock" size="is-small")
       | &nbsp;
