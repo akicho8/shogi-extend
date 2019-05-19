@@ -68,9 +68,8 @@
         table.table.is-narrow.is-fullwidth
           tr v-for="e of latest_chat_messages"
             td
-              message_link_to :user_to="e.user"
-                .chat_message(:class="e.msg_options.msg_class")
-                  | {{e.message}}
+              message_link_to(:user_to="e.user")
+                .mlt_chat_message(:class="e.msg_options.msg_class" v-text="e.message")
 
         article.media
           figure.media-left
