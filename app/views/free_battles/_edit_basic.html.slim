@@ -1,4 +1,4 @@
-- @page_title ||= current_record.new_record? ? "棋譜投稿" : "#{current_record.safe_title}の編集"
+- @page_title ||= current_record.new_record? ? "棋譜投稿" : "【#{current_record.title}】の編集"
 
 - content_for :head do
   = javascript_pack_tag("free_battle_edit")

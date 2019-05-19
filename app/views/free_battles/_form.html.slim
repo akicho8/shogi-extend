@@ -68,17 +68,20 @@
 .field
   = form.label(:title, class: "label")
   .control
-    = form.text_field(:title, class: "input is-small", placeholder: "空でかまいません")
+    = form.text_field(:title, class: "input is-small", required: true)
 
 .field
   = form.label(:description, class: "label")
   .control
-    = form.text_area(:description, class: "textarea is-small", placeholder: "空でかまいません", rows: 2)
+    = form.text_area(:description, class: "textarea is-small", rows: 2)
 
 - if current_user
   b-field
     template(v-for="e in $options.saturn_info")
-      b-radio-button(v-model="record.saturn_key" :native-value="e.key" name="free_battle[saturn_key]") {{e.name}}
+      b-radio-button(v-model="record.saturn_key" :native-value="e.key" name="free_battle[saturn_key]")
+        template(v-if="e.icon")
+          b-icon(:icon="e.icon" size="is-small")
+        | {{e.name}}
 
 .field
   details

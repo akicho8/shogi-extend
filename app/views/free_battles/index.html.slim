@@ -39,29 +39,6 @@
 
   = render partial: "parmalink"
 
-  / - if Rails.env.development?
-  /   .columns
-  /     .column
-  /       ruby:
-  /         rows = current_records.collect { |e|
-  /           {
-  /             # "ID" => link_to("##{e.id}", [ns_prefix, e]),
-  /             "題名" => link_to(e.safe_title, [ns_prefix, e], "@click.stop.prevent" => "show_handle(#{e.id})") + " " + tag.span(e.description, :class => "has-text-grey is-size-7"),
-  /             # "先手" => e.meta_info["先手"],
-  /             # "後手" => e.meta_info["後手"],
-  /             "手数" => e.turn_max,
-  /             "所有者" => e.owner_user ? link_to(e.owner_user.name, e.owner_user) : "",
-  /             "作成日時" => time_ago_in_words(e.created_at) + "前",
-  /             "操作" => [
-  /               link_to("詳細", [ns_prefix, e], class: "button is-small"),
-  /               (link_to("編集", [:edit, ns_prefix, e], class: "button is-small") if editable_record?(e)),
-  /               # (link_to("削除", [ns_prefix, e], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}) if editable_record?(e)),
-  /             ].compact.join(" ").html_safe,
-  /           }
-  /         }
-  /       = rows.to_html
-  /       = paginate current_records
-
   .columns
     .column
       article.message.is-primary.is-size-7

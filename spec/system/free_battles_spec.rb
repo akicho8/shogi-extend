@@ -20,6 +20,7 @@ RSpec.describe "棋譜投稿", type: :system do
     # expect(page).to have_field "free_battle[kifu_file]"
 
     fill_in "free_battle[kifu_body]", with: "68銀"
+    fill_in "free_battle[title]", with: "(題名)"
     sleep(3)
     doc_image("入力")
     click_button "保存"

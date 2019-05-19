@@ -90,8 +90,8 @@ class FreeBattle < ApplicationRecord
     end
   end
 
-  def safe_title
-    title.presence || "#{self.class.count.next}番目の何かの棋譜"
+  def default_title
+    "#{self.class.count.next}番目の何かの棋譜"
   end
 
   def to_title
@@ -115,7 +115,7 @@ class FreeBattle < ApplicationRecord
   end
 
   before_validation do
-    self.title = safe_title
+    self.title ||= default_title
     self.description ||= ""
 
     self.kifu_body ||= ""
