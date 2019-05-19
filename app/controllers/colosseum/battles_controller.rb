@@ -31,7 +31,7 @@ module Colosseum
   class BattlesController < ApplicationController
     include ModulableCrud::All
 
-    let :js_lobby do
+    let :js_index_options do
       ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
     end
 

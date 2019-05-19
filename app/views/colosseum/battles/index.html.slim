@@ -1,10 +1,9 @@
-javascript:
-  var js_lobby = #{js_lobby.to_json.html_safe}
-
 - content_for :head do
-  = javascript_pack_tag("lobby")
+  = javascript_pack_tag("colosseum_battle_index")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { App.lobby_vm = new ColosseumBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#colosseum_battle_index") })
 
-#lobby_app(v-cloak)
+#colosseum_battle_index(v-cloak)
   b-modal(:active.sync="setting_modal_p")
     template(v-if="true")
       header.modal-card-head
