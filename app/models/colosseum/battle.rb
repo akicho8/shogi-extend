@@ -485,7 +485,7 @@ module Colosseum
     # チャット関連
     concerning :ChatMessageMethods do
       included do
-        cattr_accessor(:chat_window_size) { 25 }
+        cattr_accessor(:chat_window_size) { 10 }
 
         has_many :chat_messages, dependent: :destroy do
           def limited_latest_list

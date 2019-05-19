@@ -68,31 +68,13 @@
 
   .columns
     .column
-      .non_border_box.chat_container
+      ul.chat_container
         - if true
-          .media.is-paddingless.is-marginless(v-for="e of latest_lobby_messages")
-            .media-left
-              message_link_to(:user_to="e.user")
+          .media(v-for="e of latest_lobby_messages")
             .media-content
-              p.content.chat_message(:class="e.msg_options.msg_class")
+              message_link_to(:user_to="e.user")
+              span.content.chat_message(:class="e.msg_options.msg_class")
                 | {{e.message}}
-
-        / / .title.is-6= "チャット"
-        / table.table.is-narrow.is-fullwidth
-        /   tr v-for="e of latest_lobby_messages"
-        /     td
-        /       .chat_one_line
-        /         message_link_to(:user_to="e.user")
-        /         = " "
-        /         span.chat_message(:class="e.msg_options.msg_class")
-        /           | {{e.message}}
-
-        / .field
-        /   .control
-        /     input.input.is-large.is-primary(type="text" autocomplete="off" v-model.trim="message" @keydown.enter="message_post_button_handle")
-        / .field
-        /   .control
-        /     button.button.is-primary(@click="message_post_button_handle") 送信
 
         - if true
           article.media
@@ -117,25 +99,24 @@
                   /       |  Press enter to submit
 
     .column
-      .non_border_box
-        / .title.is-6= "プレイヤー"
-        b-table(:data="online_users" :paginated="true" :per-page="10")
-          template(slot-scope="props")
-            b-table-column(field="name" label="プレイヤー" sortable="sortable")
-              message_link_to(:user_to="props.row")
-              template(v-if="user_self_p(props.row)")
-                = " ★"
-            b-table-column(label="ステイタス")
-              template(v-if="props.row.matching_at")
-                span.has-text-danger
-                  = "マッチング中"
-              template(v-if="props.row.active_battles.length >= 1")
-                span.has-text-danger
-                  = "対局中"
-                  template(v-for="e in props.row.active_battles")
-                    a(:href="e.show_path")
-                      =<> "{{e.name}}"
-        global_message_link
+      / .title.is-6= "プレイヤー"
+      b-table(:data="online_users" :paginated="true" :per-page="10")
+        template(slot-scope="props")
+          b-table-column(field="name" label="プレイヤー" sortable="sortable")
+            message_link_to(:user_to="props.row")
+            template(v-if="user_self_p(props.row)")
+              = " ★"
+          b-table-column(label="ステイタス")
+            template(v-if="props.row.matching_at")
+              span.has-text-danger
+                = "マッチング中"
+            template(v-if="props.row.active_battles.length >= 1")
+              span.has-text-danger
+                = "対局中"
+                template(v-for="e in props.row.active_battles")
+                  a(:href="e.show_path")
+                    =<> "{{e.name}}"
+      global_message_link
 
   .columns
     .column
