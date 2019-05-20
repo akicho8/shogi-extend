@@ -1,15 +1,15 @@
 - if current_swars_user
-  .columns
-    .column
-      .buttons
-        .is-hidden-desktop
-          = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
-            | 最新の対局を
-            = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
-            | で開く
+  = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded .is-hidden-desktop") do
+    | 最新の対局を
+    = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
+    | で開く
 
-        / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
-        = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-primary is-small is-rounded")
+  | &nbsp;
+  / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
+  = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-small is-rounded")
+  | &nbsp;
 
-        = link_to("古い対局も取り込む", "#", class: "button is-success is-small is-rounded", "@click" => "many_import_handle")
-        = link_to("(invisible)", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "many_import_link")
+  b-tooltip(label="古い棋譜も可能な限り取り込みます")
+    = link_to("もっと取り込む", "#", class: "button is-small is-rounded", "@click" => "many_import_handle")
+
+  = link_to("", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "many_import_link")
