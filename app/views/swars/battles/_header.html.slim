@@ -1,9 +1,3 @@
 .title.yumincho.is-2
   = "将棋ウォーズ棋譜検索"
 hr
-
-- unless Rails.env.production?
-  .tabs
-    ul
-      li class=("is-active" if params["controller"] == "swars/battles" && current_mode == :basic || current_mode == :light) = link_to("検索", [:swars, :basic, query: current_query])
-      li class=("is-active" if params["controller"] == "swars/battles" && current_mode == :cloud) = link_to("タグクラウド", [:swars, :cloud])

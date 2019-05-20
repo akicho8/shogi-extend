@@ -54,9 +54,7 @@ Rails.application.routes.draw do
 
     get "wr/:id",   to: "battles#show" # 互換性のため
 
-    # get "w/:query", to: "battles#index", as: :search
     get "w",        to: "battles#index", as: :basic
-    get "w-cloud",  to: "battles#index", as: :cloud, defaults: {mode: :cloud}
     get "w-light",  to: "battles#index", as: :light, defaults: {mode: :light}
   end
 

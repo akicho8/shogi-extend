@@ -41,10 +41,4 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     expect(page).to have_content "データ収集中なのであと15秒ぐらいしてからお試しください"
     doc_image
   end
-
-  it "戦法クラウド" do
-    visit "/w-cloud"
-    expect(page).to have_content "Rails"
-    doc_image
-  end
 end
