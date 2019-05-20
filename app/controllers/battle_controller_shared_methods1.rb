@@ -59,6 +59,11 @@ module BattleControllerSharedMethods1
   private
 
   def send_png_file
+    # 画像がなければ作る
+    unless current_record.thumbnail_image.attached?
+      current_record.create_image_by_rmagick
+    end
+
     key = current_record.tweet_image.processed.key
     path = ActiveStorage::Blob.service.path_for(key)
     send_file path, type: current_record.thumbnail_image.content_type, disposition: :inline, filename: "#{current_record.id}.png"

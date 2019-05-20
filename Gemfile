@@ -173,3 +173,6 @@ gem "color"
 
 # 検索
 gem "ransack"
+
+# for Bioshogi to_img method
+gem "rmagick"
