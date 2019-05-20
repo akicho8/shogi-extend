@@ -1,7 +1,7 @@
 <template lang="pug">
   .message_link_to.inline_iikanjino_yoko_ljust
-    img.avatar_image(@click.prevent="modal_open" :src="user_to.avatar_url")
-    span.user_name(@click.prevent="modal_open" v-text="user_to.name")
+    img.avatar_image(@click.prevent="modal_open" :src="user_to.avatar_url" :class="`user_${user_to.id}`")
+    span.user_name(@click.prevent="modal_open" v-text="user_to.name" :class="`user_${user_to.id}`")
     slot
 
     b-modal(:active.sync="modal_p" has-modal-card)

@@ -176,7 +176,7 @@ RSpec.describe "対戦", type: :system do
     it "自分vs自分" do
       visit_and_login
       refresh
-      find(".message_link_to.user_#{Colosseum::User.last.id}").click
+      find(".message_link_to img.user_#{Colosseum::User.last.id}").click
       expect(page).to have_content "対局申し込み"
       doc_image("申込")
       click_on("対局申し込み")
@@ -195,7 +195,7 @@ RSpec.describe "対戦", type: :system do
       end
       using_session("user2") do
         visit_and_login
-        find(".message_link_to.user_#{@user1.id}").click
+        find(".message_link_to img.user_#{@user1.id}").click
         expect(page).to have_content "対局申し込み"
         doc_image("申込")
         click_on("対局申し込み")
@@ -221,7 +221,7 @@ RSpec.describe "対戦", type: :system do
     it "自分宛" do
       visit_and_login
       refresh
-      find(".message_link_to.user_#{Colosseum::User.last.id}").click
+      find(".message_link_to img.user_#{Colosseum::User.last.id}").click
       within(".modal-card") do
         expect(page).to have_content "対局申し込み"
         find("textarea").set(message)
@@ -234,7 +234,7 @@ RSpec.describe "対戦", type: :system do
     it "他者宛" do
       @alice = create(:colosseum_user)
       visit_and_login
-      find(".message_link_to.user_#{@alice.id}").click
+      find(".message_link_to img.user_#{@alice.id}").click
       expect(page).to have_content "対局申し込み"
       within(".modal-card") do
         find("textarea").set(message)
@@ -247,7 +247,7 @@ RSpec.describe "対戦", type: :system do
       Colosseum::User.setup     # ロボットたちを準備
 
       visit_and_login
-      find(".message_link_to.user_#{cpu_level1.id}").click
+      find(".message_link_to img.user_#{cpu_level1.id}").click
       expect(page).to have_content "対局申し込み"
       within(".modal-card") do
         find("textarea").set(message)
