@@ -195,18 +195,22 @@ module BattleControllerSharedMethods2
       end
     end
 
-    let :twitter_staitc_image_url do
-      if current_record.thumbnail_image.attached?
-        # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
-        # とした場合はリダイレクトするURLになってしまうため使えない
-        # 固定URL化する
-        polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
-      end
-    end
-
     let :current_search_scope_key do
       (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
     end
+  end
+
+  def twitter_staitc_image_url
+    if false
+      unless current_record.thumbnail_image.attached?
+        return
+      end
+    end
+
+    # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
+    # とした場合はリダイレクトするURLになってしまうため使えない
+    # 固定URL化する
+    polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
   end
 
   def show
