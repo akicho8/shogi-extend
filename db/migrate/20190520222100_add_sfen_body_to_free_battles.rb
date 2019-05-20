@@ -28,13 +28,12 @@
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
-# frozen_string_literal: true
-
-class AddColosseumUserToFreeBattles < ActiveRecord::Migration[5.2]
+class AddSfenBodyToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    change_table :free_battles do |t|
-      t.belongs_to :colosseum_user, null: true, index: true
-      t.string :title
+    [:swars_battles, :free_battles, :general_battles].each do |table|
+      change_table table do |t|
+        t.string :sfen_body, limit: 8192
+      end
     end
   end
 end

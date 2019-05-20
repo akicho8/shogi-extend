@@ -3,25 +3,26 @@
 #
 # 棋譜投稿 (free_battles as FreeBattle)
 #
-# |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
-# | name              | desc               | type        | opts        | refs                              | index |
-# |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
-# | id                | ID                 | integer(8)  | NOT NULL PK |                                   |       |
-# | key               | ユニークなハッシュ | string(255) | NOT NULL    |                                   | A!    |
-# | kifu_url          | 棋譜URL            | string(255) |             |                                   |       |
-# | kifu_body         | 棋譜               | text(65535) | NOT NULL    |                                   |       |
-# | turn_max          | 手数               | integer(4)  | NOT NULL    |                                   | D     |
-# | meta_info         | 棋譜ヘッダー       | text(65535) | NOT NULL    |                                   |       |
-# | battled_at        | Battled at         | datetime    | NOT NULL    |                                   | C     |
-# | created_at        | 作成日時           | datetime    | NOT NULL    |                                   |       |
-# | updated_at        | 更新日時           | datetime    | NOT NULL    |                                   |       |
-# | colosseum_user_id | 所有者ID           | integer(8)  |             | :owner_user => Colosseum::User#id | B     |
-# | title             | 題名               | string(255) |             |                                   |       |
-# | description       | 説明               | text(65535) | NOT NULL    |                                   |       |
-# | start_turn        | 開始手数           | integer(4)  |             |                                   |       |
-# | critical_turn     | 開戦               | integer(4)  |             |                                   |       |
-# | saturn_key        | Saturn key         | string(255) | NOT NULL    |                                   |       |
-# |-------------------+--------------------+-------------+-------------+-----------------------------------+-------|
+# |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
+# | name              | desc               | type         | opts        | refs                              | index |
+# |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
+# | id                | ID                 | integer(8)   | NOT NULL PK |                                   |       |
+# | key               | ユニークなハッシュ | string(255)  | NOT NULL    |                                   | A!    |
+# | kifu_url          | 棋譜URL            | string(255)  |             |                                   |       |
+# | kifu_body         | 棋譜               | text(65535)  | NOT NULL    |                                   |       |
+# | turn_max          | 手数               | integer(4)   | NOT NULL    |                                   | D     |
+# | meta_info         | 棋譜ヘッダー       | text(65535)  | NOT NULL    |                                   |       |
+# | battled_at        | Battled at         | datetime     | NOT NULL    |                                   | C     |
+# | created_at        | 作成日時           | datetime     | NOT NULL    |                                   |       |
+# | updated_at        | 更新日時           | datetime     | NOT NULL    |                                   |       |
+# | colosseum_user_id | 所有者ID           | integer(8)   |             | :owner_user => Colosseum::User#id | B     |
+# | title             | 題名               | string(255)  |             |                                   |       |
+# | description       | 説明               | text(65535)  | NOT NULL    |                                   |       |
+# | start_turn        | 開始手数           | integer(4)   |             |                                   |       |
+# | critical_turn     | 開戦               | integer(4)   |             |                                   |       |
+# | saturn_key        | Saturn key         | string(255)  | NOT NULL    |                                   |       |
+# | sfen_body         | Sfen body          | string(8192) |             |                                   |       |
+# |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
@@ -142,22 +143,24 @@ class FreeBattlesController < ApplicationController
           saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
         }
       end
+    end
 
-      let :current_input_any_kifu do
-        params[:input_any_kifu].to_s
-      end
+    private
 
-      let :heavy_parsed_info do
-        Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: true)
-      end
+    def output_kifs
+      @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
+    end
 
-      let :turn_max do
-        heavy_parsed_info.mediator.turn_info.turn_max
-      end
+    def turn_max
+      @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_max
+    end
 
-      let :output_kifs do
-        KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
-      end
+    def heavy_parsed_info
+      @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: true)
+    end
+
+    def current_input_any_kifu
+      params[:input_any_kifu].to_s
     end
   end
 

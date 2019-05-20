@@ -3,27 +3,28 @@
 #
 # 将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)
 #
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | name              | desc             | type        | opts        | refs | index |
-# |-------------------+------------------+-------------+-------------+------+-------|
-# | id                | ID               | integer(8)  | NOT NULL PK |      |       |
-# | key               | 対局ユニークキー | string(255) | NOT NULL    |      | A!    |
-# | battled_at        | 対局日時         | datetime    | NOT NULL    |      | E     |
-# | rule_key          | ルール           | string(255) | NOT NULL    |      | B     |
-# | csa_seq           | 棋譜             | text(65535) | NOT NULL    |      |       |
-# | final_key         | 結末             | string(255) | NOT NULL    |      | C     |
-# | win_user_id       | 勝者             | integer(8)  |             |      | D     |
-# | turn_max          | 手数             | integer(4)  | NOT NULL    |      | F     |
-# | meta_info         | メタ情報         | text(65535) | NOT NULL    |      |       |
-# | last_accessd_at   | 最終アクセス日時 | datetime    | NOT NULL    |      |       |
-# | access_logs_count | アクセス数       | integer(4)  | DEFAULT(0)  |      |       |
-# | created_at        | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時         | datetime    | NOT NULL    |      |       |
-# | preset_key        | 手合割           | string(255) | NOT NULL    |      |       |
-# | start_turn        | 開始手数         | integer(4)  |             |      |       |
-# | critical_turn     | 開戦             | integer(4)  |             |      |       |
-# | saturn_key        | Saturn key       | string(255) | NOT NULL    |      |       |
-# |-------------------+------------------+-------------+-------------+------+-------|
+# |-------------------+------------------+--------------+-------------+------+-------|
+# | name              | desc             | type         | opts        | refs | index |
+# |-------------------+------------------+--------------+-------------+------+-------|
+# | id                | ID               | integer(8)   | NOT NULL PK |      |       |
+# | key               | 対局ユニークキー | string(255)  | NOT NULL    |      | A!    |
+# | battled_at        | 対局日時         | datetime     | NOT NULL    |      | E     |
+# | rule_key          | ルール           | string(255)  | NOT NULL    |      | B     |
+# | csa_seq           | 棋譜             | text(65535)  | NOT NULL    |      |       |
+# | final_key         | 結末             | string(255)  | NOT NULL    |      | C     |
+# | win_user_id       | 勝者             | integer(8)   |             |      | D     |
+# | turn_max          | 手数             | integer(4)   | NOT NULL    |      | F     |
+# | meta_info         | メタ情報         | text(65535)  | NOT NULL    |      |       |
+# | last_accessd_at   | 最終アクセス日時 | datetime     | NOT NULL    |      |       |
+# | access_logs_count | アクセス数       | integer(4)   | DEFAULT(0)  |      |       |
+# | created_at        | 作成日時         | datetime     | NOT NULL    |      |       |
+# | updated_at        | 更新日時         | datetime     | NOT NULL    |      |       |
+# | preset_key        | 手合割           | string(255)  | NOT NULL    |      |       |
+# | start_turn        | 開始手数         | integer(4)   |             |      |       |
+# | critical_turn     | 開戦             | integer(4)   |             |      |       |
+# | saturn_key        | Saturn key       | string(255)  | NOT NULL    |      |       |
+# | sfen_body         | Sfen body        | string(8192) |             |      |       |
+# |-------------------+------------------+--------------+-------------+------+-------|
 
 module Swars
   class BattlesController < ApplicationController

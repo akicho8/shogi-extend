@@ -215,7 +215,7 @@ module BattleControllerSharedMethods2
 
   def show
     if request.xhr? && request.format.json?
-      render json: { sp_sfen: current_record.sfen }
+      render json: { sfen_body: current_record.sfen_nakereba_tukutte_hozon }
       return
     end
 
@@ -242,7 +242,7 @@ module BattleControllerSharedMethods2
 
   def js_modal_record_for(e)
     js_record_for(e).tap do |a|
-      a[:sp_sfen] = e.sfen
+      a[:sfen_body] ||= e.sfen_nakereba_tukutte_hozon
       if v = current_force_turn
         a[:force_turn] = v
       end

@@ -22,45 +22,6 @@ module BattleModelSharedMethods
     end
   end
 
-  # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
-  def to_cached_kifu(key)
-    if kifu_cache_enable
-      Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
-        heavy_parsed_info.public_send("to_#{key}", compact: true)
-      end
-    else
-      if e = converted_infos.text_format_eq(key).take
-        e.text_body
-      end
-    end
-  end
-
-  def sfen
-    to_cached_sfen
-  end
-
-  def to_cached_sfen
-    Rails.cache.fetch([cache_key, "sfen"].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
-      fast_parsed_info.to_sfen
-    end
-  end
-
-  # KI2変換可能だけど重い
-  def heavy_parsed_info
-    @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: true)
-  end
-
-  # バリデーションをはずして KI2 への変換もしない前提の軽い版
-  # ヘッダーやタグが欲しいとき用
-  def fast_parsed_info
-    @fast_parsed_info ||= Bioshogi::Parser.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parsed_options))
-  end
-
-  # オプションはサブクラスで渡してもらう
-  def fast_parsed_options
-    {}
-  end
-
   # def total_seconds
   #   @total_seconds ||= heavy_parsed_info.move_infos.sum { |e| e[:used_seconds] }
   # end
@@ -91,6 +52,7 @@ module BattleModelSharedMethods
 
     self.turn_max = info.mediator.turn_info.turn_max
     self.critical_turn = info.mediator.critical_turn
+    self.sfen_body = info.mediator.to_sfen
 
     self.meta_info = {
       :header          => info.header.to_h,
@@ -215,6 +177,47 @@ module BattleModelSharedMethods
 
   def start_turn_or_critical_turn
     start_turn || critical_turn || 0
+  end
+
+  concerning :KifuConvertMethods do
+    # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
+    def to_cached_kifu(key)
+      if kifu_cache_enable
+        Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
+          heavy_parsed_info.public_send("to_#{key}", compact: true)
+        end
+      else
+        if e = converted_infos.text_format_eq(key).take
+          e.text_body
+        end
+      end
+    end
+
+    def sfen_nakereba_tukutte_hozon
+      unless sfen_body
+        update!(sfen_body: fast_parsed_info.to_sfen)
+      end
+
+      sfen_body
+    end
+
+    # バリデーションをはずして KI2 への変換もしない前提の軽い版
+    # ヘッダーやタグが欲しいとき用
+    def fast_parsed_info
+      @fast_parsed_info ||= Bioshogi::Parser.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parsed_options))
+    end
+
+    private
+
+    # KI2変換可能だけど重い
+    def heavy_parsed_info
+      @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: true)
+    end
+
+    # オプションはサブクラスで渡してもらう
+    def fast_parsed_options
+      {}
+    end
   end
 
   concerning :SaturnMethods do

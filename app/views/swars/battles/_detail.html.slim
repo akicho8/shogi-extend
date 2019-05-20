@@ -20,9 +20,9 @@ template(slot="detail" slot-scope="props")
       | Tweetコピー
 
   - if Rails.env.development?
-    template(v-if="props.row.sp_sfen")
+    template(v-if="props.row.sfen_body")
       shogi-player(
-        :kifu_body="props.row.sp_sfen"
+        :kifu_body="props.row.sfen_body"
         :key_event_capture="true"
         :slider_show="true"
         :sfen_show="false"

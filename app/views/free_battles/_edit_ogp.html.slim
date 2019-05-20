@@ -20,7 +20,7 @@
 
   #capture_container
     #capture_main
-      shogi-player(:kifu_body="'#{current_record.to_cached_sfen}'" :theme="'simple'" :key_event_capture="true" :start_turn.sync="start_turn" ref="main_sp")
+      shogi-player(:kifu_body="'#{current_record.sfen_nakereba_tukutte_hozon}'" :theme="'simple'" :key_event_capture="true" :start_turn.sync="start_turn" ref="main_sp")
 
   template(v-if="slider_show")
     .has-text-centered

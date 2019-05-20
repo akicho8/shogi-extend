@@ -65,7 +65,7 @@ export default {
       this.modal_record = row
       this.real_pos = this.start_turn
 
-      if (this.modal_record.sp_sfen) {
+      if (this.modal_record.sfen_body) {
         this.debug_alert("棋譜はすでにある")
         this.modal_show()
       } else {
@@ -147,7 +147,7 @@ export default {
 
     // row の棋譜がなければ取得して block があれば呼ぶ
     record_fetch_to(row, block) {
-      if (row.sp_sfen) {
+      if (row.sfen_body) {
         this.debug_alert("棋譜はすでにある")
       } else {
         this.debug_alert("新規取得")
@@ -158,12 +158,12 @@ export default {
           url: row.sp_sfen_get_path,
           headers: {"X-Requested-With": "XMLHttpRequest"},
         }).then(response => {
-          this.$set(row, "sp_sfen", response.data["sp_sfen"])
+          this.$set(row, "sfen_body", response.data["sfen_body"])
           if (block) {
             block("success")
           }
           // const record = this.records.find(e => e.id === this.modal_record)
-          // this.$set(record, "sp_sfen", response.data["sp_sfen"])
+          // this.$set(record, "sfen_body", response.data["sfen_body"])
           // this.modal_show()
         }).catch((error) => {
           console.table([error.response])
@@ -222,7 +222,7 @@ export default {
     // modal_record に対応する sfen
     // modal_record_sp_sfen() {
     //   if (this.modal_record) {
-    //     return this.modal_record.sp_sfen
+    //     return this.modal_record.sfen_body
     //   }
     // },
 

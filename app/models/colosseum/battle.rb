@@ -85,6 +85,10 @@ module Colosseum
       end
     end
 
+    after_create do
+      SlackAgent.message_send(key: "バトル開始", body: name)
+    end
+
     def name
       if false
         if users.present?
