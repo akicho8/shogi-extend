@@ -49,17 +49,43 @@ template(slot-scope="props")
       a.is-hidden-desktop(@click.stop :href="props.row.piyo_shogi_app_url")
         = image_tag("piyo_shogi_icon.png", "class": "row_piyo_link")
 
-      / b-dropdown(:hoverable="false" @click.stop)
-      /   button.button.is-small(slot="trigger")
-      /     / span もっと見る
-      /     b-icon(icon="menu-up")
-      / 
-      /   template(v-if="props.row.show_path")
-      /     b-dropdown-item(:has-link="true" :paddingless="true")
-      /       a(@click.stop :href="props.row.show_path")
-      /         | 詳細
-      / 
-      /   template(v-if="props.row.edit_path")
-      /     b-dropdown-item(:has-link="true" :paddingless="true")
-      /       a(@click.stop :href="props.row.edit_path")
-      /         | 編集
+      b-dropdown(:hoverable="false" @click.native.stop position="is-top-left")
+        button.button.is-small(slot="trigger")
+          / span もっと見る
+          b-icon(icon="menu-up")
+
+        template(v-if="props.row.show_path")
+          b-dropdown-item(:has-link="true" :paddingless="true")
+            a(@click.stop :href="props.row.show_path")
+              | 詳細
+
+        - unless Rails.env.production?
+          template(v-if="props.row.edit_path")
+            b-dropdown-item(:has-link="true" :paddingless="true")
+              a(@click.stop :href="props.row.edit_path")
+                | 編集
+
+        template(v-for="e in props.row.memberships")
+          b-dropdown-item(:has-link="true" :paddingless="true")
+            a(@click.stop :href="e.player_info_url")
+              | {{e.name_with_grade}} 情報
+
+        b-dropdown-item(:separator="true")
+
+        b-dropdown-item(:has-link="true" :paddingless="true")
+          a(@click.stop :href="`${props.row.show_path}.kif`")
+            | KIF ダウンロード
+
+        b-dropdown-item(:has-link="true" :paddingless="true")
+          a(@click.stop :href="`${props.row.show_path}.ki2`")
+            | KI2 ダウンロード
+
+        b-dropdown-item(:separator="true")
+
+        b-dropdown-item(:has-link="true" :paddingless="true")
+          a(@click.stop :href="props.row.swars_real_battle_url" target="_blank")
+            | ウォーズに移動
+
+        b-dropdown-item(:has-link="true" :paddingless="true")
+          a(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)")
+            | ウォーズ側のTweetコピー

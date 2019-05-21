@@ -11,7 +11,7 @@ window.SwarsBattleIndex = Vue.extend({
   data() {
     return {
       submited: false,
-      // detailed: false,
+      detailed: false,
     }
   },
 
