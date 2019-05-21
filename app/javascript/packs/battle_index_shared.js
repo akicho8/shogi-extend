@@ -174,12 +174,12 @@ export default {
   },
 
   mounted() {
-    if (!this.query) {
-      this.$refs.main_field.focus()
-    }
-
     if (this.$options.modal_record) {
       this.show_handle(this.$options.modal_record)
+    } else {
+      if (!this.query) {
+        this.$refs.main_field.focus()
+      }
     }
 
     this.async_records_load()
