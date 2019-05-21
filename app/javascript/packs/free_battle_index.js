@@ -1,7 +1,7 @@
-import battle_index_mod from "./battle_index_mod.js"
+import battle_index_shared from "./battle_index_shared.js"
 
 window.FreeBattleIndex = Vue.extend({
-  mixins: [battle_index_mod],
+  mixins: [battle_index_shared],
 
   data() {
     return {

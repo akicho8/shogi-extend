@@ -1,4 +1,4 @@
-import battle_index_mod from "./battle_index_mod.js"
+import battle_index_shared from "./battle_index_shared.js"
 
 import _ from "lodash"
 import * as AppHelper from "./app_helper.js"
@@ -6,7 +6,7 @@ import axios from "axios"
 import dayjs from "dayjs"
 
 window.SwarsBattleIndex = Vue.extend({
-  mixins: [battle_index_mod],
+  mixins: [battle_index_shared],
 
   data() {
     return {
