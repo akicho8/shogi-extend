@@ -61,7 +61,7 @@ module BattleControllerSharedMethods1
   def send_png_file
     # 画像がなければ作る
     unless current_record.thumbnail_image.attached?
-      current_record.create_image_by_rmagick
+      current_record.image_auto_cerate
     end
 
     key = current_record.tweet_image.processed.key

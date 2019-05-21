@@ -238,12 +238,9 @@ module BattleModelSharedMethods
     end
 
     # rmagick で盤面作成
-    def create_image_by_rmagick
+    def image_auto_cerate
       parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: start_turn_or_critical_turn)
-      canvas = parser.to_img.canvas
-      canvas.format = "png"
-      v = canvas.to_blob
-      thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+      thumbnail_image.attach(io: StringIO.new(parser.to_png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
     end
 
     def tweet_modal_url(**params)
