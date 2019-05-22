@@ -1,14 +1,6 @@
 # クレジット
 <hr>
 
-ぴよ将棋
-https://www.studiok-i.net/ios/piyo_shogi.html
-
-将棋ウォーズ
-https://shogiwars.heroz.jp/
-
-## 利用素材
-
 将棋駒と将棋盤 画像フリー素材 | 無料素材倶楽部
 http://sozai.7gates.net/docs/japanese-chess/
 
@@ -35,3 +27,6 @@ https://free-texture.net/seamless-pattern/tatami01.html
 
 かわいいフリー素材集 いらすとや
 https://www.irasutoya.com/
+
+フォント Ricty Diminished
+https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
