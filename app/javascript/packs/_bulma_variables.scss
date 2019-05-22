@@ -75,7 +75,8 @@ $variable-columns: true !default;
 
 // The default Bulma derived variables are declared below
 
-$primary: $turquoise !default;
+// $primary: $turquoise !default;
+$primary: $cyan !default;
 
 $info: $cyan !default;
 $success: $green !default;
