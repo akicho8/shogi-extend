@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         App.battle_vm.watch_ships = data["watch_ships"]
       }
 
-      // バトル開始
+      // 対戦開始
       if (data["begin_at"]) {
         AppHelper.talk("対戦開始")
         App.battle_vm.battle_setup(data)
@@ -155,7 +155,7 @@ window.ColosseumBattleShow = Vue.extend({
   },
 
   methods: {
-    // バトル開始(トリガーから全体通知が来たときの処理)
+    // 対戦開始(トリガーから全体通知が来たときの処理)
     battle_setup(data) {
       this.begin_at = data["begin_at"]
       this.end_at = null

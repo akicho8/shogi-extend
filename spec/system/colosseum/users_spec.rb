@@ -78,13 +78,13 @@ RSpec.describe "対戦", type: :system do
     it "シングルス" do
       using_session(:user1) do
         visit_and_login
-        click_on("バトル開始")
+        click_on("対戦開始")
         expect(page).to have_content "マッチング開始"
         doc_image("待ち")
       end
       using_session(:user2) do
         visit_and_login
-        click_on("バトル開始")
+        click_on("対戦開始")
       end
       sleep(2)
 
@@ -274,7 +274,7 @@ RSpec.describe "対戦", type: :system do
     choose(rule)
     click_on("閉じる")
     sleep(5)
-    click_on("バトル開始")
+    click_on("対戦開始")
     sleep(2)
   end
 

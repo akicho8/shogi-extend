@@ -86,7 +86,7 @@ module Colosseum
     end
 
     after_create do
-      SlackAgent.message_send(key: "バトル開始", body: name)
+      SlackAgent.message_send(key: "対戦開始", body: name)
     end
 
     def name
