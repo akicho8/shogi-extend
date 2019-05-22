@@ -43,8 +43,17 @@ module BattleControllerSharedMethods1
   end
 
   def update
+    if v = params[:image_turn]
+      current_record.update!(image_turn: v)
+    end
+
     if params[:canvas_image_base64_data_url]
       render json: current_record.canvas_data_save(params)
+      return
+    end
+
+    if params[:gazodetukuru]
+      render json: current_record.canvas_data_save2(params)
       return
     end
 
@@ -62,24 +71,17 @@ module BattleControllerSharedMethods1
     # 手数の指定があればリアルタイムに作成
     if current_force_turn
       user_params = params.to_unsafe_h.symbolize_keys.transform_values { |e| Float(e) rescue e }
-
-      options = {
-        width: 1200,
-        height: 630,
-      }.merge(user_params)
-
+      options = current_record.image_default_options.merge(user_params)
       png = Rails.cache.fetch(options, expires_in: Rails.env.production? ? 1.days : 0) do
-        Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn).to_png(options)
+        parser = Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn)
+        parser.to_png(options)
       end
       send_data png, type: Mime[:png], disposition: :inline, filename: "#{current_record.id}-#{current_force_turn}.png"
       return
     end
 
     # 画像がなければ作る
-    unless current_record.thumbnail_image.attached?
-      current_record.image_auto_cerate
-    end
-
+    current_record.image_auto_cerate_onece
     key = current_record.tweet_image.processed.key
     path = ActiveStorage::Blob.service.path_for(key)
     send_file path, type: current_record.thumbnail_image.content_type, disposition: :inline, filename: "#{current_record.id}.png"

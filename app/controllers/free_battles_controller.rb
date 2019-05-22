@@ -22,6 +22,7 @@
 # | critical_turn     | 開戦               | integer(4)   |             |                                   |       |
 # | saturn_key        | Saturn key         | string(255)  | NOT NULL    |                                   |       |
 # | sfen_body         | Sfen body          | string(8192) |             |                                   |       |
+# | image_turn        | OGP画像の手数      | integer(4)   |             |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -122,9 +123,11 @@ class FreeBattlesController < ApplicationController
   end
 
   def redirect_to_where
-    if current_record.saved_changes[:id]
-      if editable_record?(current_record)
-        return [:edit, ns_prefix, current_record, mode: :ogp]
+    if false
+      if current_record.saved_changes[:id]
+        if editable_record?(current_record)
+          return [:edit, ns_prefix, current_record, mode: :ogp]
+        end
       end
     end
 

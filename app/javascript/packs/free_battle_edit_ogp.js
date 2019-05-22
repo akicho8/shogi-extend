@@ -5,7 +5,7 @@ window.FreeBattleEditOgp = Vue.extend({
   data() {
     return {
       tweet_image_url: this.$options.tweet_image_url,
-      start_turn: this.$options.start_turn,
+      start_turn: this.$options.og_turn,
       slider_show: false,
     }
   },
@@ -17,7 +17,6 @@ window.FreeBattleEditOgp = Vue.extend({
 
   methods: {
     capture_dom_save() {
-
       const options = {
         // scale: 2,
         // dpi: 144,
@@ -31,7 +30,7 @@ window.FreeBattleEditOgp = Vue.extend({
         const loading_instance = this.$loading.open()
         const params = new URLSearchParams()
         params.append("canvas_image_base64_data_url", canvas.toDataURL("image/png"))
-        // params.append("start_turn", this.start_turn)
+        params.append("image_turn", this.start_turn)
         axios({
           method: "put",
           timeout: 1000 * 60 * 10,
@@ -93,6 +92,30 @@ window.FreeBattleEditOgp = Vue.extend({
         this.$toast.open({message: response.data.message})
         this.tweet_image_url = null
       }).catch((error) => {
+        console.table([error.response])
+        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+      })
+    },
+
+    og_image_create2() {
+      const loading_instance = this.$loading.open()
+      const params = new URLSearchParams()
+      params.append("gazodetukuru", "true")
+      params.append("image_turn", this.start_turn)
+      axios({
+        method: "put",
+        timeout: 1000 * 60 * 10,
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        url: this.$options.xhr_put_path,
+        data: params,
+      }).then((response) => {
+        loading_instance.close()
+        console.log(response.data)
+        this.$toast.open({message: response.data.message})
+        this.tweet_image_url = response.data.tweet_image_url
+        this.debug_alert(this.tweet_image_url)
+      }).catch((error) => {
+        loading_instance.close()
         console.table([error.response])
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })

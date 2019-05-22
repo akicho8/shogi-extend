@@ -19,6 +19,7 @@
       description: "説明",
       turn_max: "手数",
       start_turn: "開始手数",
+      image_turn: "OGP画像の手数",
       critical_turn: "開戦",
       meta_info: "棋譜ヘッダー",
     },

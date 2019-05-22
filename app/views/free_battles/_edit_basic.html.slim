@@ -39,6 +39,7 @@
             .field
               .buttons
                 = link_to("OGP画像設定", [:edit, ns_prefix, current_record, mode: "ogp"], class: "button is-small")
+                = link_to("OGP画像確認", controller.twitter_staitc_image_url, class: "button is-small")
             hr
             .buttons
               b-tooltip(label="削除")

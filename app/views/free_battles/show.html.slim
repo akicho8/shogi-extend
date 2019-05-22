@@ -32,6 +32,7 @@
         - if editable_record?(current_record)
           = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
           = link_to("OGP画像設定", [:edit, ns_prefix, current_record, mode: "ogp"], class: "button")
+          = link_to("OGP画像確認", controller.twitter_staitc_image_url, class: "button")
 
   .columns
     .column

@@ -245,7 +245,7 @@ export default {
         if ("force_turn" in this.modal_record) {
           return this.modal_record.force_turn
         } else {
-          return this.modal_record.start_turn_or_critical_turn
+          return this.modal_record.sp_turn
         }
       }
     },

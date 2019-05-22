@@ -24,6 +24,7 @@
 # | critical_turn     | 開戦             | integer(4)   |             |      |       |
 # | saturn_key        | Saturn key       | string(255)  | NOT NULL    |      |       |
 # | sfen_body         | Sfen body        | string(8192) |             |      |       |
+# | image_turn        | OGP画像の手数    | integer(4)   |             |      |       |
 # |-------------------+------------------+--------------+-------------+------+-------|
 
 module Swars

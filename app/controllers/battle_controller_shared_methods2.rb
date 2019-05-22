@@ -119,7 +119,7 @@ module BattleControllerSharedMethods2
 
     let :modal_record do
       if v = params[:modal_id]
-        current_scope.find_by(id: v)
+        current_scope.find(v)
       end
     end
 
@@ -223,7 +223,10 @@ module BattleControllerSharedMethods2
   end
 
   def js_record_for(e)
-    e.as_json(methods: [:start_turn_or_critical_turn]).tap do |a|
+    e.as_json(methods: [
+        :sp_turn,
+        :og_turn,
+      ]).tap do |a|
       a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
       a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
       a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ

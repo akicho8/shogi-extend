@@ -175,8 +175,12 @@ module BattleModelSharedMethods
     to_param
   end
 
-  def start_turn_or_critical_turn
+  def sp_turn
     start_turn || critical_turn || 0
+  end
+
+  def og_turn
+    image_turn || start_turn || critical_turn || 9999
   end
 
   concerning :KifuConvertMethods do
@@ -237,10 +241,27 @@ module BattleModelSharedMethods
       has_one_attached :thumbnail_image
     end
 
+    def image_default_options
+      {
+        width: 1200,
+        height: 630,
+      }
+    end
+
     # rmagick で盤面作成
-    def image_auto_cerate
-      parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: start_turn_or_critical_turn)
-      thumbnail_image.attach(io: StringIO.new(parser.to_png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+    def image_auto_cerate_onece
+      unless thumbnail_image.attached?
+        image_auto_cerate_force
+      end
+    end
+
+    def image_auto_cerate_force
+      if thumbnail_image.attached?
+        thumbnail_image.purge
+      end
+      parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: og_turn)
+      png = parser.to_png(image_default_options)
+      thumbnail_image.attach(io: StringIO.new(png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
     end
 
     def tweet_modal_url(**params)
@@ -277,22 +298,25 @@ module BattleModelSharedMethods
     end
 
     def canvas_data_save(params)
-      if v = params[:canvas_image_base64_data_url]
-        v = v.remove(/\A.*,/)
-        v = Base64.decode64(v)
-        thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+      v = params[:canvas_image_base64_data_url]
+      v = v.remove(/\A.*,/)
+      v = Base64.decode64(v)
+      thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+      canvas_data_save3
+    end
 
-        if v = params[:start_turn]
-          update!(start_turn: v)
-        end
+    def canvas_data_save2(params)
+      image_auto_cerate_force
+      canvas_data_save3
+    end
 
-        {
-          message: "OGP画像を設定しました",
-          # https://edgeguides.rubyonrails.org/active_storage_overview.html
-          # Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
-          tweet_image_url: tweet_image_url,
-        }
-      end
+    def canvas_data_save3
+      {
+        message: "OGP画像を設定しました",
+        # https://edgeguides.rubyonrails.org/active_storage_overview.html
+        # Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
+        tweet_image_url: tweet_image_url,
+      }
     end
 
     def canvas_data_destroy(params)
