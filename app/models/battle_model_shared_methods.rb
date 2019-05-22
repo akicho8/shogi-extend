@@ -193,7 +193,7 @@ module BattleModelSharedMethods
       end
     end
 
-    def sfen_nakereba_tukutte_hozon
+    def existing_sfen
       unless sfen_body
         update!(sfen_body: fast_parsed_info.to_sfen)
       end

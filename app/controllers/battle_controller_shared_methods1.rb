@@ -59,6 +59,22 @@ module BattleControllerSharedMethods1
   private
 
   def send_png_file
+    # 手数の指定があればリアルタイムに作成
+    if current_force_turn
+      user_params = params.to_unsafe_h.symbolize_keys.transform_values { |e| Float(e) rescue e }
+
+      options = {
+        width: 1200,
+        height: 630,
+      }.merge(user_params)
+
+      png = Rails.cache.fetch(options, expires_in: Rails.env.production? ? 1.days : 0) do
+        Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn).to_png(options)
+      end
+      send_data png, type: Mime[:png], disposition: :inline, filename: "#{current_record.id}-#{current_force_turn}.png"
+      return
+    end
+
     # 画像がなければ作る
     unless current_record.thumbnail_image.attached?
       current_record.image_auto_cerate
