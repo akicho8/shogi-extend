@@ -69,7 +69,7 @@ html(lang="ja")
             = link_to(icon_tag(:fas, :play) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
             = link_to(icon_tag(:fas, :bolt) + "CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
             = link_to(icon_tag(:fas, :search) + "ウォーズ棋譜検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
-            = link_to("普通の棋譜一覧", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
+            = link_to(icon_tag(:far, :clipboard) + "普通の棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link もっと見る
               .navbar-dropdown.is-boxed
@@ -110,7 +110,7 @@ html(lang="ja")
                 = link_to([current_user], class: "navbar-link", slot: "trigger") do
                   = image_tag(current_user.avatar_url, class: "header_avatar_image")
                   span.my_name
-                    = current_user.name
+                    b= current_user.name
                 .navbar-dropdown.is-boxed
                   = link_to("プロフィール", [current_user], class: "navbar-item")
                   = link_to("設定", [:edit, current_user], class: "navbar-item")
@@ -145,7 +145,7 @@ html(lang="ja")
 
             .navbar-item
               b-tooltip(label="オンラインの人数" position="is-bottom")
-                b-icon(icon="access-point")
+                b-icon(icon="account")
                 | &nbsp;
                 | {{online_only_count}}
             .navbar-item

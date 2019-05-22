@@ -1,7 +1,10 @@
 <template lang="pug">
   span
     slot(name="notify_to_all")
-      button.button.is-primary(@click.prevent="modal_open") 全体通知
+      button.button(@click.prevent="modal_open")
+        b-icon(icon="volume-high" size="is-small")
+        | &nbsp;
+        | 全体通知
 
     b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card
