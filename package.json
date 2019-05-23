@@ -29,7 +29,6 @@
     "glob": "^7.1.2",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
-    "howler": "^2.1.2",
     "html2canvas": "^1.0.0-rc.1",
     "jquery": "^3.2.1",
     "js-memory-record": "^0.0.11",

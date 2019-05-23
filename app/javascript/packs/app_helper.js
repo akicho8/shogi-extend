@@ -1,7 +1,7 @@
 // どこに書いたらいいかわからない機能シリーズ
 
 import axios from "axios"
-import { Howl, Howler } from 'howler'
+// import { Howl, Howler } from 'howler'
 
 // 指定 URL の結果をクリップボードにコピー
 export function kifu_copy_exec(params) {
@@ -148,13 +148,13 @@ export function talk(source_text) {
     }
 
     // FIFO形式で順次発声
-    if (false) {
+    if (true) {
       audio_queue.media_push(response.data.service_path)
     }
 
     // Howler
-    if (true) {
-      new Howl({src: response.data.service_path, autoplay: true, volume: 1.0})
+    if (false) {
+      // new Howl({src: response.data.service_path, autoplay: true, volume: 1.0})
     }
 
   }).catch((error) => {
