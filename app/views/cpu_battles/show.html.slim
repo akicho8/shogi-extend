@@ -38,13 +38,13 @@
   hr
   .buttons.is-centered.has-addons
     a.button(@click="() => { sp_params.theme = 'simple' }") 紙面風
-    a.button(@click="() => { sp_params.theme = 'real'; sp_params.piece_variant = 'a'}") 普通の駒
-    a.button(@click="() => { sp_params.theme = 'real'; sp_params.piece_variant = 'b'}") 将棋図案駒
+    a.button(@click="() => { sp_params.theme = 'real'; sp_params.piece_variant = 'a'}") 普通駒
+    a.button(@click="() => { sp_params.theme = 'real'; sp_params.piece_variant = 'b'}") 図案駒
 
   details
     summary.has-text-white-ter
       | Permalink
     .buttons.is-centered
       = link_to("紙面風", [:cpu_battles, theme: "simple"], :class => "button")
-      = link_to("普通の駒", [:cpu_battles, theme: "real", piece_variant: "a"], :class => "button")
-      = link_to("将棋図案駒", [:cpu_battles, theme: "real", piece_variant: "b"], :class => "button")
+      = link_to("普通駒", [:cpu_battles, theme: "real", piece_variant: "a"], :class => "button")
+      = link_to("図案駒", [:cpu_battles, theme: "real", piece_variant: "b"], :class => "button")
