@@ -1,15 +1,26 @@
 class CpuBattlesController < ApplicationController
-  def js_cpu_battle
-    sp_params = self.params.dup
-    sp_params[:theme] ||= "real"
-    sp_params[:piece_variant] ||= "a"
+  def show_twitter_options
+    options = {}
+    options[:title] = "CPU対戦"
+    options[:description] = "ものすごく弱いです"
+    options[:image] = ApplicationController.helpers.image_url("cpu_battle_show.png")
+    options
+  end
 
+  def js_cpu_battle
     {
       player_mode_moved_path: url_for([:cpu_battles, format: "json"]),
       cpu_brain_infos: CpuBrainInfo,
       cpu_brain_key: current_cpu_brain_key,
       sp_params: sp_params,
     }
+  end
+
+  def sp_params
+    {
+      theme: "real",
+      piece_variant: "a",
+    }.merge(params.to_unsafe_h.to_options)
   end
 
   def show
