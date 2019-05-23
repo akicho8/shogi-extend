@@ -41,7 +41,7 @@ window.CpuBattlesApp = Vue.extend({
 
   watch: {
     cpu_brain_key() {
-      AppHelper.talk(this.cpu_brain_info.name)
+      AppHelper.talk(`${this.cpu_brain_info.name}に変更しました`)
     },
   },
 
