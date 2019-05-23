@@ -7629,10 +7629,10 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shogi-player@^0.0.124:
-  version "0.0.124"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.124.tgz#9f86ba6463d2ee08230515ebdb08236a79c6dea2"
-  integrity sha512-BEmSgXY1/e3w1b7c3uZFW90QPhIAxfJmdhXpT8nbm5to3inL7P/mzBat65cseDaCBzYjO7xOY+GKTfMnBtdOnQ==
+shogi-player@^0.0.125:
+  version "0.0.125"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.125.tgz#c78489ded489e6868542f20e927a7a4818f29012"
+  integrity sha512-93fI9g9PEFFOJBGt/IgwtTqwIDhfG+ddPU6UzH4LcAWMSzzje6XVkTtRqg3rtvR7IPXIsLS9md4hpvrHx/i6GA==
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"

@@ -1,11 +1,14 @@
 class CpuBattlesController < ApplicationController
-  def show
-    @js_cpu_battle = {
+  def js_cpu_battle
+    {
       player_mode_moved_path: url_for([:cpu_battles, format: "json"]),
       cpu_brain_infos: CpuBrainInfo,
       cpu_brain_key: current_cpu_brain_key,
+      params: params,
     }
+  end
 
+  def show
     if false
       talk("talk")
       direct_talk("direct_talk")
