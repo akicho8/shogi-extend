@@ -10,8 +10,8 @@
   .has-text-centered
     shogi-player(
       :kifu_body="full_sfen"
-      :theme="$options.params.theme || 'real'"
-      :piece_variant="$options.params.piece_variant || 'a'"
+      :theme="sp_params.theme"
+      :piece_variant="sp_params.piece_variant"
       :key_event_capture="false"
       :slider_show="false"
       :sfen_show="false"
@@ -24,14 +24,25 @@
       @update:play_mode_long_sfen="play_mode_long_sfen_set"
     )
     / :theme="'#{current_shogi_player_theme}'"
-    br
+
+  hr
+  .has-text-centered
     b-field(label="CPUの強さ")
-      .block
+      div
         template(v-for="e in CpuBrainInfo.values")
-          b-radio(v-model="cpu_brain_key" :native-value="e.key")
+          b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
             | {{e.name}}
 
   hr
-  .buttons
-    = link_to("将棋図案駒", [:cpu_battles, theme: "real", piece_variant: "b"], :class => "button")
-    = link_to("テキスト駒", [:cpu_battles, theme: "simple"], :class => "button")
+  .buttons.is-centered.has-addons
+    a.button(@click="() => { sp_params.theme = 'simple' }") 紙面風
+    a.button(@click="() => { sp_params.theme = 'real'; sp_params.piece_variant = 'a'}") 普通の駒
+    a.button(@click="() => { sp_params.theme = 'real'; sp_params.piece_variant = 'b'}") 将棋図案駒
+
+  details
+    summary.has-text-white-ter
+      | Permalink
+    .buttons.is-centered
+      = link_to("紙面風", [:cpu_battles, theme: "simple"], :class => "button")
+      = link_to("普通の駒", [:cpu_battles, theme: "real", piece_variant: "a"], :class => "button")
+      = link_to("将棋図案駒", [:cpu_battles, theme: "real", piece_variant: "b"], :class => "button")

@@ -1,10 +1,14 @@
 class CpuBattlesController < ApplicationController
   def js_cpu_battle
+    sp_params = self.params.dup
+    sp_params[:theme] ||= "real"
+    sp_params[:piece_variant] ||= "a"
+
     {
       player_mode_moved_path: url_for([:cpu_battles, format: "json"]),
       cpu_brain_infos: CpuBrainInfo,
       cpu_brain_key: current_cpu_brain_key,
-      params: params,
+      sp_params: sp_params,
     }
   end
 

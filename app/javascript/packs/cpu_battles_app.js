@@ -8,8 +8,9 @@ window.CpuBattlesApp = Vue.extend({
   data() {
     return {
       CpuBrainInfo,
+      sp_params: this.$options.sp_params,
       full_sfen: "position startpos",
-      cpu_brain_key: js_cpu_battle.cpu_brain_key,
+      cpu_brain_key: this.$options.cpu_brain_key,
       current_user: js_global.current_user, // 名前を読み上げるため
     }
   },
@@ -54,7 +55,7 @@ window.CpuBattlesApp = Vue.extend({
         method: "post",
         timeout: 1000 * 60 * 10,
         headers: {"X-TAISEN": true}, // 入れてみただけ
-        url: js_cpu_battle.player_mode_moved_path,
+        url: this.$options.player_mode_moved_path,
         data: params,
       }).then((response) => {
         if (response.data["error_message"]) {
