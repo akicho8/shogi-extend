@@ -17,10 +17,6 @@ import "./application_dependent.sass"
 import "./free_battle_edit_ogp_css.sass"
 
 import "./modulable_crud.coffee"
-import "./light_session_app.js"
-import "./audio_queue.js"
-
-import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
@@ -32,6 +28,8 @@ Vue.use(Vuex)                   // これは一箇所だけで実行すること
 
 import Repository from "./Repository.js"
 Vue.prototype.$http = Repository
+
+import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
@@ -127,7 +125,11 @@ Vue.mixin({
 
 window.GVI = new Vue()           // ActionCable 側から Vue のグローバルなメソッドを呼ぶため
 
+import "./audio_queue.js"
+import "./light_session_app.js"
+
 //////////////////////////////////////////////////////////////////////////////// 確認用
+
 
 if (typeof(jQuery) != "undefined") {
   console.log("[Webpack] jQuery: OK")

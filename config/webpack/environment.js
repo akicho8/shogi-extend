@@ -4,15 +4,15 @@ const vue =  require('./loaders/vue')
 const file =  require('./loaders/file')
 const webpack = require('webpack')
 
-environment.plugins.append(
-  'Provide',
-  new webpack.ProvidePlugin({
-    $: "jquery",
-    jQuery: "jquery",
-    "window.jQuery": "jquery",
-    "window.$": "jquery",
-  })
-)
+// environment.plugins.append(
+//   'Provide',
+//   new webpack.ProvidePlugin({
+//     $: "jquery",
+//     jQuery: "jquery",
+//     "window.jQuery": "jquery",
+//     "window.$": "jquery",
+//   })
+// )
 
 environment.loaders.append('vue', vue)
 environment.loaders.append('coffee', coffee)
