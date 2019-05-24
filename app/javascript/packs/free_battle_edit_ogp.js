@@ -29,8 +29,8 @@ window.FreeBattleEditOgp = Vue.extend({
       html2canvas(dom, options).then(canvas => {
         const loading_instance = this.$loading.open()
         const params = new URLSearchParams()
-        params.append("canvas_image_base64_data_url", canvas.toDataURL("image/png"))
-        params.append("image_turn", this.start_turn)
+        params.set("canvas_image_base64_data_url", canvas.toDataURL("image/png"))
+        params.set("image_turn", this.start_turn)
         axios({
           method: "put",
           timeout: 1000 * 60 * 10,
@@ -53,7 +53,7 @@ window.FreeBattleEditOgp = Vue.extend({
         //   const my_canvas_url = URL.createObjectURL(blob)
         //
         //   const params = new URLSearchParams()
-        //   params.append("my_canvas_url", my_canvas_url)
+        //   params.set("my_canvas_url", my_canvas_url)
         //
         //   axios({
         //     method: "put",
@@ -66,7 +66,7 @@ window.FreeBattleEditOgp = Vue.extend({
         //     this.toast.open("OK")
         //   }).catch((error) => {
         //     console.table([error.response])
-        //     Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        //     this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         //   })
         // })
       })
@@ -81,7 +81,7 @@ window.FreeBattleEditOgp = Vue.extend({
       this.debug_alert("og_image_destroy")
 
       const params = new URLSearchParams()
-      params.append("og_image_destroy", true)
+      params.set("og_image_destroy", true)
       axios({
         method: "put",
         timeout: 1000 * 60 * 10,
@@ -100,8 +100,8 @@ window.FreeBattleEditOgp = Vue.extend({
     og_image_create2() {
       const loading_instance = this.$loading.open()
       const params = new URLSearchParams()
-      params.append("gazodetukuru", "true")
-      params.append("image_turn", this.start_turn)
+      params.set("gazodetukuru", "true")
+      params.set("image_turn", this.start_turn)
       axios({
         method: "put",
         timeout: 1000 * 60 * 10,

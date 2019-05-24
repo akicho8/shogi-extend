@@ -56,15 +56,15 @@ export default {
     },
     message_send_process() {
       App.single_notification.message_send_to({from: js_global.current_user, to: this.user_to, message: this.message})
-      Vue.prototype.$toast.open({message: "送信OK", position: "is-top", type: "is-info", duration: 500})
+      this.$toast.open({message: "送信OK", position: "is-top", type: "is-info", duration: 500})
     },
     battle_request_to() {
-      if (AppHelper.login_required()) {
+      if (this.login_required()) {
         return
       }
       App.single_notification.battle_request_to({battle_request: {from_id: js_global.current_user.id, to_id: this.user_to.id, message: this.message}})
       this.message = ""
-      Vue.prototype.$toast.open({message: "対局を申し込みました", position: "is-top", type: "is-info", duration: 500})
+      this.$toast.open({message: "対局を申し込みました", position: "is-top", type: "is-info", duration: 500})
     },
   },
 }

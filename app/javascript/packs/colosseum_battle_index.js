@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // ロビーでの発言追加
       if (data["lobby_message"]) {
-        AppHelper.talk(data["lobby_message"].message)
+        this.talk(data["lobby_message"].message)
         App.lobby_vm.lobby_messages.push(data["lobby_message"])
       }
 
@@ -172,7 +172,7 @@ window.ColosseumBattleIndex = Vue.extend({
     },
 
     battle_setting_open_click() {
-      if (AppHelper.login_required()) {
+      if (this.login_required()) {
         return
       }
       this.setting_modal_p = true

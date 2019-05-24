@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = data["message"]
         const from = data["from"]
         const str = `${from.name}: ${message}`
-        AppHelper.talk(message)
-        Vue.prototype.$toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
+        this.talk(message)
+        this.$toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
       }
 
       // オンラインの人数更新
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     created() {
       // App.system_notification.talk({source_text: "こんにちは"})
-      // AppHelper.talk("こんにちは")
+      // this.talk("こんにちは")
     },
 
     methods: {

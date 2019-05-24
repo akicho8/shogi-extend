@@ -1,8 +1,6 @@
 // 棋譜投稿用
 
 import _ from "lodash"
-import * as AppHelper from "./app_helper.js"
-import axios from "axios"
 
 const TEXT_INPUT_UPDATE_DELAY = 0.5 // プレビューするまでの遅延時間(秒)
 
@@ -84,10 +82,10 @@ window.FreeBattleEdit = Vue.extend({
     // 操作入力の場合は即時反映
     kifu_convert(input_any_kifu) {
       const params = new URLSearchParams()
-      params.append("input_any_kifu", input_any_kifu)
-      axios.post(this.$options.post_path, params, {headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response) => {
+      params.set("input_any_kifu", input_any_kifu)
+      this.$http.post(this.$options.post_path, params).then((response) => {
         if (response.data.error_message) {
-          Vue.prototype.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+          this.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
         }
         if (response.data.output_kifs) {
           this.output_kifs = response.data.output_kifs
@@ -118,7 +116,7 @@ window.FreeBattleEdit = Vue.extend({
         }
       }).catch((error) => {
         console.table([error.response])
-        Vue.prototype.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
 
@@ -147,7 +145,7 @@ window.FreeBattleEdit = Vue.extend({
 
     kifu_copy(e) {
       if (this.output_kifs) {
-        AppHelper.clipboard_copy({text: this.output_kifs[e.key]["value"]})
+        this.clipboard_copy({text: this.output_kifs[e.key]["value"]})
       }
     },
 

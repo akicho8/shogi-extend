@@ -1,5 +1,4 @@
 import _ from "lodash"
-import * as AppHelper from "./app_helper.js"
 import axios from "axios"
 import dayjs from "dayjs"
 
@@ -89,18 +88,18 @@ export default {
     },
 
     kifu_copy_handle(params) {
-      AppHelper.kifu_copy_exec(params)
+      this.kifu_copy_exec(params)
     },
 
     modal_url_copy() {
       if (this.modal_record) {
-        AppHelper.clipboard_copy({text: this.modal_record.tweet_modal_url})
+        this.clipboard_copy({text: this.modal_record.tweet_modal_url})
       }
     },
 
     modal_url_with_turn_copy() {
       if (this.modal_record) {
-        AppHelper.clipboard_copy({text: `${this.modal_record.tweet_modal_url}&turn=${this.real_pos}` })
+        this.clipboard_copy({text: `${this.modal_record.tweet_modal_url}&turn=${this.real_pos}` })
       }
     },
 

@@ -9,7 +9,7 @@ export default {
   watch: {
     // メッセージを入力しようとしたときにログインしていなければログインに飛ばす
     message() {
-      if (AppHelper.login_required()) {
+      if (this.login_required()) {
         return
       }
     },
@@ -26,7 +26,7 @@ export default {
 
     // 「送信」ボタンを押したとき
     message_post_button_handle() {
-      if (AppHelper.login_required()) {
+      if (this.login_required()) {
         return
       }
       if (this.message !== "") {

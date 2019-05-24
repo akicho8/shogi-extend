@@ -1,7 +1,7 @@
 .columns
   .column
     - if sfen = current_record.existing_sfen
-      shogi-player(
+      shogi_player(
         :kifu_body="'#{sfen}'"
         :start_turn="#{current_record.sp_turn}"
         :key_event_capture="true"

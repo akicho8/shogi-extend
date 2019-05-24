@@ -19,7 +19,7 @@
               = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
             .iikanjino_tate(v-html="name_with_time_block('black')")
       .box
-        shogi-player(
+        shogi_player(
           :run_mode="run_mode"
           :kifu_body="full_sfen"
           :key_event_capture="false"

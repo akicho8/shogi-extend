@@ -30,6 +30,9 @@ window.Vue = Vue
 import Vuex from "vuex"
 Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
 
+import Repository from "./Repository.js"
+Vue.prototype.$http = Repository
+
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
 import "./buefy.scss"
@@ -44,23 +47,10 @@ Vue.use(Buefy, {
   defaultTooltipAnimated: true,   // ←効いてなくね？
 })
 
-//////////////////////////////////////////////////////////////////////////////// ShogiPlayer
-
-// import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
-// Vue.component("shogi-player", ShogiPlayer)
-
-//////////////////////////////////////////////////////////////////////////////// チャット関連コンポーネント
-
-import MessageLinkTo from "../message_link_to.vue"
-Vue.component("message_link_to", MessageLinkTo)
-
-import GlobalMessageLink from "../global_message_link.vue"
-Vue.component("global_message_link", GlobalMessageLink)
-
 //////////////////////////////////////////////////////////////////////////////// lodash
 
 import _ from "lodash"
-Object.defineProperty(Vue.prototype, "_", {value: _})
+window._ = _
 
 //////////////////////////////////////////////////////////////////////////////// moment
 
@@ -73,9 +63,6 @@ import Chart from "chart.js"
 window.Chart = Chart
 
 //////////////////////////////////////////////////////////////////////////////// アプリ用の雑多なライブラリ
-
-import * as AppHelper from "./app_helper.js"
-window.AppHelper = AppHelper    // こうしとけばどこからでも直接使える
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -110,57 +97,35 @@ import CustomPresetInfo from "./custom_preset_info"
 import HiraKomaInfo from "./hira_koma_info"
 import RobotAcceptInfo from "./robot_accept_info"
 
-import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
+Vue.prototype.LifetimeInfo = LifetimeInfo
+Vue.prototype.TeamInfo = TeamInfo
+Vue.prototype.LastActionInfo = LastActionInfo
+Vue.prototype.CustomPresetInfo = CustomPresetInfo
+Vue.prototype.HiraKomaInfo = HiraKomaInfo
+Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
+
+//////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
+
+import vue_basic_methods from "./vue_basic_methods.js"
+
+import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
+import message_link_to from "../message_link_to.vue"
+import global_message_link from "../global_message_link.vue"
 
 Vue.mixin({
+  mixins: [
+    vue_basic_methods,
+  ],
+
+  // よくない命名規則だけどこっちの方が開発しやすい
   components: {
-    ShogiPlayer,
-  },
-
-  data() {
-    return {
-      LifetimeInfo,
-      TeamInfo,
-      LastActionInfo,
-      CustomPresetInfo,
-      HiraKomaInfo,
-      RobotAcceptInfo,
-    }
-  },
-
-  methods: {
-    process_now() {
-
-      // this.$modal.open()
-
-      // this.$dialog.alert({
-      //   title: "処理中",
-      //   message: "しばらくお待ちください",
-      //   type: "is-primary",
-      //   // hasIcon: true,
-      //   // icon: "crown",
-      //   // iconPack: "mdi",
-      // })
-
-      this.$loading.open()
-    },
-
-    wars_tweet_copy_click(wars_tweet_body) {
-      AppHelper.clipboard_copy({text: wars_tweet_body})
-    },
-
-    kifu_copy_exec_click(e) {
-      const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
-      AppHelper.kifu_copy_exec(params)
-    },
-
-    debug_alert(message) {
-      if (process.env.NODE_ENV === "development") {
-        this.$toast.open({message: message, position: "is-bottom", type: "is-danger"})
-      }
-    },
+    shogi_player,
+    message_link_to,
+    global_message_link,
   },
 })
+
+window.GV = new Vue()           // ActionCable 側から Vue のグローバルなメソッドを呼ぶため
 
 //////////////////////////////////////////////////////////////////////////////// 確認用
 
