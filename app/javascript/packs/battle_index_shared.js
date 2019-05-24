@@ -1,5 +1,4 @@
 import _ from "lodash"
-import axios from "axios"
 import dayjs from "dayjs"
 
 export default {
@@ -117,12 +116,7 @@ export default {
     async_records_load() {
       this.loading = true
 
-      axios({
-        method: "get",
-        timeout: 1000 * 60 * 10,
-        url: this.async_records_load_url,
-        headers: {"X-Requested-With": "XMLHttpRequest"},
-      }).then(response => {
+      this.$http.get(this.async_records_load_url).then(response => {
         this.loading = false
         this.records = response.data
         this.fetched_count += 1
@@ -151,12 +145,7 @@ export default {
       } else {
         this.debug_alert("新規取得")
 
-        axios({
-          method: "get",
-          timeout: 1000 * 60 * 10,
-          url: row.sp_sfen_get_path,
-          headers: {"X-Requested-With": "XMLHttpRequest"},
-        }).then(response => {
+        this.$http.get(row.sp_sfen_get_path).then(response => {
           this.$set(row, "sfen_body", response.data["sfen_body"])
           if (block) {
             block("success")

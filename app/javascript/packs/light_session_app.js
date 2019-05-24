@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     received(data) {
       // わざわざ JavaScript 側から発信したようにする場合
       if (data["yomiage"]) {
-        GV.talk(data["yomiage"])
-        GV.debug_alert(data["yomiage"])
+        GVI.talk(data["yomiage"])
+        GVI.debug_alert(data["yomiage"])
       }
 
       // Rails側で翻訳できている場合はショートカットして再生することもできる

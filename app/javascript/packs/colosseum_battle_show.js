@@ -1,6 +1,5 @@
 import _ from "lodash"
 import assert from "assert"
-import axios from "axios"
 import chess_clock from "./chess_clock"
 
 import PresetInfo from "shogi-player/src/preset_info"
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 対戦開始
       if (data["begin_at"]) {
-        this.talk("対戦開始")
+        GVI.talk("対戦開始")
         App.battle_vm.battle_setup(data)
       }
 
@@ -60,12 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 読み上げ(この部屋のすべての人が受信する)
       if (data["yomiage"]) {
-        this.talk(data["yomiage"])
+        GVI.talk(data["yomiage"])
       }
 
       // チャットの発言の追加
       if (data["chat_message"]) {
-        this.talk(data["chat_message"].message)
+        GVI.talk(data["chat_message"].message)
         App.battle_vm.chat_messages.push(data["chat_message"])
       }
 

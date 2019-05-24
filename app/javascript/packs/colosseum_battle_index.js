@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // ロビーでの発言追加
       if (data["lobby_message"]) {
-        this.talk(data["lobby_message"].message)
+        GVI.talk(data["lobby_message"].message)
         App.lobby_vm.lobby_messages.push(data["lobby_message"])
       }
 
