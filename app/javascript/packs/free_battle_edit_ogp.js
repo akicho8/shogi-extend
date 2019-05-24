@@ -3,7 +3,7 @@ import html2canvas from "html2canvas"
 window.FreeBattleEditOgp = Vue.extend({
   data() {
     return {
-      tweet_image_url: this.$options.tweet_image_url,
+      tweet_origin_image_path: this.$options.tweet_origin_image_path,
       start_turn: this.$options.og_turn,
       slider_show: false,
     }
@@ -34,8 +34,8 @@ window.FreeBattleEditOgp = Vue.extend({
           loading_instance.close()
           console.log(response.data)
           this.$toast.open({message: response.data.message})
-          this.tweet_image_url = response.data.tweet_image_url
-          this.debug_alert(this.tweet_image_url)
+          this.tweet_origin_image_path = response.data.tweet_origin_image_path
+          this.debug_alert(this.tweet_origin_image_path)
         }).catch(error => {
           loading_instance.close()
           console.table([error.response])
@@ -56,7 +56,7 @@ window.FreeBattleEditOgp = Vue.extend({
       params.set("og_image_destroy", true)
       this.$http.put(this.$options.xhr_put_path, params).then(response => {
         this.$toast.open({message: response.data.message})
-        this.tweet_image_url = null
+        this.tweet_origin_image_path = null
       }).catch(error => {
         console.table([error.response])
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
@@ -72,8 +72,8 @@ window.FreeBattleEditOgp = Vue.extend({
         loading_instance.close()
         console.log(response.data)
         this.$toast.open({message: response.data.message})
-        this.tweet_image_url = response.data.tweet_image_url
-        this.debug_alert(this.tweet_image_url)
+        this.tweet_origin_image_path = response.data.tweet_origin_image_path
+        this.debug_alert(this.tweet_origin_image_path)
       }).catch(error => {
         loading_instance.close()
         console.table([error.response])

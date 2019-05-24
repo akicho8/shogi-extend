@@ -207,7 +207,7 @@ module BattleControllerSharedMethods2
       end
     end
 
-    # rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
+    # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
     # とした場合はリダイレクトするURLになってしまうため使えない
     # 固定URL化する
     polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
@@ -233,7 +233,7 @@ module BattleControllerSharedMethods2
       a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
       a[:battled_at] = e.battled_at.to_s(:battle_time)
       a[:show_path] = polymorphic_path([ns_prefix, e])
-      a[:tweet_image_url] = e.tweet_image_url
+      a[:tweet_origin_image_path] = e.tweet_origin_image_path
       a[:tweet_window_url] = e.tweet_window_url
       a[:tweet_modal_url] = e.tweet_modal_url
       a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?

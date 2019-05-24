@@ -291,9 +291,9 @@ module BattleModelSharedMethods
       end
     end
 
-    def tweet_image_url
+    def tweet_origin_image_path
       if tweet_image
-        Rails.application.routes.url_helpers.rails_representation_url(tweet_image)
+        Rails.application.routes.url_helpers.rails_representation_path(tweet_image)
       end
     end
 
@@ -315,7 +315,7 @@ module BattleModelSharedMethods
         message: "OGP画像を設定しました",
         # https://edgeguides.rubyonrails.org/active_storage_overview.html
         # Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
-        tweet_image_url: tweet_image_url,
+        tweet_origin_image_path: tweet_origin_image_path,
       }
     end
 
