@@ -20,7 +20,7 @@
 
   #capture_container
     #capture_main
-      shogi-player(:kifu_body="'#{current_record.existing_sfen}'" :theme="'simple'" :key_event_capture="true" :start_turn.sync="start_turn" ref="main_sp")
+      shogi_player(:kifu_body="'#{current_record.existing_sfen}'" :theme="'simple'" :key_event_capture="true" :start_turn.sync="start_turn" ref="main_sp")
 
   template(v-if="slider_show")
     .has-text-centered
@@ -41,15 +41,15 @@
   .has-text-centered
     .section
       .title.is-6.paddingless 現在のOGP画像
-      template(v-if="tweet_image_url")
+      template(v-if="tweet_origin_image_path")
         .img_size_check
-          a(:href="tweet_image_url" target="_blank")
-            img(:src="tweet_image_url" width="600")
+          a(:href="tweet_origin_image_path" target="_blank")
+            img(:src="tweet_origin_image_path" width="600")
         b-tooltip(label="削除")
           a.button.is-danger(@click="og_image_destroy")
             b-icon(pack="fas" icon="trash")
 
-      template(v-else="tweet_image_url")
+      template(v-else="tweet_origin_image_path")
         | なし
 
       br
@@ -79,6 +79,6 @@
   /         rails_blob_path: rails_blob_path(current_record.thumbnail_image),
   /         url_for: url_for(current_record.thumbnail_image),
   /         rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
-  /         rails_representation_url: rails_representation_url(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
+  /         rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
   /       }
   /     = list.to_html

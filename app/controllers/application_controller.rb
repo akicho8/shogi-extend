@@ -159,7 +159,7 @@ class ApplicationController < ActionController::Base
     #
     #   light_session_channel.rb
     #     light_session_app.js
-    #       app_helper.js (talk)
+    #       vue_basic_methods.js (talk)
     #         axios
     #           talk_controller.rb
     #         Audio#play

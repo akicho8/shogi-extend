@@ -11,7 +11,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
 
       section.modal-card-body
         template(v-if="modal_record.sfen_body")
-          shogi-player(
+          shogi_player(
             :run_mode.sync="sp_run_mode"
             :debug_mode="false"
             :start_turn="start_turn"

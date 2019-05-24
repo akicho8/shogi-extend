@@ -20,7 +20,7 @@ export default {
 
   methods: {
     matching_start() {
-      if (AppHelper.login_required()) {
+      if (this.login_required()) {
         return
       }
       App.lobby.matching_start()
@@ -42,8 +42,8 @@ export default {
           if (this.robot_accept_key === "accept") {
             if (this.matching_counter === this.matching_counter_trigger) {
               const message = "相手がいないのでCPUと対局しますか？"
-              AppHelper.talk(message)
-              Vue.prototype.$dialog.confirm({
+              this.talk(message)
+              this.$dialog.confirm({
                 title: "確認",
                 message: message,
                 confirmText: "CPUと対局する",
@@ -52,7 +52,7 @@ export default {
                   App.lobby.matching_start_with_robot()
                 },
                 onCancel: () => {
-                  AppHelper.talk("誰か来るまで待ちます")
+                  this.talk("誰か来るまで待ちます")
                 },
               })
             }

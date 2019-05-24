@@ -1,6 +1,4 @@
 import _ from "lodash"
-import * as AppHelper from "./app_helper.js"
-import axios from "axios"
 import dayjs from "dayjs"
 
 export default {
@@ -89,18 +87,18 @@ export default {
     },
 
     kifu_copy_handle(params) {
-      AppHelper.kifu_copy_exec(params)
+      this.kifu_copy_exec(params)
     },
 
     modal_url_copy() {
       if (this.modal_record) {
-        AppHelper.clipboard_copy({text: this.modal_record.tweet_modal_url})
+        this.clipboard_copy({text: this.modal_record.tweet_modal_url})
       }
     },
 
     modal_url_with_turn_copy() {
       if (this.modal_record) {
-        AppHelper.clipboard_copy({text: `${this.modal_record.tweet_modal_url}&turn=${this.real_pos}` })
+        this.clipboard_copy({text: `${this.modal_record.tweet_modal_url}&turn=${this.real_pos}` })
       }
     },
 
@@ -118,16 +116,11 @@ export default {
     async_records_load() {
       this.loading = true
 
-      axios({
-        method: "get",
-        timeout: 1000 * 60 * 10,
-        url: this.async_records_load_url,
-        headers: {"X-Requested-With": "XMLHttpRequest"},
-      }).then(response => {
+      this.$http.get(this.async_records_load_url).then(response => {
         this.loading = false
         this.records = response.data
         this.fetched_count += 1
-      }).catch((error) => {
+      }).catch(error => {
         console.table([error.response])
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
@@ -152,12 +145,7 @@ export default {
       } else {
         this.debug_alert("新規取得")
 
-        axios({
-          method: "get",
-          timeout: 1000 * 60 * 10,
-          url: row.sp_sfen_get_path,
-          headers: {"X-Requested-With": "XMLHttpRequest"},
-        }).then(response => {
+        this.$http.get(row.sp_sfen_get_path).then(response => {
           this.$set(row, "sfen_body", response.data["sfen_body"])
           if (block) {
             block("success")
@@ -165,7 +153,7 @@ export default {
           // const record = this.records.find(e => e.id === this.modal_record)
           // this.$set(record, "sfen_body", response.data["sfen_body"])
           // this.modal_show()
-        }).catch((error) => {
+        }).catch(error => {
           console.table([error.response])
           this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })

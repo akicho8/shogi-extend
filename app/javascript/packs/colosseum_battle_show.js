@@ -1,6 +1,5 @@
 import _ from "lodash"
 import assert from "assert"
-import axios from "axios"
 import chess_clock from "./chess_clock"
 
 import PresetInfo from "shogi-player/src/preset_info"
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 対戦開始
       if (data["begin_at"]) {
-        AppHelper.talk("対戦開始")
+        GVI.talk("対戦開始")
         App.battle_vm.battle_setup(data)
       }
 
@@ -60,12 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 読み上げ(この部屋のすべての人が受信する)
       if (data["yomiage"]) {
-        AppHelper.talk(data["yomiage"])
+        GVI.talk(data["yomiage"])
       }
 
       // チャットの発言の追加
       if (data["chat_message"]) {
-        AppHelper.talk(data["chat_message"].message)
+        GVI.talk(data["chat_message"].message)
         App.battle_vm.chat_messages.push(data["chat_message"])
       }
 
@@ -164,8 +163,8 @@ window.ColosseumBattleShow = Vue.extend({
 
     give_up() {
       const message = "本当に投了しますか？"
-      AppHelper.talk(message)
-      Vue.prototype.$dialog.confirm({
+      this.talk(message)
+      this.$dialog.confirm({
         title: "確認",
         message: message,
         confirmText: "投了する",
@@ -204,7 +203,7 @@ window.ColosseumBattleShow = Vue.extend({
             // 片方に所属している場合
             if (_.includes(this.my_uniq_locations, this.win_location_info)) {
               // 勝った方
-              Vue.prototype.$dialog.alert({
+              this.$dialog.alert({
                 title: "勝利",
                 message: "勝ちました",
                 type: "is-primary",
@@ -212,18 +211,18 @@ window.ColosseumBattleShow = Vue.extend({
                 icon: "crown",
                 iconPack: "mdi",
               })
-              AppHelper.talk("勝ちました")
+              this.talk("勝ちました")
             } else {
               // 負けた方
               if (this.last_action_key === "TORYO") {
                 // 自ら投了した場合、負けは自明なので何も出さない
               } else {
-                Vue.prototype.$dialog.alert({
+                this.$dialog.alert({
                   title: "敗北",
                   message: "負けました",
                   type: "is-primary",
                 })
-                AppHelper.talk("負けました")
+                this.talk("負けました")
               }
             }
           }
@@ -237,12 +236,12 @@ window.ColosseumBattleShow = Vue.extend({
     // 客観的結果通知
     last_action_notify_dialog_basic() {
       const message = `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location_info)}の勝ち`
-      Vue.prototype.$dialog.alert({
+      this.$dialog.alert({
         type: "is-primary",
         title: "結果",
         message: message,
       })
-      AppHelper.talk(message)
+      this.talk(message)
     },
 
     location_key_name(membership) {

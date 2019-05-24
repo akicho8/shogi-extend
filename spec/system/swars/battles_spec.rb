@@ -13,7 +13,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     doc_image
   end
 
-  it "検索" do
+  it "通常検索" do
     visit "/w"
     fill_in "query", with: "devuser1"
     click_button "検索"

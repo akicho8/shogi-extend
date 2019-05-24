@@ -1,6 +1,6 @@
 - cache([controller_path, :filter_block]) do
   - args = params.to_unsafe_h.merge(page: nil)
-  b-dropdown(:hoverable="false" position="is-bottom-right")
+  b-dropdown(:hoverable="false")
     button.button.is-small(slot="trigger")
       span よく使うフィルタ
       b-icon(icon="menu-down")
@@ -25,7 +25,7 @@
     / b-dropdown-item(:has-link="true" :paddingless="true")
       / = link_to("手数少ない順", args.merge(sort_column: :turn_max, sort_order: :asc), "@click.stop" => true)
   - Bioshogi::TacticInfo.each do |e|
-    b-dropdown(:hoverable="false" position="is-bottom-right")
+    b-dropdown(:hoverable="false")
       button.button.is-small(slot="trigger")
         span= e.name
         b-icon(icon="menu-down")

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     received(data) {
       // 発音の受信(ログインしているときは LightSessionChannel ではなくこちらでも利用できる)
       if (data["yomiage"]) {
-        AppHelper.talk(data["yomiage"])
+        GVI.talk(data["yomiage"])
       }
 
       // 個別メッセージの受信
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const from = data["from"]
         const to = data["to"]
         const str = `${from.name}: ${message}`
-        Vue.prototype.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
-        AppHelper.talk(message)
+        GVI.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
+        GVI.talk(message)
       }
 
       // 対局リクエスト
@@ -61,10 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
 `
         const message = _.template(message_template)({handicap: handicap})
 
-        AppHelper.talk(`${e.from.name}さんからの挑戦状が届きました`)
+        GVI.talk(`${e.from.name}さんからの挑戦状が届きました`)
 
         this.battle_request_dialog_showing = true
-        Vue.prototype.$dialog.confirm({
+        GVI.$dialog.confirm({
           title: `${e.from.name}さんからの挑戦状`,
           message: message,
           confirmText: "受ける",
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.perform("battle_match_ok", data)
           },
           onCancel: () => {
-            AppHelper.talk(`断りました`)
+            GVI.talk(`断りました`)
             this.battle_request_dialog_showing = false
             this.perform("battle_match_ng", data)
           },
@@ -86,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["matching_establish"]) {
         assert(data["battle_show_path"])
         if (data["auto_matched_at"]) {
-          Vue.prototype.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          GVI.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
         }
         if (data["battle_request_at"]) {
-          Vue.prototype.$toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          GVI.$toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
         }
         location.href = data["battle_show_path"]
       }

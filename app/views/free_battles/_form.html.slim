@@ -5,7 +5,7 @@
   b-tabs.input_method_tabs(v-model="input_active_tab" expanded)
     b-tab-item(label="操作入力")
       .non_border_box
-        shogi-player(
+        shogi_player(
           :run_mode.sync="run_mode"
           :kifu_body="input_sfen"
           :start_turn="default_start_turn"
