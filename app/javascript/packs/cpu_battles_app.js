@@ -45,7 +45,7 @@ window.CpuBattlesApp = Vue.extend({
 
   methods: {
     play_mode_long_sfen_set(v) {
-      this.$http.post(this.$options.player_mode_moved_path, {kifu_body: v, cpu_brain_key: this.cpu_brain_key}).then((response) => {
+      this.$http.post(this.$options.player_mode_moved_path, {kifu_body: v, cpu_brain_key: this.cpu_brain_key}).then(response => {
         if (response.data["error_message"]) {
           this.$dialog.alert({
             title: "反則負け",
@@ -97,7 +97,7 @@ window.CpuBattlesApp = Vue.extend({
           this.full_sfen = response.data["sfen"]
         }
 
-      }).catch((error) => {
+      }).catch(error => {
         console.table([error.response])
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })

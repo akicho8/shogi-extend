@@ -126,7 +126,7 @@ export default {
         this.loading = false
         this.records = response.data
         this.fetched_count += 1
-      }).catch((error) => {
+      }).catch(error => {
         console.table([error.response])
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
@@ -164,7 +164,7 @@ export default {
           // const record = this.records.find(e => e.id === this.modal_record)
           // this.$set(record, "sfen_body", response.data["sfen_body"])
           // this.modal_show()
-        }).catch((error) => {
+        }).catch(error => {
           console.table([error.response])
           this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })

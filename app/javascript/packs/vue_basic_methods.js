@@ -28,13 +28,12 @@ export default {
       const kc_url = params["kc_url"]
       if (kc_url) {
         const kc_format = params["kc_format"] || "kif"
-        const kifu_text = $.ajax({ // このためだけに jQuery 使用
-          type: "GET",
-          url: `${kc_url}.${kc_format}?copy_trigger=true`,
-          async: false, // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
-        }).responseText
-
-        params["text"] = kifu_text
+        this.$http.get(`${kc_url}.${kc_format}`, { params: { copy_trigger: true }}).then(response => {
+          params["text"] = response.data
+        }).catch(error => {
+          console.table([error.response])
+          this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        })
       }
 
       const kc_title = params["kc_title"]
@@ -145,7 +144,7 @@ export default {
     talk(source_text) {
       // const params = new URLSearchParams()
       // params.set("source_text", source_text)
-      // this.$http.post(js_global.talk_path, params).then((response) => {
+      // this.$http.post(js_global.talk_path, params).then(response => {
       this.$http.get(js_global.talk_path, {params: {source_text: source_text}}).then(response => {
         // すぐに発声する場合
         if (false) {
@@ -173,7 +172,7 @@ export default {
           // new Howl({src: response.data.service_path, autoplay: true, volume: 1.0})
         }
 
-      }).catch((error) => {
+      }).catch(error => {
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
