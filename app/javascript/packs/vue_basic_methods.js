@@ -30,18 +30,20 @@ export default {
         const kc_format = params["kc_format"] || "kif"
         this.$http.get(`${kc_url}.${kc_format}`, { params: { copy_trigger: true }}).then(response => {
           params["text"] = response.data
+
+          const kc_title = params["kc_title"]
+          if (kc_title) {
+            params["success_yomiage"] = `${kc_title}の棋譜をクリップボードにコピーしました`
+          }
+
+          this.clipboard_copy(params)
+
         }).catch(error => {
           console.table([error.response])
           this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })
       }
 
-      const kc_title = params["kc_title"]
-      if (kc_title) {
-        params["success_yomiage"]= `${kc_title}の棋譜をクリップボードにコピーしました`
-      }
-
-      this.clipboard_copy(params)
     },
 
     // str をクリップボードにコピー
