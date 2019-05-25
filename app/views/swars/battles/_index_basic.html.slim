@@ -29,25 +29,25 @@
 = render partial: "free_battles/parmalink"
 
 - if current_records && current_records.exists?
-.columns
-  .column
-    p
-      =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-info is-small") do
-        b-icon(icon="download" size="is-small")
-        | &nbsp;&nbsp;
-        - if controller.current_query
-          | この検索条件で
-        = "まとめてダウンロード"
+  .columns
+    .column
+      p
+        =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-small") do
+          b-icon(icon="download" size="is-small")
+          | &nbsp;&nbsp;
+          - if controller.current_query
+            | この検索条件で
+          = "まとめてダウンロード"
 
 .columns
   .column
     article.message.is-primary.is-size-7
       .message-header
-        | 便利な使い方
+        | 使い方
       .message-body.has-text-left
         .content
           ol
-            li 行をクリックすると盤面がポップアップします
+            li 行クリックで局面を見れます
             - if current_swars_user && params[:page].to_i <= 1
               li 検索後のページをブクマしておくと毎回ウォーズIDを入力する手間が省けます
               li(class=(Rails.env.test? ? "" : "is-hidden-desktop"))
