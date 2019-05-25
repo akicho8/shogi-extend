@@ -138,7 +138,7 @@ module Swars
             datasets: WinLoseInfo.collect.with_index { |wl, i|
               {
                 label: wl.name,
-                data: memberships.find_all { |e| e.judge_key.to_sym == wl.key }.collect { |e| { t: e.battle.battled_at.to_s(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
+                data: memberships.find_all { |e| e.judge_key.to_sym == wl.key }.collect { |e| { t: e.battle.battled_at.midnight.to_s(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
                 backgroundColor: PaletteInfo[i].background_color,
                 borderColor: PaletteInfo[i].border_color,
                 pointRadius: 4,           # 点半径
