@@ -10,16 +10,16 @@
     ul
       li= link_to("棋譜一覧", current_plural_key)
       - if current_record.persisted?
-        li= link_to("##{current_record.id}", current_record)
+        li= link_to(current_record.title, current_record)
       li.is-active
         - if current_record.persisted?
           = link_to("編集", [:edit, current_record])
         - else
-          a= "新規"
+          a= "投稿"
 
-  p.title.is-2.yumincho
-    = @page_title
-  hr
+  / p.title.is-2.yumincho
+  /   = @page_title
+  / hr
 
   .columns
     .column.is-half
