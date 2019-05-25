@@ -128,7 +128,9 @@ RSpec.describe "対戦", type: :system do
     end
 
     it "ダブルス" do
-      refresh
+      # refresh
+      sleep(15)
+
       matching_set("user1", "ダブルス")
       matching_set("user2", "ダブルス")
       matching_set("user3", "ダブルス")
