@@ -24,6 +24,8 @@
   .columns
     .column
       = form_with(url: [ns_prefix, current_plural_key], method: :get, skip_enforcing_utf8: true) do |form|
+        - if v = params[:search_scope_key].presence
+          = form.hidden_field(:search_scope_key, value: v)
         .field.has-addons
           .control.is-expanded
             / modal にフォーカスできなくなるので autofocus は使ってはいけない
