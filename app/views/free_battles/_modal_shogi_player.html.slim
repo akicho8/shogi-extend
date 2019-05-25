@@ -4,7 +4,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
       header.modal-card-head
         p.modal-card-title.is-size-5.yumincho
           template(v-if="modal_record.saturn_key === 'private'")
-            b-icon.has-text-grey-light(pack="fas" icon="lock" size="is-small")
+            b-icon.has-text-grey-light(icon="lock" size="is-small")
             | &nbsp;
           | {{modal_record.title}}
         button(class="delete" aria-label="close" @click="modal_p = false")
