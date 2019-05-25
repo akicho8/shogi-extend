@@ -109,6 +109,7 @@ import vue_basic_methods from "./vue_basic_methods.js"
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import message_link_to from "../message_link_to.vue"
 import global_message_link from "../global_message_link.vue"
+import swars_user_link_to from "../swars_user_link_to.vue"
 
 Vue.mixin({
   mixins: [
@@ -120,6 +121,7 @@ Vue.mixin({
     shogi_player,
     message_link_to,
     global_message_link,
+    swars_user_link_to,
   },
 })
 

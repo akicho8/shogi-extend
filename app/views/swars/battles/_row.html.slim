@@ -12,8 +12,12 @@ template(slot-scope="props")
   template(v-for="m in props.row.memberships")
     b-table-column(:label="m.label")
       span(v-html="m.icon_html")
-      a(@click.stop :href="m.query_user_url")
-        | {{m.name_with_grade}}
+      template(v-if="false")
+        a(@click.stop :href="m.query_user_url")
+          | {{m.name_with_grade}}
+      template(v-else)
+        swars_user_link_to(:membership="m")
+
       template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
         template(v-if="table_columns_hash[key].visible")
           template(v-for="tag in m[key]")
@@ -65,10 +69,11 @@ template(slot-scope="props")
               a(@click.stop :href="props.row.edit_path")
                 | 編集
 
-        template(v-for="e in props.row.memberships")
-          b-dropdown-item(:has-link="true" :paddingless="true")
-            a(@click.stop :href="e.player_info_url")
-              | {{e.name_with_grade}} 情報
+        - unless Rails.env.production?
+          template(v-for="e in props.row.memberships")
+            b-dropdown-item(:has-link="true" :paddingless="true")
+              a(@click.stop :href="e.player_info_path")
+                | {{e.name_with_grade}} 情報
 
         b-dropdown-item(:separator="true")
 

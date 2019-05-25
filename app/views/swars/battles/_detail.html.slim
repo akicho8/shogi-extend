@@ -4,7 +4,7 @@ template(slot="detail" slot-scope="props")
       | 詳細
 
     template(v-for="e in props.row.memberships")
-      a.button(:href="e.player_info_url")
+      a.button(:href="e.player_info_path")
         | {{e.name_with_grade}} 情報
 
     a.button(:href="`${props.row.show_path}.kif`")

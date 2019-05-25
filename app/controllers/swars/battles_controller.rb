@@ -475,10 +475,11 @@ module Swars
         a[:memberships] = left_right_pairs(e).collect do |label, e|
           attrs = {
             label: label,
-            player_info_url: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
+            player_info_path: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
             icon_html: e.icon_html,
             name_with_grade: e.name_with_grade,
-            query_user_url: polymorphic_path(e.user, current_mode: current_mode),
+            query_user_url: polymorphic_path(e.user),
+            swars_home_url: e.user.swars_home_url,
           }
           [:attack, :defense].each do |key|
             attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
