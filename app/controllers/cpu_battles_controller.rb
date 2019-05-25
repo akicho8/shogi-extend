@@ -39,14 +39,12 @@ class CpuBattlesController < ApplicationController
         lines = error.message.lines
         error_message = [
           "#{lines.first.remove("【反則】")}",
-
           # "<br><br>"
           # "<pre>", lines.drop(1).join, "</pre>",
-
           # "<br>",
           # "<br>",
-          # '<span class="is-size-7 has-text-grey">一手戻して再開できます</span>'
-        ].join
+          '<span class="is-size-7 has-text-grey">※一手戻して再開できます</span>',
+        ].join.strip
 
         # info.move_infos.size - 0
 
@@ -54,7 +52,7 @@ class CpuBattlesController < ApplicationController
         # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
         # render json: {error_message: error_message, before_sfen: before_sfen}
 
-        render json: {error_message: error_message}
+        final_decision(error_message: error_message)
         return
       end
 
@@ -63,7 +61,7 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          render json: {you_win_message: "玉を取って勝ちました！", sfen: mediator.to_sfen}
+          final_decision(you_win_message: "玉を取って勝ちました！", sfen: mediator.to_sfen)
           return
         end
       end
@@ -84,13 +82,13 @@ class CpuBattlesController < ApplicationController
         tp Bioshogi::Brain.human_format(records)
 
         if records.empty?
-          render json: {you_win_message: "CPUが投了しました", sfen: mediator.to_sfen}
+          final_decision(you_win_message: "CPUが投了しました", sfen: mediator.to_sfen)
           return
         end
 
         record = records.first
         if record[:score] <= -Bioshogi::INF_MAX
-          render json: {you_win_message: "CPUが降参しました", sfen: mediator.to_sfen}
+          final_decision(you_win_message: "CPUが降参しました", sfen: mediator.to_sfen)
           return
         end
 
@@ -102,7 +100,7 @@ class CpuBattlesController < ApplicationController
         end
         hand = hands.sample
         unless hand
-          render json: {you_win_message: "CPUはもう何も指す手がなかったようです", sfen: mediator.to_sfen}
+          final_decision(you_win_message: "CPUはもう何も指す手がなかったようです", sfen: mediator.to_sfen)
           return
         end
       end
@@ -117,7 +115,7 @@ class CpuBattlesController < ApplicationController
       if true
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
-          render json: response.merge(you_lose_message: "CPUの勝ちです")
+          final_decision(response.merge(you_lose_message: "CPUの勝ちです"))
           return
         end
       end
@@ -125,7 +123,7 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          render json: response.merge(you_lose_message: "玉を取られました")
+          final_decision(response.merge(you_lose_message: "玉を取られました"))
           return
         end
       end
@@ -133,6 +131,11 @@ class CpuBattlesController < ApplicationController
       render json: response
       return
     end
+  end
+
+  def final_decision(response)
+    SlackAgent.message_send(key: "CPU対戦終局", body: response)
+    render json: response
   end
 
   def current_cpu_brain_info
