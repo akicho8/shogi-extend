@@ -6,7 +6,7 @@ html(lang="ja")
     meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css")
-    link(rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css")
+    link(rel="stylesheet" href="//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css")
 
     link(rel="apple-touch-icon" href=path_to_image(@apple_touch_icon || "apple-touch-icon.png"))
 
@@ -66,22 +66,23 @@ html(lang="ja")
         #main_navar.navbar-menu
           .navbar-start
             / ここでの is-active に意味はない
-            = link_to(icon_tag(:fas, :play) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
-            = link_to(icon_tag(:fas, :robot) + "&nbsp;CPU対戦".html_safe, :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
-            = link_to(icon_tag(:fas, :search) + "ウォーズ検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
-            = link_to(icon_tag(:far, :clipboard) + "棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
+            = link_to(icon_tag2(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
+            = link_to(icon_tag2(:robot, margin_right: 1) + "CPU対戦".html_safe, :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
+            = link_to(icon_tag2(:magnify, margin_right: 1) + "ウォーズ検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
+            = link_to(icon_tag2("clipboard-text-outline", margin_right: 1) + "棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
             .navbar-item.has-dropdown.is-hoverable
-              span.navbar-link もっと見る
+              span.navbar-link
+                | もっと見る
               .navbar-dropdown.is-boxed
-                = link_to(icon_tag(:fas, :edit) + "棋譜投稿", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
-                = link_to(icon_tag(:fas, :user) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
+                = link_to(icon_tag2("clipboard-arrow-up-outline", margin_right: 2) + "棋譜投稿", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
+                = link_to(icon_tag2(:account, margin_right: 2) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
                 = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")]) if !Rails.env.production?
                 = link_to("戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
                 = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
                 = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
 
           #header_app.navbar-end(v-cloak)
-            = link_to("production", production_app_url, class: ["navbar-item"], target: "_blank") unless Rails.env.production?
+            = link_to(icon_tag2(:cancel, margin_right: 1) + "production", production_app_url, class: ["navbar-item"], target: "_blank") unless Rails.env.production?
 
             / - unless current_user
             /   = link_to("アカウント作成", [:new, :colosseum, :session], class: "navbar-item")

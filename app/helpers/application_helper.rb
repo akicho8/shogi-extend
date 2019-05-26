@@ -1,7 +1,7 @@
 module ApplicationHelper
   include ActsAsTaggableOn::TagsHelper
 
-  delegate :icon_tag, to: Fa
+  delegate :icon_tag, :icon_tag2, to: Fa
 
   def html_title
     @override_page_title || full_html_title

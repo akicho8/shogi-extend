@@ -110,6 +110,7 @@ import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import message_link_to from "../message_link_to.vue"
 import global_message_link from "../global_message_link.vue"
 import swars_user_link_to from "../swars_user_link_to.vue"
+import b_icon2 from "../b_icon2.vue"
 
 Vue.mixin({
   mixins: [
@@ -122,6 +123,7 @@ Vue.mixin({
     message_link_to,
     global_message_link,
     swars_user_link_to,
+    "b-icon2": b_icon2,
   },
 })
 
