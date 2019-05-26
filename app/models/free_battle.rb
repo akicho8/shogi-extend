@@ -55,7 +55,7 @@ class FreeBattle < ApplicationRecord
         record.kifu_body = file.read
         record.title = title.gsub(/_/, " ")
 
-        if md2 = description.match(/\A(?<start_turn>\d+)_(?<rest>.*)/)
+        if md2 = description.match(/\As(?<start_turn>\d+)_(?<rest>.*)/)
           record.start_turn = md2["start_turn"].to_i
           description = md2["rest"]
         end
@@ -119,7 +119,7 @@ class FreeBattle < ApplicationRecord
       parts << "__"
 
       if start_turn
-        parts << "#{start_turn}手目" + "_"
+        parts << "s#{start_turn}" + "_"
       end
 
       parts << description.truncate(80, omission: "").gsub(/\p{Space}+/, "_")
