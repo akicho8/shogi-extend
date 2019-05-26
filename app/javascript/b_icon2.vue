@@ -1,29 +1,38 @@
 <template lang="pug">
-  b-icon(:icon="icon" :customSize="real_size")
+  span
+    span(v-text="' '")
+    b-icon(:icon="icon" :size="size2")
+    span(v-text="' '")
 </template>
 
 <script>
 export default {
   props: {
     icon: { required: true, },
-    size: { default: "is-default", },
+    size: { default: "is-small", },
   },
 
   computed: {
-    real_size() {
-      if (this.size === "is-small") {
-        return ""
-      }
-      if (this.size === "is-default") {
-        return "mdi-18px"
-      }
-      if (this.size === "is-medium") {
-        return "mdi-24px"
-      }
-      if (this.size === "is-large") {
-        return "mdi-36px"
-      }
+    size2() {
+      return this.size
+      //   === "is-small") {
+      //   return "is-small"
+      // }
     },
+    // customSize2() {
+    //   if (this.size === "is-small") {
+    //     return null
+    //   }
+    //   if (this.size === "is-default") {
+    //     return "mdi-24px"
+    //   }
+    //   if (this.size === "is-medium") {
+    //     return "mdi-36px"
+    //   }
+    //   if (this.size === "is-large") {
+    //     return "mdi-48px"
+    //   }
+    // },
   },
 }
 </script>
