@@ -137,7 +137,7 @@ html(lang="ja")
               /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
             - if !current_user
-              = link_to(content_tag("b-icon", "", icon: "login") + "&nbsp;ログイン".html_safe, :new_xuser_session, class: "navbar-item")
+              = link_to(content_tag("b-icon", "", icon: "login", size: "is-small") + "&nbsp;&nbsp;ログイン".html_safe, :new_xuser_session, class: "navbar-item")
               = link_to("アカウント登録", :new_xuser_registration, class: "navbar-item") unless Rails.env.production?
               / .navbar-item.has-dropdown.is-hoverable
               /   span.navbar-link ログイン
