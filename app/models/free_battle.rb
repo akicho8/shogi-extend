@@ -54,7 +54,14 @@ class FreeBattle < ApplicationRecord
         record.owner_user = Colosseum::User.find_by(name: Rails.application.credentials.production_my_user_name) || Colosseum::User.sysop
         record.kifu_body = file.read
         record.title = title.gsub(/_/, " ")
-        record.description = description.to_s.gsub(/_/, " ")
+
+        if md2 = description.match(/\A(?<start_turn>\d+)_(?<rest>.*)/)
+          record.start_turn = md2["start_turn"].to_i
+          description = md2["rest"]
+        end
+
+        record.description = description.to_s.gsub(/_/, " ").strip
+
         # record.public_send("#{:kifu_body}_will_change!") # 強制的にパースさせるため
 
         if saturn_info = SaturnInfo.find { |e| e.char_key == md["saturn_key"] }
@@ -110,6 +117,11 @@ class FreeBattle < ApplicationRecord
     parts << title.gsub(/\p{Space}+/, "_")
     if description.present?
       parts << "__"
+
+      if start_turn
+        parts << "#{start_turn}手目" + "_"
+      end
+
       parts << description.truncate(80, omission: "").gsub(/\p{Space}+/, "_")
     end
     parts.join
