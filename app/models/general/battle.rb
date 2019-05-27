@@ -201,20 +201,6 @@ module General
     end
 
     concerning :HelperMethods do
-      def icon_html(membership)
-        if final_info.draw
-          Fa.icon_tag(:fas, :minus, :class => "icon_hidden")
-        else
-          if membership.judge_key == "win"
-            Fa.icon_tag(:fas, :crown, class: :icon_o)
-          elsif membership.judge_key == "lose"
-            Fa.icon_tag(:fas, :times, class: :icon_x)
-          else
-            raise "must not happen"
-          end
-        end
-      end
-
       def myself(user)
         index = meta_info[:simple_names].index { |e| e.flatten.include?(user.name) }
         memberships_of_index(index)

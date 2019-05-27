@@ -47,7 +47,7 @@
             img(:src="tweet_origin_image_path" width="600")
         b-tooltip(label="削除")
           a.button.is-danger(@click="og_image_destroy")
-            b-icon(pack="fas" icon="trash")
+            b-icon(icon="trash-can-outline")
 
       template(v-else="tweet_origin_image_path")
         | なし
@@ -60,7 +60,7 @@
       br
       br
       a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
-        = icon_tag(:fab, :twitter) + "ツイート"
+        = icon_tag(:twitter) + "ツイート"
 
   / - if current_record.thumbnail_image.attached? && false
   /   .box.img_size_check

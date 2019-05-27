@@ -51,13 +51,16 @@
   .buttons
     template(v-if="!matching_at")
       button.button.is-primary.is-large(@click.prevent="matching_start")
-        = icon_tag(:fas, :play) + "対戦開始"
-      button.button.is-large(@click.prevent="battle_setting_open_click" id="rule_set_dialog_button")
-        b-tooltip(label="ルール設定")
-          b-icon(pack="fas" icon="cog")
+        b-icon(icon="play")
+        | &nbsp;
+        | &nbsp;
+        | 対戦開始
       = link_to([:colosseum, :rankings], class: "button is-large") do
         b-tooltip(label="ランキング")
-          b-icon(pack="fas" icon="crown")
+          b-icon(icon="crown" size="is-medium")
+      button.button.is-large(@click.prevent="battle_setting_open_click" id="rule_set_dialog_button")
+        b-tooltip(label="ルール設定")
+          b-icon(icon="settings-outline" size="is-medium")
     template(v-else)
       a.button.is-large(@click.prevent="matching_cancel")
         | マッチング開始{{matching_counter}}

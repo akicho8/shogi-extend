@@ -343,21 +343,20 @@ module Swars
 
       if false
         if options[:alert_p]
-          # key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
-          key = Fa.icon_tag(:fas, :exclamation_circle, :class => "has-text-danger") + key
+          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
         end
         if options[:great_p]
-          key = Fa.icon_tag(:fas, :exclamation, :class => "has-text-danger") + key
+          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
         end
         if options[:warn_p]
-          key = Fa.icon_tag(:fas, :exclamation_triangle, :class => "has-text-warning") + key
+          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
         end
       else
         if options[:alert_p] || options[:great_p] || options[:warn_p]
-          key = Fa.icon_tag(:fas, :exclamation, :class => "has-text-danger") + key
+          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
         end
         if options[:danger_p]
-          key = Fa.icon_tag(:fas, :skull, :class => "has-text-danger") + key
+          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
         end
       end
 

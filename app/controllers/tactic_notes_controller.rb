@@ -84,7 +84,7 @@ class TacticNotesController < ApplicationController
               if v = other_objects_hash["☆"]
                 if v[place]
                   back_class << "not_any_from_place"
-                  str = icon_tag(:fab, :times)
+                  str = "×"
                 end
               end
 
@@ -118,11 +118,11 @@ class TacticNotesController < ApplicationController
     if index = all_records.find_index(current_record)
       @left_right_link = tag.navi(:class => "pagination is-right", role: "navigation", "aria-label": "pagination") do
         [
-          [-1, [:play, :rotate_180], "pagination-previous"],
-          [+1, [:play],              "pagination-next"],
+          [-1, "arrow-left", "pagination-previous"],
+          [+1, "arrow-right", "pagination-next"],
         ].collect { |s, icon, klass|
           r = all_records[(index + s).modulo(all_records.size)]
-          link_to(icon_tag(:fas, *icon), [:tactic_note, id: r.key], :class => klass)
+          link_to(icon_tag(icon), [:tactic_note, id: r.key], :class => klass)
         }.join(" ").html_safe + tag.ul("class": "pagination-list")
       end
     end
@@ -249,7 +249,7 @@ class TacticNotesController < ApplicationController
   end
 
   def checked
-    Fa.icon_tag(:fas, :check)
+    Icon.icon_tag("check-bold")
   end
 
   def detail?
