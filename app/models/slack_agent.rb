@@ -10,6 +10,10 @@ module SlackAgent
       return
     end
 
+    if ENV["SLACK_AGENT_DISABLE"].to_s == "1"
+      return
+    end
+
     if ENV["SLACK_AGENT_RAISE"]
       raise Slack::Web::Api::Errors::SlackError, 1
     end

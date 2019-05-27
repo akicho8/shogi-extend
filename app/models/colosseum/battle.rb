@@ -86,24 +86,15 @@ module Colosseum
     end
 
     after_create do
-      SlackAgent.message_send(key: "対戦開始", body: name)
+      SlackAgent.message_send(key: "対戦開始", body: long_name)
     end
 
     def name
-      if false
-        if users.present?
-          users.collect(&:name).join(" vs ")
-        else
-          names = []
-          if room_owner
-            names << "#{room_owner.name}の"
-          end
-          names << "対戦部屋 ##{Battle.count.next}"
-          names.join
-        end
-      else
-        "##{id}"
-      end
+      "##{id}"
+    end
+
+    def long_name
+      "##{id} 対戦部屋 " + users.collect(&:name).join(" vs ")
     end
 
     def xstate_key
@@ -165,6 +156,23 @@ module Colosseum
     end
 
     concerning :BattleMethods do
+      class_methods do
+        def auto_close(**options)
+          options = {
+            time: nil,
+          }.merge(options)
+
+          kesuyatu(options).each do |e|
+            e.game_end({})
+            SlackAgent.message_send(key: "自動終了", body: e.long_name)
+          end
+        end
+      end
+
+      included do
+        scope :kesuyatu, -> **options { st_battle_now.where(arel_table[:begin_at].lteq(((options[:time] || 1.hour)).seconds.ago)).order(:begin_at) }
+      end
+
       def battle_start
         unless begin_at
           update!(begin_at: Time.current)
