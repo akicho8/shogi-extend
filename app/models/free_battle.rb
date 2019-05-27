@@ -55,12 +55,14 @@ class FreeBattle < ApplicationRecord
         record.kifu_body = file.read
         record.title = title.gsub(/_/, " ")
 
-        if md2 = description.match(/\As(?<start_turn>\d+)_(?<rest>.*)/)
-          record.start_turn = md2["start_turn"].to_i
-          description = md2["rest"]
-        end
+        if description
+          if md2 = description.match(/\As(?<start_turn>\d+)_(?<rest>.*)/)
+            record.start_turn = md2["start_turn"].to_i
+            description = md2["rest"]
+          end
 
-        record.description = description.to_s.gsub(/_/, " ").strip
+          record.description = description.to_s.gsub(/_/, " ").strip
+        end
 
         # record.public_send("#{:kifu_body}_will_change!") # 強制的にパースさせるため
 
