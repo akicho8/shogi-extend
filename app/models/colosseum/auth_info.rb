@@ -25,7 +25,7 @@ module Colosseum
       if auth
         self.provider  = auth.provider
         self.uid       = auth.uid
-        self.meta_info = auth.to_hash # ここで allocator undefined for Proc がでている……？？？ 出ないときもある。よくわからん
+        self.meta_info = auth.as_json # as_json することで Proc オブジェクトを除外する。含まれていると allocator undefined for Proc エラーになる
       end
     end
 
