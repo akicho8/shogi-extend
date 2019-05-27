@@ -35,7 +35,7 @@ module Icon
       span_style = "border: 2px dotted blue"
     end
 
-    i = tag.i(style: i_style, :class => [:mdi, *names.collect { |e| "mdi-#{e}" }])
+    i = tag.i(style: i_style, :class => [:mdi, *names.collect { |e| "mdi-#{e.to_s.gsub(/_/, '-')}" }])
     s = tag.span(i, :class => ["icon", size, *options[:class]].flatten.compact, style: span_style)
 
     if true
