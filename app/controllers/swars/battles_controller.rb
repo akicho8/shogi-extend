@@ -421,11 +421,11 @@ module Swars
             s = s.where(id: current_ids)
           end
 
-          if v = current_query_hash[:turn_max_gteq]
+          if v = current_query_hash[:turn_max_gteq]&.first
             s = s.where(Battle.arel_table[:turn_max].gteq(v))
           end
 
-          if v = current_query_hash[:turn_max_lt]
+          if v = current_query_hash[:turn_max_lt]&.first
             s = s.where(Battle.arel_table[:turn_max].lt(v))
           end
 
