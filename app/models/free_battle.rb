@@ -56,7 +56,7 @@ class FreeBattle < ApplicationRecord
         record.title = title.gsub(/_/, " ")
 
         if description
-          if md2 = description.match(/\As(?<start_turn>\d+)_(?<rest>.*)/)
+          if md2 = description.match(/\As(?<start_turn>\d+)_?(?<rest>.*)/)
             record.start_turn = md2["start_turn"].to_i
             description = md2["rest"]
           end
