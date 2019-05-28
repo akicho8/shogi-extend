@@ -94,23 +94,6 @@ module BattleControllerSharedMethods2
       end
     end
 
-    let :js_index_options do
-      {
-        query: current_query || "",
-        search_scope_key: current_search_scope_key,
-        xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
-        total: current_records.total_count, # ここで事前にSQLが走るのは仕方ない
-        page: current_records.current_page,
-        per: current_per,
-        sort_column: current_sort_column,
-        sort_order: current_sort_order,
-        sort_order_default: "desc", # カラムをクリックしたときの最初の向き
-        records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
-        table_columns_hash: js_table_columns_hash,
-        modal_record: js_modal_record,
-      }
-    end
-
     let :js_modal_record do
       if modal_record
         js_modal_record_for(modal_record)
@@ -198,6 +181,23 @@ module BattleControllerSharedMethods2
     let :current_search_scope_key do
       (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
     end
+  end
+
+  def js_index_options
+    {
+      query: current_query || "",
+      search_scope_key: current_search_scope_key,
+      xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
+      total: current_records.total_count, # ここで事前にSQLが走るのは仕方ない
+      page: current_records.current_page,
+      per: current_per,
+      sort_column: current_sort_column,
+      sort_order: current_sort_order,
+      sort_order_default: "desc", # カラムをクリックしたときの最初の向き
+      records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
+      table_columns_hash: js_table_columns_hash,
+      modal_record: js_modal_record,
+    }
   end
 
   def twitter_staitc_image_url

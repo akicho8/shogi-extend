@@ -1,0 +1,7 @@
+= tag.datalist(id: "search_field_query_completion") do
+  / - Swars::User.search_form_datalist.each do |e|
+  /   = tag.option(value: e)
+  /
+  = cache do
+    - Bioshogi::TacticInfo.all_elements.each do |e|
+      = tag.option(value: "tag:#{e.name}")

@@ -3,10 +3,15 @@
     | 最新の対局を
     = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
     | で開く
-
   | &nbsp;
+
   / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
-  = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-small is-rounded")
+  / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-small is-rounded")
+  / | &nbsp;
+
+  b-tooltip(label="切断率などがわかります")
+    = link_to("プレイヤー情報", "#", class: "button is-small is-rounded", "@click" => "player_info_click_hadle")
+
   | &nbsp;
 
   b-tooltip(label="古い棋譜も可能な限り取り込みます")

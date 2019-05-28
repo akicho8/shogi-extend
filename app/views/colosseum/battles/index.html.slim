@@ -1,7 +1,7 @@
 - content_for :head do
   = javascript_pack_tag("colosseum_battle_index")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { App.lobby_vm = new ColosseumBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#colosseum_battle_index") })
+    document.addEventListener('DOMContentLoaded', () => { App.lobby_vm = new ColosseumBattleIndex(#{controller.js_index_options.to_json.html_safe}).$mount("#colosseum_battle_index") })
 
 #colosseum_battle_index(v-cloak)
   b-modal(:active.sync="setting_modal_p")

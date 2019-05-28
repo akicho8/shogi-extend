@@ -132,6 +132,12 @@ module Swars
       render :index
     end
 
+    def js_index_options
+      super.merge({
+          player_info_path: current_user_key ? url_for([:swars, :player_infos, user_key: current_user_key, only_path: true]) : nil,
+        })
+    end
+
     private
 
     def import_process(flash)
