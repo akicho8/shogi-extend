@@ -55,7 +55,6 @@ module Swars
                     {
                       data: RuleInfo.collect { |e| memberships_rule_key_group[e.key.to_s] || 0 },
                       backgroundColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].pie_color },
-                      # borderColor: RuleInfo.collect.with_index { |e, i| PaletteInfo[i].border_color },
                     },
                   ],
                 },
@@ -139,8 +138,8 @@ module Swars
               {
                 label: wl.name,
                 data: memberships.find_all { |e| e.judge_key.to_sym == wl.key }.collect { |e| { t: e.battle.battled_at.midnight.to_s(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
-                backgroundColor: PaletteInfo[i].background_color,
-                borderColor: PaletteInfo[i].border_color,
+                backgroundColor: wl.palette.background_color,
+                borderColor: wl.palette.border_color,
                 pointRadius: 4,           # 点半径
                 borderWidth: 2,           # 点枠の太さ
                 pointHoverRadius: 5,      # 点半径(アクティブ時)
@@ -172,8 +171,8 @@ module Swars
               labels: WinLoseInfo.collect(&:name),
               datasets: [
                 {
-                  data: [:win, :lose].collect { |judge_key| current_swars_user.memberships.tagged_with(tag.name, on: tags_key).where(judge_key: judge_key).count },
-                  backgroundColor: [:win, :lose].collect.with_index { |e, i| PaletteInfo[i].pie_color },
+                  data: WinLoseInfo.collect { |e| current_swars_user.memberships.tagged_with(tag.name, on: tags_key).where(judge_key: e.key).count },
+                  backgroundColor: WinLoseInfo.collect { |e| e.palette.pie_color },
                 },
               ],
             },
