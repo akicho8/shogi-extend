@@ -93,16 +93,20 @@ module Swars
 
     concerning :HelperMethods do
       def icon_html
-        klass = [judge_info.icon_class]
-        if judge_info.key == :lose
-          klass << battle.final_info.has_text_color
+        final_info = battle.final_info
+        # final_info = Swars::FinalInfo.to_a.sample
+
+        icon_names = judge_info.icon_names || final_info.icon_names
+        icon_class = judge_info.icon_class || final_info.icon_class
+
+        if icon_names.present?
+          Icon.icon_tag(*icon_names, :class => icon_class)
         end
-        Icon.icon_tag(*judge_info.icon_args, :class => klass)
       end
 
       def winner_only_icon_html
         if judge_info.key == :win
-          Icon.icon_tag(*judge_info.icon_args, :class => judge_info.icon_class)
+          Icon.icon_tag(*judge_info.icon_names, :class => judge_info.icon_class)
         end
       end
     end
