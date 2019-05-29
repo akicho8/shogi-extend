@@ -7,7 +7,7 @@
         = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
           .field
             .control.has-icons-left.has-icons-right
-              = f.email_field(:email, autofocus: true, class: 'input', placeholder: "メールアドレス")
+              = f.email_field(:email, autofocus: false, class: 'input', placeholder: "メールアドレス")
               span.icon.is-small.is-left
                 i.fas.fa-envelope
 
