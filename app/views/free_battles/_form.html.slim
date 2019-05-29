@@ -2,27 +2,26 @@
   / 「テキスト入力」の方がタブで隠れている状態で post すると params[:kifu_body] に含まれないため隠しパラメータとしてかわりに hidden_kifu_body が送られるようにしている
   = form.hidden_field(:hidden_kifu_body, "v-model": "input_text")
 
-  b-tabs.input_method_tabs(v-model="input_active_tab" expanded)
+  b-tabs.input_method_tabs.is_lr_paddingless(v-model="input_active_tab" expanded)
     b-tab-item(label="操作入力")
-      .non_border_box
-        shogi_player(
-          :run_mode.sync="run_mode"
-          :kifu_body="input_sfen"
-          :start_turn="default_start_turn"
-          :debug_mode="false"
-          :key_event_capture="true"
-          :slider_show="true"
-          :sfen_show="false"
-          :controller_show="true"
-          :theme="'simple'"
-          :size="'default'"
-          :sound_effect="true"
-          :volume=AppConfig[:volume]
-          @update:play_mode_long_sfen="play_mode_long_sfen_set"
-          @update:start_turn="seek_to"
-          ref="main_sp"
-          )
-          = render partial: "sfen_link"
+      shogi_player(
+        :run_mode.sync="run_mode"
+        :kifu_body="input_sfen"
+        :start_turn="default_start_turn"
+        :debug_mode="false"
+        :key_event_capture="true"
+        :slider_show="true"
+        :sfen_show="false"
+        :controller_show="true"
+        :theme="'simple'"
+        :size="'default'"
+        :sound_effect="true"
+        :volume=AppConfig[:volume]
+        @update:play_mode_long_sfen="play_mode_long_sfen_set"
+        @update:start_turn="seek_to"
+        ref="main_sp"
+        )
+        = render partial: "sfen_link"
 
       .field
         .iikanjino_yoko
