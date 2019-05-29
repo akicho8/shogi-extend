@@ -64,21 +64,20 @@
                   /   header.card-header
                   /     p.card-header-title.is-size-7
                   / .card-content
-                  .non_border_box
-                    shogi_player(
-                      :kifu_body="output_kifs['sfen']['value']"
-                      :start_turn="-1"
-                      :debug_mode="false"
-                      :key_event_capture="false"
-                      :slider_show="true"
-                      :sfen_show="false"
-                      :controller_show="true"
-                      :theme="'simple'"
-                      :size="'default'"
-                      :sound_effect="true"
-                      :volume=AppConfig[:volume]
-                      )
-                      = render partial: "sfen_link"
+                  shogi_player(
+                    :kifu_body="output_kifs['sfen']['value']"
+                    :start_turn="-1"
+                    :debug_mode="false"
+                    :key_event_capture="false"
+                    :slider_show="true"
+                    :sfen_show="false"
+                    :controller_show="true"
+                    :theme="'simple'"
+                    :size="'default'"
+                    :sound_effect="true"
+                    :volume=AppConfig[:volume]
+                    )
+                    = render partial: "sfen_link"
 
     / template(v-if="output_kifs")
     /   .column
