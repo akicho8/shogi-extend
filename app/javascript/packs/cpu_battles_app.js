@@ -71,7 +71,7 @@ window.CpuBattlesApp = Vue.extend({
             message: response.data["you_win_message"],
             type: 'is-primary',
             hasIcon: true,
-            icon: 'crown',
+            icon: 'trophy',
             iconPack: 'mdi',
           })
           this.talk("勝ちました")

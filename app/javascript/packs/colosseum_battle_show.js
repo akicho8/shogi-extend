@@ -208,7 +208,7 @@ window.ColosseumBattleShow = Vue.extend({
                 message: "勝ちました",
                 type: "is-primary",
                 hasIcon: true,
-                icon: "crown",
+                icon: "trophy",
                 iconPack: "mdi",
               })
               this.talk("勝ちました")
