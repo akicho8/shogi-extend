@@ -113,7 +113,7 @@ html(lang="ja")
                   - unless Rails.env.production?
                     span.my_name
                       b= current_user.name
-                .navbar-dropdown.is-boxed
+                .navbar-dropdown.is-boxed.is-right
                   = link_to(icon_tag("account", margin_right: 2) + "プロフィール", [current_user], class: "navbar-item")
                   = link_to(icon_tag("settings-outline", margin_right: 2) + "設定", [:edit, current_user], class: "navbar-item")
                   .navbar-divider
