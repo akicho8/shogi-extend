@@ -227,8 +227,21 @@ $any_exist_soldiers: $grey-light
       &:hover
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
         cursor: zoom-in
+
       // &.public
       //   background-color: $danger
+
+////////////////////////////////////////////////////////////////////////////// デスクトップのときは行のボタンを非表示にしておく
+
++desktop
+  .is_row_clickable
+    tbody
+      tr
+        &:hover
+          .row_operations
+            visibility: visible
+        .row_operations
+            visibility: hidden
 
 ////////////////////////////////////////////////////////////////////////////// for _modal_shogi_player.html.slim
 

@@ -46,7 +46,7 @@ template(slot-scope="props")
     | {{props.row['battled_at']}}
 
   b-table-column(label="")
-    .buttons
+    .buttons.row_operations
       a.is-hidden-desktop(@click.stop :href="props.row.piyo_shogi_app_url")
         = image_tag("piyo_shogi_icon.png", "class": "row_piyo_link")
 

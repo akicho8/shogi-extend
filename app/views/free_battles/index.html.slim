@@ -44,7 +44,11 @@
 
   .columns
     .column
-      = link_to("投稿", [:new, ns_prefix, current_single_key], class: "button is-primary")
+      = link_to([:new, ns_prefix, current_single_key], class: "button is-primary") do
+        b-icon(icon="clipboard-arrow-up-outline" size="is-small")
+        | &nbsp;
+        | &nbsp;
+        | 投稿
 
   = render partial: "parmalink"
 
