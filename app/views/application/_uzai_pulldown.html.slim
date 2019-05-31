@@ -41,6 +41,13 @@
 
     | &nbsp;
     a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
-      = icon_tag(:twitter, size: "is-small") + "ツイート"
+      b-icon(icon="twitter" size="is-small")
+      | &nbsp;
+      | &nbsp;
+      | ツイート
 
     = link_to("一覧でポップアップするURL", [ns_prefix, current_plural_key, modal_id: current_record.id], class: "button is-small")
+
+    - if current_record.kind_of?(Swars::Battle)
+      - current_record.memberships.each do |e|
+        = link_to("#{e.user.name_with_grade} 情報", [:swars, :player_infos, user_key: e.user.key], class: "button is-small")
