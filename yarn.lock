@@ -1806,12 +1806,12 @@ buefy@^0.7.5:
   dependencies:
     bulma "0.7.4"
 
-buefy@^0.7.6:
-  version "0.7.6"
-  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.6.tgz#db0c4874a4d16cae8b774b085cd70f5362f14f8d"
-  integrity sha512-Mnx2E6hrGzEB2R/smkRFekHVdhtZR/qJU6/ARW5g8VAyL0r9EtZkPHWEEYB8ZDi7AKGNF0CTTqZc4j24cASMbQ==
+buefy@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.7.tgz#0e0dea84e776959bf2c23110541d67a94eaaa1de"
+  integrity sha512-UuPD+/749s6XzRL2INoJxykOygcBo1pVlLlSJ7wodY228LGOYsURXSkMrCxeemwhvWzSq/UJ+D8X9BkyIw6Tww==
   dependencies:
-    bulma "0.7.4"
+    bulma "0.7.5"
 
 buffer-indexof@^1.0.0:
   version "1.1.1"
@@ -1847,7 +1847,7 @@ bulma@0.7.4, bulma@^0.7.4:
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.4.tgz#7e74512e9118d9799021339e67e365ee0ac4f3f9"
   integrity sha512-krG2rP6eAX1WE0sf6O0SC/FUVSOBX4m1PBC2+GKLpb2pX0qanaDqcv9U2nu75egFrsHkI0zdWYuk/oGwoszVWg==
 
-bulma@^0.7.5:
+bulma@0.7.5, bulma@^0.7.5:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
   integrity sha512-cX98TIn0I6sKba/DhW0FBjtaDpxTelU166pf7ICXpCCuplHWyu6C9LYZmL5PEsnePIeJaiorsTEzzNk3Tsm1hw==
@@ -7624,10 +7624,10 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shogi-player@^0.0.132:
-  version "0.0.132"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.132.tgz#b378f4e04d349872754ddb5181f13340ce432757"
-  integrity sha512-3cKD+5XNRqI7Mq3RXnSJ0/2YLcIwe8H8c5oWJBu9JgQiz5fKXBXBpI5b4BG0eXDfcDzuCWMA+zYLjRPbhhgQ+A==
+shogi-player@^0.0.133:
+  version "0.0.133"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.133.tgz#a54dde11bcb0bc4f9be5553f0320feb73a083ba3"
+  integrity sha512-6e/DXFRxbnCTRKJD5g2+k5J7pBXqUxTLH6WWhApednDUHL431FrAZkJpYFc6HuVUSsB4GF+IEDcuMptA2BMILQ==
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"
