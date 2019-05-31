@@ -20,17 +20,11 @@
   = render :partial => "kifu_player"
   = render :partial => "uzai_pulldown"
   = render :partial => "kifu_clock_chart"
+
+  .columns
+    - current_record.memberships.each do |e|
+      .column
+        .box.is-size-7.hash_value_only_nowrap
+          = e.swgod_info(detail: params[:detail]).to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
+
   = render :partial => "kifu_player_tabs_div"
-
-  details
-    summary.has-text-white-ter
-      | 棋神召喚疑惑判決
-    hr
-    .section
-      .title.is-4.yumincho 棋神召喚疑惑判決
-
-      .columns
-        - current_record.memberships.each do |e|
-          .column
-            .box.is-size-7.hash_value_only_nowrap
-              = e.swgod_info.to_html(table_class: "table is-hoverable is-fullwidth is-narrow")

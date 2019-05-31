@@ -178,20 +178,20 @@ module Swars
       end
 
       def swgod_level1_used?
-        if battle.fast_parsed_info.move_infos.size >= swgod_move_getq
-          list = sec_list.last(swgod_last_n)
-          if list.size >= swgod_hand_times
-            list.each_cons(swgod_hand_times).any? { |list| list.sum <= swgod_time_limit }
+        @swgod_level1_used ||= -> {
+          if battle.fast_parsed_info.move_infos.size >= swgod_move_getq
+            list = sec_list.last(swgod_last_n)
+            if list.size >= swgod_hand_times
+              list.each_cons(swgod_hand_times).any? { |list| list.sum <= swgod_time_limit }
+            end
           end
-        end
+        }.call
       end
 
       def swgod_10min_winner_used?
-        if battle.rule_info.key == :ten_min
-          if swgod_level1_used?
-            if judge_info.key == :win
-              swgod_level1_used?
-            end
+        if battle.rule_info.key == :ten_min || battle.rule_info.key == :ten_sec
+          if judge_info.key == :win
+            swgod_level1_used?
           end
         end
       end
@@ -201,14 +201,23 @@ module Swars
         judge_info.key == :win
       end
 
-      def swgod_info
-        {
-          "被告"   => name_with_grade,
-          "指し手" => sec_list,
+      def swgod_info(**options)
+        options = {
+          detail: false,
+        }.merge(options)
+
+        info = {
+          "対局者"   => name_with_grade,
+          "消費時間" => sec_list,
           "結末"   => summary_key,
-          "一審"   => swgod_level1_used? ? "有罪" : "無罪",
-          "二審"   => swgod_10min_winner_used? ? "有罪" : "無罪",
         }
+
+        if Rails.env.development? || options[:detail]
+          info["一審"] = swgod_level1_used? ? "有罪" : "無罪"
+          info["二審"] = swgod_10min_winner_used? ? "有罪" : "無罪"
+        end
+
+        info
       end
     end
   end
