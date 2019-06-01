@@ -29,9 +29,9 @@ module Colosseum
 
     serialize :msg_options
 
-    cattr_accessor(:chat_window_size) { 10 }
+    cattr_accessor(:chat_display_lines_limit) { 10 }
 
-    scope :latest_list, -> { order(created_at: :desc).limit(chat_window_size) } # 実際に使うときは昇順表示なので reverse しよう
+    scope :latest_list, -> { order(created_at: :desc).limit(chat_display_lines_limit) } # 実際に使うときは昇順表示なので reverse しよう
 
     before_validation on: :create do
       self.msg_options ||= {}

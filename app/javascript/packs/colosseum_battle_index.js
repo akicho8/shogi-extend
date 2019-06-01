@@ -215,7 +215,7 @@ window.ColosseumBattleIndex = Vue.extend({
   computed: {
     // チャットに表示する最新メッセージたち
     latest_lobby_messages() {
-      return _.takeRight(this.lobby_messages, js_global.chat_window_size)
+      return _.takeRight(this.lobby_messages, js_global.chat_display_lines_limit)
     },
 
     // 選択中の持ち時間項目

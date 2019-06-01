@@ -290,8 +290,8 @@ window.ColosseumBattleShow = Vue.extend({
 
     // チャットに表示する最新メッセージたち
     latest_chat_messages() {
-      console.assert(this.$options.chat_window_size)
-      return _.takeRight(this.chat_messages, this.$options.chat_window_size)
+      console.assert(this.$options.chat_display_lines_limit)
+      return _.takeRight(this.chat_messages, this.$options.chat_display_lines_limit)
     },
 
     // 手番選択用

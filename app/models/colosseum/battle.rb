@@ -497,11 +497,11 @@ module Colosseum
     # チャット関連
     concerning :ChatMessageMethods do
       included do
-        cattr_accessor(:chat_window_size) { 10 }
+        cattr_accessor(:chat_display_lines_limit) { 12 }
 
         has_many :chat_messages, dependent: :destroy do
           def limited_latest_list
-            latest_list.limit(chat_window_size)
+            latest_list.limit(chat_display_lines_limit)
           end
         end
       end

@@ -23,7 +23,7 @@ module Colosseum
       :handicap,
 
       :human_kifu_text,           # これは重い
-      :chat_window_size,
+      :chat_display_lines_limit,
     ]
 
     has_many :memberships
@@ -63,7 +63,7 @@ end
 # >>   "手合割：平手\n" +
 # >>   "\n" +
 # >>   "まで0手で後手の勝ち\n",
-# >>  :chat_window_size=>25,
+# >>  :chat_display_lines_limit=>25,
 # >>  :memberships=>
 # >>   [{:id=>197,
 # >>     :location_key=>"black",

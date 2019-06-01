@@ -71,56 +71,57 @@
 
   .columns
     .column
-      ul.chat_container
+      ul.chat_container.box
         - if true
-          .media.is-paddingless(v-for="e of latest_lobby_messages")
-            .media-content
-              message_link_to(:user_to="e.user" :name_show="false")
-                .mlt_chat_message(:class="e.msg_options.msg_class")
-                  message_link_to(:user_to="e.user" :icon_show="false")
-                  | {{e.message}}
+          li(v-for="e of latest_lobby_messages")
+            message_link_to(:user_to="e.user")
+              .mlt_chat_message(:class="e.msg_options.msg_class")
+                | {{e.message}}
 
-        - if true
-          article.media
-            - if current_user
-              figure.media-left
-                p.image.is-64x64
-                  = image_tag current_user.avatar_url
+      - if true
+        article.media
+          - if current_user
+            figure.media-left
+              p.image.is-64x64
+                = image_tag current_user.avatar_url
 
-            .media-content
-              p.content
-                textarea.textarea(autocomplete="off" v-model.trim="message" @keydown.enter="message_enter_handle" ref="message_input" rows="2")
-              template(v-if="message || true")
-                nav.level
-                  .level-left
-                    .level-item
-                      button.button.is-primary(@click="message_post_button_handle")
-                        | 送信
-                  / .level-right
-                  /   .level-item
-                  /     label.checkbox
-                  /       input[type="checkbox"]
-                  /       |  Press enter to submit
+          .media-content
+            p.content
+              textarea.textarea(autocomplete="off" v-model.trim="message" @keydown.enter="message_enter_handle" ref="message_input" rows="2")
+            template(v-if="message || true")
+              nav.level
+                .level-left
+                  .level-item
+                    button.button.is-primary(@click="message_post_button_handle")
+                      | 送信
+                / .level-right
+                /   .level-item
+                /     label.checkbox
+                /       input[type="checkbox"]
+                /       |  Press enter to submit
+
+      br
+      global_message_link
 
     .column
-      / .title.is-6= "プレイヤー"
-      b-table(:data="online_users" :paginated="true" :per-page="10")
-        template(slot-scope="props")
-          b-table-column(field="name" label="プレイヤー" sortable="sortable")
-            message_link_to(:user_to="props.row")
-              template(v-if="user_self_p(props.row)")
-                | ★
-          b-table-column(label="ステイタス")
-            template(v-if="props.row.matching_at")
-              span.has-text-danger
-                = "マッチング中"
-            template(v-if="props.row.active_battles.length >= 1")
-              span.has-text-danger
-                = "対局中"
-                template(v-for="e in props.row.active_battles")
-                  a(:href="e.show_path")
-                    =<> "{{e.name}}"
-      global_message_link
+      .box
+        / .title.is-6= "プレイヤー"
+        b-table(:data="online_users" :paginated="true" :per-page="10")
+          template(slot-scope="props")
+            b-table-column(field="name" label="プレイヤー" sortable="sortable")
+              message_link_to(:user_to="props.row")
+                template(v-if="user_self_p(props.row)")
+                  | ★
+            b-table-column(label="ステイタス")
+              template(v-if="props.row.matching_at")
+                span.has-text-danger
+                  = "マッチング中"
+              template(v-if="props.row.active_battles.length >= 1")
+                span.has-text-danger
+                  = "対局中"
+                  template(v-for="e in props.row.active_battles")
+                    a(:href="e.show_path")
+                      =<> "{{e.name}}"
 
   .columns
     .column
