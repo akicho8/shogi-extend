@@ -45,6 +45,9 @@ Vue.use(Buefy, {
   defaultTooltipAnimated: true,   // ←効いてなくね？
 })
 
+import "bulma-extensions/dist/js/bulma-extensions.min.js"
+// import "bulma-extensions/dist/css/bulma-extensions.min.css"
+
 //////////////////////////////////////////////////////////////////////////////// lodash
 
 import _ from "lodash"
@@ -133,7 +136,6 @@ import "./audio_queue.js"
 import "./light_session_app.js"
 
 //////////////////////////////////////////////////////////////////////////////// 確認用
-
 
 if (typeof(jQuery) != "undefined") {
   console.log("[Webpack] jQuery: OK")
