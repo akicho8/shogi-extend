@@ -4,6 +4,11 @@ export default {
       this.$loading.open()
     },
 
+    js_link_to(href) {
+      this.process_now()
+      location.href = href
+    },
+
     wars_tweet_copy_click(wars_tweet_body) {
       this.clipboard_copy({text: wars_tweet_body})
     },

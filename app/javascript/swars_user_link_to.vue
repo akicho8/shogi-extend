@@ -4,12 +4,12 @@
       a(slot="trigger")
         | {{membership.name_with_grade}}
       b-dropdown-item(:has-link="true")
-        a(@click.stop="() => {}" :href="membership.query_user_url")
+        a(@click.stop.prevent="js_link_to(membership.query_user_url)")
           b-icon2(icon="magnify")
           | &nbsp;
           | 検索
       b-dropdown-item(:has-link="true")
-        a(@click.stop="() => {}" :href="membership.player_info_path")
+        a(@click.stop.prevent="js_link_to(membership.player_info_path)")
           b-icon2(icon="account")
           | &nbsp;
           | プレイヤー情報
