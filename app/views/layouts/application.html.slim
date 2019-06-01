@@ -76,10 +76,10 @@ html(lang="ja")
               .navbar-dropdown.is-boxed
                 = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 2) + "棋譜投稿", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
                 = link_to(icon_tag(:account, margin_right: 2) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
-                = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")]) if !Rails.env.production?
-                = link_to("戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
-                = link_to("符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
-                = link_to("2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
+                = link_to(icon_tag(:pencil, margin_right: 2) + "局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")]) if !Rails.env.production?
+                = link_to(icon_tag(:book, margin_right: 2) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
+                = link_to(icon_tag(:apps, margin_right: 2) + "符号入力ゲーム", :xy, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game")])
+                = link_to(icon_tag(:magnify, margin_right: 2) + "2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
 
           #header_app.navbar-end(v-cloak)
             = link_to(icon_tag(:cancel, margin_right: 1) + "production", production_app_url, class: ["navbar-item"], target: "_blank") unless Rails.env.production?
@@ -219,11 +219,6 @@ html(lang="ja")
           .columns
             .column
               ul
-                li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io", target: "_blank")
-                li== "&nbsp;"
-                li= link_to("GraphQL API", :graphiql_rails, target: "_blank")
-            .column
-              ul
                 li= link_to("プライバシー", [:about, id: :privacy_policy])
                 li= link_to("利用規約", [:about, id: :terms])
                 li= link_to("クレジット", [:about, id: :credit])
@@ -239,13 +234,18 @@ html(lang="ja")
                 ul= link_to("bioshogi", "https://github.com/akicho8/bioshogi", target: "_blank")
                 ul= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
                 ul= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
+            .column
+              ul
+                li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io", target: "_blank")
+                li== "&nbsp;"
+                li= link_to("GraphQL API", :graphiql_rails, target: "_blank")
           .column
             .column
-              .has-text-centered.no-decoration
+              .has-text-centered
                 = "Powered by "
-                = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/", target: "_blank", :class => "no-decoration")
+                = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/", target: "_blank")
                 = " and "
-                = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank", :class => "no-decoration")
+                = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank")
               #system_notification_app.has-text-grey-lighter.is-size-7
                 | ActionCable: {{latest_system_logs.join(" ")}}
 
