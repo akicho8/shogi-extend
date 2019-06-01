@@ -452,8 +452,11 @@ module Swars
         end
 
         let :table_columns_hash do
-          [
-            { key: :id,               label: "ID",   visible: false,          },
+          list = []
+          unless Rails.env.production?
+            list << { key: :id,               label: "ID",   visible: false, }
+          end
+          list += [
             { key: :attack_tag_list,  label: "戦型", visible: !mobile_agent?, },
             { key: :defense_tag_list, label: "囲い", visible: false,          },
             { key: :final_info,       label: "結果", visible: false,          },

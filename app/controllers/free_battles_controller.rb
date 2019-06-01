@@ -172,8 +172,11 @@ class FreeBattlesController < ApplicationController
   concerning :IndexCustomMethods do
     included do
       let :table_columns_hash do
-        [
-          { key: :id,                label: "ID",       visible: false, },
+        list = []
+        unless Rails.env.production?
+          list << { key: :id,               label: "ID",   visible: false, }
+        end
+        list += [
           { key: :created_at,        label: "作成日時", visible: false, },
           { key: :turn_max,          label: "手数",     visible: false, },
           { key: :colosseum_user_id, label: "所有者",   visible: false, },
