@@ -27,8 +27,6 @@ $colors: map-merge($colors, $addColors);
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
 
-@import "~bulma-extensions/src/sass/index.sass";
-
 // router-link がアクティブなとき
 .router-link-exact-active {
   color: $primary;
