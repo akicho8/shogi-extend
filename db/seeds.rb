@@ -1,3 +1,5 @@
+ENV["SLACK_AGENT_DISABLE"] = "1"
+
 [
   FreeBattle,
   General::Battle,
