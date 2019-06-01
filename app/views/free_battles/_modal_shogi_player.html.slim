@@ -44,7 +44,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             b-loading(:is-full-page="false" :active="!modal_record.sfen_body" :can-cancel="true")
 
       footer.modal-card-foot.space_between
-        template(v-if="modal_record.sfen_body")
+        template(v-if="modal_record.kifu_copy_params")
           b-tooltip(label="棋譜をクリップボードにコピーする" position="is-right")
             a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
               b-icon(icon="clipboard-outline" size="is-small")
