@@ -7,42 +7,11 @@ Time::DATE_FORMATS.update({
     battle_short: "%H:%M",
     csa_ymdhms: "%Y/%m/%d %H:%M:%S",
 
-    # :ymd     => "%y/%m/%d",
-    # :yymdhm  => "%Y/%m/%d %R",
-    # :yymdhms => "%Y/%m/%d %X",
-    # :ymdhm   => "%y/%m/%d %R",
-    # :ymdhms  => "%y/%m/%d %X",
-    # :mdhm    => "%m/%d %R",
-    # :mdhms   => "%m/%d %X",
-    # :hms     => "%X",
-    # :hm      => "%R",
-    # :exec_distance => proc {|time; gap, before_after|
-    #   gap = time - Time.current
-    #   before_after = (gap <= 0 ? '前' : '後')
-    #   "#{time.to_s(:hms)}(#{time.to_s(:battle_time)}#{before_after})"
-    # },
-
-    # battle_time: proc {|time|
-    #   # key = :battle_long
-    #   # if time >= Time.current.midnight
-    #   #   key = :battle_short
-    #   # end
-    #   # time.to_s(key)
-    # },
-
-    # # "3日後"
-    # :distance => proc {|time; gap, before_after|
-    #   gap = (time.to_i - Time.current.to_i).to_i  # 秒
-    #   before_after = ""
-    #   if gap != 0
-    #     before_after = (gap < 0 ? '前' : '後')
-    #   end
-    #   "#{time.to_s(:battle_time)}#{before_after}"
-    # },
-    # :diff => proc {|time| time.to_s(:distance)},
-    #
-    # "3日"
     :battle_time => proc { |time|
+      time.to_s(:battle_long)
+    },
+
+    :battle_time_relative => proc { |time|
       d = time - Time.current
       suffix = d.negative? ? '前' : '後'
       t = d.abs
