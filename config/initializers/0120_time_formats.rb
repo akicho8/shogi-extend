@@ -8,7 +8,14 @@ Time::DATE_FORMATS.update({
     csa_ymdhms: "%Y/%m/%d %H:%M:%S",
 
     :battle_time => proc { |time|
-      time.to_s(:battle_long)
+      if time >= 1.days.ago
+        time.to_s(:battle_short)
+      else
+        time.to_s(:battle_long)
+      end
+    },
+
+    :battle_time_today => proc { |time|
     },
 
     :battle_time_relative => proc { |time|
