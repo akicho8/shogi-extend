@@ -20,6 +20,8 @@
       = link_to("駒柱",      args.merge(query: "tag:駒柱"),          "@click.stop" => true)
     b-dropdown-item(:has-link="true" :paddingless="true")
       = link_to("鬼殺し",    args.merge(query: "tag:鬼殺し"),        "@click.stop" => true)
+    b-dropdown-item(:has-link="true" :paddingless="true")
+      = link_to("右四間飛車 vs 四間飛車", args.merge(query: "tag:右四間飛車,四間飛車"), "@click.stop" => true)
     / b-dropdown-item(:has-link="true" :paddingless="true")
       / = link_to("手数多い順", args.merge(sort_column: :turn_max, sort_order: :desc), "@click.stop" => true)
     / b-dropdown-item(:has-link="true" :paddingless="true")
