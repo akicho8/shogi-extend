@@ -159,6 +159,10 @@ export default {
         })
       }
     },
+
+    url_build(attributes) {
+      return _.map(attributes, (v, k) => `${k}=${v}`).join("&")
+    },
   },
 
   mounted() {
@@ -175,23 +179,23 @@ export default {
 
   computed: {
     async_records_load_url_params() {
-      return _.map({
-        query:             this.query,
-        search_scope_key:       this.search_scope_key,
-        page:              this.page,
-        per:               this.per,
-        sort_column:       this.sort_column,
-        sort_order:        this.sort_order,
-        visible_columns:   this.visible_columns.join(",")
-      }, (v, k) => `${k}=${v}`).join("&")
+      return {
+        query:            this.query,
+        search_scope_key: this.search_scope_key,
+        page:             this.page,
+        per:              this.per,
+        sort_column:      this.sort_column,
+        sort_order:       this.sort_order,
+        visible_columns:  this.visible_columns.join(","),
+      }
     },
 
     async_records_load_url() {
-      return `${this.$options.xhr_index_path}.json?${this.async_records_load_url_params}`
+      return `${this.$options.xhr_index_path}.json?${this.url_build(this.async_records_load_url_params)}`
     },
 
     permalink_url() {
-      return `${this.$options.xhr_index_path}?${this.async_records_load_url_params}`
+      return `${this.$options.xhr_index_path}?${this.url_build(this.async_records_load_url_params)}`
     },
 
     // id ですぐに引けるハッシュ
