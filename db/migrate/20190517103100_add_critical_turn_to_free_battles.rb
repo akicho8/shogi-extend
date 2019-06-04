@@ -19,8 +19,8 @@
 # | title             | 題名               | string(255)  |             |                                   |       |
 # | description       | 説明               | text(65535)  | NOT NULL    |                                   |       |
 # | start_turn        | 開始手数           | integer(4)   |             |                                   |       |
-# | critical_turn     | 開戦               | integer(4)   |             |                                   |       |
-# | saturn_key        | Saturn key         | string(255)  | NOT NULL    |                                   |       |
+# | critical_turn     | 開戦               | integer(4)   |             |                                   | E     |
+# | saturn_key        | Saturn key         | string(255)  | NOT NULL    |                                   | F     |
 # | sfen_body         | Sfen body          | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の手数      | integer(4)   |             |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
@@ -33,8 +33,8 @@ class AddCriticalTurnToFreeBattles < ActiveRecord::Migration[5.2]
   def change
     [:swars_battles, :free_battles, :general_battles].each do |table|
       change_table table do |t|
-        t.change :start_turn, :integer, null: true, index: true
-        t.integer :critical_turn, null: true, index: true
+        t.change :start_turn, :integer, null: true
+        t.integer :critical_turn, null: true
       end
     end
 

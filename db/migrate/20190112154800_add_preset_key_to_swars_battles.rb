@@ -14,6 +14,6 @@ class AddPresetKeyToSwarsBattles < ActiveRecord::Migration[5.2]
       end
     end
 
-    change_column :swars_battles, :preset_key, :string, index: true, null: false
+    change_column :swars_battles, :preset_key, :string, null: false
   end
 end

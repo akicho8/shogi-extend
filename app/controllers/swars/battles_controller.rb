@@ -21,8 +21,8 @@
 # | updated_at        | 更新日時         | datetime     | NOT NULL    |      |       |
 # | preset_key        | 手合割           | string(255)  | NOT NULL    |      |       |
 # | start_turn        | 開始手数         | integer(4)   |             |      |       |
-# | critical_turn     | 開戦             | integer(4)   |             |      |       |
-# | saturn_key        | Saturn key       | string(255)  | NOT NULL    |      |       |
+# | critical_turn     | 開戦             | integer(4)   |             |      | G     |
+# | saturn_key        | Saturn key       | string(255)  | NOT NULL    |      | H     |
 # | sfen_body         | Sfen body        | string(8192) |             |      |       |
 # | image_turn        | OGP画像の手数    | integer(4)   |             |      |       |
 # |-------------------+------------------+--------------+-------------+------+-------|
