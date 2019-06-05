@@ -281,7 +281,7 @@ module Swars
       end
     end
 
-    let :current_per do
+    def current_per
       params[:per].presence || default_per
     end
 
@@ -289,33 +289,33 @@ module Swars
       User.find_by(user_key: current_user_key)
     end
 
-    let :current_query_info do
-      QueryInfo.parse(current_query)
+    def current_query_info
+      @current_query_info ||= QueryInfo.parse(current_query)
     end
 
-    let :current_query_hash do
+    def current_query_hash
       current_query_info.attributes
     end
 
-    let :current_tags do
+    def current_tags
       if v = current_query_hash
         v[:tag]
       end
     end
 
-    let :current_musers do
+    def current_musers
       if v = current_query_hash
         v[:muser]
       end
     end
 
-    let :current_mtags do
+    def current_mtags
       if v = current_query_hash
         v[:mtag]
       end
     end
 
-    let :current_ids do
+    def current_ids
       if v = current_query_hash
         v[:ids]
       end
