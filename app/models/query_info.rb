@@ -28,6 +28,7 @@ class QueryInfo
     str.split.each do |s|
       parse_one_part(s)
     end
+    @attributes = @attributes.transform_values(&:uniq)
   end
 
   private
