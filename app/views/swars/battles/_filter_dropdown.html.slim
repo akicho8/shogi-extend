@@ -5,7 +5,7 @@ ruby:
     button.button.is-small(slot="trigger")
       span よく使うフィルタ
       b-icon(icon="menu-down")
-    - Swars::Yokutukau.each do |e|
+    - Swars::FrequentlyUsedFilterInfo.each do |e|
       b-dropdown-item(:has-link="true" :paddingless="true")
         = link_to(e.name, args.merge(e.params), "@click.stop" => true)
   - Bioshogi::TacticInfo.each do |e|

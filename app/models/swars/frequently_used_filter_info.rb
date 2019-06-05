@@ -1,5 +1,5 @@
 module Swars
-  class Yokutukau
+  class FrequentlyUsedFilterInfo
     include ApplicationMemoryRecord
     memory_record [
       { name: "相入玉",                 params: { query: "tag:相入玉",                        }, },
