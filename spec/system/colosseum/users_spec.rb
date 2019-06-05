@@ -29,7 +29,7 @@ RSpec.describe "対戦", type: :system do
     end
 
     it "チャットでメッセージ送信" do
-      find(".chat_container textarea").set(message)
+      find(".media-content textarea").set(message)
       click_on("送信")
       expect(page).to have_content message
 
