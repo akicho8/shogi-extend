@@ -46,7 +46,7 @@ class QueryInfo
     when md = s.match(/\A(?<key>#{available_keys_regexp}):(?<value>\S+)/i)
       key = md["key"].to_sym
       attributes[key] ||= []
-      attributes[key] = md["value"].split(",")
+      attributes[key].concat(md["value"].split(","))
     else
       values.concat(s.split(","))
     end
