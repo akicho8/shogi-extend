@@ -35,6 +35,9 @@ template(slot-scope="props")
   b-table-column(field="critical_turn" :label="table_columns_hash['critical_turn'].label" :visible="table_columns_hash['critical_turn'].visible" sortable numeric)
     | {{props.row['critical_turn']}}
 
+  / b-table-column(field="grade_diff" :label="table_columns_hash['grade_diff'].label" :visible="table_columns_hash['grade_diff'].visible" sortable numeric)
+  /   | {{props.row['grade_diff']}}
+
   b-table-column(field="rule_key" :label="table_columns_hash['rule_info'].label" :visible="table_columns_hash['rule_info'].visible" sortable)
     a(@click.stop :href="props.row['rule_info'].url")
       | {{props.row['rule_info'].name}}

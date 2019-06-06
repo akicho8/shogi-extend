@@ -15,6 +15,7 @@
 # | position     | 順序         | integer(4)  |             |      | H       |
 # | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
 # | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
+# | grade_diff   | Grade diff   | integer(4)  | NOT NULL    |      | I       |
 # |--------------+--------------+-------------+-------------+------+---------|
 
 module Swars
@@ -58,6 +59,17 @@ module Swars
           if judge_info.key == :win
             battle.win_user ||= user
           end
+        end
+      end
+
+      if Rails.env.test?
+        self.grade ||= Grade.first
+      end
+
+      if battle
+        rival = (battle.memberships - [self]).first
+        if grade && rival.grade
+          self.grade_diff = -(rival.grade.priority - grade.priority)
         end
       end
     end

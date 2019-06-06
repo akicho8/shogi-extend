@@ -6,7 +6,7 @@ require "securerandom"
 # title = "石田流vs左美濃"
 
 base = "09000"
-(93..200).each do |i|
+(77..92).each do |i|
   title = "寄せの手筋%03d" % i
   filename = "#{base}_#{SecureRandom.hex}_0_#{title}__s0.kif"
   File.write(filename, "")

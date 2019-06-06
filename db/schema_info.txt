@@ -304,6 +304,7 @@
 # | position     | 順序         | integer(4)  |             |      | H       |
 # | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
 # | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
+# | grade_diff   | Grade diff   | integer(4)  | NOT NULL    |      | I       |
 # |--------------+--------------+-------------+-------------+------+---------|
 
 # == Schema Information ==

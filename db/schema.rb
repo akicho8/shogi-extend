@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_04_221600) do
+ActiveRecord::Schema.define(version: 2019_06_06_202500) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -314,9 +314,11 @@ ActiveRecord::Schema.define(version: 2019_06_04_221600) do
     t.integer "position", comment: "手番の順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "grade_diff", null: false
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
+    t.index ["grade_diff"], name: "index_swars_memberships_on_grade_diff"
     t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
     t.index ["judge_key"], name: "index_swars_memberships_on_judge_key"
     t.index ["location_key"], name: "index_swars_memberships_on_location_key"

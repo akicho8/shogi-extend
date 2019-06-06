@@ -462,6 +462,7 @@ module Swars
             { key: :final_info,       label: "結果", visible: false,          },
             { key: :turn_max,         label: "手数", visible: false,          },
             { key: :critical_turn,    label: "開戦", visible: false,          },
+            # { key: :grade_diff,     label: "力差", visible: false,          },
             { key: :rule_info,        label: "種類", visible: false,          },
             { key: :preset_info,      label: "手合", visible: teai_p,         },
             { key: :battled_at,       label: "日時", visible: !mobile_agent?, },

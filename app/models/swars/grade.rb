@@ -54,7 +54,7 @@ module Swars
     end
 
     def grade_info
-      GradeInfo.fetch(key)
+      @grade_info ||= GradeInfo.fetch(key)
     end
 
     delegate :name, to: :grade_info
