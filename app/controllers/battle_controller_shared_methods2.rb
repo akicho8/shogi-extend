@@ -16,7 +16,7 @@ module BattleControllerSharedMethods2
       s = current_scope
       s = s.select(current_model.column_names - exclude_column_names)
       if current_sort_column && current_sort_order
-        s = s.order(current_sort_column => current_sort_order).reverse_order
+        s = s.order(current_sort_column => current_sort_order)
       end
       s = s.order(id: :desc)
       s.page(params[:page]).per(current_per)
