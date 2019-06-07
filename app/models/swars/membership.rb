@@ -108,8 +108,25 @@ module Swars
         final_info = battle.final_info
         # final_info = Swars::FinalInfo.to_a.sample
 
-        icon_names = judge_info.icon_names || final_info.icon_names
-        icon_class = judge_info.icon_class || final_info.icon_class
+        # JudgeInfo
+        if judge_info.key == :win
+          icon_names = nil
+          icon_class = ["icon_o"]
+
+          # grade_diff = rand(-2..2)
+
+          case
+          when grade_diff >= 1
+            icon_names = ["star"]
+          when grade_diff == 0
+            icon_names = ["star-half"]
+          else
+            icon_names = ["star-outline"]
+          end
+        else
+          icon_names = judge_info.icon_names || final_info.icon_names
+          icon_class = judge_info.icon_class || final_info.icon_class
+        end
 
         if icon_names.present?
           Icon.icon_tag(*icon_names, :class => icon_class)
@@ -118,7 +135,7 @@ module Swars
 
       def winner_only_icon_html
         if judge_info.key == :win
-          Icon.icon_tag(*judge_info.icon_names, :class => judge_info.icon_class)
+          icon_html
         end
       end
     end
