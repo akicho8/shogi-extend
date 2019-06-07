@@ -36,7 +36,6 @@ module Swars
     belongs_to :win_user, class_name: "User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
 
     has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
-    delegate :rival, :myself, to: :memberships # FIXME: 使用禁止
 
     has_many :access_logs, dependent: :destroy # アクセスログみたいもの
 
