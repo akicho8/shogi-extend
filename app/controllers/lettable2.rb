@@ -39,7 +39,7 @@ module Lettable2
     end
 
     def mlet(name, **options, &block)
-      clet(options.merge(as_helper_method: false))
+      clet(name, options.merge(as_helper_method: false), &block)
     end
   end
 

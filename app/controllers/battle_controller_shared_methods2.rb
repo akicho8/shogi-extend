@@ -2,18 +2,25 @@ module BattleControllerSharedMethods2
   extend ActiveSupport::Concern
 
   included do
-    let :current_query do
-      params[:query].presence
-    end
+    helper_method :current_query
+    helper_method :current_per
+    helper_method :modal_record_twitter_options
+    helper_method :current_placeholder
+    helper_method :current_mode
+  end
 
-    let :current_queries do
-      if current_query
-        current_query.scan(/\P{Space}+/)
-      end
-    end
+  mlet :current_query do
+    params[:query].presence
+  end
 
-    let :current_records do
-      s = current_scope
+  mlet :current_queries do
+    if current_query
+      current_query.scan(/\P{Space}+/)
+    end
+  end
+
+  mlet :current_records do
+    current_scope.tap do |s|
       s = s.select(current_model.column_names - exclude_column_names)
       if current_sort_column && current_sort_order
         s = s.order(current_sort_column => current_sort_order)
@@ -21,169 +28,179 @@ module BattleControllerSharedMethods2
       s = s.order(id: :desc)
       s.page(params[:page]).per(current_per)
     end
+  end
 
-    let :exclude_column_names do
-      ["meta_info"]
-    end
+  mlet :exclude_column_names do
+    [
+      "meta_info",
+    ]
+  end
 
-    let :current_per do
-      (params[:per].presence || (Rails.env.production? ? 25 : 25)).to_i
-    end
+  mlet :current_per do
+    (params[:per].presence || current_per_default).to_i
+  end
 
-    let :current_sort_column do
-      params[:sort_column].presence || default_sort_column
-    end
+  mlet :current_per_default do
+    Rails.env.production? ? 25 : 25
+  end
 
-    let :default_sort_column do
-      "created_at"
-    end
+  mlet :current_sort_column do
+    params[:sort_column].presence || default_sort_column
+  end
 
-    let :current_sort_order do
-      params[:sort_order].presence || "desc"
-    end
+  mlet :default_sort_column do
+    "created_at"
+  end
 
-    let :current_placeholder do
-      ""
-    end
+  mlet :current_sort_order do
+    params[:sort_order].presence || current_sort_order_default
+  end
 
-    let :pure_current_scope do
-      current_model.all
-    end
+  mlet :current_sort_order_default do
+    "desc"
+  end
 
-    let :current_scope do
-      s = pure_current_scope
+  mlet :current_placeholder do
+    ""
+  end
 
-      case current_search_scope_key
-      when :ss_public
-        s = s.where(saturn_key: :public)
-      when :ss_my_public
-        s = s.where(saturn_key: :public)
-        s = s.where(owner_user: current_user)
-        unless current_user
-          s = s.none
-        end
-      when :ss_my_private
-        s = s.where(saturn_key: :private)
-        s = s.where(owner_user: current_user)
-        unless current_user
-          s = s.none
-        end
-      when :ss_my_all
-        s = s.where(owner_user: current_user)
-        unless current_user
-          s = s.none
-        end
+  mlet :pure_current_scope do
+    current_model.all
+  end
+
+  mlet :current_scope do
+    s = pure_current_scope
+
+    case current_search_scope_key
+    when :ss_public
+      s = s.where(saturn_key: :public)
+    when :ss_my_public
+      s = s.where(saturn_key: :public)
+      s = s.where(owner_user: current_user)
+      unless current_user
+        s = s.none
       end
-
-      if r = current_ransack
-        s = s.merge(current_model.ransack(r).result)
+    when :ss_my_private
+      s = s.where(saturn_key: :private)
+      s = s.where(owner_user: current_user)
+      unless current_user
+        s = s.none
       end
-
-      # if current_user
-      #   current_user
-      # end
-
-      s
-    end
-
-    let :current_ransack do
-      if current_queries
-        {
-          title_or_description_cont_all: current_queries,
-        }
+    when :ss_my_all
+      s = s.where(owner_user: current_user)
+      unless current_user
+        s = s.none
       end
     end
 
-    let :js_modal_record do
-      if modal_record
-        js_modal_record_for(modal_record)
+    if r = current_ransack
+      s = s.merge(current_model.ransack(r).result)
+    end
+
+    # if current_user
+    #   current_user
+    # end
+
+    s
+  end
+
+  mlet :current_ransack do
+    if current_queries
+      {
+        title_or_description_cont_all: current_queries,
+      }
+    end
+  end
+
+  mlet :js_modal_record do
+    if modal_record
+      js_modal_record_for(modal_record)
+    end
+  end
+
+  mlet :modal_record do
+    if v = params[:modal_id]
+      current_scope.find(v)
+    end
+  end
+
+  mlet :js_table_columns_hash do
+    table_columns_hash.inject({}) do |a, e|
+      visible = e[:visible]
+      if visible_columns
+        visible = visible_columns.include?(e[:key].to_s)
       end
+      visible ||= !Rails.env.production?
+      a.merge(e[:key] => e.merge(visible: visible))
+    end
+  end
+
+  mlet :visible_columns do
+    if v = params[:visible_columns]
+      v.scan(/\w+/).to_set
+    end
+  end
+
+  mlet :js_show_options do
+    js_modal_record_for(current_record)
+  end
+
+  mlet :js_edit_ogp_options do
+    js_show_options
+  end
+
+  mlet :current_mode do
+    (params[:mode].presence || :basic).to_sym
+  end
+
+  mlet :show_twitter_options do
+    options = {}
+    options[:title] = current_record.to_title
+    options[:url] = current_record.tweet_modal_url
+    options[:description] = current_record.description
+
+    if twitter_staitc_image_url
+      options[:image] = twitter_staitc_image_url
+    else
+      options[:card] = "summary"
     end
 
-    let :modal_record do
-      if v = params[:modal_id]
-        current_scope.find(v)
-      end
-    end
+    options
+  end
 
-    let :js_table_columns_hash do
-      table_columns_hash.inject({}) do |a, e|
-        visible = e[:visible]
-        if visible_columns
-          visible = visible_columns.include?(e[:key].to_s)
-        end
-        visible ||= !Rails.env.production?
-        a.merge(e[:key] => e.merge(visible: visible))
-      end
-    end
-
-    let :visible_columns do
-      if v = params[:visible_columns]
-        v.scan(/\w+/).to_set
-      end
-    end
-
-    let :js_show_options do
-      js_modal_record_for(current_record)
-    end
-
-    let :js_edit_ogp_options do
-      js_show_options
-    end
-
-    let :current_mode do
-      (params[:mode].presence || :basic).to_sym
-    end
-
-    let :show_twitter_options do
+  mlet :modal_record_twitter_options do
+    if e = modal_record
       options = {}
-      options[:title] = current_record.to_title
-      options[:url] = current_record.tweet_modal_url
-      options[:description] = current_record.description
 
-      if twitter_staitc_image_url
-        options[:image] = twitter_staitc_image_url
+      if v = current_force_turn
+        options[:title] = "#{e.to_title}【#{v}手目】"
+      else
+        options[:title] = e.to_title
+      end
+
+      if v = current_force_turn
+        options[:url] = e.tweet_modal_url(turn: v)
+      else
+        options[:url] = e.tweet_modal_url
+      end
+
+      options[:description] = e.description
+
+      if e.thumbnail_image.attached?
+        options[:image] = polymorphic_url([ns_prefix, e], format: "png", updated_at: e.updated_at.to_i)
       else
         options[:card] = "summary"
       end
 
       options
     end
-
-    let :modal_record_twitter_options do
-      if e = modal_record
-        options = {}
-
-        if v = current_force_turn
-          options[:title] = "#{e.to_title}【#{v}手目】"
-        else
-          options[:title] = e.to_title
-        end
-
-        if v = current_force_turn
-          options[:url] = e.tweet_modal_url(turn: v)
-        else
-          options[:url] = e.tweet_modal_url
-        end
-
-        options[:description] = e.description
-
-        if e.thumbnail_image.attached?
-          options[:image] = polymorphic_url([ns_prefix, e], format: "png", updated_at: e.updated_at.to_i)
-        else
-          options[:card] = "summary"
-        end
-
-        options
-      end
-    end
-
-    let :current_search_scope_key do
-      (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
-    end
   end
 
-  def js_index_options
+  mlet :current_search_scope_key do
+    (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
+  end
+
+  mlet :js_index_options do
     {
       query: current_query || "",
       search_scope_key: current_search_scope_key,
@@ -200,13 +217,7 @@ module BattleControllerSharedMethods2
     }
   end
 
-  def twitter_staitc_image_url
-    if false
-      unless current_record.thumbnail_image.attached?
-        return
-      end
-    end
-
+  mlet :twitter_staitc_image_url do
     # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
     # とした場合はリダイレクトするURLになってしまうため使えない
     # 固定URL化する

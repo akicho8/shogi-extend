@@ -273,24 +273,12 @@ module Swars
       url_for([:swars, current_mode, query: "tag:#{e}", only_path: true])
     end
 
-    let :default_per do
-      if current_mode == :basic
-        25
-      else
-        50
-      end
-    end
-
-    def current_per
-      params[:per].presence || default_per
-    end
-
-    let :current_swars_user do
+    clet :current_swars_user do
       User.find_by(user_key: current_user_key)
     end
 
-    def current_query_info
-      @current_query_info ||= QueryInfo.parse(current_query)
+    clet :current_query_info do
+      QueryInfo.parse(current_query)
     end
 
     def current_query_hash
@@ -298,30 +286,22 @@ module Swars
     end
 
     def current_tags
-      if v = current_query_hash
-        v[:tag]
-      end
+      current_query_hash.dig(:tag)
     end
 
     def current_musers
-      if v = current_query_hash
-        v[:muser]
-      end
+      current_query_hash.dig(:muser)
     end
 
     def current_mtags
-      if v = current_query_hash
-        v[:mtag]
-      end
+      current_query_hash.dig(:mtag)
     end
 
     def current_ids
-      if v = current_query_hash
-        v[:ids]
-      end
+      current_query_hash.dig(:ids)
     end
 
-    let :current_user_key do
+    clet :current_user_key do
       if s = (current_query_info.values + current_query_info.urls).first
         # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
         # https://shogiwars.heroz.jp/users/foo                          -> foo
@@ -340,7 +320,7 @@ module Swars
       end
     end
 
-    let :current_record do
+    clet :current_record do
       if v = params[:id].presence
         current_model.single_battle_import(key: v)
         current_scope.find_by!(key: v)
@@ -349,7 +329,7 @@ module Swars
       end
     end
 
-    let :js_swars_show_app_params do
+    clet :js_swars_show_app_params do
       {
         think_chart_params: {
           type: "line",
@@ -383,95 +363,93 @@ module Swars
       }
     end
 
-    let :latest_open_limit do
+    mlet :latest_open_limit do
       if v = params[:latest_open_index].presence
         [v.to_i.abs, 10].min.next
       end
     end
 
-    let :exclude_column_names do
+    mlet :exclude_column_names do
       ["meta_info", "csa_seq"]
     end
 
     concerning :IndexCustomMethods do
-      included do
-        let :current_placeholder do
-          "ウォーズIDまたは対局URLを入力してください"
+      mlet :current_placeholder do
+        "ウォーズIDまたは対局URLを入力してください"
+      end
+
+      mlet :pure_current_scope do
+        s = current_model.all
+
+        s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
+
+        if current_swars_user
+          s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
         end
 
-        let :pure_current_scope do
-          s = current_model.all
-
-          s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
-
-          if current_swars_user
-            s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
-          end
-
-          if current_tags
-            s = s.tagged_with(current_tags)
-          end
-
-          # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
-          # tag:username だと相手が「角換わり」したのも出てきてしまう
-          if current_mtags
-            m = Membership.all
-            if current_musers
-              m = m.where(user: User.where(user_key: current_musers))
-            end
-            m = m.tagged_with(current_mtags)
-            s = s.merge(m)
-          end
-
-          if current_ids
-            s = s.where(id: current_ids)
-          end
-
-          if v = current_query_hash[:turn_max_gteq]&.first
-            s = s.where(Battle.arel_table[:turn_max].gteq(v))
-          end
-
-          if v = current_query_hash[:turn_max_lt]&.first
-            s = s.where(Battle.arel_table[:turn_max].lt(v))
-          end
-
-          # # 平手以外
-          # if params[:handicap]
-          #   s = s.tagged_with("平手", exclude: true)
-          # end
-          # s = s.order(battled_at: :desc)
-
-          s
+        if current_tags
+          s = s.tagged_with(current_tags)
         end
 
-        let :default_sort_column do
-          "battled_at"
-        end
-
-        let :current_ransack do
-        end
-
-        let :table_columns_hash do
-          list = []
-          unless Rails.env.production?
-            list << { key: :id,               label: "ID",   visible: false, }
+        # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
+        # tag:username だと相手が「角換わり」したのも出てきてしまう
+        if current_mtags
+          m = Membership.all
+          if current_musers
+            m = m.where(user: User.where(user_key: current_musers))
           end
-          list += [
-            { key: :attack_tag_list,  label: "戦型", visible: !mobile_agent?, },
-            { key: :defense_tag_list, label: "囲い", visible: false,          },
-            { key: :final_info,       label: "結果", visible: false,          },
-            { key: :turn_max,         label: "手数", visible: false,          },
-            { key: :critical_turn,    label: "開戦", visible: false,          },
-            # { key: :grade_diff,     label: "力差", visible: false,          },
-            { key: :rule_info,        label: "種類", visible: false,          },
-            { key: :preset_info,      label: "手合", visible: teai_p,         },
-            { key: :battled_at,       label: "日時", visible: !mobile_agent?, },
-          ]
+          m = m.tagged_with(current_mtags)
+          s = s.merge(m)
         end
 
-        let :teai_p do
-          current_tags && (current_tags.include?("駒落ち") || current_tags.include?("指導対局"))
+        if current_ids
+          s = s.where(id: current_ids)
         end
+
+        if v = current_query_hash[:turn_max_gteq]&.first
+          s = s.where(Battle.arel_table[:turn_max].gteq(v))
+        end
+
+        if v = current_query_hash[:turn_max_lt]&.first
+          s = s.where(Battle.arel_table[:turn_max].lt(v))
+        end
+
+        # # 平手以外
+        # if params[:handicap]
+        #   s = s.tagged_with("平手", exclude: true)
+        # end
+        # s = s.order(battled_at: :desc)
+
+        s
+      end
+
+      mlet :default_sort_column do
+        "battled_at"
+      end
+
+      mlet :current_ransack do
+      end
+
+      mlet :table_columns_hash do
+        list = []
+        unless Rails.env.production?
+          list << { key: :id,               label: "ID",   visible: false, }
+        end
+        list += [
+          { key: :attack_tag_list,  label: "戦型", visible: !mobile_agent?, },
+          { key: :defense_tag_list, label: "囲い", visible: false,          },
+          { key: :final_info,       label: "結果", visible: false,          },
+          { key: :turn_max,         label: "手数", visible: false,          },
+          { key: :critical_turn,    label: "開戦", visible: false,          },
+          # { key: :grade_diff,     label: "力差", visible: false,          },
+          { key: :rule_info,        label: "種類", visible: false,          },
+          { key: :preset_info,      label: "手合", visible: teai_p,         },
+          { key: :battled_at,       label: "日時", visible: !mobile_agent?, },
+        ]
+      end
+
+      mlet :teai_p do
+        current_tags && (current_tags.include?("駒落ち") || current_tags.include?("指導対局"))
       end
 
       def js_record_for(e)

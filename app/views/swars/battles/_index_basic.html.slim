@@ -35,7 +35,7 @@
         =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-small") do
           b-icon(icon="download" size="is-small")
           | &nbsp;&nbsp;
-          - if controller.current_query
+          - if current_query
             | この検索条件で
           = "まとめてダウンロード"
 
