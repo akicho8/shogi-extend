@@ -33,6 +33,11 @@ module Swars
     include BattleControllerSharedMethods1
     include BattleControllerSharedMethods2
 
+    helper_method :current_swars_user
+    helper_method :current_query_info
+    helper_method :js_swars_show_app_params
+    # helper_method :current_user_key
+
     prepend_before_action only: :show do
       if bot_agent?
         if v = params[:id].presence
@@ -273,11 +278,11 @@ module Swars
       url_for([:swars, current_mode, query: "tag:#{e}", only_path: true])
     end
 
-    clet :current_swars_user do
+    mlet :current_swars_user do
       User.find_by(user_key: current_user_key)
     end
 
-    clet :current_query_info do
+    mlet :current_query_info do
       QueryInfo.parse(current_query)
     end
 
@@ -301,7 +306,7 @@ module Swars
       current_query_hash.dig(:ids)
     end
 
-    clet :current_user_key do
+    mlet :current_user_key do
       if s = (current_query_info.values + current_query_info.urls).first
         # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
         # https://shogiwars.heroz.jp/users/foo                          -> foo
@@ -320,7 +325,7 @@ module Swars
       end
     end
 
-    clet :current_record do
+    mlet :current_record do
       if v = params[:id].presence
         current_model.single_battle_import(key: v)
         current_scope.find_by!(key: v)
@@ -329,7 +334,7 @@ module Swars
       end
     end
 
-    clet :js_swars_show_app_params do
+    mlet :js_swars_show_app_params do
       {
         think_chart_params: {
           type: "line",

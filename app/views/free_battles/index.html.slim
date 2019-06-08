@@ -8,7 +8,7 @@
 - content_for :head do
   = javascript_pack_tag("free_battle_index")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new FreeBattleIndex(#{controller.js_index_options.to_json.html_safe}).$mount("#free_battle_index") })
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#free_battle_index") })
 
 #free_battle_index(v-cloak)
   = render partial: "modal_shogi_player"

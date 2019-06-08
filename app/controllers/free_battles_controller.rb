@@ -65,7 +65,7 @@ class FreeBattlesController < ApplicationController
 
   private
 
-  legacy_let :current_record do
+  mlet :current_record do
     if params[:id]
       record = current_model.find(params[:id])
     else
@@ -136,16 +136,18 @@ class FreeBattlesController < ApplicationController
 
   concerning :EditCustomMethods do
     included do
-      # free_battle_edit.js の引数用
-      legacy_let :js_edit_options do
-        {
-          post_path: url_for([:free_battles, format: "json"]),
-          record_attributes: current_record.as_json,
-          output_kifs: output_kifs,
-          new_path: polymorphic_path([:new, :free_battle]),
-          saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
-        }
-      end
+      helper_method :js_edit_options
+    end
+
+    # free_battle_edit.js の引数用
+    mlet :js_edit_options do
+      {
+        post_path: url_for([:free_battles, format: "json"]),
+        record_attributes: current_record.as_json,
+        output_kifs: output_kifs,
+        new_path: polymorphic_path([:new, :free_battle]),
+        saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
+      }
     end
 
     private
@@ -170,18 +172,16 @@ class FreeBattlesController < ApplicationController
   include BattleControllerSharedMethods2
 
   concerning :IndexCustomMethods do
-    included do
-      legacy_let :table_columns_hash do
-        list = []
-        unless Rails.env.production?
-          list << { key: :id,               label: "ID",   visible: false, }
-        end
-        list += [
-          { key: :created_at,        label: "作成日時", visible: false, },
-          { key: :turn_max,          label: "手数",     visible: false, },
-          { key: :colosseum_user_id, label: "所有者",   visible: false, },
-        ]
+    mlet :table_columns_hash do
+      list = []
+      unless Rails.env.production?
+        list << { key: :id,               label: "ID",   visible: false, }
       end
+      list += [
+        { key: :created_at,        label: "作成日時", visible: false, },
+        { key: :turn_max,          label: "手数",     visible: false, },
+        { key: :colosseum_user_id, label: "所有者",   visible: false, },
+      ]
     end
 
     def js_record_for(e)

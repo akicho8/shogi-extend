@@ -56,29 +56,31 @@ class ApplicationController < ActionController::Base
 
   concerning :CurrentUserMethods do
     included do
-      legacy_let :js_global do
-        {
-          :current_user        => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
-          :online_only_count   => Colosseum::User.online_only.count,
-          :fighter_only_count  => Colosseum::User.fighter_only.count,
-          :lifetime_infos      => Colosseum::LifetimeInfo,
-          :team_infos          => Colosseum::TeamInfo,
-          :custom_preset_infos => Colosseum::CustomPresetInfo,
-          :robot_accept_infos  => Colosseum::RobotAcceptInfo,
-          :last_action_infos   => Colosseum::LastActionInfo,
-          :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「名無しのアカウントを作成してログイン」を使ってみてください。"}]),
-          :talk_path           => talk_path,
-          :custom_session_id   => custom_session_id, # CPU対戦で対局者を特定するため(こうしなくてもセッションで httponly: false にすると document.cookie から取れるらしいが危険)
-          :chat_display_lines_limit => Colosseum::LobbyMessage.chat_display_lines_limit,
-        }
-      end
-
-      legacy_let :sysop? do
-        current_user && current_user.sysop?
-      end
-
+      helper_method :js_global
+      helper_method :sysop?
       helper_method :editable_record?
       helper_method :current_user
+    end
+
+    mlet :js_global do
+      {
+        :current_user        => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
+        :online_only_count   => Colosseum::User.online_only.count,
+        :fighter_only_count  => Colosseum::User.fighter_only.count,
+        :lifetime_infos      => Colosseum::LifetimeInfo,
+        :team_infos          => Colosseum::TeamInfo,
+        :custom_preset_infos => Colosseum::CustomPresetInfo,
+        :robot_accept_infos  => Colosseum::RobotAcceptInfo,
+        :last_action_infos   => Colosseum::LastActionInfo,
+        :login_path          => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「名無しのアカウントを作成してログイン」を使ってみてください。"}]),
+        :talk_path           => talk_path,
+        :custom_session_id   => custom_session_id, # CPU対戦で対局者を特定するため(こうしなくてもセッションで httponly: false にすると document.cookie から取れるらしいが危険)
+        :chat_display_lines_limit => Colosseum::LobbyMessage.chat_display_lines_limit,
+      }
+    end
+
+    mlet :sysop? do
+      current_user && current_user.sysop?
     end
 
     def editable_record?(record)
@@ -97,34 +99,32 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def current_user
-      @current_user ||= -> {
-        # # unless bot_agent?       # ブロックの中なので guard return してはいけない
-        # user_id = nil
-        # # unless Rails.env.production?
-        # #   user_id ||= params[:__user_id__]
-        # # end
-        # user_id ||=
+    mlet :current_user do
+      # # unless bot_agent?       # ブロックの中なので guard return してはいけない
+      # user_id = nil
+      # # unless Rails.env.production?
+      # #   user_id ||= params[:__user_id__]
+      # # end
+      # user_id ||=
 
-        user = nil
-        if id = cookies.signed[:user_id]
-          user ||= Colosseum::User.find_by(id: id)
+      user = nil
+      if id = cookies.signed[:user_id]
+        user ||= Colosseum::User.find_by(id: id)
+      end
+      user ||= current_xuser
+
+      if Rails.env.test?
+        if params[:__create_user_name__]
+          user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
         end
-        user ||= current_xuser
+      end
 
-        if Rails.env.test?
-          if params[:__create_user_name__]
-            user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
-          end
-        end
+      if user
+        cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
+      end
 
-        if user
-          cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
-        end
-
-        user
-        # end
-      }.call
+      user
+      # end
     end
 
     def current_user_set_id(user_id)
@@ -146,11 +146,11 @@ class ApplicationController < ActionController::Base
 
   concerning :TalkMethods do
     included do
-      legacy_let :custom_session_id do
-        Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
-      end
-
       helper_method :talk
+    end
+
+    mlet :custom_session_id do
+      Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
     end
 
     # talk("こんにちは")
@@ -186,7 +186,7 @@ class ApplicationController < ActionController::Base
       helper_method :link_to_eval
     end
 
-    def link_to_eval(name, options = {}, &block)
+    def link_to_eval(name, **options, &block)
       if code = block.call
         link_to(name, eval_path(options.merge(code: code)), method: :put, :class => "button is-small is-danger")
       end
@@ -239,12 +239,6 @@ class ApplicationController < ActionController::Base
   end
 
   concerning :BotCheckMethods do
-    included do
-      legacy_let :bot_agent? do
-        request.user_agent.to_s.match?(self.class.bot_regexp)
-      end
-    end
-
     class_methods do
       def bot_regexp
         # ▼HTTP_USER_AGENTでbot,Browser,Deviceチェック - Qiita
@@ -283,13 +277,15 @@ class ApplicationController < ActionController::Base
           ])
       end
     end
+
+    mlet :bot_agent? do
+      request.user_agent.to_s.match?(self.class.bot_regexp)
+    end
   end
 
   concerning :MobileMethods do
     included do
-      legacy_let :mobile_agent? do
-        request.user_agent.to_s.match?(self.class.mobile_regexp)
-      end
+      helper_method :mobile_agent?
     end
 
     class_methods do
@@ -297,21 +293,24 @@ class ApplicationController < ActionController::Base
         @mobile_regexp ||= Regexp.union([/iPhone|iPad/i, /Android.*Mobile/i])
       end
     end
+
+    mlet :mobile_agent? do
+      request.user_agent.to_s.match?(self.class.mobile_regexp)
+    end
   end
 
   concerning :ShowiPlayerMethods do
     included do
-      legacy_let :current_shogi_player_theme do
-        # if mobile_agent?
-        #   "simple"
-        # else
-        #   "real"
-        # end
-        "simple"
-      end
+      helper_method :sp_theme_default
     end
 
-    class_methods do
+    mlet :sp_theme_default do
+      # if mobile_agent?
+      #   "simple"
+      # else
+      #   "real"
+      # end
+      "simple"
     end
   end
 end

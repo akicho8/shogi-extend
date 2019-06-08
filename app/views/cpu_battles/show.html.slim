@@ -1,8 +1,8 @@
-- twitter_card_tag(controller.show_twitter_options)
+- twitter_card_tag(show_twitter_options)
 
 - content_for :head do
   javascript:
-    var js_cpu_battle = #{controller.js_cpu_battle.to_json.html_safe};
+    var js_cpu_battle = #{js_cpu_battle.to_json.html_safe};
   = stylesheet_pack_tag("cpu_battles_style")
   = javascript_pack_tag("cpu_battles_app")
   javascript:
@@ -25,7 +25,7 @@
       :human_side="'black'"
       @update:play_mode_long_sfen="play_mode_long_sfen_set"
     )
-    / :theme="'#{current_shogi_player_theme}'"
+    / :theme="'#{sp_theme_default}'"
 
   hr
   .has-text-centered

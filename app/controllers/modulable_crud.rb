@@ -16,49 +16,56 @@ module ModulableCrud
         end
       end
 
-      # override according to the situation
-      #
-      # Examples
-      #   :foo
-      #   [:foo, :bar]
-      #   self.class.parent_name.underscore
-      #
-      legacy_let :ns_prefix do
-      end
+      helper_method :ns_prefix
+      helper_method :current_model
+      helper_method :current_scope
+      helper_method :current_single_key
+      helper_method :current_param_key
+      helper_method :respond_to_destroy?
+      helper_method :respond_to_confirm?
+      helper_method :current_record
+    end
 
-      # override according to the situation
-      legacy_let :current_model do
-        controller_path.classify.constantize
-      end
+    # Examples
+    #   :foo
+    #   [:foo, :bar]
+    #   self.class.parent_name.underscore
+    #
+    mlet :ns_prefix do
+    end
 
-      legacy_let :current_scope do
-        current_model.all
-      end
+    # override according to the situation
+    mlet :current_model do
+      controller_path.classify.constantize
+    end
 
-      legacy_let :current_single_key do
-        current_model.model_name.singular.to_sym
-      end
+    mlet :current_scope do
+      current_model.all
+    end
 
-      legacy_let :current_param_key do
-        current_model.model_name.param_key
-      end
+    mlet :current_single_key do
+      current_model.model_name.singular.to_sym
+    end
 
-      legacy_let :respond_to_destroy? do
-        respond_to?(:destroy)
-      end
+    mlet :current_param_key do
+      current_model.model_name.param_key
+    end
 
-      legacy_let :respond_to_confirm? do
-        self.class.ancestors.include?(ConfirmMethods)
-      end
+    mlet :respond_to_destroy? do
+      respond_to?(:destroy)
+    end
 
-      # override according to the situation
-      legacy_let :current_record do
-        # current_scope.find_or_initialize_by(id: params[:id]) は危険
-        if params[:id]
-          current_scope.find(params[:id])
-        else
-          current_scope.new
-        end
+    mlet :respond_to_confirm? do
+      self.class.ancestors.include?(ConfirmMethods)
+    end
+
+    # override according to the situation
+    mlet :current_record do
+      # current_scope.find_or_initialize_by(id: params[:id]) は危険
+      if params[:id]
+        current_scope.find(params[:id])
+      else
+        current_scope.new
       end
     end
 
@@ -77,17 +84,21 @@ module ModulableCrud
 
   concern :IndexMethods do
     included do
-      legacy_let :current_plural_key do
-        current_model.model_name.plural.to_sym
-      end
+      helper_method :current_plural_key
+      helper_method :current_records
+      helper_method :js_current_records
+    end
 
-      legacy_let :current_records do
-        current_scope.order(:id).reverse_order.page(params[:page])
-      end
+    mlet :current_plural_key do
+      current_model.model_name.plural.to_sym
+    end
 
-      legacy_let :js_current_records do
-        current_records.collect { |e| js_record_for(e) }
-      end
+    mlet :current_records do
+      current_scope.order(:id).reverse_order.page(params[:page])
+    end
+
+    mlet :js_current_records do
+      current_records.collect { |e| js_record_for(e) }
     end
 
     def js_record_for(e)
@@ -109,9 +120,11 @@ module ModulableCrud
 
   concern :ShowMethods do
     included do
-      legacy_let :page_header_show_title do
-        "詳細: ##{current_record.to_param}"
-      end
+      helper_method :page_header_show_title
+    end
+
+    mlet :page_header_show_title do
+      "詳細: ##{current_record.to_param}"
     end
 
     def show

@@ -40,6 +40,8 @@ module Colosseum
   class UsersController < ApplicationController
     include ModulableCrud::All
 
+    helper_method :js_user_profile
+
     before_action only: [:index] do
       unless sysop?
         redirect_to :root, alert: "アクセス権限がありません"
@@ -54,7 +56,7 @@ module Colosseum
       end
     end
 
-    legacy_let :js_user_profile do
+    def js_user_profile
       ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
     end
 

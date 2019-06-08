@@ -2,6 +2,7 @@ class TacticNotesController < ApplicationController
   delegate :soldiers, :trigger_soldiers, :other_objects_hash_ary, :other_objects_hash, :any_exist_soldiers, to: "current_record.board_parser"
 
   helper_method :current_record
+  helper_method :sample_kifu_body
 
   def index
     params[:mode] ||= "list"
@@ -129,7 +130,7 @@ class TacticNotesController < ApplicationController
 
   end
 
-  legacy_let :sample_kifu_body do
+  mlet :sample_kifu_body do
     Rails.cache.fetch("#{__method__}_#{current_record.key}", :expires_in => 1.week) do
       file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
       heavy_parsed_info = Bioshogi::Parser.file_parse(file)

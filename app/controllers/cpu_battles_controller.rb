@@ -1,4 +1,7 @@
 class CpuBattlesController < ApplicationController
+  helper_method :show_twitter_options
+  helper_method :js_cpu_battle
+
   def show_twitter_options
     options = {}
     options[:title] = "CPU対戦"

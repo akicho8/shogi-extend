@@ -1,5 +1,12 @@
 module Swars
   class PlayerInfosController < ApplicationController
+    helper_method :current_user_key
+    helper_method :current_swars_user
+    helper_method :js_swars_player_info_app_params
+    helper_method :memberships_rule_key_group
+    helper_method :attack_chart_params_list
+    helper_method :defense_chart_params_list
+
     def index
       if bot_agent?
         return
@@ -20,15 +27,15 @@ module Swars
       end
     end
 
-    legacy_let :current_user_key do
+    mlet :current_user_key do
       params[:user_key].to_s.strip.presence
     end
 
-    legacy_let :current_swars_user do
+    mlet :current_swars_user do
       User.find_by(user_key: current_user_key)
     end
 
-    legacy_let :js_swars_player_info_app_params do
+    mlet :js_swars_player_info_app_params do
       if current_swars_user
         scope = current_swars_user.memberships.joins(:battle).includes(:battle).reorder(created_at: :desc)
 
@@ -107,15 +114,15 @@ module Swars
       end
     end
 
-    legacy_let :memberships_rule_key_group do
+    mlet :memberships_rule_key_group do
       current_swars_user.battles.group("rule_key").count
     end
 
-    legacy_let :attack_chart_params_list do
+    mlet :attack_chart_params_list do
       any_chart_params_list_for(:attack)
     end
 
-    legacy_let :defense_chart_params_list do
+    mlet :defense_chart_params_list do
       any_chart_params_list_for(:defense)
     end
 

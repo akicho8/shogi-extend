@@ -31,11 +31,14 @@ module Colosseum
   class BattlesController < ApplicationController
     include ModulableCrud::All
 
+    helper_method :js_index_options
+    helper_method :js_show_options
+
     def js_index_options
       ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
     end
 
-    legacy_let :js_show_options do
+    def js_show_options
       ams_sr(current_record, serializer: BattleShowSerializer, include: {memberships: :user, watch_ships: :user, chat_messages: :user})
     end
 

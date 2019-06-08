@@ -7,6 +7,10 @@ module BattleControllerSharedMethods2
     helper_method :modal_record_twitter_options
     helper_method :current_placeholder
     helper_method :current_mode
+    helper_method :current_search_scope_key
+    helper_method :show_twitter_options
+    helper_method :js_index_options
+    helper_method :js_show_options
   end
 
   mlet :current_query do
@@ -20,14 +24,13 @@ module BattleControllerSharedMethods2
   end
 
   mlet :current_records do
-    current_scope.tap do |s|
-      s = s.select(current_model.column_names - exclude_column_names)
-      if current_sort_column && current_sort_order
-        s = s.order(current_sort_column => current_sort_order)
-      end
-      s = s.order(id: :desc)
-      s.page(params[:page]).per(current_per)
+    s = current_scope
+    s = s.select(current_model.column_names - exclude_column_names)
+    if current_sort_column && current_sort_order
+      s = s.order(current_sort_column => current_sort_order)
     end
+    s = s.order(id: :desc)
+    s.page(params[:page]).per(current_per)
   end
 
   mlet :exclude_column_names do
