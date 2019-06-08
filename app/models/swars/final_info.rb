@@ -38,9 +38,24 @@ module Swars
       last_action_key
     end
 
-    def icon_names
-      Array(super || "emoticon-sad-outline")
+    def icon_params(grade_diff)
+      if icon_names
+        { :names => Array(icon_names), :class => icon_class }
+      else
+        case
+        when grade_diff >= 1
+          { :names => ["emoticon-neutral-outline"], :class => icon_class }
+        when grade_diff == 0
+          { :names => ["emoticon-sad-outline"], :class => icon_class }
+        else
+          { :names => ["emoticon-dead-outline"], :class => icon_class }
+        end
+      end
     end
+
+    # def icon_names
+    #   Array(super || "emoticon-sad-outline")
+    # end
 
     def icon_color
       super || "grey-light"
