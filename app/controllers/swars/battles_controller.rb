@@ -30,8 +30,7 @@
 module Swars
   class BattlesController < ApplicationController
     include ModulableCrud::All
-    include BattleControllerSharedMethods1
-    include BattleControllerSharedMethods2
+    include BattleControllerSharedMethods
 
     helper_method :current_swars_user
     helper_method :current_query_info
@@ -126,10 +125,6 @@ module Swars
       redirect_to [:swars, current_mode, query: current_swars_user]
     end
 
-    def user_link2(membership)
-      link_to(membership.name_with_grade, polymorphic_path(membership.user, current_mode: current_mode))
-    end
-
     rescue_from "Mechanize::ResponseCodeError" do |exception|
       message = "該当のユーザーが見つからないか混み合っています"
       flash.now[:danger] = %(<div class="has-text-weight-bold">#{message}</div><br/>#{exception.class.name}<br/>#{exception.message}<br/><br/>#{exception.backtrace.take(8).join("<br/>")}).html_safe
@@ -152,7 +147,7 @@ module Swars
         end
 
         # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-        success = Battle.sometimes_user_import(user_key: current_user_key, page_max: current_page_max)
+        success = Battle.sometimes_user_import(user_key: current_user_key, page_max: import_page_max)
         if !success
           # development でここが通らない
           # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
@@ -185,7 +180,7 @@ module Swars
       current_user_key && params[:page].blank? && !params[:import_skip] && !flash[:import_skip]
     end
 
-    let :current_page_max do
+    let :import_page_max do
       (params[:page_max].presence || 1).to_i
     end
 
@@ -261,12 +256,6 @@ module Swars
         end
       end
       labels.zip(a)
-    end
-
-    def left_right_pairs2(row)
-      row.transform_values do |e|
-        e.icon_html + user_link2(e)
-      end
     end
 
     def slow_processing_error_redirect_url
@@ -431,7 +420,7 @@ module Swars
         "battled_at"
       end
 
-      let :current_ransack do
+      let :ransack_params do
       end
 
       let :table_columns_hash do

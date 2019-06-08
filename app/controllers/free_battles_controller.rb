@@ -31,7 +31,7 @@
 
 class FreeBattlesController < ApplicationController
   include ModulableCrud::All
-  include BattleControllerSharedMethods1
+  include BattleControllerSharedMethods
 
   def new
     if id = params[:source_id]
@@ -169,7 +169,6 @@ class FreeBattlesController < ApplicationController
     end
   end
 
-  include BattleControllerSharedMethods2
 
   concerning :IndexCustomMethods do
     let :table_columns_hash do
