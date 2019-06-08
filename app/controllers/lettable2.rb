@@ -3,6 +3,7 @@ module Lettable2
     # https://gist.github.com/eric1234/375ad4a79972467d6f30af3bd0146584
     def clet(name, **options, &block)
       options = {
+        as_helper_method: true,
         return_value_if_exist: false,
       }.merge(options)
 
@@ -25,7 +26,9 @@ module Lettable2
         instance_variable_set(iv, instance_eval(&block))
       end
 
-      helper_method name
+      if options[:as_helper_method]
+        helper_method name
+      end
 
       unless reader_only
         define_method(:"#{name}=") do |value|
@@ -33,6 +36,10 @@ module Lettable2
         end
         private :"#{name}="
       end
+    end
+
+    def mlet(name, **options, &block)
+      clet(options.merge(as_helper_method: false))
     end
   end
 
