@@ -65,7 +65,7 @@ class FreeBattlesController < ApplicationController
 
   private
 
-  mlet :current_record do
+  let :current_record do
     if params[:id]
       record = current_model.find(params[:id])
     else
@@ -140,7 +140,7 @@ class FreeBattlesController < ApplicationController
     end
 
     # free_battle_edit.js の引数用
-    mlet :js_edit_options do
+    let :js_edit_options do
       {
         post_path: url_for([:free_battles, format: "json"]),
         record_attributes: current_record.as_json,
@@ -172,7 +172,7 @@ class FreeBattlesController < ApplicationController
   include BattleControllerSharedMethods2
 
   concerning :IndexCustomMethods do
-    mlet :table_columns_hash do
+    let :table_columns_hash do
       list = []
       unless Rails.env.production?
         list << { key: :id,               label: "ID",   visible: false, }

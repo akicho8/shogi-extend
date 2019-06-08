@@ -130,7 +130,7 @@ class TacticNotesController < ApplicationController
 
   end
 
-  mlet :sample_kifu_body do
+  let :sample_kifu_body do
     Rails.cache.fetch("#{__method__}_#{current_record.key}", :expires_in => 1.week) do
       file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
       heavy_parsed_info = Bioshogi::Parser.file_parse(file)

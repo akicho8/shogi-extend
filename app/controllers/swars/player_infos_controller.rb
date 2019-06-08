@@ -18,7 +18,7 @@ module Swars
 
       if current_user_key
         Battle.sometimes_user_import(user_key: current_user_key, page_max: 5)
-        let_cache_remove(:current_swars_user)
+        unlet(:current_swars_user)
         unless current_swars_user
           flash.now[:warning] = "#{current_user_key} さんの情報は見つかりませんでした"
           return
@@ -27,15 +27,15 @@ module Swars
       end
     end
 
-    mlet :current_user_key do
+    let :current_user_key do
       params[:user_key].to_s.strip.presence
     end
 
-    mlet :current_swars_user do
+    let :current_swars_user do
       User.find_by(user_key: current_user_key)
     end
 
-    mlet :js_swars_player_info_app_params do
+    let :js_swars_player_info_app_params do
       if current_swars_user
         scope = current_swars_user.memberships.joins(:battle).includes(:battle).reorder(created_at: :desc)
 
@@ -114,15 +114,15 @@ module Swars
       end
     end
 
-    mlet :memberships_rule_key_group do
+    let :memberships_rule_key_group do
       current_swars_user.battles.group("rule_key").count
     end
 
-    mlet :attack_chart_params_list do
+    let :attack_chart_params_list do
       any_chart_params_list_for(:attack)
     end
 
-    mlet :defense_chart_params_list do
+    let :defense_chart_params_list do
       any_chart_params_list_for(:defense)
     end
 

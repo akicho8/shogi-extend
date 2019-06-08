@@ -1,10 +1,11 @@
 module Lettable
-  extend ActiveSupport::Concern
+  module ModuleMethods
+    private
 
-  class_methods do
     # https://gist.github.com/eric1234/375ad4a79972467d6f30af3bd0146584
-    def legacy_let(name, **options, &block)
+    def let(name, **options, &block)
       options = {
+        # as_helper_method: true,
         return_value_if_exist: false,
       }.merge(options)
 
@@ -27,7 +28,9 @@ module Lettable
         instance_variable_set(iv, instance_eval(&block))
       end
 
-      helper_method name
+      # if options[:as_helper_method]
+      #   helper_method name
+      # end
 
       unless reader_only
         define_method(:"#{name}=") do |value|
@@ -36,12 +39,20 @@ module Lettable
         private :"#{name}="
       end
     end
+
+    # def let(name, **options, &block)
+    #   let(name, options.merge(as_helper_method: false), &block)
+    # end
   end
 
-  def let_cache_remove(name)
-    iv = "@" + name.to_s.sub(/\?\z/, "_p")
-    if instance_variable_defined?(iv)
-      remove_instance_variable(iv)
+  module ObjectMethods
+    private
+
+    def unlet(name)
+      iv = "@" + name.to_s.sub(/\?\z/, "_p")
+      if instance_variable_defined?(iv)
+        remove_instance_variable(iv)
+      end
     end
   end
 end

@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  include Lettable
-
   before_action do
     ActiveStorage::Current.host = request.base_url
   end
@@ -62,7 +60,7 @@ class ApplicationController < ActionController::Base
       helper_method :current_user
     end
 
-    mlet :js_global do
+    let :js_global do
       {
         :current_user        => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
         :online_only_count   => Colosseum::User.online_only.count,
@@ -79,7 +77,7 @@ class ApplicationController < ActionController::Base
       }
     end
 
-    mlet :sysop? do
+    let :sysop? do
       current_user && current_user.sysop?
     end
 
@@ -99,7 +97,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    mlet :current_user do
+    let :current_user do
       # # unless bot_agent?       # ブロックの中なので guard return してはいけない
       # user_id = nil
       # # unless Rails.env.production?
@@ -149,7 +147,7 @@ class ApplicationController < ActionController::Base
       helper_method :talk
     end
 
-    mlet :custom_session_id do
+    let :custom_session_id do
       Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
     end
 
@@ -278,7 +276,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    mlet :bot_agent? do
+    let :bot_agent? do
       request.user_agent.to_s.match?(self.class.bot_regexp)
     end
   end
@@ -294,7 +292,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    mlet :mobile_agent? do
+    let :mobile_agent? do
       request.user_agent.to_s.match?(self.class.mobile_regexp)
     end
   end
@@ -304,7 +302,7 @@ class ApplicationController < ActionController::Base
       helper_method :sp_theme_default
     end
 
-    mlet :sp_theme_default do
+    let :sp_theme_default do
       # if mobile_agent?
       #   "simple"
       # else

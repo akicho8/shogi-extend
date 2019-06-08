@@ -29,7 +29,7 @@ module General
 
     helper_method :rows
 
-    mlet :current_record do
+    let :current_record do
       if v = params[:id].presence
         current_scope.find_by!(key: v)
       else
@@ -37,11 +37,11 @@ module General
       end
     end
 
-    mlet :current_query do
+    let :current_query do
       params[:query].presence
     end
 
-    mlet :current_scope do
+    let :current_scope do
       s = current_model
       if v = current_query
         s = s.tagged_with(v)
@@ -49,11 +49,11 @@ module General
       s.order(battled_at: :desc)
     end
 
-    mlet :current_records do
+    let :current_records do
       current_scope.page(params[:page]).per(params[:per])
     end
 
-    mlet :rows do
+    let :rows do
       current_records.collect do |battle|
         {}.tap do |row|
           row["ID"] = link_to("##{battle.to_param}", battle)

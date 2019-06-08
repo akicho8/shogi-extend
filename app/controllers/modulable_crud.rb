@@ -31,36 +31,36 @@ module ModulableCrud
     #   [:foo, :bar]
     #   self.class.parent_name.underscore
     #
-    mlet :ns_prefix do
+    let :ns_prefix do
     end
 
     # override according to the situation
-    mlet :current_model do
+    let :current_model do
       controller_path.classify.constantize
     end
 
-    mlet :current_scope do
+    let :current_scope do
       current_model.all
     end
 
-    mlet :current_single_key do
+    let :current_single_key do
       current_model.model_name.singular.to_sym
     end
 
-    mlet :current_param_key do
+    let :current_param_key do
       current_model.model_name.param_key
     end
 
-    mlet :respond_to_destroy? do
+    let :respond_to_destroy? do
       respond_to?(:destroy)
     end
 
-    mlet :respond_to_confirm? do
+    let :respond_to_confirm? do
       self.class.ancestors.include?(ConfirmMethods)
     end
 
     # override according to the situation
-    mlet :current_record do
+    let :current_record do
       # current_scope.find_or_initialize_by(id: params[:id]) は危険
       if params[:id]
         current_scope.find(params[:id])
@@ -89,15 +89,15 @@ module ModulableCrud
       helper_method :js_current_records
     end
 
-    mlet :current_plural_key do
+    let :current_plural_key do
       current_model.model_name.plural.to_sym
     end
 
-    mlet :current_records do
+    let :current_records do
       current_scope.order(:id).reverse_order.page(params[:page])
     end
 
-    mlet :js_current_records do
+    let :js_current_records do
       current_records.collect { |e| js_record_for(e) }
     end
 
@@ -123,7 +123,7 @@ module ModulableCrud
       helper_method :page_header_show_title
     end
 
-    mlet :page_header_show_title do
+    let :page_header_show_title do
       "詳細: ##{current_record.to_param}"
     end
 

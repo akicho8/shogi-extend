@@ -13,17 +13,17 @@ module BattleControllerSharedMethods2
     helper_method :js_show_options
   end
 
-  mlet :current_query do
+  let :current_query do
     params[:query].presence
   end
 
-  mlet :current_queries do
+  let :current_queries do
     if current_query
       current_query.scan(/\P{Space}+/)
     end
   end
 
-  mlet :current_records do
+  let :current_records do
     s = current_scope
     s = s.select(current_model.column_names - exclude_column_names)
     if current_sort_column && current_sort_order
@@ -33,45 +33,45 @@ module BattleControllerSharedMethods2
     s.page(params[:page]).per(current_per)
   end
 
-  mlet :exclude_column_names do
+  let :exclude_column_names do
     [
       "meta_info",
     ]
   end
 
-  mlet :current_per do
+  let :current_per do
     (params[:per].presence || current_per_default).to_i
   end
 
-  mlet :current_per_default do
+  let :current_per_default do
     Rails.env.production? ? 25 : 25
   end
 
-  mlet :current_sort_column do
+  let :current_sort_column do
     params[:sort_column].presence || default_sort_column
   end
 
-  mlet :default_sort_column do
+  let :default_sort_column do
     "created_at"
   end
 
-  mlet :current_sort_order do
+  let :current_sort_order do
     params[:sort_order].presence || current_sort_order_default
   end
 
-  mlet :current_sort_order_default do
+  let :current_sort_order_default do
     "desc"
   end
 
-  mlet :current_placeholder do
+  let :current_placeholder do
     ""
   end
 
-  mlet :pure_current_scope do
+  let :pure_current_scope do
     current_model.all
   end
 
-  mlet :current_scope do
+  let :current_scope do
     s = pure_current_scope
 
     case current_search_scope_key
@@ -107,7 +107,7 @@ module BattleControllerSharedMethods2
     s
   end
 
-  mlet :current_ransack do
+  let :current_ransack do
     if current_queries
       {
         title_or_description_cont_all: current_queries,
@@ -115,19 +115,19 @@ module BattleControllerSharedMethods2
     end
   end
 
-  mlet :js_modal_record do
+  let :js_modal_record do
     if modal_record
       js_modal_record_for(modal_record)
     end
   end
 
-  mlet :modal_record do
+  let :modal_record do
     if v = params[:modal_id]
       current_scope.find(v)
     end
   end
 
-  mlet :js_table_columns_hash do
+  let :js_table_columns_hash do
     table_columns_hash.inject({}) do |a, e|
       visible = e[:visible]
       if visible_columns
@@ -138,25 +138,25 @@ module BattleControllerSharedMethods2
     end
   end
 
-  mlet :visible_columns do
+  let :visible_columns do
     if v = params[:visible_columns]
       v.scan(/\w+/).to_set
     end
   end
 
-  mlet :js_show_options do
+  let :js_show_options do
     js_modal_record_for(current_record)
   end
 
-  mlet :js_edit_ogp_options do
+  let :js_edit_ogp_options do
     js_show_options
   end
 
-  mlet :current_mode do
+  let :current_mode do
     (params[:mode].presence || :basic).to_sym
   end
 
-  mlet :show_twitter_options do
+  let :show_twitter_options do
     options = {}
     options[:title] = current_record.to_title
     options[:url] = current_record.tweet_modal_url
@@ -171,7 +171,7 @@ module BattleControllerSharedMethods2
     options
   end
 
-  mlet :modal_record_twitter_options do
+  let :modal_record_twitter_options do
     if e = modal_record
       options = {}
 
@@ -199,11 +199,11 @@ module BattleControllerSharedMethods2
     end
   end
 
-  mlet :current_search_scope_key do
+  let :current_search_scope_key do
     (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
   end
 
-  mlet :js_index_options do
+  let :js_index_options do
     {
       query: current_query || "",
       search_scope_key: current_search_scope_key,
@@ -220,7 +220,7 @@ module BattleControllerSharedMethods2
     }
   end
 
-  mlet :twitter_staitc_image_url do
+  let :twitter_staitc_image_url do
     # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
     # とした場合はリダイレクトするURLになってしまうため使えない
     # 固定URL化する

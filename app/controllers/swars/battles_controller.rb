@@ -36,7 +36,6 @@ module Swars
     helper_method :current_swars_user
     helper_method :current_query_info
     helper_method :js_swars_show_app_params
-    # helper_method :current_user_key
 
     prepend_before_action only: :show do
       if bot_agent?
@@ -160,7 +159,7 @@ module Swars
           flash[:warning] = "#{current_user_key} さんの棋譜はさっき取得したばかりです"
         end
         if success
-          let_cache_remove(:current_swars_user)
+          unlet(:current_swars_user)
 
           hit_count = 0
           if current_swars_user
@@ -186,7 +185,7 @@ module Swars
       current_user_key && params[:page].blank? && !params[:import_skip] && !flash[:import_skip]
     end
 
-    def current_page_max
+    let :current_page_max do
       (params[:page_max].presence || 1).to_i
     end
 
@@ -278,35 +277,35 @@ module Swars
       url_for([:swars, current_mode, query: "tag:#{e}", only_path: true])
     end
 
-    mlet :current_swars_user do
+    let :current_swars_user do
       User.find_by(user_key: current_user_key)
     end
 
-    mlet :current_query_info do
+    let :current_query_info do
       QueryInfo.parse(current_query)
     end
 
-    def current_query_hash
+    let :current_query_hash do
       current_query_info.attributes
     end
 
-    def current_tags
+    let :current_tags do
       current_query_hash.dig(:tag)
     end
 
-    def current_musers
+    let :current_musers do
       current_query_hash.dig(:muser)
     end
 
-    def current_mtags
+    let :current_mtags do
       current_query_hash.dig(:mtag)
     end
 
-    def current_ids
+    let :current_ids do
       current_query_hash.dig(:ids)
     end
 
-    mlet :current_user_key do
+    let :current_user_key do
       if s = (current_query_info.values + current_query_info.urls).first
         # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
         # https://shogiwars.heroz.jp/users/foo                          -> foo
@@ -325,7 +324,7 @@ module Swars
       end
     end
 
-    mlet :current_record do
+    let :current_record do
       if v = params[:id].presence
         current_model.single_battle_import(key: v)
         current_scope.find_by!(key: v)
@@ -334,7 +333,7 @@ module Swars
       end
     end
 
-    mlet :js_swars_show_app_params do
+    let :js_swars_show_app_params do
       {
         think_chart_params: {
           type: "line",
@@ -368,22 +367,22 @@ module Swars
       }
     end
 
-    mlet :latest_open_limit do
+    let :latest_open_limit do
       if v = params[:latest_open_index].presence
         [v.to_i.abs, 10].min.next
       end
     end
 
-    mlet :exclude_column_names do
+    let :exclude_column_names do
       ["meta_info", "csa_seq"]
     end
 
     concerning :IndexCustomMethods do
-      mlet :current_placeholder do
+      let :current_placeholder do
         "ウォーズIDまたは対局URLを入力してください"
       end
 
-      mlet :pure_current_scope do
+      let :pure_current_scope do
         s = current_model.all
 
         s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
@@ -428,14 +427,14 @@ module Swars
         s
       end
 
-      mlet :default_sort_column do
+      let :default_sort_column do
         "battled_at"
       end
 
-      mlet :current_ransack do
+      let :current_ransack do
       end
 
-      mlet :table_columns_hash do
+      let :table_columns_hash do
         list = []
         unless Rails.env.production?
           list << { key: :id,               label: "ID",   visible: false, }
@@ -453,7 +452,7 @@ module Swars
         ]
       end
 
-      mlet :teai_p do
+      let :teai_p do
         current_tags && (current_tags.include?("駒落ち") || current_tags.include?("指導対局"))
       end
 
