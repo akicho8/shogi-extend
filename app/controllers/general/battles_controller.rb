@@ -27,7 +27,7 @@ module General
   class BattlesController < ApplicationController
     include ModulableCrud::All
 
-    let :current_record do
+    legacy_let :current_record do
       if v = params[:id].presence
         current_scope.find_by!(key: v)
       else
@@ -35,11 +35,11 @@ module General
       end
     end
 
-    let :current_query do
+    legacy_let :current_query do
       params[:query].presence
     end
 
-    let :current_scope do
+    legacy_let :current_scope do
       s = current_model
       if v = current_query
         s = s.tagged_with(v)
@@ -47,11 +47,11 @@ module General
       s.order(battled_at: :desc)
     end
 
-    let :current_records do
+    legacy_let :current_records do
       current_scope.page(params[:page]).per(params[:per])
     end
 
-    let :rows do
+    legacy_let :rows do
       current_records.collect do |battle|
         {}.tap do |row|
           row["ID"] = link_to("##{battle.to_param}", battle)

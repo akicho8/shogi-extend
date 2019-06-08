@@ -3,7 +3,7 @@ module Lettable
 
   class_methods do
     # https://gist.github.com/eric1234/375ad4a79972467d6f30af3bd0146584
-    def let(name, **options, &block)
+    def legacy_let(name, **options, &block)
       options = {
         return_value_if_exist: false,
       }.merge(options)

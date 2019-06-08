@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
 
   concerning :CurrentUserMethods do
     included do
-      let :js_global do
+      legacy_let :js_global do
         {
           :current_user        => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
           :online_only_count   => Colosseum::User.online_only.count,
@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
         }
       end
 
-      let :sysop? do
+      legacy_let :sysop? do
         current_user && current_user.sysop?
       end
 
@@ -146,7 +146,7 @@ class ApplicationController < ActionController::Base
 
   concerning :TalkMethods do
     included do
-      let :custom_session_id do
+      legacy_let :custom_session_id do
         Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
       end
 
@@ -240,7 +240,7 @@ class ApplicationController < ActionController::Base
 
   concerning :BotCheckMethods do
     included do
-      let :bot_agent? do
+      legacy_let :bot_agent? do
         request.user_agent.to_s.match?(self.class.bot_regexp)
       end
     end
@@ -287,7 +287,7 @@ class ApplicationController < ActionController::Base
 
   concerning :MobileMethods do
     included do
-      let :mobile_agent? do
+      legacy_let :mobile_agent? do
         request.user_agent.to_s.match?(self.class.mobile_regexp)
       end
     end
@@ -301,7 +301,7 @@ class ApplicationController < ActionController::Base
 
   concerning :ShowiPlayerMethods do
     included do
-      let :current_shogi_player_theme do
+      legacy_let :current_shogi_player_theme do
         # if mobile_agent?
         #   "simple"
         # else

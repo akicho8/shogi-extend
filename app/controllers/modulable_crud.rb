@@ -23,36 +23,36 @@ module ModulableCrud
       #   [:foo, :bar]
       #   self.class.parent_name.underscore
       #
-      let :ns_prefix do
+      legacy_let :ns_prefix do
       end
 
       # override according to the situation
-      let :current_model do
+      legacy_let :current_model do
         controller_path.classify.constantize
       end
 
-      let :current_scope do
+      legacy_let :current_scope do
         current_model.all
       end
 
-      let :current_single_key do
+      legacy_let :current_single_key do
         current_model.model_name.singular.to_sym
       end
 
-      let :current_param_key do
+      legacy_let :current_param_key do
         current_model.model_name.param_key
       end
 
-      let :respond_to_destroy? do
+      legacy_let :respond_to_destroy? do
         respond_to?(:destroy)
       end
 
-      let :respond_to_confirm? do
+      legacy_let :respond_to_confirm? do
         self.class.ancestors.include?(ConfirmMethods)
       end
 
       # override according to the situation
-      let :current_record do
+      legacy_let :current_record do
         # current_scope.find_or_initialize_by(id: params[:id]) は危険
         if params[:id]
           current_scope.find(params[:id])
@@ -77,15 +77,15 @@ module ModulableCrud
 
   concern :IndexMethods do
     included do
-      let :current_plural_key do
+      legacy_let :current_plural_key do
         current_model.model_name.plural.to_sym
       end
 
-      let :current_records do
+      legacy_let :current_records do
         current_scope.order(:id).reverse_order.page(params[:page])
       end
 
-      let :js_current_records do
+      legacy_let :js_current_records do
         current_records.collect { |e| js_record_for(e) }
       end
     end
@@ -109,7 +109,7 @@ module ModulableCrud
 
   concern :ShowMethods do
     included do
-      let :page_header_show_title do
+      legacy_let :page_header_show_title do
         "詳細: ##{current_record.to_param}"
       end
     end

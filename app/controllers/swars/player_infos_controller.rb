@@ -20,15 +20,15 @@ module Swars
       end
     end
 
-    let :current_user_key do
+    legacy_let :current_user_key do
       params[:user_key].to_s.strip.presence
     end
 
-    let :current_swars_user do
+    legacy_let :current_swars_user do
       User.find_by(user_key: current_user_key)
     end
 
-    let :js_swars_player_info_app_params do
+    legacy_let :js_swars_player_info_app_params do
       if current_swars_user
         scope = current_swars_user.memberships.joins(:battle).includes(:battle).reorder(created_at: :desc)
 
@@ -107,15 +107,15 @@ module Swars
       end
     end
 
-    let :memberships_rule_key_group do
+    legacy_let :memberships_rule_key_group do
       current_swars_user.battles.group("rule_key").count
     end
 
-    let :attack_chart_params_list do
+    legacy_let :attack_chart_params_list do
       any_chart_params_list_for(:attack)
     end
 
-    let :defense_chart_params_list do
+    legacy_let :defense_chart_params_list do
       any_chart_params_list_for(:defense)
     end
 

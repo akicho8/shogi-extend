@@ -54,7 +54,7 @@ module Colosseum
       end
     end
 
-    let :js_user_profile do
+    legacy_let :js_user_profile do
       ams_sr(current_record, serializer: UserProfileSerializer, include: {battles: {memberships: :user}})
     end
 
