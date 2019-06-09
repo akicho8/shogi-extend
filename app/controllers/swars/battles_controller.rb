@@ -271,24 +271,16 @@ module Swars
       QueryInfo.parse(current_query)
     end
 
-    let :current_query_hash do
+    let :query_hash do
       current_query_info.attributes
     end
 
-    let :current_tags do
-      current_query_hash.dig(:tag)
-    end
-
     let :current_musers do
-      current_query_hash.dig(:muser)
+      query_hash.dig(:muser)
     end
 
     let :current_mtags do
-      current_query_hash.dig(:mtag)
-    end
-
-    let :current_ids do
-      current_query_hash.dig(:ids)
+      query_hash.dig(:mtag)
     end
 
     let :current_user_key do
@@ -377,9 +369,7 @@ module Swars
           s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
         end
 
-        if current_tags
-          s = s.tagged_with(current_tags)
-        end
+        s = tag_scope_add(s)
 
         # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
         # tag:username だと相手が「角換わり」したのも出てきてしまう
@@ -392,15 +382,15 @@ module Swars
           s = s.merge(m)
         end
 
-        if current_ids
-          s = s.where(id: current_ids)
+        if v = query_hash.dig(:ids)
+          s = s.where(id: v)
         end
 
-        if v = current_query_hash[:turn_max_gteq]&.first
+        if v = query_hash.dig(:turn_max_gteq)&.first
           s = s.where(Battle.arel_table[:turn_max].gteq(v))
         end
 
-        if v = current_query_hash[:turn_max_lt]&.first
+        if v = query_hash.dig(:turn_max_lt)&.first
           s = s.where(Battle.arel_table[:turn_max].lt(v))
         end
 
@@ -409,6 +399,22 @@ module Swars
         #   s = s.tagged_with("平手", exclude: true)
         # end
         # s = s.order(battled_at: :desc)
+
+        s
+      end
+
+      def tag_scope_add(s)
+        if v = query_hash.dig(:tag)
+          s = s.tagged_with(v)
+        end
+
+        if v = query_hash.dig(:or_tag)
+          s = s.tagged_with(v, any: true)
+        end
+
+        if v = query_hash.dig(:exclude_tag)
+          s = s.tagged_with(v, exclude: true)
+        end
 
         s
       end
