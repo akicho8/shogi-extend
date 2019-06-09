@@ -203,12 +203,7 @@ module BattleControllerSharedMethods
         end
 
         options[:description] = e.description
-
-        if e.thumbnail_image.attached?
-          options[:image] = polymorphic_url([ns_prefix, e], format: "png", updated_at: e.updated_at.to_i)
-        else
-          options[:card] = "summary"
-        end
+        options[:image] = twitter_staitc_image_url(e)
 
         options
       end
@@ -222,7 +217,9 @@ module BattleControllerSharedMethods
 
     let :modal_record do
       if v = params[:modal_id]
-        current_scope.find(v)
+        record = current_scope.find(v)
+        access_log_create(record)
+        record
       end
     end
 
@@ -268,7 +265,7 @@ module BattleControllerSharedMethods
         return
       end
 
-      access_log_create
+      access_log_create(current_record)
 
       respond_to do |format|
         format.html
@@ -283,25 +280,18 @@ module BattleControllerSharedMethods
 
     let :show_twitter_options do
       options = {}
-
       options[:title] = current_record.to_title
       options[:url] = current_record.tweet_modal_url
       options[:description] = current_record.description
-
-      if twitter_staitc_image_url
-        options[:image] = twitter_staitc_image_url
-      else
-        options[:card] = "summary"
-      end
-
+      options[:image] = twitter_staitc_image_url(current_record)
       options
     end
 
-    let :twitter_staitc_image_url do
+    def twitter_staitc_image_url(record)
       # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
       # とした場合はリダイレクトするURLになってしまうため使えない
       # 固定URL化する
-      polymorphic_url([ns_prefix, current_record], format: "png", updated_at: current_record.updated_at.to_i)
+      polymorphic_url([ns_prefix, record], format: "png", updated_at: record.updated_at.to_i)
     end
 
     def js_record_for(e)
@@ -322,7 +312,7 @@ module BattleControllerSharedMethods
       end
     end
 
-    def access_log_create
+    def access_log_create(record)
     end
 
     private

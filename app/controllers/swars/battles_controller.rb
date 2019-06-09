@@ -188,13 +188,13 @@ module Swars
       s.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) # 長音符は無視
     end
 
-    def access_log_create
+    def access_log_create(record)
       if bot_agent?
         return
       end
 
       if request.format.html?
-        current_record.access_logs.create!
+        record.access_logs.create!
       end
     end
 
