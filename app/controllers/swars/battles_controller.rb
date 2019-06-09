@@ -436,13 +436,9 @@ module Swars
           { key: :critical_turn,    label: "開戦", visible: false,          },
           # { key: :grade_diff,     label: "力差", visible: false,          },
           { key: :rule_info,        label: "種類", visible: false,          },
-          { key: :preset_info,      label: "手合", visible: teai_p,         },
+          { key: :preset_info,      label: "手合", visible: false,          },
           { key: :battled_at,       label: "日時", visible: !mobile_agent?, },
         ]
-      end
-
-      let :teai_p do
-        current_tags && (current_tags.include?("駒落ち") || current_tags.include?("指導対局"))
       end
 
       def js_record_for(e)
