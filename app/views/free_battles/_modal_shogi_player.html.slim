@@ -116,5 +116,14 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
                   / | &nbsp;
                   | ツイート
 
+            b-dropdown-item(:separator="true")
+
+            template(v-if="modal_record.swars_real_battle_url")
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                a(@click.stop :href="modal_record.swars_real_battle_url" target="_blank")
+                  b-icon(icon="link" size="is-small")
+                  | &nbsp;&nbsp;
+                  | ウォーズに移動
+
           template(v-if="false")
             a.button.is-small(@click="modal_p = false") 閉じる
