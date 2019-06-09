@@ -21,8 +21,8 @@
         - SearchScopeInfo.each do |e|
           li class=("is-active" if params["controller"] == "free_battles" && current_search_scope_key == e.key)
             = link_to([:free_battles, query: current_query, search_scope_key: e.key]) do
-              - if e.icon_names
-                = icon_tag(*e.icon_names)
+              - if e.icon_key
+                = icon_tag(*e.icon_key)
               = e.name
 
 

@@ -3,10 +3,10 @@ module Icon
   extend ActionView::Helpers::TagHelper
 
   # 何もサイズを指定しないと font-size に依存する
-  def icon_tag(*names)
+  def icon_tag(*keys)
     options = {
       # debug: Rails.env.development?
-    }.merge(names.extract_options!)
+    }.merge(keys.extract_options!)
 
     size = options[:size]
 
@@ -21,7 +21,7 @@ module Icon
         # "is-large2": 36,
       }
       # if v = table[size]
-      #   names << "#{v}px"
+      #   keys << "#{v}px"
       # end
     end
 
@@ -35,7 +35,7 @@ module Icon
       span_style = "border: 2px dotted blue"
     end
 
-    i = tag.i(style: i_style, :class => [:mdi, *names.collect { |e| "mdi-#{e.to_s.gsub(/_/, '-')}" }])
+    i = tag.i(style: i_style, :class => [:mdi, *keys.collect { |e| "mdi-#{e.to_s.gsub(/_/, '-')}" }])
     s = tag.span(i, :class => ["icon", size, *options[:class]].flatten.compact, style: span_style)
 
     if true
@@ -54,11 +54,11 @@ module Icon
   #   fa_icon_tag(:fab, :clock_o, :size => 1)            #=> ' <i class="fa fa-clock-o fa-fw"></i> '
   #   fa_icon_tag(:fab, :clock_o, :size => 2)            #=> ' <i class="fa fa-clock-o fa-fw fa-lg"></i> '
   #
-  def fa_icon_tag(*names)
+  def fa_icon_tag(*keys)
     options = {
       :size        => 1,
       :fixed_width => true,
-    }.merge(names.extract_options!)
+    }.merge(keys.extract_options!)
 
     size = {
       1 => "",
@@ -71,11 +71,11 @@ module Icon
 
     fixed_width = options.delete(:fixed_width) ? "fa-fw" : ""
 
-    klass = names.drop(1).join(" ").gsub("_", "-").split(/\s+/).collect do |e|
+    klass = keys.drop(1).join(" ").gsub("_", "-").split(/\s+/).collect do |e|
       "fa-#{e}"
     end
     if klass.present?
-      options[:class] = [names.first, *klass, size, fixed_width, options[:class]].join(" ").squish
+      options[:class] = [keys.first, *klass, size, fixed_width, options[:class]].join(" ").squish
       (" " + tag.i(options) + " ").html_safe
     end
   end

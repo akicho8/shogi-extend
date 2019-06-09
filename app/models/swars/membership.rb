@@ -91,18 +91,16 @@ module Swars
 
     concerning :HelperMethods do
       def icon_html
-        FinalInfo
-        JudgeInfo
-
         final_info = battle.final_info
 
-        # final_info = Swars::FinalInfo.to_a.sample
-        # grade_diff = rand(-2..2)
+        if ENV["ICON_HTML_DEBUG"] || true
+          judge_info = JudgeInfo.to_a.sample
+          final_info = FinalInfo.to_a.sample
+          grade_diff = rand(-1..1)
+        end
 
-        icon = judge_info.icon_params(grade_diff) || final_info.icon_params(grade_diff)
-
-        if icon[:names].present?
-          Icon.icon_tag(*icon[:names], :class => icon[:class])
+        if icon = judge_info.icon_params(grade_diff) || final_info.icon_params(grade_diff)
+          Icon.icon_tag(*icon[:key], :class => icon[:class])
         end
       end
 
