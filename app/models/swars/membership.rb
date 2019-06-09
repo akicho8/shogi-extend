@@ -93,11 +93,9 @@ module Swars
       def icon_html
         final_info = battle.final_info
 
-        if ENV["ICON_HTML_DEBUG"] || true
-          judge_info = JudgeInfo.to_a.sample
-          final_info = FinalInfo.to_a.sample
-          grade_diff = rand(-1..1)
-        end
+        # judge_info = JudgeInfo.to_a.sample
+        # final_info = FinalInfo.to_a.sample
+        # grade_diff = rand(-1..1)
 
         if icon = judge_info.icon_params(grade_diff) || final_info.icon_params(grade_diff)
           Icon.icon_tag(*icon[:key], :class => icon[:class])
