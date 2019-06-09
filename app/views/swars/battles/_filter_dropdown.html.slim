@@ -1,5 +1,4 @@
-ruby:
-- cache([controller_path, :filter_block]) do
+- cache([controller_path, :filter_block], expires_in: Rails.env.production? ? 1.day : 0) do
   - args = params.to_unsafe_h.merge(page: nil)
   b-dropdown(:hoverable="false")
     button.button.is-small(slot="trigger")
