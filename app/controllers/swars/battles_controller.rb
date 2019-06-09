@@ -217,9 +217,6 @@ module Swars
           end
           parts << Time.current.strftime("%Y%m%d%H%M%S")
           parts << current_encode
-          if current_tags
-            parts.concat(current_tags)
-          end
           str = parts.compact.join("_") + ".zip"
           str.public_send("to#{current_encode}")
         }
