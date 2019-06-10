@@ -260,8 +260,8 @@ module Swars
       query_hash.dig(:muser)
     end
 
-    let :current_mtags do
-      query_hash.dig(:mtag)
+    let :current_ms_tags do
+      query_hash.dig(:ms_tag)
     end
 
     let :current_user_key do
@@ -353,14 +353,14 @@ module Swars
 
           s = tag_scope_add(s)
 
-          # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
+          # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
           # tag:username だと相手が「角換わり」したのも出てきてしまう
-          if current_mtags
+          if current_ms_tags
             m = Membership.all
             if current_musers
               m = m.where(user: User.where(user_key: current_musers))
             end
-            m = m.tagged_with(current_mtags)
+            m = m.tagged_with(current_ms_tags)
             s = s.merge(m)
           end
 
