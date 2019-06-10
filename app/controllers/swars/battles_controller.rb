@@ -184,10 +184,6 @@ module Swars
       (params[:page_max].presence || 1).to_i
     end
 
-    def zenkaku_query?(s)
-      s.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) # 長音符は無視
-    end
-
     def access_log_create(record)
       if bot_agent?
         return
