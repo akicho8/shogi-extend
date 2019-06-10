@@ -56,23 +56,23 @@ module BattleControllerSharedMethods
       Rails.env.production? ? 25 : 25
     end
 
-    let :sort_column do
+    def sort_column
       params[:sort_column].presence || default_sort_column
     end
 
-    let :default_sort_column do
+    def default_sort_column
       "created_at"
     end
 
-    let :sort_order do
+    def sort_order
       params[:sort_order].presence || sort_order_default
     end
 
-    let :sort_order_default do
+    def sort_order_default
       "desc"
     end
 
-    let :current_placeholder do
+    def current_placeholder
       ""
     end
 
@@ -144,10 +144,12 @@ module BattleControllerSharedMethods
 
     let :current_scope do
       s = current_model.all
+      s = tag_scope_add(s)
+      s = search_scope_add(s)
+      s = other_scope_add(s)
       if v = query_hash.dig(:ids)
         s = s.where(id: v)
       end
-      s = search_scope_add(s)
       if r = ransack_params
         s = s.merge(current_model.ransack(r).result)
       end
@@ -176,6 +178,34 @@ module BattleControllerSharedMethods
           s = s.none
         end
       end
+      s
+    end
+
+    def tag_scope_add(s)
+      if v = query_hash.dig(:tag)
+        s = s.tagged_with(v)
+      end
+
+      if v = query_hash.dig(:or_tag)
+        s = s.tagged_with(v, any: true)
+      end
+
+      if v = query_hash.dig(:exclude_tag)
+        s = s.tagged_with(v, exclude: true)
+      end
+
+      s
+    end
+
+    def other_scope_add(s)
+      if v = query_hash.dig(:turn_max_gteq)&.first
+        s = s.where(Battle.arel_table[:turn_max].gteq(v))
+      end
+
+      if v = query_hash.dig(:turn_max_lt)&.first
+        s = s.where(Battle.arel_table[:turn_max].lt(v))
+      end
+
       s
     end
 

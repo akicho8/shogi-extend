@@ -344,14 +344,11 @@ module Swars
       def current_scope
         @current_scope ||= -> {
           s = super
-
           s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
 
           if current_swars_user
             s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
           end
-
-          s = tag_scope_add(s)
 
           # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
           # tag:username だと相手が「角換わり」したのも出てきてしまう
@@ -364,39 +361,15 @@ module Swars
             s = s.merge(m)
           end
 
-          if v = query_hash.dig(:turn_max_gteq)&.first
-            s = s.where(Battle.arel_table[:turn_max].gteq(v))
-          end
-
-          if v = query_hash.dig(:turn_max_lt)&.first
-            s = s.where(Battle.arel_table[:turn_max].lt(v))
-          end
-
           s
         }.call
       end
 
-      def tag_scope_add(s)
-        if v = query_hash.dig(:tag)
-          s = s.tagged_with(v)
-        end
-
-        if v = query_hash.dig(:or_tag)
-          s = s.tagged_with(v, any: true)
-        end
-
-        if v = query_hash.dig(:exclude_tag)
-          s = s.tagged_with(v, exclude: true)
-        end
-
-        s
-      end
-
-      let :default_sort_column do
+      def default_sort_column
         "battled_at"
       end
 
-      let :ransack_params do
+      def ransack_params
       end
 
       let :table_columns_hash do
