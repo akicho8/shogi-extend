@@ -194,13 +194,6 @@ module Swars
       end
     end
 
-    def versus_tag(*list)
-      if !list.compact.empty?
-        vs = tag.span(" vs ", :class => "text-muted")
-        list.collect { |e| e || "不明" }.join(vs).html_safe
-      end
-    end
-
     def perform_zip_download
       if request.format.zip?
         require "kconv"
