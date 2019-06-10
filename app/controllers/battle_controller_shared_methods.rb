@@ -26,6 +26,12 @@ module BattleControllerSharedMethods
           behavior_after_rescue(message)
         end
       end
+
+      before_action do
+        if params[:modal_id] && !modal_record
+          flash.now[:alert] = "#{params[:modal_id]} に対応するレコードが見つかりませんでした"
+        end
+      end
     end
 
     let :current_query do
@@ -217,9 +223,10 @@ module BattleControllerSharedMethods
 
     let :modal_record do
       if v = params[:modal_id]
-        record = current_scope.find(v)
-        access_log_create(record)
-        record
+        if record = current_scope.find_by(id: v)
+          access_log_create(record)
+          record
+        end
       end
     end
 
