@@ -267,14 +267,6 @@ module Swars
       User.find_by(user_key: current_user_key)
     end
 
-    let :current_query_info do
-      QueryInfo.parse(current_query)
-    end
-
-    let :query_hash do
-      current_query_info.attributes
-    end
-
     let :current_musers do
       query_hash.dig(:muser)
     end
@@ -360,47 +352,39 @@ module Swars
         "ウォーズIDまたは対局URLを入力してください"
       end
 
-      let :pure_current_scope do
-        s = current_model.all
+      def current_scope
+        @current_scope ||= -> {
+          s = super
 
-        s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
+          s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
 
-        if current_swars_user
-          s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
-        end
-
-        s = tag_scope_add(s)
-
-        # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
-        # tag:username だと相手が「角換わり」したのも出てきてしまう
-        if current_mtags
-          m = Membership.all
-          if current_musers
-            m = m.where(user: User.where(user_key: current_musers))
+          if current_swars_user
+            s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
           end
-          m = m.tagged_with(current_mtags)
-          s = s.merge(m)
-        end
 
-        if v = query_hash.dig(:ids)
-          s = s.where(id: v)
-        end
+          s = tag_scope_add(s)
 
-        if v = query_hash.dig(:turn_max_gteq)&.first
-          s = s.where(Battle.arel_table[:turn_max].gteq(v))
-        end
+          # "muser:username mtag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
+          # tag:username だと相手が「角換わり」したのも出てきてしまう
+          if current_mtags
+            m = Membership.all
+            if current_musers
+              m = m.where(user: User.where(user_key: current_musers))
+            end
+            m = m.tagged_with(current_mtags)
+            s = s.merge(m)
+          end
 
-        if v = query_hash.dig(:turn_max_lt)&.first
-          s = s.where(Battle.arel_table[:turn_max].lt(v))
-        end
+          if v = query_hash.dig(:turn_max_gteq)&.first
+            s = s.where(Battle.arel_table[:turn_max].gteq(v))
+          end
 
-        # # 平手以外
-        # if params[:handicap]
-        #   s = s.tagged_with("平手", exclude: true)
-        # end
-        # s = s.order(battled_at: :desc)
+          if v = query_hash.dig(:turn_max_lt)&.first
+            s = s.where(Battle.arel_table[:turn_max].lt(v))
+          end
 
-        s
+          s
+        }.call
       end
 
       def tag_scope_add(s)

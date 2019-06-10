@@ -3,11 +3,9 @@ module BattleControllerSharedMethods
 
   concerning :IndexMethods do
     included do
-      helper_method :current_query
       helper_method :current_per
       helper_method :current_placeholder
       helper_method :current_mode
-      helper_method :current_search_scope_key
       helper_method :js_index_options
 
       rescue_from "Bioshogi::BioshogiError" do |exception|
@@ -31,16 +29,6 @@ module BattleControllerSharedMethods
         if params[:modal_id] && !modal_record
           flash.now[:alert] = "#{params[:modal_id]} に対応するレコードが見つかりませんでした"
         end
-      end
-    end
-
-    let :current_query do
-      params[:query].presence
-    end
-
-    let :current_queries do
-      if current_query
-        current_query.scan(/\P{Space}+/)
       end
     end
 
@@ -88,12 +76,77 @@ module BattleControllerSharedMethods
       ""
     end
 
-    let :pure_current_scope do
-      current_model.all
+    let :visible_columns do
+      if v = params[:visible_columns]
+        v.scan(/\w+/).to_set
+      end
+    end
+
+    let :current_mode do
+      (params[:mode].presence || :basic).to_sym
+    end
+
+    def js_index_options
+      {
+        query: current_query || "",
+        search_scope_key: current_search_scope_key,
+        xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
+        total: current_records.total_count, # ここで事前にSQLが走るのは仕方ない
+        page: current_records.current_page,
+        per: current_per,
+        sort_column: sort_column,
+        sort_order: sort_order,
+        sort_order_default: "desc", # カラムをクリックしたときの最初の向き
+        records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
+        table_columns_hash: js_table_columns_hash,
+        modal_record: js_modal_record,
+      }
+    end
+
+    private
+
+    def zip_download_limit
+      (params[:limit].presence || AppConfig[:zip_download_limit_default]).to_i.clamp(0, AppConfig[:zip_download_limit_max])
+    end
+
+    def behavior_after_rescue(message)
+      redirect_to :root, danger: message
+    end
+  end
+
+  concerning :QueryMethods do
+    included do
+      helper_method :current_query
+      helper_method :current_search_scope_key
+    end
+
+    let :current_search_scope_key do
+      (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
+    end
+
+    let :current_query do
+      params[:query].presence
+    end
+
+    let :current_queries do
+      if current_query
+        current_query.scan(/\P{Space}+/)
+      end
+    end
+
+    let :current_query_info do
+      QueryInfo.parse(current_query)
+    end
+
+    let :query_hash do
+      current_query_info.attributes
     end
 
     let :current_scope do
-      s = pure_current_scope
+      s = current_model.all
+      if v = query_hash.dig(:ids)
+        s = s.where(id: v)
+      end
       s = search_scope_add(s)
       if r = ransack_params
         s = s.merge(current_model.ransack(r).result)
@@ -145,46 +198,6 @@ module BattleControllerSharedMethods
       end
     end
 
-    let :visible_columns do
-      if v = params[:visible_columns]
-        v.scan(/\w+/).to_set
-      end
-    end
-
-    let :current_mode do
-      (params[:mode].presence || :basic).to_sym
-    end
-
-    let :current_search_scope_key do
-      (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
-    end
-
-    def js_index_options
-      {
-        query: current_query || "",
-        search_scope_key: current_search_scope_key,
-        xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
-        total: current_records.total_count, # ここで事前にSQLが走るのは仕方ない
-        page: current_records.current_page,
-        per: current_per,
-        sort_column: sort_column,
-        sort_order: sort_order,
-        sort_order_default: "desc", # カラムをクリックしたときの最初の向き
-        records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
-        table_columns_hash: js_table_columns_hash,
-        modal_record: js_modal_record,
-      }
-    end
-
-    private
-
-    def zip_download_limit
-      (params[:limit].presence || AppConfig[:zip_download_limit_default]).to_i.clamp(0, AppConfig[:zip_download_limit_max])
-    end
-
-    def behavior_after_rescue(message)
-      redirect_to :root, danger: message
-    end
   end
 
   concerning :ModalMethods do
