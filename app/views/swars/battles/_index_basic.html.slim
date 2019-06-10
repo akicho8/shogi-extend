@@ -23,6 +23,23 @@
   .column
     = render partial: "filter_dropdown"
 
+.columns
+  .column
+    button.button.is-small(@click.stop.prevent="matometemiru_handle")
+      | 仕掛けの局面の一覧を表示
+    span.is-size-7.has-text-danger
+      | &nbsp;
+      | ← 新機能
+
+template(v-if="matometemiru")
+  .columns.is-multiline
+    template(v-for="e in records")
+      .column.is-one-fifth.has-text-centered.is-narrow
+        a(@click.stop.prevent="show_handle(e)")
+          small.word_break.has-text-grey
+            | {{e.title}}
+          img(:src="e.twitter_staitc_image_url")
+
 = render partial: "free_battles/modal_shogi_player"
 = render partial: "free_battles/table"
 = render partial: "free_battles/index_footer"

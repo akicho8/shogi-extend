@@ -32,6 +32,8 @@ export default {
       sp_run_mode: "view_mode",
 
       real_pos: null,           // 現在表示している手数
+
+      matometemiru: false,
     }
   },
 
@@ -47,6 +49,10 @@ export default {
   },
 
   methods: {
+    matometemiru_handle() {
+      this.matometemiru = !this.matometemiru
+    },
+
     seek_to(pos) {
       this.real_pos = pos
     },
