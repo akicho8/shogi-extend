@@ -144,6 +144,7 @@ module BattleControllerSharedMethods
 
     let :current_scope do
       s = current_model.all
+      s = s.public_send("with_attached_#{'thumbnail_image'}")
       s = tag_scope_add(s)
       s = search_scope_add(s)
       s = other_scope_add(s)
@@ -345,7 +346,27 @@ module BattleControllerSharedMethods
     end
 
     def js_record_for(e)
-      e.as_json(methods: [:sp_turn, :og_turn]).tap do |a|
+      e.as_json(
+        only: [
+          :id,
+          :key,
+          # :battled_at,
+          :turn_max,
+          # :preset_key,
+          # :start_turn,
+          # :critical_turn,
+          :saturn_key,
+          :sfen_body,
+          :image_turn,
+          :sp_turn,
+          :og_turn,
+        ],
+        methods: [
+          :sp_turn,
+          :og_turn,
+        ],
+        ).tap do |a|
+
         a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
         a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
         a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ

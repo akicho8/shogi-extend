@@ -2,13 +2,11 @@ module BattleModelSharedMethods
   extend ActiveSupport::Concern
 
   included do
+    include TaggingModel
+
     cattr_accessor(:kifu_cache_enable)     { true }
     cattr_accessor(:kifu_cache_expires_in) { 1.days }
 
-    acts_as_ordered_taggable_on :defense_tags
-    acts_as_ordered_taggable_on :attack_tags
-    acts_as_ordered_taggable_on :technique_tags
-    acts_as_ordered_taggable_on :note_tags
     acts_as_ordered_taggable_on :other_tags
     acts_as_ordered_taggable_on :secret_tags
 

@@ -234,7 +234,7 @@ module Swars
         out = []
         out << "将棋ウォーズ#{rule_info.long_name}"
         # out << final_info.name
-        out << memberships.collect { |e| (e.attack_tag_list.presence || ["その他"]).join(" ") }.join(" vs ")
+        out << memberships.collect { |e| (e.tag_names_for(:attack).presence || ["その他"]).join(" ") }.join(" vs ")
         out.join(" ")
       end
     end

@@ -94,7 +94,7 @@ module ModulableCrud
     end
 
     let :current_records do
-      current_scope.order(:id).reverse_order.page(params[:page])
+      current_scope.page(params[:page])
     end
 
     let :js_current_records do

@@ -20,6 +20,8 @@
 
 module Swars
   class Membership < ApplicationRecord
+    include TaggingModel
+
     belongs_to :battle            # 対局
     belongs_to :user, touch: true # 対局者
     belongs_to :grade             # 対局したときの段位
@@ -30,10 +32,6 @@ module Swars
 
     scope :judge_key_eq, -> v { where(judge_key: v).take }
 
-    acts_as_ordered_taggable_on :defense_tags
-    acts_as_ordered_taggable_on :attack_tags
-    acts_as_ordered_taggable_on :technique_tags
-    acts_as_ordered_taggable_on :note_tags
 
     before_validation do
       if user

@@ -344,7 +344,8 @@ module Swars
       def current_scope
         @current_scope ||= -> {
           s = super
-          s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
+          # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
+          s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
 
           if current_swars_user
             s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
@@ -392,12 +393,14 @@ module Swars
 
       def js_record_for(e)
         a = super
+
         a[:title] = e.to_title
         a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
         a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
         a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
         a[:swars_real_battle_url] = swars_real_battle_url(e)
         a[:wars_tweet_body] = e.wars_tweet_body
+
         a[:memberships] = left_right_pairs(e).collect do |label, e|
           attrs = {
             label: label,
@@ -408,12 +411,21 @@ module Swars
             swars_home_url: e.user.swars_home_url,
           }
           [:attack, :defense].each do |key|
-            attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
-              { name: e, url: swars_tag_search_path(e) }
-            end
+            # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
+            #   { name: e, url: swars_tag_search_path(e) }
+            # end
+
+            attrs["#{key}_tag_list"] = e.tag_names_for(key).collect { |name|
+              { name: name, url: swars_tag_search_path(name) }
+            }
+
+            # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
+            #   { name: e, url: swars_tag_search_path(e) }
+            # end
           end
           attrs
         end
+
         a
       end
     end
