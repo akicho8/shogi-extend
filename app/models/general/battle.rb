@@ -29,6 +29,7 @@ module General
   class Battle < ApplicationRecord
     include BattleModelSharedMethods
 
+    attribute :title            # インターフェイスを統一するため
     attribute :description      # インターフェイスを統一するため
 
     has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
