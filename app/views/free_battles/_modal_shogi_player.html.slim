@@ -24,6 +24,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             :size="'default'"
             :sound_effect="true"
             :volume=AppConfig[:volume]
+            :setting_button_show="false"
             @update:start_turn="seek_to"
             ref="modal_shogi_player"
           )
