@@ -51,23 +51,22 @@ template(v-if="trick_show")
         a(@click.stop.prevent="show_handle(e)")
           small.word_break.has-text-black-ter
             | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
-          keep-alive
-            shogi_player(
-              :run_mode="'view_mode'"
-              :debug_mode="false"
-              :start_turn="start_turn_for(e)"
-              :kifu_body="e.sfen_body"
-              :key_event_capture="true"
-              :theme="'simple'"
-              :size="'x-small'"
-              :sound_effect="false"
-              :hidden_if_piece_stand_blank="true"
-              :setting_button_show="false"
-              :summary_show="false"
-              :operation_disable="true"
-              :overlay_navi="false"
-              :flip="e.fliped"
-            )
+          shogi_player(
+            :run_mode="'view_mode'"
+            :debug_mode="false"
+            :start_turn="start_turn_for(e)"
+            :kifu_body="e.sfen_body"
+            :key_event_capture="true"
+            :theme="'simple'"
+            :size="'x-small'"
+            :sound_effect="false"
+            :hidden_if_piece_stand_blank="true"
+            :setting_button_show="false"
+            :summary_show="false"
+            :operation_disable="true"
+            :overlay_navi="false"
+            :flip="e.fliped"
+          )
           small.word_break.has-text-black-ter
             | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
 
