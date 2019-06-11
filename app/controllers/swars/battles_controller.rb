@@ -133,6 +133,7 @@ module Swars
 
     def js_index_options
       super.merge({
+          current_user_key: current_user_key,
           player_info_path: current_user_key ? url_for([:swars, :player_infos, user_key: current_user_key, only_path: true]) : nil,
         })
     end
@@ -226,22 +227,25 @@ module Swars
     end
 
     def left_right_pairs(record)
-      row = {}
+      fliped = false
       a = record.memberships.to_a
       if current_swars_user
         labels = ["対象", "相手"]
         if a.last.user == current_swars_user
-          a = a.reverse
+          fliped = true
         end
       else
         labels = ["勝ち", "負け"]
         if record.win_user_id
           if a.last.judge_key == "win"
-            a = a.reverse
+            fliped = true
           end
         end
       end
-      labels.zip(a)
+      if fliped
+        a = a.reverse
+      end
+      [fliped, labels.zip(a)]
     end
 
     def slow_processing_error_redirect_url
@@ -400,7 +404,8 @@ module Swars
         a[:swars_real_battle_url] = swars_real_battle_url(e)
         a[:wars_tweet_body] = e.wars_tweet_body
 
-        a[:memberships] = left_right_pairs(e).collect do |label, e|
+        fliped, pairs = left_right_pairs(e)
+        a[:memberships] = pairs.collect do |label, e|
           attrs = {
             label: label,
             player_info_path: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
@@ -408,6 +413,8 @@ module Swars
             name_with_grade: e.name_with_grade,
             query_user_url: polymorphic_path(e.user),
             swars_home_url: e.user.swars_home_url,
+            location: { hexagon_mark: e.location.hexagon_mark },
+            # position: e.position,
           }
           [:attack, :defense].each do |key|
             # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
@@ -424,6 +431,8 @@ module Swars
           end
           attrs
         end
+
+        a[:fliped] = fliped
 
         a
       end

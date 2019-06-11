@@ -369,6 +369,8 @@ module BattleControllerSharedMethods
         ],
         ).tap do |a|
 
+        a[:fliped] = false      # free_battles の方では設定してないので初期値を入れとく
+
         a[:title] = e.title
         a[:description] = e.description
         a[:twitter_staitc_image_url] = twitter_staitc_image_url(e)

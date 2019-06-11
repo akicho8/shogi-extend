@@ -47,7 +47,7 @@ template(v-if="matometemiru")
       .column.is-one-fifth.has-text-centered.is-narrow
         a(@click.stop.prevent="show_handle(e)")
           small.word_break.has-text-black-ter
-            | ☖ {{e.memberships[1].name_with_grade}}
+            | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
           keep-alive
             shogi_player(
               :run_mode="'view_mode'"
@@ -63,9 +63,10 @@ template(v-if="matometemiru")
               :summary_show="false"
               :operation_disable="true"
               :overlay_navi="false"
+              :flip="e.fliped"
             )
           small.word_break.has-text-black-ter
-            | ☗ {{e.memberships[0].name_with_grade}}
+            | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
 
 = render partial: "free_battles/modal_shogi_player"
 = render partial: "free_battles/table"
