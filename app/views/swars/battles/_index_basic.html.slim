@@ -31,14 +31,41 @@
       | &nbsp;
       | ← 新機能
 
+- if false
+  template(v-if="matometemiru")
+    .columns.is-multiline
+      template(v-for="e in records")
+        .column.is-one-fifth.has-text-centered.is-narrow
+          a(@click.stop.prevent="show_handle(e)")
+            small.word_break.has-text-grey
+              | {{e.title}}
+            img(:src="e.twitter_staitc_image_url")
+
 template(v-if="matometemiru")
   .columns.is-multiline
     template(v-for="e in records")
       .column.is-one-fifth.has-text-centered.is-narrow
         a(@click.stop.prevent="show_handle(e)")
-          small.word_break.has-text-grey
-            | {{e.title}}
-          img(:src="e.twitter_staitc_image_url")
+          small.word_break.has-text-black-ter
+            | ☖ {{e.memberships[1].name_with_grade}}
+          shogi_player(
+            :run_mode="'view_mode'"
+            :debug_mode="false"
+            :start_turn="start_turn_for(e)"
+            :kifu_body="e.sfen_body"
+            :key_event_capture="true"
+            :theme="'simple'"
+            :size="'x-small'"
+            :sound_effect="true"
+            :volume=AppConfig[:volume]
+            :hidden_if_piece_stand_blank="true"
+            :setting_button_show="false"
+            :summary_show="false"
+            :operation_disable="true"
+            :overlay_navi="false"
+          )
+          small.word_break.has-text-black-ter
+            | ☗ {{e.memberships[0].name_with_grade}}
 
 = render partial: "free_battles/modal_shogi_player"
 = render partial: "free_battles/table"

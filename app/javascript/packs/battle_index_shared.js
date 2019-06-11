@@ -169,6 +169,19 @@ export default {
     url_build(attributes) {
       return _.map(attributes, (v, k) => `${k}=${v}`).join("&")
     },
+
+    // 開始手数
+    // force_turn start_turn critical_turn の順に見る
+    // force_turn は $options.modal_record にのみ入っている
+    start_turn_for(record) {
+      if (record) {
+        if ("force_turn" in record) {
+          return record.force_turn
+        } else {
+          return record.sp_turn
+        }
+      }
+    },
   },
 
   mounted() {
@@ -239,13 +252,7 @@ export default {
     // force_turn start_turn critical_turn の順に見る
     // force_turn は $options.modal_record にのみ入っている
     start_turn() {
-      if (this.modal_record) {
-        if ("force_turn" in this.modal_record) {
-          return this.modal_record.force_turn
-        } else {
-          return this.modal_record.sp_turn
-        }
-      }
+      return this.start_turn_for(this.modal_record)
     },
   },
 }
