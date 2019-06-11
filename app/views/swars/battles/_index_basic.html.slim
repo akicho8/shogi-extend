@@ -44,7 +44,10 @@
 template(v-if="trick_show")
   .columns.is-multiline
     template(v-for="e in records")
-      .column.is-one-fifth.has-text-centered.is-narrow
+      / widescreen 2/12 = 6
+      / desktop    1/5  = 5
+      / touch      1/4  = 4
+      .column.is-2-widescreen.is-one-fifth-desktop.is-one-quarter-touch-only.has-text-centered
         a(@click.stop.prevent="show_handle(e)")
           small.word_break.has-text-black-ter
             | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
