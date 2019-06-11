@@ -90,6 +90,7 @@ module BattleControllerSharedMethods
       {
         query: current_query || "",
         search_scope_key: current_search_scope_key,
+        trick_show: params[:trick_show],
         xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
         total: current_records.total_count, # ここで事前にSQLが走るのは仕方ない
         page: current_records.current_page,

@@ -25,14 +25,14 @@
 
 .columns
   .column
-    button.button.is-small(@click.stop.prevent="matometemiru_handle")
+    button.button.is-small(@click.stop.prevent="trick_show_handle")
       | 仕掛けの局面を表示
     // span.is-size-7.has-text-danger
     //   | &nbsp;
     //   | ← 新機能
 
 - if false
-  template(v-if="matometemiru")
+  template(v-if="trick_show")
     .columns.is-multiline
       template(v-for="e in records")
         .column.is-one-fifth.has-text-centered.is-narrow
@@ -41,7 +41,7 @@
               | {{e.title}}
             img(:src="e.twitter_staitc_image_url")
 
-template(v-if="matometemiru")
+template(v-if="trick_show")
   .columns.is-multiline
     template(v-for="e in records")
       .column.is-one-fifth.has-text-centered.is-narrow
