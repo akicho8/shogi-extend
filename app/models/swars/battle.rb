@@ -215,7 +215,7 @@ module Swars
       end
 
       def wars_tweet_body
-        "将棋ウォーズ棋譜(#{to_title}) #{wars_url} #shogiwars #将棋"
+        "将棋ウォーズ棋譜(#{title}) #{wars_url} #shogiwars #将棋"
       end
 
       def wars_url
@@ -226,7 +226,7 @@ module Swars
         super.merge("場所" => h.link_to(key, wars_url, target: "_blank"))
       end
 
-      def to_title
+      def title
         memberships.collect(&:name_with_grade).join(" 対 ")
       end
 

@@ -164,13 +164,9 @@ module BattleModelSharedMethods
   def to_kifu_copy_params(h, **options)
     {
       kc_url: h.url_for(self),
-      kc_title: to_title,
+      kc_title: title,
       **options,
     }
-  end
-
-  def to_title
-    to_param
   end
 
   def sp_turn
@@ -272,7 +268,7 @@ module BattleModelSharedMethods
 
     def tweet_body(**options)
       out = []
-      out << to_title
+      out << title
       out << description
       out << (options[:url] || tweet_modal_url) # URLは最後にすることでURLの表示がツイート内容から隠せる
       out.reject(&:blank?).join("\n")

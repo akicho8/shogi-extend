@@ -241,9 +241,9 @@ module BattleControllerSharedMethods
         options = {}
 
         if v = current_force_turn
-          options[:title] = "#{e.to_title}【#{v}手目】"
+          options[:title] = "#{e.title}【#{v}手目】"
         else
-          options[:title] = e.to_title
+          options[:title] = e.title
         end
 
         if v = current_force_turn
@@ -331,7 +331,7 @@ module BattleControllerSharedMethods
 
     let :show_twitter_options do
       options = {}
-      options[:title] = current_record.to_title
+      options[:title] = current_record.title
       options[:url] = current_record.tweet_modal_url
       options[:description] = current_record.description
       options[:image] = twitter_staitc_image_url(current_record)
@@ -346,6 +346,8 @@ module BattleControllerSharedMethods
     end
 
     def js_record_for(e)
+      # e.attributes は継承しない
+
       e.as_json(
         only: [
           :id,
@@ -367,6 +369,8 @@ module BattleControllerSharedMethods
         ],
         ).tap do |a|
 
+        a[:title] = e.title
+        a[:description] = e.description
         a[:twitter_staitc_image_url] = twitter_staitc_image_url(e)
         a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
         a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
@@ -420,7 +424,7 @@ module BattleControllerSharedMethods
         text_body = current_record.to_cached_kifu(params[:format])
 
         if params[:copy_trigger]
-          SlackAgent.message_send(key: "#{params[:format]}コピー", body: current_record.to_title)
+          SlackAgent.message_send(key: "#{params[:format]}コピー", body: current_record.title)
         end
 
         # 激指ではクリップボードは UTF8 でないと読めない

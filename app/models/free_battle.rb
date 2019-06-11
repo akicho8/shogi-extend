@@ -102,10 +102,6 @@ class FreeBattle < ApplicationRecord
     "#{self.class.count.next}番目の何かの棋譜"
   end
 
-  def to_title
-    title
-  end
-
   # 01060_77dacfcf0a24e8315ddd51e86152d3b2_横歩取り_急戦1__飛車先を受けずに互いに攻め合うと封じ込まれて後手有利.kif
   # のような形式にする
   def download_filename

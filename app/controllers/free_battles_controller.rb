@@ -169,7 +169,6 @@ class FreeBattlesController < ApplicationController
     end
   end
 
-
   concerning :IndexCustomMethods do
     let :table_columns_hash do
       list = []
@@ -185,6 +184,9 @@ class FreeBattlesController < ApplicationController
 
     def js_record_for(e)
       a = super
+
+      a[:title] = e.title
+      a[:description] = e.description
 
       if e.owner_user
         a[:owner_info] = { name: e.owner_user.name, url: url_for(e.owner_user) }
