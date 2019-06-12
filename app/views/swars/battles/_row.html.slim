@@ -68,7 +68,7 @@ template(slot-scope="props")
           b-dropdown-item(:has-link="true" :paddingless="true")
             a(@click.stop :href="props.row.show_path")
               b-icon(icon="play" size="is-small")
-              | &nbsp;&nbsp;
+              | &nbsp;&nbsp;&nbsp;
               | 詳細
 
         - unless Rails.env.production?
@@ -76,7 +76,7 @@ template(slot-scope="props")
             b-dropdown-item(:has-link="true" :paddingless="true")
               a(@click.stop :href="props.row.edit_path")
                 b-icon(icon="pencil" size="is-small")
-                | &nbsp;&nbsp;
+                | &nbsp;&nbsp;&nbsp;
                 | 編集
 
         - unless Rails.env.production?
@@ -84,7 +84,7 @@ template(slot-scope="props")
             b-dropdown-item(:has-link="true" :paddingless="true")
               a(@click.stop :href="e.player_info_path")
                 b-icon(icon="account" size="is-small")
-                | &nbsp;&nbsp;
+                | &nbsp;&nbsp;&nbsp;
                 | {{e.name_with_grade}} 情報
 
         b-dropdown-item(:separator="true")
@@ -92,13 +92,13 @@ template(slot-scope="props")
         b-dropdown-item(:has-link="true" :paddingless="true")
           a(@click.stop :href="`${props.row.show_path}.kif`")
             b-icon(icon="download" size="is-small")
-            | &nbsp;&nbsp;
+            | &nbsp;&nbsp;&nbsp;
             | KIF ダウンロード
 
         b-dropdown-item(:has-link="true" :paddingless="true")
           a(@click.stop :href="`${props.row.show_path}.ki2`")
             b-icon(icon="download" size="is-small")
-            | &nbsp;&nbsp;
+            | &nbsp;&nbsp;&nbsp;
             | KI2 ダウンロード
 
         b-dropdown-item(:separator="true")
@@ -106,11 +106,11 @@ template(slot-scope="props")
         b-dropdown-item(:has-link="true" :paddingless="true")
           a(@click.stop :href="props.row.swars_real_battle_url" target="_blank")
             b-icon(icon="link" size="is-small")
-            | &nbsp;&nbsp;
+            | &nbsp;&nbsp;&nbsp;
             | ウォーズに移動
 
         b-dropdown-item(:has-link="true" :paddingless="true")
           a(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)")
             b-icon(icon="clipboard-outline" size="is-small")
-            | &nbsp;&nbsp;
+            | &nbsp;&nbsp;&nbsp;
             | ウォーズ側のTweetコピー

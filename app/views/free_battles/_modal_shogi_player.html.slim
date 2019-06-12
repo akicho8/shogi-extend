@@ -63,11 +63,15 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             template(v-if="modal_record.show_path")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="modal_record.show_path")
+                  b-icon(icon="play" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | 詳細
 
             template(v-if="modal_record.edit_path")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="modal_record.edit_path")
+                  b-icon(icon="pencil" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | 編集
 
             template(v-if="modal_record.new_and_copy")
@@ -80,16 +84,22 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             template(v-if="modal_record.show_path")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="`${modal_record.show_path}.kif`")
+                  b-icon(icon="download" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | KIF ダウンロード
 
             template(v-if="modal_record.kifu_copy_params")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'ki2'})")
+                  b-icon(icon="clipboard-outline" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | KI2 コピー
 
             template(v-if="modal_record.show_path")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="`${modal_record.show_path}.ki2`")
+                  b-icon(icon="download" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | KI2 ダウンロード
 
             b-dropdown-item(:separator="true")
@@ -97,11 +107,15 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             template(v-if="modal_record.tweet_modal_url")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop.prevent="modal_url_copy")
+                  b-icon(icon="clipboard-outline" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | URLをコピー
 
             template(v-if="modal_record.tweet_modal_url")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop.prevent="modal_url_with_turn_copy")
+                  b-icon(icon="clipboard-outline" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | 現在の手数のURLをコピー
 
             b-dropdown-item(:separator="true")
@@ -109,13 +123,15 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             template(v-if="modal_record.edit_path")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="`${modal_record.edit_path}?mode=ogp`")
+                  b-icon(icon="settings-outline" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | OGP画像設定
 
             template(v-if="modal_record.tweet_window_url")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="modal_record.tweet_window_url" target="_blank")
-                  / b-icon(pack="fab" icon="twitter" size="is-small")
-                  / | &nbsp;
+                  b-icon(icon="twitter" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
                   | ツイート
 
             b-dropdown-item(:separator="true")
@@ -124,7 +140,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="modal_record.swars_real_battle_url" target="_blank")
                   b-icon(icon="link" size="is-small")
-                  | &nbsp;&nbsp;
+                  | &nbsp;&nbsp;&nbsp;
                   | ウォーズに移動
 
           template(v-if="false")
