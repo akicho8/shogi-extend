@@ -27,11 +27,8 @@
   .column
     button.button.is-small(@click.stop.prevent="trick_show_handle")
       | 仕掛けの局面を表示
-      | &nbsp;&nbsp;
-      b-icon(:icon="trick_show ? 'minus' : 'plus'" size="is-small")
-    // span.is-size-7.has-text-danger
-    //   | &nbsp;
-    //   | ← 新機能
+      | &nbsp;&nbsp;&nbsp;
+      b-icon(:icon="!trick_show ? 'grid' : 'minus'" size="is-small")
 
 - if false
   template(v-if="trick_show")
