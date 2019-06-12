@@ -43,7 +43,7 @@ template(slot-scope="props")
       template(v-if="props.row.show_path")
         a.button(@click.stop :href="props.row.show_path")
           b-tooltip(label="詳細")
-            b-icon(custom-size="mdi-18px" icon="information-outline")
+            b-icon(custom-size="mdi-18px" icon="play")
 
       template(v-if="props.row.edit_path")
         a.button(@click.stop :href="props.row.edit_path")
