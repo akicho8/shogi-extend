@@ -56,7 +56,7 @@ module Swars
       end
 
       if params[:redirect_to_bookmarkable_page]
-        SlackAgent.message_send(key: "ブクマ移動", body: current_user_key)
+        SlackAgent.message_send(key: "ブクマ移動", body: current_swars_user_key)
         flash[:external_app_exec_skip_once] = true # ブックマークできるように一時的にぴよ将棋に飛ばないようにする
         # flash[:primary] = "この状態で「ホーム画面に追加」しておくと開くと同時に最新の対局をぴよ将棋で開けるようになります"
         redirect_to [:swars, current_mode, query: current_swars_user, latest_open_index: params[:latest_open_index]]
@@ -82,7 +82,7 @@ module Swars
         if latest_open_limit
           if record = current_scope.order(battled_at: :desc).limit(latest_open_limit).last
             @redirect_url_by_js = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
-            SlackAgent.message_send(key: "最新開くぴよ", body: current_user_key)
+            SlackAgent.message_send(key: "最新開くぴよ", body: current_swars_user_key)
             if false
               # この方法だと動くけど白紙のページが開いてしまう
               redirect_to @redirect_url_by_js
@@ -133,8 +133,8 @@ module Swars
 
     def js_index_options
       super.merge({
-          current_user_key: current_user_key,
-          player_info_path: current_user_key ? url_for([:swars, :player_infos, user_key: current_user_key, only_path: true]) : nil,
+          current_swars_user_key: current_swars_user_key,
+          player_info_path: current_swars_user_key ? url_for([:swars, :player_infos, user_key: current_swars_user_key, only_path: true]) : nil,
         })
     end
 
@@ -148,11 +148,11 @@ module Swars
         end
 
         # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-        success = Battle.sometimes_user_import(user_key: current_user_key, page_max: import_page_max)
+        success = Battle.sometimes_user_import(user_key: current_swars_user_key, page_max: import_page_max)
         if !success
           # development でここが通らない
           # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-          flash[:warning] = "#{current_user_key} さんの棋譜はさっき取得したばかりです"
+          flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです"
         end
         if success
           unlet(:current_swars_user)
@@ -161,24 +161,24 @@ module Swars
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
             if hit_count.zero?
-              # flash[:warning] = "#{current_user_key} さんの新しい棋譜は見つかりませんでした"
+              # flash[:warning] = "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした"
             else
               flash[:info] = "#{hit_count}件新しく見つかりました"
             end
             current_swars_user.search_logs.create!
           else
-            flash[:warning] = "#{current_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+            flash[:warning] = "#{current_swars_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
           end
 
           if hit_count.nonzero?
-            SlackAgent.message_send(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_user_key} #{hit_count}件")
+            SlackAgent.message_send(key: current_mode == :basic ? "ウォーズ検索" : "ぴよ専用検索", body: "#{current_swars_user_key} #{hit_count}件")
           end
         end
       end
     end
 
     def import_enable?
-      current_user_key && params[:page].blank? && !params[:import_skip] && !flash[:import_skip]
+      current_swars_user_key && params[:page].blank? && !params[:import_skip] && !flash[:import_skip]
     end
 
     let :import_page_max do
@@ -257,7 +257,7 @@ module Swars
     end
 
     let :current_swars_user do
-      User.find_by(user_key: current_user_key)
+      User.find_by(user_key: current_swars_user_key)
     end
 
     let :current_musers do
@@ -268,7 +268,7 @@ module Swars
       query_hash.dig(:ms_tag)
     end
 
-    let :current_user_key do
+    let :current_swars_user_key do
       if s = (current_query_info.values + current_query_info.urls).first
         # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
         # https://shogiwars.heroz.jp/users/foo                          -> foo

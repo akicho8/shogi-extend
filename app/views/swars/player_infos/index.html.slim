@@ -14,7 +14,7 @@
       = form_with(url: [:swars, :player_infos], method: :get, skip_enforcing_utf8: true, html: {"@submit" => "form_submited"}) do |form|
         .field.has-addons
           .control.is-expanded
-            = form.search_field(:user_key, class: "input", value: current_user_key, placeholder: "ウォーズのIDを入力してください", list: "search_field_query_completion", autofocus: current_user_key.blank?)
+            = form.search_field(:user_key, class: "input", value: current_swars_user_key, placeholder: "ウォーズのIDを入力してください", list: "search_field_query_completion", autofocus: current_swars_user_key.blank?)
             = tag.datalist(id: "search_field_query_completion") do
               - Swars::User.search_form_datalist.each do |e|
                 = tag.option(value: e)

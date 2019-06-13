@@ -1,6 +1,6 @@
 module Swars
   class PlayerInfosController < ApplicationController
-    helper_method :current_user_key
+    helper_method :current_swars_user_key
     helper_method :current_swars_user
     helper_method :js_swars_player_info_app_params
     helper_method :memberships_rule_key_group
@@ -16,23 +16,23 @@ module Swars
         return
       end
 
-      if current_user_key
-        Battle.sometimes_user_import(user_key: current_user_key, page_max: 5)
+      if current_swars_user_key
+        Battle.sometimes_user_import(user_key: current_swars_user_key, page_max: 5)
         unlet(:current_swars_user)
         unless current_swars_user
-          flash.now[:warning] = "#{current_user_key} さんの情報は見つかりませんでした"
+          flash.now[:warning] = "#{current_swars_user_key} さんの情報は見つかりませんでした"
           return
         end
         SlackAgent.message_send(key: "プレイヤー情報", body: current_swars_user.user_key)
       end
     end
 
-    let :current_user_key do
+    let :current_swars_user_key do
       params[:user_key].to_s.strip.presence
     end
 
     let :current_swars_user do
-      User.find_by(user_key: current_user_key)
+      User.find_by(user_key: current_swars_user_key)
     end
 
     let :js_swars_player_info_app_params do
@@ -189,7 +189,7 @@ module Swars
     end
 
     def slow_processing_error_redirect_url
-      [:swars, :player_infos, user_key: current_user_key, stop_processing_because_it_is_too_heavy: 1]
+      [:swars, :player_infos, user_key: current_swars_user_key, stop_processing_because_it_is_too_heavy: 1]
     end
   end
 end
