@@ -71,7 +71,7 @@ export default {
 
       let success = null
 
-      if (false) {
+      if (true) {
         // この方法は iPhone で動かない。先に elem.select() を実行した時点で iPhone の方が作動しなくなる
         if (false) {
           const elem = document.createElement("textarea")
@@ -94,7 +94,7 @@ export default {
         }
 
         // https://marmooo.blogspot.com/2018/02/javascript.html
-        if (false) {
+        if (true) {
           const elem = document.createElement('textarea')
           document.body.appendChild(elem)
           elem.value = params["text"]
@@ -103,8 +103,9 @@ export default {
         }
 
         if (!success) {
-          this.talk(params["error_yomiage"])
-          this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
+          // this.talk(params["error_yomiage"])
+          // this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
+          this.clipboard_copy_myself(params)
           return
         }
 
@@ -112,8 +113,9 @@ export default {
         this.$toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
       }
 
+      // この方法は Windows Chrome で必ず失敗するというか navigator.clipboard が定義されてないので激指をメインで使う人は異様に使いにくくなってしまう
       // https://alligator.io/js/async-clipboard-api/
-      if (true) {
+      if (false) {
         if (navigator.clipboard) {
           navigator.clipboard.writeText(params["text"]).then(() => {
             this.talk(params["success_yomiage"])
@@ -132,6 +134,10 @@ export default {
       this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
 
       const ModalForm = {
+        mounted() {
+          this.$refs.text_copy_textarea.focus()
+          this.$refs.text_copy_textarea.select()
+        },
         template: `
 <form action="">
 <div class="modal-card" style="width: auto">
@@ -140,7 +146,7 @@ export default {
 </header>
 <section class="modal-card-body">
   <b-field label="">
-    <b-input type="textarea" value="${params['text']}"></b-input>
+    <b-input type="textarea" value="${params['text']}" ref="text_copy_textarea"></b-input>
   </b-field>
 </section>
 <footer class="modal-card-foot">
