@@ -29,6 +29,10 @@
       | 仕掛けの局面を表示
       | &nbsp;&nbsp;&nbsp;
       b-icon(:icon="!trick_show ? 'grid' : 'minus'" size="is-small")
+    template(v-if="trick_show")
+      | &nbsp;
+      | &nbsp;
+      b-switch(v-model="end_show") 終了図
 
 - if false
   template(v-if="trick_show")
@@ -46,7 +50,7 @@
     / desktop    1/5  = 5
     / touch      1/4  = 4
     .column.is-2-widescreen.is-one-fifth-desktop.is-one-quarter-touch-only.has-text-centered
-      a(@click.stop.prevent="show_handle(e)")
+      a.no-decoration(@click.stop.prevent="show_handle(e)")
         small.word_break.has-text-black-ter
           | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
         shogi_player(
@@ -56,9 +60,9 @@
           :kifu_body="e.sfen_body"
           :key_event_capture="true"
           :theme="'simple'"
-          :size="'x-small'"
+          :size="!end_show ? 'x-small' : 'xx-small'"
           :sound_effect="false"
-          :hidden_if_piece_stand_blank="true"
+          :hidden_if_piece_stand_blank="!end_show ? true : false"
           :setting_button_show="false"
           :summary_show="false"
           :operation_disable="true"

@@ -7,6 +7,7 @@ export default {
       query: this.$options.query,     // 検索文字列
       search_scope_key: this.$options.search_scope_key,     // スコープ
       trick_show: this.$options.trick_show,
+      end_show: this.$options.end_show,
 
       modal_p: false,                 // モーダルを開くフラグ
       modal_record: null,             // 選択したレコード
@@ -174,6 +175,10 @@ export default {
     // force_turn は $options.modal_record にのみ入っている
     start_turn_for(record) {
       if (record) {
+        if (this.end_show) {
+          return record.turn_max
+        }
+
         if ("force_turn" in record) {
           return record.force_turn
         } else {
@@ -201,6 +206,7 @@ export default {
         query:            this.query,
         search_scope_key: this.search_scope_key,
         trick_show:       this.trick_show,
+        end_show:      this.end_show,
         page:             this.page,
         per:              this.per,
         sort_column:      this.sort_column,
