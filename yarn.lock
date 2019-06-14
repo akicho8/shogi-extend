@@ -8346,6 +8346,11 @@ uid-number@^0.0.6:
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
   integrity sha1-DqEOgDXo61uOREnwbaHHMGY7qoE=
 
+umbrellajs@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/umbrellajs/-/umbrellajs-3.1.0.tgz#a4e6f0f6381f9d93110b5eee962e0e0864b10bd0"
+  integrity sha512-3qichMg1Q6EetLweBAT0L55O2W6CJe9qyiSt1RBnf+bcOqwJ4R7e2PDcoIUrCsg+uRo3DXOvurWdklBu0ia7fg==
+
 union-value@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/union-value/-/union-value-1.0.0.tgz#5c71c34cb5bad5dcebe3ea0cd08207ba5aa1aea4"

@@ -48,6 +48,7 @@
     "shogi-player": "^0.0.136",
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "^1.1.6",
+    "umbrellajs": "^3.1.0",
     "url-loader": "^0.5.8",
     "vue": "^2.5.16",
     "vue-loader": "^13.6.1",
