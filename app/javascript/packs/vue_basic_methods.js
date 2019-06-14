@@ -66,7 +66,7 @@ export default {
         success_message: "クリップボードにコピーしました",
         error_message: "クリップボードへのコピーに失敗しました",
         success_yomiage: "コピーしました",
-        error_yomiage: "失敗したので自力でコピーしてください",
+        error_yomiage: "失敗しました",
       }, params)
 
       let success = null
@@ -105,7 +105,7 @@ export default {
         if (!success) {
           // this.talk(params["error_yomiage"])
           // this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
-          this.clipboard_copy_myself(params)
+          this.clipboard_copy_error_dialog(params)
           return
         }
 
@@ -121,30 +121,33 @@ export default {
             this.talk(params["success_yomiage"])
             this.$toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
           }).catch(err => {
-            this.clipboard_copy_myself(params)
+            this.clipboard_copy_error_dialog(params)
           })
         } else {
-          this.clipboard_copy_myself(params)
+          this.clipboard_copy_error_dialog(params)
         }
       }
     },
 
-    clipboard_copy_myself(params) {
+    clipboard_copy_error_dialog(params) {
       this.talk(params["error_yomiage"])
-      this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
+      // this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
 
-      const ModalForm = {
-        mounted() {
-          this.$refs.text_copy_textarea.focus()
-          this.$refs.text_copy_textarea.select()
-        },
-        template: `
-<form action="">
+      this.$modal.open({
+        parent: this,
+        hasModalCard: true,
+        component: {
+          mounted() {
+            this.$refs.text_copy_textarea.focus()
+            this.$refs.text_copy_textarea.select()
+          },
+          template: `
 <div class="modal-card" style="width: auto">
 <header class="modal-card-head">
-  <p class="modal-card-title">失敗したので自力でコピーしてください</p>
+  <p class="modal-card-title">コピーに失敗しました</p>
 </header>
 <section class="modal-card-body">
+  <p><small>こちらから手動でコピーしてみてください</small><p/>
   <b-field label="">
     <b-input type="textarea" value="${params['text']}" ref="text_copy_textarea"></b-input>
   </b-field>
@@ -153,13 +156,8 @@ export default {
   <button class="button" type="button" @click="$parent.close()">閉じる</button>
 </footer>
 </div>
-</form>
     `,
-      }
-      this.$modal.open({
-        parent: this,
-        component: ModalForm,
-        hasModalCard: true
+        },
       })
     },
 
