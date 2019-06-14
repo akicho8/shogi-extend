@@ -206,7 +206,7 @@ export default {
         query:            this.query,
         search_scope_key: this.search_scope_key,
         trick_show:       this.trick_show,
-        end_show:      this.end_show,
+        end_show:         this.end_show,
         page:             this.page,
         per:              this.per,
         sort_column:      this.sort_column,
