@@ -12,7 +12,7 @@ module TaggingModel
   def tag_names_for(key)
     context = "#{key}_tags"
     if taggings.loaded?
-      taggings.find_all { |e| e.context == context }.map { |e| e.tag.name }
+      taggings.find_all { |e| e.context == context }.collect { |e| e.tag.name }
     else
       send("#{key}_tags").pluck(:name)
     end
