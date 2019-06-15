@@ -157,8 +157,18 @@ module BattleControllerSharedMethods
       if v = query_hash.dig(:ids)
         s = s.where(id: v)
       end
-      if r = ransack_params
-        s = s.merge(current_model.ransack(r).result)
+      if v = ransack_params
+        if true
+          s = s.merge(current_model.ransack(v).result)
+        else
+          # current_queries.each do |e|
+          #   m = current_model
+          #   w = m.where(["title LIKE BINARY ?", "%#{e}%"])
+          #   w = w.or(m.where(["description LIKE BINARY ?", "%#{e}%"]))
+          #   s = s.merge(w)
+          # end
+          # # raise s.to_sql.inspect
+        end
       end
       s
     end
