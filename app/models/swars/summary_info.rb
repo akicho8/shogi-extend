@@ -59,11 +59,11 @@ module Swars
             count = ms_a.count
             count_set(stat, "【#{rule_info.name}】最終着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負け", count, danger_p: count.nonzero?, memberships: ms_a)
 
-            ms_a = ships.find_all { |e| e.summary_key == "詰ます" && e.sec_list.last >= rule_info.leave_alone_limit }
+            ms_a = ships.find_all { |e| e.summary_key == "詰ました" && e.sec_list.last >= rule_info.leave_alone_limit }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ます", count, danger_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ました", count, danger_p: count.nonzero?, memberships: ms_a)
 
-            scope = ships.find_all { |e| e.summary_key == "詰ます" }
+            scope = ships.find_all { |e| e.summary_key == "詰ました" }
             if ms = scope.max_by { |e| e.sec_list.last.to_i }
               sec = ms.sec_list.last.to_i
               sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
