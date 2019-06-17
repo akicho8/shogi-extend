@@ -320,7 +320,10 @@ module BattleControllerSharedMethods
             if Rails.env.development?
               message << "(フッターのデバッグリンクから任意のユーザーまたは sysop でログインしてください)"
             end
-            redirect_to :root, alert: message
+            if Rails.env.test?
+            else
+              redirect_to :root, alert: message
+            end
           end
         end
       end
@@ -494,6 +497,10 @@ module BattleControllerSharedMethods
   end
 
   concerning :EditMethods do
+    included do
+      helper_method :js_edit_ogp_options
+    end
+
     let :js_edit_ogp_options do
       js_show_options
     end
