@@ -44,6 +44,14 @@ RSpec.describe "棋譜投稿", type: :system do
     expect(page).to have_content "新米長玉"
   end
 
+  it "編集" do
+    visit "/x/#{@free_battle.id}/edit"
+  end
+
+  it "OGP画像設定" do
+    visit "/x/#{@free_battle.id}/edit?mode=ogp"
+  end
+
   # click_on("テキスト入力") 相当
   def text_input_click
     find(".input_method_tabs .tabs li:nth-child(2)").click
