@@ -74,10 +74,12 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
                   | &nbsp;&nbsp;&nbsp;
                   | 編集
 
-            template(v-if="modal_record.new_and_copy")
+            template(v-if="modal_record.new_and_copy_url")
               b-dropdown-item(:has-link="true" :paddingless="true")
-                a(@click.stop :href="modal_record.new_and_copy.url")
-                  | {{modal_record.new_and_copy.name}}
+                a(@click.stop :href="modal_record.new_and_copy_url")
+                  b-icon(icon="open-in-new" size="is-small")
+                  | &nbsp;&nbsp;&nbsp;
+                  | コピペ新規
 
             b-dropdown-item(:separator="true")
 
