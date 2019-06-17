@@ -209,7 +209,7 @@ module BattleModelSharedMethods
 
     # KI2変換可能だけど重い
     def heavy_parsed_info
-      @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: true)
+      @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
     end
 
     # オプションはサブクラスで渡してもらう
