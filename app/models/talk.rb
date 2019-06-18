@@ -1,3 +1,4 @@
+# https://us-east-1.console.aws.amazon.com/polly/home/SynthesizeSpeech
 #
 # Talk.new(source_text: "こんにちは")
 #
@@ -7,8 +8,7 @@ class Talk
       output_format: "mp3",
       sample_rate: "16000",
       text_type: "text",
-      voice_id: "Mizuki",
-      # voice_id: "Takumi",
+      voice_id: "Takumi",       # Mizuki or Takumi
     }
   end
 
