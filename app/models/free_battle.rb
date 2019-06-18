@@ -48,11 +48,13 @@ class FreeBattle < ApplicationRecord
     end
 
     def file_import(file)
+      kifu_body = file.read
+
       if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<saturn_key>.)_(?<title_with_desc>.*)/)
         title, description = md["title_with_desc"].split("__")
         record = find_by(key: md["key"]) || new(key: md["key"])
         record.owner_user = Colosseum::User.find_by(name: Rails.application.credentials.production_my_user_name) || Colosseum::User.sysop
-        record.kifu_body = file.read
+        record.kifu_body = kifu_body
         record.title = title.gsub(/_/, " ")
 
         if description
@@ -73,7 +75,13 @@ class FreeBattle < ApplicationRecord
         error = nil
         begin
           # record.parser_exec    # かならずパースする
-          record.save!
+          if kifu_body.blank?
+            if record.persisted?
+              record.destroy!
+            end
+          else
+            record.save!
+          end
         rescue => error
           pp record
           pp record.errors.full_messages
