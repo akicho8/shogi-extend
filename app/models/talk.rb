@@ -8,7 +8,6 @@ class Talk
       output_format: "mp3",
       sample_rate: "16000",
       text_type: "text",
-      voice_id: "Takumi",       # Mizuki or Takumi
     }
   end
 
@@ -89,7 +88,15 @@ class Talk
   end
 
   def polly_params
-    default_polly_params.merge(@params[:polly_params])
+    default_polly_params.merge({voice_id: voice_id}, @params[:polly_params])
+  end
+
+  def voice_id
+    if Time.current.day.even?
+      "Takumi"
+    else
+      "Mizuki"
+    end
   end
 
   def relative_path
