@@ -216,11 +216,11 @@ module BattleControllerSharedMethods
 
     def other_scope_add(s)
       if v = query_hash.dig(:turn_max_gteq)&.first
-        s = s.where(Battle.arel_table[:turn_max].gteq(v))
+        s = s.where(current_model.arel_table[:turn_max].gteq(v))
       end
 
       if v = query_hash.dig(:turn_max_lt)&.first
-        s = s.where(Battle.arel_table[:turn_max].lt(v))
+        s = s.where(current_model.arel_table[:turn_max].lt(v))
       end
 
       s

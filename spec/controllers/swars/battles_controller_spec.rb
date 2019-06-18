@@ -41,6 +41,9 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
     get :index, params: {query: "devuser1"}
     expect(response).to have_http_status(:ok)
+
+    get :index, params: {query: "turn_max_gteq:200"}
+    expect(response).to have_http_status(:ok)
   end
 
   it "show" do
