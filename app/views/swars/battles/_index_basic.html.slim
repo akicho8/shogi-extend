@@ -53,6 +53,7 @@
       a.no-decoration(@click.stop.prevent="show_handle(e)")
         small.word_break.has-text-black-ter
           | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
+        / :size="!end_show ? 'x-small' : 'xx-small'"
         shogi_player(
           :run_mode="'view_mode'"
           :debug_mode="false"
@@ -60,9 +61,10 @@
           :kifu_body="e.sfen_body"
           :key_event_capture="true"
           :theme="'simple'"
-          :size="!end_show ? 'x-small' : 'xx-small'"
+          :size="'x-small'"
           :sound_effect="false"
           :hidden_if_piece_stand_blank="!end_show ? true : false"
+          :vlayout="true"
           :setting_button_show="false"
           :summary_show="false"
           :operation_disable="true"
