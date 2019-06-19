@@ -41,4 +41,16 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     expect(page).to have_content "データ収集中なのであと15秒ぐらいしてからお試しください"
     doc_image
   end
+
+  it "仕掛けの局面表示" do
+    visit "/w?query=devuser1&trick_show=true"
+    expect(page).to have_content "終了図"
+    doc_image
+  end
+
+  it "終了の局面表示" do
+    visit "/w?query=devuser1&trick_show=true&end_show=true"
+    expect(page).to have_content "終了図"
+    doc_image
+  end
 end
