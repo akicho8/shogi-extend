@@ -1,9 +1,10 @@
-// Vue.js にする必要ない気がするけど今後膨らむかもしれないのでこれでいい
+import battle_show_shared from "./battle_show_shared.js"
 
 window.SwarsBattleShowApp = Vue.extend({
+  mixins: [battle_show_shared],
+
   data() {
     return {
-      kifu_type_tab_index: 0,
     }
   },
 

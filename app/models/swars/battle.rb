@@ -202,6 +202,16 @@ module Swars
       end
     end
 
+    concerning :SummaryMethods do
+      def total_seconds
+        @total_seconds ||= memberships.sum(&:total_seconds)
+      end
+
+      def end_at
+        @end_at ||= battled_at + total_seconds.seconds
+      end
+    end
+
     concerning :HelperMethods do
       class_methods do
         def extraction_key_from_dirty_string(str)

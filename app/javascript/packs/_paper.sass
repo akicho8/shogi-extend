@@ -1,0 +1,187 @@
+@import "./general.sass"
+
+@media print
+  .is_screen_only
+    display: none
+
+  body
+    overflow: visible !important
+
+.tategaki
+  display: inline-block
+  writing-mode: vertical-rl
+
+%tate_1gyo
+  width: 1em
+
+.tiisame
+  font-size: 80%
+
+.kifu_grid_container
+  @media screen
+    margin-top: 1em
+
+  .kifu_grid_container_wrap
+    border-top: 1px solid black
+    border-left: 1px solid black
+
+    width: 640px
+    margin: auto auto
+
+    @extend .yumincho
+
+    table
+      width: 100%
+      border-collapse: separate
+
+      td
+        height: 1.5em
+        text-align: center
+        vertical-align: middle
+        @extend .nowrap
+
+      &.hand_logs
+        .shohi_tuukei_td
+          height: 3em
+          font-size: 0.4em
+          .shohi_tuukei
+            height: 100%
+            display: flex
+            justify-content: space-between
+            .shohi
+              align-self: flex-start
+            .tuukei
+              align-self: flex-end
+
+      .sengo
+        @extend .tategaki
+
+      td
+        //////////////////////////////////////////////////////////////////////////////// 備考
+        &.bikou_td
+          @extend %tate_1gyo
+          .bikou_label
+            @extend .tategaki
+        .bikou_naiyou
+          @extend .word_break
+          text-align: left
+          @extend .tiisame
+
+        &.taikyokusha_td
+          @extend %tate_1gyo
+          padding: 0.5em 0
+          text-align-last: justify
+          .taikyokusha
+            text-align: center
+            @extend .tategaki
+            min-height: 4em
+
+        &.taikyokujo_td
+          width: 5em
+
+        &.kisenmei_td
+          @extend %tate_1gyo
+          padding: 0.5em 0
+          text-align-last: justify
+          .kisenmei
+            @extend .tategaki
+            min-height: 5em
+
+        &.dankyu_td
+          width: 3em
+          padding: 0 0.2em
+          .dankyu
+            font-size: 0.8em
+
+        &.teaiwari_td
+          padding: 0 0.5em
+          text-align-last: justify
+          .teaiwari
+
+    .blank_cell_for_border
+      border: 1px solid blue
+
+    // .td_slash
+    //   background: linear-gradient(to bottom right, transparent calc(50% - 0.5px), black calc(50% - 0.5px), black calc(50% + 0.5px), transparent calc(50% + 0.5px))
+
+    td
+      &.td_slash
+        position: relative
+        svg
+          position: absolute
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+
+    .c0
+    .c1
+    .c2
+    .c3
+    .c4
+    .c5
+    .c6
+    .c7
+
+    .s0
+      border-bottom: 1px solid black
+
+    .s1
+      border-right: 1px solid black
+
+    .s2
+      border-bottom: 1px solid black
+      border-right: 1px solid black
+
+    .s3
+      border-bottom: 1px solid black
+      border-right: 1px solid black
+
+      text-align: right
+      vertical-align: middle
+      white-space: nowrap
+
+    .s4
+      border-bottom: 1px solid black
+      vertical-align: middle
+      white-space: nowrap
+
+    .v2__s4
+      border-bottom: 3px DOUBLE black
+
+      vertical-align: middle
+      white-space: nowrap
+
+    .v2__s0
+      border-bottom: 1px solid black
+
+    .v2__s1
+      border-right: 1px solid black
+
+    .v2__s2
+      border-bottom: 1px solid black
+      border-right: 1px solid black
+
+      vertical-align: middle
+      white-space: nowrap
+
+    .v2__s6
+      border-bottom: 3px double black
+      border-right: 1px solid black
+
+      text-align: left
+      vertical-align: middle
+      white-space: nowrap
+
+    .v2__s3
+      border-bottom: 1px solid black
+
+      vertical-align: middle
+      white-space: nowrap
+
+    .v2__s5
+      border-right: 1px solid black
+
+      text-align: left
+      vertical-align: middle
+      white-space: nowrap
