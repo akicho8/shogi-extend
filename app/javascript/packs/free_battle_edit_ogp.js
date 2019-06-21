@@ -44,8 +44,8 @@ window.FreeBattleEditOgp = Vue.extend({
       })
     },
 
-    og_image_create() {
-      this.debug_alert("og_image_create")
+    og_image_create_by_html2canvas() {
+      this.debug_alert("og_image_create_by_html2canvas")
       this.capture_dom_save()
     },
 
@@ -63,7 +63,7 @@ window.FreeBattleEditOgp = Vue.extend({
       })
     },
 
-    og_image_create2() {
+    og_image_create_by_rmagick() {
       const loading_instance = this.$loading.open()
       const params = new URLSearchParams()
       params.set("gazodetukuru", "true")
