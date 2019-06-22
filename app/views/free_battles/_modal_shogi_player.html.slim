@@ -136,8 +136,6 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
                   | &nbsp;&nbsp;&nbsp;
                   | ツイート
 
-            b-dropdown-item(:separator="true")
-
             template(v-if="modal_record.swars_real_battle_url")
               b-dropdown-item(:has-link="true" :paddingless="true")
                 a(@click.stop :href="modal_record.swars_real_battle_url" target="_blank")
