@@ -70,20 +70,21 @@ class Talk
 
   def force_generate
     params = polly_params.merge(text: source_text, response_target: direct_file_path.to_s)
-    tp params
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
-    tp resp.to_h
-    # >> |-------------+----------------------------------------|
-    # >> |      region | us-west-2                              |
-    # >> | credentials | #<Aws::Credentials:0x00007fdb7bc7ba10> |
-    # >> |-------------+----------------------------------------|
-    # >> |--------------------+-----------------------------------------------------|
-    # >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007fdb7ba74cf8> |
-    # >> |       content_type | audio/mpeg                                          |
-    # >> | request_characters | 5                                                   |
-    # >> |--------------------+-----------------------------------------------------|
-
+    unless Rails.env.production?
+      tp params
+      tp resp.to_h
+      # >> |-------------+----------------------------------------|
+      # >> |      region | us-west-2                              |
+      # >> | credentials | #<Aws::Credentials:0x00007fdb7bc7ba10> |
+      # >> |-------------+----------------------------------------|
+      # >> |--------------------+-----------------------------------------------------|
+      # >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007fdb7ba74cf8> |
+      # >> |       content_type | audio/mpeg                                          |
+      # >> | request_characters | 5                                                   |
+      # >> |--------------------+-----------------------------------------------------|
+    end
     Rails.logger.info("#{__method__}: #{source_text} => #{direct_file_path}")
   end
 
@@ -93,10 +94,9 @@ class Talk
 
   def voice_id
     if Time.current.day.even?
-      "Takumi"
-    else
-      "Mizuki"
+      # return "Takumi"
     end
+    "Mizuki"
   end
 
   def relative_path
