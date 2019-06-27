@@ -72,9 +72,9 @@ template(slot-scope="props")
               | &nbsp;&nbsp;&nbsp;
               | 詳細
 
-        template(v-if="props.row.paper_path")
+        template(v-if="props.row.formal_paper_path")
           b-dropdown-item(:has-link="true" :paddingless="true")
-            a(@click.stop :href="props.row.paper_path")
+            a(@click.stop :href="props.row.formal_paper_path")
               b-icon(icon="play" size="is-small")
               | &nbsp;&nbsp;&nbsp;
               | 棋譜用紙
