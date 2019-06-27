@@ -36,16 +36,24 @@ class BattleDecorator
     battle.end_at
   end
 
-  def jihunkara
+  def blank_jihunkara
     s = "#{spc(3)}時#{spc(3)}分"
     "#{s} 〜 #{s}".html_safe
+  end
+
+  def dankyuu_number_for(location, type)
+    s = membership_for(location).grade.grade_info.name
+    if s.include?(type)
+      # s.remove(type)
+      s
+    end
   end
 
   def kirokugakari
   end
 
-  def bikou_naiyou
-    # "(bikou_naiyou)"
+  def bikou_body
+    # "(bikou_body)"
   end
 
   def teaiwari

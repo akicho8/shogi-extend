@@ -11,8 +11,11 @@
   display: inline-block
   writing-mode: vertical-rl
 
+%text_just
+  text-align-last: justify
+
 %tate_1gyo
-  width: 1em
+  width: 1% !important
 
 %cell_slash
   position: relative
@@ -40,9 +43,14 @@
 .tiisame
   font-size: 80%
 
+.tiisame2
+  font-size: 60%
+
 .kifu_grid_container
   @media screen
     margin-top: 1em
+
+  color: black
 
   .kifu_grid_container_wrap
     border-top: 1px solid black
@@ -68,7 +76,7 @@
           height: 2em
 
         .kifu_body_row
-          height: 2em
+          height: 1.65em
 
         .kifu_data_td
           width: 10%
@@ -82,22 +90,29 @@
 
       .sengo
         @extend .tategaki
+        @extend .tiisame
 
       td
+        &.ls3
+          // letter-spacing: 0.5em
+
         //////////////////////////////////////////////////////////////////////////////// 備考
-        &.bikou_td
+        &.bikou_label_td
           @extend %tate_1gyo
+          @extend .tiisame
+          letter-spacing: 0.5em
           .bikou_label
             @extend .tategaki
-        .bikou_naiyou
-          @extend .word_break
-          text-align: left
-          @extend .tiisame
+        &.bikou_body_td
+          width: 25%
+          .bikou_body
+            @extend .tiisame
+            @extend .word_break
+            text-align: left
 
         &.taikyokusha_td
           @extend %tate_1gyo
           padding: 0.5em 0
-          text-align-last: justify
           .taikyokusha
             text-align: center
             @extend .tategaki
@@ -112,8 +127,6 @@
 
         &.kisenmei_td
           @extend %tate_1gyo
-          padding: 0.5em 0
-          text-align-last: justify
           .kisenmei
             @extend .tategaki
             min-height: 5em
@@ -122,12 +135,15 @@
           width: 3em
           padding: 0 0.2em
           .dankyu
-            font-size: 0.8em
+            letter-spacing: 0.1em
 
         &.teaiwari_td
           padding: 0 0.5em
-          text-align-last: justify
           .teaiwari
+
+        &.hirukyuumae_td
+          @extend .tiisame2
+          padding: 0 0.5em
 
     .blank_cell_for_border
       border: 1px solid blue
@@ -141,14 +157,6 @@
     .s2
       border-bottom: 1px solid black
       border-right: 1px solid black
-
-    .s3
-      border-bottom: 1px solid black
-      border-right: 1px solid black
-
-      text-align: right
-      vertical-align: middle
-      white-space: nowrap
 
     .s4
       border-bottom: 1px solid black

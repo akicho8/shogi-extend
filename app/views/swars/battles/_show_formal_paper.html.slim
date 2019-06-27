@@ -19,20 +19,20 @@ ruby:
   .kifu_grid_container_wrap
     table
       tr
-        td.s2.taikyokusha_td[rowspan="12"]
+        td.s2.taikyokusha_td.ls3[rowspan="12"]
           .taikyokusha
-            = hirogeru("対局者")
-        td.s3.dankyu_td[rowspan="3"]
-          span.dankyu
-            | 級
+            | 対局者
+        td.s2.dankyu_td[rowspan="3"]
+          .dankyu
+            = decorator.dankyuu_number_for(:black, "級")
         td.s4[rowspan="6"]
           .sengo
             | 先 ☗
         td.s2.username_td[rowspan="6"]
           = decorator.user_name_for(:black)
-        td.s2.kisenmei_td[rowspan="8"]
+        td.s2.kisenmei_td.ls3[rowspan="8"]
           .kisenmei
-            = hirogeru("棋戦名")
+            | 棋戦名
         td.s2[colspan="2" rowspan="4"]
           | 将棋ウォーズ
         td.s2[rowspan="3"]
@@ -44,9 +44,9 @@ ruby:
       tr
 
       tr
-        td.s3.dankyu_td[rowspan="3"]
+        td.s2.dankyu_td[rowspan="3"]
           span.dankyu
-            | 段
+            = decorator.dankyuu_number_for(:black, "段")
         td.s2[rowspan="3"]
           | 終了
         td.s2[rowspan="3"]
@@ -56,18 +56,18 @@ ruby:
           = decorator.battle.rule_info.long_name
       tr
       tr
-        td.s3.dankyu_td[rowspan="3"]
+        td.s2.dankyu_td[rowspan="3"]
           span.dankyu
-            | 級
+            = decorator.dankyuu_number_for(:white, "級")
         td.s4[rowspan="6"]
-          span.sengo
+          .sengo
             | 後 ☖
         td.s2.username_td[rowspan="6"]
           = decorator.user_name_for(:white)
         td.s2[rowspan="3"]
           | 昼休
         td.s2[rowspan="3"]
-          = decorator.jihunkara
+          = decorator.blank_jihunkara
 
       tr
 
@@ -78,13 +78,13 @@ ruby:
           | インターネット
       tr
 
-        td.s3.dankyu_td[rowspan="3"]
+        td.s2.dankyu_td[rowspan="3"]
           span.dankyu
-            | 段
+            = decorator.dankyuu_number_for(:white, "段")
         td.s2[rowspan="3"]
           | 夕休
         td.s2[rowspan="3"]
-          = decorator.jihunkara
+          = decorator.blank_jihunkara
 
       tr
 
@@ -92,24 +92,27 @@ ruby:
 
     table
       tr
-        td.v2__s2.teaiwari_td
+        td.v2__s2.teaiwari_td.ls3
           .teaiwari
             | 手合割
         td.v2__s2
           = decorator.teaiwari
-        td.bikou_td[rowspan="3"]
-          span.bikou_label
+        td.bikou_label_td[rowspan="3"]
+          .bikou_label
             | 備考
-        td.s1[rowspan="3"]
-          .bikou_naiyou
-            = decorator.bikou_naiyou
+        td.s1.bikou_body_td[rowspan="3"]
+          .bikou_body
+            = decorator.bikou_body
 
-        td.v2__s3
+        td.v2__s2
           | 手数
         td.v2__s2
-          |  手 勝
+          = decorator.battle.turn_max
+          | 手
+          | &nbsp;&nbsp;&nbsp;&nbsp;
+          | 勝
       tr
-        td.v2__s2
+        td.v2__s2.ls3
           | 持時間
         td.v2__s2
           | 各
@@ -133,9 +136,9 @@ ruby:
         td.v2__s2
           | ☖
           = decorator.total_seconds_str_for(:white)
-        td.v2__s2.tiisame[colspan="2"]
+        td.v2__s2.hirukyuumae_td[colspan="2"]
           | 昼休前☖&nbsp;&nbsp;&nbsp;分・夕休前☖&nbsp;&nbsp;&nbsp;分
-        td.v2__s3
+        td.v2__s2
           | 記録係
         td.v2__s2
           = decorator.kirokugakari
