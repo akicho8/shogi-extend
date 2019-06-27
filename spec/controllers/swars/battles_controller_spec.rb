@@ -46,8 +46,13 @@ RSpec.describe Swars::BattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
-  it "show" do
+  it "詳細" do
     get :show, params: {id: @battle.to_param}
+    expect(response).to have_http_status(:ok)
+  end
+
+  it "棋譜印刷" do
+    get :show, params: {id: @battle.to_param, paper: true}
     expect(response).to have_http_status(:ok)
   end
 end
