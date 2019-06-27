@@ -22,12 +22,12 @@
     left: 0
     width: 100%
     height: 100%
-  
-// +---------------+    
+
+// +---------------+
 // | elem1         |
 // |               |
 // |         elem2 |
-// +---------------+    
+// +---------------+
 %top_left_and_bottom_right_layout
   height: 100%
   display: flex
@@ -36,7 +36,7 @@
     align-self: flex-start
   *:nth-child(2)
     align-self: flex-end
-    
+
 .tiisame
   font-size: 80%
 
@@ -65,14 +65,14 @@
 
       &.hand_logs_table
         .kifu_header_row
-          height: 2.25em
-          
+          height: 2em
+
         .kifu_body_row
           height: 2em
-          
+
         .kifu_data_td
           width: 10%
-          
+
         .shouhi_tuukei_td
           @extend %cell_slash
           font-size: 0.5em
@@ -80,9 +80,6 @@
             @extend %top_left_and_bottom_right_layout
             padding: 0 0.25em
 
-
-            
-            
       .sengo
         @extend .tategaki
 
@@ -109,6 +106,10 @@
         &.taikyokujo_td
           width: 5em
 
+        &.username_td
+          text-align: left
+          padding: 0.25em
+
         &.kisenmei_td
           @extend %tate_1gyo
           padding: 0.5em 0
@@ -130,15 +131,6 @@
 
     .blank_cell_for_border
       border: 1px solid blue
-
-    .c0
-    .c1
-    .c2
-    .c3
-    .c4
-    .c5
-    .c6
-    .c7
 
     .s0
       border-bottom: 1px solid black
