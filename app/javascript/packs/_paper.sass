@@ -14,6 +14,15 @@
 %tate_1gyo
   width: 1em
 
+%cell_slash
+  position: relative
+  svg
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+  
 .tiisame
   font-size: 80%
 
@@ -41,14 +50,21 @@
         @extend .nowrap
 
       &.hand_logs
-        .shohi_tuukei_td
-          height: 3em
-          font-size: 0.4em
-          .shohi_tuukei
+        .kifu_header_row
+          height: 2.25em
+          
+        .kifu_body_row
+          height: 2em
+          
+        .shouhi_tuukei_td
+          @extend %cell_slash
+          font-size: 0.5em
+          .shouhi_tuukei
             height: 100%
             display: flex
             justify-content: space-between
-            .shohi
+            padding: 0 0.25em
+            .shouhi
               align-self: flex-start
             .tuukei
               align-self: flex-end
@@ -100,19 +116,6 @@
 
     .blank_cell_for_border
       border: 1px solid blue
-
-    // .td_slash
-    //   background: linear-gradient(to bottom right, transparent calc(50% - 0.5px), black calc(50% - 0.5px), black calc(50% + 0.5px), transparent calc(50% + 0.5px))
-
-    td
-      &.td_slash
-        position: relative
-        svg
-          position: absolute
-          top: 0
-          left: 0
-          width: 100%
-          height: 100%
 
     .c0
     .c1

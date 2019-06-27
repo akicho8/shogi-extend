@@ -146,34 +146,36 @@ ruby:
           line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
 
     table.hand_logs
-      tr
+      tr.kifu_header_row
         - 3.times do |x|
           - 2.times do |left_or_right|
             td.s2
               = Bioshogi::Location.fetch(left_or_right).hexagon_mark
-            td.s2.td_slash.shohi_tuukei_td
+            td.s2.shouhi_tuukei_td
               svg
                 use(xlink:href="#svg_slash")
-              .shohi_tuukei
-                .shohi
+              .shouhi_tuukei
+                .shouhi
                   | 消費
                 .tuukei
                   | 通計
       - cell_rows.times do |y|
-        tr
+        tr.kifu_body_row
           - 3.times do |x|
             - 2.times do |left_or_right|
                 - if hand_log = decorator.hand_log_for(x, y, left_or_right)
                   td.s2
                     = hand_log.to_ki2(place_format: :hankaku_number, same_suffix: " ", separator: " ", compact_if_gt: 6)
-                  td.s2.td_slash.shohi_tuukei_td
+                  td.s2.shouhi_tuukei_td
                     svg
                       use(xlink:href="#svg_slash")
-                    .shohi_tuukei
-                      .shohi
+                    .shouhi_tuukei
+                      .shouhi
                         = BattleDecorator.format_foo1(hand_log.personal_clock.used_seconds)
                       .tuukei
                         = BattleDecorator.format_foo1(hand_log.personal_clock.total_seconds)
                 - else
                   td.s2
-                  td.s2
+                  td.s2.shouhi_tuukei_td
+                    svg
+                      use(xlink:href="#svg_slash")
