@@ -177,6 +177,10 @@ module BattleModelSharedMethods
     image_turn || start_turn || critical_turn || 9999
   end
 
+  def battle_decorator(params)
+    @battle_decorator ||= BattleDecorator.new(params.merge(battle: self))
+  end
+
   concerning :KifuConvertMethods do
     # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
     def to_cached_kifu(key)
@@ -205,12 +209,12 @@ module BattleModelSharedMethods
       @fast_parsed_info ||= Bioshogi::Parser.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parsed_options))
     end
 
-    private
-
     # KI2変換可能だけど重い
     def heavy_parsed_info
       @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
     end
+
+    private
 
     # オプションはサブクラスで渡してもらう
     def fast_parsed_options

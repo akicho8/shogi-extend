@@ -59,6 +59,7 @@ template(slot-scope="props")
           b-icon(icon="clipboard-outline" size="is-small")
           | &nbsp;コピー
 
+      / FIXME: modal の方と統一する
       b-dropdown(:hoverable="false" @click.native.stop position="is-bottom-left")
         button.button.is-small(slot="trigger")
           / span もっと見る
@@ -70,6 +71,13 @@ template(slot-scope="props")
               b-icon(icon="play" size="is-small")
               | &nbsp;&nbsp;&nbsp;
               | 詳細
+
+        template(v-if="props.row.paper_path")
+          b-dropdown-item(:has-link="true" :paddingless="true")
+            a(@click.stop :href="props.row.paper_path")
+              b-icon(icon="play" size="is-small")
+              | &nbsp;&nbsp;&nbsp;
+              | 棋譜用紙
 
         - unless Rails.env.production?
           template(v-if="props.row.edit_path")

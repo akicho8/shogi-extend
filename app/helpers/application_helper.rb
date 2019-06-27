@@ -79,4 +79,9 @@ module ApplicationHelper
 
     o.join.html_safe
   end
+
+  def hirogeru(str)
+    # str.to_s.chars.join(" ")
+    str
+  end
 end

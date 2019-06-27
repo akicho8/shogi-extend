@@ -48,31 +48,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // },
   })
 
-  App.system_notification_vm = new Vue({
-    el: "#system_notification_app",
-    data() {
-      return {
-        system_logs: [],
-      }
-    },
-
-    created() {
-      // App.system_notification.talk({source_text: "こんにちは"})
-      // GVI.talk("こんにちは")
-    },
-
-    methods: {
-      puts(v) {
-        this.system_logs.push(v)
+  if (document.querySelector("#system_notification_app")) {
+    App.system_notification_vm = new Vue({
+      el: "#system_notification_app",
+      data() {
+        return {
+          system_logs: [],
+        }
       },
-    },
 
-    computed: {
-      latest_system_logs() {
-        return _.takeRight(this.system_logs, 10)
+      created() {
+        // App.system_notification.talk({source_text: "こんにちは"})
+        // GVI.talk("こんにちは")
       },
-    },
-  })
+
+      methods: {
+        puts(v) {
+          this.system_logs.push(v)
+        },
+      },
+
+      computed: {
+        latest_system_logs() {
+          return _.takeRight(this.system_logs, 10)
+        },
+      },
+    })
+  } else {
+    App.system_notification_vm = {}
+    App.system_notification_vm.puts = () => {}
+  }
 
   if (document.querySelector("#header_app")) {
     App.header_vm = new Vue({

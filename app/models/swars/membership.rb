@@ -32,7 +32,6 @@ module Swars
 
     scope :judge_key_eq, -> v { where(judge_key: v).take }
 
-
     before_validation do
       if user
         # 無かったときだけ入れる(絶対あるんだけど)

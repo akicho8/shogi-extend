@@ -7,6 +7,36 @@ Time::DATE_FORMATS.update({
     battle_short: "%H:%M",
     csa_ymdhms: "%Y/%m/%d %H:%M:%S",
 
+    # 西暦→和暦に変換
+    # https://qiita.com/mashi/items/4e6a3142bfe1062fbda7
+    :paper_format => proc { |t|
+      d = t.strftime("%Y%m%d").to_i
+      case
+      when d > 20190501
+        y = t.year - 2018
+        prefix = "令和"
+      when d > 19890108
+        y = t.year - 1988
+        prefix = "平成"
+      when d > 19261225
+        y = t.year - 1925
+        prefix = "昭和"
+      when d > 19120730
+        y = t.year - 1911
+        prefix = "大正"
+      when d >= 18680908
+        y = t.year - 1867
+        prefix = "明治"
+      else
+        y = t.year
+        prefix = ""
+      end
+      if y == 1
+        y = "元"
+      end
+      t.strftime("#{prefix}#{y}年%-m月%-d日%-H時%-M分")
+    },
+
     :battle_time => proc { |time|
       if time >= 1.days.ago
         time.to_s(:battle_short)
