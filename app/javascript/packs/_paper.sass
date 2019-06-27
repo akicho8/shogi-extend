@@ -23,6 +23,20 @@
     width: 100%
     height: 100%
   
+// +---------------+    
+// | elem1         |
+// |               |
+// |         elem2 |
+// +---------------+    
+%top_left_and_bottom_right_layout
+  height: 100%
+  display: flex
+  justify-content: space-between
+  *:nth-child(1)
+    align-self: flex-start
+  *:nth-child(2)
+    align-self: flex-end
+    
 .tiisame
   font-size: 80%
 
@@ -49,26 +63,26 @@
         vertical-align: middle
         @extend .nowrap
 
-      &.hand_logs
+      &.hand_logs_table
         .kifu_header_row
           height: 2.25em
           
         .kifu_body_row
           height: 2em
           
+        .kifu_data_td
+          width: 10%
+          
         .shouhi_tuukei_td
           @extend %cell_slash
           font-size: 0.5em
           .shouhi_tuukei
-            height: 100%
-            display: flex
-            justify-content: space-between
+            @extend %top_left_and_bottom_right_layout
             padding: 0 0.25em
-            .shouhi
-              align-self: flex-start
-            .tuukei
-              align-self: flex-end
 
+
+            
+            
       .sengo
         @extend .tategaki
 
