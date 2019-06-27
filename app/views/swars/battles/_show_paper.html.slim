@@ -1,6 +1,7 @@
 / app/javascript/packs/_paper.sass
 
 ruby:
+  @override_page_title = current_record.title
   cell_columns = 3
   cell_rows = 25
   decorator = current_record.battle_decorator(view_context: self, cell_rows: cell_rows)
