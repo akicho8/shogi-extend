@@ -10,14 +10,16 @@ class BattleDecorator
 
   attr_accessor :params
 
-  delegate :memberships, to: :battle
+  delegate :memberships, :preset_info, to: :battle
 
   def initialize(params)
     @params = params
   end
 
   def hand_log_for(*args)
-    hand_logs[index_for(*args)]
+    if idx = index_for(*args)
+      hand_logs[idx]
+    end
   end
 
   def user_name_for(location)
@@ -48,7 +50,7 @@ class BattleDecorator
 
   def teaiwari
     s = []
-    name = battle.preset_info.name
+    name = preset_info.name
     s << name
     if name == "平手"
       s << "振駒"
@@ -78,11 +80,22 @@ class BattleDecorator
   private
 
   def index_for(x, y, left_or_right)
-    x * (params[:cell_rows] * 2) + (y * 2) + left_or_right
+    if preset_info.handicap
+      if x == 0 && y == 0 && left_or_right == 0
+        return
+      end
+      left_or_right -= 1
+    end
+
+    x * (params[:cell_rows] * location_size) + (y * location_size) + left_or_right
   end
 
   def hand_logs
     @hand_logs ||= battle.heavy_parsed_info.mediator.hand_logs
+  end
+
+  def location_size
+    Bioshogi::Location.count
   end
 
   def vc
