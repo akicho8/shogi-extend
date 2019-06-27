@@ -5,6 +5,11 @@ ruby:
   cell_rows = 25
   decorator = current_record.battle_decorator(view_context: self, cell_rows: cell_rows)
 
+.message.is-primary.is-size-7.is_screen_only
+  .message-body.has-text-left
+    .content
+      | 実験中の機能です
+
 .show_controllers.is_screen_only
   .has-text-centered
     button.button(@click="printer_handle") 印刷
