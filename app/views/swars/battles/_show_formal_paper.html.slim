@@ -162,7 +162,7 @@ ruby:
                   - hand_log = decorator.hand_log_for(x, y, left_or_right)
                   td.s0.s1.kifu_data_td
                     / = hand_log.to_ki2(place_format: :hankaku_number, same_suffix: " ", separator: " ", compact_if_gt: 6) if hand_log
-                    = hand_log.to_ki2(same_suffix: "　", separator: " ", compact_if_gt: 7) if hand_log
+                    = hand_log.to_ki2(same_suffix: "\u3000", separator: " ", compact_if_gt: 7) if hand_log
                   td.s0.s1.shouhi_tuukei_td
                     svg
                       use(xlink:href="#svg_slash")
