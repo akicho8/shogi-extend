@@ -14,7 +14,7 @@ class BattleDecorator
       cell_rows: 25,
     }
   end
-  
+
   attr_accessor :params
 
   delegate :memberships, :preset_info, to: :battle
@@ -125,21 +125,38 @@ class BattleDecorator
     params[:cell_rows]
   end
 
+  def page_count
+    q, r = battle.turn_max.divmod(count_of_1page)
+    if r.nonzero?
+      q += 1
+    end
+    q
+  end
+
   private
 
   def win_membership
     @win_membership ||= memberships.find { |e| e.judge_info.key == :win }
   end
 
-  def index_for(x, y, left_or_right)
+  def index_for(page_index, x, y, left_or_right)
     if preset_info.handicap
-      if x == 0 && y == 0 && left_or_right == 0
+      if page_index == 0 && x == 0 && y == 0 && left_or_right == 0
         return
       end
-      left_or_right -= 1
     end
 
-    x * (params[:cell_rows] * location_size) + (y * location_size) + left_or_right
+    base = page_index * count_of_1page
+    base += base + x * (cell_rows * location_size) + (y * nikozutu) + left_or_right
+    base - iti_if_handicap
+  end
+
+  def iti_if_handicap
+    preset_info.handicap ? 1 : 0
+  end
+
+  def count_of_1page
+    cell_rows * yoko3retu * nikozutu
   end
 
   def hand_logs

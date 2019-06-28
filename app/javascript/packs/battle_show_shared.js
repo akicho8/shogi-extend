@@ -22,11 +22,4 @@ export default {
 
   computed: {
   },
-
-  filters: {
-    hirogeru(value) {
-      if (!value) return ""
-      return value.toString().split("").join(" ")
-    }
-  },
 }
