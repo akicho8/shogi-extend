@@ -49,7 +49,7 @@ class BattleDecorator
     name = location.call_name(handicap?)
     [name.chars.first, location.hexagon_mark].join(" ")
   end
-  
+
   def battle_end_at
     battle.end_at
   end
@@ -142,6 +142,12 @@ class BattleDecorator
     if r.nonzero?
       q += 1
     end
+
+    # 初手投了の場合 q == 0 で何も表示されなくなるのを防ぐ
+    if q.zero?
+      q = 1
+    end
+
     q
   end
 
