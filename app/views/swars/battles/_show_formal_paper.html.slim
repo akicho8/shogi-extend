@@ -3,9 +3,7 @@
 - @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
   
 ruby:
-  cell_columns = 3
-  cell_rows = 25
-  decorator = current_record.battle_decorator(view_context: self, cell_rows: cell_rows)
+  decorator = current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: self))
 
 / .message.is-primary.is-size-7.is_screen_only
 /   .message-body.has-text-left
@@ -142,8 +140,8 @@ ruby:
     table.body_table
       thead
         tr
-          - 3.times do |x|
-            - 2.times do |left_or_right|
+          - decorator.yoko3retu.times do |x|
+            - decorator.nikozutu.times do |left_or_right|
               td
                 = Bioshogi::Location.fetch(left_or_right).hexagon_mark
               td.shouhi_tuukei_td
@@ -155,10 +153,10 @@ ruby:
                   .tuukei
                     | 通計
       tbody
-        - cell_rows.times do |y|
+        - decorator.cell_rows.times do |y|
           tr.kifu_body_row
-            - 3.times do |x|
-              - 2.times do |left_or_right|
+            - decorator.yoko3retu.times do |x|
+              - decorator.nikozutu.times do |left_or_right|
                   - hand_log = decorator.hand_log_for(x, y, left_or_right)
                   td.s0.s1.kifu_data_td
                     / = hand_log.to_ki2(place_format: :hankaku_number, same_suffix: " ", separator: " ", compact_if_gt: 6) if hand_log

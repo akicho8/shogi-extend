@@ -8,12 +8,19 @@ class BattleDecorator
     end
   end
 
+  def self.default_params
+    {
+      yoko3retu: 3,
+      cell_rows: 25,
+    }
+  end
+  
   attr_accessor :params
 
   delegate :memberships, :preset_info, to: :battle
 
   def initialize(params)
-    @params = params
+    @params = self.class.default_params.merge(params)
   end
 
   def hand_log_for(*args)
@@ -30,6 +37,7 @@ class BattleDecorator
     memberships.collect { |m|
       s = m.attack_tag_list.first || m.defense_tag_list.first || m.note_tag_list.grep_v(/指導対局/).first
       if s
+        s = s.remove(/△|▲/)
         vc.tag.div { m.location.hexagon_mark + " #{s}" }
       end
     }.compact.join.html_safe
@@ -103,6 +111,18 @@ class BattleDecorator
   def membership_for(location)
     location = Bioshogi::Location.fetch(location)
     battle.memberships[location.code]
+  end
+
+  def nikozutu
+    location_size
+  end
+
+  def yoko3retu
+    params[:yoko3retu]
+  end
+
+  def cell_rows
+    params[:cell_rows]
   end
 
   private
