@@ -25,7 +25,7 @@ ruby:
         td.s2.dankyu_td[rowspan="3"]
           .dankyu
             = decorator.dankyuu_number_for(:black, "級")
-        td.s4[rowspan="6"]
+        td.s0[rowspan="6"]
           .sengo
             | 先 ☗
         td.s2.username_td[rowspan="6"]
@@ -38,7 +38,7 @@ ruby:
         td.s2[rowspan="3"]
           | 開始
         td.s2[rowspan="3"]
-          = decorator.battle.battled_at.to_s(:paper_format)
+          = decorator.battle.battled_at.to_s(:seireki_format)
       tr
 
       tr
@@ -50,7 +50,7 @@ ruby:
         td.s2[rowspan="3"]
           | 終了
         td.s2[rowspan="3"]
-          = decorator.battle.end_at.to_s(:paper_format)
+          = decorator.battle.end_at.to_s(:seireki_format)
       tr
         td.s2[colspan="2" rowspan="4"]
           = decorator.battle.rule_info.long_name
@@ -59,7 +59,7 @@ ruby:
         td.s2.dankyu_td[rowspan="3"]
           span.dankyu
             = decorator.dankyuu_number_for(:white, "級")
-        td.s4[rowspan="6"]
+        td.s0[rowspan="6"]
           .sengo
             | 後 ☖
         td.s2.username_td[rowspan="6"]
@@ -92,55 +92,44 @@ ruby:
 
     table
       tr
-        td.v2__s2.teaiwari_td.ls3
+        td.s2.teaiwari_td.ls3
           .teaiwari
             | 手合割
-        td.v2__s2
+        td.s2
           = decorator.teaiwari
-        td.bikou_label_td[rowspan="3"]
+        td.s0.bikou_label_td[rowspan="4"]
           .bikou_label
             | 備考
-        td.s1.bikou_body_td[rowspan="3"]
+        td.s2.bikou_body_td[rowspan="4"]
           .bikou_body
             = decorator.bikou_body
 
-        td.v2__s2
+        td.s2
           | 手数
-        td.v2__s2
-          = decorator.battle.turn_max
-          | 手
-          | &nbsp;&nbsp;&nbsp;&nbsp;
-          | 勝
+        td.s2
+          = decorator.katimake_result
       tr
-        td.v2__s2.ls3
+        td.s2.ls3
           | 持時間
-        td.v2__s2
+        td.s2
           | 各
           = decorator.kaku_jikan
           | 分
-        td.v2__s4[rowspan="2"]
+        td.double_bottom_border[rowspan="2"]
           | 戦型
-        td.v2__s5
-          | ☗
-          = decorator.sengata_for(:black)
+        td.s1.double_bottom_border[rowspan="2"]
+          = decorator.sengata_pack
       tr
-        td.v2__s2[rowspan="2"]
+        td.s2[rowspan="2"]
           | 消費時間
-        td.v2__s2
-          | ☗
+        td.s2
           = decorator.total_seconds_str_for(:black)
-        td.v2__s6
-          | ☖
-          = decorator.sengata_for(:white)
       tr
-        td.v2__s2
-          | ☖
+        td.s2
           = decorator.total_seconds_str_for(:white)
-        td.v2__s2.hirukyuumae_td[colspan="2"]
-          | 昼休前☖&nbsp;&nbsp;&nbsp;分・夕休前☖&nbsp;&nbsp;&nbsp;分
-        td.v2__s2
+        td.s2
           | 記録係
-        td.v2__s2
+        td.s2
           = decorator.kirokugakari
 
     / 斜線の定義

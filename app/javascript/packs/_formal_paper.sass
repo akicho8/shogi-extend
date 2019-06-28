@@ -26,6 +26,9 @@
     width: 100%
     height: 100%
 
+%double_bottom_border
+  border-bottom: 3px double black
+    
 // +---------------+
 // | elem1         |
 // |               |
@@ -104,7 +107,8 @@
           .bikou_label
             @extend .tategaki
         &.bikou_body_td
-          width: 25%
+          // width: 25%
+          padding: 0.5em
           .bikou_body
             @extend .tiisame
             @extend .word_break
@@ -114,9 +118,14 @@
           @extend %tate_1gyo
           padding: 0.5em 0
           .taikyokusha
-            text-align: center
+            @extend %text_just
             @extend .tategaki
             min-height: 4em
+            
+        &.kisenmei_td
+          @extend %tate_1gyo
+          .kisenmei
+            @extend .tategaki
 
         &.taikyokujo_td
           width: 5em
@@ -125,11 +134,6 @@
           text-align: left
           padding: 0.25em
 
-        &.kisenmei_td
-          @extend %tate_1gyo
-          .kisenmei
-            @extend .tategaki
-            min-height: 5em
 
         &.dankyu_td
           width: 3em
@@ -145,6 +149,10 @@
           @extend .tiisame2
           padding: 0 0.5em
 
+    // .align_left
+    //   text-align: left
+    //   padding: 0 0.25em
+          
     .blank_cell_for_border
       border: 1px solid blue
 
@@ -158,47 +166,5 @@
       border-bottom: 1px solid black
       border-right: 1px solid black
 
-    .s4
-      border-bottom: 1px solid black
-      vertical-align: middle
-      white-space: nowrap
-
-    .v2__s4
-      border-bottom: 3px DOUBLE black
-
-      vertical-align: middle
-      white-space: nowrap
-
-    .v2__s0
-      border-bottom: 1px solid black
-
-    .v2__s1
-      border-right: 1px solid black
-
-    .v2__s2
-      border-bottom: 1px solid black
-      border-right: 1px solid black
-
-      vertical-align: middle
-      white-space: nowrap
-
-    .v2__s6
-      border-bottom: 3px double black
-      border-right: 1px solid black
-
-      text-align: left
-      vertical-align: middle
-      white-space: nowrap
-
-    .v2__s3
-      border-bottom: 1px solid black
-
-      vertical-align: middle
-      white-space: nowrap
-
-    .v2__s5
-      border-right: 1px solid black
-
-      text-align: left
-      vertical-align: middle
-      white-space: nowrap
+    .double_bottom_border
+      @extend %double_bottom_border

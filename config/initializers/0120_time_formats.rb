@@ -9,7 +9,7 @@ Time::DATE_FORMATS.update({
 
     # 西暦→和暦に変換
     # https://qiita.com/mashi/items/4e6a3142bfe1062fbda7
-    :paper_format => proc { |t|
+    :wareki_format => proc { |t|
       d = t.strftime("%Y%m%d").to_i
       case
       when d > 20190501
@@ -35,6 +35,10 @@ Time::DATE_FORMATS.update({
         y = "元"
       end
       t.strftime("#{prefix}#{y}年%-m月%-d日%-H時%-M分")
+    },
+
+    :seireki_format => proc { |t|
+      t.strftime("%Y年 %-m月%-d日 %H時%M分")
     },
 
     :battle_time => proc { |time|

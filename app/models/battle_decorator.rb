@@ -26,9 +26,13 @@ class BattleDecorator
     membership_for(location).user.key
   end
 
-  def sengata_for(location)
-    m = membership_for(location)
-    m.attack_tag_list.first || m.defense_tag_list.first || m.note_tag_list.first
+  def sengata_pack
+    memberships.collect { |m|
+      s = m.attack_tag_list.first || m.defense_tag_list.first || m.note_tag_list.grep_v(/指導対局/).first
+      if s
+        vc.tag.div { m.location.hexagon_mark + " #{s}" }
+      end
+    }.compact.join.html_safe
   end
 
   # battle に移動
@@ -37,8 +41,8 @@ class BattleDecorator
   end
 
   def blank_jihunkara
-    s = "#{spc(3)}時#{spc(3)}分"
-    "#{s} 〜 #{s}".html_safe
+    # s = "#{spc(3)}時#{spc(3)}分"
+    # "#{s} 〜 #{s}".html_safe
   end
 
   def dankyuu_number_for(location, type)
@@ -53,16 +57,23 @@ class BattleDecorator
   end
 
   def bikou_body
-    # "(bikou_body)"
+    s = []
+    s << battle.final_info.name
+    s += battle.note_tag_list.grep(/\A(相)/)
+    if battle.memberships.any? { |e| e.note_tag_list.include?("指導対局") }
+      s << "指導対局"
+    end
+    # s << "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
+    s.join(" ")
   end
 
   def teaiwari
     s = []
     name = preset_info.name
     s << name
-    if name == "平手"
-      s << "振駒"
-    end
+    # if name == "平手"
+    #   s << "振駒"
+    # end
     s.join(" ")
   end
 
@@ -73,7 +84,16 @@ class BattleDecorator
   def total_seconds_str_for(location)
     m = membership_for(location)
     min, sec = m.total_seconds.divmod(1.minutes)
-    "#{min}分#{sec}秒"
+    "#{m.location.hexagon_mark}#{min}分#{sec}秒"
+  end
+
+  def katimake_result
+    if win_membership
+      s = "#{battle.turn_max}手で #{win_membership.user.key} #{win_membership.grade.name}の勝ち"
+    else
+      s = "#{battle.turn_max}手で#{battle.final_info.name}"
+    end
+    s
   end
 
   def battle
@@ -86,6 +106,10 @@ class BattleDecorator
   end
 
   private
+
+  def win_membership
+    @win_membership ||= memberships.find { |e| e.judge_info.key == :win }
+  end
 
   def index_for(x, y, left_or_right)
     if preset_info.handicap
