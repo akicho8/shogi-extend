@@ -24,7 +24,7 @@ class BattleDecorator
   end
 
   def hand_log_for(*args)
-    if idx = index_for(*args)
+    if idx = index_of(*args)
       hand_logs[idx]
     end
   end
@@ -46,7 +46,7 @@ class BattleDecorator
   # sengo_one_char(:black) # => "先 ☗"
   def sengo_one_char(location)
     location = Bioshogi::Location.fetch(location)
-    name = location.call_name(handicap)
+    name = location.call_name(handicap?)
     [name.chars.first, location.hexagon_mark].join(" ")
   end
   
@@ -76,7 +76,7 @@ class BattleDecorator
     if battle.final_info.draw
       s << battle.final_info.name
     else
-      s << [lose_membership.location.call_name(handicap), battle.final_info.name].join
+      s << [lose_membership.location.call_name(handicap?), battle.final_info.name].join
     end
 
     s += battle.note_tag_list.grep(/(^相|入玉)/)
@@ -147,7 +147,7 @@ class BattleDecorator
 
   private
 
-  def handicap
+  def handicap?
     preset_info.handicap
   end
 
@@ -159,8 +159,8 @@ class BattleDecorator
     @lose_membership ||= memberships.find { |e| e.judge_info.key == :lose }
   end
 
-  def index_for(page_index, x, y, left_or_right)
-    if handicap
+  def index_of(page_index, x, y, left_or_right)
+    if handicap?
       if page_index == 0 && x == 0 && y == 0 && left_or_right == 0
         return
       end
@@ -168,11 +168,11 @@ class BattleDecorator
 
     base = page_index * count_of_1page
     base += base + x * (cell_rows * location_size) + (y * nikozutu) + left_or_right
-    base - iti_if_handicap
+    base - one_if_handicap
   end
 
-  def iti_if_handicap
-    handicap ? 1 : 0
+  def one_if_handicap
+    handicap? ? 1 : 0
   end
 
   def count_of_1page
