@@ -43,7 +43,13 @@ class BattleDecorator
     }.compact.join.html_safe
   end
 
-  # battle に移動
+  # sengo_one_char(:black) # => "先 ☗"
+  def sengo_one_char(location)
+    location = Bioshogi::Location.fetch(location)
+    name = location.call_name(handicap)
+    [name.chars.first, location.hexagon_mark].join(" ")
+  end
+  
   def battle_end_at
     battle.end_at
   end

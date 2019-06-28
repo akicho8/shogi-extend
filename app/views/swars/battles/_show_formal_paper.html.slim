@@ -28,7 +28,7 @@ ruby:
                 = decorator.dankyuu_number_for(:black, "級")
             td.s0[rowspan="6"]
               .sengo
-                | 先 ☗
+                = decorator.sengo_one_char(:black)
             td.s0.s1.username_td[rowspan="6"]
               = decorator.user_name_for(:black)
             td.s0.s1.kisenmei_td.ls3[rowspan="8"]
@@ -62,7 +62,7 @@ ruby:
                 = decorator.dankyuu_number_for(:white, "級")
             td.s0[rowspan="6"]
               .sengo
-                | 後 ☖
+                = decorator.sengo_one_char(:white)
             td.s0.s1.username_td[rowspan="6"]
               = decorator.user_name_for(:white)
             td.s0.s1[rowspan="3"]
