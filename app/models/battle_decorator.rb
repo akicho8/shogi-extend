@@ -98,7 +98,7 @@ class BattleDecorator
   end
 
   def kaku_jikan
-    battle.rule_info.life_time / 1.minutes
+    ["各", battle.rule_info.real_life_time / 1.minutes, "分"].join
   end
 
   def total_seconds_str_for(location)
