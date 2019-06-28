@@ -66,7 +66,13 @@ class BattleDecorator
 
   def bikou_body
     s = []
-    s << battle.final_info.name
+
+    if battle.final_info.draw
+      s << battle.final_info.name
+    else
+      s << [lose_membership.location.call_name(handicap), battle.final_info.name].join
+    end
+
     s += battle.note_tag_list.grep(/(^相|入玉)/)
     if battle.memberships.any? { |e| e.note_tag_list.include?("指導対局") }
       s << "指導対局"
@@ -135,12 +141,20 @@ class BattleDecorator
 
   private
 
+  def handicap
+    preset_info.handicap
+  end
+
   def win_membership
     @win_membership ||= memberships.find { |e| e.judge_info.key == :win }
   end
 
+  def lose_membership
+    @lose_membership ||= memberships.find { |e| e.judge_info.key == :lose }
+  end
+
   def index_for(page_index, x, y, left_or_right)
-    if preset_info.handicap
+    if handicap
       if page_index == 0 && x == 0 && y == 0 && left_or_right == 0
         return
       end
@@ -152,7 +166,7 @@ class BattleDecorator
   end
 
   def iti_if_handicap
-    preset_info.handicap ? 1 : 0
+    handicap ? 1 : 0
   end
 
   def count_of_1page
