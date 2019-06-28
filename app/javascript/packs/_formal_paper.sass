@@ -56,9 +56,6 @@
   color: black
 
   .kifu_grid_container_wrap
-    border-top: 1px solid black
-    border-left: 1px solid black
-
     width: 640px
     margin: auto auto
 
@@ -74,15 +71,18 @@
         vertical-align: middle
         @extend .nowrap
 
-      &.hand_logs_table
-        .kifu_header_row
-          height: 2em
+      &.body_table
+        thead
+          tr
+            height: 2em
 
-        .kifu_body_row
-          height: 1.65em
-
-        .kifu_data_td
-          width: 10%
+        tbody
+          tr
+            height: 1.65em
+          td.kifu_data_td
+            padding: 0 0.2em
+            width: 10%
+            font-size: 0.8em
 
         .shouhi_tuukei_td
           @extend %cell_slash
@@ -160,9 +160,34 @@
     .s1
       border-right: 1px solid black
 
-    .s2
-      border-bottom: 1px solid black
-      border-right: 1px solid black
-
+    .bb
+      border-bottom-width: 2px
+      
     .double_bottom_border
       @extend %double_bottom_border
+
+  // 罫線調整
+  .kifu_grid_container_wrap
+    // 右上には線がまったくないので2px
+    border-top: 2px solid black
+    border-left: 2px solid black
+    // 下はすでに2pxあるので足さない
+      
+    .header_table1, .header_table2
+      // 上2つのテーブルの右側は1pxあるので1px追加 
+      border-right: 1px solid black
+      // テーブルの下に1px追加で2px分にする
+      border-bottom: 1px solid black
+      
+    .body_table
+      thead
+        td
+          border-right: 1px solid black
+          border-bottom: 2px solid black
+      tbody
+        tr:nth-child(5n)
+          td
+            border-bottom: 2px solid black
+      tr
+        td:nth-child(4n)
+          border-right: 2px solid black

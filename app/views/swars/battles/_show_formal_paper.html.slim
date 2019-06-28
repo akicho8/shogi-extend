@@ -17,101 +17,101 @@ ruby:
 
 .kifu_grid_container
   .kifu_grid_container_wrap
-    table
+    table.header_table1
       tr
-        td.s2.taikyokusha_td.ls3[rowspan="12"]
+        td.s0.s1.taikyokusha_td.ls3[rowspan="12"]
           .taikyokusha
             | 対局者
-        td.s2.dankyu_td[rowspan="3"]
+        td.s0.s1.dankyu_td[rowspan="3"]
           .dankyu
             = decorator.dankyuu_number_for(:black, "級")
         td.s0[rowspan="6"]
           .sengo
             | 先 ☗
-        td.s2.username_td[rowspan="6"]
+        td.s0.s1.username_td[rowspan="6"]
           = decorator.user_name_for(:black)
-        td.s2.kisenmei_td.ls3[rowspan="8"]
+        td.s0.s1.kisenmei_td.ls3[rowspan="8"]
           .kisenmei
             | 棋戦名
-        td.s2[colspan="2" rowspan="4"]
+        td.s0.s1[colspan="2" rowspan="4"]
           | 将棋ウォーズ
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           | 開始
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           = decorator.battle.battled_at.to_s(:seireki_format)
       tr
 
       tr
 
       tr
-        td.s2.dankyu_td[rowspan="3"]
+        td.s0.s1.dankyu_td[rowspan="3"]
           span.dankyu
             = decorator.dankyuu_number_for(:black, "段")
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           | 終了
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           = decorator.battle.end_at.to_s(:seireki_format)
       tr
-        td.s2[colspan="2" rowspan="4"]
+        td.s0.s1[colspan="2" rowspan="4"]
           = decorator.battle.rule_info.long_name
       tr
       tr
-        td.s2.dankyu_td[rowspan="3"]
+        td.s0.s1.dankyu_td[rowspan="3"]
           span.dankyu
             = decorator.dankyuu_number_for(:white, "級")
         td.s0[rowspan="6"]
           .sengo
             | 後 ☖
-        td.s2.username_td[rowspan="6"]
+        td.s0.s1.username_td[rowspan="6"]
           = decorator.user_name_for(:white)
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           | 昼休
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           = decorator.blank_jihunkara
 
       tr
 
       tr
-        td.s2.taikyokujo_td[colspan="2" rowspan="4"]
+        td.s0.s1.taikyokujo_td[colspan="2" rowspan="4"]
           | 対局場
-        td.s2[rowspan="4"]
+        td.s0.s1[rowspan="4"]
           | インターネット
       tr
 
-        td.s2.dankyu_td[rowspan="3"]
+        td.s0.s1.dankyu_td[rowspan="3"]
           span.dankyu
             = decorator.dankyuu_number_for(:white, "段")
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           | 夕休
-        td.s2[rowspan="3"]
+        td.s0.s1[rowspan="3"]
           = decorator.blank_jihunkara
 
       tr
 
       tr
 
-    table
+    table.header_table2
       tr
-        td.s2.teaiwari_td.ls3
+        td.s0.s1.teaiwari_td.ls3
           .teaiwari
             | 手合割
-        td.s2
+        td.s0.s1
           = decorator.teaiwari
         td.s0.bikou_label_td[rowspan="4"]
           .bikou_label
             | 備考
-        td.s2.bikou_body_td[rowspan="4"]
+        td.s0.s1.bikou_body_td[rowspan="4"]
           .bikou_body
             = decorator.bikou_body
 
-        td.s2
+        td.s0.s1
           | 手数
-        td.s2
+        td.s0.s1
           = decorator.katimake_result
       tr
-        td.s2.ls3
+        td.s0.s1.ls3
           | 持時間
-        td.s2
+        td.s0.s1
           | 各
           = decorator.kaku_jikan
           | 分
@@ -120,16 +120,16 @@ ruby:
         td.s1.double_bottom_border[rowspan="2"]
           = decorator.sengata_pack
       tr
-        td.s2[rowspan="2"]
+        td.s0.s1[rowspan="2"]
           | 消費時間
-        td.s2
+        td.s0.s1
           = decorator.total_seconds_str_for(:black)
       tr
-        td.s2
+        td.s0.s1
           = decorator.total_seconds_str_for(:white)
-        td.s2
+        td.s0.s1
           | 記録係
-        td.s2
+        td.s0.s1
           = decorator.kirokugakari
 
     / 斜線の定義
@@ -138,33 +138,35 @@ ruby:
         symbol#svg_slash(preserveAspectRatio="none")
           line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
 
-    table.hand_logs_table
-      tr.kifu_header_row
-        - 3.times do |x|
-          - 2.times do |left_or_right|
-            td.s2
-              = Bioshogi::Location.fetch(left_or_right).hexagon_mark
-            td.s2.shouhi_tuukei_td
-              svg
-                use(xlink:href="#svg_slash")
-              .shouhi_tuukei
-                .shouhi
-                  | 消費
-                .tuukei
-                  | 通計
-      - cell_rows.times do |y|
-        tr.kifu_body_row
+    table.body_table
+      thead
+        tr
           - 3.times do |x|
             - 2.times do |left_or_right|
-                - hand_log = decorator.hand_log_for(x, y, left_or_right)
-                td.s2.kifu_data_td
-                  / = hand_log.to_ki2(place_format: :hankaku_number, same_suffix: " ", separator: " ", compact_if_gt: 6) if hand_log
-                  = hand_log.to_ki2(same_suffix: "　", separator: " ", compact_if_gt: 7) if hand_log
-                td.s2.shouhi_tuukei_td
-                  svg
-                    use(xlink:href="#svg_slash")
-                  .shouhi_tuukei
-                    .shouhi
-                      = BattleDecorator.format_foo1(hand_log.personal_clock.used_seconds) if hand_log
-                    .tuukei
-                      = BattleDecorator.format_foo1(hand_log.personal_clock.total_seconds) if hand_log
+              td
+                = Bioshogi::Location.fetch(left_or_right).hexagon_mark
+              td.shouhi_tuukei_td
+                svg
+                  use(xlink:href="#svg_slash")
+                .shouhi_tuukei
+                  .shouhi
+                    | 消費
+                  .tuukei
+                    | 通計
+      tbody
+        - cell_rows.times do |y|
+          tr.kifu_body_row
+            - 3.times do |x|
+              - 2.times do |left_or_right|
+                  - hand_log = decorator.hand_log_for(x, y, left_or_right)
+                  td.s0.s1.kifu_data_td
+                    / = hand_log.to_ki2(place_format: :hankaku_number, same_suffix: " ", separator: " ", compact_if_gt: 6) if hand_log
+                    = hand_log.to_ki2(same_suffix: "　", separator: " ", compact_if_gt: 7) if hand_log
+                  td.s0.s1.shouhi_tuukei_td
+                    svg
+                      use(xlink:href="#svg_slash")
+                    .shouhi_tuukei
+                      .shouhi
+                        = BattleDecorator.format_foo1(hand_log.personal_clock.used_seconds) if hand_log
+                      .tuukei
+                        = BattleDecorator.format_foo1(hand_log.personal_clock.total_seconds) if hand_log
