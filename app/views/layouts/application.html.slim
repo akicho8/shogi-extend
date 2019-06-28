@@ -44,7 +44,7 @@ html(lang="ja")
     = yield(:twitter_card_tag)
 
     = yield :head
-  body
+  body(class=(params[:formal_paper] ? "formal_paper_bg" : ""))
     - if @simple_layout
       .container.is-fluid
         == flash_danger_notify_tag
@@ -209,7 +209,7 @@ html(lang="ja")
                   - unless Rails.env.production?
                     li class=("is-active" if params[:controller].start_with?("general/battles")) = link_to("2ch棋譜検索", [:general, :s])
 
-      section.section
+      section.section.formal_paper
         .container.is-fluid.main_container
           == flash_danger_notify_tag
           = yield
