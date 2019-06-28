@@ -59,7 +59,7 @@ class BattleDecorator
   def bikou_body
     s = []
     s << battle.final_info.name
-    s += battle.note_tag_list.grep(/\A(相)/)
+    s += battle.note_tag_list.grep(/(^相|入玉)/)
     if battle.memberships.any? { |e| e.note_tag_list.include?("指導対局") }
       s << "指導対局"
     end

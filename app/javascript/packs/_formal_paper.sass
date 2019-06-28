@@ -1,3 +1,7 @@
+$kifu_grid_container_wrap_width: 640px + 32px + 8px // 全体の横幅
+$body_table_tbody_height: 1.8em                     // 指し手の1行(tr)の縦幅
+$body_table_tbody_td_font_size: 1em                 // 指し手のフォントサイズ
+
 @import "./general.sass"
 
 @media print
@@ -56,11 +60,14 @@
   @media screen
     margin-top: 1em
 
+  @media print
+    margin-top: 1em
+    
   color: black
 
   .kifu_grid_container_wrap
-    width: 640px
-
+    width: $kifu_grid_container_wrap_width
+    margin: auto auto
     @extend .yumincho
 
     table
@@ -68,7 +75,6 @@
       border-collapse: separate
 
       td
-        height: 1.5em
         text-align: center
         vertical-align: middle
         @extend .nowrap
@@ -80,14 +86,15 @@
 
         tbody
           tr
-            height: 1.65em
+            height: $body_table_tbody_height
           td.kifu_data_td
             padding: 0 0.2em
             width: 10%
-            font-size: 0.8em
+            font-size: $body_table_tbody_td_font_size
 
         .shouhi_tuukei_td
           @extend %cell_slash
+          height: 1em           // ？ これを入れないと上下にならない
           font-size: 0.5em
           .shouhi_tuukei
             @extend %top_left_and_bottom_right_layout
@@ -193,7 +200,7 @@
         td:nth-child(4n)
           border-right: 2px solid black
 
-.kifu_grid_container
-  display: flex
-  justify-content: center
-  align-items: center
+// .kifu_grid_container
+//   display: flex
+//   justify-content: center
+//   align-items: center

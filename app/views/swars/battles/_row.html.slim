@@ -72,13 +72,6 @@ template(slot-scope="props")
               | &nbsp;&nbsp;&nbsp;
               | 詳細
 
-        template(v-if="props.row.formal_paper_path")
-          b-dropdown-item(:has-link="true" :paddingless="true")
-            a(@click.stop :href="props.row.formal_paper_path")
-              b-icon(icon="play" size="is-small")
-              | &nbsp;&nbsp;&nbsp;
-              | 棋譜用紙
-
         - unless Rails.env.production?
           template(v-if="props.row.edit_path")
             b-dropdown-item(:has-link="true" :paddingless="true")
@@ -108,6 +101,13 @@ template(slot-scope="props")
             b-icon(icon="download" size="is-small")
             | &nbsp;&nbsp;&nbsp;
             | KI2 ダウンロード
+
+        template(v-if="props.row.formal_paper_path")
+          b-dropdown-item(:has-link="true" :paddingless="true")
+            a(@click.stop :href="props.row.formal_paper_path")
+              b-icon(icon="note-outline" size="is-small")
+              | &nbsp;&nbsp;&nbsp;
+              | 印刷用棋譜
 
         b-dropdown-item(:separator="true")
 
