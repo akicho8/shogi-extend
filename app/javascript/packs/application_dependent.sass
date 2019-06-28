@@ -11,10 +11,16 @@
 
 ////////////////////////////////////////////////////////////////////////////// 最初の section の上の隙間が多すぎるので減らす
 
-@media screen
-  body > section:first-of-type
-    padding-top: $gap * 2
+// @media screen
+//   body > section:first-of-type
+//     padding-top: $gap * 2
 
+////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
+  
+#flash_danger_notify_tag
+  .notification
+    margin-bottom: 1em
+  
 ////////////////////////////////////////////////////////////////////////////// html_formatのなかでtooltipが途切れる
 
 #swars_player_info_app

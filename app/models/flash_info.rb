@@ -53,14 +53,10 @@ class FlashInfo
   # 危険通知は notification を使う
   def flash_danger_notify_tag
     if list = normalized_flash.slice(*notify_keys).presence
-      tag.div(:class => "content") do
-        tag.p do
-          tag.div(id: "flash_danger_notify_tag") do
-            list.collect { |key, message|
-              content_tag("b-notification", message.html_safe, type: "is-#{key}", ":has-icon": "false", ":closable": "false")
-            }.join.html_safe
-          end
-        end
+      tag.div(id: "flash_danger_notify_tag") do
+        list.collect { |key, message|
+          content_tag("b-notification", message.html_safe, type: "is-#{key}", ":has-icon": "false", ":closable": "false")
+        }.join.html_safe
       end
     end
   end

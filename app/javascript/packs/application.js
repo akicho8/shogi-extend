@@ -81,9 +81,11 @@ window.Chart = Chart
 //////////////////////////////////////////////////////////////////////////////// 通知
 
 document.addEventListener("DOMContentLoaded", () => {
-  new Vue({
-    el: "#flash_danger_notify_tag",
-  })
+  if (document.querySelector("#flash_danger_notify_tag")) {
+    new Vue({
+      el: "#flash_danger_notify_tag",
+    })
+  }
 })
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい
