@@ -173,8 +173,8 @@ class BattleDecorator
     end
 
     base = page_index * count_of_1page
-    base += base + x * (cell_rows * location_size) + (y * nikozutu) + left_or_right
-    base - one_if_handicap
+    offset = x * (cell_rows * location_size) + (y * nikozutu) + left_or_right
+    base + offset - one_if_handicap
   end
 
   def one_if_handicap

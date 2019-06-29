@@ -82,7 +82,7 @@ module BattleModelSharedMethods
 
     if v = info.header["開始日時"].presence
       if t = (Time.zone.parse(v) rescue nil)
-        self.battled_at = t
+        self.battled_at ||= t
       else
         values = v.scan(/\d+/).collect { |e|
           e = e.to_i
@@ -91,10 +91,10 @@ module BattleModelSharedMethods
           end
           e
         }
-        self.battled_at = Time.zone.local(*values)
+        self.battled_at ||= Time.zone.local(*values)
       end
     else
-      self.battled_at = Time.zone.parse("0001/01/01")
+      self.battled_at ||= Time.zone.parse("0001/01/01")
     end
 
     other_tag_list.add info.header["手合割"]

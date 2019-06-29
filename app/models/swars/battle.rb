@@ -51,6 +51,9 @@ module Swars
     end
 
     before_validation on: :create do
+      self.key ||= SecureRandom.hex
+      self.rule_key ||= :ten_min
+
       # "" から ten_min への変換
       if rule_key
         self.rule_key = RuleInfo.fetch(rule_key).key
@@ -58,18 +61,13 @@ module Swars
 
       # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
       if key
-        self.battled_at ||= Time.zone.parse(key.split("-").last)
+        self.battled_at ||= (Time.zone.parse(key.split("-").last) rescue nil)
       end
 
       self.last_accessd_at ||= Time.current
-
-      if Rails.env.development? || Rails.env.test?
-        self.key ||= SecureRandom.hex
-        self.battled_at ||= Time.current
-        self.rule_key ||= :ten_min
-        self.final_key ||= :TORYO
-        self.preset_key ||= :"平手"
-      end
+      self.battled_at ||= Time.current
+      self.final_key ||= :TORYO
+      self.preset_key ||= :"平手"
     end
 
     with_options presence: true do
@@ -105,18 +103,25 @@ module Swars
     concerning :ConvertHookMethos do
       included do
         serialize :csa_seq
+        attribute :kifu_body_for_test
 
         before_validation do
         end
 
         before_save do
-          if changes_to_save[:csa_seq] && csa_seq
+          if (changes_to_save[:csa_seq] && csa_seq) || (changes_to_save[:kifu_body_for_test] && kifu_body_for_test)
             parser_exec
           end
         end
       end
 
+      private
+
       def kifu_body
+        kifu_body_for_test || kifu_body_from_csa_seq
+      end
+
+      def kifu_body_from_csa_seq
         type = [rule_info.long_name]
         if memberships.any? { |e| e.grade.grade_info.key == :"十段" }
           type << "指導対局"
