@@ -79,7 +79,7 @@ class BattleDecorator
       s << [lose_membership.location.call_name(handicap?), battle.final_info.name].join
     end
 
-    s += battle.note_tag_list.grep(/(^相|入玉)/)
+    s += battle.note_tag_list.grep(/(^相|入玉|駒柱|対)/)
     if battle.memberships.any? { |e| e.note_tag_list.include?("指導対局") }
       s << "指導対局"
     end
