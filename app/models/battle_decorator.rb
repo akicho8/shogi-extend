@@ -138,7 +138,9 @@ class BattleDecorator
   end
 
   def page_count
-    q, r = battle.turn_max.divmod(count_of_1page)
+    turn_max = battle.turn_max + one_if_handicap
+
+    q, r = turn_max.divmod(count_of_1page)
     if r.nonzero?
       q += 1
     end

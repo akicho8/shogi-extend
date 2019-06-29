@@ -270,6 +270,42 @@ module Swars
             find_each(&:remake)
             p count
           end
+
+          if Rails.env.development?
+            [
+              { turn_max:   0, preset_key: "平手",   },
+              { turn_max:   1, preset_key: "平手",   },
+              { turn_max: 149, preset_key: "平手",   },
+              { turn_max: 150, preset_key: "平手",   },
+              { turn_max: 151, preset_key: "平手",   },
+              { turn_max:   0, preset_key: "香落ち", },
+              { turn_max:   1, preset_key: "香落ち", },
+              { turn_max: 149, preset_key: "香落ち", },
+              { turn_max: 150, preset_key: "香落ち", },
+              { turn_max: 151, preset_key: "香落ち", },
+              { turn_max: 152, preset_key: "香落ち", },
+            ].each do |params|
+              user1 = User.create!(user_key: SecureRandom.hex[0...5])
+              user2 = User.create!(user_key: SecureRandom.hex[0...5])
+
+              if params[:preset_key] == "平手"
+                list = [["+5958OU", 599], ["-5152OU", 597], ["+5859OU", 598], ["-5251OU", 590]]
+              else
+                list = [["-5152OU", 597], ["+5958OU", 599], ["-5251OU", 590], ["+5859OU", 598]]
+              end
+
+              cycle = list.cycle
+
+              battle = Battle.new
+              battle.preset_key = params[:preset_key]
+              battle.csa_seq = params[:turn_max].times.collect { cycle.next }
+              battle.memberships.build(user: user1, judge_key: :win,  location_key: :black)
+              battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
+              battle.battled_at = Time.current
+              battle.save!                  # => true, true, true, true, true, true, true, true, true, true, true
+            end
+          end
+
         end
 
         def run(*args, **params, &block)
