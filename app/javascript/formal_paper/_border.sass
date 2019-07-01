@@ -1,6 +1,6 @@
 @import "./_helper.sass"
 
-.formal_paper_layout
+.formal_paper_workspace
   .s0
     border-bottom: 1px solid black
 
@@ -14,19 +14,19 @@
     @extend %double_border
 
   // 罫線調整
-  .kifu_tables
+  .tables_box
     // 右上には線がまったくないので2px
     border-top: 2px solid black
     border-left: 2px solid black
     // 下はすでに2pxあるので足さない
 
-    .header_table1, .header_table2
+    .is_head1, .is_head2
       // 上2つのテーブルの右側は1pxあるので1px追加
       border-right: 1px solid black
       // テーブルの下に1px追加で2px分にする
       border-bottom: 1px solid black
 
-    .body_table
+    .is_body
       thead
         td
           border-right: 1px solid black

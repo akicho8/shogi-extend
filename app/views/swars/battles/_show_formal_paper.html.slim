@@ -14,16 +14,16 @@ ruby:
   .has-text-centered
     button.button.is-primary(@click="printer_handle") 印刷
 
-.formal_paper_layout(class=Rails.env)
+.formal_paper_workspace(class=Rails.env)
   - decorator.page_count.times do |page_index|
     .sheet
-      .sheet-body
-        .kifu_tables_container
-          .kifu_tables
+      .sheet_body
+        .tables_box_container
+          .tables_box
             
             ////////////////////////////////////////////////////////////////////////////////
             
-            table.header_table1
+            table.is_head1
               tr
                 td.s0.s1.taikyokusha_td.ls3[rowspan="12"]
                   .taikyokusha
@@ -98,7 +98,7 @@ ruby:
             
             ////////////////////////////////////////////////////////////////////////////////
                 
-            table.header_table2
+            table.is_head2
               tr
                 td.s0.s1.teaiwari_td.ls3
                   .teaiwari
@@ -146,7 +146,7 @@ ruby:
                 symbol#svg_slash(preserveAspectRatio="none")
                   line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
             
-            table.body_table
+            table.is_body
               thead
                 tr
                   - decorator.yoko3retu.times do |x|

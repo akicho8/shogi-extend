@@ -8,23 +8,16 @@
   section.section
     padding: 0 !important
 
-.formal_paper_layout
+.formal_paper_workspace
   .sheet
     color: black
     font-size: $base_font_size
     
     @extend .yumincho
     
-    .kifu_tables
+    .tables_box
       table
         width: 100%
-        // @extend %max_block
-
-        // &.header_table1
-        // &.header_table2
-        //   height: 10%
-        // &.body_table
-        //   height: 90%
         
         border-collapse: separate
 
@@ -33,18 +26,17 @@
           vertical-align: middle
           @extend .nowrap
 
-        &.body_table
+        &.is_body
           thead
             tr
-              // / height: 100%
 
           tbody
             tr
-              height: $body_table_tbody_height
+              height: $is_body_tbody_height
             td.kifu_data_td
               padding: 0 0.2em
               width: 10%
-              font-size: $body_table_tbody_td_font_size
+              font-size: $is_body_tbody_td_font_size
 
           .shouhi_tuukei_td
             @extend %cell_slash
@@ -56,7 +48,7 @@
 
         .sengo
           @extend %vertical_writing
-          @extend %small1
+          @extend %is_small1
 
         td
           &.ls3
@@ -64,8 +56,8 @@
 
           //////////////////////////////////////////////////////////////////////////////// 備考
           &.bikou_label_td
-            @extend %slendar
-            @extend %small1
+            @extend %is_slendar
+            @extend %is_small1
             letter-spacing: 0.5em
             .bikou_label
               @extend %vertical_writing
@@ -73,12 +65,12 @@
             // width: 25%
             padding: 0.5em
             .bikou_body
-              @extend %small1
+              @extend %is_small1
               @extend .word_break
               text-align: left
 
           &.taikyokusha_td
-            @extend %slendar
+            @extend %is_slendar
             padding: 0.5em 0
             .taikyokusha
               @extend %text_just
@@ -86,7 +78,7 @@
               min-height: 4em
 
           &.kisenmei_td
-            @extend %slendar
+            @extend %is_slendar
             .kisenmei
               @extend %vertical_writing
 
@@ -106,5 +98,5 @@
             .teaiwari
 
           &.hirukyuumae_td
-            @extend %small2
+            @extend %is_small2
             padding: 0 0.5em
