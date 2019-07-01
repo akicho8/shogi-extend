@@ -40,7 +40,7 @@ template(slot-scope="props")
           b-icon(icon="clipboard-outline" size="is-small")
           | &nbsp;コピー
 
-      battle_operation_pulldown(:record="props.row" position="is-bottom-left")
+      pulldown_menu(:record="props.row")
 
       / template(v-if="props.row.show_path")
       /   a.button(@click.stop :href="props.row.show_path")

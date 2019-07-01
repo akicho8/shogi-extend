@@ -92,9 +92,9 @@ export default {
       })
     },
 
-    // kifu_copy_handle(params) {
-    //   this.kifu_copy_exec(params)
-    // },
+    kifu_copy_handle(params) {
+      this.kifu_copy_exec(params)
+    },
 
     modal_url_copy() {
       if (this.modal_record) {

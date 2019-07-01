@@ -1,8 +1,8 @@
 <template lang="pug">
-  b-dropdown(:hoverable="false" :position="position" @click.native.stop="")
+  b-dropdown(:hoverable="false" @click.native.stop="" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
     button.button.is-small(slot="trigger")
       //- span もっと見る
-      b-icon(icon="menu-up")
+      b-icon(:icon="in_modal ? 'menu-up' : 'menu-down'")
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
@@ -50,13 +50,6 @@
           | &nbsp;&nbsp;&nbsp;
           | KIF ダウンロード
 
-    template(v-if="record.kifu_copy_params")
-      b-dropdown-item(:has-link="true" :paddingless="true")
-        a(@click.stop.prevent="kifu_copy_exec(Object.assign({}, record.kifu_copy_params, {kc_format: 'ki2'}))")
-          b-icon(icon="clipboard-outline" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | KI2 コピー
-
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(@click.stop="" :href="`${record.show_path}.ki2`")
@@ -64,18 +57,24 @@
           | &nbsp;&nbsp;&nbsp;
           | KI2 ダウンロード
 
-    template(v-if="record.tweet_modal_url")
-      template(v-if="modal_url_copy")
-        b-dropdown-item(:has-link="true" :paddingless="true")
-          a(@click.stop.prevent="modal_url_copy")
-            b-icon(icon="clipboard-outline" size="is-small")
-            | &nbsp;&nbsp;&nbsp;
-            | URLをコピー
+    template(v-if="record.kifu_copy_params")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(@click.stop.prevent="$root.kifu_copy_handle(Object.assign({}, record.kifu_copy_params, {kc_format: 'ki2'}))")
+          b-icon(icon="clipboard-outline" size="is-small")
+          | &nbsp;&nbsp;&nbsp;
+          | KI2 コピー
 
     template(v-if="record.tweet_modal_url")
-      template(v-if="modal_url_with_turn_copy")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(@click.stop.prevent="$root.modal_url_copy")
+          b-icon(icon="clipboard-outline" size="is-small")
+          | &nbsp;&nbsp;&nbsp;
+          | URLをコピー
+
+    template(v-if="in_modal")
+      template(v-if="record.tweet_modal_url")
         b-dropdown-item(:has-link="true" :paddingless="true")
-          a(@click.stop.prevent="modal_url_with_turn_copy")
+          a(@click.stop.prevent="$root.modal_url_with_turn_copy")
             b-icon(icon="clipboard-outline" size="is-small")
             | &nbsp;&nbsp;&nbsp;
             | 現在の手数のURLをコピー
@@ -105,7 +104,7 @@
 
     template(v-if="record.wars_tweet_body")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(@click.prevent="wars_tweet_copy_click(record.wars_tweet_body)")
+        a(@click.stop.prevent="wars_tweet_copy_click(record.wars_tweet_body)")
           b-icon(icon="clipboard-outline" size="is-small")
           | &nbsp;&nbsp;&nbsp;
           | ウォーズ側のTweetコピー
@@ -116,19 +115,8 @@
 
 export default {
   props: {
-    record: {},
-    position: {},
-    modal_url_copy: {},
-    modal_url_with_turn_copy: {},
-  },
-  data() {
-    return {
-    }
-  },
-  methods: {
+    record:   { required: true },
+    in_modal: { required: true },
   },
 }
 </script>
-
-<style scoped>
-</style>

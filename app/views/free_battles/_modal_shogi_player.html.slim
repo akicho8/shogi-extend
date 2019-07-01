@@ -50,12 +50,12 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
           b-tooltip(label="棋譜をクリップボードにコピーする" position="is-right")
             a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
               b-icon(icon="clipboard-outline" size="is-small")
-              | &nbsp;コピー
+              | &nbsp;&nbsp;KIF コピー
 
           a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
             = image_tag("piyo_shogi_icon.png", "class": "modal_piyo_link")
 
-          battle_operation_pulldown(:record="modal_record" :modal_url_copy="modal_url_copy" :modal_url_with_turn_copy="modal_url_with_turn_copy" position="is-top-left")
+          pulldown_menu(:record="modal_record" :in_modal="true")
 
           template(v-if="false")
             a.button.is-small(@click="modal_p = false") 閉じる

@@ -113,7 +113,7 @@ import message_link_to from "../message_link_to.vue"
 import global_message_link from "../global_message_link.vue"
 import swars_user_link_to from "../swars_user_link_to.vue"
 import b_icon2 from "../b_icon2.vue"
-import battle_operation_pulldown from "../battle_operation_pulldown.vue"
+import pulldown_menu from "../pulldown_menu.vue"
 
 Vue.mixin({
   mixins: [
@@ -127,7 +127,7 @@ Vue.mixin({
     global_message_link,
     swars_user_link_to,
     "b-icon2": b_icon2,
-    battle_operation_pulldown,
+    pulldown_menu,
   },
 })
 
