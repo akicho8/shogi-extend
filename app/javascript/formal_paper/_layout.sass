@@ -26,7 +26,7 @@ $a4_padding: 10mm
     page-break-after: always
 
     .sheet-body
-      @extend %w_h_max
+      @extend %max_block
       border: 1px solid red
 
       display: flex
@@ -34,11 +34,11 @@ $a4_padding: 10mm
 
       .kifu_tables_container
         width: 100%
-        // @extend %w_h_max
+        // @extend %max_block
 
         .kifu_tables
           width: 100%
-          // @extend %w_h_max      // 外側を100%にすることで内側のテーブルが最大まで「自動的に」広がる
+          // @extend %max_block      // 外側を100%にすることで内側のテーブルが最大まで「自動的に」広がる
 
 /* プレビュー用のスタイル */
 @media screen

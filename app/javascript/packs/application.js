@@ -10,11 +10,7 @@
 import Rails from "rails-ujs"
 Rails.start()
 
-import "helper.sass"
-import "flex_box.sass"
-import "general.sass"
-import "application_dependent.sass"
-import "free_battle_edit_ogp_css.sass"
+import "application.sass"
 
 import "modulable_crud.coffee"
 
