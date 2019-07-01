@@ -1,6 +1,7 @@
 if Rails.env.production? # || Rails.env.development?
   Rails.application.config.middleware.use(ExceptionNotification::Rack, {
-      ignore_exceptions: ExceptionNotifier.ignored_exceptions - ["ActiveRecord::RecordNotFound"], # 404 のエラーも通知する
+      # ignore_exceptions: ExceptionNotifier.ignored_exceptions - ["ActiveRecord::RecordNotFound"], # 404 のエラーも通知する
+      ignore_exceptions: ExceptionNotifier.ignored_exceptions - [],
 
       email: {
         :email_prefix         => "[shogi_web #{Rails.env}] ",
