@@ -27,10 +27,10 @@
 
     template(v-if="record.formal_paper_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="record.formal_paper_path")
+        a(:href="record.formal_paper_path" target="_blank")
           b-icon(icon="note-outline" size="is-small")
           | &nbsp;&nbsp;&nbsp;
-          | 印刷用棋譜
+          | 棋譜印刷(PDF)
 
     template(v-if="record.memberships")
       b-dropdown-item(:separator="true")
@@ -117,7 +117,9 @@
 export default {
   props: {
     record:   { required: true },
-    in_modal: { required: true },
+    in_modal: { },
+  },
+  methods: {
   },
 }
 </script>
