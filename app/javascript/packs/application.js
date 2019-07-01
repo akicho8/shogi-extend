@@ -10,13 +10,13 @@
 import Rails from "rails-ujs"
 Rails.start()
 
-import "./helper.sass"
-import "./flex_box.sass"
-import "./general.sass"
-import "./application_dependent.sass"
-import "./free_battle_edit_ogp_css.sass"
+import "helper.sass"
+import "flex_box.sass"
+import "general.sass"
+import "application_dependent.sass"
+import "free_battle_edit_ogp_css.sass"
 
-import "./modulable_crud.coffee"
+import "modulable_crud.coffee"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
@@ -26,15 +26,15 @@ window.Vue = Vue
 import Vuex from "vuex"
 Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
 
-import Repository from "./Repository.js"
+import Repository from "Repository.js"
 Vue.prototype.$http = Repository
 
 import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
-import "./buefy.scss"
-import "./bulma_burger.js"
+import "../my_buefy.scss"
+import "bulma_burger.js"
 
 import Buefy from "buefy"
 // import "buefy/src/scss/buefy-build.scss" // これか
@@ -90,12 +90,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい
 
-import LifetimeInfo from "./lifetime_info"
-import TeamInfo from "./team_info"
-import LastActionInfo from "./last_action_info"
-import CustomPresetInfo from "./custom_preset_info"
-import HiraKomaInfo from "./hira_koma_info"
-import RobotAcceptInfo from "./robot_accept_info"
+import LifetimeInfo from "lifetime_info"
+import TeamInfo from "team_info"
+import LastActionInfo from "last_action_info"
+import CustomPresetInfo from "custom_preset_info"
+import HiraKomaInfo from "hira_koma_info"
+import RobotAcceptInfo from "robot_accept_info"
 
 Vue.prototype.LifetimeInfo = LifetimeInfo
 Vue.prototype.TeamInfo = TeamInfo
@@ -106,14 +106,14 @@ Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_basic_methods from "./vue_basic_methods.js"
+import vue_basic_methods from "vue_basic_methods.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-import message_link_to from "../message_link_to.vue"
-import global_message_link from "../global_message_link.vue"
-import swars_user_link_to from "../swars_user_link_to.vue"
-import b_icon2 from "../b_icon2.vue"
-import pulldown_menu from "../pulldown_menu.vue"
+import message_link_to from "message_link_to.vue"
+import global_message_link from "global_message_link.vue"
+import swars_user_link_to from "swars_user_link_to.vue"
+import b_icon2 from "b_icon2.vue"
+import pulldown_menu from "pulldown_menu.vue"
 
 Vue.mixin({
   mixins: [
@@ -133,8 +133,8 @@ Vue.mixin({
 
 window.GVI = new Vue()           // ActionCable 側から Vue のグローバルなメソッドを呼ぶため
 
-import "./audio_queue.js"
-import "./light_session_app.js"
+import "audio_queue.js"
+import "light_session_app.js"
 
 //////////////////////////////////////////////////////////////////////////////// 確認用
 

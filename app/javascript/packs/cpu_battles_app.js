@@ -1,6 +1,6 @@
 import _ from "lodash"
 
-import CpuBrainInfo from "./cpu_brain_info.js"
+import CpuBrainInfo from "cpu_brain_info"
 
 window.CpuBattlesApp = Vue.extend({
   data() {

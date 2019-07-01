@@ -1,0 +1,293 @@
+@import "bulma_variables"
+@import "~bulma/sass/utilities/mixins"
+// @import "my_buefy.scss"
+
+@import "helper.sass"
+@import "general.sass"
+@import "formal_paper"
+@import "flex_box.sass"
+@import "free_battle_edit_ogp_css.sass"
+
+////////////////////////////////////////////////////////////////////////////// フッターまでの最低限の縦幅
+
+.main_container
+  min-height: 70vmin
+
+////////////////////////////////////////////////////////////////////////////// 最初の section の上の隙間が多すぎるので減らす
+
+// @media screen
+//   body > section:first-of-type
+//     padding-top: $gap * 2
+
+////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
+  
+#flash_danger_notify_tag
+  .notification
+    margin-bottom: 1em
+  
+////////////////////////////////////////////////////////////////////////////// html_formatのなかでtooltipが途切れる
+
+#swars_player_info_app
+  .html_format
+    overflow: visible
+
+////////////////////////////////////////////////////////////////////////////// ぴよ将棋の画像調整
+
+.show_piyo_link
+  margin: 0.5rem
+  height: 1.4rem
+
+.row_piyo_link
+  margin: 0 1em
+  height: 1.4rem
+
+.piyo_icon_in_button
+  height: 1.0rem
+
+.modal_piyo_link
+  height: 2em
+
+////////////////////////////////////////////////////////////////////////////// 棋譜のtwitter用画像の小さいの
+
+.mini_img
+  height: 24px
+  width: 24px
+  border: 1px solid $primary
+
+////////////////////////////////////////////////////////////////////////////// _modal_shogi_player
+
+.modal_loading_content
+  width: 40vmin
+  height: 40vmin
+
+////////////////////////////////////////////////////////////////////////////// 段級位
+
+.versus
+  margin: 0px 0.25rem
+
+////////////////////////////////////////////////////////////////////////////// アイコン
+
+.has_text_gold
+  color: hsl(38, 80%, 60%)
+
+////////////////////////////////////////////////////////////////////////////// 持ち時間用フォント
+
+.digit_font
+  font-family: Consolas, 'Courier New', Courier, Monaco, monospace
+
+////////////////////////////////////////////////////////////////////////////// チャットのメッセージは強く折り返す
+
+.chat_container
+  word-break: break-all
+  figure.media-left
+    .image
+      img
+        border-radius: 5%
+
+//////////////////////////////////////////////////////////////////////////////// message_link_to
+
+.message_link_to
+  .avatar_image
+    cursor: pointer
+    height: 2em
+    border-radius: 5%
+  .user_name
+    margin: 0 0.2em
+    white-space: nowrap
+    cursor: pointer
+    font-weight: bold
+
+.mlt_chat_message
+  word-break: break-all
+  margin-left: 0.5em
+
+.avatar_image_in_dialog
+  height: 3.0em
+  vertical-align: middle
+  margin-right: 0.5em
+  border-radius: 5%
+
+////////////////////////////////////////////////////////////////////////////// ヘッダーのアバター画像
+
+.header_avatar_image
+  vertical-align: middle
+  border-radius: 50%
+
+.my_name
+  margin-left: 0.5em
+
+////////////////////////////////////////////////////////////////////////////// ランキングのアバター
+
+.ranking_avatar
+  vertical-align: middle
+  width: 26px
+  margin-right: 8px
+
+////////////////////////////////////////////////////////////////////////////// .box のかわり
+
+.non_border_box
+  display: block
+  padding: 1.25rem
+
+////////////////////////////////////////////////////////////////////////////// html_format で Hash 表示したとき値は改行する
+
+.hash_value_only_nowrap
+  .html_format
+    .html_format_type_hash
+      td
+        white-space: normal
+
+////////////////////////////////////////////////////////////////////////////// 棋譜入力の盤面入力の幅が狭くなるのを防ぐ
+
+.b-tabs
+  &.is_lr_paddingless
+    .tab-content
+      padding-left: 0em !important
+      padding-right: 0em !important
+
+////////////////////////////////////////////////////////////////////////////// ヘッダー画像
+
+// .hero
+//   &.is-primary
+//     background-color: transparent !important
+//
+//   position: relative
+//   &:after
+//     position: absolute
+//     z-index: -1
+//     content: ""
+//     background-image: url("../../../node_modules/shogi-player/src/assets/hero.jpg")
+//     background-position: center
+//     background-size: cover
+//     opacity: 1.0
+//     top: 0
+//     left: 0
+//     width: 100%
+//     height: 100%
+
+////////////////////////////////////////////////////////////////////////////// ShogiPlayer の css を適用 (ShogiPlayer.vue とは別に管理する)
+
+// /* @import "../../../node_modules/bulma/bulma.sass"
+// @import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
+// @import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"
+
+// ShogiPlayer.sass からの相対パスで画像が参照できるはずだけど次の謎のエラーになるため $sp_assets_dir をこのファイルからの相対パスに変更する
+//
+// ERROR in ./node_modules/css-loader??ref--2-2!./node_modules/postcss-loader/lib??ref--2-3!./node_modules/sass-loader/lib/loader.js??ref--2-4!./app/javascript/packs/application_dependent.sass
+// Module not found: Error: Can't resolve '../assets/japanese-chess/koma/60x64/sgl58.png' in '/Users/ikeda/src/shogi_web/app/javascript/packs'
+//  @ ./node_modules/css-loader??ref--2-2!./node_modules/postcss-loader/lib??ref--2-3!./node_modules/sass-loader/lib/loader.js??ref--2-4!./app/javascript/packs/application_dependent.sass 7:13975-14031
+//
+$sp_assets_dir: "../../node_modules/shogi-player/src/assets"
+@import "../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
+
+////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
+
+$cell_blank_bg:      $grey
+$something_exist_bg: $green
+$any_exist_soldiers: $grey-light
+
+.shogi-player
+  table
+    .cell_blank
+      background: $cell_blank_bg
+    .something_exist
+      background: $something_exist_bg
+    .any_exist_soldiers
+      color: $any_exist_soldiers
+
+/* 背景画像
+/* body
+/*   position: relative
+/*   &:after
+/*     position: absolute
+/*     z-index: -1
+/*     content: ""
+/*     background-image: url("../image_basename")
+/*     background-position: center
+/*     background-size: cover
+/*     opacity: 1.0
+/*     top: 0
+/*     left: 0
+/*     width: 100%
+/*     height: 100%
+
+////////////////////////////////////////////////////////////////////////////// ログインボタン
+/* https://qiita.com/AcaiBowl/items/8ee0a5a6c994685fb1cd
+/* https://lab.syncer.jp/Document/Color/Brand-Color/
+
+=brand_def($name, $color)
+  .#{$name}
+    &.brand_button
+      border: none ! important
+      color: white ! important
+      background: $color ! important
+    &:hover
+      background: darken($color, 10%) ! important
+
++brand_def("twitter", rgb(85, 172, 238))
++brand_def("google",  rgb(221, 75,  57))
++brand_def("github",  rgb( 51, 51,  51))
+
+  
+////////////////////////////////////////////////////////////////////////////// footer
+
+.footer
+  color: $grey
+  a
+    color: inherit
+  
+////////////////////////////////////////////////////////////////////////////// クリックできる行を GMail 風にする
+
+.is_row_clickable
+  tbody
+    tr
+      &:hover
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
+        cursor: zoom-in
+
+      // &.public
+      //   background-color: $danger
+
+////////////////////////////////////////////////////////////////////////////// デスクトップのときは行のボタンを非表示にしておく
+
++desktop
+  .is_row_clickable
+    tbody
+      tr
+        &:hover
+          .row_operations
+            visibility: visible
+        .row_operations
+            visibility: hidden
+
+////////////////////////////////////////////////////////////////////////////// for _modal_shogi_player.html.slim
+
+.modal_sp_tweet_icon
+  font-size: 0.75em !important
+
+.modal_sp_bottom_links
+  margin-top: 0.8em
+
+.modal_sp_description
+  margin: 0em 1em
+
+//////////////////////////////////////////////////////////////////////////////
+
++mobile
+  html
+    font-size: 80% !important
+
+  .section
+    margin: 1em 0 !important
+    padding: 0 0.5em !important
+
+// .shogi-player
+//   .font_size_base
+//     +mobile
+//       width: auto
+//       background-color: blue
+//       font-size: 4.2vmin
+//   .modal_trigger_dots
+//     +mobile
+//       display: none
+

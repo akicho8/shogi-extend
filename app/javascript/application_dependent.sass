@@ -1,8 +1,7 @@
 @import "bulma_variables"
 @import "~bulma/sass/utilities/mixins"
-@import "./helper.sass"
-// @import "./general.sass"
-@import "./formal_paper/_all.sass"
+@import "helper.sass"
+@import "formal_paper/_all.sass"
 
 ////////////////////////////////////////////////////////////////////////////// フッターまでの最低限の縦幅
 
@@ -173,8 +172,8 @@
 // Module not found: Error: Can't resolve '../assets/japanese-chess/koma/60x64/sgl58.png' in '/Users/ikeda/src/shogi_web/app/javascript/packs'
 //  @ ./node_modules/css-loader??ref--2-2!./node_modules/postcss-loader/lib??ref--2-3!./node_modules/sass-loader/lib/loader.js??ref--2-4!./app/javascript/packs/application_dependent.sass 7:13975-14031
 //
-$sp_assets_dir: "../../../node_modules/shogi-player/src/assets"
-@import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
+$sp_assets_dir: "../../node_modules/shogi-player/src/assets"
+@import "../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
 
 ////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
 

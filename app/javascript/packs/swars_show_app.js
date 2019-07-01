@@ -1,4 +1,4 @@
-import battle_show_shared from "./battle_show_shared.js"
+import battle_show_shared from "battle_show_shared.js"
 
 window.SwarsBattleShowApp = Vue.extend({
   mixins: [battle_show_shared],

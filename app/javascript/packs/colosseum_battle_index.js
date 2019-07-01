@@ -1,8 +1,8 @@
 import _ from "lodash"
-import CustomPresetInfo from './custom_preset_info'
-import HiraKomaInfo from './hira_koma_info'
-import lobby_matching from './lobby_matching'
-import message_form_shared from './message_form_shared'
+import CustomPresetInfo from "custom_preset_info"
+import HiraKomaInfo from "hira_koma_info"
+import lobby_matching from "lobby_matching"
+import message_form_shared from "message_form_shared"
 
 document.addEventListener('DOMContentLoaded', () => {
   // ~/src/shogi_web/app/channels/lobby_channel.rb

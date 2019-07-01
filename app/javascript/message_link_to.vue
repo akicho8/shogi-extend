@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import message_form_shared from './packs/message_form_shared'
+import message_form_shared from "message_form_shared"
 
 export default {
   mixins: [

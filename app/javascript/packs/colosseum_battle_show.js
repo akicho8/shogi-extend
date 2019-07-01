@@ -1,12 +1,12 @@
 import _ from "lodash"
 import assert from "assert"
-import chess_clock from "./chess_clock"
+import chess_clock from "chess_clock"
 
 import PresetInfo from "shogi-player/src/preset_info"
 import Location from "shogi-player/src/location"
-import LastActionInfo from "./last_action_info"
+import LastActionInfo from "last_action_info"
 
-import message_form_shared from './message_form_shared'
+import message_form_shared from "message_form_shared"
 
 document.addEventListener("DOMContentLoaded", () => {
   App.battle = App.cable.subscriptions.create({

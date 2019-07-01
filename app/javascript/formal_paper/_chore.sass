@@ -1,0 +1,121 @@
+@import "../general.sass"
+@import "./_helper.sass"
+
+@media print
+  .is_screen_only
+    display: none
+
+  body
+    overflow: visible !important
+
+  section.section
+    padding: 0 !important
+
+.tategaki
+  display: inline-block
+  writing-mode: vertical-rl
+
+.tiisame
+  font-size: 80%
+
+.tiisame2
+  font-size: 60%
+
+.formal_paper_layout
+  .sheet
+    color: black
+    @extend .yumincho
+    
+    .kifu_tables
+      table
+        width: 100%
+        // @extend %w_h_max
+
+        // &.header_table1
+        // &.header_table2
+        //   height: 10%
+        // &.body_table
+        //   height: 90%
+        
+        border-collapse: separate
+
+        td
+          text-align: center
+          vertical-align: middle
+          @extend .nowrap
+
+        &.body_table
+          thead
+            tr
+              // / height: 100%
+
+          tbody
+            tr
+              height: $body_table_tbody_height
+            td.kifu_data_td
+              padding: 0 0.2mm
+              width: 10%
+              font-size: $body_table_tbody_td_font_size
+
+          .shouhi_tuukei_td
+            @extend %cell_slash
+            height: 1mm           // ？ これを入れないと上下にならない
+            font-size: 0.5mm
+            .shouhi_tuukei
+              @extend %top_left_and_bottom_right_layout
+              padding: 0 0.25mm
+
+        .sengo
+          @extend .tategaki
+          @extend .tiisame
+
+        td
+          &.ls3
+            // letter-spacing: 0.5mm
+
+          //////////////////////////////////////////////////////////////////////////////// 備考
+          &.bikou_label_td
+            @extend %tate_1gyo
+            @extend .tiisame
+            letter-spacing: 0.5mm
+            .bikou_label
+              @extend .tategaki
+          &.bikou_body_td
+            // width: 25%
+            padding: 0.5mm
+            .bikou_body
+              @extend .tiisame
+              @extend .word_break
+              text-align: left
+
+          &.taikyokusha_td
+            @extend %tate_1gyo
+            padding: 0.5mm 0
+            .taikyokusha
+              @extend %text_just
+              @extend .tategaki
+              min-height: 4mm
+
+          &.kisenmei_td
+            @extend %tate_1gyo
+            .kisenmei
+              @extend .tategaki
+
+          &.taikyokujo_td
+
+          &.username_td
+            text-align: left
+            padding: 0.25mm
+
+          &.dankyu_td
+            padding: 0 0.2mm
+            .dankyu
+              letter-spacing: 0.1mm
+
+          &.teaiwari_td
+            padding: 0 0.5mm
+            .teaiwari
+
+          &.hirukyuumae_td
+            @extend .tiisame2
+            padding: 0 0.5mm

@@ -1,0 +1,71 @@
+@import "./_helper.sass"
+
+$paper_margin: 0mm
+
+$a4_w: 210mm
+$a4_h: 297mm
+
+$a4_padding: 10mm
+
+// $sb_w: $a4_w - ($a4_padding * 2)
+// $sb_h: $a4_h - ($a4_padding * 2)
+
+@page
+  size: A4    // A4 は 210mm 297mm と書くのと同じ
+  margin: 0   // Chrome に限っては 0 にするとヘッダー/フッダーの記入を省略できるとのこと https://qiita.com/cognitom/items/d39d5f19054c8c8fd592
+
+.formal_paper_layout
+  @media screen
+    margin-top: 2em
+
+  .sheet
+    width: $a4_w
+    height: $a4_h
+    padding: $a4_padding
+    margin: auto
+    page-break-after: always
+
+    .sheet-body
+      @extend %w_h_max
+      border: 1px solid red
+
+      display: flex
+      align-items: center       // 横は100%なのでY軸のみ中央
+
+      .kifu_tables_container
+        width: 100%
+        // @extend %w_h_max
+
+        .kifu_tables
+          width: 100%
+          // @extend %w_h_max      // 外側を100%にすることで内側のテーブルが最大まで「自動的に」広がる
+
+/* プレビュー用のスタイル */
+@media screen
+  .formal_paper_bg
+    background: #eee
+
+  .sheet
+    background: white
+    box-shadow: 0 .5mm 2mm rgba(0, 0, 0, 0.3)
+    margin: 5mm
+
+// @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css)
+
+// Chromeの縮尺バグを回避する ← 修正済みとのこと
+// https://qiita.com/cognitom/items/d39d5f19054c8c8fd592#chrome%E3%81%AE%E7%B8%AE%E5%B0%BA%E3%83%90%E3%82%B0%E3%82%92%E5%9B%9E%E9%81%BF%E3%81%99%E3%82%8B
+// @media print
+//   body
+//     width: 210mm - ($paper_margin * 2)
+
+// ページ番号の出力
+// https://qiita.com/cognitom/items/d39d5f19054c8c8fd592#%E3%83%9A%E3%83%BC%E3%82%B8%E7%95%AA%E5%8F%B7%E3%81%AE%E5%87%BA%E5%8A%9B
+// body
+//   counter-reset: sheet
+//
+//   .sheet::after
+//     position: absolute
+//     bottom: 0
+//     right: 0
+//     counter-increment: sheet
+//     content: "ページ " counter(sheet)

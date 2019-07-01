@@ -20,7 +20,7 @@ export default {
   mounted() {
     if (this.$options.formal_paper) {
       setTimeout(function () {
-        window.print()
+        // window.print()
         // window.close()
       }, 200)
     }
