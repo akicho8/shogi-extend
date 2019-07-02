@@ -67,10 +67,6 @@ class BattleDecorator
     end
   end
 
-  def __blank__
-    # vc.tag.td(class: "__blank__")
-  end
-  
   def kirokugakari
   end
 
