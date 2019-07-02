@@ -172,10 +172,16 @@ ruby:
                   tr.kifu_body_row
                     - decorator.yoko3retu.times do |x|
                       - decorator.nikozutu.times do |left_or_right|
-                          - hand_log = decorator.hand_log_for(page_index, x, y, left_or_right)
-                          td.kifu_data_td
-                            / = hand_log.to_ki2(place_format: :hankaku_number, same_suffix: " ", separator: " ", compact_if_gt: 6) if hand_log
-                            = hand_log.to_ki2(same_suffix: "\u3000", separator: " ", compact_if_gt: 7) if hand_log
+                          ruby:
+                            hand_log = decorator.hand_log_for(page_index, x, y, left_or_right)
+                            v = nil
+                            hand_size = nil
+                            if hand_log
+                              v = hand_log.to_ki2(same_suffix: "\u3000", separator: " ", compact_if_gt: 7)
+                              hand_size = "hand_size#{v.size}"
+                            end
+                          td.kifu_data_td(class=hand_size)
+                            = v
                           td.shouhi_tuukei_td
                             svg
                               use(xlink:href="#svg_slash")
