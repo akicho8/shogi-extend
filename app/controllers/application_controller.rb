@@ -232,7 +232,7 @@ class ApplicationController < ActionController::Base
       end
       out << list.to_html
 
-      tag.div(out.join.html_safe, :class => "is_screen_only")
+      tag.div(out.join.html_safe, :class => "eval_box is_screen_only")
     end
   end
 

@@ -6,14 +6,11 @@ $a4_h: 297mm
   margin: 0   // Chrome に限っては 0 にするとヘッダー/フッダーの記入を省略できるとのこと https://qiita.com/cognitom/items/d39d5f19054c8c8fd592
 
 .formal_paper_workspace
-  @media screen
-    margin-top: 2em
-
   .sheet
     width: $a4_w
     height: $a4_h
     padding: $sheet_padding
-    margin: auto
+    // margin: auto
     page-break-after: always
 
     .sheet_body
@@ -31,16 +28,27 @@ $a4_h: 297mm
             @extend %max_width
             border-collapse: collapse
             border-spacing: 0
-            
-// プレビュー用
+
+// プレビューおよび印刷時に消しておきたいタグ
+.has_formal_paper
+  nav.navbar
+    display: none
+
+  .eval_box
+    display: none
+
+  footer.footer
+    display: none
+
+// プレビュー時のみ適用
 @media screen
-  .formal_paper_bg
+  .has_formal_paper
     background: #eee
 
   .sheet
     background: white
     box-shadow: 0 .5mm 2mm rgba(0, 0, 0, 0.3)
-    margin: 5mm
+    margin: 14mm auto
 
 // @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css)
 

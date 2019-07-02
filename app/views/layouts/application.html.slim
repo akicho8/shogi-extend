@@ -3,7 +3,9 @@ html(lang="ja")
   head
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    - if params[:formal_paper]
+    - else
+      meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css")
     link(rel="stylesheet" href="//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css")
@@ -43,7 +45,8 @@ html(lang="ja")
     = yield(:twitter_card_tag)
 
     = yield :head
-  body(class=(params[:formal_paper] ? "formal_paper_bg" : ""))
+
+  body(class=(params[:formal_paper] ? "has_formal_paper" : ""))
     - if @simple_layout
       .container.is-fluid
         == flash_danger_notify_tag
@@ -208,7 +211,7 @@ html(lang="ja")
                   - unless Rails.env.production?
                     li class=("is-active" if params[:controller].start_with?("general/battles")) = link_to("2ch棋譜検索", [:general, :s])
 
-      section.section.formal_paper
+      section.section
         .container.is-fluid.main_container
           == flash_danger_notify_tag
           = yield
