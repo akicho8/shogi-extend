@@ -24,7 +24,7 @@ html(lang="ja")
       var js_global = #{js_global.to_json.html_safe}
 
     / sprockets
-    = stylesheet_link_tag "application"
+    = stylesheet_link_tag "application", media: "all"
     = javascript_include_tag "application"
 
     / webpack
