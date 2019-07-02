@@ -20,122 +20,133 @@ ruby:
       .sheet_body
         .tables_box_container
           .tables_box
-            
+
             ////////////////////////////////////////////////////////////////////////////////
-            
+
             table.is_head1
               tr
-                td.s0.s1.taikyokusha_td.ls3[rowspan="12"]
+                td.b_b.b_r.taikyokusha_td.ls3[rowspan="12"]
                   .taikyokusha
                     | 対局者
-                td.s0.s1.dankyu_td[rowspan="3"]
+                td.b_b.b_r.dankyu_td[rowspan="3"]
                   .dankyu
                     = decorator.dankyuu_number_for(:black, "級")
-                td.s0[rowspan="6"]
+                td.b_b.sengo_td[rowspan="6"]
                   .sengo
-                    = decorator.sengo_one_char(:black)
-                td.s0.s1.username_td[rowspan="6"]
+                    = decorator.location_kanji_char(:black)
+                  .mark
+                    | ☗
+                td.b_b.b_r.username_td[rowspan="6"]
                   = decorator.user_name_for(:black)
-                td.s0.s1.kisenmei_td.ls3[rowspan="8"]
+                td.b_b.b_r.kisenmei_td.ls3[rowspan="8"]
                   .kisenmei
                     | 棋戦名
-                td.s0.s1[colspan="2" rowspan="4"]
+                td.b_b.b_r[colspan="2" rowspan="4"]
                   | 将棋ウォーズ
-                td.s0.s1[rowspan="3"]
+                td.b_b.b_r.kaisi_td[rowspan="3"]
                   | 開始
-                td.s0.s1[rowspan="3"]
+                td.b_b[rowspan="3"]
                   = decorator.battle.battled_at.to_s(:seireki_format)
               tr
-            
+                = decorator.__blank__
               tr
-            
+                = decorator.__blank__
+
               tr
-                td.s0.s1.dankyu_td[rowspan="3"]
+                td.b_b.b_r.dankyu_td[rowspan="3"]
                   span.dankyu
                     = decorator.dankyuu_number_for(:black, "段")
-                td.s0.s1[rowspan="3"]
+                td.b_b.b_r[rowspan="3"]
                   | 終了
-                td.s0.s1[rowspan="3"]
+                td.b_b[rowspan="3"]
                   = decorator.battle.end_at.to_s(:seireki_format)
               tr
-                td.s0.s1[colspan="2" rowspan="4"]
+                td.b_b.b_r[colspan="2" rowspan="4"]
                   = decorator.battle.rule_info.long_name
               tr
+                = decorator.__blank__
               tr
-                td.s0.s1.dankyu_td[rowspan="3"]
+                td.b_b.b_r.dankyu_td[rowspan="3"]
                   span.dankyu
                     = decorator.dankyuu_number_for(:white, "級")
-                td.s0[rowspan="6"]
+                td.b_b.sengo_td[rowspan="6"]
                   .sengo
-                    = decorator.sengo_one_char(:white)
-                td.s0.s1.username_td[rowspan="6"]
+                    = decorator.location_kanji_char(:white)
+                  .mark
+                    | ☖
+                td.b_b.b_r.username_td[rowspan="6"]
                   = decorator.user_name_for(:white)
-                td.s0.s1[rowspan="3"]
+                td.b_b.b_r[rowspan="3"]
                   | 昼休
-                td.s0.s1[rowspan="3"]
+                td.b_b[rowspan="3"]
                   = decorator.blank_jihunkara
-            
+
               tr
-            
+                = decorator.__blank__
+
               tr
-                td.s0.s1.taikyokujo_td[colspan="2" rowspan="4"]
+                td.b_b.b_r.taikyokujo_td[colspan="2" rowspan="4"]
                   | 対局場
-                td.s0.s1[rowspan="4"]
+                td.b_b.b_r[rowspan="4"]
                   | インターネット
               tr
-            
-                td.s0.s1.dankyu_td[rowspan="3"]
+                = decorator.__blank__
+
+                td.b_b.b_r.dankyu_td[rowspan="3"]
                   span.dankyu
                     = decorator.dankyuu_number_for(:white, "段")
-                td.s0.s1[rowspan="3"]
+                td.b_b.b_r[rowspan="3"]
                   | 夕休
-                td.s0.s1[rowspan="3"]
+                td.b_b[rowspan="3"]
                   = decorator.blank_jihunkara
-            
+
               tr
-            
+                = decorator.__blank__
+
               tr
-            
+                = decorator.__blank__
+
             ////////////////////////////////////////////////////////////////////////////////
-                
+
             table.is_head2
               tr
-                td.s0.s1.teaiwari_td.ls3
+                td.b_b.b_r.teaiwari_td.ls3
                   .teaiwari
                     | 手合割
-                td.s0.s1
+                td.b_b.b_r
                   = decorator.teaiwari
-                td.s0.bikou_label_td[rowspan="4"]
+                td.b_b.bikou_label_td[rowspan="4"]
                   .bikou_label
                     | 備考
-                td.s0.s1.bikou_body_td[rowspan="4"]
+                td.b_b.b_r.bikou_body_td[rowspan="4"]
                   .bikou_body
                     = decorator.bikou_body
-            
-                td.s0.s1
+
+                td.b_b.b_r
                   | 手数
-                td.s0.s1
+                td.b_b
                   = decorator.katimake_result
               tr
-                td.s0.s1.ls3
+                td.b_b.b_r.ls3
                   | 持時間
-                td.s0.s1
+                td.b_b.b_r
                   = decorator.kaku_jikan
                 td.double_border[rowspan="2"]
                   | 戦型
-                td.s1.double_border[rowspan="2"]
+                td.double_border[rowspan="2"]
                   = decorator.sengata_pack
+
               tr
-                td.s0.s1[rowspan="2"]
+                td.b_b.b_r[rowspan="2"]
                   | 消費時間
-                td.s0.s1
+                td.b_b.b_r
                   = decorator.total_seconds_str_for(:black)
               tr
-                td.s0.s1
+                td.b_b.b_r
                   = decorator.total_seconds_str_for(:white)
-                td.s0.s1
+                td.b_b.b_r
                   | 記録係
-                td.s0.s1
+                td.b_b
                   = decorator.kirokugakari
 
             ////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +156,7 @@ ruby:
               defs
                 symbol#svg_slash(preserveAspectRatio="none")
                   line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
-            
+
             table.is_body
               thead
                 tr
@@ -167,10 +178,10 @@ ruby:
                     - decorator.yoko3retu.times do |x|
                       - decorator.nikozutu.times do |left_or_right|
                           - hand_log = decorator.hand_log_for(page_index, x, y, left_or_right)
-                          td.s0.s1.kifu_data_td
+                          td.kifu_data_td
                             / = hand_log.to_ki2(place_format: :hankaku_number, same_suffix: " ", separator: " ", compact_if_gt: 6) if hand_log
                             = hand_log.to_ki2(same_suffix: "\u3000", separator: " ", compact_if_gt: 7) if hand_log
-                          td.s0.s1.shouhi_tuukei_td
+                          td.shouhi_tuukei_td
                             svg
                               use(xlink:href="#svg_slash")
                             .shouhi_tuukei

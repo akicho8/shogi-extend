@@ -1,9 +1,6 @@
 $a4_w: 210mm
 $a4_h: 297mm
 
-// $sb_w: $a4_w - ($sheet_padding * 2)
-// $sb_h: $a4_h - ($sheet_padding * 2)
-
 @page
   size: A4    // A4 は 210mm 297mm と書くのと同じ
   margin: 0   // Chrome に限っては 0 にするとヘッダー/フッダーの記入を省略できるとのこと https://qiita.com/cognitom/items/d39d5f19054c8c8fd592
@@ -21,18 +18,21 @@ $a4_h: 297mm
 
     .sheet_body
       @extend %max_block
-      border: 1px solid red
 
       display: flex
       align-items: center       // 横は100%なのでY軸のみ中央
 
       .tables_box_container
-        width: 100%
+        @extend %max_width
 
         .tables_box
-          width: 100%
-
-/* プレビュー用のスタイル */
+          @extend %max_width
+          table
+            @extend %max_width
+            border-collapse: collapse
+            border-spacing: 0
+            
+// プレビュー用
 @media screen
   .formal_paper_bg
     background: #eee

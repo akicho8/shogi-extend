@@ -9,8 +9,13 @@
           table.is_head2    ; 手合割など
           table.is_body     ; 指し手
 
-* 解説
+* 備考
 
-.tables_box_container 内で縦中央に .tables_box がくるようになっている
+tables_box_container 内で縦中央に tables_box がくるようになっている
 なので .tables_box 内の高さだけを調整する
 高さの調整は主に指し手の行の高さで行う
+
+外枠は tables_box で行う予定だったが Google Chrome でのみ、右端に隙間ができるため 3 つの table の border で調整している
+
+Google Chrome でのみ起きる右端隙間問題は sheet の padding を調整すると治る値もある
+13.6mm だと治る。13mm だと隙間ができる

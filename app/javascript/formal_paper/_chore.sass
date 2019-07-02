@@ -17,65 +17,61 @@
     
     .tables_box
       table
-        width: 100%
-        
-        border-collapse: separate
-
         td
           text-align: center
           vertical-align: middle
           @extend .nowrap
 
+          // &.__blank__
+          //   height: 0px
+          
         &.is_body
           thead
             tr
 
           tbody
-            tr
-              height: $is_body_tbody_height
             td.kifu_data_td
               padding: 0 0.2em
-              width: 10%
+              width: 100% / (4 * 3)
               font-size: $is_body_tbody_td_font_size
 
           .shouhi_tuukei_td
             @extend %cell_slash
             height: 1em           // ？ これを入れないと上下にならない
-            font-size: 0.5em
+            font-size: 0.2em
             .shouhi_tuukei
               @extend %oppoite_pole_pos
               padding: 0 0.25em
-
-        .sengo
-          @extend %vertical_writing
-          @extend %is_small1
+              font-size: 0.2em
 
         td
           &.ls3
             // letter-spacing: 0.5em
 
+          &.sengo_td
+            @extend %is_small1
+              
           //////////////////////////////////////////////////////////////////////////////// 備考
           &.bikou_label_td
-            @extend %is_slendar
+            width: 2em
             @extend %is_small1
             letter-spacing: 0.5em
             .bikou_label
               @extend %vertical_writing
           &.bikou_body_td
-            // width: 25%
-            padding: 0.5em
+            padding: 0.25em
             .bikou_body
               @extend %is_small1
               @extend .word_break
               text-align: left
 
           &.taikyokusha_td
-            @extend %is_slendar
             padding: 0.5em 0
+            width: 2em
+            
             .taikyokusha
               @extend %text_just
               @extend %vertical_writing
-              min-height: 4em
 
           &.kisenmei_td
             @extend %is_slendar
@@ -83,6 +79,7 @@
               @extend %vertical_writing
 
           &.taikyokujo_td
+            padding: 0 0.2em
 
           &.username_td
             text-align: left

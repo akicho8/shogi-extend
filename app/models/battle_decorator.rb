@@ -43,11 +43,11 @@ class BattleDecorator
     }.compact.join.html_safe
   end
 
-  # sengo_one_char(:black) # => "先 ☗"
-  def sengo_one_char(location)
+  # location_kanji_char(:black) # => "先 ☗"
+  def location_kanji_char(location)
     location = Bioshogi::Location.fetch(location)
     name = location.call_name(handicap?)
-    [name.chars.first, location.hexagon_mark].join(" ")
+    name.chars.first
   end
 
   def battle_end_at
@@ -67,6 +67,10 @@ class BattleDecorator
     end
   end
 
+  def __blank__
+    # vc.tag.td(class: "__blank__")
+  end
+  
   def kirokugakari
   end
 
