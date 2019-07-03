@@ -48,7 +48,7 @@
 
     = link_to("一覧でポップアップするURL", [ns_prefix, current_plural_key, modal_id: current_record.id], class: "button is-small")
 
-    = link_to("印刷用棋譜", [ns_prefix, current_record, formal_paper: true], class: "button is-small")
+    = link_to("印刷用棋譜", [ns_prefix, current_record, formal_sheet: true], class: "button is-small")
 
     - if current_record.kind_of?(Swars::Battle)
       - current_record.memberships.each do |e|

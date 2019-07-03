@@ -20,7 +20,7 @@ http://shineleckoma.web.fc2.com/
 https://www.samplescience.ca/2018/03/8-bit-fx.html
  
 Paper-co | 紙のテクスチャー素材を無料でダウンロードできるサイト
-http://free-formal_paper-texture.com/
+http://free-formal_sheet-texture.com/
  
 フリーテクスチャ素材館／畳のテクスチャ素材01
 https://free-texture.net/seamless-pattern/tatami01.html

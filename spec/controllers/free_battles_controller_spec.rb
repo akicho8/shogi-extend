@@ -49,7 +49,7 @@ RSpec.describe FreeBattlesController, type: :controller do
   end
 
   it "棋譜印刷" do
-    get :show, params: {id: @free_battle.to_param, formal_paper: true}
+    get :show, params: {id: @free_battle.to_param, formal_sheet: true}
     expect(response).to have_http_status(:ok)
   end
 

@@ -298,7 +298,7 @@ module Swars
 
     let :js_swars_show_app_params do
       {
-        formal_paper: !!params[:formal_paper],
+        formal_sheet: !!params[:formal_sheet],
 
         think_chart_params: {
           type: "line",

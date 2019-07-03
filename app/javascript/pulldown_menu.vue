@@ -25,9 +25,9 @@
           | &nbsp;&nbsp;&nbsp;
           | コピペ新規
 
-    template(v-if="record.formal_paper_path")
+    template(v-if="record.formal_sheet_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="record.formal_paper_path" target="_blank")
+        a(:href="record.formal_sheet_path" target="_blank")
           b-icon(icon="note-outline" size="is-small")
           | &nbsp;&nbsp;&nbsp;
           | 棋譜印刷(PDF)

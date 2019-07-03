@@ -1,9 +1,9 @@
 doctype 5
-html(lang="ja" class=(params[:formal_paper] ? "has_formal_paper" : ""))
+html(lang="ja" class=(params[:formal_sheet] ? "has_formal_sheet" : ""))
   head
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
-    - if params[:formal_paper]
+    - if params[:formal_sheet]
     - else
       meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 

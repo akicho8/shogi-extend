@@ -8,8 +8,8 @@
 #app
   - @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
 
-  - if params[:formal_paper]
-    = render partial: "free_battles/show_formal_paper"
+  - if params[:formal_sheet]
+    = render partial: "free_battles/show_formal_sheet"
   - else
     .has-text-centered
       .title.is-3.yumincho

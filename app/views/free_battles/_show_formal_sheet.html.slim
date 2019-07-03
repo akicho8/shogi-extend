@@ -1,4 +1,4 @@
-/ app/javascript/packs/formal_paper/_all.sass
+/ app/javascript/packs/formal_sheet/_all.sass
 
 - @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
 
@@ -12,7 +12,7 @@ ruby:
   button.button.is-primary.is-large(@click="printer_handle")
     b-icon(icon="printer" size="is-medium")
 
-.formal_paper_workspace(class=Rails.env)
+.formal_sheet_workspace(class=Rails.env)
   - decorator.page_count.times do |page_index|
     .sheet
       .sheet_body

@@ -18,7 +18,7 @@ export default {
   },
 
   mounted() {
-    if (this.$options.formal_paper) {
+    if (this.$options.formal_sheet) {
       setTimeout(function () {
         // window.print()
         // window.close()

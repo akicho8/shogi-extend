@@ -8,8 +8,8 @@
 #show_app
   - @page_title ||= current_record.title
 
-  - if params[:formal_paper]
-    = render partial: "show_formal_paper"
+  - if params[:formal_sheet]
+    = render partial: "show_formal_sheet"
   - else
     nav.breadcrumb
       ul

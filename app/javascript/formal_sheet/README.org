@@ -1,6 +1,6 @@
 * 構造
 
-.formal_paper_workspace
+.formal_sheet_workspace
   .sheet                    ; 紙
     .sheet_body             ; 余白を除いた部分
       .tables_box_container ; レイアウト確認用

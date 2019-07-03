@@ -337,8 +337,8 @@ module BattleControllerSharedMethods
 
       access_log_create(current_record)
 
-      if params[:formal_paper]
-        if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_paper_debug]
+      if params[:formal_sheet]
+        if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
           flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
         end
       end
@@ -405,7 +405,7 @@ module BattleControllerSharedMethods
         a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
         a[:battled_at] = e.battled_at.to_s(:battle_time)
         a[:show_path] = polymorphic_path([ns_prefix, e])
-        a[:formal_paper_path] = polymorphic_path([ns_prefix, e], formal_paper: true)
+        a[:formal_sheet_path] = polymorphic_path([ns_prefix, e], formal_sheet: true)
         a[:tweet_origin_image_path] = e.tweet_origin_image_path
         a[:tweet_window_url] = e.tweet_window_url
         a[:tweet_modal_url] = e.tweet_modal_url
