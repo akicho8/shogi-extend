@@ -8,9 +8,9 @@ ruby:
 / b-notification(type="is-warning" aria-close-label="Close notification" role="alert" :closable="false")
 /   | macOS Google Chrome でしか正しくレイアウトできません
 
-.show_controllers.is_screen_only
-  .has-text-centered
-    button.button.is-primary.is-large(@click="printer_handle") 印刷
+.fixed_container.is_screen_only
+  button.button.is-primary.is-large(@click="printer_handle")
+    b-icon(icon="printer" size="is-medium")
 
 .formal_paper_workspace(class=Rails.env)
   - decorator.page_count.times do |page_index|

@@ -14,17 +14,13 @@ $a4_h: 297mm
 
   section.section
     padding: 0 !important
-  
+
 .formal_paper_workspace
   .sheet
     width: $a4_w
     height: $a4_h
     padding: $fp_sheet_body_margin
     page-break-after: always
-
-    // プレビュー時
-    @media screen
-      margin: 14mm auto
 
     // 開発ツールでエミュレートしたとき中央配置
     @media print
@@ -60,21 +56,24 @@ $a4_h: 297mm
 // プレビュー時のみ適用
 @media screen
   .has_formal_paper
-    background: #eee
+    background: hsl(0, 0%, 90%)
 
-  .show_controllers
-    // position: absolute
-    // right: 0
-    // bottom: 0
-    
-    .button
-      width: $a4_w !important
-    
-  .sheet
-    background: white
-    box-shadow: 0 .5mm 2mm rgba(0, 0, 0, 0.3)
-    margin: 14mm auto
-    
+    .section
+      padding: $fp_preview_screen_margin 0
+
+  .fixed_container
+    position: fixed
+    top: $fp_preview_screen_margin
+    right: $fp_preview_screen_margin
+      
+  .formal_paper_workspace      
+    .sheet
+      background: white
+      box-shadow: 0 .5mm 2mm rgba(0, 0, 0, 0.3)
+      margin: auto
+
+      &:not(:first-of-type)
+        margin-top: $fp_preview_sheet_separator
     
 // @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css)
 

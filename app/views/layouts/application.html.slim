@@ -1,5 +1,5 @@
 doctype 5
-html(lang="ja")
+html(lang="ja" class=(params[:formal_paper] ? "has_formal_paper" : ""))
   head
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
@@ -46,7 +46,7 @@ html(lang="ja")
 
     = yield :head
 
-  body(class=(params[:formal_paper] ? "has_formal_paper" : ""))
+  body
     - if @simple_layout
       .container.is-fluid
         == flash_danger_notify_tag
