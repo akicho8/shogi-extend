@@ -5,11 +5,21 @@ $a4_h: 297mm
   size: A4    // A4 は 210mm 297mm と書くのと同じ
   margin: 0   // Chrome に限っては 0 にするとヘッダー/フッダーの記入を省略できるとのこと https://qiita.com/cognitom/items/d39d5f19054c8c8fd592
 
+@media print
+  .is_screen_only
+    display: none
+
+  body
+    overflow: visible !important
+
+  section.section
+    padding: 0 !important
+  
 .formal_paper_workspace
   .sheet
     width: $a4_w
     height: $a4_h
-    padding: $sheet_padding
+    padding: $fp_sheet_body_margin
     page-break-after: always
 
     // プレビュー時

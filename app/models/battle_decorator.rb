@@ -29,7 +29,7 @@ class BattleDecorator
     end
   end
 
-  def user_name_for(location)
+  def player_name_for(location)
     membership_for(location).user.key
   end
 
@@ -54,7 +54,7 @@ class BattleDecorator
     battle.end_at
   end
 
-  def blank_jihunkara
+  def datetime_blank
     # s = "#{spc(3)}時#{spc(3)}分"
     # "#{s} 〜 #{s}".html_safe
   end

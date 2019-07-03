@@ -1,18 +1,16 @@
 .formal_paper_workspace
   .sheet
+    font-size: $fp_base_font_size
     .sheet_body
       .tables_box_container
         .tables_box
           table
             &.is_head1
-              tr
-              td
-              
             &.is_head2
             &.is_body
               tr
-                height: $is_body_tbody_height
-              .kifu_data_td
+                height: $fp_hand_height
+              .td_kifu_data
                 font-size: 1em
                 &.hand_size4
                   font-size: 0.8em
@@ -22,3 +20,6 @@
                   font-size: 0.4em
                 &.hand_size7
                   font-size: 0.2em
+
+              .td_spend_times
+                font-size: 0.7em

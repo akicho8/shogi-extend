@@ -1,17 +1,6 @@
-@media print
-  .is_screen_only
-    display: none
-
-  body
-    overflow: visible !important
-
-  section.section
-    padding: 0 !important
-
 .formal_paper_workspace
   .sheet
     color: black
-    font-size: $base_font_size
     
     @extend .yumincho
     
@@ -27,69 +16,63 @@
             tr
 
           tbody
-            td.kifu_data_td
+            td.td_kifu_data
               padding: 0 0.2em
               width: 100% / (4 * 3)
 
-          .shouhi_tuukei_td
+          .td_spend_times
             @extend %cell_slash
             height: 1em           // ？ これを入れないと上下にならない
-            font-size: 0.2em
-            .shouhi_tuukei
+            .values
               @extend %oppoite_pole_pos
               padding: 0 0.25em
-              font-size: 0.2em
 
         td
-          &.ls3
-            // letter-spacing: 0.5em
-
-          &.sengo_td
+          &.td_datetime
+            width: 1%
+            padding: 0 0.5em
+          
+          &.td_location_label
             @extend %is_small1
               
-          //////////////////////////////////////////////////////////////////////////////// 備考
-          &.bikou_label_td
+          &.td_desc_label
             width: 2em
             @extend %is_small1
             letter-spacing: 0.5em
-            .bikou_label
+            .value
               @extend %vertical_writing
-          &.bikou_body_td
+              
+          &.td_desc_body
             padding: 0.25em
-            .bikou_body
+            .value
               @extend %is_small1
               @extend .word_break
               text-align: left
 
-          &.taikyokusha_td
+          &.td_players
             padding: 0.5em 0
             width: 2em
-            
-            .taikyokusha
+            .value
               @extend %text_just
               @extend %vertical_writing
 
-          &.kisenmei_td
+          &.td_tournament
             @extend %is_slendar
-            .kisenmei
+            .value
               @extend %vertical_writing
 
-          &.taikyokujo_td
+          &.td_playing_field
+            width: 1%
             padding: 0 0.2em
 
-          &.username_td
+          &.td_player_name
             text-align: left
             padding: 0.25em
 
-          &.dankyu_td
+          &.td_grade
             padding: 0 0.2em
-            .dankyu
+            .value
               letter-spacing: 0.1em
 
-          &.teaiwari_td
-            padding: 0 0.5em
-            .teaiwari
-
-          &.hirukyuumae_td
-            @extend %is_small2
+          &.td_preset
             padding: 0 0.5em
