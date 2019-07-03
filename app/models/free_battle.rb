@@ -106,6 +106,10 @@ class FreeBattle < ApplicationRecord
     end
   end
 
+  def battle_decorator_class
+    BattleDecorator::FreeBattleDecorator
+  end
+
   def default_title
     "#{self.class.count.next}番目の何かの棋譜"
   end

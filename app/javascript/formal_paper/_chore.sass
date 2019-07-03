@@ -28,12 +28,19 @@
               padding: 0 0.25em
 
         td
+          %slendar
+          
+          &.td_datetime_label
+            @extend %is_slendar
+            padding: 0 0.2em
           &.td_datetime
-            width: 1%
+            @extend %is_slendar
             padding: 0 0.5em
           
           &.td_location_label
+            @extend %is_slendar
             @extend %is_small1
+            padding: 0 0.2em
               
           &.td_desc_label
             width: 2em
@@ -56,13 +63,13 @@
               @extend %text_just
               @extend %vertical_writing
 
-          &.td_tournament
+          &.td_tournament_label
             @extend %is_slendar
             .value
               @extend %vertical_writing
 
           &.td_playing_field
-            width: 1%
+            @extend %is_slendar
             padding: 0 0.2em
 
           &.td_player_name

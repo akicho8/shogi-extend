@@ -100,6 +100,10 @@ module Swars
       Bioshogi::PresetInfo.fetch(preset_key)
     end
 
+    def battle_decorator_class
+      BattleDecorator::SwarsBattleDecorator
+    end
+
     concerning :ConvertHookMethos do
       included do
         serialize :csa_seq

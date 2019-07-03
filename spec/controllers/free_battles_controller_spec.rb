@@ -48,6 +48,11 @@ RSpec.describe FreeBattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
+  it "棋譜印刷" do
+    get :show, params: {id: @free_battle.to_param, formal_paper: true}
+    expect(response).to have_http_status(:ok)
+  end
+
   it "new" do
     get :new
     expect(response).to have_http_status(:ok)

@@ -52,7 +52,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
   end
 
   it "棋譜印刷" do
-    get :show, params: {id: @battle.to_param, formal_paper: true}
+    get :show, params: {id: @battle.to_param, formal_paper: true, formal_paper_debug: true}
     expect(response).to have_http_status(:ok)
   end
 end

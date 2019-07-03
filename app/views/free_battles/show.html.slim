@@ -8,36 +8,39 @@
 #show_app
   - @page_title ||= current_record.title
 
-  nav.breadcrumb
-    ul
-      li= link_to("棋譜一覧", current_plural_key)
-      / li.is-active= link_to(current_record.title, current_record)
-      li.is-active= link_to("##{current_record.id}", current_record)
+  - if params[:formal_paper]
+    = render partial: "show_formal_paper"
+  - else
+    nav.breadcrumb
+      ul
+        li= link_to("棋譜一覧", current_plural_key)
+        / li.is-active= link_to(current_record.title, current_record)
+        li.is-active= link_to("##{current_record.id}", current_record)
 
-  .level
-    .level-left
-      .level-item.has-text-left
-        p.title.is-5.yumincho
-          = current_record.title
-  hr
+    .level
+      .level-left
+        .level-item.has-text-left
+          p.title.is-5.yumincho
+            = current_record.title
+    hr
 
-  .has-text-centered
-    = render partial: "kifu_player"
+    .has-text-centered
+      = render partial: "kifu_player"
 
-  .columns
-    .column
-      .buttons.are-small
-        = link_to("詳細", [ns_prefix, current_record], class: "button")
-        = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
-        - if editable_record?(current_record)
-          = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
-          = link_to("OGP画像設定", [:edit, ns_prefix, current_record, mode: "ogp"], class: "button")
-          = link_to("OGP画像確認", controller.twitter_staitc_image_url(current_record), class: "button")
+    .columns
+      .column
+        .buttons.are-small
+          = link_to("詳細", [ns_prefix, current_record], class: "button")
+          = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
+          - if editable_record?(current_record)
+            = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
+            = link_to("OGP画像設定", [:edit, ns_prefix, current_record, mode: "ogp"], class: "button")
+            = link_to("OGP画像確認", controller.twitter_staitc_image_url(current_record), class: "button")
 
-  .columns
-    .column
-      = render partial: "uzai_pulldown"
+    .columns
+      .column
+        = render partial: "uzai_pulldown"
 
-  .columns.is-hidden-touch
-    .column
-      = render partial: "kifu_player_tabs_div"
+    .columns.is-hidden-touch
+      .column
+        = render partial: "kifu_player_tabs_div"

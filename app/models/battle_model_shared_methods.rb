@@ -178,7 +178,10 @@ module BattleModelSharedMethods
   end
 
   def battle_decorator(params)
-    @battle_decorator ||= BattleDecorator.new(params.merge(battle: self))
+    @battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))
+  end
+
+  def battle_decorator_class
   end
 
   concerning :KifuConvertMethods do

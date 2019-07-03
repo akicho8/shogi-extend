@@ -400,7 +400,6 @@ module Swars
       def js_record_for(e)
         a = super
 
-        a[:formal_paper_path] = polymorphic_path([ns_prefix, e], formal_paper: true)
         a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
         a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
         a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }

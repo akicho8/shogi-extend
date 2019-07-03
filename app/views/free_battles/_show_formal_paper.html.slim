@@ -10,7 +10,7 @@ ruby:
 
 .show_controllers.is_screen_only
   .has-text-centered
-    button.button.is-primary.is-large.is-fullwidth(@click="printer_handle") 印刷
+    button.button.is-primary.is-large(@click="printer_handle") 印刷
 
 .formal_paper_workspace(class=Rails.env)
   - decorator.page_count.times do |page_index|
@@ -28,7 +28,7 @@ ruby:
                     | 対 局 者
                 td.b_b.b_r.td_grade(rowspan="3")
                   .value
-                    = decorator.dankyuu_number_for(:black, "級")
+                    = decorator.grade_number_for(:black, "級")
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
                     = decorator.location_kanji_char(:black)
@@ -36,12 +36,12 @@ ruby:
                     | ☗
                 td.b_b.b_r.td_player_name(rowspan="6")
                   = decorator.player_name_for(:black)
-                td.b_b.b_r.td_tournament(rowspan="8")
+                td.b_b.b_r.td_tournament_label(rowspan="8")
                   .value
                     | 棋戦名
                 td.b_b.b_r(colspan="2" rowspan="4")
-                  | 将棋ウォーズ
-                td.b_b.b_r(rowspan="3")
+                  = decorator.tournament_name
+                td.b_b.b_r.td_datetime_label(rowspan="3")
                   | 開始
                 td.b_b.td_datetime(rowspan="3")
                   = decorator.battle.battled_at.to_s(:seireki_format)
@@ -52,20 +52,20 @@ ruby:
               tr
                 td.b_b.b_r.td_grade(rowspan="3")
                   span.dankyu
-                    = decorator.dankyuu_number_for(:black, "段")
-                td.b_b.b_r(rowspan="3")
+                    = decorator.grade_number_for(:black, "段")
+                td.b_b.b_r.td_datetime_label(rowspan="3")
                   | 終了
                 td.b_b.td_datetime(rowspan="3")
-                  = decorator.battle.end_at.to_s(:seireki_format)
+                  = decorator.end_at_s
               tr
                 td.b_b.b_r(colspan="2" rowspan="4")
-                  = decorator.battle.rule_info.long_name
+                  = decorator.rule_name
               tr
 
               tr
                 td.b_b.b_r.td_grade(rowspan="3")
                   span.dankyu
-                    = decorator.dankyuu_number_for(:white, "級")
+                    = decorator.grade_number_for(:white, "級")
 
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
@@ -89,7 +89,7 @@ ruby:
 
                 td.b_b.b_r.td_grade(rowspan="3")
                   span.dankyu
-                    = decorator.dankyuu_number_for(:white, "段")
+                    = decorator.grade_number_for(:white, "段")
                 td.b_b.b_r(rowspan="3")
                   | 夕休
                 td.b_b(rowspan="3")
@@ -107,23 +107,23 @@ ruby:
                   .value
                     | 手 合 割
                 td.b_b.b_r
-                  = decorator.teaiwari
+                  = decorator.preset_str
                 td.b_b.td_desc_label(rowspan="4")
                   .value
                     | 備考
                 td.b_b.b_r.td_desc_body(rowspan="4")
                   .value
-                    = decorator.bikou_body
+                    = decorator.desc_body
 
                 td.b_b.b_r
                   | 手数
                 td.b_b
-                  = decorator.katimake_result
+                  = decorator.battle_result_str
               tr
                 td.b_b.b_r
                   | 持 時 間
                 td.b_b.b_r
-                  = decorator.kaku_jikan
+                  = decorator.hold_time_str
                 td.double_border(rowspan="2")
                   | 戦型
                 td.double_border(rowspan="2")
@@ -140,7 +140,7 @@ ruby:
                 td.b_b.b_r
                   | 記録係
                 td.b_b
-                  = decorator.kirokugakari
+                  = decorator.umpire_name
 
             ////////////////////////////////////////////////////////////////////////////////
 
@@ -153,8 +153,8 @@ ruby:
             table.is_body
               thead
                 tr
-                  - decorator.yoko3retu.times do |x|
-                    - decorator.nikozutu.times do |left_or_right|
+                  - decorator.outer_columns.times do |x|
+                    - decorator.inner_fixed_columns.times do |left_or_right|
                       td
                         = Bioshogi::Location.fetch(left_or_right).hexagon_mark
                       td.td_spend_times
@@ -168,8 +168,8 @@ ruby:
               tbody
                 - decorator.cell_rows.times do |y|
                   tr.kifu_body_row
-                    - decorator.yoko3retu.times do |x|
-                      - decorator.nikozutu.times do |left_or_right|
+                    - decorator.outer_columns.times do |x|
+                      - decorator.inner_fixed_columns.times do |left_or_right|
                           ruby:
                             hand_log = decorator.hand_log_for(page_index, x, y, left_or_right)
                             v = nil
@@ -185,6 +185,6 @@ ruby:
                               use(xlink:href="#svg_slash")
                             .values
                               .used_seconds
-                                = BattleDecorator.format_foo1(hand_log.personal_clock.used_seconds) if hand_log
+                                = decorator.class.personal_clock_format(hand_log.personal_clock.used_seconds) if hand_log
                               .total_seconds
-                                = BattleDecorator.format_foo1(hand_log.personal_clock.total_seconds) if hand_log
+                                = decorator.class.personal_clock_format(hand_log.personal_clock.total_seconds) if hand_log
