@@ -78,7 +78,7 @@ module Swars
           # md = elem.to_s.match(/appAnalysis\('(.*?)'\)/)
           # row[:key] = md.captures.first
 
-          # if row[:key] == "Takechan831-Ito_Asuka-20190111_223848"
+          # if row[:key] == "Takechan831-Yamada_Taro-20190111_223848"
           #   puts elem.to_s
           # end
 
@@ -212,10 +212,10 @@ module Swars
     tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 0)
     tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 1)
 
-    # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "Ito_Asuka")
-    # tp Agent.new(run_remote: false).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
+    # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "Yamada_Taro")
+    # tp Agent.new(run_remote: false).record_get("MinoriChihara-Yamada_Taro-20190111_084942")
 
-    # tp Agent.new(run_remote: true).record_get("MinoriChihara-Ito_Asuka-20190111_084942")
+    # tp Agent.new(run_remote: true).record_get("MinoriChihara-Yamada_Taro-20190111_084942")
     exit
 
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "kinakom0chi")
@@ -259,12 +259,12 @@ module Swars
   end
 end
 # >> |-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |               key | MinoriChihara-Ito_Asuka-20190111_084942                                                                                                                                                                                                                             |
-# >> |               url | http://kif-pona.heroz.jp/games/MinoriChihara-Ito_Asuka-20190111_084942?locale=ja                                                                                                                                                                                    |
+# >> |               key | MinoriChihara-Yamada_Taro-20190111_084942                                                                                                                                                                                                                             |
+# >> |               url | http://kif-pona.heroz.jp/games/MinoriChihara-Yamada_Taro-20190111_084942?locale=ja                                                                                                                                                                                    |
 # >> |        battled_at | 20190111_084942                                                                                                                                                                                                                                                     |
 # >> | preset_dirty_code | 5                                                                                                                                                                                                                                                                   |
-# >> |          gamedata | {:name=>"devuser1-Ito_Asuka-20190111_084942", :avatar0=>"_e1812s10c", :avatar1=>"coach04", :dan0=>"2級", :dan1=>"十段", :gtype=>""}                                                                                                                            |
-# >> |        user_infos | [{:user_key=>"MinoriChihara", :grade_key=>"2級"}, {:user_key=>"Ito_Asuka", :grade_key=>"十段"}]                                                                                                                                                                     |
+# >> |          gamedata | {:name=>"devuser1-Yamada_Taro-20190111_084942", :avatar0=>"_e1812s10c", :avatar1=>"coach04", :dan0=>"2級", :dan1=>"十段", :gtype=>""}                                                                                                                            |
+# >> |        user_infos | [{:user_key=>"MinoriChihara", :grade_key=>"2級"}, {:user_key=>"Yamada_Taro", :grade_key=>"十段"}]                                                                                                                                                                     |
 # >> |       __final_key | GOTE_WIN_TORYO                                                                                                                                                                                                                                                      |
 # >> |           csa_seq | [["-7162GI", 599], ["+2726FU", 597], ["-4132KI", 598], ["+6978KI", 590], ["-5354FU", 596], ["+3948GI", 588], ["-6253GI", 595], ["+9796FU", 582], ["-9394FU", 594], ["+7776FU", 568], ["-4344FU", 592], ["+7968GI", 563], ["-5162OU", 589], ["+6877GI", 552], ["-... |
 # >> |           st_done | true                                                                                                                                                                                                                                                                |
