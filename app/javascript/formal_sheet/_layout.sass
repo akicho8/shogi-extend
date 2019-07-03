@@ -20,8 +20,11 @@ $a4_h: 297mm
     width: $a4_w
     height: $a4_h
     padding: $fp_sheet_body_margin
-    page-break-after: always
+    // page-break-after: always
 
+    &:not(:first-of-type)
+      page-break-before: always
+    
     // 開発ツールでエミュレートしたとき中央配置
     @media print
       margin: auto
