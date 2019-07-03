@@ -10,8 +10,15 @@ $a4_h: 297mm
     width: $a4_w
     height: $a4_h
     padding: $sheet_padding
-    // margin: auto
     page-break-after: always
+
+    // プレビュー時
+    @media screen
+      margin: 14mm auto
+
+    // 開発ツールでエミュレートしたとき中央配置
+    @media print
+      margin: auto
 
     .sheet_body
       @extend %max_block
