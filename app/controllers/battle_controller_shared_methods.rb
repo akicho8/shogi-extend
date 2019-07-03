@@ -338,9 +338,7 @@ module BattleControllerSharedMethods
       access_log_create(current_record)
 
       if params[:formal_paper]
-        if request.user_agent.to_s.match?(/Macintosh.*Chrome/)
-          flash.now[:warning] = "macOS 版の Google Chrome のみでしか正しくレイアウトされません"
-        end
+        flash.now[:warning] = "macOS 版の Google Chrome のみでしか正しくレイアウトされません"
       end
 
       respond_to do |format|
