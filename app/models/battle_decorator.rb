@@ -240,10 +240,6 @@ module BattleDecorator
 
       # s << "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
 
-      # s << memberships.collect { |e|
-      #   e.location.hexagon_mark + e.attack_tag_list.join("→")
-      # }.join
-
       s.join(" ")
     end
 

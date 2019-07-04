@@ -106,38 +106,38 @@ ruby:
                 td.b_b.b_r.td_preset
                   .value
                     | 手 合 割
-                td.b_b.b_r
-                  = decorator.preset_str
+                td.b_b.b_r.td_preset_body
+                  = decorator.preset_str if page_index.zero?
                 td.b_b.td_desc_label(rowspan="4")
                   .value
                     | 備考
                 td.b_b.b_r.td_desc_body(rowspan="4")
-                  .value
-                    = decorator.desc_body
+                  - if page_index.zero?
+                    .value= decorator.desc_body
 
                 td.b_b.b_r
                   | 手数
                 td.b_b
-                  = decorator.battle_result_str
+                  = decorator.battle_result_str if page_index.zero?
               tr
-                td.b_b.b_r
+                td.b_b.b_r.basic_label
                   | 持 時 間
                 td.b_b.b_r
-                  = decorator.hold_time_str
-                td.double_border(rowspan="2")
+                  = decorator.hold_time_str if page_index.zero?
+                td.double_border.basic_label(rowspan="2")
                   | 戦型
                 td.double_border(rowspan="2")
-                  = decorator.strategy_pack_str
+                  = decorator.strategy_pack_str if page_index.zero?
 
               tr
-                td.b_b.b_r(rowspan="2")
+                td.b_b.b_r.basic_label(rowspan="2")
                   | 消費時間
-                td.b_b.b_r
-                  = decorator.total_seconds_str_for(:black)
+                td.b_b.b_r.td_total_seconds
+                  = decorator.total_seconds_str_for(:black) if page_index.zero?
               tr
-                td.b_b.b_r
-                  = decorator.total_seconds_str_for(:white)
-                td.b_b.b_r
+                td.b_b.b_r.td_total_seconds
+                  = decorator.total_seconds_str_for(:white) if page_index.zero?
+                td.b_b.b_r.basic_label
                   | 記録係
                 td.b_b
                   = decorator.umpire_name

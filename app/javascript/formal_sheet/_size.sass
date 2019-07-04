@@ -6,11 +6,22 @@
         .tables_box
           table
             .td_player_name
-              width: 30%
+              width: 28%
 
             .td_playing_field_name
               width: 14%
 
+            .td_preset
+              width: 14%
+              
+            .td_preset_body              
+              &:empty
+                width: 10%
+              
+            .td_desc_body
+              &:empty
+                width: 40%
+              
             &.is_body
               tr
                 height: $fp_hand_height
