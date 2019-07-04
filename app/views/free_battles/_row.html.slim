@@ -53,6 +53,8 @@ template(slot-scope="props")
       /       b-icon(custom-size="mdi-18px" icon="pencil")
 
       template(v-if="props.row.tweet_origin_image_path")
-        b-tooltip(label="OGP画像")
-          a(@click.stop :href="props.row.tweet_origin_image_path" target="_blank")
+        | &nbsp;
+        a(@click.stop :href="props.row.tweet_origin_image_path" target="_blank")
+          b-tooltip(label="OGP画像")
             img.mini_img(:src="props.row.tweet_origin_image_path")
+
