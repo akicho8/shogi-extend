@@ -13,6 +13,7 @@ module BattleDecorator
       {
         outer_columns: 3,
         cell_rows: 25,
+        separator: "&#x21E8;",
       }
     end
 
@@ -46,12 +47,17 @@ module BattleDecorator
     def end_at_s
     end
 
-    def sengata_pack
+    def strategy_pack_str
+
       memberships.collect { |m|
-        s = m.attack_tag_list.first || m.defense_tag_list.first || m.note_tag_list.grep_v(/指導対局/).first
+        sep = " #{params[:separator]} "
+        s = nil
+        s ||= m.attack_tag_list.join(sep).presence
+        s ||= m.defense_tag_list.join(sep).presence
+        s ||= m.note_tag_list.grep_v(/指導対局/).first
         if s
           s = s.remove(/△|▲/)
-          vc.tag.div { m.location.hexagon_mark + " #{s}" }
+          vc.tag.div { m.location.hexagon_mark.html_safe + " #{s}".html_safe }
         end
       }.compact.join.html_safe
     end
@@ -227,10 +233,17 @@ module BattleDecorator
       end
 
       s += battle.note_tag_list.grep(/(^相|入玉|駒柱|対)/)
+      # s = s.grep_v(/対抗型/)
       if battle.memberships.any? { |e| e.note_tag_list.include?("指導対局") }
         s << "指導対局"
       end
+
       # s << "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
+
+      # s << memberships.collect { |e|
+      #   e.location.hexagon_mark + e.attack_tag_list.join("→")
+      # }.join
+
       s.join(" ")
     end
 

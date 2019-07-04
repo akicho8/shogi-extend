@@ -5,11 +5,16 @@
       .tables_box_container
         .tables_box
           table
-            &.is_head1
-            &.is_head2
+            .td_player_name
+              width: 30%
+
+            .td_playing_field_name
+              width: 14%
+
             &.is_body
               tr
                 height: $fp_hand_height
+
               .td_kifu_data
                 font-size: 1em
                 &.hand_size4

@@ -82,9 +82,9 @@ ruby:
               tr
 
               tr
-                td.b_b.b_r.td_playing_field(colspan="2" rowspan="4")
+                td.b_b.b_r.td_playing_field_label(colspan="2" rowspan="4")
                   | 対局場
-                td.b_b.b_r(rowspan="4")
+                td.b_b.b_r.td_playing_field_name(rowspan="4")
               tr
 
                 td.b_b.b_r.td_grade(rowspan="3")
@@ -127,7 +127,7 @@ ruby:
                 td.double_border(rowspan="2")
                   | 戦型
                 td.double_border(rowspan="2")
-                  = decorator.sengata_pack
+                  = decorator.strategy_pack_str
 
               tr
                 td.b_b.b_r(rowspan="2")
