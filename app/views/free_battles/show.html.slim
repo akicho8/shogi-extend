@@ -5,7 +5,7 @@
   javascript:
     document.addEventListener('DOMContentLoaded', () => { new FreeBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
-#show_app
+#show_app(v-cloak)
   - @page_title ||= current_record.title
 
   - if params[:formal_sheet]
