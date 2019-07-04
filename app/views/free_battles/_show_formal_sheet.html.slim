@@ -107,36 +107,45 @@ ruby:
                   .value
                     | 手 合 割
                 td.b_b.b_r.td_preset_body
-                  = decorator.preset_str if page_index.zero?
+                  - if page_index.zero?
+                    = decorator.preset_str
+
                 td.b_b.td_desc_label(rowspan="4")
                   .value
                     | 備考
+
                 td.b_b.b_r.td_desc_body(rowspan="4")
                   - if page_index.zero?
-                    .value= decorator.desc_body
+                    .value
+                      = decorator.desc_body
 
                 td.b_b.b_r
                   | 手数
                 td.b_b
-                  = decorator.battle_result_str if page_index.zero?
+                  - if page_index.zero?
+                    = decorator.battle_result_str
               tr
                 td.b_b.b_r.basic_label
                   | 持 時 間
                 td.b_b.b_r
-                  = decorator.hold_time_str if page_index.zero?
+                  - if page_index.zero?
+                    = decorator.hold_time_str
                 td.double_border.basic_label(rowspan="2")
                   | 戦型
                 td.double_border(rowspan="2")
-                  = decorator.strategy_pack_str if page_index.zero?
+                  - if page_index.zero?
+                    = decorator.strategy_pack_str
 
               tr
                 td.b_b.b_r.basic_label(rowspan="2")
                   | 消費時間
                 td.b_b.b_r.td_total_seconds
-                  = decorator.total_seconds_str_for(:black) if page_index.zero?
+                  - if page_index.zero?
+                    = decorator.total_seconds_str_for(:black)
               tr
                 td.b_b.b_r.td_total_seconds
-                  = decorator.total_seconds_str_for(:white) if page_index.zero?
+                  - if page_index.zero?
+                    = decorator.total_seconds_str_for(:white)
                 td.b_b.b_r.basic_label
                   | 記録係
                 td.b_b
