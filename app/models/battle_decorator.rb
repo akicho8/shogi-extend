@@ -25,6 +25,13 @@ module BattleDecorator
     def hand_info(*args)
       if e = hand_log_for(*args)
         value = e.to_ki2(same_suffix: "\u3000", separator: " ", compact_if_gt: 7)
+
+        if debug_mode?
+          value = "９九成香左上"
+          # value = "１２３４５６".chars.take(rand(4..6)).join
+          # value = "１２３４５６"
+        end
+
         {
           :object => e,
           :value  => value,
@@ -129,6 +136,10 @@ module BattleDecorator
     end
 
     private
+
+    def debug_mode?
+      params[:formal_sheet_debug]
+    end
 
     def hand_log_for(*args)
       if idx = index_of(*args)
