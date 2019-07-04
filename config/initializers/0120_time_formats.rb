@@ -37,8 +37,8 @@ Time::DATE_FORMATS.update({
       t.strftime("#{prefix}#{y}年%-m月%-d日%-H時%-M分")
     },
 
-    :seireki_format => proc { |t|
-      t.strftime("%Y年 %-m月%-d日 %H時%M分")
+    :ja_ad_format => proc { |t|
+      t.strftime("%Y年%-m月%-d日%-H時%-M分")
     },
 
     :battle_time => proc { |time|

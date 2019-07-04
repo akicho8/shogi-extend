@@ -22,9 +22,14 @@ module BattleDecorator
       @params = self.class.default_params.merge(params)
     end
 
-    def hand_log_for(*args)
-      if idx = index_of(*args)
-        hand_logs[idx]
+    def hand_info(*args)
+      if e = hand_log_for(*args)
+        value = e.to_ki2(same_suffix: "\u3000", separator: " ", compact_if_gt: 7)
+        {
+          :object => e,
+          :value  => value,
+          :class  => "hand_size#{value.size}",
+        }
       end
     end
 
@@ -125,6 +130,12 @@ module BattleDecorator
 
     private
 
+    def hand_log_for(*args)
+      if idx = index_of(*args)
+        hand_logs[idx]
+      end
+    end
+
     def memberships
       []
     end
@@ -180,10 +191,6 @@ module BattleDecorator
     def vc
       params[:view_context]
     end
-
-    def spc(n = 1)
-      "&nbsp;" * n
-    end
   end
 
   class SwarsBattleDecorator < Base
@@ -192,7 +199,7 @@ module BattleDecorator
     end
 
     def end_at_s
-      battle_end_at.to_s(:seireki_format)
+      battle_end_at.to_s(:ja_ad_format)
     end
 
     def rule_name

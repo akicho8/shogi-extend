@@ -44,7 +44,7 @@ ruby:
                 td.b_b.b_r.td_datetime_label(rowspan="3")
                   | 開始
                 td.b_b.td_datetime(rowspan="3")
-                  = decorator.battle.battled_at.to_s(:seireki_format)
+                  = decorator.battle.battled_at.to_s(:ja_ad_format)
               tr
 
               tr
@@ -170,21 +170,14 @@ ruby:
                   tr.kifu_body_row
                     - decorator.outer_columns.times do |x|
                       - decorator.inner_fixed_columns.times do |left_or_right|
-                          ruby:
-                            hand_log = decorator.hand_log_for(page_index, x, y, left_or_right)
-                            v = nil
-                            hand_size = nil
-                            if hand_log
-                              v = hand_log.to_ki2(same_suffix: "\u3000", separator: " ", compact_if_gt: 7)
-                              hand_size = "hand_size#{v.size}"
-                            end
-                          td.td_kifu_data(class=hand_size)
-                            = v
+                          - hand_info = decorator.hand_info(page_index, x, y, left_or_right)
+                          td.td_kifu_data(class=(hand_info ? hand_info[:class] : nil))
+                            = hand_info[:value] if hand_info
                           td.td_spend_times
                             svg
                               use(xlink:href="#svg_slash")
                             .values
                               .used_seconds
-                                = decorator.class.personal_clock_format(hand_log.personal_clock.used_seconds) if hand_log
+                                = decorator.class.personal_clock_format(hand_info[:object].personal_clock.used_seconds) if hand_info
                               .total_seconds
-                                = decorator.class.personal_clock_format(hand_log.personal_clock.total_seconds) if hand_log
+                                = decorator.class.personal_clock_format(hand_info[:object].personal_clock.total_seconds) if hand_info
