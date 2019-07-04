@@ -338,6 +338,8 @@ module BattleControllerSharedMethods
       access_log_create(current_record)
 
       if params[:formal_sheet]
+        SlackAgent.message_send(key: "棋譜用紙", body: current_record.title)
+
         if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
           flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
         end
