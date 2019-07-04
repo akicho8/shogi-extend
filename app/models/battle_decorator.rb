@@ -248,9 +248,9 @@ module BattleDecorator
     end
 
     def total_seconds_str_for(location)
-      m = membership_for(location)
-      min, sec = m.total_seconds.divmod(1.minutes)
-      "#{m.location.hexagon_mark}#{min}分#{sec}秒"
+      e = membership_for(location)
+      m, s = e.total_seconds.divmod(1.minutes)
+      [e.location.hexagon_mark, m.nonzero? ? "#{m}分" : nil, "#{s}秒"].join
     end
 
     def tournament_name
