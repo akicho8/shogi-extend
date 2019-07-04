@@ -1,90 +1,89 @@
 .formal_sheet_workspace
+  color: black
+  @extend .yumincho
   .sheet
-    color: black
-    
-    @extend .yumincho
-    
-    .tables_box
-      table
-        td
-          text-align: center
-          vertical-align: middle
-          @extend .nowrap
-          &:empty
-            &:after
-              content: "\03000"
+    .sheet_body
+      .tables_box
+        table
+          td
+            text-align: center
+            vertical-align: middle
+            @extend .nowrap
+            &:empty
+              &:after
+                content: "\03000"
 
-        .basic_label
-          @extend %is_slendar
-          padding: 0 0.2em
-              
-        &.is_body
-          thead
-            tr
+          .basic_label
+            @extend %is_slendar
+            padding: 0 0.2em
 
-          tbody
-            td.td_kifu_data
+          &.is_body
+            thead
+              tr
+
+            tbody
+              td.td_kifu_data
+                padding: 0 0.2em
+                width: 100% / (4 * 3)
+
+            .td_spend_times
+              @extend %cell_slash
+              height: 1em           // ？ これを入れないと上下にならない
+              .values
+                @extend %oppoite_pole_pos
+                padding: 0 0.25em
+
+          td
+            &.td_datetime_label
+              @extend %is_slendar
               padding: 0 0.2em
-              width: 100% / (4 * 3)
+            &.td_datetime
+              @extend %is_slendar
+              padding: 0 0.5em
 
-          .td_spend_times
-            @extend %cell_slash
-            height: 1em           // ？ これを入れないと上下にならない
-            .values
-              @extend %oppoite_pole_pos
-              padding: 0 0.25em
+            &.td_location_label
+              @extend %is_slendar
+              @extend %is_small1
+              padding: 0 0.5em
 
-        td
-          &.td_datetime_label
-            @extend %is_slendar
-            padding: 0 0.2em
-          &.td_datetime
-            @extend %is_slendar
-            padding: 0 0.5em
-          
-          &.td_location_label
-            @extend %is_slendar
-            @extend %is_small1
-            padding: 0 0.5em
-              
-          &.td_desc_label
-            width: 2em
-            @extend %is_small1
-            letter-spacing: 0.5em
-            .value
-              @extend %vertical_writing
-              
-          &.td_desc_body
-            padding: 0.25em
-            .value
-              @extend .word_break
+            &.td_desc_label
+              width: 2em
+              @extend %is_small1
+              letter-spacing: 0.5em
+              .value
+                @extend %vertical_writing
+
+            &.td_desc_body
+              padding: 0.25em
+              .value
+                @extend .word_break
+                text-align: left
+
+            &.td_players
+              padding: 0.5em 0
+              width: 2em
+              .value
+                @extend %text_just
+                @extend %vertical_writing
+
+            &.td_tournament_label
+              @extend %is_slendar
+              .value
+                @extend %vertical_writing
+
+            &.td_playing_field_label
+              @extend %is_slendar
+              padding: 0 0.2em
+
+            &.td_player_name
               text-align: left
+              padding: 0.25em
 
-          &.td_players
-            padding: 0.5em 0
-            width: 2em
-            .value
-              @extend %text_just
-              @extend %vertical_writing
+            &.td_grade
+              @extend %is_slendar
+              padding: 0 0.75em
+              .value
+                letter-spacing: 0.1em
 
-          &.td_tournament_label
-            @extend %is_slendar
-            .value
-              @extend %vertical_writing
-
-          &.td_playing_field_label
-            @extend %is_slendar
-            padding: 0 0.2em
-
-          &.td_player_name
-            text-align: left
-            padding: 0.25em
-
-          &.td_grade
-            @extend %is_slendar
-            padding: 0 0.75em
-            .value
-              letter-spacing: 0.1em
-
-          &.td_preset
-            padding: 0 0.5em
+            &.td_preset
+              padding: 0 0.5em

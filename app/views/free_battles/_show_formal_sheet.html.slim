@@ -18,6 +18,9 @@ ruby:
       .sheet_body
         .tables_box_container
           .tables_box
+            - if decorator.page_count >= 2
+              .page_no
+                | No. #{page_index.next}
 
             ////////////////////////////////////////////////////////////////////////////////
 
@@ -187,6 +190,8 @@ ruby:
                               use(xlink:href="#svg_slash")
                             .values
                               .used_seconds
-                                = decorator.class.personal_clock_format(hand_info[:object].personal_clock.used_seconds) if hand_info
+                                - if hand_info
+                                  = decorator.class.personal_clock_format(hand_info[:object].personal_clock.used_seconds)
                               .total_seconds
-                                = decorator.class.personal_clock_format(hand_info[:object].personal_clock.total_seconds) if hand_info
+                                - if hand_info
+                                  = decorator.class.personal_clock_format(hand_info[:object].personal_clock.total_seconds)
