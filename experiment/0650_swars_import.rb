@@ -2,7 +2,8 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 Swars::Battle.count             # => 10
-Swars::Battle.user_import(user_key: "Kadokura_Keita", run_remote: true)
+# Swars::Battle.user_import(user_key: "Kadokura_Keita", run_remote: true)
+Swars::Battle.user_import(user_key: "itoshinTV", run_remote: true)
 Swars::Battle.count             # => 20
 
 # >> |------------------------------------------------------------------------|

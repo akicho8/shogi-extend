@@ -48,13 +48,13 @@ module BattleDecorator
     end
 
     def strategy_pack_str
-
+      sep = " #{params[:separator]} "
+      max = 3
       memberships.collect { |m|
-        sep = " #{params[:separator]} "
         s = nil
-        s ||= m.attack_tag_list.join(sep).presence
-        s ||= m.defense_tag_list.join(sep).presence
-        s ||= m.note_tag_list.grep_v(/指導対局/).first
+        s ||= m.attack_tag_list.take(max).join(sep).presence
+        s ||= m.defense_tag_list.take(max).join(sep).presence
+        s ||= m.note_tag_list.take(max).grep_v(/指導対局/).first
         if s
           s = s.remove(/△|▲/)
           vc.tag.div { m.location.hexagon_mark.html_safe + " #{s}".html_safe }
