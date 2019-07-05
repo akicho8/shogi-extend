@@ -30,8 +30,7 @@ ruby:
                   .value
                     | 対 局 者
                 td.b_b.b_r.td_grade(rowspan="3")
-                  .value
-                    = decorator.grade_number_for(:black, "級")
+                  = decorator.grade_number_for(:black, "級")
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
                     = decorator.location_kanji_char(:black)
@@ -54,8 +53,7 @@ ruby:
 
               tr
                 td.b_b.b_r.td_grade(rowspan="3")
-                  span.dankyu
-                    = decorator.grade_number_for(:black, "段")
+                  = decorator.grade_number_for(:black, "段")
                 td.b_b.b_r.td_datetime_label(rowspan="3")
                   | 終了
                 td.b_b.td_datetime(rowspan="3")
@@ -67,8 +65,7 @@ ruby:
 
               tr
                 td.b_b.b_r.td_grade(rowspan="3")
-                  span.dankyu
-                    = decorator.grade_number_for(:white, "級")
+                  = decorator.grade_number_for(:white, "級")
 
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
@@ -91,8 +88,7 @@ ruby:
               tr
 
                 td.b_b.b_r.td_grade(rowspan="3")
-                  span.dankyu
-                    = decorator.grade_number_for(:white, "段")
+                  = decorator.grade_number_for(:white, "段")
                 td.b_b.b_r(rowspan="3")
                   | 夕休
                 td.b_b(rowspan="3")
