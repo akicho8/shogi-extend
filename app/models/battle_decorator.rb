@@ -76,7 +76,7 @@ module BattleDecorator
     def datetime_blank
     end
 
-    def grade_number_for(location, type)
+    def grade_number_for(location)
     end
 
     def umpire_name
@@ -272,11 +272,8 @@ module BattleDecorator
       "将棋ウォーズ"
     end
 
-    def grade_number_for(location, type)
-      s = membership_for(location).grade.grade_info.name
-      if s.include?(type)
-        s
-      end
+    def grade_number_for(location)
+      membership_for(location).grade.grade_info.name
     end
 
     private

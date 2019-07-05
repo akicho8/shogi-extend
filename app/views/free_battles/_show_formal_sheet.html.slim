@@ -26,8 +26,8 @@
                 td.b_b.b_r.td_players(rowspan="12")
                   .value
                     | 対 局 者
-                td.b_b.b_r.td_grade(rowspan="3")
-                  = decorator.grade_number_for(:black, "級")
+                td.b_b.b_r.td_grade(rowspan="6")
+                  = decorator.grade_number_for(:black)
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
                     = decorator.location_kanji_char(:black)
@@ -49,8 +49,6 @@
               tr
 
               tr
-                td.b_b.b_r.td_grade(rowspan="3")
-                  = decorator.grade_number_for(:black, "段")
                 td.b_b.b_r.td_datetime_label(rowspan="3")
                   | 終了
                 td.b_b.td_datetime(rowspan="3")
@@ -61,8 +59,8 @@
               tr
 
               tr
-                td.b_b.b_r.td_grade(rowspan="3")
-                  = decorator.grade_number_for(:white, "級")
+                td.b_b.b_r.td_grade(rowspan="6")
+                  = decorator.grade_number_for(:white)
 
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
@@ -84,9 +82,6 @@
                 td.b_b.b_r.td_playing_field_name(rowspan="4" @click=(page_index.zero? ? "x_click_handle({key: 'playing_field_name'})" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.playing_field_name}}
               tr
-
-                td.b_b.b_r.td_grade(rowspan="3")
-                  = decorator.grade_number_for(:white, "段")
                 td.b_b.b_r(rowspan="3")
                   | 夕休
                 td.b_b(rowspan="3")
