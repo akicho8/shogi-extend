@@ -112,12 +112,8 @@
 
                 td.b_b.b_r.td_desc_body(rowspan="4" @click=(page_index.zero? ? "desc_body_click_handle" : ""))
                   - if page_index.zero?
-                    template(v-if="desc_body_edit_p")
-                      b-input(type="textarea" v-model="decorator.desc_body" @blur="desc_body_edit_p = false" ref="desc_body_edit_ref")
-                      button.button.is-primary.is-small(@click.prevent.stop="desc_body_edit_p = false") OK
-                    template(v-else)
-                      .value
-                        | {{decorator.desc_body}}
+                    .value
+                      | {{decorator.desc_body}}
 
                 td.b_b.b_r
                   | 手数
