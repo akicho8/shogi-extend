@@ -17,6 +17,8 @@
             &:empty
               &:after
                 content: "\03000"
+            &.editable
+              cursor: pointer
 
           .basic_label
             @extend %is_slendar
@@ -62,7 +64,6 @@
                 @extend %vertical_writing
 
             &.td_desc_body
-              cursor: pointer
               padding: 0.25em
               .value
                 @extend .word_break

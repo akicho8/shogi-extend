@@ -19,15 +19,15 @@ export default {
       window.print()
     },
 
-    desc_body_click_handle() {
+    x_click_handle(params) {
       this.$dialog.prompt({
-        title: "備考",
-        inputAttrs: { type: "text", value: this.decorator.desc_body },
+        title: "編集",
+        inputAttrs: {type: "text", value: this.decorator[params.key], required: false},
         confirmText: "更新",
         cancelText: "キャンセル",
         onConfirm: (value) => {
-          this.decorator.desc_body = value
-          this.$toast.open("備考を更新しました")
+          this.$set(this.decorator, params.key, value)
+          this.$toast.open({message: `更新しました`, position: "is-bottom"})
         },
       })
     },

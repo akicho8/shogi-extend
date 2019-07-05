@@ -81,7 +81,8 @@
               tr
                 td.b_b.b_r.td_playing_field_label(colspan="2" rowspan="4")
                   | 対局場
-                td.b_b.b_r.td_playing_field_name(rowspan="4")
+                td.b_b.b_r.td_playing_field_name(rowspan="4" @click=(page_index.zero? ? "x_click_handle({key: 'playing_field_name'})" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.playing_field_name}}
               tr
 
                 td.b_b.b_r.td_grade(rowspan="3")
@@ -110,7 +111,7 @@
                   .value
                     | 備考
 
-                td.b_b.b_r.td_desc_body(rowspan="4" @click=(page_index.zero? ? "desc_body_click_handle" : ""))
+                td.b_b.b_r.td_desc_body(rowspan="4" @click=(page_index.zero? ? "x_click_handle({key: 'desc_body'})" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
                     .value
                       | {{decorator.desc_body}}
