@@ -19,11 +19,11 @@
 //     padding-top: $gap * 2
 
 ////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
-  
+
 #flash_danger_notify_tag
   .notification
     margin-bottom: 1em
-  
+
 ////////////////////////////////////////////////////////////////////////////// html_formatのなかでtooltipが途切れる
 
 #swars_player_info_app
@@ -49,8 +49,7 @@
 ////////////////////////////////////////////////////////////////////////////// 棋譜のtwitter用画像の小さいの
 
 .mini_img
-  height: 24px
-  width: 24px
+  height: 27px
   border: 1px solid $primary
 
 ////////////////////////////////////////////////////////////////////////////// _modal_shogi_player
@@ -144,6 +143,14 @@
       padding-left: 0em !important
       padding-right: 0em !important
 
+////////////////////////////////////////////////////////////////////////////// テーブルの一行は基本改行しない
+
+.b-table
+  .table-wrapper
+    overflow-x: scroll !important
+    -webkit-overflow-scrolling: touch
+  @extend .nowrap
+
 ////////////////////////////////////////////////////////////////////////////// ヘッダー画像
 
 // .hero
@@ -227,14 +234,13 @@ $any_exist_soldiers: $grey-light
 +brand_def("google",  rgb(221, 75,  57))
 +brand_def("github",  rgb( 51, 51,  51))
 
-  
 ////////////////////////////////////////////////////////////////////////////// footer
 
 .footer
   color: $grey
   a
     color: inherit
-  
+
 ////////////////////////////////////////////////////////////////////////////// クリックできる行を GMail 風にする
 
 .is_row_clickable
@@ -289,4 +295,3 @@ $any_exist_soldiers: $grey-light
 //   .modal_trigger_dots
 //     +mobile
 //       display: none
-

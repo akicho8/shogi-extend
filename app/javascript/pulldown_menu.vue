@@ -2,7 +2,11 @@
   b-dropdown(:hoverable="false" @click.native.stop="" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
     button.button.is-small(slot="trigger")
       //- span もっと見る
+      | &nbsp;
+      | &nbsp;
       b-icon(:icon="in_modal ? 'menu-up' : 'menu-down'")
+      | &nbsp;
+      | &nbsp;
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")

@@ -31,15 +31,17 @@ template(slot-scope="props")
       | {{props.row.saturn_key}}
 
   b-table-column(label="")
-    .buttons.are-small
+    .row_operations
       a.is-hidden-desktop(@click.stop :href="props.row.piyo_shogi_app_url")
         = image_tag("piyo_shogi_icon.png", "class": "row_piyo_link")
 
       template(v-if="props.row.kifu_copy_params")
+        | &nbsp;
         a.button.is-small(@click.stop.prevent="kifu_copy_handle({...props.row.kifu_copy_params, kc_format: 'kif'})")
           b-icon(icon="clipboard-outline" size="is-small")
           | &nbsp;コピー
 
+      | &nbsp;
       pulldown_menu(:record="props.row")
 
       / template(v-if="props.row.show_path")
@@ -57,4 +59,3 @@ template(slot-scope="props")
         a(@click.stop :href="props.row.tweet_origin_image_path" target="_blank")
           b-tooltip(label="OGP画像")
             img.mini_img(:src="props.row.tweet_origin_image_path")
-
