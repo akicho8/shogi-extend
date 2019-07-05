@@ -47,19 +47,22 @@ module BattleDecorator
     def end_at_s
     end
 
-    def strategy_pack_str
+    def strategy_pack_for(location)
       sep = " #{params[:separator]} "
       max = 3
-      memberships.collect { |m|
+      if m = membership_for(location)
         s = nil
         s ||= m.attack_tag_list.take(max).join(sep).presence
         s ||= m.defense_tag_list.take(max).join(sep).presence
         s ||= m.note_tag_list.take(max).grep_v(/指導対局/).first
+        s ||= "不明"
         if s
           s = s.remove(/△|▲/)
-          vc.tag.div { m.location.hexagon_mark.html_safe + " #{s}".html_safe }
+          # s = m.location.hexagon_mark.html_safe + " #{s}".html_safe
+          s
         end
-      }.compact.join.html_safe
+        s
+      end
     end
 
     # location_kanji_char(:black) # => "先 ☗"
@@ -76,7 +79,7 @@ module BattleDecorator
     def datetime_blank
     end
 
-    def grade_number_for(location)
+    def grade_name_for(location)
     end
 
     def umpire_name
@@ -146,6 +149,13 @@ module BattleDecorator
         desc_body: desc_body,
         tournament_name: tournament_name,
         rule_name: rule_name,
+        strategy_pack_for_black: strategy_pack_for(:black),
+        strategy_pack_for_white: strategy_pack_for(:white),
+        battle_result_str: battle_result_str,
+        player_name_for_black: player_name_for(:black),
+        player_name_for_white: player_name_for(:white),
+        grade_name_for_black: grade_name_for(:black),
+        grade_name_for_white: grade_name_for(:white),
       }
     end
 
@@ -274,7 +284,7 @@ module BattleDecorator
       "将棋ウォーズ"
     end
 
-    def grade_number_for(location)
+    def grade_name_for(location)
       membership_for(location).grade.grade_info.name
     end
 

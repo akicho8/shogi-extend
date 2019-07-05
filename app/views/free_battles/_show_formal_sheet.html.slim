@@ -26,15 +26,17 @@
                 td.b_b.b_r.td_players(rowspan="12")
                   .value
                     | 対 局 者
-                td.b_b.b_r.td_grade(rowspan="6")
-                  = decorator.grade_number_for(:black)
+
+                td.b_b.b_r.td_grade(rowspan="6" @click=(page_index.zero? ? "x_click_handle({key: 'grade_name_for_black'})" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.grade_name_for_black}}
+
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
                     = decorator.location_kanji_char(:black)
                   .mark
                     | ☗
-                td.b_b.b_r.td_player_name(rowspan="6")
-                  = decorator.player_name_for(:black)
+                td.b_b.b_r.td_player_name(rowspan="6" @click=(page_index.zero? ? "x_click_handle({key: 'player_name_for_black'})" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.player_name_for_black}}
                 td.b_b.b_r.td_tournament_label(rowspan="8")
                   .value
                     | 棋戦名
@@ -59,16 +61,17 @@
               tr
 
               tr
-                td.b_b.b_r.td_grade(rowspan="6")
-                  = decorator.grade_number_for(:white)
+                td.b_b.b_r.td_grade(rowspan="6" @click=(page_index.zero? ? "x_click_handle({key: 'grade_name_for_white'})" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.grade_name_for_white}}
 
                 td.b_b.td_location_label(rowspan="6")
                   .kanji
                     = decorator.location_kanji_char(:white)
                   .mark
                     | ☖
-                td.b_b.b_r.td_player_name(rowspan="6")
-                  = decorator.player_name_for(:white)
+
+                td.b_b.b_r.td_player_name(rowspan="6" @click=(page_index.zero? ? "x_click_handle({key: 'player_name_for_white'})" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.player_name_for_white}}
                 td.b_b.b_r(rowspan="3")
                   | 昼休
                 td.b_b(rowspan="3")
@@ -113,9 +116,9 @@
 
                 td.b_b.b_r
                   | 手数
-                td.b_b
+                td.b_b(@click=(page_index.zero? ? "x_click_handle({key: 'battle_result_str'})" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    = decorator.battle_result_str
+                    | {{decorator.battle_result_str}}
               tr
                 td.b_b.b_r.basic_label
                   | 持 時 間
@@ -126,7 +129,14 @@
                   | 戦型
                 td.double_border(rowspan="2")
                   - if page_index.zero?
-                    = decorator.strategy_pack_str
+                    div(@click=(page_index.zero? ? "x_click_handle({key: 'strategy_pack_for_black'})" : "") class=(page_index.zero? ? "editable" : ""))
+                      | ☗
+                      = " "
+                      | {{decorator.strategy_pack_for_black}}
+                    div(@click=(page_index.zero? ? "x_click_handle({key: 'strategy_pack_for_white'})" : "") class=(page_index.zero? ? "editable" : ""))
+                      | ☖
+                      = " "
+                      | {{decorator.strategy_pack_for_white}}
 
               tr
                 td.b_b.b_r.basic_label(rowspan="2")
