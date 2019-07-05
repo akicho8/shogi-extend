@@ -11,12 +11,12 @@
           | &nbsp;&nbsp;&nbsp;
           | 詳細
 
-    //- template(v-if="record.formal_sheet_path")
-    //-   b-dropdown-item(:has-link="true" :paddingless="true")
-    //-     a(:href="record.formal_sheet_path" target="_blank")
-    //-       b-icon(icon="note-outline" size="is-small")
-    //-       | &nbsp;&nbsp;&nbsp;
-    //-       | 棋譜用紙
+    template(v-if="record.formal_sheet_path")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="record.formal_sheet_path" target="_blank")
+          b-icon(icon="note-outline" size="is-small")
+          | &nbsp;&nbsp;&nbsp;
+          | 棋譜用紙
 
     template(v-if="record.edit_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
