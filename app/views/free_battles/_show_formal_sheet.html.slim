@@ -38,8 +38,8 @@
                 td.b_b.b_r.td_tournament_label(rowspan="8")
                   .value
                     | 棋戦名
-                td.b_b.b_r(colspan="2" rowspan="4")
-                  = decorator.tournament_name
+                td.b_b.b_r(colspan="2" rowspan="4" @click=(page_index.zero? ? "x_click_handle({key: 'tournament_name'})" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.tournament_name}}
                 td.b_b.b_r.td_datetime_label(rowspan="3")
                   | 開始
                 td.b_b.td_datetime(rowspan="3")
@@ -54,8 +54,8 @@
                 td.b_b.td_datetime(rowspan="3")
                   = decorator.end_at_s
               tr
-                td.b_b.b_r(colspan="2" rowspan="4")
-                  = decorator.rule_name
+                td.b_b.b_r(colspan="2" rowspan="4" @click=(page_index.zero? ? "x_click_handle({key: 'rule_name'})" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.rule_name}}
               tr
 
               tr

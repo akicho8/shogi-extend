@@ -144,6 +144,8 @@ module BattleDecorator
     def as_json(*)
       {
         desc_body: desc_body,
+        tournament_name: tournament_name,
+        rule_name: rule_name,
       }
     end
 
