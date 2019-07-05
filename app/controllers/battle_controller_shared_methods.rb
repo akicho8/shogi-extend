@@ -311,6 +311,7 @@ module BattleControllerSharedMethods
   concerning :ShowMethods do
     included do
       helper_method :js_show_options
+      helper_method :decorator
       helper_method :show_twitter_options
 
       before_action only: [:edit, :update, :destroy] do
@@ -355,7 +356,14 @@ module BattleControllerSharedMethods
     end
 
     let :js_show_options do
-      js_modal_record_for(current_record)
+      a = js_modal_record_for(current_record)
+      a[:formal_sheet] = !!params[:formal_sheet]
+      a[:decorator] = decorator.as_json
+      a
+    end
+
+    let :decorator do
+      current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: view_context))
     end
 
     let :show_twitter_options do

@@ -141,6 +141,12 @@ module BattleDecorator
     def rule_name
     end
 
+    def as_json(*)
+      {
+        desc_body: desc_body,
+      }
+    end
+
     private
 
     def debug_mode?

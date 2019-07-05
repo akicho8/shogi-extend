@@ -2,9 +2,6 @@
 
 - @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
 
-ruby:
-  decorator = current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: self))
-
 / b-notification(type="is-warning" aria-close-label="Close notification" role="alert" :closable="false")
 /   | macOS Google Chrome でしか正しくレイアウトできません
 
@@ -113,10 +110,14 @@ ruby:
                   .value
                     | 備考
 
-                td.b_b.b_r.td_desc_body(rowspan="4")
+                td.b_b.b_r.td_desc_body(rowspan="4" @click=(page_index.zero? ? "desc_body_click_handle" : ""))
                   - if page_index.zero?
-                    .value
-                      = decorator.desc_body
+                    template(v-if="desc_body_edit_p")
+                      b-input(type="textarea" v-model="decorator.desc_body" @blur="desc_body_edit_p = false" ref="desc_body_edit_ref")
+                      button.button.is-primary.is-small(@click.prevent.stop="desc_body_edit_p = false") OK
+                    template(v-else)
+                      .value
+                        | {{decorator.desc_body}}
 
                 td.b_b.b_r
                   | 手数

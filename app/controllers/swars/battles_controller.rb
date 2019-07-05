@@ -34,7 +34,6 @@ module Swars
 
     helper_method :current_swars_user
     helper_method :current_query_info
-    helper_method :js_swars_show_app_params
 
     prepend_before_action only: :show do
       if bot_agent?
@@ -296,40 +295,38 @@ module Swars
       end
     end
 
-    let :js_swars_show_app_params do
-      {
-        formal_sheet: !!params[:formal_sheet],
-
-        think_chart_params: {
-          type: "line",
-          data: {
-            labels: (1..current_record.turn_max).to_a,
-            datasets: current_record.memberships.collect.with_index { |e, i|
-              {
-                label: e.name_with_grade,
-                data: e.chartjs_data,
-                borderColor: PaletteInfo[i].border_color,
-                backgroundColor: PaletteInfo[i].background_color,
-                borderWidth: 3,
-                fill: true,
-              }
+    def js_show_options
+      super.merge({
+          think_chart_params: {
+            type: "line",
+            data: {
+              labels: (1..current_record.turn_max).to_a,
+              datasets: current_record.memberships.collect.with_index { |e, i|
+                {
+                  label: e.name_with_grade,
+                  data: e.chartjs_data,
+                  borderColor: PaletteInfo[i].border_color,
+                  backgroundColor: PaletteInfo[i].background_color,
+                  borderWidth: 3,
+                  fill: true,
+                }
+              },
+            },
+            options: {
+              # https://misc.0o0o.org/chartjs-doc-ja/general/responsive.html
+              # responsive: true,
+              # maintainAspectRatio: true,
+              # elements: {
+              #   line: {
+              #     tension: 0, # ベジェ曲線無効
+              #   },
+              # },
+              # animation: {
+              #   duration: 0, # 一般的なアニメーションの時間
+              # },
             },
           },
-          options: {
-            # https://misc.0o0o.org/chartjs-doc-ja/general/responsive.html
-            # responsive: true,
-            # maintainAspectRatio: true,
-            # elements: {
-            #   line: {
-            #     tension: 0, # ベジェ曲線無効
-            #   },
-            # },
-            # animation: {
-            #   duration: 0, # 一般的なアニメーションの時間
-            # },
-          },
-        },
-      }
+        })
     end
 
     let :latest_open_limit do

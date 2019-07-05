@@ -5,6 +5,9 @@ export default {
   data() {
     return {
       kifu_type_tab_index: 0,
+      record: this.$options.record,
+      decorator: this.$options.decorator,
+      desc_body_edit_p: false,
     }
   },
 
@@ -15,6 +18,14 @@ export default {
     printer_handle() {
       window.print()
     },
+
+    desc_body_click_handle() {
+      if (!this.desc_body_edit_p) {
+        this.desc_body_edit_p = true
+        this.$nextTick(() => this.$refs.desc_body_edit_ref.focus())
+      }
+    },
+
   },
 
   mounted() {
