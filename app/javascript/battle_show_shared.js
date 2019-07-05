@@ -19,15 +19,17 @@ export default {
       window.print()
     },
 
-    x_click_handle(params) {
+    edit_to(key) {
       this.$dialog.prompt({
         title: "編集",
-        inputAttrs: {type: "text", value: this.decorator[params.key], required: false},
+        inputAttrs: {type: "text", value: this.decorator[key], required: false},
         confirmText: "更新",
         cancelText: "キャンセル",
         onConfirm: (value) => {
-          this.$set(this.decorator, params.key, value)
-          this.$toast.open({message: `更新しました`, position: "is-bottom"})
+          if (this.decorator[key] !== value) {
+            this.$set(this.decorator, key, value)
+            this.$toast.open({message: `更新しました`, position: "is-bottom"})
+          }
         },
       })
     },
