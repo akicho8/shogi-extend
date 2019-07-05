@@ -1,6 +1,10 @@
 .formal_sheet_workspace
   color: black
   @extend .yumincho
+
+  // https://ics.media/entry/14087/
+  font-feature-settings: "palt"
+
   .sheet
     .sheet_body
       .tables_box
@@ -36,7 +40,7 @@
           td
             &.td_total_seconds
               padding: 0 0.3em
-            
+
             &.td_datetime_label
               @extend %is_slendar
               padding: 0 0.2em
