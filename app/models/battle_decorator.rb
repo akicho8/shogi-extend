@@ -13,7 +13,7 @@ module BattleDecorator
       {
         outer_columns: 3,
         cell_rows: 25,
-        separator: "&#x21E8;",
+        separator: "→",
       }
     end
 
