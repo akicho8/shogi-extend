@@ -237,47 +237,16 @@ class ApplicationController < ActionController::Base
   end
 
   concerning :BotCheckMethods do
-    class_methods do
-      def bot_regexp
-        # ▼HTTP_USER_AGENTでbot,Browser,Deviceチェック - Qiita
-        # https://qiita.com/haco99/items/c8321b2992080364d08c
-        @bot_regexp ||= Regexp.union(*[
-            "Googlebot",
-            "Yahoo! Slurp",
-            "Mediapartners-Google",
-            "msnbot",
-            "bingbot",
-            "MJ12bot",
-            "Ezooms",
-            "pirst; MSIE 8.0;",
-            "Google Web Preview",
-            "ia_archiver",
-            "Sogou web spider",
-            "Googlebot-Mobile",
-            "AhrefsBot",
-            "YandexBot",
-            "Purebot",
-            "Baiduspider",
-            "UnwindFetchor",
-            "TweetmemeBot",
-            "MetaURI",
-            "PaperLiBot",
-            "Showyoubot",
-            "JS-Kit",
-            "PostRank",
-            "Crowsnest",
-            "PycURL",
-            "bitlybot",
-            "Hatena",
-            "facebookexternalhit",
-            "MauiBot",
-            "archive.org_bot", # "Mozilla/5.0 (compatible; archive.org_bot +http://archive.org/details/archive.org_bot)"
-          ])
-      end
+    included do
+      helper_method :ua
+    end
+
+    let :ua do
+      @ua ||= UserAgent.parse(request.user_agent.to_s)
     end
 
     let :bot_agent? do
-      request.user_agent.to_s.match?(self.class.bot_regexp)
+      ua.bot?
     end
   end
 
@@ -286,14 +255,8 @@ class ApplicationController < ActionController::Base
       helper_method :mobile_agent?
     end
 
-    class_methods do
-      def mobile_regexp
-        @mobile_regexp ||= Regexp.union([/iPhone|iPad/i, /Android.*Mobile/i])
-      end
-    end
-
     let :mobile_agent? do
-      request.user_agent.to_s.match?(self.class.mobile_regexp)
+      ua.mobile?
     end
   end
 

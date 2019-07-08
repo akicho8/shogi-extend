@@ -176,3 +176,6 @@ gem "ransack"
 
 # for Bioshogi to_img method
 gem "rmagick"
+
+# bot判定用
+gem "useragent"
