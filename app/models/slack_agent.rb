@@ -22,9 +22,9 @@ module SlackAgent
     if ua
       a = []
       if ua.mobile?
-        a << "PC"
-      else
         a << "Mobile"
+      else
+        a << "PC"
       end
       a << ua.browser
       a << ua.platform
