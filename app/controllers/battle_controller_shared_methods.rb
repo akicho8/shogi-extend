@@ -340,7 +340,7 @@ module BattleControllerSharedMethods
 
       if params[:formal_sheet]
         if Rails.env.production? && !bot_agent?
-          SlackAgent.message_send(key: "棋譜用紙", body: current_record.title)
+          slack_message(key: "棋譜用紙", body: current_record.title)
         end
 
         if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
@@ -464,7 +464,7 @@ module BattleControllerSharedMethods
         text_body = current_record.to_cached_kifu(params[:format])
 
         if params[:copy_trigger]
-          SlackAgent.message_send(key: "#{params[:format]}コピー", body: current_record.title)
+          slack_message(key: "#{params[:format]}コピー", body: current_record.title)
         end
 
         # 激指ではクリップボードは UTF8 でないと読めない

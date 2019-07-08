@@ -137,7 +137,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def final_decision(response)
-    SlackAgent.message_send(key: "CPU対戦終局", body: response)
+    slack_message(key: "CPU対戦終局", body: response)
     render json: response
   end
 

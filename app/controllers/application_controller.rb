@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
       params.key?(name)
     end
 
+    def slack_message(**params)
+      SlackAgent.message_send(params.merge(ua: ua))
+    end
+
     private
 
     def h
