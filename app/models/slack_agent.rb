@@ -18,25 +18,30 @@ module SlackAgent
       raise Slack::Web::Api::Errors::SlackError, 1
     end
 
-    ua_text = nil
+    ua_str = nil
+    icon = nil
     if ua
       a = []
       if ua.mobile?
-        a << "Mobile"
+        icon = ":iphone:"
       else
-        a << "PC"
+        icon = ":desktop_computer:"
       end
       a << ua.browser
-      a << ua.platform
+      unless ua.os.include?(ua.platform)
+        a << ua.platform
+      end
       a << ua.os
       a = a.compact
       if a.present?
-        ua_text = "(" + a.join(" ") + ")"
+        ua_str = a.join(" ")
+        ua_str = ua_str.gsub(/Macintosh/, "Mac")
+        ua_str = "(#{ua_str})"
       end
     end
 
     Slack::Web::Client.new.tap do |client|
-      client.chat_postMessage(channel: "#shogi_web", text: "【#{key}】#{body} #{ua_text}".strip)
+      client.chat_postMessage(channel: "#shogi_web", text: "#{icon}【#{key}】#{body} #{ua_str}".strip)
     end
   rescue Slack::Web::Api::Errors::TooManyRequestsError => error
     # エラー通知はするが Slack 通知自体はなかったことにして処理を続行する
