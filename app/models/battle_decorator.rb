@@ -54,14 +54,9 @@ module BattleDecorator
         s = nil
         s ||= m.attack_tag_list.take(max).join(sep).presence
         s ||= m.defense_tag_list.take(max).join(sep).presence
-        s ||= m.note_tag_list.take(max).grep_v(/指導対局/).first
+        s ||= m.note_tag_list.take(max).grep_v(/指導対局/).first.to_s.presence
         s ||= "不明"
-        if s
-          s = s.remove(/△|▲/)
-          # s = m.location.hexagon_mark.html_safe + " #{s}".html_safe
-          s
-        end
-        s
+        s.remove(/△|▲/)
       end
     end
 
@@ -321,12 +316,9 @@ module BattleDecorator
       s = nil
       s ||= player.skill_set.attack_infos.take(max).join(sep).presence
       s ||= player.skill_set.defense_infos.take(max).join(sep).presence
-      s ||= player.skill_set.note_infos.take(max).first
+      s ||= player.skill_set.note_infos.take(max).first.to_s.presence
       s ||= "不明"
-      if s
-        s = s.remove(/△|▲/)
-      end
-      s
+      s.remove(/△|▲/)
     end
 
     def battle_result_str
