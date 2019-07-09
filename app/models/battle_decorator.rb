@@ -96,6 +96,10 @@ module BattleDecorator
     end
 
     def total_seconds_str_for(location)
+      location = Bioshogi::Location.fetch(location)
+      seconds = total_seconds_for(location)
+      m, s = seconds.divmod(1.minutes)
+      [location.hexagon_mark, " ", m.nonzero? ? "#{m}分" : nil, "#{s}秒"].join
     end
 
     def tournament_name
@@ -160,6 +164,9 @@ module BattleDecorator
     end
 
     private
+
+    def total_seconds_for(location)
+    end
 
     def debug_mode?
       params[:formal_sheet_debug]
@@ -274,10 +281,8 @@ module BattleDecorator
       ["各", battle.rule_info.real_life_time / 1.minutes, "分"].join
     end
 
-    def total_seconds_str_for(location)
-      e = membership_for(location)
-      m, s = e.total_seconds.divmod(1.minutes)
-      [e.location.hexagon_mark, " ", m.nonzero? ? "#{m}分" : nil, "#{s}秒"].join
+    def total_seconds_for(location)
+      membership_for(location).total_seconds
     end
 
     def tournament_name
@@ -298,6 +303,38 @@ module BattleDecorator
   class FreeBattleDecorator < Base
     def preset_info
       @preset_info ||= heavy_parsed_info.preset_info
+    end
+
+    def tournament_name
+      heavy_parsed_info.header["棋戦"]
+    end
+
+    def player_name_for(location)
+      location = Bioshogi::Location[location]
+      heavy_parsed_info.header.to_h.values_at(*location.call_names).compact.first
+    end
+
+    def strategy_pack_for(location)
+      player = heavy_parsed_info.mediator.player_at(location)
+      sep = " #{params[:separator]} "
+      max = 3
+      s = nil
+      s ||= player.skill_set.attack_infos.take(max).join(sep).presence
+      s ||= player.skill_set.defense_infos.take(max).join(sep).presence
+      s ||= player.skill_set.note_infos.take(max).first
+      s ||= "不明"
+      if s
+        s = s.remove(/△|▲/)
+      end
+      s
+    end
+
+    def battle_result_str
+      "#{battle.turn_max}手"
+    end
+
+    def total_seconds_for(location)
+      heavy_parsed_info.mediator.player_at(location).personal_clock.total_seconds
     end
   end
 end
