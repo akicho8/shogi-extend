@@ -1,4 +1,4 @@
-################################################################################ deploy:upload
+# cap production deploy:upload FILES=config/schedule.rb
 
 desc "cap production deploy:upload FILES=config/schedule.rb"
 namespace :deploy do
