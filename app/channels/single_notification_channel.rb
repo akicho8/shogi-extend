@@ -17,7 +17,7 @@ class SingleNotificationChannel < ApplicationCable::Channel
 
     # 受信者がCPUなら自動的に返事をする
     if to.race_info.auto_message_response
-      message_send_to({"from" => to, "to" => from, "message" => "#{from.name}さんは#{data["message"]}なんですね"})
+      message_send_to("from" => to, "to" => from, "message" => "#{from.name}さんは#{data["message"]}なんですね")
       return
     end
 
@@ -47,6 +47,6 @@ class SingleNotificationChannel < ApplicationCable::Channel
 
   def battle_match_ng(data)
     e = data["battle_request"]
-    message_send_to({"from" => e["to"], "to" => e["from"], "message" => "ごめん"})
+    message_send_to("from" => e["to"], "to" => e["from"], "message" => "ごめん")
   end
 end

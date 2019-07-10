@@ -18,7 +18,7 @@ end
 # >>  :name=>"名無しの棋士3号",
 # >>  :show_path=>"/colosseum/users/12",
 # >>  :avatar_url=>
-# >>   "/assets/human/0021_fallback_avatar_icon-35f7d2753708660f1028e234d7214edb783933bb8b41335c3cf9c1ba3bc171f2.png",
+# >>   "/assets/human/0021_fallback_avatar_icon-8e21e309a9ecfad976b1941f20e7a4a48fb9ec5928daa87637f9c4a60948e551.png",
 # >>  :race_key=>"human",
 # >>  :win_count=>0,
 # >>  :lose_count=>0,

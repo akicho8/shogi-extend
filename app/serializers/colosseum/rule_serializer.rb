@@ -10,7 +10,7 @@ module Colosseum
   end
 end
 # >> {:id=>1,
-# >>  :lifetime_key=>"lifetime_m5",
+# >>  :lifetime_key=>"lifetime_m10",
 # >>  :team_key=>"team_p1vs1",
 # >>  :self_preset_key=>"平手",
 # >>  :oppo_preset_key=>"平手",

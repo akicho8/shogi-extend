@@ -1,6 +1,6 @@
 class LobbyChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "lobby_channel" # ブロードキャストするにはこれが必要
+    stream_from "lobby_channel" # ブロードキャストするために必要
     stream_for current_user
   end
 
