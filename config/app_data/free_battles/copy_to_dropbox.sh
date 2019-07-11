@@ -1,2 +1,2 @@
 #!/bin/sh
-rsync -avzu --delete *.kif ~/Dropbox/free_battles
+rsync -avzu --delete . ~/Dropbox/free_battles

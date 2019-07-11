@@ -83,12 +83,13 @@
   .columns
     .column
       p
-        =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-small") do
-          b-icon(icon="download" size="is-small")
-          | &nbsp;&nbsp;
-          - if current_query
-            | この検索条件で
-          = "まとめてダウンロード"
+        b-tooltip(label="Windows からアクセスの場合は SJIS にしています" position="is-right")
+          =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-small") do
+            b-icon(icon="download" size="is-small")
+            | &nbsp;&nbsp;
+            - if current_query
+              | この検索条件で
+            = "まとめてダウンロード"
 
 .columns
   .column
