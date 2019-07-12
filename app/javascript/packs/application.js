@@ -12,7 +12,7 @@ Rails.start()
 
 import "action_cable_setup.js"
 import "application.sass"
-import "modulable_crud.coffee"
+import "modulable_crud.js"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
