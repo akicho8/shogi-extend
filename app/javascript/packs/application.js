@@ -10,8 +10,8 @@
 import Rails from "rails-ujs"
 Rails.start()
 
+import "action_cable_setup.js"
 import "application.sass"
-
 import "modulable_crud.coffee"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
