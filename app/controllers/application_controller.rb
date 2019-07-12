@@ -183,63 +183,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  concerning :EvalMethods do
-    included do
-      helper_method :link_to_eval
-    end
-
-    def link_to_eval(name, **options, &block)
-      if code = block.call
-        link_to(name, eval_path(options.merge(code: code)), method: :put, :class => "button is-small is-danger")
-      end
-    end
-
-    def eval_box
-      return unless Rails.env.development?
-
-      out = []
-      out << tag.div(:class => "buttons") do
-        [
-          link_to_eval("ユーザーセットアップ") { "Colosseum::User.setup" },
-          link_to_eval("ユーザー全削除") { "Colosseum::User.destroy_all" },
-          link_to_eval("ユーザー追加") { "Colosseum::User.create!" },
-          link_to_eval("1 + 2") { "1 + 2" },
-          link_to_eval("1 / 0", redirect_to: root_path) { "1 / 0" },
-          link_to_eval("find(0)", redirect_to: root_path) { "Colosseum::User.find(0)" },
-          link_to_eval("部屋作成") { "Colosseum::Battle.create!" },
-          link_to_eval("部屋削除") { "Colosseum::Battle.last&.destroy!" },
-          link_to_eval("部屋全削除") { "Colosseum::Battle.destroy_all" },
-          link_to_eval("flash確認", redirect_to: root_path(debug: "true")) { "" },
-          link_to_eval("Swars::Battle.destroy_all") { "Swars::Battle.destroy_all" },
-          link_to_eval("リモート取り込み") { "Swars::Battle.user_import(user_key: 'kinakom0chi', run_remote: true)" },
-          link_to_eval("指導対局リモート取り込み") { "Swars::Battle.user_import(user_key: 'Aikawa_Haruka', run_remote: true)" },
-          link_to_eval("メール書式確認", redirect_to: "/rails/mailers") { "" },
-          link_to_eval("RegularCrawler") { "Swars::Crawler::RegularCrawler.new.run" },
-          link_to_eval("FreeBattle.destroy_all") { "FreeBattle.destroy_all" },
-          link_to_eval("FreeBattle.setup") { "FreeBattle.setup" },
-        ].compact.join.html_safe
-      end
-
-      list = Colosseum::User.all.collect do |e|
-        {}.tap do |row|
-          row[:id] = link_to(e.id, e)
-          row[:name] = link_to(e.name, e)
-          row["操作"] = [
-            link_to_eval("login") { "current_user_set_id(#{e.id})" },
-            link_to_eval("削除") { "Colosseum::User.find(#{e.id}).destroy!" },
-            link_to_eval("online") { "Colosseum::User.find(#{e.id}).update!(online_at: Time.current)" if !e.online_at },
-            link_to_eval("offline") { "Colosseum::User.find(#{e.id}).update!(online_at: nil)" if e.online_at },
-            link_to_eval("logout") { "reset_session" if e == current_user },
-            link_to_eval("名前変更") { "Colosseum::User.find(#{e.id}).update!(name: SecureRandom.hex)" },
-          ].compact.join(" ").html_safe
-        end
-      end
-      out << list.to_html
-
-      tag.div(out.join.html_safe, :class => "eval_box is_screen_only")
-    end
-  end
-
   concerning :BotCheckMethods do
     included do
       helper_method :ua

@@ -51,7 +51,7 @@ html(lang="ja" class=(params[:formal_sheet] ? "has_formal_sheet" : ""))
       .container.is-fluid
         == flash_danger_notify_tag
         = yield
-        == controller.eval_box
+        == ToolBelt::Basic.new(view_context: self).to_html
       footer.footer
         .container.is-fluid
           .columns
@@ -215,7 +215,7 @@ html(lang="ja" class=(params[:formal_sheet] ? "has_formal_sheet" : ""))
         .container.is-fluid.main_container
           == flash_danger_notify_tag
           = yield
-          == controller.eval_box
+          == ToolBelt::Basic.new(view_context: self).to_html
 
       footer.footer.is_screen_only
         .container.is-fluid
