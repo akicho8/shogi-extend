@@ -6,7 +6,7 @@
 //    variables in _bulma_variables.scss
 @import "./_bulma_variables.scss";
 
-// 2. カスタムカラーを設定する
+// 2. カスタムカラー設定
 $twitter: #55acee;
 $twitter-invert: findColorInvert($twitter);
 $github: #333;
@@ -29,8 +29,3 @@ $colors: map-merge($colors, $addColors);
 
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
-
-// router-link がアクティブなとき
-.router-link-exact-active {
-  color: $primary;
-}

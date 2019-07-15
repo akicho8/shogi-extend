@@ -11,6 +11,7 @@ import Rails from "rails-ujs"
 Rails.start()
 
 import "action_cable_setup.js"
+// import "../my_custom_buefy.scss"
 import "application.sass"
 import "modulable_crud.js"
 
@@ -29,7 +30,6 @@ import "css-browser-selector"   // 読み込んだ時点で htmlタグの class 
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
-import "../my_buefy.scss"
 import "bulma_burger.js"
 
 import Buefy from "buefy"
