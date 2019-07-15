@@ -21,11 +21,11 @@ class JudgeInfo
       if key == :win
         case
         when grade_diff >= 1
-          { key: "star-circle", :class => "has_text_gold", }
+          { key: "star-circle", :class => "has-text-gold", }
         when grade_diff == 0
-          { key: "star", :class => "has_text_gold", }
+          { key: "star", :class => "has-text-gold", }
         else
-          { key: "star-outline", :class => "has_text_gold", }
+          { key: "star-outline", :class => "has-text-gold", }
         end
       end
     end
