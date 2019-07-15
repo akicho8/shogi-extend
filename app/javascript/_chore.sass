@@ -1,0 +1,173 @@
+////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
+
+#flash_danger_notify_tag
+  .notification
+    margin-bottom: 1em
+
+////////////////////////////////////////////////////////////////////////////// html_formatのなかでtooltipが途切れる
+
+#swars_player_info_app
+  .html_format
+    overflow: visible
+
+////////////////////////////////////////////////////////////////////////////// ぴよ将棋の画像調整
+
+.show_piyo_link
+  margin: 0.5rem
+  height: 1.4rem
+
+.row_piyo_link
+  margin: 0 1em
+  height: 1.4rem
+
+.piyo_icon_in_button
+  height: 1.0rem
+
+.modal_piyo_link
+  height: 2em
+
+////////////////////////////////////////////////////////////////////////////// 棋譜のtwitter用画像の小さいの
+
+.mini_img
+  height: 27px
+  border: 1px solid $primary
+
+////////////////////////////////////////////////////////////////////////////// _modal_shogi_player
+
+.modal_loading_content
+  width: 40vmin
+  height: 40vmin
+
+////////////////////////////////////////////////////////////////////////////// 段級位
+
+.versus
+  margin: 0px 0.25rem
+
+////////////////////////////////////////////////////////////////////////////// アイコン
+
+.has_text_gold
+  color: hsl(38, 80%, 60%)
+
+////////////////////////////////////////////////////////////////////////////// 持ち時間用フォント
+
+.digit_font
+  font-family: Consolas, 'Courier New', Courier, Monaco, monospace
+
+////////////////////////////////////////////////////////////////////////////// チャットのメッセージは強く折り返す
+
+.chat_container
+  word-break: break-all
+  figure.media-left
+    .image
+      img
+        border-radius: 5%
+
+//////////////////////////////////////////////////////////////////////////////// message_link_to
+
+.message_link_to
+  .avatar_image
+    cursor: pointer
+    height: 2em
+    border-radius: 5%
+  .user_name
+    margin: 0 0.2em
+    white-space: nowrap
+    cursor: pointer
+    font-weight: bold
+
+.mlt_chat_message
+  word-break: break-all
+  margin-left: 0.5em
+
+.avatar_image_in_dialog
+  height: 3.0em
+  vertical-align: middle
+  margin-right: 0.5em
+  border-radius: 5%
+
+////////////////////////////////////////////////////////////////////////////// ヘッダーのアバター画像
+
+.header_avatar_image
+  vertical-align: middle
+  border-radius: 50%
+
+.my_name
+  margin-left: 0.5em
+
+////////////////////////////////////////////////////////////////////////////// ランキングのアバター
+
+.ranking_avatar
+  vertical-align: middle
+  width: 26px
+  margin-right: 8px
+
+////////////////////////////////////////////////////////////////////////////// .box のかわり
+
+.non_border_box
+  display: block
+  padding: 1.25rem
+
+////////////////////////////////////////////////////////////////////////////// html_format で Hash 表示したとき値は改行する
+
+.hash_value_only_nowrap
+  .html_format
+    .html_format_type_hash
+      td
+        white-space: normal
+
+////////////////////////////////////////////////////////////////////////////// 棋譜入力の盤面入力の幅が狭くなるのを防ぐ
+
+.b-tabs
+  &.is_lr_paddingless
+    .tab-content
+      padding-left: 0em !important
+      padding-right: 0em !important
+
+////////////////////////////////////////////////////////////////////////////// テーブルの一行は基本改行しない
+
+.b-table
+  .table-wrapper
+    overflow-x: scroll !important
+    -webkit-overflow-scrolling: touch
+  @extend .nowrap
+
+////////////////////////////////////////////////////////////////////////////// ログインボタン
+/* https://qiita.com/AcaiBowl/items/8ee0a5a6c994685fb1cd
+/* https://lab.syncer.jp/Document/Color/Brand-Color/
+
+=brand_def($name, $color)
+  .#{$name}
+    &.brand_button
+      border: none !important
+      color: white !important
+      background: $color !important
+    &:hover
+      background: darken($color, 10%) !important
+
++brand_def("twitter", $twitter)
++brand_def("google",  $google)
++brand_def("github",  $github)
+
+////////////////////////////////////////////////////////////////////////////// クリックできる行を GMail 風にする
+
+.is_row_clickable
+  tbody
+    tr
+      &:hover
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
+        cursor: zoom-in
+
+      // &.public
+      //   background-color: $danger
+
+////////////////////////////////////////////////////////////////////////////// デスクトップのときは行のボタンを非表示にしておく
+
++desktop
+  .is_row_clickable
+    tbody
+      tr
+        &:hover
+          .row_operations
+            visibility: visible
+        .row_operations
+            visibility: hidden
