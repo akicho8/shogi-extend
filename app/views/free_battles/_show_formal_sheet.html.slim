@@ -5,6 +5,17 @@
 / b-notification(type="is-warning" aria-close-label="Close notification" role="alert" :closable="false")
 /   | macOS Google Chrome でしか正しくレイアウトできません
 
+- if ua.browser != "Chrome" || params[:formal_sheet_debug]
+  javascript:
+    document.addEventListener("DOMContentLoaded", () => {
+      Vue.prototype.$dialog.alert({
+        title: "ブラウザ不適合",
+        message: "<b>#{ua.browser}</b> ではレイアウトが崩れている恐れがあります。<b>Google Chrome</b> でお試しください。",
+        type: "is-warning",
+        hasIcon: true,
+      })
+    })
+
 .fixed_container.is_screen_only
   button.button.is-primary.is-large(@click="printer_handle")
     b-icon(icon="printer" size="is-medium")

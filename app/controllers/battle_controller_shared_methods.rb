@@ -343,9 +343,9 @@ module BattleControllerSharedMethods
           slack_message(key: "棋譜用紙", body: current_record.title)
         end
 
-        if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
-          flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
-        end
+        # if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
+        #   flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
+        # end
       end
 
       respond_to do |format|
