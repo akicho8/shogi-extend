@@ -5,17 +5,17 @@
         | {{membership.name_with_grade}}
       b-dropdown-item(:has-link="true")
         a(@click.stop.prevent="js_link_to(membership.query_user_url)")
-          b-icon2(icon="magnify")
+          b-icon(icon="magnify" size="is-small")
           | &nbsp;
           | 検索
       b-dropdown-item(:has-link="true")
         a(@click.stop.prevent="js_link_to(membership.player_info_path)")
-          b-icon2(icon="account")
+          b-icon(icon="account" size="is-small")
           | &nbsp;
           | プレイヤー情報
       b-dropdown-item(:has-link="true")
         a(@click.stop="() => {}" :href="membership.swars_home_url" target="_blank")
-          b-icon2(icon="open-in-new")
+          b-icon(icon="open-in-new" size="is-small")
           | &nbsp;
           | ウォーズに移動
 </template>
@@ -29,7 +29,4 @@ export default {
 </script>
 
 <style lang="sass">
-// .swars_user_link_to
-//   border: 1px solid blue !important
-//   background-color: red !important
 </style>
