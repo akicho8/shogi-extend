@@ -412,6 +412,8 @@ module Swars
             name_with_grade: e.name_with_grade,
             query_user_url: polymorphic_path(e.user),
             swars_home_url: e.user.swars_home_url,
+            google_search_url: google_search_url(e.user.user_key),
+            twitter_search_url: twitter_search_url(e.user.user_key),
             location: { hexagon_mark: e.location.hexagon_mark },
             # position: e.position,
           }

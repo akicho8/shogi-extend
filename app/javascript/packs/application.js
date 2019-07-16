@@ -7,8 +7,6 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import "application.sass"
-
 import Rails from "rails-ujs"
 Rails.start()
 
@@ -30,6 +28,7 @@ import "css-browser-selector"   // 読み込んだ時点で htmlタグの class 
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
+import "application.sass"
 import "bulma_burger.js"
 
 import Buefy from "buefy"

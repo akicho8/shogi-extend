@@ -121,7 +121,8 @@ Rails.application.routes.draw do
   end
 
   direct :twitter_search do |query|
-    "https://search.yahoo.co.jp/realtime/search?p=#{query}&ei=UTF-8"
+    # "https://search.yahoo.co.jp/realtime/search?p=#{query}&ei=UTF-8"
+    "https://twitter.com/search?q=#{query}"
   end
 
   direct :google_maps do |query|
