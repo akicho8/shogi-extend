@@ -1,0 +1,19 @@
+- if sfen = current_record.existing_sfen
+  shogi_player(
+    :kifu_body="'#{sfen}'"
+    :start_turn="#{current_record_turn}"
+    :key_event_capture="true"
+    :slider_show="true"
+    :sfen_show="false"
+    :controller_show="true"
+    :theme="'#{sp_theme_default}'"
+    :size="'medium'"
+    :sound_effect="true"
+    :volume=AppConfig[:volume]
+    )
+    = render partial: "sfen_link"
+
+  - if current_record.description.present?
+    .message.is-size-7
+      .message-body
+        = current_record.description

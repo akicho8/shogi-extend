@@ -1,7 +1,10 @@
 import _ from "lodash"
 import dayjs from "dayjs"
+import battle_record_methods from "battle_record_methods.js"
 
 export default {
+  mixins: [battle_record_methods],
+
   data() {
     return {
       kifu_type_tab_index: 0,
