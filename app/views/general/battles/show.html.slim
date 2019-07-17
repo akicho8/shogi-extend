@@ -21,6 +21,6 @@ javascript:
     - current_record.showable_tag_list.each do |e|
       span.tag= link_to(e, general_search_path(e))
 
-  = render partial: "kifu_player"
+  = render partial: "shogi_player_shared"
   = render partial: "uzai_pulldown"
-  = render partial: "kifu_player_tabs_div"
+  = render partial: "shogi_player_shared_tabs_div"

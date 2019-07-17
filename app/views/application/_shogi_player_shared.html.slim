@@ -20,7 +20,8 @@
           .message-body
             = current_record.description
 
-.columns
-  .column
-    .field
-      == current_record.header_detail(self).to_html(table_class: "table is-fullwidth is-narrow")
+- if !params[:iframe]
+  .columns
+    .column
+      .field
+        == current_record.header_detail(self).to_html(table_class: "table is-fullwidth is-narrow")

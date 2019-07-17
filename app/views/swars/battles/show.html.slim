@@ -20,7 +20,7 @@
       - current_record.showable_tag_list.each do |e|
        span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])
 
-    = render partial: "kifu_player"
+    = render partial: "shogi_player_shared"
     = render partial: "uzai_pulldown"
     = render partial: "kifu_clock_chart"
 
@@ -30,4 +30,4 @@
           .box.is-size-7.hash_value_only_nowrap
             = e.swgod_info(detail: params[:detail]).to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
 
-    = render partial: "kifu_player_tabs_div"
+    = render partial: "shogi_player_shared_tabs_div"
