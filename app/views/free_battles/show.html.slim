@@ -11,7 +11,7 @@
   - if params[:formal_sheet]
     = render partial: "show_formal_sheet"
   - else
-    - if !params[:iframe]
+    - if !iframe?
       nav.breadcrumb
         ul
           li= link_to("棋譜一覧", current_plural_key)
@@ -28,7 +28,7 @@
     .has-text-centered
       = render partial: "shogi_player_shared"
 
-    - if !params[:iframe]
+    - if !iframe?
       .columns
         .column
           .buttons.are-small
