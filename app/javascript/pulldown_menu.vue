@@ -4,7 +4,9 @@
       //- span もっと見る
       | &nbsp;
       | &nbsp;
+      | &nbsp;
       b-icon(:icon="in_modal ? 'menu-up' : 'menu-down'")
+      | &nbsp;
       | &nbsp;
       | &nbsp;
 
