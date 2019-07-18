@@ -13,3 +13,21 @@ html(lang="ja" class=([params[:formal_sheet] ? "has_formal_sheet" : "", iframe? 
         = ToolBelt::Basic.new(view_context: self).to_html
     = render partial: "layouts/footer"
     = render partial: "layouts/flash_light_notify"
+    script(src="https://cdn.jsdelivr.net/npm/darkmode-js@1.3.4/lib/darkmode-js.min.js")
+    javascript:
+      var options = {
+        bottom: '64px', // default: '32px'
+        right: 'unset', // default: '32px'
+        left: '32px', // default: 'unset'
+        time: '0.5s', // default: '0.3s'
+        mixColor: '#fff', // default: '#fff'
+        backgroundColor: '#fff',  // default: '#fff'
+        buttonColorDark: '#100f2c',  // default: '#100f2c'
+        buttonColorLight: '#fff', // default: '#fff'
+        saveInCookies: false, // default: true,
+        label: '🌓', // default: ''
+        autoMatchOsTheme: true // default: true
+      }
+      const darkmode = new Darkmode(options)
+      darkmode.showWidget()
+
