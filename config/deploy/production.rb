@@ -24,5 +24,23 @@ after "deploy:finished", :yarn_cache_clean
 set :my_heartbeat_urls, ["http://tk2-221-20341.vs.sakura.ne.jp/shogi", "http://shogi-flow.xyz/"]
 
 if ENV["APP2"]
-  set :deploy_to, -> { "/var/www/#{fetch(:application)}2_#{fetch(:stage)}" }
+  set :deploy_name, -> { fetch(:application) + "2" }
+
+  tp(deploy_to: fetch(:deploy_to))
+
+  desc "storage を shogi_web_production/shared/storage にリンクする"
+  task :my_storeage_symlink do
+    on release_roles :all do
+      target = release_path.join("storage")
+      source = Pathname("/var/www/shogi_web_production/shared").join("storage")
+      if test "[ -d #{target} ]"
+        execute :rm, "-rf", target
+      end
+      execute :ln, "-s", source, target
+      execute :ls, "-al", "#{release_path}/"
+    end
+  end
+  before "deploy:symlink:linked_dirs", "deploy:my_storeage_symlink"
+else
+  append :linked_dirs, "storage"
 end
