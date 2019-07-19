@@ -24,5 +24,5 @@ after "deploy:finished", :yarn_cache_clean
 set :my_heartbeat_urls, ["http://tk2-221-20341.vs.sakura.ne.jp/shogi", "http://shogi-flow.xyz/"]
 
 if ENV["APP2"]
-  set :application, "shogi_web2"
+  set :deploy_to, -> { "/var/www/#{fetch(:application)}2_#{fetch(:stage)}" }
 end
