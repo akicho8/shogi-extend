@@ -97,5 +97,7 @@ Rails.application.configure do
   config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
 
   # ################################################################################ ActiveStorage
-  Rails.application.routes.default_url_options[:host] = "tk2-221-20341.vs.sakura.ne.jp"
+  # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩
+  # https://shinkufencer.hateblo.jp/entry/2018/07/25/230537
+  Rails.application.routes.default_url_options[:host] = ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp"
 end
