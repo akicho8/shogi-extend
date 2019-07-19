@@ -94,7 +94,8 @@ Rails.application.configure do
 
   # ################################################################################ ActionCable
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
-  config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:28081"
+  port = ENV.fetch("PORT") { 28081 }
+  config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:#{port}"
 
   # ################################################################################ ActiveStorage
   # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩

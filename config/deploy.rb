@@ -17,7 +17,14 @@ set :git_shallow_clone, 1
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env)} }
+
+if ENV["APP2"]
+  ws_port = 28082
+else
+  ws_port = 28081
+end
+
+set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env), ws_port: ws_port} }
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
@@ -40,4 +47,7 @@ set :keep_releases, 1
 # set :print_config_variables, true # デプロイ前に設定した変数値を確認
 
 # set :my_rails_relative_url_root, "/#{fetch(:application).underscore.dasherize}"
-set :my_rails_relative_url_root, "/shogi"
+if ENV["APP2"]
+else
+  set :my_rails_relative_url_root, "/shogi"
+end
