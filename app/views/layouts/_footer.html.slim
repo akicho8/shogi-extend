@@ -7,7 +7,7 @@
             li= link_to("プライバシー", [:about, id: :privacy_policy])
             li= link_to("利用規約", [:about, id: :terms])
             li= link_to("クレジット", [:about, id: :credit])
-            li= link_to("問い合わせ", "http://twitter.com/sgkinakomochi", target: "_blank")
+            li= link_to("問い合わせ", "https://twitter.com/sgkinakomochi", target: "_blank")
             - if Rails.env.development?
               li= link_to("404", root_path + "404.html")
               li= link_to("422", root_path + "422.html")
