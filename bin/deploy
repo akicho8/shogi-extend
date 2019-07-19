@@ -1,0 +1,7 @@
+#!/bin/sh
+git push
+APP1=1 cap production deploy
+APP2=1 cap production deploy
+say 'deploy all finish'
+open http://shogi-flow.xyz/
+open http://tk2-221-20341.vs.sakura.ne.jp/shogi/
