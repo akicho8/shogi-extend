@@ -18,7 +18,7 @@ set :git_shallow_clone, 1
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-if ENV["APP2"]
+if ENV["USE_NEW_DOMAIN"]
   set :repo_url, -> { "git@github.com:akicho8/shogi_web.git" }
 
   ws_port = 28082
@@ -49,7 +49,7 @@ set :keep_releases, 1
 # set :print_config_variables, true # デプロイ前に設定した変数値を確認
 
 # set :my_rails_relative_url_root, "/#{fetch(:application).underscore.dasherize}"
-if ENV["APP2"]
+if ENV["USE_NEW_DOMAIN"]
 else
   set :my_rails_relative_url_root, "/shogi"
 end

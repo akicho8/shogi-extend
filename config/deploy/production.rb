@@ -23,7 +23,7 @@ after "deploy:finished", :yarn_cache_clean
 # 起動確認
 set :my_heartbeat_urls, ["http://tk2-221-20341.vs.sakura.ne.jp/shogi", "http://shogi-flow.xyz/"]
 
-if ENV["APP2"]
+if ENV["USE_NEW_DOMAIN"]
   set :application, "shogi_web2"
 
   desc "storage を shogi_web_production/shared/storage にリンクする"
