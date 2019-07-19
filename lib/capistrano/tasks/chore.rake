@@ -98,6 +98,7 @@ end
 desc "サーバー起動確認"
 after "deploy:finished", :hb do
   Array(fetch(:my_heartbeat_urls)).each do |url|
+    puts url
     puts `curl --silent -I #{url} | grep HTTP`.strip
   end
 end
