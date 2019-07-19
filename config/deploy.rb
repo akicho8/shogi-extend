@@ -19,6 +19,8 @@ set :git_shallow_clone, 1
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 if ENV["APP2"]
+  set :repo_url, -> { "git@github.com:akicho8/shogi_web.git" }
+
   ws_port = 28082
 else
   ws_port = 28081
