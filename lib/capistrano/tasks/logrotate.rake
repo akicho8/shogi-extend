@@ -64,7 +64,10 @@ namespace :logrotate do
   task :status do
     on roles(:all) do |host|
       execute :cat, "/etc/logrotate.d/#{fetch(:application)}"
-      execute :ls, "-al", "#{current_path}/log/*"
+      # 最初のデプロイのとき current_path はまだ存在しないため
+      if test "[ -d #{current_path}/log ]"
+        execute :ls, "-al", "#{current_path}/log/*"
+      end
     end
   end
 end
