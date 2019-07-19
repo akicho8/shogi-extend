@@ -93,9 +93,10 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # ################################################################################ ActionCable
+  # ActionCable.server.config.disable_request_forgery_protection = true
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
   port = ENV.fetch("PORT") { 28081 }
-  config.action_cable.url = "ws://tk2-221-20341.vs.sakura.ne.jp:#{port}"
+  config.action_cable.url = "wss://tk2-221-20341.vs.sakura.ne.jp:#{port}"
 
   # ################################################################################ ActiveStorage
   # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩
