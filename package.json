@@ -46,7 +46,7 @@
     "rails-ujs": "^5.1.5",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
-    "shogi-player": "^0.0.140",
+    "shogi-player": "^0.0.141",
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "umbrellajs": "^3.1.0",
