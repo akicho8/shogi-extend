@@ -134,7 +134,8 @@ Rails.application.routes.draw do
   end
 
   direct :production_app do
-    "http://shogi-flow.xyz/"
+    "http://tk2-221-20341.vs.sakura.ne.jp/shogi"
+    # "http://shogi-flow.xyz/"
   end
 
   ################################################################################ graphiql
