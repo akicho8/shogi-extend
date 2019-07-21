@@ -95,8 +95,10 @@ Rails.application.configure do
   # ################################################################################ ActionCable
   # ActionCable.server.config.disable_request_forgery_protection = true
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
-  port = ENV.fetch("PORT") { 28081 }
-  config.action_cable.url = "wss://tk2-221-20341.vs.sakura.ne.jp:#{port}"
+  host = ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp"
+  ws_port = ENV.fetch("WS_PORT") { 28081 }
+  protocol = ENV["USE_NEW_DOMAIN"] ? "wss" : "ws"
+  config.action_cable.url = "#{ws_port}://#{host}:#{ws_port}"
 
   # ################################################################################ ActiveStorage
   # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩

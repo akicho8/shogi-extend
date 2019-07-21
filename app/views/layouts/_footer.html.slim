@@ -33,3 +33,7 @@
             = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank")
           #system_notification_app.has-text-grey-lighter.is-size-7
             | ActionCable: {{latest_system_logs.join(" ")}}
+          details
+            summary
+              | DEBUG
+            = ["WS_PORT", "USE_NEW_DOMAIN", "MY_APP_HOST"].inject({}) { |a, e| a.merge(e => ENV[e]) }.to_html
