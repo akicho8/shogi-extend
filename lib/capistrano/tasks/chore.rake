@@ -92,7 +92,7 @@ desc "間違わないようにバナー表示"
 before "deploy:starting", :starting_banner do
   label = "#{fetch(:application)} #{fetch(:branch)} to #{fetch(:stage)}".gsub(/[_\W]+/, " ")
   puts Artii::Base.new(font: "slant").output(label)
-  system "say '#{label}'"
+  system "say -v Victoria '#{label}'"
 end
 
 desc "サーバー起動確認"
@@ -112,5 +112,5 @@ desc "デプロイ成功"
 after "deploy:finished", :finished_banner do # finished にすると動かない
   label = "#{fetch(:branch)} to #{fetch(:stage)} deploy finished".gsub(/[_\W]+/, " ")
   puts Artii::Base.new(font: "slant").output(label)
-  system "say '#{label}'"
+  system "say -v Victoria '#{label}'"
 end

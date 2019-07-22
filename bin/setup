@@ -53,9 +53,13 @@ chdir APP_ROOT do
   puts "\n== Restarting application server =="
   system! 'rails restart'
 
+  system! "say 'テスト実行'"
+
   puts "\n== Testing =="
   system! "rm -fr doc/images montage*.png"
   system 'rails spec'
   system! 'rails create_montage'
   # system! 'open montage.png'
+
+  system! "say 'セットアップ完了'"
 end

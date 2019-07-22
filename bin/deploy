@@ -1,7 +1,9 @@
 #!/bin/sh
 git push
+say 'デプロイ1つめ'
 cap production deploy
+say 'デプロイ2つめ'
 USE_NEW_DOMAIN=1 cap production deploy
-say 'deploy all finish'
+say 'デプロイ終わった'
 open http://shogi-flow.xyz/
 open http://tk2-221-20341.vs.sakura.ne.jp/shogi/
