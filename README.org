@@ -28,3 +28,9 @@ RUN_REMOTE=1 foreman s
 #+BEGIN_SRC shell
 rake
 #+END_SRC
+
+* 自分用メモ
+
+| USE_NEW_DOMAIN | 新しいドメインにデプロイしたいとき。サーバー側の httpd.conf でも設定しているので一方的にリネームしてはいけない |
+| MY_APP_HOST    | httpd.conf で定義している                                                                                      |
+| WS_PORT        | デプロイ時だけでなく、サーバー側で restart したときも必要なので  httpd.conf の https 側で定義している。        |
