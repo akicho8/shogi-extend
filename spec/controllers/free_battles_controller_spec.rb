@@ -73,6 +73,11 @@ RSpec.describe FreeBattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
+  it "OGP設定" do
+    get :edit, params: {id: @free_battle.to_param, mode: "ogp"}
+    expect(response).to have_http_status(:ok)
+  end
+
   it "update" do
     put :update, params: {id: @free_battle.to_param}
     expect(response).to have_http_status(:redirect)
@@ -80,6 +85,7 @@ RSpec.describe FreeBattlesController, type: :controller do
 
   it "destroy" do
     delete :destroy, params: {id: @free_battle.to_param}
+    assert { FreeBattle.where(id: @free_battle.to_param).none? }
     expect(response).to have_http_status(:redirect)
   end
 end
