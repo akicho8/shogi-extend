@@ -31,6 +31,7 @@
 
 class FreeBattlesController < ApplicationController
   include ModulableCrud::All
+  include BattleControllerBaseMethods
   include BattleControllerSharedMethods
 
   def new

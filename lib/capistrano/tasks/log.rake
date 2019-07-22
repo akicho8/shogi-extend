@@ -27,7 +27,9 @@ set_if_empty :log_tail_limit, 500
   task "#{e[:task]}:download" do
     on roles(:all) do
       file = fetch("#{e[:task]}_path", e[:default].call)
-      download! file, "log"     # TODO: sudo で download する方法
+      if test "[ -f #{file} ]"
+        download! file, "log"     # TODO: sudo で download する方法
+      end
     end
   end
 end

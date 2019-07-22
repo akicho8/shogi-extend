@@ -298,14 +298,6 @@ module BattleControllerSharedMethods
         end
       end
     end
-
-    private
-
-    def current_force_turn
-      if v = (params[:force_turn] || params[:turn]).presence
-        v.to_i
-      end
-    end
   end
 
   concerning :ShowMethods do
@@ -313,7 +305,6 @@ module BattleControllerSharedMethods
       helper_method :js_show_options
       helper_method :decorator
       helper_method :show_twitter_options
-      helper_method :current_record_turn
 
       before_action only: [:edit, :update, :destroy] do
         if request.format.html?
@@ -381,10 +372,6 @@ module BattleControllerSharedMethods
       # とした場合はリダイレクトするURLになってしまうため使えない
       # 固定URL化する
       polymorphic_url([ns_prefix, record], format: "png", updated_at: record.updated_at.to_i)
-    end
-
-    def current_record_turn
-      current_force_turn || current_record.sp_turn
     end
 
     def js_record_for(e)

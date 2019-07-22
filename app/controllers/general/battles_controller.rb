@@ -26,6 +26,7 @@
 module General
   class BattlesController < ApplicationController
     include ModulableCrud::All
+    include BattleControllerBaseMethods
 
     helper_method :rows
 

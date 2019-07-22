@@ -30,6 +30,7 @@
 module Swars
   class BattlesController < ApplicationController
     include ModulableCrud::All
+    include BattleControllerBaseMethods
     include BattleControllerSharedMethods
 
     helper_method :current_swars_user
