@@ -4,6 +4,8 @@ module Swars
       attr_accessor :params
       attr_accessor :rows
 
+      extend ActiveModel::Translation # for model_name.human
+
       class << self
         def run(**params)
           new(params).run

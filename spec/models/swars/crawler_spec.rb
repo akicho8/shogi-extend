@@ -11,5 +11,9 @@ module Swars
       puts Crawler::RegularCrawler.new.run.rows.to_t
       puts Crawler::ExpertCrawler.new.run.rows.to_t
     end
+
+    it "model_name" do
+      assert { Crawler::RegularCrawler.model_name.human }
+    end
   end
 end
