@@ -41,8 +41,13 @@
 
   .has-text-centered
     .buttons.is-inline
-      a.button.is-primary(@click="og_image_create_by_html2canvas") このHTMLを画像化
-      a.button.is-primary(@click="og_image_create_by_rmagick") この局面を内部で画像化
+      a.button.is-primary(@click="og_image_create_by_html2canvas")
+        b-tooltip(label="綺麗だけどブラウザ依存")
+          | このHTMLを画像化
+      a.button(@click="og_image_create_by_rmagick")
+        b-tooltip(label="いまいちだけどブラウザ非依存")
+          | この局面を内部で画像化
+
       / p.has-text-grey-light.is-size-7
       /   | 開始手数も同時に保存します
 
