@@ -50,7 +50,7 @@ module Swars
       end
 
       def subject
-        self.class.name.demodulize
+        self.class.model_name.human
       end
 
       def report_for(user_key)
