@@ -6,6 +6,8 @@ set :output, {standard: "log/#{@environment}_cron.log"}
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
+# p ["#{__FILE__}:#{__LINE__}", __method__, ENV["USE_NEW_DOMAIN"]]
+
 if ENV["USE_NEW_DOMAIN"]
 else
   every("0 * * * *") { runner "Colosseum::Battle.auto_close" }

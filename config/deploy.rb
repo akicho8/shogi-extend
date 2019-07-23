@@ -21,12 +21,14 @@ set :git_shallow_clone, 1
 if ENV["USE_NEW_DOMAIN"]
   set :repo_url, -> { "git@github.com:akicho8/shogi_web.git" }
 
+  use_new_domain = "1"
   ws_port = 28082
 else
+  use_new_domain = nil
   ws_port = 28081
 end
 
-set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env), ws_port: ws_port} }
+set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env), ws_port: ws_port, use_new_domain: use_new_domain} }
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
