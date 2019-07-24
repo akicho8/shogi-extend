@@ -411,6 +411,7 @@ module BattleControllerSharedMethods
         a[:show_path] = polymorphic_path([ns_prefix, e])
         a[:formal_sheet_path] = polymorphic_path([ns_prefix, e], formal_sheet: true)
         a[:tweet_origin_image_path] = e.tweet_origin_image_path
+        a[:tweet_body] = e.tweet_body
         a[:tweet_window_url] = e.tweet_window_url
         a[:tweet_modal_url] = e.tweet_modal_url
         a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?

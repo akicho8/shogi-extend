@@ -73,7 +73,25 @@
       br
       br
       a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
-        = icon_tag(:twitter) + "ツイート"
+        | &nbsp;
+        b-icon(icon="twitter" size="")
+        | &nbsp;
+        | &nbsp;
+        | &nbsp;
+        | ツイート
+        | &nbsp;
+      br
+      br
+      textarea.textarea(rows="3" readonly)
+        | {{$options.tweet_body}}
+
+  - if Rails.env.development?
+    table(border=1)
+      caption
+        | data
+      tr(v-for="(value, key) in $data")
+        th(v-text="key")
+        td(v-text="value")
 
   / - if current_record.thumbnail_image.attached? && false
   /   .box.img_size_check
