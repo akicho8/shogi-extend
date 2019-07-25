@@ -6,10 +6,9 @@ set :output, {standard: "log/#{@environment}_cron.log"}
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
-# p ["#{__FILE__}:#{__LINE__}", __method__, ENV["USE_NEW_DOMAIN"]]
+p ["#{__FILE__}:#{__LINE__}", __method__, ENV["USE_NEW_DOMAIN"]]
 
-if ENV["USE_NEW_DOMAIN"]
-else
+if ENV["USE_NEW_DOMAIN"].to_s == ""
   every("0 * * * *") { runner "Colosseum::Battle.auto_close" }
 
   every("30 4 * * *") { runner "Swars::Battle.old_record_destroy"   }
