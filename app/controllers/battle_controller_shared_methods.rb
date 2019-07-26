@@ -315,7 +315,7 @@ module BattleControllerSharedMethods
             end
             if Rails.env.test?
             else
-              redirect_to :root, alert: message
+              redirect_to :root, alert: message.join
             end
           end
         end
