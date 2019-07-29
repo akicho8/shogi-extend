@@ -98,7 +98,7 @@ Rails.application.configure do
   host = ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp"
   ws_port = ENV.fetch("WS_PORT") { 28081 }
   protocol = ENV["USE_NEW_DOMAIN"] ? "wss" : "ws"
-  config.action_cable.url = "#{ws_port}://#{host}:#{ws_port}"
+  config.action_cable.url = "#{protocol}://#{host}:#{ws_port}"
 
   # ################################################################################ ActiveStorage
   # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩
