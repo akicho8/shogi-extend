@@ -43,8 +43,9 @@ module SlackAgent
     Slack::Web::Client.new.tap do |client|
       client.chat_postMessage(channel: "#shogi_web", text: "#{icon}【#{key}】#{body} #{ua_str}".strip)
     end
-  rescue Slack::Web::Api::Errors::TooManyRequestsError => error
+  rescue Slack::Web::Api::Errors::TooManyRequestsError, Faraday::ParsingError => error
     # エラー通知はするが Slack 通知自体はなかったことにして処理を続行する
+    # Faraday::ParsingError は Slack が HTML のエラー画面を返してくる場合があるため
     ExceptionNotifier.notify_exception(error)
     Rails.logger.info(error.inspect)
   end
