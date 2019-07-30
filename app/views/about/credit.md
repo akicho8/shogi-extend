@@ -33,3 +33,6 @@ https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
 
 将棋図案駒
 https://twitter.com/Shogi_Zuan
+
+BGM・ジングル・効果音のフリー素材｜OtoLogic
+https://otologic.jp
