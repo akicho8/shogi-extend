@@ -1,115 +1,66 @@
 <template lang="pug">
 .stopwatch
-  h2.title
-    | ストップウォッチ
-  hr
-
   .columns
-    .column.is-one-third
-      .box
-        span.is-size-1
+    .column.is-half
+      .has-text-centered
+        b 詰将棋タイムアタック用ストップウォッチ
+      .box.has-text-centered.nowrap
+        .lap_time
           | {{quest_name(new_record)}}
           | -
           | {{time_format(lap_counter)}}
-          |
-          span.is-size-4.has-text-grey-light
-            | {{ja_time_format(total_seconds2)}}
-
-        .buttons
+        .has-text-grey-light.total_time
+          | {{ja_time_format(total_seconds2)}}
+        .buttons.is-centered.start_or_stop
           template(v-if="mode === 'standby'")
-            button.button.is-primary(@click="start_run") 開始
-          template(v-else)
-            button.button.is-danger(@click="stop_run") 停止
+            button.button.is-fullwidth.is-primary(@click="start_run") スタート
 
-          template(v-if="mode === 'playing'")
-            template(v-if="book_mode === 'time_only'")
-              button.button.is-primary(@click="lap_handle('o')" ref="lap_ref") ラップ
-            template(v-else)
-              .ox_buttons
-                button.button.is-success.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-                button.button.is-success.is-outlined.ox_button(@click="lap_handle('x')") ×
-          template(v-else)
-            template(v-if="total_seconds2 >= 1")
-              button.button(@click="reset_handle" key="reset_key") リセット
+          template(v-if="mode !== 'standby'")
+            button.button.is-danger(@click="stop_run") ストップ
+
+        template(v-if="mode === 'playing'")
+          .buttons.is-centered
+            .ox_buttons
+              button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+              button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
+
+        template(v-if="mode !== 'playing'")
+          template(v-if="total_seconds2 >= 1")
+            .buttons.is-paddingless
+              button.button.is-fullwidth(@click="reset_handle" key="reset_key") リセット
 
       template(v-if="quest_list.length === 0 || true")
         .field
-          label.label 開始番号
+          label.label
+            | 問題番号
+            | &nbsp;
+            a.is-link(@click.prevent="current_track = 1")
+              | (1に設定)
           .control
-            input.input(type="number" v-model.number="current_track")
-            a.is-link.is-size-7(@click.prevent="current_track = 1") 1に設定
+            b-numberinput(v-model="current_track" min="1" controls-position="compact" :expanded="true")
 
       .field
-        //- label.label 番号置換
         .control
-          textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで記述すると番号を置き換える")
+          textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで記述すると問題を置き換える")
           a.is-link.is-size-7(@click.prevent="quest_list_str = ''") クリア
 
-      .field
-        label.label モード
-        .controll
-          label.radio
-            input(type="radio" v-model="book_mode" value="time_only")
-            | 基本
-          label.radio
-            input(type="radio" v-model="book_mode" value="with_ox")
-            | 正誤
-
       br
-      .buttons
-        a.button.is-small(@click.prevent="revert" :disabled="rows.length === 0") 1つ前に戻す(z)
-        a.button.is-small(@click.prevent="rap_reset") 直近ラップのみリセット(r)
-        a.button.is-small(@click.prevent="permalink_to_url") パーマリンクをURLに反映
-        a.button.is-small(@click.prevent="matigai_set") 不正解だけ再テスト
-
-      .box.content.has-text-grey.is-size-7
-        h6 ショートカット
-        ul
-          li p or k --- 開始/停止
-          li o --- 「○」ボタン
-          li x --- 「×」ボタン
-          li z --- 1つ前に戻す
+      .buttons.is-centered
+        a.button.is-small(@click.prevent="rap_reset") 最後のタイムだけリセット
+        a.button.is-small(@click.prevent="revert") 1つ前に戻す
+        a.button.is-small(@click.prevent="reset_by_x_numbers") 不正解だけ再テスト
 
       br
       .buttons
         template(v-if="rows.length >= 1 || true")
           a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
 
-    .column
+    .column.is-3
       article.message.is-primary.is-size-7
         .message-body
-          div
-            | {{quest_range}}
-            | 計{{rows.length}}問
-            template(v-if="quest_list.length >= 1")
-              | /全{{quest_list.length}}問
-            |
-            | {{human_rate}}
-            | {{ja_time_format(total_seconds)}}
-            | {{human_avg}}
+          | {{case1}}
 
-          template(v-for="(rows, key) in o_group_by_min")
-            br
-            div.has-text-weight-bold
-              | {{human_minute(key, rows)}}
-            div
-              template(v-for="row in rows")
-                | {{quest_name(row)}}
-                |
-
-          template(v-if="'x' in ox_group")
-            br
-            div.has-text-weight-bold
-              | 不正解
-            div
-              template(v-for="row in ox_group['x']")
-                | {{quest_name(row)}}
-                |
-
-      template(v-if="quest_list.length >= 1")
-        progress(:value="progress_value")
-
-    .column
+    .column.nowrap
       article.message.is-primary.is-size-7.compact
         .message-body
           template(v-for="(row, i) in rows")
@@ -118,7 +69,7 @@
               | {{time_format(row.lap_counter)}}
               | {{o_or_x_to_s(row, "", "×")}}
 
-    .column
+    .column.nowrap
       article.message.is-primary.is-size-7.compact
         .message-body
           template(v-for="(rows, key) in o_group_by_min")
@@ -141,7 +92,7 @@
                   | -
                   | {{time_format(row.lap_counter)}}
 
-    .column
+    .column.nowrap
       article.message.is-primary.is-size-7.compact
         .message-body
           template(v-for="(row, i) in rows")
@@ -150,6 +101,27 @@
               | {{quest_name(row)}}
               | -
               | {{time_format(row.lap_counter)}}
+  .columns
+    .column
+      .box.content.has-text-grey.is-size-7
+        h6 PC用ショートカット
+        table.table.is-narrow
+          tr
+            th p or k
+            td 開始/停止
+          tr
+            th o
+            td 正解
+          tr
+            th x
+            td 不正解
+          tr
+            th z
+            td 1つ前に戻す
+          tr
+            th r
+            td 最後のタイムだけリセット
+
 </template>
 
 <script>
@@ -159,25 +131,14 @@ import { Howl, Howler } from 'howler'
 import o_mp3 from "oto_logic/Quiz-Correct_Answer02-1.mp3"
 import x_mp3 from "oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 
-// import button46_mp3 from "@/assets/button46.mp3"
-// import button23_mp3 from "@/assets/button23.mp3"
-// import button62_mp3 from "@/assets/button62.mp3"
-// import button70_mp3 from "@/assets/button70.mp3"
-
-// import my_lzma from "lzma-native"
-
-import Chart from "chart.js"
-
 export default {
   name: "stopwatch",
   data() {
     return {
       current_track: null,
-      // total_counter: null,
       lap_counter: null,
       rows: null,
       quest_list_str: null,
-      book_mode: null,
       mode: "standby",
       interval_id: null,
     }
@@ -233,13 +194,14 @@ export default {
     },
 
     focus_to_button() {
-      let key = null
-      if (this.book_mode === 'time_only') {
-        key = "lap_ref"
-      } else {
-        key = "o_button_ref"
-      }
-      this.$nextTick(() => this.$refs[key].focus())
+      this.$nextTick(() => {
+        if (this.$refs.x_button_ref) {
+          this.$refs.x_button_ref.blur()
+        }
+        if (this.$refs.o_button_ref) {
+          this.$refs.o_button_ref.focus()
+        }
+      })
     },
 
     stop_run() {
@@ -249,7 +211,6 @@ export default {
 
     reset_handle() {
       this.rows = []
-      // this.total_counter = 0
       this.lap_counter = 0
     },
 
@@ -305,9 +266,7 @@ export default {
 
         this.current_track -= 1
         this.lap_counter = 0
-        // this.total_counter -= record.lap_counter
         this.focus_to_button()
-        // this.sound_play(button46_mp3)
       }
     },
 
@@ -333,7 +292,6 @@ export default {
     },
 
     step_next() {
-      // this.total_counter += 1
       this.lap_counter += 1
     },
 
@@ -357,12 +315,10 @@ export default {
 
     o_or_x_to_s(row, o, x) {
       let s = null
-      if (this.book_mode === 'with_ox') {
-        if (row.o_or_x === 'o') {
-          s = o
-        } else {
-          s = x
-        }
+      if (row.o_or_x === 'o') {
+        s = o
+      } else {
+        s = x
       }
       return s
     },
@@ -377,11 +333,9 @@ export default {
 
     restore_data(value) {
       this.current_track  = value.current_track || 1
-      // this.total_counter  = value.total_counter || 0
       this.lap_counter    = value.lap_counter || 0
       this.rows           = value.rows || []
       this.quest_list_str = value.quest_list_str || ""
-      this.book_mode      = value.book_mode || "time_only"
     },
 
     save_process() {
@@ -396,20 +350,20 @@ export default {
       location.hash = this.encoded_snapshot_json
     },
 
-    matigai_set() {
-      this.quest_list_str = this.matigai_list.join(" ")
-      this.reset_handle()
-      this.focus_to_button()
+    reset_by_x_numbers() {
+      if (this.count_of('o') >= 1) {
+        this.current_track = 1
+        this.quest_list_str = this.matigai_list.join(" ")
+        this.reset_handle()
+        this.focus_to_button()
+      }
     },
   },
 
   watch: {
-    current_track()     { this.save_process() },
-    // total_counter()     { this.save_process() },
-    // lap_counter()       { this.save_process() },
-    quest_list_str()    { this.save_process() },
-    book_mode()         { this.save_process() },
-    rows()              { this.save_process() },
+    current_track()  { this.save_process() },
+    quest_list_str() { this.save_process() },
+    rows()           { this.save_process() },
   },
 
   mounted() {
@@ -432,7 +386,6 @@ export default {
       return {
         index: this.rows.length,
         track: this.current_track,
-        // total_counter: this.total_counter,
         lap_counter: this.lap_counter,
       }
     },
@@ -464,7 +417,7 @@ export default {
 
     // 間違った問題リスト
     matigai_list() {
-      return this.ox_group['x'].map(e => this.quest_name(e))
+      return (this.ox_group['x'] || []).map(e => this.quest_name(e))
     },
 
     total_seconds() {
@@ -530,33 +483,66 @@ export default {
     save_data() {
       return {
         current_track:  this.current_track,
-        // total_counter:  this.total_counter,
         lap_counter:    this.lap_counter,
         rows:           this.rows,
         quest_list_str: this.quest_list_str,
-        book_mode:      this.book_mode,
       }
     },
 
-    progress_value() {
+    case1() {
+      let out = ""
+      out += this.quest_range + "\n"
+      out += `計${this.rows.length}問\n`
       if (this.quest_list.length >= 1) {
-        return this.rows.length / this.quest_list.length
+        out += `/全${this.rows.length}問`
+        out += this.human_rate
+        out += this.ja_time_format(this.total_seconds)
+        out += this.human_avg
+        for ([rows, key] in this.o_group_by_min) {
+          out += this.human_minute(key, rows)
+          for (row in this.rows) {
+            out += this.quest_name(row)
+          }
+          if ('x' in this.ox_group) {
+            out += "不正解"
+            for (row in this.ox_group['x']) {
+              out += this.quest_name(row)
+            }
+          }
+        }
       }
-    },
-
+      return out
+    }
   },
 }
 </script>
 
-<style scoped lang="sass">
-  .ox_button
-    width: 6rem
+<style lang="sass">
+.stopwatch
+  touch-action: manipulation
+
+  .is-size-1
+    font-size: 4rem !important
+
   .compact
     line-height: 100%
+
+  .lap_time
+    margin-top: 0.8rem
+    font-size: 4rem
+    line-height: 100%
+
+  .total_time
+    font-size: 1rem
+
   .ox_buttons
-    margin-left: 0.7rem
-  article
-    font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace
-  progress
     width: 100%
+    .button
+      width: 45%
+
+  .start_or_stop
+    margin-top: 0.9rem
+
+  article
+    font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace
 </style>
