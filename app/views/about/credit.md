@@ -1,6 +1,8 @@
 # クレジット (利用素材)
 <hr>
 
+## 画像
+
 将棋駒と将棋盤 画像フリー素材 | 無料素材倶楽部
 http://sozai.7gates.net/docs/japanese-chess/
 
@@ -13,12 +15,6 @@ https://www.beiz.jp/
 ぱくたそ-フリー素材・無料写真ダウンロード
 https://www.pakutaso.com/
  
-しんえれ外部駒
-http://shineleckoma.web.fc2.com/
- 
-8 bit FX | SampleScience
-https://www.samplescience.ca/2018/03/8-bit-fx.html
- 
 Paper-co | 紙のテクスチャー素材を無料でダウンロードできるサイト
 http://free-formal_sheet-texture.com/
  
@@ -28,11 +24,21 @@ https://free-texture.net/seamless-pattern/tatami01.html
 かわいいフリー素材集 いらすとや
 https://www.irasutoya.com/
 
-Ricty Diminished フォント
-https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
-
 将棋図案駒
 https://twitter.com/Shogi_Zuan
 
+## 音
+
+しんえれ外部駒 (駒音)
+http://shineleckoma.web.fc2.com/
+
+8 bit FX | SampleScience
+https://www.samplescience.ca/2018/03/8-bit-fx.html
+
 BGM・ジングル・効果音のフリー素材｜OtoLogic
 https://otologic.jp
+
+## フォント
+
+Ricty Diminished フォント
+https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
