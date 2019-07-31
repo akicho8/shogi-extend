@@ -2,32 +2,43 @@
 .stopwatch
   .columns
     .column.is-half
-      .has-text-centered
-        b 詰将棋タイムアタック用ストップウォッチ
-      .box.has-text-centered.nowrap
+      .has-text-centered.page_title
+        | 詰将棋タイムアタック用ストップウォッチ
+      .box.main_box.has-text-centered.nowrap
+        b-dropdown.is-pulled-left
+          button.button(slot="trigger")
+            b-icon(icon="menu-down")
+          b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット
+          b-dropdown-item(@click="revert") 1つ前に戻す
+          b-dropdown-item(@click="reset_by_x_numbers") 不正解だけ再テスト
+
         .lap_time
-          | {{quest_name(new_record)}}
+          span.number_span(@click="number_input")
+            | {{quest_name(new_record)}}
+          |
           | -
           | {{time_format(lap_counter)}}
         .has-text-grey-light.total_time
-          | {{ja_time_format(total_seconds2)}}
+          b-tooltip(label="トータル" position="is-right")
+            | {{ja_time_format(total_with_lap_seconds)}}
         .buttons.is-centered.start_or_stop
           template(v-if="mode === 'standby'")
-            button.button.is-fullwidth.is-primary(@click="start_run") スタート
+            button.button.is-large.is-primary(@click="start_run")
+              b-icon(icon="play" size="is-large")
 
           template(v-if="mode !== 'standby'")
-            button.button.is-danger(@click="stop_run") ストップ
+            button.button.is-large.is-danger(@click="stop_run")
+              b-icon(icon="stop" size="is-large")
 
         template(v-if="mode === 'playing'")
-          .buttons.is-centered
-            .ox_buttons
-              button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-              button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
+          .buttons.is-centered.ox_buttons
+            button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+            button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
 
         template(v-if="mode !== 'playing'")
-          template(v-if="total_seconds2 >= 1")
-            .buttons.is-paddingless
-              button.button.is-fullwidth(@click="reset_handle" key="reset_key") リセット
+          template(v-if="total_with_lap_seconds >= 1")
+            .buttons.is-centered.is-paddingless
+              button.button.is-large(@click="reset_handle" key="reset_key") リセット
 
       template(v-if="quest_list.length === 0 || true")
         .field
@@ -37,78 +48,34 @@
             a.is-link(@click.prevent="current_track = 1")
               | (1に設定)
           .control
-            b-numberinput(v-model="current_track" min="1" controls-position="compact" :expanded="true")
+            b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" size="is-large")
 
       .field
         .control
           textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで記述すると問題を置き換える")
           a.is-link.is-size-7(@click.prevent="quest_list_str = ''") クリア
 
-      br
-      .buttons.is-centered
-        a.button.is-small(@click.prevent="rap_reset") 最後のタイムだけリセット
-        a.button.is-small(@click.prevent="revert") 1つ前に戻す
-        a.button.is-small(@click.prevent="reset_by_x_numbers") 不正解だけ再テスト
+    .column
+      b-tabs.result_body(expanded v-model="tab_index")
+        template(v-for="(value, key) in format_all")
+          b-tab-item(:label="key")
+            | {{value}}
 
-      br
-      .buttons
-        template(v-if="rows.length >= 1 || true")
-          a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
+      template(v-if="rows.length >= 1 || true")
+        a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
+          | &nbsp;
+          b-icon(icon="twitter" size="is-small")
+          | &nbsp;
+          | ツイート
 
-    .column.is-3
-      article.message.is-primary.is-size-7
-        .message-body
-          | {{case1}}
-
-    .column.nowrap
-      article.message.is-primary.is-size-7.compact
-        .message-body
-          template(v-for="(row, i) in rows")
-            div
-              | {{quest_name(row)}}
-              | {{time_format(row.lap_counter)}}
-              | {{o_or_x_to_s(row, "", "×")}}
-
-    .column.nowrap
-      article.message.is-primary.is-size-7.compact
-        .message-body
-          template(v-for="(rows, key) in o_group_by_min")
-            div.has-text-weight-bold
-              | {{human_minute(key, rows)}}
-            div
-              template(v-for="row in rows")
-                div
-                  | {{quest_name(row)}}
-                  | -
-                  | {{time_format(row.lap_counter)}}
-            br
-          template(v-if="'x' in ox_group")
-            div.has-text-weight-bold
-              | 不正解
-            div
-              template(v-for="row in ox_group['x']")
-                div
-                  | {{quest_name(row)}}
-                  | -
-                  | {{time_format(row.lap_counter)}}
-
-    .column.nowrap
-      article.message.is-primary.is-size-7.compact
-        .message-body
-          template(v-for="(row, i) in rows")
-            div
-              | {{o_or_x_to_s(row, "○", "×")}}
-              | {{quest_name(row)}}
-              | -
-              | {{time_format(row.lap_counter)}}
   .columns
     .column
       .box.content.has-text-grey.is-size-7
-        h6 PC用ショートカット
+        h6 ショートカット
         table.table.is-narrow
           tr
             th p or k
-            td 開始/停止
+            td 開始 / 停止
           tr
             th o
             td 正解
@@ -141,6 +108,7 @@ export default {
       quest_list_str: null,
       mode: "standby",
       interval_id: null,
+      tab_index: 0,
     }
   },
 
@@ -178,6 +146,16 @@ export default {
   },
 
   methods: {
+    number_input() {
+      this.$dialog.prompt({
+        message: "問題番号",
+        confirmText: "更新",
+        cancelText: "キャンセル",
+        inputAttrs: { type: 'number', value: this.current_track, min: 1 },
+        onConfirm: (value) => this.current_track = value,
+      })
+    },
+
     pause() {
       if (this.mode === "standby") {
         this.start_run()
@@ -187,6 +165,7 @@ export default {
     },
 
     start_run() {
+      this.talk("スタート")
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
@@ -207,6 +186,7 @@ export default {
     stop_run() {
       this.mode = "standby"
       this.clear_interval_safe()
+      this.talk("ストップ")
     },
 
     reset_handle() {
@@ -280,7 +260,7 @@ export default {
         const audio = new Audio(src)
         audio.play()
       } else {
-        new Howl({src: src, autoplay: true, volume: 1.0})
+        new Howl({src: src, autoplay: true, volume: 0.2})
       }
     },
 
@@ -336,6 +316,7 @@ export default {
       this.lap_counter    = value.lap_counter || 0
       this.rows           = value.rows || []
       this.quest_list_str = value.quest_list_str || ""
+      this.tab_index      = value.tab_index || 0
     },
 
     save_process() {
@@ -364,6 +345,11 @@ export default {
     current_track()  { this.save_process() },
     quest_list_str() { this.save_process() },
     rows()           { this.save_process() },
+    current_min(v) {
+      if (v >= 1) {
+        this.talk(`${v}分経過`)
+      }
+    },
   },
 
   mounted() {
@@ -395,12 +381,13 @@ export default {
     },
 
     tweet_body() {
-      return _.concat(this.rows, this.new_record).map(e => `${this.quest_name(e)} - ${this.time_format(e.lap_counter)}`).join("\n")
+      // return _.concat(this.rows, this.new_record).map(e => `${this.quest_name(e)} - ${this.time_format(e.lap_counter)}`).join("\n")
+      return Object.values(this.format_all)[this.tab_index]
     },
 
     quest_list() {
       if (this.quest_list_str !== "") {
-        return this.quest_list_str.split(/[\s+,]/)
+        return this.quest_list_str.split(/[\s,]+/)
       } else {
         return []
       }
@@ -415,6 +402,14 @@ export default {
       return _.groupBy(this.ox_group["o"], e => Math.floor(e.lap_counter / 60))
     },
 
+    current_min() {
+      return Math.floor(this.lap_counter / 60)
+    },
+
+    current_sec() {
+      return this.lap_counter % 60
+    },
+
     // 間違った問題リスト
     matigai_list() {
       return (this.ox_group['x'] || []).map(e => this.quest_name(e))
@@ -424,7 +419,7 @@ export default {
       return _.sumBy(this.rows, e => e.lap_counter)
     },
 
-    total_seconds2() {
+    total_with_lap_seconds() {
       return this.total_seconds + this.lap_counter
     },
 
@@ -486,33 +481,93 @@ export default {
         lap_counter:    this.lap_counter,
         rows:           this.rows,
         quest_list_str: this.quest_list_str,
+        tab_index:      this.tab_index,
       }
     },
 
-    case1() {
+    format_all() {
+      return {
+        "OX":       this.format_type3,
+        "Oは省略":  this.format_type2,
+        "時間なし": this.format_type1,
+        "分毎":     this.format_type4,
+      }
+    },
+
+    summary() {
       let out = ""
-      out += this.quest_range + "\n"
-      out += `計${this.rows.length}問\n`
+      if (this.quest_range) {
+        out += this.quest_range + " "
+      }
+      out += `計${this.rows.length}問`
       if (this.quest_list.length >= 1) {
         out += `/全${this.rows.length}問`
+      }
+      if (this.human_rate) {
+        out += " "
         out += this.human_rate
-        out += this.ja_time_format(this.total_seconds)
+      }
+      out += " "
+      out += this.ja_time_format(this.total_seconds)
+      if (this.human_avg) {
+        out += " "
         out += this.human_avg
-        for ([rows, key] in this.o_group_by_min) {
-          out += this.human_minute(key, rows)
-          for (row in this.rows) {
-            out += this.quest_name(row)
-          }
-          if ('x' in this.ox_group) {
-            out += "不正解"
-            for (row in this.ox_group['x']) {
-              out += this.quest_name(row)
-            }
-          }
-        }
+      }
+      out += "\n"
+      return out
+    },
+
+    format_type1() {
+      let out = ""
+      out += this.summary
+
+      _.forIn(this.o_group_by_min, (rows, key) => {
+        out += "\n"
+        out += this.human_minute(key) + "\n"
+        out += rows.map(e => this.quest_name(e)).join(" ")
+        out += "\n"
+      })
+
+      if ('x' in this.ox_group) {
+        out += "\n"
+        out += "不正解\n"
+        out += this.ox_group['x'].map(e => this.quest_name(e)).join(" ")
+        out += "\n"
+      }
+
+      return out
+    },
+
+    format_type2() {
+      return [
+        this.summary + "\n",
+        this.rows.map(e => this.quest_name(e) + " " + this.time_format(e.lap_counter) + this.o_or_x_to_s(e, "", " ×") + "\n").join(""),
+      ].join("")
+    },
+
+    format_type3() {
+      return [
+        this.summary + "\n",
+        this.rows.map(e => this.o_or_x_to_s(e, "○", "×") + " " + this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join(""),
+      ].join("")
+    },
+
+    format_type4() {
+      let out = ""
+      out += this.summary
+      _.forIn(this.o_group_by_min, (rows, key) => {
+        out += "\n"
+        out += this.human_minute(key) + "\n"
+        out += rows.map(e => this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join("")
+      })
+      if ("x" in this.ox_group) {
+        out += "\n"
+        out += "不正解\n"
+        out += this.ox_group['x'].map(e => this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join("")
       }
       return out
-    }
+    },
+
   },
 }
 </script>
@@ -521,28 +576,45 @@ export default {
 .stopwatch
   touch-action: manipulation
 
-  .is-size-1
-    font-size: 4rem !important
+  .page_title
+    font-weight: bold
+
+  .main_box
+    margin-top: 0.25rem
+
+    position: relative
+    .dropdown
+      position: absolute
+      top: 0.5rem
+      left: 0.5rem
+
+    .lap_time
+      margin-top: 1.2rem
+      font-size: 5rem
+      line-height: 100%
+      .number_span
+        cursor: pointer
+
+    .total_time
+      font-size: 1rem
+
+    .start_or_stop
+      margin-top: 0.9rem
+
+    .ox_buttons
+      margin-top: 1.5rem
+      margin-bottom: 0.5rem
+      width: 100%
+      .button
+        width: 45%
 
   .compact
     line-height: 100%
 
-  .lap_time
-    margin-top: 0.8rem
-    font-size: 4rem
-    line-height: 100%
-
-  .total_time
-    font-size: 1rem
-
-  .ox_buttons
-    width: 100%
-    .button
-      width: 45%
-
-  .start_or_stop
-    margin-top: 0.9rem
-
-  article
-    font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace
+  .result_body
+    .tab-item
+      font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace
+      white-space: pre-wrap
+      line-height: 105%
+      font-size: 0.8rem
 </style>
