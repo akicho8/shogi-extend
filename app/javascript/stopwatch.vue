@@ -23,11 +23,11 @@
             | {{ja_time_format(total_with_lap_seconds)}}
         .buttons.is-centered.start_or_stop
           template(v-if="mode === 'standby'")
-            button.button.is-large.is-primary(@click="start_run")
+            button.button.is-large.is-primary.other_button(@click="start_run")
               b-icon(icon="play" size="is-large")
 
           template(v-if="mode !== 'standby'")
-            button.button.is-large.is-danger(@click="stop_run")
+            button.button.is-large.is-danger.other_button(@click="stop_run")
               b-icon(icon="stop" size="is-large")
 
         template(v-if="mode === 'playing'")
@@ -38,7 +38,7 @@
         template(v-if="mode !== 'playing'")
           template(v-if="total_with_lap_seconds >= 1")
             .buttons.is-centered.is-paddingless
-              button.button.is-large(@click="reset_handle" key="reset_key") リセット
+              button.button.is-large.other_button(@click="reset_handle" key="reset_key") リセット
 
       template(v-if="quest_list.length === 0 || true")
         .field
@@ -98,6 +98,10 @@ import { Howl, Howler } from 'howler'
 import o_mp3 from "oto_logic/Quiz-Correct_Answer02-1.mp3"
 import x_mp3 from "oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 
+const SOUND_VOLUME = 0.2
+const X_MARK = "x"
+const O_MARK = "o"
+
 export default {
   name: "stopwatch",
   data() {
@@ -109,6 +113,7 @@ export default {
       mode: "standby",
       interval_id: null,
       tab_index: 0,
+      sound_objects: {},
     }
   },
 
@@ -257,10 +262,21 @@ export default {
 
     sound_play(src) {
       if (false) {
-        const audio = new Audio(src)
-        audio.play()
-      } else {
-        new Howl({src: src, autoplay: true, volume: 0.2})
+        (new Audio(src)).play()
+      }
+
+      if (false) {
+        new Howl({src: src, autoplay: true, volume: SOUND_VOLUME})
+      }
+
+      if (true) {
+        if (!this.sound_objects[src]) {
+          this.$set(this.sound_objects, src, new Howl({src: src, autoplay: true, volume: SOUND_VOLUME}))
+        }
+        const obj = this.sound_objects[src]
+        obj.stop()
+        obj.seek(0)
+        obj.play()
       }
     },
 
@@ -541,14 +557,14 @@ export default {
     format_type2() {
       return [
         this.summary + "\n",
-        this.rows.map(e => this.quest_name(e) + " " + this.time_format(e.lap_counter) + this.o_or_x_to_s(e, "", " ×") + "\n").join(""),
+        this.rows.map(e => this.quest_name(e) + " " + this.time_format(e.lap_counter) + this.o_or_x_to_s(e, "", " " + X_MARK) + "\n").join(""),
       ].join("")
     },
 
     format_type3() {
       return [
         this.summary + "\n",
-        this.rows.map(e => this.o_or_x_to_s(e, "○", "×") + " " + this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join(""),
+        this.rows.map(e => this.o_or_x_to_s(e, O_MARK, X_MARK) + " " + this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join(""),
       ].join("")
     },
 
@@ -600,6 +616,9 @@ export default {
 
     .start_or_stop
       margin-top: 0.9rem
+
+    .other_button
+      width: 8rem !important
 
     .ox_buttons
       margin-top: 1.5rem
