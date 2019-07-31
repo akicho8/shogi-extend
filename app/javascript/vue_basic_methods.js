@@ -229,13 +229,13 @@ export default {
         }
 
         // FIFO形式で順次発声
-        if (true) {
+        if (false) {
           audio_queue.media_push(response.data.service_path)
         }
 
         // Howler
-        if (false) {
-          // new Howl({src: response.data.service_path, autoplay: true, volume: 1.0})
+        if (true) {
+          new Howl({src: response.data.service_path, autoplay: true, volume: 1.0})
         }
 
       }).catch(error => {
