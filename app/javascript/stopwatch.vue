@@ -50,7 +50,7 @@
 
       .field
         .control
-          textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで記述すると問題を置き換える")
+          textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
           a.is-link.is-size-7(@click.prevent="quest_list_str_clear") クリア
 
     .column
