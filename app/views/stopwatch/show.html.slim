@@ -1,5 +1,7 @@
 - @page_title ||= "ストップウォッチ"
 
+- twitter_card_tag(title: @page_title, description: "詰将棋を繰り返し解くのに特化したストップウォッチです", image: "stopwatch.png")
+
 - content_for :head do
   = javascript_pack_tag("stopwatch_app")
   javascript:
