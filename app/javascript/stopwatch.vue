@@ -53,7 +53,7 @@
       .field
         .control
           textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで記述すると問題を置き換える")
-          a.is-link.is-size-7(@click.prevent="quest_list_str = ''") クリア
+          a.is-link.is-size-7(@click.prevent="quest_list_str_clear") クリア
 
     .column
       b-tabs.result_body(expanded v-model="tab_index")
@@ -127,7 +127,7 @@ export default {
     data = JSON.parse(data)
     this.restore_data(data)
 
-    document.addEventListener("keypress", e => {
+    document.addEventListener("keydown", e => {
       if (e.key === "x") {
         this.lap_handle('x')
       }
@@ -151,6 +151,11 @@ export default {
   },
 
   methods: {
+    quest_list_str_clear() {
+      this.quest_list_str = ""
+      this.focus_to_button()
+    },
+
     number_input() {
       this.$dialog.prompt({
         message: "問題番号",
