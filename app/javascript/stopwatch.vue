@@ -217,14 +217,16 @@ export default {
     ja_time_format(seconds) {
       let format = null
       if ((seconds / 60) >= 60) {
-        if (seconds % 60 > 0) {
-          seconds += 60
-        }
-        // format = "h時間m分"
-        format = "hh:mm"
+        // if (seconds % 60 > 0) {
+        //   seconds += 60         // 秒を切り上げして分+1
+        // }
+        // format = "hh:mm"
+        format = "h時間m分s秒"
       } else {
-        // format = "m分s秒"
         format = "mm:ss"
+        // } else {
+        //   format = "m分s秒"
+        // }
       }
       return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
