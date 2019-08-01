@@ -13,7 +13,7 @@
           b-dropdown-item(@click="reset_by_x_numbers") 不正解だけ再テスト
 
         .lap_time
-          span.number_span(@click="number_input")
+          span.number_span(@click="track_input_dialog")
             | {{quest_name(new_record)}}
           |
           | -
@@ -23,11 +23,11 @@
             | {{ja_time_format(total_with_lap_seconds)}}
         .buttons.is-centered.start_or_stop
           template(v-if="mode === 'standby'")
-            button.button.is-large.is-primary.other_button(@click="start_run")
+            button.button.is-large.is-primary.other_button(@click="start_handle")
               b-icon(icon="play" size="is-large")
 
           template(v-if="mode !== 'standby'")
-            button.button.is-large.is-danger.other_button(@click="stop_run")
+            button.button.is-large.is-danger.other_button(@click="stop_handle")
               b-icon(icon="stop" size="is-large")
 
         template(v-if="mode === 'playing'")
@@ -98,12 +98,15 @@ import { Howl, Howler } from 'howler'
 import o_mp3 from "oto_logic/Quiz-Correct_Answer02-1.mp3"
 import x_mp3 from "oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 
+import stopwatch_data_retention from './stopwatch_data_retention.js'
+
 const SOUND_VOLUME = 0.2
 const X_MARK = "x"
 const O_MARK = "o"
 
 export default {
   name: "stopwatch",
+  mixins: [stopwatch_data_retention],
   data() {
     return {
       current_track: null,
@@ -118,32 +121,7 @@ export default {
   },
 
   created() {
-    let data = null
-    if (location.hash) {
-      data = decodeURIComponent(location.hash.replace(/^#/, ""))
-    } else {
-      data = localStorage.getItem("stopwatch") || "{}"
-    }
-    data = JSON.parse(data)
-    this.restore_data(data)
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "x") {
-        this.lap_handle('x')
-      }
-      if (e.key === "o") {
-        this.lap_handle('o')
-      }
-      if (e.key === "z") {
-        this.revert()
-      }
-      if (e.key === "r") {
-        this.rap_reset()
-      }
-      if (e.key === "p" || e.key === "k") {
-        this.pause()
-      }
-    }, false)
+    this.shortcut_key_assign()
   },
 
   beforeDestroy() {
@@ -151,12 +129,32 @@ export default {
   },
 
   methods: {
-    quest_list_str_clear() {
-      this.quest_list_str = ""
-      this.focus_to_button()
+    shortcut_key_assign() {
+      document.addEventListener("keydown", e => {
+        if (e.key === "x") {
+          this.lap_handle('x')
+        }
+        if (e.key === "o") {
+          this.lap_handle('o')
+        }
+        if (e.key === "z") {
+          this.revert()
+        }
+        if (e.key === "r") {
+          this.rap_reset()
+        }
+        if (e.key === "p" || e.key === "k") {
+          this.pause_handle()
+        }
+      }, false)
     },
 
-    number_input() {
+    quest_list_str_clear() {
+      this.quest_list_str = ""
+      this.focus_to_o_button()
+    },
+
+    track_input_dialog() {
       this.$dialog.prompt({
         message: "問題番号",
         confirmText: "更新",
@@ -166,23 +164,23 @@ export default {
       })
     },
 
-    pause() {
+    pause_handle() {
       if (this.mode === "standby") {
-        this.start_run()
+        this.start_handle()
       } else {
-        this.stop_run()
+        this.stop_handle()
       }
     },
 
-    start_run() {
-      this.talk("スタート")
+    start_handle() {
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
-      this.focus_to_button()
+      this.focus_to_o_button()
+      this.talk("スタート")
     },
 
-    focus_to_button() {
+    focus_to_o_button() {
       this.$nextTick(() => {
         if (this.$refs.x_button_ref) {
           this.$refs.x_button_ref.blur()
@@ -193,7 +191,7 @@ export default {
       })
     },
 
-    stop_run() {
+    stop_handle() {
       this.mode = "standby"
       this.clear_interval_safe()
       this.talk("ストップ")
@@ -207,7 +205,7 @@ export default {
     time_format(seconds) {
       let format = null
       if ((seconds / 60) >= 60) {
-        format = "h:m:ss"
+        format = "hh:mm:ss"
       } else {
         format = "m:ss"
       }
@@ -237,8 +235,10 @@ export default {
 
         this.current_track += 1
         this.lap_counter = 0
-        this.focus_to_button()
+        this.focus_to_o_button()
         this.sound_play(this.sound_src(o_or_x))
+
+        this.talk(this.quest_name(this.new_record))
       }
     },
 
@@ -258,13 +258,13 @@ export default {
 
         this.current_track -= 1
         this.lap_counter = 0
-        this.focus_to_button()
+        this.focus_to_o_button()
       }
     },
 
     rap_reset() {
       this.lap_counter = 0
-      this.focus_to_button()
+      this.focus_to_o_button()
     },
 
     sound_play(src) {
@@ -334,40 +334,28 @@ export default {
       return count
     },
 
-    restore_data(value) {
-      this.current_track  = value.current_track || 1
-      this.lap_counter    = value.lap_counter || 0
-      this.rows           = value.rows || []
-      this.quest_list_str = value.quest_list_str || ""
-      this.tab_index      = value.tab_index || 0
-    },
-
-    save_process() {
-      // URLに保存するとブラウザが重くなるのでやめる
-      this.permalink_to_url()
-
-      // 開き直したおきに復元できるようにするため
-      localStorage.setItem("stopwatch", this.snapshot_json)
-    },
-
-    permalink_to_url() {
-      location.hash = this.encoded_snapshot_json
+    data_restore_from_hash(hash) {
+      this.current_track  = hash.current_track || 1
+      this.lap_counter    = hash.lap_counter || 0
+      this.rows           = hash.rows || []
+      this.quest_list_str = hash.quest_list_str || ""
+      this.tab_index      = hash.tab_index || 0
     },
 
     reset_by_x_numbers() {
       if (this.count_of('o') >= 1) {
         this.current_track = 1
-        this.quest_list_str = this.matigai_list.join(" ")
+        this.quest_list_str = this.x_list.join(" ")
         this.reset_handle()
-        this.focus_to_button()
+        this.focus_to_o_button()
       }
     },
   },
 
   watch: {
-    current_track()  { this.save_process() },
-    quest_list_str() { this.save_process() },
-    rows()           { this.save_process() },
+    current_track()  { this.data_save() },
+    quest_list_str() { this.data_save() },
+    rows()           { this.data_save() },
     current_min(v) {
       if (v >= 1) {
         this.talk(`${v}分経過`)
@@ -379,16 +367,8 @@ export default {
   },
 
   computed: {
-    permalink() {
-      return `${window.location.href}#${this.encoded_snapshot_json}`
-    },
-
-    snapshot_json() {
-      return JSON.stringify(this.save_data)
-    },
-
-    encoded_snapshot_json() {
-      return encodeURIComponent(this.snapshot_json)
+    local_storage_key() {
+      return "stopwatch"
     },
 
     new_record() {
@@ -434,7 +414,7 @@ export default {
     },
 
     // 間違った問題リスト
-    matigai_list() {
+    x_list() {
       return (this.ox_group['x'] || []).map(e => this.quest_name(e))
     },
 
@@ -498,7 +478,7 @@ export default {
       }
     },
 
-    save_data() {
+    save_hash() {
       return {
         current_track:  this.current_track,
         lap_counter:    this.lap_counter,
