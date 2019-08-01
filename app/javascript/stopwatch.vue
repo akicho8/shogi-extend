@@ -4,13 +4,13 @@
     .column.is-half
       .has-text-centered.page_title
         | 詰将棋タイムアタック用ストップウォッチ
-      .box.main_box.has-text-centered.nowrap
+      .box.main_box.has-text-centered.nowrap.is-shadowless
         b-dropdown.is-pulled-left
           button.button(slot="trigger")
             b-icon(icon="menu-down")
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット
           b-dropdown-item(@click="revert") 1つ前に戻す
-          b-dropdown-item(@click="reset_by_x_numbers") 不正解だけ再テスト
+          b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
 
         .lap_time
           span.number_span(@click="track_input_dialog")
@@ -36,8 +36,7 @@
             button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
 
         template(v-if="mode !== 'playing'")
-          .buttons.is-centered.is-paddingless
-            button.button.is-large.other_button(@click="reset_handle" key="reset_key") リセット
+          button.button.is-large.other_button(@click="reset_handle" key="reset_key" :disabled="total_with_lap_seconds === 0") リセット
 
       template(v-if="quest_list.length === 0 || true")
         .field
@@ -55,25 +54,26 @@
           a.is-link.is-size-7(@click.prevent="quest_list_str_clear") クリア
 
     .column
-      b-tabs.result_body(expanded v-model="tab_index")
+      b-tabs.result_body(expanded v-model="format_index")
         template(v-for="(value, key) in format_all")
           b-tab-item(:label="key")
             | {{value}}
 
       template(v-if="rows.length >= 1 || true")
-        a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
-          | &nbsp;
-          b-icon(icon="twitter" size="is-small")
-          | &nbsp;
-          | ツイート
+        .has-text-centered
+          a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
+            | &nbsp;
+            b-icon(icon="twitter" size="is-small")
+            | &nbsp;
+            | ツイート
 
-  .columns
+  .columns.is-hidden-touch
     .column
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
         table.table.is-narrow
           tr
-            th p or k
+            th p k
             td 開始 / 停止
           tr
             th o
@@ -82,7 +82,7 @@
             th x
             td 不正解
           tr
-            th z
+            th z Backspace
             td 1つ前に戻す
           tr
             th r
@@ -114,7 +114,7 @@ export default {
       quest_list_str: null,
       mode: "standby",
       interval_id: null,
-      tab_index: 0,
+      format_index: 0,
       sound_objects: {},
     }
   },
@@ -180,7 +180,7 @@ export default {
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
       this.focus_to_o_button()
-      this.talk("スタート")
+      // this.talk("スタート")
     },
 
     focus_to_o_button() {
@@ -197,7 +197,7 @@ export default {
     stop_handle() {
       this.mode = "standby"
       this.clear_interval_safe()
-      this.talk("ストップ")
+      // this.talk("ストップ")
     },
 
     reset_handle() {
@@ -342,14 +342,16 @@ export default {
       this.lap_counter    = hash.lap_counter || 0
       this.rows           = hash.rows || []
       this.quest_list_str = hash.quest_list_str || ""
-      this.tab_index      = hash.tab_index || 0
+      this.format_index   = hash.format_index || 0
     },
 
-    reset_by_x_numbers() {
-      this.current_track = 1
-      this.quest_list_str = this.x_list.join(" ")
-      this.reset_handle()
-      this.focus_to_o_button()
+    reset_by_x() {
+      if (this.x_list.length >= 1) {
+        this.current_track = 1
+        this.quest_list_str = this.x_list.join(" ")
+        this.reset_handle()
+        this.focus_to_o_button()
+      }
     },
   },
 
@@ -357,6 +359,7 @@ export default {
     current_track()  { this.data_save() },
     quest_list_str() { this.data_save() },
     rows()           { this.data_save() },
+    format_index()   { this.data_save() },
     current_min(v) {
       if (v >= 1) {
         this.talk(`${v}分経過`)
@@ -386,7 +389,7 @@ export default {
 
     tweet_body() {
       // return _.concat(this.rows, this.new_record).map(e => `${this.quest_name(e)} - ${this.time_format(e.lap_counter)}`).join("\n")
-      return Object.values(this.format_all)[this.tab_index]
+      return Object.values(this.format_all)[this.format_index]
     },
 
     quest_list() {
@@ -485,7 +488,7 @@ export default {
         lap_counter:    this.lap_counter,
         rows:           this.rows,
         quest_list_str: this.quest_list_str,
-        tab_index:      this.tab_index,
+        format_index:   this.format_index,
       }
     },
 
@@ -584,7 +587,8 @@ export default {
     font-weight: bold
 
   .main_box
-    margin-top: 0.25rem
+    margin-top: 0.6rem
+    background-color: hsl(0, 0%, 98%)
 
     position: relative
     .dropdown
