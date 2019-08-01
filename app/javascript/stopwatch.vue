@@ -131,13 +131,17 @@ export default {
   methods: {
     shortcut_key_assign() {
       document.addEventListener("keydown", e => {
+        const dom = document.activeElement
+        if (dom.tagName === "TEXTAREA" || dom.tagName === "INPUT") {
+          return
+        }
         if (e.key === "x") {
           this.lap_handle('x')
         }
         if (e.key === "o") {
           this.lap_handle('o')
         }
-        if (e.key === "z") {
+        if (e.key === "z" || e.code === "Backspace") {
           this.revert()
         }
         if (e.key === "r") {
@@ -343,12 +347,10 @@ export default {
     },
 
     reset_by_x_numbers() {
-      if (this.count_of('o') >= 1) {
-        this.current_track = 1
-        this.quest_list_str = this.x_list.join(" ")
-        this.reset_handle()
-        this.focus_to_o_button()
-      }
+      this.current_track = 1
+      this.quest_list_str = this.x_list.join(" ")
+      this.reset_handle()
+      this.focus_to_o_button()
     },
   },
 
