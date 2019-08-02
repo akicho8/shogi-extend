@@ -14,7 +14,7 @@
 
         .lap_time
           span.number_span(@click="track_input_dialog")
-            | {{quest_name(new_record)}}
+            | {{quest_name(new_quest)}}
           |
           | -
           | {{time_format(lap_counter)}}
@@ -82,14 +82,11 @@
         h6 ショートカット
         table.table.is-narrow
           tr
-            th p k
+            th p k Space
             td 開始 / 停止
           tr
-            th o
+            th o Enter
             td 正解
-          tr
-            th Enter Space
-            td 正解 (○ボタンにフォーカスがあるときのみ)
           tr
             th x
             td 不正解
@@ -99,7 +96,6 @@
           tr
             th r
             td 最後のタイムだけリセット
-
 </template>
 
 <script>
@@ -146,20 +142,30 @@ export default {
         if (this.input_focus_p()) {
           return
         }
+
+        let processed = false
         if (e.key === "x") {
           this.lap_handle('x')
+          processed = true
         }
-        if (e.key === "o") {
+        if (e.key === "o" || e.code === "Enter") {
           this.lap_handle('o')
+          processed = true
         }
         if (e.key === "z" || e.code === "Backspace") {
           this.revert_handle()
+          processed = true
         }
         if (e.key === "r") {
           this.rap_reset()
+          processed = true
         }
-        if (e.key === "p" || e.key === "k") {
+        if (e.key === "p" || e.key === "k" || e.code === "Space") {
           this.pause_handle()
+          processed = true
+        }
+        if (processed) {
+          e.preventDefault()
         }
       }, false)
     },
@@ -171,7 +177,6 @@ export default {
 
     quest_text_clear() {
       this.quest_text = ""
-      this.o_button_focus()
     },
 
     track_input_dialog() {
@@ -201,15 +206,8 @@ export default {
       this.track_next()
     },
 
-    o_button_focus() {
-      this.$nextTick(() => {
-        if (this.$refs.x_button_ref) {
-          this.$refs.x_button_ref.blur()
-        }
-        if (this.$refs.o_button_ref) {
-          this.$refs.o_button_ref.focus()
-        }
-      })
+    button_focus(o_or_x) {
+      this.$nextTick(() => this.$refs[`${o_or_x}_button_ref`].focus())
     },
 
     stop_handle() {
@@ -252,7 +250,8 @@ export default {
 
     lap_handle(o_or_x) {
       if (this.mode === "playing") {
-        this.rows.push({...this.new_record, o_or_x: o_or_x})
+        this.button_focus(o_or_x)
+        this.rows.push({...this.new_quest, o_or_x: o_or_x})
 
         this.current_track += 1
         this.lap_counter = 0
@@ -263,10 +262,8 @@ export default {
     },
 
     track_next() {
-      this.o_button_focus()
-
-      if (this.quest_name_get(this.new_record)) {
-        this.talk(this.quest_name(this.new_record))
+      if (this.quest_name_get(this.new_quest)) {
+        this.talk(this.quest_name(this.new_quest))
       } else {
         this.stop_handle()
       }
@@ -287,13 +284,11 @@ export default {
         this.rows.pop()
         this.current_track -= 1
         this.lap_counter = 0
-        this.o_button_focus()
       }
     },
 
     rap_reset() {
       this.lap_counter = 0
-      this.o_button_focus()
     },
 
     sound_play(src, volume = SOUND_VOLUME) {
@@ -384,7 +379,6 @@ export default {
         this.current_track = 1
         this.quest_text = this.x_list.join(" ")
         this.reset_handle()
-        this.o_button_focus()
       }
     },
   },
@@ -410,7 +404,7 @@ export default {
       return "stopwatch"
     },
 
-    new_record() {
+    new_quest() {
       return {
         index: this.rows.length,
         track: this.current_track,
@@ -423,7 +417,7 @@ export default {
     },
 
     tweet_body() {
-      // return _.concat(this.rows, this.new_record).map(e => `${this.quest_name(e)} - ${this.time_format(e.lap_counter)}`).join("\n")
+      // return _.concat(this.rows, this.new_quest).map(e => `${this.quest_name(e)} - ${this.time_format(e.lap_counter)}`).join("\n")
       return Object.values(this.format_all)[this.format_index]
     },
 
