@@ -9,7 +9,7 @@
           button.button(slot="trigger")
             b-icon(icon="menu-down")
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット
-          b-dropdown-item(@click="revert") 1つ前に戻す
+          b-dropdown-item(@click="revert_handle") 1つ前に戻す
           b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
 
         .lap_time
@@ -50,8 +50,8 @@
 
       .field
         .control
-          textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
-          a.is-link.is-size-7(@click.prevent="quest_list_str_clear") クリア
+          textarea.textarea(v-model.trim="quest_text" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
+          a.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
 
     .column
       b-tabs.result_body(expanded v-model="format_index")
@@ -124,7 +124,7 @@ export default {
       current_track: null,
       lap_counter: null,
       rows: null,
-      quest_list_str: null,
+      quest_text: null,
       mode: "standby",
       interval_id: null,
       format_index: 0,
@@ -143,8 +143,7 @@ export default {
   methods: {
     shortcut_key_assign() {
       document.addEventListener("keydown", e => {
-        const dom = document.activeElement
-        if (dom.tagName === "TEXTAREA" || dom.tagName === "INPUT") {
+        if (this.input_focus_p()) {
           return
         }
         if (e.key === "x") {
@@ -154,7 +153,7 @@ export default {
           this.lap_handle('o')
         }
         if (e.key === "z" || e.code === "Backspace") {
-          this.revert()
+          this.revert_handle()
         }
         if (e.key === "r") {
           this.rap_reset()
@@ -165,9 +164,14 @@ export default {
       }, false)
     },
 
-    quest_list_str_clear() {
-      this.quest_list_str = ""
-      this.focus_to_o_button()
+    input_focus_p() {
+      const dom = document.activeElement
+      return dom.tagName === "TEXTAREA" || dom.tagName === "INPUT"
+    },
+
+    quest_text_clear() {
+      this.quest_text = ""
+      this.o_button_focus()
     },
 
     track_input_dialog() {
@@ -197,7 +201,7 @@ export default {
       this.track_next()
     },
 
-    focus_to_o_button() {
+    o_button_focus() {
       this.$nextTick(() => {
         if (this.$refs.x_button_ref) {
           this.$refs.x_button_ref.blur()
@@ -259,7 +263,7 @@ export default {
     },
 
     track_next() {
-      this.focus_to_o_button()
+      this.o_button_focus()
 
       if (this.quest_name_get(this.new_record)) {
         this.talk(this.quest_name(this.new_record))
@@ -269,28 +273,27 @@ export default {
     },
 
     sound_src(o_or_x) {
-      let sound_src = null
+      let src = null
       if (o_or_x === "o") {
-        sound_src = mp3_o
+        src = mp3_o
       } else {
-        sound_src = mp3_x
+        src = mp3_x
       }
-      return sound_src
+      return src
     },
 
-    revert() {
+    revert_handle() {
       if (this.rows.length >= 1) {
-        const record = this.rows.pop()
-
+        this.rows.pop()
         this.current_track -= 1
         this.lap_counter = 0
-        this.focus_to_o_button()
+        this.o_button_focus()
       }
     },
 
     rap_reset() {
       this.lap_counter = 0
-      this.focus_to_o_button()
+      this.o_button_focus()
     },
 
     sound_play(src, volume = SOUND_VOLUME) {
@@ -372,25 +375,26 @@ export default {
       this.current_track  = hash.current_track || 1
       this.lap_counter    = hash.lap_counter || 0
       this.rows           = hash.rows || []
-      this.quest_list_str = hash.quest_list_str || ""
+      this.quest_text     = hash.quest_text || ""
       this.format_index   = hash.format_index || 0
     },
 
     reset_by_x() {
       if (this.x_list.length >= 1) {
         this.current_track = 1
-        this.quest_list_str = this.x_list.join(" ")
+        this.quest_text = this.x_list.join(" ")
         this.reset_handle()
-        this.focus_to_o_button()
+        this.o_button_focus()
       }
     },
   },
 
   watch: {
-    current_track()  { this.data_save() },
-    quest_list_str() { this.data_save() },
-    rows()           { this.data_save() },
-    format_index()   { this.data_save() },
+    current_track() { this.data_save() },
+    quest_text()    { this.data_save() },
+    rows()          { this.data_save() },
+    format_index()  { this.data_save() },
+
     current_min(v) {
       if (v >= 1) {
         this.talk(`${v}分経過`)
@@ -424,8 +428,8 @@ export default {
     },
 
     quest_list() {
-      if (this.quest_list_str !== "") {
-        return this.quest_list_str.split(/[\s,]+/)
+      if (this.quest_text !== "") {
+        return this.quest_text.split(/[\s,]+/)
       } else {
         return []
       }
@@ -518,7 +522,7 @@ export default {
         current_track:  this.current_track,
         lap_counter:    this.lap_counter,
         rows:           this.rows,
-        quest_list_str: this.quest_list_str,
+        quest_text: this.quest_text,
         format_index:   this.format_index,
       }
     },
