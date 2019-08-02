@@ -32,8 +32,8 @@
 
         template(v-if="mode === 'playing'")
           .buttons.is-centered.ox_buttons
-            button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-            button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
+            button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+            button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
 
         template(v-if="mode !== 'playing'")
           button.button.is-large.other_button(@click="reset_handle" key="reset_key" :disabled="total_with_lap_seconds === 0 && false") リセット
@@ -67,8 +67,17 @@
             | &nbsp;
             | ツイート
 
-  .columns.is-hidden-touch
-    .column
+  .columns
+    //- .column
+    //-   article.message.is-primary.is-size-7
+    //-     .message-header
+    //-       | 使い方
+    //-     .message-body.has-text-left
+    //-       .content
+    //-         ol
+    //-           li 文章
+
+    .column.is-hidden-touch
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
         table.table.is-narrow
@@ -78,6 +87,9 @@
           tr
             th o
             td 正解
+          tr
+            th Enter Space
+            td 正解 (○ボタンにフォーカスがあるときのみ)
           tr
             th x
             td 不正解
@@ -94,8 +106,9 @@
 import dayjs from "dayjs"
 import { Howl, Howler } from 'howler'
 
-import o_mp3 from "oto_logic/Quiz-Correct_Answer02-1.mp3"
-import x_mp3 from "oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
+import mp3_o     from "oto_logic/Quiz-Correct_Answer02-1.mp3"
+import mp3_x     from "oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
+import mp3_start from "oto_logic/Quiz-Question03-1.mp3"
 
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 
@@ -181,6 +194,7 @@ export default {
       this.interval_id = setInterval(this.step_next, 1000)
       this.focus_to_o_button()
       // this.talk("スタート")
+      this.sound_play(mp3_start)
     },
 
     focus_to_o_button() {
@@ -241,16 +255,20 @@ export default {
         this.focus_to_o_button()
         this.sound_play(this.sound_src(o_or_x))
 
-        this.talk(this.quest_name(this.new_record))
+        if (this.quest_name_get(this.new_record)) {
+          this.talk(this.quest_name(this.new_record))
+        } else {
+          this.stop_handle()
+        }
       }
     },
 
     sound_src(o_or_x) {
       let sound_src = null
       if (o_or_x === "o") {
-        sound_src = o_mp3
+        sound_src = mp3_o
       } else {
-        sound_src = x_mp3
+        sound_src = mp3_x
       }
       return sound_src
     },
@@ -270,7 +288,7 @@ export default {
       this.focus_to_o_button()
     },
 
-    sound_play(src) {
+    sound_play(src, volume = SOUND_VOLUME) {
       if (false) {
         (new Audio(src)).play()
       }
@@ -281,7 +299,7 @@ export default {
 
       if (true) {
         if (!this.sound_objects[src]) {
-          this.$set(this.sound_objects, src, new Howl({src: src, autoplay: true, volume: SOUND_VOLUME}))
+          this.$set(this.sound_objects, src, new Howl({src: src, autoplay: true, volume: volume}))
         }
         const obj = this.sound_objects[src]
         obj.stop()
@@ -302,8 +320,16 @@ export default {
     },
 
     quest_name(row) {
+      const v = this.quest_name_get(row)
+      if (v === undefined) {
+        return "?"
+      }
+      return v
+    },
+
+    quest_name_get(row) {
       if (this.quest_list.length >= 1) {
-        return this.quest_list[row.index] || "?"
+        return this.quest_list[row.index]
       }
       return row.track
     },
