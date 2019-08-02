@@ -36,7 +36,7 @@
             button.button.is-large.is-success.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
 
         template(v-if="mode !== 'playing'")
-          button.button.is-large.other_button(@click="reset_handle" key="reset_key" :disabled="total_with_lap_seconds === 0") リセット
+          button.button.is-large.other_button(@click="reset_handle" key="reset_key" :disabled="total_with_lap_seconds === 0 && false") リセット
 
       template(v-if="quest_list.length === 0 || true")
         .field
