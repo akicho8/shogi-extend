@@ -52,6 +52,12 @@
         .control
           textarea.textarea(v-model.trim="quest_text" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
           a.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
+          | &nbsp;
+          a.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
+          | &nbsp;
+          a.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
+          | &nbsp;
+          a.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
 
     .column
       b-tabs.result_body(expanded v-model="format_index")
@@ -180,6 +186,18 @@ export default {
 
     quest_text_clear() {
       this.quest_text = ""
+    },
+
+    quest_text_sort() {
+      this.quest_text = this.quest_list.slice().sort().join(" ")
+    },
+
+    quest_text_uniq() {
+      this.quest_text = _.uniq(this.quest_list).join(" ")
+    },
+
+    quest_text_shuffle() {
+      this.quest_text = _.shuffle(this.quest_list).join(" ")
     },
 
     track_input_dialog() {
