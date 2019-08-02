@@ -192,9 +192,9 @@ export default {
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
-      this.focus_to_o_button()
       // this.talk("スタート")
       this.sound_play(mp3_start)
+      this.track_next()
     },
 
     focus_to_o_button() {
@@ -252,14 +252,19 @@ export default {
 
         this.current_track += 1
         this.lap_counter = 0
-        this.focus_to_o_button()
         this.sound_play(this.sound_src(o_or_x))
 
-        if (this.quest_name_get(this.new_record)) {
-          this.talk(this.quest_name(this.new_record))
-        } else {
-          this.stop_handle()
-        }
+        this.track_next()
+      }
+    },
+
+    track_next() {
+      this.focus_to_o_button()
+
+      if (this.quest_name_get(this.new_record)) {
+        this.talk(this.quest_name(this.new_record))
+      } else {
+        this.stop_handle()
       }
     },
 
