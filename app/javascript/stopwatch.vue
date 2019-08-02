@@ -198,10 +198,10 @@ export default {
     },
 
     start_handle() {
+      // this.talk("スタート")
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
-      // this.talk("スタート")
       this.sound_play(mp3_start)
       this.track_next()
     },
@@ -211,9 +211,9 @@ export default {
     },
 
     stop_handle() {
+      // this.talk("ストップ")
       this.mode = "standby"
       this.clear_interval_safe()
-      // this.talk("ストップ")
     },
 
     reset_handle() {
@@ -241,9 +241,7 @@ export default {
         format = "h時間m分s秒"
       } else {
         format = "mm:ss"
-        // } else {
-        //   format = "m分s秒"
-        // }
+        // format = "m分s秒"
       }
       return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
@@ -344,8 +342,7 @@ export default {
       } else {
         s = `${key}分以上`
       }
-      return `${s}`
-      // return `${s} - ${rows.length}`
+      return s
     },
 
     o_or_x_to_s(row, o, x) {
@@ -500,10 +497,8 @@ export default {
         if (this.avg < 60) {
           // v = Math.floor(this.avg * 100) / 100
           // v = `${v}秒`
-
           v = Math.ceil(this.avg)
           v = `${v}秒`
-
         } else {
           v = dayjs().startOf("year").set("seconds", this.avg).format("m分s秒")
         }
