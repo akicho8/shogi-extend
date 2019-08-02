@@ -201,6 +201,10 @@ export default {
     },
 
     start_handle() {
+      if (!this.last_quest_exist_p) {
+        return
+      }
+
       // this.talk("スタート")
       this.mode = "playing"
       this.clear_interval_safe()
@@ -263,10 +267,11 @@ export default {
     },
 
     track_next() {
-      if (this.quest_name_get(this.new_quest)) {
+      if (this.last_quest_exist_p) {
         this.talk(this.quest_name(this.new_quest))
       } else {
         this.stop_handle()
+        this.talk("おわりました")
       }
     },
 
@@ -400,6 +405,10 @@ export default {
   },
 
   computed: {
+    last_quest_exist_p() {
+      return this.quest_name_get(this.new_quest)
+    },
+
     local_storage_key() {
       return "stopwatch"
     },
