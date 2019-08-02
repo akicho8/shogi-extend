@@ -55,7 +55,8 @@
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
           | &nbsp;
-          a.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
+          b-tooltip(label="重複をなくします" position="is-bottom")
+            a.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
 
