@@ -11,6 +11,7 @@
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット
           b-dropdown-item(@click="revert_handle") 1つ前に戻す
           b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
+          b-dropdown-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
 
         .lap_time
           span.number_span(@click="track_input_dialog")
@@ -190,7 +191,7 @@ export default {
     },
 
     quest_text_sort() {
-      this.quest_text = this.quest_list.slice().sort().join(" ")
+      this.quest_text = _.sortBy(this.quest_list, [e => parseInt(e)]).join(" ")
     },
 
     quest_text_uniq() {
@@ -404,6 +405,40 @@ export default {
         this.quest_text = this.x_list.join(" ")
         this.reset_handle()
       }
+    },
+
+    reset_by_x_with_drop(drop) {
+      let list = []
+
+      list = _.concat(list, this.x_list)
+
+      _.each(this.rows, e => {
+        if (e.lap_counter >= drop) {
+          list.push(this.quest_name(e))
+        }
+      })
+
+      if (list.length >= 1) {
+        this.quest_text = list.join(" ")
+
+        this.quest_text_uniq()
+        this.quest_text_sort()
+
+        this.current_track = 1
+        this.reset_handle()
+      }
+    },
+
+    reset_by_x_with_n_seconds() {
+      this.$dialog.prompt({
+        message: "秒",
+        confirmText: "OK",
+        cancelText: "キャンセル",
+        inputAttrs: { type: 'number', value: 60, },
+        onConfirm: (value) => {
+          this.reset_by_x_with_drop(value)
+        },
+      })
     },
   },
 
