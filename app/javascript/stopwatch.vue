@@ -81,13 +81,14 @@
       template(v-if="memento_list.length >= 1")
         .box.memento_box
           .is-size-7
-            b-tooltip(label="前の状態に戻るための履歴でストップしたときに反映する")
-              b 履歴
+            b-tooltip(label="クリックでそのとき時点に戻れる (ストップしたときに反映)")
+              b ログ
           ul
             template(v-for="row in memento_list.slice().reverse()")
               li.is-size-7
-                a(@click.prevent="memento_restore(row)")
+                a.has-text-grey(@click.prevent="memento_restore(row)")
                   | {{row.time}}
+                  | &nbsp;
                   | {{row.summary}}
   .columns
     //- .column
@@ -756,4 +757,8 @@ export default {
 
   .memento_box
     margin-top: 1.5rem
+    a
+      &:hover
+        text-decoration: underline
 </style>
+
