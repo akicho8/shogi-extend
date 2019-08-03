@@ -600,6 +600,13 @@ autolinker@^1.6.0:
   resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-1.8.3.tgz#8295d26700f1ad39691281c6a4f96686b64b5f30"
   integrity sha512-FtH5edduS5XwI1u9tLirRJv33ql5ualzHflFWX/ko5bggDXI8llFG/347VZGK2NAeDXuTh9p5xvCGQ+UrgpjtQ==
 
+autolinker@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-3.11.0.tgz#209c4632550eed32285058eaac51f1382dae023a"
+  integrity sha512-VMTEjE3jeBK5MinTZiuVE07O4wMVmXhpzmc5sCc8cap6exsVzjmQJgtH8NqHsFru58ujUieBA9Dmwiz+E5KWEA==
+  dependencies:
+    tslib "^1.9.3"
+
 autoprefixer@^6.3.1:
   version "6.7.7"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.7.7.tgz#1dbd1c835658e35ce3f9984099db00585c782014"
@@ -8374,6 +8381,11 @@ trim-right@^1.0.1:
   integrity sha1-fskRMJJHZsf1c74wIMNPj9/QDWI=
   dependencies:
     glob "^6.0.4"
+
+tslib@^1.9.3:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
+  integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
 
 tty-browserify@0.0.0:
   version "0.0.0"
