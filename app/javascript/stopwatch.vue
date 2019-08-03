@@ -84,7 +84,7 @@
             b-tooltip(label="クリックでそのとき時点に戻れる (ストップしたときに反映)")
               b ログ
           ul
-            template(v-for="row in memento_list.slice().reverse()")
+            template(v-for="row in memento_list")
               li.is-size-7
                 a.has-text-grey(@click.prevent="memento_restore(row)")
                   | {{row.time}}
@@ -761,4 +761,3 @@ export default {
       &:hover
         text-decoration: underline
 </style>
-
