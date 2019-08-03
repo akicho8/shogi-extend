@@ -1,6 +1,6 @@
 // URL または localStorage にデータを永続化保存する機能
 
-import { LZMA } from "lzma/src/lzma_worker-min.js"
+import { LZMA } from "lzma/src/lzma_worker.js"
 import * as UrlSafeBase64 from "url-safe-base64"
 
 export default {
