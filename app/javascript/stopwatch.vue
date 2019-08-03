@@ -78,16 +78,17 @@
             | &nbsp;
             | ツイート
 
-      .box.memento_box
-        .is-size-7
-          b-tooltip(label="前の状態に戻るための履歴でストップしたときに反映する")
-            b 履歴
-        ul
-          template(v-for="row in memento_list.slice().reverse()")
-            li.is-size-7
-              a(@click.prevent="memento_restore(row)")
-                | {{row.time}}
-                | {{row.summary}}
+      template(v-if="memento_list.length >= 1")
+        .box.memento_box
+          .is-size-7
+            b-tooltip(label="前の状態に戻るための履歴でストップしたときに反映する")
+              b 履歴
+          ul
+            template(v-for="row in memento_list.slice().reverse()")
+              li.is-size-7
+                a(@click.prevent="memento_restore(row)")
+                  | {{row.time}}
+                  | {{row.summary}}
   .columns
     //- .column
     //-   article.message.is-primary.is-size-7
@@ -256,6 +257,12 @@ export default {
       this.memento_create()
     },
 
+    stop_if_playing() {
+      if (this.mode === "playing") {
+        this.stop_handle()
+      }
+    },
+
     reset_handle() {
       this.rows = []
       this.lap_counter = 0
@@ -413,23 +420,23 @@ export default {
     },
 
     reset_by_x() {
-      if (this.x_list.length >= 1) {
-        this.current_track = 1
-        this.quest_text = this.x_list.join(" ")
-        this.reset_handle()
-      }
+      reset_by_x_with_drop(null)
     },
 
-    reset_by_x_with_drop() {
+    reset_by_x_with_drop(drop_seconds) {
+      this.stop_if_playing()
+
       let list = []
 
       list = _.concat(list, this.x_list)
 
-      _.each(this.rows, e => {
-        if (e.lap_counter >= this.drop_seconds) {
-          list.push(this.quest_name(e))
-        }
-      })
+      if (drop_seconds) {
+        _.each(this.rows, e => {
+          if (e.lap_counter >= drop_seconds) {
+            list.push(this.quest_name(e))
+          }
+        })
+      }
 
       if (list.length >= 1) {
         this.quest_text = list.join(" ")
@@ -450,7 +457,7 @@ export default {
         inputAttrs: { type: 'number', value: this.drop_seconds, },
         onConfirm: (value) => {
           this.drop_seconds = value
-          this.reset_by_x_with_drop()
+          this.reset_by_x_with_drop(value)
         },
       })
     },
