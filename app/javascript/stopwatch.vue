@@ -563,7 +563,7 @@ export default {
       }
       out += `計${this.rows.length}問`
       if (this.quest_list.length >= 1) {
-        out += `/全${this.rows.length}問`
+        out += `/全${this.quest_list.length}問`
       }
       if (this.human_rate) {
         out += " "
