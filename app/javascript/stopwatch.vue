@@ -78,6 +78,16 @@
             | &nbsp;
             | ツイート
 
+      .box.memento_box
+        .is-size-7
+          b-tooltip(label="前の状態に戻るための履歴でストップしたときに反映する")
+            b 履歴
+        ul
+          template(v-for="row in memento_list.slice().reverse()")
+            li.is-size-7
+              a(@click.prevent="memento_restore(row)")
+                | {{row.time}}
+                | {{row.summary}}
   .columns
     //- .column
     //-   article.message.is-primary.is-size-7
@@ -137,6 +147,7 @@ export default {
       format_index: 0,
       sound_objects: {},
       drop_seconds: 60,
+      memento_list: [],
     }
   },
 
@@ -242,6 +253,7 @@ export default {
       // this.talk("ストップ")
       this.mode = "standby"
       this.clear_interval_safe()
+      this.memento_create()
     },
 
     reset_handle() {
@@ -442,6 +454,19 @@ export default {
         },
       })
     },
+
+    memento_create() {
+      this.memento_list.push({
+        time: dayjs().format("YYYY-MM-DD hh:mm:ss"),
+        summary: this.summary,
+        enc_base64: this.enc_base64,
+      })
+      this.memento_list = _.takeRight(this.memento_list, 10)
+    },
+
+    memento_restore(row) {
+      this.data_restore_from_base64(row.enc_base64)
+    },
   },
 
   watch: {
@@ -580,7 +605,7 @@ export default {
         current_track:  this.current_track,
         lap_counter:    this.lap_counter,
         rows:           this.rows,
-        quest_text: this.quest_text,
+        quest_text:     this.quest_text,
         format_index:   this.format_index,
       }
     },
@@ -721,4 +746,7 @@ export default {
       white-space: pre-wrap
       line-height: 105%
       font-size: 0.8rem
+
+  .memento_box
+    margin-top: 1.5rem
 </style>

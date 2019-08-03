@@ -16,12 +16,16 @@ export default {
 
     data_restore_from_url_or_storage() {
       let enc_base64 = null
-      let dec_params = null
       if (location.hash) {
         enc_base64 = location.hash.replace(/^#/, "")
       } else {
         enc_base64 = localStorage.getItem(this.local_storage_key)
       }
+      this.data_restore_from_base64(enc_base64)
+    },
+
+    data_restore_from_base64(enc_base64) {
+      let dec_params = {}
       if (enc_base64) {
         try {
           const dec_string = atob(UrlSafeBase64.decode(enc_base64))
