@@ -136,6 +136,7 @@ export default {
       interval_id: null,
       format_index: 0,
       sound_objects: {},
+      drop_seconds: 60,
     }
   },
 
@@ -407,13 +408,13 @@ export default {
       }
     },
 
-    reset_by_x_with_drop(drop) {
+    reset_by_x_with_drop() {
       let list = []
 
       list = _.concat(list, this.x_list)
 
       _.each(this.rows, e => {
-        if (e.lap_counter >= drop) {
+        if (e.lap_counter >= this.drop_seconds) {
           list.push(this.quest_name(e))
         }
       })
@@ -434,9 +435,10 @@ export default {
         message: "秒",
         confirmText: "OK",
         cancelText: "キャンセル",
-        inputAttrs: { type: 'number', value: 60, },
+        inputAttrs: { type: 'number', value: this.drop_seconds, },
         onConfirm: (value) => {
-          this.reset_by_x_with_drop(value)
+          this.drop_seconds = value
+          this.reset_by_x_with_drop()
         },
       })
     },
@@ -447,6 +449,7 @@ export default {
     quest_text()    { this.data_save() },
     rows()          { this.data_save() },
     format_index()  { this.data_save() },
+    drop_seconds()  { this.data_save() },
 
     current_min(v) {
       if (v >= 1) {
