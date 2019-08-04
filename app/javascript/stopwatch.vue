@@ -421,7 +421,7 @@ export default {
     },
 
     reset_by_x() {
-      reset_by_x_with_drop(null)
+      this.reset_by_x_with_drop(null)
     },
 
     reset_by_x_with_drop(drop_seconds) {
