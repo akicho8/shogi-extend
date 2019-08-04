@@ -272,7 +272,7 @@ export default {
     time_format(seconds) {
       let format = null
       if ((seconds / 60) >= 60) {
-        format = "hh:mm:ss"
+        format = "HH:mm:ss"
       } else {
         format = "m:ss"
       }
@@ -285,7 +285,7 @@ export default {
         // if (seconds % 60 > 0) {
         //   seconds += 60         // 秒を切り上げして分+1
         // }
-        // format = "hh:mm"
+        // format = "HH:mm"
         format = "h時間m分s秒"
       } else {
         format = "mm:ss"
@@ -465,7 +465,7 @@ export default {
 
     memento_create() {
       this.memento_list.push({
-        time: dayjs().format("YYYY-MM-DD hh:mm:ss"),
+        time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
         summary: this.summary,
         enc_base64: this.enc_base64,
       })

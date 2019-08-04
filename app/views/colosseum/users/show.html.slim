@@ -56,4 +56,4 @@ javascript:
               | {{props.row.turn_max}}
             b-table-column(field="begin_at" label="日時" sortable numeric)
               template(v-if="props.row.begin_at")
-                | {{moment(props.row.begin_at).format('YYYY/MM/DD hh:mm')}}
+                | {{moment(props.row.begin_at).format('YYYY/MM/DD HH:mm')}}
