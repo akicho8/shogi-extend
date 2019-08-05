@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
       inputKeys: null,
       timerRun: false,
       timerCount: null,
-      limitSeconds: 10,
+      limitSeconds: 60,
       error: 0,
       piece: null,
       location: null,
