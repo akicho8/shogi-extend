@@ -1,4 +1,8 @@
 // URL または localStorage にデータを永続化保存する機能
+//
+// save_hash
+// local_storage_key
+// data_restore_from_hash
 
 import { LZMA } from "lzma/src/lzma_worker.js"
 import * as UrlSafeBase64 from "url-safe-base64"
@@ -11,7 +15,7 @@ export default {
   methods: {
     data_save() {
       location.hash = this.enc_base64
-      localStorage.setItem("stopwatch", this.enc_base64)
+      localStorage.setItem(this.local_storage_key, this.enc_base64)
     },
 
     data_restore_from_url_or_storage() {
@@ -44,6 +48,10 @@ export default {
   },
 
   computed: {
+    save_hash() {
+      alert("save_hash not implemented")
+    },
+
     permalink() {
       return `${window.location.href}#${this.enc_base64}`
     },

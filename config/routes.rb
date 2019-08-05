@@ -83,8 +83,9 @@ Rails.application.routes.draw do
 
   ################################################################################ 符号入力ゲーム
 
-  get "xy", to: "xy_game#show"
   get "stopwatch", to: "stopwatch#show"
+
+  resources :xy_game_records, path: "xy", only: [:index, :create, :update]
 
   ################################################################################ 局面編集
 

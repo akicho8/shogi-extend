@@ -1,0 +1,11 @@
+- @page_title ||= "符号入力ゲーム"
+
+- twitter_card_tag(title: @page_title, description: "時間内に駒のある場所を2桁の数字でタイプしていくだけの符号練習用のゲームです", image: "xy_game.png")
+
+- content_for :head do
+  = javascript_pack_tag("xy_game_app")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new XyGameApp(#{js_show_options.to_json.html_safe}).$mount("#app") })
+
+#app(v-cloak="true")
+  xy_game

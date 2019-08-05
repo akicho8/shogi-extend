@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_06_202500) do
+ActiveRecord::Schema.define(version: 2019_08_06_151000) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -369,6 +369,20 @@ ActiveRecord::Schema.define(version: 2019_06_06_202500) do
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "xy_game_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "summary"
+    t.string "rule_key"
+    t.bigint "colosseum_user_id"
+    t.integer "o_count_max"
+    t.integer "o_count"
+    t.integer "x_count"
+    t.float "spent_msec"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["colosseum_user_id"], name: "index_xy_game_records_on_colosseum_user_id"
   end
 
 end
