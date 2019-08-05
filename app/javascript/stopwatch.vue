@@ -60,6 +60,8 @@
             a.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
+          | &nbsp;
+          a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
 
     .column
       b-tabs.result_body(expanded v-model="format_index")
@@ -215,6 +217,10 @@ export default {
 
     quest_text_shuffle() {
       this.quest_text = _.shuffle(this.quest_list).join(" ")
+    },
+
+    quest_text_reverse() {
+      this.quest_text = _.reverse(this.quest_list.slice()).join(" ")
     },
 
     track_input_dialog() {
