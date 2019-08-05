@@ -91,14 +91,18 @@
                   | &nbsp;
                   | {{row.summary}}
   .columns
-    //- .column
-    //-   article.message.is-primary.is-size-7
-    //-     .message-header
-    //-       | 使い方
-    //-     .message-body.has-text-left
-    //-       .content
-    //-         ol
-    //-           li 文章
+    .column
+      article.message.is-primary.is-size-7
+        .message-header
+          | 補足説明
+        .message-body.has-text-left
+          .content
+            ol
+              li ログはストップを押したときに現在の状態を保存しています
+              li ログをクリックするとその時間の状態に戻ります
+              li ログは間違って操作したときや「不正解だけ再テスト」をしたあと前に戻りたくなったときに使います
+              li 明示的に問題番号を並べたとき、自動インリメントの方の問題番号は意味を持ちません
+              li スマホの自動ロックで時計が止まってしまうのでスマホから使う場合はスマホ側の設定で自動ロック「なし」の設定を推奨します
 
     .column.is-hidden-touch
       .box.content.has-text-grey.is-size-7
@@ -123,21 +127,19 @@
 
 <script>
 import dayjs from "dayjs"
-import { Howl, Howler } from 'howler'
-
-import mp3_o     from "oto_logic/Quiz-Correct_Answer02-1.mp3"
-import mp3_x     from "oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
-import mp3_start from "oto_logic/Quiz-Question03-1.mp3"
 
 import stopwatch_data_retention from './stopwatch_data_retention.js'
+import sound_cache from './sound_cache.js'
 
-const SOUND_VOLUME = 0.2
 const X_MARK = "x"
 const O_MARK = "o"
 
 export default {
   name: "stopwatch",
-  mixins: [stopwatch_data_retention],
+  mixins: [
+    stopwatch_data_retention,
+    sound_cache,
+  ],
   data() {
     return {
       current_track: null,
@@ -147,7 +149,6 @@ export default {
       mode: "standby",
       interval_id: null,
       format_index: 0,
-      sound_objects: {},
       drop_seconds: 60,
       memento_list: [],
     }
@@ -243,7 +244,7 @@ export default {
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
-      this.sound_play(mp3_start)
+      this.sound_play("start")
       this.track_next()
     },
 
@@ -301,7 +302,7 @@ export default {
 
         this.current_track += 1
         this.lap_counter = 0
-        this.sound_play(this.sound_src(o_or_x))
+        this.sound_play(o_or_x)
 
         this.track_next()
       }
@@ -316,16 +317,6 @@ export default {
       }
     },
 
-    sound_src(o_or_x) {
-      let src = null
-      if (o_or_x === "o") {
-        src = mp3_o
-      } else {
-        src = mp3_x
-      }
-      return src
-    },
-
     revert_handle() {
       if (this.rows.length >= 1) {
         this.rows.pop()
@@ -336,26 +327,6 @@ export default {
 
     rap_reset() {
       this.lap_counter = 0
-    },
-
-    sound_play(src, volume = SOUND_VOLUME) {
-      if (false) {
-        (new Audio(src)).play()
-      }
-
-      if (false) {
-        new Howl({src: src, autoplay: true, volume: SOUND_VOLUME})
-      }
-
-      if (true) {
-        if (!this.sound_objects[src]) {
-          this.$set(this.sound_objects, src, new Howl({src: src, autoplay: true, volume: volume}))
-        }
-        const obj = this.sound_objects[src]
-        obj.stop()
-        obj.seek(0)
-        obj.play()
-      }
     },
 
     clear_interval_safe() {
