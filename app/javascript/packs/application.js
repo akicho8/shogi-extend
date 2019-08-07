@@ -83,7 +83,7 @@ Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_basic_methods from "vue_basic_methods.js"
+import vue_support from "vue_support.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import message_link_to from "message_link_to.vue"
@@ -95,7 +95,7 @@ import xy_game from "xy_game.vue"
 
 Vue.mixin({
   mixins: [
-    vue_basic_methods,
+    vue_support,
   ],
 
   // よくない命名規則だけどこっちの方が開発しやすい
