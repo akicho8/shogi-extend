@@ -19,7 +19,7 @@ export default {
     },
 
     debug_alert(message) {
-      if (process.env.NODE_ENV === "development") {
+      if (this.development_p) {
         this.$toast.open({message: message, position: "is-bottom", type: "is-danger"})
       }
     },
@@ -241,6 +241,12 @@ export default {
       }).catch(error => {
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
+    },
+  },
+
+  computed: {
+    development_p() {
+      return process.env.NODE_ENV === "development"
     },
   },
 }

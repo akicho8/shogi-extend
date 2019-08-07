@@ -9,6 +9,8 @@ link(rel="stylesheet" href="https://cdn.materialdesignicons.com/3.6.95/css/mater
 
 link(rel="apple-touch-icon" href=path_to_image(@apple_touch_icon || "apple-touch-icon.png"))
 
+meta(name="rails_env" content="#{Rails.env}")
+
 sass:
   [v-cloak]
     /* important 指定しないと効かないのが謎 */

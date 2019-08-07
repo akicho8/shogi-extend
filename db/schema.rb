@@ -371,7 +371,7 @@ ActiveRecord::Schema.define(version: 2019_08_06_151000) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "xy_game_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "summary"
     t.string "rule_key"
@@ -382,7 +382,7 @@ ActiveRecord::Schema.define(version: 2019_08_06_151000) do
     t.float "spent_msec"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["colosseum_user_id"], name: "index_xy_game_records_on_colosseum_user_id"
+    t.index ["colosseum_user_id"], name: "index_xy_records_on_colosseum_user_id"
   end
 
 end

@@ -6,10 +6,12 @@ import mp3_start from "oto_logic/Quiz-Question03-1.mp3"
 
 import { Howl, Howler } from 'howler'
 
+window.sound_objects = {}
+
 export default {
   data() {
     return {
-      sound_objects: {},
+      // sound_objects: {},
       sound_presets: {
         o:     { file: mp3_o,     volume: null, },
         x:     { file: mp3_x,     volume: null, },
@@ -36,10 +38,10 @@ export default {
       }
 
       if (true) {
-        if (!this.sound_objects[src]) {
-          this.$set(this.sound_objects, src, new Howl({src: src, autoplay: true, volume: volume}))
+        if (!window.sound_objects[src]) {
+          window.sound_objects[src] = new Howl({src: src, autoplay: true, volume: volume})
         }
-        const obj = this.sound_objects[src]
+        const obj = window.sound_objects[src]
         obj.stop()
         obj.seek(0)
         obj.play()

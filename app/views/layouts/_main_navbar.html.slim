@@ -20,7 +20,7 @@ nav.navbar.is-primary.is_screen_only
           = link_to(icon_tag(:account, margin_right: 2) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")])
           = link_to(icon_tag(:pencil, margin_right: 2) + "局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")]) if !Rails.env.production?
           = link_to(icon_tag(:book, margin_right: 2) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
-          = link_to(icon_tag(:apps, margin_right: 2) + "符号入力ゲーム", :xy_game_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_game_records")])
+          = link_to(icon_tag(:apps, margin_right: 2) + "符号入力ゲーム", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
           = link_to(icon_tag(:magnify, margin_right: 2) + "2ch棋譜検索", [:general, :s], class: ["navbar-item", ("is-active" if params[:controller].start_with?("general/battles"))])
           = link_to(icon_tag(:clock, margin_right: 2) + "ストップウォッチ", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatch")])
 

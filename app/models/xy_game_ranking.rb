@@ -10,7 +10,7 @@ class XyGameRanking
   class << self
     def rule_list
       collect { |e|
-        e.attributes.merge(xy_game_records: e.all)
+        e.attributes.merge(xy_records: e.all)
       }
     end
   end
@@ -18,12 +18,12 @@ class XyGameRanking
   def all
     current_clean
     aggregate
-    redis.zrevrange(inside_key, 0, rank_limit - 1, with_scores: true).collect do |xy_game_record_id, spent_msec|
+    redis.zrevrange(inside_key, 0, rank_limit - 1, with_scores: true).collect do |xy_record_id, spent_msec|
       # rank = computed_rank(spent_msec)
-      XyGameRecord.find(xy_game_record_id).as_json(methods: [:computed_rank])
+      XyRecord.find(xy_record_id).as_json(methods: [:computed_rank])
 
-      # { rank: rank, xy_game_record_id: xy_game_record_id, name: XyGameRecord.find(xy_game_record_id).name, spent_msec: -spent_msec }
-      # { rank: rank, xy_game_record_id: xy_game_record_id, name: XyGameRecord.find(xy_game_record_id).name, spent_msec: -spent_msec }
+      # { rank: rank, xy_record_id: xy_record_id, name: XyRecord.find(xy_record_id).name, spent_msec: -spent_msec }
+      # { rank: rank, xy_record_id: xy_record_id, name: XyRecord.find(xy_record_id).name, spent_msec: -spent_msec }
     end
   end
 
@@ -34,7 +34,7 @@ class XyGameRanking
   private
 
   def aggregate
-    XyGameRecord.where(rule_key: key).each do |record|
+    XyRecord.where(rule_key: key).each do |record|
       redis.zadd(inside_key, -record.spent_msec || 0, record.id)
     end
   end

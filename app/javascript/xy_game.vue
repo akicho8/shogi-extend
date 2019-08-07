@@ -1,27 +1,26 @@
 <template lang="pug">
 .xy_game
   .columns
-    .column
-      .xy_game.has-text-centered
-        template(v-if="mode === 'stop' || mode === 'goal'")
-          .buttons.is-centered
+    .column.is-8
+      .has-text-centered
+        .buttons.is-centered
+          template(v-if="mode === 'stop' || mode === 'goal'")
             button.button.is-primary(@click="start_handle") スタート
+          template(v-if="mode === 'running'")
+            button.button(@click="stop_handle") リタイア
 
-            b-dropdown(v-model="rule_key").is-pulled-left
-              button.button(slot="trigger")
-                span {{current_rule.name}}
-                b-icon(icon="menu-down")
-              template(v-for="e in rule_list")
-                b-dropdown-item(:value="e.key") {{e.name}}
+          b-dropdown.is-pulled-left(v-model="rule_key" :disabled="mode === 'running'")
+            button.button(slot="trigger")
+              span {{current_rule.name}}
+              b-icon(icon="menu-down")
+            template(v-for="e in rule_list")
+              b-dropdown-item(:value="e.key") {{e.name}}
 
-        template(v-if="mode === 'running'")
-          .buttons.is-centered
-            div
-              | {{current_rule.name}}
-            button.button(@click="stop_handle") やめる
-            button.button(@click="goal_handle") ゴール
+          template(v-if="development_p")
+            template(v-if="mode === 'running'")
+              button.button(@click="goal_handle") ゴール
 
-        .level_wrap
+        .level_container
           nav.level.is-mobile
             .level-item.has-text-centered
               div
@@ -32,54 +31,58 @@
                 p.heading まちがい
                 p.title {{x_count}}
 
-        .shogi-player.theme-simple.size-default
-          .board_container.font_size_base
-            .flippable
-              .board_wrap
-                .board_outer
-                  table.board_inner
-                    tr(v-for="y in board_size")
-                      td(v-for="x in board_size")
-                        .piece_back(:class="cell_class(x - 1, y - 1)")
-                          .piece_fore
-                            template(v-if="active_p(x - 1, y - 1)")
-                              | {{piece}}
+        .field_conainer
+          .shogi-player.theme-simple.size-default
+            .board_container.font_size_base
+              .flippable
+                .board_wrap
+                  .board_outer
+                    table.board_inner
+                      tr(v-for="y in board_size")
+                        td(v-for="x in board_size")
+                          .piece_back
+                            .piece_fore(:class="cell_class(x - 1, y - 1)")
+                              template(v-if="active_p(x - 1, y - 1)")
+                                | {{piece}}
 
-        .time.fixed_font.is-size-3
-          | {{time_format}}
+        .time_container
+          .fixed_font.is-size-2
+            | {{time_format}}
 
         template(v-if="mode === 'goal'")
           .box
             .summary
               | {{summary}}
-            .buttons.is-centered
-              a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
-                | &nbsp;
-                b-icon(icon="twitter" size="is-small")
-                | &nbsp;
-                | ツイート
+            .tweet_button_container
+              .buttons.is-centered
+                a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
+                  | &nbsp;
+                  b-icon(icon="twitter" size="is-small")
+                  | &nbsp;
+                  | ツイート
 
-        article.message.is-primary
-          .message-header
-            p ルール
-          .message-body.has-text-left
-            ul
-              li 駒のある場所の座標を数字2桁で入力していきます
-              li {{o_count_max}}回正解するまでの時間を競います
+        .rule_container
+          article.message.is-primary
+            .message-header
+              p ルール
+            .message-body.has-text-left
+              ul
+                li 駒のある場所の座標をキーボードの数字2桁で入力していきます
+                li {{o_count_max}}回正解するまでの時間を競います
     .column
-      .box.is-shadowless
-        b-tabs(v-model="rule_selected_index")
+      .box2.is-shadowless
+        b-tabs(v-model="rule_selected_index" expanded)
           template(v-for="rule_list1 in rule_list")
             b-tab-item(:label="rule_list1.name" :value="rule_list1.key")
-              b-table(:data="rule_list1.xy_game_records" :paginated="true" :per-page="25" :row-class="(row, index) => row.id === (xy_game_record && xy_game_record.id) && 'is-selected'")
+              b-table(:data="rule_list1.xy_records" :paginated="true" :per-page="25" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'")
                 template(slot-scope="props")
-                  b-table-column(field="computed_rank" label="ランク" sortable)
+                  b-table-column(field="computed_rank" label="順位" sortable centered :width="1")
                     | {{props.row.computed_rank}}
-                  b-table-column(field="name" label="名前")
+                  b-table-column(field="name" label="名前" sortable)
                     | {{props.row.name || '？'}}
-                  b-table-column(field="spent_msec" label="タイム")
+                  b-table-column(field="spent_msec" label="タイム" sortable)
                     | {{time_format_from_msec(props.row.spent_msec)}}
-                  b-table-column(field="created_at" label="日時")
+                  b-table-column(field="created_at" label="日時" v-if="false")
                     | {{time_default_format(props.row.created_at)}}
 
   template(v-show="true")
@@ -135,7 +138,8 @@ export default {
       handle_name: null,
       rule_selected_index: null,
       rule_list: this.$root.$options.rule_list,
-      xy_game_record: null,
+      xy_record: null,
+      xhr_put_path: null,
     }
   },
 
@@ -181,6 +185,7 @@ export default {
       this.input_keys = []
       this.mode = "running"
       this.quest_next()
+      this.sound_play("start")
 
       document.addEventListener("keypress", this.key_handle, false)
     },
@@ -204,8 +209,8 @@ export default {
       //   "x_count",
       //   "micro_seconds",
       // ], e => {
-      //   params.append(`xy_game_record[${e}]`, this.$data[e])
-      //   // params.append(`xy_game_record[${e}]`, "a\nb")
+      //   params.append(`xy_record[${e}]`, this.$data[e])
+      //   // params.append(`xy_record[${e}]`, "a\nb")
       // })
 
       const params = ["summary", "rule_key", "o_count", "x_count", "spent_msec"].reduce((a, e) => ({...a, [e]: this[e]}), {})
@@ -225,19 +230,20 @@ export default {
       this.$http({
         method: "post",
         url: this.$root.$options.xhr_post_path,
-        data: {xy_game_record: params},
+        data: {xy_record: params},
       }).then((response) => {
         loading_instance.close()
         console.log(response.data)
-        this.$toast.open({message: response.data.message})
+        // this.$toast.open({message: response.data.message})
         // this.tweet_image_url = response.data.tweet_image_url
         // this.debug_alert(this.tweet_image_url)
 
         this.rule_list = response.data.rule_list
-        this.xy_game_record = response.data.xy_game_record
+        this.xy_record = response.data.xy_record
+        this.xhr_put_path = response.data.xhr_put_path
 
         this.$dialog.prompt({
-          message: `${this.xy_game_record.computed_rank}位`,
+          message: `${this.xy_record.computed_rank}位`,
           confirmText: "保存",
           cancelText: "キャンセル",
           inputAttrs: { type: 'text', value: this.handle_name, placeholder: "名前", },
@@ -246,9 +252,9 @@ export default {
             const loading_instance = this.$loading.open()
 
             this.$http({
-              method: "post",
-              url: this.$root.$options.xhr_post_path,
-              data: { xy_game_record: { id: this.xy_game_record.id, name: value, } },
+              method: "put",
+              url: this.xhr_put_path,
+              data: { xy_record: { id: this.xy_record.id, name: value, } },
             }).then((response) => {
               loading_instance.close()
               // console.log(response.data)
@@ -257,7 +263,7 @@ export default {
               // this.debug_alert(this.tweet_image_url)
 
               this.rule_list = response.data.rule_list
-              this.xy_game_record = response.data.xy_game_record
+              this.xy_record = response.data.xy_record
 
             }).catch((error) => {
               loading_instance.close()
@@ -388,8 +394,8 @@ export default {
     summary() {
       let out = ""
       out += `ルール:${this.current_rule.name}\n`
-      if (this.xy_game_record) {
-        out += `ランク:${this.xy_game_record.computed_rank}位\n`
+      if (this.xy_record) {
+        out += `順位:${this.xy_record.computed_rank}位\n`
       }
       out += `タイム:${this.time_format}\n`
       out += `まちがい:${this.x_count}\n`
@@ -429,9 +435,17 @@ export default {
 
 <style lang="sass">
 .xy_game
-  .level_wrap
-    width: 320px
+  .level_container
+    width: 10rem
     margin: 0 auto
+  .field_conainer
+    margin-top: 1rem
+  .time_container
+    margin-top: 0rem
+  .rule_container
+    margin-top: 0.5rem
   .summary
     white-space: pre-wrap
+  .tweet_button_container
+    margin-top: 0.5rem
 </style>

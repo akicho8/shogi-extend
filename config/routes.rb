@@ -85,7 +85,7 @@ Rails.application.routes.draw do
 
   get "stopwatch", to: "stopwatch#show"
 
-  resources :xy_game_records, path: "xy", only: [:index, :create, :update]
+  resources :xy_records, path: "xy", only: [:index, :create, :update]
 
   ################################################################################ 局面編集
 
