@@ -9,7 +9,7 @@
 # | id                | ID             | integer(8)  | NOT NULL PK |      |       |
 # | name              | Name           | string(255) |             |      |       |
 # | summary           | Summary        | string(255) |             |      |       |
-# | rule_key          | Rule key       | string(255) |             |      |       |
+# | xy_rule_key          | Rule key       | string(255) |             |      |       |
 # | colosseum_user_id | Colosseum user | integer(8)  |             |      | A     |
 # | o_count_max       | O count max    | integer(4)  |             |      |       |
 # | o_count           | O count        | integer(4)  |             |      |       |
@@ -24,11 +24,34 @@
 #--------------------------------------------------------------------------------
 
 class XyRecord < ApplicationRecord
-  before_validation on: :create do
-    self.summary = summary.to_s.squish
+  MSEC_ACCURACY = 1000
+
+  belongs_to :user, class_name: "Colosseum::User", foreign_key: "colosseum_user_id", required: false
+
+  before_validation do
+    if summary
+      self.summary = summary.to_s.squish
+    end
+    if entry_name
+      self.entry_name = entry_name.to_s.squish
+    end
   end
 
-  def computed_rank
-    XyGameRanking[rule_key].computed_rank(-spent_msec)
+  with_options presence: true do
+    validates :xy_rule_key
+    validates :x_count
+    validates :spent_msec
+  end
+
+  with_options allow_blank: true do
+    validates :xy_rule_key, inclusion: XyRuleInfo.keys.collect(&:to_s)
+  end
+
+  def rank
+    XyRuleInfo[xy_rule_key].rank_by_score(score)
+  end
+
+  def score
+    spent_msec * MSEC_ACCURACY * -1
   end
 end

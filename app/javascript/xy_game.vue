@@ -9,7 +9,7 @@
           template(v-if="mode === 'running'")
             button.button(@click="stop_handle") リタイア
 
-          b-dropdown.is-pulled-left(v-model="rule_key" :disabled="mode === 'running'")
+          b-dropdown.is-pulled-left(v-model="xy_rule_key" :disabled="mode === 'running'")
             button.button(slot="trigger")
               span {{current_rule.name}}
               b-icon(icon="menu-down")
@@ -19,6 +19,7 @@
           template(v-if="development_p")
             template(v-if="mode === 'running'")
               button.button(@click="goal_handle") ゴール
+            button.button(@click="command_send('ranking_reset', {a: 1})") ランキングリセット
 
         .level_container
           nav.level.is-mobile
@@ -72,14 +73,14 @@
     .column
       .box2.is-shadowless
         b-tabs(v-model="rule_selected_index" expanded)
-          template(v-for="rule_list1 in rule_list")
-            b-tab-item(:label="rule_list1.name" :value="rule_list1.key")
-              b-table(:data="rule_list1.xy_records" :paginated="true" :per-page="25" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'")
+          template(v-for="rule_one in rule_list")
+            b-tab-item(:label="rule_one.name" :value="rule_one.key")
+              b-table(:data="rule_one.xy_records" :paginated="true" :per-page="25" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'")
                 template(slot-scope="props")
-                  b-table-column(field="computed_rank" label="順位" sortable centered :width="1")
-                    | {{props.row.computed_rank}}
-                  b-table-column(field="name" label="名前" sortable)
-                    | {{props.row.name || '？'}}
+                  b-table-column(field="rank" label="順位" sortable centered :width="1")
+                    | {{props.row.rank}}
+                  b-table-column(field="entry_name" label="名前" sortable)
+                    | {{props.row.entry_name || '？'}}
                   b-table-column(field="spent_msec" label="タイム" sortable)
                     | {{time_format_from_msec(props.row.spent_msec)}}
                   b-table-column(field="created_at" label="日時" v-if="false")
@@ -134,8 +135,8 @@ export default {
       micro_seconds: null,
       piece: null,
       location: null,
-      rule_key: null,
-      handle_name: null,
+      xy_rule_key: null,
+      entry_name: null,
       rule_selected_index: null,
       rule_list: this.$root.$options.rule_list,
       xy_record: null,
@@ -148,20 +149,24 @@ export default {
   },
 
   watch: {
-    handle_name() { this.data_save() },
-    rule_key(v) {
+    entry_name() { this.data_save() },
+    xy_rule_key(v) {
       this.rule_selected_index = this.current_rule.code
       this.data_save()
     },
     rule_selected_index(v) {
-      this.rule_key = this.rule_list[v].key
+      this.xy_rule_key = this.rule_list[v].key
     },
   },
 
   methods: {
     data_restore_from_hash(hash) {
-      this.rule_key = hash.rule_key || "xy_rule_1c"
-      this.handle_name = hash.handle_name
+      this.xy_rule_key = hash.xy_rule_key
+      if (!this.current_rule) {
+        this.xy_rule_key = this.rule_list[0].key
+      }
+
+      this.entry_name = hash.entry_name
     },
 
     timer_setup() {
@@ -199,87 +204,33 @@ export default {
       this.mode = "goal"
       this.timer_stop()
 
-      const loading_instance = this.$loading.open()
-
-      // const params = new URLSearchParams()
-      // _.each([
-      //   "summary",
-      //   "rule_key",
-      //   "o_count",
-      //   "x_count",
-      //   "micro_seconds",
-      // ], e => {
-      //   params.append(`xy_record[${e}]`, this.$data[e])
-      //   // params.append(`xy_record[${e}]`, "a\nb")
-      // })
-
-      const params = ["summary", "rule_key", "o_count", "x_count", "spent_msec"].reduce((a, e) => ({...a, [e]: this[e]}), {})
-
-      // _.each([
-      //   "summary",
-      //   "rule_key",
-      //   "o_count",
-      //   "x_count",
-      //   "spent_msec",
-      // ], e => {
-      //   params[e] = this[e]
-      // })
-
-      // console.log(params)
-
-      this.$http({
-        method: "post",
-        url: this.$root.$options.xhr_post_path,
-        data: {xy_record: params},
-      }).then((response) => {
-        loading_instance.close()
-        console.log(response.data)
-        // this.$toast.open({message: response.data.message})
-        // this.tweet_image_url = response.data.tweet_image_url
-        // this.debug_alert(this.tweet_image_url)
-
-        this.rule_list = response.data.rule_list
-        this.xy_record = response.data.xy_record
-        this.xhr_put_path = response.data.xhr_put_path
+      this.http_command("post", this.$root.$options.xhr_post_path, {xy_record: this.post_params}, data => {
+        this.rule_list = data.rule_list
+        this.xy_record = data.xy_record
+        this.xhr_put_path = data.xhr_put_path
 
         this.$dialog.prompt({
-          message: `${this.xy_record.computed_rank}位`,
+          message: `${this.xy_record.rank}位`,
           confirmText: "保存",
           cancelText: "キャンセル",
-          inputAttrs: { type: 'text', value: this.handle_name, placeholder: "名前", },
-          onConfirm: (value) => {
-            this.handle_name = value
-            const loading_instance = this.$loading.open()
-
-            this.$http({
-              method: "put",
-              url: this.xhr_put_path,
-              data: { xy_record: { id: this.xy_record.id, name: value, } },
-            }).then((response) => {
-              loading_instance.close()
-              // console.log(response.data)
-              // this.$toast.open({message: response.data.message})
-              // this.tweet_image_url = response.data.tweet_image_url
-              // this.debug_alert(this.tweet_image_url)
-
-              this.rule_list = response.data.rule_list
-              this.xy_record = response.data.xy_record
-
-            }).catch((error) => {
-              loading_instance.close()
-              console.table([error.response])
-              this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
-            })
-
+          inputAttrs: { type: 'text', value: this.entry_name, placeholder: "名前", },
+          onConfirm: value => {
+            this.entry_name = value
+            this.entry_name_save()
           },
         })
-
-      }).catch((error) => {
-        loading_instance.close()
-        console.table([error.response])
-        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
+    },
 
+    entry_name_save() {
+      this.http_command("put", this.xhr_put_path, {xy_record: { id: this.xy_record.id, entry_name: this.entry_name}}, data => {
+        this.rule_list = data.rule_list
+        this.xy_record = data.xy_record
+      })
+    },
+
+    command_send(command, args = {}) {
+      this.http_command("post", this.$root.$options.xhr_post_path, { xy_record: { command: command, ...args } })
     },
 
     timer_stop() {
@@ -356,12 +307,21 @@ export default {
   },
 
   computed: {
+    post_params() {
+      return [
+        "xy_rule_key",
+        "spent_msec",
+        "x_count",              // なくてもよい
+        "summary",              // なくてもよい
+      ].reduce((a, e) => ({...a, [e]: this[e]}), {})
+    },
+
     o_count_max() {
       return this.current_rule.o_count_max
     },
 
     current_rule() {
-      return this.rule_list_hash[this.rule_key]
+      return this.rule_list_hash[this.xy_rule_key]
     },
 
     rule_list_hash() {
@@ -370,8 +330,8 @@ export default {
 
     save_hash() {
       return {
-        rule_key: this.rule_key,
-        handle_name: this.handle_name,
+        xy_rule_key: this.xy_rule_key,
+        entry_name: this.entry_name,
       }
     },
 
@@ -386,20 +346,20 @@ export default {
     tweet_body() {
       let out = ""
       out += "▼符号入力ゲームの結果\n"
-      out += this.summary + "\n"
-      out += window.location.href
+      out += this.summary
+      out += window.location.href.replace(window.location.hash, "")
       return out
     },
 
     summary() {
       let out = ""
-      out += `ルール:${this.current_rule.name}\n`
+      out += `ルール: ${this.current_rule.name}\n`
       if (this.xy_record) {
-        out += `順位:${this.xy_record.computed_rank}位\n`
+        out += `順位: ${this.xy_record.rank}位\n`
       }
-      out += `タイム:${this.time_format}\n`
-      out += `まちがい:${this.x_count}\n`
-      out += `正解率:${this.rate_per}%\n`
+      out += `タイム: ${this.time_format}\n`
+      out += `まちがえた数: ${this.x_count}\n`
+      out += `正解率: ${this.rate_per}%\n`
       return out
     },
 

@@ -9,3 +9,8 @@
 
 #app(v-cloak="true")
   xy_game
+
+- if Rails.env.development?
+  .box
+    = session.id
+

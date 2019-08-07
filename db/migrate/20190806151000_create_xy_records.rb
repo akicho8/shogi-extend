@@ -9,7 +9,7 @@
 # | id                | ID             | integer(8)  | NOT NULL PK |      |       |
 # | name              | Name           | string(255) |             |      |       |
 # | summary           | Summary        | string(255) |             |      |       |
-# | rule_key          | Rule key       | string(255) |             |      |       |
+# | xy_rule_key          | Rule key       | string(255) |             |      |       |
 # | colosseum_user_id | Colosseum user | integer(8)  |             |      | A     |
 # | o_count_max       | O count max    | integer(4)  |             |      |       |
 # | o_count           | O count        | integer(4)  |             |      |       |
@@ -26,12 +26,10 @@
 class CreateXyRecords < ActiveRecord::Migration[5.1]
   def change
     create_table :xy_records, force: true do |t|
-      t.string :name
-      t.string :summary
-      t.string :rule_key
       t.belongs_to :colosseum_user, null: true, index: true
-      t.integer :o_count_max
-      t.integer :o_count
+      t.string :entry_name
+      t.string :summary
+      t.string :xy_rule_key
       t.integer :x_count
       t.float :spent_msec
       t.timestamps null: false

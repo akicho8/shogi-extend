@@ -1,5 +1,26 @@
 export default {
   methods: {
+    http_command(method, url, data, callback = null) {
+      const loading_instance = this.$loading.open()
+      this.$http({
+        method: method,
+        url: url,
+        data: data,
+      }).then((response) => {
+        loading_instance.close()
+        if (response.data.message) {
+          this.$toast.open({message: response.data.message})
+        }
+        if (callback) {
+          callback(response.data)
+        }
+      }).catch((error) => {
+        loading_instance.close()
+        console.table([error.response])
+        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+      })
+    },
+
     process_now() {
       this.$loading.open()
     },
