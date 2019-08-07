@@ -1,5 +1,13 @@
 export default {
   methods: {
+    rand(n) {
+      return Math.floor(Math.random() * n)
+    },
+
+    float_to_percentage(v) {
+      return Math.floor(v * 100.0)
+    },
+
     http_command(method, url, data, callback = null) {
       const loading_instance = this.$loading.open()
       this.$http({

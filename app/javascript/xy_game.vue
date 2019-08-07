@@ -45,6 +45,8 @@
                             .piece_fore(:class="cell_class(x - 1, y - 1)")
                               template(v-if="active_p(x - 1, y - 1)")
                                 | {{piece}}
+          .input_keys2
+            | {{input_keys}}
 
         .time_container
           .fixed_font.is-size-2
@@ -128,18 +130,18 @@ export default {
       mode: "stop",
       current_x: null,
       current_y: null,
-      o_count: 0,
-      x_count: 0,
+      o_count: 0,               // 正解数
+      x_count: 0,               // 不正解数
       input_keys: null,
       timer_run: false,
       micro_seconds: null,
       piece: null,
       location: null,
       xy_rule_key: null,
-      entry_name: null,
-      rule_selected_index: null,
-      rule_list: this.$root.$options.rule_list,
-      xy_record: null,
+      entry_name: null,                         // ランキングでの名前を保持しておく
+      rule_selected_index: null,                // b-tabs 連動用
+      rule_list: this.$root.$options.rule_list, // 複数のルールでそれぞれにランキング情報も入っている
+      xy_record: null,                          // ゲームが終わたっときにランクなどが入っている
       xhr_put_path: null,
     }
   },
@@ -150,10 +152,12 @@ export default {
 
   watch: {
     entry_name() { this.data_save() },
+
     xy_rule_key(v) {
       this.rule_selected_index = this.current_rule.code
       this.data_save()
     },
+
     rule_selected_index(v) {
       this.xy_rule_key = this.rule_list[v].key
     },
@@ -293,10 +297,6 @@ export default {
       return chars[this.rand(chars.length)]
     },
 
-    rand(n) {
-      return Math.floor(Math.random() * n)
-    },
-
     time_format_from_msec(v) {
       return dayjs.unix(v).format("mm:ss.SSS")
     },
@@ -364,7 +364,7 @@ export default {
     },
 
     rate_per() {
-      return Math.floor(this.rate * 100.0)
+      return this.float_to_percentage(this.rate)
     },
 
     rate() {
@@ -400,6 +400,11 @@ export default {
     margin: 0 auto
   .field_conainer
     margin-top: 1rem
+    position: relative
+    .input_keys2
+      top: 0
+      left: 0
+
   .time_container
     margin-top: 0rem
   .rule_container
