@@ -1,20 +1,21 @@
 <template lang="pug">
 .xy_game
   .columns
-    .column.is-8
+    .column
       .has-text-centered
         .buttons.is-centered
           template(v-if="mode === 'stop' || mode === 'goal'")
             button.button.is-primary(@click="start_handle") スタート
           template(v-if="mode === 'running'")
-            button.button(@click="stop_handle") リタイア
+            b-button(@click="stop_handle" type="is-danger") やめる
 
-          b-dropdown.is-pulled-left(v-model="xy_rule_key" :disabled="mode === 'running'")
-            button.button(slot="trigger")
-              span {{current_rule.name}}
-              b-icon(icon="menu-down")
-            template(v-for="e in rule_list")
-              b-dropdown-item(:value="e.key") {{e.name}}
+          template(v-if="mode !== 'running'")
+            b-dropdown.is-pulled-left(v-model="xy_rule_key")
+              button.button(slot="trigger")
+                span {{selected_rule.name}}
+                b-icon(icon="menu-down")
+              template(v-for="e in rule_list")
+                b-dropdown-item(:value="e.key") {{e.name}}
 
           b-tooltip(label="ルール")
             b-button(@click="rule_display" icon-right="help")
@@ -67,11 +68,11 @@
                   | &nbsp;
                   | ツイート
 
-    .column
-      b-tabs(v-model="rule_selected_index" expanded)
+    .column.is-4(v-if="mode === 'stop' || mode === 'goal'")
+      b-tabs(v-model="selected_rule_index" expanded)
         template(v-for="rule_one in rule_list")
           b-tab-item(:label="rule_one.name" :value="rule_one.key")
-            b-table(:data="rule_one.xy_records" :paginated="true" :per-page="$root.$options.per_page" :current-page.sync="current_pages[rule_selected_index]" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'")
+            b-table(:data="rule_one.xy_records" :paginated="true" :per-page="$root.$options.per_page" :current-page.sync="current_pages[selected_rule_index]" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'")
               template(slot-scope="props")
                 b-table-column(field="rank" label="順位" sortable centered :width="1")
                   | {{props.row.rank}}
@@ -133,11 +134,12 @@ export default {
       location: null,
       xy_rule_key: null,
       entry_name: null,       // ランキングでの名前を保持しておく
-      rule_selected_index: null,                // b-tabs 連動用
+      selected_rule_index: null,                // b-tabs 連動用
       rule_list: this.$root.$options.rule_list, // 複数のルールでそれぞれにランキング情報も入っている
       xy_record: null,                          // ゲームが終わたっときにランクなどが入っている
       xhr_put_path: null,
       current_pages: null,
+      game_rule: null,
     }
   },
 
@@ -151,11 +153,11 @@ export default {
     current_pages() { this.data_save_to_local_storage() },
 
     xy_rule_key(v) {
-      this.rule_selected_index = this.current_rule.code
+      this.selected_rule_index = this.selected_rule.code
       this.data_save_to_local_storage()
     },
 
-    rule_selected_index(v) {
+    selected_rule_index(v) {
       // このタブを始めて開いたときランキングの1ページ目に合わせる
       // this.current_pages[v] ||= 1 相当
       if (!this.current_pages[v]) {
@@ -178,7 +180,7 @@ export default {
 <div class="content is-size-7">
 <ol>
 <li>駒の場所をキーボードの数字2桁で入力していきます</li>
-<li>${this.o_count_max}問正解するまでの時間を競います</li>
+<li>${this.selected_rule.o_count_max}問正解するまでの時間を競います</li>
 <li>最初の数字を間違えたときはESCキーでキャンセルできます</li>
 </ol>
 </div>
@@ -190,7 +192,7 @@ export default {
 
     data_restore_from_hash(hash) {
       this.xy_rule_key = hash.xy_rule_key
-      if (!this.current_rule) {
+      if (!this.selected_rule) {
         this.xy_rule_key = this.rule_list[0].key
       }
 
@@ -218,6 +220,7 @@ export default {
       this.x_count = 0
       this.key_queue = []
       this.mode = "running"
+      this.game_rule = this.selected_rule
       this.quest_next()
       this.sound_play("start")
     },
@@ -235,7 +238,7 @@ export default {
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_record: this.post_params}, data => {
         this.rule_list = data.rule_list
         this.xy_record = data.xy_record
-        this.$set(this.current_pages, this.rule_selected_index, this.xy_record.ranking_page)
+        this.$set(this.current_pages, this.selected_rule_index, this.xy_record.ranking_page)
         this.xhr_put_path = data.xhr_put_path
 
         this.$dialog.prompt({
@@ -360,6 +363,18 @@ export default {
   },
 
   computed: {
+    summary() {
+      let out = ""
+      out += `ルール: ${this.game_rule.name}\n`
+      if (this.xy_record) {
+        out += `順位: ${this.xy_record.rank}位\n`
+      }
+      out += `タイム: ${this.time_format}\n`
+      out += `まちがえた数: ${this.x_count}\n`
+      out += `正解率: ${this.rate_per}%\n`
+      return out
+    },
+
     post_params() {
       return [
         "xy_rule_key",
@@ -370,10 +385,10 @@ export default {
     },
 
     o_count_max() {
-      return this.current_rule.o_count_max
+      return this.game_rule.o_count_max
     },
 
-    current_rule() {
+    selected_rule() {
       return this.rule_list_hash[this.xy_rule_key]
     },
 
@@ -402,18 +417,6 @@ export default {
       out += "▼符号入力ゲームの結果\n"
       out += this.summary
       out += window.location.href.replace(window.location.hash, "")
-      return out
-    },
-
-    summary() {
-      let out = ""
-      out += `ルール: ${this.current_rule.name}\n`
-      if (this.xy_record) {
-        out += `順位: ${this.xy_record.rank}位\n`
-      }
-      out += `タイム: ${this.time_format}\n`
-      out += `まちがえた数: ${this.x_count}\n`
-      out += `正解率: ${this.rate_per}%\n`
       return out
     },
 
@@ -448,7 +451,7 @@ export default {
       if (js_global.current_user) {
         return js_global.current_user.name
       }
-    }
+    },
   },
 }
 </script>
