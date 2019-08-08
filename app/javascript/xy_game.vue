@@ -241,6 +241,7 @@ export default {
       this.key_queue = []
       this.mode = "running"
       this.game_rule = this.selected_rule
+      this.piece_reset()
       this.quest_next()
       this.sound_play("start")
     },
@@ -325,11 +326,12 @@ export default {
           if (this.active_p(this.board_size - x, y - 1)) {
             this.o_count++
             this.sound_play("o")
+            this.piece_reset()
+            this.quest_next()
           } else {
             this.x_count++
             this.sound_play("x")
           }
-          this.quest_next()
         }
         e.preventDefault()
         return
@@ -341,9 +343,19 @@ export default {
         this.goal_handle()
         return
       }
+    },
 
-      this.current_x = this.place_random()
-      this.current_y = this.place_random()
+    piece_reset() {
+      while (true) {
+        this.current_x = this.place_random()
+        this.current_y = this.place_random()
+        const retry_p = (this.o_count == 0 && this.current_x === this.current_y)
+        if (retry_p) {
+        } else {
+          break
+        }
+      }
+
       this.piece = this.piece_sample()
       if (this.rand(2) === 0) {
         this.location = "black"
