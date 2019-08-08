@@ -264,7 +264,7 @@ export default {
 
         // Howler
         if (true) {
-          const sound = new Howl({src: response.data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.7})
+          const sound = new Howl({src: response.data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.5})
           if (options.onend) {
             sound.on("end", () => options.onend())
           }
