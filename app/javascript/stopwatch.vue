@@ -467,7 +467,7 @@ export default {
 
     current_min(v) {
       if (v >= 1) {
-        this.talk(`${v}分経過`)
+        this.talk(`${v}分経過。`)
       }
     },
   },
