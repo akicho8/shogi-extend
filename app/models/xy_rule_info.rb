@@ -16,7 +16,9 @@ class XyRuleInfo
 
   class << self
     def setup
-      clear_all
+      if Rails.env.development? || Rails.env.test?
+        clear_all
+      end
     end
 
     def rule_list
