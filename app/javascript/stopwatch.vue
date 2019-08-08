@@ -14,11 +14,12 @@
           b-dropdown-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
 
         .lap_time
-          span.number_span(@click="track_input_dialog")
+          span.quest_digit(@click="track_input_dialog")
             | {{quest_name(new_quest)}}
-          |
-          | -
-          | {{time_format(lap_counter)}}
+          span.has-text-grey-light
+            | -
+          span.current_digit
+            | {{time_format(lap_counter)}}
         .has-text-grey-light.total_time
           b-tooltip(label="トータル" position="is-right")
             | {{ja_time_format(total_with_lap_seconds)}}
@@ -686,6 +687,8 @@ export default {
 </script>
 
 <style lang="sass">
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap')
+
 .stopwatch
   touch-action: manipulation
 
@@ -706,8 +709,11 @@ export default {
       margin-top: 1.2rem
       font-size: 5rem
       line-height: 100%
-      .number_span
+      font-family: 'Roboto mono', monospace
+      .quest_digit
         cursor: pointer
+      .current_digit
+        margin-left: 1rem
 
     .total_time
       font-size: 1rem

@@ -4,14 +4,14 @@ hr
 
 .columns
   .column
-    = render partial: "show", locals: {rule_key: :total}
+    = render partial: "show", locals: {ranking_key: :total}
   .column
-    = render partial: "show", locals: {rule_key: :day}
+    = render partial: "show", locals: {ranking_key: :day}
 .columns
   .column
-    = render partial: "show", locals: {rule_key: :week}
+    = render partial: "show", locals: {ranking_key: :week}
   .column
-    = render partial: "show", locals: {rule_key: :month}
+    = render partial: "show", locals: {ranking_key: :month}
 
 p
   = link_to("ロビーに戻る", [:colosseum, :battles], :class => "button")

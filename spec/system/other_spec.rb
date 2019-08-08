@@ -8,6 +8,9 @@ RSpec.describe "その他", type: :system do
   end
 
   it "符号入力ゲーム" do
+    XyRecord.destroy_all
+    XyRuleInfo.clear_all
+
     visit "/xy"
     expect(page).to have_content "Rails"
     doc_image

@@ -19,6 +19,10 @@ class XyRuleInfo
       end
     end
 
+    def clear_all
+      each(&:current_clean)
+    end
+
     def rebuild
       each(&:aggregate)
     end
