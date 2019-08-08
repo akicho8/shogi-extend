@@ -47,8 +47,20 @@ class XyRecord < ApplicationRecord
     validates :xy_rule_key, inclusion: XyRuleInfo.keys.collect(&:to_s)
   end
 
+  after_create do
+    ranking_store
+  end
+
   def rank
     XyRuleInfo[xy_rule_key].rank_by_score(score)
+  end
+
+  def ranking_page
+    XyRuleInfo[xy_rule_key].ranking_page(id)
+  end
+
+  def ranking_store
+    XyRuleInfo[xy_rule_key].ranking_store(self)
   end
 
   def score

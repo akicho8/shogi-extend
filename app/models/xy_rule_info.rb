@@ -9,7 +9,8 @@ class XyRuleInfo
     { key: "xy_rule100", name: "100問", o_count_max: 100, development_only: false, },
   ]
 
-  cattr_accessor(:rank_limit) { 50 }  # 位まで表示
+  cattr_accessor(:rank_limit) { Rails.env.production? ? 100 : 5 }  # 位まで表示
+  cattr_accessor(:per_page) { Rails.env.production? ? 20 : 2 }
 
   class << self
     def rule_list
@@ -18,15 +19,15 @@ class XyRuleInfo
       end
     end
 
-    def clear_all
-      each(&:current_clean)
+    def rebuild
+      each(&:aggregate)
     end
   end
 
   # 実際のスコア(のもとの時間)は XyRecord が持っているので取り出さない
   def xy_records
-    current_clean
-    aggregate
+    # current_clean
+    # aggregate
     redis.zrevrange(inside_key, 0, rank_limit - 1).collect do |id|
       XyRecord.find(id).as_json(methods: [:rank])
     end
@@ -36,17 +37,27 @@ class XyRuleInfo
     redis.zcount(inside_key, score + 1, "+inf") + 1
   end
 
+  def ranking_page(id)
+    if index = redis.zrevrank(inside_key, id)
+      index.div(per_page).next
+    end
+  end
+
+  def ranking_store(record)
+    redis.zadd(inside_key, record.score, record.id)
+  end
+
   def current_clean
     redis.del(inside_key)
   end
 
-  private
-
   def aggregate
-    XyRecord.where(xy_rule_key: key).each do |record|
-      redis.zadd(inside_key, record.score, record.id)
+    XyRecord.where(xy_rule_key: key).each do |e|
+      ranking_store(e)
     end
   end
+
+  private
 
   def inside_key
     "#{self.class.name.underscore}/#{key}"

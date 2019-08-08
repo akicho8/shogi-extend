@@ -27,8 +27,8 @@ class XyRecordsController < ApplicationController
   helper_method :js_index_options
 
   class << self
-    def command_ranking_reset(params)
-      XyRuleInfo.clear_all
+    def command_ranking_rebuild(params)
+      XyRuleInfo.rebuild
     end
   end
 
@@ -57,6 +57,7 @@ class XyRecordsController < ApplicationController
     {
       xhr_post_path: url_for([:xy_records, format: :json]),
       rule_list: XyRuleInfo.rule_list,
+      per_page: XyRuleInfo.per_page,
     }
   end
 
@@ -65,8 +66,8 @@ class XyRecordsController < ApplicationController
   def result_attributes
     {
       xhr_put_path: url_for([@xy_record, format: :json]),
-      xy_record: @xy_record.as_json(methods: [:rank]),
       rule_list: XyRuleInfo.rule_list,
+      xy_record: @xy_record.as_json(methods: [:rank, :ranking_page]),
     }
   end
 

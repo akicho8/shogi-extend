@@ -19,7 +19,9 @@
           template(v-if="development_p")
             template(v-if="mode === 'running'")
               button.button(@click="goal_handle") ゴール
-            button.button(@click="command_send('ranking_reset', {a: 1})") ランキングリセット
+            button.button(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
+            button.button(@click="data_restore_from_hash({})") 初期化
+            | {{current_pages}}
 
         .level_container
           nav.level.is-mobile
@@ -45,9 +47,6 @@
                             .piece_fore(:class="cell_class(x - 1, y - 1)")
                               template(v-if="active_p(x - 1, y - 1)")
                                 | {{piece}}
-          .input_keys2
-            | {{input_keys}}
-
         .time_container
           .fixed_font.is-size-2
             | {{time_format}}
@@ -71,22 +70,22 @@
             .message-body.has-text-left
               ul
                 li 駒のある場所の座標をキーボードの数字2桁で入力していきます
-                li {{o_count_max}}回正解するまでの時間を競います
+                li {{o_count_max}}問正解するまでの時間を競います
+                li 最初の数字を間違えたときは ESC キーでキャンセルできます
     .column
-      .box2.is-shadowless
-        b-tabs(v-model="rule_selected_index" expanded)
-          template(v-for="rule_one in rule_list")
-            b-tab-item(:label="rule_one.name" :value="rule_one.key")
-              b-table(:data="rule_one.xy_records" :paginated="true" :per-page="25" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'")
-                template(slot-scope="props")
-                  b-table-column(field="rank" label="順位" sortable centered :width="1")
-                    | {{props.row.rank}}
-                  b-table-column(field="entry_name" label="名前" sortable)
-                    | {{props.row.entry_name || '？'}}
-                  b-table-column(field="spent_msec" label="タイム" sortable)
-                    | {{time_format_from_msec(props.row.spent_msec)}}
-                  b-table-column(field="created_at" label="日時" v-if="false")
-                    | {{time_default_format(props.row.created_at)}}
+      b-tabs(v-model="rule_selected_index" expanded)
+        template(v-for="rule_one in rule_list")
+          b-tab-item(:label="rule_one.name" :value="rule_one.key")
+            b-table(:data="rule_one.xy_records" :paginated="true" :per-page="$root.$options.per_page" :current-page.sync="current_pages[rule_selected_index]" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'")
+              template(slot-scope="props")
+                b-table-column(field="rank" label="順位" sortable centered :width="1")
+                  | {{props.row.rank}}
+                b-table-column(field="entry_name" label="名前" sortable)
+                  | {{props.row.entry_name || entry_name || '名無しの棋士'}}
+                b-table-column(field="spent_msec" label="タイム" sortable)
+                  | {{time_format_from_msec(props.row.spent_msec)}}
+                b-table-column(field="created_at" label="日時" v-if="false")
+                  | {{time_default_format(props.row.created_at)}}
 
   template(v-show="true")
     .columns
@@ -132,17 +131,18 @@ export default {
       current_y: null,
       o_count: 0,               // 正解数
       x_count: 0,               // 不正解数
-      input_keys: null,
+      key_queue: null,
       timer_run: false,
       micro_seconds: null,
       piece: null,
       location: null,
       xy_rule_key: null,
-      entry_name: null,                         // ランキングでの名前を保持しておく
+      entry_name: null,       // ランキングでの名前を保持しておく
       rule_selected_index: null,                // b-tabs 連動用
       rule_list: this.$root.$options.rule_list, // 複数のルールでそれぞれにランキング情報も入っている
       xy_record: null,                          // ゲームが終わたっときにランクなどが入っている
       xhr_put_path: null,
+      current_pages: null,
     }
   },
 
@@ -152,6 +152,7 @@ export default {
 
   watch: {
     entry_name() { this.data_save() },
+    current_pages() { this.data_save() },
 
     xy_rule_key(v) {
       this.rule_selected_index = this.current_rule.code
@@ -160,6 +161,11 @@ export default {
 
     rule_selected_index(v) {
       this.xy_rule_key = this.rule_list[v].key
+
+      // this.current_pages[v] ||= 1 相当
+      if (!this.current_pages[v]) {
+        this.$set(this.current_pages, v, 1)
+      }
     },
   },
 
@@ -170,7 +176,8 @@ export default {
         this.xy_rule_key = this.rule_list[0].key
       }
 
-      this.entry_name = hash.entry_name
+      this.entry_name = hash.entry_name || this.default_name
+      this.current_pages = hash.current_pages || {}
     },
 
     timer_setup() {
@@ -191,12 +198,12 @@ export default {
       this.micro_seconds = 0
       this.o_count = 0
       this.x_count = 0
-      this.input_keys = []
+      this.key_queue = []
       this.mode = "running"
       this.quest_next()
       this.sound_play("start")
 
-      document.addEventListener("keypress", this.key_handle, false)
+      document.addEventListener("keydown", this.key_handle, false)
     },
 
     stop_handle() {
@@ -211,6 +218,7 @@ export default {
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_record: this.post_params}, data => {
         this.rule_list = data.rule_list
         this.xy_record = data.xy_record
+        this.$set(this.current_pages, this.rule_selected_index, this.xy_record.ranking_page)
         this.xhr_put_path = data.xhr_put_path
 
         this.$dialog.prompt({
@@ -218,10 +226,16 @@ export default {
           confirmText: "保存",
           cancelText: "キャンセル",
           inputAttrs: { type: 'text', value: this.entry_name, placeholder: "名前", },
+          canCancel: false,
           onConfirm: value => {
             this.entry_name = value
             this.entry_name_save()
           },
+          // onCancel: () => {
+          //   if (this.entry_name) {
+          //     this.entry_name_save()
+          //   }
+          // },
         })
       })
     },
@@ -230,6 +244,7 @@ export default {
       this.http_command("put", this.xhr_put_path, {xy_record: { id: this.xy_record.id, entry_name: this.entry_name}}, data => {
         this.rule_list = data.rule_list
         this.xy_record = data.xy_record
+        this.talk(`${this.entry_name}さんは${this.xy_record.rank}位です`)
       })
     },
 
@@ -245,18 +260,27 @@ export default {
       if (this.mode != "running") {
         return
       }
-      this.input_keys.push(e.key)
-      if (this.input_keys.length >= 2) {
-        const x = parseInt(this.input_keys.shift())
-        const y = parseInt(this.input_keys.shift())
-        if (this.active_p(this.board_size - x, y - 1)) {
-          this.o_count++
-          this.sound_play("o")
-        } else {
-          this.sound_play("x")
-          this.x_count++
+      if (e.key === "Escape") {
+        this.key_queue = []
+        e.preventDefault()
+        return
+      }
+      if (e.key.match(/^\d/)) {
+        this.key_queue.push(e.key)
+        if (this.key_queue.length >= 2) {
+          const x = parseInt(this.key_queue.shift())
+          const y = parseInt(this.key_queue.shift())
+          if (this.active_p(this.board_size - x, y - 1)) {
+            this.o_count++
+            this.sound_play("o")
+          } else {
+            this.x_count++
+            this.sound_play("x")
+          }
+          this.quest_next()
         }
-        this.quest_next()
+        e.preventDefault()
+        return
       }
     },
 
@@ -332,6 +356,7 @@ export default {
       return {
         xy_rule_key: this.xy_rule_key,
         entry_name: this.entry_name,
+        current_pages: this.current_pages,
       }
     },
 
@@ -389,6 +414,12 @@ export default {
     spent_msec() {
       return this.micro_seconds / 1000
     },
+
+    default_name() {
+      if (js_global.current_user) {
+        return js_global.current_user.name
+      }
+    }
   },
 }
 </script>
@@ -400,11 +431,6 @@ export default {
     margin: 0 auto
   .field_conainer
     margin-top: 1rem
-    position: relative
-    .input_keys2
-      top: 0
-      left: 0
-
   .time_container
     margin-top: 0rem
   .rule_container
