@@ -72,7 +72,16 @@
       b-tabs(v-model="selected_rule_index" expanded)
         template(v-for="rule_one in rule_list")
           b-tab-item(:label="rule_one.name" :value="rule_one.key")
-            b-table(:data="rule_one.xy_records" :paginated="true" :per-page="$root.$options.per_page" :current-page.sync="current_pages[selected_rule_index]" :pagination-simple="true" :mobile-cards="false" :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'" default-sort-direction="desc")
+            b-table(
+              :data="rule_one.xy_records"
+              :paginated="true"
+              :per-page="$root.$options.per_page"
+              :current-page.sync="current_pages[selected_rule_index]"
+              :pagination-simple="true"
+              :mobile-cards="false"
+              :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'"
+              default-sort-direction="desc"
+              )
               template(slot-scope="props")
                 b-table-column(field="rank" label="順位" sortable centered :width="1")
                   | {{props.row.rank}}
