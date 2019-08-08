@@ -16,11 +16,15 @@
             template(v-for="e in rule_list")
               b-dropdown-item(:value="e.key") {{e.name}}
 
+          b-tooltip(label="ルール")
+            b-button(@click="rule_display" icon-right="help")
+
           template(v-if="development_p")
             template(v-if="mode === 'running'")
               button.button(@click="goal_handle") ゴール
             button.button(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
             button.button(@click="data_restore_from_hash({})") 初期化
+            button.button(@click="storage_clear") storage_clear
             | {{current_pages}}
 
         .level_container
@@ -63,15 +67,6 @@
                   | &nbsp;
                   | ツイート
 
-        .rule_container
-          article.message.is-primary
-            .message-header
-              p ルール
-            .message-body.has-text-left
-              ul
-                li 駒のある場所の座標をキーボードの数字2桁で入力していきます
-                li {{o_count_max}}問正解するまでの時間を競います
-                li 最初の数字を間違えたときは ESC キーでキャンセルできます
     .column
       b-tabs(v-model="rule_selected_index" expanded)
         template(v-for="rule_one in rule_list")
@@ -81,13 +76,13 @@
                 b-table-column(field="rank" label="順位" sortable centered :width="1")
                   | {{props.row.rank}}
                 b-table-column(field="entry_name" label="名前" sortable)
-                  | {{props.row.entry_name || entry_name || '名無しの棋士'}}
+                  | {{props.row.entry_name || entry_name || '？'}}
                 b-table-column(field="spent_msec" label="タイム" sortable)
                   | {{time_format_from_msec(props.row.spent_msec)}}
                 b-table-column(field="created_at" label="日時" v-if="false")
                   | {{time_default_format(props.row.created_at)}}
 
-  template(v-if="development_p || true")
+  template(v-if="development_p")
     .columns
       .column
         table(border=1)
@@ -148,6 +143,7 @@ export default {
 
   created() {
     this.timer_setup()
+    document.addEventListener("keydown", this.key_handle, false)
   },
 
   watch: {
@@ -160,17 +156,38 @@ export default {
     },
 
     rule_selected_index(v) {
-      console.log(v)
-      this.xy_rule_key = this.rule_list[v].key
-
+      // このタブを始めて開いたときランキングの1ページ目に合わせる
       // this.current_pages[v] ||= 1 相当
       if (!this.current_pages[v]) {
         this.$set(this.current_pages, v, 1)
+      }
+
+      // タブインデックスからルールのキーを求めてプルダウンの方にも反映する
+      const e = this.rule_list[v]
+      if (e) {
+        this.xy_rule_key = e.key
       }
     },
   },
 
   methods: {
+    rule_display() {
+      this.$dialog.alert({
+        title: "ルール",
+        message: `
+<div class="content is-size-7">
+<ol>
+<li>駒の場所をキーボードの数字2桁で入力していきます</li>
+<li>${this.o_count_max}問正解するまでの時間を競います</li>
+<li>最初の数字を間違えたときはESCキーでキャンセルできます</li>
+</ol>
+</div>
+`,
+        confirmText: "わかった",
+        canCancel: ["outside", "escape"],
+      })
+    },
+
     data_restore_from_hash(hash) {
       this.xy_rule_key = hash.xy_rule_key
       if (!this.current_rule) {
@@ -203,8 +220,6 @@ export default {
       this.mode = "running"
       this.quest_next()
       this.sound_play("start")
-
-      document.addEventListener("keydown", this.key_handle, false)
     },
 
     stop_handle() {
@@ -215,6 +230,7 @@ export default {
     goal_handle() {
       this.mode = "goal"
       this.timer_stop()
+      this.talk("おわりました")
 
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_record: this.post_params}, data => {
         this.rule_list = data.rule_list
@@ -226,7 +242,7 @@ export default {
           message: `${this.xy_record.rank}位`,
           confirmText: "保存",
           cancelText: "キャンセル",
-          inputAttrs: { type: 'text', value: this.entry_name, placeholder: "名前", },
+          inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
           canCancel: false,
           onConfirm: value => {
             this.entry_name = value
@@ -245,8 +261,20 @@ export default {
       this.http_command("put", this.xhr_put_path, {xy_record: { id: this.xy_record.id, entry_name: this.entry_name}}, data => {
         this.rule_list = data.rule_list
         this.xy_record = data.xy_record
-        this.talk(`${this.entry_name}さんは${this.xy_record.rank}位です`)
+        this.congrats_talk()
       })
+    },
+
+    congrats_talk() {
+      let message = ""
+      if (this.xy_record.rank <= 3) {
+        message += `おめでとうございます。`
+      }
+      message += `${this.entry_name}さんは${this.xy_record.rank}位です。`
+      if (this.xy_record.rank > this.$root.$options.rank_max) {
+        message += `ランキング外です。`
+      }
+      this.talk(message)
     },
 
     command_send(command, args = {}) {

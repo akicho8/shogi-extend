@@ -8,13 +8,13 @@ module Colosseum
       { key: :month, name: "月間", begin_at: -> { Time.current.beginning_of_month }, end_at: -> { Time.current.beginning_of_month.next_month }, },
     ]
 
-    cattr_accessor(:rank_limit) { 50 }  # 位まで表示
+    cattr_accessor(:rank_max) { 50 }  # 位まで表示
     cattr_accessor(:accuracy)  { 1000 } # 精度
 
     def all
       current_clean
       aggregate
-      redis.zrevrange(inside_key, 0, rank_limit - 1, with_scores: true).collect do |user_id, score|
+      redis.zrevrange(inside_key, 0, rank_max - 1, with_scores: true).collect do |user_id, score|
         rank = redis.zcount(inside_key, score + 1, "+inf") + 1
         {rank: rank, user_id: user_id, win_ratio: score.fdiv(accuracy)}
       end

@@ -25,6 +25,10 @@ export default {
       localStorage.setItem(this.local_storage_key, this.enc_base64)
     },
 
+    storage_clear() {
+      localStorage.removeItem(this.local_storage_key)
+    },
+    
     data_restore_from_url_or_storage() {
       let enc_base64 = null
       if (location.hash) {

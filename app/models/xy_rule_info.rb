@@ -1,3 +1,6 @@
+# cap production rails:runner CODE='XyRuleInfo.clear_all'
+# cap production rails:runner CODE='XyRecord.destroy_all'
+
 class XyRuleInfo
   include ApplicationMemoryRecord
   memory_record [
@@ -8,7 +11,7 @@ class XyRuleInfo
     { key: "xy_rule100", name: "100問", o_count_max: 100, development_only: false, },
   ]
 
-  cattr_accessor(:rank_limit) { Rails.env.production? ? 100 : 5 }  # 位まで表示
+  cattr_accessor(:rank_max) { Rails.env.production? ? 100 : 5 }  # 位まで表示
   cattr_accessor(:per_page) { Rails.env.production? ? 20 : 2 }
 
   class << self
@@ -31,7 +34,7 @@ class XyRuleInfo
   def xy_records
     # current_clean
     # aggregate
-    redis.zrevrange(inside_key, 0, rank_limit - 1).collect do |id|
+    redis.zrevrange(inside_key, 0, rank_max - 1).collect do |id|
       XyRecord.find(id).as_json(methods: [:rank])
     end
   end

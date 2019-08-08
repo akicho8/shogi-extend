@@ -56,6 +56,7 @@ class XyRecordsController < ApplicationController
       xhr_post_path: url_for([:xy_records, format: :json]),
       rule_list: XyRuleInfo.rule_list,
       per_page: XyRuleInfo.per_page,
+      rank_max: XyRuleInfo.rank_max,
     }
   end
 
