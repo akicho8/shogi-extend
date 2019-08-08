@@ -15,6 +15,10 @@ class XyRuleInfo
   cattr_accessor(:per_page) { Rails.env.production? ? 20 : 2 }
 
   class << self
+    def setup
+      clear_all
+    end
+
     def rule_list
       reject { |e| !Rails.env.development? && e.development_only }.collect do |e|
         e.attributes.merge(xy_records: e.xy_records)

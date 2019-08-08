@@ -379,6 +379,9 @@ export default {
         out += `順位: ${this.xy_record.rank}位\n`
       }
       out += `タイム: ${this.time_format}\n`
+      if (this.time_avg) {
+        out += `平均: ${this.time_avg}\n`
+      }
       out += `まちがえた数: ${this.x_count}\n`
       out += `正解率: ${this.rate_per}%\n`
       return out
@@ -450,6 +453,12 @@ export default {
 
     time_format() {
       return this.time_format_from_msec(this.spent_msec)
+    },
+
+    time_avg() {
+      if (this.o_count >= 1) {
+        return this.time_format_from_msec(this.spent_msec / this.o_count)
+      }
     },
 
     spent_msec() {
