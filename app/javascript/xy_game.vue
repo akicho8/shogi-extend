@@ -151,12 +151,12 @@ export default {
   },
 
   watch: {
-    entry_name() { this.data_save() },
-    current_pages() { this.data_save() },
+    entry_name() { this.data_save_to_local_storage() },
+    current_pages() { this.data_save_to_local_storage() },
 
     xy_rule_key(v) {
       this.rule_selected_index = this.current_rule.code
-      this.data_save()
+      this.data_save_to_local_storage()
     },
 
     rule_selected_index(v) {

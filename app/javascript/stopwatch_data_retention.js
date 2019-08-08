@@ -15,6 +15,13 @@ export default {
   methods: {
     data_save() {
       location.hash = this.enc_base64
+    },
+
+    data_save_to_location_hash() {
+      location.hash = this.enc_base64
+    },
+
+    data_save_to_local_storage() {
       localStorage.setItem(this.local_storage_key, this.enc_base64)
     },
 
