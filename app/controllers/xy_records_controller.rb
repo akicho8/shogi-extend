@@ -40,7 +40,7 @@ class XyRecordsController < ApplicationController
       return
     end
 
-    @xy_record = XyRecord.create!(current_params)
+    @xy_record = XyRecord.create!(current_params.merge(user: current_user))
     render json: result_attributes
   end
 

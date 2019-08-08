@@ -27,9 +27,9 @@ class CreateXyRecords < ActiveRecord::Migration[5.1]
       t.belongs_to :colosseum_user, null: true, index: true
       t.string :entry_name
       t.string :summary
-      t.string :xy_rule_key
-      t.integer :x_count
-      t.float :spent_msec
+      t.string :xy_rule_key, null: false, index: true
+      t.integer :x_count, null: false
+      t.float :spent_msec, null: false
       t.timestamps null: false
     end
   end
