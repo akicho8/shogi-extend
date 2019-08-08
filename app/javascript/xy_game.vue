@@ -183,7 +183,9 @@ export default {
 
   methods: {
     rule_display() {
-      this.$dialog.alert({
+      Howler.unload()
+
+      const rule_dialog = this.$dialog.alert({
         title: "ルール",
         message: `
 <div class="content is-size-7">
@@ -196,7 +198,16 @@ export default {
 `,
         confirmText: "わかった",
         canCancel: ["outside", "escape"],
+        onConfirm: () => { Howler.unload() },
+        onCancel:  () => { Howler.unload() },
       })
+
+      this.talk(`
+1、駒の場所をキーボードの数字2桁で入力していきます。
+2、${this.selected_rule.o_count_max}問正解するまでの時間を競います。
+3、最初の数字を間違えたときはエスケープキーでキャンセルできます。
+`, {onend: () => { rule_dialog.close() }})
+
     },
 
     data_restore_from_hash(hash) {

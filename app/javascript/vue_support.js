@@ -236,7 +236,7 @@ export default {
     },
 
     // しゃべる
-    talk(source_text) {
+    talk(source_text, options = {}) {
       // const params = new URLSearchParams()
       // params.set("source_text", source_text)
       // this.$http.post(js_global.talk_path, params).then(response => {
@@ -264,7 +264,10 @@ export default {
 
         // Howler
         if (true) {
-          new Howl({src: response.data.service_path, autoplay: true, volume: 1.0})
+          const sound = new Howl({src: response.data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 2.0})
+          if (options.onend) {
+            sound.on("end", () => options.onend())
+          }
         }
 
       }).catch(error => {
