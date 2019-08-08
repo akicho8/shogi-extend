@@ -87,7 +87,7 @@
                 b-table-column(field="created_at" label="日時" v-if="false")
                   | {{time_default_format(props.row.created_at)}}
 
-  template(v-show="true")
+  template(v-if="development_p")
     .columns
       .column
         table(border=1)
