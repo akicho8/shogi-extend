@@ -298,8 +298,8 @@ export default {
         // format = "HH:mm"
         format = "h時間m分s秒"
       } else {
-        format = "mm:ss"
-        // format = "m分s秒"
+        // format = "mm:ss"
+        format = "m分s秒"
       }
       return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
