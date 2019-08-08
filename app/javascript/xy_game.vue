@@ -87,7 +87,7 @@
                 b-table-column(field="created_at" label="日時" v-if="false")
                   | {{time_default_format(props.row.created_at)}}
 
-  template(v-if="development_p")
+  template(v-if="development_p || true")
     .columns
       .column
         table(border=1)
@@ -160,6 +160,7 @@ export default {
     },
 
     rule_selected_index(v) {
+      console.log(v)
       this.xy_rule_key = this.rule_list[v].key
 
       // this.current_pages[v] ||= 1 相当
