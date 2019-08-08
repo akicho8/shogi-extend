@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_06_151000) do
+ActiveRecord::Schema.define(version: 2019_08_06_151001) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -375,12 +375,13 @@ ActiveRecord::Schema.define(version: 2019_08_06_151000) do
     t.bigint "colosseum_user_id"
     t.string "entry_name"
     t.string "summary"
-    t.string "xy_rule_key"
-    t.integer "x_count"
-    t.float "spent_msec"
+    t.string "xy_rule_key", null: false
+    t.integer "x_count", null: false
+    t.float "spent_msec", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["colosseum_user_id"], name: "index_xy_records_on_colosseum_user_id"
+    t.index ["xy_rule_key"], name: "index_xy_records_on_xy_rule_key"
   end
 
 end

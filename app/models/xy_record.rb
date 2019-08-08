@@ -10,9 +10,9 @@
 # | colosseum_user_id | Colosseum user | integer(8)  |             | :user => Colosseum::User#id | A     |
 # | entry_name        | Entry name     | string(255) |             |                             |       |
 # | summary           | Summary        | string(255) |             |                             |       |
-# | xy_rule_key       | Xy rule key    | string(255) |             |                             |       |
-# | x_count           | X count        | integer(4)  |             |                             |       |
-# | spent_msec        | Spent msec     | float(24)   |             |                             |       |
+# | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |                             | B     |
+# | x_count           | X count        | integer(4)  | NOT NULL    |                             |       |
+# | spent_msec        | Spent msec     | float(24)   | NOT NULL    |                             |       |
 # | created_at        | 作成日時       | datetime    | NOT NULL    |                             |       |
 # | updated_at        | 更新日時       | datetime    | NOT NULL    |                             |       |
 # |-------------------+----------------+-------------+-------------+-----------------------------+-------|
