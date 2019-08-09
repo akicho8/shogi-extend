@@ -264,6 +264,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.mode = "readygo"
       this.count_down_counter = 0
       this.init_other_variables()
+      this.game_rule = this.selected_rule
 
       this.inteval_id = setInterval(() => {
         this.count_down_counter += 1
