@@ -373,10 +373,12 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
           const x = parseInt(this.key_queue.shift())
           const y = parseInt(this.key_queue.shift())
           if (this.active_p(this.board_size - x, y - 1)) {
-            this.o_count++
             this.sound_play("o")
-            this.place_next_set()
+            this.o_count++
             this.goal_check()
+            if (this.mode === "running") {
+              this.place_next_set()
+            }
           } else {
             this.x_count++
             this.sound_play("x")
@@ -398,7 +400,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       while (true) {
         this.current_x = this.place_random()
         this.current_y = this.place_random()
-        const retry_p = (this.o_count == 0 && this.current_x === this.current_y)
+        const retry_p = (this.o_count === 0 && this.current_x === this.current_y)
         if (retry_p) {
         } else {
           break
