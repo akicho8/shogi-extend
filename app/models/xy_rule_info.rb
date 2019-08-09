@@ -1,5 +1,4 @@
 # cap production rails:runner CODE='XyRuleInfo.clear_all'
-# cap production rails:runner CODE='XyRecord.destroy_all'
 
 class XyRuleInfo
   include ApplicationMemoryRecord
@@ -28,6 +27,11 @@ class XyRuleInfo
     end
 
     def clear_all
+      redis_clear_all
+      XyRecord.destroy_all
+    end
+
+    def redis_clear_all
       each(&:current_clean)
     end
 

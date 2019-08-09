@@ -3,7 +3,6 @@ require File.expand_path('../../config/environment', __FILE__)
 
 # XyRuleInfo.clear_all
 #
-# XyRecord.destroy_all
 # XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "(name1)", spent_msec: 1.123, x_count: 0)
 # XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "(name1)", spent_msec: 2.123, x_count: 0)
 # XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "(name1)", spent_msec: 3.123, x_count: 0)
