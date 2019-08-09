@@ -87,6 +87,7 @@
               :pagination-simple="true"
               :mobile-cards="false"
               :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'"
+              :narrowed="true"
               default-sort-direction="desc"
               )
               template(slot-scope="props")
