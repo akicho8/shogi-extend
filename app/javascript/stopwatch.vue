@@ -5,19 +5,24 @@
       .has-text-centered.page_title
         | 詰将棋タイムアタック用ストップウォッチ
       .box.main_box.has-text-centered.nowrap.is-shadowless
-        b-dropdown.is-pulled-left
+        b-dropdown.options_doropdown.is-pulled-left
           button.button(slot="trigger")
             b-icon(icon="menu-down")
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット
           b-dropdown-item(@click="revert_handle") 1つ前に戻す
           b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
           b-dropdown-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
+        .helper_button
+          b-tooltip(label="使い方")
+            b-button(@click="rule_display" icon-right="help")
 
         .lap_time
           span.quest_digit(@click="track_input_dialog")
             | {{quest_name(new_quest)}}
-          span.has-text-grey-light
+          span.has-text-grey-lighter
+            |
             | -
+            |
           span.current_digit
             | {{time_format(lap_counter)}}
         .has-text-grey-light.total_time
@@ -94,22 +99,6 @@
                   | &nbsp;
                   | {{row.summary}}
   .columns
-    .column
-      article.message.is-primary.is-size-7
-        .message-header
-          | 補足説明
-        .message-body.has-text-left
-          .content
-            ol
-              li 正解するごとに「リターン」を叩いて、まちがえたら「x キー」を押して進めていくのが想定する使い方です
-              li ストップを押したときに現在の状態をログに保存します
-              li ログをクリックするとその時間の状態に戻ります
-              li 操作を間違えてリセットしてしまったときや「不正解だけ再テスト」をして前に戻りたくなったときに使います
-              li 手動で問題番号を並べたとき、自動インクリメントの方の問題番号は意味を持ちません
-              li スマホから使う場合、自動ロックで時計が止まってしまうので、スマホ側の設定で自動ロック「なし」を推奨します
-              li ブラウザを開き直したときに直近の問題の開始時の状態を復元します
-              li URLをコピーして他の端末で途中から再開できます
-
     .column.is-hidden-touch
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
@@ -169,6 +158,35 @@ export default {
   },
 
   methods: {
+    rule_display() {
+      const rule_dialog = this.$dialog.alert({
+        title: "使い方",
+        message: `
+          <div class="content is-size-7">
+            <ol>
+              <li>正解するごとに「リターン」を叩いて、まちがえたら「x キー」を押して進めていく想定です</li>
+              <li>手動で問題番号を並べたとき、自動インクリメントの方の問題番号は意味を持ちません</li>
+              <li>スマホから使う場合、自動ロックで時計が止まってしまうので、スマホ側の設定で自動ロック「なし」を推奨します</li>
+              <li>ブラウザを開き直したときに直近の問題の開始時の状態で復帰します</li>
+              <li>URLをコピーして他の端末で途中から再開できます</li>
+            </ol>
+            <br>
+            <h5>ログ</h5>
+            <ol>
+              <li>ストップを押したときに現在の状態をログに保存します</li>
+              <li>ログをクリックするとその時間の状態に戻ります</li>
+              <li>操作を間違えてリセットしてしまったときや「不正解だけ再テスト」をして前に戻りたくなったときに使います</li>
+            </ol>
+          </div>`,
+        confirmText: "わかった",
+        canCancel: ["outside", "escape"],
+        type: "is-info",
+        hasIcon: true,
+        onConfirm: () => { },
+        onCancel:  () => { },
+      })
+    },
+
     shortcut_key_assign() {
       document.addEventListener("keydown", e => {
         if (this.input_focus_p()) {
@@ -502,11 +520,11 @@ export default {
     },
 
     quest_list() {
-      if (this.quest_text !== "") {
-        return this.quest_text.split(/[\s,]+/)
-      } else {
+      if (this.quest_text === "") {
         return []
       }
+
+      return this.quest_text.split(/[\s,]+/)
     },
 
     ox_group() {
@@ -601,10 +619,10 @@ export default {
 
     format_all() {
       return {
-        "OX":       this.format_type3,
-        "Oは省略":  this.format_type2,
-        "時間なし": this.format_type1,
-        "分毎":     this.format_type4,
+        "OX":       this.format_type_a,
+        "Oは省略":  this.format_type_b,
+        "時間なし": this.format_type_c,
+        "分毎":     this.format_type_d,
       }
     },
 
@@ -631,7 +649,7 @@ export default {
       return out
     },
 
-    format_type1() {
+    format_type_c() {
       let out = ""
       out += this.summary
 
@@ -652,21 +670,21 @@ export default {
       return out
     },
 
-    format_type2() {
+    format_type_b() {
       return [
         this.summary + "\n",
         this.rows.map(e => this.quest_name(e) + " " + this.time_format(e.lap_counter) + this.o_or_x_to_s(e, "", " " + X_MARK) + "\n").join(""),
       ].join("")
     },
 
-    format_type3() {
+    format_type_a() {
       return [
         this.summary + "\n",
         this.rows.map(e => this.o_or_x_to_s(e, O_MARK, X_MARK) + " " + this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join(""),
       ].join("")
     },
 
-    format_type4() {
+    format_type_d() {
       let out = ""
       out += this.summary
       _.forIn(this.o_group_by_min, (rows, key) => {
@@ -687,7 +705,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap')
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap")
 
 .stopwatch
   touch-action: manipulation
@@ -700,20 +718,25 @@ export default {
     background-color: hsl(0, 0%, 98%)
 
     position: relative
-    .dropdown
+    .options_doropdown
       position: absolute
       top: 0.5rem
       left: 0.5rem
+    .helper_button
+      position: absolute
+      top: 0.5rem
+      right: 0.5rem
 
     .lap_time
       margin-top: 1.2rem
       font-size: 5rem
       line-height: 100%
-      font-family: 'Roboto mono', monospace
       .quest_digit
         cursor: pointer
       .current_digit
         margin-left: 1rem
+      .quest_digit, .current_digit
+        font-family: 'Roboto mono', monospace
 
     .total_time
       font-size: 1rem
