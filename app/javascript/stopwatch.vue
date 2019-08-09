@@ -471,7 +471,7 @@ export default {
     drop_seconds()  { this.data_save() },
 
     current_min(v) {
-      if (v >= 0) {
+      if (v >= 1) {
         this.talk(`${v}分経過`, {rate: 1.0})
       }
     },
