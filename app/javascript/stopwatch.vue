@@ -22,7 +22,6 @@
           span.has-text-grey-lighter
             |
             | -
-            |
           span.current_digit
             | {{time_format(lap_counter)}}
         .has-text-grey-light.total_time
