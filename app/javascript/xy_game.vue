@@ -168,6 +168,7 @@ export default {
   },
 
   created() {
+    this.init_other_variables()
     this.timer_setup()
     document.addEventListener("keydown", this.key_handle, false)
   },
@@ -250,17 +251,19 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       loop()
     },
 
-    readygo_handle() {
-      this.mode = "readygo"
-      this.count_down_counter = 0
-
+    init_other_variables() {
       this.micro_seconds = 0
       this.current_x = null
       this.current_y = null
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
-      this.game_rule = this.selected_rule
+    },
+
+    readygo_handle() {
+      this.mode = "readygo"
+      this.count_down_counter = 0
+      this.init_other_variables()
 
       this.inteval_id = setInterval(() => {
         this.count_down_counter += 1
