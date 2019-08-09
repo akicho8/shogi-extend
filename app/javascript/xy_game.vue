@@ -5,11 +5,11 @@
       .has-text-centered
         .buttons.is-centered
           template(v-if="mode === 'stop' || mode === 'goal'")
-            button.button.is-primary(@click="start_handle") スタート
-          template(v-if="mode === 'running'")
+            button.button.is-primary(@click="readygo_handle") スタート
+          template(v-if="mode === 'running' || mode === 'readygo'")
             b-button(@click="stop_handle" type="is-danger") やめる
 
-          template(v-if="mode !== 'running'")
+          template(v-if="mode === 'stop' || mode === 'goal'")
             b-dropdown.is-pulled-left(v-model="xy_rule_key")
               button.button(slot="trigger")
                 span {{selected_rule.name}}
@@ -42,6 +42,10 @@
                 p.title {{x_count}}
 
         .field_conainer
+          template(v-if="mode === 'readygo'")
+            .count_down_wrap
+              .count_down
+                | {{count_down}}
           .shogi-player.theme-simple.size-default
             .board_container.font_size_base
               .flippable
@@ -133,12 +137,19 @@ export default {
   ],
   data() {
     return {
+      // const
       board_size: 9,
+      count_down_max: 3,
+      count_down_speed: 1000 * 0.5,
+
       mode: "stop",
+      inteval_id: null,
+      count_down_counter: null,
+      sub_mode: null,
       current_x: null,
       current_y: null,
-      o_count: 0,               // 正解数
-      x_count: 0,               // 不正解数
+      o_count: null,               // 正解数
+      x_count: null,               // 不正解数
       key_queue: null,
       timer_run: false,
       micro_seconds: null,
@@ -238,15 +249,38 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       loop()
     },
 
-    start_handle() {
-      this.timer_run = true
+    readygo_handle() {
+      this.mode = "readygo"
+      this.count_down_counter = 0
+
       this.micro_seconds = 0
+      this.current_x = null
+      this.current_y = null
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
-      this.mode = "running"
       this.game_rule = this.selected_rule
-      this.place_reset()
+
+      this.inteval_id = setInterval(() => {
+        this.count_down_counter += 1
+        if (this.count_down === 0) {
+          this.countdown_interval_stop()
+          this.go_handle()
+        }
+      }, this.count_down_speed)
+    },
+
+    countdown_interval_stop() {
+      if (this.inteval_id) {
+        clearInterval(this.inteval_id)
+        this.inteval_id = null
+      }
+    },
+
+    go_handle() {
+      this.mode = "running"
+      this.timer_run = true
+      this.place_next_set()
       this.sound_play("start")
       this.goal_check()
     },
@@ -254,6 +288,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     stop_handle() {
       this.mode = "stop"
       this.timer_stop()
+      this.countdown_interval_stop()
     },
 
     goal_handle() {
@@ -335,7 +370,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
           if (this.active_p(this.board_size - x, y - 1)) {
             this.o_count++
             this.sound_play("o")
-            this.place_reset()
+            this.place_next_set()
             this.goal_check()
           } else {
             this.x_count++
@@ -354,7 +389,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       }
     },
 
-    place_reset() {
+    place_next_set() {
       while (true) {
         this.current_x = this.place_random()
         this.current_y = this.place_random()
@@ -404,6 +439,10 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
   },
 
   computed: {
+    count_down() {
+      return this.count_down_max - this.count_down_counter
+    },
+
     summary() {
       let out = ""
       out += `ルール: ${this.game_rule.name}\n`
@@ -513,6 +552,23 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     margin: 0 auto
   .field_conainer
     margin-top: 1rem
+    position: relative
+    .count_down_wrap
+      z-index: 1
+      position: absolute
+      top: 0%
+      bottom: 0%
+      left: 0%
+      right: 0%
+      margin: auto
+      // border: 1px dotted blue
+
+      display: flex
+      justify-content: center
+      align-items: center
+      .count_down
+        font-size: 24rem
+
   .time_container
     margin-top: 0.1rem
   .tweet_box_container
