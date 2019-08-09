@@ -264,8 +264,12 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_record: this.post_params}, data => {
         this.rule_list = data.rule_list
         this.xy_record = data.xy_record
-        this.$set(this.current_pages, this.selected_rule_index, this.xy_record.ranking_page)
         this.xhr_put_path = data.xhr_put_path
+
+        // ランク内ならランキングのページをそのページに移動する
+        if (this.xy_record.rank <= this.$root.$options.rank_max) {
+          this.$set(this.current_pages, this.selected_rule_index, this.xy_record.ranking_page)
+        }
 
         this.$dialog.prompt({
           message: `${this.xy_record.rank}位`,
