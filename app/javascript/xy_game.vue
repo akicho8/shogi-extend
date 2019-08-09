@@ -516,5 +516,5 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
   .summary
     white-space: pre-wrap
   .tweet_button_container
-    margin-top: 0.5rem
+    margin-top: 0.75rem
 </style>
