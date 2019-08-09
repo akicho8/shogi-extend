@@ -201,6 +201,8 @@ export default {
 `,
         confirmText: "わかった",
         canCancel: ["outside", "escape"],
+        type: "is-info",
+        hasIcon: true,
         onConfirm: () => { Howler.unload() },
         onCancel:  () => { Howler.unload() },
       })
@@ -209,7 +211,7 @@ export default {
 1、駒の場所をキーボードの数字2桁で入力していきます。
 2、${this.selected_rule.o_count_max}問正解するまでの時間を競います。
 3、最初の数字を間違えたときはエスケープキーでキャンセルできます。
-`, {onend: () => { rule_dialog.close() }})
+`, {rate: 2.0, onend: () => { rule_dialog.close() }})
 
     },
 
@@ -244,9 +246,9 @@ export default {
       this.key_queue = []
       this.mode = "running"
       this.game_rule = this.selected_rule
-      this.piece_reset()
-      this.quest_next()
+      this.place_reset()
       this.sound_play("start")
+      this.goal_check()
     },
 
     stop_handle() {
@@ -329,8 +331,8 @@ export default {
           if (this.active_p(this.board_size - x, y - 1)) {
             this.o_count++
             this.sound_play("o")
-            this.piece_reset()
-            this.quest_next()
+            this.place_reset()
+            this.goal_check()
           } else {
             this.x_count++
             this.sound_play("x")
@@ -341,14 +343,14 @@ export default {
       }
     },
 
-    quest_next() {
+    goal_check() {
       if (this.count_rest <= 0) {
         this.goal_handle()
         return
       }
     },
 
-    piece_reset() {
+    place_reset() {
       while (true) {
         this.current_x = this.place_random()
         this.current_y = this.place_random()
