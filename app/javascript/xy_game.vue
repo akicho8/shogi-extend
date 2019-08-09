@@ -208,9 +208,9 @@ export default {
       })
 
       this.talk(`
-1、駒の場所をキーボードの数字2桁で入力していきます。
-2、${this.selected_rule.o_count_max}問正解するまでの時間を競います。
-3、最初の数字を間違えたときはエスケープキーでキャンセルできます。
+駒の場所をキーボードの数字2桁で入力していきます。
+${this.selected_rule.o_count_max}問正解するまでの時間を競います。
+最初の数字を間違えたときはエスケープキーでキャンセルできます。
 `, {rate: 2.0, onend: () => { rule_dialog.close() }})
 
     },
