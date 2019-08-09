@@ -31,9 +31,9 @@
             = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/", target: "_blank")
             = " and "
             = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank")
-          #system_notification_app.has-text-grey-lighter.is-size-7
-            | ActionCable: {{latest_system_logs.join(" ")}}
           details
             summary
               | DEBUG
+            #system_notification_app.is-size-7
+              | ActionCable: {{latest_system_logs}}
             = ["WS_PORT", "USE_NEW_DOMAIN", "MY_APP_HOST"].inject({}) { |a, e| a.merge(e => ENV[e]) }.to_html
