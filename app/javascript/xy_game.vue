@@ -32,11 +32,13 @@
           nav.level.is-mobile
             .level-item.has-text-centered
               div
-                p.heading 正解
+                p.heading
+                  b-icon(pack="far" icon="circle" type="is-info" size="is-small")
                 p.title {{o_count}}
             .level-item.has-text-centered
               div
-                p.heading まちがい
+                p.heading
+                  b-icon(pack="fas" icon="times" type="is-danger" size="is-small")
                 p.title {{x_count}}
 
         .field_conainer
@@ -57,16 +59,17 @@
             | {{time_format}}
 
         template(v-if="mode === 'goal'")
-          .box
-            .summary
-              | {{summary}}
-            .tweet_button_container
-              .buttons.is-centered
-                a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
-                  | &nbsp;
-                  b-icon(icon="twitter" size="is-small")
-                  | &nbsp;
-                  | ツイート
+          .tweet_box_container
+            .box
+              .summary
+                | {{summary}}
+              .tweet_button_container
+                .buttons.is-centered
+                  a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
+                    | &nbsp;
+                    b-icon(icon="twitter" size="is-small")
+                    | &nbsp;
+                    | ツイート
 
     .column.is-4(v-if="mode === 'stop' || mode === 'goal'")
       b-tabs(v-model="selected_rule_index" expanded)
@@ -505,9 +508,9 @@ export default {
   .field_conainer
     margin-top: 1rem
   .time_container
-    margin-top: 0rem
-  .rule_container
-    margin-top: 0.5rem
+    margin-top: 0.1rem
+  .tweet_box_container
+    margin-top: 0.75rem
   .summary
     white-space: pre-wrap
   .tweet_button_container
