@@ -89,7 +89,7 @@
       template(v-if="memento_list.length >= 1")
         .box.memento_box
           .is-size-7
-            b-tooltip(label="クリックでそのとき時点に戻れる (ストップしたときに反映)")
+            b-tooltip(label="クリックでそのとき時点に戻れる")
               b ログ
           ul
             template(v-for="row in memento_list")
@@ -124,6 +124,7 @@
 import dayjs from "dayjs"
 
 import stopwatch_data_retention from './stopwatch_data_retention.js'
+import stopwatch_memento_list from './stopwatch_memento_list.js'
 import sound_cache from './sound_cache.js'
 
 const X_MARK = "x"
@@ -133,6 +134,7 @@ export default {
   name: "stopwatch",
   mixins: [
     stopwatch_data_retention,
+    stopwatch_memento_list,
     sound_cache,
   ],
   data() {
@@ -145,7 +147,6 @@ export default {
       interval_id: null,
       format_index: 0,
       drop_seconds: 60,
-      memento_list: [],
     }
   },
 
@@ -461,19 +462,6 @@ export default {
         },
       })
     },
-
-    memento_create() {
-      this.memento_list.push({
-        time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-        summary: this.summary,
-        enc_base64: this.enc_base64,
-      })
-      this.memento_list = _.takeRight(this.memento_list, 10)
-    },
-
-    memento_restore(row) {
-      this.data_restore_from_base64(row.enc_base64)
-    },
   },
 
   watch: {
@@ -484,10 +472,16 @@ export default {
     drop_seconds()  { this.data_save() },
 
     current_min(v) {
-      if (v >= 1) {
+      if (v >= 0) {
         this.talk(`${v}分経過`, {rate: 1.0})
       }
     },
+
+    // current_sec(v) {
+    //   if (v >= 1) {
+    //     this.talk(`${v}秒経過`, {rate: 1.0})
+    //   }
+    // },
   },
 
   mounted() {

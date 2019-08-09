@@ -28,7 +28,7 @@ export default {
     storage_clear() {
       localStorage.removeItem(this.local_storage_key)
     },
-    
+
     data_restore_from_url_or_storage() {
       let enc_base64 = null
       if (location.hash) {
@@ -40,21 +40,32 @@ export default {
     },
 
     data_restore_from_base64(enc_base64) {
-      let dec_params = {}
-      if (enc_base64) {
-        try {
-          const dec_string = atob(UrlSafeBase64.decode(enc_base64))
-          const dec_json = LZMA.decompress(dec_string.split("").map(c => c.charCodeAt(0)))
-          dec_params = JSON.parse(dec_json)
-        } catch (e) {
-          console.error(e)
-        }
-      }
-      this.data_restore_from_hash(dec_params || {})
+      const value = this.base64_to_value(enc_base64)
+      this.data_restore_from_hash(value || {})
     },
 
     data_restore_from_hash(hash) {
       alert("data_restore not implemented")
+    },
+
+    value_to_base64(value) {
+      const enc_json = JSON.stringify(value)
+      const compressed = LZMA.compress(enc_json, 9)
+      const enc_string = String.fromCharCode(...new Uint8Array(compressed))
+      const enc_base64 = UrlSafeBase64.encode(btoa(enc_string))
+      return enc_base64
+    },
+
+    base64_to_value(enc_base64) {
+      let value = null
+      try {
+        const dec_string = atob(UrlSafeBase64.decode(enc_base64))
+        const dec_json = LZMA.decompress(dec_string.split("").map(c => c.charCodeAt(0)))
+        value = JSON.parse(dec_json)
+      } catch (e) {
+        console.error(e)
+      }
+      return value
     },
   },
 
@@ -68,11 +79,7 @@ export default {
     },
 
     enc_base64() {
-      const enc_json = JSON.stringify(this.save_hash)
-      const compressed = LZMA.compress(enc_json, 9)
-      const enc_string = String.fromCharCode(...new Uint8Array(compressed))
-      const enc_base64 = UrlSafeBase64.encode(btoa(enc_string))
-      return enc_base64
+      return this.value_to_base64(this.save_hash)
     },
 
     local_storage_key() {
