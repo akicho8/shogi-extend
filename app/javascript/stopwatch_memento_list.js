@@ -13,12 +13,19 @@ export default {
 
   methods: {
     memento_create() {
+      const last = _.last(this.memento_list)
+      if (last) {
+        if (last.enc_base64 === this.enc_base64) {
+          return
+        }
+      }
+
       this.memento_list.push({
         time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
         summary: this.summary,
         enc_base64: this.enc_base64,
       })
-      this.memento_list = _.takeRight(this.memento_list, 10)
+      this.memento_list = _.takeRight(this.memento_list, 20)
       this.memento_list_save()
     },
 

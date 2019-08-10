@@ -173,7 +173,7 @@ export default {
             <br>
             <h5>ログ</h5>
             <ol>
-              <li>ストップを押したときに現在の状態をログに保存します</li>
+              <li>開始 / 停止のタイミングで現在の状態をログに保存します</li>
               <li>ログをクリックするとその時間の状態に戻ります</li>
               <li>操作を間違えてリセットしてしまったときや「不正解だけ再テスト」をして前に戻りたくなったときに使います</li>
             </ol>
@@ -274,6 +274,7 @@ export default {
       this.interval_id = setInterval(this.step_next, 1000)
       this.sound_play("start")
       this.track_next()
+      this.memento_create()
     },
 
     button_focus(o_or_x) {
