@@ -48,6 +48,7 @@ class XyRecordsController < ApplicationController
     id = current_params[:id]
     @xy_record = XyRecord.find(id)
     @xy_record.update!(entry_name: current_params[:entry_name])
+    SlackAgent.message_send(key: "符号入力ゲーム", body: "[#{@xy_record.entry_name}] #{@xy_record.summary}")
     render json: result_attributes
   end
 
