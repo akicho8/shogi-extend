@@ -400,7 +400,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       while (true) {
         this.current_x = this.place_random()
         this.current_y = this.place_random()
-        const retry_p = (this.o_count === 0 && this.current_x === this.current_y)
+        const retry_p = (this.o_count === 0 && (this.board_size - 1 - this.current_x) === this.current_y)
         if (retry_p) {
         } else {
           break
