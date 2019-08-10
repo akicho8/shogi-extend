@@ -14,7 +14,8 @@ export default {
 
   methods: {
     data_save() {
-      location.hash = this.enc_base64
+      this.data_save_to_location_hash()
+      this.data_save_to_local_storage()
     },
 
     data_save_to_location_hash() {
