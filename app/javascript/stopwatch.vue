@@ -98,7 +98,7 @@
                   | &nbsp;
                   | {{row.summary}}
   .columns
-    .column.is-hidden-touch
+    .column
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
         table.table.is-narrow

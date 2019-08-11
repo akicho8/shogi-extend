@@ -102,7 +102,7 @@
             li 行クリックで局面を見れます
             - if current_swars_user && params[:page].to_i <= 1
               li 検索後のページをブクマしておくと毎回ウォーズIDを入力する手間が省けます
-              li(class=(Rails.env.test? ? "" : "is-hidden-desktop"))
+              li
                 b
                   = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
                 | をタップしたあと「ホーム画面に追加」しておくとアイコンから最新の対局をぴよ将棋で開けるようになります

@@ -54,7 +54,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
               b-icon(icon="clipboard-outline" size="is-small")
               | &nbsp;&nbsp;KIF コピー
 
-          a.is-hidden-desktop(@click.stop :href="modal_record.piyo_shogi_app_url")
+          a(@click.stop :href="modal_record.piyo_shogi_app_url")
             = image_tag("piyo_shogi_icon.png", "class": "modal_piyo_link")
 
           pulldown_menu(:record="modal_record" :in_modal="true")
