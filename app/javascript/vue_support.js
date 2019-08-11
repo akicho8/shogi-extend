@@ -1,3 +1,5 @@
+window.talk_sound = null
+
 export default {
   methods: {
     rand(n) {
@@ -264,15 +266,22 @@ export default {
 
         // Howler
         if (true) {
-          const sound = new Howl({src: response.data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
+          window.talk_sound = new Howl({src: response.data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
           if (options.onend) {
-            sound.on("end", () => options.onend())
+            window.talk_sound.on("end", () => options.onend())
           }
         }
 
       }).catch(error => {
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
+    },
+
+    talk_stop() {
+      if (window.talk_sound) {
+        window.talk_sound.stop()
+        window.talk_sound = null
+      }
     },
   },
 

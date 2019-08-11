@@ -199,7 +199,7 @@ export default {
 
   methods: {
     rule_display() {
-      Howler.unload()
+      this.talk_stop()
 
       const rule_dialog = this.$dialog.alert({
         title: "ルール",
@@ -216,8 +216,8 @@ export default {
         canCancel: ["outside", "escape"],
         type: "is-info",
         hasIcon: true,
-        onConfirm: () => { Howler.unload() },
-        onCancel:  () => { Howler.unload() },
+        onConfirm: () => { this.talk_stop() },
+        onCancel:  () => { this.talk_stop() },
       })
 
       this.talk(`
@@ -265,6 +265,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.count_down_counter = 0
       this.init_other_variables()
       this.game_rule = this.selected_rule
+      this.talk_stop()
 
       this.inteval_id = setInterval(() => {
         this.count_down_counter += 1
