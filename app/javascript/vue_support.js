@@ -100,7 +100,7 @@ export default {
         error_yomiage: "失敗しました",
       }, params)
 
-      let success = null
+      let success = false
 
       if (true) {
         // この方法は iPhone で動かない。先に elem.select() を実行した時点で iPhone の方が作動しなくなる
@@ -140,7 +140,7 @@ export default {
           return
         }
 
-        this.talk(params["success_yomiage"])
+        this.talk(params["success_yomiage"], {rate: 2.0})
         this.$toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
       }
 
@@ -161,7 +161,7 @@ export default {
     },
 
     clipboard_copy_error_dialog(params) {
-      this.talk(params["error_yomiage"])
+      this.talk(params["error_yomiage"], {rate: 2.0})
       // this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
 
       this.$modal.open({
@@ -169,23 +169,24 @@ export default {
         hasModalCard: true,
         component: {
           mounted() {
-            this.$refs.text_copy_textarea.focus()
-            this.$refs.text_copy_textarea.select()
+            this.$refs.text_copy_textarea.$refs.textarea.focus()
+            this.$refs.text_copy_textarea.$refs.textarea.select()
+            this.$refs.text_copy_textarea.$refs.textarea.scrollTop = 0
           },
           template: `
-<div class="modal-card" style="width: auto">
-<header class="modal-card-head">
-  <p class="modal-card-title">コピーに失敗しました</p>
-</header>
-<section class="modal-card-body">
-  <p><small>こちらから手動でコピーしてみてください</small><p/>
-  <b-field label="">
-    <b-input type="textarea" value="${params['text']}" ref="text_copy_textarea"></b-input>
-  </b-field>
-</section>
-<footer class="modal-card-foot">
-  <button class="button" type="button" @click="$parent.close()">閉じる</button>
-</footer>
+<div class="modal-card">
+  <header class="modal-card-head">
+    <p class="modal-card-title">コピーに失敗しました</p>
+  </header>
+  <section class="modal-card-body">
+    <p><small>こちらから手動でコピーしてみてください</small></p>
+    <b-field label="">
+      <b-input type="textarea" value="${params['text']}" ref="text_copy_textarea" rows="12"></b-input>
+    </b-field>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button" type="button" @click="$parent.close()">閉じる</button>
+  </footer>
 </div>
     `,
         },
