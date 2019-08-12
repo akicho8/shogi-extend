@@ -592,10 +592,12 @@ export default {
       if (this.rows.length >= 1) {
         let v = null
         if (this.avg < 60) {
-          // v = Math.floor(this.avg * 100) / 100
+          v = Math.round(this.avg * 100) / 100
           // v = `${v}秒`
-          v = Math.ceil(this.avg)
+          // console.log(this.avg)
+          // v = Math.ceil(this.avg)
           v = `${v}秒`
+          // Math.round(123.456789 * 100) / 100
         } else {
           v = dayjs().startOf("year").set("seconds", this.avg).format("m分s秒")
         }
