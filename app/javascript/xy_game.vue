@@ -147,8 +147,8 @@ export default {
       inteval_id: null,
       count_down_counter: null,
       sub_mode: null,
-      current_x: null,
-      current_y: null,
+      before_place: null,
+      current_place: null,
       o_count: null,               // 正解数
       x_count: null,               // 不正解数
       key_queue: null,
@@ -253,8 +253,8 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
 
     init_other_variables() {
       this.micro_seconds = 0
-      this.current_x = null
-      this.current_y = null
+      this.before_place = null
+      this.current_place = null
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
@@ -398,14 +398,19 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     place_next_set() {
+      this.before_place = this.current_place
+
       while (true) {
-        this.current_x = this.place_random()
-        this.current_y = this.place_random()
-        const retry_p = (this.o_count === 0 && (this.board_size - 1 - this.current_x) === this.current_y)
-        if (retry_p) {
-        } else {
-          break
+        this.current_place = {x: this.place_random(), y: this.place_random()}
+        if ((this.o_count === 0 && (this.board_size - 1 - this.current_place.x) === this.current_place.y)) {
+          continue
         }
+        if (this.before_place) {
+          if (_.isEqual(this.before_place, this.current_place)) {
+            continue
+          }
+        }
+        break
       }
 
       this.piece = this.piece_sample()
@@ -425,7 +430,9 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     active_p(x, y) {
-      return this.current_x === x && this.current_y === y
+      if (this.current_place) {
+        return _.isEqual(this.current_place, {x: x, y: y})
+      }
     },
 
     place_random() {
