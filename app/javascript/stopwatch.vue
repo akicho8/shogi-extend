@@ -94,9 +94,7 @@
             template(v-for="row in memento_list")
               li.is-size-7
                 a.has-text-grey(@click.prevent="memento_restore(row)")
-                  | {{row.time}}
-                  | &nbsp;
-                  | {{row.summary}}
+                  | {{row.time}} [{{row.event}}] {{row.current_track}} {{row.summary}}
   .columns
     .column
       .box.content.has-text-grey.is-size-7
@@ -274,7 +272,7 @@ export default {
       this.interval_id = setInterval(this.step_next, 1000)
       this.sound_play("start")
       this.track_next()
-      this.memento_create()
+      this.memento_create("start")
     },
 
     button_focus(o_or_x) {
@@ -285,7 +283,7 @@ export default {
       // this.talk("ストップ")
       this.mode = "standby"
       this.clear_interval_safe()
-      this.memento_create()
+      this.memento_create("stop")
     },
 
     stop_if_playing() {
