@@ -16,7 +16,7 @@ export default {
       const last = _.last(this.memento_list)
       if (last) {
         if (last.enc_base64 === this.enc_base64) {
-          // return
+          return
         }
       }
 
