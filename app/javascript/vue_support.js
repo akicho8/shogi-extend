@@ -63,7 +63,7 @@ export default {
 
       const kc_url = params["kc_url"]
       const kc_title = params["kc_title"]
-      if (kc_title) {
+      if (kc_title && false) {
         params["success_yomiage"] = `${kc_title}の棋譜をクリップボードにコピーしました`
       }
 
