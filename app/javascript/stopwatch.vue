@@ -471,7 +471,9 @@ export default {
 
     current_min(v) {
       if (v >= 1) {
-        this.talk(`${v}分経過`, {rate: 1.0})
+        if (this.mode === "playing") {
+          this.talk(`${v}分経過`, {rate: 1.0})
+        }
       }
     },
 
