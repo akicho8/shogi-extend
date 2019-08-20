@@ -15,7 +15,6 @@
         .helper_button
           b-tooltip(label="使い方")
             b-button(@click="rule_display" icon-right="help")
-
         .lap_time
           span.quest_digit(@click="track_input_dialog")
             | {{quest_name(new_quest)}}
@@ -42,7 +41,7 @@
             button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
 
         template(v-if="mode !== 'playing'")
-          button.button.is-large.other_button(@click="reset_handle" key="reset_key" :disabled="total_with_lap_seconds === 0 && false") リセット
+          button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
 
       template(v-if="quest_list.length === 0 || true")
         .field
@@ -68,6 +67,8 @@
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
 
+      b-button(@click="log_display") ログ
+
     .column
       b-tabs.result_body(expanded v-model="format_index")
         template(v-for="(value, key) in format_all")
@@ -77,7 +78,7 @@
                 b-icon(icon="clipboard-outline" size="is-small")
             | {{value}}
 
-      template(v-if="rows.length >= 1 || true")
+      template(v-if="rows.length >= 1")
         .has-text-centered
           a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
             | &nbsp;
@@ -177,6 +178,32 @@ export default {
             </ol>
           </div>`,
         confirmText: "わかった",
+        canCancel: ["outside", "escape"],
+        type: "is-info",
+        hasIcon: true,
+        onConfirm: () => { },
+        onCancel:  () => { },
+      })
+    },
+
+    log_display() {
+      const message_template = `
+        <div class="memento_box">
+          <ul>
+            <% for (row in this.memento_list) { %>
+              <li class="is-size-7">
+                <a class="has-text-grey" onClick="memento_restore(row)">
+                  ${row.time} [${row.event}] ${row.current_track} ${row.summary}
+                </a>
+              </li>
+            <% } %>
+          </ul>
+        </div>`,
+      const message = _.template(message_template)({handicap: handicap})
+      const rule_dialog = this.$dialog.alert({
+        title: "ログ",
+        message: message,
+        confirmText: "閉じる",
         canCancel: ["outside", "escape"],
         type: "is-info",
         hasIcon: true,
@@ -763,7 +790,6 @@ export default {
       font-size: 0.8rem
 
   .memento_box
-    margin-top: 1.5rem
     a
       &:hover
         text-decoration: underline
