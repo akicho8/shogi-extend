@@ -35,7 +35,11 @@ module Colosseum
     helper_method :js_show_options
 
     def js_index_options
-      ams_sr({}, serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
+      # root を指定しないとエラーになるため
+      # とりあえず root を指定したが、その名前はどこにも出ない
+      # https://github.com/rails-api/active_model_serializers/issues/2141
+      # https://github.com/rails-api/active_model_serializers/blob/0-10-stable/docs/general/serializers.md#root
+      ams_sr({}, root: "root_name_need_for_ver0_10_10", serializer: LobbySerializer, include: {lobby_messages: :user, battles: {memberships: :user}, online_users: {active_battles: nil}})
     end
 
     def js_show_options
