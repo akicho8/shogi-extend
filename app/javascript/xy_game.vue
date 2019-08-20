@@ -97,7 +97,7 @@
                   | {{props.row.entry_name || entry_name || '？'}}
                 b-table-column(field="spent_msec" label="タイム" sortable)
                   | {{time_format_from_msec(props.row.spent_msec)}}
-                b-table-column(field="created_at" label="日時" v-if="false")
+                b-table-column(field="created_at" label="日付" sortable v-if="true")
                   | {{time_default_format(props.row.created_at)}}
 
   template(v-if="development_p")
@@ -449,7 +449,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     time_default_format(v) {
-      return dayjs(v).format("YYYY-MM-DD HH:mm")
+      return dayjs(v).format("YYYY-MM-DD")
     },
   },
 

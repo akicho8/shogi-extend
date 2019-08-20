@@ -6,7 +6,6 @@ class XyRuleInfo
     { key: "xy_rule1",   name: "1問",   o_count_max:  1,  development_only: false, },
     { key: "xy_rule10",  name: "10問",  o_count_max: 10,  development_only: false, },
     { key: "xy_rule30",  name: "30問",  o_count_max: 30,  development_only: false, },
-    { key: "xy_rule50",  name: "50問",  o_count_max: 50,  development_only: false, },
     { key: "xy_rule100", name: "100問", o_count_max: 100, development_only: false, },
   ]
 
