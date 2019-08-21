@@ -183,7 +183,7 @@ export default {
         component: {
           mounted() { },
           template: `
-            <div class="modal-card is-size-7 log_dialog">
+            <div class="modal-card is-size-7 stopwatch_log_dialog">
               <header class="modal-card-head">
                 <p class="modal-card-title">ログ</p>
               </header>
@@ -804,7 +804,7 @@ export default {
   .log_button_container
     margin-top: 1.2em
 
-.log_dialog
+.stopwatch_log_dialog
   table
     tbody
       tr
