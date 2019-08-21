@@ -4,6 +4,7 @@ export default {
   data() {
     return {
       memento_list: [],
+      memento_list_max: 100,
     }
   },
 
@@ -21,17 +22,20 @@ export default {
       }
 
       this.memento_list.push({
-        time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+        time: dayjs().format("YYYY-MM-DD HH:mm"),
         event: event,
         summary: this.summary,
         current_track: this.current_track,
         enc_base64: this.enc_base64,
       })
-      this.memento_list = _.takeRight(this.memento_list, 20)
+      this.memento_list = _.takeRight(this.memento_list, this.memento_list_max)
       this.memento_list_save()
     },
 
     memento_restore(row) {
+      const message = "指定の時間の状態に戻しました"
+      this.talk(message)
+      this.$toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
       this.data_restore_from_base64(row.enc_base64)
     },
 

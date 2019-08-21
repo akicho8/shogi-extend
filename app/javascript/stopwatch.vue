@@ -67,7 +67,8 @@
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
 
-      b-button(@click="log_display") ログ
+      .log_button_container
+        b-button(@click="log_display") ログ
 
     .column
       b-tabs.result_body(expanded v-model="format_index")
@@ -182,20 +183,27 @@ export default {
         component: {
           mounted() { },
           template: `
-            <div class="modal-card log_dialog">
+            <div class="modal-card is-size-7 log_dialog">
               <header class="modal-card-head">
                 <p class="modal-card-title">ログ</p>
               </header>
               <section class="modal-card-body">
-                <ul>
-                  <template v-for="row in $parent.$parent.memento_list">
-                    <li class="is-size-7">
-                      <a class="has-text-grey" @click.prevent="$parent.$parent.memento_restore(row)">
-                        {{row.time}} [{{row.event}}] {{row.current_track}} {{row.summary}}
-                      </a>
-                    </li>
+                <b-table
+                  :data="$parent.$parent.memento_list.slice().reverse()"
+                  :paginated="true"
+                  :per-page="10"
+                  :pagination-simple="true"
+                  :mobile-cards="false"
+                  @click="$parent.$parent.memento_restore"
+                  hoverable
+                  >
+                  <template slot-scope="props">
+                    <b-table-column field="time" label="Date" sortable>{{props.row.time}}</b-table-column>
+                    <b-table-column field="event" label="Event">{{props.row.event}}</b-table-column>
+                    <b-table-column field="track" label="Track">{{props.row.current_track}}</b-table-column>
+                    <b-table-column field="summary" label="Summary">{{props.row.summary}}</b-table-column>
                   </template>
-                </ul>
+                </b-table>
               </section>
               <footer class="modal-card-foot">
                 <button class="button" type="button" @click="$parent.close()">閉じる</button>
@@ -793,8 +801,13 @@ export default {
       line-height: 105%
       font-size: 0.8rem
 
-  .log_dialog
-    a
-      &:hover
-        text-decoration: underline
+  .log_button_container
+    margin-top: 1.2em
+
+.log_dialog
+  table
+    tbody
+      tr
+        &:hover
+          cursor: pointer
 </style>
