@@ -67,7 +67,7 @@
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
 
-      //- b-button(@click="log_display") ログ
+      b-button(@click="log_display") ログ
 
     .column
       b-tabs.result_body(expanded v-model="format_index")
@@ -85,17 +85,6 @@
             b-icon(icon="twitter" size="is-small")
             | &nbsp;
             | ツイート
-
-      template(v-if="memento_list.length >= 1")
-        .box.memento_box
-          .is-size-7
-            b-tooltip(label="クリックでそのとき時点に戻れる")
-              b ログ
-          ul
-            template(v-for="row in memento_list")
-              li.is-size-7
-                a.has-text-grey(@click.prevent="memento_restore(row)")
-                  | {{row.time}} [{{row.event}}] {{row.current_track}} {{row.summary}}
   .columns
     .column
       .box.content.has-text-grey.is-size-7
@@ -186,31 +175,46 @@ export default {
       })
     },
 
-    // log_display() {
-    //   const message_template = `
-    //     <div class="memento_box">
-    //       <ul>
-    //         <% for (row in this.memento_list) { %>
-    //           <li class="is-size-7">
-    //             <a class="has-text-grey" onClick="memento_restore(row)">
-    //               ${row.time} [${row.event}] ${row.current_track} ${row.summary}
-    //             </a>
-    //           </li>
-    //         <% } %>
-    //       </ul>
-    //     </div>`,
-    //   const message = _.template(message_template)({handicap: handicap})
-    //   const rule_dialog = this.$dialog.alert({
-    //     title: "ログ",
-    //     message: message,
-    //     confirmText: "閉じる",
-    //     canCancel: ["outside", "escape"],
-    //     type: "is-info",
-    //     hasIcon: true,
-    //     onConfirm: () => { },
-    //     onCancel:  () => { },
-    //   })
-    // },
+    log_display() {
+      this.$modal.open({
+        parent: this,
+        hasModalCard: true,
+        component: {
+          mounted() { },
+          template: `
+            <div class="modal-card log_dialog">
+              <header class="modal-card-head">
+                <p class="modal-card-title">ログ</p>
+              </header>
+              <section class="modal-card-body">
+                <ul>
+                  <template v-for="row in $parent.$parent.memento_list">
+                    <li class="is-size-7">
+                      <a class="has-text-grey" @click.prevent="$parent.$parent.memento_restore(row)">
+                        {{row.time}} [{{row.event}}] {{row.current_track}} {{row.summary}}
+                      </a>
+                    </li>
+                  </template>
+                </ul>
+              </section>
+              <footer class="modal-card-foot">
+                <button class="button" type="button" @click="$parent.close()">閉じる</button>
+              </footer>
+            </div>
+          `,
+        },
+      })
+      // const rule_dialog = this.$dialog.alert({
+      //   title: "ログ",
+      //   message: message,
+      //   confirmText: "閉じる",
+      //   canCancel: ["outside", "escape"],
+      //   type: "is-info",
+      //   hasIcon: true,
+      //   onConfirm: () => { },
+      //   onCancel:  () => { },
+      // })
+    },
 
     shortcut_key_assign() {
       document.addEventListener("keydown", e => {
@@ -789,8 +793,7 @@ export default {
       line-height: 105%
       font-size: 0.8rem
 
-  .memento_box
-    margin-top: 1.5rem
+  .log_dialog
     a
       &:hover
         text-decoration: underline
