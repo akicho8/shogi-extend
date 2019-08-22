@@ -19,8 +19,11 @@ $a4_h: 297mm
   .sheet
     width: $a4_w
     height: $a4_h
+    // 2019-08-22 Safari とか Chrome とか関係なく ios の印刷機能では break-after が効かず、空の偶数ページできてしまう
+    // ここを 0 にするとなおるがレイアウトが崩してまで対応はできない
     padding: $fp_sheet_body_margin
-    page-break-after: always
+    // http://www.htmq.com/css3/break-after.shtml
+    break-after: page
 
     // 開発ツールでエミュレートしたとき中央配置
     @media print
