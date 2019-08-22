@@ -52,7 +52,7 @@
                 td.b_b.b_r.td_tournament_label(rowspan="2")
                   .value
                     | &nbsp;棋戦名
-                td.b_b.b_r(colspan="2" @click=(page_index.zero? ? "edit_to('tournament_name')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r(@click=(page_index.zero? ? "edit_to('tournament_name')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.tournament_name}}
                 td.b_b.b_r.td_datetime_label
                   | 開始
@@ -60,7 +60,7 @@
                   = decorator.battle.battled_at.to_s(:ja_ad_format)
 
               tr
-                td.b_b.b_r(colspan="2" @click=(page_index.zero? ? "edit_to('rule_name')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r(@click=(page_index.zero? ? "edit_to('rule_name')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.rule_name}}
                 td.b_b.b_r.td_datetime_label
                   | 終了
@@ -83,18 +83,18 @@
                 td.b_b.b_r.td_playing_field_label(rowspan="2")
                   .value
                     | &nbsp;対局場
-                td.b_b.b_r.td_playing_field_name(colspan="2" rowspan="2" @click=(page_index.zero? ? "edit_to('playing_field_name')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r.td_playing_field_name(rowspan="2" @click=(page_index.zero? ? "edit_to('playing_field_name')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.playing_field_name}}
 
-                td.b_b.b_r(rowspan="1")
+                td.b_b.b_r
                   | 昼休
-                td.b_b(rowspan="1")
+                td.b_b
                   = decorator.datetime_blank
 
               tr
-                td.b_b.b_r(rowspan="1")
+                td.b_b.b_r
                   | 夕休
-                td.b_b(rowspan="1")
+                td.b_b
                   = decorator.datetime_blank
 
             ////////////////////////////////////////////////////////////////////////////////
