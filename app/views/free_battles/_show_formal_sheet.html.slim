@@ -5,16 +5,16 @@
 / b-notification(type="is-warning" aria-close-label="Close notification" role="alert" :closable="false")
 /   | macOS Google Chrome でしか正しくレイアウトできません
 
-- if ua.browser != "Chrome" || params[:formal_sheet_debug]
-  javascript:
-    document.addEventListener("DOMContentLoaded", () => {
-      Vue.prototype.$dialog.alert({
-        title: "ブラウザ不適合",
-        message: "<b>#{ua.browser}</b> ではレイアウトが崩れている恐れがあります。<b>Google Chrome</b> でお試しください。",
-        type: "is-warning",
-        hasIcon: true,
-      })
-    })
+/ - if ua.browser != "Chrome" || params[:formal_sheet_debug]
+/   javascript:
+/     document.addEventListener("DOMContentLoaded", () => {
+/       Vue.prototype.$dialog.alert({
+/         title: "ブラウザ不適合",
+/         message: "<b>#{ua.browser}</b> ではレイアウトが崩れている恐れがあります。<b>Google Chrome</b> でお試しください。",
+/         type: "is-warning",
+/         hasIcon: true,
+/       })
+/     })
 
 .fixed_printer_button_container.is_screen_only
   button.button.is-primary.is-large(@click="printer_handle")
@@ -35,87 +35,67 @@
             table.is_head1
               tr
                 = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-                td.b_b.b_r.td_players(rowspan="12")
+                td.b_b.b_r.td_players(rowspan="4")
                   .value
                     | 対 局 者
 
-                td.b_b.b_r.td_grade(rowspan="6" @click=(page_index.zero? ? "edit_to('grade_name_for_black')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r.td_grade(rowspan="2" @click=(page_index.zero? ? "edit_to('grade_name_for_black')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.grade_name_for_black}}
 
-                td.b_b.td_location_label(rowspan="6")
+                td.b_b.td_location_label(rowspan="2")
                   .kanji
                     = decorator.location_kanji_char(:black)
                   .mark
                     | ☗
-                td.b_b.b_r.td_player_name(rowspan="6" @click=(page_index.zero? ? "edit_to('player_name_for_black')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r.td_player_name(rowspan="2" @click=(page_index.zero? ? "edit_to('player_name_for_black')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.player_name_for_black}}
-                td.b_b.b_r.td_tournament_label(rowspan="8")
+                td.b_b.b_r.td_tournament_label(rowspan="2")
                   .value
                     | &nbsp;棋戦名
-                td.b_b.b_r(colspan="2" rowspan="4" @click=(page_index.zero? ? "edit_to('tournament_name')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r(colspan="2" @click=(page_index.zero? ? "edit_to('tournament_name')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.tournament_name}}
-                td.b_b.b_r.td_datetime_label(rowspan="3")
+                td.b_b.b_r.td_datetime_label
                   | 開始
-                td.b_b.td_datetime(rowspan="3")
+                td.b_b.td_datetime
                   = decorator.battle.battled_at.to_s(:ja_ad_format)
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
 
               tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-                td.b_b.b_r.td_datetime_label(rowspan="3")
-                  | 終了
-                td.b_b.td_datetime(rowspan="3")
-                  = decorator.end_at_s
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-                td.b_b.b_r(colspan="2" rowspan="4" @click=(page_index.zero? ? "edit_to('rule_name')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r(colspan="2" @click=(page_index.zero? ? "edit_to('rule_name')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.rule_name}}
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
+                td.b_b.b_r.td_datetime_label
+                  | 終了
+                td.b_b.td_datetime
+                  = decorator.end_at_s
 
               tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-                td.b_b.b_r.td_grade(rowspan="6" @click=(page_index.zero? ? "edit_to('grade_name_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r.td_grade(rowspan="2" @click=(page_index.zero? ? "edit_to('grade_name_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.grade_name_for_white}}
 
-                td.b_b.td_location_label(rowspan="6")
+                td.b_b.td_location_label(rowspan="2")
                   .kanji
                     = decorator.location_kanji_char(:white)
                   .mark
                     | ☖
 
-                td.b_b.b_r.td_player_name(rowspan="6" @click=(page_index.zero? ? "edit_to('player_name_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r.td_player_name(rowspan="2" @click=(page_index.zero? ? "edit_to('player_name_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.player_name_for_white}}
-                td.b_b.b_r(rowspan="3")
-                  | 昼休
-                td.b_b(rowspan="3")
-                  = decorator.datetime_blank
 
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-                td.b_b.b_r.td_playing_field_label(colspan="2" rowspan="4")
-                  | 対局場
-                td.b_b.b_r.td_playing_field_name(rowspan="4" @click=(page_index.zero? ? "edit_to('playing_field_name')" : "") class=(page_index.zero? ? "editable" : ""))
+                td.b_b.b_r.td_playing_field_label(rowspan="2")
+                  .value
+                    | &nbsp;対局場
+                td.b_b.b_r.td_playing_field_name(colspan="2" rowspan="2" @click=(page_index.zero? ? "edit_to('playing_field_name')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.playing_field_name}}
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-                td.b_b.b_r(rowspan="3")
-                  | 夕休
-                td.b_b(rowspan="3")
+
+                td.b_b.b_r(rowspan="1")
+                  | 昼休
+                td.b_b(rowspan="1")
                   = decorator.datetime_blank
 
               tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
-
-              tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
+                td.b_b.b_r(rowspan="1")
+                  | 夕休
+                td.b_b(rowspan="1")
+                  = decorator.datetime_blank
 
             ////////////////////////////////////////////////////////////////////////////////
 

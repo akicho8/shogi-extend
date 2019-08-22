@@ -2,6 +2,7 @@
   color: black
   @extend .yumincho
 
+  // 文字詰め
   // https://qiita.com/ryosukemaehira/items/3af1196b9947dec79ed5
   // https://ics.media/entry/14087/
   font-feature-settings: "palt"
@@ -99,7 +100,10 @@
 
             &.td_playing_field_label
               @extend %is_slendar
-              padding: 0 0.2em
+              width: 2em
+              .value
+                @extend %is_small1
+                @extend %vertical_writing
 
             &.td_player_name
               text-align: left
