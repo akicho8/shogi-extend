@@ -16,7 +16,7 @@
       })
     })
 
-.fixed_container.is_screen_only
+.fixed_printer_button_container.is_screen_only
   button.button.is-primary.is-large(@click="printer_handle")
     b-icon(icon="printer" size="is-medium")
 
@@ -33,6 +33,7 @@
             ////////////////////////////////////////////////////////////////////////////////
 
             table.is_head1
+              <tr class="ios_safari_and_ios_chrome_bug"><td></td></tr>
               tr
                 td.b_b.b_r.td_players(rowspan="12")
                   .value
