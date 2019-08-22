@@ -155,6 +155,7 @@ module BattleDecorator
         player_name_for_white: player_name_for(:white),
         grade_name_for_black: grade_name_for(:black),
         grade_name_for_white: grade_name_for(:white),
+        umpire_name: "",
       }
     end
 
