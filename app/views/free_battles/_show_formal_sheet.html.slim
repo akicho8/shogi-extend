@@ -2,7 +2,6 @@
 
 - @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
 
-
 .fixed_printer_button_container.is_screen_only
   button.button.is-primary.is-large(@click="printer_handle")
     b-icon(icon="printer" size="is-medium")
@@ -21,7 +20,6 @@
 
             table.is_head1
               tr
-                = render partial: "free_battles/blank_td_for_ios_buggy_browser"
                 td.b_b.b_r.td_players(rowspan="4")
                   .value
                     | 対 局 者
@@ -140,8 +138,8 @@
                     = decorator.total_seconds_str_for(:white)
                 td.b_b.b_r.basic_label
                   | 記録係
-                td.b_b
-                  = decorator.umpire_name
+                td.b_b(@click=(page_index.zero? ? "edit_to('umpire_name')" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.umpire_name}}
 
             ////////////////////////////////////////////////////////////////////////////////
 
