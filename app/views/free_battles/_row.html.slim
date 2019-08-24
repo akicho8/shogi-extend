@@ -6,14 +6,16 @@ template(slot-scope="props")
         | {{props.row.id}}
 
   b-table-column(field="title" label="題名" sortable)
-    template(v-if="props.row.saturn_key === 'private'")
-      b-icon.has-text-grey-light(icon="lock" size="is-small")
-      | &nbsp;
-    | {{props.row.title}}
-    template(v-if="props.row.description")
-      == "&nbsp;"
-      span.has-text-grey.is-size-7
-        | {{props.row.description}}
+    .line_break_on
+      template(v-if="props.row.saturn_key === 'private'")
+        b-icon.has-text-grey-light(icon="lock" size="is-small")
+        | &nbsp;
+      | {{props.row.title}}
+      template(v-if="props.row.description")
+        br.is-hidden-desktop
+        == "&nbsp;"
+        span.has-text-grey.is-size-7
+          | {{props.row.description}}
 
   b-table-column(field="created_at" :label="table_columns_hash.created_at.label" :visible="table_columns_hash.created_at.visible" sortable)
     | {{props.row.formated_created_at}}
