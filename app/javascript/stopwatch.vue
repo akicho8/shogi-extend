@@ -4,7 +4,7 @@
     .column.is-half
       .has-text-centered.page_title
         | 詰将棋タイムアタック用ストップウォッチ
-      .box.main_box.has-text-centered.nowrap.is-shadowless
+      .box.main_box.has-text-centered.line_break_off.is-shadowless
         b-dropdown.options_doropdown.is-pulled-left
           button.button(slot="trigger")
             b-icon(icon="menu-down")

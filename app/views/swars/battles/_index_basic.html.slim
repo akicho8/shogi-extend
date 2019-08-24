@@ -40,7 +40,7 @@
       template(v-for="e in records")
         .column.is-one-fifth.has-text-centered.is-narrow
           a(@click.stop.prevent="show_handle(e)")
-            small.word_break.has-text-grey
+            small.line_break_on.has-text-grey
               | {{e.title}}
             img(:src="e.twitter_staitc_image_url")
 
@@ -51,7 +51,7 @@
     / touch      1/4  = 4
     .column.is-2-widescreen.is-one-fifth-desktop.is-one-quarter-touch-only.has-text-centered
       a.no-decoration(@click.stop.prevent="show_handle(e)")
-        small.word_break.has-text-black-ter
+        small.line_break_on.has-text-black-ter
           | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
         / :size="!end_show ? 'x-small' : 'xx-small'"
         shogi_player(
@@ -71,7 +71,7 @@
           :overlay_navi="false"
           :flip="e.fliped"
         )
-        small.word_break.has-text-black-ter
+        small.line_break_on.has-text-black-ter
           | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
 
 = render partial: "free_battles/modal_shogi_player"

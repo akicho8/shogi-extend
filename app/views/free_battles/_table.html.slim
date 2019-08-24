@@ -44,7 +44,7 @@
       = render partial: "detail"
 
     - if Rails.env.development?
-      .box.word_break
+      .box.line_break_on
         p
           | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} $options.sort_order_default={{$options.sort_order_default}}
         p

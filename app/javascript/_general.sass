@@ -37,7 +37,7 @@ pre
     position: relative
     top: -15px
     right: -19px
-      
+
 ////////////////////////////////////////////////////////////////////////////// エラーメッセージ内のPRE相当
 
 .error_message_pre
@@ -50,13 +50,15 @@ pre
 .yumincho
   font-family: "YuMincho", "Yu Mincho", serif
 
-.nowrap
+////////////////////////////////////////////////////////////////////////////// 行折り返し
+
+.line_break_off
   white-space: nowrap
 
-.word_break
+.line_break_on
   white-space: normal
   word-break: break-all
-  
+
 //////////////////////////////////////////////////////////////////////////////// aタグを装飾しない
 
 a.no-decoration
@@ -64,7 +66,7 @@ a.no-decoration
   text-decoration: inherit
 
 ////////////////////////////////////////////////////////////////////////////// 主に modal-card-foot のボタンを均等配置にするため
-    
+
 .modal-card-foot
   &.space_between
     justify-content: space-between
