@@ -31,11 +31,11 @@
     - if !iframe?
       .columns
         .column
-          .buttons
+          .buttons.is-centered
             = link_to("OGP画像設定", [:edit, ns_prefix, current_record, mode: "ogp"], class: "button is-primary", target: "_blank")
       .columns
         .column
-          .buttons
+          .buttons.is-centered
             = link_to("詳細", [ns_prefix, current_record], class: "button")
             = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
             - if editable_record?(current_record)

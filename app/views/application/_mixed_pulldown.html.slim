@@ -1,5 +1,5 @@
 / FIXME: ここのプルダウンがうざすぎる
-.buttons(v-cloak="true")
+.buttons.is-centered(v-cloak="true")
   b-dropdown(:hoverable="true")
     button.button(slot="trigger")
       span コピー
@@ -27,7 +27,7 @@
           = e.name
 
 .field
-  .buttons(v-cloak="true")
+  .buttons.is-centered(v-cloak="true")
     - if current_record.kind_of?(Swars::Battle)
       b-dropdown(:hoverable="true")
         button.button(slot="trigger")
@@ -40,15 +40,14 @@
 
     = link_to(image_tag("piyo_shogi_icon.png", "class": "show_piyo_link"), piyo_shogi_app_url(full_url_for([ns_prefix, current_record, format: "kif"])), :class => "")
 
-    = link_to("一覧でポップアップするURL", [ns_prefix, current_plural_key, modal_id: current_record.id], class: "button")
+    = link_to("ポップアップURL", [ns_prefix, current_plural_key, modal_id: current_record.id], class: "button")
 
-    = link_to("印刷用棋譜", [ns_prefix, current_record, formal_sheet: true], class: "button")
+    = link_to("棋譜印刷", [ns_prefix, current_record, formal_sheet: true], class: "button")
 
     - if current_record.kind_of?(Swars::Battle)
       - current_record.memberships.each do |e|
         = link_to("#{e.user.name_with_grade} 情報", [:swars, :player_infos, user_key: e.user.key], class: "button")
 
-    | &nbsp;
     a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
       b-icon(icon="twitter" size="is-small")
       | &nbsp;
