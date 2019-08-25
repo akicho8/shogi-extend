@@ -42,10 +42,10 @@
   .has-text-centered
     .buttons.is-inline
       a.button.is-primary(@click="og_image_create_by_html2canvas")
-        b-tooltip(label="綺麗だけどブラウザ依存")
+        b-tooltip(multilined label="html2canvasを使う方法。綺麗だけどブラウザ依存。手動で作成しないといけない")
           | このHTMLを画像化
       a.button(@click="og_image_create_by_rmagick")
-        b-tooltip(label="いまいちだけどブラウザ非依存")
+        b-tooltip(multilined label="ImageMagickを使う方法。いまいちだけどブラウザ非依存。html2canvasで手動生成しなかったときはこちらを自動的に使う(のでここで生成しなくてもいい)")
           | この局面を内部で画像化
 
       / p.has-text-grey-light.is-size-7
