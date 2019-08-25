@@ -180,5 +180,3 @@ gem "rmagick"
 
 # bot判定用
 gem "useragent"
-
-gem "rack-dev-mark"
