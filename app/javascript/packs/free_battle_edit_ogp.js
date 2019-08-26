@@ -10,8 +10,12 @@ window.FreeBattleEditOgp = Vue.extend({
   },
 
   mounted() {
-    this.slider_show = true
-    this.$nextTick(() => this.$refs.ogp_turn_slider.focus())
+    if (this.auto_write_p) {
+      this.capture_dom_save()
+    } else {
+      this.slider_show = true // スライダーはマウントしてから有効にすること
+      this.$nextTick(() => this.$refs.ogp_turn_slider.focus())
+    }
   },
 
   methods: {
@@ -36,6 +40,9 @@ window.FreeBattleEditOgp = Vue.extend({
           this.$toast.open({message: response.data.message})
           this.tweet_origin_image_path = response.data.tweet_origin_image_path
           this.debug_alert(this.tweet_origin_image_path)
+          if (this.auto_write_p) {
+            location.href = this.$options.show_path
+          }
         }).catch(error => {
           loading_instance.close()
           console.table([error.response])
@@ -79,6 +86,12 @@ window.FreeBattleEditOgp = Vue.extend({
         console.table([error.response])
         this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
+    },
+  },
+
+  computed: {
+    auto_write_p() {
+      return this.$options.auto_write
     },
   },
 })

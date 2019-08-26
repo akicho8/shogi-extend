@@ -514,7 +514,10 @@ module BattleControllerSharedMethods
     end
 
     let :js_edit_ogp_options do
-      js_show_options.merge(auto_write: params[:auto_write] == "true")
+      js_show_options.merge({
+          auto_write: params[:auto_write] == "true",
+          index_path: polymorphic_path([ns_prefix, current_plural_key]),
+        })
     end
 
     def update
