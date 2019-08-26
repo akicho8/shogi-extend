@@ -76,7 +76,7 @@
           b-tab-item(:label="key")
             a.is-pulled-right.clipboard_copy(@click.stop.prevent="clipboard_copy({text: value})")
               b-tooltip(label="クリップボードにコピー" position="is-left")
-                b-icon(icon="clipboard-outline" size="is-small")
+                b-icon(icon="clipboard-outline")
             | {{value}}
 
       template(v-if="rows.length >= 1")
