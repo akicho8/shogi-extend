@@ -298,20 +298,20 @@ module BattleModelSharedMethods
       end
     end
 
-    def canvas_data_save(params)
+    def canvas_data_save_by_html2canvas(params)
       v = params[:canvas_image_base64_data_url]
       v = v.remove(/\A.*,/)
       v = Base64.decode64(v)
       thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
-      canvas_data_save3
+      canvas_data_save_result
     end
 
-    def canvas_data_save2(params)
+    def canvas_data_save_by_rmagick(params)
       image_auto_cerate_force
-      canvas_data_save3
+      canvas_data_save_result
     end
 
-    def canvas_data_save3
+    def canvas_data_save_result
       {
         message: "OGP画像を設定しました",
         # https://edgeguides.rubyonrails.org/active_storage_overview.html

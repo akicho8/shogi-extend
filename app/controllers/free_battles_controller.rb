@@ -125,11 +125,20 @@ class FreeBattlesController < ApplicationController
 
   def redirect_to_where
     if false
+      # 自動的にOGP画像設定に移動する場合
       if current_record.saved_changes[:id]
         if editable_record?(current_record)
           return [:edit, ns_prefix, current_record, mode: :ogp]
         end
       end
+    end
+
+    if false
+      # if current_record.saved_changes[:id]
+      if editable_record?(current_record)
+        return [:edit, ns_prefix, current_record, mode: :ogp, auto_write: true]
+      end
+      # end
     end
 
     super

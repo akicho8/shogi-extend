@@ -66,7 +66,7 @@ window.FreeBattleEditOgp = Vue.extend({
     og_image_create_by_rmagick() {
       const loading_instance = this.$loading.open()
       const params = new URLSearchParams()
-      params.set("gazodetukuru", "true")
+      params.set("create_by_rmagick", "true")
       params.set("image_turn", this.start_turn)
       this.$http.put(this.$options.xhr_put_path, params).then(response => {
         loading_instance.close()
