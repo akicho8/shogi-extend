@@ -142,6 +142,7 @@ export default {
       board_size: 9,
       count_down_max: 3,
       count_down_speed: 1000 * 0.5,
+      congrats_lteq: 10,
 
       mode: "stop",
       inteval_id: null,
@@ -341,7 +342,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
 
     congrats_talk() {
       let message = ""
-      if (this.xy_record.rank <= 3) {
+      if (this.xy_record.rank <= this.congrats_lteq) {
         message += `おめでとうございます。`
       }
       message += `${this.entry_name}さんは${this.xy_record.rank}位です。`
