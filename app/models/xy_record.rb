@@ -12,7 +12,7 @@
 # | summary           | Summary        | string(255) |             |                             |       |
 # | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |                             | B     |
 # | x_count           | X count        | integer(4)  | NOT NULL    |                             |       |
-# | spent_msec        | Spent msec     | float(24)   | NOT NULL    |                             |       |
+# | spent_sec        | Spent msec     | float(24)   | NOT NULL    |                             |       |
 # | created_at        | 作成日時       | datetime    | NOT NULL    |                             |       |
 # | updated_at        | 更新日時       | datetime    | NOT NULL    |                             |       |
 # |-------------------+----------------+-------------+-------------+-----------------------------+-------|
@@ -22,7 +22,7 @@
 #--------------------------------------------------------------------------------
 
 class XyRecord < ApplicationRecord
-  MSEC_ACCURACY = 1000
+  MSEC_ACCURACY = 1000_000
 
   belongs_to :user, class_name: "Colosseum::User", foreign_key: "colosseum_user_id", required: false
 
@@ -38,7 +38,7 @@ class XyRecord < ApplicationRecord
   with_options presence: true do
     validates :xy_rule_key
     validates :x_count
-    validates :spent_msec
+    validates :spent_sec
   end
 
   with_options allow_blank: true do
@@ -62,6 +62,6 @@ class XyRecord < ApplicationRecord
   end
 
   def score
-    spent_msec * MSEC_ACCURACY * -1
+    spent_sec * MSEC_ACCURACY * -1
   end
 end

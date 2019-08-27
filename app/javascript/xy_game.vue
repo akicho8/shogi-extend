@@ -95,8 +95,9 @@
                   | {{props.row.rank}}
                 b-table-column(field="entry_name" label="名前" sortable)
                   | {{props.row.entry_name || entry_name || '？'}}
-                b-table-column(field="spent_msec" label="タイム" sortable)
-                  | {{time_format_from_msec(props.row.spent_msec)}}
+                b-table-column(field="spent_sec" label="タイム" sortable)
+                  b-tooltip(:label="`${props.row.spent_sec} s`")
+                    | {{time_format_from_msec(props.row.spent_sec)}}
                 b-table-column(field="created_at" label="日付" sortable v-if="true")
                   | {{time_default_format(props.row.created_at)}}
 
@@ -476,7 +477,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     post_params() {
       return [
         "xy_rule_key",
-        "spent_msec",
+        "spent_sec",
         "x_count",              // なくてもよい
         "summary",              // なくてもよい
       ].reduce((a, e) => ({...a, [e]: this[e]}), {})
@@ -538,16 +539,16 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     time_format() {
-      return this.time_format_from_msec(this.spent_msec)
+      return this.time_format_from_msec(this.spent_sec)
     },
 
     time_avg() {
       if (this.o_count >= 1) {
-        return this.time_format_from_msec(this.spent_msec / this.o_count)
+        return this.time_format_from_msec(this.spent_sec / this.o_count)
       }
     },
 
-    spent_msec() {
+    spent_sec() {
       return this.micro_seconds / 1000
     },
 
