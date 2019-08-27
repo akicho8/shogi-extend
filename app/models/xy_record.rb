@@ -22,7 +22,7 @@
 #--------------------------------------------------------------------------------
 
 class XyRecord < ApplicationRecord
-  MSEC_ACCURACY = 1000
+  ACCURACY = 3
 
   belongs_to :user, class_name: "Colosseum::User", foreign_key: "colosseum_user_id", required: false
 
@@ -32,6 +32,10 @@ class XyRecord < ApplicationRecord
     end
     if entry_name
       self.entry_name = entry_name.to_s.squish
+    end
+    # ランキングで同じ順位なのに表記が異なる場合があるのを避けるため
+    if spent_sec
+      self.spent_sec = spent_sec.floor(ACCURACY)
     end
   end
 
@@ -62,6 +66,6 @@ class XyRecord < ApplicationRecord
   end
 
   def score
-    spent_sec * MSEC_ACCURACY * -1
+    spent_sec * 10**ACCURACY * -1
   end
 end
