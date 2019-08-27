@@ -96,8 +96,7 @@
                 b-table-column(field="entry_name" label="名前" sortable)
                   | {{props.row.entry_name || entry_name || '？'}}
                 b-table-column(field="spent_sec" label="タイム" sortable)
-                  b-tooltip(:label="`${props.row.spent_sec} s`")
-                    | {{time_format_from_msec(props.row.spent_sec)}}
+                  | {{time_format_from_msec(props.row.spent_sec)}}
                 b-table-column(field="created_at" label="日付" sortable v-if="true")
                   | {{time_default_format(props.row.created_at)}}
 
