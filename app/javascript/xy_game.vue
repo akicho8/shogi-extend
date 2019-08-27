@@ -176,7 +176,7 @@ export default {
 
   watch: {
     entry_name() { this.data_save_to_local_storage() },
-    current_pages() { this.data_save_to_local_storage() },
+    current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
 
     xy_rule_key(v) {
       this.selected_rule_index = this.selected_rule.code
