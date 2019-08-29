@@ -57,7 +57,8 @@
                           .piece_back
                             .piece_fore(:class="cell_class(x - 1, y - 1)")
                               template(v-if="active_p(x - 1, y - 1)")
-                                | {{piece}}
+                                template(v-if="mode === 'running'")
+                                  | {{piece}}
         .time_container
           .fixed_font.is-size-2
             | {{time_format}}
@@ -404,17 +405,23 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     place_next_set() {
       this.before_place = this.current_place
 
-      while (true) {
-        this.current_place = {x: this.place_random(), y: this.place_random()}
-        if ((this.o_count === 0 && (this.board_size - 1 - this.current_place.x) === this.current_place.y)) {
-          continue
-        }
-        if (this.before_place) {
-          if (_.isEqual(this.before_place, this.current_place)) {
+      if (true) {
+        while (true) {
+          this.current_place = {x: this.place_random(), y: this.place_random()}
+          if ((this.o_count === 0 && (this.board_size - 1 - this.current_place.x) === this.current_place.y)) {
             continue
           }
+          if (this.before_place) {
+            if (_.isEqual(this.before_place, this.current_place)) {
+              continue
+            }
+          }
+          break
         }
-        break
+      }
+
+      if (false) {
+        this.current_place = {x: this.place_random(), y: _.sample([5,6])}
       }
 
       this.piece = this.piece_sample()
@@ -434,14 +441,16 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     td_style(x, y) {
-      const l_min = 80
-      const key = this.xy_key(x, y)
-      let count = this.danger_zone[key] || 0
-      let v = 100 - (count * 1.0)
-      if (v < l_min) {
-        v = l_min
+      if (this.mode === 'goal') {
+        const l_min = 50
+        const key = this.xy_key(x, y)
+        let count = this.danger_zone[key] || 0
+        let v = 100 - (count * 3.0)
+        if (v < l_min) {
+          v = l_min
+        }
+        return { "background-color": `hsl(0, 100%, ${v}%)` }
       }
-      return { "background-color": `hsl(0, 90%, ${v}%)` }
     },
 
     danger_zone_plus() {
