@@ -53,7 +53,7 @@
                   .board_outer
                     table.board_inner
                       tr(v-for="y in board_size")
-                        td(v-for="x in board_size")
+                        td(v-for="x in board_size" :style="td_style(x - 1, y - 1)")
                           .piece_back
                             .piece_fore(:class="cell_class(x - 1, y - 1)")
                               template(v-if="active_p(x - 1, y - 1)")
@@ -165,6 +165,7 @@ export default {
       xhr_put_path: null,
       current_pages: null,
       game_rule: null,
+      danger_zone: {},
     }
   },
 
@@ -259,6 +260,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
+      this.danger_zone = {}
     },
 
     readygo_handle() {
@@ -384,6 +386,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
           } else {
             this.x_count++
             this.sound_play("x")
+            this.danger_zone_plus()
           }
         }
         e.preventDefault()
@@ -428,6 +431,27 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
         str = ["current", `location_${this.location}`]
       }
       return str
+    },
+
+    td_style(x, y) {
+      const l_min = 80
+      const key = this.xy_key(x, y)
+      let count = this.danger_zone[key] || 0
+      let v = 100 - (count * 0.5)
+      if (v < l_min) {
+        v = l_min
+      }
+      return { "background-color": `hsl(0, 90%, ${v}%)` }
+    },
+
+    danger_zone_plus() {
+      const key = this.xy_key(this.current_place.x, this.current_place.y)
+      const count = this.danger_zone[key] || 0
+      this.$set(this.danger_zone, key, count + 1)
+    },
+
+    xy_key(x, y) {
+      return [x, y].join(",")
     },
 
     active_p(x, y) {
