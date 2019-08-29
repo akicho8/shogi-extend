@@ -437,7 +437,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       const l_min = 80
       const key = this.xy_key(x, y)
       let count = this.danger_zone[key] || 0
-      let v = 100 - (count * 0.5)
+      let v = 100 - (count * 1.0)
       if (v < l_min) {
         v = l_min
       }
