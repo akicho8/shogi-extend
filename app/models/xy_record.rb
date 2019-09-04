@@ -68,4 +68,8 @@ class XyRecord < ApplicationRecord
   def score
     spent_sec * 10**ACCURACY * -1
   end
+
+  def spent_sec_time_format
+    "%d:%02d.%d" % [spent_sec / 60, spent_sec % 60, (spent_sec % 1) * 10**ACCURACY]
+  end
 end

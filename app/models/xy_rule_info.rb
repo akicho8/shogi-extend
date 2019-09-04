@@ -37,6 +37,13 @@ class XyRuleInfo
     def rebuild
       each(&:aggregate)
     end
+
+    def description
+      Time.current.strftime("%-d日%-H時") + "の時点のランキング1位は" + values.reverse.collect { |e|
+        names = e.top_xy_records.collect { |e| "#{e.entry_name} (#{e.spent_sec_time_format})"  }.join(" / ")
+        "【#{e.name}】#{names}"
+      }.join(" ") + " です"
+    end
   end
 
   # 実際のスコア(のもとの時間)は XyRecord が持っているので取り出さない
@@ -46,6 +53,12 @@ class XyRuleInfo
     redis.zrevrange(inside_key, 0, rank_max - 1).collect do |id|
       XyRecord.find(id).as_json(methods: [:rank])
     end
+  end
+
+  def top_xy_records
+    redis.zrevrange(inside_key, 0, 0).collect { |id|
+      XyRecord.find(id)
+    }
   end
 
   def rank_by_score(score)
