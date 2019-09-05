@@ -41,6 +41,7 @@ class XyRecordsController < ApplicationController
     end
 
     @xy_record = XyRecord.create!(current_params.merge(user: current_user))
+    @xy_record.slack_notify
     render json: result_attributes
   end
 
@@ -48,7 +49,7 @@ class XyRecordsController < ApplicationController
     id = current_params[:id]
     @xy_record = XyRecord.find(id)
     @xy_record.update!(entry_name: current_params[:entry_name])
-    SlackAgent.message_send(key: "符号", body: "[#{@xy_record.entry_name}] #{@xy_record.summary}")
+    @xy_record.slack_notify
     render json: result_attributes
   end
 

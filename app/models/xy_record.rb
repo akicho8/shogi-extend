@@ -72,4 +72,8 @@ class XyRecord < ApplicationRecord
   def spent_sec_time_format
     "%d:%02d.%d" % [spent_sec / 60, spent_sec % 60, (spent_sec % 1) * 10**ACCURACY]
   end
+
+  def slack_notify
+    SlackAgent.message_send(key: "符号", body: "[#{entry_name}] #{summary}")
+  end
 end

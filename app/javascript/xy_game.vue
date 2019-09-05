@@ -323,8 +323,14 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
           inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
           canCancel: false,
           onConfirm: value => {
-            this.entry_name = value
-            this.entry_name_save()
+            if (this.entry_name === value) {
+              // 同じなので更新しない
+              this.congrats_talk()
+            } else {
+              // 名前を変更したので更新する
+              this.entry_name = value
+              this.entry_name_save()
+            }
           },
           // onCancel: () => {
           //   if (this.entry_name) {
@@ -511,6 +517,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       return [
         "xy_rule_key",
         "spent_sec",
+        "entry_name",
         "x_count",              // なくてもよい
         "summary",              // なくてもよい
       ].reduce((a, e) => ({...a, [e]: this[e]}), {})
