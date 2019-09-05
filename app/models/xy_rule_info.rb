@@ -50,8 +50,16 @@ class XyRuleInfo
   def xy_records
     # current_clean
     # aggregate
-    redis.zrevrange(inside_key, 0, rank_max - 1).collect do |id|
-      XyRecord.find(id).as_json(methods: [:rank])
+    if ActiveRecord::Base.connection.adapter_name == "Mysql2"
+      ids = redis.zrevrange(inside_key, 0, rank_max - 1)
+      if ids.empty?
+        return []
+      end
+      XyRecord.where(id: ids).order("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})").as_json(methods: [:rank]) # MySQL 依存
+    else
+      redis.zrevrange(inside_key, 0, rank_max - 1).collect do |id|
+        XyRecord.where(id: ids).as_json(methods: [:rank])
+      end
     end
   end
 
