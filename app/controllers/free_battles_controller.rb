@@ -54,10 +54,14 @@ class FreeBattlesController < ApplicationController
       end
     end
 
-    if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
-      if key = Swars::Battle.extraction_key_from_dirty_string(url)
-        redirect_to [:swars, :battle, id: key]
-        return
+    # 本文に将棋ウォーズのURLが含まれているとウォーズ検索の方に飛ばす
+    # この機能はウォーズの棋譜をコピーして投稿しようとしたときに意図せず発動してしまうため禁止にする
+    if false
+      if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
+        if key = Swars::Battle.extraction_key_from_dirty_string(url)
+          redirect_to [:swars, :battle, id: key]
+          return
+        end
       end
     end
 
