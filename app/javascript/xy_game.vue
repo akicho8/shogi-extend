@@ -204,7 +204,7 @@ export default {
     rule_display() {
       this.talk_stop()
 
-      const rule_dialog = this.$dialog.alert({
+      const rule_dialog = this.$buefy.dialog.alert({
         title: "ルール",
         message: `
 <div class="content is-size-7">
@@ -316,7 +316,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
           this.$set(this.current_pages, this.selected_rule_index, this.xy_record.ranking_page)
         }
 
-        this.$dialog.prompt({
+        this.$buefy.dialog.prompt({
           message: `${this.xy_record.rank}位`,
           confirmText: "保存",
           cancelText: "キャンセル",

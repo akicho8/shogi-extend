@@ -15,7 +15,7 @@ window.SwarsBattleIndex = Vue.extend({
 
   methods: {
     player_info_click_hadle(e) {
-      this.$dialog.confirm({
+      this.$buefy.dialog.confirm({
         title: "プレイヤー情報",
         message: "20秒ぐらいかかる場合がありますがよろしいですか？",
         confirmText: "表示する",
@@ -32,7 +32,7 @@ window.SwarsBattleIndex = Vue.extend({
     },
 
     many_import_handle(e) {
-      this.$dialog.confirm({
+      this.$buefy.dialog.confirm({
         title: "古い棋譜も取得",
         message: "1分ぐらいかかる場合がありますがよろしいですか？",
         confirmText: "実行する",

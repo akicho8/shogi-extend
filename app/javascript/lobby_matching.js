@@ -43,7 +43,7 @@ export default {
             if (this.matching_counter === this.matching_counter_trigger) {
               const message = "相手がいないのでCPUと対局しますか？"
               this.talk(message)
-              this.$dialog.confirm({
+              this.$buefy.dialog.confirm({
                 title: "確認",
                 message: message,
                 confirmText: "CPUと対局する",

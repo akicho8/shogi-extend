@@ -23,7 +23,7 @@ export default {
     },
 
     edit_to(key) {
-      this.$dialog.prompt({
+      this.$buefy.dialog.prompt({
         title: "編集",
         inputAttrs: {type: "text", value: this.decorator[key], required: false},
         confirmText: "更新",
@@ -31,7 +31,7 @@ export default {
         onConfirm: (value) => {
           if (this.decorator[key] !== value) {
             this.$set(this.decorator, key, value)
-            this.$toast.open({message: `更新しました`, position: "is-bottom"})
+            this.$buefy.toast.open({message: `更新しました`, position: "is-bottom"})
           }
         },
       })

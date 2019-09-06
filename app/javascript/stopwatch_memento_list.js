@@ -35,7 +35,7 @@ export default {
     memento_restore(row) {
       const message = "指定の時間の状態に戻しました"
       this.talk(message)
-      this.$toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
       this.data_restore_from_base64(row.enc_base64)
     },
 

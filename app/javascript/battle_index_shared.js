@@ -43,9 +43,9 @@ export default {
   watch: {
     sp_run_mode(v) {
       if (v === "play_mode") {
-        this.$toast.open({message: "駒を操作できます", position: "is-top", type: "is-info", duration: 1000 * 1})
+        this.$buefy.toast.open({message: "駒を操作できます", position: "is-top", type: "is-info", duration: 1000 * 1})
       } else {
-        this.$toast.open({message: "元に戻しました", position: "is-top", type: "is-info", duration: 1000 * 1})
+        this.$buefy.toast.open({message: "元に戻しました", position: "is-top", type: "is-info", duration: 1000 * 1})
       }
       this.turn_slider_focus()
     },
@@ -131,7 +131,7 @@ export default {
         this.fetched_count += 1
       }).catch(error => {
         console.table([error.response])
-        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
 
@@ -164,7 +164,7 @@ export default {
           // this.modal_show()
         }).catch(error => {
           console.table([error.response])
-          this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+          this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
         })
       }
     },

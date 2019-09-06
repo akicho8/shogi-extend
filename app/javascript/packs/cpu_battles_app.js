@@ -47,7 +47,7 @@ window.CpuBattlesApp = Vue.extend({
     play_mode_long_sfen_set(v) {
       this.$http.post(this.$options.player_mode_moved_path, {kifu_body: v, cpu_brain_key: this.cpu_brain_key}).then(response => {
         if (response.data["error_message"]) {
-          this.$dialog.alert({
+          this.$buefy.dialog.alert({
             title: "反則負け",
             message: response.data["error_message"],
             type: 'is-danger',
@@ -57,16 +57,16 @@ window.CpuBattlesApp = Vue.extend({
           })
           this.talk("反則負けです")
 
-          // this.$dialog.alert({
+          // this.$buefy.dialog.alert({
           //   message: response.data["normal_message"],
           // })
 
         }
 
         if (response.data["you_win_message"]) {
-          // this.$toast.open({message: response.data["normal_message"], position: "is-bottom", type: "is-info", duration: 1000 * 10})
+          // this.$buefy.toast.open({message: response.data["normal_message"], position: "is-bottom", type: "is-info", duration: 1000 * 10})
 
-          this.$dialog.alert({
+          this.$buefy.dialog.alert({
             title: "勝利",
             message: response.data["you_win_message"],
             type: 'is-primary',
@@ -78,9 +78,9 @@ window.CpuBattlesApp = Vue.extend({
         }
 
         if (response.data["you_lose_message"]) {
-          // this.$toast.open({message: response.data["normal_message"], position: "is-bottom", type: "is-info", duration: 1000 * 10})
+          // this.$buefy.toast.open({message: response.data["normal_message"], position: "is-bottom", type: "is-info", duration: 1000 * 10})
 
-          this.$dialog.alert({
+          this.$buefy.dialog.alert({
             title: "敗北",
             message: response.data["you_lose_message"],
             type: 'is-primary',
@@ -99,7 +99,7 @@ window.CpuBattlesApp = Vue.extend({
 
       }).catch(error => {
         console.table([error.response])
-        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
   },

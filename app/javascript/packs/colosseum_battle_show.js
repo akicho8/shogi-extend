@@ -164,7 +164,7 @@ window.ColosseumBattleShow = Vue.extend({
     give_up() {
       const message = "本当に投了しますか？"
       this.talk(message)
-      this.$dialog.confirm({
+      this.$buefy.dialog.confirm({
         title: "確認",
         message: message,
         confirmText: "投了する",
@@ -203,7 +203,7 @@ window.ColosseumBattleShow = Vue.extend({
             // 片方に所属している場合
             if (_.includes(this.my_uniq_locations, this.win_location_info)) {
               // 勝った方
-              this.$dialog.alert({
+              this.$buefy.dialog.alert({
                 title: "勝利",
                 message: "勝ちました",
                 type: "is-primary",
@@ -217,7 +217,7 @@ window.ColosseumBattleShow = Vue.extend({
               if (this.last_action_key === "TORYO") {
                 // 自ら投了した場合、負けは自明なので何も出さない
               } else {
-                this.$dialog.alert({
+                this.$buefy.dialog.alert({
                   title: "敗北",
                   message: "負けました",
                   type: "is-primary",
@@ -236,7 +236,7 @@ window.ColosseumBattleShow = Vue.extend({
     // 客観的結果通知
     last_action_notify_dialog_basic() {
       const message = `${this.last_action_info.name}により${this.turn_max}手で${this.location_name(this.win_location_info)}の勝ち`
-      this.$dialog.alert({
+      this.$buefy.dialog.alert({
         type: "is-primary",
         title: "結果",
         message: message,

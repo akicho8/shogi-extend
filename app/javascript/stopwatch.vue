@@ -148,7 +148,7 @@ export default {
 
   methods: {
     rule_display() {
-      const rule_dialog = this.$dialog.alert({
+      const rule_dialog = this.$buefy.dialog.alert({
         title: "使い方",
         message: `
           <div class="content is-size-7">
@@ -177,7 +177,7 @@ export default {
     },
 
     log_display() {
-      this.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         component: {
@@ -212,7 +212,7 @@ export default {
           `,
         },
       })
-      // const rule_dialog = this.$dialog.alert({
+      // const rule_dialog = this.$buefy.dialog.alert({
       //   title: "ログ",
       //   message: message,
       //   confirmText: "閉じる",
@@ -283,7 +283,7 @@ export default {
     },
 
     track_input_dialog() {
-      this.$dialog.prompt({
+      this.$buefy.dialog.prompt({
         message: "問題番号",
         confirmText: "更新",
         cancelText: "キャンセル",
@@ -488,7 +488,7 @@ export default {
     },
 
     reset_by_x_with_n_seconds() {
-      this.$dialog.prompt({
+      this.$buefy.dialog.prompt({
         message: "秒",
         confirmText: "OK",
         cancelText: "キャンセル",

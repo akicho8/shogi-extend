@@ -85,7 +85,7 @@ window.FreeBattleEdit = Vue.extend({
       params.set("input_any_kifu", input_any_kifu)
       this.$http.post(this.$options.post_path, params).then(response => {
         if (response.data.error_message) {
-          this.$toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+          this.$buefy.toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
         }
         if (response.data.output_kifs) {
           this.output_kifs = response.data.output_kifs
@@ -116,7 +116,7 @@ window.FreeBattleEdit = Vue.extend({
         }
       }).catch(error => {
         console.table([error.response])
-        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
 

@@ -11,7 +11,7 @@ export default {
     },
 
     http_command(method, url, data, callback = null) {
-      const loading_instance = this.$loading.open()
+      const loading_instance = this.$buefy.loading.open()
       this.$http({
         method: method,
         url: url,
@@ -19,7 +19,7 @@ export default {
       }).then((response) => {
         loading_instance.close()
         if (response.data.message) {
-          this.$toast.open({message: response.data.message})
+          this.$buefy.toast.open({message: response.data.message})
         }
         if (callback) {
           callback(response.data)
@@ -27,12 +27,12 @@ export default {
       }).catch((error) => {
         loading_instance.close()
         console.table([error.response])
-        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
 
     process_now() {
-      this.$loading.open()
+      this.$buefy.loading.open()
     },
 
     js_link_to(href) {
@@ -51,7 +51,7 @@ export default {
 
     debug_alert(message) {
       if (this.development_p) {
-        this.$toast.open({message: message, position: "is-bottom", type: "is-danger"})
+        this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger"})
       }
     },
 
@@ -77,7 +77,7 @@ export default {
             this.clipboard_copy(params)
           }).catch(error => {
             console.table([error.response])
-            this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+            this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
           })
         } else {
           const kifu_text = $.ajax({ // このためだけに jQuery 使用
@@ -135,13 +135,13 @@ export default {
 
         if (!success) {
           // this.talk(params["error_yomiage"])
-          // this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
+          // this.$buefy.toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
           this.clipboard_copy_error_dialog(params)
           return
         }
 
         this.talk(params["success_yomiage"], {rate: 2.0})
-        this.$toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
+        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
       }
 
       // この方法は Windows Chrome で必ず失敗するというか navigator.clipboard が定義されてないので激指をメインで使う人は異様に使いにくくなってしまう
@@ -150,7 +150,7 @@ export default {
         if (navigator.clipboard) {
           navigator.clipboard.writeText(params["text"]).then(() => {
             this.talk(params["success_yomiage"])
-            this.$toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
+            this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
           }).catch(err => {
             this.clipboard_copy_error_dialog(params)
           })
@@ -162,9 +162,9 @@ export default {
 
     clipboard_copy_error_dialog(params) {
       this.talk(params["error_yomiage"], {rate: 2.0})
-      // this.$toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
+      // this.$buefy.toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
 
-      this.$modal.open({
+      this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         component: {
@@ -274,7 +274,7 @@ export default {
         }
 
       }).catch(error => {
-        this.$toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
 
