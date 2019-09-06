@@ -78,6 +78,10 @@ module Colosseum
 
     private
 
+    def redirect_to_where
+      [:edit, ns_prefix, current_record]
+    end
+
     def social_media_info
       SocialMediaInfo.fetch(params[:provider])
     end
