@@ -56,3 +56,6 @@ module Lettable
     end
   end
 end
+
+Module.include(Lettable::ModuleMethods)
+Object.include(Lettable::ObjectMethods)
