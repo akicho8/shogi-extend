@@ -45,7 +45,7 @@ module Swars
     end
 
     with_options allow_blank: true do
-      validates :user_key, uniqueness: true
+      validates :user_key, uniqueness: { case_sensitive: true }
     end
 
     def to_param
