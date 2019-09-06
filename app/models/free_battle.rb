@@ -96,7 +96,7 @@ class FreeBattle < ApplicationRecord
 
   has_secure_token :key
 
-  has_one_attached :kifu_file
+  attribute :kifu_file
 
   belongs_to :owner_user, :class_name => "Colosseum::User", :foreign_key => "colosseum_user_id", required: false
 
@@ -143,8 +143,8 @@ class FreeBattle < ApplicationRecord
 
     self.kifu_body ||= ""
 
-    if kifu_file.attached?
-      v = kifu_file.download
+    if kifu_file
+      v = kifu_file.read
       v = v.to_s.toutf8 rescue nil
       self.kifu_body = v
     end
@@ -167,7 +167,6 @@ class FreeBattle < ApplicationRecord
 
   before_save do
     if changes_to_save[:kifu_body]
-      kifu_file.purge
       if kifu_body
         parser_exec
       end

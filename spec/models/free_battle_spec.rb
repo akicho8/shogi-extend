@@ -33,12 +33,13 @@ require 'rails_helper'
 
 RSpec.describe FreeBattle, type: :model do
   before do
-    @kifu_file = {io: StringIO.new("68S"), filename: "嬉野流.kif", content_type: "application/octet-stream"}
+    tempfile = Tempfile.open
+    tempfile.write("68S")
+    @kifu_file = ActionDispatch::Http::UploadedFile.new(filename: "嬉野流.kif", type: "text/plain", tempfile: tempfile.open)
   end
 
   it "ファイルアップロードして変換" do
     free_battle = FreeBattle.create!(kifu_file: @kifu_file)
     assert { free_battle.kifu_body == "68S" }
-    assert { free_battle.kifu_file.attached? == false }
   end
 end
