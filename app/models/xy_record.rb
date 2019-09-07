@@ -24,6 +24,8 @@
 class XyRecord < ApplicationRecord
   ACCURACY = 3
 
+  scope :entry_name_blank_scope, -> { where(entry_name: nil).where(arel_table[:created_at].lt(1.day.ago) ) }
+
   belongs_to :user, class_name: "Colosseum::User", foreign_key: "colosseum_user_id", required: false
 
   before_validation do
@@ -31,8 +33,9 @@ class XyRecord < ApplicationRecord
       self.summary = summary.to_s.squish
     end
     if entry_name
-      self.entry_name = entry_name.to_s.squish
+      self.entry_name = entry_name.to_s.squish.presence
     end
+
     # ランキングで同じ順位なのに表記が異なる場合があるのを避けるため
     if spent_sec
       self.spent_sec = spent_sec.floor(ACCURACY)

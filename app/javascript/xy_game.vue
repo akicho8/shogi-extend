@@ -324,13 +324,16 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
           inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
           canCancel: false,
           onConfirm: value => {
-            if (this.entry_name === value) {
-              // 同じなので更新しない
-              this.congrats_talk()
-            } else {
-              // 名前を変更したので更新する
-              this.entry_name = value
-              this.entry_name_save()
+            value = _.trim(value)
+            if (value) {
+              if (this.entry_name === value) {
+                // 同じなので更新しない
+                this.congrats_talk()
+              } else {
+                // 名前を変更したので更新する
+                this.entry_name = value
+                this.entry_name_save()
+              }
             }
           },
           // onCancel: () => {
@@ -352,14 +355,16 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
 
     congrats_talk() {
       let message = ""
-      if (this.xy_record.rank <= this.congrats_lteq) {
-        message += `おめでとうございます。`
+      if (this.entry_name) {
+        if (this.xy_record.rank <= this.congrats_lteq) {
+          message += `おめでとうございます。`
+        }
+        message += `${this.entry_name}さんは${this.xy_record.rank}位です。`
+        if (this.xy_record.rank > this.$root.$options.rank_max) {
+          message += `ランキング外です。`
+        }
+        this.talk(message)
       }
-      message += `${this.entry_name}さんは${this.xy_record.rank}位です。`
-      if (this.xy_record.rank > this.$root.$options.rank_max) {
-        message += `ランキング外です。`
-      }
-      this.talk(message)
     },
 
     command_send(command, args = {}) {
