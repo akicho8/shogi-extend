@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_27_150700) do
+ActiveRecord::Schema.define(version: 2019_09_07_220200) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 2019_08_27_150700) do
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["saturn_key"], name: "index_free_battles_on_saturn_key"
+    t.index ["start_turn"], name: "index_free_battles_on_start_turn"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
   end
 
@@ -236,6 +237,7 @@ ActiveRecord::Schema.define(version: 2019_08_27_150700) do
     t.index ["final_key"], name: "index_general_battles_on_final_key"
     t.index ["key"], name: "index_general_battles_on_key", unique: true
     t.index ["saturn_key"], name: "index_general_battles_on_saturn_key"
+    t.index ["start_turn"], name: "index_general_battles_on_start_turn"
     t.index ["turn_max"], name: "index_general_battles_on_turn_max"
   end
 
@@ -290,8 +292,10 @@ ActiveRecord::Schema.define(version: 2019_08_27_150700) do
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
+    t.index ["preset_key"], name: "index_swars_battles_on_preset_key"
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
     t.index ["saturn_key"], name: "index_swars_battles_on_saturn_key"
+    t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
   end
@@ -384,4 +388,5 @@ ActiveRecord::Schema.define(version: 2019_08_27_150700) do
     t.index ["xy_rule_key"], name: "index_xy_records_on_xy_rule_key"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
 end
