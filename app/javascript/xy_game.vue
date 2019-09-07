@@ -262,6 +262,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.x_count = 0
       this.key_queue = []
       this.danger_zone = {}
+      this.xy_record = null
     },
 
     readygo_handle() {
