@@ -24,7 +24,7 @@
 class XyRecord < ApplicationRecord
   ACCURACY = 3
 
-  scope :entry_name_blank_scope, -> { where(entry_name: nil).where(arel_table[:created_at].lt(1.day.ago) ) }
+  scope :entry_name_blank_scope, -> { where(entry_name: nil).where(arel_table[:created_at].lt(1.hour.ago) ) }
 
   belongs_to :user, class_name: "Colosseum::User", foreign_key: "colosseum_user_id", required: false
 
@@ -53,7 +53,11 @@ class XyRecord < ApplicationRecord
   end
 
   after_create do
-    ranking_store
+    ranking_add
+  end
+
+  after_destroy do
+    ranking_rem
   end
 
   def rank
@@ -62,10 +66,6 @@ class XyRecord < ApplicationRecord
 
   def ranking_page
     XyRuleInfo[xy_rule_key].ranking_page(id)
-  end
-
-  def ranking_store
-    XyRuleInfo[xy_rule_key].ranking_store(self)
   end
 
   def score
@@ -78,5 +78,15 @@ class XyRecord < ApplicationRecord
 
   def slack_notify
     SlackAgent.message_send(key: "符号", body: "[#{entry_name}] #{summary}")
+  end
+
+  private
+
+  def ranking_add
+    XyRuleInfo[xy_rule_key].ranking_add(self)
+  end
+
+  def ranking_rem
+    XyRuleInfo[xy_rule_key].ranking_rem(self)
   end
 end

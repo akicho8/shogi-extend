@@ -1,4 +1,6 @@
-# cap production rails:runner CODE='XyRuleInfo.clear_all'
+# cap production rails:runner CODE='XyRuleInfo.redis_clear_all'
+# cap production rails:runner CODE='XyRuleInfo.rebuild'
+# cap production rails:runner CODE='XyRecord.entry_name_blank_scope.destroy_all'
 
 class XyRuleInfo
   include ApplicationMemoryRecord
@@ -26,6 +28,9 @@ class XyRuleInfo
     end
 
     def clear_all
+      if Rails.env.production?
+        raise "must not happen"
+      end
       redis_clear_all
       XyRecord.destroy_all
     end
@@ -79,8 +84,12 @@ class XyRuleInfo
     end
   end
 
-  def ranking_store(record)
+  def ranking_add(record)
     redis.zadd(inside_key, record.score, record.id)
+  end
+
+  def ranking_rem(record)
+    redis.zrem(inside_key, record.id)
   end
 
   def current_clean
@@ -89,7 +98,7 @@ class XyRuleInfo
 
   def aggregate
     XyRecord.where(xy_rule_key: key).each do |e|
-      ranking_store(e)
+      ranking_add(e)
     end
   end
 
