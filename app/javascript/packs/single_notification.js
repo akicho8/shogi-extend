@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const from = data["from"]
         const to = data["to"]
         const str = `${from.name}: ${message}`
-        GVI.$toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
+        GVI.$buefy.toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
         GVI.talk(message)
       }
 
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         GVI.talk(`${e.from.name}さんからの挑戦状が届きました`)
 
         this.battle_request_dialog_showing = true
-        GVI.$dialog.confirm({
+        GVI.$buefy.dialog.confirm({
           title: `${e.from.name}さんからの挑戦状`,
           message: message,
           confirmText: "受ける",
@@ -86,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data["matching_establish"]) {
         assert(data["battle_show_path"])
         if (data["auto_matched_at"]) {
-          GVI.$toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          GVI.$buefy.toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
         }
         if (data["battle_request_at"]) {
-          GVI.$toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          GVI.$buefy.toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
         }
         location.href = data["battle_show_path"]
       }

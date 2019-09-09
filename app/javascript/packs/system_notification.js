@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const from = data["from"]
         const str = `${from.name}: ${message}`
         GVI.talk(message)
-        GVI.$toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
+        GVI.$buefy.toast.open({message: str, position: "is-top", type: "is-success", duration: 1000 * 3})
       }
 
       // オンラインの人数更新
