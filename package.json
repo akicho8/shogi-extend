@@ -33,7 +33,7 @@
     "graphql-tag": "^2.9.2",
     "howler": "^2.1.2",
     "html2canvas": "^1.0.0-rc.1",
-    "js-memory-record": "^0.0.11",
+    "js-memory-record": "^0.0.12",
     "js-yaml": "^3.9.1",
     "lzma": "^2.3.2",
     "moment": "^2.22.1",

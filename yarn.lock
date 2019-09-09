@@ -4586,6 +4586,14 @@ js-memory-record@^0.0.11:
     babel-core "^6.22.1"
     lodash "^4.17.4"
 
+js-memory-record@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.12.tgz#eb6a81b05eb64184044890a0dc9042439239e5e7"
+  integrity sha512-opaj8739t4lHyt0+pASsdXdXcPe5sRH02NUtueZRoJSDExiSKFUWBdKOtXso56tXWPYzDc2fk4j9oVdO6XwyGA==
+  dependencies:
+    babel-core "^6.22.1"
+    lodash "^4.17.4"
+
 js-stringify@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/js-stringify/-/js-stringify-1.0.2.tgz#1736fddfd9724f28a3682adc6230ae7e4e9679db"

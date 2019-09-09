@@ -2,9 +2,6 @@
 
 - twitter_card_tag(card: "summary", title: @page_title, description: XyRuleInfo.description, image: "xy_game.png")
 
-ruby:
-  js_global[:xy_rule_info] = XyRuleInfo.as_json
-
 - content_for :head do
   = javascript_pack_tag("xy_game_app")
   javascript:

@@ -130,7 +130,10 @@
 import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 import sound_cache from './sound_cache.js'
-import XyRuleInfo from "./xy_rule_info.js"
+import MemoryRecord from 'js-memory-record'
+
+class XyRuleInfo extends MemoryRecord {
+}
 
 export default {
   name: "xy_game",
@@ -160,10 +163,10 @@ export default {
       piece: null,
       location: null,
       xy_rule_key: null,
-      entry_name: null,       // ランキングでの名前を保持しておく
-      selected_rule_index: null,                // b-tabs 連動用
+      entry_name: null,                                   // ランキングでの名前を保持しておく
+      selected_rule_index: null,                          // b-tabs 連動用
       rule_attrs_ary: this.$root.$options.rule_attrs_ary, // 複数のルールでそれぞれにランキング情報も入っている
-      xy_record: null,                          // ゲームが終わたっときにランクなどが入っている
+      xy_record: null,                                    // ゲームが終わたっときにランクなどが入っている
       xhr_put_path: null,
       current_pages: null,
       game_rule: null,
@@ -172,6 +175,8 @@ export default {
   },
 
   created() {
+    XyRuleInfo.memory_record_reset(this.$root.$options.xy_rule_info)
+
     this.init_other_variables()
     this.timer_setup()
     document.addEventListener("keydown", this.key_handle, false)
