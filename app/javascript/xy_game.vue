@@ -174,9 +174,11 @@ export default {
     }
   },
 
-  created() {
+  beforeCreate() {
     XyRuleInfo.memory_record_reset(this.$root.$options.xy_rule_info)
+  },
 
+  created() {
     this.init_other_variables()
     this.timer_setup()
     document.addEventListener("keydown", this.key_handle, false)
@@ -544,11 +546,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     selected_rule() {
-      return this.rule_list_hash[this.xy_rule_key]
-    },
-
-    rule_list_hash() {
-      return this.rule_attrs_ary.reduce((a, e, i) => ({...a, [e.key]: {...e}}), {})
+      return this.rule_attrs_ary[XyRuleInfo.fetch(this.xy_rule_key).code]
     },
 
     save_hash() {
