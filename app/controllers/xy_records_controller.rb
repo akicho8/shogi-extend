@@ -67,7 +67,7 @@ class XyRecordsController < ApplicationController
   def result_attributes
     {
       xhr_put_path: url_for([@xy_record, format: :json]),
-      rule_list: XyRuleInfo.rule_list,
+      xy_records: XyRuleInfo[@xy_record.xy_rule_key].xy_records,
       xy_record: @xy_record.as_json(methods: [:rank, :ranking_page]),
     }
   end

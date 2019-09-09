@@ -130,6 +130,7 @@
 import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 import sound_cache from './sound_cache.js'
+import XyRuleInfo from "./xy_rule_info.js"
 
 export default {
   name: "xy_game",
@@ -308,8 +309,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.talk("おわりました")
 
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_record: this.post_params}, data => {
-        this.rule_list = data.rule_list
-        this.xy_record = data.xy_record
+        this.data_update(data)
         this.xhr_put_path = data.xhr_put_path
 
         // ランク内ならランキングのページをそのページに移動する
@@ -347,10 +347,15 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
 
     entry_name_save() {
       this.http_command("put", this.xhr_put_path, {xy_record: { id: this.xy_record.id, entry_name: this.entry_name}}, data => {
-        this.rule_list = data.rule_list
-        this.xy_record = data.xy_record
+        this.data_update(data)
         this.congrats_talk()
       })
+    },
+
+    data_update(data) {
+      const code = XyRuleInfo.fetch(data.xy_record.xy_rule_key).code
+      this.$set(this.rule_list[code], "xy_records", data.xy_records)
+      this.xy_record = data.xy_record
     },
 
     congrats_talk() {
