@@ -56,7 +56,7 @@ class XyRecordsController < ApplicationController
   def js_index_options
     {
       xhr_post_path: url_for([:xy_records, format: :json]),
-      rule_list: XyRuleInfo.rule_list,
+      rule_attrs_ary: XyRuleInfo.rule_attrs_ary,
       per_page: XyRuleInfo.per_page,
       rank_max: XyRuleInfo.rank_max,
     }

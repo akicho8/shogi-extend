@@ -21,7 +21,7 @@ class XyRuleInfo
       end
     end
 
-    def rule_list
+    def rule_attrs_ary
       reject { |e| !Rails.env.development? && e.development_only }.collect do |e|
         e.attributes.merge(xy_records: e.xy_records)
       end
