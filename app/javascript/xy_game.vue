@@ -85,7 +85,7 @@
               :paginated="true"
               :per-page="$root.$options.per_page"
               :current-page.sync="current_pages[selected_rule_index]"
-              :pagination-simple="true"
+              :pagination-simple="false"
               :mobile-cards="false"
               :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'"
               :narrowed="true"
