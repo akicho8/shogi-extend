@@ -57,14 +57,14 @@ class XyRuleInfo
     # aggregate
 
     if ActiveRecord::Base.connection.adapter_name == "Mysql2"
-      ids = redis.zrevrange(inside_key_for(params), 0, rank_max - 1)
+      ids = redis.zrevrange(table_key_for(params), 0, rank_max - 1)
       if ids.empty?
         return []
       end
       records = XyRecord.where(id: ids).order("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})")
       records.collect { |e| e.attributes.merge(rank: e.rank(params)) }.as_json
     else
-      redis.zrevrange(inside_key_for(params), 0, rank_max - 1).collect do |id|
+      redis.zrevrange(table_key_for(params), 0, rank_max - 1).collect do |id|
         record = XyRecord.where(id: ids)
         record.attributes.merge(rank: record.rank(params)).as_json
       end
@@ -72,37 +72,37 @@ class XyRuleInfo
   end
 
   def top_xy_records
-    redis.zrevrange(all_inside_key, 0, 0).collect { |id|
+    redis.zrevrange(all_table_key, 0, 0).collect { |id|
       XyRecord.find(id)
     }
   end
 
   def rank_by_score(params, score)
-    redis.zcount(inside_key_for(params), score + 1, "+inf") + 1
+    redis.zcount(table_key_for(params), score + 1, "+inf") + 1
   end
 
   def ranking_page(params, id)
-    if index = redis.zrevrank(inside_key_for(params), id)
+    if index = redis.zrevrank(table_key_for(params), id)
       index.div(per_page).next
     end
   end
 
   def ranking_add(record)
     XyScopeInfo.each do |e|
-      key = e.inside_key(record, self)
+      key = e.table_key_for[record, self]
       redis.zadd(key, record.score, record.id)
     end
   end
 
   def ranking_rem(record)
     XyScopeInfo.each do |e|
-      key = e.inside_key(record, self)
+      key = e.table_key_for[record, self]
       redis.zrem(key, record.id)
     end
   end
 
   def current_clean
-    redis.del(all_inside_key)
+    redis.del(all_table_key)
   end
 
   def aggregate
@@ -111,21 +111,21 @@ class XyRuleInfo
     end
   end
 
-  def all_inside_key
+  def all_table_key
     [self.class.name.underscore, key].join("/")
   end
 
-  def today_inside_key
-    date_inside_key(Time.current)
+  def today_table_key
+    time_table_key(Time.current)
   end
 
-  def date_inside_key(created_at)
+  def time_table_key(created_at)
     [self.class.name.underscore, key, created_at.strftime("%Y%m%d")].join("/")
   end
 
   private
 
-  def inside_key_for(params)
+  def table_key_for(params)
     xy_scope_info = XyScopeInfo.fetch(params[:xy_scope_key])
     send(xy_scope_info.key_method)
   end

@@ -77,6 +77,11 @@
                     | ツイート
 
     .column.is-4(v-if="mode === 'stop' || mode === 'goal' && rule_attrs_ary")
+      b-field
+        template(v-for="e in XyScopeInfo.values")
+          b-radio-button(v-model="xy_scope_key" :native-value="e.key")
+            | {{e.name}}
+
       b-tabs(v-model="selected_rule_index" expanded)
         template(v-for="rule_one in rule_attrs_ary")
           b-tab-item(:label="rule_one.name" :value="rule_one.key")
@@ -100,11 +105,6 @@
                   | {{time_format_from_msec(props.row.spent_sec)}}
                 b-table-column(field="created_at" label="日付" sortable v-if="true")
                   | {{time_default_format(props.row.created_at)}}
-
-      b-field
-        template(v-for="e in XyScopeInfo.values")
-          b-radio-button(v-model="xy_scope_key" :native-value="e.key")
-            | {{e.name}}
 
   template(v-if="development_p")
     .columns
