@@ -111,13 +111,6 @@ class XyRuleInfo
     end
   end
 
-  def inside_key_for(params)
-    xy_scope_info = XyScopeInfo.fetch(params[:xy_scope_key])
-    send(xy_scope_info.key_method)
-  end
-
-  private
-
   def all_inside_key
     [self.class.name.underscore, key].join("/")
   end
@@ -128,6 +121,13 @@ class XyRuleInfo
 
   def date_inside_key(created_at)
     [self.class.name.underscore, key, created_at.strftime("%Y%m%d")].join("/")
+  end
+
+  private
+
+  def inside_key_for(params)
+    xy_scope_info = XyScopeInfo.fetch(params[:xy_scope_key])
+    send(xy_scope_info.key_method)
   end
 
   def redis
