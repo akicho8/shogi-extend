@@ -12,9 +12,9 @@
           template(v-if="mode === 'stop' || mode === 'goal'")
             b-dropdown.is-pulled-left(v-model="xy_rule_key")
               button.button(slot="trigger")
-                span {{selected_rule.name}}
+                span {{current_rule.name}}
                 b-icon(icon="menu-down")
-              template(v-for="e in rule_attrs_ary")
+              template(v-for="e in XyRuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
           b-tooltip(label="ルール")
@@ -76,20 +76,20 @@
                     | &nbsp;
                     | ツイート
 
-    .column.is-4(v-if="mode === 'stop' || mode === 'goal' && rule_attrs_ary")
+    .column.is-4(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
       b-field
         template(v-for="e in XyScopeInfo.values")
           b-radio-button(v-model="xy_scope_key" :native-value="e.key")
             | {{e.name}}
 
-      b-tabs(v-model="selected_rule_index" expanded)
-        template(v-for="rule_one in rule_attrs_ary")
-          b-tab-item(:label="rule_one.name" :value="rule_one.key")
+      b-tabs(v-model="current_rule_index" expanded)
+        template(v-for="xy_rule_info in XyRuleInfo.values")
+          b-tab-item(:label="xy_rule_info.name" :value="xy_rule_info.key")
             b-table(
-              :data="rule_one.xy_records"
+              :data="xy_records_hash[xy_rule_info.key]"
               :paginated="true"
               :per-page="$root.$options.per_page"
-              :current-page.sync="current_pages[selected_rule_index]"
+              :current-page.sync="current_pages[current_rule_index]"
               :pagination-simple="false"
               :mobile-cards="false"
               :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'"
@@ -174,12 +174,12 @@ export default {
       xy_scope_key: null,
       xy_rule_key: null,
       entry_name: null,                                   // ランキングでの名前を保持しておく
-      selected_rule_index: null,                          // b-tabs 連動用
-      rule_attrs_ary: null, // 複数のルールでそれぞれにランキング情報も入っている
+      current_rule_index: null,                          // b-tabs 連動用
+      xy_records_hash: null, // 複数のルールでそれぞれにランキング情報も入っている
       xy_record: null,                                    // ゲームが終わたっときにランクなどが入っている
       xhr_put_path: null,
       current_pages: null,
-      game_rule: null,
+      saved_rule: null,
       danger_zone: {},
     }
   },
@@ -201,18 +201,18 @@ export default {
 
     xy_scope_key(v) {
       this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key }, data => {
-        this.rule_attrs_ary = data.rule_attrs_ary
+        this.xy_records_hash = data.xy_records_hash
       })
 
       this.data_save_to_local_storage()
     },
 
     xy_rule_key(v) {
-      this.selected_rule_index = this.selected_rule.code
+      this.current_rule_index = this.current_rule.code
       this.data_save_to_local_storage()
     },
 
-    selected_rule_index(v) {
+    current_rule_index(v) {
       // このタブを始めて開いたときランキングの1ページ目に合わせる
       // this.current_pages[v] ||= 1 相当
       if (!this.current_pages[v]) {
@@ -220,12 +220,7 @@ export default {
       }
 
       // タブインデックスからルールのキーを求めてプルダウンの方にも反映する
-      if (this.rule_attrs_ary) {
-        const e = this.rule_attrs_ary[v]
-        if (e) {
-          this.xy_rule_key = e.key
-        }
-      }
+      this.xy_rule_key = XyRuleInfo.fetch(v).key
     },
   },
 
@@ -239,7 +234,7 @@ export default {
 <div class="content is-size-7">
 <ol>
 <li>駒の場所をキーボードの数字2桁で入力していきます</li>
-<li>${this.selected_rule.o_count_max}問正解するまでの時間を競います</li>
+<li>${this.current_rule.o_count_max}問正解するまでの時間を競います</li>
 <li>最初の数字を間違えたときはESCキーでキャンセルできます</li>
 </ol>
 </div>
@@ -254,7 +249,7 @@ export default {
 
       this.talk(`
 駒の場所をキーボードの数字2桁で入力していきます。
-${this.selected_rule.o_count_max}問正解するまでの時間を競います。
+${this.current_rule.o_count_max}問正解するまでの時間を競います。
 最初の数字を間違えたときはエスケープキーでキャンセルできます。
 `, {rate: 2.0, onend: () => { rule_dialog.close() }})
 
@@ -303,7 +298,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.mode = "readygo"
       this.count_down_counter = 0
       this.init_other_variables()
-      this.game_rule = this.selected_rule
+      this.saved_rule = this.current_rule
       this.talk_stop()
 
       this.inteval_id = setInterval(() => {
@@ -347,7 +342,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
 
         // ランク内ならランキングのページをそのページに移動する
         if (this.xy_record.rank <= this.$root.$options.rank_max) {
-          this.$set(this.current_pages, this.selected_rule_index, this.xy_record.ranking_page)
+          this.$set(this.current_pages, this.current_rule_index, this.xy_record.ranking_page)
         }
 
         this.$buefy.dialog.prompt({
@@ -386,8 +381,8 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     data_update(data) {
-      const code = XyRuleInfo.fetch(data.xy_record.xy_rule_key).code
-      this.$set(this.rule_attrs_ary[code], "xy_records", data.xy_records)
+      const xy_rule_info = XyRuleInfo.fetch(data.xy_record.xy_rule_key)
+      this.$set(this.xy_records_hash, xy_rule_info.key, data.xy_records)
       this.xy_record = data.xy_record
     },
 
@@ -544,7 +539,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
 
     summary() {
       let out = ""
-      out += `ルール: ${this.game_rule.name}\n`
+      out += `ルール: ${this.saved_rule.name}\n`
       if (this.xy_record) {
         out += `順位: ${this.xy_record.rank}位\n`
       }
@@ -568,11 +563,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     o_count_max() {
-      return this.game_rule.o_count_max
-    },
-
-    selected_rule() {
-      return XyRuleInfo.fetch(this.xy_rule_key)
+      return this.saved_rule.o_count_max
     },
 
     save_hash() {
@@ -643,9 +634,12 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       return XyScopeInfo.fetch(this.xy_scope_key)
     },
 
-    XyScopeInfo() {
-      return XyScopeInfo
-    }
+    current_rule() {
+      return XyRuleInfo.fetch(this.xy_rule_key)
+    },
+
+    XyScopeInfo() { return XyScopeInfo },
+    XyRuleInfo() { return XyRuleInfo },
   },
 }
 </script>

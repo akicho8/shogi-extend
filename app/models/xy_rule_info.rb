@@ -21,10 +21,8 @@ class XyRuleInfo
       end
     end
 
-    def rule_attrs_ary(params)
-      collect do |e|
-        e.attributes.merge(xy_records: e.xy_records(params))
-      end
+    def xy_records_hash(params)
+      inject({}) { |a, e| a.merge(e.key => e.xy_records(params)) }
     end
 
     def clear_all

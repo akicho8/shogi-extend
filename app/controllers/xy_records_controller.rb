@@ -32,7 +32,7 @@ class XyRecordsController < ApplicationController
 
   def index
     if request.format.json?
-      render json: { rule_attrs_ary: XyRuleInfo.rule_attrs_ary(params) }
+      render json: { xy_records_hash: XyRuleInfo.xy_records_hash(params) }
       return
     end
   end
