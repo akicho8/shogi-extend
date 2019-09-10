@@ -103,8 +103,9 @@
                   | {{props.row.entry_name || '？？？'}}
                 b-table-column(field="spent_sec" label="タイム" sortable)
                   | {{time_format_from_msec(props.row.spent_sec)}}
-                b-table-column(field="created_at" label="日付" sortable v-if="true")
-                  | {{time_default_format(props.row.created_at)}}
+                template(v-if="curent_scope.date_visible")
+                  b-table-column(field="created_at" label="日付" sortable)
+                    | {{time_default_format(props.row.created_at)}}
 
   template(v-if="development_p")
     .columns
@@ -636,6 +637,10 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       if (js_global.current_user) {
         return js_global.current_user.name
       }
+    },
+
+    curent_scope() {
+      return XyScopeInfo.fetch(this.xy_scope_key)
     },
 
     XyScopeInfo() {
