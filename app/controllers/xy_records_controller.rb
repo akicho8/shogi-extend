@@ -31,6 +31,10 @@ class XyRecordsController < ApplicationController
   end
 
   def index
+    if request.format.json?
+      render json: { rule_attrs_ary: XyRuleInfo.rule_attrs_ary(params) }
+      return
+    end
   end
 
   def create
@@ -56,8 +60,8 @@ class XyRecordsController < ApplicationController
   def js_index_options
     {
       xy_rule_info: XyRuleInfo.as_json,
+      xy_scope_info: XyScopeInfo.as_json,
       xhr_post_path: url_for([:xy_records, format: :json]),
-      rule_attrs_ary: XyRuleInfo.rule_attrs_ary,
       per_page: XyRuleInfo.per_page,
       rank_max: XyRuleInfo.rank_max,
     }
@@ -68,8 +72,8 @@ class XyRecordsController < ApplicationController
   def result_attributes
     {
       xhr_put_path: url_for([@xy_record, format: :json]),
-      xy_records: XyRuleInfo[@xy_record.xy_rule_key].xy_records,
-      xy_record: @xy_record.as_json(methods: [:rank, :ranking_page]),
+      xy_records: XyRuleInfo[@xy_record.xy_rule_key].xy_records(params),
+      xy_record: @xy_record.attributes.merge(rank: @xy_record.rank(params), ranking_page: @xy_record.ranking_page(params)).as_json,
     }
   end
 

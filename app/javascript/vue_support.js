@@ -31,6 +31,23 @@ export default {
       })
     },
 
+    http_get_command(url, params, callback = null) {
+      const loading_instance = this.$buefy.loading.open()
+      this.$http.get(url, {params: params}).then((response) => {
+        loading_instance.close()
+        if (response.data.message) {
+          this.$buefy.toast.open({message: response.data.message})
+        }
+        if (callback) {
+          callback(response.data)
+        }
+      }).catch((error) => {
+        loading_instance.close()
+        console.table([error.response])
+        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+      })
+    },
+
     process_now() {
       this.$buefy.loading.open()
     },

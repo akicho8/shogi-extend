@@ -5,10 +5,10 @@
 class XyRuleInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: "xy_rule1",   name: "1問",   o_count_max:  1,  development_only: false, },
-    { key: "xy_rule10",  name: "10問",  o_count_max: 10,  development_only: false, },
-    { key: "xy_rule30",  name: "30問",  o_count_max: 30,  development_only: false, },
-    { key: "xy_rule100", name: "100問", o_count_max: 100, development_only: false, },
+    { key: "xy_rule1",   name: "1問",   o_count_max:  1,  },
+    { key: "xy_rule10",  name: "10問",  o_count_max: 10,  },
+    { key: "xy_rule30",  name: "30問",  o_count_max: 30,  },
+    { key: "xy_rule100", name: "100問", o_count_max: 100, },
   ]
 
   cattr_accessor(:rank_max) { Rails.env.production? ? 300 : 5 }  # 位まで表示
@@ -21,9 +21,9 @@ class XyRuleInfo
       end
     end
 
-    def rule_attrs_ary
-      reject { |e| !Rails.env.development? && e.development_only }.collect do |e|
-        e.attributes.merge(xy_records: e.xy_records)
+    def rule_attrs_ary(params)
+      collect do |e|
+        e.attributes.merge(xy_records: e.xy_records(params))
       end
     end
 
@@ -52,48 +52,57 @@ class XyRuleInfo
   end
 
   # 実際のスコア(のもとの時間)は XyRecord が持っているので取り出さない
-  def xy_records
+  def xy_records(params)
     # current_clean
     # aggregate
+
     if ActiveRecord::Base.connection.adapter_name == "Mysql2"
-      ids = redis.zrevrange(inside_key, 0, rank_max - 1)
+      ids = redis.zrevrange(inside_key_for(params), 0, rank_max - 1)
       if ids.empty?
         return []
       end
-      XyRecord.where(id: ids).order("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})").as_json(methods: [:rank]) # MySQL 依存
+      records = XyRecord.where(id: ids).order("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})")
+      records.collect { |e| e.attributes.merge(rank: e.rank(params)) }.as_json
     else
-      redis.zrevrange(inside_key, 0, rank_max - 1).collect do |id|
-        XyRecord.where(id: ids).as_json(methods: [:rank])
+      redis.zrevrange(inside_key_for(params), 0, rank_max - 1).collect do |id|
+        record = XyRecord.where(id: ids)
+        record.attributes.merge(rank: record.rank(params)).as_json
       end
     end
   end
 
   def top_xy_records
-    redis.zrevrange(inside_key, 0, 0).collect { |id|
+    redis.zrevrange(all_inside_key, 0, 0).collect { |id|
       XyRecord.find(id)
     }
   end
 
-  def rank_by_score(score)
-    redis.zcount(inside_key, score + 1, "+inf") + 1
+  def rank_by_score(params, score)
+    redis.zcount(inside_key_for(params), score + 1, "+inf") + 1
   end
 
-  def ranking_page(id)
-    if index = redis.zrevrank(inside_key, id)
+  def ranking_page(params, id)
+    if index = redis.zrevrank(inside_key_for(params), id)
       index.div(per_page).next
     end
   end
 
   def ranking_add(record)
-    redis.zadd(inside_key, record.score, record.id)
+    XyScopeInfo.each do |e|
+      key = e.inside_key(record, self)
+      redis.zadd(key, record.score, record.id)
+    end
   end
 
   def ranking_rem(record)
-    redis.zrem(inside_key, record.id)
+    XyScopeInfo.each do |e|
+      key = e.inside_key(record, self)
+      redis.zrem(key, record.id)
+    end
   end
 
   def current_clean
-    redis.del(inside_key)
+    redis.del(all_inside_key)
   end
 
   def aggregate
@@ -102,10 +111,23 @@ class XyRuleInfo
     end
   end
 
+  def inside_key_for(params)
+    xy_scope_info = XyScopeInfo.fetch(params[:xy_scope_key])
+    send(xy_scope_info.key_method)
+  end
+
   private
 
-  def inside_key
-    "#{self.class.name.underscore}/#{key}"
+  def all_inside_key
+    [self.class.name.underscore, key].join("/")
+  end
+
+  def today_inside_key
+    date_inside_key(Time.current)
+  end
+
+  def date_inside_key(created_at)
+    [self.class.name.underscore, key, created_at.strftime("%Y%m%d")].join("/")
   end
 
   def redis

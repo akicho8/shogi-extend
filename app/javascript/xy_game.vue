@@ -76,7 +76,7 @@
                     | &nbsp;
                     | ツイート
 
-    .column.is-4(v-if="mode === 'stop' || mode === 'goal'")
+    .column.is-4(v-if="mode === 'stop' || mode === 'goal' && rule_attrs_ary")
       b-tabs(v-model="selected_rule_index" expanded)
         template(v-for="rule_one in rule_attrs_ary")
           b-tab-item(:label="rule_one.name" :value="rule_one.key")
@@ -100,6 +100,11 @@
                   | {{time_format_from_msec(props.row.spent_sec)}}
                 b-table-column(field="created_at" label="日付" sortable v-if="true")
                   | {{time_default_format(props.row.created_at)}}
+
+      b-field
+        template(v-for="e in XyScopeInfo.values")
+          b-radio-button(v-model="xy_scope_key" :native-value="e.key")
+            | {{e.name}}
 
   template(v-if="development_p")
     .columns
@@ -135,6 +140,9 @@ import MemoryRecord from 'js-memory-record'
 class XyRuleInfo extends MemoryRecord {
 }
 
+class XyScopeInfo extends MemoryRecord {
+}
+
 export default {
   name: "xy_game",
   mixins: [
@@ -162,10 +170,11 @@ export default {
       micro_seconds: null,
       piece: null,
       location: null,
+      xy_scope_key: null,
       xy_rule_key: null,
       entry_name: null,                                   // ランキングでの名前を保持しておく
       selected_rule_index: null,                          // b-tabs 連動用
-      rule_attrs_ary: this.$root.$options.rule_attrs_ary, // 複数のルールでそれぞれにランキング情報も入っている
+      rule_attrs_ary: null, // 複数のルールでそれぞれにランキング情報も入っている
       xy_record: null,                                    // ゲームが終わたっときにランクなどが入っている
       xhr_put_path: null,
       current_pages: null,
@@ -176,6 +185,7 @@ export default {
 
   beforeCreate() {
     XyRuleInfo.memory_record_reset(this.$root.$options.xy_rule_info)
+    XyScopeInfo.memory_record_reset(this.$root.$options.xy_scope_info)
   },
 
   created() {
@@ -187,6 +197,14 @@ export default {
   watch: {
     entry_name() { this.data_save_to_local_storage() },
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
+
+    xy_scope_key(v) {
+      this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key }, data => {
+        this.rule_attrs_ary = data.rule_attrs_ary
+      })
+
+      this.data_save_to_local_storage()
+    },
 
     xy_rule_key(v) {
       this.selected_rule_index = this.selected_rule.code
@@ -201,9 +219,11 @@ export default {
       }
 
       // タブインデックスからルールのキーを求めてプルダウンの方にも反映する
-      const e = this.rule_attrs_ary[v]
-      if (e) {
-        this.xy_rule_key = e.key
+      if (this.rule_attrs_ary) {
+        const e = this.rule_attrs_ary[v]
+        if (e) {
+          this.xy_rule_key = e.key
+        }
       }
     },
   },
@@ -241,8 +261,13 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
 
     data_restore_from_hash(hash) {
       this.xy_rule_key = hash.xy_rule_key
-      if (!this.selected_rule) {
-        this.xy_rule_key = this.rule_attrs_ary[0].key
+      if (!XyRuleInfo.lookup(this.xy_rule_key)) {
+        this.xy_rule_key = XyRuleInfo.fetch(0).key
+      }
+
+      this.xy_scope_key = hash.xy_scope_key
+      if (!XyScopeInfo.lookup(this.xy_scope_key)) {
+        this.xy_scope_key = XyScopeInfo.fetch(0).key
       }
 
       this.entry_name = hash.entry_name || this.default_name
@@ -315,7 +340,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
       this.timer_stop()
       this.talk("おわりました")
 
-      this.http_command("post", this.$root.$options.xhr_post_path, {xy_record: this.post_params}, data => {
+      this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
         this.data_update(data)
         this.xhr_put_path = data.xhr_put_path
 
@@ -353,7 +378,7 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     entry_name_save() {
-      this.http_command("put", this.xhr_put_path, {xy_record: { id: this.xy_record.id, entry_name: this.entry_name}}, data => {
+      this.http_command("put", this.xhr_put_path, {xy_scope_key: this.xy_scope_key, xy_record: { id: this.xy_record.id, entry_name: this.entry_name}}, data => {
         this.data_update(data)
         this.congrats_talk()
       })
@@ -546,11 +571,12 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
     },
 
     selected_rule() {
-      return this.rule_attrs_ary[XyRuleInfo.fetch(this.xy_rule_key).code]
+      return XyRuleInfo.fetch(this.xy_rule_key)
     },
 
     save_hash() {
       return {
+        xy_scope_key: this.xy_scope_key,
         xy_rule_key: this.xy_rule_key,
         entry_name: this.entry_name,
         current_pages: this.current_pages,
@@ -611,6 +637,10 @@ ${this.selected_rule.o_count_max}問正解するまでの時間を競います�
         return js_global.current_user.name
       }
     },
+
+    XyScopeInfo() {
+      return XyScopeInfo
+    }
   },
 }
 </script>

@@ -60,12 +60,12 @@ class XyRecord < ApplicationRecord
     ranking_rem
   end
 
-  def rank
-    XyRuleInfo[xy_rule_key].rank_by_score(score)
+  def rank(params)
+    XyRuleInfo[xy_rule_key].rank_by_score(params, score)
   end
 
-  def ranking_page
-    XyRuleInfo[xy_rule_key].ranking_page(id)
+  def ranking_page(params)
+    XyRuleInfo[xy_rule_key].ranking_page(params, id)
   end
 
   def score
