@@ -250,13 +250,14 @@ export default {
     rule_display() {
       this.talk_stop()
 
+      // ${xxx} で埋め込める
       const rule_dialog = this.$buefy.dialog.alert({
         title: "ルール",
         message: `
 <div class="content is-size-7">
 <ol>
 <li>駒の場所をキーボードの数字2桁で入力していきます</li>
-<li>${this.current_rule.o_count_max}問正解するまでの時間を競います</li>
+<li>選択した数まで正解するまでの時間を競います</li>
 <li>最初の数字を間違えたときはESCキーでキャンセルできます</li>
 </ol>
 </div>
@@ -271,7 +272,7 @@ export default {
 
       this.talk(`
 駒の場所をキーボードの数字2桁で入力していきます。
-${this.current_rule.o_count_max}問正解するまでの時間を競います。
+選択した数まで正解するまでの時間を競います。
 最初の数字を間違えたときはエスケープキーでキャンセルできます。
 `, {rate: 2.0, onend: () => { rule_dialog.close() }})
 
