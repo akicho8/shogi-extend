@@ -59,6 +59,8 @@
             :theme.sync="sp_theme"
             :bg_variant.sync="sp_bg_variant"
             :size.sync="sp_size"
+            :flip.sync="sp_flip"
+            :piece_variant.sync="sp_piece_variant"
           )
         .time_container
           .fixed_font.is-size-2
@@ -140,9 +142,7 @@ import sound_cache from './sound_cache.js'
 import MemoryRecord from 'js-memory-record'
 
 import Soldier from "shogi-player/src/soldier.js"
-// import Location from "shogi-player/src/location.js"
 import Place from "shogi-player/src/place.js"
-// import Piece from "shogi-player/src/piece.js"
 
 class XyRuleInfo extends MemoryRecord {
 }
@@ -188,6 +188,8 @@ export default {
       sp_theme: null,
       sp_bg_variant: null,
       sp_size: null,
+      sp_flip: null,
+      sp_piece_variant: null,
     }
   },
 
@@ -206,10 +208,12 @@ export default {
   },
 
   watch: {
-    entry_name()    { this.data_save_to_local_storage() },
-    sp_theme()      { this.data_save_to_local_storage() },
-    sp_bg_variant() { this.data_save_to_local_storage() },
-    sp_size()       { this.data_save_to_local_storage() },
+    entry_name()       { this.data_save_to_local_storage() },
+    sp_theme()         { this.data_save_to_local_storage() },
+    sp_bg_variant()    { this.data_save_to_local_storage() },
+    sp_size()          { this.data_save_to_local_storage() },
+    sp_flip()          { this.data_save_to_local_storage() },
+    sp_piece_variant() { this.data_save_to_local_storage() },
 
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
 
@@ -274,12 +278,14 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
     },
 
     persistense_variables_init() {
-      this.xy_rule_key   = null
-      this.entry_name    = null
-      this.current_pages = null
-      this.sp_theme      = null
-      this.sp_bg_variant = null
-      this.sp_size       = null
+      this.xy_rule_key      = null
+      this.entry_name       = null
+      this.current_pages    = null
+      this.sp_theme         = null
+      this.sp_bg_variant    = null
+      this.sp_size          = null
+      this.sp_flip          = null
+      this.sp_piece_variant = null
 
       this.data_restore_from_hash({})
     },
@@ -301,6 +307,8 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
       this.sp_theme = hash.sp_theme || "simple"
       this.sp_bg_variant = hash.sp_bg_variant || "a"
       this.sp_size = hash.sp_size || "default"
+      this.sp_flip = hash.sp_flip != null ? hash.sp_flip : false
+      this.sp_piece_variant = hash.sp_piece_variant || "a"
     },
 
     timer_setup() {
@@ -572,6 +580,8 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
         sp_theme: this.sp_theme,
         sp_bg_variant: this.sp_bg_variant,
         sp_size: this.sp_size,
+        sp_flip: this.sp_flip,
+        sp_piece_variant: this.sp_piece_variant,
       }
     },
 
