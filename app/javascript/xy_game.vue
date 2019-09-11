@@ -440,7 +440,7 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
 
     timer_stop() {
       this.timer_run = false
-      this.$refs.api_sp.mediator.board.clear()
+      this.$refs.api_sp.api_board_clear()
     },
 
     key_handle(e) {
@@ -512,8 +512,8 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
 
       const soldier = Soldier.random()
       soldier.place = Place.fetch([this.current_place.x, this.current_place.y])
-      this.$refs.api_sp.mediator.board.clear()
-      this.$refs.api_sp.mediator.board.place_on(soldier)
+      this.$refs.api_sp.api_board_clear()
+      this.$refs.api_sp.api_place_on(soldier)
     },
 
     active_p(x, y) {
