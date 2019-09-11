@@ -77,7 +77,8 @@ class XyRecord < ApplicationRecord
   end
 
   def slack_notify
-    SlackAgent.message_send(key: "符号", body: "[#{entry_name}] #{summary}")
+    rank = rank(xy_scope_key: :xy_scope_all)
+    SlackAgent.message_send(key: "符号", body: "[#{rank}位][#{entry_name}] #{summary}")
   end
 
   private
