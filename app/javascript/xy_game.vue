@@ -17,8 +17,11 @@
               template(v-for="e in XyRuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
-          b-tooltip(label="ルール")
-            b-button(@click="rule_display" icon-right="help")
+            b-tooltip(label="盤サイズを変更します。テーマを「画像駒」にすると「背景の種類」で見た目を変更できます" multilined)
+              b-button(@click="sp_setting_handle" icon-right="settings")
+
+            b-tooltip(label="使い方")
+              b-button(@click="rule_display" icon-right="help")
 
           template(v-if="development_p")
             template(v-if="mode === 'running'")
@@ -26,6 +29,7 @@
             button.button(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
             button.button(@click="data_restore_from_hash({})") 初期化
             button.button(@click="storage_clear") storage_clear
+            button.button(@click="persistense_variables_init") 保存可能な変数のリセット
             | {{current_pages}}
 
         .level_container
@@ -46,19 +50,16 @@
             .count_down_wrap
               .count_down
                 | {{count_down}}
-          .shogi-player.theme-simple.size-default
-            .board_container.font_size_base
-              .flippable
-                .board_wrap
-                  .board_outer
-                    table.board_inner
-                      tr(v-for="y in board_size")
-                        td(v-for="x in board_size" :style="td_style(x - 1, y - 1)")
-                          .piece_back
-                            .piece_fore(:class="cell_class(x - 1, y - 1)")
-                              template(v-if="active_p(x - 1, y - 1)")
-                                template(v-if="mode === 'running'")
-                                  | {{piece}}
+
+          shogi_player(
+            ref="api_sp"
+            :summary_show="false"
+            :hidden_if_piece_stand_blank="true"
+            :setting_button_show="false"
+            :theme.sync="sp_theme"
+            :bg_variant.sync="sp_bg_variant"
+            :size.sync="sp_size"
+          )
         .time_container
           .fixed_font.is-size-2
             | {{time_format}}
@@ -138,6 +139,11 @@ import stopwatch_data_retention from './stopwatch_data_retention.js'
 import sound_cache from './sound_cache.js'
 import MemoryRecord from 'js-memory-record'
 
+import Soldier from "shogi-player/src/soldier.js"
+// import Location from "shogi-player/src/location.js"
+import Place from "shogi-player/src/place.js"
+// import Piece from "shogi-player/src/piece.js"
+
 class XyRuleInfo extends MemoryRecord {
 }
 
@@ -180,7 +186,10 @@ export default {
       xhr_put_path: null,
       current_pages: null,
       saved_rule: null,
-      danger_zone: {},
+
+      sp_theme: null,
+      sp_bg_variant: null,
+      sp_size: null,
     }
   },
 
@@ -195,8 +204,15 @@ export default {
     document.addEventListener("keydown", this.key_handle, false)
   },
 
+  mounted() {
+  },
+
   watch: {
-    entry_name() { this.data_save_to_local_storage() },
+    entry_name()    { this.data_save_to_local_storage() },
+    sp_theme()      { this.data_save_to_local_storage() },
+    sp_bg_variant() { this.data_save_to_local_storage() },
+    sp_size()       { this.data_save_to_local_storage() },
+
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
 
     xy_scope_key(v) {
@@ -225,6 +241,10 @@ export default {
   },
 
   methods: {
+    sp_setting_handle() {
+      this.$refs.api_sp.setting_modal_p = true
+    },
+
     rule_display() {
       this.talk_stop()
 
@@ -255,6 +275,17 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
 
     },
 
+    persistense_variables_init() {
+      this.xy_rule_key   = null
+      this.entry_name    = null
+      this.current_pages = null
+      this.sp_theme      = null
+      this.sp_bg_variant = null
+      this.sp_size       = null
+
+      this.data_restore_from_hash({})
+    },
+
     data_restore_from_hash(hash) {
       this.xy_rule_key = hash.xy_rule_key
       if (!XyRuleInfo.lookup(this.xy_rule_key)) {
@@ -268,6 +299,10 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
 
       this.entry_name = hash.entry_name || this.default_name
       this.current_pages = hash.current_pages || {}
+
+      this.sp_theme = hash.sp_theme || "simple"
+      this.sp_bg_variant = hash.sp_bg_variant || "a"
+      this.sp_size = hash.sp_size || "default"
     },
 
     timer_setup() {
@@ -290,7 +325,6 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
-      this.danger_zone = {}
       this.xy_record = null
     },
 
@@ -406,6 +440,7 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
 
     timer_stop() {
       this.timer_run = false
+      this.$refs.api_sp.mediator.board.clear()
     },
 
     key_handle(e) {
@@ -432,7 +467,6 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
           } else {
             this.x_count++
             this.sound_play("x")
-            this.danger_zone_plus()
           }
         }
         e.preventDefault()
@@ -475,37 +509,11 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
       } else {
         this.location = "white"
       }
-    },
 
-    cell_class(x, y) {
-      let str = null
-      if (this.active_p(x, y)) {
-        str = ["current", `location_${this.location}`]
-      }
-      return str
-    },
-
-    td_style(x, y) {
-      if (this.mode === 'goal') {
-        const l_min = 50
-        const key = this.xy_key(x, y)
-        let count = this.danger_zone[key] || 0
-        let v = 100 - (count * 3.0)
-        if (v < l_min) {
-          v = l_min
-        }
-        return { "background-color": `hsl(0, 100%, ${v}%)` }
-      }
-    },
-
-    danger_zone_plus() {
-      const key = this.xy_key(this.current_place.x, this.current_place.y)
-      const count = this.danger_zone[key] || 0
-      this.$set(this.danger_zone, key, count + 1)
-    },
-
-    xy_key(x, y) {
-      return [x, y].join(",")
+      const soldier = Soldier.random()
+      soldier.place = Place.fetch([this.current_place.x, this.current_place.y])
+      this.$refs.api_sp.mediator.board.clear()
+      this.$refs.api_sp.mediator.board.place_on(soldier)
     },
 
     active_p(x, y) {
@@ -572,6 +580,10 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
         xy_rule_key: this.xy_rule_key,
         entry_name: this.entry_name,
         current_pages: this.current_pages,
+
+        sp_theme: this.sp_theme,
+        sp_bg_variant: this.sp_bg_variant,
+        sp_size: this.sp_size,
       }
     },
 
@@ -645,6 +657,8 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
 </script>
 
 <style lang="sass">
+@import "./my_custom_buefy.scss"
+
 .xy_game
   .level_container
     width: 10rem
@@ -667,6 +681,8 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
       align-items: center
       .count_down
         font-size: 24rem
+        color: $primary
+        -webkit-text-stroke: 4px white
 
   .time_container
     margin-top: 0.1rem
