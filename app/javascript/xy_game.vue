@@ -175,8 +175,6 @@ export default {
       key_queue: null,
       timer_run: false,
       micro_seconds: null,
-      piece: null,
-      location: null,
       xy_scope_key: null,
       xy_rule_key: null,
       entry_name: null,                                   // ランキングでの名前を保持しておく
@@ -484,36 +482,31 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
     place_next_set() {
       this.before_place = this.current_place
 
+      let p = null
       if (true) {
         while (true) {
-          this.current_place = {x: this.place_random(), y: this.place_random()}
-          if ((this.o_count === 0 && (this.board_size - 1 - this.current_place.x) === this.current_place.y)) {
+          p = {x: this.place_random(), y: this.place_random()}
+          if ((this.o_count === 0 && (this.board_size - 1 - p.x) === p.y)) {
             continue
           }
           if (this.before_place) {
-            if (_.isEqual(this.before_place, this.current_place)) {
+            if (_.isEqual(this.before_place, p)) {
               continue
             }
           }
           break
         }
       }
-
       if (false) {
-        this.current_place = {x: this.place_random(), y: _.sample([5,6])}
-      }
-
-      this.piece = this.piece_sample()
-      if (this.rand(2) === 0) {
-        this.location = "black"
-      } else {
-        this.location = "white"
+        p = {x: this.place_random(), y: _.sample([5,6])}
       }
 
       const soldier = Soldier.random()
-      soldier.place = Place.fetch([this.current_place.x, this.current_place.y])
+      soldier.place = Place.fetch([p.x, p.y])
       this.$refs.api_sp.api_board_clear()
       this.$refs.api_sp.api_place_on(soldier)
+
+      this.current_place = p
     },
 
     active_p(x, y) {
@@ -523,12 +516,7 @@ ${this.current_rule.o_count_max}問正解するまでの時間を競います。
     },
 
     place_random() {
-      return this.rand(this.board_size)
-    },
-
-    piece_sample() {
-      const chars = "玉飛龍角馬金銀全桂圭香杏歩と".split("")
-      return chars[this.rand(chars.length)]
+      return _.random(0, this.board_size - 1)
     },
 
     time_format_from_msec(v) {
