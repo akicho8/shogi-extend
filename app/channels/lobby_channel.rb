@@ -7,6 +7,14 @@ class LobbyChannel < ApplicationCable::Channel
   def unsubscribed
   end
 
+  def lobby_in_handle(data)
+    current_user.appear
+  end
+
+  def lobby_out_handle(data)
+    current_user.disappear
+  end
+
   def chat_say(data)
     current_user.lobby_chat_say(data["message"], msg_options: data["msg_options"])
   end

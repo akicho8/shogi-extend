@@ -34,6 +34,7 @@
 # | failed_attempts        | Failed attempts          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token             | string(255) |                     |      | E!    |
 # | locked_at              | Locked at                | datetime    |                     |      |       |
+# | lobby_in_at            | Lobby in at              | datetime    |                     |      |       |
 # |------------------------+--------------------------+-------------+---------------------+------+-------|
 
 module Colosseum
@@ -291,10 +292,22 @@ module Colosseum
 
       def appear
         update!(online_at: Time.current)
+        LobbyChannel.broadcast_to(self, {online_at: online_at})
+        ActionCable.server.broadcast("lobby_channel", {online_user_add: ams_sr(self, serializer: Colosseum::OnlineUserSerializer)})
       end
 
       def disappear
         update!(online_at: nil)
+        LobbyChannel.broadcast_to(self, {online_at: online_at})
+        ActionCable.server.broadcast("lobby_channel", {online_user_remove: ams_sr(self, serializer: Colosseum::OnlineUserSerializer)})
+      end
+
+      def appear2
+        update!(lobby_in_at: Time.current)
+      end
+
+      def disappear2
+        update!(lobby_in_at: nil)
       end
 
       def online_only_count_update

@@ -4,6 +4,7 @@ module Colosseum
   class SimpleUserSerializer < ApplicationSerializer
     attributes :name, :show_path, :avatar_url, :race_key
     attributes :win_count, :lose_count, :win_ratio
+    attributes :online_at
   end
 
   if $0 == __FILE__

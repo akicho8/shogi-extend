@@ -48,29 +48,49 @@
   / .title.is-6 ネット対戦・ロビー
   / hr
 
-  .buttons
-    template(v-if="!matching_at")
-      button.button.is-primary.is-large(@click.prevent="matching_start")
-        b-icon(icon="play")
-        | &nbsp;
-        | &nbsp;
-        | 対戦開始
-      = link_to([:colosseum, :rankings], class: "button is-large") do
-        b-tooltip(label="ランキング")
-          b-icon(icon="trophy" size="is-medium")
-      button.button.is-large(@click.prevent="battle_setting_open_click" id="rule_set_dialog_button")
-        b-tooltip(label="ルール設定")
-          b-icon(icon="settings-outline" size="is-medium")
-    template(v-else)
-      a.button.is-large(@click.prevent="matching_cancel")
-        | マッチング開始{{matching_counter}}
-
-    - if Rails.env.development? && false
-      = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
-      = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
-
   .columns
     .column
+      .buttons
+        template(v-if="!(current_user && current_user.online_at)")
+          button.button.is-primary.is-large(@click.prevent="lobby_in_handle")
+            b-tooltip(label="ロビーに入る")
+              | 入室
+
+        template(v-if="current_user && current_user.online_at")
+          template(v-if="!matching_at")
+            button.button.is-primary.is-large(@click.prevent="matching_start")
+              b-icon(icon="play")
+              | &nbsp;
+              | &nbsp;
+              | 対戦開始
+
+        template(v-if="!matching_at")
+          button.button.is-large(@click.prevent="battle_setting_open_click" id="rule_set_dialog_button")
+            b-tooltip(label="ルール設定")
+              b-icon(icon="settings-outline" size="is-medium")
+
+        template(v-if="matching_at")
+          a.button.is-large(@click.prevent="matching_cancel")
+            | キャンセル
+
+        template(v-if="!matching_at")
+          = link_to([:colosseum, :rankings], class: "button is-large") do
+            b-tooltip(label="ランキング")
+              b-icon(icon="trophy" size="is-medium")
+
+        template(v-if="current_user && current_user.online_at")
+          button.button.is-large(@click.prevent="lobby_out_handle")
+            | 退出
+
+        - if Rails.env.development? && false
+          = link_to("新しい部屋を作る", [:new, ns_prefix, current_single_key], class: "button")
+          = link_to("新しい部屋を作って入る", [ns_prefix, current_plural_key], class: "button is-primary", method: :post)
+
+      template(v-if="matching_at")
+        .columns
+          .column
+            | 対戦相手を探しています({{matching_counter}}秒経過)
+
       ul.chat_container.box
         - if true
           li(v-for="e of latest_lobby_messages")
@@ -105,7 +125,7 @@
     .column
       .box
         / .title.is-6= "プレイヤー"
-        b-table(:data="online_users" :paginated="true" :per-page="10")
+        b-table(:data="online_users" :paginated="true" :per-page="10" :narrowed="true")
           template(slot-scope="props")
             b-table-column(field="name" label="プレイヤー" sortable="sortable")
               message_link_to(:user_to="props.row")

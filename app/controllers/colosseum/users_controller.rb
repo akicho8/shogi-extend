@@ -34,6 +34,7 @@
 # | failed_attempts        | Failed attempts          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token             | string(255) |                     |      | E!    |
 # | locked_at              | Locked at                | datetime    |                     |      |       |
+# | lobby_in_at            | Lobby in at              | datetime    |                     |      |       |
 # |------------------------+--------------------------+-------------+---------------------+------+-------|
 
 module Colosseum

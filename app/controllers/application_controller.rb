@@ -123,6 +123,7 @@ class ApplicationController < ActionController::Base
       if Rails.env.test?
         if params[:__create_user_name__]
           user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
+          user.appear
         end
       end
 

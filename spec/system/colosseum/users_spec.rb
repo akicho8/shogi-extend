@@ -79,7 +79,7 @@ RSpec.describe "対戦", type: :system do
       using_session(:user1) do
         visit_and_login
         click_on("対戦開始")
-        expect(page).to have_content "マッチング開始"
+        expect(page).to have_content "対戦相手を探しています"
         doc_image("待ち")
       end
       using_session(:user2) do
@@ -264,7 +264,7 @@ RSpec.describe "対戦", type: :system do
   def matching_set(name, rule)
     using_session(name) do
       __choise_rule_and_start(rule)
-      expect(page).to have_content "マッチング開始"
+      expect(page).to have_content "対戦相手を探しています"
     end
 
     assert { Colosseum::User.all.all?(&:online_at) }

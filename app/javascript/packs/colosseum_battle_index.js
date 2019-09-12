@@ -15,6 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     received(data) {
+      console.log(data)
+
+      // 自分だけが受信。ロビーに入ったり出たりする
+      if ("online_at" in data) {
+        App.lobby_vm.current_user.online_at = data["online_at"]
+      }
+
+      // 全体受信。オンラインユーザー追加
+      const online_user_add = data["online_user_add"]
+      if (online_user_add) {
+        App.lobby_vm.online_users = _.concat([online_user_add], App.lobby_vm.online_users)
+      }
+
+      // 全体受信。オンラインユーザー削除
+      const online_user_remove = data["online_user_remove"]
+      if (online_user_remove) {
+        App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== online_user_remove.id)
+      }
+
       // マッチング中に変更
       if (data["matching_wait"]) {
         App.lobby_vm.matching_wait(data["matching_wait"]["matching_at"])
@@ -61,6 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
 
+    lobby_in_handle(params) {
+      this.perform("lobby_in_handle", params)
+    },
+
+    lobby_out_handle(params) {
+      this.perform("lobby_out_handle", params)
+    },
+
     chat_say(message, msg_options = {}) {
       this.perform("chat_say", {message: message, msg_options: msg_options})
     },
@@ -80,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     matching_cancel(data) {
       this.perform("matching_cancel", data)
     },
+
   })
 })
 
@@ -88,6 +116,7 @@ window.ColosseumBattleIndex = Vue.extend({
     lobby_matching,
     message_form_shared,
   ],
+
   data() {
     return {
       // 発言
@@ -167,6 +196,18 @@ window.ColosseumBattleIndex = Vue.extend({
   },
 
   methods: {
+    lobby_in_handle(params) {
+      if (this.login_required()) {
+        return
+      }
+      App.lobby.lobby_in_handle(params)
+    },
+
+    lobby_out_handle(params) {
+      this.matching_cancel()
+      App.lobby.lobby_out_handle(params)
+    },
+
     user_self_p(user) {
       if (this.current_user) {
         return user.id === this.current_user.id

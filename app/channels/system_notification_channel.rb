@@ -5,7 +5,7 @@ class SystemNotificationChannel < ApplicationCable::Channel
     if current_user
       # このようにすれば SystemNotificationChannel.broadcast_to(user, ...) として個別送信もできる
       stream_for current_user
-      current_user.appear
+      current_user.appear2
     end
   end
 
@@ -20,7 +20,7 @@ class SystemNotificationChannel < ApplicationCable::Channel
         return
       end
 
-      current_user.disappear
+      current_user.disappear2
     end
   end
 
