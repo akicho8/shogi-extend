@@ -115,8 +115,16 @@ import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
 import sound_cache from './sound_cache.js'
 
-const X_MARK = "x"
-const O_MARK = "o"
+import MemoryRecord from 'js-memory-record'
+
+class AnswerInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { key: "o", char_name: "o", name: "正解",   },
+      { key: "x", char_name: "x", name: "不正解", },
+    ]
+  }
+}
 
 export default {
   name: "stopwatch",
@@ -710,14 +718,14 @@ export default {
     format_type_b() {
       return [
         this.summary + "\n",
-        this.rows.map(e => this.quest_name(e) + " " + this.time_format(e.lap_counter) + this.o_or_x_to_s(e, "", " " + X_MARK) + "\n").join(""),
+        this.rows.map(e => this.quest_name(e) + " " + this.time_format(e.lap_counter) + this.o_or_x_to_s(e, "", " " + AnswerInfo.fetch("x").char_name) + "\n").join(""),
       ].join("")
     },
 
     format_type_a() {
       return [
         this.summary + "\n",
-        this.rows.map(e => this.o_or_x_to_s(e, O_MARK, X_MARK) + " " + this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join(""),
+        this.rows.map(e => this.o_or_x_to_s(e, AnswerInfo.fetch("o").char_name, AnswerInfo.fetch("x").char_name) + " " + this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join(""),
       ].join("")
     },
 
