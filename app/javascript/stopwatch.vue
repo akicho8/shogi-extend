@@ -8,8 +8,8 @@
         b-dropdown.options_doropdown.is-pulled-left
           button.button(slot="trigger")
             b-icon(icon="menu-down")
-          b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット
-          b-dropdown-item(@click="revert_handle") 1つ前に戻す
+          b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット (r)
+          b-dropdown-item(@click="revert_handle") 1つ前に戻す (z)
           b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
           b-dropdown-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
         .helper_button
