@@ -10,6 +10,7 @@
             b-icon(icon="menu-down")
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット (r)
           b-dropdown-item(@click="revert_handle") 1つ前に戻す (z)
+          b-dropdown-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
           b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
           b-dropdown-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
         .helper_button
@@ -106,6 +107,9 @@
           tr
             th r
             td 最後のタイムだけリセット
+          tr
+            th t
+            td 最後の解答の正誤を反転する
 </template>
 
 <script>
@@ -259,6 +263,10 @@ export default {
           this.pause_handle()
           processed = true
         }
+        if (e.key === "t") {
+          this.toggle_handle()
+          processed = true
+        }
         if (processed) {
           e.preventDefault()
         }
@@ -342,6 +350,29 @@ export default {
     reset_handle() {
       this.rows = []
       this.lap_counter = 0
+    },
+
+    toggle_handle() {
+      const last = _.last(this.rows)
+      if (last) {
+        if (last.o_or_x === "x") {
+          last.o_or_x = "o"
+        } else {
+          last.o_or_x = "x"
+        }
+        const answer_info = AnswerInfo.fetch(last.o_or_x)
+        const message = `最後の解答を${answer_info.name}に変更しました`
+        this.$buefy.toast.open({message: message, position: "is-bottom"})
+        this.talk(message)
+      }
+    },
+
+    ox_char_to_human_ox(ox) {
+      if (ox === "x") {
+        last.o_or_x = "o"
+      } else {
+        last.o_or_x = "x"
+      }
     },
 
     time_format(seconds) {
