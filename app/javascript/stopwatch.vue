@@ -504,9 +504,9 @@ export default {
   watch: {
     current_track() { this.data_save() },
     quest_text()    { this.data_save() },
-    rows()          { this.data_save() },
     format_index()  { this.data_save() },
     drop_seconds()  { this.data_save() },
+    rows:           { handler() { this.data_save() }, deep: true, },
 
     current_min(v) {
       if (v >= 1) {
