@@ -11,8 +11,13 @@
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット (r)
           b-dropdown-item(@click="revert_handle") 1つ前に戻す (z)
           b-dropdown-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
+          b-dropdown-item(:separator="true")
           b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
           b-dropdown-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
+          b-dropdown-item(:separator="true")
+          b-dropdown-item
+            b-switch(v-model="browser_setting.sound_silent_p")
+              | 静かにする (スマホ電池節約用)
         .helper_button
           b-tooltip(label="使い方")
             b-button(@click="rule_display" icon-right="help")
@@ -117,6 +122,7 @@ import dayjs from "dayjs"
 
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
+import stopwatch_browser_setting from './stopwatch_browser_setting.js'
 import sound_cache from './sound_cache.js'
 
 import MemoryRecord from 'js-memory-record'
@@ -135,6 +141,7 @@ export default {
   mixins: [
     stopwatch_data_retention,
     stopwatch_memento_list,
+    stopwatch_browser_setting,
     sound_cache,
   ],
   data() {
@@ -273,6 +280,11 @@ export default {
       }, false)
     },
 
+    syaberanai_handle() {
+      this.$set(this.browser_setting, "sound_silent_p", !this.browser_setting.sound_silent_p)
+      console.log("syaberanai_handle", this.browser_setting.sound_silent_p)
+    },
+
     input_focus_p() {
       const dom = document.activeElement
       return dom.tagName === "TEXTAREA" || dom.tagName === "INPUT"
@@ -321,7 +333,7 @@ export default {
         return
       }
 
-      // this.talk("スタート")
+      // this.safe_talk("スタート")
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
@@ -335,7 +347,7 @@ export default {
     },
 
     stop_handle() {
-      // this.talk("ストップ")
+      // this.safe_talk("ストップ")
       this.mode = "standby"
       this.clear_interval_safe()
       this.memento_create("stop")
@@ -363,7 +375,7 @@ export default {
         const answer_info = AnswerInfo.fetch(last.o_or_x)
         const message = `最後の解答を${answer_info.name}に変更しました`
         this.$buefy.toast.open({message: message, position: "is-bottom"})
-        this.talk(message)
+        this.safe_talk(message)
       }
     },
 
@@ -415,10 +427,10 @@ export default {
 
     track_next() {
       if (this.last_quest_exist_p) {
-        this.talk(this.quest_name(this.new_quest))
+        this.safe_talk(this.quest_name(this.new_quest))
       } else {
         this.stop_handle()
-        this.talk("おわりました")
+        this.safe_talk("おわりました")
       }
     },
 
@@ -538,6 +550,13 @@ export default {
         },
       })
     },
+
+    safe_talk(message, options = {}) {
+      if (this.browser_setting.sound_silent_p) {
+        return
+      }
+      this.talk(message, options)
+    },
   },
 
   watch: {
@@ -550,14 +569,14 @@ export default {
     current_min(v) {
       if (v >= 1) {
         if (this.mode === "playing") {
-          this.talk(`${v}分経過`, {rate: 1.0})
+          this.safe_talk(`${v}分経過`, {rate: 1.0})
         }
       }
     },
 
     // current_sec(v) {
     //   if (v >= 1) {
-    //     this.talk(`${v}秒経過`, {rate: 1.0})
+    //     this.safe_talk(`${v}秒経過`, {rate: 1.0})
     //   }
     // },
   },

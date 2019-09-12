@@ -11,6 +11,8 @@ window.sound_objects = {}
 export default {
   data() {
     return {
+      sound_silent_p: false,
+
       // sound_objects: {},
       sound_presets: {
         o:     { file: mp3_o,     volume: null, },
@@ -22,6 +24,10 @@ export default {
 
   methods: {
     sound_play(key) {
+      if (this.sound_silent_p) {
+        return
+      }
+
       const sound_preset = this.sound_presets[key]
       if (sound_preset) {
         this.sound_play_by_src(sound_preset.file)
