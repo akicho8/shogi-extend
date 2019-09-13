@@ -298,7 +298,7 @@
 # |-------------------+----------------+-------------+-------------+-----------------------------+-------|
 # | id                | ID             | integer(8)  | NOT NULL PK |                             |       |
 # | colosseum_user_id | Colosseum user | integer(8)  |             | :user => Colosseum::User#id | A     |
-# | entry_name        | Entry name     | string(255) |             |                             |       |
+# | entry_name        | Entry name     | string(255) | NOT NULL    |                             | C     |
 # | summary           | Summary        | string(255) |             |                             |       |
 # | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |                             | B     |
 # | x_count           | X count        | integer(4)  | NOT NULL    |                             |       |

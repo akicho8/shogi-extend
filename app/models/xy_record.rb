@@ -8,7 +8,7 @@
 # |-------------------+----------------+-------------+-------------+-----------------------------+-------|
 # | id                | ID             | integer(8)  | NOT NULL PK |                             |       |
 # | colosseum_user_id | Colosseum user | integer(8)  |             | :user => Colosseum::User#id | A     |
-# | entry_name        | Entry name     | string(255) |             |                             |       |
+# | entry_name        | Entry name     | string(255) | NOT NULL    |                             | C     |
 # | summary           | Summary        | string(255) |             |                             |       |
 # | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |                             | B     |
 # | x_count           | X count        | integer(4)  | NOT NULL    |                             |       |
@@ -46,6 +46,7 @@ class XyRecord < ApplicationRecord
     validates :xy_rule_key
     validates :x_count
     validates :spent_sec
+    validates :entry_name
   end
 
   with_options allow_blank: true do
@@ -57,7 +58,7 @@ class XyRecord < ApplicationRecord
   end
 
   after_destroy do
-    ranking_rem
+    ranking_remove
   end
 
   def rank(params)
@@ -87,7 +88,7 @@ class XyRecord < ApplicationRecord
     XyRuleInfo[xy_rule_key].ranking_add(self)
   end
 
-  def ranking_rem
-    XyRuleInfo[xy_rule_key].ranking_rem(self)
+  def ranking_remove
+    XyRuleInfo[xy_rule_key].ranking_remove(self)
   end
 end

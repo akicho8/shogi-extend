@@ -5,9 +5,9 @@
 class XyRuleInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: "xy_rule1",   name: "1問",   o_count_max:  1,  },
-    { key: "xy_rule10",  name: "10問",  o_count_max: 10,  },
-    { key: "xy_rule30",  name: "30問",  o_count_max: 30,  },
+    { key: "xy_rule1",   name: "1問",   o_count_max:   1, },
+    { key: "xy_rule10",  name: "10問",  o_count_max:  10, },
+    { key: "xy_rule30",  name: "30問",  o_count_max:  30, },
     { key: "xy_rule100", name: "100問", o_count_max: 100, },
   ]
 
@@ -92,7 +92,7 @@ class XyRuleInfo
     end
   end
 
-  def ranking_rem(record)
+  def ranking_remove(record)
     XyScopeInfo.each do |e|
       key = e.table_key_for[record, self]
       redis.zrem(key, record.id)

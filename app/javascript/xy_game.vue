@@ -387,8 +387,25 @@ export default {
 
       if (this.fixed_handle_name) {
         this.entry_name = this.fixed_handle_name
+        this.record_post()
+      } else {
+        this.$buefy.dialog.prompt({
+          message: `名前を入力してください`,
+          confirmText: "保存",
+          cancelText: "キャンセル",
+          inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
+          canCancel: false,
+          onConfirm: value => {
+            this.entry_name = _.trim(value)
+            if (this.entry_name !== "") {
+              this.record_post()
+            }
+          },
+        })
       }
+    },
 
+    record_post() {
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
         this.data_update(data)
         this.xhr_put_path = data.xhr_put_path
@@ -398,41 +415,6 @@ export default {
           this.$set(this.current_pages, this.current_rule_index, this.xy_record.ranking_page)
         }
 
-        if (this.fixed_handle_name) {
-          this.congrats_talk()
-        } else {
-          this.$buefy.dialog.prompt({
-            message: `${this.xy_record.rank}位`,
-            confirmText: "保存",
-            cancelText: "キャンセル",
-            inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
-            canCancel: false,
-            onConfirm: value => {
-              value = _.trim(value)
-              if (value) {
-                if (this.entry_name === value) {
-                  // 同じなので更新しない
-                  this.congrats_talk()
-                } else {
-                  // 名前を変更したので更新する
-                  this.entry_name = value
-                  this.entry_name_save()
-                }
-              }
-            },
-            // onCancel: () => {
-            //   if (this.entry_name) {
-            //     this.entry_name_save()
-            //   }
-            // },
-          })
-        }
-      })
-    },
-
-    entry_name_save() {
-      this.http_command("put", this.xhr_put_path, {xy_scope_key: this.xy_scope_key, xy_record: { id: this.xy_record.id, entry_name: this.entry_name}}, data => {
-        this.data_update(data)
         this.congrats_talk()
       })
     },
