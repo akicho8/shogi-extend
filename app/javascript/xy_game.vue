@@ -259,6 +259,7 @@ export default {
 <li>駒の場所をキーボードの数字2桁で入力していきます</li>
 <li>選択した数まで正解するまでの時間を競います</li>
 <li>最初の数字を間違えたときはESCキーでキャンセルできます</li>
+<li>ログインしていると毎回出る名前の入力を省略できます</li>
 </ol>
 </div>
 `,
@@ -274,6 +275,7 @@ export default {
 駒の場所をキーボードの数字2桁で入力していきます。
 選択した数まで正解するまでの時間を競います。
 最初の数字を間違えたときはエスケープキーでキャンセルできます。
+ログインしていると毎回出る名前の入力を省略できます。
 `, {rate: 2.0, onend: () => { rule_dialog.close() }})
 
     },
@@ -302,7 +304,7 @@ export default {
         this.xy_scope_key = XyScopeInfo.fetch(0).key
       }
 
-      this.entry_name = hash.entry_name || this.default_name
+      this.entry_name = hash.entry_name || this.fixed_handle_name
       this.current_pages = hash.current_pages || {}
 
       this.sp_theme = hash.sp_theme || "simple"
@@ -377,6 +379,10 @@ export default {
       this.timer_stop()
       this.talk("おわりました")
 
+      if (this.fixed_handle_name) {
+        this.entry_name = this.fixed_handle_name
+      }
+
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
         this.data_update(data)
         this.xhr_put_path = data.xhr_put_path
@@ -386,31 +392,35 @@ export default {
           this.$set(this.current_pages, this.current_rule_index, this.xy_record.ranking_page)
         }
 
-        this.$buefy.dialog.prompt({
-          message: `${this.xy_record.rank}位`,
-          confirmText: "保存",
-          cancelText: "キャンセル",
-          inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
-          canCancel: false,
-          onConfirm: value => {
-            value = _.trim(value)
-            if (value) {
-              if (this.entry_name === value) {
-                // 同じなので更新しない
-                this.congrats_talk()
-              } else {
-                // 名前を変更したので更新する
-                this.entry_name = value
-                this.entry_name_save()
+        if (this.fixed_handle_name) {
+          this.congrats_talk()
+        } else {
+          this.$buefy.dialog.prompt({
+            message: `${this.xy_record.rank}位`,
+            confirmText: "保存",
+            cancelText: "キャンセル",
+            inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
+            canCancel: false,
+            onConfirm: value => {
+              value = _.trim(value)
+              if (value) {
+                if (this.entry_name === value) {
+                  // 同じなので更新しない
+                  this.congrats_talk()
+                } else {
+                  // 名前を変更したので更新する
+                  this.entry_name = value
+                  this.entry_name_save()
+                }
               }
-            }
-          },
-          // onCancel: () => {
-          //   if (this.entry_name) {
-          //     this.entry_name_save()
-          //   }
-          // },
-        })
+            },
+            // onCancel: () => {
+            //   if (this.entry_name) {
+            //     this.entry_name_save()
+            //   }
+            // },
+          })
+        }
       })
     },
 
@@ -635,9 +645,9 @@ export default {
       return this.micro_seconds / 1000
     },
 
-    default_name() {
-      if (js_global.current_user) {
-        return js_global.current_user.name
+    fixed_handle_name() {
+      if (this.global_current_user) {
+        return this.global_current_user.name
       }
     },
 
