@@ -59,6 +59,7 @@ class FreeBattle < ApplicationRecord
           record.owner_user = Colosseum::User.find_by(name: Rails.application.credentials.production_my_user_name) || Colosseum::User.sysop
           record.kifu_body = file.read.toutf8
           record.title = "必死道場 #{name}"
+          record.start_turn = 0
           record.save!
           p [file.to_s, record.id]
         end
