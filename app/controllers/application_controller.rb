@@ -147,6 +147,9 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user_logout
+      if current_user
+        current_user.disappear
+      end
       current_user_set_id(nil)
       sign_out(:xuser)
     end
