@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
     let :js_global do
       {
         :current_user        => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
-        :online_only_count   => Colosseum::User.online_only.count,
+        :joined_only_count   => Colosseum::User.joined_only.count,
         :fighter_only_count  => Colosseum::User.fighter_only.count,
         :lifetime_infos      => Colosseum::LifetimeInfo,
         :team_infos          => Colosseum::TeamInfo,
@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
       if Rails.env.test?
         if params[:__create_user_name__]
           user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
-          user.appear
+          user.lobby_in_handle
         end
       end
 
@@ -148,7 +148,7 @@ class ApplicationController < ActionController::Base
 
     def current_user_logout
       if current_user
-        current_user.disappear
+        current_user.lobby_out_handle
       end
       current_user_set_id(nil)
       sign_out(:xuser)

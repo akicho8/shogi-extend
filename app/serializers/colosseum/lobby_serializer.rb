@@ -14,7 +14,7 @@ module Colosseum
     end
 
     has_many :online_users, serializer: OnlineUserSerializer do
-      Colosseum::User.online_only.order(online_at: :desc)
+      Colosseum::User.joined_only.order(joined_at: :desc)
     end
   end
 

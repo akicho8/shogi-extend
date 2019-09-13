@@ -88,11 +88,11 @@ nav.navbar.is-primary.is_screen_only
         /     = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "navbar-item")
         /     = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
 
-      .navbar-item(v-if="online_only_count > 0")
+      .navbar-item(v-if="joined_only_count > 0")
         b-tooltip(label="オンラインの人数" position="is-left")
           b-icon(icon="account")
           | &nbsp;
-          | {{online_only_count}}
+          | {{joined_only_count}}
       .navbar-item(v-if="fighter_only_count > 0")
         b-tooltip(label="対局中の人数" position="is-left")
           b-icon(icon="play")

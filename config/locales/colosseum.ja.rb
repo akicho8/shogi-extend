@@ -18,6 +18,7 @@
         "colosseum/user": {
           :name                  => "名前",
           :avatar                => "アバター",
+          :joined_at             => "ロビーに入った日時",
           :online_at             => "オンラインになった日時",
           :fighting_at           => "入室しているなら入室日時",
           :matching_at           => "マッチング中(開始日時)",

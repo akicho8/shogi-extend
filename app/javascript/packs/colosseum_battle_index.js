@@ -18,20 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(data)
 
       // 自分だけが受信。ロビーに入ったり出たりする
-      if ("online_at" in data) {
-        App.lobby_vm.current_user.online_at = data["online_at"]
+      if ("joined_at" in data) {
+        App.lobby_vm.current_user.joined_at = data["joined_at"]
       }
 
       // 全体受信。オンラインユーザー追加
-      const online_user_add = data["online_user_add"]
-      if (online_user_add) {
-        App.lobby_vm.online_users = _.concat([online_user_add], App.lobby_vm.online_users)
+      const joined_user_add = data["joined_user_add"]
+      if (joined_user_add) {
+        App.lobby_vm.online_users = _.concat([joined_user_add], App.lobby_vm.online_users)
       }
 
       // 全体受信。オンラインユーザー削除
-      const online_user_remove = data["online_user_remove"]
-      if (online_user_remove) {
-        App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== online_user_remove.id)
+      const joined_user_remove = data["joined_user_remove"]
+      if (joined_user_remove) {
+        App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== joined_user_remove.id)
       }
 
       // マッチング中に変更

@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(version: 2019_09_12_155300) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.datetime "lobby_in_at", comment: "ロビーに入った時間"
+    t.datetime "joined_at", comment: "ロビーに入った時間"
     t.index ["confirmation_token"], name: "index_colosseum_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_colosseum_users_on_email", unique: true
     t.index ["key"], name: "index_colosseum_users_on_key", unique: true

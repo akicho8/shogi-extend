@@ -8,11 +8,11 @@ class LobbyChannel < ApplicationCable::Channel
   end
 
   def lobby_in_handle(data)
-    current_user.appear
+    current_user.lobby_in_handle
   end
 
   def lobby_out_handle(data)
-    current_user.disappear
+    current_user.lobby_out_handle
   end
 
   def chat_say(data)

@@ -34,7 +34,7 @@
 # | failed_attempts        | Failed attempts          | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token             | string(255) |                     |      | E!    |
 # | locked_at              | Locked at                | datetime    |                     |      |       |
-# | lobby_in_at            | Lobby in at              | datetime    |                     |      |       |
+# | joined_at              | ロビーに入った日時       | datetime    |                     |      |       |
 # |------------------------+--------------------------+-------------+---------------------+------+-------|
 
 module Colosseum
@@ -73,7 +73,7 @@ module Colosseum
           end
 
           if Rails.env.development?
-            self.online_at ||= Time.current
+            self.joined_at ||= Time.current
           end
         end
 
@@ -94,7 +94,7 @@ module Colosseum
 
           CpuBrainInfo.each do |e|
             unless find_by(key: e.key)
-              create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, cpu_brain_key: e.key)
+              create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, joined_at: Time.current, cpu_brain_key: e.key)
             end
           end
 
@@ -279,39 +279,39 @@ module Colosseum
 
     concerning :OnlineMethods do
       included do
-        scope :online_only, -> { where.not(online_at: nil) }
+        scope :joined_only, -> { where.not(joined_at: nil) }
 
         after_commit do
-          if saved_changes[:online_at]
-            online_only_count_update
+          if saved_changes[:joined_at]
+            joined_only_count_update
           end
         end
 
-        after_destroy_commit :online_only_count_update
+        after_destroy_commit :joined_only_count_update
+      end
+
+      def lobby_in_handle
+        update!(joined_at: Time.current)
+        LobbyChannel.broadcast_to(self, {joined_at: joined_at})
+        ActionCable.server.broadcast("lobby_channel", {joined_user_add: ams_sr(self, serializer: Colosseum::OnlineUserSerializer)})
+      end
+
+      def lobby_out_handle
+        update!(joined_at: nil)
+        LobbyChannel.broadcast_to(self, {joined_at: joined_at})
+        ActionCable.server.broadcast("lobby_channel", {joined_user_remove: ams_sr(self, serializer: Colosseum::OnlineUserSerializer)})
       end
 
       def appear
         update!(online_at: Time.current)
-        LobbyChannel.broadcast_to(self, {online_at: online_at})
-        ActionCable.server.broadcast("lobby_channel", {online_user_add: ams_sr(self, serializer: Colosseum::OnlineUserSerializer)})
       end
 
       def disappear
         update!(online_at: nil)
-        LobbyChannel.broadcast_to(self, {online_at: online_at})
-        ActionCable.server.broadcast("lobby_channel", {online_user_remove: ams_sr(self, serializer: Colosseum::OnlineUserSerializer)})
       end
 
-      def appear2
-        update!(lobby_in_at: Time.current)
-      end
-
-      def disappear2
-        update!(lobby_in_at: nil)
-      end
-
-      def online_only_count_update
-        ActionCable.server.broadcast("system_notification_channel", {online_only_count: self.class.online_only.count})
+      def joined_only_count_update
+        ActionCable.server.broadcast("system_notification_channel", {joined_only_count: self.class.joined_only.count})
       end
     end
 
@@ -336,7 +336,7 @@ module Colosseum
     concerning :MatchingMethods do
       included do
         scope :preset_scope,    -> self_preset_key, oppo_preset_key { joins(:rule).merge(Rule.where(self_preset_key: self_preset_key, oppo_preset_key: oppo_preset_key)) }
-        scope :matching_scope,  -> { online_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
+        scope :matching_scope,  -> { joined_only.where.not(matching_at: nil) } # オンラインのマッチング希望者
         scope :same_rule_scope, -> e { joins(:rule).merge(Rule.same_rule_scope(e)) }
 
         scope :robot_only, -> { where(race_key: :robot) }

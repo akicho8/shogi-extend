@@ -267,7 +267,7 @@ RSpec.describe "対戦", type: :system do
       expect(page).to have_content "対戦相手を探しています"
     end
 
-    assert { Colosseum::User.all.all?(&:online_at) }
+    assert { Colosseum::User.all.all?(&:joined_at) }
   end
 
   def __choise_rule_and_start(rule)

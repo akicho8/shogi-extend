@@ -9,7 +9,7 @@ pp ActiveModelSerializers::SerializableResource.new(Colosseum::Battle.first, inc
 # >>  :name=>"名無しの棋士1号",
 # >>  :avatar_url=>
 # >>   "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8c3f3722c03a8b111db3ede72db9bc075d026871/51587037_p15_master1200.jpg",
-# >>  :online_at=>Fri, 01 Jun 2018 16:29:36 JST +09:00,
+# >>  :joined_at=>Fri, 01 Jun 2018 16:29:36 JST +09:00,
 # >>  :fighting_at=>nil,
 # >>  :matching_at=>nil,
 # >>  :lifetime_key=>"lifetime_m5",

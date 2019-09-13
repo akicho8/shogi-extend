@@ -51,12 +51,12 @@
   .columns
     .column
       .buttons
-        template(v-if="!(current_user && current_user.online_at)")
+        template(v-if="!(current_user && current_user.joined_at)")
           button.button.is-primary.is-large(@click.prevent="lobby_in_handle")
             b-tooltip(label="ロビーに入る")
               | 入室
 
-        template(v-if="current_user && current_user.online_at")
+        template(v-if="current_user && current_user.joined_at")
           template(v-if="!matching_at")
             button.button.is-primary.is-large(@click.prevent="matching_start")
               b-icon(icon="play")
@@ -78,7 +78,7 @@
             b-tooltip(label="ランキング")
               b-icon(icon="trophy" size="is-medium")
 
-        template(v-if="current_user && current_user.online_at")
+        template(v-if="current_user && current_user.joined_at")
           button.button.is-large(@click.prevent="lobby_out_handle")
             | 退出
 

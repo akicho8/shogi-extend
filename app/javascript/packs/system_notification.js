@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // オンラインの人数更新
-      if (data["online_only_count"]) {
+      if (data["joined_only_count"]) {
         if (App.header_vm) {
-          App.header_vm.online_only_count = data["online_only_count"]
+          App.header_vm.joined_only_count = data["joined_only_count"]
         }
       }
 
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       el: "#header_app",
       data() {
         return {
-          online_only_count: js_global.online_only_count,
+          joined_only_count: js_global.joined_only_count,
           fighter_only_count: js_global.fighter_only_count,
         }
       },
