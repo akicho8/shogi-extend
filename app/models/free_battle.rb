@@ -45,6 +45,24 @@ class FreeBattle < ApplicationRecord
       # end
 
       Pathname.glob(Rails.root.join("config/app_data/free_battles/**/0*.kif")).each { |file| file_import(file) }
+
+      if Rails.env.development?
+        Pathname("~/src/bioshogi").expand_path.glob("experiment/必死道場/*.kif").sort.each do |file|
+          name = file.basename(".*").to_s
+          key = Digest::MD5.hexdigest(file.to_s)
+
+          if record = find_by(key: key)
+            record.destroy!
+          end
+
+          record = find_by(key: key) || new(key: key)
+          record.owner_user = Colosseum::User.find_by(name: Rails.application.credentials.production_my_user_name) || Colosseum::User.sysop
+          record.kifu_body = file.read.toutf8
+          record.title = "必死道場 #{name}"
+          record.save!
+          p [file.to_s, record.id]
+        end
+      end
     end
 
     def file_import(file)
