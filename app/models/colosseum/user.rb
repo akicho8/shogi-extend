@@ -94,7 +94,7 @@ module Colosseum
 
           CpuBrainInfo.each do |e|
             unless find_by(key: e.key)
-              create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, joined_at: Time.current, cpu_brain_key: e.key)
+              create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, joined_at: Time.current, cpu_brain_key: e.key)
             end
           end
 

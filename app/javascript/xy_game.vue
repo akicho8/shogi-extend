@@ -5,9 +5,10 @@
       .has-text-centered
         .buttons.is-centered
           template(v-if="mode === 'stop' || mode === 'goal'")
-            button.button.is-primary(@click="readygo_handle") スタート
-          template(v-if="mode === 'running' || mode === 'readygo'")
-            b-button(@click="stop_handle" type="is-danger") やめる
+            button.button.is-primary(@click="standby_handle") スタート
+          template(v-if="mode === 'running' || mode === 'standby'")
+            b-button(@click="retry_handle" type="is-danger") やりなおす
+            b-button(@click="stop_handle") やめる
 
           template(v-if="mode === 'stop' || mode === 'goal'")
             b-dropdown.is-pulled-left(v-model="xy_rule_key")
@@ -46,7 +47,7 @@
                 p.title {{x_count}}
 
         .field_conainer
-          template(v-if="mode === 'readygo'")
+          template(v-if="mode === 'standby'")
             .count_down_wrap
               .count_down
                 | {{count_down}}
@@ -337,8 +338,8 @@ export default {
       this.xy_record = null
     },
 
-    readygo_handle() {
-      this.mode = "readygo"
+    standby_handle() {
+      this.mode = "standby"
       this.count_down_counter = 0
       this.init_other_variables()
       this.saved_rule = this.current_rule
@@ -372,6 +373,11 @@ export default {
       this.mode = "stop"
       this.timer_stop()
       this.countdown_interval_stop()
+    },
+
+    retry_handle() {
+      this.stop_handle()
+      this.standby_handle()
     },
 
     goal_handle() {
