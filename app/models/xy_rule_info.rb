@@ -53,18 +53,28 @@ class XyRuleInfo
   def xy_records(params)
     # current_clean
     # aggregate
-
-    if ActiveRecord::Base.connection.adapter_name == "Mysql2"
-      ids = redis.zrevrange(table_key_for(params), 0, rank_max - 1)
-      if ids.empty?
+    if params[:entry_name_unique]
+      entry_names = redis.zrevrange(table_key_for2(params), 0, rank_max - 1)
+      if entry_names.empty?
         return []
       end
-      records = XyRecord.where(id: ids).order("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})")
-      records.collect { |e| e.attributes.merge(rank: e.rank(params)) }.as_json
-    else
-      redis.zrevrange(table_key_for(params), 0, rank_max - 1).collect do |id|
-        record = XyRecord.where(id: ids)
+      entry_names.collect do |e|
+        record = XyRecord.order(spent_sec: :asc).where(entry_name: e).take
         record.attributes.merge(rank: record.rank(params)).as_json
+      end
+    else
+      if ActiveRecord::Base.connection.adapter_name == "Mysql2"
+        ids = redis.zrevrange(table_key_for(params), 0, rank_max - 1)
+        if ids.empty?
+          return []
+        end
+        records = XyRecord.where(id: ids).order("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})")
+        records.collect { |e| e.attributes.merge(rank: e.rank(params)) }.as_json
+      else
+        redis.zrevrange(table_key_for(params), 0, rank_max - 1).collect do |id|
+          record = XyRecord.where(id: ids)
+          record.attributes.merge(rank: record.rank(params)).as_json
+        end
       end
     end
   end
@@ -89,6 +99,7 @@ class XyRuleInfo
     XyScopeInfo.each do |e|
       key = e.table_key_for[record, self]
       redis.zadd(key, record.score, record.id)
+      redis.zadd("#{key}/unique", record.score, record.entry_name)
     end
   end
 
@@ -96,6 +107,7 @@ class XyRuleInfo
     XyScopeInfo.each do |e|
       key = e.table_key_for[record, self]
       redis.zrem(key, record.id)
+      redis.zrem("#{key}/unique", record.entry_name)
     end
   end
 
@@ -126,6 +138,14 @@ class XyRuleInfo
   def table_key_for(params)
     xy_scope_info = XyScopeInfo.fetch(params[:xy_scope_key])
     send(xy_scope_info.key_method)
+  end
+
+  def table_key_for2(params)
+    key = table_key_for(params)
+    if params[:entry_name_unique]
+      key = "#{key}/unique"
+    end
+    key
   end
 
   def redis

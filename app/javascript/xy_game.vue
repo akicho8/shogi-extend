@@ -111,6 +111,8 @@
                   b-table-column(field="created_at" label="日付" sortable)
                     | {{time_default_format(props.row.created_at)}}
 
+      b-switch(v-model="entry_name_unique") ユニーク
+
   template(v-if="development_p")
     .columns
       .column
@@ -177,6 +179,7 @@ export default {
       timer_run: false,
       micro_seconds: null,
       xy_scope_key: null,
+      entry_name_unique: false,
       xy_rule_key: null,
       entry_name: null,                                   // ランキングでの名前を保持しておく
       current_rule_index: null,                          // b-tabs 連動用
@@ -218,12 +221,13 @@ export default {
 
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
 
-    xy_scope_key(v) {
-      this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key }, data => {
-        this.xy_records_hash = data.xy_records_hash
-      })
-
+    xy_scope_key() {
+      this.xy_records_hash_update()
       this.data_save_to_local_storage()
+    },
+
+    entry_name_unique() {
+      this.xy_records_hash_update()
     },
 
     xy_rule_key(v) {
@@ -244,6 +248,12 @@ export default {
   },
 
   methods: {
+    xy_records_hash_update() {
+      this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique }, data => {
+        this.xy_records_hash = data.xy_records_hash
+      })
+    },
+
     sp_setting_handle() {
       this.$refs.api_sp.setting_modal_p = true
     },
@@ -406,7 +416,8 @@ export default {
     },
 
     record_post() {
-      this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
+      this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique, xy_record: this.post_params}, data => {
+        this.entry_name_unique = false
         this.data_update(data)
         this.xhr_put_path = data.xhr_put_path
 
