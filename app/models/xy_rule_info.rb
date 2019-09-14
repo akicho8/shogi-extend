@@ -1,5 +1,5 @@
-# cap production rails:runner CODE='XyRuleInfo.redis_clear_all'
 # cap production rails:runner CODE='XyRuleInfo.rebuild'
+# cap production rails:runner CODE='XyRuleInfo.redis_clear_all'
 # cap production rails:runner CODE='XyRecord.entry_name_blank_scope.destroy_all'
 
 class XyRuleInfo
@@ -12,7 +12,7 @@ class XyRuleInfo
   ]
 
   cattr_accessor(:rank_max) { Rails.env.production? ? 100 : 5 }  # 位まで表示
-  cattr_accessor(:per_page) { Rails.env.production? ? 20 : 2 }
+  cattr_accessor(:per_page) { Rails.env.production? ? 20 : 10 }
 
   class << self
     def setup
@@ -25,19 +25,23 @@ class XyRuleInfo
       inject({}) { |a, e| a.merge(e.key => e.xy_records(params)) }
     end
 
-    def clear_all
-      if Rails.env.production?
-        raise "must not happen"
-      end
-      redis_clear_all
-      XyRecord.destroy_all
-    end
-
-    def redis_clear_all
-      each(&:current_clean)
-    end
+    # def clear_all
+    #   if Rails.env.production?
+    #     raise "must not happen"
+    #   end
+    #   redis_clear_all
+    #   XyRecord.destroy_all
+    # end
+    #
+    # def redis_clear_all
+    #   if Rails.env.production?
+    #     raise "must not happen"
+    #   end
+    #   each(&:current_clean)
+    # end
 
     def rebuild
+      redis.flushdb
       each(&:aggregate)
     end
 
@@ -47,19 +51,23 @@ class XyRuleInfo
         "【#{e.name}】#{names}"
       }.join(" ") + " です"
     end
+
+    def redis
+      @redis ||= Redis.new(host: "localhost", port: 6379, db: 2)
+    end
   end
 
   # 実際のスコア(のもとの時間)は XyRecord が持っているので取り出さない
   def xy_records(params)
     # current_clean
     # aggregate
-    if params[:entry_name_unique]
+    if params[:entry_name_unique] == "true"
       entry_names = redis.zrevrange(table_key_for2(params), 0, rank_max - 1)
       if entry_names.empty?
         return []
       end
       entry_names.collect do |e|
-        record = XyRecord.order(spent_sec: :asc).where(entry_name: e).take
+        record = XyRecord.where(entry_name: e, xy_rule_key: key).order(:spent_sec).first
         record.attributes.merge(rank: record.rank(params)).as_json
       end
     else
@@ -86,11 +94,11 @@ class XyRuleInfo
   end
 
   def rank_by_score(params, score)
-    redis.zcount(table_key_for(params), score + 1, "+inf") + 1
+    redis.zcount(table_key_for2(params), score + 1, "+inf") + 1
   end
 
   def ranking_page(params, id)
-    if index = redis.zrevrank(table_key_for(params), id)
+    if index = redis.zrevrank(table_key_for2(params), id)
       index.div(per_page).next
     end
   end
@@ -142,13 +150,13 @@ class XyRuleInfo
 
   def table_key_for2(params)
     key = table_key_for(params)
-    if params[:entry_name_unique]
+    if params[:entry_name_unique] == "true"
       key = "#{key}/unique"
     end
     key
   end
 
   def redis
-    @redis ||= Redis.new(host: "localhost", port: 6379, db: 2)
+    self.class.redis
   end
 end
