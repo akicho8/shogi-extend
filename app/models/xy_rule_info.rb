@@ -1,5 +1,4 @@
 # cap production rails:runner CODE='XyRuleInfo.rebuild'
-# cap production rails:runner CODE='XyRuleInfo.redis_clear_all'
 # cap production rails:runner CODE='XyRecord.entry_name_blank_scope.destroy_all'
 
 class XyRuleInfo
@@ -11,13 +10,14 @@ class XyRuleInfo
     { key: "xy_rule100", name: "100問", o_count_max: 100, },
   ]
 
-  cattr_accessor(:rank_max) { Rails.env.production? ? 100 : 5 }  # 位まで表示
-  cattr_accessor(:per_page) { Rails.env.production? ? 20 : 10 }
+  cattr_accessor(:rank_max) { Rails.env.production? ? 100 : 100 }  # 位まで表示
+  cattr_accessor(:per_page) { Rails.env.production? ? 20 : 20 }
 
   class << self
     def setup
       if Rails.env.development? || Rails.env.test?
-        clear_all
+        rebuild
+        # clear_all
       end
     end
 
@@ -107,7 +107,16 @@ class XyRuleInfo
     XyScopeInfo.each do |e|
       key = e.table_key_for[record, self]
       redis.zadd(key, record.score, record.id)
-      redis.zadd("#{key}/unique", record.score, record.entry_name)
+
+      # キー(entry_name) がユニークではないためスコアが大きいときだけ更新する処理を自力で書く必要がある
+      # そうしないと後から設定した値で更新されてしまう。後の値の方が大きいとタイムがおかしくなる。
+      update_p = true
+      if max = redis.zscore(as_unique_key(key), record.entry_name)
+        update_p = record.score > max
+      end
+      if update_p
+        redis.zadd(as_unique_key(key), record.score, record.entry_name)
+      end
     end
   end
 
@@ -115,7 +124,7 @@ class XyRuleInfo
     XyScopeInfo.each do |e|
       key = e.table_key_for[record, self]
       redis.zrem(key, record.id)
-      redis.zrem("#{key}/unique", record.entry_name)
+      redis.zrem(as_unique_key(key), record.entry_name)
     end
   end
 
@@ -130,7 +139,7 @@ class XyRuleInfo
   end
 
   def all_table_key
-    [self.class.name.underscore, key].join("/")
+    [self.class.name.underscore, key, "all"].join("/")
   end
 
   def today_table_key
@@ -151,9 +160,13 @@ class XyRuleInfo
   def table_key_for2(params)
     key = table_key_for(params)
     if params[:entry_name_unique] == "true"
-      key = "#{key}/unique"
+      key = as_unique_key(key)
     end
     key
+  end
+
+  def as_unique_key(key)
+    "#{key}/unique"
   end
 
   def redis
