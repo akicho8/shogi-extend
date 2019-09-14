@@ -21,7 +21,7 @@
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
-class UpdateXyRecords4 < ActiveRecord::Migration[5.1]
+class UpdateXyRecords3 < ActiveRecord::Migration[5.1]
   def change
     change_column :xy_records, :entry_name, :string, null: false
   end
