@@ -66,8 +66,13 @@ class XyRuleInfo
       if entry_names.empty?
         return []
       end
+      scope = XyRecord.where(xy_rule_key: key).order(:spent_sec)
+
+      xy_scope_info = XyScopeInfo.fetch(params[:xy_scope_key])
+      scope = xy_scope_info.xy_record_scope.call(scope)
+
       entry_names.collect do |e|
-        record = XyRecord.where(entry_name: e, xy_rule_key: key).order(:spent_sec).first
+        record = scope.where(entry_name: e).take
         record.attributes.merge(rank: record.rank(params)).as_json
       end
     else
