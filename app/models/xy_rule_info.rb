@@ -81,7 +81,7 @@ class XyRuleInfo
         if ids.empty?
           return []
         end
-        records = XyRecord.where(id: ids).order("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})")
+        records = XyRecord.where(id: ids).order(Arel.sql("FIELD(#{XyRecord.primary_key}, #{ids.join(', ')})"))
         records.collect { |e| e.attributes.merge(rank: e.rank(params)) }.as_json
       else
         redis.zrevrange(table_key_for(params), 0, rank_max - 1).collect do |id|
