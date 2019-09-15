@@ -99,6 +99,9 @@ group :test do
   # gem 'chromedriver-helper'
 
   gem 'database_cleaner'
+end
+
+group :development, :test do
   gem 'timecop'
 end
 

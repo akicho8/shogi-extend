@@ -24,6 +24,21 @@
 class XyRecord < ApplicationRecord
   ACCURACY = 3
 
+  class << self
+    def setup(options = {})
+      if Rails.env.development?
+        create!(xy_rule_key: "xy_rule1", entry_name: "a", spent_sec: 0.2, x_count: 0)
+        create!(xy_rule_key: "xy_rule1", entry_name: "a", spent_sec: 0.3, x_count: 0)
+        create!(xy_rule_key: "xy_rule1", entry_name: "b", spent_sec: 0.2, x_count: 0)
+        create!(xy_rule_key: "xy_rule1", entry_name: "b", spent_sec: 0.3, x_count: 0)
+      end
+
+      if Rails.env.test?
+        XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "a", spent_sec: 0.2, x_count: 0)
+      end
+    end
+  end
+
   scope :entry_name_blank_scope, -> { where(entry_name: nil).where(arel_table[:created_at].lt(1.hour.ago) ) }
 
   belongs_to :user, class_name: "Colosseum::User", foreign_key: "colosseum_user_id", required: false

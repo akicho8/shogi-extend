@@ -8,7 +8,7 @@ RSpec.describe "その他", type: :system do
   end
 
   it "符号入力ゲーム" do
-    XyRuleInfo.clear_all
+    XyRecord.setup
 
     visit "/xy"
     expect(page).to have_content "Rails"
