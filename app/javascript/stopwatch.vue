@@ -27,7 +27,7 @@
           span.has-text-grey-lighter
             |
             | -
-          span.current_digit
+          span.current_digit(@click="lap_counter_input_dialog")
             | {{time_format(lap_counter)}}
         .has-text-grey-light.total_time
           b-tooltip(label="トータル" position="is-right")
@@ -317,6 +317,16 @@ export default {
         cancelText: "キャンセル",
         inputAttrs: { type: 'number', value: this.current_track, min: 1 },
         onConfirm: (value) => this.current_track = value,
+      })
+    },
+
+    lap_counter_input_dialog() {
+      this.$buefy.dialog.prompt({
+        message: "分",
+        confirmText: "更新",
+        cancelText: "キャンセル",
+        inputAttrs: { type: 'text', value: (this.lap_counter / 60) + "" },
+        onConfirm: (value) => this.lap_counter = parseFloat(value) * 60,
       })
     },
 
@@ -829,6 +839,7 @@ export default {
       .quest_digit
         cursor: pointer
       .current_digit
+        cursor: pointer
         margin-left: 1rem
       .quest_digit, .current_digit
         font-family: 'Roboto mono', monospace
