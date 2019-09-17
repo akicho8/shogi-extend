@@ -187,6 +187,11 @@ class FreeBattle < ApplicationRecord
   before_save do
     if changes_to_save[:kifu_body]
       if kifu_body
+        # 「**候補手」のようなのがついていると容量が大きすぎてDBに保存できなくなるためコメントを除外する
+        # コメントは残したいので ** で始まるものだけ除去する
+        if Bioshogi::Parser::KifParser.accept?(kifu_body)
+          self.kifu_body = Bioshogi::Parser.source_normalize(kifu_body).gsub(/^\*\*.*\R/, "")
+        end
         parser_exec
       end
     end

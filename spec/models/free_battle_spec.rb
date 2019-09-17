@@ -42,4 +42,24 @@ RSpec.describe FreeBattle, type: :model do
     free_battle = FreeBattle.create!(kifu_file: @kifu_file)
     assert { free_battle.kifu_body == "68S" }
   end
+
+  it "「**解析」などが含まれる巨大なKIFはいったん綺麗にする" do
+    free_battle = FreeBattle.create!(kifu_body: <<~EOT)
+手数----指手---------消費時間--
+**Engines 0 HoneyWaffle WCSC28
+**解析
+*一致率 先手 21% = 14/64  後手 40% = 26/64
+*棋戦詳細：ライバル対決
+   1 ５六歩(57)        ( 0:00/00:00:00)
+**解析
+**候補手
+EOT
+
+    assert { free_battle.kifu_body == <<~EOT }
+手数----指手---------消費時間--
+*一致率 先手 21% = 14/64  後手 40% = 26/64
+*棋戦詳細：ライバル対決
+   1 ５六歩(57)        ( 0:00/00:00:00)
+EOT
+  end
 end
