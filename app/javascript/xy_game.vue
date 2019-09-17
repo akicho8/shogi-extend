@@ -62,6 +62,7 @@
             :size.sync="sp_size"
             :flip.sync="sp_flip"
             :piece_variant.sync="sp_piece_variant"
+            :board_piece_back_user_class="board_piece_back_user_class"
           )
         .time_container
           .fixed_font.is-size-2
@@ -194,6 +195,8 @@ export default {
       sp_size: null,
       sp_flip: null,
       sp_piece_variant: null,
+
+      piece_mode: false,
     }
   },
 
@@ -248,6 +251,14 @@ export default {
   },
 
   methods: {
+    board_piece_back_user_class(place) {
+      if (this.current_place) {
+        if (place.x === this.current_place.x && place.y === this.current_place.y) {
+          return ["foobarbaz"]
+        }
+      }
+    },
+
     xy_records_hash_update() {
       this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique }, data => {
         this.xy_records_hash = data.xy_records_hash
@@ -456,7 +467,9 @@ export default {
 
     timer_stop() {
       this.timer_run = false
-      this.$refs.api_sp.api_board_clear()
+      if (this.piece_mode) {
+        this.$refs.api_sp.api_board_clear()
+      }
     },
 
     key_handle(e) {
@@ -521,8 +534,10 @@ export default {
 
       const soldier = Soldier.random()
       soldier.place = Place.fetch([p.x, p.y])
-      this.$refs.api_sp.api_board_clear()
-      this.$refs.api_sp.api_place_on(soldier)
+      if (this.piece_mode) {
+        this.$refs.api_sp.api_board_clear()
+        this.$refs.api_sp.api_place_on(soldier)
+      }
 
       this.current_place = p
     },
@@ -691,6 +706,8 @@ export default {
         font-size: 24rem
         color: $primary
         -webkit-text-stroke: 4px white
+    .foobarbaz
+      border: 0.2em solid darken($cyan, 0)
 
   .time_container
     margin-top: 0.1rem
