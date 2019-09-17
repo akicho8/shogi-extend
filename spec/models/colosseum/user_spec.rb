@@ -41,6 +41,10 @@ require 'rails_helper'
 
 module Colosseum
   RSpec.describe User, type: :model do
+    it "ログイン名に絵文字が含まれていてもDBが死なない" do
+      assert { Colosseum::User.create!(name: "a🦐b").name == "a🦐b" }
+    end
+
     context "リレーション" do
       user = User.create!
       assert { user.free_battles.to_a }
