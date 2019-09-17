@@ -38,6 +38,14 @@ export default {
         enc_base64 = localStorage.getItem(this.local_storage_key)
       }
       this.data_restore_from_base64(enc_base64)
+      this.data_restore_from_url_or_storage_after_hook()
+    },
+
+    data_restore_from_url_or_storage_after_hook() {
+      // URL から hash を除いたURLにしたいとき
+      // if (location.hash) {
+      //   location.href = this.location_url_without_hash()
+      // }
     },
 
     data_restore_from_base64(enc_base64) {
@@ -75,8 +83,8 @@ export default {
       alert("save_hash not implemented")
     },
 
-    permalink() {
-      return `${window.location.href}#${this.enc_base64}`
+    permalink_url() {
+      return `${this.location_url_without_hash()}#${this.enc_base64}`
     },
 
     enc_base64() {

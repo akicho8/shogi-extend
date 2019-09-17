@@ -115,6 +115,12 @@
           tr
             th t
             td 最後の解答の正誤を反転する
+
+  .columns
+    .column
+      b-tooltip(label="このURLを持っていくと別の端末で途中から再開できます" position="is-right")
+        a(:href="permalink_url") パーマリンク
+
 </template>
 
 <script>
@@ -176,7 +182,7 @@ export default {
               <li>手動で問題番号を記入すると自動インクリメントの方の問題番号は意味を持ちません</li>
               <li>スマホでは自動ロックで時計が止まってしまうのでスマホ側の設定で自動ロック「なし」を推奨します</li>
               <li>ブラウザを開き直したときに直近の問題の開始時の状態で復帰します</li>
-              <li>URLをコピーして他の端末で途中から再開できます</li>
+              <li>他の端末で途中から再開したいときは「パーマリンク」のURLを持っていってください</li>
             </ol>
             <br>
             <h5>ログ</h5>
@@ -518,6 +524,13 @@ export default {
       this.format_index   = hash.format_index || 0
     },
 
+    data_restore_from_url_or_storage_after_hook() {
+      if (location.hash) {
+        console.log(`ハッシュ付きのURLから復元したので綺麗なURL ${this.location_url_without_hash()} に移動する`)
+        location.href = this.location_url_without_hash()
+      }
+    },
+
     reset_by_x() {
       this.reset_by_x_with_drop(null)
     },
@@ -570,11 +583,11 @@ export default {
   },
 
   watch: {
-    current_track() { this.data_save() },
-    quest_text()    { this.data_save() },
-    format_index()  { this.data_save() },
-    drop_seconds()  { this.data_save() },
-    rows:           { handler() { this.data_save() }, deep: true, },
+    current_track() { this.data_save_to_local_storage() },
+    quest_text()    { this.data_save_to_local_storage() },
+    format_index()  { this.data_save_to_local_storage() },
+    drop_seconds()  { this.data_save_to_local_storage() },
+    rows:           { handler() { this.data_save_to_local_storage() }, deep: true, },
 
     current_min(v) {
       if (v >= 1) {

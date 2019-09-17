@@ -5,7 +5,7 @@
 - content_for :head do
   = javascript_pack_tag("stopwatch_app")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new StopwatchApp().$mount("#app") })
+    document.addEventListener('DOMContentLoaded', () => { new StopwatchApp(#{stopwatch_options.to_json.html_safe}).$mount("#app") })
 
 #app(v-cloak="true")
   stopwatch

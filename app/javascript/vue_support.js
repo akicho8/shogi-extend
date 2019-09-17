@@ -289,6 +289,11 @@ export default {
         window.talk_sound = null
       }
     },
+
+    // #以降を除いた現在のパス
+    location_url_without_hash() {
+      return window.location.href.replace(window.location.hash, "")
+    },
   },
 
   computed: {
