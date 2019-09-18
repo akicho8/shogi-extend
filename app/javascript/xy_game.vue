@@ -18,11 +18,15 @@
               template(v-for="e in XyRuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
-            b-tooltip(label="盤サイズを変更します。テーマを「画像駒」にすると「背景の種類」で見た目を変更できます" multilined)
+            b-tooltip(label="盤のカスタマイズ")
               b-button(@click="sp_setting_handle" icon-right="settings")
 
             b-tooltip(label="使い方")
               b-button(@click="rule_display" icon-right="help")
+
+            b-switch(v-model="bg_mode")
+              b-tooltip(label="駒が並べてあった方が符号のイメージが定着しやすいのではないかと考えてためしに入れてみた" multilined)
+                | 駒配置
 
           template(v-if="development_p")
             template(v-if="mode === 'running'")
@@ -112,7 +116,9 @@
                   b-table-column(field="created_at" label="日付" sortable)
                     | {{time_default_format(props.row.created_at)}}
 
-      b-switch(v-model="entry_name_unique") ユニーク
+      b-switch(v-model="entry_name_unique")
+        b-tooltip(label="名前ごとに絞る")
+          | ユニーク
 
   template(v-if="development_p")
     .columns
@@ -196,7 +202,7 @@ export default {
       sp_flip: null,
       sp_piece_variant: null,
 
-      piece_mode: false,
+      bg_mode: null,
     }
   },
 
@@ -215,6 +221,7 @@ export default {
   },
 
   watch: {
+    bg_mode()          { this.data_save_to_local_storage() },
     entry_name()       { this.data_save_to_local_storage() },
     sp_theme()         { this.data_save_to_local_storage() },
     sp_bg_variant()    { this.data_save_to_local_storage() },
@@ -252,9 +259,13 @@ export default {
 
   methods: {
     board_piece_back_user_class(place) {
-      if (this.current_place) {
-        if (place.x === this.current_place.x && place.y === this.current_place.y) {
-          return ["foobarbaz"]
+      if (this.mode === "running") {
+        if (this.bg_mode) {
+          if (this.current_place) {
+            if (place.x === this.current_place.x && place.y === this.current_place.y) {
+              return ["current_place"]
+            }
+          }
         }
       }
     },
@@ -328,6 +339,7 @@ export default {
 
       this.entry_name = hash.entry_name || this.fixed_handle_name
       this.current_pages = hash.current_pages || {}
+      this.bg_mode = hash.bg_mode != null ? hash.bg_mode : false
 
       this.sp_theme = hash.sp_theme || "simple"
       this.sp_bg_variant = hash.sp_bg_variant || "a"
@@ -467,7 +479,7 @@ export default {
 
     timer_stop() {
       this.timer_run = false
-      if (this.piece_mode) {
+      if (!this.bg_mode) {
         this.$refs.api_sp.api_board_clear()
       }
     },
@@ -534,7 +546,7 @@ export default {
 
       const soldier = Soldier.random()
       soldier.place = Place.fetch([p.x, p.y])
-      if (this.piece_mode) {
+      if (!this.bg_mode) {
         this.$refs.api_sp.api_board_clear()
         this.$refs.api_sp.api_place_on(soldier)
       }
@@ -601,6 +613,7 @@ export default {
         xy_rule_key: this.xy_rule_key,
         entry_name: this.entry_name,
         current_pages: this.current_pages,
+        bg_mode: this.bg_mode,
 
         sp_theme: this.sp_theme,
         sp_bg_variant: this.sp_bg_variant,
@@ -706,8 +719,8 @@ export default {
         font-size: 24rem
         color: $primary
         -webkit-text-stroke: 4px white
-    .foobarbaz
-      border: 0.2em solid darken($cyan, 0)
+    .current_place
+      border: 0.1em solid darken($orange, 0)
 
   .time_container
     margin-top: 0.1rem
