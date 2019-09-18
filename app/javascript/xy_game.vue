@@ -58,6 +58,7 @@
 
           shogi_player(
             ref="api_sp"
+            :kifu_body="kifu_body"
             :summary_show="false"
             :hidden_if_piece_stand_blank="true"
             :setting_button_show="false"
@@ -203,6 +204,7 @@ export default {
       sp_piece_variant: null,
 
       bg_mode: null,
+      kifu_body: null,
     }
   },
 
@@ -221,7 +223,6 @@ export default {
   },
 
   watch: {
-    bg_mode()          { this.data_save_to_local_storage() },
     entry_name()       { this.data_save_to_local_storage() },
     sp_theme()         { this.data_save_to_local_storage() },
     sp_bg_variant()    { this.data_save_to_local_storage() },
@@ -230,6 +231,15 @@ export default {
     sp_piece_variant() { this.data_save_to_local_storage() },
 
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
+
+    bg_mode(v) {
+      if (v) {
+        this.$refs.api_sp.mediator_setup(0)
+      } else {
+        this.$refs.api_sp.api_board_clear()
+      }
+      this.data_save_to_local_storage()
+    },
 
     xy_scope_key() {
       this.xy_records_hash_update()
