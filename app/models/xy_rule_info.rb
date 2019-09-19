@@ -8,7 +8,6 @@ class XyRuleInfo
     { key: "xy_rule10",   name: "10問",     o_count_max:  10, },
     { key: "xy_rule30",   name: "30問",     o_count_max:  30, },
     { key: "xy_rule100",  name: "100問",    o_count_max: 100, },
-    { key: "xy_rule1000", name: "マラソン", o_count_max: 999, },
   ]
 
   cattr_accessor(:rank_max) { Rails.env.production? ? 100 : 100 }  # 位まで表示
