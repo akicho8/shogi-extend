@@ -322,7 +322,7 @@ export default {
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'number', value: this.current_track, min: 1 },
-        onConfirm: (value) => this.current_track = value,
+        onConfirm: (value) => this.current_track = parseInt(value, 10),
       })
     },
 
