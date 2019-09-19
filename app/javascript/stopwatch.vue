@@ -72,6 +72,8 @@
           a.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
+          | &nbsp;
+          a.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
       .log_button_container
         b-button(@click="log_display") ログ
@@ -160,6 +162,7 @@ export default {
       interval_id: null,
       format_index: 0,
       drop_seconds: 60,
+      generate_max: null,
     }
   },
 
@@ -314,6 +317,20 @@ export default {
 
     quest_text_reverse() {
       this.quest_text = _.reverse(this.quest_list.slice()).join(" ")
+    },
+
+    quest_generate() {
+      this.$buefy.dialog.prompt({
+        title: "連番生成",
+        message: "何問ありますか？",
+        confirmText: "生成",
+        cancelText: "キャンセル",
+        inputAttrs: { type: 'number', value: this.generate_max, min: 0 },
+        onConfirm: (value) => {
+          this.generate_max = parseInt(value, 10)
+          this.quest_text = [...Array(this.generate_max).keys()].map(i => 1 + i).join(" ")
+        },
+      })
     },
 
     track_input_dialog() {
@@ -522,6 +539,7 @@ export default {
       this.rows           = hash.rows || []
       this.quest_text     = hash.quest_text || ""
       this.format_index   = hash.format_index || 0
+      this.generate_max   = hash.generate_max || 200
     },
 
     data_restore_from_url_or_storage_after_hook() {
@@ -583,6 +601,7 @@ export default {
   },
 
   watch: {
+    generate_max()  { this.data_save_to_local_storage() },
     current_track() { this.data_save_to_local_storage() },
     quest_text()    { this.data_save_to_local_storage() },
     format_index()  { this.data_save_to_local_storage() },
