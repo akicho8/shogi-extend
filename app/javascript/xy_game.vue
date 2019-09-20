@@ -25,7 +25,7 @@
               b-button(@click="rule_display" icon-right="help")
 
             b-switch(v-model="bg_mode")
-              b-tooltip(label="駒が並べてあった方が符号のイメージが定着しやすいのではないかと考えてためしに入れてみた" multilined)
+              b-tooltip(label="平手配置でプレイ (駒が並べてあった方が符号のイメージが定着しやすい説の検証)" multilined)
                 | 駒配置
 
           template(v-if="development_p")
