@@ -25,7 +25,7 @@
               b-button(@click="rule_display" icon-right="help")
 
             b-switch(v-model="bg_mode")
-              b-tooltip(label="平手配置でプレイ (駒が並べてあった方が符号のイメージが定着しやすい説の検証)" multilined)
+              b-tooltip(label="駒を並べてある状態で行う")
                 | 駒配置
 
           template(v-if="development_p")
@@ -65,9 +65,10 @@
             :theme.sync="sp_theme"
             :bg_variant.sync="sp_bg_variant"
             :size.sync="sp_size"
-            :flip.sync="sp_flip"
+            :flip="current_rule.flip"
             :piece_variant.sync="sp_piece_variant"
             :board_piece_back_user_class="board_piece_back_user_class"
+            :operation_disable="'true'"
           )
         .time_container
           .fixed_font.is-size-2
@@ -200,7 +201,6 @@ export default {
       sp_theme: null,
       sp_bg_variant: null,
       sp_size: null,
-      sp_flip: null,
       sp_piece_variant: null,
 
       bg_mode: null,
@@ -227,7 +227,6 @@ export default {
     sp_theme()         { this.data_save_to_local_storage() },
     sp_bg_variant()    { this.data_save_to_local_storage() },
     sp_size()          { this.data_save_to_local_storage() },
-    sp_flip()          { this.data_save_to_local_storage() },
     sp_piece_variant() { this.data_save_to_local_storage() },
 
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
@@ -330,7 +329,6 @@ export default {
       this.sp_theme         = null
       this.sp_bg_variant    = null
       this.sp_size          = null
-      this.sp_flip          = null
       this.sp_piece_variant = null
 
       this.data_restore_from_hash({})
@@ -354,7 +352,6 @@ export default {
       this.sp_theme = hash.sp_theme || "simple"
       this.sp_bg_variant = hash.sp_bg_variant || "a"
       this.sp_size = hash.sp_size || "default"
-      this.sp_flip = hash.sp_flip != null ? hash.sp_flip : false
       this.sp_piece_variant = hash.sp_piece_variant || "a"
     },
 
@@ -387,6 +384,7 @@ export default {
       this.init_other_variables()
       this.saved_rule = this.current_rule
       this.talk_stop()
+      this.$refs.api_sp.$store.state.current_flip = this.current_rule.flip // FIXME api化
 
       this.inteval_id = setInterval(() => {
         this.count_down_counter += 1
@@ -628,7 +626,6 @@ export default {
         sp_theme: this.sp_theme,
         sp_bg_variant: this.sp_bg_variant,
         sp_size: this.sp_size,
-        sp_flip: this.sp_flip,
         sp_piece_variant: this.sp_piece_variant,
       }
     },
