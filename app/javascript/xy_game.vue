@@ -68,7 +68,7 @@
             :flip="current_rule.flip"
             :piece_variant.sync="sp_piece_variant"
             :board_piece_back_user_class="board_piece_back_user_class"
-            :operation_disable="'true'"
+            :operation_disable="true"
           )
         .time_container
           .fixed_font.is-size-2
