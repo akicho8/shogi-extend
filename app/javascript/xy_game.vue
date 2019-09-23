@@ -50,15 +50,15 @@
                   b-icon(pack="fas" icon="times" type="is-danger" size="is-small")
                 p.title {{x_count}}
 
-        .kanji_human_container(v-if="tap_mode")
-          .human_digits.yumincho
-            | {{kanji_human}}
-
         .field_conainer
           template(v-if="mode === 'standby'")
             .count_down_wrap
               .count_down
                 | {{count_down}}
+
+          .kanji_human_container(v-if="tap_mode")
+            .human_digits.yumincho
+              | {{kanji_human}}
 
           shogi_player(
             ref="api_sp"
@@ -745,21 +745,11 @@ export default {
 @import "./my_custom_buefy.scss"
 
 .xy_game
-  .kanji_human_container
-    margin: 0 auto
-    .human_digits
-      margin: 0 auto
-      background-color: hsl(0, 0%, 95%)
-      border-radius: 0.5rem
-      padding: 0.2rem
-      width: 5rem
-      font-weight: bold
-      font-size: 1.8rem
   .level_container
     width: 10rem
     margin: 0 auto
   .field_conainer
-    margin-top: 0.25rem
+    margin-top: 0.7rem
     position: relative
     .count_down_wrap
       z-index: 1
@@ -778,8 +768,20 @@ export default {
         font-size: 24rem
         color: $primary
         -webkit-text-stroke: 4px white
-    .current_place
-      border: 0.1em solid darken($orange, 0)
+    .kanji_human_container
+      margin-top: 0rem
+      .human_digits
+        margin: 0 auto
+        background-color: hsl(0, 0%, 95%)
+        border-radius: 0.5rem
+        padding: 0.2rem
+        width: 5rem
+        font-weight: bold
+        font-size: 1.5rem
+    .shogi-player
+      margin-top: 1em
+      .current_place
+        border: 0.1em solid darken($orange, 0)
 
   .time_container
     margin-top: 0.1rem

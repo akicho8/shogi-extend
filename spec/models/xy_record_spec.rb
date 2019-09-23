@@ -28,18 +28,18 @@ RSpec.describe XyRecord, type: :model do
     XyRecord.destroy_all
 
     Timecop.freeze("2000-01-01") do
-      XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "a", spent_sec: 1, x_count: 0)
-      XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "b", spent_sec: 1, x_count: 0)
+      XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "a", spent_sec: 1, x_count: 0)
+      XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "b", spent_sec: 1, x_count: 0)
     end
 
     Timecop.freeze("2000-01-02") do
-      XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "a", spent_sec: 2, x_count: 0)
-      XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "a", spent_sec: 3, x_count: 0)
-      XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "b", spent_sec: 2, x_count: 0)
-      XyRecord.create!(xy_rule_key: "xy_rule1", entry_name: "b", spent_sec: 3, x_count: 0)
+      XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "a", spent_sec: 2, x_count: 0)
+      XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "a", spent_sec: 3, x_count: 0)
+      XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "b", spent_sec: 2, x_count: 0)
+      XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "b", spent_sec: 3, x_count: 0)
 
       XyRuleInfo.redis.flushdb
-      XyRuleInfo[:xy_rule1].aggregate
+      XyRuleInfo[:xy_rule100].aggregate
 
       assert { build(xy_scope_key: "xy_scope_all",   entry_name_unique: "false") == [1, 1, 2, 2, 3, 3] }
       assert { build(xy_scope_key: "xy_scope_all",   entry_name_unique: "true")  == [1, 1]             }
@@ -49,7 +49,7 @@ RSpec.describe XyRecord, type: :model do
   end
 
   def build(*args)
-    v = XyRuleInfo[:xy_rule1].xy_records(*args)
+    v = XyRuleInfo[:xy_rule100].xy_records(*args)
     tp v
     v.collect { |e | e["spent_sec"] }
   end
