@@ -50,6 +50,10 @@
                   b-icon(pack="fas" icon="times" type="is-danger" size="is-small")
                 p.title {{x_count}}
 
+        .kanji_human_container(v-if="tap_mode")
+          .human_digits.yumincho
+            | {{kanji_human}}
+
         .field_conainer
           template(v-if="mode === 'standby'")
             .count_down_wrap
@@ -68,7 +72,8 @@
             :flip="current_rule.flip"
             :piece_variant.sync="sp_piece_variant"
             :board_piece_back_user_class="board_piece_back_user_class"
-            :operation_disable="true"
+            :overlay_navi="false"
+            :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
           )
         .time_container
           .fixed_font.is-size-2
@@ -267,12 +272,21 @@ export default {
   },
 
   methods: {
+    board_cell_left_click_user_handle(place, event) {
+      if (this.tap_mode) {
+        this.input_valid(place.x, place.y)
+        return true
+      }
+    },
+
     board_piece_back_user_class(place) {
-      if (this.mode === "running") {
-        if (this.bg_mode) {
-          if (this.current_place) {
-            if (place.x === this.current_place.x && place.y === this.current_place.y) {
-              return ["current_place"]
+      if (!this.tap_mode) {
+        if (this.mode === "running") {
+          if (this.bg_mode) {
+            if (this.current_place) {
+              if (place.x === this.current_place.x && place.y === this.current_place.y) {
+                return ["current_place"]
+              }
             }
           }
         }
@@ -496,6 +510,12 @@ export default {
       if (this.mode != "running") {
         return
       }
+      if (this.tap_mode) {
+        if (!this.development_p) {
+          return
+        }
+      }
+
       if (e.key === "Escape") {
         this.key_queue = []
         e.preventDefault()
@@ -506,20 +526,24 @@ export default {
         if (this.key_queue.length >= 2) {
           const x = parseInt(this.key_queue.shift())
           const y = parseInt(this.key_queue.shift())
-          if (this.active_p(this.board_size - x, y - 1)) {
-            this.sound_play("o")
-            this.o_count++
-            this.goal_check()
-            if (this.mode === "running") {
-              this.place_next_set()
-            }
-          } else {
-            this.x_count++
-            this.sound_play("x")
-          }
+          this.input_valid(this.board_size - x, y - 1)
         }
         e.preventDefault()
         return
+      }
+    },
+
+    input_valid(x, y) {
+      if (this.active_p(x, y)) {
+        this.sound_play("o")
+        this.o_count++
+        this.goal_check()
+        if (this.mode === "running") {
+          this.place_next_set()
+        }
+      } else {
+        this.x_count++
+        this.sound_play("x")
       }
     },
 
@@ -552,17 +576,21 @@ export default {
         p = {x: this.place_random(), y: _.sample([5,6])}
       }
 
-      const soldier = Soldier.random()
-      soldier.place = Place.fetch([p.x, p.y])
-      if (!this.bg_mode) {
-        this.$refs.api_sp.api_board_clear()
-        this.$refs.api_sp.api_place_on(soldier)
+      if (!this.tap_mode) {
+        const soldier = Soldier.random()
+        soldier.place = Place.fetch([p.x, p.y])
+        if (!this.bg_mode) {
+          this.$refs.api_sp.api_board_clear()
+          this.$refs.api_sp.api_place_on(soldier)
+        }
       }
 
       this.current_place = p
     },
 
     active_p(x, y) {
+      console.log(this.current_place)
+      console.log(x, y)
       if (this.current_place) {
         return _.isEqual(this.current_place, {x: x, y: y})
       }
@@ -693,6 +721,20 @@ export default {
       return XyRuleInfo.fetch(this.xy_rule_key)
     },
 
+    tap_mode() {
+      return this.current_rule.tap_mode
+    },
+
+    kanji_human() {
+      if (this.mode === "running") {
+        if (this.current_place) {
+          const place = Place.fetch([this.current_place.x, this.current_place.y])
+          return place.kanji_human
+        }
+      }
+      return "？？"
+    },
+
     XyScopeInfo() { return XyScopeInfo },
     XyRuleInfo() { return XyRuleInfo },
   },
@@ -703,11 +745,21 @@ export default {
 @import "./my_custom_buefy.scss"
 
 .xy_game
+  .kanji_human_container
+    margin: 0 auto
+    .human_digits
+      margin: 0 auto
+      background-color: hsl(0, 0%, 95%)
+      border-radius: 0.5rem
+      padding: 0.2rem
+      width: 5rem
+      font-weight: bold
+      font-size: 1.8rem
   .level_container
     width: 10rem
     margin: 0 auto
   .field_conainer
-    margin-top: 1rem
+    margin-top: 0.25rem
     position: relative
     .count_down_wrap
       z-index: 1
