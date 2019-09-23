@@ -276,9 +276,9 @@ export default {
       if (this.mode === "running") {
         if (this.tap_mode) {
           this.input_valid(place.x, place.y)
-          return true
         }
       }
+      return true
     },
 
     board_piece_back_user_class(place) {
