@@ -273,9 +273,11 @@ export default {
 
   methods: {
     board_cell_left_click_user_handle(place, event) {
-      if (this.tap_mode) {
-        this.input_valid(place.x, place.y)
-        return true
+      if (this.mode === "running") {
+        if (this.tap_mode) {
+          this.input_valid(place.x, place.y)
+          return true
+        }
       }
     },
 
