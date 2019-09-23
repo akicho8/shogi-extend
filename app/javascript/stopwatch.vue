@@ -76,7 +76,7 @@
           a.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
       .log_button_container
-        b-button(@click="log_display") ログ
+        b-button(@click="log_display") 履歴
 
     .column
       b-tabs.result_body(expanded v-model="format_index")
@@ -188,10 +188,10 @@ export default {
               <li>他の端末で途中から再開したいときは「パーマリンク」のURLを持っていってください</li>
             </ol>
             <br>
-            <h5>ログ</h5>
+            <h5>履歴</h5>
             <ol>
-              <li>開始と停止のタイミングで現在の状態をログに保存します</li>
-              <li>ログをクリックするとその時間の状態に戻ります</li>
+              <li>開始と停止のタイミングで現在の状態を履歴に保存します</li>
+              <li>履歴をクリックするとその時間の状態に戻ります</li>
               <li>操作を間違えてリセットしてしまったときや「不正解だけ再テスト」のあとで前に戻りたくなったときに使います</li>
             </ol>
           </div>`,
@@ -213,7 +213,7 @@ export default {
           template: `
             <div class="modal-card is-size-7 stopwatch_log_dialog">
               <header class="modal-card-head">
-                <p class="modal-card-title">ログ</p>
+                <p class="modal-card-title">履歴</p>
               </header>
               <section class="modal-card-body">
                 <b-table
@@ -226,10 +226,6 @@ export default {
                   hoverable
                   >
                   <template slot-scope="props">
-                    <b-table-column field="time" label="Date" sortable>{{props.row.time}}</b-table-column>
-                    <b-table-column field="event" label="Event">{{props.row.event}}</b-table-column>
-                    <b-table-column field="track" label="Track">{{props.row.current_track}}</b-table-column>
-                    <b-table-column field="summary" label="Summary">{{props.row.summary}}</b-table-column>
                     <b-table-column field="time" label="日時" sortable>{{props.row.time}}</b-table-column>
                     <b-table-column field="event" label="ｲﾍﾞﾝﾄ">{{props.row.event}}</b-table-column>
                     <b-table-column field="track" label="問題">{{props.row.current_track}}</b-table-column>
@@ -245,7 +241,7 @@ export default {
         },
       })
       // const rule_dialog = this.$buefy.dialog.alert({
-      //   title: "ログ",
+      //   title: "履歴",
       //   message: message,
       //   confirmText: "閉じる",
       //   canCancel: ["outside", "escape"],
