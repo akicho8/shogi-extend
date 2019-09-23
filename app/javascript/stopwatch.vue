@@ -289,11 +289,6 @@ export default {
       }, false)
     },
 
-    syaberanai_handle() {
-      this.$set(this.browser_setting, "sound_silent_p", !this.browser_setting.sound_silent_p)
-      console.log("syaberanai_handle", this.browser_setting.sound_silent_p)
-    },
-
     input_focus_p() {
       const dom = document.activeElement
       return dom.tagName === "TEXTAREA" || dom.tagName === "INPUT"
