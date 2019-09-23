@@ -18,9 +18,9 @@ export default {
       this.sound_silent_p = v
       if (old != null) {
         if (v) {
-          this.talk("もうしゃべりません")
+          this.notice("もうしゃべりません")
         } else {
-          this.talk("しゃべります")
+          this.notice("しゃべります")
         }
       }
     },

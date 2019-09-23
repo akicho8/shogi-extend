@@ -401,10 +401,13 @@ export default {
           last.o_or_x = "x"
         }
         const answer_info = AnswerInfo.fetch(last.o_or_x)
-        const message = `最後の解答を${answer_info.name}に変更しました`
-        this.$buefy.toast.open({message: message, position: "is-bottom"})
-        this.safe_talk(message)
+        this.notice(`最後の解答を${answer_info.name}に変更しました`)
       }
+    },
+
+    notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-bottom"})
+      this.safe_talk(message)
     },
 
     ox_char_to_human_ox(ox) {
@@ -458,7 +461,7 @@ export default {
         this.safe_talk(this.quest_name(this.new_quest))
       } else {
         this.stop_handle()
-        this.safe_talk("おわりました")
+        this.notice(`おわりました`)
       }
     },
 
@@ -467,11 +470,13 @@ export default {
         this.rows.pop()
         this.current_track -= 1
         this.lap_counter = 0
+        this.notice(`1つ前に戻しました`)
       }
     },
 
     rap_reset() {
       this.lap_counter = 0
+      this.notice(`最後のタイムだけリセットしました`)
     },
 
     clear_interval_safe() {
