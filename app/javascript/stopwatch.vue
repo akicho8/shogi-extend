@@ -230,6 +230,10 @@ export default {
                     <b-table-column field="event" label="Event">{{props.row.event}}</b-table-column>
                     <b-table-column field="track" label="Track">{{props.row.current_track}}</b-table-column>
                     <b-table-column field="summary" label="Summary">{{props.row.summary}}</b-table-column>
+                    <b-table-column field="time" label="日時" sortable>{{props.row.time}}</b-table-column>
+                    <b-table-column field="event" label="ｲﾍﾞﾝﾄ">{{props.row.event}}</b-table-column>
+                    <b-table-column field="track" label="問題">{{props.row.current_track}}</b-table-column>
+                    <b-table-column field="summary" label="サマリ">{{props.row.summary}}</b-table-column>
                   </template>
                 </b-table>
               </section>
