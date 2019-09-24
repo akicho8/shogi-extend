@@ -385,7 +385,7 @@ module BattleControllerSharedMethods
           :turn_max,
           # :preset_key,
           # :start_turn,
-          # :critical_turn,
+          :critical_turn,
           :saturn_key,
           :sfen_body,
           :image_turn,
