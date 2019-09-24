@@ -19,6 +19,7 @@ module Swars
       { name: "四段〜九段",               params: { query: "or_tag:四段,五段,六段,七段,八段,九段", }, },
       { name: "初段〜三段",               params: { query: "or_tag:初段,二段,三段",                }, },
       { name: "初段",                     params: { query: "or_tag:初段",                          }, },
+      { name: "アヒル戦法",               params: { query: "or_tag:アヒル戦法,アヒル囲い",         }, },
 
       # { name: "手数多い順",             params: { sort_column: :turn_max, sort_order: :desc,  }, },
       # { name: "手数少ない順",           params: { sort_column: :turn_max, sort_order: :asc,   }, },
