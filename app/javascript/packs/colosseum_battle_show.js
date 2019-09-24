@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // チャットの発言の追加
       if (data["chat_message"]) {
-        GVI.talk(data["chat_message"].message)
+        // GVI.talk(data["chat_message"].message)
         App.battle_vm.chat_messages.push(data["chat_message"])
       }
 
