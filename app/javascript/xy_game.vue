@@ -50,16 +50,15 @@
                   b-icon(pack="fas" icon="times" type="is-danger" size="is-small")
                 p.title {{x_count}}
 
-        .field_conainer
+        .tap_digits_container(v-if="tap_mode")
+          .value.yumincho
+            | {{kanji_human}}
+
+        .shogi_player_container
           template(v-if="mode === 'standby'")
             .count_down_wrap
               .count_down
                 | {{count_down}}
-
-          .kanji_human_container(v-if="tap_mode")
-            .human_digits.yumincho
-              | {{kanji_human}}
-
           shogi_player(
             ref="api_sp"
             :kifu_body="kifu_body"
@@ -75,6 +74,7 @@
             :overlay_navi="false"
             :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
           )
+
         .time_container
           .fixed_font.is-size-2
             | {{time_format}}
@@ -750,8 +750,17 @@ export default {
   .level_container
     width: 10rem
     margin: 0 auto
-  .field_conainer
+  .tap_digits_container
     margin-top: 0.7rem
+    .value
+      margin: 0 auto
+      background-color: hsl(0, 0%, 95%)
+      border-radius: 0.5rem
+      padding: 0.2rem
+      width: 5rem
+      font-weight: bold
+      font-size: 1.5rem
+  .shogi_player_container
     position: relative
     .count_down_wrap
       z-index: 1
@@ -770,24 +779,13 @@ export default {
         font-size: 24rem
         color: $primary
         -webkit-text-stroke: 4px white
-    .kanji_human_container
-      margin-top: 0rem
-      .human_digits
-        margin: 0 auto
-        background-color: hsl(0, 0%, 95%)
-        border-radius: 0.5rem
-        padding: 0.2rem
-        width: 5rem
-        font-weight: bold
-        font-size: 1.5rem
     .shogi-player
       margin-top: 1em
       .current_place
         border: 0.1em solid darken($orange, 0)
       .piece_back
         &:hover
-          background-color: lighten($cyan, 42%)
-
+          background-color: hsl(0, 0%, 95%)
   .time_container
     margin-top: 0.1rem
   .tweet_box_container
