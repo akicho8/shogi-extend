@@ -784,6 +784,9 @@ export default {
       margin-top: 1em
       .current_place
         border: 0.1em solid darken($orange, 0)
+      .piece_back
+        &:hover
+          background-color: lighten($cyan, 42%)
 
   .time_container
     margin-top: 0.1rem
