@@ -791,10 +791,14 @@ export default {
       out += this.summary
 
       _.forIn(this.o_group_by_min, (rows, key) => {
-        out += "\n"
-        out += this.human_minute(key) + "\n"
-        out += rows.map(e => this.quest_name(e)).join(" ")
-        out += "\n"
+        if (key == 0) {
+          out += "\n※" + this.human_minute(key) + "は省略\n"
+        } else {
+          out += "\n"
+          out += this.human_minute(key) + "\n"
+          out += rows.map(e => this.quest_name(e)).join(" ")
+          out += "\n"
+        }
       })
 
       if ('x' in this.ox_group) {
@@ -825,9 +829,13 @@ export default {
       let out = ""
       out += this.summary
       _.forIn(this.o_group_by_min, (rows, key) => {
-        out += "\n"
-        out += this.human_minute(key) + "\n"
-        out += rows.map(e => this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join("")
+        if (key == 0) {
+          out += "\n※" + this.human_minute(key) + "は省略\n"
+        } else {
+          out += "\n"
+          out += this.human_minute(key) + "\n"
+          out += rows.map(e => this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join("")
+        }
       })
       if ("x" in this.ox_group) {
         out += "\n"
