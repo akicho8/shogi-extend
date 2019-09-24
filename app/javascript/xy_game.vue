@@ -60,7 +60,7 @@
               .count_down
                 | {{count_down}}
           shogi_player(
-            ref="api_sp"
+            ref="main_sp"
             :kifu_body="kifu_body"
             :summary_show="false"
             :hidden_if_piece_stand_blank="true"
@@ -238,9 +238,9 @@ export default {
 
     bg_mode(v) {
       if (v) {
-        this.$refs.api_sp.mediator_setup(0)
+        this.$refs.main_sp.api_board_turn_set(0)
       } else {
-        this.$refs.api_sp.api_board_clear()
+        this.$refs.main_sp.api_board_clear()
       }
       this.data_save_to_local_storage()
     },
@@ -302,7 +302,7 @@ export default {
     },
 
     sp_setting_handle() {
-      this.$refs.api_sp.setting_modal_p = true
+      this.$refs.main_sp.setting_modal_p = true
     },
 
     rule_display() {
@@ -400,7 +400,7 @@ export default {
       this.init_other_variables()
       this.saved_rule = this.current_rule
       this.talk_stop()
-      this.$refs.api_sp.$store.state.current_flip = this.current_rule.flip // FIXME api化
+      this.$refs.main_sp.api_flip_set(this.current_rule.flip)
 
       this.inteval_id = setInterval(() => {
         this.count_down_counter += 1
@@ -504,7 +504,7 @@ export default {
     timer_stop() {
       this.timer_run = false
       if (!this.bg_mode) {
-        this.$refs.api_sp.api_board_clear()
+        this.$refs.main_sp.api_board_clear()
       }
     },
 
@@ -582,8 +582,8 @@ export default {
         const soldier = Soldier.random()
         soldier.place = Place.fetch([p.x, p.y])
         if (!this.bg_mode) {
-          this.$refs.api_sp.api_board_clear()
-          this.$refs.api_sp.api_place_on(soldier)
+          this.$refs.main_sp.api_board_clear()
+          this.$refs.main_sp.api_place_on(soldier)
         }
       }
 
