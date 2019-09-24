@@ -12,18 +12,20 @@ template(slot-scope="props")
 
   template(v-for="m in props.row.memberships")
     b-table-column(:label="m.label")
-      span(v-html="m.icon_html")
-      template(v-if="false")
-        a(@click.stop :href="m.query_user_url")
-          | {{m.name_with_grade}}
-      template(v-else)
-        swars_user_link_to(:membership="m")
+      / span (divでもよい) で囲まないとアイコンと名前が離れてしまう
+      span
+        span(v-html="m.icon_html")
+        template(v-if="false")
+          a(@click.stop :href="m.query_user_url")
+            | {{m.name_with_grade}}
+        template(v-else)
+          swars_user_link_to(:membership="m")
 
-      template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
-        template(v-if="table_columns_hash[key].visible")
-          template(v-for="tag in m[key]")
-            | &nbsp;
-            a.has-text-grey.is-size-7(@click.stop :href="tag.url") {{tag.name}}
+        template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
+          template(v-if="table_columns_hash[key].visible")
+            template(v-for="tag in m[key]")
+              | &nbsp;
+              a.has-text-grey.is-size-7(@click.stop :href="tag.url") {{tag.name}}
 
   b-table-column(field="final_key" :label="table_columns_hash['final_info'].label" :visible="table_columns_hash['final_info'].visible" sortable)
     a(@click.stop :href="props.row['final_info'].url" :class="props.row['final_info'].class")
