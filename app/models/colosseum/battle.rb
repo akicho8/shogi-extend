@@ -157,20 +157,27 @@ module Colosseum
 
     concerning :BattleMethods do
       class_methods do
+        # cap production rails:runner CODE='Colosseum::Battle.auto_close'
         def auto_close(**options)
           options = {
             time: nil,
           }.merge(options)
 
           kesuyatu(options).each do |e|
-            e.game_end({})
             SlackAgent.message_send(key: "自動終了", body: e.long_name)
+            if e.xstate_key == :st_before
+              # まったく始まってないのは削除
+              e.destroy!
+            else
+              # 始まったけど終ってないものは強制終了
+              e.game_end({})
+            end
           end
         end
       end
 
       included do
-        scope :kesuyatu, -> **options { st_battle_now.where(arel_table[:begin_at].lteq(((options[:time] || 1.hour)).seconds.ago)).order(:begin_at) }
+        scope :kesuyatu, -> **options { where(begin_at: nil).or(where(end_at: nil)).where(arel_table[:created_at].lteq(((options[:time] || 2.hour)).seconds.ago)).order(:created_at) }
       end
 
       def battle_start

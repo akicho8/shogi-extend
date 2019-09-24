@@ -55,7 +55,9 @@ module Colosseum
     end
 
     after_commit do
-      ActionCable.server.broadcast(battle.channel_key, memberships: ams_sr(battle.reload.memberships))
+      if battle.persisted?
+        ActionCable.server.broadcast(battle.channel_key, memberships: ams_sr(battle.reload.memberships))
+      end
     end
 
     def location
