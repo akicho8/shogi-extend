@@ -29,6 +29,8 @@
 
 module Colosseum
   class Battle < ApplicationRecord
+    cattr_accessor(:yomiage_enable) { false }
+
     class << self
       def setup(options = {})
         super
@@ -351,8 +353,11 @@ module Colosseum
             :full_sfen       => battle.full_sfen,
             :human_kifu_text => battle.human_kifu_text,
             :clock_counts    => battle.clock_counts,
-            :yomiage        => mediator.hand_logs.last.yomiage,
           }
+
+          if battle.yomiage_enable
+            broadcast_hash[:yomiage] = mediator.hand_logs.last.yomiage
+          end
 
           ActionCable.server.broadcast(battle.channel_key, broadcast_hash)
         end
