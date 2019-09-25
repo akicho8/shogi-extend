@@ -86,7 +86,7 @@ RSpec.describe "対戦", type: :system do
         visit_and_login
         click_on("対戦開始")
       end
-      sleep(2)
+      sleep(5)
 
       using_session(:user1) do
         assert { current_path == polymorphic_path(Colosseum::Battle.last) }
