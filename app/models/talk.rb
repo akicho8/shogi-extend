@@ -3,6 +3,8 @@
 # Talk.new(source_text: "こんにちは")
 #
 class Talk
+  cattr_accessor(:surrogate_pair_delete_enable) { true } # 特殊文字を除去する (除去しないと AWS 側の変換が特殊文字の直前で停止してしまう)
+
   cattr_accessor :default_polly_params do
     {
       output_format: "mp3",
@@ -42,6 +44,13 @@ class Talk
     params[:source_text].to_s
   end
 
+  def surrogate_pair_deleted_text
+    unless surrogate_pair_delete_enable
+      return source_text
+    end
+    source_text.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
+  end
+
   def direct_file_path
     Rails.public_path.join("system", self.class.name.underscore, *dir_parts, filename)
   end
@@ -69,7 +78,7 @@ class Talk
   end
 
   def force_generate
-    params = polly_params.merge(text: source_text, response_target: direct_file_path.to_s)
+    params = polly_params.merge(text: surrogate_pair_deleted_text, response_target: direct_file_path.to_s)
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
     unless Rails.env.production?
