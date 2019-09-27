@@ -16,6 +16,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "bowser": "^2.6.1",
     "buefy": "^0.8.4",
     "bulma": "^0.7.5",
     "chart.js": "^2.8.0",

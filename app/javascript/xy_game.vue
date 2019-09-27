@@ -353,7 +353,7 @@ export default {
     data_restore_from_hash(hash) {
       this.xy_rule_key = hash.xy_rule_key
       if (!XyRuleInfo.lookup(this.xy_rule_key)) {
-        this.xy_rule_key = XyRuleInfo.fetch(0).key
+        this.xy_rule_key = this.default_xy_rule_key
       }
 
       this.xy_scope_key = hash.xy_scope_key
@@ -735,6 +735,15 @@ export default {
         }
       }
       return "？？"
+    },
+
+    default_xy_rule_key() {
+      console.log(this.user_agent_hash)
+      if (this.user_agent_hash.platform.type == "desktop") {
+        return "xy_rule100"
+      } else {
+        return "xy_rule100t"
+      }
     },
 
     XyScopeInfo() { return XyScopeInfo },

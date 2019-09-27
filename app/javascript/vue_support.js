@@ -1,3 +1,5 @@
+import Bowser from "bowser"
+
 window.talk_sound = null
 
 export default {
@@ -305,6 +307,12 @@ export default {
 
     development_p() {
       return process.env.NODE_ENV === "development"
+    },
+
+    // https://www.npmjs.com/package/bowser
+    user_agent_hash() {
+      console.log(window.navigator.userAgent)
+      return Bowser.parse(window.navigator.userAgent)
     },
   },
 }
