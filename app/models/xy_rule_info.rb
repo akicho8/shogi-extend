@@ -7,9 +7,10 @@ class XyRuleInfo
     # { key: "xy_rule1",     name: "1問",      o_count_max:   1, flip: false, tap_mode: false, },
     # { key: "xy_rule10",    name: "10問",     o_count_max:  10, flip: false, tap_mode: false, },
     # { key: "xy_rule30",    name: "30問",     o_count_max:  30, flip: false, tap_mode: false, },
-    { key: "xy_rule100",   name: "100問",    o_count_max: 100, flip: false, tap_mode: false, },
-    { key: "xy_rule100w",  name: "☖100問",  o_count_max: 100, flip: true,  tap_mode: false, },
-    { key: "xy_rule100t",  name: "100問TAP", o_count_max: 100, flip: false, tap_mode: true,  },
+    { key: "xy_rule100",   name: "100問",      o_count_max: 100, flip: false, tap_mode: false, },
+    { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, flip: true,  tap_mode: false, },
+    { key: "xy_rule100t",  name: "100問TAP",   o_count_max: 100, flip: false, tap_mode: true,  },
+    { key: "xy_rule100tw", name: "☖100問TAP", o_count_max: 100, flip: true,  tap_mode: true,  },
   ]
 
   cattr_accessor(:rank_max) { Rails.env.production? ? 100 : 100 }  # 位まで表示
