@@ -791,6 +791,10 @@ export default {
         color: $primary
         -webkit-text-stroke: 4px white
     .shogi-player
+      .font_size_base
+        // モバイルのときに画面幅に合わせて盤面を大きくする
+        +mobile
+          font-size: 6.0vmin
       margin-top: 1em
       .current_place
         border: 0.1em solid darken($orange, 0)
