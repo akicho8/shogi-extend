@@ -73,7 +73,7 @@ class XyRuleInfo
     # current_clean
     # aggregate
     if params[:entry_name_unique] == "true"
-      entry_names = redis.zrevrange(table_key_for2(params), 0, rank_max - 1)
+      entry_names = redis.zrevrange(key_select(params), 0, rank_max - 1)
       if entry_names.empty?
         return []
       end
@@ -110,11 +110,11 @@ class XyRuleInfo
   end
 
   def rank_by_score(params, score)
-    redis.zcount(table_key_for2(params), score + 1, "+inf") + 1
+    redis.zcount(key_select(params), score + 1, "+inf") + 1
   end
 
   def ranking_page(params, id)
-    if index = redis.zrevrank(table_key_for2(params), id)
+    if index = redis.zrevrank(key_select(params), id)
       index.div(per_page).next
     end
   end
@@ -145,7 +145,7 @@ class XyRuleInfo
   end
 
   def current_clean
-    redis.del(all_table_key)
+    redis.del(table_key_for_all)
   end
 
   def aggregate
@@ -154,16 +154,20 @@ class XyRuleInfo
     end
   end
 
-  def all_table_key
-    [self.class.name.underscore, key, "all"].join("/")
+  def table_key_for_all
+    [*prefix_keys, "all"].join("/")
   end
 
-  def today_table_key
+  def table_key_for_today
     time_table_key(Time.current)
   end
 
   def time_table_key(created_at)
-    [self.class.name.underscore, key, created_at.strftime("%Y%m%d")].join("/")
+    [*prefix_keys, created_at.strftime("%Y%m%d")].join("/")
+  end
+
+  def prefix_keys
+    [self.class.name.underscore, key]
   end
 
   private
@@ -173,7 +177,7 @@ class XyRuleInfo
     send(xy_scope_info.key_method)
   end
 
-  def table_key_for2(params)
+  def key_select(params)
     key = table_key_for(params)
     if params[:entry_name_unique] == "true"
       key = as_unique_key(key)
