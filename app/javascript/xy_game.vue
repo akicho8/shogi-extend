@@ -360,7 +360,7 @@ export default {
 
       this.xy_scope_key = hash.xy_scope_key
       if (!XyScopeInfo.lookup(this.xy_scope_key)) {
-        this.xy_scope_key = XyScopeInfo.fetch(0).key
+        this.xy_scope_key = "xy_scope_today"
       }
 
       this.entry_name = hash.entry_name || this.fixed_handle_name
