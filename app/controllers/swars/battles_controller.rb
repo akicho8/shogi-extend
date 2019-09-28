@@ -167,7 +167,7 @@ module Swars
             end
             current_swars_user.search_logs.create!
           else
-            flash[:warning] = "#{current_swars_user_key} さんの棋譜は見つかりませんでした。ID が間違っている可能性があります"
+            flash[:warning] = "#{current_swars_user_key} さんの棋譜は見つかりませんでした。ウォーズIDが正しいか確認してみてください"
           end
 
           if hit_count.nonzero?
