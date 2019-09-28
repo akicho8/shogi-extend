@@ -49,10 +49,18 @@ class XyRuleInfo
     end
 
     def description
-      Time.current.strftime("%-d日%-H時") + "の時点のランキング1位は" + values.reverse.collect { |e|
-        names = e.top_xy_records.collect { |e| "#{e.entry_name} (#{e.spent_sec_time_format})"  }.join(" / ")
-        "【#{e.name}】#{names}"
-      }.join(" ") + " です"
+      body = values.collect { |e|
+        records = e.top_xy_records
+        if records.present?
+          names = records.collect { |e| "#{e.entry_name} (#{e.spent_sec_time_format})"  }.join(" / ")
+          "【#{e.name}】#{names}"
+        end
+      }.compact.join(" ")
+
+      time = Time.current.strftime("%-d日%-H時")
+      if body.present?
+        "#{time}の時点の今日の各ランキング1位は#{body}"
+      end
     end
 
     def redis
@@ -96,9 +104,9 @@ class XyRuleInfo
   end
 
   def top_xy_records
-    redis.zrevrange(all_table_key, 0, 0).collect { |id|
+    redis.zrevrange(table_key_for_today, 0, 0).collect do |id|
       XyRecord.find(id)
-    }
+    end
   end
 
   def rank_by_score(params, score)
