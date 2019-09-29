@@ -36,6 +36,7 @@ module SlackAgent
       if a.present?
         ua_str = a.join(" ")
         ua_str = ua_str.gsub(/Macintosh/, "Mac")
+        ua_str = ua_str.gsub(/Windows\s*/, "Win")
         ua_str = "(#{ua_str})"
       end
     end
