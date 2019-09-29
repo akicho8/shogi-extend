@@ -21,6 +21,8 @@
         .helper_button
           b-tooltip(label="使い方")
             b-button(@click="rule_display" icon-right="help")
+              .has-text-danger
+                | New!!
         .lap_time
           span.quest_digit(@click="track_input_dialog")
             | {{quest_name(new_quest)}}
@@ -180,6 +182,11 @@ export default {
         title: "使い方",
         message: `
           <div class="content is-size-7">
+            <h5>以前から使ってくれている方へ</h5>
+            <ul>
+              <li>以前はURLに現在の状態を反映(URLの後ろに#がついた状態)していましたが、それでブックマークしてしまうと復帰したときに毎回その状態に戻ってしまうため、URLに現在の状態を含めないようにしました。もし、URLの後ろに#がついた状態でブックマークされている場合は、いったん破棄して、#がついていない綺麗なURLでブックマークしなおしてみてください。そうするとブラウザに保存している履歴を使って前回の状態から再開できるようになります</li>
+            </ul>
+            <h5>基本</h5>
             <ol>
               <li>正解したら「リターン」まちがえたら「x キー」を押して進めていく想定です</li>
               <li>手動で問題番号を記入すると自動インクリメントの方の問題番号は意味を持ちません</li>
@@ -410,6 +417,11 @@ export default {
       this.safe_talk(message)
     },
 
+    warning_notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-top", type: "is-danger"})
+      this.talk(message)
+    },
+
     ox_char_to_human_ox(ox) {
       if (ox === "x") {
         last.o_or_x = "o"
@@ -624,6 +636,11 @@ export default {
   },
 
   mounted() {
+    if (!document.referrer) {
+      if (location.hash) {
+        this.warning_notice("履歴付きURLでブックマークされています。履歴付きURLの場合、ブックマークしたときの状態に復帰してしまいます。履歴がついてないURLをブックマークしておくと、ブラウザに保存している履歴を使って前回の状態から再開できます")
+      }
+    }
   },
 
   computed: {
