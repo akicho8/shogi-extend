@@ -800,7 +800,7 @@ export default {
         border: 0.1em solid darken($orange, 0)
       .piece_back
         &:hover
-          background-color: hsl(0, 0%, 95%)
+          background-color: hsl(0, 0%, 92%)
   .time_container
     margin-top: 0.1rem
   .tweet_box_container
