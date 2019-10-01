@@ -41,14 +41,15 @@ RSpec.describe "対戦", type: :system do
     it "ルール設定の変更" do
       find("#rule_set_dialog_button").click
       expect(page).to have_content "人数"
-      choose("チーム戦")
-      expect(page).to have_checked_field("チーム戦", visible: false) # FIXME: visible: false を付ける必要はないはず
+
+      rule_set("チーム戦")
+      assert_rule("チーム戦")
       click_on("閉じる")
       refresh
 
       # 反映されている
       find("#rule_set_dialog_button").click
-      expect(page).to have_checked_field("チーム戦", visible: false)
+      assert_rule("チーム戦")
     end
 
     it "全体通知" do
@@ -142,7 +143,7 @@ RSpec.describe "対戦", type: :system do
       end
 
       using_session("user4") do
-        __choise_rule_and_start("ダブルス")
+        __choise_rule_and_start("team_p2vs2")
         sleep(10)
         assert { current_path == polymorphic_path(Colosseum::Battle.last) }
         doc_image("成立")
@@ -270,10 +271,38 @@ RSpec.describe "対戦", type: :system do
     assert { Colosseum::User.all.all?(&:joined_at) }
   end
 
+  def rule_find(name)
+    find(:xpath, "//label[text()='#{name} ']")
+  end
+
+  def rule_set(rule)
+    rule_find(rule).click
+  end
+
+  def assert_rule(rule)
+    v = rule_find(rule)[:class].include?("is-primary")
+    assert { v }                # このなかで実行すると power_assert がこわれる
+  end
+
+  def choose3(rule)
+    find(:xpath, "//label[text()='#{rule} ']/input")
+  end
+
   def __choise_rule_and_start(rule)
     visit_and_login
     find("#rule_set_dialog_button").click
-    choose(rule)
+
+    rule_set(rule)
+    assert_rule(rule)
+
+    # if true
+    #   # choose(rule)
+    #   first(:xpath, "//span[text()='弱い']").click
+    # else
+    #   Capybara.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+    #   find(:xpath, "//*[@value='#{rule}']", visible: false).hover.choose
+    # end
+
     click_on("閉じる")
     sleep(5)
     click_on("対局開始")

@@ -17,7 +17,7 @@ Capybara.configure do |config|
   # config.server                = :puma, { Silent: true } #  webrick にするとこける
   # config.server                = :puma, { Threads: "10:10", workers: 1, } # ← ぜんぜんかんけいねぇ
   config.automatic_label_click = true # choose("ラベル名") でラジオボタンが押せるようになる
-  config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
+  config.default_max_wait_time = 10    # 2ぐらいだと chromedriver の転ける確立が高い
   # config.automatic_reload = false      # ←これを入れると安定する ← 関係ない
   # config.threadsafe            = false
 end
@@ -55,7 +55,8 @@ RSpec.configure do |config|
     # caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"w3c" => false})
     # driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400], options: { desired_capabilities: caps }
 
-    driven_by :headless_chrome
+    # driven_by :headless_chrome
+    driven_by :selenium_chrome
 
     # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
     # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
@@ -72,6 +73,11 @@ end
 
 if true
   module SystemSupport
+    def pause
+      puts "[PAUSE]"
+      $stdin.gets
+    end
+
     def doc_image(name = nil)
       max_resize
       name = [@__full_description__, name].compact.join("_").gsub(/\s+/, "_")

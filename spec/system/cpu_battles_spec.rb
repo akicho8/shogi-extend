@@ -9,7 +9,8 @@ RSpec.describe "CPU対戦", type: :system do
 
   it "CPUの強さ変更" do
     visit "/cpu/battles"
-    choose("弱い")
+    # choose("弱い")
+    first(:xpath, "//span[text()='弱い']").click
     doc_image
   end
 
