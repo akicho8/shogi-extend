@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-dropdown(:hoverable="false" @click.native.stop="" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
+  b-dropdown(:hoverable="true" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
     button.button.is-small(slot="trigger")
       //- span もっと見る
       | &nbsp;
