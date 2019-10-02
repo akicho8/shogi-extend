@@ -395,6 +395,7 @@ module BattleControllerSharedMethods
         methods: [
           :sp_turn,
           :og_turn,
+          :player_info,
         ],
         ).tap do |a|
 

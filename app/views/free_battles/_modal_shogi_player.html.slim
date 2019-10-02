@@ -28,6 +28,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             :volume=AppConfig[:volume]
             :setting_button_show="false"
             :flip="modal_record.fliped"
+            :player_info="modal_record.player_info"
             @update:start_turn="seek_to"
             ref="modal_shogi_player"
           )

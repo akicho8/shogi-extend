@@ -184,6 +184,17 @@ module BattleModelSharedMethods
   def battle_decorator_class
   end
 
+  def player_info
+    decorator = battle_decorator({})
+    Bioshogi::Location.inject({}) { |a, e|
+      name = decorator.player_name_for(e.key)
+      if name
+        name = name[0...3]
+      end
+      a.merge(e.key => {name: name})
+    }
+  end
+
   concerning :KifuConvertMethods do
     # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
     def to_cached_kifu(key)
