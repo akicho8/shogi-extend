@@ -21,8 +21,6 @@
         .helper_button
           b-tooltip(label="使い方")
             b-button(@click="rule_display" icon-right="help")
-              .has-text-danger
-                | New!!
         .lap_time
           span.quest_digit(@click="track_input_dialog")
             | {{quest_name(new_quest)}}
