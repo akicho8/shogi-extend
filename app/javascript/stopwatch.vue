@@ -39,7 +39,7 @@
 
           template(v-if="mode !== 'standby'")
             button.button.is-large.is-danger.other_button(@click="stop_handle")
-              b-icon(icon="pause" size="is-large")
+              b-icon(icon="stop" size="is-large")
 
         template(v-if="mode === 'playing'")
           .buttons.is-centered.ox_buttons
