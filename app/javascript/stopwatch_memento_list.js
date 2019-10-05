@@ -33,6 +33,7 @@ export default {
     },
 
     memento_restore(row) {
+      this.log_modal.close()
       const message = "指定の時間の状態に戻しました"
       this.talk(message)
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})

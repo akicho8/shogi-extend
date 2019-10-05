@@ -212,7 +212,7 @@ export default {
     },
 
     log_display() {
-      this.$buefy.modal.open({
+      this.log_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         component: {
