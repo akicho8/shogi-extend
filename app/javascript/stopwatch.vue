@@ -161,7 +161,7 @@ export default {
       mode: "standby",
       interval_id: null,
       format_index: 0,
-      drop_seconds: 60,
+      drop_seconds: null,
       generate_max: null,
     }
   },
@@ -552,6 +552,7 @@ export default {
       this.quest_text     = hash.quest_text || ""
       this.format_index   = hash.format_index || 0
       this.generate_max   = hash.generate_max || 200
+      this.drop_seconds   = hash.drop_seconds || 60
     },
 
     data_restore_from_url_or_storage_after_hook() {
