@@ -26,7 +26,9 @@ export default {
         event: event,
         summary: this.summary,
         current_track: this.current_track,
+        book_title: this.book_title,
         enc_base64: this.enc_base64,
+
       })
       this.memento_list = _.takeRight(this.memento_list, this.memento_list_max)
       this.memento_list_save()

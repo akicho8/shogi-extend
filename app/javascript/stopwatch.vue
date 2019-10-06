@@ -2,8 +2,8 @@
 .stopwatch
   .columns
     .column.is-half
-      .has-text-centered.page_title
-        | 詰将棋タイムアタック用ストップウォッチ
+      .has-text-centered.page_title(@click.prevent="book_title_input_dialog")
+        | {{book_title}}
       .box.main_box.has-text-centered.line_break_off.is-shadowless
         b-dropdown.options_doropdown.is-pulled-left
           button.button(slot="trigger")
@@ -163,6 +163,8 @@ export default {
       format_index: 0,
       drop_seconds: null,
       generate_max: null,
+      book_title: null,
+      log_modal: null,
     }
   },
 
@@ -190,16 +192,23 @@ export default {
               <li>問題番号は問題番号の部分をタッチしても値を変更できます</li>
               <li>時間をタッチすると時間を変更できます (2分30秒なら2.5と入力する)</li>
               <li>スマホでは自動ロックで時計が止まってしまうのでスマホ側の設定で自動ロック「なし」を推奨します</li>
-              <li>手動で問題番号を記入すると自動インクリメントの方の問題番号は意味を持ちません</li>
               <li>ブラウザを開き直したときに直近の問題の開始時の状態で復帰します</li>
+            </ol>
+            <br>
+            <h5>使いこなす</h5>
+            <ol>
+              <li>左上のメニューから不正解の問題だけを再挑戦できます</li>
+              <li>問題番号を記入した場合は自動インクリメントの方の問題番号は意味を持ちません</li>
               <li>他の端末で途中から再開したいときは下の方にある「パーマリンク」のURLを持っていってください</li>
             </ol>
             <br>
-            <h5>履歴</h5>
+            <h5>履歴を使いこなす</h5>
             <ol>
               <li>開始と停止のタイミングで現在の状態を履歴に保存します</li>
               <li>履歴をクリックするとその時間の状態に戻ります</li>
               <li>操作を間違えてリセットしてしまったときや「不正解だけ再テスト」のあとで前に戻りたくなったときに使います</li>
+              <li>「詰将棋タイムアタック用ストップウォッチ」の部分をクリックするとタイトルを変更できます</li>
+              <li>タイトルは履歴に含めるので少し前から続きを行いたいとに探しやすくなりす</li>
             </ol>
           </div>`,
         confirmText: "わかった",
@@ -234,6 +243,7 @@ export default {
                   >
                   <template slot-scope="props">
                     <b-table-column field="time" label="日時" sortable>{{props.row.time}}</b-table-column>
+                    <b-table-column field="time" label="タイトル" sortable>{{props.row.book_title}}</b-table-column>
                     <b-table-column field="event" label="ｲﾍﾞﾝﾄ">{{props.row.event}}</b-table-column>
                     <b-table-column field="track" label="問題">{{props.row.current_track}}</b-table-column>
                     <b-table-column field="summary" label="サマリ">{{props.row.summary}}</b-table-column>
@@ -319,6 +329,16 @@ export default {
 
     quest_text_reverse() {
       this.quest_text = _.reverse(this.quest_list.slice()).join(" ")
+    },
+
+    book_title_input_dialog() {
+      this.$buefy.dialog.prompt({
+        message: "タイトル",
+        confirmText: "更新",
+        cancelText: "キャンセル",
+        inputAttrs: { type: 'text', value: this.book_title },
+        onConfirm: (value) => this.book_title = value,
+      })
     },
 
     quest_generate() {
@@ -553,6 +573,7 @@ export default {
       this.format_index   = hash.format_index || 0
       this.generate_max   = hash.generate_max || 200
       this.drop_seconds   = hash.drop_seconds || 60
+      this.book_title     = hash.book_title || "詰将棋タイムアタック用ストップウォッチ"
     },
 
     data_restore_from_url_or_storage_after_hook() {
@@ -619,6 +640,7 @@ export default {
     quest_text()    { this.data_save_to_local_storage() },
     format_index()  { this.data_save_to_local_storage() },
     drop_seconds()  { this.data_save_to_local_storage() },
+    book_title()    { this.data_save_to_local_storage() },
     rows:           { handler() { this.data_save_to_local_storage() }, deep: true, },
 
     current_min(v) {
@@ -769,6 +791,7 @@ export default {
         rows:           this.rows,
         quest_text:     this.quest_text,
         format_index:   this.format_index,
+        book_title:     this.book_title,
       }
     },
 
@@ -874,6 +897,7 @@ export default {
   touch-action: manipulation
 
   .page_title
+    cursor: pointer
     font-weight: bold
 
   .main_box
