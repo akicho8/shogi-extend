@@ -75,7 +75,6 @@ group :development, :test do
   gem 'capistrano-rbenv'
   gem 'capistrano-yarn'
   gem "capistrano-rails-console"
-  gem 'capistrano-custom-maintenance'
   gem "slackistrano"            # for cap production slack:deploy:test
 
   gem 'artii'
