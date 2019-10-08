@@ -7,7 +7,7 @@ set_if_empty :log_tail_limit, 500
   { task: :mail_log,   default: -> { "/var/log/mail_log" },                            },
   { task: :log,        default: -> { "#{shared_path}/log/#{fetch(:rails_env)}.log" },  },
 ].each do |e|
-  desc "tail #{e[:task]}}"
+  desc "tail #{e[:task]}"
   task "#{e[:task]}" do
     on roles(:all) do
       file = fetch("#{e[:task]}_path", e[:default].call)
