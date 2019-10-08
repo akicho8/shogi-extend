@@ -1,0 +1,42 @@
+<%-- base_path ||= "/shogi" %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" />
+    <title>メンテンナンスチュウナリ</title>
+      <style type="text/css">
+        * {
+          --balloon-bg-color: white;
+          --balloon-fg-color: transparent;
+        }
+
+        html {
+          background-color: #004;
+        }
+
+        body {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+
+        .box {
+          border-radius: 25px;
+          background-color: var(--balloon-bg-color);
+          border: 1px solid var(--balloon-fg-color);
+        }
+
+        img {
+          width: 20vmin;
+        }
+     </style>
+  </head>
+  <body class="is-unselectable">
+    <div class="box has-text-weight-bold has-text-centered">スミマセヌ<br>メンテナンスチュウナリ</div>
+    <img src="<%= base_path %>/robot2_green.png">
+  </body>
+</html>
