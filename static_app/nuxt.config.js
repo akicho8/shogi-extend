@@ -2,8 +2,16 @@ export default {
   mode: 'spa',
 
   router: {
-    base: process.env.NODE_ENV === 'production' ? "/shogi/static/" : "/",
+    base: process.env.BASE_DIR || "/", // BASE_DIR=/shogi/system/static/ yarn build
   },
+
+  // server: {
+  //   port: 3001,
+  // },
+
+  // generate: {
+  // subFolders: false, // page404/index.html ではなく page404.html を生成する場合は false
+  // },
 
   /*
   ** Headers of the page

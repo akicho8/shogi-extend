@@ -1,5 +1,5 @@
 {
-  "name": "my_mock_app",
+  "name": "static_app",
   "version": "1.0.0",
   "description": "My kryptonian Nuxt.js project",
   "author": "akicho8",
@@ -23,6 +23,6 @@
     "node-sass": "^4.12.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "7"
   }
 }

@@ -1,4 +1,4 @@
-# my_mock_app
+# static_app
 
 > My kryptonian Nuxt.js project
 
