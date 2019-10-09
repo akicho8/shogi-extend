@@ -1,9 +1,8 @@
-
 export default {
   mode: 'spa',
 
   router: {
-    base: process.env.NODE_ENV === 'production' ? "/shogi/my_mock_app/dist/" : "/",
+    base: process.env.NODE_ENV === 'production' ? "/shogi/static/" : "/",
   },
 
   /*
