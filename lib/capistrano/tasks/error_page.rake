@@ -16,14 +16,14 @@ namespace :error_page do
         if false
           # 本当はこうしたかったが、
           # シンボリックリンクもハードリンクも動作しない
-          execute :ln, "-sf", "#{shared_path}/public/system/static/page#{code}.html", "#{current_path}/public/#{code}.html"
+          execute :ln, "-sf", "#{shared_path}/public/system/static/page#{code}.html", "#{release_path}/public/#{code}.html"
         else
           # ダサいが meta refresh で遷移させる
           # なぜ /public/404.html のような形で置く理由は Rails が読んでいるから
-          upload! StringIO.new(%(<html><head><meta http-equiv="refresh" content="0;url=/shogi/system/static/page#{code}/"></head></html>)), "#{current_path}/public/#{code}.html"
+          upload! StringIO.new(%(<html><head><meta http-equiv="refresh" content="0;url=/shogi/system/static/page#{code}/"></head></html>)), "#{release_path}/public/#{code}.html"
         end
       end
-      execute :ls, "-al #{current_path}/public/"
+      execute :ls, "-al #{release_path}/public/"
       execute :ls, "-al #{shared_path}/public/system/"
       execute :ls, "-al #{shared_path}/public/system/static"
     end
