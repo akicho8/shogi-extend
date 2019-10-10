@@ -1,7 +1,7 @@
 {
   "name": "static_app",
   "version": "1.0.0",
-  "description": "My kryptonian Nuxt.js project",
+  "description": "Error Page for Rails Application",
   "author": "akicho8",
   "private": true,
   "scripts": {

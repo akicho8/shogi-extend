@@ -1,6 +1,6 @@
 <template lang="pug">
   robot
-    | 422
+    | ナンカオカシクナッタ
 </template>
 
 <script>

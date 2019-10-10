@@ -1,6 +1,6 @@
 <template lang="pug">
   robot
-    | 500
+    | ブッコワレタナリ
 </template>
 
 <script>

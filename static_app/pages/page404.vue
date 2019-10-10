@@ -1,6 +1,6 @@
 <template lang="pug">
   robot
-    | 404
+    | ページガミツカリマセン
 </template>
 
 <script>
