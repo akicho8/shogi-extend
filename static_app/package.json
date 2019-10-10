@@ -11,11 +11,8 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^3.0.0-0",
     "nuxt": "^2.0.0",
-    "nuxt-buefy": "^0.3.2",
-    "nuxt-dropzone": "^1.0.4"
+    "nuxt-buefy": "^0.3.2"
   },
   "devDependencies": {
     "coffee-loader": "^0.9.0",
