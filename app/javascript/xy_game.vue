@@ -127,6 +127,13 @@
         b-tooltip(label="名前ごとに絞る")
           | ユニーク
 
+  .columns
+    .column
+      .box
+        canvas#chart_canvs(ref="chart_canvs")
+        .has-text-centered.has-text-grey.is-size-7
+          | たくさんプレイしているとグラフに登場するようになります
+
   template(v-if="development_p")
     .columns
       .column
@@ -225,6 +232,7 @@ export default {
   },
 
   mounted() {
+    const chart_instance = new Chart(this.$refs.chart_canvs, this.days_chart_js_options())
   },
 
   watch: {
@@ -272,6 +280,78 @@ export default {
   },
 
   methods: {
+    days_chart_js_options() {
+      return Object.assign({}, this.$root.$options.chartjs_params, {
+        type: "line",
+        options: {
+          title: {
+            display: false,
+            text: "学習グラフ",
+          },
+
+          // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
+          layout: {
+            padding: {
+              left: 24,
+              right: 24,
+              top: 24,
+              bottom: 24,
+            },
+          },
+
+          // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
+          scales: {
+            xAxes: [
+              {
+                type: 'time',
+                time: {
+                  unit: "day",
+                  displayFormats: {
+                    day: "M/D",
+                  },
+                },
+              },
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: false,
+                  labelString: "タイム",
+                },
+                ticks: {
+                  // suggestedMax: 25,
+                  // suggestedMin: 0,
+                  // stepSize: 60,
+                  callback(value, index, values) {
+                    return dayjs.unix(value).format("mm:ss")
+                    // return Math.trunc(value / 60) + "時"
+                  }
+                }
+              },
+            ]
+          },
+
+          // https://tr.you84815.space/chartjs/configuration/tooltip.html
+          legend: {
+            display: true,
+          },
+
+          tooltips: {
+            callbacks: {
+              title(tooltipItems, data) {
+                return ""
+              },
+              label(tooltipItem, data) {
+                const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || ""
+                const y = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y
+                return datasetLabel + " " + dayjs.unix(y).format("mm:ss.SSS")
+              },
+            },
+          },
+        },
+      })
+    },
+
     board_cell_left_click_user_handle(place, event) {
       if (this.mode === "running") {
         if (this.tap_mode) {
