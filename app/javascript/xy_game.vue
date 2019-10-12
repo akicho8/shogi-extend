@@ -457,11 +457,6 @@ export default {
         this.xy_rule_key = this.default_xy_rule_key
       }
 
-      this.xy_rule_key2 = hash.xy_rule_key2
-      if (!XyRuleInfo.lookup(this.xy_rule_key2)) {
-        this.xy_rule_key2 = this.default_xy_rule_key2
-      }
-
       this.xy_scope_key = hash.xy_scope_key
       if (!XyScopeInfo.lookup(this.xy_scope_key)) {
         this.xy_scope_key = "xy_scope_today"
@@ -475,6 +470,12 @@ export default {
       this.sp_bg_variant = hash.sp_bg_variant || "a"
       this.sp_size = hash.sp_size || "default"
       this.sp_piece_variant = hash.sp_piece_variant || "a"
+
+      // 他のパラメータを使ってリクエスト(xy_records_hash_update2)が走るので最後
+      this.xy_rule_key2 = hash.xy_rule_key2
+      if (!XyRuleInfo.lookup(this.xy_rule_key2)) {
+        this.xy_rule_key2 = this.default_xy_rule_key
+      }
     },
 
     timer_setup() {
