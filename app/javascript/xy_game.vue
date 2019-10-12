@@ -127,7 +127,7 @@
         b-tooltip(label="名前ごとに絞る")
           | ユニーク
 
-  .columns
+  .columns.is-4(v-show="(mode === 'stop' || mode === 'goal')")
     .column
       .box
         .has-text-centered
