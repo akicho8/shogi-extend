@@ -130,9 +130,14 @@
   .columns
     .column
       .box
+        .has-text-centered
+          b-field.is-inline-flex
+            template(v-for="e in XyRuleInfo.values")
+              b-radio-button(v-model="xy_rule_key2" :native-value="e.key")
+                | {{e.name}}
         canvas#chart_canvs(ref="chart_canvs")
         .has-text-centered.has-text-grey.is-size-7
-          | たくさんプレイしているとグラフに登場するようになります
+          | たくさんプレイしているとチャートに登場します
 
   template(v-if="development_p")
     .columns
@@ -217,6 +222,8 @@ export default {
 
       bg_mode: null,
       kifu_body: null,
+
+      xy_rule_key2: null,
     }
   },
 
@@ -231,9 +238,9 @@ export default {
     document.addEventListener("keydown", this.key_handle, false)
   },
 
-  mounted() {
-    const chart_instance = new Chart(this.$refs.chart_canvs, this.days_chart_js_options())
-  },
+  // mounted() {
+  //   const chart_instance = new Chart(this.$refs.chart_canvs, this.days_chart_js_options())
+  // },
 
   watch: {
     entry_name()       { this.data_save_to_local_storage() },
@@ -267,6 +274,11 @@ export default {
       this.data_save_to_local_storage()
     },
 
+    xy_rule_key2(v) {
+      this.xy_records_hash_update2()
+      this.data_save_to_local_storage()
+    },
+
     current_rule_index(v) {
       // このタブを始めて開いたときランキングの1ページ目に合わせる
       // this.current_pages[v] ||= 1 相当
@@ -280,8 +292,8 @@ export default {
   },
 
   methods: {
-    days_chart_js_options() {
-      return Object.assign({}, this.$root.$options.chartjs_params, {
+    days_chart_js_options(datasets) {
+      return Object.assign({}, {data: {datasets: datasets}}, {
         type: "line",
         options: {
           title: {
@@ -381,6 +393,12 @@ export default {
       })
     },
 
+    xy_records_hash_update2() {
+      this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key, xy_rule_key2: this.xy_rule_key2 }, data => {
+        new Chart(this.$refs.chart_canvs, this.days_chart_js_options(data.chartjs_datasets))
+      })
+    },
+
     sp_setting_handle() {
       this.$refs.main_sp.setting_modal_p = true
     },
@@ -422,6 +440,7 @@ export default {
 
     persistense_variables_init() {
       this.xy_rule_key      = null
+      this.xy_rule_key2     = null
       this.entry_name       = null
       this.current_pages    = null
       this.sp_theme         = null
@@ -436,6 +455,11 @@ export default {
       this.xy_rule_key = hash.xy_rule_key
       if (!XyRuleInfo.lookup(this.xy_rule_key)) {
         this.xy_rule_key = this.default_xy_rule_key
+      }
+
+      this.xy_rule_key2 = hash.xy_rule_key2
+      if (!XyRuleInfo.lookup(this.xy_rule_key2)) {
+        this.xy_rule_key2 = this.default_xy_rule_key2
       }
 
       this.xy_scope_key = hash.xy_scope_key
@@ -716,6 +740,7 @@ export default {
     post_params() {
       return [
         "xy_rule_key",
+        "xy_rule_key2",
         "spent_sec",
         "entry_name",
         "x_count",              // なくてもよい
@@ -731,6 +756,7 @@ export default {
       return {
         xy_scope_key: this.xy_scope_key,
         xy_rule_key: this.xy_rule_key,
+        xy_rule_key2: this.xy_rule_key2,
         entry_name: this.entry_name,
         current_pages: this.current_pages,
         bg_mode: this.bg_mode,
