@@ -741,7 +741,6 @@ export default {
     post_params() {
       return [
         "xy_rule_key",
-        "xy_rule_key2",
         "spent_sec",
         "entry_name",
         "x_count",              // なくてもよい
