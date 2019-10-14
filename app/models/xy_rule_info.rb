@@ -201,11 +201,13 @@ class XyRuleInfo
       def chartjs_datasets(params)
         xy_rule_key = params[:xy_rule_key2]
         count_all_gteq = 10
-        date_gteq = 6.month.ago
+        xy_scope2_info = XyScope2Info.fetch(params[:xy_scope2_key])
 
         scope = XyRecord.all
-
-        scope = scope.where(xy_rule_key: xy_rule_key).where(XyRecord.arel_table[:created_at].gteq(date_gteq))
+        scope = scope.where(xy_rule_key: xy_rule_key)
+        if v = xy_scope2_info.date_gteq
+          scope = scope.where(XyRecord.arel_table[:created_at].gteq(v.ago))
+        end
         names_hash = scope.group("entry_name").order("count_all DESC").having("count_all >= #{count_all_gteq}").count
         result = scope.select("entry_name, DATE(CONVERT_TZ(created_at, 'UTC', 'Asia/Tokyo')) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
 

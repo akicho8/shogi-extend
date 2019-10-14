@@ -32,7 +32,7 @@ class XyRecordsController < ApplicationController
 
   def index
     if request.format.json?
-      if params[:xy_rule_key2]
+      if params[:xy_rule_key2] || params[:xy_scope2_key]
         render json: { chartjs_datasets: XyRuleInfo.chartjs_datasets(params) }
         return
       end
@@ -66,6 +66,7 @@ class XyRecordsController < ApplicationController
     {
       xy_rule_info: XyRuleInfo.as_json,
       xy_scope_info: XyScopeInfo.as_json,
+      xy_scope2_info: XyScope2Info.as_json,
       xhr_post_path: url_for([:xy_records, format: :json]),
       per_page: XyRuleInfo.per_page,
       rank_max: XyRuleInfo.rank_max,
