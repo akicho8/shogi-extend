@@ -661,7 +661,9 @@ export default {
   mounted() {
     if (!document.referrer) {
       if (location.hash) {
-        this.warning_notice("履歴付きURLでブックマークされています。履歴付きURLの場合、ブックマークしたときの状態に復帰してしまいます。履歴がついてないURLをブックマークしておくと、ブラウザに保存している履歴を使って前回の状態から再開できます")
+        if (false) {
+          this.warning_notice("履歴付きURLでブックマークされています。履歴付きURLの場合、ブックマークしたときの状態に復帰してしまいます。履歴がついてないURLをブックマークしておくと、ブラウザに保存している履歴を使って前回の状態から再開できます")
+        }
       }
     }
   },
