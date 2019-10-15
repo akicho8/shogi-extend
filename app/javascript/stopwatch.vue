@@ -244,6 +244,7 @@ export default {
                   <template slot-scope="props">
                     <b-table-column field="time" label="日時" sortable>{{props.row.time}}</b-table-column>
                     <b-table-column field="time" label="タイトル" sortable>{{props.row.book_title}}</b-table-column>
+                    <b-table-column field="book_title" label="タイトル" sortable>{{props.row.book_title}}</b-table-column>
                     <b-table-column field="event" label="ｲﾍﾞﾝﾄ">{{props.row.event}}</b-table-column>
                     <b-table-column field="track" label="問題">{{props.row.current_track}}</b-table-column>
                     <b-table-column field="summary" label="サマリ">{{props.row.summary}}</b-table-column>
