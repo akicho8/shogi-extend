@@ -235,7 +235,7 @@ export default {
                 <b-table
                   :data="$parent.$parent.memento_list.slice().reverse()"
                   :paginated="true"
-                  :per-page="10"
+                  :per-page="200"
                   :pagination-simple="true"
                   :mobile-cards="false"
                   @click="$parent.$parent.memento_restore"
@@ -243,7 +243,6 @@ export default {
                   >
                   <template slot-scope="props">
                     <b-table-column field="time" label="日時" sortable>{{props.row.time}}</b-table-column>
-                    <b-table-column field="time" label="タイトル" sortable>{{props.row.book_title}}</b-table-column>
                     <b-table-column field="book_title" label="タイトル" sortable>{{props.row.book_title}}</b-table-column>
                     <b-table-column field="event" label="ｲﾍﾞﾝﾄ">{{props.row.event}}</b-table-column>
                     <b-table-column field="track" label="問題">{{props.row.current_track}}</b-table-column>
