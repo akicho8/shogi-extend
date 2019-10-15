@@ -227,7 +227,7 @@ export default {
         component: {
           mounted() { },
           template: `
-            <div class="modal-card is-size-7 stopwatch_log_dialog">
+            <div class="modal-card is-size-7 stopwatch_log_dialog" style="width: auto">
               <header class="modal-card-head">
                 <p class="modal-card-title">履歴</p>
               </header>
