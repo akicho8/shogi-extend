@@ -140,8 +140,8 @@
           .column
             .has-text-centered
               b-field.is-inline-flex
-                template(v-for="e in XyChartInfo.values")
-                  b-radio-button(v-model="xy_chart_key" :native-value="e.key")
+                template(v-for="e in XyScope2Info.values")
+                  b-radio-button(v-model="xy_scope2_key" :native-value="e.key")
                     | {{e.name}}
         .columns
           .column
@@ -189,7 +189,7 @@ class XyRuleInfo extends MemoryRecord {
 class XyScopeInfo extends MemoryRecord {
 }
 
-class XyChartInfo extends MemoryRecord {
+class XyScope2Info extends MemoryRecord {
 }
 
 export default {
@@ -218,7 +218,7 @@ export default {
       timer_run: false,
       micro_seconds: null,
       xy_scope_key: null,
-      xy_chart_key: null,
+      xy_scope2_key: null,
       entry_name_unique: false,
       xy_rule_key: null,
       entry_name: null,                                   // ランキングでの名前を保持しておく
@@ -244,7 +244,7 @@ export default {
   beforeCreate() {
     XyRuleInfo.memory_record_reset(this.$root.$options.xy_rule_info)
     XyScopeInfo.memory_record_reset(this.$root.$options.xy_scope_info)
-    XyChartInfo.memory_record_reset(this.$root.$options.xy_chart_info)
+    XyScope2Info.memory_record_reset(this.$root.$options.xy_scope2_info)
   },
 
   created() {
@@ -289,7 +289,7 @@ export default {
       this.data_save_to_local_storage()
     },
 
-    xy_chart_key() {
+    xy_scope2_key() {
       this.xy_records_hash_update2()
       this.data_save_to_local_storage()
     },
@@ -414,7 +414,7 @@ export default {
     },
 
     xy_records_hash_update2() {
-      this.http_get_command(this.$root.$options.xhr_post_path, { xy_chart_key: this.xy_chart_key, xy_rule_key2: this.xy_rule_key2 }, data => {
+      this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope2_key: this.xy_scope2_key, xy_rule_key2: this.xy_rule_key2 }, data => {
         new Chart(this.$refs.chart_canvs, this.days_chart_js_options(data.chartjs_datasets))
       })
     },
@@ -482,9 +482,9 @@ export default {
         this.xy_scope_key = "xy_scope_today"
       }
 
-      this.xy_chart_key = hash.xy_chart_key
-      if (!XyChartInfo.lookup(this.xy_chart_key)) {
-        this.xy_chart_key = "chart_scope_recently"
+      this.xy_scope2_key = hash.xy_scope2_key
+      if (!XyScope2Info.lookup(this.xy_scope2_key)) {
+        this.xy_scope2_key = "chart_scope_recently"
       }
 
       this.entry_name = hash.entry_name || this.fixed_handle_name
@@ -852,8 +852,8 @@ export default {
       return XyScopeInfo.fetch(this.xy_scope_key)
     },
 
-    curent_xy_chart() {
-      return XyChartInfo.fetch(this.xy_chart_key)
+    curent_xy_scope2() {
+      return XyScope2Info.fetch(this.xy_scope2_key)
     },
 
     current_rule() {
@@ -884,7 +884,7 @@ export default {
     },
 
     XyScopeInfo() { return XyScopeInfo },
-    XyChartInfo() { return XyChartInfo },
+    XyScope2Info() { return XyScope2Info },
     XyRuleInfo() { return XyRuleInfo },
   },
 }
