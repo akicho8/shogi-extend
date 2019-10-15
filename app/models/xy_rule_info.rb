@@ -199,13 +199,13 @@ class XyRuleInfo
 
     class_methods do
       def chartjs_datasets(params)
-        xy_rule_key = params[:xy_rule_key2]
+        xy_rule_key = params[:xy_chart_rule_key]
         count_all_gteq = 10
-        xy_scope2_info = XyScope2Info.fetch(params[:xy_scope2_key])
+        xy_chart_scope_info = XyChartScopeInfo.fetch(params[:xy_chart_scope_key])
 
         scope = XyRecord.all
         scope = scope.where(xy_rule_key: xy_rule_key)
-        if v = xy_scope2_info.date_gteq
+        if v = xy_chart_scope_info.date_gteq
           scope = scope.where(XyRecord.arel_table[:created_at].gteq(v.ago))
         end
         names_hash = scope.group("entry_name").order("count_all DESC").having("count_all >= #{count_all_gteq}").count
