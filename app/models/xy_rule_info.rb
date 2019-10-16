@@ -195,12 +195,12 @@ class XyRuleInfo
 
   concerning :ChartMethods do
     included do
+      cattr_accessor(:count_all_gteq) { 3 }
     end
 
     class_methods do
       def chartjs_datasets(params)
         xy_rule_key = params[:xy_chart_rule_key]
-        count_all_gteq = 10
         xy_chart_scope_info = XyChartScopeInfo.fetch(params[:xy_chart_scope_key])
 
         scope = XyRecord.all
@@ -221,9 +221,9 @@ class XyRuleInfo
             borderColor: palette.border_color,
             fill: false,
 
-            pointRadius: 2,           # 点半径
+            pointRadius: 5,           # 点半径
             borderWidth: 2,           # 点枠の太さ
-            pointHoverRadius: 3,      # 点半径(アクティブ時)
+            pointHoverRadius: 6,      # 点半径(アクティブ時)
             pointHoverBorderWidth: 2, # 点枠の太さ(アクティブ時)
             showLine: true,           # 線で繋げる
 

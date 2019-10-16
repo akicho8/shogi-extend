@@ -147,7 +147,7 @@
           .column
             canvas#chart_canvs(ref="chart_canvs")
             .has-text-centered.has-text-grey.is-size-7
-              | たくさんプレイしているとチャートに登場します
+              | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
 
   template(v-if="development_p")
     .columns
@@ -178,6 +178,7 @@
 import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 import sound_cache from './sound_cache.js'
+import xy_chart_module from './xy_chart_module.js'
 import MemoryRecord from 'js-memory-record'
 
 import Soldier from "shogi-player/src/soldier.js"
@@ -197,6 +198,7 @@ export default {
   mixins: [
     stopwatch_data_retention,
     sound_cache,
+    xy_chart_module,
   ],
   data() {
     return {
@@ -218,7 +220,6 @@ export default {
       timer_run: false,
       micro_seconds: null,
       xy_scope_key: null,
-      xy_chart_scope_key: null,
       entry_name_unique: false,
       xy_rule_key: null,
       entry_name: null,                                   // ランキングでの名前を保持しておく
@@ -236,8 +237,6 @@ export default {
 
       bg_mode: null,
       kifu_body: null,
-
-      xy_chart_rule_key: null,
     }
   },
 
@@ -289,16 +288,6 @@ export default {
       this.data_save_to_local_storage()
     },
 
-    xy_chart_scope_key() {
-      this.xy_records_hash_update2()
-      this.data_save_to_local_storage()
-    },
-
-    xy_chart_rule_key(v) {
-      this.xy_records_hash_update2()
-      this.data_save_to_local_storage()
-    },
-
     current_rule_index(v) {
       // このタブを始めて開いたときランキングの1ページ目に合わせる
       // this.current_pages[v] ||= 1 相当
@@ -312,78 +301,6 @@ export default {
   },
 
   methods: {
-    days_chart_js_options(datasets) {
-      return Object.assign({}, {data: {datasets: datasets}}, {
-        type: "line",
-        options: {
-          title: {
-            display: false,
-            text: "学習グラフ",
-          },
-
-          // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
-          layout: {
-            padding: {
-              left: 24,
-              right: 24,
-              top: 24,
-              bottom: 24,
-            },
-          },
-
-          // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
-          scales: {
-            xAxes: [
-              {
-                type: 'time',
-                time: {
-                  unit: "day",
-                  displayFormats: {
-                    day: "M/D",
-                  },
-                },
-              },
-            ],
-            yAxes: [
-              {
-                scaleLabel: {
-                  display: false,
-                  labelString: "タイム",
-                },
-                ticks: {
-                  // suggestedMax: 25,
-                  // suggestedMin: 0,
-                  // stepSize: 60,
-                  callback(value, index, values) {
-                    return dayjs.unix(value).format("mm:ss")
-                    // return Math.trunc(value / 60) + "時"
-                  }
-                }
-              },
-            ]
-          },
-
-          // https://tr.you84815.space/chartjs/configuration/tooltip.html
-          legend: {
-            display: true,
-          },
-
-          tooltips: {
-            callbacks: {
-              title(tooltipItems, data) {
-                return ""
-              },
-              label(tooltipItem, data) {
-                const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || ""
-                const y = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y
-                return datasetLabel + " " + dayjs.unix(y).format("mm:ss.SSS")
-              },
-            },
-          },
-        },
-      })
-    },
-
     board_cell_left_click_user_handle(place, event) {
       if (this.mode === "running") {
         if (this.tap_mode) {
@@ -410,12 +327,6 @@ export default {
     xy_records_hash_update() {
       this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique }, data => {
         this.xy_records_hash = data.xy_records_hash
-      })
-    },
-
-    xy_records_hash_update2() {
-      this.http_get_command(this.$root.$options.xhr_post_path, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
-        new Chart(this.$refs.chart_canvs, this.days_chart_js_options(data.chartjs_datasets))
       })
     },
 
@@ -496,7 +407,7 @@ export default {
       this.sp_size = hash.sp_size || "default"
       this.sp_piece_variant = hash.sp_piece_variant || "a"
 
-      // 他のパラメータを使ってリクエスト(xy_records_hash_update2)が走るので最後
+      // 他のパラメータを使ってリクエスト(datasets_fetch)が走るので最後
       this.xy_chart_rule_key = hash.xy_chart_rule_key
       if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
         this.xy_chart_rule_key = this.default_xy_rule_key
@@ -850,10 +761,6 @@ export default {
 
     curent_scope() {
       return XyScopeInfo.fetch(this.xy_scope_key)
-    },
-
-    curent_xy_chart_scope() {
-      return XyChartScopeInfo.fetch(this.xy_chart_scope_key)
     },
 
     current_rule() {
