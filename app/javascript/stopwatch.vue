@@ -271,6 +271,9 @@ export default {
 
     shortcut_key_assign() {
       document.addEventListener("keydown", e => {
+        if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
+          return
+        }
         if (this.input_focus_p()) {
           return
         }
