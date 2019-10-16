@@ -84,7 +84,9 @@ export default {
     },
 
     permalink_url() {
-      return `${this.location_url_without_hash()}#${this.enc_base64}`
+      // reload=1 に意味はないが現在のURLと異なるようにすることで、ストップウォッチにいる状態でリンクを踏んだときに新しいURLに飛ぶようにする
+      // そうしないとブックマークからリンクしたときに遷移しない
+      return `${this.location_url_without_search_and_hash()}?reload=1#${this.enc_base64}`
     },
 
     enc_base64() {

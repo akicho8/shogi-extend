@@ -586,7 +586,7 @@ export default {
     data_restore_from_url_or_storage_after_hook() {
       if (location.hash) {
         console.log(`ハッシュ付きのURLから復元したので綺麗なURL ${this.location_url_without_hash()} に移動する`)
-        location.href = this.location_url_without_hash()
+        location.href = this.location_url_without_search_and_hash()
       }
     },
 

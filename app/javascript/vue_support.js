@@ -296,6 +296,11 @@ export default {
     location_url_without_hash() {
       return window.location.href.replace(window.location.hash, "")
     },
+
+    // ?foo=1#xxx を除いた現在のパス
+    location_url_without_search_and_hash() {
+      return this.location_url_without_hash().replace(window.location.search, "")
+    },
   },
 
   computed: {
