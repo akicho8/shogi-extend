@@ -110,6 +110,7 @@ module BattleModelSharedMethods
     b = taggings.collect { |e| e.tag.name }.sort
     parser_exec
     save!
+    memberships.each(&:save!)   # 更新で設定したタグを保存するため
     a = taggings.collect { |e| e.tag.name }.sort
     flag = a != b # タグの変更は e.changed? では関知できない
     print(flag ? "U" : ".")
