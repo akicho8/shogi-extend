@@ -2,7 +2,7 @@ module Swars
   class FrequentlyUsedFilterInfo
     include ApplicationMemoryRecord
     memory_record [
-      { name: "アヒル戦法",               params: { query: "or_tag:アヒル戦法,アヒル囲い",         }, },
+      { name: "アヒル戦法",               params: { query: "or_tag:アヒル戦法,アヒル囲い,裏アヒル戦法,裏アヒル囲い",       }, },
       { name: "相入玉",                   params: { query: "tag:相入玉",                           }, },
       { name: "相居玉",                   params: { query: "tag:相居玉",                           }, },
       { name: "200手以上",                params: { query: "turn_max_gteq:200",                    }, },
