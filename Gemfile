@@ -96,9 +96,7 @@ group :development do
 end
 
 group :test do
-  gem 'webdrivers'              # for SystemTestCase https://qiita.com/jnchito/items/f9c3be449fd164176efa
-  # gem 'chromedriver-helper'
-
+  gem 'webdrivers' # brew の chromedriver ではなく最新のものを自動的に ~/.webdrivers/chromedriver にとってきてそれを Capybara で使うようになる
   gem 'database_cleaner'
 end
 

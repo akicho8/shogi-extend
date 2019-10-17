@@ -120,8 +120,8 @@
 
   .columns
     .column
-      b-tooltip(label="このURLを持っていくと別の端末で現在の状態から再開できます" position="is-right")
-        a.button.is-text(:href="permalink_url") パーマリンク
+      b-tooltip(label="このURLをドラッグでブクマしておくと今の状態から再開できます。別の端末で再開したいときにも使えます" position="is-right")
+        a.button.is-text(:href="permalink_url") {{book_title}}
 
 </template>
 
@@ -580,7 +580,7 @@ export default {
       this.format_index   = hash.format_index || 0
       this.generate_max   = hash.generate_max || 200
       this.drop_seconds   = hash.drop_seconds || 60
-      this.book_title     = hash.book_title || "詰将棋タイムアタック用ストップウォッチ"
+      this.book_title     = hash.book_title || "詰将棋用ストップウォッチ"
     },
 
     data_restore_from_url_or_storage_after_hook() {
