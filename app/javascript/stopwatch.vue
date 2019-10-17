@@ -120,8 +120,8 @@
 
   .columns
     .column
-      b-tooltip(label="このURLを持っていくと別の端末で途中から再開できます" position="is-right")
-        a(:href="permalink_url") パーマリンク
+      b-tooltip(label="このURLを持っていくと別の端末で現在の状態から再開できます" position="is-right")
+        a.button.is-text(:href="permalink_url") パーマリンク
 
 </template>
 
@@ -584,7 +584,7 @@ export default {
     },
 
     data_restore_from_url_or_storage_after_hook() {
-      if (location.hash) {
+      if (location.hash || this.$route.query.restore_code) {
         console.log(`ハッシュ付きのURLから復元したので綺麗なURL ${this.location_url_without_hash()} に移動する`)
         location.href = this.location_url_without_search_and_hash()
       }

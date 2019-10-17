@@ -21,6 +21,9 @@ window.Vue = Vue
 import Vuex from "vuex"
 Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
 
+import VueRouter from "vue-router"
+Vue.use(VueRouter)
+
 import Repository from "Repository.js"
 Vue.prototype.$http = Repository
 
@@ -94,7 +97,17 @@ import pulldown_menu from "pulldown_menu.vue"
 import stopwatch from "stopwatch.vue"
 import xy_game from "xy_game.vue"
 
+// const router = new VueRouter({
+//   mode: 'history',
+//   // base: process.env.BASE_URL,
+//   // linkActiveClass: "is-active", // router-link-exact-active
+//   routes: [
+//   ],
+// })
+
 Vue.mixin({
+  router: new VueRouter({mode: "history"}),
+
   mixins: [
     vue_support,
   ],

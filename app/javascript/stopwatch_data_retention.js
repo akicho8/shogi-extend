@@ -13,6 +13,7 @@ export default {
   },
 
   methods: {
+    // hashに埋めたくなくなったので未使用
     data_save() {
       this.data_save_to_location_hash()
       this.data_save_to_local_storage()
@@ -32,7 +33,10 @@ export default {
 
     data_restore_from_url_or_storage() {
       let enc_base64 = null
-      if (location.hash) {
+
+      if (this.$route.query.restore_code) {
+        enc_base64 = this.$route.query.restore_code
+      } else if (location.hash) {
         enc_base64 = location.hash.replace(/^#/, "")
       } else {
         enc_base64 = localStorage.getItem(this.local_storage_key)
@@ -41,6 +45,7 @@ export default {
       this.data_restore_from_url_or_storage_after_hook()
     },
 
+    // 本体の方でオーバーライドしている
     data_restore_from_url_or_storage_after_hook() {
       // URL から hash を除いたURLにしたいとき
       // if (location.hash) {
@@ -86,7 +91,8 @@ export default {
     permalink_url() {
       // reload=1 に意味はないが現在のURLと異なるようにすることで、ストップウォッチにいる状態でリンクを踏んだときに新しいURLに飛ぶようにする
       // そうしないとブックマークからリンクしたときに遷移しない
-      return `${this.location_url_without_search_and_hash()}?reload=1#${this.enc_base64}`
+      // return `${this.location_url_without_search_and_hash()}?reload=1#${this.enc_base64}`
+      return `${this.location_url_without_search_and_hash()}?restore_code=${this.enc_base64}`
     },
 
     enc_base64() {
