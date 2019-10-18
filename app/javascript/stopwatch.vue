@@ -94,34 +94,41 @@
             b-icon(icon="twitter" size="is-small")
             | &nbsp;
             | ツイート
-  .columns
-    .column
-      .box.content.has-text-grey.is-size-7
-        h6 ショートカット
-        table.table.is-narrow
-          tr
-            th p k Space
-            td 開始 / 停止
-          tr
-            th o Enter
-            td 正解
-          tr
-            th x
-            td 不正解
-          tr
-            th z Backspace
-            td 1つ前に戻す
-          tr
-            th r
-            td 最後のタイムだけリセット
-          tr
-            th t
-            td 最後の解答の正誤を反転する
 
   .columns
     .column
-      b-tooltip(label="このURLをドラッグでブクマしておくと今の状態から再開できます。別の端末で再開したいときにも使えます" position="is-right")
-        a.button.is-text(:href="permalink_url") {{book_title}}
+      .box
+        .columns
+          .column
+            b-field(label="PCブックマーク用" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンクです")
+              a.button.is-text(:href="permalink_url") {{book_title}}
+          .column
+            b-field(label="モバイル用パーマリンク" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
+              b-input(:value="permalink_url")
+
+  .columns
+    .column
+      .box.content.has-text-grey.is-size-7
+        b-field(label="ショートカット")
+          table.table.is-narrow
+            tr
+              th p k Space
+              td 開始 / 停止
+            tr
+              th o Enter
+              td 正解
+            tr
+              th x
+              td 不正解
+            tr
+              th z Backspace
+              td 1つ前に戻す
+            tr
+              th r
+              td 最後のタイムだけリセット
+            tr
+              th t
+              td 最後の解答の正誤を反転する
 
 </template>
 
