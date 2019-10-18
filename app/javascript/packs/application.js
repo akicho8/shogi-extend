@@ -48,12 +48,6 @@ Vue.use(Buefy, {
 import _ from "lodash"
 window._ = _
 
-//////////////////////////////////////////////////////////////////////////////// moment
-
-import moment from "moment"
-window.Chart = moment
-Object.defineProperty(Vue.prototype, "moment", {value: moment})
-
 //////////////////////////////////////////////////////////////////////////////// Chart.js
 
 import Chart from "chart.js"

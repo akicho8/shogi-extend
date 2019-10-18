@@ -1,4 +1,5 @@
 import Bowser from "bowser"
+import dayjs from "dayjs"
 
 window.talk_sound = null
 
@@ -300,6 +301,10 @@ export default {
     // ?foo=1#xxx を除いた現在のパス
     location_url_without_search_and_hash() {
       return this.location_url_without_hash().replace(window.location.search, "")
+    },
+
+    dayjs_format(time, format) {
+      return dayjs(time).format(format)
     },
   },
 

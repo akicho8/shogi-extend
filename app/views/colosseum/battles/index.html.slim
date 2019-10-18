@@ -161,7 +161,7 @@
             - if Rails.env.development? && false
               b-table-column field="begin_at" label="開始日時" sortable="sortable" numeric="numeric"
                 template(v-if="props.row.begin_at")
-                  | {{moment(props.row.begin_at).format('YYYY/MM/DD HH:mm')}}
+                  | {{dayjs_format(props.row.begin_at, 'YYYY/MM/DD HH:mm')}}
             b-table-column(field="turn_max" label="手数" sortable numeric="numeric")
               | {{props.row.turn_max}}
             b-table-column(label="状態")

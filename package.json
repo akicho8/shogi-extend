@@ -37,7 +37,6 @@
     "js-memory-record": "^0.0.12",
     "js-yaml": "^3.9.1",
     "lzma": "^2.3.2",
-    "moment": "^2.22.1",
     "node-sass": "^4.11.0",
     "numeral": "^2.0.6",
     "path-complete-extname": "^0.1.0",
