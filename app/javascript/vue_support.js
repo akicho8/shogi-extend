@@ -177,9 +177,10 @@ export default {
         hasModalCard: true,
         component: {
           mounted() {
-            this.$refs.text_copy_textarea.$refs.textarea.focus()
-            this.$refs.text_copy_textarea.$refs.textarea.select()
-            this.$refs.text_copy_textarea.$refs.textarea.scrollTop = 0
+            const el = this.$refs.text_copy_textarea.$refs.textarea
+            el.focus()
+            el.select()
+            el.scrollTop = 0
           },
           template: `
 <div class="modal-card">
