@@ -121,7 +121,7 @@
               th x
               td 不正解
             tr
-              th z Backspace
+              th z
               td 1つ前に戻す
             tr
               th r
@@ -294,7 +294,7 @@ export default {
           this.lap_handle('o')
           processed = true
         }
-        if (e.key === "z" || e.code === "Backspace") {
+        if (e.key === "z") {
           this.revert_handle()
           processed = true
         }
