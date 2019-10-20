@@ -175,6 +175,7 @@ export default {
       this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
+        fullScreen: false,
         component: {
           mounted() {
             const el = this.$refs.text_copy_textarea.$refs.textarea
