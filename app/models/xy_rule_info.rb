@@ -209,7 +209,8 @@ class XyRuleInfo
           scope = scope.where(XyRecord.arel_table[:created_at].gteq(v.ago))
         end
         names_hash = scope.group("entry_name").order("count_all DESC").having("count_all >= #{count_all_gteq}").count
-        result = scope.select("entry_name, DATE(CONVERT_TZ(created_at, 'UTC', 'Asia/Tokyo')) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
+        correction_created_at = "CONVERT_TZ(created_at, 'UTC', 'Asia/Tokyo')"
+        result = scope.select("entry_name, DATE(#{correction_created_at}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
 
         names_hash.collect.with_index { |(name, _), i|
           palette = PaletteInfo.fetch(i.modulo(PaletteInfo.count))
