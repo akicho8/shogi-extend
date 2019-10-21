@@ -1,28 +1,27 @@
+- @page_title ||= current_record.title
+- sp_title = current_record.title
 - twitter_card_tag(show_twitter_options)
 
 - content_for :head do
   = javascript_pack_tag("free_battle_show")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new FreeBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleShowApp(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
 #show_app(v-cloak)
-  - @page_title ||= current_record.title
-
   - if params[:formal_sheet]
-    = render partial: "show_formal_sheet"
+    = render partial: "free_battles/show_formal_sheet"
   - else
     - if !iframe?
       nav.breadcrumb
         ul
-          li= link_to("棋譜一覧", current_plural_key)
+          li= link_to("棋譜一覧", [ns_prefix, current_plural_key])
           / li.is-active= link_to(current_record.title, current_record)
-          li.is-active= link_to("##{current_record.id}", current_record)
+          li.is-active= link_to("##{current_record.id}", [ns_prefix, current_record])
 
-      .level
-        .level-left
-          .level-item.has-text-left
-            p.title.is-5.yumincho
-              = current_record.title
+    .versus_container
+      .has-text-centered
+        .title.is-5.yumincho
+          == current_record.title
       hr
 
     .has-text-centered

@@ -1,24 +1,29 @@
-- twitter_card_tag(card: "summary", title: current_record.title)
+- @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
+- sp_title = current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + e.name_with_grade }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
+
+- twitter_card_tag(show_twitter_options)
 
 - content_for :head do
-  = javascript_pack_tag("swars_show_app")
+  = javascript_pack_tag("swars_battle_show")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShowApp(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
+    document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
-#show_app(v-cloak)
-  - @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
+#show_app.battle_show_container(v-cloak)
 
   - if params[:formal_sheet]
     = render partial: "free_battles/show_formal_sheet"
   - else
-    .has-text-centered
-      .title.is-3.yumincho
-        == current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + e.name_with_grade }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
-    hr
+    - if !iframe?
+      nav.breadcrumb
+        ul
+          li= link_to("棋譜一覧", [ns_prefix, current_plural_key])
+          / li.is-active= link_to(current_record.title, current_record)
+          li.is-active= link_to("##{current_record.id}", [ns_prefix, current_record])
 
-    .tags
-      - current_record.showable_tag_list.each do |e|
-       span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])
+    .versus_container
+      .has-text-centered
+        .title.is-5.yumincho
+          == sp_title
 
     = render partial: "shogi_player_shared"
     = render partial: "mixed_pulldown"

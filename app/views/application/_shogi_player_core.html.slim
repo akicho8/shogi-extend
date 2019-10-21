@@ -10,10 +10,18 @@
     :size="'medium'"
     :sound_effect="true"
     :volume=AppConfig[:volume]
+    :player_info="#{current_record.player_info.to_json}"
     )
     = render partial: "sfen_link"
 
   - if current_record.description.present?
-    .message.is-size-7
-      .message-body
-        = current_record.description
+    .has-text-centered
+      .message.is-size-7
+        .message-body
+          = current_record.description
+
+  br
+  .has-text-centered
+    .tags.is-inline
+      - current_record.showable_tag_list.each do |e|
+       span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])

@@ -71,7 +71,7 @@
           | KI2 コピー
 
     // @click.stop にするとURLをコピーしたあとプルダウンが閉じなくなる
-    template(v-if="record.tweet_modal_url")
+    template(v-if="record.modal_on_index_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(@click="$root.modal_url_copy")
           b-icon(icon="clipboard-outline" size="is-small")
@@ -79,7 +79,7 @@
           | URLをコピー
 
     template(v-if="in_modal")
-      template(v-if="record.tweet_modal_url")
+      template(v-if="record.modal_on_index_url")
         b-dropdown-item(:has-link="true" :paddingless="true")
           a(@click="$root.modal_url_with_turn_copy")
             b-icon(icon="clipboard-outline" size="is-small")

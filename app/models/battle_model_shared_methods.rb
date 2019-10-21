@@ -277,7 +277,7 @@ module BattleModelSharedMethods
       thumbnail_image.attach(io: StringIO.new(png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
     end
 
-    def tweet_modal_url(**params)
+    def modal_on_index_url(**params)
       params = {
         modal_id: id,
       }.merge(params)
@@ -289,7 +289,7 @@ module BattleModelSharedMethods
       out = []
       out << title
       out << description
-      out << (options[:url] || tweet_modal_url) # URLは最後にすることでURLの表示がツイート内容から隠せる
+      out << (options[:url] || modal_on_index_url) # URLは最後にすることでURLの表示がツイート内容から隠せる
       out.reject(&:blank?).join("\n")
     end
 

@@ -263,9 +263,9 @@ module BattleControllerSharedMethods
         end
 
         if v = current_force_turn
-          options[:url] = e.tweet_modal_url(turn: v)
+          options[:url] = e.modal_on_index_url(turn: v)
         else
-          options[:url] = e.tweet_modal_url
+          options[:url] = e.modal_on_index_url
         end
 
         options[:description] = e.description
@@ -361,7 +361,7 @@ module BattleControllerSharedMethods
     let :show_twitter_options do
       options = {}
       options[:title] = current_record.title
-      options[:url] = current_record.tweet_modal_url
+      options[:url] = current_record.modal_on_index_url
       options[:description] = current_record.description
       options[:image] = twitter_staitc_image_url(current_record)
       options
@@ -414,7 +414,7 @@ module BattleControllerSharedMethods
         a[:tweet_origin_image_path] = e.tweet_origin_image_path
         a[:tweet_body] = e.tweet_body
         a[:tweet_window_url] = e.tweet_window_url
-        a[:tweet_modal_url] = e.tweet_modal_url
+        a[:modal_on_index_url] = e.modal_on_index_url
         a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?
         if editable_record?(e) || Rails.env.development?
           a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
