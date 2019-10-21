@@ -512,6 +512,11 @@ module BattleControllerSharedMethods
   concerning :EditMethods do
     included do
       helper_method :js_edit_ogp_options
+      helper_method :current_edit_mode
+    end
+
+    let :current_edit_mode do
+      (params[:edit_mode].presence || :basic).to_sym
     end
 
     let :js_edit_ogp_options do
@@ -542,6 +547,42 @@ module BattleControllerSharedMethods
       end
 
       super
+    end
+  end
+
+  concerning :EditCustomMethods do
+    included do
+      helper_method :js_edit_options
+    end
+
+    # free_battle_edit.js の引数用
+    def js_edit_options
+      {
+        post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
+        record_attributes: current_record.as_json,
+        output_kifs: output_kifs,
+        new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
+        saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
+        run_mode: "play_mode",
+      }
+    end
+
+    private
+
+    def output_kifs
+      @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
+    end
+
+    def turn_max
+      @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_max
+    end
+
+    def heavy_parsed_info
+      @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
+    end
+
+    def current_input_any_kifu
+      params[:input_any_kifu] || current_record.sfen_body
     end
   end
 end

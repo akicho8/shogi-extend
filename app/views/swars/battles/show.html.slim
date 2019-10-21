@@ -8,31 +8,4 @@
   javascript:
     document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
-#show_app.battle_show_container(v-cloak)
-
-  - if params[:formal_sheet]
-    = render partial: "free_battles/show_formal_sheet"
-  - else
-    - if !iframe?
-      nav.breadcrumb
-        ul
-          li= link_to("棋譜一覧", [ns_prefix, current_plural_key])
-          / li.is-active= link_to(current_record.title, current_record)
-          li.is-active= link_to("##{current_record.id}", [ns_prefix, current_record])
-
-    .versus_container
-      .has-text-centered
-        .title.is-5.yumincho
-          == sp_title
-
-    = render partial: "shogi_player_shared"
-    = render partial: "mixed_pulldown"
-    = render partial: "kifu_clock_chart"
-
-    .columns
-      - current_record.memberships.each do |e|
-        .column
-          .box.is-size-7.hash_value_only_nowrap
-            = e.swgod_info(detail: params[:detail]).to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
-
-    = render partial: "shogi_player_shared_tabs_div"
+= render partial: "free_battles/show_shared", locals: { sp_title: sp_title }

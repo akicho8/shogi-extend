@@ -285,11 +285,17 @@ module BattleModelSharedMethods
       Rails.application.routes.url_helpers.full_url_for([self.class, params])
     end
 
+    def tweet_show_url(**params)
+      params = {
+      }.merge(params)
+      Rails.application.routes.url_helpers.full_url_for([self, params])
+    end
+
     def tweet_body(**options)
       out = []
       out << title
       out << description
-      out << (options[:url] || modal_on_index_url) # URLは最後にすることでURLの表示がツイート内容から隠せる
+      out << (options[:url] || tweet_show_url) # Twitter側の仕様でURLは最後にすることでURLの表示がツイート内容から消える
       out.reject(&:blank?).join("\n")
     end
 

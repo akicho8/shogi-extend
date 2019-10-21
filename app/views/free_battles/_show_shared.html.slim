@@ -1,0 +1,51 @@
+#show_app.battle_show_container(v-cloak)
+  - if params[:formal_sheet]
+    = render partial: "free_battles/show_formal_sheet"
+  - else
+    - if !iframe?
+      nav.breadcrumb
+        ul
+          li= link_to("棋譜一覧", [ns_prefix, current_plural_key])
+          / li.is-active= link_to(current_record.title, current_record)
+          li.is-active= link_to("##{current_record.id}", [ns_prefix, current_record])
+
+    .versus_container
+      .has-text-centered
+        .title.is-5.yumincho
+          == sp_title
+    hr
+
+    = render partial: "shogi_player_shared"
+
+    - if !iframe?
+      .columns
+        .column
+          .buttons.is-centered
+            = link_to("OGP画像設定", [:edit, ns_prefix, current_record, edit_mode: "ogp"], class: "button is-primary", target: "_blank")
+
+      .columns
+        .column
+          .buttons.is-centered
+            - if editable_record?(current_record)
+              = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
+              = link_to("OGP画像確認", controller.twitter_staitc_image_url(current_record), class: "button")
+              = link_to("詳細", [ns_prefix, current_record], class: "button") if false
+            - if current_record.kind_of?(FreeBattle)
+              = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
+
+      .columns
+        .column
+          textarea.textarea(rows="3" readonly)
+            | {{$options.tweet_body}}
+
+      = render partial: "mixed_pulldown"
+      = render partial: "free_battles/kifu_clock_chart"
+
+      - if current_record.respond_to?(:memberships)
+        .columns
+          - current_record.memberships.each do |e|
+            .column
+              .box.is-size-7.hash_value_only_nowrap
+                = e.swgod_info(detail: params[:detail]).to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
+
+      = render partial: "shogi_player_shared_tabs_div"

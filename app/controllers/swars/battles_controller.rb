@@ -439,5 +439,14 @@ module Swars
         a
       end
     end
+
+    concerning :EditCustomMethods do
+      def js_edit_options
+        super.merge({
+            run_mode: "view_mode",
+          })
+      end
+    end
+
   end
 end

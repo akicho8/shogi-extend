@@ -132,7 +132,7 @@ class FreeBattlesController < ApplicationController
     if false
       if current_record.saved_changes[:id]
         if editable_record?(current_record)
-          return [:edit, ns_prefix, current_record, mode: :ogp]
+          return [:edit, ns_prefix, current_record, edit_mode: :ogp]
         end
       end
     end
@@ -141,47 +141,12 @@ class FreeBattlesController < ApplicationController
     if true
       if current_record.saved_changes[:image_turn]
         if editable_record?(current_record)
-          return [:edit, ns_prefix, current_record, mode: :ogp, auto_write: true]
+          return [:edit, ns_prefix, current_record, edit_mode: :ogp, auto_write: true]
         end
       end
     end
 
     super
-  end
-
-  concerning :EditCustomMethods do
-    included do
-      helper_method :js_edit_options
-    end
-
-    # free_battle_edit.js の引数用
-    let :js_edit_options do
-      {
-        post_path: url_for([:free_battles, format: "json"]),
-        record_attributes: current_record.as_json,
-        output_kifs: output_kifs,
-        new_path: polymorphic_path([:new, :free_battle]),
-        saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
-      }
-    end
-
-    private
-
-    def output_kifs
-      @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
-    end
-
-    def turn_max
-      @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_max
-    end
-
-    def heavy_parsed_info
-      @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
-    end
-
-    def current_input_any_kifu
-      params[:input_any_kifu].to_s
-    end
   end
 
   concerning :IndexCustomMethods do

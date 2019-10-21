@@ -4,24 +4,7 @@
 
   b-tabs.input_method_tabs.is_lr_paddingless(v-model="input_active_tab" expanded)
     b-tab-item(label="操作入力")
-      shogi_player(
-        :run_mode.sync="run_mode"
-        :kifu_body="input_sfen"
-        :start_turn="default_start_turn"
-        :debug_mode="false"
-        :key_event_capture="true"
-        :slider_show="true"
-        :sfen_show="false"
-        :controller_show="true"
-        :theme="'simple'"
-        :size="'default'"
-        :sound_effect="true"
-        :volume=AppConfig[:volume]
-        @update:play_mode_long_sfen="play_mode_long_sfen_set"
-        @update:start_turn="seek_to"
-        ref="main_sp"
-        )
-        = render partial: "sfen_link"
+      = render partial: "form_shogi_player"
 
       .field
         .iikanjino_yoko
@@ -54,26 +37,7 @@
           | &nbsp;
           a.is-small(@click="input_text_clear") クリア
 
-.field
-  = form.label(:start_turn, class: "label")
-  .control
-    = form.number_field(:start_turn, class: "input is-small", placeholder: "", "v-model.number": "record.start_turn", "min": "0", ":max": "record.turn_max")
-    a.is-size-7(@click="record.start_turn = $refs.main_sp.mediator.real_turn") 操作入力の手数を入力
-
-.field
-  = form.label(:image_turn, class: "label")
-  .control
-    = form.number_field(:image_turn, class: "input is-small", placeholder: "", "v-model.number": "record.image_turn", "min": "0", ":max": "record.turn_max")
-    a.is-size-7(@click="record.image_turn = $refs.main_sp.mediator.real_turn") 操作入力の手数を入力
-    template(v-if="record.image_turn !== ''")
-      | &nbsp;
-      | &nbsp;
-      | &nbsp;
-      b-tooltip(label="OGP画像設定のページで、html2canvas を使った方法でOGP画像を自動生成する" multilined)
-        label.is-size-7
-          = check_box_tag(:auto_write, "true")
-          | &nbsp;
-          | 自動生成
+= render partial: "form_start_turn"
 
 .field
   = form.label(:title, class: "label")

@@ -90,7 +90,7 @@
 
     template(v-if="record.edit_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.edit_path}?mode=ogp`")
+        a(:href="`${record.edit_path}?edit_mode=ogp`")
           b-icon(icon="settings-outline" size="is-small")
           | &nbsp;&nbsp;&nbsp;
           | OGP画像設定
