@@ -11,10 +11,10 @@ p ["#{__FILE__}:#{__LINE__}", __method__, ENV["USE_NEW_DOMAIN"]]
 if ENV["USE_NEW_DOMAIN"].to_s == ""
   every("0 * * * *") { runner "Colosseum::Battle.auto_close" }
 
-  every("25 4 * * *") { runner "XyRecord.entry_name_blank_scope.destroy_all" }
-  every("30 4 * * *") { runner "Swars::Battle.old_record_destroy"   }
-  every("45 4 * * *") do
+  every("5 4 * * *") do
     runner [
+      "XyRecord.entry_name_blank_scope.destroy_all",
+      "Swars::Battle.old_record_destroy",
       "Swars::Crawler::RegularCrawler.run",
       "Swars::Crawler::ExpertCrawler.run",
       "Swars::Crawler::RecentlyCrawler.run",

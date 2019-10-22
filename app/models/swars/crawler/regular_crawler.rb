@@ -4,7 +4,7 @@ module Swars
     class RegularCrawler < Base
       def default_params
         {
-          limit: Rails.env.production? ? 50 : 1,
+          limit: Rails.env.production? ? 10 : 1,
           page_max: Rails.env.production? ? 256 : 3,
           early_break: true,
         }

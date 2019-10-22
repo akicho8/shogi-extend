@@ -15,7 +15,7 @@ module Swars
       def initialize(**params)
         @params = {
           developper_notice: true,
-          sleep: Rails.env.production? ? 8 : 0,
+          sleep: Rails.env.production? ? 4 : 0,
         }.merge(default_params, params)
 
         @rows = []
