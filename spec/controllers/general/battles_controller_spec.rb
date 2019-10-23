@@ -16,11 +16,11 @@
 # | last_accessd_at | Last accessd at | datetime     | NOT NULL    |      |       |
 # | created_at      | 作成日時        | datetime     | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime     | NOT NULL    |      |       |
-# | start_turn      | 開始手数        | integer(4)   |             |      |       |
+# | start_turn      | 開始局面        | integer(4)   |             |      |       |
 # | critical_turn   | 開戦            | integer(4)   |             |      | E     |
 # | saturn_key      | Saturn key      | string(255)  | NOT NULL    |      | F     |
 # | sfen_body       | Sfen body       | string(8192) |             |      |       |
-# | image_turn      | OGP画像の手数   | integer(4)   |             |      |       |
+# | image_turn      | OGP画像の局面   | integer(4)   |             |      |       |
 # |-----------------+-----------------+--------------+-------------+------+-------|
 
 require 'rails_helper'

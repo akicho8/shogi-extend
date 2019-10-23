@@ -173,7 +173,7 @@ export default {
       return _.map(attributes, (v, k) => `${k}=${v}`).join("&")
     },
 
-    // 開始手数
+    // 開始局面
     // force_turn start_turn critical_turn の順に見る
     // force_turn は $options.modal_record にのみ入っている
     start_turn_for(record) {
@@ -257,7 +257,7 @@ export default {
       return _.compact(columns)
     },
 
-    // 開始手数
+    // 開始局面
     // force_turn start_turn critical_turn の順に見る
     // force_turn は $options.modal_record にのみ入っている
     start_turn() {
