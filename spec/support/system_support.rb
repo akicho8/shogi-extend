@@ -56,12 +56,13 @@ RSpec.configure do |config|
     # driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400], options: { desired_capabilities: caps }
 
     # driven_by :headless_chrome
-    driven_by :selenium_chrome
+
+    # driven_by :selenium_chrome
+    driven_by env["CHROME_HEAD"] ? :selenium_chrome : :selenium_chrome_headless
 
     # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
     # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
 
-    # driven_by :selenium_chrome_headless
 
     # 設定したいのはこっち
     # これ visit で移動してスクリーンショットを撮る前にリサイズしないと意味がない
