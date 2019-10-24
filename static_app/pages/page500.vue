@@ -1,6 +1,8 @@
 <template lang="pug">
   robot
-    | ブッコワレタナリ
+    | ブッコワレタナリ<br>
+    | モンダイワスデニキロクズミデス<br>
+    | ゴメイワクヲオカケシテスマン<br>
 </template>
 
 <script>
