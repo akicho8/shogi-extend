@@ -143,7 +143,7 @@ RSpec.describe "対戦", type: :system do
       end
 
       using_session("user4") do
-        __choise_rule_and_start("team_p2vs2")
+        __choise_rule_and_start("ダブルス")
         sleep(10)
         assert { current_path == polymorphic_path(Colosseum::Battle.last) }
         doc_image("成立")
