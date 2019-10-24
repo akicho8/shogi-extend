@@ -31,7 +31,7 @@
 
 class AddSfenBodyToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles, :general_battles].each do |table|
+    [:swars_battles, :free_battles].each do |table|
       change_table table do |t|
         t.string :sfen_body, limit: 8192
       end

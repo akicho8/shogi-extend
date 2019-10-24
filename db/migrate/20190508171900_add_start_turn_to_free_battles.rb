@@ -31,7 +31,7 @@
 
 class AddStartTurnToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles, :general_battles].each do |table|
+    [:swars_battles, :free_battles].each do |table|
       change_table table do |t|
         t.integer :start_turn, null: false, index: true
       end

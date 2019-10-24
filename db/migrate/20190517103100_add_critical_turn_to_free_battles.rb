@@ -31,7 +31,7 @@
 
 class AddCriticalTurnToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles, :general_battles].each do |table|
+    [:swars_battles, :free_battles].each do |table|
       change_table table do |t|
         t.change :start_turn, :integer, null: true
         t.integer :critical_turn, null: true

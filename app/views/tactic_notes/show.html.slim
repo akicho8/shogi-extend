@@ -61,9 +61,6 @@ javascript:
             pre.pre-wrap= value
 
   / .has-text-centered
-  / - count = General::Membership.tagged_with(current_record.name).count
-  / - if count >= 1
-   /   =<> link_to("2ch棋譜検索".html_safe + tag.span(count, class: "badge"), [:general_search, query: current_record.key])
   / - count = Swars::Battle.tagged_with(current_record.name).count
   / - if count >= 1
   /   =<> link_to("将棋ウォーズ棋譜検索".html_safe +  tag.span(count, class: "badge"), [:swars_search, query: current_record.key])

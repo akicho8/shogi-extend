@@ -16,7 +16,6 @@ if true
   ::Swars::ApplicationController
   # 8. これにはまると原因を調べるのに半日かかるため念のため他のもロードしておく
   ::Colosseum::ApplicationController
-  ::General::ApplicationController
   # 9. 新しい Ruby だと参照の順序がかわるらしいのでそれに期待。あとで調べて直ってたらこれは消す
 end
 
@@ -69,12 +68,6 @@ RSpec.configure do |config|
     def swars_battle_setup
       Swars.setup
       Swars::Battle.user_import(user_key: "devuser1")
-    end
-
-    def general_battle_setup
-      if General::Battle.count.zero?
-        General::Battle.all_import
-      end
     end
   }
 end

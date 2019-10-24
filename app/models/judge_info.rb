@@ -10,10 +10,6 @@ class JudgeInfo
     Swars::Membership.where(judge_key: key)
   end
 
-  def general_memberships
-    General::Membership.where(judge_key: key)
-  end
-
   def icon_params(grade_diff)
     if icon_key
       { key: icon_key, :class => icon_class }

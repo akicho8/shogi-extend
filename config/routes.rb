@@ -33,19 +33,6 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
   end
 
-  ################################################################################ 2ch棋譜検索
-
-  namespace :general, path: "" do
-    resources :battles, path: "sr", only: [:index, :show]
-
-    get "s?query=:query", to: "battles#index", as: :search # s/:query だと s/a%2Fb が s/a/b と解釈されて Apache (or Passenger) でエラーになってしまうため query=:query 形式にしている
-    get "s",        to: "battles#index"
-  end
-
-  resolve "General::User" do |user, options|
-    general_search_path(query: user.to_param)
-  end
-
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :swars, path: "" do
