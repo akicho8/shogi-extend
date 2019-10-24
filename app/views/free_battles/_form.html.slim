@@ -4,7 +4,7 @@
 
   b-tabs.input_method_tabs.is_lr_paddingless(v-model="input_active_tab" expanded)
     b-tab-item(label="操作入力")
-      = render partial: "form_shogi_player"
+      = render partial: "form_shogi_player", locals: { form: form }
 
       .field
         .iikanjino_yoko
@@ -37,7 +37,7 @@
           | &nbsp;
           a.is-small(@click="input_text_clear") クリア
 
-= render partial: "form_start_turn"
+= render partial: "form_start_turn", locals: { form: form }
 
 .field
   = form.label(:title, class: "label")
