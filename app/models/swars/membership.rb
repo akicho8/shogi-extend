@@ -95,7 +95,11 @@ module Swars
         # grade_diff = rand(-1..1)
 
         if icon = judge_info.icon_params(grade_diff) || final_info.icon_params(grade_diff)
-          Icon.icon_tag(*icon[:key], :class => icon[:class])
+          if icon.kind_of?(String)
+            icon
+          else
+            Icon.icon_tag(*icon[:key], :class => icon[:class])
+          end
         end
       end
 
