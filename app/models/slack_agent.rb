@@ -56,10 +56,12 @@ module SlackAgent
   end
 
   def icon_symbol(ua)
-    if ua.mobile?
-      ":iphone:"
-    else
-      ":desktop_computer:"
+    if ua
+      if ua.mobile?
+        ":iphone:"
+      else
+        ":desktop_computer:"
+      end
     end
   end
 
