@@ -14,6 +14,8 @@ window.CpuBattlesApp = Vue.extend({
   },
 
   created() {
+    CpuBrainInfo.memory_record_reset(this.$options.cpu_brain_infos)
+
     setTimeout(() => this.talk(`よろしくお願いします。${this.current_call_name}のてばんです`), 1000 * 1)
   },
 

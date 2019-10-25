@@ -1,12 +1,10 @@
 - twitter_card_tag(show_twitter_options)
 
 - content_for :head do
-  javascript:
-    var js_cpu_battle = #{js_cpu_battle.to_json.html_safe};
   = stylesheet_pack_tag("cpu_battles_style")
   = javascript_pack_tag("cpu_battles_app")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new CpuBattlesApp(js_cpu_battle).$mount("#cpu_battles_app") })
+    document.addEventListener('DOMContentLoaded', () => { new CpuBattlesApp(#{js_cpu_battle.to_json.html_safe}).$mount("#cpu_battles_app") })
 
 #cpu_battles_app(v-cloak)
   .has-text-centered
