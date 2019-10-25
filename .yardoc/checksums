@@ -12,7 +12,7 @@ app/models/query_info.rb fd2038506177c134b209222966cf73473f8a78c0
 app/models/swars/user.rb b398c6a7c85b263a6e28c4f45e8957eab1b883dc
 app/models/free_battle.rb 62b95b06410b20804a54b87128b1f107847461fa
 app/models/saturn_info.rb 24fbe4bb6ba05de8888256a2cc6cbf9dd2adebef
-app/models/slack_agent.rb 107d25c9dec048b5b9a700f8b379134f78f9aec8
+app/models/slack_agent.rb 86d9e6941077417f6dc3a6fc7401cc22d816dc34
 app/models/swars/agent.rb 7fb0564d4efcc0a4feb5bc7b668940823a4c0d04
 app/models/swars/grade.rb 67286d6847c5db2702eef1f2206a67d32c3483e9
 app/mailers/user_mailer.rb 1569a0628eb4105135ab003c72f6cac0d2d97112

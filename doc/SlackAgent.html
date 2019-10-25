@@ -93,7 +93,21 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>使い方</p>
 
+<pre class="code ruby"><code class="ruby"><span class='const'>SlackAgent</span><span class='period'>.</span><span class='id identifier rubyid_message_send'><span class='object_link'><a href="#message_send-instance_method" title="SlackAgent#message_send (method)">message_send</a></span></span><span class='lparen'>(</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>検索</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>body:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xxx</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>ua:</span> <span class='id identifier rubyid_ua'>ua</span><span class='rparen'>)</span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -154,6 +168,10 @@
       <pre class="lines">
 
 
+10
+11
+12
+13
 14
 15
 16
@@ -175,14 +193,10 @@
 32
 33
 34
-35
-36
-37
-38
-39</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/slack_agent.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'app/models/slack_agent.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message_send'>message_send</span><span class='lparen'>(</span><span class='label'>key:</span><span class='comma'>,</span> <span class='label'>body:</span><span class='comma'>,</span> <span class='label'>ua:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_test?'>test?</span>
@@ -220,7 +234,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Oct 25 16:06:59 2019 by
+  Generated on Fri Oct 25 16:12:07 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.20 (ruby-2.6.1).
 </div>
