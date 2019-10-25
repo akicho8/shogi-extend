@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Swars
+  
+    &mdash; Documentation by YARD 0.9.20
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Swars";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (S)</a> &raquo;
+    
+    
+    <span class="title">Swars</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Swars
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>app/models/swars/user.rb<span class="defines">,<br />
+  app/models/swars.rb,<br /> app/models/swars/agent.rb,<br /> app/models/swars/grade.rb,<br /> app/models/swars/battle.rb,<br /> app/models/swars/rule_info.rb,<br /> app/models/swars/access_log.rb,<br /> app/models/swars/final_info.rb,<br /> app/models/swars/grade_info.rb,<br /> app/models/swars/membership.rb,<br /> app/models/swars/search_log.rb,<br /> app/models/swars/crawler/base.rb,<br /> app/models/swars/summary_info.rb,<br /> app/models/swars/chart_tag_info.rb,<br /> app/models/swars/dirty_preset_info.rb,<br /> app/models/swars/crawler/expert_crawler.rb,<br /> app/controllers/swars/battles_controller.rb,<br /> app/models/swars/crawler/regular_crawler.rb,<br /> app/models/swars/crawler/recently_crawler.rb,<br /> app/controllers/swars/application_controller.rb,<br /> app/models/swars/frequently_used_filter_info.rb,<br /> app/controllers/swars/player_infos_controller.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h2 id="label-Schema+Information+-3D-3D">Schema Information ==</h2>
+
+<p>将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)</p>
+
+<p>|——————-<code>------------------</code>————–<code>-------------</code>——+——-| | name              | desc             | type         | opts        | refs | index | |——————-<code>------------------</code>————–<code>-------------</code>——+——-| | id                | ID               | integer(8)   | NOT NULL PK |      |       | | key               | 対局ユニークキー | string(255)  | NOT NULL    |      | A!    | | battled_at        | 対局日時         | datetime     | NOT NULL    |      | E     | | rule_key          | ルール           | string(255)  | NOT NULL    |      | B     | | csa_seq           | 棋譜             | text(65535)  | NOT NULL    |      |       | | final_key         | 結末             | string(255)  | NOT NULL    |      | C     | | win_user_id       | 勝者             | integer(8)   |             |      | D     | | turn_max          | 手数             | integer(4)   | NOT NULL    |      | F     | | meta_info         | メタ情報         | text(65535)  | NOT NULL    |      |       | | last_accessd_at   | 最終アクセス日時 | datetime     | NOT NULL    |      |       | | access_logs_count | アクセス数       | integer(4)   | DEFAULT(0)  |      |       | | created_at        | 作成日時         | datetime     | NOT NULL    |      |       | | updated_at        | 更新日時         | datetime     | NOT NULL    |      |       | | preset_key        | 手合割           | string(255)  | NOT NULL    |      |       | | start_turn        | 開始局面         | integer(4)   |             |      |       | | critical_turn     | 開戦             | integer(4)   |             |      | G     | | saturn_key        | Saturn key       | string(255)  | NOT NULL    |      | H     | | sfen_body         | Sfen body        | string(8192) |             |      |       | | image_turn        | OGP画像の局面    | integer(4)   |             |      |       | |——————-<code>------------------</code>————–<code>-------------</code>——+——-|</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Swars/Crawler.html" title="Swars::Crawler (module)">Crawler</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Swars/AccessLog.html" title="Swars::AccessLog (class)">AccessLog</a></span>, <span class='object_link'><a href="Swars/Agent.html" title="Swars::Agent (class)">Agent</a></span>, <span class='object_link'><a href="Swars/ApplicationController.html" title="Swars::ApplicationController (class)">ApplicationController</a></span>, <span class='object_link'><a href="Swars/Battle.html" title="Swars::Battle (class)">Battle</a></span>, <span class='object_link'><a href="Swars/BattlesController.html" title="Swars::BattlesController (class)">BattlesController</a></span>, <span class='object_link'><a href="Swars/ChartTagInfo.html" title="Swars::ChartTagInfo (class)">ChartTagInfo</a></span>, <span class='object_link'><a href="Swars/DirtyPresetInfo.html" title="Swars::DirtyPresetInfo (class)">DirtyPresetInfo</a></span>, <span class='object_link'><a href="Swars/FinalInfo.html" title="Swars::FinalInfo (class)">FinalInfo</a></span>, <span class='object_link'><a href="Swars/FrequentlyUsedFilterInfo.html" title="Swars::FrequentlyUsedFilterInfo (class)">FrequentlyUsedFilterInfo</a></span>, <span class='object_link'><a href="Swars/Grade.html" title="Swars::Grade (class)">Grade</a></span>, <span class='object_link'><a href="Swars/GradeInfo.html" title="Swars::GradeInfo (class)">GradeInfo</a></span>, <span class='object_link'><a href="Swars/Membership.html" title="Swars::Membership (class)">Membership</a></span>, <span class='object_link'><a href="Swars/PlayerInfosController.html" title="Swars::PlayerInfosController (class)">PlayerInfosController</a></span>, <span class='object_link'><a href="Swars/RuleInfo.html" title="Swars::RuleInfo (class)">RuleInfo</a></span>, <span class='object_link'><a href="Swars/SearchLog.html" title="Swars::SearchLog (class)">SearchLog</a></span>, <span class='object_link'><a href="Swars/SummaryInfo.html" title="Swars::SummaryInfo (class)">SummaryInfo</a></span>, <span class='object_link'><a href="Swars/User.html" title="Swars::User (class)">User</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setup-class_method" title="setup (class method)">.<strong>setup</strong>(**options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#table_name_prefix-class_method" title="table_name_prefix (class method)">.<strong>table_name_prefix</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="setup-class_method">
+  
+    .<strong>setup</strong>(**options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+6
+7
+8</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/swars.rb', line 6</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Swars/Grade.html" title="Swars::Grade (class)">Grade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_setup'><span class='object_link'><a href="Swars/Grade.html#setup-class_method" title="Swars::Grade.setup (method)">setup</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="table_name_prefix-class_method">
+  
+    .<strong>table_name_prefix</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2
+3
+4</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/swars.rb', line 2</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_table_name_prefix'>table_name_prefix</span>
+  <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Oct 25 16:06:59 2019 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.20 (ruby-2.6.1).
+</div>
+
+    </div>
+  </body>
+</html>

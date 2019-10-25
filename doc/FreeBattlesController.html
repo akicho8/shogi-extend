@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: FreeBattlesController
+  
+    &mdash; Documentation by YARD 0.9.20
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "FreeBattlesController";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (F)</a> &raquo;
+    
+    
+    <span class="title">FreeBattlesController</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: FreeBattlesController
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ActionController::Base</li>
+          
+            <li class="next"><span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></li>
+          
+            <li class="next">FreeBattlesController</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="BattleControllerBaseMethods.html" title="BattleControllerBaseMethods (module)">BattleControllerBaseMethods</a></span>, <span class='object_link'><a href="BattleControllerSharedMethods.html" title="BattleControllerSharedMethods (module)">BattleControllerSharedMethods</a></span>, ModulableCrud::All</dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>app/controllers/free_battles_controller.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h2 id="label-Schema+Information+-3D-3D">Schema Information ==</h2>
+
+<p>棋譜投稿 (free_battles as FreeBattle)</p>
+
+<p>|——————-<code>--------------------</code>————–<code>-------------</code>———————————–+——-| | name              | desc               | type         | opts        | refs                              | index | |——————-<code>--------------------</code>————–<code>-------------</code>———————————–+——-| | id                | ID                 | integer(8)   | NOT NULL PK |                                   |       | | key               | ユニークなハッシュ | string(255)  | NOT NULL    |                                   | A!    | | kifu_url          | 棋譜URL            | string(255)  |             |                                   |       | | kifu_body         | 棋譜               | text(65535)  | NOT NULL    |                                   |       | | turn_max          | 手数               | integer(4)   | NOT NULL    |                                   | D     | | meta_info         | 棋譜ヘッダー       | text(65535)  | NOT NULL    |                                   |       | | battled_at        | Battled at         | datetime     | NOT NULL    |                                   | C     | | created_at        | 作成日時           | datetime     | NOT NULL    |                                   |       | | updated_at        | 更新日時           | datetime     | NOT NULL    |                                   |       | | colosseum_user_id | 所有者ID           | integer(8)   |             | :owner_user =&gt; Colosseum::User#id | B     | | title             | 題名               | string(255)  |             |                                   |       | | description       | 説明               | text(65535)  | NOT NULL    |                                   |       | | start_turn        | 開始局面           | integer(4)   |             |                                   |       | | critical_turn     | 開戦               | integer(4)   |             |                                   | E     | | saturn_key        | Saturn key         | string(255)  | NOT NULL    |                                   | F     | | sfen_body         | Sfen body          | string(8192) |             |                                   |       | | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       | |——————-<code>--------------------</code>————–<code>-------------</code>———————————–+——-|</p>
+<ul><li>
+<p>Remarks ———————————————————————-</p>
+</li></ul>
+
+<p>Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id</p>
+<hr>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create-instance_method" title="#create (instance method)">#<strong>create</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#new-instance_method" title="#new (instance method)">#<strong>new</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="create-instance_method">
+  
+    #<strong>create</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/free_battles_controller.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
+  <span class='comment'># プレビュー用
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:input_any_kifu</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_render'>render</span> <span class='label'>json:</span> <span class='lbrace'>{</span> <span class='label'>output_kifs:</span> <span class='id identifier rubyid_output_kifs'>output_kifs</span><span class='comma'>,</span> <span class='label'>turn_max:</span> <span class='id identifier rubyid_turn_max'>turn_max</span> <span class='rbrace'>}</span>
+      <span class='kw'>return</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># 本文に将棋ウォーズのURLが含まれているとウォーズ検索の方に飛ばす
+</span>  <span class='comment'># この機能はウォーズの棋譜をコピーして投稿しようとしたときに意図せず発動してしまうため禁止にする
+</span>  <span class='kw'>if</span> <span class='kw'>false</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_current_record_params'>current_record_params</span><span class='lbracket'>[</span><span class='symbol'>:kifu_url</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>||</span> <span class='id identifier rubyid_current_record_params'>current_record_params</span><span class='lbracket'>[</span><span class='symbol'>:kifu_body</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Swars.html" title="Swars (module)">Swars</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Swars/Battle.html" title="Swars::Battle (class)">Battle</a></span></span><span class='period'>.</span><span class='id identifier rubyid_extraction_key_from_dirty_string'>extraction_key_from_dirty_string</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='lbracket'>[</span><span class='symbol'>:swars</span><span class='comma'>,</span> <span class='symbol'>:battle</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+        <span class='kw'>return</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="new-instance_method">
+  
+    #<strong>new</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/free_battles_controller.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:source_id</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_record'>record</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="FreeBattle.html" title="FreeBattle (class)">FreeBattle</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:source_id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='lbracket'>[</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='id identifier rubyid_ns_prefix'>ns_prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_current_single_key'>current_single_key</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_content'>の棋譜をコピペしました</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Oct 25 16:07:03 2019 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.20 (ruby-2.6.1).
+</div>
+
+    </div>
+  </body>
+</html>

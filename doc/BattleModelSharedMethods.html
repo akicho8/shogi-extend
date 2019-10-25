@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: BattleModelSharedMethods
+  
+    &mdash; Documentation by YARD 0.9.20
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "BattleModelSharedMethods";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (B)</a> &raquo;
+    
+    
+    <span class="title">BattleModelSharedMethods</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: BattleModelSharedMethods
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  <dl>
+      <dt>Extended by:</dt>
+      <dd>ActiveSupport::Concern</dd>
+  </dl>
+  
+  
+  
+  
+
+  
+  <dl>
+    <dt>Included in:</dt>
+    <dd><span class='object_link'><a href="FreeBattle.html" title="FreeBattle (class)">FreeBattle</a></span>, <span class='object_link'><a href="Swars/Battle.html" title="Swars::Battle (class)">Swars::Battle</a></span></dd>
+  </dl>
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>app/models/battle_model_shared_methods.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#battle_decorator-instance_method" title="#battle_decorator (instance method)">#<strong>battle_decorator</strong>(params)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#battle_decorator_class-instance_method" title="#battle_decorator_class (instance method)">#<strong>battle_decorator_class</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#date_link-instance_method" title="#date_link (instance method)">#<strong>date_link</strong>(h, v)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#header_detail-instance_method" title="#header_detail (instance method)">#<strong>header_detail</strong>(h)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#og_turn-instance_method" title="#og_turn (instance method)">#<strong>og_turn</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parser_exec-instance_method" title="#parser_exec (instance method)">#<strong>parser_exec</strong>(**options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>更新方法 ActiveRecord::Base.logger = nil Swars::Battle.find_each { |e| e.tap(&amp;:parser_exec).save! } Swars::Battle.find_each { |e| e.parser_exec; print(e.changed? ? “U” : “.”); e.save! } rescue $!.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parser_exec_after-instance_method" title="#parser_exec_after (instance method)">#<strong>parser_exec_after</strong>(info)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#place_list-instance_method" title="#place_list (instance method)">#<strong>place_list</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#player_info-instance_method" title="#player_info (instance method)">#<strong>player_info</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#preset_link-instance_method" title="#preset_link (instance method)">#<strong>preset_link</strong>(h, name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remake-instance_method" title="#remake (instance method)">#<strong>remake</strong>(**options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#showable_tag_list-instance_method" title="#showable_tag_list (instance method)">#<strong>showable_tag_list</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sp_turn-instance_method" title="#sp_turn (instance method)">#<strong>sp_turn</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_kifu_copy_params-instance_method" title="#to_kifu_copy_params (instance method)">#<strong>to_kifu_copy_params</strong>(h, **options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tournament_list-instance_method" title="#tournament_list (instance method)">#<strong>tournament_list</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="battle_decorator-instance_method">
+  
+    #<strong>battle_decorator</strong>(params)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+181
+182
+183</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 181</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_battle_decorator'>battle_decorator</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
+  <span class='ivar'>@battle_decorator</span> <span class='op'>||=</span> <span class='id identifier rubyid_battle_decorator_class'>battle_decorator_class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>battle:</span> <span class='kw'>self</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="battle_decorator_class-instance_method">
+  
+    #<strong>battle_decorator_class</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+185
+186</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 185</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_battle_decorator_class'>battle_decorator_class</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="date_link-instance_method">
+  
+    #<strong>date_link</strong>(h, v)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+124
+125
+126
+127
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 124</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_date_link'>date_link</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
+
+  <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_zone'>zone</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lparen'>(</span><span class='symbol'>:ymd</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='id identifier rubyid_v'>v</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="header_detail-instance_method">
+  
+    #<strong>header_detail</strong>(h)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_header_detail'>header_detail</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_meta_info'>meta_info</span><span class='lbracket'>[</span><span class='symbol'>:header</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="og_turn-instance_method">
+  
+    #<strong>og_turn</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 177</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_og_turn'>og_turn</span>
+  <span class='id identifier rubyid_image_turn'>image_turn</span> <span class='op'>||</span> <span class='id identifier rubyid_start_turn'>start_turn</span> <span class='op'>||</span> <span class='id identifier rubyid_critical_turn'>critical_turn</span> <span class='op'>||</span> <span class='int'>9999</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parser_exec-instance_method">
+  
+    #<strong>parser_exec</strong>(**options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>更新方法 ActiveRecord::Base.logger = nil Swars::Battle.find_each { |e| e.tap(&amp;:parser_exec).save! } Swars::Battle.find_each { |e| e.parser_exec; print(e.changed? ? “U” : “.”); e.save! } rescue $!</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parser_exec'>parser_exec</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@parser_executed</span>
+
+  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>destroy_all:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_info'>info</span> <span class='op'>=</span> <span class='id identifier rubyid_fast_parsed_info'>fast_parsed_info</span>
+  <span class='id identifier rubyid_converted_infos'>converted_infos</span><span class='period'>.</span><span class='id identifier rubyid_destroy_all'>destroy_all</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:destroy_all</span><span class='rbracket'>]</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_kifu_cache_enable'>kifu_cache_enable</span>
+  <span class='kw'>else</span>
+    <span class='comment'># くそ重くなるのでこれはやってはいけない
+</span>    <span class='const'><span class='object_link'><a href="KifuFormatWithBodInfo.html" title="KifuFormatWithBodInfo (class)">KifuFormatWithBodInfo</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+      <span class='id identifier rubyid_converted_info'>converted_info</span> <span class='op'>=</span> <span class='id identifier rubyid_converted_infos'>converted_infos</span><span class='period'>.</span><span class='id identifier rubyid_text_format_eq'>text_format_eq</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_take'>take</span> <span class='op'>||</span> <span class='id identifier rubyid_converted_infos'>converted_infos</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
+      <span class='id identifier rubyid_converted_info'>converted_info</span><span class='period'>.</span><span class='id identifier rubyid_text_body'>text_body</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_public_send'>public_send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>to_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_converted_info'>converted_info</span><span class='period'>.</span><span class='id identifier rubyid_text_format'>text_format</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_turn_max'>turn_max</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_mediator'>mediator</span><span class='period'>.</span><span class='id identifier rubyid_turn_info'>turn_info</span><span class='period'>.</span><span class='id identifier rubyid_turn_max'>turn_max</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_critical_turn'>critical_turn</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_mediator'>mediator</span><span class='period'>.</span><span class='id identifier rubyid_critical_turn'>critical_turn</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sfen_body'>sfen_body</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_mediator'>mediator</span><span class='period'>.</span><span class='id identifier rubyid_to_sfen'>to_sfen</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_meta_info'>meta_info</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='symbol'>:header</span>          <span class='op'>=&gt;</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='comma'>,</span>
+    <span class='symbol'>:detail_names</span>    <span class='op'>=&gt;</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_sente_gote'>sente_gote</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Splitter.html" title="Splitter (module)">Splitter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_split'><span class='object_link'><a href="Splitter.html#split-instance_method" title="Splitter#split (method)">split</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_content'>詳細</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='symbol'>:simple_names</span>    <span class='op'>=&gt;</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_sente_gote'>sente_gote</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Splitter.html" title="Splitter (module)">Splitter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pair_split'><span class='object_link'><a href="Splitter.html#pair_split-instance_method" title="Splitter#pair_split (method)">pair_split</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='symbol'>:skill_set_hash</span>  <span class='op'>=&gt;</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_skill_set_hash'>skill_set_hash</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_defense_tag_list'>defense_tag_list</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attack_tag_list'>attack_tag_list</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_technique_tag_list'>technique_tag_list</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_note_tag_list'>note_tag_list</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_other_tag_list'>other_tag_list</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_secret_tag_list'>secret_tag_list</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_defense_tag_list'>defense_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span>   <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_mediator'>mediator</span><span class='period'>.</span><span class='id identifier rubyid_players'>players</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_skill_set'>skill_set</span><span class='period'>.</span><span class='id identifier rubyid_defense_infos'>defense_infos</span><span class='period'>.</span><span class='id identifier rubyid_normalize'>normalize</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_alias_names'>alias_names</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_attack_tag_list'>attack_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span>    <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_mediator'>mediator</span><span class='period'>.</span><span class='id identifier rubyid_players'>players</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_skill_set'>skill_set</span><span class='period'>.</span><span class='id identifier rubyid_attack_infos'>attack_infos</span><span class='period'>.</span><span class='id identifier rubyid_normalize'>normalize</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span>  <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_alias_names'>alias_names</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_technique_tag_list'>technique_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_mediator'>mediator</span><span class='period'>.</span><span class='id identifier rubyid_players'>players</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_skill_set'>skill_set</span><span class='period'>.</span><span class='id identifier rubyid_technique_infos'>technique_infos</span><span class='period'>.</span><span class='id identifier rubyid_normalize'>normalize</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span>  <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_alias_names'>alias_names</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_note_tag_list'>note_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span>      <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_mediator'>mediator</span><span class='period'>.</span><span class='id identifier rubyid_players'>players</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_skill_set'>skill_set</span><span class='period'>.</span><span class='id identifier rubyid_note_infos'>note_infos</span><span class='period'>.</span><span class='id identifier rubyid_normalize'>normalize</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span>  <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_alias_names'>alias_names</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>棋戦</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>持ち時間</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_tournament_list'>tournament_list</span>
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='const'><span class='object_link'><a href="Splitter.html" title="Splitter (module)">Splitter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_split'><span class='object_link'><a href="Splitter.html#split-instance_method" title="Splitter#split (method)">split</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>掲載</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='const'><span class='object_link'><a href="Splitter.html" title="Splitter (module)">Splitter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_split'><span class='object_link'><a href="Splitter.html#split-instance_method" title="Splitter#split (method)">split</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>備考</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_sente_gote'>sente_gote</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Splitter.html" title="Splitter (module)">Splitter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_split'><span class='object_link'><a href="Splitter.html#split-instance_method" title="Splitter#split (method)">split</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_content'>詳細</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_sente_gote'>sente_gote</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Splitter.html" title="Splitter (module)">Splitter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_split'><span class='object_link'><a href="Splitter.html#split-instance_method" title="Splitter#split (method)">split</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>     <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_place_list'>place_list</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>開始日時</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_zone'>zone</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_battled_at'>battled_at</span> <span class='op'>||=</span> <span class='id identifier rubyid_t'>t</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\d+</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+        <span class='id identifier rubyid_e'>e</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+          <span class='id identifier rubyid_e'>e</span> <span class='op'>=</span> <span class='int'>1</span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_e'>e</span>
+      <span class='rbrace'>}</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_battled_at'>battled_at</span> <span class='op'>||=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_zone'>zone</span><span class='period'>.</span><span class='id identifier rubyid_local'>local</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_battled_at'>battled_at</span> <span class='op'>||=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_zone'>zone</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0001/01/01</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>手合割</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_parser_exec_after'>parser_exec_after</span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='rparen'>)</span>
+  <span class='ivar'>@parser_executed</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parser_exec_after-instance_method">
+  
+    #<strong>parser_exec_after</strong>(info)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 106</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parser_exec_after'>parser_exec_after</span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="place_list-instance_method">
+  
+    #<strong>place_list</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 150</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_place_list'>place_list</span>
+  <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_meta_info'>meta_info</span><span class='lbracket'>[</span><span class='symbol'>:header</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>場所</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_md'>md</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.*)「(.*?)」</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_md'>md</span><span class='period'>.</span><span class='id identifier rubyid_captures'>captures</span>
+  <span class='kw'>end</span>
+  <span class='const'>Array</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:blank?</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="player_info-instance_method">
+  
+    #<strong>player_info</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 188</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_player_info'>player_info</span>
+  <span class='id identifier rubyid_decorator'>decorator</span> <span class='op'>=</span> <span class='id identifier rubyid_battle_decorator'>battle_decorator</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='const'>Bioshogi</span><span class='op'>::</span><span class='const'>Location</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_decorator'>decorator</span><span class='period'>.</span><span class='id identifier rubyid_player_name_for'>player_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='int'>3</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="preset_link-instance_method">
+  
+    #<strong>preset_link</strong>(h, name)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 132</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_preset_link'>preset_link</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_label'>label</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>平手</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_span'>span</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='symbol'>:class</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text-danger</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_link_to'>link_to</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_general_search_path'>general_search_path</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remake-instance_method">
+  
+    #<strong>remake</strong>(**options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 109</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_remake'>remake</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_b'>b</span> <span class='op'>=</span> <span class='id identifier rubyid_taggings'>taggings</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+  <span class='id identifier rubyid_parser_exec'>parser_exec</span>
+  <span class='id identifier rubyid_save!'>save!</span>
+  <span class='id identifier rubyid_memberships'>memberships</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:save!</span><span class='rparen'>)</span>   <span class='comment'># 更新で設定したタグを保存するため
+</span>  <span class='id identifier rubyid_a'>a</span> <span class='op'>=</span> <span class='id identifier rubyid_taggings'>taggings</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+  <span class='id identifier rubyid_flag'>flag</span> <span class='op'>=</span> <span class='id identifier rubyid_a'>a</span> <span class='op'>!=</span> <span class='id identifier rubyid_b'>b</span> <span class='comment'># タグの変更は e.changed? では関知できない
+</span>  <span class='id identifier rubyid_print'>print</span><span class='lparen'>(</span><span class='id identifier rubyid_flag'>flag</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>U</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_flag'>flag</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="showable_tag_list-instance_method">
+  
+    #<strong>showable_tag_list</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_showable_tag_list'>showable_tag_list</span>
+  <span class='lbracket'>[</span>
+    <span class='op'>*</span><span class='id identifier rubyid_attack_tag_list'>attack_tag_list</span><span class='comma'>,</span>
+    <span class='op'>*</span><span class='id identifier rubyid_defense_tag_list'>defense_tag_list</span><span class='comma'>,</span>
+    <span class='op'>*</span><span class='id identifier rubyid_technique_tag_list'>technique_tag_list</span><span class='comma'>,</span>
+    <span class='op'>*</span><span class='id identifier rubyid_note_tag_list'>note_tag_list</span><span class='comma'>,</span>
+    <span class='op'>*</span><span class='id identifier rubyid_other_tag_list'>other_tag_list</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sp_turn-instance_method">
+  
+    #<strong>sp_turn</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 173</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sp_turn'>sp_turn</span>
+  <span class='id identifier rubyid_start_turn'>start_turn</span> <span class='op'>||</span> <span class='id identifier rubyid_critical_turn'>critical_turn</span> <span class='op'>||</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_kifu_copy_params-instance_method">
+  
+    #<strong>to_kifu_copy_params</strong>(h, **options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+165
+166
+167
+168
+169
+170
+171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 165</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_kifu_copy_params'>to_kifu_copy_params</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='lbrace'>{</span>
+    <span class='label'>kc_url:</span> <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_url_for'>url_for</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>kc_title:</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span>
+    <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tournament_list-instance_method">
+  
+    #<strong>tournament_list</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/battle_model_shared_methods.rb', line 161</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tournament_list'>tournament_list</span>
+  <span class='const'><span class='object_link'><a href="Splitter.html" title="Splitter (module)">Splitter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_split'><span class='object_link'><a href="Splitter.html#split-instance_method" title="Splitter#split (method)">split</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_meta_info'>meta_info</span><span class='lbracket'>[</span><span class='symbol'>:header</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>棋戦詳細</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Oct 25 16:06:59 2019 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.20 (ruby-2.6.1).
+</div>
+
+    </div>
+  </body>
+</html>

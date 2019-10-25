@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Colosseum
+  
+    &mdash; Documentation by YARD 0.9.20
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Colosseum";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (C)</a> &raquo;
+    
+    
+    <span class="title">Colosseum</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Colosseum
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>app/models/colosseum/rule.rb<span class="defines">,<br />
+  app/models/colosseum.rb,<br /> app/models/colosseum/user.rb,<br /> app/models/colosseum/battle.rb,<br /> app/models/colosseum/profile.rb,<br /> app/models/colosseum/auth_info.rb,<br /> app/models/colosseum/chronicle.rb,<br /> app/models/colosseum/race_info.rb,<br /> app/models/colosseum/team_info.rb,<br /> app/models/colosseum/membership.rb,<br /> app/models/colosseum/watch_ship.rb,<br /> app/models/colosseum/xstate_info.rb,<br /> app/models/colosseum/chat_message.rb,<br /> app/models/colosseum/ranking_info.rb,<br /> app/models/colosseum/lifetime_info.rb,<br /> app/models/colosseum/lobby_message.rb,<br /> app/models/colosseum/cpu_brain_info.rb,<br /> app/models/colosseum/last_action_info.rb,<br /> app/models/colosseum/robot_accept_info.rb,<br /> app/models/colosseum/custom_preset_info.rb,<br /> app/serializers/colosseum/rule_serializer.rb,<br /> app/controllers/colosseum/users_controller.rb,<br /> app/serializers/colosseum/lobby_serializer.rb,<br /> app/controllers/colosseum/battles_controller.rb,<br /> app/controllers/colosseum/rankings_controller.rb,<br /> app/controllers/colosseum/sessions_controller.rb,<br /> app/models/colosseum/battle/chronicle_methods.rb,<br /> app/serializers/colosseum/membership_serializer.rb,<br /> app/serializers/colosseum/watch_ship_serializer.rb,<br /> app/controllers/colosseum/application_controller.rb,<br /> app/serializers/colosseum/battle_each_serializer.rb,<br /> app/serializers/colosseum/battle_show_serializer.rb,<br /> app/serializers/colosseum/online_user_serializer.rb,<br /> app/serializers/colosseum/simple_user_serializer.rb,<br /> app/serializers/colosseum/chat_message_serializer.rb,<br /> app/serializers/colosseum/current_user_serializer.rb,<br /> app/serializers/colosseum/user_profile_serializer.rb,<br /> app/serializers/colosseum/lobby_message_serializer.rb,<br /> app/controllers/colosseum/omniauth_callbacks_controller.rb,<br /> app/serializers/colosseum/active_battle_each_serializer.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h2 id="label-Schema+Information+-3D-3D">Schema Information ==</h2>
+
+<p>対局 (colosseum_battles as Colosseum::Battle)</p>
+
+<p>|——————-<code>----------------------------------------------</code>————-<code>---------------------</code>——+——-| | name              | desc                                         | type        | opts                | refs | index | |——————-<code>----------------------------------------------</code>————-<code>---------------------</code>——+——-| | id                | ID                                           | integer(8)  | NOT NULL PK         |      |       | | black_preset_key  | ▲手合割                                     | string(255) | NOT NULL            |      |       | | white_preset_key  | △手合割                                     | string(255) | NOT NULL            |      |       | | lifetime_key      | 時間                                         | string(255) | NOT NULL            |      |       | | team_key          | 人数                                         | string(255) | NOT NULL            |      |       | | full_sfen         | USI形式棋譜                                  | text(65535) | NOT NULL            |      |       | | clock_counts      | 対局時計情報                                 | text(65535) | NOT NULL            |      |       | | countdown_flags   | 秒読み状態                                   | text(65535) | NOT NULL            |      |       | | turn_max          | 手番数                                       | integer(4)  | NOT NULL            |      |       | | battle_request_at | 対局申し込みによる成立日時                   | datetime    |                     |      |       | | auto_matched_at   | 自動マッチングによる成立日時                 | datetime    |                     |      |       | | begin_at          | メンバーたち部屋に入って対局開始になった日時 | datetime    |                     |      |       | | end_at            | バトル終了日時                               | datetime    |                     |      |       | | last_action_key   | 最後の状態                                   | string(255) |                     |      |       | | win_location_key  | 勝った方の先後                               | string(255) |                     |      |       | | memberships_count | 対局者総数                                   | integer(4)  | DEFAULT(0) NOT NULL |      |       | | watch_ships_count | この部屋の観戦者数                           | integer(4)  | DEFAULT(0) NOT NULL |      |       | | created_at        | 作成日時                                     | datetime    | NOT NULL            |      |       | | updated_at        | 更新日時                                     | datetime    | NOT NULL            |      |       | |——————-<code>----------------------------------------------</code>————-<code>---------------------</code>——+——-|</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Colosseum/ActiveBattleEachSerializer.html" title="Colosseum::ActiveBattleEachSerializer (class)">ActiveBattleEachSerializer</a></span>, <span class='object_link'><a href="Colosseum/ApplicationController.html" title="Colosseum::ApplicationController (class)">ApplicationController</a></span>, <span class='object_link'><a href="Colosseum/AuthInfo.html" title="Colosseum::AuthInfo (class)">AuthInfo</a></span>, <span class='object_link'><a href="Colosseum/Battle.html" title="Colosseum::Battle (class)">Battle</a></span>, <span class='object_link'><a href="Colosseum/BattleEachSerializer.html" title="Colosseum::BattleEachSerializer (class)">BattleEachSerializer</a></span>, <span class='object_link'><a href="Colosseum/BattleShowSerializer.html" title="Colosseum::BattleShowSerializer (class)">BattleShowSerializer</a></span>, <span class='object_link'><a href="Colosseum/BattlesController.html" title="Colosseum::BattlesController (class)">BattlesController</a></span>, <span class='object_link'><a href="Colosseum/ChatMessage.html" title="Colosseum::ChatMessage (class)">ChatMessage</a></span>, <span class='object_link'><a href="Colosseum/ChatMessageSerializer.html" title="Colosseum::ChatMessageSerializer (class)">ChatMessageSerializer</a></span>, <span class='object_link'><a href="Colosseum/Chronicle.html" title="Colosseum::Chronicle (class)">Chronicle</a></span>, <span class='object_link'><a href="Colosseum/CpuBrainInfo.html" title="Colosseum::CpuBrainInfo (class)">CpuBrainInfo</a></span>, <span class='object_link'><a href="Colosseum/CurrentUserSerializer.html" title="Colosseum::CurrentUserSerializer (class)">CurrentUserSerializer</a></span>, <span class='object_link'><a href="Colosseum/CustomPresetInfo.html" title="Colosseum::CustomPresetInfo (class)">CustomPresetInfo</a></span>, <span class='object_link'><a href="Colosseum/LastActionInfo.html" title="Colosseum::LastActionInfo (class)">LastActionInfo</a></span>, <span class='object_link'><a href="Colosseum/LifetimeInfo.html" title="Colosseum::LifetimeInfo (class)">LifetimeInfo</a></span>, <span class='object_link'><a href="Colosseum/LobbyMessage.html" title="Colosseum::LobbyMessage (class)">LobbyMessage</a></span>, <span class='object_link'><a href="Colosseum/LobbyMessageSerializer.html" title="Colosseum::LobbyMessageSerializer (class)">LobbyMessageSerializer</a></span>, <span class='object_link'><a href="Colosseum/LobbySerializer.html" title="Colosseum::LobbySerializer (class)">LobbySerializer</a></span>, <span class='object_link'><a href="Colosseum/Membership.html" title="Colosseum::Membership (class)">Membership</a></span>, <span class='object_link'><a href="Colosseum/MembershipSerializer.html" title="Colosseum::MembershipSerializer (class)">MembershipSerializer</a></span>, <span class='object_link'><a href="Colosseum/OmniauthCallbacksController.html" title="Colosseum::OmniauthCallbacksController (class)">OmniauthCallbacksController</a></span>, <span class='object_link'><a href="Colosseum/OnlineUserSerializer.html" title="Colosseum::OnlineUserSerializer (class)">OnlineUserSerializer</a></span>, <span class='object_link'><a href="Colosseum/Profile.html" title="Colosseum::Profile (class)">Profile</a></span>, <span class='object_link'><a href="Colosseum/RaceInfo.html" title="Colosseum::RaceInfo (class)">RaceInfo</a></span>, <span class='object_link'><a href="Colosseum/RankingInfo.html" title="Colosseum::RankingInfo (class)">RankingInfo</a></span>, <span class='object_link'><a href="Colosseum/RankingsController.html" title="Colosseum::RankingsController (class)">RankingsController</a></span>, <span class='object_link'><a href="Colosseum/RobotAcceptInfo.html" title="Colosseum::RobotAcceptInfo (class)">RobotAcceptInfo</a></span>, <span class='object_link'><a href="Colosseum/Rule.html" title="Colosseum::Rule (class)">Rule</a></span>, <span class='object_link'><a href="Colosseum/RuleSerializer.html" title="Colosseum::RuleSerializer (class)">RuleSerializer</a></span>, <span class='object_link'><a href="Colosseum/SessionsController.html" title="Colosseum::SessionsController (class)">SessionsController</a></span>, <span class='object_link'><a href="Colosseum/SimpleUserSerializer.html" title="Colosseum::SimpleUserSerializer (class)">SimpleUserSerializer</a></span>, <span class='object_link'><a href="Colosseum/TeamInfo.html" title="Colosseum::TeamInfo (class)">TeamInfo</a></span>, <span class='object_link'><a href="Colosseum/User.html" title="Colosseum::User (class)">User</a></span>, <span class='object_link'><a href="Colosseum/UserProfileSerializer.html" title="Colosseum::UserProfileSerializer (class)">UserProfileSerializer</a></span>, <span class='object_link'><a href="Colosseum/UsersController.html" title="Colosseum::UsersController (class)">UsersController</a></span>, <span class='object_link'><a href="Colosseum/WatchShip.html" title="Colosseum::WatchShip (class)">WatchShip</a></span>, <span class='object_link'><a href="Colosseum/WatchShipSerializer.html" title="Colosseum::WatchShipSerializer (class)">WatchShipSerializer</a></span>, <span class='object_link'><a href="Colosseum/XstateInfo.html" title="Colosseum::XstateInfo (class)">XstateInfo</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#table_name_prefix-class_method" title="table_name_prefix (class method)">.<strong>table_name_prefix</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="table_name_prefix-class_method">
+  
+    .<strong>table_name_prefix</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2
+3
+4</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/colosseum.rb', line 2</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_table_name_prefix'>table_name_prefix</span>
+  <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Oct 25 16:06:59 2019 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.20 (ruby-2.6.1).
+</div>
+
+    </div>
+  </body>
+</html>
