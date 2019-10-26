@@ -24,7 +24,9 @@ export default {
     },
 
     http_command_then_process(response, loading_instance, callback) {
-      loading_instance.close()
+      if (loading_instance) {
+        loading_instance.close()
+      }
       if (response.data.message) {
         this.$buefy.toast.open({message: response.data.message})
       }
@@ -34,7 +36,9 @@ export default {
     },
 
     http_command_error_process(error, loading_instance) {
-      loading_instance.close()
+      if (loading_instance) {
+        loading_instance.close()
+      }
       console.table([error.response])
       this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
     },
@@ -80,12 +84,9 @@ export default {
         const full_url = `${kc_url}.${kc_format}`
 
         if (true) {
-          this.$http.get(full_url, { params: { copy_trigger: true }}).then(response => {
-            params["text"] = response.data
+          this.http_get_command(full_url, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
+            params["text"] = data
             this.clipboard_copy(params)
-          }).catch(error => {
-            console.table([error.response])
-            this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
           })
         } else {
           const kifu_text = $.ajax({ // このためだけに jQuery 使用
@@ -149,7 +150,7 @@ export default {
         }
 
         this.talk(params["success_yomiage"], {rate: 2.0})
-        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
+        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom"})
       }
 
       // この方法は Windows Chrome で必ず失敗するというか navigator.clipboard が定義されてないので激指をメインで使う人は異様に使いにくくなってしまう
