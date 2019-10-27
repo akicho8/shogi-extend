@@ -187,7 +187,7 @@ export default {
           template: `
             <div class="modal-card">
               <header class="modal-card-head">
-                <p class="modal-card-title">コピーに失敗しました</p>
+                <p class="modal-card-title">棋譜のコピーに失敗しました</p>
               </header>
               <section class="modal-card-body">
                 <p><small>こちらから手動でコピーしてみてください</small></p>
