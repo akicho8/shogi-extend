@@ -75,7 +75,7 @@ export default {
 
       const kc_url = params["kc_url"]
       const kc_title = params["kc_title"]
-      if (kc_title && false) {
+      if (kc_title) {
         params["success_yomiage"] = `${kc_title}の棋譜をクリップボードにコピーしました`
       }
 
@@ -149,7 +149,7 @@ export default {
           return
         }
 
-        this.talk(params["success_yomiage"], {rate: 2.0})
+        this.talk(params["success_yomiage"], {rate: 1.5})
         this.$buefy.toast.open({message: params["success_message"], position: "is-bottom"})
       }
 
