@@ -21,7 +21,7 @@ class CpuBattlesController < ApplicationController
 
   def sp_params
     {
-      board_style_key: params[:board_style_key] || "p",
+      board_style_key: params[:board_style_key] || "a",
     }.merge(params.to_unsafe_h.to_options)
   end
 

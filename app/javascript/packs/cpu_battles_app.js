@@ -16,12 +16,18 @@ window.CpuBattlesApp = Vue.extend({
   created() {
     CpuBrainInfo.memory_record_reset(this.$options.cpu_brain_infos)
 
+    this.board_style_info_reflection()
+
     setTimeout(() => this.talk(this.first_talk_body), 1000 * 1)
   },
 
   computed: {
     CpuBrainInfo()   { return CpuBrainInfo   },
     BoardStyleInfo() { return BoardStyleInfo },
+
+    board_style_info() {
+      return BoardStyleInfo.fetch(this.sp_params.board_style_key)
+    },
 
     cpu_brain_info() {
       return CpuBrainInfo.fetch(this.cpu_brain_key)
@@ -57,14 +63,17 @@ window.CpuBattlesApp = Vue.extend({
     },
 
     // 盤面
-    "sp_params.board_style_key": function(key) {
-      const info = BoardStyleInfo.fetch(key)
-      info.func(this.sp_params)
-      this.talk(`${info.name}に変更しました`)
+    "sp_params.board_style_key": function() {
+      this.board_style_info_reflection()
+      this.talk(`${this.board_style_info.name}に変更しました`)
     },
   },
 
   methods: {
+    board_style_info_reflection() {
+      this.board_style_info.func(this.sp_params)
+    },
+
     play_mode_long_sfen_set(v) {
       this.$http.post(this.$options.player_mode_moved_path, {kifu_body: v, cpu_brain_key: this.cpu_brain_key}).then(response => {
         if (response.data["error_message"]) {
