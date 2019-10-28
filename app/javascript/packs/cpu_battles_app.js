@@ -1,11 +1,11 @@
 import _ from "lodash"
 
 import CpuBrainInfo from "cpu_brain_info"
+import BoardStyleInfo from "board_style_info"
 
 window.CpuBattlesApp = Vue.extend({
   data() {
     return {
-      CpuBrainInfo,
       sp_params: this.$options.sp_params,
       full_sfen: "position startpos",
       cpu_brain_key: this.$options.cpu_brain_key,
@@ -20,6 +20,9 @@ window.CpuBattlesApp = Vue.extend({
   },
 
   computed: {
+    CpuBrainInfo()   { return CpuBrainInfo   },
+    BoardStyleInfo() { return BoardStyleInfo },
+
     cpu_brain_info() {
       return CpuBrainInfo.fetch(this.cpu_brain_key)
     },
@@ -51,6 +54,13 @@ window.CpuBattlesApp = Vue.extend({
   watch: {
     cpu_brain_key() {
       this.talk(`${this.cpu_brain_info.name}に変更しました`)
+    },
+
+    // 盤面
+    "sp_params.board_style_key": function(key) {
+      const info = BoardStyleInfo.fetch(key)
+      info.func(this.sp_params)
+      this.talk(`${info.name}に変更しました`)
     },
   },
 
