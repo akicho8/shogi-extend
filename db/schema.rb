@@ -217,50 +217,6 @@ ActiveRecord::Schema.define(version: 2019_09_14_111600) do
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
   end
 
-  create_table "general_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "key", null: false, comment: "対局識別子"
-    t.datetime "battled_at", comment: "対局開始日時"
-    t.text "kifu_body", null: false, comment: "棋譜の断片"
-    t.string "final_key", null: false, comment: "結果詳細"
-    t.integer "turn_max", null: false, comment: "手数"
-    t.text "meta_info", null: false, comment: "棋譜メタ情報"
-    t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "start_turn"
-    t.integer "critical_turn"
-    t.string "saturn_key", null: false
-    t.string "sfen_body", limit: 8192
-    t.integer "image_turn"
-    t.index ["battled_at"], name: "index_general_battles_on_battled_at"
-    t.index ["critical_turn"], name: "index_general_battles_on_critical_turn"
-    t.index ["final_key"], name: "index_general_battles_on_final_key"
-    t.index ["key"], name: "index_general_battles_on_key", unique: true
-    t.index ["saturn_key"], name: "index_general_battles_on_saturn_key"
-    t.index ["turn_max"], name: "index_general_battles_on_turn_max"
-  end
-
-  create_table "general_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "battle_id", null: false, comment: "対局"
-    t.string "judge_key", null: false, comment: "勝・敗・引き分け"
-    t.string "location_key", null: false, comment: "▲△"
-    t.integer "position", comment: "手番の順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_id", "location_key"], name: "general_memberships_126b7e47a41d11c2", unique: true
-    t.index ["battle_id"], name: "index_general_memberships_on_battle_id"
-    t.index ["judge_key"], name: "index_general_memberships_on_judge_key"
-    t.index ["location_key"], name: "index_general_memberships_on_location_key"
-    t.index ["position"], name: "index_general_memberships_on_position"
-  end
-
-  create_table "general_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "name", null: false, comment: "対局者名"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_general_users_on_name", unique: true
-  end
-
   create_table "swars_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "対局"
     t.datetime "created_at", null: false
