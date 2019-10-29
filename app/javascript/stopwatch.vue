@@ -76,6 +76,16 @@
           a.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
       .log_button_container
+        //- b-field(grouped)
+        //-   b-field(label="タイムアウト 秒" expanded)
+        //-     b-slider(size="is-small" :min="0" :max="60" :step="5" ticks :custom-formatter="v => v + '秒'" v-model="sec_val")
+        //-   b-field(label="分" expanded)
+        //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
+        //-   b-field(label="分" expanded)
+        b-field(label="タイムアウト(秒)" expanded)
+          b-numberinput(v-model.number="timeout_sec" :min="0" step="5" controls-position="compact" :expanded="true" size="is-small")
+
+      .log_button_container
         b-button(@click="log_display") 履歴
 
     .column
@@ -172,6 +182,7 @@ export default {
       generate_max: null,
       book_title: null,
       log_modal: null,
+      timeout_sec: null,
     }
   },
 
@@ -588,6 +599,7 @@ export default {
       this.generate_max   = hash.generate_max || 200
       this.drop_seconds   = hash.drop_seconds || 60
       this.book_title     = hash.book_title || "詰将棋用ストップウォッチ"
+      this.timeout_sec = hash.timeout_sec || 0
     },
 
     data_restore_from_url_or_storage_after_hook() {
@@ -655,12 +667,21 @@ export default {
     format_index()  { this.data_save_to_local_storage() },
     drop_seconds()  { this.data_save_to_local_storage() },
     book_title()    { this.data_save_to_local_storage() },
+    timeout_sec()   { this.data_save_to_local_storage() },
     rows:           { handler() { this.data_save_to_local_storage() }, deep: true, },
 
     current_min(v) {
       if (v >= 1) {
         if (this.mode === "playing") {
           this.safe_talk(`${v}分経過`, {rate: 1.0})
+        }
+      }
+    },
+
+    lap_counter(v) {
+      if (this.timeout_sec >= 1) {
+        if (this.timeout_sec <= v) {
+          this.lap_handle('x')
         }
       }
     },
@@ -808,6 +829,7 @@ export default {
         quest_text:     this.quest_text,
         format_index:   this.format_index,
         book_title:     this.book_title,
+        timeout_sec:    this.timeout_sec,
       }
     },
 
