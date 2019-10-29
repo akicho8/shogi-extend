@@ -671,18 +671,20 @@ export default {
     rows:           { handler() { this.data_save_to_local_storage() }, deep: true, },
 
     current_min(v) {
-      if (v >= 1) {
-        if (this.mode === "playing") {
-          this.safe_talk(`${v}分経過`, {rate: 1.0})
+      if (this.mode === "playing") {
+        if (v >= 1) {
+          if (this.timeout_p) {
+            // タイムアウトのブザーと重なる場合は「?分経過」の発声をしない
+          } else {
+            this.safe_talk(`${v}分経過`, {rate: 1.0})
+          }
         }
       }
     },
 
     lap_counter(v) {
-      if (this.timeout_sec >= 1) {
-        if (this.timeout_sec <= v) {
-          this.lap_handle('x')
-        }
+      if (this.timeout_p) {
+        this.lap_handle('x')
       }
     },
 
@@ -704,6 +706,16 @@ export default {
   },
 
   computed: {
+    timeout_p() {
+      if (this.mode === "playing") {
+        if (this.timeout_sec >= 1) {
+          if (this.timeout_sec <= this.lap_counter) {
+            return true
+          }
+        }
+      }
+    },
+
     last_quest_exist_p() {
       return this.quest_name_get(this.new_quest)
     },
