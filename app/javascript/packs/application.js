@@ -81,7 +81,9 @@ Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_support from "vue_support.js"
+import vue_support from "support/vue_support.js"
+import vue_fetch from "support/vue_fetch.js"
+import vue_clipboard from "support/vue_clipboard.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import message_link_to from "message_link_to.vue"
@@ -104,6 +106,8 @@ Vue.mixin({
 
   mixins: [
     vue_support,
+    vue_fetch,
+    vue_clipboard,
   ],
 
   // よくない命名規則だけどこっちの方が開発しやすい
