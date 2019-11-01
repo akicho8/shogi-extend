@@ -8,10 +8,6 @@ module SlackAgent
   mattr_accessor(:channel_code) { "#shogi_web" }
 
   def message_send(key:, body:, ua: nil)
-    if Rails.env.test?
-      return
-    end
-
     if ENV["SETUP"]
       return
     end
@@ -25,7 +21,11 @@ module SlackAgent
     end
 
     Slack::Web::Client.new.tap do |client|
-      client.chat_postMessage(channel: channel_code, text: "#{icon_symbol(ua)}【#{key}】#{body} #{user_agent_part(ua)}".strip)
+      args = {channel: channel_code, text: "#{icon_symbol(ua)}【#{key}】#{body} #{user_agent_part(ua)}".strip}
+      if Rails.env.test?
+        return args
+      end
+      client.chat_postMessage(args)
     end
   rescue Slack::Web::Api::Errors::TooManyRequestsError, Faraday::ParsingError => error
     # エラー通知はするが Slack 通知自体はなかったことにして処理を続行する
