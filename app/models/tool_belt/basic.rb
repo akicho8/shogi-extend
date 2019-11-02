@@ -2,7 +2,7 @@ module ToolBelt
   class Basic < Base
     private
 
-    def builder
+    def build
       out = super
 
       out << h.tag.div(:class => "buttons") do
@@ -33,12 +33,12 @@ module ToolBelt
           row[:id] = h.link_to(e.id, e)
           row[:name] = h.link_to(e.name, e)
           row["操作"] = [
-            link_to_eval("login") { "current_user_set_id(#{e.id})" },
-            link_to_eval("削除") { "Colosseum::User.find(#{e.id}).destroy!" },
-            link_to_eval("online") { "Colosseum::User.find(#{e.id}).update!(joined_at: Time.current)" if !e.joined_at },
-            link_to_eval("offline") { "Colosseum::User.find(#{e.id}).update!(joined_at: nil)" if e.joined_at },
-            link_to_eval("logout") { "reset_session" if e == h.current_user },
-            link_to_eval("名前変更") { "Colosseum::User.find(#{e.id}).update!(name: SecureRandom.hex)" },
+            link_to_eval("login")    { "current_user_set_id(#{e.id})"                                                    },
+            link_to_eval("削除")     { "Colosseum::User.find(#{e.id}).destroy!"                                          },
+            link_to_eval("online")   { "Colosseum::User.find(#{e.id}).update!(joined_at: Time.current)" if !e.joined_at  },
+            link_to_eval("offline")  { "Colosseum::User.find(#{e.id}).update!(joined_at: nil)" if e.joined_at            },
+            link_to_eval("logout")   { "reset_session" if e == h.current_user                                            },
+            link_to_eval("名前変更") { "Colosseum::User.find(#{e.id}).update!(name: SecureRandom.hex)"                   },
           ].compact.join(" ").html_safe
         end
       end

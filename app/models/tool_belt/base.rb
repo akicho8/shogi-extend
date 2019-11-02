@@ -10,12 +10,12 @@ module ToolBelt
       return unless Rails.env.development?
       return if h.params[:iframe]
 
-      h.tag.div(builder.join.html_safe, :class => "box tool_belt is_screen_only")
+      h.tag.div(build.join.html_safe, :class => "box tool_belt is_screen_only")
     end
 
     private
 
-    def builder
+    def build
       []
     end
 
