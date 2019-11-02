@@ -45,10 +45,11 @@ class Talk
   end
 
   def surrogate_pair_deleted_text
-    unless surrogate_pair_delete_enable
-      return source_text
+    if surrogate_pair_delete_enable
+      source_text.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
+    else
+      source_text
     end
-    source_text.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
   end
 
   def direct_file_path
@@ -70,6 +71,7 @@ class Talk
   def generate_if_not_exist
     if direct_file_path.exist?
       if Rails.env.production? || Rails.env.test?
+        # すでにファイルが生成されている場合はパスする
         return
       end
     end
