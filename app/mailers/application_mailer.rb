@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  MEASURES_AGAINST_DOUBLE_LINE_FEEDS_IN_GMAIL = true # GMailで改行が2重になる対策
+  cattr_accessor(:measures_against_double_line_feeds_in_gmail) { true } # GMailで改行が2重になる対策
 
   default from: AppConfig[:admin_email]
   default to: AppConfig[:admin_email]
@@ -8,16 +8,28 @@ class ApplicationMailer < ActionMailer::Base
 
   # ApplicationMailer.developper_notice.deliver_now
   def developper_notice(**params)
-    pre_body = params[:body].to_s
-    if MEASURES_AGAINST_DOUBLE_LINE_FEEDS_IN_GMAIL
-      pre_body = pre_body.gsub("\n", "<br>")
-    end
-    mail(subject: [subject_prefix, " ", params[:subject]].join, content_type: "text/html", body: "<pre style='white-space: pre; font-family: Osaka-mono, \"Osaka-等幅\", \"ＭＳ ゴシック\", \"Courier New\", Consolas, monospace'>#{pre_body}</pre>")
+    body = measures_new_line_in_gmail_is_to_double(params[:body].to_s)
+    mail(subject: subject_for(params[:subject]), content_type: "text/html", body: monospaced_text(body))
   end
 
   private
 
   def subject_prefix
-    "[#{AppConfig[:app_name]} #{Rails.env}] "
+    "[#{AppConfig[:app_name]} #{Rails.env}]" + " "
+  end
+
+  def subject_for(str)
+    [subject_prefix, " ", str].join
+  end
+
+  def monospaced_text(text)
+    %(<pre style='white-space: pre; font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace'>#{text}</pre>)
+  end
+
+  def measures_new_line_in_gmail_is_to_double(text)
+    if measures_against_double_line_feeds_in_gmail
+      text = text.gsub("\n", "<br>")
+    end
+    text
   end
 end
