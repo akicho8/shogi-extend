@@ -178,7 +178,7 @@ module BattleModelSharedMethods
     image_turn || start_turn || critical_turn || 9999
   end
 
-  def battle_decorator(params)
+  def battle_decorator(params = {})
     @battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))
   end
 

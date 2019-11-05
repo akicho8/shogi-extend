@@ -14,6 +14,7 @@ module BattleDecorator
         outer_columns: 3,
         cell_rows: 25,
         separator: "→",
+        strategy_take_max: 3,
       }
     end
 
@@ -313,7 +314,7 @@ module BattleDecorator
     def strategy_pack_for(location)
       player = heavy_parsed_info.mediator.player_at(location)
       sep = " #{params[:separator]} "
-      max = 3
+      max = params[:strategy_take_max]
       s = nil
       s ||= player.skill_set.attack_infos.take(max).join(sep).presence
       s ||= player.skill_set.defense_infos.take(max).join(sep).presence
