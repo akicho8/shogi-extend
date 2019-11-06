@@ -82,8 +82,10 @@
         //-   b-field(label="分" expanded)
         //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
         //-   b-field(label="分" expanded)
-        b-field(label="タイムアウト(秒)" expanded)
+        b-field(label="1問毎のタイムアウト(秒)" expanded)
           b-numberinput(v-model.number="timeout_sec" :min="0" step="5" controls-position="compact" :expanded="true" size="is-small")
+        b-field(label="全体の制限時間(分)" expanded)
+          b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
 
       .log_button_container
         b-button(@click="log_display") 履歴
@@ -183,6 +185,7 @@ export default {
       book_title: null,
       log_modal: null,
       timeout_sec: null,
+      total_timeout_min: null,
     }
   },
 
@@ -600,6 +603,7 @@ export default {
       this.drop_seconds   = hash.drop_seconds || 60
       this.book_title     = hash.book_title || "詰将棋用ストップウォッチ"
       this.timeout_sec = hash.timeout_sec || 0
+      this.total_timeout_min = hash.total_timeout_min || 0
     },
 
     data_restore_from_url_or_storage_after_hook() {
@@ -668,12 +672,13 @@ export default {
     drop_seconds()  { this.data_save_to_local_storage() },
     book_title()    { this.data_save_to_local_storage() },
     timeout_sec()   { this.data_save_to_local_storage() },
+    total_timeout_min()   { this.data_save_to_local_storage() },
     rows:           { handler() { this.data_save_to_local_storage() }, deep: true, },
 
     current_min(v) {
       if (this.mode === "playing") {
         if (v >= 1) {
-          if (this.timeout_p) {
+          if (this.timeout_p || this.total_timeout_p) {
             // タイムアウトのブザーと重なる場合は「?分経過」の発声をしない
           } else {
             this.safe_talk(`${v}分経過`, {rate: 1.0})
@@ -683,6 +688,12 @@ export default {
     },
 
     lap_counter(v) {
+      if (this.total_timeout_p) {
+        const message = `${this.total_timeout_min}分たったので終了です`
+        this.safe_talk(message)
+        this.$buefy.dialog.alert({title: "おわり", message: message})
+        this.stop_handle()
+      }
       if (this.timeout_p) {
         this.lap_handle('x')
       }
@@ -710,6 +721,16 @@ export default {
       if (this.mode === "playing") {
         if (this.timeout_sec >= 1) {
           if (this.timeout_sec <= this.lap_counter) {
+            return true
+          }
+        }
+      }
+    },
+
+    total_timeout_p() {
+      if (this.mode === "playing") {
+        if (this.total_timeout_min >= 1) {
+          if ((this.total_timeout_min * 60) <= this.total_with_lap_seconds) {
             return true
           }
         }
@@ -842,6 +863,7 @@ export default {
         format_index:   this.format_index,
         book_title:     this.book_title,
         timeout_sec:    this.timeout_sec,
+        total_timeout_min:    this.total_timeout_min,
       }
     },
 
