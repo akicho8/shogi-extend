@@ -13,9 +13,13 @@ class CpuBattlesController < ApplicationController
   def js_cpu_battle
     {
       player_mode_moved_path: url_for([:cpu_battles, format: "json"]),
+      sp_params: sp_params,
+
       cpu_brain_infos: CpuBrainInfo,
       cpu_brain_key: current_cpu_brain_key,
-      sp_params: sp_params,
+
+      cpu_strategy_infos: CpuStrategyInfo,
+      cpu_strategy_key: current_cpu_strategy_key,
     }
   end
 
@@ -70,12 +74,12 @@ class CpuBattlesController < ApplicationController
 
       puts mediator
       if current_cpu_brain_info.depth_max_range
-        brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: Bioshogi::EvaluatorAdvance)
+        brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator)
         records = []
         time_limit = current_cpu_brain_info.time_limit
 
         begin
-          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
+          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range, cpu_strategy_key: params[:cpu_strategy_key])
         rescue Bioshogi::BrainProcessingHeavy
           time_limit += 1
           p [:retry, {time_limit: time_limit}]
@@ -138,6 +142,14 @@ class CpuBattlesController < ApplicationController
   def final_decision(response)
     slack_message(key: "CPU対戦終局", body: response)
     render json: response
+  end
+
+  def current_cpu_strategy_info
+    CpuStrategyInfo.fetch(current_cpu_strategy_key)
+  end
+
+  def current_cpu_strategy_key
+    params[:cpu_strategy_key].presence || "居飛車"
   end
 
   def current_cpu_brain_info

@@ -1,6 +1,7 @@
 import _ from "lodash"
 
 import CpuBrainInfo from "cpu_brain_info"
+import CpuStrategyInfo from "cpu_strategy_info"
 import BoardStyleInfo from "board_style_info"
 
 window.CpuBattlesApp = Vue.extend({
@@ -9,12 +10,14 @@ window.CpuBattlesApp = Vue.extend({
       sp_params: this.$options.sp_params,
       full_sfen: "position startpos",
       cpu_brain_key: this.$options.cpu_brain_key,
+      cpu_strategy_key: this.$options.cpu_strategy_key,
       current_user: js_global.current_user, // 名前を読み上げるため
     }
   },
 
   created() {
     CpuBrainInfo.memory_record_reset(this.$options.cpu_brain_infos)
+    CpuStrategyInfo.memory_record_reset(this.$options.cpu_strategy_infos)
 
     this.board_style_info_reflection()
 
@@ -22,8 +25,9 @@ window.CpuBattlesApp = Vue.extend({
   },
 
   computed: {
-    CpuBrainInfo()   { return CpuBrainInfo   },
-    BoardStyleInfo() { return BoardStyleInfo },
+    CpuBrainInfo()    { return CpuBrainInfo    },
+    CpuStrategyInfo() { return CpuStrategyInfo },
+    BoardStyleInfo()  { return BoardStyleInfo  },
 
     board_style_info() {
       return BoardStyleInfo.fetch(this.sp_params.board_style_key)
@@ -31,6 +35,10 @@ window.CpuBattlesApp = Vue.extend({
 
     cpu_brain_info() {
       return CpuBrainInfo.fetch(this.cpu_brain_key)
+    },
+
+    cpu_strategy_info() {
+      return CpuStrategyInfo.fetch(this.cpu_strategy_key)
     },
 
     // 対戦者の名前
@@ -75,7 +83,7 @@ window.CpuBattlesApp = Vue.extend({
     },
 
     play_mode_long_sfen_set(v) {
-      this.$http.post(this.$options.player_mode_moved_path, {kifu_body: v, cpu_brain_key: this.cpu_brain_key}).then(response => {
+      this.$http.post(this.$options.player_mode_moved_path, {kifu_body: v, cpu_brain_key: this.cpu_brain_key, cpu_strategy_key: this.cpu_strategy_key}).then(response => {
         if (response.data["error_message"]) {
           this.$buefy.dialog.alert({
             title: "反則負け",

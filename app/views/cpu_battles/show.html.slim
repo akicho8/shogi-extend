@@ -7,35 +7,42 @@
     document.addEventListener('DOMContentLoaded', () => { new CpuBattlesApp(#{js_cpu_battle.to_json.html_safe}).$mount("#cpu_battles_app") })
 
 #cpu_battles_app(v-cloak)
-  .has-text-centered
-    shogi_player(
-      :kifu_body="full_sfen"
-      :theme="sp_params.theme"
-      :piece_variant="sp_params.piece_variant"
-      :key_event_capture="false"
-      :slider_show="false"
-      :sfen_show="false"
-      :controller_show="true"
-      :size="'x-large'"
-      :sound_effect="true"
-      :volume=AppConfig[:volume]
-      :run_mode="'play_mode'"
-      :human_side="'black'"
-      @update:play_mode_long_sfen="play_mode_long_sfen_set"
-    )
-    / :theme="'#{sp_theme_default}'"
+  .columns
+    .column
+      .has-text-centered
+        shogi_player(
+          :kifu_body="full_sfen"
+          :theme="sp_params.theme"
+          :piece_variant="sp_params.piece_variant"
+          :key_event_capture="false"
+          :slider_show="false"
+          :sfen_show="false"
+          :controller_show="true"
+          :size="'x-large'"
+          :sound_effect="true"
+          :volume=AppConfig[:volume]
+          :run_mode="'play_mode'"
+          :human_side="'black'"
+          @update:play_mode_long_sfen="play_mode_long_sfen_set"
+        )
+        / :theme="'#{sp_theme_default}'"
 
-  hr
-  .has-text-centered
-    b-field(label="CPUの強さ")
-      div
-        template(v-for="e in CpuBrainInfo.values")
-          b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
-            | {{e.name}}
+    .column
+      .box
+        b-field(label="CPUの強さ")
+          .block
+            template(v-for="e in CpuBrainInfo.values")
+              b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
+                | {{e.name}}
 
-  hr
-  .has-text-centered
-    b-field.is-inline-flex
-      template(v-for="e in BoardStyleInfo.values")
-        b-radio-button(v-model="sp_params.board_style_key" :native-value="e.key")
-          | {{e.name}}
+        b-field(label="戦法")
+          .block
+            template(v-for="e in CpuStrategyInfo.values")
+              b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
+                | {{e.name}}
+
+        b-field(label="スタイル")
+          .block
+            template(v-for="e in BoardStyleInfo.values")
+              b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
+                | {{e.name}}

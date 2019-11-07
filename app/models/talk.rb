@@ -96,7 +96,7 @@ class Talk
       # >> | request_characters | 5                                                   |
       # >> |--------------------+-----------------------------------------------------|
     end
-    Rails.logger.info("#{__method__}: #{source_text} => #{direct_file_path}")
+    Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
   end
 
   def polly_params
