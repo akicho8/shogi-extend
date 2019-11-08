@@ -1,4 +1,4 @@
-class CpuStrategy2Info
+class CpuPresetInfo
   include ApplicationMemoryRecord
   memory_record [
     { key: "平手", },
