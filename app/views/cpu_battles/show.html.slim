@@ -29,19 +29,19 @@
 
     .column
       .box
-        b-field(label="CPUの強さ")
+        b-field(label="強さ" custom-class="is-small")
           .block
             template(v-for="e in CpuBrainInfo.values")
               b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
                 | {{e.name}}
 
-        b-field(label="戦法")
+        b-field(label="戦法" custom-class="is-small")
           .block
             template(v-for="e in CpuStrategyInfo.values")
               b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
                 | {{e.name}}
 
-        b-field(label="スタイル")
+        b-field(label="スタイル" custom-class="is-small")
           .block
             template(v-for="e in BoardStyleInfo.values")
               b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
