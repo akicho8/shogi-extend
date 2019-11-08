@@ -21,6 +21,9 @@ class CpuBattlesController < ApplicationController
 
       cpu_strategy_infos: CpuStrategyInfo,
       cpu_strategy_key: current_cpu_strategy_key,
+
+      cpu_strategy2_infos: CpuStrategy2Info,
+      cpu_strategy2_key: current_cpu_strategy2_key,
     }
   end
 
@@ -151,6 +154,14 @@ class CpuBattlesController < ApplicationController
 
   def current_cpu_strategy_key
     params[:cpu_strategy_key].presence || "居飛車"
+  end
+
+  def current_cpu_strategy2_info
+    CpuStrategy2Info.fetch(current_cpu_strategy2_key)
+  end
+
+  def current_cpu_strategy2_key
+    params[:cpu_strategy2_key].presence || "平手"
   end
 
   def current_cpu_brain_info

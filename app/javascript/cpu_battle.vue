@@ -32,6 +32,11 @@
               b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
                 | {{e.name}}
 
+        b-field(label="手合割" custom-class="is-small")
+          .block
+            template(v-for="e in CpuStrategy2Info.values")
+              b-radio(v-model="cpu_strategy2_key" :native-value="e.key" size="is-small")
+                | {{e.name}}
       .box
         b-field(label="スタイル" custom-class="is-small")
           .block
@@ -48,6 +53,7 @@
 import _ from "lodash"
 import CpuBrainInfo from "cpu_brain_info"
 import CpuStrategyInfo from "cpu_strategy_info"
+import CpuStrategy2Info from "cpu_strategy2_info"
 import BoardStyleInfo from "board_style_info"
 
 export default {
@@ -60,12 +66,14 @@ export default {
 
       cpu_brain_key: this.$root.$options.cpu_brain_key,
       cpu_strategy_key: this.$root.$options.cpu_strategy_key,
+      cpu_strategy2_key: this.$root.$options.cpu_strategy2_key,
     }
   },
 
   created() {
     CpuBrainInfo.memory_record_reset(this.$root.$options.cpu_brain_infos)
     CpuStrategyInfo.memory_record_reset(this.$root.$options.cpu_strategy_infos)
+    CpuStrategy2Info.memory_record_reset(this.$root.$options.cpu_strategy2_infos)
 
     this.board_style_info_reflection()
 
@@ -75,11 +83,13 @@ export default {
   computed: {
     CpuBrainInfo()    { return CpuBrainInfo    },
     CpuStrategyInfo() { return CpuStrategyInfo },
+    CpuStrategy2Info() { return CpuStrategy2Info },
     BoardStyleInfo()  { return BoardStyleInfo  },
 
     board_style_info()  { return BoardStyleInfo.fetch(this.sp_params.board_style_key) },
     cpu_brain_info()    { return CpuBrainInfo.fetch(this.cpu_brain_key)               },
     cpu_strategy_info() { return CpuStrategyInfo.fetch(this.cpu_strategy_key)         },
+    cpu_strategy2_info() { return CpuStrategy2Info.fetch(this.cpu_strategy2_key)         },
 
     // 対戦者の名前
     current_call_name() {
@@ -114,6 +124,10 @@ export default {
       this.talk(`${this.cpu_strategy_info.name}に変更しました`)
     },
 
+    cpu_strategy2_key() {
+      this.talk(`${this.cpu_strategy2_info.name}に変更しました`)
+    },
+
     // 盤面
     "sp_params.board_style_key": function() {
       this.board_style_info_reflection()
@@ -136,7 +150,12 @@ export default {
     },
 
     play_mode_long_sfen_set(v) {
-      this.$http.post(this.$root.$options.player_mode_moved_path, {kifu_body: v, cpu_brain_key: this.cpu_brain_key, cpu_strategy_key: this.cpu_strategy_key}).then(response => {
+      this.$http.post(this.$root.$options.player_mode_moved_path, {
+        kifu_body: v,
+        cpu_brain_key: this.cpu_brain_key,
+        cpu_strategy_key: this.cpu_strategy_key,
+        cpu_strategy2_key: this.cpu_strategy2_key,
+      }).then(response => {
         if (response.data["error_message"]) {
           this.$buefy.dialog.alert({
             title: "反則負け",
