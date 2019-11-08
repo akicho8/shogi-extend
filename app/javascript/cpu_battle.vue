@@ -15,8 +15,10 @@
           :sound_effect="true"
           :volume="$root.$options.volume"
           :run_mode="'play_mode'"
+          :flip.sync="flip",
           :human_side="'black'"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
+          ref="sp_vm"
         )
     .column
       .box
@@ -55,6 +57,7 @@ import CpuBrainInfo from "cpu_brain_info"
 import CpuStrategyInfo from "cpu_strategy_info"
 import CpuPresetInfo from "cpu_preset_info"
 import BoardStyleInfo from "board_style_info"
+import PresetInfo from "shogi-player/src/preset_info.js"
 
 export default {
   name: "cpu_battle",
@@ -63,6 +66,7 @@ export default {
       full_sfen: null,
       sp_params: this.$root.$options.sp_params,
       current_user: js_global.current_user, // 名前を読み上げるため
+      flip: null,
 
       cpu_brain_key: this.$root.$options.cpu_brain_key,
       cpu_strategy_key: this.$root.$options.cpu_strategy_key,
@@ -89,7 +93,8 @@ export default {
     board_style_info()  { return BoardStyleInfo.fetch(this.sp_params.board_style_key) },
     cpu_brain_info()    { return CpuBrainInfo.fetch(this.cpu_brain_key)               },
     cpu_strategy_info() { return CpuStrategyInfo.fetch(this.cpu_strategy_key)         },
-    cpu_preset_info() { return CpuPresetInfo.fetch(this.cpu_preset_key)         },
+    cpu_preset_info()   { return CpuPresetInfo.fetch(this.cpu_preset_key)             },
+    preset_info()       { return PresetInfo.fetch(this.cpu_preset_info.key)           },
 
     // 対戦者の名前
     current_call_name() {
@@ -125,6 +130,7 @@ export default {
     },
 
     cpu_preset_key() {
+      this.full_sfen_set()
       this.talk(`${this.cpu_preset_info.name}に変更しました`)
     },
 
@@ -136,8 +142,13 @@ export default {
   },
 
   methods: {
+    full_sfen_set() {
+      this.full_sfen = this.preset_info.sfen
+      this.flip = (this.preset_info.first_location_key === "white")
+    },
+
     reset() {
-      this.full_sfen = "position startpos"
+      this.full_sfen_set()
       setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
 

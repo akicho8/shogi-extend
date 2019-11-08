@@ -161,7 +161,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_preset_key
-    params[:cpu_preset_key].presence || "平手"
+    params[:cpu_preset_key].presence || CpuPresetInfo.to_a.last&.key
   end
 
   def current_cpu_brain_info
