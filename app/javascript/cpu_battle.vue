@@ -16,7 +16,6 @@
           :volume="$root.$options.volume"
           :run_mode="'play_mode'"
           :flip.sync="flip",
-          :human_side="'black'"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
           ref="sp_vm"
         )
