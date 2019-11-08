@@ -2,6 +2,8 @@ class CpuBattlesController < ApplicationController
   helper_method :show_twitter_options
   helper_method :js_cpu_battle
 
+  SHAKING_WIDTH = 0
+
   def show_twitter_options
     options = {}
     options[:title] = "CPU対戦"
@@ -76,7 +78,7 @@ class CpuBattlesController < ApplicationController
         end
       end
 
-      puts mediator
+      Rails.logger.info(mediator)
       if current_cpu_brain_info.depth_max_range
         brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator)
         records = []
@@ -86,20 +88,27 @@ class CpuBattlesController < ApplicationController
           records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range, cpu_strategy_key: params[:cpu_strategy_key])
         rescue Bioshogi::BrainProcessingHeavy
           time_limit += 1
-          p [:retry, {time_limit: time_limit}]
+          Rails.logger.info([:retry, {time_limit: time_limit}])
           retry
         end
-        tp Bioshogi::Brain.human_format(records)
+        Rails.logger.info(Bioshogi::Brain.human_format(records).to_t)
 
         if records.empty?
           final_decision(you_win_message: "CPUが投了しました", sfen: mediator.to_sfen)
           return
         end
 
+        # いちばん良いのを選択
         record = records.first
         if record[:score] <= -Bioshogi::INF_MAX
           final_decision(you_win_message: "CPUが降参しました", sfen: mediator.to_sfen)
           return
+        end
+
+        if true
+          # いちばん良いのが 100 点とすると 95 点まで下げて 95〜100 点の手を改めてランダムで選択する
+          min = record[:score] - SHAKING_WIDTH
+          record = records.take_while { |e| e[:score] >= min }.sample
         end
 
         hand = record[:hand]
