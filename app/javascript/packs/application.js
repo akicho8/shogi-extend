@@ -92,6 +92,7 @@ import swars_user_link_to from "swars_user_link_to.vue"
 import pulldown_menu from "pulldown_menu.vue"
 import stopwatch from "stopwatch.vue"
 import xy_game from "xy_game.vue"
+import cpu_battle from "cpu_battle.vue"
 
 // const router = new VueRouter({
 //   mode: 'history',
@@ -119,6 +120,7 @@ Vue.mixin({
     pulldown_menu,
     stopwatch,
     xy_game,
+    cpu_battle,
   },
 })
 

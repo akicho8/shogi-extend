@@ -14,6 +14,7 @@ class CpuBattlesController < ApplicationController
     {
       player_mode_moved_path: url_for([:cpu_battles, format: "json"]),
       sp_params: sp_params,
+      sp_volume: AppConfig[:volume],
 
       cpu_brain_infos: CpuBrainInfo,
       cpu_brain_key: current_cpu_brain_key,

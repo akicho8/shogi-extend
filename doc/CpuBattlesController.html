@@ -98,7 +98,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/controllers/cpu_battles_controller.rb</dd>
+    <dd>app/controllers/cpu_battle_controller.rb</dd>
   </dl>
   
 </div>
@@ -439,7 +439,7 @@
 137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:kifu_body</span><span class='rbracket'>]</span>
@@ -568,7 +568,7 @@
 146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_current_cpu_brain_info'>current_cpu_brain_info</span>
   <span class='const'><span class='object_link'><a href="CpuBattlesController/CpuBrainInfo.html" title="CpuBattlesController::CpuBrainInfo (class)">CpuBrainInfo</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_current_cpu_brain_key'>current_cpu_brain_key</span><span class='rparen'>)</span>
@@ -598,7 +598,7 @@
 150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_current_cpu_brain_key'>current_cpu_brain_key</span>
   <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:cpu_brain_key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>||</span> <span class='symbol'>:level3</span>
@@ -629,7 +629,7 @@
 142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_final_decision'>final_decision</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_slack_message'>slack_message</span><span class='lparen'>(</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CPU対戦終局</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>body:</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
@@ -665,11 +665,11 @@
 20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_js_cpu_battle'>js_cpu_battle</span>
   <span class='lbrace'>{</span>
-    <span class='label'>player_mode_moved_path:</span> <span class='id identifier rubyid_url_for'>url_for</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='symbol'>:cpu_battles</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>json</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>player_mode_moved_path:</span> <span class='id identifier rubyid_url_for'>url_for</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='symbol'>:cpu_battle</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>json</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
     <span class='label'>cpu_brain_infos:</span> <span class='const'><span class='object_link'><a href="CpuBattlesController/CpuBrainInfo.html" title="CpuBattlesController::CpuBrainInfo (class)">CpuBrainInfo</a></span></span><span class='comma'>,</span>
     <span class='label'>cpu_brain_key:</span> <span class='id identifier rubyid_current_cpu_brain_key'>current_cpu_brain_key</span><span class='comma'>,</span>
     <span class='label'>sp_params:</span> <span class='id identifier rubyid_sp_params'>sp_params</span><span class='comma'>,</span>
@@ -703,7 +703,7 @@
 34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
   <span class='kw'>if</span> <span class='kw'>false</span>
@@ -740,7 +740,7 @@
 11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 5</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_twitter_options'>show_twitter_options</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -777,7 +777,7 @@
 27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battles_controller.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/cpu_battle_controller.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sp_params'>sp_params</span>
   <span class='lbrace'>{</span>
