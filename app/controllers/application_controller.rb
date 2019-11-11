@@ -179,13 +179,13 @@ class ApplicationController < ActionController::Base
     #
     #   ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(source_text: "こんにちは").as_json)
     #
-    def talk(str)
+    def talk(str, **options)
       str.tap do
-        ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", yomiage: str)
+        ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", options.merge(yomiage: str))
       end
     end
 
-    def direct_talk(str)
+    def direct_talk(str, **options)
       str.tap do
         ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(source_text: str))
       end

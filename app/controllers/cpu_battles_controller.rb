@@ -3,6 +3,7 @@ class CpuBattlesController < ApplicationController
   helper_method :js_cpu_battle
 
   SHAKING_WIDTH = 0
+  TALK_PITCH = 1.5
 
   def show_twitter_options
     options = {}
@@ -68,7 +69,7 @@ class CpuBattlesController < ApplicationController
         return
       end
 
-      talk(mediator.hand_logs.last.yomiage)
+      yomiage_for(mediator) # 人間の手の読み上げ
 
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
@@ -80,12 +81,12 @@ class CpuBattlesController < ApplicationController
 
       Rails.logger.info(mediator)
       if current_cpu_brain_info.depth_max_range
-        brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator)
+        brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator, cpu_strategy_key: cpu_strategy_key_considering_all_round)
         records = []
         time_limit = current_cpu_brain_info.time_limit
 
         begin
-          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range, cpu_strategy_key: params[:cpu_strategy_key])
+          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
         rescue Bioshogi::BrainProcessingHeavy
           time_limit += 1
           Rails.logger.info([:retry, {time_limit: time_limit}])
@@ -128,8 +129,7 @@ class CpuBattlesController < ApplicationController
       mediator.execute(hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
       response = { sfen: mediator.to_sfen }
 
-      # CPUの手を読み上げる
-      talk(mediator.hand_logs.last.yomiage)
+      yomiage_for(mediator) # CPUの手の読み上げる
 
       if true
         # 人間側の合法手が生成できなければ人間側の負け
@@ -150,6 +150,11 @@ class CpuBattlesController < ApplicationController
       render json: response
       return
     end
+  end
+
+  # オールラウンドを考慮した戦法
+  def cpu_strategy_key_considering_all_round
+    CpuStrategyInfo.fetch_by_params(params).key
   end
 
   def final_decision(response)
@@ -179,6 +184,12 @@ class CpuBattlesController < ApplicationController
 
   def current_cpu_brain_key
     params[:cpu_brain_key].presence || :level3
+  end
+
+  private
+
+  def yomiage_for(mediator)
+    talk(mediator.hand_logs.last.yomiage, rate: TALK_PITCH) # 人間の手の読み上げ
   end
 
   class CpuBrainInfo

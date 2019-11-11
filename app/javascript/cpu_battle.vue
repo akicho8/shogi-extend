@@ -62,10 +62,13 @@ export default {
   name: "cpu_battle",
   data() {
     return {
-      full_sfen: null,
-      sp_params: this.$root.$options.sp_params,
       current_user: js_global.current_user, // 名前を読み上げるため
-      flip: null,
+
+      full_sfen: null,                      // 譜面
+      flip: null,                           // 駒落ちなら反転させる
+      sp_params: this.$root.$options.sp_params,
+
+      all_round_seed: null,           // オールラウンダー用に使っている
 
       cpu_brain_key: this.$root.$options.cpu_brain_key,
       cpu_strategy_key: this.$root.$options.cpu_strategy_key,
@@ -80,7 +83,7 @@ export default {
 
     this.board_style_info_reflection()
 
-    this.reset()
+    this.reset_handle()
   },
 
   computed: {
@@ -141,18 +144,20 @@ export default {
   },
 
   methods: {
+    all_round_seed_reset() {
+      this.all_round_seed = Math.floor(Math.random() * 256) // オールラウンダーの戦法が決まる乱数
+    },
+
     full_sfen_set() {
       this.full_sfen = this.preset_info.sfen
       this.flip = (this.preset_info.first_location_key === "white")
     },
 
-    reset() {
-      this.full_sfen_set()
-      setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
-    },
-
+    // 再挑戦
     reset_handle() {
-      this.reset()
+      this.full_sfen_set()
+      this.all_round_seed_reset()
+      setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
 
     board_style_info_reflection() {
@@ -164,6 +169,7 @@ export default {
         kifu_body: v,
         cpu_brain_key: this.cpu_brain_key,
         cpu_strategy_key: this.cpu_strategy_key,
+        all_round_seed: this.all_round_seed,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
         if (response.data["error_message"]) {

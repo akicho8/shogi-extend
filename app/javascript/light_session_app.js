@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     received(data) {
       // わざわざ JavaScript 側から発信したようにする場合
       if (data["yomiage"]) {
-        GVI.talk(data["yomiage"])
+        GVI.talk(data["yomiage"], data)
         GVI.debug_alert(data["yomiage"])
       }
 

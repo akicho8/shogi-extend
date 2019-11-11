@@ -6,6 +6,8 @@ class CustomEvaluator < Bioshogi::EvaluatorBase
 
     cpu_strategy_info = CpuStrategyInfo[params[:cpu_strategy_key]]
 
+    # Rails.logger.debug(params)
+
     # keys = [e.piece.key, e.promoted]
     # key = keys.join("_")
 
