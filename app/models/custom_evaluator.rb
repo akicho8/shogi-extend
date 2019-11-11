@@ -4,8 +4,6 @@ class CustomEvaluator < Bioshogi::EvaluatorBase
   def soldier_score(e)
     w = e.relative_weight
 
-    cpu_strategy_info = CpuStrategyInfo[params[:cpu_strategy_key]]
-
     # Rails.logger.debug(params)
 
     # keys = [e.piece.key, e.promoted]
@@ -38,5 +36,11 @@ class CustomEvaluator < Bioshogi::EvaluatorBase
     # w += s
 
     w * e.location.value_sign
+  end
+
+  private
+
+  def cpu_strategy_info
+    @cpu_strategy_info ||= CpuStrategyInfo[params[:cpu_strategy_key]]
   end
 end

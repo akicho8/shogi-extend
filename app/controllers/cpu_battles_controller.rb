@@ -167,7 +167,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_strategy_key
-    params[:cpu_strategy_key].presence || "居飛車"
+    params[:cpu_strategy_key].presence || "オールラウンド"
   end
 
   def current_cpu_preset_info
@@ -183,7 +183,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_brain_key
-    params[:cpu_brain_key].presence || :level3
+    params[:cpu_brain_key].presence || :level4
   end
 
   private

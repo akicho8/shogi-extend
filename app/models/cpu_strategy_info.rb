@@ -1,14 +1,14 @@
 class CpuStrategyInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: "オールラウンダー", },
+    { key: "オールラウンド", },
     { key: "居飛車",           },
     { key: "振り飛車",         },
   ]
 
   def self.fetch_by_params(params)
-    if params[:cpu_strategy_key] == "オールラウンダー"
-      list = values - [self["オールラウンダー"]]
+    if params[:cpu_strategy_key] == "オールラウンド"
+      list = values - [self["オールラウンド"]]
       i = Integer(params[:all_round_seed]).modulo(list.size)
       list[i]
     else

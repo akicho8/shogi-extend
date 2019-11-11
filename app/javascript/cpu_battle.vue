@@ -68,7 +68,7 @@ export default {
       flip: null,                           // 駒落ちなら反転させる
       sp_params: this.$root.$options.sp_params,
 
-      all_round_seed: null,           // オールラウンダー用に使っている
+      all_round_seed: null,           // オールラウンド用に使っている
 
       cpu_brain_key: this.$root.$options.cpu_brain_key,
       cpu_strategy_key: this.$root.$options.cpu_strategy_key,
@@ -145,7 +145,7 @@ export default {
 
   methods: {
     all_round_seed_reset() {
-      this.all_round_seed = Math.floor(Math.random() * 256) // オールラウンダーの戦法が決まる乱数
+      this.all_round_seed = Math.floor(Math.random() * 256) // オールラウンドの戦法が決まる乱数
     },
 
     full_sfen_set() {
