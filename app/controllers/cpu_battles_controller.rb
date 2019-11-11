@@ -158,11 +158,11 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_strategy_info
-    CpuStrategyInfo.lookup(current_cpu_strategy_key)
+    CpuStrategyInfo.fetch(current_cpu_strategy_key)
   end
 
   def current_cpu_strategy_key
-    params[:cpu_strategy_key].presence
+    params[:cpu_strategy_key].presence || "居飛車"
   end
 
   def current_cpu_preset_info

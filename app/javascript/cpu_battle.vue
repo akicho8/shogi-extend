@@ -29,10 +29,8 @@
 
         b-field(label="戦法" custom-class="is-small")
           .block
-            b-radio(v-model="cpu_strategy_key2" :native-value="'ｵｰﾙﾗｳﾝﾀﾞｰ'" size="is-small")
-              | ｵｰﾙﾗｳﾝﾀﾞｰ
             template(v-for="e in CpuStrategyInfo.values")
-              b-radio(v-model="cpu_strategy_key2" :native-value="e.key" size="is-small")
+              b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
                 | {{e.name}}
 
         b-field(label="手合割" custom-class="is-small")
@@ -70,9 +68,8 @@ export default {
       flip: null,
 
       cpu_brain_key: this.$root.$options.cpu_brain_key,
+      cpu_strategy_key: this.$root.$options.cpu_strategy_key,
       cpu_preset_key: this.$root.$options.cpu_preset_key,
-      cpu_strategy_key2: this.$root.$options.cpu_strategy_key || "ｵｰﾙﾗｳﾝﾀﾞｰ",
-      cpu_strategy_info: null,
     }
   },
 
@@ -94,15 +91,9 @@ export default {
 
     board_style_info()  { return BoardStyleInfo.fetch(this.sp_params.board_style_key) },
     cpu_brain_info()    { return CpuBrainInfo.fetch(this.cpu_brain_key)               },
+    cpu_strategy_info() { return CpuStrategyInfo.fetch(this.cpu_strategy_key)         },
     cpu_preset_info()   { return CpuPresetInfo.fetch(this.cpu_preset_key)             },
     preset_info()       { return PresetInfo.fetch(this.cpu_preset_info.key)           },
-
-    cpu_strategy_name() {
-      if (this.cpu_strategy_key2 === "ｵｰﾙﾗｳﾝﾀﾞｰ") {
-        return this.cpu_strategy_key2
-      }
-      return this.cpu_strategy_info.name
-    },
 
     // 対戦者の名前
     current_call_name() {
@@ -129,16 +120,12 @@ export default {
   },
 
   watch: {
-    cpu_strategy_key2() {
-      this.cpu_strategy_info_reset()
-    },
-
     cpu_brain_key() {
       this.talk(`${this.cpu_brain_info.name}に変更しました`)
     },
 
-    cpu_strategy_name(v) {
-      this.talk(`${v}に変更しました`)
+    cpu_strategy_key() {
+      this.talk(`${this.cpu_strategy_info.name}に変更しました`)
     },
 
     cpu_preset_key() {
@@ -154,19 +141,6 @@ export default {
   },
 
   methods: {
-    cpu_strategy_info_reset() {
-      this.cpu_strategy_info = this.cpu_strategy_info_random_get()
-      console.log(`cpu_strategy_info_reset: ${this.cpu_strategy_info.name}`)
-    },
-
-    cpu_strategy_info_random_get() {
-      if (this.cpu_strategy_key2 === "ｵｰﾙﾗｳﾝﾀﾞｰ") {
-        return _.sample(CpuStrategyInfo.values)
-      } else {
-        return CpuStrategyInfo.fetch(this.cpu_strategy_key2)
-      }
-    },
-
     full_sfen_set() {
       this.full_sfen = this.preset_info.sfen
       this.flip = (this.preset_info.first_location_key === "white")
@@ -174,7 +148,6 @@ export default {
 
     reset() {
       this.full_sfen_set()
-      this.cpu_strategy_info_reset() // 戦法をランダムにする
       setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
 
@@ -190,7 +163,7 @@ export default {
       this.$http.post(this.$root.$options.player_mode_moved_path, {
         kifu_body: v,
         cpu_brain_key: this.cpu_brain_key,
-        cpu_strategy_key: this.cpu_strategy_info.key,
+        cpu_strategy_key: this.cpu_strategy_key,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
         if (response.data["error_message"]) {
