@@ -1,6 +1,6 @@
 # static_app
 
-> My kryptonian Nuxt.js project
+> Railsアプリの静的エラーページ生成用
 
 ## Build Setup
 
