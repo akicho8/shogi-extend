@@ -20,6 +20,10 @@
           ref="sp_vm"
         )
     .column
+      .buttons
+        b-button(type="is-primary" @click="reset_handle")
+          | 再挑戦
+
       .box
         b-field(label="強さ" custom-class="is-small")
           .block
@@ -45,9 +49,13 @@
               b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
                 | {{e.name}}
 
-      b-button(type="is-primary" @click="reset_handle")
-        | 再挑戦
+      template(v-if="candidate_report")
+        pre.box.is-size-7.candidate_report
+          | {{candidate_report}}
 
+      template(v-if="candidate_rows")
+        .box
+          b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 </template>
 
 <script>
@@ -67,8 +75,10 @@ export default {
       full_sfen: null,                      // 譜面
       flip: null,                           // 駒落ちなら反転させる
       sp_params: this.$root.$options.sp_params,
+      candidate_report: null,                      // 候補
+      candidate_rows: null,                      // 候補
 
-      all_round_seed: null,           // オールラウンド用に使っている
+      cpu_strategy_random_number: null,           // オールラウンド用に使っている
 
       cpu_brain_key: this.$root.$options.cpu_brain_key,
       cpu_strategy_key: this.$root.$options.cpu_strategy_key,
@@ -89,7 +99,7 @@ export default {
   computed: {
     CpuBrainInfo()    { return CpuBrainInfo    },
     CpuStrategyInfo() { return CpuStrategyInfo },
-    CpuPresetInfo() { return CpuPresetInfo },
+    CpuPresetInfo()   { return CpuPresetInfo   },
     BoardStyleInfo()  { return BoardStyleInfo  },
 
     board_style_info()  { return BoardStyleInfo.fetch(this.sp_params.board_style_key) },
@@ -97,6 +107,17 @@ export default {
     cpu_strategy_info() { return CpuStrategyInfo.fetch(this.cpu_strategy_key)         },
     cpu_preset_info()   { return CpuPresetInfo.fetch(this.cpu_preset_key)             },
     preset_info()       { return PresetInfo.fetch(this.cpu_preset_info.key)           },
+
+    candidate_columns() {
+      return [
+        { field: "順位",       label: "順位",       sortable: true, numeric: true, },
+        { field: "候補手",     label: "候補手",                                    },
+        { field: "読み筋",     label: "読み筋",                                    },
+        { field: "▲形勢",     label: "▲形勢",     sortable: true, numeric: true, },
+        { field: "評価局面数", label: "評価局面数", sortable: true, numeric: true, },
+        { field: "処理時間",   label: "処理時間",   sortable: true, numeric: true, },
+      ]
+    },
 
     // 対戦者の名前
     current_call_name() {
@@ -144,8 +165,8 @@ export default {
   },
 
   methods: {
-    all_round_seed_reset() {
-      this.all_round_seed = Math.floor(Math.random() * 256) // オールラウンドの戦法が決まる乱数
+    cpu_strategy_random_number_reset() {
+      this.cpu_strategy_random_number = Math.floor(Math.random() * 256) // オールラウンドの戦法が決まる乱数
     },
 
     full_sfen_set() {
@@ -156,7 +177,9 @@ export default {
     // 再挑戦
     reset_handle() {
       this.full_sfen_set()
-      this.all_round_seed_reset()
+      this.cpu_strategy_random_number_reset()
+      this.candidate_report = null
+      this.candidate_rows = null
       setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
 
@@ -169,7 +192,7 @@ export default {
         kifu_body: v,
         cpu_brain_key: this.cpu_brain_key,
         cpu_strategy_key: this.cpu_strategy_key,
-        all_round_seed: this.all_round_seed,
+        cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
         if (response.data["error_message"]) {
@@ -219,9 +242,13 @@ export default {
           this.talk(response.data["yomiage"])
         }
 
-        if (response.data["sfen"]) {
-          this.full_sfen = response.data["sfen"]
+        let v = null
+        v = response.data["after_sfen"]
+        if (v) {
+          this.full_sfen = v
         }
+        this.candidate_report = response.data["candidate_report"]
+        this.candidate_rows = response.data["candidate_rows"]
 
       }).catch(error => {
         console.table([error.response])
@@ -236,4 +263,6 @@ export default {
 @import "./my_custom_buefy.scss"
 
 .cpu_battle
+  .candidate_report
+    line-height: 100%
 </style>

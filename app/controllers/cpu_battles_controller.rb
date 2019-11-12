@@ -45,6 +45,10 @@ class CpuBattlesController < ApplicationController
 
   def create
     if v = params[:kifu_body]
+      @candidate_records = []
+      @before_sfen = nil
+      @after_sfen = nil
+
       info = Bioshogi::Parser.parse(v)
       begin
         mediator = info.mediator
@@ -69,47 +73,54 @@ class CpuBattlesController < ApplicationController
         return
       end
 
+      @before_sfen = mediator.to_sfen
+
       yomiage_for(mediator) # 人間の手の読み上げ
 
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          final_decision(you_win_message: "玉を取って勝ちました！", sfen: mediator.to_sfen)
+          final_decision(you_win_message: "玉を取って勝ちました！")
           return
         end
       end
 
-      Rails.logger.info(mediator)
+      unless Rails.env.production?
+        Rails.logger.debug(mediator)
+      end
+
       if current_cpu_brain_info.depth_max_range
         brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator, cpu_strategy_key: cpu_strategy_key_considering_all_round)
-        records = []
         time_limit = current_cpu_brain_info.time_limit
 
         begin
-          records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
+          @candidate_records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
         rescue Bioshogi::BrainProcessingHeavy
           time_limit += 1
           Rails.logger.info([:retry, {time_limit: time_limit}])
           retry
         end
-        Rails.logger.info(Bioshogi::Brain.human_format(records).to_t)
 
-        if records.empty?
-          final_decision(you_win_message: "CPUが投了しました", sfen: mediator.to_sfen)
+        unless Rails.env.production?
+          Rails.logger.debug(candidate_report)
+        end
+
+        if @candidate_records.empty?
+          final_decision(you_win_message: "CPUが投了しました")
           return
         end
 
         # いちばん良いのを選択
-        record = records.first
+        record = @candidate_records.first
         if record[:score] <= -Bioshogi::INF_MAX
-          final_decision(you_win_message: "CPUが降参しました", sfen: mediator.to_sfen)
+          final_decision(you_win_message: "CPUが降参しました")
           return
         end
 
         if true
           # いちばん良いのが 100 点とすると 95 点まで下げて 95〜100 点の手を改めてランダムで選択する
           min = record[:score] - SHAKING_WIDTH
-          record = records.take_while { |e| e[:score] >= min }.sample
+          record = @candidate_records.take_while { |e| e[:score] >= min }.sample
         end
 
         hand = record[:hand]
@@ -127,14 +138,14 @@ class CpuBattlesController < ApplicationController
 
       # CPUの手を指す
       mediator.execute(hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
-      response = { sfen: mediator.to_sfen }
+      @after_sfen = mediator.to_sfen
 
       yomiage_for(mediator) # CPUの手の読み上げる
 
       if true
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
-          final_decision(response.merge(you_lose_message: "CPUの勝ちです"))
+          final_decision(you_lose_message: "CPUの勝ちです")
           return
         end
       end
@@ -142,12 +153,12 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          final_decision(response.merge(you_lose_message: "玉を取られました"))
+          final_decision(you_lose_message: "玉を取られました")
           return
         end
       end
 
-      render json: response
+      render json: build_response
       return
     end
   end
@@ -158,6 +169,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def final_decision(response)
+    response = build_response.merge(response)
     slack_message(key: "CPU対戦終局", body: response)
     render json: response
   end
@@ -183,13 +195,44 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_brain_key
-    params[:cpu_brain_key].presence || :level4
+    params[:cpu_brain_key].presence || :level3
   end
 
   private
 
   def yomiage_for(mediator)
     talk(mediator.hand_logs.last.yomiage, rate: TALK_PITCH) # 人間の手の読み上げ
+  end
+
+  def build_response
+    response = {
+      before_sfen: @before_sfen,
+      after_sfen: @after_sfen,
+    }
+    unless Rails.env.production?
+      response[:candidate_rows] = candidate_rows     # b-table 用
+      response[:candidate_report] = candidate_report # そのまま表示できるテキスト
+    end
+    response
+  end
+
+  def candidate_report
+    @candidate_report ||= candidate_rows.to_t
+  end
+
+  def candidate_rows
+    @candidate_rows ||= -> {
+      if @candidate_records.present?
+        Bioshogi::Brain.human_format(@candidate_records).collect { |e|
+          e.collect { |key, val|
+            if key == "候補手"
+              val = val.to_s
+            end
+            [key, val]
+          }.to_h
+        }
+      end
+    }.call
   end
 
   class CpuBrainInfo
