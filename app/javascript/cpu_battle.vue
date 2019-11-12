@@ -170,21 +170,35 @@ export default {
     },
 
     full_sfen_set() {
-      this.full_sfen = this.preset_info.sfen
-      this.flip = (this.preset_info.first_location_key === "white")
+      this.full_sfen = this.preset_info.sfen                        // 手合割に対応する盤面設定
+      this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
+      this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(0))  // 0手目の局面に戻す
     },
 
     // 再挑戦
     reset_handle() {
       this.full_sfen_set()
+
+      // オールラウンドの戦型選択
       this.cpu_strategy_random_number_reset()
+
+      // 候補手クリア
       this.candidate_report = null
       this.candidate_rows = null
+
       setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
 
     board_style_info_reflection() {
       this.board_style_info.func(this.sp_params)
+    },
+
+    easy_dialog(params) {
+      params = {
+        ...params,
+        canCancel: ["outside", "escape"],
+      }
+      this.$buefy.dialog.alert(params)
     },
 
     play_mode_long_sfen_set(v) {
@@ -195,46 +209,41 @@ export default {
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
-        if (response.data["error_message"]) {
-          this.$buefy.dialog.alert({
+        const final_state = response.data["final_state"]
+        if (final_state === "irregular") {
+          this.easy_dialog({
             title: "反則負け",
-            message: response.data["error_message"],
-            type: 'is-danger',
+            message: response.data["message"],
+            type: "is-danger",
             hasIcon: true,
-            icon: 'times-circle',
-            iconPack: 'fa',
+            icon: "times-circle",
+            iconPack: "fa",
           })
           this.talk("反則負けです")
-
-          // this.$buefy.dialog.alert({
-          //   message: response.data["normal_message"],
-          // })
-
         }
 
-        if (response.data["you_win_message"]) {
-          // this.$buefy.toast.open({message: response.data["normal_message"], position: "is-bottom", type: "is-info", duration: 1000 * 10})
-
-          this.$buefy.dialog.alert({
+        if (final_state === "you_win") {
+          this.easy_dialog({
             title: "勝利",
-            message: response.data["you_win_message"],
-            type: 'is-primary',
+            message: response.data["message"],
+            type: "is-primary",
             hasIcon: true,
-            icon: 'trophy',
-            iconPack: 'mdi',
+            icon: "trophy",
+            iconPack: "mdi",
           })
-          this.talk("勝ちました")
+          this.talk(response.data["message"])
         }
 
-        if (response.data["you_lose_message"]) {
-          // this.$buefy.toast.open({message: response.data["normal_message"], position: "is-bottom", type: "is-info", duration: 1000 * 10})
-
-          this.$buefy.dialog.alert({
+        if (final_state === "you_lose") {
+          this.easy_dialog({
             title: "敗北",
-            message: response.data["you_lose_message"],
-            type: 'is-primary',
+            message: response.data["message"],
+            type: "is-primary",
+            hasIcon: true,
+            icon: "emoticon-sad-outline",
+            iconPack: "mdi",
           })
-          this.talk("負けました")
+          this.talk(response.data["message"])
         }
 
         // CPUの指し手を読み上げる
@@ -242,11 +251,11 @@ export default {
           this.talk(response.data["yomiage"])
         }
 
-        let v = null
-        v = response.data["after_sfen"]
-        if (v) {
-          this.full_sfen = v
+        // 指した後の局面を反映
+        if (response.data["after_sfen"]) {
+          this.full_sfen = response.data["after_sfen"]
         }
+
         this.candidate_report = response.data["candidate_report"]
         this.candidate_rows = response.data["candidate_rows"]
 

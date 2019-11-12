@@ -54,7 +54,7 @@ class CpuBattlesController < ApplicationController
         mediator = info.mediator
       rescue => error
         lines = error.message.lines
-        error_message = [
+        irregular_message = [
           "#{lines.first.remove("【反則】")}",
           # "<br><br>"
           # "<pre>", lines.drop(1).join, "</pre>",
@@ -69,7 +69,7 @@ class CpuBattlesController < ApplicationController
         # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
         # render json: {error_message: error_message, before_sfen: before_sfen}
 
-        final_decision(error_message: error_message)
+        final_decision(final_state: :irregular, message: irregular_message)
         return
       end
 
@@ -77,10 +77,17 @@ class CpuBattlesController < ApplicationController
 
       yomiage_for(mediator) # 人間の手の読み上げ
 
+      if current_cpu_brain_info.mate_danger_check
+        if mediator.opponent_player.mate_danger? # この処理が 0.5 秒ぐらいで体感で遅いのがわかる
+          final_decision(final_state: :you_lose, message: "王手放置(または自殺手)で負けました")
+          return
+        end
+      end
+
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          final_decision(you_win_message: "玉を取って勝ちました！")
+          final_decision(final_state: :you_win, message: "玉を取って勝ちました！")
           return
         end
       end
@@ -106,14 +113,14 @@ class CpuBattlesController < ApplicationController
         end
 
         if @candidate_records.empty?
-          final_decision(you_win_message: "CPUが投了しました")
+          final_decision(final_state: :you_win, message: "CPUが投了しました")
           return
         end
 
         # いちばん良いのを選択
         record = @candidate_records.first
         if record[:score] <= -Bioshogi::INF_MAX
-          final_decision(you_win_message: "CPUが降参しました")
+          final_decision(final_state: :you_win, message: "CPUが降参しました")
           return
         end
 
@@ -131,7 +138,7 @@ class CpuBattlesController < ApplicationController
         end
         hand = hands.sample
         unless hand
-          final_decision(you_win_message: "CPUはもう何も指す手がなかったようです", sfen: mediator.to_sfen)
+          final_decision(final_state: :you_win, message: "CPUはもう何も指す手がなかったようです")
           return
         end
       end
@@ -145,7 +152,7 @@ class CpuBattlesController < ApplicationController
       if true
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
-          final_decision(you_lose_message: "CPUの勝ちです")
+          final_decision(final_state: :you_lose, message: "CPUの勝ちです")
           return
         end
       end
@@ -153,7 +160,7 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          final_decision(you_lose_message: "玉を取られました")
+          final_decision(final_state: :you_lose, message: "玉を取られました")
           return
         end
       end
@@ -170,7 +177,7 @@ class CpuBattlesController < ApplicationController
 
   def final_decision(response)
     response = build_response.merge(response)
-    slack_message(key: "CPU対戦終局", body: response)
+    slack_message(key: "CPU対戦終局", body: response[:message])
     render json: response
   end
 
@@ -238,11 +245,11 @@ class CpuBattlesController < ApplicationController
   class CpuBrainInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :level1, name: "ルールわかってない", time_limit: nil, depth_max_range: nil,  legal_only: false, }, # ランダム
-      { key: :level2, name: "ありえないほど弱い", time_limit: nil, depth_max_range: nil,  legal_only: true,  }, # 合法手のランダム
-      { key: :level3, name: "めちゃくちゃ弱い",   time_limit: nil, depth_max_range: 0..0, legal_only: nil,   }, # 最初の合法手リストを最善手順に並べたもの
-      { key: :level4, name: "かなり弱い",         time_limit:   3, depth_max_range: 0..9, legal_only: nil,   }, # 3秒まで深読みできる
-      { key: :level5, name: "弱い",               time_limit:   5, depth_max_range: 0..9, legal_only: nil,   }, # 必ず相手の手を読む
+      { key: :level1, name: "ルールわかってない", time_limit: nil, depth_max_range: nil,  legal_only: false, mate_danger_check: false, }, # ランダム
+      { key: :level2, name: "ありえないほど弱い", time_limit: nil, depth_max_range: nil,  legal_only: true,  mate_danger_check: true,  }, # 合法手のランダム
+      { key: :level3, name: "めちゃくちゃ弱い",   time_limit: nil, depth_max_range: 0..0, legal_only: nil,   mate_danger_check: true,  }, # 最初の合法手リストを最善手順に並べたもの
+      { key: :level4, name: "かなり弱い",         time_limit:   3, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  }, # 3秒まで深読みできる
+      { key: :level5, name: "弱い",               time_limit:   5, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  }, # 必ず相手の手を読む
     ]
   end
 end

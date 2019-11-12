@@ -83,7 +83,9 @@ module Colosseum::Battle::BattleMethods
     def execute_one
       clock_counter = measure_time do
         hand = nil
-        puts mediator
+        unless Rails.env.production?
+          puts mediator
+        end
 
         # 先を読む
         if cpu_brain_info.depth_max_range
@@ -102,10 +104,14 @@ module Colosseum::Battle::BattleMethods
           end
 
           unless records.empty?
-            tp Bioshogi::Brain.human_format(records)
+            unless Rails.env.production?
+              tp Bioshogi::Brain.human_format(records)
+            end
 
             record = records.first
-            tp record.keys
+            unless Rails.env.production?
+              tp record.keys
+            end
             hand = record[:hand]
 
             __trace("#{record[:best_pv].size}手先まで読んで#{hand}を指しました。評価値:#{record[:score2]} 読み筋:#{record[:best_pv].collect(&:to_s).join(' ')}")
