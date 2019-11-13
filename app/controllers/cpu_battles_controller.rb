@@ -46,8 +46,7 @@ class CpuBattlesController < ApplicationController
   def create
     if v = params[:kifu_body]
       @candidate_records = []
-      @before_sfen = nil
-      @after_sfen = nil
+      @current_sfen = v
 
       info = Bioshogi::Parser.parse(v)
       begin
@@ -60,7 +59,7 @@ class CpuBattlesController < ApplicationController
           # "<pre>", lines.drop(1).join, "</pre>",
           # "<br>",
           # "<br>",
-          '<span class="is-size-7 has-text-grey">※一手戻して再開できます</span>',
+          # '<span class="is-size-7 has-text-grey">※一手戻して再開できます</span>',
         ].join.strip
 
         # info.move_infos.size - 0
@@ -73,16 +72,7 @@ class CpuBattlesController < ApplicationController
         return
       end
 
-      @before_sfen = mediator.to_sfen
-
       yomiage_for(mediator) # 人間の手の読み上げ
-
-      if current_cpu_brain_info.mate_danger_check
-        if mediator.opponent_player.mate_danger? # この処理が 0.5 秒ぐらいで体感で遅いのがわかる
-          final_decision(final_state: :you_lose, message: "王手放置(または自殺手)で負けました")
-          return
-        end
-      end
 
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
@@ -96,71 +86,92 @@ class CpuBattlesController < ApplicationController
         Rails.logger.debug(mediator)
       end
 
-      if current_cpu_brain_info.depth_max_range
-        brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator, cpu_strategy_key: cpu_strategy_key_considering_all_round)
-        time_limit = current_cpu_brain_info.time_limit
+      hand = nil
 
-        begin
-          @candidate_records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
-        rescue Bioshogi::BrainProcessingHeavy
-          time_limit += 1
-          Rails.logger.info([:retry, {time_limit: time_limit}])
-          retry
+      unless hand
+        if current_cpu_brain_info.mate_danger_check
+          hand = mediator.current_player.mate_move_hands.first
+
+          # 玉を取らない場合
+          if false
+            if hand
+              final_decision(final_state: :you_lose, message: "王手放置(または自殺手)で負けました")
+              return
+            end
+          end
         end
+      end
 
-        unless Rails.env.production?
-          Rails.logger.debug(candidate_report)
+      unless hand
+        if current_cpu_brain_info.depth_max_range
+          brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator, cpu_strategy_key: cpu_strategy_key_considering_all_round)
+          time_limit = current_cpu_brain_info.time_limit
+
+          begin
+            @candidate_records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
+          rescue Bioshogi::BrainProcessingHeavy
+            time_limit += 1
+            Rails.logger.info([:retry, {time_limit: time_limit}])
+            retry
+          end
+
+          unless Rails.env.production?
+            Rails.logger.debug(candidate_report)
+          end
+
+          if @candidate_records.empty?
+            final_decision(final_state: :you_win, message: "CPUが投了しました")
+            return
+          end
+
+          # いちばん良いのを選択
+          record = @candidate_records.first
+          if record[:score] <= -Bioshogi::INF_MAX
+            final_decision(final_state: :you_win, message: "CPUが降参しました")
+            return
+          end
+
+          if true
+            # いちばん良いのが 100 点とすると 95 点まで下げて 95〜100 点の手を改めてランダムで選択する
+            min = record[:score] - SHAKING_WIDTH
+            record = @candidate_records.take_while { |e| e[:score] >= min }.sample
+          end
+
+          hand = record[:hand]
         end
+      end
 
-        if @candidate_records.empty?
-          final_decision(final_state: :you_win, message: "CPUが投了しました")
-          return
-        end
-
-        # いちばん良いのを選択
-        record = @candidate_records.first
-        if record[:score] <= -Bioshogi::INF_MAX
-          final_decision(final_state: :you_win, message: "CPUが降参しました")
-          return
-        end
-
-        if true
-          # いちばん良いのが 100 点とすると 95 点まで下げて 95〜100 点の手を改めてランダムで選択する
-          min = record[:score] - SHAKING_WIDTH
-          record = @candidate_records.take_while { |e| e[:score] >= min }.sample
-        end
-
-        hand = record[:hand]
-      else
+      unless hand
         hands = mediator.current_player.normal_all_hands.to_a
         if current_cpu_brain_info.legal_only
           hands = hands.find_all { |e| e.legal_move?(mediator) }
         end
         hand = hands.sample
-        unless hand
-          final_decision(final_state: :you_win, message: "CPUはもう何も指す手がなかったようです")
-          return
-        end
+      end
+
+      unless hand
+        final_decision(final_state: :you_win, message: "CPUが投了しました。もう何も指す手がなかったようです")
+        return
       end
 
       # CPUの手を指す
       mediator.execute(hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
-      @after_sfen = mediator.to_sfen
+      @current_sfen = mediator.to_sfen
 
       yomiage_for(mediator) # CPUの手の読み上げる
-
-      if true
-        # 人間側の合法手が生成できなければ人間側の負け
-        if mediator.current_player.legal_all_hands.none?
-          final_decision(final_state: :you_lose, message: "CPUの勝ちです")
-          return
-        end
-      end
 
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
           final_decision(final_state: :you_lose, message: "玉を取られました")
+          return
+        end
+      end
+
+      if true
+        # 人間側の合法手が生成できなければ人間側の負け
+        if mediator.current_player.legal_all_hands.none?
+          final_decision(final_state: :you_lose, message: "CPUの勝ちです")
           return
         end
       end
@@ -213,8 +224,7 @@ class CpuBattlesController < ApplicationController
 
   def build_response
     response = {
-      before_sfen: @before_sfen,
-      after_sfen: @after_sfen,
+      current_sfen: @current_sfen,
     }
     unless Rails.env.production?
       response[:candidate_rows] = candidate_rows     # b-table 用

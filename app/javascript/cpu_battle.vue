@@ -4,58 +4,70 @@
     .column
       .has-text-centered
         shogi_player(
-          :kifu_body="full_sfen"
+          :kifu_body="current_sfen"
           :theme="sp_params.theme"
           :piece_variant="sp_params.piece_variant"
           :key_event_capture="false"
-          :slider_show="false"
+          :slider_show="true"
           :sfen_show="false"
           :controller_show="true"
           :size="'x-large'"
           :sound_effect="true"
           :volume="$root.$options.volume"
-          :run_mode="'play_mode'"
-          :flip.sync="flip",
+          :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
+          :flip.sync="flip"
+          :setting_button_show="development_p"
+          :summary_show="development_p"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
           ref="sp_vm"
         )
     .column
       .buttons
-        b-button(type="is-primary" @click="reset_handle")
-          | 再挑戦
+        template(v-if="mode === 'standby'")
+          b-button(type="is-primary" @click="start_handle")
+            | 挑戦
+        template(v-if="mode === 'playing'")
+          b-button(type="is-danger" outlined @click="give_up_handle")
+            | 投了
+        template(v-if="development_p")
+          template(v-if="mode === 'playing'")
+            b-button(@click="restart_handle")
+              | 再挑戦
 
-      .box
-        b-field(label="強さ" custom-class="is-small")
-          .block
-            template(v-for="e in CpuBrainInfo.values")
-              b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
-                | {{e.name}}
+      template(v-if="mode === 'standby'")
+        .box
+          b-field(label="強さ" custom-class="is-small")
+            .block
+              template(v-for="e in CpuBrainInfo.values")
+                b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
+                  | {{e.name}}
 
-        b-field(label="戦法" custom-class="is-small")
-          .block
-            template(v-for="e in CpuStrategyInfo.values")
-              b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
-                | {{e.name}}
+          b-field(label="戦法" custom-class="is-small")
+            .block
+              template(v-for="e in CpuStrategyInfo.values")
+                b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
+                  | {{e.name}}
 
-        b-field(label="手合割" custom-class="is-small")
-          .block
-            template(v-for="e in CpuPresetInfo.values")
-              b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
-                | {{e.name}}
-      .box
-        b-field(label="スタイル" custom-class="is-small")
-          .block
-            template(v-for="e in BoardStyleInfo.values")
-              b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
-                | {{e.name}}
+          b-field(label="手合割" custom-class="is-small")
+            .block
+              template(v-for="e in CpuPresetInfo.values")
+                b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
+                  | {{e.name}}
+        .box
+          b-field(label="スタイル" custom-class="is-small")
+            .block
+              template(v-for="e in BoardStyleInfo.values")
+                b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
+                  | {{e.name}}
+
+      template(v-if="candidate_rows")
+        .box
+          b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 
       template(v-if="candidate_report")
         pre.box.is-size-7.candidate_report
           | {{candidate_report}}
 
-      template(v-if="candidate_rows")
-        .box
-          b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 </template>
 
 <script>
@@ -71,8 +83,9 @@ export default {
   data() {
     return {
       current_user: js_global.current_user, // 名前を読み上げるため
+      mode: null,
 
-      full_sfen: null,                      // 譜面
+      current_sfen: null,                      // 譜面
       flip: null,                           // 駒落ちなら反転させる
       sp_params: this.$root.$options.sp_params,
       candidate_report: null,                      // 候補
@@ -93,7 +106,17 @@ export default {
 
     this.board_style_info_reflection()
 
-    this.reset_handle()
+    this.mode = "standby"
+
+    this.current_sfen_set()
+
+    console.log("this.$route.query:", this.$route.query)
+  },
+
+  mounted() {
+    if (this.$route.query.auto_play) {
+      this.start_handle()
+    }
   },
 
   computed: {
@@ -153,7 +176,7 @@ export default {
     },
 
     cpu_preset_key() {
-      this.full_sfen_set()
+      this.current_sfen_set()
       this.talk(`${this.cpu_preset_info.name}に変更しました`)
     },
 
@@ -169,15 +192,21 @@ export default {
       this.cpu_strategy_random_number = Math.floor(Math.random() * 256) // オールラウンドの戦法が決まる乱数
     },
 
-    full_sfen_set() {
-      this.full_sfen = this.preset_info.sfen                        // 手合割に対応する盤面設定
+    current_sfen_set() {
+      this.current_sfen = this.preset_info.sfen                        // 手合割に対応する盤面設定
       this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
+      // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(0))  // 0手目の局面に戻す
       this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(0))  // 0手目の局面に戻す
     },
 
     // 再挑戦
-    reset_handle() {
-      this.full_sfen_set()
+    restart_handle() {
+      this.start_handle()
+    },
+
+    // 再挑戦
+    start_handle() {
+      this.current_sfen_set()
 
       // オールラウンドの戦型選択
       this.cpu_strategy_random_number_reset()
@@ -186,7 +215,29 @@ export default {
       this.candidate_report = null
       this.candidate_rows = null
 
+      this.mode = "playing"
       setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
+    },
+
+    // 投了
+    give_up_handle() {
+      this.view_mode_set()
+
+      // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(999))  // 0手目の局面に戻す
+
+      this.$buefy.toast.open("負けました")
+
+      // this.easy_dialog({
+      // this.easy_dialog({
+      //   title: "投了",
+      //   message: "負けました",
+      //   type: "is-primary",
+      //   hasIcon: true,
+      //   icon: "emoticon-sad-outline",
+      //   iconPack: "mdi",
+      // })
+      this.talk("負けました")
+
     },
 
     board_style_info_reflection() {
@@ -201,7 +252,17 @@ export default {
       this.$buefy.dialog.alert(params)
     },
 
+    view_mode_set() {
+      this.mode = "standby"
+      // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(999))
+      this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(999))  // 0手目の局面に戻す
+    },
+
     play_mode_long_sfen_set(v) {
+      if (this.mode === "standby") {
+        return
+      }
+
       this.$http.post(this.$root.$options.player_mode_moved_path, {
         kifu_body: v,
         cpu_brain_key: this.cpu_brain_key,
@@ -209,55 +270,59 @@ export default {
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
-        const final_state = response.data["final_state"]
-        if (final_state === "irregular") {
-          this.easy_dialog({
-            title: "反則負け",
-            message: response.data["message"],
-            type: "is-danger",
-            hasIcon: true,
-            icon: "times-circle",
-            iconPack: "fa",
-          })
-          this.talk("反則負けです")
-        }
-
-        if (final_state === "you_win") {
-          this.easy_dialog({
-            title: "勝利",
-            message: response.data["message"],
-            type: "is-primary",
-            hasIcon: true,
-            icon: "trophy",
-            iconPack: "mdi",
-          })
-          this.talk(response.data["message"])
-        }
-
-        if (final_state === "you_lose") {
-          this.easy_dialog({
-            title: "敗北",
-            message: response.data["message"],
-            type: "is-primary",
-            hasIcon: true,
-            icon: "emoticon-sad-outline",
-            iconPack: "mdi",
-          })
-          this.talk(response.data["message"])
-        }
-
         // CPUの指し手を読み上げる
         if (response.data["yomiage"]) {
           this.talk(response.data["yomiage"])
         }
 
         // 指した後の局面を反映
-        if (response.data["after_sfen"]) {
-          this.full_sfen = response.data["after_sfen"]
+        if (response.data["current_sfen"]) {
+          this.current_sfen = response.data["current_sfen"]
         }
 
         this.candidate_report = response.data["candidate_report"]
         this.candidate_rows = response.data["candidate_rows"]
+
+        const final_state = response.data["final_state"]
+        if (final_state) {
+          this.view_mode_set()
+
+          if (final_state === "irregular") {
+            this.easy_dialog({
+              title: "反則負け",
+              message: response.data["message"],
+              type: "is-danger",
+              hasIcon: true,
+              icon: "times-circle",
+              iconPack: "fa",
+            })
+            this.talk("反則負けです")
+          }
+
+          if (final_state === "you_win") {
+            this.easy_dialog({
+              title: "勝利",
+              message: response.data["message"],
+              type: "is-primary",
+              hasIcon: true,
+              icon: "trophy",
+              iconPack: "mdi",
+            })
+            this.talk(response.data["message"])
+          }
+
+          if (final_state === "you_lose") {
+            this.easy_dialog({
+              title: "敗北",
+              message: response.data["message"],
+              type: "is-primary",
+              hasIcon: true,
+              icon: "emoticon-sad-outline",
+              iconPack: "mdi",
+            })
+            this.talk(response.data["message"])
+          }
+        }
 
       }).catch(error => {
         console.table([error.response])
