@@ -2,6 +2,20 @@
 .cpu_battle
   .columns
     .column
+      template(v-if="mode === 'playing' || mode === 'standby'")
+        nav.level.is-mobile
+          .level-item
+            .buttons
+              template(v-if="mode === 'standby'")
+                b-button(type="is-primary" @click="start_handle" :rounded="true")
+                  | 挑戦
+              template(v-if="mode === 'playing'")
+                b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true")
+                  | 投了
+                template(v-if="development_p")
+                  b-button(@click="restart_handle")
+                    | 再挑戦
+
       .has-text-centered
         shogi_player(
           :kifu_body="current_sfen"
@@ -11,7 +25,7 @@
           :slider_show="true"
           :sfen_show="false"
           :controller_show="true"
-          :size="'x-large'"
+          :size="'large'"
           :sound_effect="true"
           :volume="$root.$options.volume"
           :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
@@ -21,19 +35,19 @@
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
           ref="sp_vm"
         )
-    .column
-      .buttons
-        template(v-if="mode === 'standby'")
-          b-button(type="is-primary" @click="start_handle")
-            | 挑戦
-        template(v-if="mode === 'playing'")
-          b-button(type="is-danger" outlined @click="give_up_handle")
-            | 投了
-        template(v-if="development_p")
-          template(v-if="mode === 'playing'")
-            b-button(@click="restart_handle")
-              | 再挑戦
 
+    .column.is-two-fifths(v-if="mode === 'standby'")
+      template(v-if="false")
+        .box
+          nav.level.is-mobile
+            .level-item.has-text-centered
+              div
+                p.heading CPUの勝ち
+                p.title 1
+            .level-item.has-text-centered
+              div
+                p.heading 人間の勝ち
+                p.title 1
       template(v-if="mode === 'standby'")
         .box
           b-field(label="強さ" custom-class="is-small")
@@ -60,6 +74,8 @@
                 b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
                   | {{e.name}}
 
+  .columns(v-if="development_p && mode === 'playing'")
+    .column
       template(v-if="candidate_rows")
         .box
           b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
