@@ -3,6 +3,7 @@ class CpuStrategyInfo
   memory_record [
     { key: "オールラウンド", },
     { key: "嬉野流",         },
+    { key: "アヒル戦法",     },
     { key: "振り飛車",       },
   ]
 
