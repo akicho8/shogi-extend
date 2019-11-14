@@ -19,6 +19,7 @@
       .has-text-centered
         shogi_player(
           :kifu_body="current_sfen"
+          :human_side_key="human_side_key"
           :theme="sp_params.theme"
           :bg_variant.sync="bg_variant"
           :piece_variant="sp_params.piece_variant"
@@ -110,6 +111,7 @@ export default {
       candidate_report: null, // 候補テキスト
       candidate_rows: null,   // 候補
       bg_variant: null,
+      human_side_key: null,
 
       cpu_strategy_random_number: null,           // オールラウンド用に使っている
 
@@ -215,10 +217,11 @@ export default {
     },
 
     current_sfen_set() {
-      this.current_sfen = this.preset_info.sfen                        // 手合割に対応する盤面設定
-      this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
+      this.current_sfen = this.preset_info.sfen                      // 手合割に対応する盤面設定
+      this.flip = (this.preset_info.first_location_key === "white")  // 駒落ちなら反転して上手を持つ
+      this.human_side_key = this.preset_info.first_location_key           // 人間側だけの操作にする
       // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(0))  // 0手目の局面に戻す
-      this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(0))  // 0手目の局面に戻す
+      // this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(0))  // 0手目の局面に戻す
     },
 
     // 再挑戦
@@ -281,8 +284,11 @@ export default {
 
     view_mode_set() {
       this.mode = "standby"
+
+      // standby にすると shogi-player を view_mode に切り替える
+      // そのとき局面が0手目になってしまうので、最後の局面にする
+      this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(10000))
       // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(10000))
-      this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(10000))  // 最後の局面にする
     },
 
     play_mode_long_sfen_set(v) {
