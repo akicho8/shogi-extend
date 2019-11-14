@@ -8,16 +8,16 @@ http://sozai.7gates.net/docs/japanese-chess/
 
 CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像
 http://mucho.girly.jp/bona/
- 
+
 フリー画像素材 - BEIZ Graphics
 https://www.beiz.jp/
- 
+
 ぱくたそ-フリー素材・無料写真ダウンロード
 https://www.pakutaso.com/
- 
+
 Paper-co | 紙のテクスチャー素材を無料でダウンロードできるサイト
 http://free-formal_sheet-texture.com/
- 
+
 フリーテクスチャ素材館／畳のテクスチャ素材01
 https://free-texture.net/seamless-pattern/tatami01.html
 
