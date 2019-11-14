@@ -255,11 +255,22 @@ class CpuBattlesController < ApplicationController
   class CpuBrainInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :level1, name: "ルールわかってない", time_limit: nil, depth_max_range: nil,  legal_only: false, mate_danger_check: false, }, # ランダム
-      { key: :level2, name: "ありえないほど弱い", time_limit: nil, depth_max_range: nil,  legal_only: true,  mate_danger_check: true,  }, # 合法手のランダム
-      { key: :level3, name: "めちゃくちゃ弱い",   time_limit: nil, depth_max_range: 0..0, legal_only: nil,   mate_danger_check: true,  }, # 最初の合法手リストを最善手順に並べたもの
-      { key: :level4, name: "かなり弱い",         time_limit:   3, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  }, # 3秒まで深読みできる
-      { key: :level5, name: "弱い",               time_limit:   5, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  }, # 必ず相手の手を読む
+      { key: :level1, name: "ルールわかってない", time_limit: nil, depth_max_range: nil,  legal_only: false, mate_danger_check: false, development_only: false, }, # ランダム
+      { key: :level2, name: "ありえないほど弱い", time_limit: nil, depth_max_range: nil,  legal_only: true,  mate_danger_check: true,  development_only: false, }, # 合法手のランダム
+      { key: :level3, name: "めちゃくちゃ弱い",   time_limit: nil, depth_max_range: 0..0, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 最初の合法手リストを最善手順に並べたもの
+      { key: :level4, name: "かなり弱い",         time_limit:   3, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 3秒まで深読みできる
+      { key: :level5, name: "弱い",               time_limit:   5, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 必ず相手の手を読む
+      { key: :level6, name: "長考10秒",           time_limit:  10, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
+      { key: :level7, name: "長考30秒",           time_limit:  30, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
+      { key: :level8, name: "長考1分",            time_limit:  60, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
     ]
+
+    def self.values
+      v = super
+      if Rails.env.production?
+        v = v.reject(&:development_only)
+      end
+      v
+    end
   end
 end

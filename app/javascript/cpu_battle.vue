@@ -36,7 +36,7 @@
           ref="sp_vm"
         )
 
-    .column.is-two-fifths(v-if="mode === 'standby'")
+    .column.is-two-fifths(v-if="mode === 'standby' || development_p")
       template(v-if="false")
         .box
           nav.level.is-mobile
@@ -48,7 +48,7 @@
               div
                 p.heading 人間の勝ち
                 p.title 1
-      template(v-if="mode === 'standby'")
+      template(v-if="mode === 'standby' || development_p")
         .box
           b-field(label="強さ" custom-class="is-small")
             .block
@@ -101,11 +101,11 @@ export default {
       current_user: js_global.current_user, // 名前を読み上げるため
       mode: null,
 
-      current_sfen: null,                      // 譜面
-      flip: null,                           // 駒落ちなら反転させる
+      current_sfen: null,     // 譜面
+      flip: null,             // 駒落ちなら反転させる
       sp_params: this.$root.$options.sp_params,
-      candidate_report: null,                      // 候補
-      candidate_rows: null,                      // 候補
+      candidate_report: null, // 候補テキスト
+      candidate_rows: null,   // 候補
 
       cpu_strategy_random_number: null,           // オールラウンド用に使っている
 
@@ -270,8 +270,8 @@ export default {
 
     view_mode_set() {
       this.mode = "standby"
-      // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(999))
-      this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(999))  // 0手目の局面に戻す
+      // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(10000))
+      this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(10000))  // 最後の局面にする
     },
 
     play_mode_long_sfen_set(v) {
@@ -286,60 +286,61 @@ export default {
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
-        // CPUの指し手を読み上げる
-        if (response.data["yomiage"]) {
-          this.talk(response.data["yomiage"])
-        }
-
-        // 指した後の局面を反映
-        if (response.data["current_sfen"]) {
-          this.current_sfen = response.data["current_sfen"]
-        }
-
-        this.candidate_report = response.data["candidate_report"]
-        this.candidate_rows = response.data["candidate_rows"]
-
-        const final_state = response.data["final_state"]
-        if (final_state) {
-          this.view_mode_set()
-
-          if (final_state === "irregular") {
-            this.easy_dialog({
-              title: "反則負け",
-              message: response.data["message"],
-              type: "is-danger",
-              hasIcon: true,
-              icon: "times-circle",
-              iconPack: "fa",
-            })
-            this.talk("反則負けです")
+        if (this.mode === "playing") {
+          // CPUの指し手を読み上げる
+          if (response.data["yomiage"]) {
+            this.talk(response.data["yomiage"])
           }
 
-          if (final_state === "you_win") {
-            this.easy_dialog({
-              title: "勝利",
-              message: response.data["message"],
-              type: "is-primary",
-              hasIcon: true,
-              icon: "trophy",
-              iconPack: "mdi",
-            })
-            this.talk(response.data["message"])
+          // 指した後の局面を反映
+          if (response.data["current_sfen"]) {
+            this.current_sfen = response.data["current_sfen"]
           }
 
-          if (final_state === "you_lose") {
-            this.easy_dialog({
-              title: "敗北",
-              message: response.data["message"],
-              type: "is-primary",
-              hasIcon: true,
-              icon: "emoticon-sad-outline",
-              iconPack: "mdi",
-            })
-            this.talk(response.data["message"])
+          this.candidate_report = response.data["candidate_report"]
+          this.candidate_rows = response.data["candidate_rows"]
+
+          const final_state = response.data["final_state"]
+          if (final_state) {
+            this.view_mode_set()
+
+            if (final_state === "irregular") {
+              this.easy_dialog({
+                title: "反則負け",
+                message: response.data["message"],
+                type: "is-danger",
+                hasIcon: true,
+                icon: "times-circle",
+                iconPack: "fa",
+              })
+              this.talk("反則負けです")
+            }
+
+            if (final_state === "you_win") {
+              this.easy_dialog({
+                title: "勝利",
+                message: response.data["message"],
+                type: "is-primary",
+                hasIcon: true,
+                icon: "trophy",
+                iconPack: "mdi",
+              })
+              this.talk(response.data["message"])
+            }
+
+            if (final_state === "you_lose") {
+              this.easy_dialog({
+                title: "敗北",
+                message: response.data["message"],
+                type: "is-primary",
+                hasIcon: true,
+                icon: "emoticon-sad-outline",
+                iconPack: "mdi",
+              })
+              this.talk(response.data["message"])
+            }
           }
         }
-
       }).catch(error => {
         console.table([error.response])
         this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
