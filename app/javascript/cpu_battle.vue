@@ -20,6 +20,7 @@
         shogi_player(
           :kifu_body="current_sfen"
           :theme="sp_params.theme"
+          :bg_variant.sync="bg_variant"
           :piece_variant="sp_params.piece_variant"
           :key_event_capture="false"
           :slider_show="true"
@@ -73,6 +74,8 @@
               template(v-for="e in BoardStyleInfo.values")
                 b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
                   | {{e.name}}
+          b-button(@click="bg_variant_reset" size="is-small")
+            | 背景ランダム
 
   .columns(v-if="development_p && mode === 'playing'")
     .column
@@ -106,6 +109,7 @@ export default {
       sp_params: this.$root.$options.sp_params,
       candidate_report: null, // 候補テキスト
       candidate_rows: null,   // 候補
+      bg_variant: null,
 
       cpu_strategy_random_number: null,           // オールラウンド用に使っている
 
@@ -125,6 +129,8 @@ export default {
     this.mode = "standby"
 
     this.current_sfen_set()
+
+    this.bg_variant = "a"
 
     console.log("this.$route.query:", this.$route.query)
   },
@@ -254,6 +260,11 @@ export default {
       // })
       this.talk("負けました")
 
+    },
+
+    bg_variant_reset() {
+      // 背景設定
+      this.bg_variant = _.sample(["a", "g", "l", "n", "p", "q"])
     },
 
     board_style_info_reflection() {
