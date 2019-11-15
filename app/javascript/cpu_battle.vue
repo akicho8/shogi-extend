@@ -17,6 +17,8 @@
                     | 終了
                   b-button(@click="restart_handle")
                     | 再挑戦
+                  b-button(@click="one_hand_exec")
+                    | 1手指す
 
       .has-text-centered
         shogi_player(
@@ -105,6 +107,7 @@ import CpuStrategyInfo from "cpu_strategy_info"
 import CpuPresetInfo from "cpu_preset_info"
 import BoardStyleInfo from "board_style_info"
 import PresetInfo from "shogi-player/src/preset_info.js"
+import Location from "shogi-player/src/location"
 
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
 
@@ -186,28 +189,28 @@ export default {
       ]
     },
 
-    // 対戦者の名前
-    current_call_name() {
-      let str = null
-      if (!str) {
-        if (this.current_user) {
-          str = `${this.current_user.name}さん`
-        }
-      }
-      if (!str) {
-        // str = "あなた"
-      }
-      return str
-    },
+    // // 対戦者の名前
+    // current_call_name() {
+    //   let str = null
+    //   if (!str) {
+    //     if (this.current_user) {
+    //       str = `${this.current_user.name}さん`
+    //     }
+    //   }
+    //   if (!str) {
+    //     // str = "あなた"
+    //   }
+    //   return str
+    // },
 
-    // 最初の台詞
-    first_talk_body() {
-      let str = "よろしくお願いします。"
-      if (this.current_call_name) {
-        str += `${this.current_call_name}の手番です`
-      }
-      return str
-    },
+    // // 最初の台詞
+    // first_talk_body() {
+    //   let str = ""
+    //   if (this.current_call_name) {
+    //     str += `${this.current_call_name}の手番です`
+    //   }
+    //   return str
+    // },
   },
 
   watch: {
@@ -249,7 +252,7 @@ export default {
       this.start_handle()
     },
 
-    // 再挑戦
+    // 開始
     start_handle() {
       this.current_sfen_set()
 
@@ -260,17 +263,35 @@ export default {
       this.candidate_report = null
       this.candidate_rows = null
 
-      // 投了前
+      // 投了を押せる状態にする
       this.give_up_processing = false
 
+      // 開始
       this.mode = "playing"
-      setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
+      this.talk("よろしくお願いします")
+
+      // 平手であれば振り駒
+      if (this.preset_info.first_location_key === "black") {
+        this.human_side_key = _.sample(Location.keys) // 振り駒をして
+        if (this.human_side_key === "white") {        // 後手番なら
+          this.flip = true                            // 盤面反転して
+          this.$nextTick(() => this.one_hand_exec())  // 相手に初手を指させる
+        }
+      }
+
+      // 挨拶
+      // setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
 
     // 終了
     break_handle() {
       this.view_mode_set()
       this.$buefy.toast.open("終了")
+    },
+
+    // 1手実行
+    one_hand_exec() {
+      this.play_mode_long_sfen_set(this.$refs.sp_vm.play_mode_current_sfen)
     },
 
     // 背景ランダム設定

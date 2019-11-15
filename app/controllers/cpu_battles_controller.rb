@@ -79,18 +79,20 @@ class CpuBattlesController < ApplicationController
         return
       end
 
-      yomiage_for(mediator) # 人間の手の読み上げ
-
-      captured_soldier = mediator.opponent_player.executor.captured_soldier
-      if captured_soldier
-        if captured_soldier.piece.key == :king
-          final_decision(judge_key: :win, message: "玉を取って勝ちました！")
-          return
-        end
-      end
-
       unless Rails.env.production?
         Rails.logger.debug(mediator)
+      end
+
+      yomiage_for(mediator) # 人間の手の読み上げ
+
+      if executor = mediator.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
+        captured_soldier = executor.captured_soldier
+        if captured_soldier
+          if captured_soldier.piece.key == :king
+            final_decision(judge_key: :win, message: "玉を取って勝ちました！")
+            return
+          end
+        end
       end
 
       hand = nil
@@ -231,8 +233,11 @@ class CpuBattlesController < ApplicationController
 
   private
 
+  # 最後の手があれば読み上げる
   def yomiage_for(mediator)
-    talk(mediator.hand_logs.last.yomiage, rate: TALK_PITCH) # 人間の手の読み上げ
+    if last = mediator.hand_logs.last
+      talk(last.yomiage, rate: TALK_PITCH)
+    end
   end
 
   def build_response
