@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_14_111600) do
+ActiveRecord::Schema.define(version: 2019_11_15_093100) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -190,6 +190,15 @@ ActiveRecord::Schema.define(version: 2019_09_14_111600) do
     t.datetime "updated_at", null: false
     t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
     t.index ["text_format"], name: "index_converted_infos_on_text_format"
+  end
+
+  create_table "cpu_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "colosseum_user_id", comment: "ログインしているならそのユーザー"
+    t.string "judge_key", null: false, comment: "結果"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["colosseum_user_id"], name: "index_cpu_battle_records_on_colosseum_user_id"
+    t.index ["judge_key"], name: "index_cpu_battle_records_on_judge_key"
   end
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

@@ -13,6 +13,8 @@
                 b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true")
                   | 投了
                 template(v-if="development_p")
+                  b-button(@click="break_handle")
+                    | 終了
                   b-button(@click="restart_handle")
                     | 再挑戦
 
@@ -75,8 +77,12 @@
               template(v-for="e in BoardStyleInfo.values")
                 b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
                   | {{e.name}}
-          b-button(@click="bg_variant_reset" size="is-small")
+          b-button(@click="bg_variant_reset_handle" size="is-small")
             | 背景ランダム
+
+        b-message(size="is-small")
+          | CPU {{judge_group.lose}} 勝<br>
+          | 人間 {{judge_group.win}} 勝
 
   .columns(v-if="development_p && mode === 'playing'")
     .column
@@ -118,6 +124,8 @@ export default {
       cpu_brain_key: this.$root.$options.cpu_brain_key,
       cpu_strategy_key: this.$root.$options.cpu_strategy_key,
       cpu_preset_key: this.$root.$options.cpu_preset_key,
+
+      judge_group: this.$root.$options.judge_group, // 勝敗
     }
   },
 
@@ -244,29 +252,14 @@ export default {
       setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
 
-    // 投了
-    give_up_handle() {
+    // 終了
+    break_handle() {
       this.view_mode_set()
-
-      // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(999))  // 0手目の局面に戻す
-
-      this.$buefy.toast.open("負けました")
-
-      // this.easy_dialog({
-      // this.easy_dialog({
-      //   title: "投了",
-      //   message: "負けました",
-      //   type: "is-primary",
-      //   hasIcon: true,
-      //   icon: "emoticon-sad-outline",
-      //   iconPack: "mdi",
-      // })
-      this.talk("負けました")
-
+      this.$buefy.toast.open("終了")
     },
 
-    bg_variant_reset() {
-      // 背景設定
+    // 背景ランダム設定
+    bg_variant_reset_handle() {
       this.bg_variant = _.sample(["a", "g", "l", "n", "p", "q"])
     },
 
@@ -291,79 +284,97 @@ export default {
       // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(10000))
     },
 
-    play_mode_long_sfen_set(v) {
+    give_up_handle() {
+      this.$http.post(this.$root.$options.post_path, {
+        i_give_up: true,
+      }).then(response => {
+        this.response_process(response)
+      }).catch(error => {
+        this.error_process(error)
+      })
+    },
+
+    play_mode_long_sfen_set(long_sfen) {
       if (this.mode === "standby") {
         return
       }
-
-      this.$http.post(this.$root.$options.player_mode_moved_path, {
-        kifu_body: v,
+      this.$http.post(this.$root.$options.post_path, {
+        kifu_body: long_sfen,
         cpu_brain_key: this.cpu_brain_key,
         cpu_strategy_key: this.cpu_strategy_key,
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
-        const data = response.data
-
-        if (this.mode === "playing") {
-
-          // CPUの指し手を読み上げる
-          if (data["yomiage"]) {
-            this.talk(data["yomiage"])
-          }
-
-          // 指した後の局面を反映
-          if (data["current_sfen"]) {
-            this.current_sfen = data["current_sfen"]
-          }
-
-          this.candidate_report = data["candidate_report"]
-          this.candidate_rows = data["candidate_rows"]
-
-          if (data["judge_key"]) {
-            this.view_mode_set()
-
-            if (data["judge_key"] === "win") {
-              this.talk(data["message"])
-              this.easy_dialog({
-                title: "勝利",
-                message: data["message"],
-                type: "is-primary",
-                hasIcon: true,
-                icon: "trophy",
-                iconPack: "mdi",
-              })
-            }
-
-            if (data["judge_key"] === "lose") {
-              if (data["irregular"]) {
-                this.talk("反則負けです")
-                this.easy_dialog({
-                  title: "反則負け",
-                  message: data["message"],
-                  type: "is-danger",
-                  hasIcon: true,
-                  icon: "times-circle",
-                  iconPack: "fa",
-                })
-              } else {
-                this.talk(data["message"])
-                this.easy_dialog({
-                  title: "敗北",
-                  message: data["message"],
-                  type: "is-primary",
-                  hasIcon: true,
-                  icon: "emoticon-sad-outline",
-                  iconPack: "mdi",
-                })
-              }
-            }
-          }
-        }
+        this.response_process(response)
       }).catch(error => {
-        console.table([error.response])
-        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+        this.error_process(error)
       })
+    },
+
+    response_process(response) {
+      const data = response.data
+      if (this.mode === "playing") {
+        // CPUの指し手を読み上げる
+        if (data["yomiage"]) {
+          this.talk(data["yomiage"])
+        }
+
+        // 指した後の局面を反映
+        if (data["current_sfen"]) {
+          this.current_sfen = data["current_sfen"]
+        }
+
+        this.candidate_report = data["candidate_report"]
+        this.candidate_rows = data["candidate_rows"]
+
+        if (data["judge_key"]) {
+          this.view_mode_set()
+          this.judge_group = data["judge_group"]
+          this.judge_dialog_display(data)
+        }
+      }
+    },
+
+    judge_dialog_display(data) {
+      if (data["judge_key"] === "win") {
+        this.talk(data["message"])
+        this.easy_dialog({
+          title: "勝利",
+          message: data["message"],
+          type: "is-primary",
+          hasIcon: true,
+          icon: "trophy",
+          iconPack: "mdi",
+        })
+      }
+      if (data["judge_key"] === "lose") {
+        if (data["irregular"]) {
+          this.talk("反則負けです")
+          this.easy_dialog({
+            title: "反則負け",
+            message: data["message"],
+            type: "is-danger",
+            hasIcon: true,
+            icon: "times-circle",
+            iconPack: "fa",
+          })
+        } else {
+          this.talk(data["message"])
+          this.easy_dialog({
+            title: "敗北",
+            message: data["message"],
+            type: "is-primary",
+            hasIcon: true,
+            icon: "emoticon-sad-outline",
+            iconPack: "mdi",
+          })
+        }
+      }
+    },
+
+    error_process(error) {
+      console.table([error.response])
+      this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
     },
   },
 }

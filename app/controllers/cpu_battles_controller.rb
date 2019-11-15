@@ -15,7 +15,7 @@ class CpuBattlesController < ApplicationController
 
   def js_cpu_battle
     {
-      player_mode_moved_path: url_for([:cpu_battles, format: "json"]),
+      post_path: url_for([controller_name, format: "json"]),
       sp_params: sp_params,
       sp_volume: AppConfig[:volume],
 
@@ -27,6 +27,8 @@ class CpuBattlesController < ApplicationController
 
       cpu_preset_infos: CpuPresetInfo,
       cpu_preset_key: current_cpu_preset_key,
+
+      judge_group: CpuBattleRecord.group(:judge_key).count,
     }
   end
 
@@ -44,6 +46,11 @@ class CpuBattlesController < ApplicationController
   end
 
   def create
+    if params[:i_give_up]
+      final_decision(judge_key: :lose, message: "負けました")
+      return
+    end
+
     if v = params[:kifu_body]
       @candidate_records = []
       @current_sfen = v
@@ -53,7 +60,7 @@ class CpuBattlesController < ApplicationController
         mediator = info.mediator
       rescue => error
         lines = error.message.lines
-        irregular_message = [
+        message = [
           "#{lines.first.remove("【反則】")}",
           # "<br><br>"
           # "<pre>", lines.drop(1).join, "</pre>",
@@ -68,7 +75,7 @@ class CpuBattlesController < ApplicationController
         # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
         # render json: {error_message: error_message, before_sfen: before_sfen}
 
-        final_decision(judge_key: :lose, irregular: true, message: irregular_message)
+        final_decision(judge_key: :lose, irregular: true, message: message)
         return
       end
 
@@ -188,7 +195,13 @@ class CpuBattlesController < ApplicationController
 
   def final_decision(response)
     response = build_response.merge(response)
-    slack_message(key: "CPU対戦終局", body: response[:message])
+
+    cpu_battle_record = CpuBattleRecord.create!(judge_key: response[:judge_key], user: current_user)
+    judge_info = JudgeInfo[response[:judge_key]]
+    slack_message(key: "CPU対戦終局", body: "[#{current_user&.name}][#{judge_info}] #{response[:message]}")
+
+    response[:judge_group] = CpuBattleRecord.group(:judge_key).count
+
     render json: response
   end
 
