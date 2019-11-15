@@ -5,12 +5,15 @@
 # mysql  Ver 14.14 Distrib 5.5.45, for Linux (x86_64) using readline 5.1
 # なので次のコードが必要
 
+# ActiveRecordをutf8mb4で動かす
+# https://qiita.com/kamipo/items/101aaf8159cf1470d823
+
 if Rails.env.production?
   # http://3.1415.jp/mgeu6lf5/
   module InnodbRowFormat
     def create_table(table_name, options = {}, **)
       table_options = options.reverse_merge(:options => 'ENGINE=InnoDB ROW_FORMAT=DYNAMIC')
-      create_table_without_innodb_row_format(table_name, table_options) do |td|
+      super(table_name, table_options) do |td|
         yield td if block_given?
       end
     end
