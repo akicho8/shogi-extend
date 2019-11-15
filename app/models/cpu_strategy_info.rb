@@ -2,9 +2,10 @@ class CpuStrategyInfo
   include ApplicationMemoryRecord
   memory_record [
     { key: "オールラウンド", },
+    { key: "矢倉",           },
+    { key: "右四間飛車",     },
     { key: "嬉野流",         },
     { key: "アヒル戦法",     },
-    { key: "右四間飛車",     },
     { key: "振り飛車",       },
   ]
 

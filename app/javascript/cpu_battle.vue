@@ -80,7 +80,7 @@
                 b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
                   | {{e.name}}
           b-button(@click="bg_variant_reset_handle" size="is-small")
-            | 背景ランダム
+            | 盤ランダム
 
         b-message(size="is-small")
           | CPU {{judge_group.lose}} 勝<br>
