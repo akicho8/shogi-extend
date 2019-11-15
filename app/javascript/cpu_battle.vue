@@ -8,7 +8,7 @@
             .buttons
               template(v-if="mode === 'standby'")
                 b-button(type="is-primary" @click="start_handle" :rounded="true")
-                  | 挑戦
+                  | 対局開始
               template(v-if="mode === 'playing'")
                 b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true" :loading="give_up_processing")
                   | 投了
