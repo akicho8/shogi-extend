@@ -4,6 +4,7 @@ class CpuStrategyInfo
     { key: "オールラウンド", },
     { key: "嬉野流",         },
     { key: "アヒル戦法",     },
+    { key: "右四間飛車",     },
     { key: "振り飛車",       },
   ]
 
