@@ -10,7 +10,7 @@
                 b-button(type="is-primary" @click="start_handle" :rounded="true")
                   | 挑戦
               template(v-if="mode === 'playing'")
-                b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true")
+                b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true" :loading="give_up_processing")
                   | 投了
                 template(v-if="development_p")
                   b-button(@click="break_handle")
@@ -41,6 +41,8 @@
         )
 
     .column.is-two-fifths(v-if="mode === 'standby' || development_p")
+      .content
+        h3 設定
       template(v-if="false")
         .box
           nav.level.is-mobile
@@ -118,6 +120,7 @@ export default {
       candidate_rows: null,   // 候補
       bg_variant: null,
       human_side_key: null,
+      give_up_processing: null,
 
       cpu_strategy_random_number: null,           // オールラウンド用に使っている
 
@@ -141,6 +144,8 @@ export default {
     this.current_sfen_set()
 
     this.bg_variant = "a"
+
+    this.give_up_processing = false
 
     console.log("this.$route.query:", this.$route.query)
   },
@@ -248,6 +253,9 @@ export default {
       this.candidate_report = null
       this.candidate_rows = null
 
+      // 投了前
+      this.give_up_processing = false
+
       this.mode = "playing"
       setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
     },
@@ -285,6 +293,11 @@ export default {
     },
 
     give_up_handle() {
+      if (this.give_up_processing) {
+        return
+      }
+      this.give_up_processing = true
+
       this.$http.post(this.$root.$options.post_path, {
         i_give_up: true,
       }).then(response => {
@@ -329,6 +342,7 @@ export default {
 
         if (data["judge_key"]) {
           this.view_mode_set()
+          this.give_up_processing = false
           this.judge_group = data["judge_group"]
           this.judge_dialog_display(data)
         }
