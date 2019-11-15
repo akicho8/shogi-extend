@@ -68,7 +68,7 @@ class CpuBattlesController < ApplicationController
         # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
         # render json: {error_message: error_message, before_sfen: before_sfen}
 
-        final_decision(final_state: :irregular, message: irregular_message)
+        final_decision(judge_key: :lose, irregular: true, message: irregular_message)
         return
       end
 
@@ -77,7 +77,7 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          final_decision(final_state: :you_win, message: "玉を取って勝ちました！")
+          final_decision(judge_key: :win, message: "玉を取って勝ちました！")
           return
         end
       end
@@ -95,7 +95,7 @@ class CpuBattlesController < ApplicationController
           # 玉を取らない場合
           if false
             if hand
-              final_decision(final_state: :you_lose, message: "王手放置(または自殺手)で負けました")
+              final_decision(judge_key: :lose, message: "王手放置(または自殺手)で負けました")
               return
             end
           end
@@ -120,14 +120,14 @@ class CpuBattlesController < ApplicationController
           end
 
           if @candidate_records.empty?
-            final_decision(final_state: :you_win, message: "CPUが投了しました")
+            final_decision(judge_key: :win, message: "CPUが投了しました")
             return
           end
 
           # いちばん良いのを選択
           record = @candidate_records.first
           if record[:score] <= -Bioshogi::INF_MAX
-            final_decision(final_state: :you_win, message: "CPUが降参しました")
+            final_decision(judge_key: :win, message: "CPUが降参しました")
             return
           end
 
@@ -150,7 +150,7 @@ class CpuBattlesController < ApplicationController
       end
 
       unless hand
-        final_decision(final_state: :you_win, message: "CPUが投了しました。もう何も指す手がなかったようです")
+        final_decision(judge_key: :win, message: "CPUが投了しました。もう何も指す手がなかったようです")
         return
       end
 
@@ -163,7 +163,7 @@ class CpuBattlesController < ApplicationController
       captured_soldier = mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
-          final_decision(final_state: :you_lose, message: "玉を取られました")
+          final_decision(judge_key: :lose, message: "玉を取られました")
           return
         end
       end
@@ -171,7 +171,7 @@ class CpuBattlesController < ApplicationController
       if true
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
-          final_decision(final_state: :you_lose, message: "CPUの勝ちです")
+          final_decision(judge_key: :lose, message: "CPUの勝ちです")
           return
         end
       end

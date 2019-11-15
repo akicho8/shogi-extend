@@ -303,58 +303,60 @@ export default {
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key: this.cpu_preset_key,
       }).then(response => {
+        const data = response.data
+
         if (this.mode === "playing") {
+
           // CPUの指し手を読み上げる
-          if (response.data["yomiage"]) {
-            this.talk(response.data["yomiage"])
+          if (data["yomiage"]) {
+            this.talk(data["yomiage"])
           }
 
           // 指した後の局面を反映
-          if (response.data["current_sfen"]) {
-            this.current_sfen = response.data["current_sfen"]
+          if (data["current_sfen"]) {
+            this.current_sfen = data["current_sfen"]
           }
 
-          this.candidate_report = response.data["candidate_report"]
-          this.candidate_rows = response.data["candidate_rows"]
+          this.candidate_report = data["candidate_report"]
+          this.candidate_rows = data["candidate_rows"]
 
-          const final_state = response.data["final_state"]
-          if (final_state) {
+          if (data["judge_key"]) {
             this.view_mode_set()
 
-            if (final_state === "irregular") {
-              this.easy_dialog({
-                title: "反則負け",
-                message: response.data["message"],
-                type: "is-danger",
-                hasIcon: true,
-                icon: "times-circle",
-                iconPack: "fa",
-              })
-              this.talk("反則負けです")
-            }
-
-            if (final_state === "you_win") {
+            if (data["judge_key"] === "win") {
+              this.talk(data["message"])
               this.easy_dialog({
                 title: "勝利",
-                message: response.data["message"],
+                message: data["message"],
                 type: "is-primary",
                 hasIcon: true,
                 icon: "trophy",
                 iconPack: "mdi",
               })
-              this.talk(response.data["message"])
             }
 
-            if (final_state === "you_lose") {
-              this.easy_dialog({
-                title: "敗北",
-                message: response.data["message"],
-                type: "is-primary",
-                hasIcon: true,
-                icon: "emoticon-sad-outline",
-                iconPack: "mdi",
-              })
-              this.talk(response.data["message"])
+            if (data["judge_key"] === "lose") {
+              if (data["irregular"]) {
+                this.talk("反則負けです")
+                this.easy_dialog({
+                  title: "反則負け",
+                  message: data["message"],
+                  type: "is-danger",
+                  hasIcon: true,
+                  icon: "times-circle",
+                  iconPack: "fa",
+                })
+              } else {
+                this.talk(data["message"])
+                this.easy_dialog({
+                  title: "敗北",
+                  message: data["message"],
+                  type: "is-primary",
+                  hasIcon: true,
+                  icon: "emoticon-sad-outline",
+                  iconPack: "mdi",
+                })
+              }
             }
           }
         }
