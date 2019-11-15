@@ -80,7 +80,7 @@
                 b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
                   | {{e.name}}
           b-button(@click="bg_variant_reset_handle" size="is-small")
-            | 盤ランダム
+            | ランダム盤
 
         b-message(size="is-small")
           | CPU {{judge_group.lose}} 勝<br>
@@ -106,29 +106,36 @@ import CpuPresetInfo from "cpu_preset_info"
 import BoardStyleInfo from "board_style_info"
 import PresetInfo from "shogi-player/src/preset_info.js"
 
+const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
+
 export default {
   name: "cpu_battle",
   data() {
     return {
+      // static
       current_user: js_global.current_user, // 名前を読み上げるため
-      mode: null,
 
-      current_sfen: null,     // 譜面
-      flip: null,             // 駒落ちなら反転させる
-      sp_params: this.$root.$options.sp_params,
-      candidate_report: null, // 候補テキスト
-      candidate_rows: null,   // 候補
-      bg_variant: null,
-      human_side_key: null,
-      give_up_processing: null,
-
-      cpu_strategy_random_number: null,           // オールラウンド用に使っている
-
-      cpu_brain_key: this.$root.$options.cpu_brain_key,
-      cpu_strategy_key: this.$root.$options.cpu_strategy_key,
-      cpu_preset_key: this.$root.$options.cpu_preset_key,
-
+      // dynamic
+      mode: null,                                   // 現在の状態
+      give_up_processing: null,                     // 投了処理中(連打防止用)
       judge_group: this.$root.$options.judge_group, // 勝敗
+
+      // 設定
+      cpu_strategy_random_number: null, // オールラウンド時の戦法選択用乱数
+      cpu_brain_key: this.$root.$options.cpu_brain_key,       // 強さ
+      cpu_strategy_key: this.$root.$options.cpu_strategy_key, // 戦法
+      cpu_preset_key: this.$root.$options.cpu_preset_key,     // 手合
+
+      // 指し手の候補
+      candidate_report: null, // テキスト
+      candidate_rows: null,   // 配列
+
+      // shogi-player に反映するもの
+      current_sfen: null,                       // 譜面
+      flip: null,                               // 駒落ちなら反転させる
+      sp_params: this.$root.$options.sp_params, // スタイル(createdで反映させるとwatchが反応してしまう)
+      bg_variant: null,                         // 背景
+      human_side_key: null,                     // 人間が操作する側を絞る
     }
   },
 
@@ -197,7 +204,7 @@ export default {
     first_talk_body() {
       let str = "よろしくお願いします。"
       if (this.current_call_name) {
-        str += `${this.current_call_name}のてばんです`
+        str += `${this.current_call_name}の手番です`
       }
       return str
     },
@@ -230,9 +237,9 @@ export default {
     },
 
     current_sfen_set() {
-      this.current_sfen = this.preset_info.sfen                      // 手合割に対応する盤面設定
-      this.flip = (this.preset_info.first_location_key === "white")  // 駒落ちなら反転して上手を持つ
-      this.human_side_key = this.preset_info.first_location_key           // 人間側だけの操作にする
+      this.current_sfen = this.preset_info.sfen                     // 手合割に対応する盤面設定
+      this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
+      this.human_side_key = this.preset_info.first_location_key     // 人間側だけの操作にする
       // this.$nextTick(() => this.$refs.sp_vm.current_turn_set(0))  // 0手目の局面に戻す
       // this.$nextTick(() => this.$refs.sp_vm.api_board_turn_set(0))  // 0手目の局面に戻す
     },
@@ -268,7 +275,13 @@ export default {
 
     // 背景ランダム設定
     bg_variant_reset_handle() {
-      this.bg_variant = _.sample(["a", "g", "l", "n", "p", "q"])
+      while (true) {
+        let v = _.sample(BG_VARIANT_AVAILABLE_LIST)
+        if (this.bg_variant !== v) {
+          this.bg_variant = v
+          break
+        }
+      }
     },
 
     board_style_info_reflection() {
