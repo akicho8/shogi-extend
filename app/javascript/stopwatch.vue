@@ -255,7 +255,7 @@ export default {
               <section class="modal-card-body">
                 <b-table
                   :data="$parent.$parent.memento_list.slice().reverse()"
-                  :paginated="true"
+                  :paginated="false"
                   :per-page="200"
                   :pagination-simple="true"
                   :mobile-cards="false"

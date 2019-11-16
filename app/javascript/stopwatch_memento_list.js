@@ -4,7 +4,11 @@ export default {
   data() {
     return {
       memento_list: [],
-      memento_list_max: 200,   //  LocalStorage の最大容量は 5MB なので 5.megabytes / url.size => 9118 だけど 2000 ぐらいで重くなるので控えめにする
+
+      // LocalStorage の最大容量は 5MB なので 5.megabytes / url.size => 9118
+      // だけど 2000 ぐらいで重くなるので控えめにする
+      // しかし 450 ぐらいで "Uncaught RangeError: Maximum call stack size exceeded" のエラーがでるようになったので 200 に変更した
+      memento_list_max: 200,
     }
   },
 
