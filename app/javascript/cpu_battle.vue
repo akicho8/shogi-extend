@@ -172,7 +172,7 @@ export default {
         labels: [],
         datasets: [
           {
-            label: "似非評価値",
+            label: "似非形勢グラフ",
             data: [],
             borderColor:     "hsla(204, 86%,  53%, 1.0)",
             backgroundColor: "hsla(204, 86%,  53%, 0.1)",
