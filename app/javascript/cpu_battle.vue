@@ -42,21 +42,21 @@
           ref="sp_vm"
         )
 
-    .column.is-two-fifths(v-if="mode === 'standby' || development_p")
-      .content
-        h3 設定
-      template(v-if="false")
-        .box
-          nav.level.is-mobile
-            .level-item.has-text-centered
-              div
-                p.heading CPUの勝ち
-                p.title 1
-            .level-item.has-text-centered
-              div
-                p.heading 人間の勝ち
-                p.title 1
-      template(v-if="mode === 'standby' || development_p")
+    .column.is-two-fifths
+      template(v-if="mode === 'standby'")
+        .content
+          h3 設定
+        template(v-if="false")
+          .box
+            nav.level.is-mobile
+              .level-item.has-text-centered
+                div
+                  p.heading CPUの勝ち
+                  p.title 1
+              .level-item.has-text-centered
+                div
+                  p.heading 人間の勝ち
+                  p.title 1
         .box
           b-field(label="強さ" custom-class="is-small")
             .block
@@ -88,6 +88,11 @@
           | CPU {{judge_group.lose}} 勝<br>
           | 人間 {{judge_group.win}} 勝
 
+      .box
+        canvas#chart_canvs(ref="chart_canvs")
+        template(v-if="development_p")
+          | {{chart_config.data.datasets[0].data}}
+
   .columns(v-if="development_p && mode === 'playing'")
     .column
       template(v-if="candidate_rows")
@@ -115,29 +120,31 @@ export default {
   name: "cpu_battle",
   data() {
     return {
-      // static
+      // -------------------------------------------------------------------------------- static
       current_user: js_global.current_user, // 名前を読み上げるため
 
-      // dynamic
+      // -------------------------------------------------------------------------------- dynamic
       mode: null,                                   // 現在の状態
       give_up_processing: null,                     // 投了処理中(連打防止用)
       judge_group: this.$root.$options.judge_group, // 勝敗
+      chart_config: null,
+      chart_obj: null,
 
-      // 設定
-      cpu_strategy_random_number: null, // オールラウンド時の戦法選択用乱数
+      // 設定用
+      cpu_strategy_random_number: null,                       // オールラウンド時の戦法選択用乱数
       cpu_brain_key: this.$root.$options.cpu_brain_key,       // 強さ
       cpu_strategy_key: this.$root.$options.cpu_strategy_key, // 戦法
       cpu_preset_key: this.$root.$options.cpu_preset_key,     // 手合
 
-      // 指し手の候補
+      // 候補手
       candidate_report: null, // テキスト
       candidate_rows: null,   // 配列
 
-      // shogi-player に反映するもの
+      // shogi-player 用パラメータ
       current_sfen: null,                       // 譜面
       flip: null,                               // 駒落ちなら反転させる
       sp_params: this.$root.$options.sp_params, // スタイル(createdで反映させるとwatchが反応してしまう)
-      bg_variant: null,                         // 背景
+      bg_variant: null,                         // 背景の種類
       human_side_key: null,                     // 人間が操作する側を絞る
     }
   },
@@ -157,6 +164,93 @@ export default {
 
     this.give_up_processing = false
 
+    this.chart_config = {
+      type: "line",
+
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "似非評価値",
+            data: [],
+            borderColor:     "hsla(204, 86%,  53%, 1.0)",
+            backgroundColor: "hsla(204, 86%,  53%, 0.1)",
+            fill: true,
+          },
+        ],
+      },
+
+      options: {
+        // title: {
+        //   display: true,
+        //   text: "消費時間",
+        // },
+
+        elements: {
+          line: {
+            tension: 0.0, // disables bezier curves (https://www.chartjs.org/docs/latest/charts/line.html#disable-bezier-curves)
+          },
+        },
+
+        // // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
+        scales: {
+          // xAxes: [{
+          //   scaleLabel: {
+          //     display: true,
+          //     labelString: "手数",
+          //   },
+          //   // ticks: {
+          //   //   // suggestedMin: 0,
+          //   //   // suggestedMax: 100,
+          //   //   // stepSize: 10,
+          //   //   // callback(value, index, values){
+          //   //   //   return value + '手'
+          //   //   // }
+          //   // }
+          // }],
+          yAxes: [{
+            ticks: {
+              // beginAtZero: true,
+              // min: -9999,
+              // max: +9999,
+            },
+            // scaleLabel: {
+            //   display: true,
+            //   labelString: "消費",
+            // },
+            // ticks: {
+            //   // suggestedMax: 100,
+            //   // suggestedMin: 0,
+            //   // stepSize: 10,
+            //   callback(value, index, values) {
+            //     return Math.abs(value) +  "秒"
+            //   }
+            // }
+          }],
+        },
+
+        // https://tr.you84815.space/chartjs/chart_configuration/tooltip.html
+        // legend: {
+        //   display: true,
+        // },
+        // tooltips: {
+        //   callbacks: {
+        //     title(tooltipItems, data) {
+        //       return ""
+        //     },
+        //     label(tooltipItem, data) {
+        //       return [
+        //         // data.labels[tooltipItem.index]
+        //         // data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x, "手目",
+        //         // " ",
+        //         // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
+        //         // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
+        //       ].join("")
+        //     },
+        //   },
+        // },
+      },
+    }
     console.log("this.$route.query:", this.$route.query)
   },
 
@@ -164,6 +258,83 @@ export default {
     if (this.$route.query.auto_play) {
       this.start_handle()
     }
+
+    this.chart_obj = new Chart(this.$refs.chart_canvs, this.chart_config)
+
+    // Object.assign({}, {data: {datasets: datasets}}, {
+    //   type: "line",
+    //   options: {
+    //     elements: {
+    //       line: {
+    //         tension: 0.2, // disables bezier curves (https://www.chartjs.org/docs/latest/charts/line.html#disable-bezier-curves)
+    //       },
+    //     },
+    //
+    //     title: {
+    //       display: false,
+    //       text: "学習グラフ",
+    //     },
+    //
+    //     // https://misc.0o0o.org/chartjs-doc-ja/chart_configuration/layout.html
+    //     layout: {
+    //       padding: {
+    //         left: 24,
+    //         right: 24,
+    //         top: 24,
+    //         bottom: 24,
+    //       },
+    //     },
+    //
+    //     // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
+    //     scales: {
+    //       xAxes: [
+    //         {
+    //           type: 'time',
+    //           time: {
+    //             unit: "day",
+    //             displayFormats: {
+    //               day: "M/D",
+    //             },
+    //           },
+    //         },
+    //       ],
+    //       yAxes: [
+    //         {
+    //           scaleLabel: {
+    //             display: false,
+    //             labelString: "タイム",
+    //           },
+    //           ticks: {
+    //             // suggestedMax: 25,
+    //             // suggestedMin: 0,
+    //             // stepSize: 60,
+    //             callback(value, index, values) {
+    //               return dayjs.unix(value).format("mm:ss")
+    //               // return Math.trunc(value / 60) + "時"
+    //             }
+    //           }
+    //         },
+    //       ]
+    //     },
+    //
+    //     // https://tr.you84815.space/chartjs/chart_configuration/tooltip.html
+    //     legend: {
+    //       display: true,
+    //     },
+    //
+    //     tooltips: {
+    //       callbacks: {
+    //         title(tooltipItems, data) {
+    //           return ""
+    //         },
+    //         label(tooltipItem, data) {
+    //           const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || ""
+    //           const y = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y
+    //           return datasetLabel + " " + dayjs.unix(y).format("mm:ss.SSS")
+    //         },
+    //       },
+    //     },
+    //   },
   },
 
   computed: {
@@ -263,6 +434,12 @@ export default {
       this.candidate_report = null
       this.candidate_rows = null
 
+      // 評価グラフ
+      this.chart_config.data.labels = []
+      this.chart_config.data.datasets[0].data = []
+      this.chart_config.options.scales.yAxes[0].ticks = {}
+      this.chart_obj.update()
+
       // 投了を押せる状態にする
       this.give_up_processing = false
 
@@ -359,26 +536,52 @@ export default {
     },
 
     response_process(response) {
-      const data = response.data
+      const e = response.data
       if (this.mode === "playing") {
         // CPUの指し手を読み上げる
-        if (data["yomiage"]) {
-          this.talk(data["yomiage"])
+        if (e["yomiage"]) {
+          this.talk(e["yomiage"])
         }
 
         // 指した後の局面を反映
-        if (data["current_sfen"]) {
-          this.current_sfen = data["current_sfen"]
+        if (e["current_sfen"]) {
+          this.current_sfen = e["current_sfen"]
         }
 
-        this.candidate_report = data["candidate_report"]
-        this.candidate_rows = data["candidate_rows"]
+        // if (e["hand"]) {
+        //
+        //   this.chart_config.data.labels.push(e["turn_max"])
+        //   this.chart_config.data.datasets[0].data.push({x: e["turn_max"], y: e["score"]})
+        //   this.chart_obj.update()
+        //
+        //   console.log(e["hand"])
+        // }
 
-        if (data["judge_key"]) {
+        if (e["score_list"]) {
+          let abs_max = 0
+          e["score_list"].forEach(e => {
+            this.chart_config.data.labels.push(e.x)
+            this.chart_config.data.datasets[0].data.push(e)
+            const abs = Math.abs(e.y)
+            if (abs > abs_max) {
+              abs_max = abs
+            }
+          })
+          const ticks = this.chart_config.options.scales.yAxes[0].ticks
+          const v = abs_max * 1.5
+          ticks.max = v
+          ticks.min = -v
+          this.chart_obj.update()
+        }
+
+        this.candidate_report = e["candidate_report"]
+        this.candidate_rows = e["candidate_rows"]
+
+        if (e["judge_key"]) {
           this.view_mode_set()
           this.give_up_processing = false
-          this.judge_group = data["judge_group"]
-          this.judge_dialog_display(data)
+          this.judge_group = e["judge_group"]
+          this.judge_dialog_display(e)
         }
       }
     },
