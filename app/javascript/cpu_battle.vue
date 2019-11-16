@@ -85,8 +85,7 @@
             | ランダム盤
 
         b-message(size="is-small")
-          | CPU {{judge_group.lose}} 勝<br>
-          | 人間 {{judge_group.win}} 勝
+          | CPU: {{judge_group.lose}}勝 &nbsp;&nbsp; 人間: {{judge_group.win}}勝
 
       .box
         canvas#chart_canvs(ref="chart_canvs")
@@ -115,6 +114,7 @@ import PresetInfo from "shogi-player/src/preset_info.js"
 import Location from "shogi-player/src/location"
 
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
+const CHART_TOP_PADDING_RATE = 1.2                               // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
 
 export default {
   name: "cpu_battle",
@@ -129,6 +129,7 @@ export default {
       judge_group: this.$root.$options.judge_group, // 勝敗
       chart_config: null,
       chart_obj: null,
+      abs_max: null,
 
       // 設定用
       cpu_strategy_random_number: null,                       // オールラウンド時の戦法選択用乱数
@@ -439,6 +440,7 @@ export default {
       this.chart_config.data.datasets[0].data = []
       this.chart_config.options.scales.yAxes[0].ticks = {}
       this.chart_obj.update()
+      this.abs_max = 0
 
       // 投了を押せる状態にする
       this.give_up_processing = false
@@ -558,17 +560,16 @@ export default {
         // }
 
         if (e["score_list"]) {
-          let abs_max = 0
           e["score_list"].forEach(e => {
             this.chart_config.data.labels.push(e.x)
             this.chart_config.data.datasets[0].data.push(e)
             const abs = Math.abs(e.y)
-            if (abs > abs_max) {
-              abs_max = abs
+            if (abs > this.abs_max) {
+              this.abs_max = abs
             }
           })
           const ticks = this.chart_config.options.scales.yAxes[0].ticks
-          const v = abs_max * 1.5
+          const v = this.abs_max * CHART_TOP_PADDING_RATE
           ticks.max = v
           ticks.min = -v
           this.chart_obj.update()
