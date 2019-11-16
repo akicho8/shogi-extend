@@ -16,34 +16,26 @@ window.SwarsBattleIndex = Vue.extend({
   methods: {
     player_info_click_hadle(e) {
       this.$buefy.dialog.confirm({
-        title: "プレイヤー情報",
         message: "20秒ぐらいかかる場合がありますがよろしいですか？",
-        confirmText: "表示する",
+        confirmText: "取得する",
         cancelText: "やめとく",
-        focusOn: "cancel",
+        onCancel: () => this.talk("やめときました"),
         onConfirm: () => {
           this.process_now()
           location.href = this.$options.player_info_path
-        },
-        onCancel: () => {
-          this.talk("やめときました")
         },
       })
     },
 
     many_import_handle(e) {
       this.$buefy.dialog.confirm({
-        title: "古い棋譜も取得",
         message: "1分ぐらいかかる場合がありますがよろしいですか？",
-        confirmText: "実行する",
+        confirmText: "取り込む",
         cancelText: "やめとく",
-        focusOn: "cancel",
+        onCancel: () => this.talk("やめときました"),
         onConfirm: () => {
           this.process_now()
           this.$refs.many_import_link.click()
-        },
-        onCancel: () => {
-          this.talk("やめときました")
         },
       })
     },
