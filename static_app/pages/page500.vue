@@ -1,8 +1,8 @@
 <template lang="pug">
   robot
-    | ブッコワレタナリ<br>
+    | ブッコワレマシタ<br>
     | モンダイワスデニキロクズミデス<br>
-    | ゴメイワクヲオカケシテスマン<br>
+    | ゴメイワクヲオカケシテスミマセン<br>
 </template>
 
 <script>
@@ -12,6 +12,9 @@ export default {
   name: "500",
   components: {
     Robot,
-  }
+  },
+  head: {
+    title: 'Internal Server Error',
+  },
 }
 </script>

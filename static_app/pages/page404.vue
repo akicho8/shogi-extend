@@ -10,6 +10,9 @@ export default {
   name: "404",
   components: {
     Robot,
-  }
+  },
+  head: {
+    title: 'Not Found',
+  },
 }
 </script>

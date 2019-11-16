@@ -10,6 +10,9 @@ export default {
   name: "422",
   components: {
     Robot,
-  }
+  },
+  head: {
+    title: 'Unprocessable Entity',
+  },
 }
 </script>
