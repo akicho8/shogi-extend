@@ -4,7 +4,7 @@ export default {
   data() {
     return {
       memento_list: [],
-      memento_list_max: 500,   // LocalStorage の最大容量は 5MB なので 5.megabytes / url.size => 9118 だけど 2000 ぐらいで重くなるので控えめにする
+      memento_list_max: 200,   //  LocalStorage の最大容量は 5MB なので 5.megabytes / url.size => 9118 だけど 2000 ぐらいで重くなるので控えめにする
     }
   },
 
