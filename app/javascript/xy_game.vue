@@ -798,6 +798,7 @@ export default {
 </script>
 
 <style lang="sass">
+// FIXME: ↓buefyが二重に読み込まれてしまう
 @import "./my_custom_buefy.scss"
 
 .xy_game

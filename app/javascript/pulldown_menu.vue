@@ -2,41 +2,32 @@
   b-dropdown(:hoverable="true" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
     button.button.is-small(slot="trigger")
       //- span もっと見る
-      | &nbsp;
-      | &nbsp;
-      | &nbsp;
-      b-icon(:icon="in_modal ? 'menu-up' : 'menu-down'")
-      | &nbsp;
-      | &nbsp;
-      | &nbsp;
+      .arrow_icon
+        b-icon(:icon="in_modal ? 'menu-up' : 'menu-down'")
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.show_path")
           b-icon(icon="play" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | 詳細
+          span.a_label 詳細
 
     template(v-if="record.formal_sheet_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.formal_sheet_path" target="_blank")
           b-icon(icon="note-outline" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | 棋譜用紙
+          span.a_label 棋譜用紙
 
     template(v-if="record.edit_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.edit_path")
           b-icon(icon="pencil" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | 編集
+          span.a_label 編集
 
     template(v-if="record.new_and_copy_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.new_and_copy_url")
           b-icon(icon="open-in-new" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | コピペ新規
+          span.a_label コピペ新規
 
     template(v-if="record.memberships")
       b-dropdown-item(:separator="true")
@@ -44,8 +35,7 @@
         b-dropdown-item(:has-link="true" :paddingless="true")
           a(:href="e.player_info_path")
             b-icon(icon="account" size="is-small")
-            | &nbsp;&nbsp;&nbsp;
-            | {{e.name_with_grade}} 情報
+            span.a_label {{e.name_with_grade}} 情報
 
     b-dropdown-item(:separator="true")
 
@@ -53,38 +43,33 @@
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.show_path}.kif`")
           b-icon(icon="download" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | KIF ダウンロード
+          span.a_label KIF ダウンロード
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.show_path}.ki2`")
           b-icon(icon="download" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | KI2 ダウンロード
+          span.a_label KI2 ダウンロード
 
     template(v-if="record.kifu_copy_params")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(@click="$root.kifu_copy_handle(Object.assign({}, record.kifu_copy_params, {kc_format: 'ki2'}))")
           b-icon(icon="clipboard-outline" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | KI2 コピー
+          span.a_label KI2 コピー
 
     // @click.stop にするとURLをコピーしたあとプルダウンが閉じなくなる
     template(v-if="record.modal_on_index_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(@click="$root.modal_url_copy")
           b-icon(icon="clipboard-outline" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | URLをコピー
+          span.a_label URLをコピー
 
     template(v-if="in_modal")
       template(v-if="record.modal_on_index_url")
         b-dropdown-item(:has-link="true" :paddingless="true")
           a(@click="$root.modal_url_with_turn_copy")
             b-icon(icon="clipboard-outline" size="is-small")
-            | &nbsp;&nbsp;&nbsp;
-            | 現在の手数のURLをコピー
+            span.a_label 現在の手数のURLをコピー
 
     b-dropdown-item(:separator="true")
 
@@ -92,34 +77,28 @@
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.edit_path}?edit_mode=ogp`")
           b-icon(icon="settings-outline" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | OGP画像設定
+          span.a_label OGP画像設定
 
     template(v-if="record.tweet_window_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.tweet_window_url" target="_blank")
           b-icon(icon="twitter" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | ツイート
+          span.a_label ツイート
 
     template(v-if="record.swars_real_battle_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.swars_real_battle_url" target="_blank")
           b-icon(icon="link" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | ウォーズに移動
+          span.a_label ウォーズに移動
 
     template(v-if="record.wars_tweet_body")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(@click="wars_tweet_copy_click(record.wars_tweet_body)")
           b-icon(icon="clipboard-outline" size="is-small")
-          | &nbsp;&nbsp;&nbsp;
-          | ウォーズ側のTweetコピー
-
+          span.a_label ウォーズ側のTweetコピー
 </template>
 
 <script>
-
 export default {
   props: {
     record:   { required: true },
@@ -129,3 +108,10 @@ export default {
   },
 }
 </script>
+
+<style lang="sass">
+  .a_label
+    margin-left: 1rem
+  .arrow_icon
+    padding: 0 1.2rem
+</style>
