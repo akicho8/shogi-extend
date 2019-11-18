@@ -87,7 +87,7 @@ class CpuBattlesController < ApplicationController
 
       yomiage_for(mediator) # 人間の手の読み上げ
 
-      @score_list << {x: mediator.turn_info.turn_max, y: mediator.player_at(:black).evaluator.score}
+      evaluation_value_generation(mediator)
 
       if executor = mediator.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
         captured_soldier = executor.captured_soldier
@@ -168,9 +168,7 @@ class CpuBattlesController < ApplicationController
       # CPUの手を指す
       mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
       @current_sfen = mediator.to_sfen
-      @turn_max = mediator.turn_info.turn_max
-      @score = mediator.player_at(:black).evaluator.score
-      @score_list << {x: mediator.turn_info.turn_max, y: mediator.player_at(:black).evaluator.score}
+      evaluation_value_generation(mediator)
 
       yomiage_for(mediator) # CPUの手の読み上げる
 
@@ -238,6 +236,10 @@ class CpuBattlesController < ApplicationController
 
   private
 
+  def evaluation_value_generation(mediator)
+    @score_list << {x: mediator.turn_info.turn_max, y: mediator.player_at(:black).evaluator.score}
+  end
+
   # 最後の手があれば読み上げる
   def yomiage_for(mediator)
     if last = mediator.hand_logs.last
@@ -248,8 +250,6 @@ class CpuBattlesController < ApplicationController
   def build_response
     response = {
       current_sfen: @current_sfen,
-      hand: @hand,
-      turn_max: @turn_max,
       score_list: @score_list,
     }
     unless Rails.env.production?
