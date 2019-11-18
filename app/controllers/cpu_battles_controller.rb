@@ -182,7 +182,7 @@ class CpuBattlesController < ApplicationController
         end
       end
 
-      if true
+      if current_cpu_brain_info.mate_danger_check
         # 人間側の合法手が生成できなければ人間側の負け
         if mediator.current_player.legal_all_hands.none?
           final_decision(judge_key: :lose, message: "CPUの勝ちです")

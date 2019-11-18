@@ -114,7 +114,102 @@ import PresetInfo from "shogi-player/src/preset_info.js"
 import Location from "shogi-player/src/location"
 
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
-const CHART_TOP_PADDING_RATE = 1.2                               // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
+const CHART_TOP_PADDING_RATE = 1.0                               // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
+const SUGGESTED_MAX = 10000
+
+const CHART_CONFIG_DEFAULT = {
+  type: "line",
+
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: "似非形勢グラフ",
+        data: [],
+        borderColor:     "hsla(204, 86%,  53%, 1.0)",
+        backgroundColor: "hsla(204, 86%,  53%, 0.1)",
+        fill: true,
+      },
+    ],
+  },
+
+  options: {
+    title: {
+      display: true,
+      text: "似非形勢グラフ",
+    },
+
+    elements: {
+      line: {
+        tension: 0.0, // disables bezier curves (https://www.chartjs.org/docs/latest/charts/line.html#disable-bezier-curves)
+      },
+    },
+
+    // // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
+    scales: {
+      // xAxes: [{
+      //   scaleLabel: {
+      //     display: true,
+      //     labelString: "手数",
+      //   },
+      //   // ticks: {
+      //   //   // suggestedMin: 0,
+      //   //   // suggestedMax: 100,
+      //   //   // stepSize: 10,
+      //   //   // callback(value, index, values){
+      //   //   //   return value + '手'
+      //   //   // }
+      //   // }
+      // }],
+      yAxes: [{
+        display: true,
+        ticks: {
+          maxTicksLimit: 7,
+          // min: -9999,
+          // max: +9999,
+          // stepSize: 100,
+          // suggestedMax: 100,
+          // suggestedMin: 0,
+        },
+        // scaleLabel: {
+        //   display: true,
+        //   labelString: "消費",
+        // },
+        // ticks: {
+        //   // suggestedMax: 100,
+        //   // suggestedMin: 0,
+        //   // stepSize: 10,
+        //   callback(value, index, values) {
+        //     return Math.abs(value) +  "秒"
+        //   }
+        // }
+      }],
+    },
+
+    // https://tr.you84815.space/chartjs/chart_configuration/tooltip.html
+    legend: {
+      display: false,
+    },
+    tooltips: {
+      displayColors: false,
+      callbacks: {
+        title(tooltipItems, data) {
+          return ""
+        },
+        label(tooltipItem, data) {
+          return [
+            // data.labels[tooltipItem.index]
+            // data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x,
+            // " ",
+            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y,
+            // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
+            // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
+          ].join("")
+        },
+      },
+    },
+  },
+}
 
 export default {
   name: "cpu_battle",
@@ -165,102 +260,18 @@ export default {
 
     this.give_up_processing = false
 
-    this.chart_config = {
-      type: "line",
+    this.chart_config = CHART_CONFIG_DEFAULT
+    this.chart_config_reset()
 
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: "似非形勢グラフ",
-            data: [],
-            borderColor:     "hsla(204, 86%,  53%, 1.0)",
-            backgroundColor: "hsla(204, 86%,  53%, 0.1)",
-            fill: true,
-          },
-        ],
-      },
-
-      options: {
-        // title: {
-        //   display: true,
-        //   text: "消費時間",
-        // },
-
-        elements: {
-          line: {
-            tension: 0.0, // disables bezier curves (https://www.chartjs.org/docs/latest/charts/line.html#disable-bezier-curves)
-          },
-        },
-
-        // // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
-        scales: {
-          // xAxes: [{
-          //   scaleLabel: {
-          //     display: true,
-          //     labelString: "手数",
-          //   },
-          //   // ticks: {
-          //   //   // suggestedMin: 0,
-          //   //   // suggestedMax: 100,
-          //   //   // stepSize: 10,
-          //   //   // callback(value, index, values){
-          //   //   //   return value + '手'
-          //   //   // }
-          //   // }
-          // }],
-          yAxes: [{
-            ticks: {
-              // beginAtZero: true,
-              // min: -9999,
-              // max: +9999,
-            },
-            // scaleLabel: {
-            //   display: true,
-            //   labelString: "消費",
-            // },
-            // ticks: {
-            //   // suggestedMax: 100,
-            //   // suggestedMin: 0,
-            //   // stepSize: 10,
-            //   callback(value, index, values) {
-            //     return Math.abs(value) +  "秒"
-            //   }
-            // }
-          }],
-        },
-
-        // https://tr.you84815.space/chartjs/chart_configuration/tooltip.html
-        // legend: {
-        //   display: true,
-        // },
-        // tooltips: {
-        //   callbacks: {
-        //     title(tooltipItems, data) {
-        //       return ""
-        //     },
-        //     label(tooltipItem, data) {
-        //       return [
-        //         // data.labels[tooltipItem.index]
-        //         // data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x, "手目",
-        //         // " ",
-        //         // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
-        //         // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
-        //       ].join("")
-        //     },
-        //   },
-        // },
-      },
-    }
     console.log("this.$route.query:", this.$route.query)
   },
 
   mounted() {
+    this.chart_obj = new Chart(this.$refs.chart_canvs, this.chart_config)
+
     if (this.$route.query.auto_play) {
       this.start_handle()
     }
-
-    this.chart_obj = new Chart(this.$refs.chart_canvs, this.chart_config)
 
     // Object.assign({}, {data: {datasets: datasets}}, {
     //   type: "line",
@@ -407,6 +418,13 @@ export default {
   },
 
   methods: {
+    chart_config_reset() {
+      this.chart_config.data.labels = []
+      this.chart_config.data.datasets[0].data = []
+      this.chart_config.options.scales.yAxes[0].ticks.suggestedMax = SUGGESTED_MAX
+      this.chart_config.options.scales.yAxes[0].ticks.suggestedMin = -SUGGESTED_MAX
+    },
+
     cpu_strategy_random_number_reset() {
       this.cpu_strategy_random_number = Math.floor(Math.random() * 256) // オールラウンドの戦法が決まる乱数
     },
@@ -436,11 +454,9 @@ export default {
       this.candidate_rows = null
 
       // 評価グラフ
-      this.chart_config.data.labels = []
-      this.chart_config.data.datasets[0].data = []
-      this.chart_config.options.scales.yAxes[0].ticks = {}
-      this.chart_obj.update()
+      this.chart_config_reset()
       this.abs_max = 0
+      this.chart_obj.update()
 
       // 投了を押せる状態にする
       this.give_up_processing = false
@@ -570,8 +586,12 @@ export default {
           })
           const ticks = this.chart_config.options.scales.yAxes[0].ticks
           const v = this.abs_max * CHART_TOP_PADDING_RATE
-          ticks.max = v
-          ticks.min = -v
+          // ticks.max = v
+          // ticks.min = -v
+
+          ticks.suggestedMax = v
+          ticks.suggestedMin = -v
+
           this.chart_obj.update()
         }
 
