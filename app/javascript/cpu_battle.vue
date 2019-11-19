@@ -84,6 +84,14 @@
           b-button(@click="bg_variant_reset_handle" size="is-small")
             | ランダム盤
 
+          | &nbsp;
+          | &nbsp;
+          b-tooltip(label="指し手の読み上げ")
+            template(v-if="yomiage_mode")
+              b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
+            template(v-if="!yomiage_mode")
+              b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
+
         b-message(size="is-small")
           | CPU: {{judge_group.lose}}勝 &nbsp;&nbsp; 人間: {{judge_group.win}}勝
 
@@ -231,6 +239,7 @@ export default {
       cpu_brain_key: this.$root.$options.cpu_brain_key,       // 強さ
       cpu_strategy_key: this.$root.$options.cpu_strategy_key, // 戦法
       cpu_preset_key: this.$root.$options.cpu_preset_key,     // 手合
+      yomiage_mode: true,
 
       // 候補手
       candidate_report: null, // テキスト
@@ -500,6 +509,10 @@ export default {
       }
     },
 
+    yomiage_mode_set(flag) {
+      this.yomiage_mode = flag
+    },
+
     board_style_info_reflection() {
       this.board_style_info.func(this.sp_params)
     },
@@ -546,6 +559,7 @@ export default {
         cpu_strategy_key: this.cpu_strategy_key,
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key: this.cpu_preset_key,
+        yomiage_mode: this.yomiage_mode,
       }).then(response => {
         this.response_process(response)
       }).catch(error => {
@@ -558,7 +572,9 @@ export default {
       if (this.mode === "playing") {
         // CPUの指し手を読み上げる
         if (e["yomiage"]) {
-          this.talk(e["yomiage"])
+          if (this.yomiage_mode) {
+            this.talk(e["yomiage"])
+          }
         }
 
         // 指した後の局面を反映

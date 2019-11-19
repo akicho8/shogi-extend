@@ -242,8 +242,10 @@ class CpuBattlesController < ApplicationController
 
   # 最後の手があれば読み上げる
   def yomiage_for(mediator)
-    if last = mediator.hand_logs.last
-      talk(last.yomiage, rate: TALK_PITCH)
+    if params[:yomiage_mode]
+      if last = mediator.hand_logs.last
+        talk(last.yomiage, rate: TALK_PITCH)
+      end
     end
   end
 
