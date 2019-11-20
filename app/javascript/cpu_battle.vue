@@ -337,7 +337,8 @@ export default {
     easy_dialog(params) {
       params = {
         ...params,
-        canCancel: ["outside", "escape"],
+        // 連打でスキップしてしまうことがあるため指定しない
+        // canCancel: ["outside", "escape"],
       }
       this.$buefy.dialog.alert(params)
     },
