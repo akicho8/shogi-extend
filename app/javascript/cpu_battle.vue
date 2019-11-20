@@ -122,6 +122,7 @@ import BoardStyleInfo from "board_style_info"
 import PresetInfo from "shogi-player/src/preset_info.js"
 import Location from "shogi-player/src/location"
 import cpu_battle_force_chart from "./cpu_battle_force_chart.js"
+import sound_cache from './sound_cache.js'
 
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
 
@@ -129,6 +130,7 @@ export default {
   name: "cpu_battle",
   mixins: [
     cpu_battle_force_chart,
+    sound_cache,
   ],
 
   data() {
@@ -426,6 +428,7 @@ export default {
 
     judge_dialog_display(data) {
       if (data["judge_key"] === "win") {
+        this.sound_play("win")
         this.talk(data["message"])
         this.easy_dialog({
           title: "勝利",
@@ -437,6 +440,7 @@ export default {
         })
       }
       if (data["judge_key"] === "lose") {
+        this.sound_play("lose")
         if (data["irregular"]) {
           this.talk("反則負けです")
           this.easy_dialog({
