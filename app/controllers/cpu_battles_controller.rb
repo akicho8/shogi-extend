@@ -244,7 +244,14 @@ class CpuBattlesController < ApplicationController
   def yomiage_for(mediator)
     if params[:yomiage_mode]
       if last = mediator.hand_logs.last
-        talk(last.yomiage, rate: TALK_PITCH)
+        last.skill_set.each do |e|
+          e.each do |e|
+            talk(e.name)
+          end
+        end
+        if Rails.env.development? && false
+          talk(last.yomiage, rate: TALK_PITCH)
+        end
       end
     end
   end

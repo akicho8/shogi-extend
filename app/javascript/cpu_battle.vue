@@ -84,13 +84,14 @@
           b-button(@click="bg_variant_reset_handle" size="is-small")
             | ランダム盤
 
-          | &nbsp;
-          | &nbsp;
-          b-tooltip(label="指し手の読み上げ")
-            template(v-if="yomiage_mode")
-              b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
-            template(v-if="!yomiage_mode")
-              b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
+          template(v-if="development_p")
+            | &nbsp;
+            | &nbsp;
+            b-tooltip(label="指し手の読み上げ")
+              template(v-if="yomiage_mode")
+                b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
+              template(v-if="!yomiage_mode")
+                b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
 
         b-message(size="is-small")
           | CPU: {{judge_group.lose}}勝 &nbsp;&nbsp; 人間: {{judge_group.win}}勝
