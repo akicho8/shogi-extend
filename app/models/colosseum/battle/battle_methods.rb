@@ -164,7 +164,7 @@ module Colosseum::Battle::BattleMethods
     # 戦法を自動発言
     def tactic_notify
       if hand = mediator.hand_logs.last
-        message = hand.skill_set.each do |e|
+        hand.skill_set.each do |e|
           e.each do |e|
             active_user.chat_say(battle, e.name, msg_class: "has-text-info")
           end
