@@ -145,7 +145,7 @@
                     | {{e.name}}
         .columns
           .column
-            canvas#chart_canvs(ref="chart_canvs")
+            canvas#chart_canvas(ref="chart_canvas")
             .has-text-centered.has-text-grey.is-size-7
               | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
 
@@ -253,7 +253,7 @@ export default {
   },
 
   // mounted() {
-  //   const chart_instance = new Chart(this.$refs.chart_canvs, this.days_chart_js_options())
+  //   const chart_instance = new Chart(this.$refs.chart_canvas, this.days_chart_js_options())
   // },
 
   watch: {
