@@ -408,7 +408,7 @@ export default {
         //   console.log(e["hand"])
         // }
 
-        score_list_reflection(e)
+        this.score_list_reflection(e)
 
         this.candidate_report = e["candidate_report"]
         this.candidate_rows = e["candidate_rows"]
