@@ -20,8 +20,8 @@ export default {
         o:     { file: mp3_o,     volume: null, },
         x:     { file: mp3_x,     volume: null, },
         start: { file: mp3_start, volume: null, },
-        lose:  { file: mp3_lose,  volume: 1.0,  },
-        win:   { file: mp3_win,   volume: 1.0,  },
+        lose:  { file: mp3_lose,  volume: 0.5,  },
+        win:   { file: mp3_win,   volume: 0.5,  },
       },
     }
   },

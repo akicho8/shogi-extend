@@ -19,6 +19,10 @@
                     | 再挑戦
                   b-button(@click="one_hand_exec")
                     | 1手指す
+                  b-button(@click="judge_dialog_display({judge_key: 'win'})")
+                    | win
+                  b-button(@click="judge_dialog_display({judge_key: 'lose'})")
+                    | lose
 
       .has-text-centered
         shogi_player(
