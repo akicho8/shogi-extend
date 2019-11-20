@@ -132,7 +132,7 @@ const CHART_CONFIG_DEFAULT = {
     labels: [],
     datasets: [
       {
-        label: "似非形勢グラフ",
+        label: "戦力グラフ",
         data: [],
         borderColor:     "hsla(204, 86%,  53%, 1.0)",
         backgroundColor: "hsla(204, 86%,  53%, 0.1)",
@@ -144,7 +144,7 @@ const CHART_CONFIG_DEFAULT = {
   options: {
     title: {
       display: true,
-      text: "似非形勢グラフ",
+      text: "戦力グラフ",
     },
 
     elements: {
