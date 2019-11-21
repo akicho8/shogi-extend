@@ -13,16 +13,16 @@ module.exports = {
     options: {
       extractCSS,
 
-      // // TODO: どうやって my_global.sass を読み込めばいいんだ？
+      // // TODO: どうやって global_css_test.sass を読み込めばいいんだ？
       // loaders: {
-      //   sass: 'vue-style-loader!css-loader!sass-loader?data=@import "my_global.sass"',
+      //   sass: 'vue-style-loader!css-loader!sass-loader?data=@import "global_css_test.sass"',
       //   // css: {
       //   //   loader: 'css-loader',
       //   // },
       //   // scss: {
       //   //   loader: 'sass-loader',
       //   //   options: {
-      //   //     data: '@import "my_global.sass";',
+      //   //     data: '@import "global_css_test.sass";',
       //   //     // import: [path.resolve(__dirname, '../src/assets/stylus/colors.styl')],
       //   //     includePaths: [path.resolve(__dirname, './app/javascript/')],
       //   //   },
