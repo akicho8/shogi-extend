@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "CPU対戦", type: :system do
   it "トップ" do
     visit "/cpu/battles"
-    expect(page).to have_content "CPUの強さ"
+    expect(page).to have_content "強さ"
     doc_image
   end
 
@@ -16,6 +16,12 @@ RSpec.describe "CPU対戦", type: :system do
 
   it "対局" do
     visit "/cpu/battles"
+    first(:xpath, "//span[text()='平手']").click
+    first(:xpath, "//span[text()='ルールわかってない']").click
+
+    click_on("対局開始")
+
+    sleep(0.5)
 
     # 1手目「79の銀を68に移動」
     first(".place_79").click
