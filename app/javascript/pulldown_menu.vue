@@ -108,10 +108,3 @@ export default {
   },
 }
 </script>
-
-<style lang="sass">
-  .a_label
-    margin-left: 1rem
-  .arrow_icon
-    padding: 0 1.2rem
-</style>
