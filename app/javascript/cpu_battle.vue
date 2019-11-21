@@ -478,7 +478,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./my_custom_buefy.scss"
+@import "./bulma_init.scss"
 
 .cpu_battle
   .candidate_report

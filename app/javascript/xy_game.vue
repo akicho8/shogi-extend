@@ -799,7 +799,7 @@ export default {
 
 <style lang="sass">
 // FIXME: ↓buefyが二重に読み込まれてしまう
-@import "./my_custom_buefy.scss"
+@import "./bulma_init.scss"
 
 .xy_game
   .level_container

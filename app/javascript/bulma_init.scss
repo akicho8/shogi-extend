@@ -27,5 +27,6 @@ $addColors: (
 );
 $colors: map-merge($colors, $addColors);
 
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
+// 【超重要】 *.vue のなかで +desktop などを使えるゆおにするため
+// そして ../../node_modules/bulma/sass/utilities/_all.sass にあるように、最後に指定する
+@import "~bulma/sass/utilities/mixins";
