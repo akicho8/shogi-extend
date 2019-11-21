@@ -107,6 +107,10 @@ export default {
       return process.env.NODE_ENV === "development"
     },
 
+    RAILS_ENV() {
+      return window.RAILS_ENV
+    },
+
     // https://www.npmjs.com/package/bowser
     user_agent_hash() {
       console.log(window.navigator.userAgent)

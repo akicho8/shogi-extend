@@ -419,6 +419,7 @@ export default {
       this.sound_play("start")
       this.track_next()
       this.memento_create("start")
+      this.alive_notice()
     },
 
     button_focus(o_or_x) {
@@ -430,6 +431,17 @@ export default {
       this.mode = "standby"
       this.clear_interval_safe()
       this.memento_create("stop")
+      this.alive_notice()
+    },
+
+    alive_notice() {
+      this.$http.post(this.$root.$options.post_path, {
+        mode: this.mode,
+        summary: this.summary,
+        book_title: this.book_title,
+      }).then(response => {
+      }).catch(error => {
+      })
     },
 
     stop_if_playing() {

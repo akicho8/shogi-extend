@@ -43,7 +43,7 @@
           :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
           :flip.sync="flip"
           :setting_button_show="development_p"
-          :summary_show="development_p"
+          :summary_show="development_p || RAILS_ENV === 'test'"
           @update:play_mode_long_sfen="play_mode_long_sfen_set"
           ref="sp_vm"
         )
@@ -304,8 +304,10 @@ export default {
       if (this.preset_info.first_location_key === "black") {
         this.human_side_key = _.sample(Location.keys) // 振り駒をして
         if (this.human_side_key === "white") {        // 後手番なら
-          this.flip = true                            // 盤面反転して
-          this.$nextTick(() => this.one_hand_exec())  // 相手に初手を指させる
+          if (RAILS_ENV !== "test") {
+            this.flip = true                            // 盤面反転して
+            this.$nextTick(() => this.one_hand_exec())  // 相手に初手を指させる
+          }
         }
       }
 

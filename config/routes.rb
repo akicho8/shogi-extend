@@ -70,7 +70,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 符号入力ゲーム
 
-  get "stopwatch", to: "stopwatch#show"
+  resource :stopwatch, only: [:show, :create]
 
   resources :xy_records, path: "xy", only: [:index, :create, :update]
 

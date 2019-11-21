@@ -12,6 +12,7 @@ Rails.start()
 
 import "action_cable_setup.js"
 import "modulable_crud.js"
+import "rails_env_set.js"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
