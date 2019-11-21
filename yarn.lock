@@ -1823,10 +1823,10 @@ buefy@^0.8.3:
   dependencies:
     bulma "0.7.5"
 
-buefy@^0.8.6:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.8.6.tgz#a8d7e570914b95d8d5aadc40f87bcdfbaf552f0e"
-  integrity sha512-7woxrdwANcnJbe7lofPxkJLGRRGIVwFXOo0kzEpiNB6alQj18NV6UrdAKse+LWCOADz+AeHe5gyc6qdgRjG5mw==
+buefy@^0.8.7:
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.8.7.tgz#ccfe47001156f3fab8bf3c5e5339ec646dca1b58"
+  integrity sha512-Nmd6yuNPTQkwGXflLeRCINnLQWvDZcDqbw+7sy+LjX0n5kP5kcJ4DFc43koO+yPd4MpB7ZheHhLk5Sn00NnToA==
   dependencies:
     bulma "0.7.5"
 
@@ -7646,10 +7646,10 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shogi-player@^0.0.159:
-  version "0.0.159"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.159.tgz#ffac6e0529a3c648615fe3b5e3876239684df8e0"
-  integrity sha512-PkDEPH7bq08+052oD4Tih4ICOk2osl40EfwhgbY3WRvLa8+ObwAd1ZDhLYWMlpYWn94kfMrj0p1ICq+3Fw793w==
+shogi-player@^0.0.160:
+  version "0.0.160"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.160.tgz#d2bf8254aa47b043d9202759b95d285cc32a3780"
+  integrity sha512-I22jpD5Opey7+ojmjzTTQ9E+9pQnnMIjInEDWkA+k1z6/kxuk1xZHpvgAFefKsZW/t/08WeZapnzWeYotLP9AQ==
   dependencies:
     autolinker "^1.6.0"
     autoprefixer "^7.1.2"

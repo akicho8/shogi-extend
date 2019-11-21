@@ -19,6 +19,8 @@
                     | 再挑戦
                   b-button(@click="one_hand_exec")
                     | 1手指す
+                  b-button(@click="retract_a_move")
+                    | 待った
                   b-button(@click="judge_dialog_display({judge_key: 'win'})")
                     | win
                   b-button(@click="judge_dialog_display({judge_key: 'lose'})")
@@ -320,6 +322,11 @@ export default {
     // 1手実行
     one_hand_exec() {
       this.play_mode_long_sfen_set(this.$refs.sp_vm.play_mode_current_sfen)
+    },
+
+    // 待った
+    retract_a_move() {
+      this.$refs.sp_vm.api_retract_a_move()
     },
 
     // 背景ランダム設定
