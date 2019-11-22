@@ -5,6 +5,7 @@ import mp3_x     from "oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 import mp3_start from "oto_logic/Quiz-Question03-1.mp3"
 import mp3_lose  from "oto_logic/Onmtp-Ding05-1.mp3"
 import mp3_win   from "oto_logic/Quiz-Results02-1.mp3"
+import mp3_click from "oto_logic/Onmtp-Click02-1.mp3"
 
 import { Howl, Howler } from 'howler'
 
@@ -22,6 +23,7 @@ export default {
         start: { file: mp3_start, volume: null, },
         lose:  { file: mp3_lose,  volume: 0.5,  },
         win:   { file: mp3_win,   volume: 0.5,  },
+        click: { file: mp3_click, volume: 0.5,  },
       },
     }
   },

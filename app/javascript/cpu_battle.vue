@@ -281,6 +281,8 @@ export default {
 
     // 開始
     start_handle() {
+      this.sound_play("click")
+
       this.current_sfen_set()
 
       // オールラウンドの戦型選択
@@ -336,6 +338,7 @@ export default {
       while (true) {
         let v = _.sample(BG_VARIANT_AVAILABLE_LIST)
         if (this.bg_variant !== v) {
+          this.sound_play("click")
           this.bg_variant = v
           break
         }
