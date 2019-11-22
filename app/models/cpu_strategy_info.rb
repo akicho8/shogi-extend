@@ -5,18 +5,22 @@ class CpuStrategyInfo
     { key: "矢倉",           },
     { key: "右四間飛車",     },
     { key: "嬉野流",         },
-    { key: "アヒル戦法",     },
+    { key: "アヒル",         },
     { key: "振り飛車",       },
+    { key: "かまいたち",     },
   ]
+
+  def self.values_without_all_round
+    @values_without_all_round ||= values - [self["オールラウンド"]]
+  end
 
   def self.fetch_by_params(params)
     key = params[:cpu_strategy_key]
 
     if key == "オールラウンド"
-      rest = values - [self["オールラウンド"]]
       n = Integer(params[:cpu_strategy_random_number])
-      pos = n.modulo(rest.size)
-      return rest.at(pos)
+      pos = n.modulo(values_without_all_round.size)
+      return values_without_all_round.at(pos)
     end
 
     fetch(key)

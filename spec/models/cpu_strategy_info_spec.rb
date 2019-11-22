@@ -2,6 +2,6 @@ require 'rails_helper'
 
 RSpec.describe CpuStrategyInfo, type: :model do
   it "score_table" do
-    assert { CpuStrategyInfo["アヒル戦法"].score_table }
+    assert { CpuStrategyInfo.values_without_all_round.all?(&:score_table) }
   end
 end
