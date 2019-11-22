@@ -380,7 +380,9 @@ module Swars
       let :table_columns_hash do
         list = []
         unless Rails.env.production?
-          list << { key: :id,               label: "ID",   visible: false, }
+          list += [
+            { key: :id,               label: "ID",   visible: false, },
+          ]
         end
         list += [
           { key: :attack_tag_list,  label: "戦型", visible: !mobile_agent?, },
@@ -393,6 +395,7 @@ module Swars
           { key: :preset_info,      label: "手合", visible: false,          },
           { key: :battled_at,       label: "日時", visible: !mobile_agent?, },
         ]
+        list
       end
 
       def js_record_for(e)
