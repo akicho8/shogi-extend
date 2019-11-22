@@ -22,8 +22,9 @@
   height: 1.4rem
 
 .row_piyo_link
-  margin: 0 1em
+  max-width: none
   height: 1.4rem
+  width: 1.4rem
 
 .piyo_icon_in_button
   height: 1.0rem
@@ -170,6 +171,8 @@
 
       // &.public
       //   background-color: $danger
+      .tag_name
+        margin-left: 0.25rem
 
 ////////////////////////////////////////////////////////////////////////////// デスクトップのときは行のボタンを非表示にしておく
 
@@ -178,8 +181,8 @@
     tbody
       tr
         .row_operations
-          a, .dropdown
-            margin-left: 0.3rem
+          // a, span, .dropdown
+          //   margin-left: 0.3rem
             
         // 行にカーソルを置いたときだけ表示する
         // &:hover

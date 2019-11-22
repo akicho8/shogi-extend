@@ -24,8 +24,8 @@ template(slot-scope="props")
         template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
           template(v-if="table_columns_hash[key].visible")
             template(v-for="tag in m[key]")
-              | &nbsp;
-              a.has-text-grey.is-size-7(@click.stop :href="tag.url") {{tag.name}}
+              a.has-text-grey.is-size-7.tag_name(@click.stop :href="tag.url")
+                | {{tag.name}}
 
   b-table-column(field="final_key" :label="table_columns_hash['final_info'].label" :visible="table_columns_hash['final_info'].visible" sortable)
     a(@click.stop :href="props.row['final_info'].url" :class="props.row['final_info'].class")
@@ -57,8 +57,10 @@ template(slot-scope="props")
         = image_tag("piyo_shogi_icon.png", "class": "row_piyo_link")
 
       template(v-if="props.row.kifu_copy_params")
+        | &nbsp;
         a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row.kifu_copy_params)")
           b-icon(icon="clipboard-outline" size="is-small")
           | &nbsp;コピー
 
+      | &nbsp;
       pulldown_menu(:record="props.row" position="is-bottom-left")
