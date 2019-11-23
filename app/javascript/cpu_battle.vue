@@ -205,6 +205,16 @@ export default {
       ]
     },
 
+    post_shared_params() {
+      return {
+        cpu_brain_key: this.cpu_brain_key,
+        cpu_strategy_key: this.cpu_strategy_key,
+        cpu_strategy_random_number: this.cpu_strategy_random_number,
+        cpu_preset_key: this.cpu_preset_key,
+        yomiage_mode: this.yomiage_mode,
+      }
+    },
+
     // // 対戦者の名前
     // current_call_name() {
     //   let str = null
@@ -290,6 +300,7 @@ export default {
       // 開始
       this.mode = "playing"
       this.talk("よろしくお願いします")
+      this.post_apply({start_trigger: true})
 
       // 平手であれば振り駒
       if (this.preset_info.first_location_key === "black") {
@@ -365,27 +376,20 @@ export default {
         return
       }
       this.give_up_processing = true
-
-      this.$http.post(this.$root.$options.post_path, {
-        i_give_up: true,
-      }).then(response => {
-        this.response_process(response)
-      }).catch(error => {
-        this.error_process(error)
-      })
+      this.post_apply({i_give_up: true})
     },
 
     play_mode_long_sfen_set(long_sfen) {
       if (this.mode === "standby") {
         return
       }
+      this.post_apply({kifu_body: long_sfen})
+    },
+
+    post_apply(params) {
       this.$http.post(this.$root.$options.post_path, {
-        kifu_body: long_sfen,
-        cpu_brain_key: this.cpu_brain_key,
-        cpu_strategy_key: this.cpu_strategy_key,
-        cpu_strategy_random_number: this.cpu_strategy_random_number,
-        cpu_preset_key: this.cpu_preset_key,
-        yomiage_mode: this.yomiage_mode,
+        ...this.post_shared_params,
+        ...params,
       }).then(response => {
         this.response_process(response)
       }).catch(error => {

@@ -46,6 +46,11 @@ class CpuBattlesController < ApplicationController
   end
 
   def create
+    if params[:start_trigger]
+      logging("開始")
+      return
+    end
+
     if params[:i_give_up]
       final_decision(judge_key: :lose, message: "負けました")
       return
@@ -203,7 +208,7 @@ class CpuBattlesController < ApplicationController
 
     cpu_battle_record = CpuBattleRecord.create!(judge_key: response[:judge_key], user: current_user)
     judge_info = JudgeInfo[response[:judge_key]]
-    slack_message(key: "CPU対戦終局", body: "[#{current_user&.name}][#{judge_info}] #{response[:message]}")
+    logging("終局", "[#{judge_info}] #{response[:message]}")
 
     response[:judge_group] = CpuBattleRecord.group(:judge_key).count
 
@@ -235,6 +240,19 @@ class CpuBattlesController < ApplicationController
   end
 
   private
+
+  def logging(title, body = nil)
+    slack_message(key: "CPU対戦 - #{title}", body: "#{logging_body_prefix}#{body}")
+  end
+
+  def logging_body_prefix
+    [
+      current_user,
+      current_cpu_brain_info,
+      current_cpu_strategy_info,
+      current_cpu_preset_info,
+    ].compact.collect { |e| "[#{e.name}]" }.join
+  end
 
   def evaluation_value_generation(mediator)
     @score_list << {x: mediator.turn_info.turn_max, y: mediator.player_at(:black).evaluator.score}
