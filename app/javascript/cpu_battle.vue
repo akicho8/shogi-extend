@@ -50,20 +50,9 @@
 
     .column.is-two-fifths
       template(v-if="mode === 'standby'")
-        .content
-          h3 設定
-        template(v-if="false")
-          .box
-            nav.level.is-mobile
-              .level-item.has-text-centered
-                div
-                  p.heading CPUの勝ち
-                  p.title 1
-              .level-item.has-text-centered
-                div
-                  p.heading 人間の勝ち
-                  p.title 1
         .box
+          .content
+            h4 設定
           b-field(label="強さ" custom-class="is-small")
             .block
               template(v-for="e in CpuBrainInfo.values")
@@ -81,7 +70,7 @@
               template(v-for="e in CpuPresetInfo.values")
                 b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
                   | {{e.name}}
-        .box
+          hr
           b-field(label="スタイル" custom-class="is-small")
             .block
               template(v-for="e in BoardStyleInfo.values")
