@@ -1,7 +1,5 @@
 <template lang="pug">
 .cpu_battle
-  .foobar1
-    | 嬉野流
   .columns
     .column
       template(v-if="mode === 'playing' || mode === 'standby'")
@@ -490,20 +488,4 @@ export default {
 .cpu_battle
   .candidate_report
     line-height: 100%
-
-  .foobar1
-    z-index: 1000
-    position: fixed
-    top: 25%
-    left: 25%
-    right: 25%
-    bottom: 25%
-    border: 1px solid blue
-
-    display: flex
-    justify-content: center
-    align-items: center
-
-    font-size: 10vmin
-
 </style>
