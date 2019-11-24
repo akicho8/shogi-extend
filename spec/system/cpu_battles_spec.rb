@@ -21,23 +21,18 @@ RSpec.describe "CPU対戦", type: :system do
 
     click_on("対局開始")
 
-    sleep(0.5)
-
     # 1手目「79の銀を68に移動」
     first(".place_79").click
     first(".place_68").click
     doc_image("1手目")
-    sleep(0.5)
     expect(page).to have_content "2手" # CPUがすぐに指したため2手になっている
 
     # 3手目「５一飛成」を指す
     first(".place_28").click
     first(".place_51").click
-    sleep(0.5)
     doc_image("3手目")
     expect(page).to have_content "成りますか？"
     click_on("成る")
-    sleep(0.5)
 
     expect(page).to have_content "反則負け"
     doc_image("反則負け")

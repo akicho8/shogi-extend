@@ -300,11 +300,11 @@ export default {
       this.talk("よろしくお願いします")
       this.post_apply({start_trigger: true})
 
-      // 平手であれば振り駒
-      if (this.preset_info.first_location_key === "black") {
-        this.human_side_key = _.sample(Location.keys) // 振り駒をして
-        if (this.human_side_key === "white") {        // 後手番なら
-          if (RAILS_ENV !== "test") {
+      // 平手であれば振り駒(ただしテストのときは先手からとする)
+      if (RAILS_ENV !== "test") {
+        if (this.preset_info.first_location_key === "black") {
+          this.human_side_key = _.sample(Location.keys) // 振り駒をして
+          if (this.human_side_key === "white") {        // 後手番なら
             this.flip = true                            // 盤面反転して
             this.$nextTick(() => this.one_hand_exec())  // 相手に初手を指させる
           }
