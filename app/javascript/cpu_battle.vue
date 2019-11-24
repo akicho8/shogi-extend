@@ -117,7 +117,6 @@ import BoardStyleInfo from "board_style_info"
 import PresetInfo from "shogi-player/src/preset_info.js"
 import Location from "shogi-player/src/location"
 import cpu_battle_force_chart from "./cpu_battle_force_chart.js"
-import sound_cache from './sound_cache.js'
 
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
 
@@ -125,7 +124,6 @@ export default {
   name: "cpu_battle",
   mixins: [
     cpu_battle_force_chart,
-    sound_cache,
   ],
 
   data() {

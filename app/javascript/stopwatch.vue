@@ -150,7 +150,6 @@ import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
 import stopwatch_browser_setting from './stopwatch_browser_setting.js'
-import sound_cache from './sound_cache.js'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -169,7 +168,6 @@ export default {
     stopwatch_data_retention,
     stopwatch_memento_list,
     stopwatch_browser_setting,
-    sound_cache,
   ],
   data() {
     return {

@@ -11,8 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Rails側で翻訳できている場合はショートカットして再生することもできる
+      // TODO: こっちは使用禁止
       if (data["talk"]) {
         audio_queue.media_push(data["talk"]["service_path"])
+      }
+
+      if (data["sound_key"]) {
+        GVI.sound_play(data["sound_key"], data)
+      }
+
+      if (data["message"]) {
+        GVI.$buefy.toast.open(data)
       }
     },
   })

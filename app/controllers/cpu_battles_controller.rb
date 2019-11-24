@@ -273,8 +273,10 @@ class CpuBattlesController < ApplicationController
         
         # 方法2
         if true
-          if s = last.skill_set.flat_map { |e| e.collect(&:name) }.join("、").presence
-            talk(s)
+          if names = last.skill_set.flat_map { |e| e.collect(&:name) }.presence
+            sound_play(:shine)
+            talk(names.join("、"))
+            names.each { |e| toast_message(e) }
           end
         end
         

@@ -177,7 +177,6 @@
 <script>
 import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
-import sound_cache from './sound_cache.js'
 import xy_chart_module from './xy_chart_module.js'
 import MemoryRecord from 'js-memory-record'
 
@@ -197,7 +196,6 @@ export default {
   name: "xy_game",
   mixins: [
     stopwatch_data_retention,
-    sound_cache,
     xy_chart_module,
   ],
   data() {

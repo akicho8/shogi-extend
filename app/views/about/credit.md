@@ -38,6 +38,9 @@ https://www.samplescience.ca/2018/03/8-bit-fx.html
 BGM・ジングル・効果音のフリー素材｜OtoLogic
 https://otologic.jp
 
+効果音ラボ
+https://soundeffect-lab.info/
+
 ## フォント
 
 Ricty Diminished フォント

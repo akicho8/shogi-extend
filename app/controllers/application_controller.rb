@@ -190,6 +190,18 @@ class ApplicationController < ActionController::Base
         ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(options.merge(source_text: str)))
       end
     end
+
+    def sound_play(key, **options)
+      ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", options.merge(sound_key: key))
+    end
+
+    def toast_message(message, **options)
+      options = {
+        position: "is-bottom",
+      }.merge(options)
+
+      ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", options.merge(message: message))
+    end
   end
 
   concerning :BotCheckMethods do
