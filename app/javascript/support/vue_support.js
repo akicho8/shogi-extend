@@ -62,7 +62,6 @@ export default {
         }
 
         // FIFO形式で順次発声
-        alert(options.talk_method)
         if (options.talk_method === "queue") {
           audio_queue.media_push(data.service_path)
         }
