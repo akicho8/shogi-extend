@@ -42,15 +42,17 @@ export default {
 
     // しゃべる
     talk(source_text, options = {}) {
+      options = {talk_method: "howler", ...options}
+
       this.silent_http_get_command(js_global.talk_path, {source_text: source_text}, data => {
         // すぐに発声する場合
-        if (false) {
+        if (options.talk_method === "direct_audio") {
           const audio = new Audio()
           audio.src = data.service_path
           audio.play()
         }
 
-        // 最後に来た音声のみ発声
+        // 最後に来た音声のみ発声(?)
         if (false) {
           if (!audio) {
             audio = new Audio()
@@ -60,12 +62,13 @@ export default {
         }
 
         // FIFO形式で順次発声
-        if (false) {
+        alert(options.talk_method)
+        if (options.talk_method === "queue") {
           audio_queue.media_push(data.service_path)
         }
 
         // Howler
-        if (true) {
+        if (options.talk_method === "howler") {
           window.talk_sound = new Howl({src: data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
           if (options.onend) {
             window.talk_sound.on("end", () => options.onend())

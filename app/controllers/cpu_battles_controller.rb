@@ -262,17 +262,22 @@ class CpuBattlesController < ApplicationController
   def yomiage_for(mediator)
     if params[:yomiage_mode]
       if last = mediator.hand_logs.last
+        # 方法1
         if false
           last.skill_set.each do |e|
             e.each do |e|
-              talk(e.name)
+              talk(e.name, talk_method: :queue)
             end
           end
-        else
-          if skill_yomiage = last.skill_set.flat_map { |e| e.collect(&:name) }.join("、").presence
-            talk(skill_yomiage)
+        end
+        
+        # 方法2
+        if true
+          if s = last.skill_set.flat_map { |e| e.collect(&:name) }.join("、").presence
+            talk(s)
           end
         end
+        
         if Rails.env.development? && false
           talk(last.yomiage, rate: TALK_PITCH)
         end
