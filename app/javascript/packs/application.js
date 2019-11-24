@@ -64,6 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 })
 
+//////////////////////////////////////////////////////////////////////////////// タブがアクティブか？(見えているか？)
+
+window.tab_is_active_p = () => {
+  console.log("document.hidden", document.hidden)
+  console.log("document.visibilityState", document.visibilityState)
+  return !(document.hidden || document.visibilityState === "hidden")
+}
+
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい
 
 import LifetimeInfo from "lifetime_info"

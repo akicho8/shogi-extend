@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     custom_session_id: js_global.custom_session_id,
   }, {
     received(data) {
+      if (!tab_is_active_p()) {
+        return
+      }
+
       // わざわざ JavaScript 側から発信したようにする場合
       if (data["yomiage"]) {
         GVI.talk(data["yomiage"], data)

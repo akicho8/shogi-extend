@@ -42,6 +42,10 @@ export default {
 
     // しゃべる
     talk(source_text, options = {}) {
+      if (!tab_is_active_p()) {
+        return
+      }
+
       options = {talk_method: "howler", ...options}
 
       this.silent_http_get_command(js_global.talk_path, {source_text: source_text}, data => {
