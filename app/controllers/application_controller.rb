@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include LightSessionMethods
+
   before_action do
     ActiveStorage::Current.host = request.base_url
   end
@@ -152,55 +154,6 @@ class ApplicationController < ActionController::Base
       end
       current_user_set_id(nil)
       sign_out(:xuser)
-    end
-  end
-
-  concerning :TalkMethods do
-    included do
-      helper_method :talk
-    end
-
-    let :custom_session_id do
-      Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
-    end
-
-    # talk("こんにちは")
-    #
-    # 実行順序
-    #
-    #   light_session_channel.rb
-    #     light_session_app.js
-    #       vue_support.js (talk)
-    #         axios
-    #           talk_controller.rb
-    #         Audio#play
-    #
-    # ショートカットする方法
-    #
-    #   ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(source_text: "こんにちは").as_json)
-    #
-    def talk(str, **options)
-      str.tap do
-        ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", options.merge(yomiage: str))
-      end
-    end
-
-    def direct_talk(str, **options)
-      str.tap do
-        ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(options.merge(source_text: str)))
-      end
-    end
-
-    def sound_play(key, **options)
-      ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", options.merge(sound_key: key))
-    end
-
-    def toast_message(message, **options)
-      options = {
-        position: "is-bottom",
-      }.merge(options)
-
-      ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", options.merge(message: message))
     end
   end
 

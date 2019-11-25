@@ -4,29 +4,31 @@ document.addEventListener('DOMContentLoaded', () => {
     custom_session_id: js_global.custom_session_id,
   }, {
     received(data) {
-      if (!tab_is_active_p()) {
-        return
+      if (tab_is_active_p()) {
+        this[`__command_${data.command}`](data)
       }
+    },
 
-      // わざわざ JavaScript 側から発信したようにする場合
-      if (data["yomiage"]) {
-        GVI.talk(data["yomiage"], data)
-        GVI.debug_alert(data["yomiage"])
-      }
+    // private
 
-      // Rails側で翻訳できている場合はショートカットして再生することもできる
-      // TODO: こっちは使用禁止
-      if (data["talk"]) {
-        audio_queue.media_push(data["talk"]["service_path"])
-      }
+    // わざわざ JavaScript 側から発信したようにする場合
+    __command_talk(data) {
+      GVI.talk(data["message"], data)
+      GVI.debug_alert(data["message"])
+    },
 
-      if (data["sound_key"]) {
-        GVI.sound_play(data["sound_key"], data)
-      }
+    // Rails側で翻訳できている場合はショートカットして再生することもできる
+    // TODO: こっちは使用禁止
+    __command_direct_talk(data) {
+      audio_queue.media_push(data["talk"]["service_path"])
+    },
 
-      if (data["message"]) {
-        GVI.$buefy.toast.open(data)
-      }
+    __command_sound_play(data) {
+      GVI.sound_play(data["key"], data)
+    },
+
+    __command_toast_message(data) {
+      GVI.$buefy.toast.open(data)
     },
   })
 })
