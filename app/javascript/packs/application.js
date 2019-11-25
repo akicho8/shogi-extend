@@ -93,7 +93,7 @@ Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
 import vue_support from "support/vue_support.js"
 import vue_fetch from "support/vue_fetch.js"
 import vue_clipboard from "support/vue_clipboard.js"
-import sound_cache from "sound_cache.js"
+import vue_sound from "support/vue_sound.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import message_link_to from "message_link_to.vue"
@@ -119,7 +119,7 @@ Vue.mixin({
     vue_support,
     vue_fetch,
     vue_clipboard,
-    sound_cache,
+    vue_sound,
   ],
 
   // よくない命名規則だけどこっちの方が開発しやすい

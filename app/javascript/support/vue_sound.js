@@ -43,6 +43,7 @@ export default {
         options = Object.assign({
           volume: sound_preset.volume || SOUND_VOLUME,
         }, options)
+
         this.sound_play_by_src(sound_preset.file, options.volume)
       }
     },
