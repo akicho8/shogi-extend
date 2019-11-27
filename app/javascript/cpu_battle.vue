@@ -137,10 +137,10 @@ export default {
       judge_group: this.$root.$options.judge_group, // 勝敗
 
       // 設定用
-      cpu_strategy_random_number: null,                       // オールラウンド時の戦法選択用乱数
-      cpu_brain_key: this.$root.$options.cpu_brain_key,       // 強さ
+      cpu_brain_key:    this.$root.$options.cpu_brain_key,    // 強さ
       cpu_strategy_key: this.$root.$options.cpu_strategy_key, // 戦法
-      cpu_preset_key: this.$root.$options.cpu_preset_key,     // 手合
+      cpu_preset_key:   this.$root.$options.cpu_preset_key,   // 手合
+      cpu_strategy_random_number: null,                       // オールラウンド時の戦法選択用乱数
       yomiage_mode: true,
 
       // 候補手
@@ -212,29 +212,6 @@ export default {
         yomiage_mode: this.yomiage_mode,
       }
     },
-
-    // // 対戦者の名前
-    // current_call_name() {
-    //   let str = null
-    //   if (!str) {
-    //     if (this.current_user) {
-    //       str = `${this.current_user.name}さん`
-    //     }
-    //   }
-    //   if (!str) {
-    //     // str = "あなた"
-    //   }
-    //   return str
-    // },
-
-    // // 最初の台詞
-    // first_talk_body() {
-    //   let str = ""
-    //   if (this.current_call_name) {
-    //     str += `${this.current_call_name}の手番です`
-    //   }
-    //   return str
-    // },
   },
 
   watch: {
