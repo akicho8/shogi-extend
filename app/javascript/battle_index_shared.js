@@ -1,9 +1,13 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import battle_record_methods from "battle_record_methods.js"
+import battle_index_table_column from "battle_index_table_column.js"
 
 export default {
-  mixins: [battle_record_methods],
+  mixins: [
+    battle_record_methods,
+    battle_index_table_column,
+  ],
 
   data() {
     return {
@@ -25,8 +29,6 @@ export default {
 
       sort_column: this.$options.sort_column,
       sort_order: this.$options.sort_order,
-
-      table_columns_hash: this.$options.table_columns_hash,
 
       detailed: true,           // 行の下に開くやつを使う？
       defaultOpenedDetails: [], // 最初から開いておく id を入れられる
@@ -245,17 +247,6 @@ export default {
     //     return this.modal_record.sfen_body
     //   }
     // },
-
-    // 表示している列のカラム名の配列
-    visible_columns() {
-      let columns
-      columns = _.map(this.table_columns_hash, (attrs, key) => {
-        if (attrs.visible) {
-          return key
-        }
-      })
-      return _.compact(columns)
-    },
 
     // 開始局面
     // force_turn start_turn critical_turn の順に見る

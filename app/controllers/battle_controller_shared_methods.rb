@@ -100,7 +100,7 @@ module BattleControllerSharedMethods
         sort_order: sort_order,
         sort_order_default: "desc", # カラムをクリックしたときの最初の向き
         records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
-        table_columns_hash: js_table_columns_hash,
+        table_columns_hash: table_columns_hash,
         modal_record: js_modal_record,
       }
     end
@@ -234,9 +234,9 @@ module BattleControllerSharedMethods
       end
     end
 
-    def js_table_columns_hash
-      table_columns_hash.inject({}) do |a, e|
-        visible = e[:visible]
+    def table_columns_hash
+      table_column_list.inject({}) do |a, e|
+        visible = e[:visible]   # nil の場合もある
         if visible_columns
           visible = visible_columns.include?(e[:key].to_s)
         end

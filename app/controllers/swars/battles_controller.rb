@@ -377,23 +377,23 @@ module Swars
       def ransack_params
       end
 
-      let :table_columns_hash do
+      let :table_column_list do
         list = []
         unless Rails.env.production?
           list += [
-            { key: :id,               label: "ID",   visible: false, },
+            { key: :id,             label: "ID",   visible: true, },
           ]
         end
         list += [
-          { key: :attack_tag_list,  label: "戦型", visible: !mobile_agent?, },
-          { key: :defense_tag_list, label: "囲い", visible: false,          },
-          { key: :final_info,       label: "結果", visible: false,          },
-          { key: :turn_max,         label: "手数", visible: false,          },
-          { key: :critical_turn,    label: "開戦", visible: false,          },
-          # { key: :grade_diff,     label: "力差", visible: false,          },
-          { key: :rule_info,        label: "種類", visible: false,          },
-          { key: :preset_info,      label: "手合", visible: false,          },
-          { key: :battled_at,       label: "日時", visible: !mobile_agent?, },
+          { key: :attack_tag_list,  label: "戦型", visible: true,  },
+          { key: :defense_tag_list, label: "囲い", visible: false, },
+          { key: :final_info,       label: "結果", visible: false, },
+          { key: :turn_max,         label: "手数", visible: false, },
+          { key: :critical_turn,    label: "開戦", visible: false, },
+          # { key: :grade_diff,     label: "力差", visible: false, },
+          { key: :rule_info,        label: "種類", visible: false, },
+          { key: :preset_info,      label: "手合", visible: false, },
+          { key: :battled_at,       label: "日時", visible: true,  },
         ]
         list
       end

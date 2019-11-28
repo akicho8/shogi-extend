@@ -150,7 +150,7 @@ class FreeBattlesController < ApplicationController
   end
 
   concerning :IndexCustomMethods do
-    let :table_columns_hash do
+    let :table_column_list do
       list = []
       unless Rails.env.production?
         list << { key: :id,               label: "ID",   visible: false, }
