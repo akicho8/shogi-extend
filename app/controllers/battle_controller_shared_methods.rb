@@ -102,6 +102,7 @@ module BattleControllerSharedMethods
         records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
         table_columns_hash: table_columns_hash,
         modal_record: js_modal_record,
+        table_column_storage_prefix_key: controller_path.parameterize.underscore,
       }
     end
 
