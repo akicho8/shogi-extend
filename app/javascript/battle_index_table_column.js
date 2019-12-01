@@ -71,7 +71,7 @@ export default {
     table_column_storage_key() {
       const key = this.$options.table_column_storage_prefix_key
       if (key) {
-        return [key, "table_column_storage_key"].join("_")
+        return [key, "table_column_storage_key"].join("/")
       }
     },
   },
