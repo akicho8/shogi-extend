@@ -91,7 +91,7 @@
         b-button(@click="log_display") 履歴
 
     .column
-      b-tabs.result_body(expanded v-model="format_index")
+      b-tabs.result_body(type="is-boxed" expanded v-model="format_index")
         template(v-for="(value, key) in format_all")
           b-tab-item(:label="key")
             a.is-pulled-right.clipboard_copy(@click.stop.prevent="clipboard_copy({text: value})")

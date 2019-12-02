@@ -98,7 +98,7 @@
           b-radio-button(v-model="xy_scope_key" :native-value="e.key")
             | {{e.name}}
 
-      b-tabs(v-model="current_rule_index" expanded)
+      b-tabs(type="is-boxed" v-model="current_rule_index" expanded)
         template(v-for="xy_rule_info in XyRuleInfo.values")
           b-tab-item(:label="xy_rule_info.name" :value="xy_rule_info.key")
             b-table(

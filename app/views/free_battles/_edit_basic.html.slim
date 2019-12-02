@@ -49,7 +49,7 @@
       .column
         .columns
           .column.has-text-left
-            b-tabs(v-model="output_active_tab" expanded)
+            b-tabs(type="is-boxed" v-model="output_active_tab" expanded)
               template(v-for="e in output_kifs")
                 b-tab-item(:label="e.name")
                   small
