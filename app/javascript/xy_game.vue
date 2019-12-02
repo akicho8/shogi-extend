@@ -176,7 +176,7 @@
 
 <script>
 import dayjs from "dayjs"
-import stopwatch_data_retention from './stopwatch_data_retention.js'
+import vs_clock_data_retention from './vs_clock_data_retention.js'
 import xy_chart_module from './xy_chart_module.js'
 import MemoryRecord from 'js-memory-record'
 
@@ -195,7 +195,7 @@ class XyChartScopeInfo extends MemoryRecord {
 export default {
   name: "xy_game",
   mixins: [
-    stopwatch_data_retention,
+    vs_clock_data_retention,
     xy_chart_module,
   ],
   data() {

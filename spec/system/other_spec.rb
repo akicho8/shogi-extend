@@ -16,7 +16,7 @@ RSpec.describe "その他", type: :system do
   end
 
   it "ストップウォッチ" do
-    visit "/stopwatch"
+    visit "/vs_clock"
     expect(page).to have_content "Rails"
     doc_image
   end

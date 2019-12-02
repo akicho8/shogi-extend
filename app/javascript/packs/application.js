@@ -100,7 +100,7 @@ import message_link_to from "message_link_to.vue"
 import global_message_link from "global_message_link.vue"
 import swars_user_link_to from "swars_user_link_to.vue"
 import pulldown_menu from "pulldown_menu.vue"
-import stopwatch from "stopwatch.vue"
+import vs_clock from "vs_clock.vue"
 import xy_game from "xy_game.vue"
 import cpu_battle from "cpu_battle.vue"
 
@@ -129,7 +129,7 @@ Vue.mixin({
     global_message_link,
     swars_user_link_to,
     pulldown_menu,
-    stopwatch,
+    vs_clock,
     xy_game,
     cpu_battle,
   },

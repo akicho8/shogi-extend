@@ -1,5 +1,5 @@
 <template lang="pug">
-.stopwatch
+.vs_clock
   .columns
     .column.is-half
       .has-text-centered.page_title(@click.prevent="book_title_input_dialog")
@@ -149,9 +149,9 @@ const HYPHEN_SEP = " "
 
 import dayjs from "dayjs"
 
-import stopwatch_data_retention from './stopwatch_data_retention.js'
-import stopwatch_memento_list from './stopwatch_memento_list.js'
-import stopwatch_browser_setting from './stopwatch_browser_setting.js'
+import vs_clock_data_retention from './vs_clock_data_retention.js'
+import vs_clock_memento_list from './vs_clock_memento_list.js'
+import vs_clock_browser_setting from './vs_clock_browser_setting.js'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -165,11 +165,11 @@ class AnswerInfo extends MemoryRecord {
 }
 
 export default {
-  name: "stopwatch",
+  name: "vs_clock",
   mixins: [
-    stopwatch_data_retention,
-    stopwatch_memento_list,
-    stopwatch_browser_setting,
+    vs_clock_data_retention,
+    vs_clock_memento_list,
+    vs_clock_browser_setting,
   ],
   data() {
     return {
@@ -248,7 +248,7 @@ export default {
         component: {
           mounted() { },
           template: `
-            <div class="modal-card is-size-7 stopwatch_log_dialog" style="width: auto">
+            <div class="modal-card is-size-7 vs_clock_log_dialog" style="width: auto">
               <header class="modal-card-head">
                 <p class="modal-card-title">履歴</p>
               </header>
@@ -754,7 +754,7 @@ export default {
     },
 
     local_storage_key() {
-      return "stopwatch"
+      return "vs_clock"
     },
 
     new_quest() {
@@ -984,7 +984,7 @@ export default {
 <style lang="sass">
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap")
 
-.stopwatch
+.vs_clock
   touch-action: manipulation
 
   .page_title
@@ -1046,7 +1046,7 @@ export default {
   .log_button_container
     margin-top: 1.2em
 
-.stopwatch_log_dialog
+.vs_clock_log_dialog
   table
     tbody
       tr
