@@ -145,6 +145,8 @@
 </template>
 
 <script>
+const HYPHEN_SEP = " "
+
 import dayjs from "dayjs"
 
 import stopwatch_data_retention from './stopwatch_data_retention.js'
@@ -608,7 +610,7 @@ export default {
       this.lap_counter    = hash.lap_counter || 0
       this.rows           = hash.rows || []
       this.quest_text     = hash.quest_text || ""
-      this.format_index   = hash.format_index || 0
+      this.format_index   = (hash.format_index != null) ? hash.format_index : 0,
       this.generate_max   = hash.generate_max || 200
       this.drop_seconds   = hash.drop_seconds || 60
       this.book_title     = hash.book_title || "詰将棋用ストップウォッチ"
@@ -769,7 +771,9 @@ export default {
 
     tweet_body() {
       // return _.concat(this.rows, this.new_quest).map(e => `${this.quest_name(e)} - ${this.time_format(e.lap_counter)}`).join("\n")
-      return Object.values(this.format_all)[this.format_index]
+      const values = Object.values(this.format_all)
+      const i = this.format_index % values.length
+      return values[i]
     },
 
     quest_list() {
@@ -878,12 +882,17 @@ export default {
     },
 
     format_all() {
-      return {
-        "OX":       this.format_type_a,
-        "Oは省略":  this.format_type_b,
-        "時間なし": this.format_type_c,
-        "分毎":     this.format_type_d,
+      const hash = {}
+
+      hash["問題毎"] = this.format_type_b
+      hash["サマリー"] = this.format_type_c
+
+      if (this.development_p) {
+        hash["ox"] = this.format_type_a
+        hash["分毎"] = this.format_type_d
       }
+
+      return hash
     },
 
     summary() {
@@ -944,7 +953,7 @@ export default {
     format_type_a() {
       return [
         this.summary + "\n",
-        this.rows.map(e => this.o_or_x_to_s(e, AnswerInfo.fetch("o").char_name, AnswerInfo.fetch("x").char_name) + " " + this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join(""),
+        this.rows.map(e => this.o_or_x_to_s(e, AnswerInfo.fetch("o").char_name, AnswerInfo.fetch("x").char_name) + " " + this.quest_name(e) + HYPHEN_SEP + this.time_format(e.lap_counter) + "\n").join(""),
       ].join("")
     },
 
@@ -957,13 +966,13 @@ export default {
         } else {
           out += "\n"
           out += this.human_minute(key) + "\n"
-          out += rows.map(e => this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join("")
+          out += rows.map(e => this.quest_name(e) + HYPHEN_SEP + this.time_format(e.lap_counter) + "\n").join("")
         }
       })
       if ("x" in this.ox_group) {
         out += "\n"
         out += "不正解\n"
-        out += this.ox_group['x'].map(e => this.quest_name(e) + " - " + this.time_format(e.lap_counter) + "\n").join("")
+        out += this.ox_group['x'].map(e => this.quest_name(e) + HYPHEN_SEP + this.time_format(e.lap_counter) + "\n").join("")
       }
       return out
     },
