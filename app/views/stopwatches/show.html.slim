@@ -1,11 +1,11 @@
 - @page_title ||= "ストップウォッチ"
 
-- twitter_card_tag(title: @page_title, description: "詰将棋を繰り返し解くのに特化したストップウォッチです", image: "vs_clock.png")
+- twitter_card_tag(title: @page_title, description: "詰将棋を繰り返し解くのに特化したストップウォッチです", image: "stopwatch.png")
 
 - content_for :head do
-  = javascript_pack_tag("vs_clock_app")
+  = javascript_pack_tag("stopwatch_app")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new VsClockApp(#{vs_clock_options.to_json.html_safe}).$mount("#app") })
+    document.addEventListener('DOMContentLoaded', () => { new StopwatchApp(#{stopwatch_options.to_json.html_safe}).$mount("#app") })
 
 #app(v-cloak="true")
-  vs_clock
+  stopwatch

@@ -1,7 +1,7 @@
-class VsClocksController < ApplicationController
-  helper_method :vs_clock_options
+class StopwatchesController < ApplicationController
+  helper_method :stopwatch_options
 
-  let :vs_clock_options do
+  let :stopwatch_options do
     {
       post_path: url_for([controller_name.singularize, format: "json"]),
     }

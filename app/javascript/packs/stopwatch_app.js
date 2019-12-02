@@ -1,4 +1,4 @@
-window.VsClockApp = Vue.extend({
+window.StopwatchApp = Vue.extend({
   data() {
     return {
     }
