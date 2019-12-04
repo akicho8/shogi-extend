@@ -72,6 +72,7 @@ Rails.application.routes.draw do
 
   resource :stopwatch, only: [:show, :create]
   resource :vs_clock, only: [:show, :create]
+  resource :joseki, only: [:show, :create]
 
   resources :xy_records, path: "xy", only: [:index, :create, :update]
 
