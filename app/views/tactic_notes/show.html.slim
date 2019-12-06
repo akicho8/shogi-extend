@@ -55,7 +55,7 @@ javascript:
 
   .columns
     .column
-      b-tabs(type="is-boxed" v-model="kifu_type_tab_index")
+      b-tabs(type="" v-model="kifu_type_tab_index")
         - sample_kifu_body.each do |key, value|
           b-tab-item(label=KifuFormatWithBodInfo[key].name)
             pre.pre-wrap= value

@@ -2,7 +2,7 @@
   / 「テキスト入力」の方がタブで隠れている状態で post すると params[:kifu_body] に含まれないため隠しパラメータとしてかわりに hidden_kifu_body が送られるようにしている
   = form.hidden_field(:hidden_kifu_body, "v-model": "input_text")
 
-  b-tabs.input_method_tabs.is_lr_paddingless(type="is-boxed" v-model="input_active_tab" expanded)
+  b-tabs.input_method_tabs.is_lr_paddingless(type="" v-model="input_active_tab" expanded)
     b-tab-item(label="操作入力")
       = render partial: "form_shogi_player", locals: { form: form }
 
