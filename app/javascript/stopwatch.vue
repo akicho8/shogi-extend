@@ -17,7 +17,7 @@
           b-dropdown-item(:separator="true")
           b-dropdown-item
             b-switch(v-model="browser_setting.sound_silent_p")
-              | 静かにする (スマホ電池節約用)
+              | ミュート (スマホ電池節約用)
         .helper_button
           b-tooltip(label="使い方")
             b-button(@click="rule_display" icon-right="help")
@@ -146,6 +146,7 @@
 
 <script>
 const HYPHEN_SEP = " "
+const TITLE_DEFAULT = "詰将棋タイムアタック用ストップウォッチ"
 
 import dayjs from "dayjs"
 
@@ -228,7 +229,7 @@ export default {
               <li>開始と停止のタイミングで現在の状態を履歴に保存します</li>
               <li>履歴をクリックするとその時間の状態に戻ります</li>
               <li>操作を間違えてリセットしてしまったときや「不正解だけ再テスト」のあとで前に戻りたくなったときに使います</li>
-              <li>「詰将棋タイムアタック用ストップウォッチ」の部分をクリックするとタイトルを変更できます</li>
+              <li>タイトルをクリックすると変更できます</li>
               <li>タイトルは履歴に含めるので少し前から続きを行いたいときに探しやすくなりす</li>
             </ol>
           </div>`,
@@ -361,7 +362,7 @@ export default {
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: this.book_title, required: false },
-        onConfirm: value => this.book_title = value || "詰将棋タイムアタック用ストップウォッチ",
+        onConfirm: value => this.book_title = value || TITLE_DEFAULT,
       })
     },
 
@@ -613,7 +614,7 @@ export default {
       this.format_index      = (hash.format_index != null) ? hash.format_index : 0,
       this.generate_max      = hash.generate_max || 200
       this.drop_seconds      = hash.drop_seconds || 60
-      this.book_title        = hash.book_title || "詰将棋タイムアタック用ストップウォッチ"
+      this.book_title        = hash.book_title || TITLE_DEFAULT,
       this.timeout_sec       = hash.timeout_sec || 0
       this.total_timeout_min = hash.total_timeout_min || 0
     },
