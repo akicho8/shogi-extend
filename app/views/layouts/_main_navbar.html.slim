@@ -23,7 +23,7 @@ nav.navbar.is-primary.is_screen_only
           = link_to(icon_tag(:apps, margin_right: 2) + "符号入力ゲーム", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
           = link_to(icon_tag(:clock, margin_right: 2) + "ストップウォッチ", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
           = link_to(icon_tag(:clock, margin_right: 2) + "チェスクロック", :vs_clock, class: ["navbar-item", ("is-active" if params[:controller] == "vs_clocks")]) if !Rails.env.production?
-          = link_to(icon_tag(:clock, margin_right: 2) + "定跡覚える", :joseki, class: ["navbar-item", ("is-active" if params[:controller] == "josekis")]) if !Rails.env.production?
+          = link_to(icon_tag(:apps, margin_right: 2) + "ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
 
     #header_app.navbar-end(v-cloak)
       = link_to(icon_tag(:cancel, margin_right: 1) + "production", production_app_url, class: ["navbar-item"], target: "_blank") unless Rails.env.production?

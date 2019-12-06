@@ -1,4 +1,4 @@
-window.JosekiApp = Vue.extend({
+window.SimpleBoardApp = Vue.extend({
   data() {
     return {
     }

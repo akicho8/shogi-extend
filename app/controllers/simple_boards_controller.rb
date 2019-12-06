@@ -1,7 +1,7 @@
-class JosekisController < ApplicationController
-  helper_method :joseki_options
+class SimpleBoardsController < ApplicationController
+  helper_method :simple_board_options
 
-  let :joseki_options do
+  let :simple_board_options do
     {
       post_path: url_for([controller_name.singularize, format: "json"]),
     }

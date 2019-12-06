@@ -1,0 +1,11 @@
+- @page_title ||= "ストップウォッチ"
+
+- twitter_card_tag(title: @page_title, description: "詰将棋を繰り返し解くのに特化したストップウォッチです", image: "simple_board.png")
+
+- content_for :head do
+  = javascript_pack_tag("simple_board_app")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new SimpleBoardApp(#{simple_board_options.to_json.html_safe}).$mount("#app") })
+
+#app(v-cloak="true")
+  simple_board
