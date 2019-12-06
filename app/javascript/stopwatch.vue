@@ -360,8 +360,8 @@ export default {
         message: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
-        inputAttrs: { type: 'text', value: this.book_title },
-        onConfirm: (value) => this.book_title = value,
+        inputAttrs: { type: 'text', value: this.book_title, required: false },
+        onConfirm: value => this.book_title = value || "詰将棋タイムアタック用ストップウォッチ",
       })
     },
 
@@ -606,15 +606,15 @@ export default {
     },
 
     data_restore_from_hash(hash) {
-      this.current_track  = hash.current_track || 1
-      this.lap_counter    = hash.lap_counter || 0
-      this.rows           = hash.rows || []
-      this.quest_text     = hash.quest_text || ""
-      this.format_index   = (hash.format_index != null) ? hash.format_index : 0,
-      this.generate_max   = hash.generate_max || 200
-      this.drop_seconds   = hash.drop_seconds || 60
-      this.book_title     = hash.book_title || "詰将棋用ストップウォッチ"
-      this.timeout_sec = hash.timeout_sec || 0
+      this.current_track     = hash.current_track || 1
+      this.lap_counter       = hash.lap_counter || 0
+      this.rows              = hash.rows || []
+      this.quest_text        = hash.quest_text || ""
+      this.format_index      = (hash.format_index != null) ? hash.format_index : 0,
+      this.generate_max      = hash.generate_max || 200
+      this.drop_seconds      = hash.drop_seconds || 60
+      this.book_title        = hash.book_title || "詰将棋タイムアタック用ストップウォッチ"
+      this.timeout_sec       = hash.timeout_sec || 0
       this.total_timeout_min = hash.total_timeout_min || 0
     },
 
@@ -677,15 +677,15 @@ export default {
   },
 
   watch: {
-    generate_max()  { this.data_save_to_local_storage() },
-    current_track() { this.data_save_to_local_storage() },
-    quest_text()    { this.data_save_to_local_storage() },
-    format_index()  { this.data_save_to_local_storage() },
-    drop_seconds()  { this.data_save_to_local_storage() },
-    book_title()    { this.data_save_to_local_storage() },
-    timeout_sec()   { this.data_save_to_local_storage() },
-    total_timeout_min()   { this.data_save_to_local_storage() },
-    rows:           { handler() { this.data_save_to_local_storage() }, deep: true, },
+    generate_max()      { this.data_save_to_local_storage() },
+    current_track()     { this.data_save_to_local_storage() },
+    quest_text()        { this.data_save_to_local_storage() },
+    format_index()      { this.data_save_to_local_storage() },
+    drop_seconds()      { this.data_save_to_local_storage() },
+    book_title()        { this.data_save_to_local_storage() },
+    timeout_sec()       { this.data_save_to_local_storage() },
+    total_timeout_min() { this.data_save_to_local_storage() },
+    rows:               { deep: true, handler() { this.data_save_to_local_storage() }, },
 
     current_min(v) {
       if (this.mode === "playing") {
@@ -870,14 +870,14 @@ export default {
 
     save_hash() {
       return {
-        current_track:  this.current_track,
-        lap_counter:    this.lap_counter,
-        rows:           this.rows,
-        quest_text:     this.quest_text,
-        format_index:   this.format_index,
-        book_title:     this.book_title,
-        timeout_sec:    this.timeout_sec,
-        total_timeout_min:    this.total_timeout_min,
+        current_track:     this.current_track,
+        lap_counter:       this.lap_counter,
+        rows:              this.rows,
+        quest_text:        this.quest_text,
+        format_index:      this.format_index,
+        book_title:        this.book_title,
+        timeout_sec:       this.timeout_sec,
+        total_timeout_min: this.total_timeout_min,
       }
     },
 
