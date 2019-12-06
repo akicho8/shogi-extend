@@ -11,6 +11,7 @@
         :sound_effect="true"
         :controller_show="true"
         :human_side_key="'both'"
+        :vlayout="true"
       )
 </template>
 
