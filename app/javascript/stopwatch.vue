@@ -924,7 +924,7 @@ export default {
       out += this.summary
 
       _.forIn(this.o_group_by_min, (rows, key) => {
-        if (key == 0) {
+        if (key === 0 && false) {
           out += "\n※" + this.human_minute(key) + "は省略\n"
         } else {
           out += "\n"
@@ -962,7 +962,7 @@ export default {
       let out = ""
       out += this.summary
       _.forIn(this.o_group_by_min, (rows, key) => {
-        if (key == 0) {
+        if (key === 0) {
           out += "\n※" + this.human_minute(key) + "は省略\n"
         } else {
           out += "\n"
