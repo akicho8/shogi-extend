@@ -22,7 +22,7 @@
   / hr
 
   .columns
-    .column.is-half
+    .column.is-two-thirds
       = form_with(model: [ns_prefix, current_record], html: {"@submit": "input_text_storage_clear"}) do |form|
         = render partial: "error_messages", locals: {form: form}
         = render partial: "form", locals: {form: form}
@@ -54,7 +54,7 @@
                 b-tab-item(:label="e.name")
                   small
                     pre.pre-wrap
-                      a.is-pulled-right.clipboard_copy(@click.stop.prevent="kifu_copy(e)")
+                      a.is-pulled-right.clipboard_copy(@click.stop.prevent="kifu_copy_to_clipboard(e)")
                         b-tooltip(label="クリップボードにコピー" position="is-left" size="is-small")
                           b-icon(icon="clipboard-outline")
                       | {{e.value}}

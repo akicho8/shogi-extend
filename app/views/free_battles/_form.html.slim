@@ -2,10 +2,10 @@
   / 「テキスト入力」の方がタブで隠れている状態で post すると params[:kifu_body] に含まれないため隠しパラメータとしてかわりに hidden_kifu_body が送られるようにしている
   = form.hidden_field(:hidden_kifu_body, "v-model": "input_text")
 
-  b-tabs.input_method_tabs.is_lr_paddingless(type="" v-model="input_active_tab" expanded)
+  b-tabs.input_method_tabs.is_lr_paddingless(type="" v-model="input_tab_index" expanded)
     b-tab-item(label="操作入力")
-      = render partial: "form_shogi_player", locals: { form: form }
-
+      .field
+        = render partial: "form_shogi_player", locals: { form: form }
       .field
         .iikanjino_yoko
           b-tooltip(label="入力中の棋譜を複製して新しいタブで開く")
@@ -13,8 +13,6 @@
               b-icon(icon="content-copy" size="is-small")
           b-tooltip(label="局面編集モードに切り替える(主に詰将棋作成用)")
             b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 編集
-          b-tooltip(label="指し手をテキスト入力の方に反映しない(※保存されないので注意)")
-            b-switch(v-model="auto_copy_to_input_text_disable_p" size="is-small" type="is-danger") 非反映
 
     b-tab-item(label="テキスト入力")
       .control
@@ -25,11 +23,11 @@
         .is-size-7
           | 変換後の棋譜から
           | &nbsp;
-          a.is-small(@click="copy_to_input_text('kif')") KIF
+          a.is-small(@click="input_text_set('kif')") KIF
           | &nbsp;
-          a.is-small(@click="copy_to_input_text('ki2')") KI2
+          a.is-small(@click="input_text_set('ki2')") KI2
           | &nbsp;
-          a.is-small(@click="copy_to_input_text('bod')") BOD
+          a.is-small(@click="input_text_set('bod')") BOD
           | &nbsp;
           | を逆にコピー
           | &nbsp;

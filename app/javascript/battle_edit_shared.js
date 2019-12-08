@@ -2,127 +2,125 @@ import _ from "lodash"
 
 const TEXT_INPUT_UPDATE_DELAY = 0.5 // プレビューするまでの遅延時間(秒)
 
+const TAB_NAMES = [
+  "操作入力",
+  "テキスト入力",
+]
+
 export default {
   data() {
     return {
+      // フォーム用
       record: this.$options.record_attributes,
 
-      input_text: null,                         // 入力された棋譜
-      auto_copy_to_input_text_disable_p: false, // true: 指し手をテキスト入力の方に反映しないようにする
-      input_active_tab: 0,                      // 入力タブ切り替え(テキスト入力で開始したければ1にする)
-      output_kifs: this.$options.output_kifs,   // 変換後の棋譜
-      input_sfen: null,                         // 操作入力に渡す棋譜
-      output_active_tab: 0,                     // 変換後の棋譜の切り替え
-      last_action: null,                        // 「操作入力」と「テキスト入力」のどちらで最後に入力したかわかる
-      default_start_turn: null,                 // 最初の start_turn の指定
-      run_mode: this.$options.run_mode,
+      // 左側
+      input_tab_index: 0,       // 入力タブ切り替え(テキスト入力で開始したければ1にする)
+      input_text: null,         // 入力された棋譜
+      board_sfen: null,         // 操作入力に渡す棋譜
+      default_start_turn: null, // 最初の start_turn の指定
+      run_mode: "play_mode",    // 操作入力の最初のモード
 
-      tab_names: [
-        "操作入力",
-        "テキスト入力",
-      ],
+      // 右側
+      output_active_tab: 0,                   // 変換後の棋譜の切り替え
+      output_kifs: this.$options.output_kifs, // 変換後の棋譜
     }
   },
 
   created() {
-    this.input_sfen = this.record.sfen_body
+    this.board_sfen = this.record.sfen_body
 
     // これは最初だけなので computed にしてはいけない
     this.default_start_turn = this.record.start_turn
     if (this.default_start_turn === null) {
-      this.default_start_turn = -1
+      this.default_start_turn = 65536
     }
   },
 
   mounted() {
-    this.input_text = this.record.kifu_body // 元の棋譜を復元
-    if (!this.input_text) {
-      this.input_text = localStorage.getItem("free_battle.input_text")
-    }
+    this.input_text = this.record.kifu_body || localStorage.getItem("free_battle.input_text")
     this.input_text_focus()
   },
 
   watch: {
-    input_text() {
-      this.preview_update_from_input_text()
+    input_text(new_val, old_val) {
+      if (old_val) {
+        this.delayed_kifu_convert_by()
+      } else {
+        // 最初の設定の場合は即座にSFENに変換して盤に反映する
+        this.kifu_convert_by(this.input_text)
+      }
       localStorage.setItem("free_battle.input_text", this.input_text)
     },
   },
 
   computed: {
-    input_active_tab_name() {
-      return this.tab_names[this.input_active_tab]
+    input_tab_name() {
+      return TAB_NAMES[this.input_tab_index]
     },
 
-    text_input_mode_p() {
-      return this.input_active_tab_name === "テキスト入力"
+    text_mode_p() {
+      return this.input_tab_name === "テキスト入力"
+    },
+
+    board_mode_p() {
+      return this.input_tab_name === "操作入力"
     },
   },
 
   methods: {
-    // フォーム側に反映する(フォームの方は readonly にしてある、とういか hidden_field でよくね？)
-    // 連動すると使いにくいのでやめた
-    seek_to(v) {
-      // this.record.start_turn = v
-    },
+    // テキスト入力
+    delayed_kifu_convert_by: _.debounce(function() { this.kifu_convert_by(this.input_text) }, 1000 * TEXT_INPUT_UPDATE_DELAY),
 
-    // テキスト入力の場合のみ入力が終わるまで少し待つ
-    preview_update_from_input_text: _.debounce(function() {
-      this.last_action = "テキスト入力"
-      this.kifu_convert(this.input_text)
-    }, 1000 * TEXT_INPUT_UPDATE_DELAY),
-
-    // 操作入力の場合は即時反映
-    play_mode_long_sfen_set(play_mode_long_sfen) {
-      this.last_action = "操作入力"
-      this.default_start_turn = 65536 // 操作入力したときはそれが最後になるので、大きな値を指定することで最大まで持っていく。-1 だと 0 に補正されて 0 に戻る。途中からの start_turn の -1 は意味ない
-      this.kifu_convert(play_mode_long_sfen)
+    // 操作入力
+    play_mode_long_sfen_set(str) {
+      this.kifu_convert_by(str)
     },
 
     // 操作入力の場合は即時反映
-    kifu_convert(input_any_kifu) {
+    kifu_convert_by(str) {
       const params = new URLSearchParams()
-      params.set("input_any_kifu", input_any_kifu)
+      params.set("input_any_kifu", str)
+
       this.$http.post(this.$options.post_path, params).then(response => {
-        if (response.data.error_message) {
-          this.$buefy.toast.open({message: response.data.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+        const e = response.data
+        if (e.error_message) {
+          this.$buefy.toast.open({message: e.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
         }
-        if (response.data.output_kifs) {
-          this.output_kifs = response.data.output_kifs
-          this.record.turn_max = response.data.turn_max
-
-          // 設定されていないときだけ指定する
-          if (this.record.start_turn === null) {
-            this.record.start_turn = this.record.turn_max
+        if (e.output_kifs) {
+          this.output_kifs = e.output_kifs
+          this.turn_max_set(e)
+          if (this.text_mode_p) {
+            this.board_sfen = e.output_kifs.sfen.value
           }
-
-          // テキスト編集したとき手数が範囲外なら調整する
-          if (this.record.start_turn > this.record.turn_max) {
-            this.record.start_turn = this.record.turn_max
-          }
-
-          // if (this.input_active_tab_name !== "操作入力") {
-          // 操作入力の場合は、入力内容が先祖返りするのを防ぐために、いまが「操作入力入力」でない場合のみ上書きするようにしている
-          if (this.last_action === null || this.last_action !== "操作入力") {
-            this.input_sfen = response.data.output_kifs["sfen"]["value"]
-          }
-          // }
-          if (!this.auto_copy_to_input_text_disable_p) {
-            // テキスト入力時は、入力内容が先祖返りするのを防ぐために、いまが「テキスト入力」でない場合のみ上書きするようにしている
-            if (this.input_active_tab_name !== "テキスト入力") {
-              this.copy_to_input_text("kif")
-            }
+          if (this.board_mode_p) {
+            this.input_text_set("kif")
           }
         }
       }).catch(error => {
-        console.table([error.response])
+        console.table([error.resp])
         this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
 
-    copy_to_input_text(key) {
+    // 手数関連を設定
+    // フォームも更新する
+    turn_max_set(e) {
+      this.record.turn_max = e.turn_max
+
+      // 設定されていないときだけ指定する
+      if (this.record.start_turn === null) {
+        this.record.start_turn = this.record.turn_max
+      }
+
+      // テキスト編集したとき手数が範囲外なら調整する
+      if (this.record.start_turn > this.record.turn_max) {
+        this.record.start_turn = this.record.turn_max
+      }
+    },
+
+    input_text_set(key) {
       if (this.output_kifs) {
-        this.input_text = this.output_kifs[key]["value"]
+        this.input_text = this.output_kifs[key].value
       }
     },
 
@@ -143,16 +141,16 @@ export default {
       localStorage.removeItem("free_battle.input_text")
     },
 
-    kifu_copy(e) {
+    kifu_copy_to_clipboard(e) {
       if (this.output_kifs) {
-        this.clipboard_copy({text: this.output_kifs[e.key]["value"]})
+        this.clipboard_copy({text: this.output_kifs[e.key].value})
       }
     },
 
     kifu_clone_and_new_tab_oepn_handle() {
       if (this.output_kifs) {
         // const sfen = this.output_kifs["sfen"]["value"]
-        const sfen = encodeURIComponent(this.input_sfen) // + をエスケープしないと空白になってしまうため
+        const sfen = encodeURIComponent(this.board_sfen) // + をエスケープしないと空白になってしまうため
         const key = encodeURIComponent("free_battle[kifu_body]")
         const url = `${this.$options.new_path}?${key}=${sfen}`
         window.open(url, "_blank")

@@ -564,7 +564,6 @@ module BattleControllerSharedMethods
         output_kifs: output_kifs,
         new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
         saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
-        run_mode: "play_mode",
       }
     end
 
