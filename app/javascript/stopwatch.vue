@@ -18,9 +18,6 @@
           b-dropdown-item
             b-switch(v-model="browser_setting.sound_silent_p")
               | ミュート (スマホ電池節約用)
-        .helper_button
-          b-tooltip(label="使い方")
-            b-button(@click="rule_display" icon-right="help")
         .lap_time
           span.quest_digit(@click="track_input_dialog")
             | {{quest_name(new_quest)}}
@@ -199,43 +196,6 @@ export default {
   },
 
   methods: {
-    rule_display() {
-      const rule_dialog = this.$buefy.dialog.alert({
-        title: "使い方",
-        message: `
-          <div class="content is-size-7">
-            <h5>基本</h5>
-            <ol>
-              <li>正解で「リターン」不正解で「x キー」を押す想定</li>
-              <li>問題番号をタッチしても値を変更できる</li>
-              <li>時間をタッチすると時間を変更できる (2分30秒なら2.5と入力)</li>
-              <li>ブラウザを開き直すと直近の問題の開始時の状態から始まる</li>
-            </ol>
-            <br>
-            <h5>使いこなす</h5>
-            <ol>
-              <li>左上のメニューから不正解の問題だけを選択できる</li>
-              <li>他の端末で途中から再開したいときは下にある「パーマリンク」のURLを持っていく</li>
-            </ol>
-            <br>
-            <h5>履歴を使いこなす</h5>
-            <ol>
-              <li>開始と停止のタイミングで現在の状態を履歴に保存している</li>
-              <li>履歴をクリックするとその時間の状態に戻る</li>
-              <li>操作を間違えてリセットしてしまったときや「不正解だけ再テスト」のあとで前に戻りたくなったとき使う</li>
-              <li>タイトルをクリックすると変更できる</li>
-              <li>タイトルは履歴に保存するときに利用している</li>
-            </ol>
-          </div>`,
-        confirmText: "わかった",
-        canCancel: ["outside", "escape"],
-        type: "is-info",
-        hasIcon: true,
-        onConfirm: () => { },
-        onCancel:  () => { },
-      })
-    },
-
     log_display() {
       this.log_modal = this.$buefy.modal.open({
         parent: this,
@@ -995,10 +955,6 @@ export default {
       position: absolute
       top: 0.5rem
       left: 0.5rem
-    .helper_button
-      position: absolute
-      top: 0.5rem
-      right: 0.5rem
 
     .lap_time
       margin-top: 1.2rem
