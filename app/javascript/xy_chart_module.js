@@ -1,3 +1,5 @@
+// 下のチャート関連
+
 import dayjs from "dayjs"
 
 export default {
@@ -10,18 +12,18 @@ export default {
 
   watch: {
     xy_chart_rule_key() {
-      this.datasets_fetch()
+      this.xy_chart_fetch()
       this.data_save_to_local_storage()
     },
 
     xy_chart_scope_key() {
-      this.datasets_fetch()
+      this.xy_chart_fetch()
       this.data_save_to_local_storage()
     },
   },
 
   methods: {
-    datasets_fetch() {
+    xy_chart_fetch() {
       this.http_get_command(this.$root.$options.xhr_post_path, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
         new Chart(this.$refs.chart_canvas, this.days_chart_js_options(data.chartjs_datasets))
       })

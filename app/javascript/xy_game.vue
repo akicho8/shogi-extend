@@ -134,6 +134,11 @@
           .column
             .has-text-centered
               b-field.is-inline-flex
+                b-button(@click="xy_chart_fetch")
+                  | 更新
+          .column
+            .has-text-centered
+              b-field.is-inline-flex
                 template(v-for="e in XyRuleInfo.values")
                   b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key")
                     | {{e.name}}
@@ -299,6 +304,10 @@ export default {
   },
 
   methods: {
+    rule_display2() {
+      alert(1)
+    },
+
     board_cell_left_click_user_handle(place, event) {
       if (this.mode === "running") {
         if (this.tap_mode) {
@@ -405,7 +414,7 @@ export default {
       this.sp_size = hash.sp_size || "default"
       this.sp_piece_variant = hash.sp_piece_variant || "a"
 
-      // 他のパラメータを使ってリクエスト(datasets_fetch)が走るので最後
+      // 他のパラメータを使ってリクエスト(xy_chart_fetch)が走るので最後
       this.xy_chart_rule_key = hash.xy_chart_rule_key
       if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
         this.xy_chart_rule_key = this.default_xy_rule_key
