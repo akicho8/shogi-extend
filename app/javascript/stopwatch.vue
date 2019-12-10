@@ -658,7 +658,7 @@ export default {
       if (this.total_timeout_p) {
         const message = `${this.total_timeout_min}分たったので終了です`
         this.safe_talk(message)
-        this.$buefy.dialog.alert({title: "おわり", message: message})
+        this.$buefy.dialog.alert({title: "おわり", message: message, trapFocus: true})
         this.stop_handle()
       }
       if (this.timeout_p) {

@@ -210,6 +210,7 @@ window.ColosseumBattleShow = Vue.extend({
                 hasIcon: true,
                 icon: "trophy",
                 iconPack: "mdi",
+                trapFocus: true,
               })
               this.talk("勝ちました")
             } else {
@@ -221,6 +222,7 @@ window.ColosseumBattleShow = Vue.extend({
                   title: "敗北",
                   message: "負けました",
                   type: "is-primary",
+                  trapFocus: true,
                 })
                 this.talk("負けました")
               }
@@ -240,6 +242,7 @@ window.ColosseumBattleShow = Vue.extend({
         type: "is-primary",
         title: "結果",
         message: message,
+        trapFocus: true,
       })
       this.talk(message)
     },

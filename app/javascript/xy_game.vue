@@ -362,6 +362,7 @@ export default {
         canCancel: ["outside", "escape"],
         type: "is-info",
         hasIcon: true,
+        trapFocus: true,
         onConfirm: () => { this.talk_stop() },
         onCancel:  () => { this.talk_stop() },
       })
