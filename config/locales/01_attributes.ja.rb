@@ -22,6 +22,8 @@
       image_turn: "OGP画像の局面",
       critical_turn: "開戦",
       meta_info: "棋譜ヘッダー",
+      saturn_key: "公開範囲",
+      sfen_body: "SFEN形式棋譜",
     },
   },
 }

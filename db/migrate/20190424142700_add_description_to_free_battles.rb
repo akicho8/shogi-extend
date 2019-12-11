@@ -20,8 +20,8 @@
 # | description       | 説明               | text(65535)  | NOT NULL    |                                   |       |
 # | start_turn        | 開始局面           | integer(4)   |             |                                   |       |
 # | critical_turn     | 開戦               | integer(4)   |             |                                   | E     |
-# | saturn_key        | Saturn key         | string(255)  | NOT NULL    |                                   | F     |
-# | sfen_body         | Sfen body          | string(8192) |             |                                   |       |
+# | saturn_key        | 公開範囲           | string(255)  | NOT NULL    |                                   | F     |
+# | sfen_body         | SFEN形式棋譜       | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
