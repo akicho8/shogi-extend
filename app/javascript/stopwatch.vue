@@ -72,20 +72,23 @@
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
-      .log_button_container
-        //- b-field(grouped)
-        //-   b-field(label="タイムアウト 秒" expanded)
-        //-     b-slider(size="is-small" :min="0" :max="60" :step="5" ticks :custom-formatter="v => v + '秒'" v-model="sec_val")
-        //-   b-field(label="分" expanded)
-        //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
-        //-   b-field(label="分" expanded)
-        b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
-          b-numberinput(v-model.number="timeout_sec" :min="0" step="5" controls-position="compact" :expanded="true" size="is-small")
-        b-field(label="全体の制限時間(分)" expanded custom-class="is-small")
-          b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
+      //- b-field(grouped)
+      //-   b-field(label="タイムアウト 秒" expanded)
+      //-     b-slider(size="is-small" :min="0" :max="60" :step="5" ticks :custom-formatter="v => v + '秒'" v-model="sec_val")
+      //-   b-field(label="分" expanded)
+      //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
+      //-   b-field(label="分" expanded)
+      .columns
+        .column
+          b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
+            b-numberinput(v-model.number="timeout_sec" :min="0" step="5" controls-position="compact" :expanded="true" size="is-small")
+        .column
+          b-field(label="全体の制限時間(分)" expanded custom-class="is-small")
+            b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
 
-      .log_button_container
-        b-button(@click="log_display") 履歴
+      .columns
+        .column
+          b-button(@click="log_display") 履歴
 
     .column
       b-tabs.result_body(type="" expanded v-model="format_index")
@@ -103,17 +106,6 @@
             b-icon(icon="twitter" size="is-small")
             | &nbsp;
             | ツイート
-
-  .columns
-    .column
-      .box
-        .columns
-          .column
-            b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンクです")
-              a.button.is-text(:href="permalink_url") {{book_title}}
-          .column
-            b-field(label="モバイル用パーマリンク" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
-              b-input(:value="permalink_url")
 
   .columns
     .column
@@ -138,6 +130,17 @@
             tr
               th t
               td 最後の解答の正誤を反転する
+
+  .columns
+    .column
+      .box
+        .columns
+          .column
+            b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンクです")
+              a.button.is-text(:href="permalink_url") {{book_title}}
+          .column
+            b-field(label="モバイル用パーマリンク" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
+              b-input(:value="permalink_url")
 
 </template>
 
@@ -993,9 +996,6 @@ export default {
       white-space: pre-wrap
       line-height: 105%
       font-size: 0.8rem
-
-  .log_button_container
-    margin-top: 1.2em
 
 .stopwatch_log_dialog
   table
