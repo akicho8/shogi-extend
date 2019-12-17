@@ -2,7 +2,7 @@ class CustomEvaluator < Bioshogi::EvaluatorBase
   private
 
   def soldier_score(e)
-    w = e.relative_weight
+    w = e.abs_weight
 
     # Rails.logger.debug(params)
 
@@ -35,7 +35,7 @@ class CustomEvaluator < Bioshogi::EvaluatorBase
     # s = v.weight_list[e.bottom_spaces]
     # w += s
 
-    w * e.location.value_sign
+    w
   end
 
   private
