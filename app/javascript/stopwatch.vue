@@ -456,15 +456,22 @@ export default {
 
     ja_time_format(seconds) {
       let format = null
-      if ((seconds / 60) >= 60) {
-        // if (seconds % 60 > 0) {
-        //   seconds += 60         // 秒を切り上げして分+1
-        // }
-        // format = "HH:mm"
-        format = "h時間m分s秒"
-      } else {
-        // format = "mm:ss"
+      const min = seconds / 60
+      const sec = seconds % 60
+      if (min >= 60) {
+        if (false) {
+          // 秒を切り上げして分+1
+          if (sec > 0) {
+            seconds += 60
+          }
+          format = "h時間m分"
+        } else {
+          format = "h時間m分s秒"
+        }
+      } else if (min >= 1) {
         format = "m分s秒"
+      } else {
+        format = "s秒"
       }
       return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
@@ -812,15 +819,16 @@ export default {
     human_avg() {
       if (this.rows.length >= 1) {
         let v = null
-        if (this.avg < 60) {
+        // 10秒未満なら小数付き
+        if (this.avg < 10) {
           v = Math.round(this.avg * 100) / 100
-          // v = `${v}秒`
-          // console.log(this.avg)
-          // v = Math.ceil(this.avg)
           v = `${v}秒`
-          // Math.round(123.456789 * 100) / 100
         } else {
-          v = dayjs().startOf("year").set("seconds", this.avg).format("m分s秒")
+          let format = "m分s秒"
+          if (this.avg < 60) {
+            format = "s秒"
+          }
+          v = dayjs().startOf("year").set("seconds", this.avg).format(format)
         }
         return `平均${v}`
       }
