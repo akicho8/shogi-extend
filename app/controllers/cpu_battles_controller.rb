@@ -64,7 +64,7 @@ class CpuBattlesController < ApplicationController
 
       info = Bioshogi::Parser.parse(v)
       begin
-        mediator = info.mediator
+        @mediator = info.mediator
       rescue => error
         lines = error.message.lines
         message = [
@@ -87,14 +87,14 @@ class CpuBattlesController < ApplicationController
       end
 
       unless Rails.env.production?
-        Rails.logger.debug(mediator)
+        Rails.logger.debug(@mediator)
       end
 
-      yomiage_for(mediator) # 人間の手の読み上げ
+      yomiage_process # 人間の手の読み上げ
 
-      evaluation_value_generation(mediator)
+      evaluation_value_generation
 
-      if executor = mediator.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
+      if executor = @mediator.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
         captured_soldier = executor.captured_soldier
         if captured_soldier
           if captured_soldier.piece.key == :king
@@ -106,7 +106,7 @@ class CpuBattlesController < ApplicationController
 
       unless @hand
         if current_cpu_brain_info.mate_danger_check
-          @hand = mediator.current_player.mate_move_hands.first
+          @hand = @mediator.current_player.mate_move_hands.first
 
           # 玉を取らない場合
           if false
@@ -120,7 +120,7 @@ class CpuBattlesController < ApplicationController
 
       unless @hand
         if current_cpu_brain_info.depth_max_range
-          brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator, cpu_strategy_key: cpu_strategy_key_considering_all_round)
+          brain = @mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator, cpu_strategy_key: cpu_strategy_key_considering_all_round)
           time_limit = current_cpu_brain_info.time_limit
 
           begin
@@ -158,9 +158,9 @@ class CpuBattlesController < ApplicationController
       end
 
       unless @hand
-        hands = mediator.current_player.normal_all_hands.to_a
+        hands = @mediator.current_player.normal_all_hands.to_a
         if current_cpu_brain_info.legal_only
-          hands = hands.find_all { |e| e.legal_move?(mediator) }
+          hands = hands.find_all { |e| e.legal_move?(@mediator) }
         end
         @hand = hands.sample
       end
@@ -171,13 +171,13 @@ class CpuBattlesController < ApplicationController
       end
 
       # CPUの手を指す
-      mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
-      @current_sfen = mediator.to_sfen
-      evaluation_value_generation(mediator)
+      @mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
+      @current_sfen = @mediator.to_sfen
+      evaluation_value_generation
 
-      yomiage_for(mediator) # CPUの手の読み上げる
+      yomiage_process # CPUの手の読み上げる
 
-      captured_soldier = mediator.opponent_player.executor.captured_soldier
+      captured_soldier = @mediator.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
           final_decision(judge_key: :lose, message: "玉を取られました")
@@ -187,7 +187,7 @@ class CpuBattlesController < ApplicationController
 
       if current_cpu_brain_info.mate_danger_check
         # 人間側の合法手が生成できなければ人間側の負け
-        if mediator.current_player.legal_all_hands.none?
+        if @mediator.current_player.legal_all_hands.none?
           final_decision(judge_key: :lose, message: "CPUの勝ちです")
           return
         end
@@ -228,7 +228,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_preset_key
-    params[:cpu_preset_key].presence || CpuPresetInfo.to_a.last&.key
+    params[:cpu_preset_key].presence || CpuPresetInfo.to_a.first&.key
   end
 
   def current_cpu_brain_info
@@ -254,14 +254,14 @@ class CpuBattlesController < ApplicationController
     ].compact.collect { |e| "[#{e.name}]" }.join
   end
 
-  def evaluation_value_generation(mediator)
-    @score_list << {x: mediator.turn_info.turn_max, y: mediator.player_at(:black).evaluator.score}
+  def evaluation_value_generation
+    @score_list << {x: @mediator.turn_info.turn_max, y: @mediator.player_at(:black).evaluator.score}
   end
 
   # 最後の手があれば読み上げる
-  def yomiage_for(mediator)
+  def yomiage_process
     if params[:yomiage_mode]
-      if last = mediator.hand_logs.last
+      if last = @mediator.hand_logs.last
         # 方法1
         if false
           last.skill_set.each do |e|
@@ -270,7 +270,7 @@ class CpuBattlesController < ApplicationController
             end
           end
         end
-        
+
         # 方法2
         if true
           if names = last.skill_set.flat_map { |e| e.collect(&:name) }.presence
@@ -279,7 +279,7 @@ class CpuBattlesController < ApplicationController
             names.each { |e| toast_message(e) }
           end
         end
-        
+
         if Rails.env.development? && false
           talk(last.yomiage, rate: TALK_PITCH)
         end
@@ -295,6 +295,12 @@ class CpuBattlesController < ApplicationController
     unless Rails.env.production?
       response[:candidate_rows] = candidate_rows     # b-table 用
       response[:candidate_report] = candidate_report # そのまま表示できるテキスト
+      if @mediator
+        response[:pressure_info] = [
+          @mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }.to_t,
+          *@mediator.players.collect { |e| e.pressure_report.to_t },
+        ].join
+      end
     end
     response
   end

@@ -96,15 +96,21 @@
         template(v-if="development_p")
           | {{chart_config.data.datasets[0].data}}
 
-  .columns(v-if="development_p && mode === 'playing'")
-    .column
-      template(v-if="candidate_rows")
-        .box
-          b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
-
-      template(v-if="candidate_report")
-        pre.box.is-size-7.candidate_report
-          | {{candidate_report}}
+  template(v-if="development_p && mode === 'playing'")
+    .columns
+      .column
+        template(v-if="pressure_info")
+          pre.box.is-size-7.table_format_area
+            | {{pressure_info}}
+      .column
+        template(v-if="candidate_report")
+          pre.box.is-size-7.table_format_area
+            | {{candidate_report}}
+    .columns(v-if="development_p && mode === 'playing'")
+      .column.is-half
+        template(v-if="candidate_rows")
+          .box
+            b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 
 </template>
 
@@ -145,6 +151,7 @@ export default {
 
       // 候補手
       candidate_report: null, // テキスト
+      pressure_info: null, // テキスト
       candidate_rows: null,   // 配列
 
       // shogi-player 用パラメータ
@@ -264,6 +271,7 @@ export default {
 
       // 候補手クリア
       this.candidate_report = null
+      this.pressure_info = null
       this.candidate_rows = null
 
       // 評価グラフ
@@ -400,6 +408,7 @@ export default {
         this.score_list_reflection(e)
 
         this.candidate_report = e["candidate_report"]
+        this.pressure_info = e["pressure_info"]
         this.candidate_rows = e["candidate_rows"]
 
         if (e["judge_key"]) {
@@ -462,6 +471,6 @@ export default {
 @import "./bulma_init.scss"
 
 .cpu_battle
-  .candidate_report
+  .table_format_area
     line-height: 100%
 </style>
