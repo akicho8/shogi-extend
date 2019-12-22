@@ -236,7 +236,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_brain_key
-    params[:cpu_brain_key].presence || (Rails.env.development? ? :level3 ? :level4)
+    params[:cpu_brain_key].presence || (Rails.env.development? ? :level3 : :level4)
   end
 
   private
