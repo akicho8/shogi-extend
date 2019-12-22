@@ -11,9 +11,9 @@ module Colosseum
       *(
         if !Rails.env.production?
           [
-            { key: :level7, name: "最大1分考える", depth_max_range: 2..2, time_limit: [60],    legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して3手先まで読む
-            { key: :level8, name: "3分考える",     depth_max_range: 2..5, time_limit: [60*3],  legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
-            { key: :level9, name: "30分考える",    depth_max_range: 2..5, time_limit: [60*30], legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
+            { key: :level7, name: "最大1分考える",          depth_max_range: 2..2, time_limit: [60],    legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して3手先まで読む
+            { key: :level8, name: "3分考える",              depth_max_range: 2..5, time_limit: [60*3],  legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
+            { key: :level9, name: "30分考える",             depth_max_range: 2..5, time_limit: [60*30], legal_only: true,  mate_danger_check: true,  light: false, }, # 長考して最大6手先まで読む
           ]
         end
         )
