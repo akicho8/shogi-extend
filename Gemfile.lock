@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: dfe327178cfd8f13645473a2f81a245f94838146
+  revision: 45402a98be425a21e6eadf1543f409effa820598
   specs:
     bioshogi (0.0.1)
       actionview
@@ -437,7 +437,7 @@ GEM
     timecop (0.9.1)
     tree_support (0.1.8)
       activesupport
-    tzinfo (1.2.5)
+    tzinfo (1.2.6)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)

@@ -86,6 +86,8 @@ class CpuBattlesController < ApplicationController
         return
       end
 
+      # Rails.logger.debug(@mediator.turn_info.inspect)
+
       unless Rails.env.production?
         Rails.logger.debug(@mediator)
       end
@@ -120,7 +122,7 @@ class CpuBattlesController < ApplicationController
 
       unless @hand
         if current_cpu_brain_info.depth_max_range
-          brain = @mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: CustomEvaluator, cpu_strategy_key: cpu_strategy_key_considering_all_round)
+          brain = @mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, **evaluator_params)
           time_limit = current_cpu_brain_info.time_limit
 
           begin
@@ -299,6 +301,7 @@ class CpuBattlesController < ApplicationController
       response[:candidate_report] = candidate_report # そのまま表示できるテキスト
       if @mediator
         response[:pressure_info] = [
+          @mediator.current_player.evaluator(evaluator_params).score_compute_report.to_t,
           @mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }.to_t,
           *@mediator.players.collect { |e| e.pressure_report.to_t },
         ].join
@@ -324,6 +327,13 @@ class CpuBattlesController < ApplicationController
         }
       end
     }.call
+  end
+
+  def evaluator_params
+    {
+      evaluator_class: CustomEvaluator,
+      cpu_strategy_key: cpu_strategy_key_considering_all_round,
+    }
   end
 
   class CpuBrainInfo
