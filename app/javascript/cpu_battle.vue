@@ -37,7 +37,7 @@
           :sfen_show="false"
           :slider_show="development_p || mode === 'standby'"
           :controller_show="development_p || mode === 'standby'"
-          :size="'large'"
+          :size="'medium'"
           :sound_effect="true"
           :volume="$root.$options.volume"
           :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
@@ -91,17 +91,28 @@
         b-message(size="is-small")
           | CPU: {{judge_group.lose}}勝 &nbsp;&nbsp; 人間: {{judge_group.win}}勝
 
+      template(v-if="js_pressure_hash")
+        .box
+          small
+            b 終盤度
+          template(v-for="e in Location.values")
+            .label_with_progress
+              | {{e.name}}
+              progress.is-danger(:value="js_pressure_hash[e.key] * 100" :max="100")
+          template(v-if="development_p")
+            | {{js_pressure_hash}}
+
       .box
         canvas#chart_canvas(ref="chart_canvas")
-        template(v-if="development_p")
+        template(v-if="development_p && false")
           | {{chart_config.data.datasets[0].data}}
 
   template(v-if="development_p && mode === 'playing'")
     .columns
       .column
-        template(v-if="pressure_info")
+        template(v-if="think_text")
           pre.box.is-size-7.table_format_area
-            | {{pressure_info}}
+            | {{think_text}}
       .column
         template(v-if="candidate_report")
           pre.box.is-size-7.table_format_area
@@ -116,12 +127,15 @@
 
 <script>
 import _ from "lodash"
+
+// static
 import CpuBrainInfo from "cpu_brain_info"
 import CpuStrategyInfo from "cpu_strategy_info"
 import CpuPresetInfo from "cpu_preset_info"
 import BoardStyleInfo from "board_style_info"
 import PresetInfo from "shogi-player/src/preset_info.js"
-import Location from "shogi-player/src/location"
+import Location from "shogi-player/src/location.js"
+
 import cpu_battle_force_chart from "./cpu_battle_force_chart.js"
 
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
@@ -151,8 +165,11 @@ export default {
 
       // 候補手
       candidate_report: null, // テキスト
-      pressure_info: null, // テキスト
       candidate_rows: null,   // 配列
+
+      // デバッグ用
+      js_pressure_hash: null,       // 終盤度
+      think_text: null,       // 思考内容テキスト
 
       // shogi-player 用パラメータ
       current_sfen: null,                       // 譜面
@@ -192,6 +209,7 @@ export default {
     CpuStrategyInfo() { return CpuStrategyInfo },
     CpuPresetInfo()   { return CpuPresetInfo   },
     BoardStyleInfo()  { return BoardStyleInfo  },
+    Location()        { return Location        },
 
     board_style_info()  { return BoardStyleInfo.fetch(this.sp_params.board_style_key) },
     cpu_brain_info()    { return CpuBrainInfo.fetch(this.cpu_brain_key)               },
@@ -271,8 +289,9 @@ export default {
 
       // 候補手クリア
       this.candidate_report = null
-      this.pressure_info = null
       this.candidate_rows = null
+      this.think_text = null
+      this.js_pressure_hash = null
 
       // 評価グラフ
       this.chart_reset()
@@ -408,8 +427,9 @@ export default {
         this.score_list_reflection(e)
 
         this.candidate_report = e["candidate_report"]
-        this.pressure_info = e["pressure_info"]
         this.candidate_rows = e["candidate_rows"]
+        this.think_text = e["think_text"]
+        this.js_pressure_hash = e["js_pressure_hash"]
 
         if (e["judge_key"]) {
           this.view_mode_set()
@@ -473,4 +493,11 @@ export default {
 .cpu_battle
   .table_format_area
     line-height: 100%
+
+  .label_with_progress
+    display: flex
+    align-items: center
+    progress
+      width: 100%
+
 </style>
