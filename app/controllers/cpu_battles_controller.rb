@@ -297,9 +297,9 @@ class CpuBattlesController < ApplicationController
       score_list: @score_list,
     }
     response[:candidate_rows] = candidate_rows     # b-table 用
+    response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
     unless Rails.env.production?
       response[:candidate_report] = candidate_report # そのまま表示できるテキスト
-      response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
       # response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => rand(0..1.0)) }
       if @mediator
         response[:think_text] = [
