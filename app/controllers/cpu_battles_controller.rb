@@ -331,11 +331,11 @@ class CpuBattlesController < ApplicationController
       response[:score_list] = @score_list
     end
 
-    if candidate_rows
-      response[:candidate_rows] = candidate_rows     # b-table 用
-    end
+    response[:candidate_rows] = candidate_rows     # 古いままの状態が続かないように必ず設定してビューに渡す (b-table用)
 
-    response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
+    if @mediator
+      response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
+    end
 
     unless Rails.env.production?
       response[:candidate_report] = candidate_report # そのまま表示できるテキスト

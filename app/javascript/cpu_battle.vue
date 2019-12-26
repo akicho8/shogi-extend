@@ -116,8 +116,9 @@
           .buttons
             b-button(@click="candidate_handle" :loading="candidate_processing")
               | 形勢判断
-          .box
-            b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
+          template(v-if="!candidate_processing")
+            .box
+              b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 
   template(v-if="development_p && mode === 'playing'")
     .columns
@@ -451,10 +452,9 @@ export default {
 
         this.score_list_reflection(e)
 
-        if (e["candidate_rows"]) {
-          this.candidate_processing = false
-          this.candidate_rows = e["candidate_rows"]
-        }
+        this.candidate_processing = false
+        this.candidate_rows = e["candidate_rows"]
+
         this.candidate_report = e["candidate_report"]
         this.think_text = e["think_text"]
 
