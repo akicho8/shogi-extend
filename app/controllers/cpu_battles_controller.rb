@@ -56,146 +56,13 @@ class CpuBattlesController < ApplicationController
       return
     end
 
-    if v = params[:kifu_body]
-      @candidate_records = []
-      @current_sfen = v
-      @hand = nil
-      @score_list = []
+    if params[:candidate_sfen]
+      candidate_process
+      return
+    end
 
-      info = Bioshogi::Parser.parse(v)
-      begin
-        @mediator = info.mediator
-      rescue => error
-        lines = error.message.lines
-        message = [
-          "#{lines.first.remove("【反則】")}",
-          # "<br><br>"
-          # "<pre>", lines.drop(1).join, "</pre>",
-          # "<br>",
-          # "<br>",
-          # '<span class="is-size-7 has-text-grey">※一手戻して再開できます</span>',
-        ].join.strip
-
-        # info.move_infos.size - 0
-
-        # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).mediator.to_sfen
-        # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
-        # render json: {error_message: error_message, before_sfen: before_sfen}
-
-        final_decision(judge_key: :lose, irregular: true, message: message)
-        return
-      end
-
-      # Rails.logger.debug(@mediator.turn_info.inspect)
-
-      unless Rails.env.production?
-        Rails.logger.debug(@mediator)
-      end
-
-      yomiage_process # 人間の手の読み上げ
-
-      evaluation_value_generation
-
-      if executor = @mediator.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
-        captured_soldier = executor.captured_soldier
-        if captured_soldier
-          if captured_soldier.piece.key == :king
-            final_decision(judge_key: :win, message: "玉を取って勝ちました！")
-            return
-          end
-        end
-      end
-
-      unless @hand
-        if current_cpu_brain_info.mate_danger_check
-          @hand = @mediator.current_player.mate_move_hands.first
-
-          # 玉を取らない場合
-          if false
-            if @hand
-              final_decision(judge_key: :lose, message: "王手放置(または自殺手)で負けました")
-              return
-            end
-          end
-        end
-      end
-
-      unless @hand
-        if current_cpu_brain_info.depth_max_range
-          brain = @mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, **evaluator_params)
-          time_limit = current_cpu_brain_info.time_limit
-
-          begin
-            @candidate_records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
-          rescue Bioshogi::BrainProcessingHeavy
-            time_limit += 1
-            Rails.logger.info([:retry, {time_limit: time_limit}])
-            retry
-          end
-
-          unless Rails.env.production?
-            Rails.logger.debug(candidate_report)
-          end
-
-          if @candidate_records.empty?
-            final_decision(judge_key: :win, message: "CPUが投了しました")
-            return
-          end
-
-          # いちばん良いのを選択
-          record = @candidate_records.first
-          if record[:score] <= -Bioshogi::INF_MAX
-            final_decision(judge_key: :win, message: "CPUが降参しました")
-            return
-          end
-
-          if true
-            # いちばん良いのが 100 点とすると 95 点まで下げて 95〜100 点の手を改めてランダムで選択する
-            min = record[:score] - SHAKING_WIDTH
-            record = @candidate_records.take_while { |e| e[:score] >= min }.sample
-          end
-
-          @hand = record[:hand]
-        end
-      end
-
-      unless @hand
-        hands = @mediator.current_player.normal_all_hands.to_a
-        if current_cpu_brain_info.legal_only
-          hands = hands.find_all { |e| e.legal_move?(@mediator) }
-        end
-        @hand = hands.sample
-      end
-
-      unless @hand
-        final_decision(judge_key: :win, message: "CPUが投了しました。もう何も指す手がなかったようです")
-        return
-      end
-
-      # CPUの手を指す
-      @mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
-      @current_sfen = @mediator.to_sfen
-      evaluation_value_generation
-
-      yomiage_process # CPUの手の読み上げる
-
-      captured_soldier = @mediator.opponent_player.executor.captured_soldier
-      if captured_soldier
-        if captured_soldier.piece.key == :king
-          final_decision(judge_key: :lose, message: "玉を取られました")
-          return
-        end
-      end
-
-      if current_cpu_brain_info.mate_danger_check
-        # 人間側の合法手が生成できなければ人間側の負け
-        if @mediator.current_player.legal_all_hands.none?
-          final_decision(judge_key: :lose, message: "CPUの勝ちです")
-          return
-        end
-      end
-
-      render json: build_response
+    if params[:kifu_body]
+      cpu_process
       return
     end
   end
@@ -242,6 +109,168 @@ class CpuBattlesController < ApplicationController
   end
 
   private
+
+  def cpu_process
+    @candidate_records = []
+    @current_sfen = params[:kifu_body]
+    @hand = nil
+    @score_list = []
+
+    info = Bioshogi::Parser.parse(@current_sfen)
+    begin
+      @mediator = info.mediator
+    rescue => error
+      lines = error.message.lines
+      message = [
+        "#{lines.first.remove("【反則】")}",
+        # "<br><br>"
+        # "<pre>", lines.drop(1).join, "</pre>",
+        # "<br>",
+        # "<br>",
+        # '<span class="is-size-7 has-text-grey">※一手戻して再開できます</span>',
+      ].join.strip
+
+      # info.move_infos.size - 0
+
+      # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).mediator.to_sfen
+      # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
+      # render json: {error_message: error_message, before_sfen: before_sfen}
+
+      final_decision(judge_key: :lose, irregular: true, message: message)
+      return
+    end
+
+    # Rails.logger.debug(@mediator.turn_info.inspect)
+
+    unless Rails.env.production?
+      Rails.logger.debug(@mediator)
+    end
+
+    yomiage_process # 人間の手の読み上げ
+
+    evaluation_value_generation
+
+    if executor = @mediator.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
+      captured_soldier = executor.captured_soldier
+      if captured_soldier
+        if captured_soldier.piece.key == :king
+          final_decision(judge_key: :win, message: "玉を取って勝ちました！")
+          return
+        end
+      end
+    end
+
+    unless @hand
+      if current_cpu_brain_info.mate_danger_check
+        @hand = @mediator.current_player.mate_move_hands.first
+
+        # 玉を取らない場合
+        if false
+          if @hand
+            final_decision(judge_key: :lose, message: "王手放置(または自殺手)で負けました")
+            return
+          end
+        end
+      end
+    end
+
+    unless @hand
+      if current_cpu_brain_info.depth_max_range
+        iterative_deepening
+
+        unless Rails.env.production?
+          Rails.logger.debug(candidate_report)
+        end
+
+        if @candidate_records.empty?
+          final_decision(judge_key: :win, message: "CPUが投了しました")
+          return
+        end
+
+        # いちばん良いのを選択
+        record = @candidate_records.first
+        if record[:score] <= -Bioshogi::INF_MAX
+          final_decision(judge_key: :win, message: "CPUが降参しました")
+          return
+        end
+
+        if true
+          # いちばん良いのが 100 点とすると 95 点まで下げて 95〜100 点の手を改めてランダムで選択する
+          min = record[:score] - SHAKING_WIDTH
+          record = @candidate_records.take_while { |e| e[:score] >= min }.sample
+        end
+
+        @hand = record[:hand]
+      end
+    end
+
+    unless @hand
+      hands = @mediator.current_player.normal_all_hands.to_a
+      if current_cpu_brain_info.legal_only
+        hands = hands.find_all { |e| e.legal_move?(@mediator) }
+      end
+      @hand = hands.sample
+    end
+
+    unless @hand
+      final_decision(judge_key: :win, message: "CPUが投了しました。もう何も指す手がなかったようです")
+      return
+    end
+
+    # CPUの手を指す
+    @mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
+    @current_sfen = @mediator.to_sfen
+    evaluation_value_generation
+
+    yomiage_process # CPUの手の読み上げる
+
+    captured_soldier = @mediator.opponent_player.executor.captured_soldier
+    if captured_soldier
+      if captured_soldier.piece.key == :king
+        final_decision(judge_key: :lose, message: "玉を取られました")
+        return
+      end
+    end
+
+    if current_cpu_brain_info.mate_danger_check
+      # 人間側の合法手が生成できなければ人間側の負け
+      if @mediator.current_player.legal_all_hands.none?
+        final_decision(judge_key: :lose, message: "CPUの勝ちです")
+        return
+      end
+    end
+
+    render json: build_response
+  end
+
+  def candidate_process
+    info = Bioshogi::Parser.parse(params[:candidate_sfen])
+    begin
+      @mediator = info.mediator
+    rescue => error
+      render json: build_response
+      return
+    end
+
+    if current_cpu_brain_info.depth_max_range
+      iterative_deepening
+    end
+
+    render json: build_response
+  end
+
+  def iterative_deepening
+    brain = @mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, **evaluator_params)
+    time_limit = current_cpu_brain_info.time_limit
+
+    begin
+      @candidate_records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
+    rescue Bioshogi::BrainProcessingHeavy
+      time_limit += 1
+      Rails.logger.info([:retry, {time_limit: time_limit}])
+      retry
+    end
+  end
 
   def logging(title, body = nil)
     slack_message(key: "CPU対戦 - #{title}", body: [logging_body_prefix, body].join)
@@ -292,12 +321,22 @@ class CpuBattlesController < ApplicationController
   end
 
   def build_response
-    response = {
-      current_sfen: @current_sfen,
-      score_list: @score_list,
-    }
-    response[:candidate_rows] = candidate_rows     # b-table 用
+    response = {}
+
+    if @current_sfen
+      response[:current_sfen] = @current_sfen
+    end
+
+    if @score_list
+      response[:score_list] = @score_list
+    end
+
+    if candidate_rows
+      response[:candidate_rows] = candidate_rows     # b-table 用
+    end
+
     response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
+
     unless Rails.env.production?
       response[:candidate_report] = candidate_report # そのまま表示できるテキスト
       # response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => rand(0..1.0)) }
@@ -309,6 +348,7 @@ class CpuBattlesController < ApplicationController
         ].join
       end
     end
+
     response
   end
 
@@ -322,7 +362,7 @@ class CpuBattlesController < ApplicationController
         Bioshogi::Brain.human_format(@candidate_records).collect { |e|
           e.collect { |key, val|
             if key == "候補手"
-              val = val.to_s
+              val = val.to_s    # ビューに as_json の結果が渡ってしまうので文字列にしておく
             end
             [key, val]
           }.to_h
@@ -346,7 +386,7 @@ class CpuBattlesController < ApplicationController
       { key: :level3,  name: "めちゃくちゃ弱い",   time_limit: nil, depth_max_range: 0..0, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 最初の合法手リストを最善手順に並べたもの
       { key: :level4,  name: "かなり弱い",         time_limit:   3, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 3秒まで深読みできる
       { key: :level5,  name: "弱い",               time_limit:   5, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 必ず相手の手を読む
-      { key: :level5a, name: "1手読み(TLなし)",    time_limit: nil, depth_max_range: 1..1, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 必ず相手の手を読む
+      { key: :level5a, name: "1手読み(TLE無)",     time_limit: nil, depth_max_range: 1..1, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 必ず1手読
       { key: :level6,  name: "長考10秒",           time_limit:  10, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
       { key: :level7,  name: "長考30秒",           time_limit:  30, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
       { key: :level8,  name: "長考1分",            time_limit:  60, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考

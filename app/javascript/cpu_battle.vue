@@ -12,6 +12,8 @@
               template(v-if="mode === 'playing'")
                 b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true" :loading="give_up_processing")
                   | 投了
+                b-button(@click="candidate_handle" :loading="candidate_processing")
+                  | 形勢判断
                 template(v-if="development_p")
                   b-button(@click="break_handle")
                     | 終了
@@ -111,6 +113,9 @@
     .columns
       template(v-if="candidate_rows")
         .column
+          .buttons
+            b-button(@click="candidate_handle" :loading="candidate_processing")
+              | 形勢判断
           .box
             b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 
@@ -162,6 +167,7 @@ export default {
       mode: null,                                   // 現在の状態
       give_up_processing: null,                     // 投了処理中(連打防止用)
       judge_group: this.$root.$options.judge_group, // 勝敗
+      candidate_processing: null,                   // 形勢判断中
 
       // 設定用
       cpu_brain_key:    this.$root.$options.cpu_brain_key,    // 強さ
@@ -201,6 +207,7 @@ export default {
     this.bg_variant = "a"
 
     this.give_up_processing = false
+    this.candidate_processing = false
 
     console.log("this.$route.query:", this.$route.query)
   },
@@ -306,6 +313,9 @@ export default {
       // 投了を押せる状態にする
       this.give_up_processing = false
 
+      // 形勢判断してない状態にする
+      this.candidate_processing = false
+
       // 開始
       this.mode = "playing"
       this.talk("よろしくお願いします")
@@ -389,6 +399,14 @@ export default {
       this.post_apply({i_give_up: true})
     },
 
+    candidate_handle() {
+      if (this.candidate_processing) {
+        return
+      }
+      this.candidate_processing = true
+      this.post_apply({candidate_sfen: this.current_sfen})
+    },
+
     play_mode_long_sfen_set(long_sfen) {
       if (this.mode === "standby") {
         return
@@ -433,10 +451,16 @@ export default {
 
         this.score_list_reflection(e)
 
+        if (e["candidate_rows"]) {
+          this.candidate_processing = false
+          this.candidate_rows = e["candidate_rows"]
+        }
         this.candidate_report = e["candidate_report"]
-        this.candidate_rows = e["candidate_rows"]
         this.think_text = e["think_text"]
-        this.pressure_rate_hash = e["pressure_rate_hash"]
+
+        if (e["pressure_rate_hash"]) {
+          this.pressure_rate_hash = e["pressure_rate_hash"]
+        }
 
         if (e["judge_key"]) {
           this.view_mode_set()
