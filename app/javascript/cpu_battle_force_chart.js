@@ -10,7 +10,7 @@ const CHART_CONFIG_DEFAULT = {
     labels: [],
     datasets: [
       {
-        label: "戦力グラフ",
+        label: "戦力グラフ",    // legend: true のときに表示するラベル
         data: [],
         borderColor:     "hsla(204, 86%,  53%, 1.0)",
         backgroundColor: "hsla(204, 86%,  53%, 0.1)",
@@ -31,44 +31,13 @@ const CHART_CONFIG_DEFAULT = {
       },
     },
 
-    // // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
+    // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
     scales: {
-      // xAxes: [{
-      //   scaleLabel: {
-      //     display: true,
-      //     labelString: "手数",
-      //   },
-      //   // ticks: {
-      //   //   // suggestedMin: 0,
-      //   //   // suggestedMax: 100,
-      //   //   // stepSize: 10,
-      //   //   // callback(value, index, values){
-      //   //   //   return value + '手'
-      //   //   // }
-      //   // }
-      // }],
       yAxes: [{
         display: true,
         ticks: {
           maxTicksLimit: 7,
-          // min: -9999,
-          // max: +9999,
-          // stepSize: 100,
-          // suggestedMax: 100,
-          // suggestedMin: 0,
         },
-        // scaleLabel: {
-        //   display: true,
-        //   labelString: "消費",
-        // },
-        // ticks: {
-        //   // suggestedMax: 100,
-        //   // suggestedMin: 0,
-        //   // stepSize: 10,
-        //   callback(value, index, values) {
-        //     return Math.abs(value) +  "秒"
-        //   }
-        // }
       }],
     },
 
@@ -83,14 +52,7 @@ const CHART_CONFIG_DEFAULT = {
           return ""
         },
         label(tooltipItem, data) {
-          return [
-            // data.labels[tooltipItem.index]
-            // data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x,
-            // " ",
-            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y,
-            // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
-            // Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
-          ].join("")
+          return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y
         },
       },
     },
