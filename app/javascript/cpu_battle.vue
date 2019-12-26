@@ -91,21 +91,28 @@
         b-message(size="is-small")
           | CPU: {{judge_group.lose}}勝 &nbsp;&nbsp; 人間: {{judge_group.win}}勝
 
-      template(v-if="js_pressure_hash")
+      template(v-if="pressure_rate_hash")
         .box
           small
             b 終盤度
           template(v-for="e in Location.values")
             .label_with_progress
               | {{e.name}}
-              progress.is-danger(:value="js_pressure_hash[e.key] * 100" :max="100")
+              progress.progress.is-danger.is-small(:value="pressure_rate_hash[e.key] * 100" :max="100")
           template(v-if="development_p")
-            | {{js_pressure_hash}}
+            | {{pressure_rate_hash}}
 
       .box
         canvas#chart_canvas(ref="chart_canvas")
         template(v-if="development_p && false")
           | {{chart_config.data.datasets[0].data}}
+
+  template(v-if="mode === 'playing'")
+    .columns
+      template(v-if="candidate_rows")
+        .column
+          .box
+            b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 
   template(v-if="development_p && mode === 'playing'")
     .columns
@@ -168,7 +175,7 @@ export default {
       candidate_rows: null,   // 配列
 
       // デバッグ用
-      js_pressure_hash: null,       // 終盤度
+      pressure_rate_hash: null,       // 終盤度
       think_text: null,       // 思考内容テキスト
 
       // shogi-player 用パラメータ
@@ -291,7 +298,7 @@ export default {
       this.candidate_report = null
       this.candidate_rows = null
       this.think_text = null
-      this.js_pressure_hash = null
+      this.pressure_rate_hash = null
 
       // 評価グラフ
       this.chart_reset()
@@ -429,7 +436,7 @@ export default {
         this.candidate_report = e["candidate_report"]
         this.candidate_rows = e["candidate_rows"]
         this.think_text = e["think_text"]
-        this.js_pressure_hash = e["js_pressure_hash"]
+        this.pressure_rate_hash = e["pressure_rate_hash"]
 
         if (e["judge_key"]) {
           this.view_mode_set()
@@ -498,6 +505,7 @@ export default {
     display: flex
     align-items: center
     progress
+      margin-left: 0.25rem
       width: 100%
 
 </style>

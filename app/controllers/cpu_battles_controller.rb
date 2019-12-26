@@ -296,11 +296,11 @@ class CpuBattlesController < ApplicationController
       current_sfen: @current_sfen,
       score_list: @score_list,
     }
+    response[:candidate_rows] = candidate_rows     # b-table 用
     unless Rails.env.production?
-      response[:candidate_rows] = candidate_rows     # b-table 用
       response[:candidate_report] = candidate_report # そのまま表示できるテキスト
-      response[:js_pressure_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
-      # response[:js_pressure_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => rand(0..1.0)) }
+      response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
+      # response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => rand(0..1.0)) }
       if @mediator
         response[:think_text] = [
           @mediator.current_player.evaluator(evaluator_params).score_compute_report.to_t,
