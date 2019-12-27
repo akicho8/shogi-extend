@@ -14,6 +14,8 @@
                   | 投了
                 b-button(@click="candidate_handle" :loading="candidate_processing")
                   | 形勢判断
+                b-button(@click="retract_a_move")
+                  | 待った
                 template(v-if="development_p")
                   b-button(@click="break_handle")
                     | 終了
@@ -21,8 +23,6 @@
                     | 再挑戦
                   b-button(@click="one_hand_exec")
                     | 1手指す
-                  b-button(@click="retract_a_move")
-                    | 待った
                   b-button(@click="judge_dialog_display({judge_key: 'win'})")
                     | win
                   b-button(@click="judge_dialog_display({judge_key: 'lose'})")
