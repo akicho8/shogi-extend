@@ -18,17 +18,16 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |            colosseum_users | 12   |
 # >> |      colosseum_watch_ships | 100  |
 # >> |            converted_infos | 0    |
-# >> |               free_battles | 52   |
-# >> |            general_battles | 5    |
-# >> |        general_memberships | 10   |
-# >> |              general_users | 10   |
-# >> |          schema_migrations | 15   |
+# >> |         cpu_battle_records | 1    |
+# >> |               free_battles | 576  |
+# >> |          schema_migrations | 34   |
 # >> |          swars_access_logs | 0    |
-# >> |              swars_battles | 90   |
+# >> |              swars_battles | 21   |
 # >> |               swars_grades | 40   |
-# >> |          swars_memberships | 180  |
-# >> |          swars_search_logs | 0    |
-# >> |                swars_users | 92   |
-# >> |                   taggings | 3353 |
-# >> |                       tags | 433  |
+# >> |          swars_memberships | 42   |
+# >> |          swars_search_logs | 11   |
+# >> |                swars_users | 33   |
+# >> |                   taggings | 3680 |
+# >> |                       tags | 233  |
+# >> |                 xy_records | 4    |
 # >> |----------------------------+------|

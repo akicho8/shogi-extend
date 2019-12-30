@@ -9,10 +9,10 @@ module Swars
   Battle.single_battle_import(key: "Yosikawakun-soybean-20190226_095952")
   battle = Battle.last
 
-  battle.note_tag_list     # => ["入玉", "相入玉", "指導対局"]
-  battle.other_tag_list     # => ["将棋ウォーズ(3分切れ負け)", "00:03+00", "Yosikawakun", "六段", "soybean", "五段", "2019", "2", "26", "2019/02", "2019/02/26", "211", "3分", "入玉"]
-  battle.memberships[0].reload.note_tag_list # => ["入玉", "相入玉"]
-  battle.memberships[1].reload.note_tag_list # => ["入玉", "相入玉", "指導対局"]
+  battle.note_tag_list     # => ["居飛車", "入玉", "相入玉", "相居飛車"]
+  battle.other_tag_list     # => ["将棋ウォーズ(3分切れ負け)", "00:03+00", "Yosikawakun", "六段", "soybean", "五段", "平手", "3分", "入玉"]
+  battle.memberships[0].reload.note_tag_list # => ["居飛車", "入玉", "相入玉", "相居飛車"]
+  battle.memberships[1].reload.note_tag_list # => ["居飛車", "入玉", "相入玉", "相居飛車"]
 
   tp ActsAsTaggableOn::Tag.find_by(name: "入玉").taggings
 
@@ -21,11 +21,15 @@ module Swars
   #
   # tp Battle.last
 end
+# >> |------------------------------------------------------------------------------|
+# >> | http://kif-pona.heroz.jp/games/Yosikawakun-soybean-20190226_095952?locale=ja |
+# >> |------------------------------------------------------------------------------|
 # >> |------+--------+-------------------+-------------+-------------+-----------+------------+---------------------------|
 # >> | id   | tag_id | taggable_type     | taggable_id | tagger_type | tagger_id | context    | created_at                |
 # >> |------+--------+-------------------+-------------+-------------+-----------+------------+---------------------------|
-# >> | 1667 |    338 | Swars::Battle     |          52 |             |           | note_tags  | 2019-03-21 21:49:56 +0900 |
-# >> | 1683 |    338 | Swars::Battle     |          52 |             |           | other_tags | 2019-03-21 21:49:56 +0900 |
-# >> | 1657 |    338 | Swars::Membership |         103 |             |           | note_tags  | 2019-03-21 21:49:56 +0900 |
-# >> | 1661 |    338 | Swars::Membership |         104 |             |           | note_tags  | 2019-03-21 21:49:56 +0900 |
+# >> | 3919 |    118 | Swars::Battle     |          35 |             |           | note_tags  | 2020-01-06 10:56:30 +0900 |
+# >> | 3930 |    118 | Swars::Battle     |          35 |             |           | other_tags | 2020-01-06 10:56:30 +0900 |
+# >> | 3906 |    118 | Swars::Membership |          69 |             |           | note_tags  | 2020-01-06 10:56:30 +0900 |
+# >> | 3912 |    118 | Swars::Membership |          70 |             |           | note_tags  | 2020-01-06 10:56:30 +0900 |
+# >> | 1291 |    118 | FreeBattle        |         214 |             |           | note_tags  | 2019-12-25 20:01:11 +0900 |
 # >> |------+--------+-------------------+-------------+-------------+-----------+------------+---------------------------|

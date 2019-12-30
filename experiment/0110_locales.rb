@@ -37,11 +37,10 @@ attributes = ActiveRecord::Base.subclasses.collect { |e|
 }.compact.to_h
 
 pp attributes
-# >> ["/Users/ikeda/src/shogi_web/config/initializers/0180_active_model_serializers.rb:11", nil, :ams_sr]
 # >> ActsAsTaggableOn::Tagging (call 'ActsAsTaggableOn::Tagging.connection' to establish a connection)
-# >> 433
+# >> 3680
 # >> ActsAsTaggableOn::Tag(id: integer, name: string, taggings_count: integer)
-# >> 124
+# >> 233
 # >> {"acts_as_taggable_on/tagging"=>
 # >>   {"id"=>nil,
 # >>    "tag_id"=>nil,
