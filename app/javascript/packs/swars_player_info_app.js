@@ -91,14 +91,4 @@ window.SwarsPlayerInfoApp = Vue.extend({
       })
     },
   },
-
-  computed: {
-    days_chart_params() {
-      return Object.assign({}, this.$options.days_chart_params, this.days_chart_js_options("対局日時"))
-    },
-
-    week_chart_params() {
-      return Object.assign({}, this.$options.week_chart_params, this.days_chart_js_options("直近1週間"))
-    },
-  },
 })
