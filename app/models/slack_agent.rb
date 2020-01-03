@@ -41,10 +41,12 @@ module SlackAgent
     if ua
       a = []
       a << ua.browser
-      unless ua.os.include?(ua.platform)
-        a << ua.platform
+      if ua.os
+        unless ua.os.include?(ua.platform)
+          a << ua.platform
+        end
+        a << ua.os
       end
-      a << ua.os
       a = a.compact
       if a.present?
         s = a.join(" ")
