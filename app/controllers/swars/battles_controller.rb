@@ -135,6 +135,7 @@ module Swars
       super.merge({
           current_swars_user_key: current_swars_user_key,
           player_info_path: current_swars_user_key ? url_for([:swars, :player_infos, user_key: current_swars_user_key, only_path: true]) : nil,
+          required_query_for_search: AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
         })
     end
 
@@ -353,6 +354,10 @@ module Swars
 
           if current_swars_user
             s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
+          else
+            if AppConfig[:required_user_key_for_search]
+              s = s.none
+            end
           end
 
           # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる

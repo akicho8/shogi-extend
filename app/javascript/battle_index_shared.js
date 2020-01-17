@@ -201,8 +201,6 @@ export default {
         this.$refs.main_field.focus()
       }
     }
-
-    this.async_records_load()
   },
 
   computed: {

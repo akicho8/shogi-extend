@@ -104,4 +104,11 @@ Rails.application.configure do
   # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩
   # https://shinkufencer.hateblo.jp/entry/2018/07/25/230537
   Rails.application.routes.default_url_options[:host] = ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp"
+
+  # for AppConfig
+  config.to_prepare do
+    Rails.application.config.app_config.deep_merge!({
+        zip_download_function: false,
+      })
+  end
 end

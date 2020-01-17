@@ -1,8 +1,13 @@
-AppConfig = {
-  app_name: "将棋のツール（仮）",
-  volume: 0.2,
-  admin_email: "alice@localhost",
+AppConfig.deep_merge!({
+    app_name: "将棋のツール（仮）",
+    volume: 0.2,
+    admin_email: "alice@localhost",
 
-  zip_download_limit_default: 100, # 一括ダウンロードするときの件数(初期値)
-  zip_download_limit_max: 200,     # 一括ダウンロードするときの件数(最大)
-}
+    zip_download_function: true,     # 一括ダウンロード機能
+    zip_download_limit_default: 100, # 一括ダウンロードするときの件数(初期値)
+    zip_download_limit_max: 200,     # 一括ダウンロードするときの件数(最大)
+
+    per_page_list: [25, 50],
+    required_user_key_for_search: true, # 検索にはユーザー名を必ず指定する
+    required_query_for_search: true,    # js側から一覧のレコードを出すときは必ず query が入っていないといけない
+  })

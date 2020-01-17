@@ -64,4 +64,13 @@ Rails.application.configure do
     # 有効にすると本番開発のようになりメール通知する
     # config.consider_all_requests_local = false
   end
+
+  # for AppConfig
+  # ファイルを更新したときに呼ばれる
+  config.to_prepare do
+    load Rails.root.join("config/app_config.rb")
+    # Rails.application.config.app_config.deep_merge!({
+    #     zip_download_function: false,
+    #   })
+  end
 end

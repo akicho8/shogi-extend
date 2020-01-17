@@ -11,6 +11,13 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   mounted() {
+    if (this.$options.required_query_for_search) { // js側から一覧のレコードを出すときは必ず query が入っていないといけない場合
+      if (this.query) {
+        this.async_records_load()
+      }
+    } else {
+      this.async_records_load()
+    }
   },
 
   methods: {

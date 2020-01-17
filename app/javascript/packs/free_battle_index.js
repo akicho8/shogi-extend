@@ -8,4 +8,11 @@ window.FreeBattleIndex = Vue.extend({
       detailed: false,           // 行の下に開くやつを使う？
     }
   },
+
+  mounted() {
+    // クエリーがなくても表示する
+    // if (this.query) {
+    // }
+    this.async_records_load()
+  },
 })

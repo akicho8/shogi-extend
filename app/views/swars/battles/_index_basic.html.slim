@@ -78,17 +78,18 @@
 = render partial: "free_battles/index_footer"
 = render partial: "free_battles/parmalink"
 
-- if current_records && current_records.exists?
-  .columns
-    .column
-      p
-        b-tooltip(label="Windows からアクセスの場合は SJIS にしています" position="is-right")
-          =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-small") do
-            b-icon(icon="download" size="is-small")
-            | &nbsp;&nbsp;
-            - if current_query
-              | この検索条件で
-            = "まとめてダウンロード"
+- if AppConfig[:zip_download_function]
+  - if current_records && current_records.exists?
+    .columns
+      .column
+        p
+          b-tooltip(label="Windows からアクセスの場合は SJIS にしています" position="is-right")
+            =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-small") do
+              b-icon(icon="download" size="is-small")
+              | &nbsp;&nbsp;
+              - if current_query
+                | この検索条件で
+              = "まとめてダウンロード"
 
 .columns
   .column

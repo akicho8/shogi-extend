@@ -53,7 +53,7 @@ module BattleControllerSharedMethods
     end
 
     def default_per
-      Rails.env.production? ? 25 : 25
+      Kaminari.config.default_per_page
     end
 
     def sort_column
