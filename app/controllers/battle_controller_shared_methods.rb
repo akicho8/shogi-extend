@@ -33,7 +33,7 @@ module BattleControllerSharedMethods
     end
 
     let :current_records do
-      s = current_scope
+      s = current_index_scope
       s = s.select(current_model.column_names - exclude_column_names)
       if sort_column && sort_order
         s = s.order(sort_column => sort_order)

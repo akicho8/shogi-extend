@@ -70,6 +70,10 @@ class FreeBattlesController < ApplicationController
 
   private
 
+  def current_index_scope
+    current_scope
+  end
+
   let :current_record do
     if params[:id]
       record = current_model.find(params[:id])

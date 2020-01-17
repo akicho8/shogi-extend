@@ -2,40 +2,41 @@ import assert from "assert"
 import LifetimeInfo from "lifetime_info"
 
 document.addEventListener('DOMContentLoaded', () => {
-  App.single_notification = App.cable.subscriptions.create({channel: "SingleNotificationChannel"}, {
-    connected() {
-    },
+  if (App.cable) {
+    App.single_notification = App.cable.subscriptions.create({channel: "SingleNotificationChannel"}, {
+      connected() {
+      },
 
-    disconnected() {
+      disconnected() {
 
-    },
-    received(data) {
-      // 発音の受信(ログインしているときは LightSessionChannel ではなくこちらでも利用できる)
-      if (data["yomiage"]) {
-        GVI.talk(data["yomiage"])
-      }
-
-      // 個別メッセージの受信
-      if (data["message"]) {
-        const message = data["message"]
-        const from = data["from"]
-        const to = data["to"]
-        const str = `${from.name}: ${message}`
-        GVI.$buefy.toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
-        GVI.talk(message)
-      }
-
-      // 対局リクエスト
-      if (data["battle_request"]) {
-        const e = data["battle_request"]
-
-        if (this.battle_request_dialog_showing) {
-          this.message_send_to({from: e["to"], to: e["from"], message: `(他の人からの挑戦状を見ている状態なので少ししてから送ってください)`})
-          return
+      },
+      received(data) {
+        // 発音の受信(ログインしているときは LightSessionChannel ではなくこちらでも利用できる)
+        if (data["yomiage"]) {
+          GVI.talk(data["yomiage"])
         }
 
-        const handicap = !(e.from.rule.self_preset_key === "平手" && e.from.rule.oppo_preset_key === "平手")
-        const message_template = `
+        // 個別メッセージの受信
+        if (data["message"]) {
+          const message = data["message"]
+          const from = data["from"]
+          const to = data["to"]
+          const str = `${from.name}: ${message}`
+          GVI.$buefy.toast.open({message: str, position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          GVI.talk(message)
+        }
+
+        // 対局リクエスト
+        if (data["battle_request"]) {
+          const e = data["battle_request"]
+
+          if (this.battle_request_dialog_showing) {
+            this.message_send_to({from: e["to"], to: e["from"], message: `(他の人からの挑戦状を見ている状態なので少ししてから送ってください)`})
+            return
+          }
+
+          const handicap = !(e.from.rule.self_preset_key === "平手" && e.from.rule.oppo_preset_key === "平手")
+          const message_template = `
 <nav class="level">
   <div class="level-item has-text-centered">
     <div>
@@ -59,48 +60,49 @@ document.addEventListener('DOMContentLoaded', () => {
   <% } %>
 </nav>
 `
-        const message = _.template(message_template)({handicap: handicap})
+          const message = _.template(message_template)({handicap: handicap})
 
-        GVI.talk(`${e.from.name}さんからの挑戦状が届きました`)
+          GVI.talk(`${e.from.name}さんからの挑戦状が届きました`)
 
-        this.battle_request_dialog_showing = true
-        GVI.$buefy.dialog.confirm({
-          title: `${e.from.name}さんからの挑戦状`,
-          message: message,
-          confirmText: "受ける",
-          cancelText: "ごめん",
-          focusOn: "cancel",
-          onConfirm: () => {
-            this.battle_request_dialog_showing = false
-            this.perform("battle_match_ok", data)
-          },
-          onCancel: () => {
-            GVI.talk(`断りました`)
-            this.battle_request_dialog_showing = false
-            this.perform("battle_match_ng", data)
-          },
-        })
-      }
-
-      // マッチング成立
-      if (data["matching_establish"]) {
-        assert(data["battle_show_path"])
-        if (data["auto_matched_at"]) {
-          GVI.$buefy.toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          this.battle_request_dialog_showing = true
+          GVI.$buefy.dialog.confirm({
+            title: `${e.from.name}さんからの挑戦状`,
+            message: message,
+            confirmText: "受ける",
+            cancelText: "ごめん",
+            focusOn: "cancel",
+            onConfirm: () => {
+              this.battle_request_dialog_showing = false
+              this.perform("battle_match_ok", data)
+            },
+            onCancel: () => {
+              GVI.talk(`断りました`)
+              this.battle_request_dialog_showing = false
+              this.perform("battle_match_ng", data)
+            },
+          })
         }
-        if (data["battle_request_at"]) {
-          GVI.$buefy.toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+
+        // マッチング成立
+        if (data["matching_establish"]) {
+          assert(data["battle_show_path"])
+          if (data["auto_matched_at"]) {
+            GVI.$buefy.toast.open({message: "マッチングが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          }
+          if (data["battle_request_at"]) {
+            GVI.$buefy.toast.open({message: "申し込みが成立しました", position: "is-bottom", type: "is-info", duration: 1000 * 3})
+          }
+          location.href = data["battle_show_path"]
         }
-        location.href = data["battle_show_path"]
-      }
-    },
+      },
 
-    message_send_to(data) {
-      this.perform("message_send_to", data)
-    },
+      message_send_to(data) {
+        this.perform("message_send_to", data)
+      },
 
-    battle_request_to(data) {
-      this.perform("battle_request_to", data)
-    },
-  })
+      battle_request_to(data) {
+        this.perform("battle_request_to", data)
+      },
+    })
+  }
 })

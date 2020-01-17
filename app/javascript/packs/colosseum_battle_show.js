@@ -9,105 +9,106 @@ import LastActionInfo from "last_action_info"
 import message_form_shared from "message_form_shared"
 
 document.addEventListener("DOMContentLoaded", () => {
-  App.battle = App.cable.subscriptions.create({
-    channel: "BattleChannel",
-    battle_id: js_show_options.id,
-  }, {
-    connected() {
-      // alert("room_in")
-      this.perform("room_in")
-    },
+  if (App.cable) {
+    App.battle = App.cable.subscriptions.create({
+      channel: "BattleChannel",
+      battle_id: js_show_options.id,
+    }, {
+      connected() {
+        // alert("room_in")
+        this.perform("room_in")
+      },
 
-    disconnected() {
-      // ここではすでに接続が切れている状態なので ruby 側の退出処理を呼び出すことができない。
-      // しかし ruby 側の unsubscribed もまた同じタイミングで呼ばれるのでそこで退出処理を書けばよい。
-    },
+      disconnected() {
+        // ここではすでに接続が切れている状態なので ruby 側の退出処理を呼び出すことができない。
+        // しかし ruby 側の unsubscribed もまた同じタイミングで呼ばれるのでそこで退出処理を書けばよい。
+      },
 
-    received(data) {
-      // 対局者たち更新
-      if (data["memberships"]) {
-        App.battle_vm.memberships = data["memberships"]
-      }
+      received(data) {
+        // 対局者たち更新
+        if (data["memberships"]) {
+          App.battle_vm.memberships = data["memberships"]
+        }
 
-      // 観戦者たち更新
-      if (data["watch_ships"]) {
-        App.battle_vm.watch_ships = data["watch_ships"]
-      }
+        // 観戦者たち更新
+        if (data["watch_ships"]) {
+          App.battle_vm.watch_ships = data["watch_ships"]
+        }
 
-      // 対局開始
-      if (data["begin_at"]) {
-        GVI.talk("対局開始")
-        App.battle_vm.battle_setup(data)
-      }
+        // 対局開始
+        if (data["begin_at"]) {
+          GVI.talk("対局開始")
+          App.battle_vm.battle_setup(data)
+        }
 
-      if (data["turn_max"]) {
-        App.battle_vm.turn_max = data["turn_max"]
-        App.battle_vm.clock_counts = data["clock_counts"]
-        App.battle_vm.clock_counter_reset()
-        // App.battle_vm.next_run_if_robot() // ここでCPUに指してもらう手もある。これはブロードキャストされているのでここで呼んではいけない。
-      }
+        if (data["turn_max"]) {
+          App.battle_vm.turn_max = data["turn_max"]
+          App.battle_vm.clock_counts = data["clock_counts"]
+          App.battle_vm.clock_counter_reset()
+          // App.battle_vm.next_run_if_robot() // ここでCPUに指してもらう手もある。これはブロードキャストされているのでここで呼んではいけない。
+        }
 
-      // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
-      if (data["full_sfen"]) {
-        App.battle_vm.full_sfen = data["full_sfen"]
-      }
+        // 観戦モード(view_mode)にしたとき棋譜が最新になっているようにするため指した本人にも通知する
+        if (data["full_sfen"]) {
+          App.battle_vm.full_sfen = data["full_sfen"]
+        }
 
-      // 下の棋譜(KI2)の反映。これはなくても対局には支障ない
-      if (data["human_kifu_text"]) {
-        App.battle_vm.human_kifu_text = data["human_kifu_text"]
-      }
+        // 下の棋譜(KI2)の反映。これはなくても対局には支障ない
+        if (data["human_kifu_text"]) {
+          App.battle_vm.human_kifu_text = data["human_kifu_text"]
+        }
 
-      // 読み上げ(この部屋のすべての人が受信する)
-      if (data["yomiage"]) {
-        GVI.talk(data["yomiage"])
-      }
+        // 読み上げ(この部屋のすべての人が受信する)
+        if (data["yomiage"]) {
+          GVI.talk(data["yomiage"])
+        }
 
-      // チャットの発言の追加
-      if (data["chat_message"]) {
-        // GVI.talk(data["chat_message"].message)
-        App.battle_vm.chat_messages.push(data["chat_message"])
-      }
+        // チャットの発言の追加
+        if (data["chat_message"]) {
+          // GVI.talk(data["chat_message"].message)
+          App.battle_vm.chat_messages.push(data["chat_message"])
+        }
 
-      // 終了
-      if (data["end_at"]) {
-        App.battle_vm.battle_end_notice(data)
-      }
+        // 終了
+        if (data["end_at"]) {
+          App.battle_vm.battle_end_notice(data)
+        }
 
-      // 生存確認されたときに返事をする
-      if (data["action"] === "custom_ping") {
-        this.perform("custom_pong", {user_id: js_global.current_user.id})
-      }
-    },
+        // 生存確認されたときに返事をする
+        if (data["action"] === "custom_ping") {
+          this.perform("custom_pong", {user_id: js_global.current_user.id})
+        }
+      },
 
-    chat_say(message, msg_options = {}) {
-      this.perform("chat_say", {message: message, msg_options: msg_options})
-    },
+      chat_say(message, msg_options = {}) {
+        this.perform("chat_say", {message: message, msg_options: msg_options})
+      },
 
-    time_up(data) {
-      this.perform("time_up", data)
-    },
+      time_up(data) {
+        this.perform("time_up", data)
+      },
 
-    give_up(data) {
-      this.perform("give_up", data)
-    },
+      give_up(data) {
+        this.perform("give_up", data)
+      },
 
-    fool_god(data) {
-      this.perform("fool_god", data)
-    },
+      fool_god(data) {
+        this.perform("fool_god", data)
+      },
 
-    play_mode_long_sfen_set(data) {
-      this.perform("play_mode_long_sfen_set", data)
-    },
+      play_mode_long_sfen_set(data) {
+        this.perform("play_mode_long_sfen_set", data)
+      },
 
-    countdown_flag_on(location_key) {
-      this.perform("countdown_flag_on", {location_key: location_key})
-    },
+      countdown_flag_on(location_key) {
+        this.perform("countdown_flag_on", {location_key: location_key})
+      },
 
-    next_run_if_robot() {
-      this.perform("next_run_if_robot")
-    },
-  })
-
+      next_run_if_robot() {
+        this.perform("next_run_if_robot")
+      },
+    })
+  }
 })
 
 window.ColosseumBattleShow = Vue.extend({

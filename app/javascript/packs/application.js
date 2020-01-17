@@ -10,7 +10,6 @@
 import Rails from "rails-ujs"
 Rails.start()
 
-import "action_cable_setup.js"
 import "modulable_crud.js"
 import "rails_env_set.js"
 
@@ -143,3 +142,22 @@ window.GVI = new Vue()           // ActionCable 側から Vue のグローバル
 
 import "audio_queue.js"
 import "light_session_app.js"
+
+import ActionCable from "actioncable"
+
+// このような書き方でいいのかどうかはわからない
+window.App = {}
+// document.addEventListener('DOMContentLoaded', () => {
+//   console.log(window.Vue)
+//   console.log(window.GVI)
+// })
+if (GVI.$route.path === "/w" ||
+    GVI.$route.path === "/xy" ||
+    GVI.$route.path === "/x" ||
+    false
+   ) {
+} else {
+  window.App.cable = ActionCable.createConsumer()
+  ActionCable.startDebugging()
+}
+// import "action_cable_setup.js"

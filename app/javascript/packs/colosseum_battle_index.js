@@ -7,108 +7,110 @@ import lobby_matching from "lobby_matching"
 import message_form_shared from "message_form_shared"
 
 document.addEventListener('DOMContentLoaded', () => {
-  // ~/src/shogi_web/app/channels/lobby_channel.rb
-  App.lobby = App.cable.subscriptions.create("LobbyChannel", {
-    connected() {
-    },
-    disconnected() {
-    },
+  if (App.cable) {
+    // ~/src/shogi_web/app/channels/lobby_channel.rb
+    App.lobby = App.cable.subscriptions.create("LobbyChannel", {
+      connected() {
+      },
+      disconnected() {
+      },
 
-    received(data) {
-      console.log(data)
+      received(data) {
+        console.log(data)
 
-      // 自分だけが受信。ロビーに入ったり出たりする
-      if ("joined_at" in data) {
-        App.lobby_vm.current_user.joined_at = data["joined_at"]
-      }
-
-      // 全体受信。オンラインユーザー追加
-      const joined_user_add = data["joined_user_add"]
-      if (joined_user_add) {
-        App.lobby_vm.online_users = _.concat([joined_user_add], App.lobby_vm.online_users)
-      }
-
-      // 全体受信。オンラインユーザー削除
-      const joined_user_remove = data["joined_user_remove"]
-      if (joined_user_remove) {
-        App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== joined_user_remove.id)
-      }
-
-      // マッチング中に変更
-      if (data["matching_wait"]) {
-        App.lobby_vm.matching_wait(data["matching_wait"]["matching_at"])
-      }
-
-      // ロビーでの発言追加
-      if (data["lobby_message"]) {
-        GVI.talk(data["lobby_message"].message)
-        App.lobby_vm.lobby_messages.push(data["lobby_message"])
-      }
-
-      // バトル追加・更新・削除
-      const battle_cud = data["battle_cud"]
-      if (battle_cud) {
-        const action = battle_cud.action
-        const record = battle_cud.battle
-        if (action === "create") {
-          App.lobby_vm.battles = _.concat([record], App.lobby_vm.battles)
+        // 自分だけが受信。ロビーに入ったり出たりする
+        if ("joined_at" in data) {
+          App.lobby_vm.current_user.joined_at = data["joined_at"]
         }
-        if (action === "update") {
-          const index = App.lobby_vm.battles.findIndex(e => e.id === record.id)
-          Vue.set(App.lobby_vm.battles, index, record)
+
+        // 全体受信。オンラインユーザー追加
+        const joined_user_add = data["joined_user_add"]
+        if (joined_user_add) {
+          App.lobby_vm.online_users = _.concat([joined_user_add], App.lobby_vm.online_users)
         }
-        if (action === "destroy") {
-          App.lobby_vm.battles = App.lobby_vm.battles.filter(e => e.id !== record.id)
+
+        // 全体受信。オンラインユーザー削除
+        const joined_user_remove = data["joined_user_remove"]
+        if (joined_user_remove) {
+          App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== joined_user_remove.id)
         }
-      }
 
-      // ユーザー追加・更新・削除
-      const user_cud = data["user_cud"]
-      if (user_cud) {
-        const action = user_cud.action
-        const record = user_cud.user
-        if (action === "create") {
-          App.lobby_vm.online_users = _.concat([record], App.lobby_vm.online_users)
+        // マッチング中に変更
+        if (data["matching_wait"]) {
+          App.lobby_vm.matching_wait(data["matching_wait"]["matching_at"])
         }
-        if (action === "update") {
-          const index = App.lobby_vm.online_users.findIndex(e => e.id === record.id)
-          Vue.set(App.lobby_vm.online_users, index, record)
+
+        // ロビーでの発言追加
+        if (data["lobby_message"]) {
+          GVI.talk(data["lobby_message"].message)
+          App.lobby_vm.lobby_messages.push(data["lobby_message"])
         }
-        if (action === "destroy") {
-          App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== record.id)
+
+        // バトル追加・更新・削除
+        const battle_cud = data["battle_cud"]
+        if (battle_cud) {
+          const action = battle_cud.action
+          const record = battle_cud.battle
+          if (action === "create") {
+            App.lobby_vm.battles = _.concat([record], App.lobby_vm.battles)
+          }
+          if (action === "update") {
+            const index = App.lobby_vm.battles.findIndex(e => e.id === record.id)
+            Vue.set(App.lobby_vm.battles, index, record)
+          }
+          if (action === "destroy") {
+            App.lobby_vm.battles = App.lobby_vm.battles.filter(e => e.id !== record.id)
+          }
         }
-      }
-    },
 
-    lobby_in_handle(params) {
-      this.perform("lobby_in_handle", params)
-    },
+        // ユーザー追加・更新・削除
+        const user_cud = data["user_cud"]
+        if (user_cud) {
+          const action = user_cud.action
+          const record = user_cud.user
+          if (action === "create") {
+            App.lobby_vm.online_users = _.concat([record], App.lobby_vm.online_users)
+          }
+          if (action === "update") {
+            const index = App.lobby_vm.online_users.findIndex(e => e.id === record.id)
+            Vue.set(App.lobby_vm.online_users, index, record)
+          }
+          if (action === "destroy") {
+            App.lobby_vm.online_users = App.lobby_vm.online_users.filter(e => e.id !== record.id)
+          }
+        }
+      },
 
-    lobby_out_handle(params) {
-      this.perform("lobby_out_handle", params)
-    },
+      lobby_in_handle(params) {
+        this.perform("lobby_in_handle", params)
+      },
 
-    chat_say(message, msg_options = {}) {
-      this.perform("chat_say", {message: message, msg_options: msg_options})
-    },
+      lobby_out_handle(params) {
+        this.perform("lobby_out_handle", params)
+      },
 
-    setting_save(data) {
-      this.perform("setting_save", data)
-    },
+      chat_say(message, msg_options = {}) {
+        this.perform("chat_say", {message: message, msg_options: msg_options})
+      },
 
-    matching_start(data) {
-      this.perform("matching_start", data)
-    },
+      setting_save(data) {
+        this.perform("setting_save", data)
+      },
 
-    matching_start_with_robot(data) {
-      this.perform("matching_start_with_robot", data)
-    },
+      matching_start(data) {
+        this.perform("matching_start", data)
+      },
 
-    matching_cancel(data) {
-      this.perform("matching_cancel", data)
-    },
+      matching_start_with_robot(data) {
+        this.perform("matching_start_with_robot", data)
+      },
 
-  })
+      matching_cancel(data) {
+        this.perform("matching_cancel", data)
+      },
+
+    })
+  }
 })
 
 window.ColosseumBattleIndex = Vue.extend({

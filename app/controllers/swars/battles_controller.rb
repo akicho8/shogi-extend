@@ -354,10 +354,6 @@ module Swars
 
           if current_swars_user
             s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
-          else
-            if AppConfig[:required_user_key_for_search]
-              s = s.none
-            end
           end
 
           # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
@@ -371,6 +367,18 @@ module Swars
             s = s.merge(m)
           end
 
+          s
+        }.call
+      end
+
+      def current_index_scope
+        @current_index_scope ||= -> {
+          s = current_scope
+          unless current_swars_user
+            if AppConfig[:required_user_key_for_search]
+              s = s.none
+            end
+          end
           s
         }.call
       end
