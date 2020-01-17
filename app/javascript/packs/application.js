@@ -151,12 +151,7 @@ window.App = {}
 //   console.log(window.Vue)
 //   console.log(window.GVI)
 // })
-if (GVI.$route.path === "/w" ||
-    GVI.$route.path === "/xy" ||
-    GVI.$route.path === "/x" ||
-    false
-   ) {
-} else {
+if (GVI.$route.path.startsWith("/colosseum")) {
   window.App.cable = ActionCable.createConsumer()
   ActionCable.startDebugging()
 }

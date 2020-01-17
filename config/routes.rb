@@ -21,7 +21,8 @@ Rails.application.routes.draw do
     resources :rankings, only: :index
   end
 
-  root "colosseum/battles#index"
+  # root "colosseum/battles#index"
+  root "swars/battles#index"
 
   ################################################################################ Debug
 

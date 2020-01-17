@@ -110,6 +110,7 @@ Rails.application.configure do
     Rails.application.config.app_config.deep_merge!({
         zip_download_function: false,
         swars_battles_index_filter_options_show: false,
+        colosseum_battle_enable: false,
       })
   end
 end
