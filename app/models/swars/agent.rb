@@ -163,13 +163,16 @@ module Swars
             { user_key: url_info[:white], grade_key: signed_number_to_grade_key(game_hash[:gote_dan]),  },
           ]
 
-          # CSA形式の棋譜
-          # 開始直後に切断している場合は空文字列になる
-          # だから空ではないチェックをしてはいけない
-          info[:csa_seq] = game_hash[:moves].collect { |e| [e[:m], e[:t]] }
+          # :moves がない場合がある
+          if game_hash[:moves]
+            # CSA形式の棋譜
+            # 開始直後に切断している場合は空文字列になる
+            # だから空ではないチェックをしてはいけない
+            info[:csa_seq] = game_hash[:moves].collect { |e| [e[:m], e[:t]] }
 
-          # 対局完了？
-          info[:st_done] = true
+            # 対局完了？
+            info[:st_done] = true
+          end
         end
 
         info
