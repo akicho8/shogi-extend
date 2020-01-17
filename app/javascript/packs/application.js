@@ -151,7 +151,7 @@ window.App = {}
 //   console.log(window.Vue)
 //   console.log(window.GVI)
 // })
-if (GVI.$route.path.includes("/colosseum")) {
+if (GVI.$route.path.includes("/colosseum/battles")) {
   window.App.cable = ActionCable.createConsumer()
   ActionCable.startDebugging()
 }
