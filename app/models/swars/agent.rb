@@ -20,6 +20,7 @@ module Swars
           gtype: "",    # 空:10分 sb:3分 s1:10秒
           user_key: nil,
           page_index: 0,
+          grade_get_on_inex: false,
         }.merge(params)
 
         q = {
@@ -86,7 +87,7 @@ module Swars
 
           # key から行けるページで次の情報もとれるのでここで取得しなくてもいい
           # と思ったが、指定の段位以上の人だけ取り込みたいとき、対局ページにGETする前に判断することができるので取っといた方がいい
-          if false
+          if @options[:grade_get_on_inex]
             if true
               row[:user_infos] = elem.search(".history_prof").collect do |e|
                 [:user_key, :grade_key].zip(e.inner_text.scan(/\S+/)).to_h
@@ -144,7 +145,9 @@ module Swars
         doc = Nokogiri::HTML(str)
         elem = doc.at("//div[@data-react-props]")
         props = JSON.parse(elem["data-react-props"], symbolize_names: true)
-        # pp props
+        if @options[:show_props]
+          pp props
+        end
 
         game_hash = props[:gameHash]
 
