@@ -15,9 +15,9 @@ if ENV["USE_NEW_DOMAIN"].to_s == ""
     runner [
       "XyRecord.entry_name_blank_scope.destroy_all",
       "Swars::Battle.old_record_destroy",
-      "Swars::Crawler::RegularCrawler.run",
-      "Swars::Crawler::ExpertCrawler.run",
-      "Swars::Crawler::RecentlyCrawler.run",
+      # "Swars::Crawler::RegularCrawler.run",
+      # "Swars::Crawler::ExpertCrawler.run",
+      # "Swars::Crawler::RecentlyCrawler.run",
     ].join(";")
   end
 end
