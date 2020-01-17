@@ -219,6 +219,10 @@ module Swars
     end
 
     def run_remote?
+      if Rails.env.test?
+        return false
+      end
+
       @options[:run_remote] || (ENV["RUN_REMOTE"] == "1") || Rails.env.production?
     end
 
