@@ -92,8 +92,8 @@ Rails.application.routes.draw do
     #   locale: "ja",
     # }.merge(options)
     #
-    # "http://kif-pona.heroz.jp/games/#{battle.key}?#{options.to_query}"
-    "http://kif-pona.heroz.jp/games/#{battle.key}"
+    # "https://shogiwars.heroz.jp/games/#{battle.key}?#{options.to_query}"
+    "https://shogiwars.heroz.jp/games/#{battle.key}"
   end
 
   direct :swars_home do |user, **options|

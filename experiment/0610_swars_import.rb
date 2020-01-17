@@ -10,34 +10,34 @@ Swars::Battle.count             # => 20
 # >> | https://shogiwars.heroz.jp/games/history?user_id=Kadokura_Keita&gtype= |
 # >> |------------------------------------------------------------------------|
 # >> |----------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/watatoma-Kadokura_Keita-20190626_183257?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/watatoma-Kadokura_Keita-20190626_183257?locale=ja |
 # >> |----------------------------------------------------------------------------------|
 # >> |------------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/Kadokura_Keita-asigaruhei-20190626_181927?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/Kadokura_Keita-asigaruhei-20190626_181927?locale=ja |
 # >> |------------------------------------------------------------------------------------|
 # >> |-------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/yairo-Kadokura_Keita-20190626_175518?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/yairo-Kadokura_Keita-20190626_175518?locale=ja |
 # >> |-------------------------------------------------------------------------------|
 # >> |----------------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/shimejidonguri-Kadokura_Keita-20190626_174340?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/shimejidonguri-Kadokura_Keita-20190626_174340?locale=ja |
 # >> |----------------------------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/ishiki-Kadokura_Keita-20190626_145119?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/ishiki-Kadokura_Keita-20190626_145119?locale=ja |
 # >> |--------------------------------------------------------------------------------|
 # >> |---------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/Kadokura_Keita-Konosin-20190625_164207?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/Kadokura_Keita-Konosin-20190625_164207?locale=ja |
 # >> |---------------------------------------------------------------------------------|
 # >> |-----------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/ijinotabi-Kadokura_Keita-20190622_232022?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/ijinotabi-Kadokura_Keita-20190622_232022?locale=ja |
 # >> |-----------------------------------------------------------------------------------|
 # >> |----------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/ryoworld-Kadokura_Keita-20190622_231511?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/ryoworld-Kadokura_Keita-20190622_231511?locale=ja |
 # >> |----------------------------------------------------------------------------------|
 # >> |-----------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/tommy2018-Kadokura_Keita-20190622_225736?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/tommy2018-Kadokura_Keita-20190622_225736?locale=ja |
 # >> |-----------------------------------------------------------------------------------|
 # >> |----------------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/ChangChungTing-Kadokura_Keita-20190621_001847?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/ChangChungTing-Kadokura_Keita-20190621_001847?locale=ja |
 # >> |----------------------------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------------|
 # >> | https://shogiwars.heroz.jp/games/history?user_id=Kadokura_Keita&gtype=sb |

@@ -26,7 +26,7 @@ end
 # >> 後手：6ffbeba0e766f3f594c3bd96e31ad095 30級
 # >> 開始日時：2020/01/06 10:56:18
 # >> 棋戦：将棋ウォーズ(10分切れ負け)
-# >> 場所：http://kif-pona.heroz.jp/games/b36cb5b2d89d989b66f05bfda948f2bb
+# >> 場所：https://shogiwars.heroz.jp/games/b36cb5b2d89d989b66f05bfda948f2bb
 # >> 持ち時間：10分
 # >> 先手の備考：入玉, 相入玉, 居飛車, 相居飛車
 # >> 後手の備考：入玉, 相入玉, 居飛車, 相居飛車
@@ -59,7 +59,7 @@ end
 # >> |          final_key | TORYO                                                                                                                                                                                                                                                                                               |
 # >> |        win_user_id | 58                                                                                                                                                                                                                                                                                                  |
 # >> |           turn_max | 14                                                                                                                                                                                                                                                                                                  |
-# >> |          meta_info | {:header=>{"先手"=>"6b11d2dd66ef167d699d2c75c91aec02 30級", "後手"=>"6ffbeba0e766f3f594c3bd96e31ad095 30級", "開始日時"=>"2020/01/06 10:56:18", "棋戦"=>"将棋ウォーズ(10分切れ負け)", "場所"=>"http://kif-pona.heroz.jp/games/b36cb5b2d89d989b66f05bfda948f2bb", "持ち時間"=>"00:10+00", "先手の... |
+# >> |          meta_info | {:header=>{"先手"=>"6b11d2dd66ef167d699d2c75c91aec02 30級", "後手"=>"6ffbeba0e766f3f594c3bd96e31ad095 30級", "開始日時"=>"2020/01/06 10:56:18", "棋戦"=>"将棋ウォーズ(10分切れ負け)", "場所"=>"https://shogiwars.heroz.jp/games/b36cb5b2d89d989b66f05bfda948f2bb", "持ち時間"=>"00:10+00", "先手の... |
 # >> |    last_accessd_at | 2020-01-06 10:56:18 +0900                                                                                                                                                                                                                                                                           |
 # >> |  access_logs_count | 0                                                                                                                                                                                                                                                                                                   |
 # >> |         created_at | 2020-01-06 10:56:19 +0900                                                                                                                                                                                                                                                                           |

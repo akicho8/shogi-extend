@@ -22,7 +22,7 @@ module Swars
   # tp Battle.last
 end
 # >> |------------------------------------------------------------------------------|
-# >> | http://kif-pona.heroz.jp/games/Yosikawakun-soybean-20190226_095952?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/Yosikawakun-soybean-20190226_095952?locale=ja |
 # >> |------------------------------------------------------------------------------|
 # >> |------+--------+-------------------+-------------+-------------+-----------+------------+---------------------------|
 # >> | id   | tag_id | taggable_type     | taggable_id | tagger_type | tagger_id | context    | created_at                |
