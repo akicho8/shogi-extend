@@ -111,6 +111,8 @@ Rails.application.configure do
         zip_download_function: false,
         swars_battles_index_filter_options_show: false,
         colosseum_battle_enable: false,
+        player_info_function: false,
+        more_import_function: false,
       })
   end
 end

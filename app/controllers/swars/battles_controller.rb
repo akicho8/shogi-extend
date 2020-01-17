@@ -132,11 +132,16 @@ module Swars
     end
 
     def js_index_options
-      super.merge({
+      options = super.merge({
           current_swars_user_key: current_swars_user_key,
-          player_info_path: current_swars_user_key ? url_for([:swars, :player_infos, user_key: current_swars_user_key, only_path: true]) : nil,
           required_query_for_search: AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
         })
+      if AppConfig[:player_info_function]
+        if current_swars_user_key
+          options[:player_info_path] = url_for([:swars, :player_infos, user_key: current_swars_user_key, only_path: true])
+        end
+      end
+      options
     end
 
     private
@@ -424,7 +429,6 @@ module Swars
         a[:memberships] = pairs.collect do |label, e|
           attrs = {
             label: label,
-            player_info_path: url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true]),
             icon_html: e.icon_html,
             name_with_grade: e.name_with_grade,
             query_user_url: polymorphic_path(e.user),
@@ -434,6 +438,11 @@ module Swars
             location: { hexagon_mark: e.location.hexagon_mark },
             # position: e.position,
           }
+
+          if AppConfig[:player_info_function]
+            attrs[:player_info_path] = url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true])
+          end
+
           [:attack, :defense].each do |key|
             # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
             #   { name: e, url: swars_tag_search_path(e) }

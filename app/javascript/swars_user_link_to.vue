@@ -7,10 +7,11 @@
         a(@click="js_link_to(membership.query_user_url)")
           b-icon(icon="magnify" size="is-small")
           span.a_label 検索
-      b-dropdown-item(:has-link="true")
-        a(@click="js_link_to(membership.player_info_path)")
-          b-icon(icon="account" size="is-small")
-          span.a_label プレイヤー情報
+      template(v-if="membership.player_info_path")
+        b-dropdown-item(:has-link="true")
+          a(@click="js_link_to(membership.player_info_path)")
+            b-icon(icon="account" size="is-small")
+            span.a_label プレイヤー情報
       b-dropdown-item(:has-link="true")
         a(@click="() => {}" :href="membership.swars_home_url" target="_blank")
           b-icon(icon="open-in-new" size="is-small")

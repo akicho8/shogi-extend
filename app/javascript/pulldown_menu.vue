@@ -30,12 +30,12 @@
           span.a_label コピペ新規
 
     template(v-if="record.memberships")
-      b-dropdown-item(:separator="true")
       template(v-for="e in record.memberships")
-        b-dropdown-item(:has-link="true" :paddingless="true")
-          a(:href="e.player_info_path")
-            b-icon(icon="account" size="is-small")
-            span.a_label {{e.name_with_grade}} 情報
+        template(v-if="e.player_info_path")
+          b-dropdown-item(:has-link="true" :paddingless="true")
+            a(:href="e.player_info_path")
+              b-icon(icon="account" size="is-small")
+              span.a_label {{e.name_with_grade}} 情報
 
     b-dropdown-item(:separator="true")
 
