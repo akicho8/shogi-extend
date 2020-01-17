@@ -37,7 +37,9 @@ namespace :cable_puma do
       end
     end
   end
-  before "deploy:restart", "cable_puma:restart"
+  if ENV["ACTION_CABLE_ENABLE"] == "1"
+    before "deploy:restart", "cable_puma:restart"
+  end
 
   desc "cap production cable_puma:stop"
   task :stop do
@@ -50,7 +52,6 @@ namespace :cable_puma do
       end
     end
   end
-  after "deploy:restart", "cable_puma:status"
 
   desc "cap production cable_puma:status"
   task :status do
@@ -62,5 +63,7 @@ namespace :cable_puma do
       end
     end
   end
-  after "deploy:restart", "cable_puma:status"
+  if ENV["ACTION_CABLE_ENABLE"] == "1"
+    after "deploy:restart", "cable_puma:status"
+  end
 end
