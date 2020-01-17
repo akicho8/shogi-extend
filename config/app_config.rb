@@ -3,6 +3,8 @@ AppConfig.deep_merge!({
     volume: 0.2,
     admin_email: "alice@localhost",
 
+    free_battles_import: false,
+
     zip_download_function: true,     # 一括ダウンロード機能
     zip_download_limit_default: 100, # 一括ダウンロードするときの件数(初期値)
     zip_download_limit_max: 200,     # 一括ダウンロードするときの件数(最大)

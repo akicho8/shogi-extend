@@ -44,7 +44,9 @@ class FreeBattle < ApplicationRecord
       #   end
       # end
 
-      Pathname.glob(Rails.root.join("config/app_data/free_battles/**/0*.kif")).each { |file| file_import(file) }
+      if AppConfig[:free_battles_import]
+        Pathname.glob(Rails.root.join("config/app_data/free_battles/**/0*.kif")).each { |file| file_import(file) }
+      end
 
       # if Rails.env.development?
       #   Pathname("~/src/bioshogi").expand_path.glob("experiment/必死道場/*.kif").sort.each do |file|
