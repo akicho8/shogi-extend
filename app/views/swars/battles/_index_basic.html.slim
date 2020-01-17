@@ -19,9 +19,10 @@
     .column
       = render partial: "search_bottom_share_links"
 
-.columns
-  .column
-    = render partial: "filter_dropdown"
+- if AppConfig[:swars_battles_index_filter_options_show]
+  .columns
+    .column
+      = render partial: "filter_dropdown"
 
 .columns
   .column
