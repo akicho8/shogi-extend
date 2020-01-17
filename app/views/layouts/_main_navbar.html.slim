@@ -51,52 +51,54 @@ nav.navbar.is-primary.is_screen_only
       /       b-dropdown-item(:has-link="true" :paddingless="true")
       /         = link_to("ログアウト", [:colosseum, :session], method: :delete)
 
-      - if current_user
-        .navbar-item.has-dropdown.is-hoverable
-          = link_to([current_user], class: "navbar-link", slot: "trigger") do
-            = image_tag(current_user.avatar_url, class: "header_avatar_image")
-            - unless Rails.env.production?
-              span.my_name
-                b= current_user.name
-          .navbar-dropdown.is-boxed.is-right
-            = link_to(icon_tag("account", margin_right: 2) + "プロフィール", [current_user], class: "navbar-item")
-            = link_to(icon_tag("settings-outline", margin_right: 2) + "設定", [:edit, current_user], class: "navbar-item")
-            .navbar-divider
-            = link_to(icon_tag("logout", margin_right: 2) + "ログアウト", [:colosseum, :session], method: :delete, class: "navbar-item")
-            / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
+      - if params[:controller].start_with?("colosseum/battles") || params[:controller].start_with?("xy_records") || params[:controller].start_with?("free_battles")
+        - if current_user
+          .navbar-item.has-dropdown.is-hoverable
+            = link_to([current_user], class: "navbar-link", slot: "trigger") do
+              = image_tag(current_user.avatar_url, class: "header_avatar_image")
+              - unless Rails.env.production?
+                span.my_name
+                  b= current_user.name
+            .navbar-dropdown.is-boxed.is-right
+              = link_to(icon_tag("account", margin_right: 2) + "プロフィール", [current_user], class: "navbar-item")
+              = link_to(icon_tag("settings-outline", margin_right: 2) + "設定", [:edit, current_user], class: "navbar-item")
+              .navbar-divider
+              = link_to(icon_tag("logout", margin_right: 2) + "ログアウト", [:colosseum, :session], method: :delete, class: "navbar-item")
+              / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
-        / こっちを使うと縦幅が大きくなってしまう
-        / span.navbar-item
-        /   b-dropdown(hoverable)
-        /     = link_to([current_user], class: "navbar-link", slot: "trigger") do
-        /       = image_tag(current_user.avatar_url, class: "header_avatar_image")
-        /       span.my_name
-        /         = current_user.name
-        /     b-dropdown-item(:has-link="true" :paddingless="true")
-        /       = link_to("プロフィール", [current_user], id: "header_profile_show")
-        /     b-dropdown-item(:has-link="true" :paddingless="true")
-        /       = link_to("設定", [:edit, current_user])
-        /     b-dropdown-item(:separator="true")
-        /     b-dropdown-item(:has-link="true" :paddingless="true")
-        /       = link_to("ログアウト", [:colosseum, :session], method: :delete)
-        /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
+          / こっちを使うと縦幅が大きくなってしまう
+          / span.navbar-item
+          /   b-dropdown(hoverable)
+          /     = link_to([current_user], class: "navbar-link", slot: "trigger") do
+          /       = image_tag(current_user.avatar_url, class: "header_avatar_image")
+          /       span.my_name
+          /         = current_user.name
+          /     b-dropdown-item(:has-link="true" :paddingless="true")
+          /       = link_to("プロフィール", [current_user], id: "header_profile_show")
+          /     b-dropdown-item(:has-link="true" :paddingless="true")
+          /       = link_to("設定", [:edit, current_user])
+          /     b-dropdown-item(:separator="true")
+          /     b-dropdown-item(:has-link="true" :paddingless="true")
+          /       = link_to("ログアウト", [:colosseum, :session], method: :delete)
+          /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
-      - if !current_user
-        = link_to(content_tag("b-icon", "", icon: "login", size: "is-small") + "&nbsp;&nbsp;ログイン".html_safe, :new_xuser_session, class: "navbar-item")
-        = link_to("アカウント登録", :new_xuser_registration, class: "navbar-item") unless Rails.env.production?
-        / .navbar-item.has-dropdown.is-hoverable
-        /   span.navbar-link ログイン
-        /   .navbar-dropdown.is-boxed
-        /     = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "navbar-item")
-        /     = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
+        - if !current_user
+          = link_to(content_tag("b-icon", "", icon: "login", size: "is-small") + "&nbsp;&nbsp;ログイン".html_safe, :new_xuser_session, class: "navbar-item")
+          = link_to("アカウント登録", :new_xuser_registration, class: "navbar-item") unless Rails.env.production?
+          / .navbar-item.has-dropdown.is-hoverable
+          /   span.navbar-link ログイン
+          /   .navbar-dropdown.is-boxed
+          /     = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "navbar-item")
+          /     = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
 
-      .navbar-item(v-if="joined_only_count > 0")
-        b-tooltip(label="ロビーに入っている人数" position="is-left")
-          b-icon(icon="account")
-          | &nbsp;
-          | {{joined_only_count}}
-      .navbar-item(v-if="fighter_only_count > 0")
-        b-tooltip(label="対局中の人数" position="is-left")
-          b-icon(icon="play")
-          | &nbsp;
-          | {{fighter_only_count}}
+      template(v-if="$route.path.includes('/colosseum/battles')")
+        .navbar-item(v-if="joined_only_count > 0")
+          b-tooltip(label="ロビーに入っている人数" position="is-left")
+            b-icon(icon="account")
+            | &nbsp;
+            | {{joined_only_count}}
+        .navbar-item(v-if="fighter_only_count > 0")
+          b-tooltip(label="対局中の人数" position="is-left")
+            b-icon(icon="play")
+            | &nbsp;
+            | {{fighter_only_count}}
