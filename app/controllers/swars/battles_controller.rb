@@ -425,7 +425,10 @@ module Swars
         a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
         a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
         a[:swars_real_battle_url] = swars_real_battle_url(e)
-        a[:wars_tweet_body] = e.wars_tweet_body
+
+        if AppConfig[:swars_side_tweet_copy_function]
+          a[:wars_tweet_body] = e.wars_tweet_body
+        end
 
         fliped, pairs = left_right_pairs(e)
         a[:memberships] = pairs.collect do |label, e|
