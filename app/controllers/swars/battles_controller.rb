@@ -236,7 +236,7 @@ module Swars
       fliped = false
       a = record.memberships.to_a
       if current_swars_user
-        labels = ["対象", "相手"]
+        labels = ["検索対象", "対局相手"]
         if a.last.user == current_swars_user
           fliped = true
         end

@@ -6,7 +6,7 @@
       b-dropdown-item(:has-link="true")
         a(@click="js_link_to(membership.query_user_url)")
           b-icon(icon="magnify" size="is-small")
-          span.a_label 検索
+          span.a_label 棋譜検索
       template(v-if="membership.player_info_path")
         b-dropdown-item(:has-link="true")
           a(@click="js_link_to(membership.player_info_path)")
