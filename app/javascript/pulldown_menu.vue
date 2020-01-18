@@ -89,7 +89,7 @@
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.swars_real_battle_url" target="_blank")
           b-icon(icon="link" size="is-small")
-          span.a_label ウォーズに移動
+          span.a_label ウォーズに飛ぶ
 
     template(v-if="record.wars_tweet_body")
       b-dropdown-item(:has-link="true" :paddingless="true")

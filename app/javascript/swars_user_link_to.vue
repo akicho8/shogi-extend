@@ -15,7 +15,7 @@
       b-dropdown-item(:has-link="true")
         a(@click="() => {}" :href="membership.swars_home_url" target="_blank")
           b-icon(icon="open-in-new" size="is-small")
-          span.a_label ウォーズに移動
+          span.a_label ウォーズに飛ぶ
       b-dropdown-item(:has-link="true")
         a(@click="() => {}" :href="membership.google_search_url" target="_blank")
           b-icon(icon="google" size="is-small")

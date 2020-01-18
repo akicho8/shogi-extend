@@ -14,7 +14,7 @@ template(slot="detail" slot-scope="props")
       | KI2 ダウンロード
 
     a.button(:href="props.row.swars_real_battle_url" target="_blank")
-      | ウォーズに移動
+      | ウォーズに飛ぶ
 
     a.button(@click.prevent="wars_tweet_copy_click(props.row.wars_tweet_body)")
       | Tweetコピー
