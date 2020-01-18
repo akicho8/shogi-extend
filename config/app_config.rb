@@ -10,6 +10,7 @@ AppConfig.deep_merge!({
     swars_tag_search_function: true, # タグ検索
     battle_index_permalink_show: true,            # 固定リンクを表示するか？
     swars_side_tweet_copy_function: true,
+    search_form_datalist_function: true, # 検索で入力したユーザー名を共有して検索候補にするか？
 
     zip_download_function: true,     # 一括ダウンロード機能
     zip_download_limit_default: 100, # 一括ダウンロードするときの件数(初期値)

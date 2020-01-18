@@ -2,7 +2,7 @@
   - Swars::User.search_form_datalist.each do |e|
     = tag.option(value: e)
 
-    - if AppConfig[:swars_tag_search_function]
-      = cache do
-        - Bioshogi::TacticInfo.all_elements.each do |e|
-          = tag.option(value: "tag:#{e.name}")
+  - if AppConfig[:swars_tag_search_function]
+    = cache do
+      - Bioshogi::TacticInfo.all_elements.each do |e|
+        = tag.option(value: "tag:#{e.name}")

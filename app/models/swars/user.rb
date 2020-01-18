@@ -79,6 +79,10 @@ module Swars
 
       class_methods do
         def search_form_datalist
+          if !AppConfig[:search_form_datalist_function]
+            return []
+          end
+
           Rails.cache.fetch("search_form_datalist", expires_in: Rails.env.production? ? 1.days : 0) do
             user_keys = []
 
