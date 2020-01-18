@@ -177,7 +177,7 @@ module Swars
           end
 
           if hit_count.nonzero?
-            slack_message(key: current_mode == :basic ? "ウ検索" : "ぴよ専用検索", body: "#{current_swars_user_key} #{hit_count}件")
+            slack_message(key: current_mode == :basic ? "検索" : "ぴよ専用検索", body: "#{current_swars_user_key} #{hit_count}件")
           end
         end
       end
