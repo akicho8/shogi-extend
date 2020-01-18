@@ -109,6 +109,8 @@ Rails.application.configure do
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
         zip_download_function: false,
+        # zip_download_function: false,
+        swars_index_permalink_show: false,
         swars_battles_index_filter_options_show: false,
         colosseum_battle_enable: false,
         player_info_function: false,
