@@ -259,7 +259,9 @@ module Swars
     end
 
     def swars_tag_search_path(e)
-      url_for([:swars, current_mode, query: "tag:#{e}", only_path: true])
+      if AppConfig[:swars_tag_search_function]
+        url_for([:swars, current_mode, query: "tag:#{e}", only_path: true])
+      end
     end
 
     let :current_swars_user do

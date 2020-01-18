@@ -24,12 +24,20 @@ template(slot-scope="props")
         template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
           template(v-if="table_columns_hash[key].visible")
             template(v-for="tag in m[key]")
-              a.has-text-grey.is-size-7.tag_name(@click.stop :href="tag.url")
-                | {{tag.name}}
+              template(v-if="tag.url")
+                a.has-text-grey.is-size-7.tag_name(@click.stop :href="tag.url")
+                  | {{tag.name}}
+              template(v-else)
+                span.has-text-grey.is-size-7.tag_name
+                  | {{tag.name}}
 
   b-table-column(field="final_key" :label="table_columns_hash.final_info.label" :visible="table_columns_hash.final_info.visible" sortable)
-    a(@click.stop :href="props.row.final_info.url" :class="props.row.final_info.class")
-      | {{props.row.final_info.name}}
+    template(v-if="props.row.final_info.url")
+      a(@click.stop :href="props.row.final_info.url" :class="props.row.final_info.class")
+        | {{props.row.final_info.name}}
+    template(v-else)
+      span(:class="props.row.final_info.class")
+        | {{props.row.final_info.name}}
 
   b-table-column(field="turn_max" :label="table_columns_hash.turn_max.label" :visible="table_columns_hash.turn_max.visible" sortable numeric)
     | {{props.row.turn_max}}
@@ -41,11 +49,17 @@ template(slot-scope="props")
   /   | {{props.row.grade_diff}}
 
   b-table-column(field="rule_key" :label="table_columns_hash.rule_info.label" :visible="table_columns_hash.rule_info.visible" sortable)
-    a(@click.stop :href="props.row.rule_info.url")
+    template(v-if="props.row.rule_info.url")
+      a(@click.stop :href="props.row.rule_info.url")
+        | {{props.row.rule_info.name}}
+    template(v-else)
       | {{props.row.rule_info.name}}
 
   b-table-column(field="preset_key" :label="table_columns_hash.preset_info.label" :visible="table_columns_hash.preset_info.visible" sortable)
-    a(@click.stop :href="props.row.preset_info.url")
+    template(v-if="props.row.preset_info.url")
+      a(@click.stop :href="props.row.preset_info.url")
+        | {{props.row.preset_info.name}}
+    template(v-else)
       | {{props.row.preset_info.name}}
 
   b-table-column(field="battled_at" :label="table_columns_hash.battled_at.label" :visible="table_columns_hash.battled_at.visible" sortable)

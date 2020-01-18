@@ -4,9 +4,10 @@ AppConfig.deep_merge!({
     admin_email: "alice@localhost",
 
     free_battles_import: false,
-    colosseum_battle_enable: true,  # ネット対戦機能
-    player_info_function: true,     # プレイヤー情報
-    more_import_function: true,     # もっと取り込む
+    colosseum_battle_enable: true,   # ネット対戦機能
+    player_info_function: true,      # プレイヤー情報
+    more_import_function: true,      # もっと取り込む
+    swars_tag_search_function: true, # タグ検索
 
     zip_download_function: true,     # 一括ダウンロード機能
     zip_download_limit_default: 100, # 一括ダウンロードするときの件数(初期値)

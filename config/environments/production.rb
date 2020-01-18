@@ -113,6 +113,7 @@ Rails.application.configure do
         colosseum_battle_enable: false,
         player_info_function: false,
         more_import_function: false,
+        swars_tag_search_function: false,
       })
   end
 end

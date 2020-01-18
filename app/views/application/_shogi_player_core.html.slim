@@ -20,8 +20,9 @@
         .message-body
           = current_record.description
 
-  br
-  .has-text-centered
-    .tags.is-inline
-      - current_record.showable_tag_list.each do |e|
-       span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])
+  - if AppConfig[:swars_tag_search_function]
+      br
+      .has-text-centered
+        .tags.is-inline
+          - current_record.showable_tag_list.each do |e|
+           span.tag= link_to(e, [:swars, :basic, query: "tag:#{e}"])
