@@ -350,7 +350,7 @@ module Swars
 
     concerning :IndexCustomMethods do
       let :current_placeholder do
-        "将棋ウォーズのユーザー名を入力してください"
+        "プレイヤーIDを入力してください"
       end
 
       def current_scope
