@@ -22,7 +22,7 @@
   / hr
 
   .columns
-    .column.is-two-thirds
+    .column
       = form_with(model: [ns_prefix, current_record], html: {"@submit": "input_text_storage_clear"}) do |form|
         = render partial: "error_messages", locals: {form: form}
         = render partial: "form", locals: {form: form}
