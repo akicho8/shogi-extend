@@ -7,10 +7,9 @@ job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
 if ENV["USE_NEW_DOMAIN"].to_s == ""
-  every("0 * * * *") { runner "Colosseum::Battle.auto_close" }
-
   every("5 4 * * *") do
     runner [
+      "Colosseum::Battle.auto_close",
       "XyRecord.entry_name_blank_scope.destroy_all",
       "Swars::Battle.old_record_destroy",
       # "Swars::Crawler::RegularCrawler.run",
