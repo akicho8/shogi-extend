@@ -21,6 +21,12 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   methods: {
+    // テーブルを表示する条件は検索文字列があること
+    // フォームに割り当てられている this.query だと変動するので使ってはいけない
+    table_display_p() {
+      return this.$options.query
+    },
+
     player_info_click_hadle(e) {
       if (this.$options.player_info_path) {
         this.$buefy.dialog.confirm({

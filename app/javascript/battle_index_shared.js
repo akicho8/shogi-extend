@@ -54,6 +54,11 @@ export default {
   },
 
   methods: {
+    // テーブルを表示する条件
+    table_display_p() {
+      return true
+    },
+
     trick_show_handle() {
       this.trick_show = !this.trick_show
     },
