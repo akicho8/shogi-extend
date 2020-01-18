@@ -8,7 +8,6 @@ module BattleModelSharedMethods
     cattr_accessor(:kifu_cache_expires_in) { 1.days }
 
     acts_as_ordered_taggable_on :other_tags
-    acts_as_ordered_taggable_on :secret_tags
 
     has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :convertable
 
@@ -52,33 +51,35 @@ module BattleModelSharedMethods
     self.critical_turn = info.mediator.critical_turn
     self.sfen_body = info.mediator.to_sfen
 
-    self.meta_info = {
-      :header          => info.header.to_h,
-      :detail_names    => info.header.sente_gote.collect { |e| Splitter.split(info.header["#{e}詳細"]) },
-      :simple_names    => info.header.sente_gote.collect { |e| Splitter.pair_split(info.header[e]) },
-      :skill_set_hash  => info.skill_set_hash,
-    }
+    # self.meta_info = {
+    #   :header          => info.header.to_h,
+    #   # :detail_names    => info.header.sente_gote.collect { |e| Splitter.split(info.header["#{e}詳細"]) },
+    #   # :simple_names    => info.header.sente_gote.collect { |e| Splitter.pair_split(info.header[e]) },
+    #   # :skill_set_hash  => info.skill_set_hash,
+    # }
 
-    self.defense_tag_list = ""
-    self.attack_tag_list = ""
-    self.technique_tag_list = ""
-    self.note_tag_list = ""
-    self.other_tag_list = ""
-    self.secret_tag_list = ""
+    if AppConfig[:swars_tag_search_function]
+      self.defense_tag_list = ""
+      self.attack_tag_list = ""
+      self.technique_tag_list = ""
+      self.note_tag_list = ""
+      self.other_tag_list = ""
 
-    defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-    attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-    technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-    note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+      attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
 
-    other_tag_list.add info.header["棋戦"]
-    other_tag_list.add info.header["持ち時間"]
-    other_tag_list.add tournament_list
-    other_tag_list.add Splitter.split(info.header["掲載"].to_s)
-    other_tag_list.add Splitter.split(info.header["備考"].to_s)
-    other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
-    other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}"])     }
-    other_tag_list.add place_list
+      other_tag_list.add info.header["棋戦"]
+      other_tag_list.add info.header["持ち時間"]
+      other_tag_list.add tournament_list
+      other_tag_list.add Splitter.split(info.header["掲載"].to_s)
+      other_tag_list.add Splitter.split(info.header["備考"].to_s)
+      other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
+      other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}"])     }
+      other_tag_list.add place_list
+      other_tag_list.add info.header["手合割"]
+    end
 
     if v = info.header["開始日時"].presence
       if t = (Time.zone.parse(v) rescue nil)
@@ -96,8 +97,6 @@ module BattleModelSharedMethods
     else
       self.battled_at ||= Time.zone.parse("0001/01/01")
     end
-
-    other_tag_list.add info.header["手合割"]
 
     parser_exec_after(info)
     @parser_executed = true
@@ -147,19 +146,21 @@ module BattleModelSharedMethods
     ]
   end
 
-  def place_list
-    v = meta_info[:header]["場所"].to_s
-    if v.start_with?("http")
-      return []
+  if AppConfig[:swars_tag_search_function]
+    def place_list
+      v = meta_info[:header]["場所"].to_s
+      if v.start_with?("http")
+        return []
+      end
+      if md = v.match(/(.*)「(.*?)」/)
+        v = md.captures
+      end
+      Array(v).reject(&:blank?)
     end
-    if md = v.match(/(.*)「(.*?)」/)
-      v = md.captures
-    end
-    Array(v).reject(&:blank?)
-  end
 
-  def tournament_list
-    Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
+    def tournament_list
+      Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
+    end
   end
 
   def to_kifu_copy_params(h, **options)
