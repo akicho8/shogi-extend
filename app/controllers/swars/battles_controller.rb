@@ -348,7 +348,7 @@ module Swars
 
     concerning :IndexCustomMethods do
       let :current_placeholder do
-        "ウォーズIDまたは対局URLを入力してください"
+        "将棋ウォーズのユーザー名を入力してください"
       end
 
       def current_scope
