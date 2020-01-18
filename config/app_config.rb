@@ -12,11 +12,11 @@ AppConfig.deep_merge!({
     swars_side_tweet_copy_function: true,
     search_form_datalist_function: true, # 検索で入力したユーザー名を共有して検索候補にするか？
 
-    zip_download_function: true,     # 一括ダウンロード機能
-    zip_download_limit_default: 100, # 一括ダウンロードするときの件数(初期値)
-    zip_download_limit_max: 200,     # 一括ダウンロードするときの件数(最大)
+    zip_download_function: true,    # 一括ダウンロード機能
+    zip_download_limit_default: 50, # 一括ダウンロードするときの件数(初期値)
+    zip_download_limit_max: 50,     # 一括ダウンロードするときの件数(最大)
 
-    per_page_list: [25, 50],                       # 1ページあたりの項目数選択肢リストの最初と最後を除いたもの
+    per_page_list: [25],                           # 1ページあたりの項目数選択肢リストの最初と最後を除いたもの
     required_user_key_for_search: true,            # 検索にはユーザー名を必ず指定するか？
     required_query_for_search: true,               # js側から一覧のレコードを出すときは必ず query が入っていないといけないか？
     swars_battles_index_filter_options_show: true, # 将棋ウォーズ棋譜検索のフィルターオプションを表示する？
