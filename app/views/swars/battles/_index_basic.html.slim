@@ -107,7 +107,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
               li
                 b
                   = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-                | をタップしたあと「ホーム画面に追加」しておくとアイコンから最新の対局をぴよ将棋で開けるようになります
+                | をタップしたあと「ホーム画面に追加」しておくとホームのアイコンから最新の対局をすぐにぴよ将棋で開けます
 
 - if Rails.env.development? && false
   = Swars::User.to_html
