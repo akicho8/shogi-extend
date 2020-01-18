@@ -92,7 +92,7 @@ export default {
         }
 
         this.talk(params["success_yomiage"], {rate: 1.5})
-        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom"})
+        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", type: "is-info"})
       }
 
       // この方法は Windows Chrome で必ず失敗するというか navigator.clipboard が定義されてないので激指をメインで使う人は異様に使いにくくなってしまう
