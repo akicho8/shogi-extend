@@ -108,7 +108,6 @@ Rails.application.configure do
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
-        zip_download_function: false,
         # zip_download_function: false,
         swars_index_permalink_show: false,
         swars_battles_index_filter_options_show: false,

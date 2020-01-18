@@ -8,6 +8,7 @@ AppConfig.deep_merge!({
     player_info_function: true,      # プレイヤー情報
     more_import_function: true,      # もっと取り込む
     swars_tag_search_function: true, # タグ検索
+    swars_index_permalink_show: true,            # 固定リンクを表示するか？
 
     zip_download_function: true,     # 一括ダウンロード機能
     zip_download_limit_default: 100, # 一括ダウンロードするときの件数(初期値)

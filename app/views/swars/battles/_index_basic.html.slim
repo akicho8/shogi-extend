@@ -86,9 +86,9 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
             =<> link_to(params.to_unsafe_h.merge(format: "zip"), class: "button is-small") do
               b-icon(icon="download" size="is-small")
               | &nbsp;&nbsp;
-              - if current_query
-                | この検索条件で
-              = "まとめてダウンロード"
+              / - if current_query
+              /   | この検索条件で
+              = "まとめてZIPダウンロード"
 
 .columns
   .column
