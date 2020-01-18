@@ -91,7 +91,7 @@ module Swars
             # すごい人たち
             user_keys += Rails.cache.fetch("great_only", expires_in: Rails.env.production? ? 1.days : 0) { great_only.limit(10).pluck(:user_key) }
 
-            user_keys.uniq
+            user_keys.sort.uniq
           end
         end
       end
