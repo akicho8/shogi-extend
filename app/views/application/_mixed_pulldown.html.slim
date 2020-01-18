@@ -45,9 +45,10 @@
 
     = link_to("棋譜印刷", [ns_prefix, current_record, formal_sheet: true], class: "button")
 
-    - if current_record.kind_of?(Swars::Battle)
-      - current_record.memberships.each do |e|
-        = link_to("#{e.user.name_with_grade} 情報", [:swars, :player_infos, user_key: e.user.key], class: "button")
+    - if AppConfig[:player_info_function]
+      - if current_record.kind_of?(Swars::Battle)
+        - current_record.memberships.each do |e|
+          = link_to("#{e.user.name_with_grade} 情報", [:swars, :player_infos, user_key: e.user.key], class: "button")
 
     a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
       b-icon(icon="twitter" size="is-small")
