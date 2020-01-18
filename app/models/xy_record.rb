@@ -25,7 +25,7 @@ class XyRecord < ApplicationRecord
   ACCURACY = 3
 
   class << self
-    def setup(options = {})
+    def setup(**options)
       if Rails.env.development?
         create!(xy_rule_key: "xy_rule100", entry_name: "a", spent_sec: 0.2, x_count: 0)
         create!(xy_rule_key: "xy_rule100", entry_name: "a", spent_sec: 0.3, x_count: 0)

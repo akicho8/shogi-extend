@@ -81,7 +81,7 @@ module Colosseum
       end
 
       class_methods do
-        def setup(options = {})
+        def setup(**options)
           super
 
           sysop

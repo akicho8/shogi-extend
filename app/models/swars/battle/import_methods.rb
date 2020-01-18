@@ -2,7 +2,7 @@ module Swars
   class Battle
     concern :ImportMethods do
       class_methods do
-        def setup(options = {})
+        def setup(**options)
           super
 
           if Rails.env.development?

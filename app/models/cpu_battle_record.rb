@@ -19,7 +19,7 @@
 
 class CpuBattleRecord < ApplicationRecord
   class << self
-    def setup(options = {})
+    def setup(**options)
       unless Rails.env.production?
         create!(user: Colosseum::User.sysop, judge_key: :win)
         create!(user: nil,                   judge_key: :lose)

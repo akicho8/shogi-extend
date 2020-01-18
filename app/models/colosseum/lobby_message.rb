@@ -17,7 +17,7 @@
 module Colosseum
   class LobbyMessage < ApplicationRecord
     class << self
-      def setup(options = {})
+      def setup(**options)
         if Rails.env.development?
           user = User.first
           user.lobby_chat_say("(message)")
