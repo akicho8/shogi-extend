@@ -60,7 +60,13 @@ module Swars
             time: 2.weeks.ago,
           }.merge(params)
 
-          all.where(arel_table[:last_accessd_at].lteq(params[:time])).find_each(batch_size: 100, &:destroy)
+          all.where(arel_table[:last_accessd_at].lteq(params[:time])).find_in_batches(batch_size: 100) do |g|
+            begin
+              g.each(&:destroy)
+            rescue ActiveRecord::Deadlocked => error
+              puts error
+            end
+          end
         end
 
         # cap production rails:runner CODE='Swars::Battle.remake'

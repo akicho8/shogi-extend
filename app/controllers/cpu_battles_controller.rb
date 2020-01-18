@@ -105,7 +105,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def current_cpu_brain_key
-    params[:cpu_brain_key].presence || (Rails.env.development? ? :level3 : :level4)
+    params[:cpu_brain_key].presence || :level3
   end
 
   private
@@ -386,7 +386,7 @@ class CpuBattlesController < ApplicationController
       { key: :level3,  name: "めちゃくちゃ弱い",   time_limit: nil, depth_max_range: 0..0, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 最初の合法手リストを最善手順に並べたもの
       { key: :level4,  name: "かなり弱い",         time_limit:   3, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 3秒まで深読みできる
       { key: :level5,  name: "弱い",               time_limit:   5, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 必ず相手の手を読む
-      { key: :level5a, name: "1手読み(TLE無)",     time_limit: nil, depth_max_range: 1..1, legal_only: nil,   mate_danger_check: true,  development_only: false, }, # 必ず1手読
+      { key: :level5a, name: "1手読み(TLE無)",     time_limit: nil, depth_max_range: 1..1, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 必ず1手読
       { key: :level6,  name: "長考10秒",           time_limit:  10, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
       { key: :level7,  name: "長考30秒",           time_limit:  30, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
       { key: :level8,  name: "長考1分",            time_limit:  60, depth_max_range: 0..9, legal_only: nil,   mate_danger_check: true,  development_only: true,  }, # 長考
