@@ -14,10 +14,7 @@
         p.control
           = form.button("検索", name: nil, class: "button is-info")
 
-- if current_swars_user
-  .columns
-    .column
-      = render partial: "search_bottom_share_links"
+= render partial: "search_bottom_share_links"
 
 - if AppConfig[:swars_battles_index_filter_options_show]
   .columns

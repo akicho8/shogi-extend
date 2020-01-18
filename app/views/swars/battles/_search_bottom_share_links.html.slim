@@ -1,29 +1,31 @@
-- if current_swars_user
+- if !Rails.env.production? || AppConfig[:player_info_function] || AppConfig[:more_import_function]
+  - if current_swars_user
+    .columns
+      .column
+        - if !Rails.env.production?
+          = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
+            | 最新の対局を
+            = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
+            | で開く
+          | &nbsp;
 
-  - unless Rails.env.production?
-    = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
-      | 最新の対局を
-      = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
-      | で開く
-    | &nbsp;
+        / template(v-if="fetched_count >= 1 && records.length >= 1")
+        /   a.button.is-warning.is-small.is-rounded(@click.stop="saisin_hiraku")
+        /     | 最新の対局を
+        /     = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
+        /     | で開く2
 
-  / template(v-if="fetched_count >= 1 && records.length >= 1")
-  /   a.button.is-warning.is-small.is-rounded(@click.stop="saisin_hiraku")
-  /     | 最新の対局を
-  /     = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
-  /     | で開く2
+        / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
+        / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-small is-rounded")
+        / | &nbsp;
 
-  / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key, import_skip: true], class: "button is-primary is-smal")
-  / = link_to("プレイヤー情報", [:swars, :player_infos, user_key: current_swars_user.user_key], class: "button is-small is-rounded")
-  / | &nbsp;
+        - if AppConfig[:player_info_function]
+          b-tooltip(label="切断率などがわかります")
+            = link_to("プレイヤー情報", "#", class: "button is-small is-rounded", "@click" => "player_info_click_hadle")
 
-  - if AppConfig[:player_info_function]
-    b-tooltip(label="切断率などがわかります")
-      = link_to("プレイヤー情報", "#", class: "button is-small is-rounded", "@click" => "player_info_click_hadle")
+        - if AppConfig[:more_import_function]
+          | &nbsp;
+          b-tooltip(label="古い棋譜も可能な限り取り込みます")
+            = link_to("もっと取り込む", "#", class: "button is-small is-rounded", "@click" => "many_import_handle")
 
-  - if AppConfig[:more_import_function]
-    | &nbsp;
-    b-tooltip(label="古い棋譜も可能な限り取り込みます")
-      = link_to("もっと取り込む", "#", class: "button is-small is-rounded", "@click" => "many_import_handle")
-
-  = link_to("", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "many_import_link")
+          = link_to("", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "many_import_link")
