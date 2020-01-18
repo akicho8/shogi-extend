@@ -60,7 +60,7 @@ module Swars
             time: 2.weeks.ago,
           }.merge(params)
 
-          all.where(arel_table[:last_accessd_at].lteq(params[:time])).destroy_all
+          all.where(arel_table[:last_accessd_at].lteq(params[:time])).find_each(batch_size: 100, &:destroy)
         end
 
         # cap production rails:runner CODE='Swars::Battle.remake'
