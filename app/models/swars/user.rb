@@ -83,13 +83,13 @@ module Swars
             user_keys = []
 
             # 利用者
-            user_keys += recently_only.limit(16).pluck(:user_key)
+            user_keys += recently_only.limit(10).pluck(:user_key)
 
             # 最近取り込んだ人たち
-            user_keys += all.order(updated_at: :desc).limit(16).pluck(:user_key)
+            user_keys += all.order(updated_at: :desc).limit(10).pluck(:user_key)
 
             # すごい人たち
-            user_keys += Rails.cache.fetch("great_only", expires_in: Rails.env.production? ? 1.days : 0) { great_only.limit(32).pluck(:user_key) }
+            user_keys += Rails.cache.fetch("great_only", expires_in: Rails.env.production? ? 1.days : 0) { great_only.limit(10).pluck(:user_key) }
 
             user_keys.uniq
           end
