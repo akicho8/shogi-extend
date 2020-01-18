@@ -24,16 +24,17 @@
     .column
       = render partial: "filter_dropdown"
 
-.columns
-  .column
-    button.button.is-small(@click.stop.prevent="trick_show_handle")
-      | 仕掛けの局面を表示
-      | &nbsp;&nbsp;&nbsp;
-      b-icon(:icon="!trick_show ? 'grid' : 'minus'" size="is-small")
-    template(v-if="trick_show")
-      | &nbsp;
-      | &nbsp;
-      b-switch(v-model="end_show") 終了図
+template(v-if="fetched_count >= 1 && records.length >= 1")
+  .columns
+    .column
+      button.button.is-small(@click.stop.prevent="trick_show_handle")
+        | 仕掛けの局面を表示
+        | &nbsp;&nbsp;&nbsp;
+        b-icon(:icon="!trick_show ? 'grid' : 'minus'" size="is-small")
+      template(v-if="trick_show")
+        | &nbsp;
+        | &nbsp;
+        b-switch(v-model="end_show") 終了図
 
 - if false
   template(v-if="trick_show")

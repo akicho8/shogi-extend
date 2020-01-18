@@ -1,53 +1,55 @@
-.columns
-  .column
-    b-field(grouped group-multiline)
-      div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
-        b-checkbox.is-small(v-model="value.visible")
-          | {{value.label}}
+template(v-if="fetched_count >= 1")
+  .columns
+    .column
+      template(v-if="records.length >= 1")
+        b-field(grouped group-multiline)
+          div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
+            b-checkbox.is-small(v-model="value.visible")
+              | {{value.label}}
 
-    b-table.is_row_clickable(
-      hoverable
+      b-table.is_row_clickable(
+        hoverable
 
-      :loading="loading"
+        :loading="loading"
 
-      paginated
-      backend-pagination
-      pagination-simple
-      :current-page="page"
-      :data="records"
-      :total="total"
-      :per-page="per"
-      @page-change="page_change_handle"
+        paginated
+        backend-pagination
+        pagination-simple
+        :current-page="page"
+        :data="records"
+        :total="total"
+        :per-page="per"
+        @page-change="page_change_handle"
 
-      backend-sorting
-      :default-sort-direction="$options.sort_order_default"
-      :default-sort="[sort_column, sort_order]"
-      @sort="sort_handle"
+        backend-sorting
+        :default-sort-direction="$options.sort_order_default"
+        :default-sort="[sort_column, sort_order]"
+        @sort="sort_handle"
 
-      ref="table"
-      :opened-detailed="defaultOpenedDetails"
-      :detailed="detailed"
-      detail-key="id"
-      @details-open="details_open_handle"
-      :show-detail-icon="showDetailIcon"
+        ref="table"
+        :opened-detailed="defaultOpenedDetails"
+        :detailed="detailed"
+        detail-key="id"
+        @details-open="details_open_handle"
+        :show-detail-icon="showDetailIcon"
 
-      @click="show_handle"
+        @click="show_handle"
 
-      :row-class="(row, index) => row.saturn_key"
+        :row-class="(row, index) => row.saturn_key"
 
-      )
+        )
 
-      / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
+        / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
 
-      = render partial: "table_empty"
-      = render partial: "row"
-      = render partial: "detail"
+        = render partial: "table_empty"
+        = render partial: "row"
+        = render partial: "detail"
 
-    - if Rails.env.development?
-      .box.line_break_on
-        p
-          | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} $options.sort_order_default={{$options.sort_order_default}}
-        p
-          | visible_columns: {{visible_columns}}
-        p
-          | permalink_url: {{permalink_url}}
+      - if Rails.env.development?
+        .box.line_break_on
+          p
+            | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} $options.sort_order_default={{$options.sort_order_default}}
+          p
+            | visible_columns: {{visible_columns}}
+          p
+            | permalink_url: {{permalink_url}}
