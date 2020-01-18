@@ -169,6 +169,10 @@ class FreeBattlesController < ApplicationController
     def js_record_for(e)
       a = super
 
+      a[:tweet_origin_image_path] = e.tweet_origin_image_path
+      a[:tweet_body] = e.tweet_body
+      a[:tweet_window_url] = e.tweet_window_url
+
       a[:title] = e.title
       a[:description] = e.description
 

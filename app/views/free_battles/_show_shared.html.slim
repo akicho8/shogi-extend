@@ -33,10 +33,11 @@
             - if current_record.kind_of?(FreeBattle)
               = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.id], class: "button")
 
-      .columns
-        .column
-          textarea.textarea(rows="3" readonly)
-            | {{$options.tweet_body}}
+      template(v-if="$options.tweet_body")
+        .columns
+          .column
+            textarea.textarea(rows="3" readonly)
+              | {{$options.tweet_body}}
 
       = render partial: "mixed_pulldown"
       = render partial: "free_battles/kifu_clock_chart"

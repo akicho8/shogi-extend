@@ -136,9 +136,11 @@ module Swars
         Rails.application.routes.url_helpers.swars_real_battle_url(self)
       end
 
-      def header_detail(h)
-        super.merge("場所" => h.link_to(key, wars_url, target: "_blank"))
-      end
+      # def header_detail(h)
+      #   if v = super
+      #     v.merge("場所" => h.link_to(key, wars_url, target: "_blank"))
+      #   end
+      # end
 
       def title
         memberships.collect(&:name_with_grade).join(" 対 ")
