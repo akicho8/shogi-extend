@@ -79,11 +79,11 @@ module Swars
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
                 if AppConfig[:swars_tag_search_function]
+                  e.send("#{key}_tag_list=", values)
+                else
                   if [:attack, :defense].include?(key)
                     e.send("#{key}_tag_list=", values)
                   end
-                else
-                  e.send("#{key}_tag_list=", values)
                 end
               end
             end
