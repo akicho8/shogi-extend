@@ -73,8 +73,7 @@ class ApplicationController < ActionController::Base
 
     def js_global
       @js_global ||= {
-        :current_user => current_user && ams_sr(current_user, serializer: Colosseum::CurrentUserSerializer),
-        :login_path   => url_for([:xuser_session, __redirect_to: url_for(:xuser_session), __flash: {alert: "アカウント登録もしくはログインしてください。すぐに遊びたい場合は「名無しのアカウントを作成してログイン」を使ってみてください。"}]),
+        :current_user => current_user && ams_sr(current_user, serializer: Colosseum::BasicUserSerializer),
         :talk_path    => talk_path,
       }
     end

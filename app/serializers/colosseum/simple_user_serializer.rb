@@ -1,8 +1,11 @@
 require File.expand_path('../../../../config/environment', __FILE__) if $0 == __FILE__
 
 module Colosseum
-  class SimpleUserSerializer < ApplicationSerializer
-    attributes :name, :show_path, :avatar_url, :race_key
+  class SimpleUserSerializer < BasicUserSerializer
+    attributes :show_path
+    attributes :avatar_url
+    attributes :show_path
+    attributes :race_key
     attributes :win_count, :lose_count, :win_ratio
     attributes :joined_at
   end
