@@ -86,8 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
       el: "#header_app",
       data() {
         return {
-          joined_only_count: js_global.joined_only_count,
-          fighter_only_count: js_global.fighter_only_count,
+          joined_only_count: 0,
+          fighter_only_count: 0,
+        }
+      },
+      created() {
+        if ("joined_only_count" in js_global) {
+          this.joined_only_count = js_global.joined_only_count
+        }
+        if ("fighter_only_count" in js_global) {
+          this.fighter_only_count = js_global.fighter_only_count
         }
       },
     })
