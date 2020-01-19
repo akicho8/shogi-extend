@@ -9,12 +9,16 @@ export default {
 
   created() {
     if (this.table_column_storage_key) {
-      console.log("table_column_storage_key", this.table_column_storage_key)
+      if (this.development_p) {
+        console.log("table_column_storage_key", this.table_column_storage_key)
+      }
 
       // localStorage.removeItem(this.table_column_storage_key)
 
-      console.log("反映前")
-      console.table(this.simple_table_columns_hash_for_storage)
+      if (this.development_p) {
+        console.log("反映前")
+        console.table(this.simple_table_columns_hash_for_storage)
+      }
 
       const hash = this.storage_load_visible_columns_hash()
       if (hash) {
@@ -28,8 +32,10 @@ export default {
   watch: {
     simple_table_columns_hash_for_storage(v) {
       if (this.table_column_storage_key) {
-        console.log("save")
-        console.table(v)
+        if (this.development_p) {
+          console.log("save")
+          console.table(v)
+        }
         localStorage.setItem(this.table_column_storage_key, JSON.stringify(v))
       }
     },
@@ -41,8 +47,10 @@ export default {
         const str = localStorage.getItem(this.table_column_storage_key)
         if (str) {
           const v = JSON.parse(str)
-          console.log("load")
-          console.table(v)
+          if (this.development_p) {
+            console.log("load")
+            console.table(v)
+          }
           return v
         }
       }
