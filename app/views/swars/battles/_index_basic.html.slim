@@ -100,13 +100,13 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
           ol
             li 検索結果をタップすると盤面を開きます
             li ぴよ将棋のアイコンをタップすると、ぴよ将棋が起動し、自動的に棋譜を読み込みます
-            li ShogiDroid・激指・ShogiGUI などでは「棋譜コピー」を押したあと「張り付け」をやってみてください
+            li ShogiDroid・ShogiGUI・激指などでは「棋譜コピー」を押したあとソフトのほうで「張り付け」をやってみてください
             - if current_swars_user && params[:page].to_i <= 1
-              li 検索後のページをブックマークしておくと毎回プレイヤーIDを入力する手間が省けます。
+              li 検索後のページをブックマークしておくと毎回プレイヤーIDを入力する手間が省けます
               li
                 b
                   = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-                | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をスムーズにぴよ将棋で開けます。直前の対局を必ず検討する人向けのショートカットです。
+                | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をスムーズにぴよ将棋で開けます。直前の対局を必ず検討する人向けのショートカットです
 
 - if Rails.env.development? && false
   = Swars::User.to_html
