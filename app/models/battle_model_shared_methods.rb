@@ -51,14 +51,14 @@ module BattleModelSharedMethods
     self.critical_turn = info.mediator.critical_turn
     self.sfen_body = info.mediator.to_sfen
 
-    # self.meta_info = {
-    #   :header          => info.header.to_h,
-    #   # :detail_names    => info.header.sente_gote.collect { |e| Splitter.split(info.header["#{e}詳細"]) },
-    #   # :simple_names    => info.header.sente_gote.collect { |e| Splitter.pair_split(info.header[e]) },
-    #   # :skill_set_hash  => info.skill_set_hash,
-    # }
-
     if AppConfig[:swars_tag_search_function]
+      self.meta_info = {
+        :header          => info.header.to_h,
+        # :detail_names    => info.header.sente_gote.collect { |e| Splitter.split(info.header["#{e}詳細"]) },
+        # :simple_names    => info.header.sente_gote.collect { |e| Splitter.pair_split(info.header[e]) },
+        # :skill_set_hash  => info.skill_set_hash,
+      }
+
       self.defense_tag_list = ""
       self.attack_tag_list = ""
       self.technique_tag_list = ""
