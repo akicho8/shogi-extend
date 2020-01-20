@@ -8,7 +8,7 @@
 #app
   nav.breadcrumb
     ul
-      li= link_to("棋譜一覧", current_plural_key)
+      li= link_to("野良棋譜一覧", current_plural_key)
       - if current_record.persisted?
         li= link_to(current_record.title, current_record)
       li.is-active
