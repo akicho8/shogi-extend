@@ -35,7 +35,7 @@
     "howler": "^2.1.2",
     "html2canvas": "^1.0.0-rc.1",
     "js-memory-record": "^0.0.12",
-    "js-yaml": "^3.9.1",
+    "js-yaml": "^3.13.1",
     "lzma": "^2.3.2",
     "node-sass": "^4.11.0",
     "numeral": "^2.0.6",
