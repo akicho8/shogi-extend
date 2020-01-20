@@ -39,7 +39,7 @@ template(slot-scope="props")
 
       | &nbsp;
 
-      a.button.is-small.kento_app_button(@click.stop.prevent :href="props.row.kento_app_url" target="_blank")
+      a.button.is-small.kento_app_button(@click.stop :href="props.row.kento_app_url" target="_blank")
         | ☗ KENTO
 
       template(v-if="props.row.kifu_copy_params")
