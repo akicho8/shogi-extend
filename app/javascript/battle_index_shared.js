@@ -118,6 +118,15 @@ export default {
       }
     },
 
+    // modal_url_with_turn_copy2() {
+    //   if (this.modal_record) {
+    //     this.modal_record.
+    //     
+    //     
+    //     this.clipboard_copy({text: `${this.modal_record.modal_on_index_url}&turn=${this.real_pos}` })
+    //   }
+    // },
+
     sort_handle(column, order) {
       this.sort_column = column
       this.sort_order = order

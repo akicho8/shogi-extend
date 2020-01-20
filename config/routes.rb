@@ -108,6 +108,14 @@ Rails.application.routes.draw do
     "piyoshogi://?url=#{url}"
   end
 
+  direct :kento_app do |url, **options|
+    options = {
+      kifu: url,
+    }.merge(options)
+
+    "https://kento.netlify.com/?#{options.to_query}"
+  end
+
   direct :google_search do |query|
     "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&q=#{query}"
   end

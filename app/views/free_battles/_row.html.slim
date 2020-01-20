@@ -37,6 +37,11 @@ template(slot-scope="props")
       a(@click.stop :href="props.row.piyo_shogi_app_url")
         = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
 
+      | &nbsp;
+
+      a.button.is-small.kento_app_button(@click.stop.prevent :href="props.row.kento_app_url" target="_blank")
+        | ☗ KENTO
+
       template(v-if="props.row.kifu_copy_params")
         | &nbsp;
         a.button.is-small(@click.stop.prevent="kifu_copy_handle({...props.row.kifu_copy_params, kc_format: 'kif'})")
