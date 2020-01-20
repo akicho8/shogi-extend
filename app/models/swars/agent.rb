@@ -151,6 +151,8 @@ module Swars
 
         game_hash = props[:gameHash]
 
+        info[:rule_key] = game_hash[:gtype]
+
         # 手合割
         info[:preset_dirty_code] = game_hash[:handicap]
 
@@ -235,14 +237,16 @@ module Swars
   end
 
   if $0 == __FILE__
-    tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 0)
-    tp Agent.new(run_remote: true).index_get(gtype: "sb",  user_key: "chrono_", page_index: 0)
+    # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 0)
+    # tp Agent.new(run_remote: true).index_get(gtype: "sb",  user_key: "chrono_", page_index: 0)
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 1)
 
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "Yamada_Taro")
 
-    tp Agent.new(run_remote: true).record_get("myasuMan-chrono_-20200116_232605")
-    tp Agent.new(run_remote: true).record_get("kkkkkfff-kinakom0chi-20191229_211058")
+    # tp Agent.new(run_remote: true).record_get("myasuMan-chrono_-20200116_232605")
+    # tp Agent.new(run_remote: true).record_get("kkkkkfff-kinakom0chi-20191229_211058")
+
+    tp Agent.new(run_remote: true, show_props: true).record_get("YuriCitrus-itoshinTV-20200115_152807")
 
     # tp Agent.new(run_remote: true).record_get("JUST_TAP_OUT-Aeterna7-20200117_114139")
 

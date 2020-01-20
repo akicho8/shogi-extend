@@ -219,7 +219,7 @@ module Swars
 
           battle = Battle.new({
               key: info[:key],
-              rule_key: info.dig(:gamedata, :gtype),
+              rule_key: info[:rule_key],
               csa_seq: info[:csa_seq],
               preset_key: preset_info.key,
             })
