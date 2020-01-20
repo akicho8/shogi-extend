@@ -116,7 +116,10 @@ gem 'memory_record'
 gem 'tree_support'
 gem 'table_format'
 gem 'html_format'
-gem "aam"
+
+group :development do
+  gem "aam"
+end
 
 # gem 'bioshogi', path: "~/src/bioshogi"
 gem 'bioshogi', github: 'akicho8/bioshogi'
