@@ -19,12 +19,13 @@
             ul= link_to("bioshogi", "https://github.com/akicho8/bioshogi", target: "_blank")
             ul= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
             ul= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
-        .column.has-text-centered
-          ul
-            li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io", target: "_blank")
-            - if !Rails.env.production? || params[:graphql_show]
-              li== "&nbsp;"
-              li= link_to("GraphQL API", :graphiql_rails, target: "_blank")
+        - if false
+          .column.has-text-centered
+            ul
+              li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io", target: "_blank")
+              - if !Rails.env.production? || params[:graphql_show]
+                li== "&nbsp;"
+                li= link_to("GraphQL API", :graphiql_rails, target: "_blank")
       .column
         .column.has-text-centered
           = "Powered by "
