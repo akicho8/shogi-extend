@@ -238,6 +238,8 @@ module Swars
 
   if $0 == __FILE__
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 0)
+    tp Agent.new(run_remote: true).index_get(gtype: "sb",  user_key: "micro77", page_index: 0)
+
     # tp Agent.new(run_remote: true).index_get(gtype: "sb",  user_key: "chrono_", page_index: 0)
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "chrono_", page_index: 1)
 
@@ -246,7 +248,7 @@ module Swars
     # tp Agent.new(run_remote: true).record_get("myasuMan-chrono_-20200116_232605")
     # tp Agent.new(run_remote: true).record_get("kkkkkfff-kinakom0chi-20191229_211058")
 
-    tp Agent.new(run_remote: true, show_props: true).record_get("YuriCitrus-itoshinTV-20200115_152807")
+    #  tp Agent.new(run_remote: true, show_props: true).record_get("YuriCitrus-itoshinTV-20200115_152807")
 
     # tp Agent.new(run_remote: true).record_get("JUST_TAP_OUT-Aeterna7-20200117_114139")
 
