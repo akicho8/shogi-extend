@@ -1,7 +1,7 @@
-# クレジット (利用素材)
+## クレジット (利用素材)
 <hr>
 
-## 画像
+#### 画像
 
 将棋駒と将棋盤 画像フリー素材 | 無料素材倶楽部
 http://sozai.7gates.net/docs/japanese-chess/
@@ -27,7 +27,8 @@ https://www.irasutoya.com/
 将棋図案駒
 https://twitter.com/Shogi_Zuan
 
-## 音
+<br>
+#### 音
 
 しんえれ外部駒 (駒音)
 http://shineleckoma.web.fc2.com/
@@ -41,7 +42,8 @@ https://otologic.jp
 効果音ラボ
 https://soundeffect-lab.info/
 
-## フォント
+<br>
+#### フォント
 
 Ricty Diminished フォント
 https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
