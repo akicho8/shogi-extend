@@ -5,7 +5,7 @@
     - if !iframe?
       nav.breadcrumb
         ul
-          li= link_to("野良棋譜一覧", [ns_prefix, current_plural_key])
+          li= link_to("棋譜一覧", [ns_prefix, current_plural_key])
           / li.is-active= link_to(current_record.title, current_record)
           li.is-active= link_to("##{current_record.id}", [ns_prefix, current_record])
 
