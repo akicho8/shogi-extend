@@ -9,24 +9,23 @@ nav.navbar.is-primary.is_screen_only
     .navbar-start
       / ここでの is-active に意味はない
       = link_to(icon_tag(:magnify, margin_right: 1) + "ウォーズ検索", [:swars, :basic], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
-      = link_to(icon_tag("clipboard-text-outline", margin_right: 1) + "野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
       = link_to(icon_tag(:clock, margin_right: 1) + "ストップウォッチ", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
       = link_to(icon_tag(:robot, margin_right: 1) + "CPU対戦".html_safe, :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
       = link_to(icon_tag(:apps, margin_right: 1) + "符号入力ゲーム", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
-      = link_to(icon_tag(:apps, margin_right: 1) + "ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
 
-      - if Rails.env.development?
-        .navbar-item.has-dropdown.is-hoverable
-          span.navbar-link
-            | もっと見る
-          .navbar-dropdown.is-boxed
-            = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 1) + "棋譜投稿", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
-            = link_to(icon_tag(:account, margin_right: 1) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]
-            = link_to(icon_tag(:pencil, margin_right: 1) + "局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")]) if !Rails.env.production?
-            = link_to(icon_tag(:book, margin_right: 1) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")]) if !Rails.env.production?
-            = link_to(icon_tag(:clock, margin_right: 1) + "チェスクロック", :vs_clock, class: ["navbar-item", ("is-active" if params[:controller] == "vs_clocks")]) if !Rails.env.production?
-            - if AppConfig[:colosseum_battle_enable]
-              = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
+      .navbar-item.has-dropdown.is-hoverable
+        span.navbar-link
+          | もっと見る
+        .navbar-dropdown.is-boxed
+          = link_to(icon_tag("clipboard-text-outline", margin_right: 1) + "野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
+          = link_to(icon_tag(:apps, margin_right: 1) + "ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
+          = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 1) + "棋譜投稿", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
+          = link_to(icon_tag(:account, margin_right: 1) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]
+          = link_to(icon_tag(:pencil, margin_right: 1) + "局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")]) if !Rails.env.production?
+          = link_to(icon_tag(:book, margin_right: 1) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")]) if !Rails.env.production?
+          = link_to(icon_tag(:clock, margin_right: 1) + "チェスクロック", :vs_clock, class: ["navbar-item", ("is-active" if params[:controller] == "vs_clocks")]) if !Rails.env.production?
+          - if AppConfig[:colosseum_battle_enable]
+            = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
 
     #header_app.navbar-end(v-cloak)
       = link_to(icon_tag(:cancel, margin_right: 1) + "production", production_app_url, class: ["navbar-item"], target: "_blank") unless Rails.env.production?
