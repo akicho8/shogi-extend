@@ -52,7 +52,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
         a(@click.stop :href="modal_record.piyo_shogi_app_url")
           = image_tag("piyo_shogi_banner.png", "class": "modal_piyo_link")
 
-        - if params[:kento_enable]
+        - if AppConfig[:kento_enable]
           a.button.is-small.kento_app_button(@click.stop :href="`${modal_record.kento_app_url}#${real_pos}`" target="_blank")
             | ☗ KENTO
             template(v-if="development_p")
