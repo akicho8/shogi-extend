@@ -360,7 +360,7 @@ class CpuBattlesController < ApplicationController
   def candidate_rows
     @candidate_rows ||= -> {
       if @candidate_records.present?
-        Bioshogi::Brain.human_format(@candidate_records.take(10)).collect { |e|
+        Bioshogi::Brain.human_format(@candidate_records.take(5)).collect { |e|
           e.collect { |key, val|
             if key == "候補手"
               val = val.to_s    # ビューに as_json の結果が渡ってしまうので文字列にしておく

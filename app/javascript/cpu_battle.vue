@@ -93,6 +93,15 @@
         b-message(size="is-small")
           | CPU: {{judge_group.lose}}勝 &nbsp;&nbsp; 人間: {{judge_group.win}}勝
 
+      template(v-if="mode === 'playing'")
+        template(v-if="candidate_rows")
+          .buttons
+            b-button(@click="candidate_handle" :loading="candidate_processing")
+              | 自分の形勢判断
+          template(v-if="!candidate_processing")
+            .box
+              b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
+
       template(v-if="pressure_rate_hash")
         .box
           small
@@ -105,20 +114,9 @@
             | {{pressure_rate_hash}}
 
       .box
-        canvas#chart_canvas(ref="chart_canvas")
+        canvas#chart_canvas(ref="chart_canvas" height="80")
         template(v-if="development_p && false")
           | {{chart_config.data.datasets[0].data}}
-
-  template(v-if="mode === 'playing'")
-    .columns
-      template(v-if="candidate_rows")
-        .column
-          .buttons
-            b-button(@click="candidate_handle" :loading="candidate_processing")
-              | 形勢判断
-          template(v-if="!candidate_processing")
-            .box
-              b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 
   template(v-if="development_p && mode === 'playing'")
     .columns
@@ -233,11 +231,13 @@ export default {
     preset_info()       { return PresetInfo.fetch(this.cpu_preset_info.key)           },
 
     candidate_columns() {
-      const columns = [
-        { field: "順位",       label: "順位",       sortable: true, numeric: true, },
-        { field: "候補手",     label: "候補手",                                    },
-        { field: "▲形勢",     label: "▲形勢",     sortable: true, numeric: true, },
-      ]
+      const columns = []
+      if (this.development_p) {
+        columns.push({ field: "順位",       label: "順位",       sortable: true, numeric: true, })
+      }
+
+      columns.push({ field: "候補手",     label: "候補手",                                    })
+      columns.push({ field: "▲形勢",     label: "評価値",     sortable: true, numeric: true, })
 
       if (this.development_p) {
         columns.push({ field: "読み筋",     label: "読み筋",                                    }),
