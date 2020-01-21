@@ -39,7 +39,7 @@
           :sfen_show="false"
           :slider_show="development_p || mode === 'standby'"
           :controller_show="development_p || mode === 'standby'"
-          :size="'medium'"
+          :size="'large'"
           :sound_effect="true"
           :volume="$root.$options.volume"
           :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
