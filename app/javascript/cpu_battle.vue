@@ -12,9 +12,9 @@
               template(v-if="mode === 'playing'")
                 b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true" :loading="give_up_processing")
                   | 投了
-                b-button(@click="candidate_handle" :loading="candidate_processing")
-                  | 形勢判断
                 template(v-if="development_p")
+                  b-button(@click="candidate_handle" :loading="candidate_processing")
+                    | 形勢判断
                   b-button(@click="break_handle")
                     | 終了
                   b-button(@click="restart_handle")
