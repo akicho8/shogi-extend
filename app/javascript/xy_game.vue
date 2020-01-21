@@ -358,7 +358,7 @@ export default {
 </ol>
 </div>
 `,
-        confirmText: "わかった",
+        confirmText: "もうわかった",
         canCancel: ["outside", "escape"],
         type: "is-info",
         hasIcon: true,
