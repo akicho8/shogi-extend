@@ -42,9 +42,11 @@ javascript:
 
 = render "google_analytics" if Rails.env.production?
 
+/ これはとる
+= javascript_pack_tag("system_notification")
+
 - if AppConfig[:colosseum_battle_enable]
   / ActionCable
-  = javascript_pack_tag("system_notification")
   - if current_user
     = javascript_pack_tag("single_notification")
 
