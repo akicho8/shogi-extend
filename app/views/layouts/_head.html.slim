@@ -11,6 +11,7 @@ link(rel="apple-touch-icon" href=path_to_image(@apple_touch_icon || "apple-touch
 
 meta(name="rails_env" content="#{Rails.env}")
 
+/ FIXME: インラインで書くな
 sass:
   [v-cloak]
     /* important 指定しないと効かないのが謎 */
@@ -19,8 +20,11 @@ sass:
 = favicon_link_tag
 = csrf_meta_tag
 title= html_title
-= action_cable_meta_tag
 
+- if AppConfig[:colosseum_battle_enable]
+  = action_cable_meta_tag
+
+/ FIXME: とる
 javascript:
   var js_global = #{js_global.to_json.html_safe}
 
@@ -34,10 +38,11 @@ javascript:
 
 = render "google_analytics" if Rails.env.production?
 
-/ ActionCable
-= javascript_pack_tag("system_notification")
-- if current_user
-  = javascript_pack_tag("single_notification")
+- if AppConfig[:colosseum_battle_enable]
+  / ActionCable
+  = javascript_pack_tag("system_notification")
+  - if current_user
+    = javascript_pack_tag("single_notification")
 
 - unless content_for?(:twitter_card_tag)
   - twitter_card_tag(description: "将棋に関連するプログラムの実験的なサイトです。ネット対戦・CPU対戦・将棋ウォーズ棋譜検索・棋譜変換などができます", image: "swars_battles_index.png")
