@@ -26,7 +26,7 @@ end
 # >>  :battles=>[],
 # >>  :lobby_messages=>
 # >>   [{:id=>128,
-# >>     :message=>"符号入力ゲームのランキングを名前でユニークにする機能をつけました",
+# >>     :message=>"符号の鬼のランキングを名前でユニークにする機能をつけました",
 # >>     :msg_options=>{:msg_options=>{}},
 # >>     :created_at=>Sun, 15 Sep 2019 18:26:57 JST +09:00,
 # >>     :user=>
@@ -133,7 +133,7 @@ end
 # >>       :win_ratio=>0.522,
 # >>       :joined_at=>nil}},
 # >>    {:id=>135,
-# >>     :message=>"符号入力ゲームのマラソンモードはめんどくさくてやらなくなったので廃止",
+# >>     :message=>"符号の鬼のマラソンモードはめんどくさくてやらなくなったので廃止",
 # >>     :msg_options=>{:msg_options=>{}},
 # >>     :created_at=>Thu, 19 Sep 2019 11:02:02 JST +09:00,
 # >>     :user=>

@@ -7,7 +7,7 @@ RSpec.describe "その他", type: :system do
     doc_image
   end
 
-  it "符号入力ゲーム" do
+  it "符号の鬼" do
     XyRecord.setup
 
     visit "/xy"

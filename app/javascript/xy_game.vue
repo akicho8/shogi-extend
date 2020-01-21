@@ -722,7 +722,7 @@ export default {
 
     tweet_body() {
       let out = ""
-      out += "▼符号入力ゲームの結果\n"
+      out += "▼符号の鬼の結果\n"
       out += this.summary
       out += window.location.href.replace(window.location.hash, "")
       return out
