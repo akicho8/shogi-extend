@@ -233,14 +233,19 @@ export default {
     preset_info()       { return PresetInfo.fetch(this.cpu_preset_info.key)           },
 
     candidate_columns() {
-      return [
+      const columns = [
         { field: "順位",       label: "順位",       sortable: true, numeric: true, },
         { field: "候補手",     label: "候補手",                                    },
-        { field: "読み筋",     label: "読み筋",                                    },
         { field: "▲形勢",     label: "▲形勢",     sortable: true, numeric: true, },
-        { field: "評価局面数", label: "評価局面数", sortable: true, numeric: true, },
-        { field: "処理時間",   label: "処理時間",   sortable: true, numeric: true, },
       ]
+
+      if (this.development_p) {
+        columns.push({ field: "読み筋",     label: "読み筋",                                    }),
+        columns.push({ field: "評価局面数", label: "評価局面数", sortable: true, numeric: true, }),
+        columns.push({ field: "処理時間",   label: "処理時間",   sortable: true, numeric: true, })
+      }
+
+      return columns
     },
 
     post_shared_params() {
