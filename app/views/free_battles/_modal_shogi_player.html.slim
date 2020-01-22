@@ -61,8 +61,7 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
 
         template(v-if="modal_record.kifu_copy_params")
           b-tooltip(label="棋譜をクリップボードにコピーする" position="is-top")
-            / MEMO: Microsoft Edge では JS の ... が使えずエラーになるので注意
-            a.button.is-small(@click.stop.prevent="kifu_copy_handle(Object.assign({}, modal_record.kifu_copy_params, {kc_format: 'kif'}))")
+            a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
               | 棋譜コピー
 
         pulldown_menu(:record="modal_record" :in_modal="true")

@@ -44,7 +44,7 @@ template(slot-scope="props")
 
       template(v-if="props.row.kifu_copy_params")
         | &nbsp;
-        a.button.is-small(@click.stop.prevent="kifu_copy_handle(Object.assign({}, props.row.kifu_copy_params, {kc_format: 'kif'}))")
+        a.button.is-small(@click.stop.prevent="kifu_copy_handle({...props.row.kifu_copy_params, kc_format: 'kif'})")
           | 棋譜コピー
 
       | &nbsp;
