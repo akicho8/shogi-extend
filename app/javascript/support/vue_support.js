@@ -119,6 +119,20 @@ export default {
 
     // https://www.npmjs.com/package/bowser
     user_agent_hash() {
+      // 古い Edge
+      // return Bowser.parse("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18362")
+      // browser: {name: "Microsoft Edge", version: "18.18362"}
+      // os: {name: "Windows", version: "NT 10.0", versionName: "10"}
+      // platform: {type: "desktop"}
+      // engine: {name: "EdgeHTML", version: "18.18362"}
+
+      // 新しい Edge
+      // return Bowser.parse("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36 Edg/79.0.309.71")
+      // browser: {name: "Microsoft Edge", version: "79.0.309.71"}
+      // os: {name: "Windows", version: "NT 10.0", versionName: "10"}
+      // platform: {type: "desktop"}
+      // engine: {name: "Blink"}
+
       console.log(window.navigator.userAgent)
       return Bowser.parse(window.navigator.userAgent)
     },
