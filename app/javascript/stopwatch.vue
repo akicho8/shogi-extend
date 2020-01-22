@@ -81,7 +81,7 @@
       .columns
         .column
           b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
-            b-numberinput(v-model.number="timeout_sec" :min="0" step="5" controls-position="compact" :expanded="true" size="is-small")
+            b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
         .column
           b-field(label="全体の制限時間(分)" expanded custom-class="is-small")
             b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
