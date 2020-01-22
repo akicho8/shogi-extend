@@ -5,7 +5,7 @@
       .has-text-centered
         .buttons.is-centered
           template(v-if="mode === 'stop' || mode === 'goal'")
-            button.button.is-primary(@click="standby_handle") スタート
+            button.button.is-primary(@click="standby_handle") START
           template(v-if="mode === 'running' || mode === 'standby'")
             b-button(@click="retry_handle" type="is-danger") やりなおす
             b-button(@click="stop_handle") やめる
@@ -18,15 +18,17 @@
               template(v-for="e in XyRuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
-            b-tooltip(label="盤のカスタマイズ")
-              b-button(@click="sp_setting_handle" icon-right="settings")
+            template(v-if="$root.$options.xy_game_custom_mode")
+              b-tooltip(label="盤のカスタマイズ")
+                b-button(@click="sp_setting_handle" icon-right="settings")
 
             b-tooltip(label="使い方")
               b-button(@click="rule_display" icon-right="help")
 
-            b-switch(v-model="bg_mode")
-              b-tooltip(label="駒を並べてある状態で行う")
-                | 駒配置
+            template(v-if="$root.$options.xy_game_custom_mode")
+              b-switch(v-model="bg_mode")
+                b-tooltip(label="駒を並べてある状態で行う")
+                  | 駒配置
 
           template(v-if="development_p")
             template(v-if="mode === 'running'")
@@ -124,8 +126,7 @@
                     | {{time_default_format(props.row.created_at)}}
 
       b-switch(v-model="entry_name_unique")
-        b-tooltip(label="名前ごとに絞る")
-          | ユニーク
+        | プレイヤー毎の順位をわかりやすくする
 
   .columns.is-4(v-show="(mode === 'stop' || mode === 'goal')")
     .column
@@ -211,6 +212,7 @@ export default {
       count_down_speed: 1000 * 0.5,
       congrats_lteq: 10,
 
+      // dynamic
       mode: "stop",
       inteval_id: null,
       count_down_counter: null,
@@ -225,10 +227,10 @@ export default {
       xy_scope_key: null,
       entry_name_unique: false,
       xy_rule_key: null,
-      entry_name: null,                                   // ランキングでの名前を保持しておく
-      current_rule_index: null,                          // b-tabs 連動用
-      xy_records_hash: null, // 複数のルールでそれぞれにランキング情報も入っている
-      xy_record: null,                                    // ゲームが終わたっときにランクなどが入っている
+      entry_name: null,         // ランキングでの名前を保持しておく
+      current_rule_index: null, // b-tabs 連動用
+      xy_records_hash: null,    // 複数のルールでそれぞれにランキング情報も入っている
+      xy_record: null,          // ゲームが終わたっときにランクなどが入っている
       xhr_put_path: null,
       current_pages: null,
       saved_rule: null,
@@ -382,6 +384,9 @@ export default {
       // this.xy_chart_rule_key     = null
       this.entry_name       = null
       this.current_pages    = null
+
+      this.bg_mode          = null
+
       this.sp_theme         = null
       this.sp_bg_variant    = null
       this.sp_size          = null
@@ -391,6 +396,16 @@ export default {
     },
 
     data_restore_from_hash(hash) {
+      if (this.$root.$options.xy_game_custom_mode) {
+      } else {
+        hash.bg_mode          = null
+
+        hash.sp_theme         = null
+        hash.sp_bg_variant    = null
+        hash.sp_size          = null
+        hash.sp_piece_variant = null
+      }
+
       this.xy_rule_key = hash.xy_rule_key
       if (!XyRuleInfo.lookup(this.xy_rule_key)) {
         this.xy_rule_key = this.default_xy_rule_key

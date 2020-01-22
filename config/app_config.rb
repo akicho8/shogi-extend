@@ -13,6 +13,7 @@ AppConfig.deep_merge!({
     search_form_datalist_function: false, # 検索で入力したユーザー名を共有して検索候補にするか？
     swars_tweet_function: true, # 将棋ウォーズ棋譜詳細へのツイートできる？
     kento_enable: true, # KENTO にリンクする？
+    xy_game_custom_mode: false, # 符号の鬼の設定機能を有効にする？
 
     zip_download_function: true,    # 一括ダウンロード機能
     zip_download_limit_default: 50, # 一括ダウンロードするときの件数(初期値)
