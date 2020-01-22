@@ -5,7 +5,7 @@
 
 .columns
   .column
-    = form_with(url: [:swars, :basic], method: :get, skip_enforcing_utf8: true) do |form|
+    = form_with(url: [:swars, :battles], method: :get, skip_enforcing_utf8: true) do |form|
       = form.submit("submit_button_for_test") if Rails.env.test?
 
       b-field
@@ -105,7 +105,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
               li 検索後のページをブックマークしておくと毎回プレイヤーIDを入力する手間が省けます
               li
                 b
-                  = link_to "【こちら】", [:swars, current_mode, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
+                  = link_to "【こちら】", [:swars, :battles, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
                 | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をスムーズにぴよ将棋で開けます。直前の対局を必ず検討する人向けのショートカットです
 
 - if Rails.env.development? && false

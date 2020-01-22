@@ -5,7 +5,6 @@ module BattleControllerSharedMethods
     included do
       helper_method :current_per
       helper_method :current_placeholder
-      helper_method :current_mode
       helper_method :js_index_options
 
       rescue_from "Bioshogi::BioshogiError" do |exception|
@@ -80,10 +79,6 @@ module BattleControllerSharedMethods
       if v = params[:visible_columns]
         v.scan(/\w+/).to_set
       end
-    end
-
-    let :current_mode do
-      (params[:mode].presence || :basic).to_sym
     end
 
     def js_index_options

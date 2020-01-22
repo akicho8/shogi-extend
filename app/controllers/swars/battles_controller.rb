@@ -59,7 +59,7 @@ module Swars
         slack_message(key: "ブクマ移動", body: current_swars_user_key)
         flash[:external_app_exec_skip_once] = true # ブックマークできるように一時的にぴよ将棋に飛ばないようにする
         # flash[:primary] = "この状態で「ホーム画面に追加」しておくと開くと同時に最新の対局をぴよ将棋で開けるようになります"
-        redirect_to [:swars, current_mode, query: current_swars_user, latest_open_index: params[:latest_open_index]]
+        redirect_to [:swars, :battles, query: current_swars_user, latest_open_index: params[:latest_open_index]]
         return
       end
 
@@ -111,7 +111,7 @@ module Swars
       if v = params[:id].presence
         if User.where(user_key: v).exists?
           flash[:import_skip] = true
-          redirect_to [:swars, current_mode, query: v], alert: "URLを変更したのでトップにリダイレクトしました。お手数ですが新しい棋譜を取り込むには再度検索してください"
+          redirect_to [:swars, :battles, query: v], alert: "URLを変更したのでトップにリダイレクトしました。お手数ですが新しい棋譜を取り込むには再度検索してください"
           return
         end
       end
@@ -122,7 +122,7 @@ module Swars
     def create
       import_process(flash)
       flash[:import_skip] = true
-      redirect_to [:swars, current_mode, query: current_swars_user]
+      redirect_to [:swars, :battles, query: current_swars_user]
     end
 
     rescue_from "Mechanize::ResponseCodeError" do |exception|
@@ -177,7 +177,7 @@ module Swars
           end
 
           if hit_count.nonzero?
-            slack_message(key: current_mode == :basic ? "検索" : "ぴよ専用検索", body: "#{current_swars_user_key} #{hit_count}件")
+            slack_message(key: "検索", body: "#{current_swars_user_key} #{hit_count}件")
           end
         end
       end
@@ -255,12 +255,12 @@ module Swars
     end
 
     def slow_processing_error_redirect_url
-      [:swars, :basic, query: current_query, stop_processing_because_it_is_too_heavy: 1]
+      [:swars, :battles, query: current_query, stop_processing_because_it_is_too_heavy: 1]
     end
 
     def swars_tag_search_path(e)
       if AppConfig[:swars_tag_search_function]
-        url_for([:swars, current_mode, query: "tag:#{e}", only_path: true])
+        url_for([:swars, :battles, query: "tag:#{e}", only_path: true])
       end
     end
 

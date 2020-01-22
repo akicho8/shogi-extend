@@ -321,7 +321,7 @@ module Swars
     end
 
     def query_path(query, **options)
-      Rails.application.routes.url_helpers.url_for([:swars, :basic, options.merge(query: query, only_path: true, per: Kaminari.config.max_per_page)])
+      Rails.application.routes.url_helpers.url_for([:swars, :battles, options.merge(query: query, only_path: true, per: Kaminari.config.max_per_page)])
     end
 
     def parcentage_set(stat, key, numerator, denominator, **options)

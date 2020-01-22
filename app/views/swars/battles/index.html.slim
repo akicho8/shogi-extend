@@ -23,7 +23,7 @@
   .columns
     .column
       br
-      = link_to "← 前のページにもどる", [:swars, current_mode, query: current_swars_user], class: "button is-primary is-small"
+      = link_to "← 前のページにもどる", [:swars, :battles, query: current_swars_user], class: "button is-primary is-small"
 - else
   - content_for :head do
     = javascript_pack_tag("swars_battle_index")

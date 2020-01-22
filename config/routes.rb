@@ -43,15 +43,11 @@ Rails.application.routes.draw do
     get "wr/:id",   to: "battles#show" # 互換性のため
 
     get "w",        to: "battles#index", as: :basic
-    get "w-light",  to: "battles#index", as: :light, defaults: {mode: :light}
+    get "w-light",  to: "battles#index", as: :light
   end
 
   resolve "Swars::User" do |user, options|
-    if options[:current_mode] == :light
-      swars_light_path(query: user.to_param)
-    else
-      swars_basic_path(query: user.to_param)
-    end
+    swars_basic_path(query: user.to_param)
   end
 
   ################################################################################ 棋譜投稿

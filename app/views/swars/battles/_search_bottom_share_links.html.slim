@@ -3,7 +3,7 @@
     .columns
       .column
         - if !Rails.env.production?
-          = link_to([:swars, current_mode, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
+          = link_to([:swars, :battles, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
             | 最新の対局を
             = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")
             | で開く
@@ -28,4 +28,4 @@
           b-tooltip(label="古い棋譜も可能な限り取り込みます")
             = link_to("もっと取り込む", "#", class: "button is-small is-rounded", "@click" => "many_import_handle")
 
-          = link_to("", [:swars, :battles, mode: current_mode, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "many_import_link")
+          = link_to("", [:swars, :battles, query: current_swars_user, page_max: 256], class: "is-invisible", method: :post, "ref" => "many_import_link")
