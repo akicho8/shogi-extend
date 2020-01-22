@@ -36,6 +36,9 @@ module Swars
     helper_method :current_swars_user
     helper_method :current_query_info
 
+    cattr_accessor(:labels_type1) { ["対象", "相手"] }
+    cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
+
     prepend_before_action only: :show do
       if bot_agent?
         if v = params[:id].presence
@@ -236,12 +239,12 @@ module Swars
       fliped = false
       a = record.memberships.to_a
       if current_swars_user
-        labels = ["検索対象", "対局相手"]
+        labels = labels_type1
         if a.last.user == current_swars_user
           fliped = true
         end
       else
-        labels = ["勝ち", "負け"]
+        labels = labels_type2
         if record.win_user_id
           if a.last.judge_key == "win"
             fliped = true
