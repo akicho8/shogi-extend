@@ -3,7 +3,7 @@ AppConfig.deep_merge!({
     volume: 0.2,
     admin_email: "alice@localhost",
 
-    free_battles_import: false,
+    free_battles_import: false,        # 野良棋譜のセットアップ時に保持している対局を取り込むか？
     colosseum_battle_enable: true,   # ネット対戦機能
     player_info_function: true,      # プレイヤー情報
     more_import_function: true,      # もっと取り込む
