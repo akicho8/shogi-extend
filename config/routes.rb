@@ -134,19 +134,6 @@ Rails.application.routes.draw do
     # "http://shogi-flow.xyz/"
   end
 
-  ################################################################################ graphiql
-
-  if true
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "#{ActionController::Base.relative_url_root}/graphql"
-    post "/graphql", to: "graphql#execute"
-
-    # namespace :api, { format: 'json' } do
-    #   namespace :v1 do
-    #     post "/graphql", to: "graphql#execute"
-    #   end
-    # end
-  end
-
   ################################################################################ admin
 
   # namespace :admin do

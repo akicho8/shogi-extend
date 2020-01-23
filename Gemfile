@@ -146,11 +146,6 @@ gem 'ffi', '1.9.18'             # 1.9.19 が転けるのでとりあえず
 
 gem 'active_model_serializers'
 
-gem 'graphql'
-# group :development do
-gem 'graphiql-rails' # graphqlのテスト画面
-# end
-
 # application 用
 gem 'slack-ruby-client'
 

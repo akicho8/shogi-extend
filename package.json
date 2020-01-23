@@ -3,7 +3,6 @@
   "dependencies": {
     "@rails/webpacker": "3.2.0",
     "actioncable": "^5.2.3",
-    "apollo-boost": "^0.1.10",
     "assert": "^1.4.1",
     "autolinker": "^3.11.0",
     "autoprefixer": "^7.1.2",
@@ -30,8 +29,6 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "glob": "^7.1.2",
-    "graphql": "^0.13.2",
-    "graphql-tag": "^2.9.2",
     "howler": "^2.1.2",
     "html2canvas": "^1.0.0-rc.1",
     "js-memory-record": "^0.0.12",

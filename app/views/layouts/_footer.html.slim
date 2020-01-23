@@ -26,9 +26,6 @@
           .column.has-text-centered
             ul
               li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io", target: "_blank")
-              - if !Rails.env.production? || params[:graphql_show]
-                li== "&nbsp;"
-                li= link_to("GraphQL API", :graphiql_rails, target: "_blank")
       .column
         .column.has-text-centered
           = "Powered by "
