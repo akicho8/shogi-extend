@@ -90,23 +90,24 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
               /   | この検索条件で
               = "まとめてZIPダウンロード"
 
-.columns
-  .column
-    article.message.is-primary.is-size-7
-      .message-header
-        | 使い方
-      .message-body.has-text-left
-        .content
-          ol
-            li 検索結果をタップすると盤面を開きます
-            / li 「ぴよ将棋」のアイコンをタップすると、自動的に棋譜を読み込んで起動します
-            li ShogiDroid や ShogiGUI では「棋譜コピー」を押したあとソフトのほうで「編集」→「張り付け」をしてみてください
-            - if current_swars_user && params[:page].to_i <= 1
-              li 検索後のページをブックマークしておくと毎回ウォーズIDを入力する手間が省けます
-              li
-                b
-                  = link_to "【こちら】", [:swars, :battles, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
-                | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をスムーズにぴよ将棋で開けます。直前の対局を必ず検討する人向けのショートカットです
+- if AppConfig[:help_function]
+  .columns
+    .column
+      article.message.is-primary.is-size-7
+        .message-header
+          | 使い方
+        .message-body.has-text-left
+          .content
+            ol
+              li 検索結果をタップすると盤面を開きます
+              / li 「ぴよ将棋」のアイコンをタップすると、自動的に棋譜を読み込んで起動します
+              li ShogiDroid や ShogiGUI では「棋譜コピー」を押したあとソフトのほうで「編集」→「張り付け」をしてみてください
+              - if current_swars_user && params[:page].to_i <= 1
+                li 検索後のページをブックマークしておくと毎回ウォーズIDを入力する手間が省けます
+                li
+                  b
+                    = link_to "【こちら】", [:swars, :battles, query: current_swars_user, latest_open_index: 0, redirect_to_bookmarkable_page: true]
+                  | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をスムーズにぴよ将棋で開けます。直前の対局を必ず検討する人向けのショートカットです
 
 - if Rails.env.development? && false
   = Swars::User.to_html

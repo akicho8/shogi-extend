@@ -53,14 +53,15 @@
 
   = render partial: "parmalink"
 
-  .columns
-    .column
-      article.message.is-primary.is-size-7
-        .message-header
-          | 使い方
-        .message-body.has-text-left
-          .content
-            ol
-              li 検索結果をタップすると盤面を開きます
-              li ログインしてから投稿すると再編集できます
-              li ウォーズの棋譜と違って古くなっても消しません
+  - if AppConfig[:help_function]
+    .columns
+      .column
+        article.message.is-primary.is-size-7
+          .message-header
+            | 使い方
+          .message-body.has-text-left
+            .content
+              ol
+                li 検索結果をタップすると盤面を開きます
+                li ログインしてから投稿すると再編集できます
+                li ウォーズの棋譜と違って古くなっても消しません

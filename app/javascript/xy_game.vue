@@ -22,8 +22,7 @@
               b-tooltip(label="盤のカスタマイズ")
                 b-button(@click="sp_setting_handle" icon-right="settings")
 
-            b-tooltip(label="使い方")
-              b-button(@click="rule_display" icon-right="help")
+            b-button(@click="rule_display" icon-right="help")
 
             template(v-if="$root.$options.xy_game_custom_mode")
               b-switch(v-model="bg_mode")
