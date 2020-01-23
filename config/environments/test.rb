@@ -43,4 +43,11 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # for AppConfig
+  config.to_prepare do
+    Rails.application.config.app_config.deep_merge!({
+        help_function: true, # 使い方の表示
+      })
+  end
 end
