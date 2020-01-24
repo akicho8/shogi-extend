@@ -11,6 +11,5 @@ class VsClocksController < ApplicationController
   end
 
   def create
-    slack_message(key: "ストップウォッチ", body: "[#{params[:book_title]}][#{params[:mode]}] #{params[:summary].strip}")
   end
 end
