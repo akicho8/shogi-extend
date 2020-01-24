@@ -29,9 +29,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
         | &nbsp;&nbsp;&nbsp;
         b-icon(:icon="!trick_show ? 'grid' : 'minus'" size="is-small")
       template(v-if="trick_show")
-        | &nbsp;
-        | &nbsp;
-        b-switch(v-model="end_show") 終了図
+        b-switch.end_show(v-model="end_show") 終了図
 
 - if false
   template(v-if="trick_show")
