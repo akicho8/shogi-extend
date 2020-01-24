@@ -156,12 +156,17 @@ module Swars
           before_count = current_swars_user.battles.count
         end
 
-        # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-        success = Battle.sometimes_user_import(user_key: current_swars_user_key, page_max: import_page_max)
-        if !success
-          # development でここが通らない
-          # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-          flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです"
+        if params[:force]
+          Battle.user_import(user_key: current_swars_user_key, page_max: import_page_max)
+          success = true
+        else
+          # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
+          success = Battle.sometimes_user_import(user_key: current_swars_user_key, page_max: import_page_max)
+          if !success
+            # development でここが通らない
+            # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
+            flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりなのでウォーズへのアクセスは行っていません"
+          end
         end
         if success
           unlet(:current_swars_user)
