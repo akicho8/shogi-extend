@@ -212,7 +212,10 @@ export default {
       this.show_handle(this.$options.modal_record)
     } else {
       if (!this.query) {
-        this.$refs.main_field.focus()
+        // モバイルでは手動でフォーカスしたときにはじめて入力ツールが登場するので自動的にフォーカスしない方がいい
+        if (false) {
+          this.$refs.main_field.focus()
+        }
       }
     }
   },
