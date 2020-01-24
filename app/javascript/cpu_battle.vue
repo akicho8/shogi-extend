@@ -114,7 +114,7 @@
             | {{pressure_rate_hash}}
 
       .box
-        canvas#chart_canvas(ref="chart_canvas" height="80")
+        canvas#chart_canvas(ref="chart_canvas")
         template(v-if="development_p && false")
           | {{chart_config.data.datasets[0].data}}
 
@@ -536,5 +536,4 @@ export default {
     progress
       margin-left: 0.25rem
       width: 100%
-
 </style>

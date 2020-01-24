@@ -96,7 +96,7 @@
       .columns
         - js_swars_player_info_app_params[:time_chart_params_list].each do |e|
           .column
-            canvas(ref=e[:canvas_id] height="400")
+            canvas(ref=e[:canvas_id])
 
       - if Rails.env.development?
         .columns

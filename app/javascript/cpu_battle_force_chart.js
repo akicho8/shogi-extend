@@ -20,6 +20,9 @@ const CHART_CONFIG_DEFAULT = {
   },
 
   options: {
+    // サイズ
+    aspectRatio: 3, // 大きいほど横長方形になる
+
     title: {
       display: true,
       text: "戦力グラフ",
