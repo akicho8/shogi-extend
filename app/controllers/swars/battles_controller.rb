@@ -168,6 +168,7 @@ module Swars
             flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりなのでウォーズへのアクセスは行っていません"
           end
         end
+
         if success
           unlet(:current_swars_user)
 
@@ -177,11 +178,11 @@ module Swars
             if hit_count.zero?
               # flash[:warning] = "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした"
             else
-              flash[:info] = "#{hit_count}件新しく見つかりました"
+              flash[:info] = "#{hit_count}件、新しく見つかりました"
             end
             current_swars_user.search_logs.create!
           else
-            flash[:warning] = "#{current_swars_user_key} さんの棋譜は見つかりませんでした。ウォーズIDが正しいか確認してみてください"
+            flash[:warning] = "#{current_swars_user_key} さんは存在しないかも？ ウォーズIDが正しいか確認してみてください"
           end
 
           if hit_count.nonzero?
