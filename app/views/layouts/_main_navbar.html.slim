@@ -11,7 +11,7 @@ nav.navbar.is-primary.is_screen_only
       = link_to(icon_tag(:magnify, margin_right: 1) + "ウォーズ検索", [:swars, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
       = link_to(icon_tag(:robot, margin_right: 1) + "CPU対戦".html_safe, :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
       = link_to(icon_tag(:apps, margin_right: 1) + "符号の鬼", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
-      = link_to(icon_tag(:clock, margin_right: 1) + "ストップウォッチ", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
+      = link_to(icon_tag(:clock, margin_right: 1) + "詰将棋RTA", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
 
       .navbar-item.has-dropdown.is-hoverable
         span.navbar-link

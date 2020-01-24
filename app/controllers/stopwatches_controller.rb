@@ -11,6 +11,6 @@ class StopwatchesController < ApplicationController
   end
 
   def create
-    slack_message(key: "ストップウォッチ", body: "[#{params[:book_title]}][#{params[:mode]}] #{params[:summary].strip}")
+    slack_message(key: "詰将棋RTA", body: "[#{params[:book_title]}][#{params[:mode]}] #{params[:summary].strip}")
   end
 end
