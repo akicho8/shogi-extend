@@ -121,8 +121,8 @@ export default {
     // modal_url_with_turn_copy2() {
     //   if (this.modal_record) {
     //     this.modal_record.
-    //     
-    //     
+    //
+    //
     //     this.clipboard_copy({text: `${this.modal_record.modal_on_index_url}&turn=${this.real_pos}` })
     //   }
     // },
@@ -213,8 +213,9 @@ export default {
     } else {
       if (!this.query) {
         // モバイルでは手動でフォーカスしたときにはじめて入力ツールが登場するので自動的にフォーカスしない方がいい
-        if (false) {
-          this.$refs.main_field.focus()
+        const el = document.querySelector("html")
+        if (!el.classList.contains("mobile")) {
+          this.$refs.query_field.focus()
         }
       }
     }
