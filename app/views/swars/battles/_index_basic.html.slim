@@ -9,10 +9,10 @@
       = form.submit("submit_button_for_test") if Rails.env.test?
 
       b-field
-        b-input(name="query" placeholder=current_placeholder type="search" icon="magnify" v-model="query" ref="query_field" expanded rounded list="search_field_query_completion")
+        b-input(name="query" placeholder=current_placeholder type="search" icon="magnify" v-model="query" ref="query_field" expanded list="search_field_query_completion")
         = render partial: "search_field_query_completion"
         p.control
-          = form.button("検索", name: nil, class: "button is-info is-rounded")
+          = form.button("検索", name: nil, class: "button is-info")
 
 = render partial: "search_bottom_share_links"
 
