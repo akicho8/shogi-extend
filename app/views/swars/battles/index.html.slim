@@ -3,7 +3,7 @@
 - if v = modal_record_twitter_options
   - twitter_card_tag(v)
 - else
-  - twitter_card_tag(title: @page_title, description: "ぴよ将棋や KENTO と連携して開けます。またクリップボードにコピーして ShogiDroid・ShogiGUI・激指などに張り付けるような使い方ができます", image: "swars_battles_index.png")
+  - twitter_card_tag(title: @page_title, description: "ぴよ将棋やKENTOと連携して開けます。またクリップボードにコピーしてShogiDroid・ShogiGUI・激指などに張り付けるような使い方ができます", image: "swars_battles_index.png")
 
 / @redirect_url_by_js のときも変更しているのはアイコンが元に戻ってしまうのを回避するため
 - if flash[:external_app_exec_skip_once] || params[:external_app_exec_skip_once] || params[:latest_open_index]
