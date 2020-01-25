@@ -50,10 +50,12 @@ module Swars
     end
 
     def index
+      # FIXME: BOTを許可する
       if bot_agent?
         return
       end
 
+      # FIXME: 名前変更する
       if params[:stop_processing_because_it_is_too_heavy]
         return
       end
