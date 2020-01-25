@@ -182,7 +182,7 @@ module Swars
             end
             current_swars_user.search_logs.create!
           else
-            flash[:warning] = "#{current_swars_user_key} さんは存在しないかも？ ウォーズIDが正しいか確認してみてください"
+            flash[:warning] = "#{current_swars_user_key} さんは存在しないかも？"
           end
 
           if hit_count.nonzero?
