@@ -110,7 +110,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 / 最初のを自動的に開く
 - if current_swars_user
   template(v-if="!usage_display_p")
-    b-button(@click="usage_display_click_handle" size="is-small" icon-right="lightbulb-on-outline")
+    b-button.usage_display_button(@click="usage_display_click_handle" size="is-small" icon-right="lightbulb-on-outline")
   template(v-if="usage_display_p")
     .columns
       .column
