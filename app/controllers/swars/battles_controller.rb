@@ -82,6 +82,9 @@ module Swars
       import_process(flash.now)
 
       external_app_action2
+      if performed?
+        return
+      end
 
       perform_zip_download
       if performed?

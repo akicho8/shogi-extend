@@ -50,6 +50,10 @@ module Swars
         if record = current_scope.order(battled_at: :desc).limit(latest_open_limit).last
           @external_app_url = current_external_app_info.external_url(self, record)
           slack_message(key: current_external_app_info.shortcut_name, body: current_swars_user_key)
+
+          if current_external_app_info.redirect_in_controller
+            redirect_to @external_app_url
+          end
         end
       end
     end
