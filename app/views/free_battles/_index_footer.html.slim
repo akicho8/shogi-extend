@@ -4,7 +4,7 @@
       .column
         = paginate current_records
 
-  template(v-if="fetched_count >= 1")
+  template(v-if="fetched_count >= 1 && records.length >= 1")
     .columns
       .column
         - args = params.to_unsafe_h.except(:latest_open_index)
@@ -13,5 +13,7 @@
           small
             | 件ずつ表示
 
-  - content_for :head do
-    = rel_next_prev_link_tags current_records
+  / クロールされたくないので入れる必要なし
+  - if Rails.env.development?
+    - content_for :head do
+      = rel_next_prev_link_tags current_records
