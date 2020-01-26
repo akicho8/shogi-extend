@@ -14,7 +14,10 @@
   javascript:
     document.addEventListener('DOMContentLoaded', () => {
       const url = "#{@external_app_url}"
-      const other_window = "#{current_external_app_info.other_window}"
+      let other_window = "#{current_external_app_info.other_window}"
+      if (GVI.$route.query.other_window) {
+        other_window = GVI.$route.query.other_window
+      }
       if (other_window === "true") {
         if (window.open(url, "_blank")) {
           // Google Chrome では動く
