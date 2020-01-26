@@ -1,8 +1,18 @@
+# 動作手順
+#
+# 1. HTMLから  { query: "itoshinTV", latest_open_index: 0, external_app_setup: true, external_app_key: "piyo_shogi" } で飛ぶ
+# 2. params[:external_app_setup] があれば flash[:external_app_setup] = true してビューへ
+# 3. flash[:external_app_setup] があればビューでブックマークを促す
+# 4. 次のアクセスで flash[:external_app_setup] は消えるので通常の検索が走る
+# 5. params[:latest_open_index] があるので指定のレコードを external_app_key が指すアプリに渡す
+#
 module Swars
   concern :ExternalAppMethods do
     included do
       helper_method :current_external_app_info
       helper_method :external_app_mode?
+
+      cattr_accessor(:latest_open_limit_max) { 10 }
     end
 
     def current_external_app_info
@@ -17,14 +27,14 @@ module Swars
 
     let :latest_open_limit do
       if v = params[:latest_open_index].presence
-        [v.to_i.abs, 10].min.next
+        [v.to_i.abs, latest_open_limit_max].min.next
       end
     end
 
     def external_app_action1
-      if params[:redirect_to_bookmarkable_page]
+      if params[:external_app_setup]
+        flash[:external_app_setup] = true
         slack_message(key: "ブクマ移動", body: current_swars_user_key)
-        flash[:external_app_bm] = true
         redirect_to [:swars, :battles, params.to_unsafe_h.slice(:query, :latest_open_index, :external_app_key)]
       end
     end
@@ -32,7 +42,7 @@ module Swars
     # このなかでリダイレクトすると白紙のページが開いてしまうためビューを表示つつリダイレクトしている
     # ぴよ将棋の場合、選択肢が出て、遷移をキャンセルすることもできるため、その方が都合が良い
     def external_app_action2
-      if flash[:external_app_bm]
+      if flash[:external_app_setup]
         return
       end
 

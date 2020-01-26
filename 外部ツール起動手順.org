@@ -2,6 +2,6 @@
 
 ** HTMLからこれで飛ぶ
 
-  { query: "itoshinTV", latest_open_index: 0, redirect_to_bookmarkable_page: true, external_app_key: "piyo_shogi" }
+  { query: "itoshinTV", latest_open_index: 0, external_app_setup: true, external_app_key: "piyo_shogi" }
 
-** redirect_to_bookmarkable_page があれば flash[:external_app_exec_skip_once] = true
+** external_app_setup があれば flash[:external_app_exec_skip_once] = true

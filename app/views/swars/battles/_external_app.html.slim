@@ -2,7 +2,7 @@
   - @override_page_title ||= current_external_app_info.shortcut_name
   - @apple_touch_icon ||= current_external_app_info.apple_touch_icon
 
-- if flash[:external_app_bm]
+- if flash[:external_app_setup]
   javascript:
     document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$buefy.dialog.alert({message: "<b>ホーム画面に追加</b>してください", type: 'is-primary', trapFocus: true}) })
   .columns

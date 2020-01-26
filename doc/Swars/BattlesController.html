@@ -362,7 +362,7 @@
     <span class='kw'>return</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:redirect_to_bookmarkable_page</span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:external_app_setup</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_slack_message'>slack_message</span><span class='lparen'>(</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ブクマ移動</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>body:</span> <span class='id identifier rubyid_current_swars_user_key'>current_swars_user_key</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:external_app_exec_skip_once</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='comment'># ブックマークできるように一時的にぴよ将棋に飛ばないようにする
 </span>    <span class='comment'># flash[:primary] = &quot;この状態で「ホーム画面に追加」しておくと開くと同時に最新の対局をぴよ将棋で開けるようになります&quot;
