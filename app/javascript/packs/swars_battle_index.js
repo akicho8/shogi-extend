@@ -7,6 +7,8 @@ window.SwarsBattleIndex = Vue.extend({
     return {
       submited: false,
       detailed: false,
+
+      usage_display_p: false,   // 使い方を表示する？
     }
   },
 
@@ -59,6 +61,10 @@ window.SwarsBattleIndex = Vue.extend({
       this.process_now()
 
       this.submited = true
+    },
+
+    usage_display_click_handle() {
+      this.usage_display_p = true
     },
   },
 })

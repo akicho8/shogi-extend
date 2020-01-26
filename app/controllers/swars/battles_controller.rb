@@ -32,6 +32,7 @@ module Swars
     include ModulableCrud::All
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
+    include ExternalAppMethods
 
     helper_method :current_swars_user
     helper_method :current_query_info
@@ -60,11 +61,8 @@ module Swars
         return
       end
 
-      if params[:redirect_to_bookmarkable_page]
-        slack_message(key: "ブクマ移動", body: current_swars_user_key)
-        flash[:external_app_exec_skip_once] = true # ブックマークできるように一時的にぴよ将棋に飛ばないようにする
-        # flash[:primary] = "この状態で「ホーム画面に追加」しておくと開くと同時に最新の対局をぴよ将棋で開けるようになります"
-        redirect_to [:swars, :battles, query: current_swars_user, latest_open_index: params[:latest_open_index]]
+      external_app_action1
+      if performed?
         return
       end
 
@@ -83,21 +81,7 @@ module Swars
 
       import_process(flash.now)
 
-      unless flash[:external_app_exec_skip_once]
-        if latest_open_limit
-          if record = current_scope.order(battled_at: :desc).limit(latest_open_limit).last
-            @redirect_url_by_js = piyo_shogi_app_url(full_url_for([record, format: "kif"]))
-            slack_message(key: "最新開くぴよ", body: current_swars_user_key)
-            if false
-              # この方法だと動くけど白紙のページが開いてしまう
-              redirect_to @redirect_url_by_js
-              return
-            else
-              # なのでページを開いてから遷移する
-            end
-          end
-        end
-      end
+      external_app_action2
 
       perform_zip_download
       if performed?
@@ -349,12 +333,6 @@ module Swars
         })
     end
 
-    let :latest_open_limit do
-      if v = params[:latest_open_index].presence
-        [v.to_i.abs, 10].min.next
-      end
-    end
-
     let :exclude_column_names do
       ["meta_info", "csa_seq"]
     end
@@ -488,6 +466,5 @@ module Swars
           })
       end
     end
-
   end
 end

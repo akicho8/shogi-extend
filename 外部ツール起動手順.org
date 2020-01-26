@@ -1,0 +1,7 @@
+* 外部ツール起動手順
+
+** HTMLからこれで飛ぶ
+
+  { query: "itoshinTV", latest_open_index: 0, redirect_to_bookmarkable_page: true, external_app_key: "piyo_shogi" }
+
+** redirect_to_bookmarkable_page があれば flash[:external_app_exec_skip_once] = true

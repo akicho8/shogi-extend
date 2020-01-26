@@ -1,0 +1,15 @@
+- if external_app_mode?
+  - @override_page_title ||= current_external_app_info.shortcut_name
+  - @apple_touch_icon ||= current_external_app_info.apple_touch_icon
+
+- if flash[:external_app_bm]
+  javascript:
+    document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$buefy.dialog.alert({message: "<b>ホーム画面に追加</b>してください", type: 'is-primary', trapFocus: true}) })
+  .columns
+    .column
+      br
+      = link_to "← もどる", [:swars, :battles, query: current_swars_user], class: "button is-primary is-small"
+
+- if @external_app_url
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { location.href = "#{@external_app_url}" })
