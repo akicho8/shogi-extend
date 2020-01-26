@@ -32,7 +32,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
     it "アプリ起動できるブックマーク可能なページに飛ぶ" do
       visit "/w-light?query=devuser1"
-      click_on "こちら"
+      click_on "【ぴよ将棋】"
       expect(page).to have_content "ホーム画面に追加してください"
       doc_image
     end
