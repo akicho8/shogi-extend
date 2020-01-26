@@ -162,9 +162,10 @@ module Swars
           # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
           success = Battle.sometimes_user_import(user_key: current_swars_user_key, page_max: import_page_max)
           if !success
-            # development でここが通らない
-            # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-            flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです"
+            # ここを有効にするには rails dev:cache してキャッシュを有効にすること
+            unless Rails.env.production?
+              flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです"
+            end
           end
         end
 
@@ -175,7 +176,9 @@ module Swars
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
             if hit_count.zero?
-              # flash[:warning] = "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした"
+              unless Rails.env.production?
+                flash[:warning] = "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした"
+              end
             else
               flash[:info] = "#{hit_count}件、新しく見つかりました"
             end
