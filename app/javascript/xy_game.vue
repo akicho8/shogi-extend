@@ -125,7 +125,7 @@
                     | {{time_default_format(props.row.created_at)}}
 
       b-switch(v-model="entry_name_unique")
-        | プレイヤー毎の順位をわかりやすくする
+        | プレイヤーの順位をわかりやすくする
 
   .columns.is-4(v-show="(mode === 'stop' || mode === 'goal')")
     .column
