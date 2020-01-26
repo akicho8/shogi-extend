@@ -11,7 +11,7 @@ class ExternalAppInfo
 
   def external_url(h, record)
     unless Rails.env.production?
-      return "https://www.example.net/"
+      return "https://www.example.com/?a=1&b=2"
     end
 
     h.public_send("#{key}_app_url", h.full_url_for([record, format: "kif"]))

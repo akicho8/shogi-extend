@@ -108,7 +108,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 /                   | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をスムーズにぴよ将棋で開けます。直前の対局を必ず検討する人向けのショートカットです
 
 / 最初のを自動的に開く
-- if current_swars_user
+- if true
   template(v-if="fetched_count >= 1 && records.length >= 1")
     template(v-if="!usage_display_p")
       b-button.usage_display_button(@click="usage_display_click_handle" size="is-small" icon-right="lightbulb-on-outline")
@@ -138,15 +138,15 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
         b-message(title="便利な使い方" type="is-info" size="is-small" :closable="false")
           .content
             ol
-              - if current_swars_user && params[:page].to_i <= 1
+              - if controller.import_enable?
                 li 検索後の最初の画面 (今の画面) をブックマークしておくとウォーズIDを毎回入力する手間が省けます
-                li
-                  | また直前の対局を必ず検討する人向けのショートカットがあります。
-                  | こちらの
-                  == ExternalAppInfo.collect { |e| link_to tag.b("【#{e.name}】"), [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key] }.join("または")
-                  | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから直前の対局をすぐに確認できるようになります
-                  br
-                  | ※ KENTO はどこからでも利用できるので PC の利用者もブックマークしておくと便利です
+              li
+                | 直前の対局を必ず検討する人向けのショートカットがあります。
+                | こちらの
+                == ExternalAppInfo.collect { |e| link_to tag.b("【#{e.name}】"), [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key] }.join("または")
+                | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから直前の対局をすぐに確認できるようになります
+                br
+                | ※ KENTO はどこからでも利用できるので PC の利用者もブックマークしておくと便利です
 
 / b-modal(:active.sync="modal_p" has-modal-card)
 /   .modal-card

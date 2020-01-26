@@ -6,7 +6,7 @@
 
 - if flash[:external_app_setup]
   javascript:
-    document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$buefy.dialog.alert({message: "<b>ホーム画面に追加</b>してください<br>(ブックマークでもよいです)", type: 'is-primary', trapFocus: true, onConfirm: () => { location.href = "#{back_to_url}" }}) })
+    document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$buefy.dialog.alert({message: "<b>ホーム画面に追加</b>してください<br>(ブックマークでもよいです)", type: 'is-primary', trapFocus: true, onConfirm: () => { location.href = "#{raw back_to_url}" }}) })
 
 - if @external_app_url
   javascript:

@@ -136,6 +136,16 @@ module Swars
       options
     end
 
+    def import_enable?
+      v = true
+      v &&= current_swars_user_key
+      v &&= params[:page].blank?
+      v &&= !params[:import_skip]
+      v &&= !flash[:import_skip]
+      v &&= !flash[:external_app_setup]
+      v
+    end
+
     private
 
     def import_process(flash)
@@ -154,7 +164,7 @@ module Swars
           if !success
             # development でここが通らない
             # development では memory_store なのでリロードが入ると Rails.cache.exist? がつねに false を返している……？
-            flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりなのでウォーズへのアクセスは行っていません"
+            flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです"
           end
         end
 
@@ -179,10 +189,6 @@ module Swars
           end
         end
       end
-    end
-
-    def import_enable?
-      current_swars_user_key && params[:page].blank? && !params[:import_skip] && !flash[:import_skip]
     end
 
     let :import_page_max do
