@@ -93,7 +93,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 /     .column
 /       article.message.is-primary.is-size-7
 /         .message-header
-/           | 便利な使い方
+/           | 使い方
 /         .message-body.has-text-left
 /           .content
 /             ol
@@ -123,15 +123,9 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
                 - if current_swars_user && params[:page].to_i <= 1
                   li 検索後の最初の画面 (この画面) をブックマークしておくと毎回ウォーズIDを入力する手間が省けます
                   li
-                    | また
-                    b
-                      = link_to "【こちら】", [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: "piyo_shogi"]
-                    | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をぴよ将棋でスムーズに開けるようになります
-                  li
-                    | KENTO の場合は同様に
-                    b
-                      = link_to "【こちら】", [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: "kento"]
-                    | をタップしてください。この2つは直前の対局を必ず検討する人向けのショートカットです
+                    | また直前の対局を必ず検討する人向けのショートカットとして、この
+                    == ExternalAppInfo.collect { |e| link_to tag.b("【#{e.name}】"), [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key] }.join("または")
+                    | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局を指定のアプリでスムーズに開けるようになります
 
 / b-modal(:active.sync="modal_p" has-modal-card)
 /   .modal-card
