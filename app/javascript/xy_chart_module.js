@@ -26,6 +26,9 @@ export default {
     xy_chart_fetch() {
       this.http_get_command(this.$root.$options.xhr_post_path, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
         new Chart(this.$refs.chart_canvas, this.days_chart_js_options(data.chartjs_datasets))
+
+        // const ctx = this.$refs.chart_canvas.getContext('2d')
+        // ctx.canvas.height = 280
       })
     },
 
@@ -33,6 +36,10 @@ export default {
       return Object.assign({}, {data: {datasets: datasets}}, {
         type: "line",
         options: {
+          // サイズ
+          aspectRatio: 2, // 大きいほど横長方形になる
+          // maintainAspectRatio: false,
+
           elements: {
             line: {
               tension: 0.2, // disables bezier curves (https://www.chartjs.org/docs/latest/charts/line.html#disable-bezier-curves)
@@ -47,10 +54,10 @@ export default {
           // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
           layout: {
             padding: {
-              left: 24,
-              right: 24,
-              top: 24,
-              bottom: 24,
+              left: 8,
+              right: 8,
+              top: 8,
+              bottom: 8,
             },
           },
 
