@@ -188,7 +188,9 @@ module Swars
           end
 
           if hit_count.nonzero?
-            slack_message(key: "検索", body: "#{current_swars_user_key} #{hit_count}件")
+            unless Rails.env.production?
+              slack_message(key: "検索", body: "#{current_swars_user_key} #{hit_count}件")
+            end
           end
         end
       end
