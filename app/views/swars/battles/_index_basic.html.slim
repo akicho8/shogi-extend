@@ -146,7 +146,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
                 == ExternalAppInfo.collect { |e| link_to tag.b("【#{e.name}】"), [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key] }.join("または")
                 | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから直前の対局をすぐに確認できるようになります
                 br
-                | ※ KENTO はどこからでも利用できるので PC の利用者もブックマークしておくと便利です
+                | ※ KENTO はどこからでも利用できるので PC でもブックマークしておくと便利です
 
 / b-modal(:active.sync="modal_p" has-modal-card)
 /   .modal-card
