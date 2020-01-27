@@ -150,6 +150,10 @@ module Swars
 
     def import_process(flash)
       if import_enable?
+        if current_swars_user
+          cookies.permanent.signed[:remember_swars_user_keys] = [current_swars_user.user_key, *(cookies.permanent.signed[:remember_swars_user_keys] || [])].uniq.take(10)
+        end
+
         before_count = 0
         if current_swars_user
           before_count = current_swars_user.battles.count

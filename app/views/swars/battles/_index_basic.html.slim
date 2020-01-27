@@ -162,3 +162,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 - if Rails.env.development? && false
   = Swars::User.to_html
   = Swars::Battle.to_html
+
+- if Rails.env.development?
+  = debug cookies.permanent.signed[:remember_swars_user_keys]
+
