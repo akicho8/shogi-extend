@@ -97,6 +97,13 @@ class XyRecord < ApplicationRecord
     SlackAgent.message_send(key: "符号", body: "[#{rank}位][#{entry_name}] #{summary}")
   end
 
+  def rank_info
+    XyScopeInfo.inject({}) do |a, e|
+      args = {xy_scope_key: e.key, entry_name_unique: false}
+      a.merge(e.key => { rank: rank(args), page: ranking_page(args) })
+    end
+  end
+
   private
 
   def ranking_add

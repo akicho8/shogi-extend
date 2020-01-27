@@ -85,7 +85,7 @@ class XyRecordsController < ApplicationController
   def result_attributes
     {
       xy_records: XyRuleInfo[@xy_record.xy_rule_key].xy_records(params),
-      xy_record: @xy_record.attributes.merge(rank: @xy_record.rank(params), ranking_page: @xy_record.ranking_page(params)).as_json,
+      xy_record: @xy_record.attributes.merge(rank_info: @xy_record.rank_info).as_json,
     }
   end
 

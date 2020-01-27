@@ -48,6 +48,19 @@ RSpec.describe XyRecord, type: :model do
     end
   end
 
+  it "ユニークの場合は一番良い結果を更新してないと登録しない点に注意" do
+    XyRecord.destroy_all
+    XyRuleInfo.redis.flushdb
+
+    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0) # 登録する
+    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 20, x_count: 0) # 以降登録しない
+    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 30, x_count: 0)
+    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 40, x_count: 0)
+    XyRuleInfo.rebuild
+    r = XyRecord.last
+    assert { r.rank(xy_scope_key: "xy_scope_all", entry_name_unique: "true") == 2 } # 全体だと40は2位
+  end
+
   def build(*args)
     v = XyRuleInfo[:xy_rule100].xy_records(*args)
     tp v

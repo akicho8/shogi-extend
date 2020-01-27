@@ -125,7 +125,7 @@
                     | {{time_default_format(props.row.created_at)}}
 
       b-switch(v-model="entry_name_unique")
-        | プレイヤーの順位をわかりやすくする
+        | プレイヤー毎の順位をわかりやすくする
 
   .columns.is-4(v-show="(mode === 'stop' || mode === 'goal')")
     .column
@@ -525,13 +525,13 @@ export default {
     },
 
     record_post() {
-      this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique, xy_record: this.post_params}, data => {
+      this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
         this.entry_name_unique = false
         this.data_update(data)
 
         // ランク内ならランキングのページをそのページに移動する
-        if (this.xy_record.rank <= this.$root.$options.rank_max) {
-          this.$set(this.current_pages, this.current_rule_index, this.xy_record.ranking_page)
+        if (this.current_rank <= this.$root.$options.rank_max) {
+          this.$set(this.current_pages, this.current_rule_index, this.xy_record.rank_info[this.xy_scope_key].page)
         }
 
         this.congrats_talk()
@@ -547,11 +547,11 @@ export default {
     congrats_talk() {
       let message = ""
       if (this.entry_name) {
-        if (this.xy_record.rank <= this.congrats_lteq) {
+        if (this.current_rank <= this.congrats_lteq) {
           message += `おめでとうございます。`
         }
-        message += `${this.entry_name}さんは${this.xy_record.rank}位です。`
-        if (this.xy_record.rank > this.$root.$options.rank_max) {
+        message += `${this.entry_name}さんは${this.current_rank}位です。`
+        if (this.current_rank > this.$root.$options.rank_max) {
           message += `ランキング外です。`
         }
         this.talk(message)
@@ -681,7 +681,8 @@ export default {
       let out = ""
       out += `ルール: ${this.saved_rule.name}\n`
       if (this.xy_record) {
-        out += `順位: ${this.xy_record.rank}位\n`
+        out += `本日: ${this.xy_record.rank_info.xy_scope_today.rank}位\n`
+        out += `全体: ${this.xy_record.rank_info.xy_scope_all.rank}位\n`
       }
       out += `タイム: ${this.time_format}\n`
       if (this.time_avg) {
@@ -732,8 +733,9 @@ export default {
 
     tweet_body() {
       let out = ""
-      out += "▼符号の鬼の結果\n"
+      out += "#符号の鬼\n"
       out += this.summary
+      out += "\n"
       out += window.location.href.replace(window.location.hash, "")
       return out
     },
@@ -806,6 +808,10 @@ export default {
       } else {
         return "xy_rule100t"
       }
+    },
+
+    current_rank() {
+      return this.xy_record.rank_info[this.xy_scope_key].rank
     },
 
     XyScopeInfo() { return XyScopeInfo },

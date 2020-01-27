@@ -72,7 +72,7 @@ class XyRuleInfo
   def xy_records(params)
     # current_clean
     # aggregate
-    if params[:entry_name_unique] == "true"
+    if params[:entry_name_unique].to_s == "true"
       entry_names = redis.zrevrange(key_select(params), 0, rank_max - 1)
       if entry_names.empty?
         return []
@@ -179,7 +179,7 @@ class XyRuleInfo
 
   def key_select(params)
     key = table_key_for(params)
-    if params[:entry_name_unique] == "true"
+    if params[:entry_name_unique].to_s == "true"
       key = as_unique_key(key)
     end
     key
