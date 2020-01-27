@@ -15,6 +15,7 @@ module Swars
           end
 
           if Rails.env.development?
+            tp "棋譜用紙の境界線チェック用データ投入"
             [
               { turn_max:   0, preset_key: "平手",   },
               { turn_max:   1, preset_key: "平手",   },
@@ -32,9 +33,9 @@ module Swars
               user2 = User.create!(user_key: SecureRandom.hex[0...5])
 
               if params[:preset_key] == "平手"
-                list = [["+5958OU", 599], ["-5152OU", 597], ["+5859OU", 598], ["-5251OU", 590]]
+                list = [["+5958OU", 0], ["-5152OU", 0], ["+5859OU", 0], ["-5251OU", 0]]
               else
-                list = [["-5152OU", 597], ["+5958OU", 599], ["-5251OU", 590], ["+5859OU", 598]]
+                list = [["-5152OU", 0], ["+5958OU", 0], ["-5251OU", 0], ["+5859OU", 0]]
               end
 
               cycle = list.cycle
@@ -45,10 +46,9 @@ module Swars
               battle.memberships.build(user: user1, judge_key: :win,  location_key: :black)
               battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
               battle.battled_at = Time.current
-              battle.save!                  # => true, true, true, true, true, true, true, true, true, true, true
+              battle.save!
             end
           end
-
         end
 
         def run(*args, **params, &block)
