@@ -230,7 +230,6 @@ export default {
       current_rule_index: null, // b-tabs 連動用
       xy_records_hash: null,    // 複数のルールでそれぞれにランキング情報も入っている
       xy_record: null,          // ゲームが終わたっときにランクなどが入っている
-      xhr_put_path: null,
       current_pages: null,
       saved_rule: null,
 
@@ -529,7 +528,6 @@ export default {
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique, xy_record: this.post_params}, data => {
         this.entry_name_unique = false
         this.data_update(data)
-        this.xhr_put_path = data.xhr_put_path
 
         // ランク内ならランキングのページをそのページに移動する
         if (this.xy_record.rank <= this.$root.$options.rank_max) {
