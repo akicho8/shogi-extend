@@ -887,21 +887,19 @@ export default {
     format_type_c() {
       let out = ""
       out += this.summary
-
+      out += "\n"
       _.forIn(this.o_group_by_min, (rows, key) => {
         if (key === 0 && false) {
-          out += "\n※" + this.human_minute(key) + "は省略\n"
+          out += "※" + this.human_minute(key) + "は省略\n"
         } else {
-          out += "\n"
-          out += this.human_minute(key) + "\n"
+          out += this.human_minute(key) + " "
           out += rows.map(e => this.quest_name(e)).join(" ")
           out += "\n"
         }
       })
 
       if ('x' in this.ox_group) {
-        out += "\n"
-        out += "不正解\n"
+        out += "不正解" + " "
         out += this.ox_group['x'].map(e => this.quest_name(e)).join(" ")
         out += "\n"
       }
