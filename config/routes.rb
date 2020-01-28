@@ -109,7 +109,7 @@ Rails.application.routes.draw do
       kifu: url,
     }.merge(options)
 
-    "https://kento.netlify.com/?#{options.to_query}"
+    "https://www.kento-shogi.com/?#{options.to_query}"
   end
 
   direct :google_search do |query|
