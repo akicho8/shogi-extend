@@ -130,11 +130,12 @@
   .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
     .column.is-8
       .columns
-        .column
-          .has-text-centered
-            b-field.is-inline-flex
-              b-button(@click="xy_chart_fetch" size="is-small")
-                | 更新
+        template(v-if="development_p")
+          .column
+            .has-text-centered
+              b-field.is-inline-flex
+                b-button(@click="xy_chart_fetch" size="is-small")
+                  | 更新
         .column
           .has-text-centered
             b-field.is-inline-flex
@@ -532,7 +533,12 @@ export default {
           this.$set(this.current_pages, this.current_rule_index, this.xy_record.rank_info[this.xy_scope_key].page)
         }
 
+        // おめでとう
         this.congrats_talk()
+
+        // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
+        this.xy_chart_rule_key = this.xy_rule_key
+        this.xy_chart_scope_key = "chart_scope_recently"
       })
     },
 
