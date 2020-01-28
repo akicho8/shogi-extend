@@ -182,7 +182,7 @@
 <script>
 import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
-import xy_chart_module from './xy_chart_module.js'
+import xy_game_chart_mod from './xy_game_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
 
 import Soldier from "shogi-player/src/soldier.js"
@@ -201,7 +201,7 @@ export default {
   name: "xy_game",
   mixins: [
     stopwatch_data_retention,
-    xy_chart_module,
+    xy_game_chart_mod,
   ],
   data() {
     return {
