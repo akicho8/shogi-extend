@@ -674,6 +674,10 @@ export default {
     time_default_format(v) {
       return dayjs(v).format("YYYY-MM-DD")
     },
+
+    magic_number() {
+      return dayjs().format("YYMMDDHHMM")
+    },
   },
 
   computed: {
@@ -692,7 +696,7 @@ export default {
       if (this.time_avg) {
         out += `平均: ${this.time_avg}\n`
       }
-      out += `まちがえた数: ${this.x_count}\n`
+      out += `不正解: ${this.x_count}\n`
       out += `正解率: ${this.rate_per}%\n`
       return out
     },
@@ -739,8 +743,8 @@ export default {
       let out = ""
       out += "#符号の鬼\n"
       out += this.summary
-      out += "\n"
-      out += window.location.href.replace(window.location.hash, "")
+      // out += "\n"
+      out += window.location.href.replace(window.location.hash, "") + "?" + this.magic_number()
       return out
     },
 
