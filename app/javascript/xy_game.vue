@@ -416,6 +416,11 @@ export default {
         this.xy_chart_scope_key = "chart_scope_recently"
       }
 
+      this.xy_chart_rule_key = hash.xy_chart_rule_key
+      if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
+        this.xy_chart_rule_key = this.default_xy_rule_key
+      }
+
       this.entry_name = hash.entry_name || this.fixed_handle_name
       this.current_pages = hash.current_pages || {}
       this.bg_mode = hash.bg_mode != null ? hash.bg_mode : false
@@ -424,12 +429,6 @@ export default {
       this.sp_bg_variant = hash.sp_bg_variant || "a"
       this.sp_size = hash.sp_size || "default"
       this.sp_piece_variant = hash.sp_piece_variant || "a"
-
-      // 他のパラメータを使ってリクエスト(xy_chart_fetch)が走るので最後
-      this.xy_chart_rule_key = hash.xy_chart_rule_key
-      if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
-        this.xy_chart_rule_key = this.default_xy_rule_key
-      }
     },
 
     timer_setup() {
