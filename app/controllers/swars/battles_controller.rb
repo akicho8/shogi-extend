@@ -37,6 +37,8 @@ module Swars
     helper_method :current_swars_user
     helper_method :current_query_info
 
+    cattr_accessor(:remember_swars_user_keys_max) { 10 }
+
     cattr_accessor(:labels_type1) { ["対象", "相手"] }
     cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
 
@@ -151,7 +153,9 @@ module Swars
     def import_process(flash)
       if import_enable?
         if current_swars_user
-          cookies.permanent.signed[:remember_swars_user_keys] = [current_swars_user.user_key, *(cookies.permanent.signed[:remember_swars_user_keys] || [])].uniq.take(10)
+          if remember_swars_user_keys_max
+            cookies.permanent.signed[:remember_swars_user_keys] = [current_swars_user.user_key, *cookies.permanent.signed[:remember_swars_user_keys]].uniq.take(remember_swars_user_keys_max)
+          end
         end
 
         before_count = 0
