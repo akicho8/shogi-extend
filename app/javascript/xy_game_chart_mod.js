@@ -10,6 +10,9 @@ export default {
     }
   },
 
+  mounted() {
+  },
+  
   watch: {
     xy_chart_rule_key() {
       this.xy_chart_fetch()
@@ -26,6 +29,9 @@ export default {
     xy_chart_fetch() {
       this.http_get_command(this.$root.$options.xhr_post_path, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
         new Chart(this.$refs.chart_canvas, this.days_chart_js_options(data.chartjs_datasets))
+        // chart.canvas.style.height = '128px';
+        // alert(1)
+        // chart.canvas.style.width = '128px';
       })
     },
 
@@ -34,7 +40,11 @@ export default {
         type: "line",
         options: {
           // サイズ
-          aspectRatio: 2, // 大きいほど横長方形になる
+          aspectRatio: 1.5, // 大きいほど横長方形になる
+          // maintainAspectRatio: false,
+          // responsive: false,
+          // responsive: true,
+          // maintainAspectRatio: false,
 
           elements: {
             line: {

@@ -127,32 +127,31 @@
       b-switch(v-model="entry_name_unique")
         | プレイヤー毎の順位をわかりやすくする
 
-  .columns.is-4(v-show="(mode === 'stop' || mode === 'goal')")
-    .column
-      .box
-        .columns
-          .column
-            .has-text-centered
-              b-field.is-inline-flex
-                b-button(@click="xy_chart_fetch")
-                  | 更新
-          .column
-            .has-text-centered
-              b-field.is-inline-flex
-                template(v-for="e in XyRuleInfo.values")
-                  b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key")
-                    | {{e.name}}
-          .column
-            .has-text-centered
-              b-field.is-inline-flex
-                template(v-for="e in XyChartScopeInfo.values")
-                  b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key")
-                    | {{e.name}}
-        .columns
-          .column
-            canvas#chart_canvas(ref="chart_canvas")
-            .has-text-centered.has-text-grey.is-size-7
-              | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
+  .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
+    .column.is-8
+      .columns
+        .column
+          .has-text-centered
+            b-field.is-inline-flex
+              b-button(@click="xy_chart_fetch" size="is-small")
+                | 更新
+        .column
+          .has-text-centered
+            b-field.is-inline-flex
+              template(v-for="e in XyRuleInfo.values")
+                b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small")
+                  | {{e.name}}
+        .column
+          .has-text-centered
+            b-field.is-inline-flex
+              template(v-for="e in XyChartScopeInfo.values")
+                b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small")
+                  | {{e.name}}
+      .columns
+        .column
+          canvas#chart_canvas.is-centered.is-4(ref="chart_canvas")
+          .has-text-centered.has-text-grey.is-size-7
+            | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
 
   template(v-if="development_p")
     .columns
@@ -877,4 +876,6 @@ export default {
     white-space: pre-wrap
   .tweet_button_container
     margin-top: 0.75rem
+  .chart_box_container
+    margin-top: 4rem
 </style>
