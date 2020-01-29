@@ -48,7 +48,7 @@
 
     = link_to("ポップアップURL", current_record.modal_on_index_url, class: "button")
 
-    = link_to("棋譜印刷", [ns_prefix, current_record, formal_sheet: true], class: "button")
+    = link_to("棋譜用紙", [ns_prefix, current_record, formal_sheet: true], class: "button")
 
     - if AppConfig[:player_info_function]
       - if current_record.kind_of?(Swars::Battle)

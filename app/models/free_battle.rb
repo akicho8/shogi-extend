@@ -132,7 +132,8 @@ class FreeBattle < ApplicationRecord
   end
 
   def default_title
-    "#{self.class.count.next}番目の何かの棋譜"
+    # "#{self.class.count.next}番目の何かの棋譜"
+    ""
   end
 
   # 01060_77dacfcf0a24e8315ddd51e86152d3b2_横歩取り_急戦1__飛車先を受けずに互いに攻め合うと封じ込まれて後手有利.kif
@@ -161,7 +162,6 @@ class FreeBattle < ApplicationRecord
   before_validation do
     self.title ||= default_title
     self.description ||= ""
-
     self.kifu_body ||= ""
 
     if kifu_file
@@ -201,7 +201,7 @@ class FreeBattle < ApplicationRecord
 
   after_create do
     if Rails.env.production? || Rails.env.test?
-      SlackAgent.message_send(key: "棋譜投稿", body: title)
+      SlackAgent.message_send(key: "棋譜投稿(#{purpose_info.name})", body: title)
     end
   end
 
@@ -212,6 +212,30 @@ class FreeBattle < ApplicationRecord
       acts_as_ordered_taggable_on :technique_tags
       acts_as_ordered_taggable_on :note_tags
       acts_as_ordered_taggable_on :other_tags
+    end
+  end
+
+  def to_param
+    key
+  end
+
+  concerning :PurposeMethods do
+    included do
+      before_validation do
+        self.purpose_key ||= PurposeInfo.fetch(:basic).key
+      end
+
+      with_options presence: true do
+        validates :purpose_key
+      end
+
+      with_options allow_blank: true do
+        validates :purpose_key, inclusion: PurposeInfo.keys.collect(&:to_s)
+      end
+    end
+
+    def purpose_info
+      PurposeInfo.fetch(purpose_key)
     end
   end
 end

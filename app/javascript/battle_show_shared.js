@@ -7,7 +7,6 @@ export default {
 
   data() {
     return {
-      kifu_type_tab_index: 0,
       record: this.$options.record,
       decorator: this.$options.decorator,
       desc_body_edit_p: false,

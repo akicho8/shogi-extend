@@ -26,3 +26,4 @@
         .tags.is-inline
           - current_record.showable_tag_list.each do |e|
            span.tag= link_to(e, [:swars, :battles, query: "tag:#{e}"])
+

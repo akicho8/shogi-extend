@@ -2,9 +2,9 @@ import _ from "lodash"
 
 const TEXT_INPUT_UPDATE_DELAY = 0.5 // プレビューするまでの遅延時間(秒)
 
-const TAB_NAMES = [
+const TAB_NAME_KEYS = [
+  "テキスト",
   "操作入力",
-  "テキスト入力",
 ]
 
 export default {
@@ -14,7 +14,7 @@ export default {
       record: this.$options.record_attributes,
 
       // 左側
-      input_tab_index: 0,       // 入力タブ切り替え(テキスト入力で開始したければ1にする)
+      input_tab_index: 0,       // 入力タブ切り替え(テキストで開始したければ1にする)
       input_text: null,         // 入力された棋譜
       board_sfen: null,         // 操作入力に渡す棋譜
       default_start_turn: null, // 最初の start_turn の指定
@@ -37,7 +37,10 @@ export default {
   },
 
   mounted() {
-    this.input_text = this.record.kifu_body || localStorage.getItem("free_battle.input_text")
+    if (this.$options.free_battles_pro_mode) {
+      this.input_text = this.record.kifu_body || localStorage.getItem("free_battle.input_text")
+    }
+
     this.input_text_focus()
   },
 
@@ -49,17 +52,19 @@ export default {
         // 最初の設定の場合は即座にSFENに変換して盤に反映する
         this.kifu_convert_by(this.input_text)
       }
-      localStorage.setItem("free_battle.input_text", this.input_text)
+      if (this.$options.free_battles_pro_mode) {
+        localStorage.setItem("free_battle.input_text", this.input_text)
+      }
     },
   },
 
   computed: {
     input_tab_name() {
-      return TAB_NAMES[this.input_tab_index]
+      return TAB_NAME_KEYS[this.input_tab_index]
     },
 
     text_mode_p() {
-      return this.input_tab_name === "テキスト入力"
+      return this.input_tab_name === "テキスト"
     },
 
     board_mode_p() {
@@ -68,7 +73,7 @@ export default {
   },
 
   methods: {
-    // テキスト入力
+    // テキスト
     delayed_kifu_convert_by: _.debounce(function() { this.kifu_convert_by(this.input_text) }, 1000 * TEXT_INPUT_UPDATE_DELAY),
 
     // 操作入力
@@ -138,7 +143,9 @@ export default {
     // 保持していた入力内容を破棄する
     // これは form の submit のタイミングで呼ばれる
     input_text_storage_clear() {
-      localStorage.removeItem("free_battle.input_text")
+      if (this.$options.free_battles_pro_mode) {
+        localStorage.removeItem("free_battle.input_text")
+      }
     },
 
     kifu_copy_to_clipboard(e) {

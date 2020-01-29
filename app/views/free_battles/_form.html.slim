@@ -1,25 +1,15 @@
 .field
-  / 「テキスト入力」の方がタブで隠れている状態で post すると params[:kifu_body] に含まれないため隠しパラメータとしてかわりに hidden_kifu_body が送られるようにしている
+  / 「テキスト」の方がタブで隠れている状態で post すると params[:kifu_body] に含まれないため隠しパラメータとしてかわりに hidden_kifu_body が送られるようにしている
   = form.hidden_field(:hidden_kifu_body, "v-model": "input_text")
 
   b-tabs.input_method_tabs.is_lr_paddingless(type="" v-model="input_tab_index" expanded)
-    b-tab-item(label="操作入力")
-      .field
-        = render partial: "form_shogi_player", locals: { form: form }
-      .field
-        .iikanjino_yoko
-          b-tooltip(label="入力中の棋譜を複製して新しいタブで開く")
-            a.button.is-small(@click="kifu_clone_and_new_tab_oepn_handle")
-              b-icon(icon="content-copy" size="is-small")
-          b-tooltip(label="局面編集モードに切り替える(主に詰将棋作成用)")
-            b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 編集
-
-    b-tab-item(label="テキスト入力")
+    b-tab-item(label="テキスト")
       .control
-        = form.label(:kifu_body, class: "label")
+        - if AppConfig[:free_battles_pro_mode]
+          = form.label(:kifu_body, class: "label")
         = form.text_area(:kifu_body, rows: 12, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "input_text", ref: "input_text")
 
-      - if Rails.env.development? || true
+      - if AppConfig[:free_battles_pro_mode]
         .is-size-7
           | 変換後の棋譜から
           | &nbsp;
@@ -35,17 +25,26 @@
           | &nbsp;
           a.is-small(@click="input_text_clear") クリア
 
-= render partial: "form_start_turn", locals: { form: form }
+    b-tab-item(label="操作入力")
+      .field
+        = render partial: "form_shogi_player", locals: { form: form }
+      .field
+        .iikanjino_yoko
+          b-tooltip(label="入力中の棋譜を複製して新しいタブで開く")
+            a.button.is-small(@click="kifu_clone_and_new_tab_oepn_handle")
+              b-icon(icon="content-copy" size="is-small")
+          b-tooltip(label="局面編集モードに切り替える(主に詰将棋作成用)")
+            b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 編集
 
 .field
   = form.label(:title, class: "label")
   .control
-    = form.text_field(:title, class: "input is-small", required: true)
+    = form.text_field(:title, class: "input is-small", required: false)
 
 .field
   = form.label(:description, class: "label")
   .control
-    = form.text_area(:description, class: "textarea is-small", rows: 2)
+    = form.text_area(:description, class: "textarea is-small", rows: 1)
 
 - if current_user
   b-field
@@ -57,13 +56,18 @@
 
 .field
   details
-    summary その他
-    .field
-      = form.label(:kifu_url, class: "label")
-      .control
-        = form.url_field(:kifu_url, class: "input is-small", placeholder: "別のサイトにある場合は URL で指定できます。ウォーズの対局URLでも可です")
+    summary.is-size-6
+      | その他
 
-    .field
-      = form.label(:kifu_file, class: "label")
-      .control
-        = form.file_field(:kifu_file)
+    = render partial: "form_start_turn", locals: { form: form }
+
+    - unless Rails.env.production?
+      .field
+        = form.label(:kifu_url, class: "label")
+        .control
+          = form.url_field(:kifu_url, class: "input is-small", placeholder: "別のサイトにある場合は URL で指定できます。ウォーズの対局URLでも可です")
+
+      .field
+        = form.label(:kifu_file, class: "label")
+        .control
+          = form.file_field(:kifu_file)

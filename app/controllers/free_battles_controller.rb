@@ -36,7 +36,7 @@ class FreeBattlesController < ApplicationController
 
   def new
     if id = params[:source_id]
-      record = FreeBattle.find(id)
+      record = FreeBattle.find_by!(key: id)
       flash[:source_id] = record.id
       redirect_to [:new, ns_prefix, current_single_key], notice: "#{record.title}の棋譜をコピペしました"
       return
@@ -75,17 +75,30 @@ class FreeBattlesController < ApplicationController
   end
 
   let :current_record do
-    if params[:id]
-      record = current_model.find(params[:id])
-    else
-      record = current_model.new
+    record = nil
+
+    if id = params[:id]
+      unless Rails.env.production?
+        record ||= current_model.find_by(id: id)
+      end
+      record ||= current_model.find_by!(key: id)
     end
+
+    record ||= current_model.new
+
     record.tap do |e|
       # 初期値設定
-      if current_user
+
+      if current_edit_mode == :transport
         e.saturn_key ||= SaturnInfo.fetch(:private).key
+        e.purpose_key ||= PurposeInfo.fetch(:adapter).key
       else
-        e.saturn_key ||= SaturnInfo.fetch(:public).key
+        e.purpose_key ||= PurposeInfo.fetch(:basic).key
+        if current_user
+          e.saturn_key ||= SaturnInfo.fetch(:private).key
+        else
+          e.saturn_key ||= SaturnInfo.fetch(:public).key
+        end
       end
     end
   end
@@ -109,7 +122,9 @@ class FreeBattlesController < ApplicationController
   end
 
   def current_record_save
-    current_record.owner_user ||= current_user
+    if current_record.purpose_info.key == :basic
+      current_record.owner_user ||= current_user
+    end
     super
   end
 
@@ -157,7 +172,7 @@ class FreeBattlesController < ApplicationController
     let :table_column_list do
       list = []
       unless Rails.env.production?
-        list << { key: :id,               label: "ID",   visible: false, }
+        list << { key: :key,       label: "KEY",      visible: false, }
       end
       list += [
         { key: :created_at,        label: "作成日時", visible: false, },
