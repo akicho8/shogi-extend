@@ -42,11 +42,12 @@ template(slot-scope="props")
   b-table-column(field="turn_max" :label="table_columns_hash.turn_max.label" :visible="table_columns_hash.turn_max.visible" sortable numeric)
     | {{props.row.turn_max}}
 
-  b-table-column(field="critical_turn" :label="table_columns_hash.critical_turn.label" :visible="table_columns_hash.critical_turn.visible" sortable numeric)
-    | {{props.row.critical_turn}}
+  - if AppConfig[:columns_detail_show]
+    b-table-column(field="critical_turn" :label="table_columns_hash.critical_turn.label" :visible="table_columns_hash.critical_turn.visible" sortable numeric)
+      | {{props.row.critical_turn}}
 
-  / b-table-column(field="grade_diff" :label="table_columns_hash.grade_diff.label" :visible="table_columns_hash.grade_diff.visible" sortable numeric)
-  /   | {{props.row.grade_diff}}
+    b-table-column(field="grade_diff" :label="table_columns_hash.grade_diff.label" :visible="table_columns_hash.grade_diff.visible" sortable numeric)
+      | {{props.row.grade_diff}}
 
   b-table-column(field="rule_key" :label="table_columns_hash.rule_info.label" :visible="table_columns_hash.rule_info.visible" sortable)
     template(v-if="props.row.rule_info.url")

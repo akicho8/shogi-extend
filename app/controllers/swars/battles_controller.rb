@@ -411,21 +411,19 @@ module Swars
       let :table_column_list do
         list = []
         unless Rails.env.production?
-          list += [
-            { key: :id,             label: "ID",   visible: true, },
-          ]
+          list << { key: :id,             label: "ID",   visible: true, }
         end
-        list += [
-          { key: :attack_tag_list,  label: "戦型", visible: true,  },
-          { key: :defense_tag_list, label: "囲い", visible: false, },
-          { key: :final_info,       label: "結果", visible: false, },
-          { key: :turn_max,         label: "手数", visible: false, },
-          { key: :critical_turn,    label: "開戦", visible: false, },
-          # { key: :grade_diff,     label: "力差", visible: false, },
-          { key: :rule_info,        label: "種類", visible: false, },
-          { key: :preset_info,      label: "手合", visible: false, },
-          { key: :battled_at,       label: "日時", visible: true,  },
-        ]
+        list << { key: :attack_tag_list,  label: "戦型", visible: true,  }
+        list << { key: :defense_tag_list, label: "囲い", visible: false, }
+        list << { key: :final_info,       label: "結果", visible: false, }
+        list << { key: :turn_max,         label: "手数", visible: false, }
+        if AppConfig[:columns_detail_show]
+          list << { key: :critical_turn,    label: "開戦", visible: false, }
+          list << { key: :grade_diff,       label: "力差", visible: false, }
+        end
+        list << { key: :rule_info,        label: "種類", visible: false, }
+        list << { key: :preset_info,      label: "手合", visible: false, }
+        list << { key: :battled_at,       label: "日時", visible: true,  }
         list
       end
 
@@ -476,6 +474,11 @@ module Swars
         end
 
         a[:fliped] = fliped
+
+        if AppConfig[:columns_detail_show]
+          # 左側にいるひとから見た右側の人の力差
+          a[:grade_diff] = pairs.first.last.grade_diff
+        end
 
         a
       end

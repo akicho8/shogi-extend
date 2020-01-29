@@ -15,6 +15,7 @@ AppConfig.deep_merge!({
     kento_enable: true, # KENTO にリンクする？
     xy_game_custom_mode: false, # 符号の鬼の設定機能を有効にする？
     help_function: false, # 使い方の表示
+    columns_detail_show: true, # 「開戦」の手数を表示する？
 
     zip_download_function: true,    # 一括ダウンロード機能
     zip_download_limit_default: 50, # 一括ダウンロードするときの件数(初期値)
