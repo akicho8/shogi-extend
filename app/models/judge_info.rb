@@ -17,8 +17,19 @@ class JudgeInfo
       if key == :win
         case
         when grade_diff >= 1
-          # "🎉"
-          { key: "star-circle", :class => "has-text-gold", }
+          case
+          when true
+            if grade_diff <= 9
+              v = "numeric-#{grade_diff}-circle"
+            else
+              v = "numeric-9-plus-circle"
+            end
+            { :key => v, :class => "has-text-gold" }
+          when false
+            "🎉"
+          when false
+            { key: "star-circle", :class => "has-text-gold", }
+          end
         when grade_diff == 0
           { key: "star", :class => "has-text-gold", }
         else
