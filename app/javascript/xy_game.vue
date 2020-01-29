@@ -197,6 +197,8 @@ class XyScopeInfo extends MemoryRecord {
 class XyChartScopeInfo extends MemoryRecord {
 }
 
+const TALK_RATE = 2.0
+
 export default {
   name: "xy_game",
   mixins: [
@@ -308,11 +310,21 @@ export default {
       alert(1)
     },
 
+    place_talk(place) {
+      const x = this.board_size - place.x
+      const y = place.y + 1
+      this.talk(`${x} ${y}`, {rate: TALK_RATE})
+    },
+
     board_cell_left_click_user_handle(place, event) {
       if (this.mode === "running") {
         if (this.tap_mode) {
           this.input_valid(place.x, place.y)
+        } else {
+          this.place_talk(place)
         }
+      } else {
+        this.place_talk(place)
       }
       return true
     },
