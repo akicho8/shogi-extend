@@ -1,7 +1,7 @@
 if (window.navigator.userAgent.match(/Windows.*Edge/)) {
   alert("ブラウザが古いため表示できません\n外部サイトに移動しますので新しい Microsoft Edge に更新してください\nもしくは Google Chrome をご利用ください")
   location.href = "https://www.microsoft.com/en-us/edge"
-} else if (window.navigator.userAgent.match(/Chrome\/7[678]\./)) {
+} else if (window.navigator.userAgent.match(/Chrome\/7[678]\./) && false) {
   if (window.navigator.userAgent.match(/Android/)) {
     alert("ブラウザが古いため動作しないかもしれません\n端末に向かって「OK Google クローム 更新」と叫んでください")
   } else if (window.navigator.userAgent.match(/iPhone|iPad/)) {
