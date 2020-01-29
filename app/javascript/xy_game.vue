@@ -127,32 +127,32 @@
       b-switch(v-model="entry_name_unique")
         | プレイヤー毎の順位をわかりやすくする
 
-  .columns.is-4(v-show="(mode === 'stop' || mode === 'goal')")
-    .column
-      .box
-        .columns
+  .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
+    .column.is-8
+      .columns
+        template(v-if="development_p")
           .column
             .has-text-centered
               b-field.is-inline-flex
-                b-button(@click="xy_chart_fetch")
+                b-button(@click="xy_chart_fetch" size="is-small")
                   | 更新
-          .column
-            .has-text-centered
-              b-field.is-inline-flex
-                template(v-for="e in XyRuleInfo.values")
-                  b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key")
-                    | {{e.name}}
-          .column
-            .has-text-centered
-              b-field.is-inline-flex
-                template(v-for="e in XyChartScopeInfo.values")
-                  b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key")
-                    | {{e.name}}
-        .columns
-          .column
-            canvas#chart_canvas(ref="chart_canvas")
-            .has-text-centered.has-text-grey.is-size-7
-              | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
+        .column
+          .has-text-centered
+            b-field.is-inline-flex
+              template(v-for="e in XyRuleInfo.values")
+                b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small")
+                  | {{e.name}}
+        .column
+          .has-text-centered
+            b-field.is-inline-flex
+              template(v-for="e in XyChartScopeInfo.values")
+                b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small")
+                  | {{e.name}}
+      .columns
+        .column
+          canvas#chart_canvas.is-centered.is-4(ref="chart_canvas")
+          .has-text-centered.has-text-grey.is-size-7
+            | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
 
   template(v-if="development_p")
     .columns
@@ -182,7 +182,7 @@
 <script>
 import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
-import xy_chart_module from './xy_chart_module.js'
+import xy_game_chart_mod from './xy_game_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
 
 import Soldier from "shogi-player/src/soldier.js"
@@ -201,7 +201,7 @@ export default {
   name: "xy_game",
   mixins: [
     stopwatch_data_retention,
-    xy_chart_module,
+    xy_game_chart_mod,
   ],
   data() {
     return {
@@ -417,6 +417,11 @@ export default {
         this.xy_chart_scope_key = "chart_scope_recently"
       }
 
+      this.xy_chart_rule_key = hash.xy_chart_rule_key
+      if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
+        this.xy_chart_rule_key = this.default_xy_rule_key
+      }
+
       this.entry_name = hash.entry_name || this.fixed_handle_name
       this.current_pages = hash.current_pages || {}
       this.bg_mode = hash.bg_mode != null ? hash.bg_mode : false
@@ -425,12 +430,6 @@ export default {
       this.sp_bg_variant = hash.sp_bg_variant || "a"
       this.sp_size = hash.sp_size || "default"
       this.sp_piece_variant = hash.sp_piece_variant || "a"
-
-      // 他のパラメータを使ってリクエスト(xy_chart_fetch)が走るので最後
-      this.xy_chart_rule_key = hash.xy_chart_rule_key
-      if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
-        this.xy_chart_rule_key = this.default_xy_rule_key
-      }
     },
 
     timer_setup() {
@@ -534,7 +533,12 @@ export default {
           this.$set(this.current_pages, this.current_rule_index, this.xy_record.rank_info[this.xy_scope_key].page)
         }
 
+        // おめでとう
         this.congrats_talk()
+
+        // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
+        this.xy_chart_rule_key = this.xy_rule_key
+        this.xy_chart_scope_key = "chart_scope_recently"
       })
     },
 
@@ -670,6 +674,10 @@ export default {
     time_default_format(v) {
       return dayjs(v).format("YYYY-MM-DD")
     },
+
+    magic_number() {
+      return dayjs().format("YYMMDDHHMM")
+    },
   },
 
   computed: {
@@ -688,7 +696,7 @@ export default {
       if (this.time_avg) {
         out += `平均: ${this.time_avg}\n`
       }
-      out += `まちがえた数: ${this.x_count}\n`
+      out += `不正解: ${this.x_count}\n`
       out += `正解率: ${this.rate_per}%\n`
       return out
     },
@@ -735,8 +743,8 @@ export default {
       let out = ""
       out += "#符号の鬼\n"
       out += this.summary
-      out += "\n"
-      out += window.location.href.replace(window.location.hash, "")
+      // out += "\n"
+      out += window.location.href.replace(window.location.hash, "") + "?" + this.magic_number()
       return out
     },
 
@@ -877,4 +885,6 @@ export default {
     white-space: pre-wrap
   .tweet_button_container
     margin-top: 0.75rem
+  .chart_box_container
+    margin-top: 4rem
 </style>
