@@ -73,15 +73,21 @@ module Swars
         return
       end
 
-      # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
-      if query = params[:query].presence
-        if key = Battle.extraction_key_from_dirty_string(query)
-          redirect_to [:swars, :battle, id: key]
+      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき詳細に飛ばす
+      if false
+        if primary_key
+          redirect_to [:swars, :battle, id: primary_key]
           return
         end
       end
 
-      import_process(flash.now)
+      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき
+      if primary_key
+        # 一覧に表示したいので取得
+        current_model.single_battle_import(key: primary_key)
+      else
+        import_process(flash.now)
+      end
 
       external_app_action2
       if performed?
@@ -152,6 +158,13 @@ module Swars
     end
 
     private
+
+    # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
+    let :primary_key do
+      if query = params[:query].presence
+        Battle.extraction_key_from_dirty_string(query)
+      end
+    end
 
     def import_process(flash)
       if import_enable?
@@ -395,9 +408,14 @@ module Swars
       def current_index_scope
         @current_index_scope ||= -> {
           s = current_scope
-          unless current_swars_user
-            if AppConfig[:required_user_key_for_search]
-              s = s.none
+          if primary_key
+            s = s.where(key: primary_key)
+          else
+            if current_swars_user
+            else
+              if AppConfig[:required_user_key_for_search]
+                s = s.none
+              end
             end
           end
           s
