@@ -338,7 +338,7 @@ ActiveRecord::Schema.define(version: 2020_01_25_185300) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "colosseum_user_id"
     t.string "entry_name", null: false
     t.string "summary"
