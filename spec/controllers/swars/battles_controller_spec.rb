@@ -49,6 +49,9 @@ RSpec.describe Swars::BattlesController, type: :controller do
   it "検索窓にURLを指定" do
     get :index, params: {query: "https://shogiwars.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
     expect(response).to have_http_status(:ok)
+
+    get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
+    expect(response).to have_http_status(:ok)
   end
 
   it "詳細" do
