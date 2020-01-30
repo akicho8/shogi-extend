@@ -108,7 +108,6 @@ class FreeBattlesController < ApplicationController
     v = super
 
     if id = flash[:source_id]
-      p ["#{__FILE__}:#{__LINE__}", __method__, id]
       record = FreeBattle.find_by!(key: id)
       v[:kifu_body] = record.kifu_body
       v[:title] = "「#{record.title}」のコピー"
