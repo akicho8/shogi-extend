@@ -23,6 +23,7 @@
 # | saturn_key        | 公開範囲           | string(255)  | NOT NULL    |                                   | F     |
 # | sfen_body         | SFEN形式棋譜       | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       |
+# | purpose_key       | Purpose key        | string(255)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -59,7 +60,7 @@ RSpec.describe FreeBattlesController, type: :controller do
   end
 
   it "コピペ新規" do
-    get :new, params: {source_id: @free_battle.id}
+    get :new, params: {source_id: @free_battle.to_param}
     expect(response).to have_http_status(:redirect)
   end
 

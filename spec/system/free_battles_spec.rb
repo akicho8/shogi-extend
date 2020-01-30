@@ -32,7 +32,7 @@ RSpec.describe "棋譜投稿", type: :system do
   end
 
   it "コピペ新規" do
-    visit "/x/#{@free_battle.id}"
+    visit "/x/#{@free_battle.to_param}"
     click_on "コピペ新規"
     text_input_click
     expect(page).to have_content "48玉"
@@ -40,20 +40,20 @@ RSpec.describe "棋譜投稿", type: :system do
   end
 
   it "詳細" do
-    visit "/x/#{@free_battle.id}"
+    visit "/x/#{@free_battle.to_param}"
     expect(page).to have_content "新米長玉"
   end
 
   it "編集" do
-    visit "/x/#{@free_battle.id}/edit"
+    visit "/x/#{@free_battle.to_param}/edit"
   end
 
   it "OGP画像設定" do
-    visit "/x/#{@free_battle.id}/edit?mode=ogp"
+    visit "/x/#{@free_battle.to_param}/edit?mode=ogp"
   end
 
   # click_on("テキスト入力") 相当
   def text_input_click
-    find(".input_method_tabs .tabs li:nth-child(2)").click
+    find(".input_method_tabs .tabs li:nth-child(1)").click
   end
 end

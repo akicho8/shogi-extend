@@ -23,6 +23,7 @@
 # | saturn_key        | 公開範囲           | string(255)  | NOT NULL    |                                   | F     |
 # | sfen_body         | SFEN形式棋譜       | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       |
+# | purpose_key       | Purpose key        | string(255)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -37,7 +38,7 @@ class FreeBattlesController < ApplicationController
   def new
     if id = params[:source_id]
       record = FreeBattle.find_by!(key: id)
-      flash[:source_id] = record.id
+      flash[:source_id] = record.to_param
       redirect_to [:new, ns_prefix, current_single_key], notice: "#{record.title}の棋譜をコピペしました"
       return
     end
@@ -107,7 +108,8 @@ class FreeBattlesController < ApplicationController
     v = super
 
     if id = flash[:source_id]
-      record = FreeBattle.find(id)
+      p ["#{__FILE__}:#{__LINE__}", __method__, id]
+      record = FreeBattle.find_by!(key: id)
       v[:kifu_body] = record.kifu_body
       v[:title] = "「#{record.title}」のコピー"
       v[:description] = record.description
@@ -196,7 +198,7 @@ class FreeBattlesController < ApplicationController
       end
 
       a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
-      a[:new_and_copy_url] = url_for([:new, ns_prefix, current_single_key, source_id: e.id])
+      a[:new_and_copy_url] = url_for([:new, ns_prefix, current_single_key, source_id: e.to_param])
 
       a
     end
