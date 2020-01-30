@@ -255,6 +255,7 @@ module Swars
             battle.save!
           rescue ActiveRecord::RecordNotUnique, ActiveRecord::Deadlocked => error
             Rails.logger.info(error.inspect)
+            false
           end
         end
 
