@@ -4,8 +4,15 @@ window.Transport = Vue.extend({
       input_text: "68S",
       output_kifs: null,
       record: null,
+      create_counter: 0,
     }
   },
+  watch: {
+    input_text() {
+      this.create_counter = 0
+    }
+  },
+
   methods: {
     piyo_shogi_click_handle() {
       this.record_create(() => { this.other_window_open(this.record.piyo_shogi_app_url) })
@@ -19,7 +26,17 @@ window.Transport = Vue.extend({
       this.record_create(() => { this.kifu_copy_exec(this.record.kifu_copy_params) })
     },
 
-    record_create(my_func) {
+    // private
+
+    record_create(callback) {
+      if (this.create_counter >= 1) {
+        if (this.record) {
+          callback()
+        }
+        return
+      }
+      this.create_counter += 1
+
       const params = new URLSearchParams()
       params.set("input_any_kifu", this.input_text)
       params.set("edit_mode", "transport")
@@ -38,7 +55,7 @@ window.Transport = Vue.extend({
         if (e.record) {
           this.record = e.record
 
-          my_func()
+          callback()
 
           // this.turn_max_set(e)
           // this.board_sfen = e.output_kifs.sfen.value
