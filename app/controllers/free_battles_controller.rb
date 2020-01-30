@@ -50,8 +50,20 @@ class FreeBattlesController < ApplicationController
     # プレビュー用
     if request.format.json?
       if v = params[:input_any_kifu]
-        render json: { output_kifs: output_kifs, turn_max: turn_max }
-        return
+        if current_edit_mode === :transport
+          current_record.assign_attributes(kifu_body: v)
+          if current_record.save
+            render json: { output_kifs: output_kifs, turn_max: turn_max, record: js_record_for(current_record) }
+            return
+          else
+            render json: { errors_full_messages: current_record.errors.full_messages }
+            return
+          end
+        end
+        if current_edit_mode === :basic
+          render json: { output_kifs: output_kifs, turn_max: turn_max }
+          return
+        end
       end
     end
 

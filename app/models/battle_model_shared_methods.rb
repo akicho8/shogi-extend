@@ -95,6 +95,7 @@ module BattleModelSharedMethods
         self.battled_at ||= Time.zone.local(*values)
       end
     else
+      p ["#{__FILE__}:#{__LINE__}", __method__, ]
       self.battled_at ||= Time.zone.parse("0001/01/01")
     end
 

@@ -17,12 +17,7 @@
         other_window = GVI.$route.query.other_window
       }
       if (other_window === "true") {
-        if (window.open(url, "_blank")) {
-          // Google Chrome では動く
-        } else {
-          // iOS Safari ではこちら
-          location.href = url
-        }
+        GVI.other_window_open(url)
       } else {
         location.href = url
       }

@@ -100,6 +100,15 @@ export default {
     dayjs_format(time, format) {
       return dayjs(time).format(format)
     },
+
+    other_window_open(url) {
+      if (window.open(url, "_blank")) {
+        // Google Chrome では動く
+      } else {
+        // iOS Safari ではこちら
+        location.href = url
+      }
+    },
   },
 
   computed: {
