@@ -121,7 +121,7 @@ module Swars
         def extraction_key_from_dirty_string(str)
           # コピペで空白を入れる人がいるため strip でもいいがいっそのことURLだけを抽出する
           if url = URI.extract(str, ["http", "https"]).first
-            if url.include?("shogiwars.heroz.jp/games") # FIXME
+            if url.include?(%r{(shogiwars|kif-pona).heroz.jp/games/})
               URI(url).path.split("/").last
             end
           end

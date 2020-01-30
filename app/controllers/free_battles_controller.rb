@@ -23,6 +23,7 @@
 # | saturn_key        | 公開範囲           | string(255)  | NOT NULL    |                                   | F     |
 # | sfen_body         | SFEN形式棋譜       | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       |
+# | purpose_key       | Purpose key        | string(255)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -36,8 +37,8 @@ class FreeBattlesController < ApplicationController
 
   def new
     if id = params[:source_id]
-      record = FreeBattle.find(id)
-      flash[:source_id] = record.id
+      record = FreeBattle.find_by!(key: id)
+      flash[:source_id] = record.to_param
       redirect_to [:new, ns_prefix, current_single_key], notice: "#{record.title}の棋譜をコピペしました"
       return
     end
@@ -75,17 +76,30 @@ class FreeBattlesController < ApplicationController
   end
 
   let :current_record do
-    if params[:id]
-      record = current_model.find(params[:id])
-    else
-      record = current_model.new
+    record = nil
+
+    if id = params[:id]
+      unless Rails.env.production?
+        record ||= current_model.find_by(id: id)
+      end
+      record ||= current_model.find_by!(key: id)
     end
+
+    record ||= current_model.new
+
     record.tap do |e|
       # 初期値設定
-      if current_user
+
+      if current_edit_mode == :transport
         e.saturn_key ||= SaturnInfo.fetch(:private).key
+        e.purpose_key ||= PurposeInfo.fetch(:adapter).key
       else
-        e.saturn_key ||= SaturnInfo.fetch(:public).key
+        e.purpose_key ||= PurposeInfo.fetch(:basic).key
+        if current_user
+          e.saturn_key ||= SaturnInfo.fetch(:private).key
+        else
+          e.saturn_key ||= SaturnInfo.fetch(:public).key
+        end
       end
     end
   end
@@ -94,7 +108,8 @@ class FreeBattlesController < ApplicationController
     v = super
 
     if id = flash[:source_id]
-      record = FreeBattle.find(id)
+      p ["#{__FILE__}:#{__LINE__}", __method__, id]
+      record = FreeBattle.find_by!(key: id)
       v[:kifu_body] = record.kifu_body
       v[:title] = "「#{record.title}」のコピー"
       v[:description] = record.description
@@ -109,7 +124,9 @@ class FreeBattlesController < ApplicationController
   end
 
   def current_record_save
-    current_record.owner_user ||= current_user
+    if current_record.purpose_info.key == :basic
+      current_record.owner_user ||= current_user
+    end
     super
   end
 
@@ -157,7 +174,7 @@ class FreeBattlesController < ApplicationController
     let :table_column_list do
       list = []
       unless Rails.env.production?
-        list << { key: :id,               label: "ID",   visible: false, }
+        list << { key: :key,       label: "KEY",      visible: false, }
       end
       list += [
         { key: :created_at,        label: "作成日時", visible: false, },
@@ -181,7 +198,7 @@ class FreeBattlesController < ApplicationController
       end
 
       a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
-      a[:new_and_copy_url] = url_for([:new, ns_prefix, current_single_key, source_id: e.id])
+      a[:new_and_copy_url] = url_for([:new, ns_prefix, current_single_key, source_id: e.to_param])
 
       a
     end

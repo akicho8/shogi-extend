@@ -119,6 +119,7 @@ Rails.application.configure do
         search_form_datalist_function: false,
         swars_tweet_function: false,
         xy_game_custom_mode: false,
+        columns_detail_show: false,
       })
   end
 end

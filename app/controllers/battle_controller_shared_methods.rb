@@ -344,7 +344,8 @@ module BattleControllerSharedMethods
     end
 
     let :js_show_options do
-      a = js_modal_record_for(current_record)
+      a = {}
+      a[:record] = js_modal_record_for(current_record)
       a[:formal_sheet] = !!params[:formal_sheet]
       a[:decorator] = decorator.as_json
       a
@@ -557,6 +558,8 @@ module BattleControllerSharedMethods
         output_kifs: output_kifs,
         new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
         saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
+        free_battles_pro_mode: AppConfig[:free_battles_pro_mode],
+        current_edit_mode: current_edit_mode,
       }
     end
 

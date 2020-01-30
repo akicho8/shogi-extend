@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_15_121600) do
+ActiveRecord::Schema.define(version: 2020_01_25_185300) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(version: 2019_11_15_121600) do
     t.string "saturn_key", null: false
     t.string "sfen_body", limit: 8192
     t.integer "image_turn"
+    t.string "purpose_key", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"

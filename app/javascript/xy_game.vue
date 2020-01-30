@@ -197,6 +197,8 @@ class XyScopeInfo extends MemoryRecord {
 class XyChartScopeInfo extends MemoryRecord {
 }
 
+const TALK_RATE = 2.0
+
 export default {
   name: "xy_game",
   mixins: [
@@ -308,11 +310,21 @@ export default {
       alert(1)
     },
 
+    place_talk(place) {
+      const x = this.board_size - place.x
+      const y = place.y + 1
+      this.talk(`${x} ${y}`, {rate: TALK_RATE})
+    },
+
     board_cell_left_click_user_handle(place, event) {
       if (this.mode === "running") {
         if (this.tap_mode) {
           this.input_valid(place.x, place.y)
+        } else {
+          this.place_talk(place)
         }
+      } else {
+        this.place_talk(place)
       }
       return true
     },
@@ -357,7 +369,7 @@ export default {
 </ol>
 </div>
 `,
-        confirmText: "もうわかった",
+        confirmText: "わかった",
         canCancel: ["outside", "escape"],
         type: "is-info",
         hasIcon: true,
@@ -371,7 +383,7 @@ export default {
 タップじゃないモードでは駒の場所をキーボードの数字2桁で入力していきます。最初の数字を間違えたときはエスケープキーでキャンセルできます。
 選択した数まで正解するまでの時間を競います。
 ログインしていると毎回出る名前の入力を省略できます。
-`, {rate: 2.0, onend: () => { rule_dialog.close() }})
+`, {rate: TALK_RATE, onend: () => { rule_dialog.close() }})
 
     },
 
@@ -501,7 +513,7 @@ export default {
     goal_handle() {
       this.mode = "goal"
       this.timer_stop()
-      this.talk("おわりました")
+      this.talk("おわりました", {rate: TALK_RATE})
 
       if (this.fixed_handle_name) {
         this.entry_name = this.fixed_handle_name
@@ -551,14 +563,24 @@ export default {
     congrats_talk() {
       let message = ""
       if (this.entry_name) {
-        if (this.current_rank <= this.congrats_lteq) {
+        if (this.xy_record.rank_info.xy_scope_today.rank <= this.congrats_lteq) {
           message += `おめでとうございます。`
         }
-        message += `${this.entry_name}さんは${this.current_rank}位です。`
-        if (this.current_rank > this.$root.$options.rank_max) {
-          message += `ランキング外です。`
+        const t_r = this.xy_record.rank_info.xy_scope_today.rank
+        const a_r = this.xy_record.rank_info.xy_scope_all.rank
+        message += `${this.entry_name}さんは`
+        message += `本日${t_r}位です。`
+        message += `全体で`
+        if (t_r === a_r) {
+          message += `も`
+        } else {
+          message += `は`
         }
-        this.talk(message)
+        message += `${a_r}位です。`
+        // if (this.current_rank > this.$root.$options.rank_max) {
+        //   message += `ランキング外です。`
+        // }
+        this.talk(message, {rate: 1.5})
       }
     },
 

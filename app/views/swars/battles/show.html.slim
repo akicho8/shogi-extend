@@ -8,4 +8,8 @@
   javascript:
     document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
-= render partial: "free_battles/show_shared", locals: { sp_title: sp_title }
+#show_app.battle_show_container(v-cloak)
+  - if params[:formal_sheet]
+    = render partial: "free_battles/show_formal_sheet", locals: { sp_title: sp_title }
+  - else
+    = render partial: "free_battles/show_basic", locals: { sp_title: sp_title }

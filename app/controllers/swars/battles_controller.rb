@@ -73,15 +73,21 @@ module Swars
         return
       end
 
-      # 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
-      if query = params[:query].presence
-        if key = Battle.extraction_key_from_dirty_string(query)
-          redirect_to [:swars, :battle, id: key]
+      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき詳細に飛ばす
+      if false
+        if primary_key
+          redirect_to [:swars, :battle, id: primary_key]
           return
         end
       end
 
-      import_process(flash.now)
+      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき
+      if primary_key
+        # 一覧に表示したいので取得
+        current_model.single_battle_import(key: primary_key)
+      else
+        import_process(flash.now)
+      end
 
       external_app_action2
       if performed?
@@ -120,8 +126,11 @@ module Swars
     end
 
     rescue_from "Mechanize::ResponseCodeError" do |exception|
-      message = "該当のユーザーが見つからないか混み合っています"
-      flash.now[:danger] = %(<div class="has-text-weight-bold">#{message}</div><br/>#{exception.class.name}<br/>#{exception.message}<br/><br/>#{exception.backtrace.take(8).join("<br/>")}).html_safe
+      message = "該当のデータが見つからないか混み合っています"
+      flash.now[:warning] = message
+      if Rails.env.development?
+        flash.now[:danger] = %(<div class="has-text-weight-bold">#{message}</div><br/>#{exception.class.name}<br/>#{exception.message}<br/><br/>#{exception.backtrace.take(8).join("<br/>")}).html_safe
+      end
       render :index
     end
 
@@ -149,6 +158,13 @@ module Swars
     end
 
     private
+
+    # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
+    let :primary_key do
+      if query = params[:query].presence
+        Battle.extraction_key_from_dirty_string(query)
+      end
+    end
 
     def import_process(flash)
       if import_enable?
@@ -392,9 +408,14 @@ module Swars
       def current_index_scope
         @current_index_scope ||= -> {
           s = current_scope
-          unless current_swars_user
-            if AppConfig[:required_user_key_for_search]
-              s = s.none
+          if primary_key
+            s = s.where(key: primary_key)
+          else
+            if current_swars_user
+            else
+              if AppConfig[:required_user_key_for_search]
+                s = s.none
+              end
             end
           end
           s
@@ -411,21 +432,19 @@ module Swars
       let :table_column_list do
         list = []
         unless Rails.env.production?
-          list += [
-            { key: :id,             label: "ID",   visible: true, },
-          ]
+          list << { key: :id,             label: "ID",   visible: true, }
         end
-        list += [
-          { key: :attack_tag_list,  label: "戦型", visible: true,  },
-          { key: :defense_tag_list, label: "囲い", visible: false, },
-          { key: :final_info,       label: "結果", visible: false, },
-          { key: :turn_max,         label: "手数", visible: false, },
-          { key: :critical_turn,    label: "開戦", visible: false, },
-          # { key: :grade_diff,     label: "力差", visible: false, },
-          { key: :rule_info,        label: "種類", visible: false, },
-          { key: :preset_info,      label: "手合", visible: false, },
-          { key: :battled_at,       label: "日時", visible: true,  },
-        ]
+        list << { key: :attack_tag_list,  label: "戦型", visible: true,  }
+        list << { key: :defense_tag_list, label: "囲い", visible: false, }
+        list << { key: :final_info,       label: "結果", visible: false, }
+        list << { key: :turn_max,         label: "手数", visible: false, }
+        if AppConfig[:columns_detail_show]
+          list << { key: :critical_turn,    label: "開戦", visible: false, }
+          list << { key: :grade_diff,       label: "力差", visible: false, }
+        end
+        list << { key: :rule_info,        label: "種類", visible: false, }
+        list << { key: :preset_info,      label: "手合", visible: false, }
+        list << { key: :battled_at,       label: "日時", visible: true,  }
         list
       end
 
@@ -476,6 +495,11 @@ module Swars
         end
 
         a[:fliped] = fliped
+
+        if AppConfig[:columns_detail_show]
+          # 左側にいるひとから見た右側の人の力差
+          a[:grade_diff] = pairs.first.last.grade_diff
+        end
 
         a
       end
