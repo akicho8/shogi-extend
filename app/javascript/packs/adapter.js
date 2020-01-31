@@ -143,7 +143,7 @@ window.Adapter = Vue.extend({
         if (e.bs_error) {
           this.error_counter += 1
           this.bs_error = e.bs_error
-          this.talk(this.bs_error.message, {rate: 2.0})
+          this.talk(this.bs_error.message, {rate: 1.0})
 
           if (this.development_p) {
             this.$buefy.toast.open({message: e.bs_error.message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
