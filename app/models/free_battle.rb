@@ -153,6 +153,10 @@ class FreeBattle < ApplicationRecord
   # 01060_77dacfcf0a24e8315ddd51e86152d3b2_横歩取り_急戦1__飛車先を受けずに互いに攻め合うと封じ込まれて後手有利.kif
   # のような形式にする
   def download_filename
+    if use_info.key == :adapter
+      return key
+    end
+
     parts = []
     parts << "%05d" % id
     parts << "_"
