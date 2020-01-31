@@ -59,7 +59,7 @@ class XyRuleInfo
 
       time = Time.current.strftime("%-d日%-H時")
       if body.present?
-        "#{time}の時点の今日の各ランキング1位は#{body}"
+        "#{time}の今日の鬼1位は#{body}"
       end
     end
 
@@ -103,6 +103,7 @@ class XyRuleInfo
     end
   end
 
+  # 今日のトップ
   def top_xy_records
     redis.zrevrange(table_key_for_today, 0, 0).collect do |id|
       XyRecord.find(id)
