@@ -54,7 +54,7 @@ Rails.application.routes.draw do
 
   resources :free_battles, path: "x"
 
-  get "transport", to: "free_battles#new", defaults: { edit_mode: "transport" }
+  get "adapter", to: "free_battles#new", defaults: { edit_mode: "adapter" }
 
   # resolve "FreeBattle" do |free_battle, options|
   #   [ns_prefix, free_battle, options]

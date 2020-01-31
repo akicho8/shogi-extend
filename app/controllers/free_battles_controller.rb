@@ -23,7 +23,7 @@
 # | saturn_key        | 公開範囲           | string(255)  | NOT NULL    |                                   | F     |
 # | sfen_body         | SFEN形式棋譜       | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       |
-# | purpose_key       | Purpose key        | string(255)  | NOT NULL    |                                   |       |
+# | use_key           | Use key            | string(255)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -50,7 +50,7 @@ class FreeBattlesController < ApplicationController
     # プレビュー用
     if request.format.json?
       if v = params[:input_any_kifu]
-        if current_edit_mode === :transport
+        if current_edit_mode === :adapter
           current_record.assign_attributes(kifu_body: v)
           if current_record.save
             render json: { output_kifs: output_kifs, turn_max: turn_max, record: js_record_for(current_record) }
@@ -102,11 +102,11 @@ class FreeBattlesController < ApplicationController
     record.tap do |e|
       # 初期値設定
 
-      if current_edit_mode == :transport
+      if current_edit_mode == :adapter
         e.saturn_key ||= SaturnInfo.fetch(:private).key
-        e.purpose_key ||= PurposeInfo.fetch(:adapter).key
+        e.use_key ||= UseInfo.fetch(:adapter).key
       else
-        e.purpose_key ||= PurposeInfo.fetch(:basic).key
+        e.use_key ||= UseInfo.fetch(:basic).key
         if current_user
           e.saturn_key ||= SaturnInfo.fetch(:private).key
         else
@@ -135,7 +135,7 @@ class FreeBattlesController < ApplicationController
   end
 
   def current_record_save
-    if current_record.purpose_info.key == :basic
+    if current_record.use_info.key == :basic
       current_record.owner_user ||= current_user
     end
     super

@@ -1,4 +1,4 @@
-class PurposeInfo
+class UseInfo
   include ApplicationMemoryRecord
   memory_record [
     { key: :basic,   name: "基本", },

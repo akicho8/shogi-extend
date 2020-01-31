@@ -359,7 +359,7 @@
 # | saturn_key        | 公開範囲           | string(255)  | NOT NULL    |                                   | F     |
 # | sfen_body         | SFEN形式棋譜       | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       |
-# | purpose_key       | Purpose key        | string(255)  | NOT NULL    |                                   |       |
+# | use_key           | Use key            | string(255)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

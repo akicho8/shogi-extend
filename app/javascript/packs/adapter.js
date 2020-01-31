@@ -39,7 +39,7 @@ window.Transport = Vue.extend({
 
       const params = new URLSearchParams()
       params.set("input_any_kifu", this.input_text)
-      params.set("edit_mode", "transport")
+      params.set("edit_mode", "adapter")
 
       // TODO: あとでシンプルなのに変更する
       this.$http.post(this.$options.post_path, params).then(response => {

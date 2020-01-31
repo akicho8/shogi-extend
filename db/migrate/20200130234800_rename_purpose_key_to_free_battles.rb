@@ -30,12 +30,10 @@
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
-class AddImageTurnToFreeBattles < ActiveRecord::Migration[5.2]
+class RenamePurposeKeyToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles].each do |table|
-      change_table table do |t|
-        t.integer :image_turn
-      end
+    change_table :free_battles do |t|
+      t.rename :purpose_key, :use_key
     end
   end
 end

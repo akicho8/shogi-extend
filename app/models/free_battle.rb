@@ -23,7 +23,7 @@
 # | saturn_key        | 公開範囲           | string(255)  | NOT NULL    |                                   | F     |
 # | sfen_body         | SFEN形式棋譜       | string(8192) |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)   |             |                                   |       |
-# | purpose_key       | Purpose key        | string(255)  | NOT NULL    |                                   |       |
+# | use_key           | Use key            | string(255)  | NOT NULL    |                                   |       |
 # |-------------------+--------------------+--------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -202,7 +202,7 @@ class FreeBattle < ApplicationRecord
 
   after_create do
     if Rails.env.production? || Rails.env.test?
-      SlackAgent.message_send(key: "棋譜投稿(#{purpose_info.name})", body: title)
+      SlackAgent.message_send(key: "棋譜投稿(#{use_info.name})", body: title)
     end
   end
 
@@ -223,20 +223,20 @@ class FreeBattle < ApplicationRecord
   concerning :PurposeMethods do
     included do
       before_validation do
-        self.purpose_key ||= PurposeInfo.fetch(:basic).key
+        self.use_key ||= UseInfo.fetch(:basic).key
       end
 
       with_options presence: true do
-        validates :purpose_key
+        validates :use_key
       end
 
       with_options allow_blank: true do
-        validates :purpose_key, inclusion: PurposeInfo.keys.collect(&:to_s)
+        validates :use_key, inclusion: UseInfo.keys.collect(&:to_s)
       end
     end
 
-    def purpose_info
-      PurposeInfo.fetch(purpose_key)
+    def use_info
+      UseInfo.fetch(use_key)
     end
   end
 end

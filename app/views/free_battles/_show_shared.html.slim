@@ -1,7 +1,7 @@
 #show_app.battle_show_container(v-cloak)
   - if params[:formal_sheet]
     = render partial: "free_battles/show_formal_sheet", locals: { sp_title: sp_title }
-  - elsif current_record.purpose_info.key == :adapter
+  - elsif current_record.use_info.key == :adapter
     = render partial: "free_battles/show_adapter", locals: { sp_title: sp_title }
   - else
     = render partial: "free_battles/show_basic", locals: { sp_title: sp_title }
