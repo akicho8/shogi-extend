@@ -25,7 +25,7 @@
           | ☗ KENTO
 
         | &nbsp;
-        a.button.is-small(@click.stop.prevent="kifu_copy_click_handle('kif')") 棋譜コピー
+        a.button.is-small.kif_copy_link(@click.stop.prevent="kifu_copy_click_handle('kif')") 棋譜コピー
 
         template(v-if="development_p")
           | &nbsp;
