@@ -237,7 +237,7 @@ class FreeBattle < ApplicationRecord
     key
   end
 
-  concerning :PurposeMethods do
+  concerning :UseInfoMethods do
     included do
       before_validation do
         self.use_key ||= UseInfo.fetch(:basic).key
