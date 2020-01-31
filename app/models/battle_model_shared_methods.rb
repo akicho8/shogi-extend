@@ -252,7 +252,7 @@ module BattleModelSharedMethods
 
   concerning :TwitterMethods do
     included do
-      has_one_attached :thumbnail_image
+      has_one_attached :thumbnail_image, dependent: :purge
     end
 
     def image_default_options
