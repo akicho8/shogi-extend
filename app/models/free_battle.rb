@@ -114,6 +114,19 @@ class FreeBattle < ApplicationRecord
         p [record.id, record.title, record.description, error]
       end
     end
+    def old_record_destroy(**params)
+      params = {
+        expires_in: 2.weeks,
+      }.merge(params)
+
+      all.where(use_key: "adapter").where(arel_table[:updated_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
+        begin
+          g.each(&:destroy)
+        rescue ActiveRecord::Deadlocked => error
+          puts error
+        end
+      end
+    end
   end
 
   has_secure_token :key
