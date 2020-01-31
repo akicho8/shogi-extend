@@ -513,7 +513,7 @@ export default {
     goal_handle() {
       this.mode = "goal"
       this.timer_stop()
-      this.talk("おわりました", {rate: TALK_RATE})
+      this.talk("おわりました", {rate: 1.2})
 
       if (this.fixed_handle_name) {
         this.entry_name = this.fixed_handle_name
@@ -580,7 +580,7 @@ export default {
         // if (this.current_rank > this.$root.$options.rank_max) {
         //   message += `ランキング外です。`
         // }
-        this.talk(message, {rate: 1.5})
+        this.talk(message, {rate: 1.2})
       }
     },
 

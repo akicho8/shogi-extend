@@ -114,6 +114,7 @@ class FreeBattle < ApplicationRecord
         p [record.id, record.title, record.description, error]
       end
     end
+
     def old_record_destroy(**params)
       params = {
         expires_in: 2.weeks,
