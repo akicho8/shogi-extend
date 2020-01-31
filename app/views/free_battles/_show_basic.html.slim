@@ -14,10 +14,11 @@ hr
 = render partial: "shogi_player_shared"
 
 - if !iframe?
-  .columns
-    .column
-      .buttons.is-centered
-        = link_to("OGP画像設定", [:edit, ns_prefix, current_record, edit_mode: "ogp"], class: "button is-primary", target: "_blank")
+  - if current_user || Rails.env.development?
+    .columns
+      .column
+        .buttons.is-centered
+          = link_to("OGP画像設定", [:edit, ns_prefix, current_record, edit_mode: "ogp"], class: "button is-primary", target: "_blank")
 
   .columns
     .column

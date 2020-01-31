@@ -1,16 +1,74 @@
-window.Transport = Vue.extend({
+window.Adapter = Vue.extend({
   data() {
     return {
-      input_text: "68S",
+      input_text: null,
       output_kifs: null,
       record: null,
-      create_counter: 0,
+      change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
+      fetched_counter: 0,
+      bs_error: null,
+      error_counter: 0,
+      other_display: false,
+      loading_instance: null,
     }
   },
+
+  mounted() {
+    // 変更した状態にする
+    this.input_text = ""
+
+    if (this.development_p) {
+      this.input_text = ""
+    }
+
+    // // easy_dialog(params) {
+    // //   params = {
+    // //     ...params,
+    // //     // 連打でスキップしてしまうことがあるため指定しない
+    // //     // canCancel: ["outside", "escape"],
+    // //     trapFocus: true,
+    // //   }
+    // this.$buefy.dialog.alert({
+    //   title: "反則負け",
+    //   message: "<hr>あああ<hr>",
+    //   type: "is-danger",
+    //   hasIcon: true,
+    //   icon: "times-circle",
+    //   iconPack: "fa",
+    //   trapFocus: true,
+    // })
+  },
+
   watch: {
     input_text() {
-      this.create_counter = 0
+      this.change_counter += 1
+      this.record = null
+      this.bs_error = null
     }
+  },
+
+  computed: {
+    disabled_p() {
+      return !!this.loading_instance
+    },
+
+    field_type() {
+      if (this.change_counter === 0) {
+        if (this.bs_error) {
+          return "is-danger"
+        }
+        if (this.record) {
+          return "is-success"
+        }
+      }
+    },
+    field_message() {
+      if (this.change_counter === 0) {
+        if (this.bs_error) {
+          return this.bs_error.message
+        }
+      }
+    },
   },
 
   methods: {
@@ -22,36 +80,101 @@ window.Transport = Vue.extend({
       this.record_create(() => { this.other_window_open(this.record.kento_app_url) })
     },
 
-    kifu_copy_click_handle() {
-      this.record_create(() => { this.kifu_copy_exec(this.record.kifu_copy_params) })
+    kifu_copy_click_handle(kifu_type) {
+      this.record_create(() => {
+        this.clipboard_copy({text: this.output_kifs[kifu_type].value, success_message: "棋譜をクリップボードにコピーしました"})
+      })
+    },
+
+    validate_click_handle() {
+      this.record_create(() => {})
+    },
+
+    error_click_handle() {
+      this.input_text = "68銀 12玉"
+      this.validate_click_handle()
+    },
+
+    // 「その他」
+    other_click_handle() {
+      this.other_display = true
+    },
+
+    // 「棋譜印刷」
+    print_out_click_handle() {
+      this.record_create(() => { this.other_window_open(this.record.formal_sheet_path) })
+    },
+
+    // 「KIFダウンロード」
+    kif_download_click_handle(kifu_type) {
+      this.record_create(() => { this.other_window_open(`${this.record.show_path}.${kifu_type}`) })
     },
 
     // private
 
     record_create(callback) {
-      if (this.create_counter >= 1) {
+      if (this.change_counter === 0) {
         if (this.record) {
           callback()
         }
+      }
+      if (this.change_counter >= 1) {
+        this.record_force_create(callback)
+      }
+    },
+
+    record_force_create(callback) {
+      if (this.loading_instance) {
         return
       }
-      this.create_counter += 1
+
+      this.loading_instance = this.$buefy.loading.open()
 
       const params = new URLSearchParams()
       params.set("input_any_kifu", this.input_text)
       params.set("edit_mode", "adapter")
 
-      // TODO: あとでシンプルなのに変更する
       this.$http.post(this.$options.post_path, params).then(response => {
+        this.loading_instance.close()
+        this.loading_instance = null
         const e = response.data
-        if (e.errors_full_messages) {
-          this.$buefy.toast.open({message: e.errors_full_messages.join("\n"), position: "is-bottom", type: "is-warning", duration: 1000 * 5})
+
+        // BioshogiError の文言が入る
+        if (e.bs_error) {
+          this.error_counter += 1
+          this.bs_error = e.bs_error
+          this.talk(this.bs_error.message, {rate: 2.0})
+
+          if (this.development_p) {
+            this.$buefy.toast.open({message: e.bs_error.message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+          }
+
+          if (this.development_p) {
+            this.$buefy.dialog.alert({
+              title: "ERROR",
+              message: `<div>${e.bs_error.message}</div><div class="error_message_pre is-size-7">${e.bs_error.board}</div>`,
+              canCancel: ["outside", "escape"],
+              type: "is-danger",
+              hasIcon: true,
+              icon: "times-circle",
+              iconPack: "fa",
+              trapFocus: true,
+            })
+          }
+        } else {
+          this.bs_error = null
         }
+
         if (e.output_kifs) {
           this.output_kifs = e.output_kifs
           // this.turn_max_set(e)
           // this.board_sfen = e.output_kifs.sfen.value
+        } else {
+          this.output_kifs = null
         }
+
+        this.change_counter = 0
+
         if (e.record) {
           this.record = e.record
 
@@ -59,11 +182,17 @@ window.Transport = Vue.extend({
 
           // this.turn_max_set(e)
           // this.board_sfen = e.output_kifs.sfen.value
+        } else {
+          this.record = null
         }
       }).catch(error => {
+        this.loading_instance.close()
+        this.loading_instance = null
+
         console.table([error.response])
         this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
+
   },
 })

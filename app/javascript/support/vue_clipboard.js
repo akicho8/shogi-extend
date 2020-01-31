@@ -15,6 +15,11 @@ export default {
         success_message: "棋譜をクリップボードにコピーしました",
       }, params)
 
+      if (params["text"]) {
+        this.clipboard_copy(params)
+        return
+      }
+
       const kc_url = params["kc_url"]
       const kc_title = params["kc_title"]
       if (kc_title && false) {

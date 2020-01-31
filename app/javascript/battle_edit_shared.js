@@ -88,9 +88,12 @@ export default {
 
       this.$http.post(this.$options.post_path, params).then(response => {
         const e = response.data
-        if (e.error_message) {
-          this.$buefy.toast.open({message: e.error_message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+
+        // BioshogiError の文言が入る
+        if (e.bs_error) {
+          this.$buefy.toast.open({message: e.bs_error.message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
         }
+
         if (e.output_kifs) {
           this.output_kifs = e.output_kifs
           this.turn_max_set(e)

@@ -3,7 +3,7 @@
 - content_for :head do
   = javascript_pack_tag("adapter")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new Transport(#{js_edit_options.to_json.html_safe}).$mount("#app") })
+    document.addEventListener('DOMContentLoaded', () => { new Adapter(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
   p.title.is-2.yumincho
@@ -12,20 +12,59 @@
 
   .columns
     .column
-      b-field(label="")
-        b-input(type="textarea" ref="input_text" v-model.trim="input_text")
+      b-field(label="" :type="field_type" :message="field_message")
+        b-input(type="textarea" ref="input_text" v-model="input_text" :disabled="disabled_p")
 
-      a(@click.stop="piyo_shogi_click_handle")
-        = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
+      template(v-if="!bs_error")
+        a(@click.stop="piyo_shogi_click_handle")
+          = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
 
-      | &nbsp;
+        | &nbsp;
 
-      a.button.is-small.kento_app_button(@click.stop="kento_click_handle")
-        | ☗ KENTO
+        a.button.is-small.kento_app_button(@click.stop="kento_click_handle")
+          | ☗ KENTO
 
-      | &nbsp;
-      a.button.is-small(@click.stop.prevent="kifu_copy_click_handle")
-        | 棋譜コピー
+        | &nbsp;
+        a.button.is-small(@click.stop.prevent="kifu_copy_click_handle('kif')") 棋譜コピー
+
+        template(v-if="development_p")
+          | &nbsp;
+          a.button.is-small(@click.stop.prevent="error_click_handle")
+            | 棋譜エラー
+
+        / template(v-if="record")
+        /   pulldown_menu(:record="record" position="is-bottom-left")
+
+  .columns(v-if="!bs_error")
+    .column
+      template(v-if="!other_display")
+        a.button.is-small(@click="other_click_handle") その他
+
+      template(v-if="other_display")
+        .buttons
+          a.button.is-small(@click="validate_click_handle") 検証のみ
+          a.button.is-small(@click="print_out_click_handle") 棋譜印刷
+          a.button.is-small(@click="kif_download_click_handle('kif')") KIFダウンロード
+          a.button.is-small(@click="kifu_copy_click_handle('ki2')") KI2コピー
+          a.button.is-small(@click="kif_download_click_handle('ki2')") KI2ダウンロード
+
+  - if Rails.env.development?
+    .columns
+      .column
+        template(v-if="output_kifs")
+          pre
+            | {{output_kifs.ki2.value}}
+    .columns
+      .column
+        template(v-if="bs_error")
+          .error_message_pre
+            | {{bs_error.board}}
+
+  - if Rails.env.development?
+    .columns
+      .column
+        | change_counter: {{change_counter}}<br>
+        | fetched_counter: {{fetched_counter}}<br>
 
   - if Rails.env.development?
       .columns

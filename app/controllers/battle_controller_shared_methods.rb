@@ -8,8 +8,14 @@ module BattleControllerSharedMethods
       helper_method :js_index_options
 
       rescue_from "Bioshogi::BioshogiError" do |exception|
+        if Rails.env.development?
+          Rails.logger.info(exception)
+        end
+
+        ExceptionNotifier.notify_exception(exception)
+
         if request.format.json?
-          render json: {error_message: exception.message.lines.first.strip}
+          render json: { bs_error: { message: exception.message.lines.first.strip, board: exception.message.lines.drop(1).join } }
         else
           h = ApplicationController.helpers
           lines = exception.message.lines
@@ -553,10 +559,12 @@ module BattleControllerSharedMethods
     # free_battle_edit.js の引数用
     def js_edit_options
       {
-        post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
         record_attributes: current_record.as_json,
         output_kifs: output_kifs,
+
+        post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
         new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
+
         saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
         free_battles_pro_mode: AppConfig[:free_battles_pro_mode],
         current_edit_mode: current_edit_mode,
