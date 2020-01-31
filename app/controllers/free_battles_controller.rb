@@ -83,6 +83,10 @@ class FreeBattlesController < ApplicationController
 
   private
 
+  def access_log_create(record)
+    record.update!(updated_at: Time.current)
+  end
+
   def current_index_scope
     current_scope
   end
