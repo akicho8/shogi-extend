@@ -57,10 +57,10 @@ module Swars
 
         def old_record_destroy(**params)
           params = {
-            time: 2.weeks.ago,
+            expires_in: 2.weeks,
           }.merge(params)
 
-          all.where(arel_table[:last_accessd_at].lteq(params[:time])).find_in_batches(batch_size: 100) do |g|
+          all.where(arel_table[:last_accessd_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
             begin
               g.each(&:destroy)
             rescue ActiveRecord::Deadlocked => error
