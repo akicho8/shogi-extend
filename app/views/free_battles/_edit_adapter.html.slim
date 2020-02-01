@@ -6,6 +6,25 @@
     document.addEventListener('DOMContentLoaded', () => { new Adapter(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
+  b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
+    template(v-if="record")
+      .modal-card.is-shogi-player-modal-card.box.is-paddingless(style="width:auto")
+        .modal-card-body
+          shogi_player(
+            :run_mode="'view_mode'"
+            :start_turn="9999"
+            :kifu_body="record.sfen_body"
+            :key_event_capture="false"
+            :slider_show="true"
+            :controller_show="true"
+            :theme="'simple'"
+            :size="'default'"
+            :sound_effect="true"
+            :volume=AppConfig[:volume]
+            :setting_button_show="false"
+            ref="modal_shogi_player"
+          )
+
   p.title.is-2.yumincho
     = @page_title
   hr
@@ -43,8 +62,10 @@
 
       template(v-if="other_display")
         .buttons
-          a.button.is-small(@click="validate_click_handle") 検証
-          a.button.is-small(@click="print_out_click_handle") 棋譜用紙
+          template(v-if="development_p")
+            a.button.is-small(@click="validate_click_handle") 検証
+          a.button.is-small(@click="board_show_click_handle") 盤面
+          a.button.is-small(@click="print_out_click_handle") 用紙
         b-field(label="表示" custom-class="is-small")
           .buttons
             a.button.is-small(@click="kif_show_click_handle('kif')") KIF

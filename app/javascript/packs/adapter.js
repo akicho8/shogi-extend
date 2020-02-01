@@ -9,7 +9,10 @@ window.Adapter = Vue.extend({
       bs_error: null,
       error_counter: 0,
       other_display: false,
+      board_show: false,
       _loading: null,
+
+      modal_p: false,
     }
   },
 
@@ -111,6 +114,13 @@ window.Adapter = Vue.extend({
     // 「表示」
     kif_show_click_handle(kifu_type) {
       this.record_create(() => { this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`) })
+    },
+
+    // 「盤面」
+    board_show_click_handle() {
+      this.record_create(() => {
+        this.modal_p = true
+      })
     },
 
     // private

@@ -67,13 +67,14 @@ export default {
       this.real_pos = pos
     },
 
-    toggle_run_mode() {
-      if (this.sp_run_mode === "view_mode") {
-        this.sp_run_mode = "play_mode"
-      } else {
-        this.sp_run_mode = "view_mode"
-      }
-    },
+    // 未使用
+    // toggle_run_mode() {
+    //   if (this.sp_run_mode === "view_mode") {
+    //     this.sp_run_mode = "play_mode"
+    //   } else {
+    //     this.sp_run_mode = "view_mode"
+    //   }
+    // },
 
     show_handle(row) {
       this.modal_record = row
