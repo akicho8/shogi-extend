@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_action do
     request.env["exception_notifier.exception_data"] = {
-      current_user: current_user,
+      current_user_id: current_user&.id,
     }
   end
 
