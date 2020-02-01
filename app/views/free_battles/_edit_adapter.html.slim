@@ -38,7 +38,8 @@
   .columns(v-if="!bs_error")
     .column
       template(v-if="!other_display")
-        a.button.is-small(@click="other_click_handle") その他
+        b-button(size="is-small" @click="other_click_handle" icon-left="chevron-down")
+        // a.button.is-small(@click="other_click_handle") その他
 
       template(v-if="other_display")
         .buttons
