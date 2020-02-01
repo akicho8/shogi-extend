@@ -42,12 +42,22 @@
 
       template(v-if="other_display")
         .buttons
-          a.button.is-small(@click="validate_click_handle") 検証のみ
-          a.button.is-small(@click="print_out_click_handle") 棋譜印刷
-          a.button.is-small(@click="kif_download_click_handle('kif')") KIFダウンロード
-          a.button.is-small(@click="kifu_copy_click_handle('ki2')") KI2コピー
-          a.button.is-small(@click="kif_download_click_handle('ki2')") KI2ダウンロード
-          template(v-if="development_p")
+          a.button.is-small(@click="validate_click_handle") 検証
+          a.button.is-small(@click="print_out_click_handle") 棋譜用紙
+        b-field(label="コピー" custom-class="is-small")
+          .buttons
+            a.button.is-small(@click="kifu_copy_click_handle('ki2')") KI2
+            a.button.is-small(@click="kifu_copy_click_handle('csa')") CSA
+            a.button.is-small(@click="kifu_copy_click_handle('sfen')") SFEN
+        b-field(label="ダウンロード" custom-class="is-small")
+          .buttons
+            a.button.is-small(@click="kif_download_click_handle('kif')") KIF
+            a.button.is-small(@click="kif_download_click_handle('ki2')") KI2
+            a.button.is-small(@click="kif_download_click_handle('csa')") CSA
+            a.button.is-small(@click="kif_download_click_handle('sfen')") SFEN
+
+        template(v-if="development_p")
+          hr
             a.button.is-small(@click="kif_download_click_handle('png')") 画像
 
   - if Rails.env.development?
