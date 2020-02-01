@@ -58,7 +58,19 @@ module Swars
           used = life[i] - t
           life[i] = t
           s << "#{op}"
-          s << "T#{used}" # 将棋ウォーズの不具合で時間がマイナスになることがある
+
+          if true
+            # 【超重要】
+            # ・将棋ウォーズの不具合で時間がマイナスになることがある
+            # ・もともとはこれを容認していた
+            # ・しかしKIFの時間のところに負の値を書くことになる
+            # ・するとKENTOで使っているKIFパースライブラリで、ハイフンを受け付けずに転ける
+            if used.negative?
+              used = 0
+            end
+          end
+
+          s << "T#{used}"
         end
 
         s << "%#{final_info.last_action_key}"
