@@ -53,7 +53,8 @@ class FreeBattlesController < ApplicationController
         if current_edit_mode === :adapter
           current_record.assign_attributes(kifu_body: v)
           if current_record.save
-          render json: { output_kifs: output_kifs, turn_max: turn_max, record: js_record_for(current_record) }
+            slack_message(key: "変換OK", body: v.to_s.lines.take(8).join)
+            render json: { output_kifs: output_kifs, turn_max: turn_max, record: js_record_for(current_record) }
             return
           else
             render json: { bs_error: {message: current_record.errors.full_messages.join(" ")} }

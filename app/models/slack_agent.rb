@@ -20,10 +20,17 @@ module SlackAgent
       raise Slack::Web::Api::Errors::SlackError, 1
     end
 
+    body = body.to_s.strip
+    if body.include?("\n")
+      part = "#{user_agent_part(ua)}\n#{body}"
+    else
+      part = "#{body} #{user_agent_part(ua)}".squish
+    end
+
     Slack::Web::Client.new.tap do |client|
       args = {
         channel: channel_code,
-        text: "#{icon_symbol(ua)}【#{key}】#{body} #{user_agent_part(ua)}".strip,
+        text: "#{icon_symbol(ua)}【#{key}】#{part}",
       }
       if Rails.env.test?
         return args

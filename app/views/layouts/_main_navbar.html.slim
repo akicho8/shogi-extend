@@ -9,6 +9,7 @@ nav.navbar.is-primary.is_screen_only
     .navbar-start
       / ここでの is-active に意味はない
       = link_to(icon_tag(:magnify, margin_right: 1) + "ウォーズ検索", [:swars, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
+      = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 1) + "なんでも棋譜変換", :adapter, class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] == "adapter")])
       = link_to(icon_tag(:robot, margin_right: 1) + "CPU対戦".html_safe, :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
       = link_to(icon_tag(:apps, margin_right: 1) + "符号の鬼", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
       = link_to(icon_tag(:clock, margin_right: 1) + "詰将棋RTA", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
@@ -17,8 +18,6 @@ nav.navbar.is-primary.is_screen_only
         span.navbar-link
           | もっと見る
         .navbar-dropdown.is-boxed
-          - unless Rails.env.production?
-            = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 1) + "なんでも棋譜変換", :adapter, class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] == "adapter")])
           / = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 1) + "野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] != "adapter")])
           = link_to(icon_tag("clipboard-text-outline", margin_right: 1) + "野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
           = link_to(icon_tag(:apps, margin_right: 1) + "ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])

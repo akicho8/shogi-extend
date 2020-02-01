@@ -218,12 +218,6 @@ class FreeBattle < ApplicationRecord
     end
   end
 
-  after_create do
-    if Rails.env.production? || Rails.env.test?
-      SlackAgent.message_send(key: "棋譜投稿(#{use_info.name})", body: title)
-    end
-  end
-
   concerning :TagMethods do
     included do
       acts_as_ordered_taggable_on :defense_tags

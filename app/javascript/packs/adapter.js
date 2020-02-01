@@ -9,7 +9,7 @@ window.Adapter = Vue.extend({
       bs_error: null,
       error_counter: 0,
       other_display: false,
-      loading_instance: null,
+      _loading: null,
     }
   },
 
@@ -49,7 +49,7 @@ window.Adapter = Vue.extend({
 
   computed: {
     disabled_p() {
-      return !!this.loading_instance
+      return !!this.$data._loading
     },
 
     field_type() {
@@ -128,20 +128,26 @@ window.Adapter = Vue.extend({
       }
     },
 
+    loading_off() {
+      if (this.$data._loading) {
+        this.$data._loading.close()
+        this.$data._loading = null
+      }
+    },
+
     record_force_create(callback) {
-      if (this.loading_instance) {
+      if (this.$data._loading) {
         return
       }
 
-      this.loading_instance = this.$buefy.loading.open()
+      this.$data._loading = this.$buefy.loading.open()
 
       const params = new URLSearchParams()
       params.set("input_any_kifu", this.input_text)
       params.set("edit_mode", "adapter")
 
       this.$http.post(this.$options.post_path, params).then(response => {
-        this.loading_instance.close()
-        this.loading_instance = null
+        this.loading_off()
         const e = response.data
 
         // BioshogiError の文言が入る
@@ -191,8 +197,7 @@ window.Adapter = Vue.extend({
           this.record = null
         }
       }).catch(error => {
-        this.loading_instance.close()
-        this.loading_instance = null
+        this.loading_off()
 
         console.table([error.response])
         this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})

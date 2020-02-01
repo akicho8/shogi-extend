@@ -13,6 +13,7 @@ module BattleControllerSharedMethods
         end
 
         ExceptionNotifier.notify_exception(exception)
+        slack_message(key: exception.class.name, body: exception.message.lines.first)
 
         if request.format.json?
           render json: { bs_error: { message: exception.message.lines.first.strip, board: exception.message.lines.drop(1).join } }
