@@ -14,6 +14,8 @@ window.Adapter = Vue.extend({
   },
 
   mounted() {
+    this.desktop_only_focus(this.$refs.input_text)
+
     // 変更した状態にする
     this.input_text = ""
 
