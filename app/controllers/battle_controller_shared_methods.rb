@@ -12,6 +12,10 @@ module BattleControllerSharedMethods
           Rails.logger.info(exception)
         end
 
+        if Rails.env.development?
+          sleep(1)
+        end
+
         ExceptionNotifier.notify_exception(exception)
         slack_message(key: exception.class.name, body: exception.message.lines.first)
 

@@ -48,10 +48,6 @@ window.Adapter = Vue.extend({
   },
 
   computed: {
-    disabled_p() {
-      return !!this.$data._loading
-    },
-
     field_type() {
       if (this.change_counter === 0) {
         if (this.bs_error) {

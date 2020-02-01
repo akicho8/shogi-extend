@@ -13,7 +13,7 @@
   .columns
     .column
       b-field(label="" :type="field_type" :message="field_message")
-        b-input(type="textarea" ref="input_text" v-model="input_text" :disabled="disabled_p")
+        b-input(type="textarea" ref="input_text" v-model="input_text")
 
       template(v-if="!bs_error")
         a(@click.stop="piyo_shogi_click_handle")
