@@ -89,6 +89,7 @@ Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
+import vue_application from "support/vue_application.js"
 import vue_support from "support/vue_support.js"
 import vue_fetch from "support/vue_fetch.js"
 import vue_clipboard from "support/vue_clipboard.js"
@@ -117,6 +118,7 @@ Vue.mixin({
   router: new VueRouter({mode: "history"}),
 
   mixins: [
+    vue_application,
     vue_support,
     vue_fetch,
     vue_clipboard,

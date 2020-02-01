@@ -213,10 +213,7 @@ export default {
     } else {
       if (!this.query) {
         // モバイルでは手動でフォーカスしたときにはじめて入力ツールが登場するので自動的にフォーカスしない方がいい
-        const el = document.querySelector("html")
-        if (!el.classList.contains("mobile")) {
-          this.$refs.query_field.focus()
-        }
+        this.desktop_only_focus(this.$refs.query_field)
       }
     }
   },
