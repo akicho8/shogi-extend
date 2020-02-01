@@ -149,7 +149,9 @@ gem 'active_model_serializers'
 # application 用
 gem 'slack-ruby-client'
 
+# エラー通知
 gem 'exception_notification'
+gem 'slack-notifier'
 
 # devise
 gem 'devise'
