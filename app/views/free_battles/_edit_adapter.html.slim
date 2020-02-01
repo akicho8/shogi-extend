@@ -45,8 +45,15 @@
         .buttons
           a.button.is-small(@click="validate_click_handle") 検証
           a.button.is-small(@click="print_out_click_handle") 棋譜用紙
+        b-field(label="表示" custom-class="is-small")
+          .buttons
+            a.button.is-small(@click="kif_show_click_handle('kif')") KIF
+            a.button.is-small(@click="kif_show_click_handle('ki2')") KI2
+            a.button.is-small(@click="kif_show_click_handle('csa')") CSA
+            a.button.is-small(@click="kif_show_click_handle('sfen')") SFEN
         b-field(label="コピー" custom-class="is-small")
           .buttons
+            a.button.is-small(@click="kifu_copy_click_handle('kif')") KIF
             a.button.is-small(@click="kifu_copy_click_handle('ki2')") KI2
             a.button.is-small(@click="kifu_copy_click_handle('csa')") CSA
             a.button.is-small(@click="kifu_copy_click_handle('sfen')") SFEN

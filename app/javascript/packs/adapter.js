@@ -110,6 +110,11 @@ window.Adapter = Vue.extend({
       this.record_create(() => { this.other_window_open(`${this.record.show_path}.${kifu_type}`) })
     },
 
+    // 「表示」
+    kif_show_click_handle(kifu_type) {
+      this.record_create(() => { this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`) })
+    },
+
     // private
 
     record_create(callback) {
