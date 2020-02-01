@@ -51,9 +51,6 @@
           a.button.is-small(@click.stop.prevent="error_click_handle")
             | 棋譜エラー
 
-        / template(v-if="record")
-        /   pulldown_menu(:record="record" position="is-bottom-left")
-
   .columns(v-if="!bs_error")
     .column
       template(v-if="!other_display")
