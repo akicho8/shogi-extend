@@ -88,7 +88,7 @@ window.Adapter = Vue.extend({
     },
 
     validate_click_handle() {
-      this.record_create(() => {})
+      this.record_create(() => { this.$buefy.toast.open({message: "OK", position: "is-bottom", type: "is-success"}) })
     },
 
     error_click_handle() {

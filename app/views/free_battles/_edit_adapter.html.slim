@@ -65,10 +65,10 @@
 
       template(v-if="other_display")
         .buttons
-          template(v-if="development_p")
-            a.button.is-small(@click="validate_click_handle") 検証
           a.button.is-small(@click="board_show_click_handle") 盤面
           a.button.is-small(@click="print_out_click_handle") 用紙
+          template(v-if="development_p || true")
+            a.button.is-small(@click="validate_click_handle") 検証
         b-field(label="表示" custom-class="is-small")
           .buttons
             a.button.is-small(@click="kif_show_click_handle('kif')") KIF
