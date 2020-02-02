@@ -69,7 +69,7 @@ export default {
 
   computed: {
     memento_list_storage_key() {
-      return [this.local_storage_key, "log"].join("_")
+      return [this.ls_key, "log"].join("_")
     },
   },
 }

@@ -753,7 +753,7 @@ export default {
       }
     },
 
-    local_storage_key() {
+    ls_key() {
       return "xy_game"
     },
 

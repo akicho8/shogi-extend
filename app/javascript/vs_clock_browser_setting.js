@@ -51,7 +51,7 @@ export default {
 
   computed: {
     browser_setting_storage_key() {
-      return [this.local_storage_key, "browser_setting"].join("_")
+      return [this.ls_key, "browser_setting"].join("_")
     },
   },
 }

@@ -1,7 +1,7 @@
 // URL または localStorage にデータを永続化保存する機能
 //
 // save_hash
-// local_storage_key
+// ls_key
 // data_restore_from_hash
 
 import { LZMA } from "lzma/src/lzma_worker.js"
@@ -24,11 +24,11 @@ export default {
     },
 
     data_save_to_local_storage() {
-      localStorage.setItem(this.local_storage_key, this.enc_base64)
+      localStorage.setItem(this.ls_key, this.enc_base64)
     },
 
     storage_clear() {
-      localStorage.removeItem(this.local_storage_key)
+      localStorage.removeItem(this.ls_key)
     },
 
     data_restore_from_url_or_storage() {
@@ -39,7 +39,7 @@ export default {
       } else if (location.hash) {
         enc_base64 = location.hash.replace(/^#/, "")
       } else {
-        enc_base64 = localStorage.getItem(this.local_storage_key)
+        enc_base64 = localStorage.getItem(this.ls_key)
       }
       this.data_restore_from_base64(enc_base64)
       this.data_restore_from_url_or_storage_after_hook()
@@ -99,7 +99,7 @@ export default {
       return this.value_to_base64(this.save_hash)
     },
 
-    local_storage_key() {
+    ls_key() {
       return "dc6c1cd5cf94742da55c164d1b625d22"
     },
   },

@@ -419,7 +419,7 @@ export default {
   },
 
   computed: {
-    local_storage_key() {
+    ls_key() {
       return "vs_clock"
     },
 

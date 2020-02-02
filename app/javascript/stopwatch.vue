@@ -718,7 +718,7 @@ export default {
       return this.quest_name_get(this.new_quest)
     },
 
-    local_storage_key() {
+    ls_key() {
       return "stopwatch"
     },
 
