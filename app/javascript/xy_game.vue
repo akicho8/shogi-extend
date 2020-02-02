@@ -737,7 +737,7 @@ export default {
       return this.saved_rule.o_count_max
     },
 
-    save_hash() {
+    $_ls_hash() {
       return {
         xy_scope_key: this.xy_scope_key,
         xy_rule_key: this.xy_rule_key,

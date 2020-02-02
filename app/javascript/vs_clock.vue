@@ -440,7 +440,7 @@ export default {
       return this.use_seconds % 60
     },
 
-    save_hash() {
+    $_ls_hash() {
       return {
         current_track:  this.current_track,
         use_seconds:    this.use_seconds,

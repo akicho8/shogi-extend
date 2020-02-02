@@ -35,9 +35,9 @@ export default {
   methods: {
     $_ls_save() {
       if (this.development_p) {
-        console.log("$_ls_save", this.$_ls_attributes)
+        console.log("$_ls_save", this.$_ls_hash)
       }
-      localStorage.setItem(this.ls_key, JSON.stringify(this.$_ls_attributes))
+      localStorage.setItem(this.ls_key, JSON.stringify(this.$_ls_hash))
     },
 
     $_ls_load() {
@@ -81,7 +81,8 @@ export default {
       return this.$_ls_data_keys.map(e => this[e])
     },
 
-    $_ls_attributes() {
+    // ハッシュ型にした保存するデータ
+    $_ls_hash() {
       return this.$_ls_data_keys.reduce((a, e) => ({...a, [e]: this[e]}), {})
     },
   },

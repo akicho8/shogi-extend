@@ -1,6 +1,6 @@
 // URL または localStorage にデータを永続化保存する機能
 //
-// save_hash
+// $_ls_hash
 // ls_key
 // data_restore_from_hash
 
@@ -84,8 +84,8 @@ export default {
   },
 
   computed: {
-    save_hash() {
-      alert("save_hash not implemented")
+    $_ls_hash() {
+      alert("$_ls_hash not implemented")
     },
 
     permalink_url() {
@@ -96,7 +96,7 @@ export default {
     },
 
     enc_base64() {
-      return this.value_to_base64(this.save_hash)
+      return this.value_to_base64(this.$_ls_hash)
     },
 
     ls_key() {

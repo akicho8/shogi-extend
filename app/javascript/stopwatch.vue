@@ -834,7 +834,7 @@ export default {
       }
     },
 
-    save_hash() {
+    $_ls_hash() {
       return {
         current_track:     this.current_track,
         lap_counter:       this.lap_counter,
