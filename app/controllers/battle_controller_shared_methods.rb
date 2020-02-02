@@ -1,12 +1,8 @@
 module BattleControllerSharedMethods
   extend ActiveSupport::Concern
 
-  concerning :IndexMethods do
+  concerning :ExceptionRescueMethods do
     included do
-      helper_method :current_per
-      helper_method :current_placeholder
-      helper_method :js_index_options
-
       rescue_from "Bioshogi::BioshogiError" do |exception|
         if Rails.env.development?
           Rails.logger.info(exception)
@@ -19,7 +15,7 @@ module BattleControllerSharedMethods
         ExceptionNotifier.notify_exception(exception, env: request.env, data: {params: params.to_unsafe_h})
 
         if request.format.json?
-          render json: { bs_error: { message: exception.message.lines.first.strip, board: exception.message.lines.drop(1).join } }
+          render json: { bs_error: { message_prefix: message_prefix_build(exception), message: exception.message.lines.first.strip, board: exception.message.lines.drop(1).join } }
         else
           h = ApplicationController.helpers
           lines = exception.message.lines
@@ -33,6 +29,31 @@ module BattleControllerSharedMethods
           behavior_after_rescue(message)
         end
       end
+    end
+
+    private
+
+    def message_prefix_build(e)
+      s = []
+      if e.respond_to?(:mediator)
+        s << "#{e.mediator.turn_info.counter + 1}手目"
+        s << "#{e.mediator.current_player.call_name}番"
+      end
+      if e.respond_to?(:input)
+        s << "#{e.input.input.values.join}"
+      end
+      s = s.join.squish
+      if s.present?
+        "(#{s}) "
+      end
+    end
+  end
+
+  concerning :IndexMethods do
+    included do
+      helper_method :current_per
+      helper_method :current_placeholder
+      helper_method :js_index_options
 
       before_action do
         if params[:modal_id] && !modal_record

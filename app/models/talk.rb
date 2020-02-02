@@ -83,6 +83,11 @@ class Talk
     params = polly_params.merge(text: surrogate_pair_deleted_text, response_target: direct_file_path.to_s)
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
+
+    # ドトールで実行すると client.synthesize_speech のタイミングで
+    # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
+    # のエラーになることがある
+
     unless Rails.env.production?
       tp params
       tp resp.to_h

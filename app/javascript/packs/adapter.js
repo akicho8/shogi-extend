@@ -66,7 +66,7 @@ window.Adapter = Vue.extend({
     field_message() {
       if (this.change_counter === 0) {
         if (this.bs_error) {
-          return this.bs_error.message
+          return `${this.bs_error.message_prefix}${this.bs_error.message}`
         }
       }
     },
@@ -168,7 +168,7 @@ window.Adapter = Vue.extend({
             this.$buefy.toast.open({message: e.bs_error.message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
           }
 
-          if (this.development_p) {
+          if (this.development_p && false) {
             this.$buefy.dialog.alert({
               title: "ERROR",
               message: `<div>${e.bs_error.message}</div><div class="error_message_pre is-size-7">${e.bs_error.board}</div>`,

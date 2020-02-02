@@ -40,11 +40,14 @@ pre
 
 ////////////////////////////////////////////////////////////////////////////// エラーメッセージ内のPRE相当
 
-.error_message_pre
+.error_message_pre_base
   @extend .fixed_font
-  margin-top: 1rem
   white-space: pre
   line-height: 110%
+
+.error_message_pre
+  @extend .error_message_pre_base
+  margin-top: 1rem
 
 ////////////////////////////////////////////////////////////////////////////// 綺麗な明朝体
 
@@ -71,4 +74,3 @@ a.no-decoration
 .modal-card-foot
   &.space_between
     justify-content: space-between
-

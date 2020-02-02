@@ -32,8 +32,13 @@
 
   .columns
     .column
-      b-field(label="" :type="field_type" :message="field_message")
+      b-field(label="" :type="field_type")
         b-input(type="textarea" ref="input_text" v-model="input_text")
+
+      template(v-if="bs_error")
+        b-message(:title="field_message" type="is-danger" size="is-small" :closable="false")
+          .error_message_pre_base
+            | {{bs_error.board}}
 
       template(v-if="!bs_error")
         a(@click.stop="piyo_shogi_click_handle")
@@ -93,11 +98,6 @@
         template(v-if="output_kifs")
           pre
             | {{output_kifs.ki2.value}}
-    .columns
-      .column
-        template(v-if="bs_error")
-          .error_message_pre
-            | {{bs_error.board}}
 
   - if Rails.env.development?
     .columns
