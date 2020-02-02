@@ -1,18 +1,21 @@
+import adapter_local_storage from "adapter_local_storage.js"
+
 window.Adapter = Vue.extend({
+  mixins: [adapter_local_storage],
+
   data() {
     return {
-      input_text: null,
-      output_kifs: null,
-      record: null,
+      input_text: null,  // 入力した棋譜
+      output_kifs: null, // 変換した棋譜
+      record: null,      // FreeBattle のインスタンスにいろいろんな情報がくっついたやつ
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
-      fetched_counter: 0,
-      bs_error: null,
-      error_counter: 0,
-      other_display: false,
-      board_show: false,
-      _loading: null,
+      bs_error: null,    // BioshogiError の情報(Hash)
+      _loading: null,    // ajax中なら入ってる
+      board_show_p: false,    // 「盤面」を押したときに true
 
-      modal_p: false,
+      // 永続化
+      option_show_p: null,
+      my_value1: null,
     }
   },
 
@@ -63,6 +66,7 @@ window.Adapter = Vue.extend({
         }
       }
     },
+
     field_message() {
       if (this.change_counter === 0) {
         if (this.bs_error) {
@@ -70,6 +74,21 @@ window.Adapter = Vue.extend({
         }
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ls_key() {
+      return "adapter"
+    },
+
+    ls_data() {
+      return {
+        option_show_p: false,
+        my_value1: false,
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
 
   methods: {
@@ -98,29 +117,27 @@ window.Adapter = Vue.extend({
 
     // 「その他」
     other_click_handle() {
-      this.other_display = true
+      this.option_show_p = true
     },
 
     // 「棋譜印刷」
     print_out_click_handle() {
-      this.record_create(() => { this.other_window_open(this.record.formal_sheet_path) })
+      this.record_create(() => this.other_window_open(this.record.formal_sheet_path))
     },
 
     // 「KIFダウンロード」
     kif_download_click_handle(kifu_type) {
-      this.record_create(() => { this.other_window_open(`${this.record.show_path}.${kifu_type}`) })
+      this.record_create(() => this.other_window_open(`${this.record.show_path}.${kifu_type}`))
     },
 
     // 「表示」
     kif_show_click_handle(kifu_type) {
-      this.record_create(() => { this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`) })
+      this.record_create(() => this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`))
     },
 
     // 「盤面」
     board_show_click_handle() {
-      this.record_create(() => {
-        this.modal_p = true
-      })
+      this.record_create(() => this.board_show_p = true)
     },
 
     // private
@@ -160,7 +177,6 @@ window.Adapter = Vue.extend({
 
         // BioshogiError の文言が入る
         if (e.bs_error) {
-          this.error_counter += 1
           this.bs_error = e.bs_error
           this.talk(this.bs_error.message, {rate: 1.0})
 

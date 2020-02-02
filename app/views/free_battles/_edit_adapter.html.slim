@@ -7,7 +7,7 @@
     document.addEventListener('DOMContentLoaded', () => { new Adapter(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
-  b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
+  b-modal(:active.sync="board_show_p" has-modal-card animation="zoom-in")
     template(v-if="record")
       .modal-card.is-shogi-player-modal-card.box.is-paddingless(style="width:auto")
         .modal-card-body
@@ -46,51 +46,59 @@
 
         | &nbsp;
 
-        a.button.is-small.kento_app_button(@click.stop="kento_click_handle")
+        .button.is-small.kento_app_button(@click.stop="kento_click_handle")
           | ☗ KENTO
 
         | &nbsp;
-        a.button.is-small.kif_copy_link(@click.stop.prevent="kifu_copy_click_handle('kif')") 棋譜コピー
+        .button.is-small.kif_copy_link(@click.stop.prevent="kifu_copy_click_handle('kif')") 棋譜コピー
 
         template(v-if="development_p")
           | &nbsp;
-          a.button.is-small(@click.stop.prevent="error_click_handle")
+          .button.is-small(@click.stop.prevent="error_click_handle")
             | 棋譜エラー
 
-  .columns(v-if="!bs_error")
-    .column
-      template(v-if="!other_display")
-        b-button(size="is-small" @click="other_click_handle" icon-left="chevron-down")
-        // a.button.is-small(@click="other_click_handle") その他
+  template(v-if="!bs_error")
 
-      template(v-if="other_display")
-        .buttons
-          a.button.is-small(@click="board_show_click_handle") 盤面
-          a.button.is-small(@click="print_out_click_handle") 用紙
-          template(v-if="development_p || true")
-            a.button.is-small(@click="validate_click_handle") 検証
-        b-field(label="表示" custom-class="is-small")
-          .buttons
-            a.button.is-small(@click="kif_show_click_handle('kif')") KIF
-            a.button.is-small(@click="kif_show_click_handle('ki2')") KI2
-            a.button.is-small(@click="kif_show_click_handle('csa')") CSA
-            a.button.is-small(@click="kif_show_click_handle('sfen')") SFEN
-        b-field(label="コピー" custom-class="is-small")
-          .buttons
-            a.button.is-small(@click="kifu_copy_click_handle('kif')") KIF
-            a.button.is-small(@click="kifu_copy_click_handle('ki2')") KI2
-            a.button.is-small(@click="kifu_copy_click_handle('csa')") CSA
-            a.button.is-small(@click="kifu_copy_click_handle('sfen')") SFEN
-        b-field(label="ダウンロード" custom-class="is-small")
-          .buttons
-            a.button.is-small(@click="kif_download_click_handle('kif')") KIF
-            a.button.is-small(@click="kif_download_click_handle('ki2')") KI2
-            a.button.is-small(@click="kif_download_click_handle('csa')") CSA
-            a.button.is-small(@click="kif_download_click_handle('sfen')") SFEN
+    .columns(v-if="!bs_error")
+      .column
+        b-switch(v-model="option_show_p" size="is-small")
+          | オプション
 
-        template(v-if="development_p")
-          hr
-            a.button.is-small(@click="kif_download_click_handle('png')") 画像
+    .columns(v-if="!bs_error")
+      .column
+        // template(v-if="!option_show_p")
+        //   b-button(size="is-small" @click="other_click_handle" icon-left="chevron-down")
+        //   // .button.is-small(@click="other_click_handle") その他
+
+        template(v-if="option_show_p")
+          .buttons
+            .button.is-small(@click="board_show_click_handle") 盤面
+            .button.is-small(@click="print_out_click_handle") 用紙
+            template(v-if="development_p || true")
+              .button.is-small(@click="validate_click_handle") 検証
+
+          b-field(label="表示" custom-class="is-small")
+            .buttons.has-addons.are-small
+              .button(@click="kif_show_click_handle('kif')") KIF
+              .button(@click="kif_show_click_handle('ki2')") KI2
+              .button(@click="kif_show_click_handle('csa')") CSA
+              .button(@click="kif_show_click_handle('sfen')") SFEN
+          b-field(label="コピー" custom-class="is-small")
+            .buttons.has-addons.are-small
+              .button(@click="kifu_copy_click_handle('kif')") KIF
+              .button(@click="kifu_copy_click_handle('ki2')") KI2
+              .button(@click="kifu_copy_click_handle('csa')") CSA
+              .button(@click="kifu_copy_click_handle('sfen')") SFEN
+          b-field(label="ダウンロード" custom-class="is-small")
+            .buttons.has-addons.are-small
+              .button(@click="kif_download_click_handle('kif')") KIF
+              .button(@click="kif_download_click_handle('ki2')") KI2
+              .button(@click="kif_download_click_handle('csa')") CSA
+              .button(@click="kif_download_click_handle('sfen')") SFEN
+
+          template(v-if="development_p")
+            hr
+              .button.is-small(@click="kif_download_click_handle('png')") 画像
 
   - if Rails.env.development?
     .columns
@@ -102,8 +110,11 @@
   - if Rails.env.development?
     .columns
       .column
+        template(v-if="development_p")
+          b-switch(v-model="my_value1")
+            | {{my_value1}}
+        br
         | change_counter: {{change_counter}}<br>
-        | fetched_counter: {{fetched_counter}}<br>
 
   - if Rails.env.development?
       .columns
