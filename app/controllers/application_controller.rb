@@ -69,6 +69,7 @@ class ApplicationController < ActionController::Base
       helper_method :sysop?
       helper_method :editable_record?
       helper_method :current_user
+      helper_method :login_display?
     end
 
     def js_global
@@ -144,6 +145,14 @@ class ApplicationController < ActionController::Base
       end
       current_user_set_id(nil)
       sign_out(:xuser)
+    end
+
+    def login_display?
+      v = false
+      v ||= params[:controller].start_with?("colosseum")
+      v ||= params[:controller].start_with?("xy_records")
+      v ||= params[:controller].start_with?("free_battles") && params[:edit_mode] != "adapter"
+      v
     end
   end
 

@@ -74,15 +74,8 @@
           .buttons
             .button.is-small(@click="board_show_click_handle") 盤面
             .button.is-small(@click="print_out_click_handle") 用紙
-            template(v-if="development_p || true")
-              .button.is-small(@click="validate_click_handle") 検証
+            .button.is-small(@click="validate_click_handle") 検証
 
-          b-field(label="表示" custom-class="is-small")
-            .buttons.has-addons.are-small
-              .button(@click="kif_show_click_handle('kif')") KIF
-              .button(@click="kif_show_click_handle('ki2')") KI2
-              .button(@click="kif_show_click_handle('csa')") CSA
-              .button(@click="kif_show_click_handle('sfen')") SFEN
           b-field(label="コピー" custom-class="is-small")
             .buttons.has-addons.are-small
               .button(@click="kifu_copy_click_handle('kif')") KIF
@@ -95,6 +88,12 @@
               .button(@click="kif_download_click_handle('ki2')") KI2
               .button(@click="kif_download_click_handle('csa')") CSA
               .button(@click="kif_download_click_handle('sfen')") SFEN
+          b-field(label="表示" custom-class="is-small")
+            .buttons.has-addons.are-small
+              .button(@click="kif_show_click_handle('kif')") KIF
+              .button(@click="kif_show_click_handle('ki2')") KI2
+              .button(@click="kif_show_click_handle('csa')") CSA
+              .button(@click="kif_show_click_handle('sfen')") SFEN
 
           template(v-if="development_p")
             hr

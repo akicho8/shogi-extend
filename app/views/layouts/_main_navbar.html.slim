@@ -54,7 +54,7 @@ nav.navbar.is-primary.is_screen_only
       /       b-dropdown-item(:has-link="true" :paddingless="true")
       /         = link_to("ログアウト", [:colosseum, :session], method: :delete)
 
-      - if params[:controller].start_with?("colosseum/battles") || params[:controller].start_with?("xy_records") || params[:controller].start_with?("free_battles")
+      - if login_display?
         - if current_user
           .navbar-item.has-dropdown.is-hoverable
             = link_to([current_user], class: "navbar-link", slot: "trigger") do
