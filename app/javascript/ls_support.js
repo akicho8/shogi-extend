@@ -2,10 +2,10 @@
 //
 // 使う側で書くこと
 //
-//   import adapter_local_storage from "adapter_local_storage.js"
+//   import ls_support from "ls_support.js"
 //
 //   {
-//     mixins: [adapter_local_storage],
+//     mixins: [ls_support],
 //
 //     data() {
 //       return {

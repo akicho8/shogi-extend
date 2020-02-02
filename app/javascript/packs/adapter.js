@@ -1,7 +1,7 @@
-import adapter_local_storage from "adapter_local_storage.js"
+import ls_support from "ls_support.js"
 
 window.Adapter = Vue.extend({
-  mixins: [adapter_local_storage],
+  mixins: [ls_support],
 
   data() {
     return {
