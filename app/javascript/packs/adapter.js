@@ -157,6 +157,10 @@ window.Adapter = Vue.extend({
 
         const e = response.data
 
+        if (e.redirect_to) {
+          this.self_window_open(e.redirect_to)
+        }
+
         if (e.bs_error) {
           this.bs_error = e.bs_error
           this.talk(this.bs_error.message, {rate: 1.0})

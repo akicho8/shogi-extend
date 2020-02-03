@@ -47,10 +47,21 @@ class FreeBattlesController < ApplicationController
   end
 
   def create
-    # プレビュー用
     if request.format.json?
       if v = params[:input_any_kifu]
+        # なんでも棋譜変換
         if current_edit_mode === :adapter
+          if true
+            if v.to_s.strip.lines.count <= 2
+              if url = Swars::Battle.extraction_url_from_dirty_string(v)
+                slack_message(key: "リダイレクト", body: v)
+                flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
+                render json: { redirect_to: url_for([:swars, :battles, query: v]) }
+                return
+              end
+            end
+          end
+
           current_record.assign_attributes(kifu_body: v)
           if current_record.save
             slack_message(key: "変換OK", body: v.to_s.lines.take(8).join)
@@ -61,6 +72,8 @@ class FreeBattlesController < ApplicationController
             return
           end
         end
+
+        # プレビュー用
         if current_edit_mode === :basic
           render json: { output_kifs: output_kifs, turn_max: turn_max }
           return

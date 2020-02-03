@@ -118,12 +118,18 @@ module Swars
 
     concerning :HelperMethods do
       class_methods do
-        def extraction_key_from_dirty_string(str)
-          # コピペで空白を入れる人がいるため strip でもいいがいっそのことURLだけを抽出する
+        def extraction_url_from_dirty_string(str)
           if url = URI.extract(str, ["http", "https"]).first
-            if url.match?(%r{(shogiwars|kif-pona)\.heroz\.jp/games/})
-              URI(url).path.split("/").last
+            if url.match?(%r{\.heroz\.jp/games/})
+              url
             end
+          end
+        end
+
+        # コピペで空白を入れる人がいるため strip でもいいがいっそのことURLだけを抽出する
+        def extraction_key_from_dirty_string(str)
+          if url = extraction_url_from_dirty_string(str)
+            URI(url).path.split("/").last
           end
         end
       end
