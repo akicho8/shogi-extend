@@ -1,5 +1,8 @@
-- @page_title ||= "なんでも棋譜変換"
-- twitter_card_tag(title: @page_title, description: "将棋倶楽部24や掲示板などで見かける棋譜を外部アプリへ橋渡ししたり、検証・正規化・相互変換・印刷ができます", image: "adapter.png")
+ruby:
+  @page_title ||= "なんでも棋譜変換"
+  twitter_card_tag(title: @page_title, description: "将棋倶楽部24や掲示板などで見かける棋譜を外部アプリへ橋渡ししたり、検証・正規化・相互変換・印刷ができます", image: "adapter.png")
+  @override_page_title ||= @page_title
+  @apple_touch_icon ||= "apple-touch-icon-adapter.png"
 
 - content_for :head do
   = javascript_pack_tag("adapter")
