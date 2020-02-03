@@ -151,6 +151,9 @@ window.Adapter = Vue.extend({
       params.set("edit_mode", "adapter")
 
       this.$http.post(this.$options.post_path, params).then(response => {
+        this.loading_close()
+        this.change_counter = 0
+
         this.bs_error = null
         this.output_kifs = null
         this.output_kifs = null
@@ -158,6 +161,12 @@ window.Adapter = Vue.extend({
         const e = response.data
 
         if (e.redirect_to) {
+          if (true) {
+            // リダイレクトしたあとブラウザバックで戻ると前の入力が残っている状態になる
+            // このとき内部の変数 input_text は空！なので、KENTOを押すと空の棋譜を作って飛んでします
+            // それを防ぐためにリダイレクト前に消している
+            this.input_text = ""
+          }
           this.self_window_open(e.redirect_to)
         }
 
@@ -192,8 +201,6 @@ window.Adapter = Vue.extend({
           callback()
         }
 
-        this.loading_close()
-        this.change_counter = 0
       }).catch(error => {
         this.loading_close()
         console.table([error.response])
