@@ -1,7 +1,7 @@
 export default {
   methods: {
-    wars_tweet_copy_click(wars_tweet_body) {
-      this.clipboard_copy({text: wars_tweet_body})
+    wars_tweet_copy_click(swars_tweet_text) {
+      this.clipboard_copy({text: swars_tweet_text})
     },
 
     kifu_copy_exec_click(e) {

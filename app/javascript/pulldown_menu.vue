@@ -85,15 +85,15 @@
           b-icon(icon="twitter" size="is-small")
           span.a_label ツイート
 
-    template(v-if="record.swars_real_battle_url")
+    template(v-if="record.official_swars_battle_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="record.swars_real_battle_url" target="_blank")
+        a(:href="record.official_swars_battle_url" target="_blank")
           b-icon(icon="link" size="is-small")
           span.a_label ウォーズに飛ぶ
 
-    template(v-if="record.wars_tweet_body")
+    template(v-if="record.swars_tweet_text")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(@click="wars_tweet_copy_click(record.wars_tweet_body)")
+        a(@click="wars_tweet_copy_click(record.swars_tweet_text)")
           b-icon(icon="clipboard-outline" size="is-small")
           span.a_label ウォーズ側のTweetコピー
 </template>

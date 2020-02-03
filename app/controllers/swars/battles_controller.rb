@@ -162,7 +162,7 @@ module Swars
     # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
     let :primary_key do
       if query = params[:query].presence
-        Battle.extract_battle_key(query)
+        Battle.battle_key_extract(query)
       end
     end
 
@@ -454,10 +454,10 @@ module Swars
         a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
         a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }
         a[:rule_info] = { name: e.rule_info.name,   url: swars_tag_search_path(e.rule_info.name),    }
-        a[:swars_real_battle_url] = swars_real_battle_url(e)
+        a[:official_swars_battle_url] = official_swars_battle_url(e)
 
         if AppConfig[:swars_side_tweet_copy_function]
-          a[:wars_tweet_body] = e.wars_tweet_body
+          a[:swars_tweet_text] = e.swars_tweet_text
         end
 
         fliped, pairs = left_right_pairs(e)

@@ -110,6 +110,7 @@ module Swars
     def parser_class
       Bioshogi::Parser::CsaParser
     end
+
     concerning :SummaryMethods do
       def total_seconds
         @total_seconds ||= memberships.sum(&:total_seconds)
@@ -122,7 +123,7 @@ module Swars
 
     concerning :HelperMethods do
       class_methods do
-        def extract_battle_url(str)
+        def battle_url_extract(str)
           if url = URI.extract(str, ["http", "https"]).first
             if url.match?(%r{\.heroz\.jp/games/})
               url
@@ -130,24 +131,24 @@ module Swars
           end
         end
 
-        def extract_battle_key(str)
-          if url = extract_battle_url(str)
+        def battle_key_extract(str)
+          if url = battle_url_extract(str)
             URI(url).path.split("/").last
           end
         end
       end
 
-      def wars_tweet_body
-        "将棋ウォーズ棋譜(#{title}) #{wars_url} #shogiwars #将棋"
+      def swars_tweet_text
+        "将棋ウォーズ棋譜(#{title}) #{official_swars_battle_url} #shogiwars #将棋"
       end
 
-      def wars_url
-        Rails.application.routes.url_helpers.swars_real_battle_url(self)
+      def official_swars_battle_url
+        Rails.application.routes.url_helpers.official_swars_battle_url(self)
       end
 
       # def header_detail(h)
       #   if v = super
-      #     v.merge("場所" => h.link_to(key, wars_url, target: "_blank"))
+      #     v.merge("場所" => h.link_to(key, official_swars_battle_url, target: "_blank"))
       #   end
       # end
 

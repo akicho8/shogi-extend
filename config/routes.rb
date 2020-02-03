@@ -86,7 +86,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 外部リンク
 
-  direct :swars_real_battle do |battle, **options|
+  direct :official_swars_battle do |battle, **options|
     # options = {
     #   locale: "ja",
     # }.merge(options)

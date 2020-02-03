@@ -55,7 +55,7 @@ class FreeBattlesController < ApplicationController
           # 自動的に飛ばすとそれが正規の方法だと思う人がでてくる問題あり
           if true
             if v.to_s.strip.lines.count <= 2
-              if url = Swars::Battle.extract_battle_url(v)
+              if url = Swars::Battle.battle_url_extract(v)
                 slack_message(key: "なんでも棋譜変換にウォーズの対局URL入力", body: v)
                 flash[:warning] = "ウォーズの対局URLはこっちに入力してください"
                 render json: { redirect_to: url_for([:swars, :battles, query: v]) }
@@ -87,7 +87,7 @@ class FreeBattlesController < ApplicationController
     # この機能はウォーズの棋譜をコピーして投稿しようとしたときに意図せず発動してしまうため禁止にする
     if false
       if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
-        if key = Swars::Battle.extract_battle_key(url)
+        if key = Swars::Battle.battle_key_extract(url)
           redirect_to [:swars, :battle, id: key]
           return
         end
