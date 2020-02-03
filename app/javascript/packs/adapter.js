@@ -5,46 +5,28 @@ window.Adapter = Vue.extend({
 
   data() {
     return {
-      input_text: null,  // 入力した棋譜
-      output_kifs: null, // 変換した棋譜
-      record: null,      // FreeBattle のインスタンスにいろいろんな情報がくっついたやつ
-      change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
-      bs_error: null,    // BioshogiError の情報(Hash)
-      _loading: null,    // ajax中なら入ってる
-      board_show_p: false,    // 「盤面」を押したときに true
+      // フォーム関連
+      input_text: null,    // 入力した棋譜
+      option_show_p: null, // オプション有効か？ (永続化)
+      board_show_p: false, // 「盤面」を押した？
 
-      // 永続化
-      option_show_p: null,
-      my_value1: null,
+      // データ
+      output_kifs: null, // 変換した棋譜
+      record: null,      // FreeBattle のインスタンスの属性たち + いろいろんな情報
+      bs_error: null,    // BioshogiError の情報 (Hash)
+
+      // その他
+      change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
+      _loading: null,    // ajax中なら $buefy.loading.open() のインスタンスが入ってる
     }
   },
 
   mounted() {
+    // デスクトップのときだけ棋譜のテキストエリアにフォーカス
     this.desktop_only_focus(this.$refs.input_text)
 
-    // 変更した状態にする
+    // 変更した状態にしておく
     this.input_text = ""
-
-    if (this.development_p) {
-      this.input_text = ""
-    }
-
-    // // easy_dialog(params) {
-    // //   params = {
-    // //     ...params,
-    // //     // 連打でスキップしてしまうことがあるため指定しない
-    // //     // canCancel: ["outside", "escape"],
-    // //     trapFocus: true,
-    // //   }
-    // this.$buefy.dialog.alert({
-    //   title: "反則負け",
-    //   message: "<hr>あああ<hr>",
-    //   type: "is-danger",
-    //   hasIcon: true,
-    //   icon: "times-circle",
-    //   iconPack: "fa",
-    //   trapFocus: true,
-    // })
   },
 
   watch: {
@@ -52,10 +34,12 @@ window.Adapter = Vue.extend({
       this.change_counter += 1
       this.record = null
       this.bs_error = null
-    }
+    },
   },
 
   computed: {
+    //////////////////////////////////////////////////////////////////////////////// view
+
     field_type() {
       if (this.change_counter === 0) {
         if (this.bs_error) {
@@ -70,12 +54,12 @@ window.Adapter = Vue.extend({
     field_message() {
       if (this.change_counter === 0) {
         if (this.bs_error) {
-          return `${this.bs_error.message_prefix}${this.bs_error.message}`
+          return `${this.bs_error.message} ${this.bs_error.message_prefix}`
         }
       }
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////// ls_support
 
     ls_key() {
       return "adapter"
@@ -84,83 +68,78 @@ window.Adapter = Vue.extend({
     ls_data() {
       return {
         option_show_p: false,
-        my_value1: false,
       }
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
   },
 
   methods: {
-    piyo_shogi_click_handle() {
-      this.record_create(() => { this.other_window_open(this.record.piyo_shogi_app_url) })
+    piyo_shogi_open_handle() {
+      this.record_fetch(() => this.other_window_open(this.record.piyo_shogi_app_url))
     },
 
-    kento_click_handle() {
-      this.record_create(() => { this.other_window_open(this.record.kento_app_url) })
+    kento_open_handle() {
+      this.record_fetch(() => this.other_window_open(this.record.kento_app_url))
     },
 
-    kifu_copy_click_handle(kifu_type) {
-      this.record_create(() => {
-        this.clipboard_copy({text: this.output_kifs[kifu_type].value, success_message: "棋譜をクリップボードにコピーしました"})
-      })
+    kifu_copy_handle(kifu_type) {
+      this.record_fetch(() => this.clipboard_copy({text: this.output_kifs[kifu_type].value, success_message: "棋譜をクリップボードにコピーしました"}))
     },
 
-    validate_click_handle() {
-      this.record_create(() => { this.$buefy.toast.open({message: "OK", position: "is-bottom", type: "is-success"}) })
+    validate_handle() {
+      this.record_fetch(() => this.$buefy.toast.open({message: "OK", position: "is-bottom", type: "is-success"}))
     },
 
-    error_click_handle() {
+    ng_test_handle() {
       this.input_text = "68銀 12玉"
-      this.validate_click_handle()
+      this.$nextTick(() => this.validate_handle())
     },
 
-    // 「その他」
-    other_click_handle() {
-      this.option_show_p = true
+    ok_test_handle() {
+      this.input_text = "68銀、三4歩・☗七九角、8四歩五六歩△85歩78金"
+      this.$nextTick(() => this.validate_handle())
     },
 
     // 「棋譜印刷」
-    print_out_click_handle() {
-      this.record_create(() => this.other_window_open(this.record.formal_sheet_path))
+    kifu_paper_handle() {
+      this.record_fetch(() => this.other_window_open(this.record.formal_sheet_path))
     },
 
     // 「KIFダウンロード」
-    kif_download_click_handle(kifu_type) {
-      this.record_create(() => this.other_window_open(`${this.record.show_path}.${kifu_type}`))
+    kifu_dl_handle(kifu_type) {
+      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}`))
     },
 
     // 「表示」
-    kif_show_click_handle(kifu_type) {
-      this.record_create(() => this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`))
+    kifu_show_handle(kifu_type) {
+      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`))
     },
 
     // 「盤面」
-    board_show_click_handle() {
-      this.record_create(() => this.board_show_p = true)
+    board_show_handle() {
+      this.record_fetch(() => this.board_show_p = true)
     },
 
     // private
 
-    record_create(callback) {
+    record_fetch(callback) {
       if (this.change_counter === 0) {
         if (this.record) {
           callback()
         }
       }
       if (this.change_counter >= 1) {
-        this.record_force_create(callback)
+        this.record_create(callback)
       }
     },
 
-    loading_off() {
+    loading_close() {
       if (this.$data._loading) {
         this.$data._loading.close()
         this.$data._loading = null
       }
     },
 
-    record_force_create(callback) {
+    record_create(callback) {
       if (this.$data._loading) {
         return
       }
@@ -172,10 +151,12 @@ window.Adapter = Vue.extend({
       params.set("edit_mode", "adapter")
 
       this.$http.post(this.$options.post_path, params).then(response => {
-        this.loading_off()
+        this.bs_error = null
+        this.output_kifs = null
+        this.output_kifs = null
+
         const e = response.data
 
-        // BioshogiError の文言が入る
         if (e.bs_error) {
           this.bs_error = e.bs_error
           this.talk(this.bs_error.message, {rate: 1.0})
@@ -196,37 +177,24 @@ window.Adapter = Vue.extend({
               trapFocus: true,
             })
           }
-        } else {
-          this.bs_error = null
         }
 
         if (e.output_kifs) {
           this.output_kifs = e.output_kifs
-          // this.turn_max_set(e)
-          // this.board_sfen = e.output_kifs.sfen.value
-        } else {
-          this.output_kifs = null
         }
-
-        this.change_counter = 0
 
         if (e.record) {
           this.record = e.record
-
           callback()
-
-          // this.turn_max_set(e)
-          // this.board_sfen = e.output_kifs.sfen.value
-        } else {
-          this.record = null
         }
-      }).catch(error => {
-        this.loading_off()
 
+        this.loading_close()
+        this.change_counter = 0
+      }).catch(error => {
+        this.loading_close()
         console.table([error.response])
         this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
-
   },
 })

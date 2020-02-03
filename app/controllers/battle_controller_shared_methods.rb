@@ -44,7 +44,7 @@ module BattleControllerSharedMethods
       end
       s = s.join.squish
       if s.present?
-        "(#{s}) "
+        "(#{s})"
       end
     end
   end

@@ -32,7 +32,12 @@
 
   .columns
     .column
-      b-field(label="" :type="field_type")
+      template(v-if="development_p")
+        .buttons
+          .button.is-small(@click.stop.prevent="ng_test_handle") NG
+          .button.is-small(@click.stop.prevent="ok_test_handle") OK
+
+      b-field(:type="field_type")
         b-input(type="textarea" ref="input_text" v-model="input_text")
 
       template(v-if="bs_error")
@@ -41,21 +46,13 @@
             | {{bs_error.board}}
 
       template(v-if="!bs_error")
-        a(@click.stop="piyo_shogi_click_handle")
+        a(@click.stop="piyo_shogi_open_handle")
           = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
-
         | &nbsp;
-
-        .button.is-small.kento_app_button(@click.stop="kento_click_handle")
+        .button.is-small.kento_app_button(@click.stop="kento_open_handle")
           | ☗ KENTO
-
         | &nbsp;
-        .button.is-small.kif_copy_link(@click.stop.prevent="kifu_copy_click_handle('kif')") 棋譜コピー
-
-        template(v-if="development_p")
-          | &nbsp;
-          .button.is-small(@click.stop.prevent="error_click_handle")
-            | 棋譜エラー
+        .button.is-small.kif_copy_link(@click.stop.prevent="kifu_copy_handle('kif')") 棋譜コピー
 
   template(v-if="!bs_error")
 
@@ -66,38 +63,34 @@
 
     .columns(v-if="!bs_error")
       .column
-        // template(v-if="!option_show_p")
-        //   b-button(size="is-small" @click="other_click_handle" icon-left="chevron-down")
-        //   // .button.is-small(@click="other_click_handle") その他
-
         template(v-if="option_show_p")
           .buttons
-            .button.is-small(@click="board_show_click_handle") 盤面
-            .button.is-small(@click="print_out_click_handle") 用紙
-            .button.is-small(@click="validate_click_handle") 検証
+            .button.is-small(@click="board_show_handle") 盤面
+            .button.is-small(@click="kifu_paper_handle") 用紙
+            .button.is-small(@click="validate_handle") 検証
 
           b-field(label="コピー" custom-class="is-small")
             .buttons.has-addons.are-small
-              .button(@click="kifu_copy_click_handle('kif')") KIF
-              .button(@click="kifu_copy_click_handle('ki2')") KI2
-              .button(@click="kifu_copy_click_handle('csa')") CSA
-              .button(@click="kifu_copy_click_handle('sfen')") SFEN
+              .button(@click="kifu_copy_handle('kif')") KIF
+              .button(@click="kifu_copy_handle('ki2')") KI2
+              .button(@click="kifu_copy_handle('csa')") CSA
+              .button(@click="kifu_copy_handle('sfen')") SFEN
           b-field(label="ダウンロード" custom-class="is-small")
             .buttons.has-addons.are-small
-              .button(@click="kif_download_click_handle('kif')") KIF
-              .button(@click="kif_download_click_handle('ki2')") KI2
-              .button(@click="kif_download_click_handle('csa')") CSA
-              .button(@click="kif_download_click_handle('sfen')") SFEN
+              .button(@click="kifu_dl_handle('kif')") KIF
+              .button(@click="kifu_dl_handle('ki2')") KI2
+              .button(@click="kifu_dl_handle('csa')") CSA
+              .button(@click="kifu_dl_handle('sfen')") SFEN
           b-field(label="表示" custom-class="is-small")
             .buttons.has-addons.are-small
-              .button(@click="kif_show_click_handle('kif')") KIF
-              .button(@click="kif_show_click_handle('ki2')") KI2
-              .button(@click="kif_show_click_handle('csa')") CSA
-              .button(@click="kif_show_click_handle('sfen')") SFEN
+              .button(@click="kifu_show_handle('kif')") KIF
+              .button(@click="kifu_show_handle('ki2')") KI2
+              .button(@click="kifu_show_handle('csa')") CSA
+              .button(@click="kifu_show_handle('sfen')") SFEN
 
           template(v-if="development_p")
             hr
-              .button.is-small(@click="kif_download_click_handle('png')") 画像
+              .button.is-small(@click="kifu_dl_handle('png')") 画像
 
   - if Rails.env.development?
     .columns
@@ -105,28 +98,17 @@
         template(v-if="output_kifs")
           pre
             | {{output_kifs.ki2.value}}
-
-  - if Rails.env.development?
     .columns
       .column
-        template(v-if="development_p")
-          b-switch(v-model="my_value1")
-            | {{my_value1}}
-        br
-        | change_counter: {{change_counter}}<br>
-
-  - if Rails.env.development?
-      .columns
-        .column
-          .virtual_box
-            .title.is-5 Vue Internal Variables
-            table.table(border=1)
-              tr(v-for="(value, key) in $data")
-                th v-text="key"
-                td v-text="value"
-          .virtual_box
-            .title.is-5 Vue Computed Results
-            table.table(border=1)
-              tr(v-for="(e, key) in _computedWatchers")
-                th v-text="key"
-                td v-text="e.value"
+        .virtual_box
+          .title.is-5 Vue Internal Variables
+          table.table(border=1)
+            tr(v-for="(value, key) in $data")
+              th v-text="key"
+              td v-text="$data[key]"
+        .virtual_box
+          .title.is-5 Vue Computed Results
+          table.table(border=1)
+            tr(v-for="(e, key) in _computedWatchers")
+              th v-text="key"
+              td v-text="e.value"
