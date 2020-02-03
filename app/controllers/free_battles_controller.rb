@@ -51,11 +51,13 @@ class FreeBattlesController < ApplicationController
       if v = params[:input_any_kifu]
         # なんでも棋譜変換
         if current_edit_mode === :adapter
+
+          # 自動的に飛ばすとそれが正規の方法だと思う人がでてくる問題あり
           if true
             if v.to_s.strip.lines.count <= 2
               if url = Swars::Battle.extract_battle_url(v)
-                slack_message(key: "リダイレクト", body: v)
-                flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
+                slack_message(key: "なんでも棋譜変換にウォーズの対局URL入力", body: v)
+                flash[:warning] = "将棋ウォーズの対局URLは「将棋ウォーズ棋譜検索」の方に入力してください"
                 render json: { redirect_to: url_for([:swars, :battles, query: v]) }
                 return
               end
