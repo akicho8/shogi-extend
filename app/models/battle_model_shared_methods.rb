@@ -222,12 +222,16 @@ module BattleModelSharedMethods
     # バリデーションをはずして KI2 への変換もしない前提の軽い版
     # ヘッダーやタグが欲しいとき用
     def fast_parsed_info
-      @fast_parsed_info ||= Bioshogi::Parser.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parsed_options))
+      @fast_parsed_info ||= parser_class.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parsed_options))
     end
 
     # KI2変換可能だけど重い
     def heavy_parsed_info
-      @heavy_parsed_info ||= Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
+      @heavy_parsed_info ||= parser_class.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
+    end
+
+    def parser_class
+      Bioshogi::Parser
     end
 
     private

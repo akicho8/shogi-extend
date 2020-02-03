@@ -106,6 +106,10 @@ module Swars
       BattleDecorator::SwarsBattleDecorator
     end
 
+    # 将棋ウォーズの形式はCSAなのでパーサーを明示すると理論上は速くなる
+    def parser_class
+      Bioshogi::Parser::CsaParser
+    end
     concerning :SummaryMethods do
       def total_seconds
         @total_seconds ||= memberships.sum(&:total_seconds)
