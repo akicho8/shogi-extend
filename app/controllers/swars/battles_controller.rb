@@ -162,7 +162,7 @@ module Swars
     # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
     let :primary_key do
       if query = params[:query].presence
-        Battle.extraction_key_from_dirty_string(query)
+        Battle.extract_battle_key(query)
       end
     end
 

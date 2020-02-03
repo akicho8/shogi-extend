@@ -118,7 +118,7 @@ module Swars
 
     concerning :HelperMethods do
       class_methods do
-        def extraction_url_from_dirty_string(str)
+        def extract_battle_url(str)
           if url = URI.extract(str, ["http", "https"]).first
             if url.match?(%r{\.heroz\.jp/games/})
               url
@@ -126,9 +126,8 @@ module Swars
           end
         end
 
-        # コピペで空白を入れる人がいるため strip でもいいがいっそのことURLだけを抽出する
-        def extraction_key_from_dirty_string(str)
-          if url = extraction_url_from_dirty_string(str)
+        def extract_battle_key(str)
+          if url = extract_battle_url(str)
             URI(url).path.split("/").last
           end
         end

@@ -377,7 +377,7 @@
 
   <span class='comment'># 検索窓に将棋ウォーズへ棋譜URLが指定されたときは詳細に飛ばす
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:query</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Battle.html" title="Swars::Battle (class)">Battle</a></span></span><span class='period'>.</span><span class='id identifier rubyid_extraction_key_from_dirty_string'>extraction_key_from_dirty_string</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Battle.html" title="Swars::Battle (class)">Battle</a></span></span><span class='period'>.</span><span class='id identifier rubyid_extract_battle_key'>extract_battle_key</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='lbracket'>[</span><span class='symbol'>:swars</span><span class='comma'>,</span> <span class='symbol'>:battle</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
       <span class='kw'>return</span>
     <span class='kw'>end</span>

@@ -53,7 +53,7 @@ class FreeBattlesController < ApplicationController
         if current_edit_mode === :adapter
           if true
             if v.to_s.strip.lines.count <= 2
-              if url = Swars::Battle.extraction_url_from_dirty_string(v)
+              if url = Swars::Battle.extract_battle_url(v)
                 slack_message(key: "リダイレクト", body: v)
                 flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
                 render json: { redirect_to: url_for([:swars, :battles, query: v]) }
@@ -85,7 +85,7 @@ class FreeBattlesController < ApplicationController
     # この機能はウォーズの棋譜をコピーして投稿しようとしたときに意図せず発動してしまうため禁止にする
     if false
       if url = current_record_params[:kifu_url].presence || current_record_params[:kifu_body].presence
-        if key = Swars::Battle.extraction_key_from_dirty_string(url)
+        if key = Swars::Battle.extract_battle_key(url)
           redirect_to [:swars, :battle, id: key]
           return
         end
