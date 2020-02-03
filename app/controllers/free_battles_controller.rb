@@ -57,7 +57,7 @@ class FreeBattlesController < ApplicationController
             if v.to_s.strip.lines.count <= 2
               if url = Swars::Battle.extract_battle_url(v)
                 slack_message(key: "なんでも棋譜変換にウォーズの対局URL入力", body: v)
-                flash[:warning] = "将棋ウォーズの対局URLは「将棋ウォーズ棋譜検索」の方に入力してください"
+                flash[:warning] = "ウォーズの対局URLはこっちに入力してください"
                 render json: { redirect_to: url_for([:swars, :battles, query: v]) }
                 return
               end
