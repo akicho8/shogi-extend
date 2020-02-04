@@ -17,6 +17,7 @@ AppConfig.deep_merge!({
     help_function: false, # 使い方の表示
     columns_detail_show: true, # 「開戦」の手数を表示する？
     free_battles_pro_mode: false, # 野良棋譜にいろいろ入れる？
+    force_convert_for_twitter_image: false, # 作成した画像を強制的に 1600x630 に変更する
 
     zip_download_function: true,    # 一括ダウンロード機能
     zip_download_limit_default: 50, # 一括ダウンロードするときの件数(初期値)

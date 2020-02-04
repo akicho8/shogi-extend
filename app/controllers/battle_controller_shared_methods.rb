@@ -408,23 +408,27 @@ module BattleControllerSharedMethods
     private
 
     def png_file_send
+      disposition = params[:disposition] || :inline
+
       # 手数の指定があればリアルタイムに作成
       if current_force_turn
-        user_params = params.to_unsafe_h.symbolize_keys.transform_values { |e| Float(e) rescue e }
-        options = current_record.image_default_options.merge(user_params)
         png = Rails.cache.fetch(options, expires_in: Rails.env.production? ? 1.days : 0) do
           parser = Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn)
-          parser.to_png(options)
+          parser.to_png(current_record.param_as_to_png_options(params.to_unsafe_h))
         end
-        send_data png, type: Mime[:png], disposition: :inline, filename: "#{current_record.id}-#{current_force_turn}.png"
+        send_data png, type: Mime[:png], disposition: disposition, filename: "#{current_record.to_param}-#{current_force_turn}.png"
         return
       end
 
       # 画像がなければ作る
-      current_record.image_auto_cerate_onece
-      key = current_record.tweet_image.processed.key
+      current_record.image_auto_cerate_onece(params.to_unsafe_h)
+      if AppConfig[:force_convert_for_twitter_image]
+        key = current_record.tweet_image.processed.key
+      else
+        key = current_record.thumbnail_image.key
+      end
       path = ActiveStorage::Blob.service.path_for(key)
-      send_file path, type: current_record.thumbnail_image.content_type, disposition: :inline, filename: "#{current_record.id}.png"
+      send_file path, type: current_record.thumbnail_image.content_type, disposition: disposition, filename: "#{current_record.to_param}.png"
     end
 
     concerning :KifDataSendMethods do
@@ -543,6 +547,7 @@ module BattleControllerSharedMethods
 
         post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
         new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
+        xhr_put_path: url_for([ns_prefix, current_record, format: "json"]),
 
         saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
         free_battles_pro_mode: AppConfig[:free_battles_pro_mode],

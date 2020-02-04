@@ -256,7 +256,9 @@ module BattleModelSharedMethods
 
   concerning :TwitterMethods do
     included do
-      has_one_attached :thumbnail_image, dependent: :purge
+      has_one_attached :thumbnail_image # , dependent: :purge
+
+      before_destroy :thumbnail_image_file_delete # 不具合を回避するため dependent: :purge をつけずに自力で削除する
     end
 
     def image_default_options
@@ -267,19 +269,41 @@ module BattleModelSharedMethods
     end
 
     # rmagick で盤面作成
-    def image_auto_cerate_onece
+    def image_auto_cerate_onece(params)
       unless thumbnail_image.attached?
-        image_auto_cerate_force
+        image_auto_cerate_force(params)
       end
     end
 
-    def image_auto_cerate_force
+    def image_auto_cerate_force(params)
+      thumbnail_image_file_delete
+      parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: og_turn)
+      png = parser.to_png(param_as_to_png_options(params))
+      thumbnail_image.attach(io: StringIO.new(png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+    end
+
+    # has_one_attached :thumbnail_image, dependent: :purge とすると thumbnail_image.attached? が false になる不具合あり
+    def thumbnail_image_file_delete
       if thumbnail_image.attached?
         thumbnail_image.purge
       end
-      parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: og_turn)
-      png = parser.to_png(image_default_options)
-      thumbnail_image.attach(io: StringIO.new(png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+    end
+
+    def param_as_to_png_options(params)
+      if params.respond_to?(:to_unsafe_h)
+        params = params.to_unsafe_h
+      end
+
+      hash = params.to_options.transform_values { |e| Float(e) rescue e }
+
+      options = image_default_options.merge(hash)
+
+      # 補正
+      image_default_options.each do |key, val|
+        options[key] = options[key].clamp(1, val)
+      end
+
+      options
     end
 
     def modal_on_index_url(**params)
@@ -330,7 +354,7 @@ module BattleModelSharedMethods
     end
 
     def canvas_data_save_by_rmagick(params)
-      image_auto_cerate_force
+      image_auto_cerate_force(params)
       canvas_data_save_result
     end
 

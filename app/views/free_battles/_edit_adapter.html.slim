@@ -86,6 +86,7 @@ ruby:
               .button(@click="kifu_dl_handle('csa')") CSA
               .button(@click="kifu_dl_handle('sfen')") SFEN
               .button(@click="kifu_dl_handle('bod')") BOD
+              .button(@click="png_dl_handle") PNG
           b-field(label="表示" custom-class="is-small")
             .buttons.has-addons.are-small
               .button(@click="kifu_show_handle('kif')") KIF
@@ -93,6 +94,7 @@ ruby:
               .button(@click="kifu_show_handle('csa')") CSA
               .button(@click="kifu_show_handle('sfen')") SFEN
               .button(@click="kifu_show_handle('bod')") BOD
+              .button(@click="png_show_handle") PNG
 
           template(v-if="development_p")
             hr

@@ -114,6 +114,16 @@ window.Adapter = Vue.extend({
       this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`))
     },
 
+    // 画像 表示
+    png_show_handle(disposition) {
+      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.png?width=840`))
+    },
+
+    // 画像 DL
+    png_dl_handle() {
+      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.png?width=840&disposition=attachment`))
+    },
+
     // 「盤面」
     board_show_handle() {
       this.record_fetch(() => this.board_show_p = true)
