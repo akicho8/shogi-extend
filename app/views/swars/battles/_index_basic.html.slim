@@ -43,10 +43,11 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 
 .columns.is-multiline(v-show="trick_show")
   template(v-for="e in records")
-    / widescreen 2/12 = 6
-    / desktop    1/5  = 5
-    / touch      1/4  = 4
-    .column.is-2-widescreen.is-one-fifth-desktop.is-one-quarter-touch-only.has-text-centered
+    / https://bulma.io/documentation/columns/responsiveness/
+    / widescreen 1/5 (is-one-fifth-widescreen)
+    / desktop    1/4 (is-one-quarter-desktop)
+    / table      1/4 (is-one-quarter-tablet)
+    .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered
       a.no-decoration(@click.stop.prevent="show_handle(e)")
         small.line_break_on.has-text-black-ter
           | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
