@@ -34,7 +34,7 @@ window.FreeBattleEditOgp = Vue.extend({
         const params = new URLSearchParams()
         params.set("canvas_image_base64_data_url", canvas.toDataURL("image/png"))
         params.set("image_turn", this.start_turn)
-        this.$http.put(this.$options.xhr_put_path, params).then(response => {
+        this.$http.put(this.$options.record.xhr_put_path, params).then(response => {
           loading_instance.close()
           console.log(response.data)
           this.$buefy.toast.open({message: response.data.message})
@@ -61,7 +61,7 @@ window.FreeBattleEditOgp = Vue.extend({
 
       const params = new URLSearchParams()
       params.set("og_image_destroy", true)
-      this.$http.put(this.$options.xhr_put_path, params).then(response => {
+      this.$http.put(this.$options.record.xhr_put_path, params).then(response => {
         this.$buefy.toast.open({message: response.data.message})
         this.tweet_origin_image_path = null
       }).catch(error => {
@@ -75,7 +75,8 @@ window.FreeBattleEditOgp = Vue.extend({
       const params = new URLSearchParams()
       params.set("create_by_rmagick", "true")
       params.set("image_turn", this.start_turn)
-      this.$http.put(this.$options.xhr_put_path, params).then(response => {
+
+      this.$http.put(this.$options.record.xhr_put_path, params).then(response => {
         loading_instance.close()
         console.log(response.data)
         this.$buefy.toast.open({message: response.data.message})
