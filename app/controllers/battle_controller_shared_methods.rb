@@ -1,53 +1,7 @@
 module BattleControllerSharedMethods
   extend ActiveSupport::Concern
 
-  concerning :ExceptionRescueMethods do
-    included do
-      rescue_from "Bioshogi::BioshogiError" do |exception|
-        if Rails.env.development?
-          Rails.logger.info(exception)
-        end
-
-        if Rails.env.development?
-          sleep(0.5)
-        end
-
-        ExceptionNotifier.notify_exception(exception, env: request.env, data: {params: params.to_unsafe_h})
-
-        if request.format.json?
-          render json: { bs_error: { message_prefix: message_prefix_build(exception), message: exception.message.lines.first.strip, board: exception.message.lines.drop(1).join } }
-        else
-          h = ApplicationController.helpers
-          lines = exception.message.lines
-          message = lines.first.strip.html_safe
-          if field = lines.drop(1).presence
-            message += h.tag.div(field.join.html_safe, :class => "error_message_pre").html_safe
-          end
-          if v = exception.backtrace
-            message += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre").html_safe
-          end
-          behavior_after_rescue(message)
-        end
-      end
-    end
-
-    private
-
-    def message_prefix_build(e)
-      s = []
-      if e.respond_to?(:mediator)
-        s << "#{e.mediator.turn_info.counter + 1}手目"
-        s << "#{e.mediator.current_player.call_name}番"
-      end
-      if e.respond_to?(:input)
-        s << "#{e.input.input.values.join}"
-      end
-      s = s.join.squish
-      if s.present?
-        "(#{s})"
-      end
-    end
-  end
+  include ShogiErrorRescueMod
 
   concerning :IndexMethods do
     included do
@@ -607,11 +561,11 @@ module BattleControllerSharedMethods
     end
 
     def heavy_parsed_info
-      @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_any_kifu, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
+      @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_text, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
     end
 
-    def current_input_any_kifu
-      params[:input_any_kifu] || current_record.sfen_body
+    def current_input_text
+      params[:input_text] || current_record.sfen_body || ""
     end
   end
 end

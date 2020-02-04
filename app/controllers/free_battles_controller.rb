@@ -34,6 +34,7 @@ class FreeBattlesController < ApplicationController
   include ModulableCrud::All
   include BattleControllerBaseMethods
   include BattleControllerSharedMethods
+  include AdapterMethods
 
   def new
     if id = params[:source_id]
@@ -48,29 +49,11 @@ class FreeBattlesController < ApplicationController
 
   def create
     if request.format.json?
-      if v = params[:input_any_kifu]
+      if params[:input_text]
         # なんでも棋譜変換
         if current_edit_mode === :adapter
-
-          # 自動的に飛ばすとそれが正規の方法だと思う人がでてくる問題あり
-          if true
-            if v.to_s.strip.lines.count <= 2
-              if url = Swars::Battle.battle_url_extract(v)
-                slack_message(key: "なんでも棋譜変換にウォーズの対局URL入力", body: v)
-                flash[:warning] = "ウォーズの対局URLはこっちに入力してください"
-                render json: { redirect_to: url_for([:swars, :battles, query: v]) }
-                return
-              end
-            end
-          end
-
-          current_record.assign_attributes(kifu_body: v)
-          if current_record.save
-            slack_message(key: "変換OK", body: v.to_s.lines.take(8).join)
-            render json: { output_kifs: output_kifs, turn_max: turn_max, record: js_record_for(current_record) }
-            return
-          else
-            render json: { bs_error: {message: current_record.errors.full_messages.join(" ")} }
+          adapter_process
+          if performed?
             return
           end
         end

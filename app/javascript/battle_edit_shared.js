@@ -84,7 +84,7 @@ export default {
     // 操作入力の場合は即時反映
     kifu_convert_by(str) {
       const params = new URLSearchParams()
-      params.set("input_any_kifu", str)
+      params.set("input_text", str)
 
       this.$http.post(this.$options.post_path, params).then(response => {
         const e = response.data

@@ -7,7 +7,7 @@ module SlackAgent
 
   mattr_accessor(:channel_code) { "#shogi_web" }
 
-  def message_send(key:, body:, ua: nil)
+  def message_send(key:, body:, channel: nil, ua: nil)
     if ENV["SETUP"]
       return
     end
@@ -29,7 +29,7 @@ module SlackAgent
 
     Slack::Web::Client.new.tap do |client|
       args = {
-        channel: channel_code,
+        channel: channel || channel_code,
         text: "#{icon_symbol(ua)}【#{key}】#{part}",
       }
       if Rails.env.test?

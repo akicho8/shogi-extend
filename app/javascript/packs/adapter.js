@@ -147,7 +147,7 @@ window.Adapter = Vue.extend({
       this.$data._loading = this.$buefy.loading.open()
 
       const params = new URLSearchParams()
-      params.set("input_any_kifu", this.input_text)
+      params.set("input_text", this.input_text)
       params.set("edit_mode", "adapter")
 
       this.$http.post(this.$options.post_path, params).then(response => {
