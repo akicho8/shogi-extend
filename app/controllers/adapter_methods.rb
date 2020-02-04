@@ -43,7 +43,7 @@ module AdapterMethods
     return if current_input_text.blank?
 
     lines = current_input_text.lines
-    body = (lines.take(8) + ["\n(snip)\n"] + lines.last(3)).join
+    body = (lines.take(8) + ["(snip)\n"] + lines.last(3)).join
     if turn_max.zero?
       channel = "#adapter_error"
     else
