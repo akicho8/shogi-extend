@@ -411,16 +411,17 @@ module BattleControllerSharedMethods
       disposition = params[:disposition] || :inline
 
       # 手数の指定があればリアルタイムに作成
-      if current_force_turn
+      if current_force_turn && params[:dynamic]
+        options = current_record.param_as_to_png_options(params.to_unsafe_h)
         png = Rails.cache.fetch(options, expires_in: Rails.env.production? ? 1.days : 0) do
           parser = Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn)
-          parser.to_png(current_record.param_as_to_png_options(params.to_unsafe_h))
+          parser.to_png(options)
         end
         send_data png, type: Mime[:png], disposition: disposition, filename: "#{current_record.to_param}-#{current_force_turn}.png"
         return
       end
 
-      # 画像がなければ作る
+      # 画像がなければ1回だけ作る
       current_record.image_auto_cerate_onece(params.to_unsafe_h)
       if AppConfig[:force_convert_for_twitter_image]
         key = current_record.tweet_image.processed.key
