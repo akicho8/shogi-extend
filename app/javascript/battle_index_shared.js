@@ -187,7 +187,7 @@ export default {
     },
 
     url_build(attributes) {
-      return _.map(attributes, (v, k) => `${k}=${v}`).join("&")
+      return _.map(attributes, (v, k) => `${k}=${encodeURIComponent(v)}`).join("&")
     },
 
     // 開始局面

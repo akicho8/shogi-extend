@@ -309,22 +309,28 @@ module Swars
       query_hash.dig(:ms_tag)
     end
 
+    # 対局URLが指定されているときはそれを優先するので current_swars_user_key を拾ってはいけない
+    # 拾うと次の文字列の先頭をウォーズIDと解釈してしまう
+    # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1"
     let :current_swars_user_key do
-      if s = (current_query_info.values + current_query_info.urls).first
-        # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
-        # https://shogiwars.heroz.jp/users/foo                          -> foo
-        if true
-          if url = URI::Parser.new.extract(s).first
-            uri = URI(url)
-            if uri.path
-              if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
-                s = md.captures.compact.first
-              end
-              logger.info([url, s].to_t)
+      unless primary_key
+        current_swars_user_key_from_url || current_query_info.values.first
+      end
+    end
+
+    # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
+    # https://shogiwars.heroz.jp/users/foo                          -> foo
+    def current_swars_user_key_from_url
+      if url = current_query_info.urls.first
+        if url = URI::Parser.new.extract(url).first
+          uri = URI(url)
+          if uri.path
+            if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
+              s = md.captures.compact.first
+              ERB::Util.html_escape(s)
             end
           end
         end
-        ERB::Util.html_escape(s)
       end
     end
 
