@@ -78,18 +78,21 @@ ruby:
               .button(@click="kifu_copy_handle('ki2')") KI2
               .button(@click="kifu_copy_handle('csa')") CSA
               .button(@click="kifu_copy_handle('sfen')") SFEN
+              .button(@click="kifu_copy_handle('bod')") BOD
           b-field(label="ダウンロード" custom-class="is-small")
             .buttons.has-addons.are-small
               .button(@click="kifu_dl_handle('kif')") KIF
               .button(@click="kifu_dl_handle('ki2')") KI2
               .button(@click="kifu_dl_handle('csa')") CSA
               .button(@click="kifu_dl_handle('sfen')") SFEN
+              .button(@click="kifu_dl_handle('bod')") BOD
           b-field(label="表示" custom-class="is-small")
             .buttons.has-addons.are-small
               .button(@click="kifu_show_handle('kif')") KIF
               .button(@click="kifu_show_handle('ki2')") KI2
               .button(@click="kifu_show_handle('csa')") CSA
               .button(@click="kifu_show_handle('sfen')") SFEN
+              .button(@click="kifu_show_handle('bod')") BOD
 
           template(v-if="development_p")
             hr
