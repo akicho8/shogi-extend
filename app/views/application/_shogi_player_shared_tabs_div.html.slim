@@ -1,6 +1,6 @@
 .columns
   .column.has-text-left
-    b-tabs(type="" v-model="kifu_type_tab_index" expanded)
+    b-tabs(v-model="kifu_type_tab_index" expanded)
       - KifuFormatWithBodInfo.each do |e|
         b-tab-item(label=e.name)
           - if s = current_record.to_cached_kifu(e.key)

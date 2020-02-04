@@ -9,7 +9,7 @@ export default {
     return {
       record: this.$options.record,
       decorator: this.$options.decorator,
-      desc_body_edit_p: false,
+      kifu_type_tab_index: 0,
     }
   },
 
