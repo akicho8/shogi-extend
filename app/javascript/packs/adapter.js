@@ -106,12 +106,12 @@ window.Adapter = Vue.extend({
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
-      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}`))
+      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}?attachment=true`))
     },
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}?plain=true`))
+      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}`))
     },
 
     // 画像 表示

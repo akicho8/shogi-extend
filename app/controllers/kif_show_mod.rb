@@ -42,12 +42,12 @@ module KifShowMod
     value = params[:disposition]
 
     unless value
-      if key = [:inline, :attachment].find { |e| as_true_or_false(params[key]) }
+      if key = [:inline, :attachment].find { |e| as_true_or_false(params[e]) }
         value ||= key
       end
     end
 
-    value || :attachment
+    value || :inline
   end
 
   def current_filename

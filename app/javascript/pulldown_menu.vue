@@ -41,13 +41,13 @@
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.kif`")
+        a(:href="`${record.show_path}.kif?attachment=true`")
           b-icon(icon="download" size="is-small")
           span.a_label KIF ダウンロード
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.ki2`")
+        a(:href="`${record.show_path}.ki2?attachment=true`")
           b-icon(icon="download" size="is-small")
           span.a_label KI2 ダウンロード
 

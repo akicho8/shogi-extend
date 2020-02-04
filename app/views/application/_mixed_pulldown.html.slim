@@ -13,7 +13,7 @@
       span ダウンロード
       b-icon(icon="menu-down")
     - KifuFormatWithBodInfo.each do |e|
-      = link_to([current_record, format: e.key]) do
+      = link_to([current_record, format: e.key, attachment: "true"]) do
         b-dropdown-item
           = e.name
 
@@ -22,7 +22,7 @@
       span 直リンク
       b-icon(icon="menu-down")
     - KifuFormatWithBodInfo.each do |e|
-      = link_to([current_record, format: e.key, plain: true], target: "_blank") do
+      = link_to([current_record, format: e.key], target: "_blank") do
         b-dropdown-item
           = e.name
 
