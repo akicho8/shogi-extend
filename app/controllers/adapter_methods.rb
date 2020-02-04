@@ -49,7 +49,7 @@ module AdapterMethods
     else
       channel = "#adapter_success"
     end
-    slack_message(key: "変換(#{turn_max}手)", body: body, channel: channel)
+    slack_message(key: "変換#{turn_max}手", body: body, channel: channel)
   end
 
   def ng_notify(error)
