@@ -31,7 +31,7 @@ export default {
         const full_url = `${kc_url}.${kc_format}`
 
         if (true) {
-          this.http_get_command(full_url, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
+          this.http_get_command(full_url, {}, data => {
             params["text"] = data
             this.clipboard_copy(params)
           })
