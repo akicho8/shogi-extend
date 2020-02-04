@@ -109,10 +109,11 @@ class Talk
   end
 
   def voice_id
-    if Time.current.day.even?
-      # return "Takumi"
+    if Time.current.hour.modulo(2).even? || HolidayJp.holiday?(Time.current)
+      "Mizuki"
+    else
+      "Takumi"
     end
-    "Mizuki"
   end
 
   def relative_path

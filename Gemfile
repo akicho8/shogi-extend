@@ -184,3 +184,6 @@ gem "rmagick"
 
 # bot判定用
 gem "useragent"
+
+# 休日判定
+gem "holiday_jp"
