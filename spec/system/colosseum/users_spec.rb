@@ -1,6 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "対戦", type: :system do
+# 意図的に実行する場合は rspec spec --tag slow_spec
+RSpec.describe "対戦", type: :system, slow_spec: true do
   context "ログインしてない状態" do
     it "ログイン画面" do
       visit "/colosseum/battles"
