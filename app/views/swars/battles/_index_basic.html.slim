@@ -124,7 +124,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
   /           .content
   /             ol
   /               - if current_swars_user && params[:page].to_i <= 1
-  /                 li 検索後の最初の画面 (今の画面) をブックマークしておくとウォーズIDを毎回入力する手間が省けます
+  /                 li 検索後の最初の画面 (今の画面) をホーム画面に追加しておくとウォーズIDを毎回入力する手間が省けます
   /                 li
   /                   | また直前の対局を必ず検討する人向けのショートカットがあります。
   /                   | こちらの
@@ -140,7 +140,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
           .content
             ol
               - if controller.import_enable?
-                li 検索後の最初の画面 (今の画面) をブックマークしておくとウォーズIDを毎回入力する手間が省けます
+                li 検索後の最初の画面 (今の画面) をホーム画面に追加しておくとウォーズIDを毎回入力する手間が省けます
               li
                 | 直前の対局を必ず検討する人向けのショートカットがあります。
                 | こちらの
