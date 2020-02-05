@@ -54,7 +54,7 @@ window.Adapter = Vue.extend({
     field_message() {
       if (this.change_counter === 0) {
         if (this.bs_error) {
-          return `${this.bs_error.message} ${this.bs_error.message_prefix}`
+          return _.compact([this.bs_error.message, this.bs_error.message_prefix]).join(" ")
         }
       }
     },
