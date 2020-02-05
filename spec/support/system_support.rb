@@ -58,7 +58,7 @@ RSpec.configure do |config|
     # driven_by :headless_chrome
 
     # driven_by :selenium_chrome
-    driven_by ENV["CHROME_HEAD"] ? :selenium_chrome : :selenium_chrome_headless
+    driven_by ENV["BROWSER_DEBUG"] ? :selenium_chrome : :selenium_chrome_headless
 
     # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
     # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)

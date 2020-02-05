@@ -42,6 +42,7 @@
     "precss": "^2.0.0",
     "prop-types": "^15.5.10",
     "pug": "^2.0.4",
+    "qs": "^6.9.1",
     "rails-erb-loader": "^5.5.2",
     "rails-ujs": "^5.1.5",
     "resolve-url-loader": "^2.1.0",

@@ -1,4 +1,5 @@
 import ls_support from "ls_support.js"
+import qs from "qs"
 
 window.Adapter = Vue.extend({
   mixins: [ls_support],
@@ -9,6 +10,7 @@ window.Adapter = Vue.extend({
       input_text: null,    // 入力した棋譜
       option_show_p: null, // オプション有効か？ (永続化)
       board_show_p: false, // 「盤面」を押した？
+      body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
       output_kifs: null, // 変換した棋譜
@@ -106,12 +108,23 @@ window.Adapter = Vue.extend({
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
-      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}?attachment=true`))
+      this.record_fetch(() => {
+        const params = {
+          attachment: "true",
+          body_encode: this.body_encode,
+        }
+        this.other_window_open(`${this.record.show_path}.${kifu_type}?${qs.stringify(params)}`)
+      })
     },
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.${kifu_type}`))
+      this.record_fetch(() => {
+        const params = {
+          body_encode: this.body_encode,
+        }
+        this.other_window_open(`${this.record.show_path}.${kifu_type}?${qs.stringify(params)}`)
+      })
     },
 
     // 画像 表示
@@ -130,6 +143,10 @@ window.Adapter = Vue.extend({
     },
 
     // private
+
+    // 「盤面」
+    build_params(params) {
+    },
 
     record_fetch(callback) {
       if (this.change_counter === 0) {
