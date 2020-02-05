@@ -44,12 +44,12 @@ chdir APP_ROOT do
   system! 'rails log:clear tmp:clear webpacker:clobber'
   # system! 'rails webpacker:clobber'
 
-  puts "\n== Production log download =="
-  system! "cap production access_log:download"
+  # puts "\n== Production log download =="
+  # system! "cap production access_log:download"
   # system! "cap production cron_log:download"
-  system! "cap production error_log:download"
+  # system! "cap production error_log:download"
   # system! "cap production mail_log:download"
-  system! "cap production rails:log:download"
+  # system! "cap production rails:log:download"
 
   puts "\n== Restarting application server =="
   system! 'rails restart'
