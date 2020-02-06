@@ -205,9 +205,9 @@ module BattleModelSharedMethods
     # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
     def to_cached_kifu(key)
       if kifu_cache_enable
-        Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
-          heavy_parsed_info.public_send("to_#{key}", compact: true)
-        end
+        # Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
+        heavy_parsed_info.public_send("to_#{key}", compact: true)
+        # end
       else
         if e = converted_infos.text_format_eq(key).take
           e.text_body
