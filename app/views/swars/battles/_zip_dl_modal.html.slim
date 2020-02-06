@@ -5,4 +5,4 @@ b-modal(:active.sync="zip_dl_modal_p" has-modal-card trap-focus animation="zoom-
         template(v-for="e in ZipKifuInfo.values")
           b-radio-button(v-model="zip_kifu_key" :native-value="e.key" size="is-small") {{e.name}}
       b-field
-        b-button.zip_dl_run(@click="zip_dl_run" icon-left="download")
+        b-button.zip_dl_run(@click="zip_dl_run" icon-left="download" size="is-small")
