@@ -10,7 +10,7 @@ ruby:
     document.addEventListener('DOMContentLoaded', () => { new Adapter(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
-  b-modal(:active.sync="board_show_p" has-modal-card animation="zoom-in")
+  b-modal(:active.sync="board_show_p" has-modal-card trap-focus animation="zoom-in")
     template(v-if="record")
       .modal-card.is-shogi-player-modal-card.box.is-paddingless(style="width:auto")
         .modal-card-body
