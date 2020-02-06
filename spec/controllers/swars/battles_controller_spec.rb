@@ -67,7 +67,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
   it "ZIPダウンロード" do
     get :index, params: { query: "devuser1", format: "zip" }
     expect(response).to have_http_status(:ok)
-    assert { response.content_type == "application/zip2" }
+    assert { response.content_type == "application/zip" }
   end
 
   it "KIF 表示/DL" do

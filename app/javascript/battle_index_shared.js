@@ -4,13 +4,16 @@ import MemoryRecord from 'js-memory-record'
 
 import battle_record_methods from "battle_record_methods.js"
 import battle_index_table_column from "battle_index_table_column.js"
+
 import zip_kifu_dl_mod from "zip_kifu_dl_mod.js"
+import ls_support from "ls_support.js"
 
 export default {
   mixins: [
     battle_record_methods,
     battle_index_table_column,
     zip_kifu_dl_mod,
+    ls_support,
   ],
 
   data() {
@@ -268,5 +271,20 @@ export default {
     start_turn() {
       return this.start_turn_for(this.modal_record)
     },
+
+    //////////////////////////////////////////////////////////////////////////////// ls_support
+
+    ls_key() {
+      return [this.$options.table_column_storage_prefix_key, "main"].join("/")
+    },
+
+    ls_data() {
+      return {
+        zip_kifu_key: "kif",
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
   },
 }
