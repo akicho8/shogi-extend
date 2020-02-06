@@ -8,6 +8,8 @@ module Swars
 
     def zip_dl_perform
       if request.format.zip?
+        t = Time.current
+
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           zip_scope.each do |battle|
             if str = battle.to_cached_kifu(kifu_format_info.key)
@@ -19,6 +21,9 @@ module Swars
             end
           end
         end
+
+        sec = "%.2f s" % (Time.current - t)
+        slack_message(key: "ZIP #{sec}", body: zip_filename)
         send_data(zip_buffer.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
       end
     end
