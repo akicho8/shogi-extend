@@ -33,6 +33,7 @@ module Swars
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
     include ExternalAppMethods
+    include ZipDownloadMod
 
     helper_method :current_swars_user
     helper_method :current_query_info
@@ -231,37 +232,6 @@ module Swars
 
       if request.format.html?
         record.access_logs.create!
-      end
-    end
-
-    def perform_zip_download
-      if request.format.zip?
-        require "kconv"
-
-        filename = -> {
-          parts = []
-          parts << "shogiwars"
-          if current_swars_user
-            parts << current_swars_user.user_key
-          end
-          parts << Time.current.strftime("%Y%m%d%H%M%S")
-          parts << current_encode
-          str = parts.compact.join("_") + ".zip"
-          str.public_send("to#{current_encode}")
-        }
-
-        zip_buffer = Zip::OutputStream.write_buffer do |zos|
-          current_scope.limit(zip_download_limit).each do |battle|
-            Bioshogi::KifuFormatInfo.each.with_index do |e|
-              if str = battle.to_cached_kifu(e.key)
-                zos.put_next_entry("#{e.key}/#{battle.key}.#{e.key}")
-                zos.write(str.public_send("to#{current_encode}"))
-              end
-            end
-          end
-        end
-
-        send_data(zip_buffer.string, type: Mime[params[:format]], filename: filename.call, disposition: "attachment")
       end
     end
 

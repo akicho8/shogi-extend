@@ -30,7 +30,7 @@ module KifShowMod
       slack_message(key: "#{params[:format]}コピー", body: current_record.title)
     end
 
-    if params[:body_encode] == "sjis"
+    if current_body_encode == :sjis
       text_body = text_body.tosjis
     end
 
@@ -51,7 +51,7 @@ module KifShowMod
   end
 
   def current_type
-    if params[:body_encode] == "sjis"
+    if current_body_encode == :sjis
       "text/plain; charset=Shift_JIS"
     else
       "text/plain; charset=UTF-8"
@@ -88,5 +88,9 @@ module KifShowMod
 
   def filename_sjis?
     request.user_agent.to_s.match?(/Windows/i) || as_b(params[:shift_jis]) || as_b(params[:sjis])
+  end
+
+  def current_body_encode
+    (params[:body_encode].presence || :utf8).to_sym
   end
 end

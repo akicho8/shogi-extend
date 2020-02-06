@@ -63,4 +63,30 @@ RSpec.describe Swars::BattlesController, type: :controller do
     get :show, params: {id: @battle.to_param, formal_sheet: true, formal_sheet_debug: true}
     expect(response).to have_http_status(:ok)
   end
+
+  it "ZIPダウンロード" do
+    get :index, params: { query: "devuser1", format: "zip" }
+    expect(response).to have_http_status(:ok)
+    assert { response.content_type == "application/zip2" }
+  end
+
+  it "KIF 表示/DL" do
+    get :show, params: { id: @battle.to_param, format: "kif" }
+    assert { response.content_type == "text/plain" }
+    assert { response.body.encoding == Encoding::UTF_8 }
+    assert { response.header["Content-Type"] == "text/plain; charset=UTF-8" }
+    assert { response.header["Content-Disposition"] == nil }
+
+    get :show, params: { id: @battle.to_param, format: "kif", body_encode: "sjis" }
+    assert { response.content_type == "text/plain" }
+    assert { response.body.encoding == Encoding::Shift_JIS }
+    assert { response.header["Content-Type"] == "text/plain; charset=Shift_JIS" }
+    assert { response.header["Content-Disposition"] == nil }
+
+    get :show, params: { id: @battle.to_param, format: "kif", body_encode: "sjis", attachment: "true" }
+    assert { response.content_type == "text/plain" }
+    assert { response.body.encoding == Encoding::Shift_JIS }
+    assert { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
+    assert { response.header["Content-Disposition"].include?("attachment") }
+  end
 end

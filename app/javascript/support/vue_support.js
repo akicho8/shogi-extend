@@ -66,6 +66,10 @@ export default {
         }
       }
     },
+
+    url_build(attributes) {
+      return _.map(attributes, (v, k) => `${k}=${encodeURIComponent(v)}`).join("&")
+    },
   },
 
   computed: {

@@ -84,14 +84,11 @@ module BattleControllerSharedMethods
         table_columns_hash: table_columns_hash,
         modal_record: js_modal_record,
         table_column_storage_prefix_key: controller_path,
+        zip_kifu_info: ZipKifuInfo.as_json,
       }
     end
 
     private
-
-    def zip_download_limit
-      (params[:limit].presence || AppConfig[:zip_download_limit_default]).to_i.clamp(0, AppConfig[:zip_download_limit_max])
-    end
 
     def behavior_after_rescue(message)
       redirect_to :root, danger: message
