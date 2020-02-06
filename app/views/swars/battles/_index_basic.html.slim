@@ -73,7 +73,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 = render partial: "free_battles/index_footer"
 = render partial: "free_battles/parmalink"
 
-- if AppConfig[:zip_download_function]
+- if AppConfig[:zip_dl_function]
   - if current_records && current_records.exists?
     .columns
       .column
@@ -86,7 +86,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
               /   | この検索条件で
               = "まとめてZIPダウンロード"
 
-= render partial: "free_battles/zip_download"
+= render partial: "free_battles/zip_dl"
 
 / - if AppConfig[:help_function]
 /   .columns
@@ -113,7 +113,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
     .buttons
       template(v-if="!usage_display_p")
         b-button.usage_display_button(@click="usage_display_click_handle" size="is-small" icon-right="lightbulb-on-outline")
-      b-button(@click="zip_download_modal_open_handle" size="is-small" icon-right="download")
+      b-button(@click="zip_dl_modal_open_handle" size="is-small" icon-right="download")
 
   / template(v-if="usage_display_p")
   /   .columns

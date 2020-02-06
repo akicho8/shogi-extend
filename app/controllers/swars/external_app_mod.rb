@@ -7,7 +7,7 @@
 # 5. params[:latest_open_index] があるので指定のレコードを external_app_key が指すアプリに渡す
 #
 module Swars
-  concern :ExternalAppMethods do
+  concern :ExternalAppMod do
     included do
       helper_method :current_external_app_info
       helper_method :external_app_mode?
@@ -31,7 +31,7 @@ module Swars
       end
     end
 
-    def external_app_action1
+    def external_app_setup
       if params[:external_app_setup]
         flash[:external_app_setup] = true
         slack_message(key: "ブクマ移動", body: current_swars_user_key)
@@ -41,7 +41,7 @@ module Swars
 
     # このなかでリダイレクトすると白紙のページが開いてしまうためビューを表示つつリダイレクトしている
     # ぴよ将棋の場合、選択肢が出て、遷移をキャンセルすることもできるため、その方が都合が良い
-    def external_app_action2
+    def external_app_run
       if flash[:external_app_setup]
         return
       end

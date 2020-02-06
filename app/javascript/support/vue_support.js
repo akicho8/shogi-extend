@@ -2,6 +2,7 @@
 
 import Bowser from "bowser"
 import dayjs from "dayjs"
+import qs from "qs"
 
 export default {
   methods: {
@@ -68,7 +69,11 @@ export default {
     },
 
     url_build(attributes) {
-      return _.map(attributes, (v, k) => `${k}=${encodeURIComponent(v)}`).join("&")
+      if (false) {
+        return _.map(attributes, (v, k) => `${k}=${encodeURIComponent(v)}`).join("&")
+      } else {
+        return qs.stringify(attributes)
+      }
     },
   },
 

@@ -1,4 +1,4 @@
-b-modal(:active.sync="zip_download_modal_p" has-modal-card trap-focus)
+b-modal(:active.sync="zip_dl_modal_p" has-modal-card trap-focus)
   .modal-card(style="width:auto")
     .modal-card-head
       .modal-card-title
@@ -38,5 +38,5 @@ b-modal(:active.sync="zip_download_modal_p" has-modal-card trap-focus)
     /       b-radio-button(v-model="robot_accept_key" :native-value="e.key") {{e.name}}
     /
     .modal-card-foot
-      .button.is-primary(@click="zip_download_run") ダウンロードする
-      / .button.is-primary(@click="zip_download_modal_p = false") 閉じる
+      .button.is-primary(@click="zip_dl_run") ダウンロードする
+      / .button.is-primary(@click="zip_dl_modal_p = false") 閉じる

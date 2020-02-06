@@ -1,12 +1,12 @@
 require "kconv"
 
 module Swars
-  module ZipDownloadMod
+  module ZipDlMod
     extend ActiveSupport::Concern
 
     private
 
-    def perform_zip_download
+    def zip_dl_perform
       if request.format.zip?
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           zip_scope.each do |battle|
@@ -42,7 +42,7 @@ module Swars
     end
 
     def zip_dl_max
-      (params[:zip_dl_max].presence || AppConfig[:zip_dl_max_default]).to_i.clamp(0, AppConfig[:zip_dl_max_max])
+      (params[:zip_dl_max].presence || AppConfig[:zip_dl_max_default]).to_i.clamp(0, AppConfig[:zip_dl_max])
     end
 
     def kifu_format_info

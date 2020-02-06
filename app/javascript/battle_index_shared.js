@@ -4,14 +4,13 @@ import MemoryRecord from 'js-memory-record'
 
 import battle_record_methods from "battle_record_methods.js"
 import battle_index_table_column from "battle_index_table_column.js"
-
-class ZipKifuInfo extends MemoryRecord {
-}
+import zip_kifu_dl_mod from "zip_kifu_dl_mod.js"
 
 export default {
   mixins: [
     battle_record_methods,
     battle_index_table_column,
+    zip_kifu_dl_mod,
   ],
 
   data() {
@@ -44,14 +43,7 @@ export default {
       sp_run_mode: "view_mode",
 
       real_pos: null,           // 現在表示している手数
-
-      zip_download_modal_p: false,
-      zip_kifu_key: "kif",
     }
-  },
-
-  beforeCreate() {
-    ZipKifuInfo.memory_record_reset(this.$options.zip_kifu_info)
   },
 
   watch: {
@@ -66,26 +58,6 @@ export default {
   },
 
   methods: {
-    zip_download_modal_open_handle() {
-      this.zip_download_modal_p = true
-    },
-    zip_download_run() {
-      this.zip_download_modal_p = false
-
-      const params = {
-        query:                this.query,
-        search_scope_key:     this.search_scope_key,
-        zip_kifu_key:         this.zip_kifu_key,
-        // page:                 this.page,
-        // per:                  this.per,
-        // sort_column:          this.sort_column,
-        // sort_order:           this.sort_order,
-      }
-
-      const url = `${this.$options.xhr_index_path}.zip?${this.url_build(params)}`
-      this.self_window_open(url)
-    },
-
     // テーブルを表示する条件
     table_display_p() {
       return true
@@ -296,8 +268,5 @@ export default {
     start_turn() {
       return this.start_turn_for(this.modal_record)
     },
-
-    // memory_record
-    ZipKifuInfo() { return ZipKifuInfo },
   },
 }

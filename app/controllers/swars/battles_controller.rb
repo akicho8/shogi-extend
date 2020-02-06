@@ -32,8 +32,8 @@ module Swars
     include ModulableCrud::All
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
-    include ExternalAppMethods
-    include ZipDownloadMod
+    include ExternalAppMod
+    include ZipDlMod
 
     helper_method :current_swars_user
     helper_method :current_query_info
@@ -64,7 +64,7 @@ module Swars
         return
       end
 
-      external_app_action1
+      external_app_setup
       if performed?
         return
       end
@@ -90,12 +90,12 @@ module Swars
         import_process(flash.now)
       end
 
-      external_app_action2
+      external_app_run
       if performed?
         return
       end
 
-      perform_zip_download
+      zip_dl_perform
       if performed?
         return
       end
