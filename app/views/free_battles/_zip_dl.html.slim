@@ -38,5 +38,5 @@ b-modal(:active.sync="zip_dl_modal_p" has-modal-card trap-focus)
     /       b-radio-button(v-model="robot_accept_key" :native-value="e.key") {{e.name}}
     /
     .modal-card-foot
-      .button.is-primary(@click="zip_dl_run") ダウンロードする
+      b-button(@click="zip_dl_run" size="is-small" icon-left="download") ダウンロード
       / .button.is-primary(@click="zip_dl_modal_p = false") 閉じる
