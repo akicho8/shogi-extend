@@ -26,7 +26,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
   it "オプション" do
     visit "/adapter"
     option_click
-    expect(page).to have_content "ダウンロード"
+    expect(page).to have_content "盤面"
     doc_image
   end
 
