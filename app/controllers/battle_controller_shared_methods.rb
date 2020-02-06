@@ -446,7 +446,6 @@ module BattleControllerSharedMethods
 
     let :js_edit_ogp_options do
       js_show_options.merge({
-          auto_write: params[:auto_write] == "true",
           index_path: polymorphic_path([ns_prefix, current_plural_key]),
         })
     end
@@ -454,11 +453,6 @@ module BattleControllerSharedMethods
     def update
       if v = params[:image_turn]
         current_record.update!(image_turn: v)
-      end
-
-      if params[:canvas_image_base64_data_url]
-        render json: current_record.canvas_data_save_by_html2canvas(params)
-        return
       end
 
       if params[:create_by_rmagick]

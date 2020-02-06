@@ -84,14 +84,6 @@ module ImageMod
     end
   end
 
-  def canvas_data_save_by_html2canvas(params)
-    v = params[:canvas_image_base64_data_url]
-    v = v.remove(/\A.*,/)
-    v = Base64.decode64(v)
-    thumbnail_image.attach(io: StringIO.new(v), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
-    canvas_data_save_result
-  end
-
   def canvas_data_save_by_rmagick(params)
     image_auto_cerate_force(params)
     canvas_data_save_result
