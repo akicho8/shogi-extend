@@ -271,15 +271,18 @@ class FreeBattle < ApplicationRecord
     if kifu_body.strip.lines.count <= URL_CHECK_LINES && kifu_body.match?(%{^https?://})
       url = URI.extract(kifu_body, ["http", "https"]).first
       uri = URI(url)
+      sfen = nil
       case
       when uri.host == "shogidb2.com"
         case
         when uri.fragment
-          s = Rack::Utils.unescape(uri.fragment)                     # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"
-          self.kifu_body = ["position sfen", s].join(" ")            # => "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"
+          sfen = Rack::Utils.unescape(uri.fragment)                     # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"
         when uri.query
           hash = Rack::Utils.parse_query(uri.query)                  # => {"sfen"=>"lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2", "moves"=>"-3334FU+2726FU-8384FU+2625FU-8485FU+5958OU-4132KI+6978KI-8586FU+8786FU-8286HI+2524FU-2324FU+2824HI-8684HI+0087FU-0023FU+2428HI-2233KA+5868OU-7172GI+9796FU-3142GI+8833UM"}
-          self.kifu_body = ["position sfen", hash["sfen"]].join(" ") # => "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"
+          sfen = hash["sfen"]
+        end
+        if sfen
+          self.kifu_body = ["position", "sfen", sfen].join(" ")
         end
       else
         self.kifu_body = open(url, &:read).toutf8
