@@ -20,9 +20,9 @@ AppConfig.deep_merge!({
     :force_convert_for_twitter_image         =>  false, # 作成した画像を強制的に 1600x630 に変更する
     :html2canvas_enable                      =>  false, # html2canvas を使って盤面を取り込む機能を入れる？
 
-    :zip_download_function                   =>  true,  # 一括ダウンロード機能
-    :zip_dl_max_default              =>  50,    # 一括ダウンロードするときの件数(初期値)
-    :zip_dl_max                  =>  50,    # 一括ダウンロードするときの件数(最大)
+    :zip_download_function =>  true,  # 一括ダウンロード機能
+    :zip_dl_max_default    =>  30,    # 一括ダウンロードするときの件数(初期値)
+    :zip_dl_max            =>  30,    # 一括ダウンロードするときの件数(最大)
 
     :per_page_list                           =>  [25],  # 1ページあたりの項目数選択肢リストの最初と最後を除いたもの
     :required_user_key_for_search            =>  true,  # 検索にはユーザー名を必ず指定するか？
