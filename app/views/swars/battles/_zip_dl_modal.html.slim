@@ -1,12 +1,8 @@
-b-modal(:active.sync="zip_dl_modal_p" has-modal-card trap-focus)
+b-modal(:active.sync="zip_dl_modal_p" has-modal-card trap-focus :animation="false")
   .modal-card(style="width:auto")
-    .modal-card-head
-      .modal-card-title.is-size-6 ZIP ダウンロード
-    .modal-card-body
-      b-field(grouped)
-        b-field(label="種類")
-        b-field
-          template(v-for="e in ZipKifuInfo.values")
-            b-radio-button(v-model="zip_kifu_key" :native-value="e.key" size="is-small" expanded) {{e.name}}
-    .modal-card-foot
-      b-button(@click="zip_dl_run" size="is-small" icon-left="download") ダウンロード
+    .modal-card-body.box
+      b-field
+        template(v-for="e in ZipKifuInfo.values")
+          b-radio-button(v-model="zip_kifu_key" :native-value="e.key" size="is-small") {{e.name}}
+      b-field
+        b-button(@click="zip_dl_run" icon-left="download")
