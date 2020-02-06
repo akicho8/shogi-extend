@@ -113,7 +113,7 @@ window.Adapter = Vue.extend({
           attachment: "true",
           body_encode: this.body_encode,
         }
-        this.other_window_open(`${this.record.show_path}.${kifu_type}?${qs.stringify(params)}`)
+        this.self_window_open(`${this.record.show_path}.${kifu_type}?${qs.stringify(params)}`)
       })
     },
 
@@ -134,7 +134,7 @@ window.Adapter = Vue.extend({
 
     // 画像 DL
     png_dl_handle() {
-      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.png?width=840&turn=${this.record.turn_max}&disposition=attachment`))
+      this.record_fetch(() => this.self_window_open(`${this.record.show_path}.png?width=840&turn=${this.record.turn_max}&disposition=attachment`))
     },
 
     // 「盤面」
