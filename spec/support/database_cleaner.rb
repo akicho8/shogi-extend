@@ -2,14 +2,14 @@ if defined?(DatabaseCleaner)
   RSpec.configure do |config|
     # デフォルト
     config.before(:context) do
-      tp :transaction
+      # tp :transaction
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:transaction)
     end
 
     # SystemTest の場合はこれが「あと」に呼ばれるので truncation が有効になる
     config.before(:context, type: :system) do
-      tp :truncation
+      # tp :truncation
       DatabaseCleaner.strategy = :truncation
       DatabaseCleaner.clean_with(:truncation)
     end
