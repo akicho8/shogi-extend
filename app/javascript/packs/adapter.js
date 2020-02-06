@@ -13,7 +13,7 @@ window.Adapter = Vue.extend({
       body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
-      output_kifs: null, // 変換した棋譜
+      all_kifs: null, // 変換した棋譜
       record: null,      // FreeBattle のインスタンスの属性たち + いろいろんな情報
       bs_error: null,    // BioshogiError の情報 (Hash)
 
@@ -84,7 +84,7 @@ window.Adapter = Vue.extend({
     },
 
     kifu_copy_handle(kifu_type) {
-      this.record_fetch(() => this.clipboard_copy({text: this.output_kifs[kifu_type].value, success_message: "棋譜をクリップボードにコピーしました"}))
+      this.record_fetch(() => this.clipboard_copy({text: this.all_kifs[kifu_type], success_message: "棋譜をクリップボードにコピーしました"}))
     },
 
     validate_handle() {
@@ -182,8 +182,7 @@ window.Adapter = Vue.extend({
         this.change_counter = 0
 
         this.bs_error = null
-        this.output_kifs = null
-        this.output_kifs = null
+        this.all_kifs = null
 
         const e = response.data
 
@@ -219,8 +218,8 @@ window.Adapter = Vue.extend({
           }
         }
 
-        if (e.output_kifs) {
-          this.output_kifs = e.output_kifs
+        if (e.all_kifs) {
+          this.all_kifs = e.all_kifs
         }
 
         if (e.record) {

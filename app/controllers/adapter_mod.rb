@@ -1,4 +1,4 @@
-module AdapterMethods
+module AdapterMod
   extend ActiveSupport::Concern
 
   def adapter_process
@@ -9,9 +9,9 @@ module AdapterMethods
 
     current_record.assign_attributes(kifu_body: current_input_text)
     if current_record.save
-      output_kifs       # エラーにならないことを確認するため
+      all_kifs = current_record.all_kifs # エラーにならないことを確認する目的もある
       ok_notify
-      render json: { output_kifs: output_kifs, turn_max: turn_max, record: js_record_for(current_record) }
+      render json: { all_kifs: all_kifs, turn_max: turn_max, record: js_record_for(current_record) }
       return
     else
       # ここに来ることはない……ことない

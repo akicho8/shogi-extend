@@ -234,6 +234,10 @@ module BattleModelSharedMethods
       @heavy_parsed_info ||= parser_class.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
     end
 
+    def all_kifs
+      @all_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => to_cached_kifu(e.key)) }
+    end
+
     def parser_class
       Bioshogi::Parser
     end

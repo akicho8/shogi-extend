@@ -34,7 +34,7 @@ class FreeBattlesController < ApplicationController
   include ModulableCrud::All
   include BattleControllerBaseMethods
   include BattleControllerSharedMethods
-  include AdapterMethods
+  include AdapterMod
 
   def new
     if id = params[:source_id]

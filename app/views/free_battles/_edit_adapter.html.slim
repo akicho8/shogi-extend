@@ -118,9 +118,9 @@ ruby:
   - if Rails.env.development?
     .columns
       .column
-        template(v-if="output_kifs")
+        template(v-if="all_kifs")
           pre
-            | {{output_kifs.ki2.value}}
+            | {{all_kifs.ki2}}
     .columns
       .column
         .virtual_box
