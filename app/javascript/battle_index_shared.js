@@ -60,6 +60,19 @@ export default {
     },
   },
 
+  beforeCreate() {
+    // 引っ越し
+    if (true) {
+      const old_key = `${this.$options.table_column_storage_prefix_key}/table_column_storage_key`
+      const new_key = `${this.$options.table_column_storage_prefix_key}/index`
+      let v = localStorage.getItem(old_key)
+      if (v) {
+        localStorage.setItem(new_key, JSON.stringify({visible_hash: JSON.parse(v)}))
+        localStorage.removeItem(old_key)
+      }
+    }
+  },
+
   methods: {
     // テーブルを表示する条件
     table_display_p() {
@@ -233,7 +246,7 @@ export default {
         per:              this.per,
         sort_column:      this.sort_column,
         sort_order:       this.sort_order,
-        visible_columns:  this.visible_columns.join(","),
+        visible_only_keys:  this.visible_only_keys.join(","),
       }
     },
 
@@ -275,12 +288,13 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// ls_support
 
     ls_key() {
-      return [this.$options.table_column_storage_prefix_key, "main"].join("/")
+      return [this.$options.table_column_storage_prefix_key, "index"].join("/")
     },
 
     ls_data() {
       return {
         zip_kifu_key: "kif",
+        visible_hash: this.as_visible_hash(this.$options.table_columns_hash),
       }
     },
 

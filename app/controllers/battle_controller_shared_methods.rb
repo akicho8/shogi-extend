@@ -61,8 +61,8 @@ module BattleControllerSharedMethods
       ""
     end
 
-    let :visible_columns do
-      if v = params[:visible_columns]
+    let :visible_only_keys do
+      if v = params[:visible_only_keys]
         v.scan(/\w+/).to_set
       end
     end
@@ -214,10 +214,10 @@ module BattleControllerSharedMethods
     end
 
     def table_columns_hash
-      table_column_list.inject({}) do |a, e|
+      v = table_column_list.inject({}) do |a, e|
         visible = e[:visible]   # nil の場合もある
-        if visible_columns
-          visible = visible_columns.include?(e[:key].to_s)
+        if visible_only_keys
+          visible = visible_only_keys.include?(e[:key].to_s)
         end
         visible ||= !Rails.env.production?
         a.merge(e[:key] => e.merge(visible: visible))

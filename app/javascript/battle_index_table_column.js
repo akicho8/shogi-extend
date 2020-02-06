@@ -4,83 +4,26 @@ export default {
   data() {
     return {
       table_columns_hash: this.$options.table_columns_hash,
+      visible_hash: null,       //  { xxx: true, yyy: false } 形式
     }
-  },
-
-  created() {
-    if (this.table_column_storage_key) {
-      if (this.development_p) {
-        console.log("table_column_storage_key", this.table_column_storage_key)
-      }
-
-      // localStorage.removeItem(this.table_column_storage_key)
-
-      if (this.development_p) {
-        console.log("反映前")
-        console.table(this.simple_table_columns_hash_for_storage)
-      }
-
-      const hash = this.storage_load_visible_columns_hash()
-      if (hash) {
-        _.each(this.table_columns_hash, (v, k) => {
-          v.visible = !!hash[k]
-        })
-      }
-    }
-  },
-
-  watch: {
-    simple_table_columns_hash_for_storage(v) {
-      if (this.table_column_storage_key) {
-        if (this.development_p) {
-          console.log("save")
-          console.table(v)
-        }
-        localStorage.setItem(this.table_column_storage_key, JSON.stringify(v))
-      }
-    },
   },
 
   methods: {
-    storage_load_visible_columns_hash() {
-      if (this.table_column_storage_key) {
-        const str = localStorage.getItem(this.table_column_storage_key)
-        if (str) {
-          const v = JSON.parse(str)
-          if (this.development_p) {
-            console.log("load")
-            console.table(v)
-          }
-          return v
-        }
-      }
+    // { xxx: true, yyy: false } 形式に変換
+    as_visible_hash(v) {
+      return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
     },
   },
 
   computed: {
     // 表示している列のカラム名の配列
-    visible_columns() {
-      const ary = _.map(this.table_columns_hash, (attrs, key) => {
-        if (attrs.visible) {
+    visible_only_keys() {
+      const ary = _.map(this.visible_hash, (value, key) => {
+        if (value) {
           return key
         }
       })
       return _.compact(ary)
-    },
-
-    // private
-
-    // ストレージに保存する用のハッシュ
-    // {a: true, b: false} 形式
-    simple_table_columns_hash_for_storage() {
-      return _.reduce(this.table_columns_hash, (a, e) => ({...a, [e.key]: e.visible}), {})
-    },
-
-    table_column_storage_key() {
-      const key = this.$options.table_column_storage_prefix_key
-      if (key) {
-        return [key, "table_column_storage_key"].join("/")
-      }
     },
   },
 }

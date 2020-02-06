@@ -3,7 +3,7 @@
     template(v-if="records.length >= 1")
       b-field(grouped group-multiline)
         div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
-          b-checkbox.is-small(v-model="value.visible")
+          b-checkbox.is-small(v-model="visible_hash[key]")
             | {{value.label}}
 
     b-table.is_row_clickable(
@@ -51,6 +51,6 @@
         p
           | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} $options.sort_order_default={{$options.sort_order_default}}
         p
-          | visible_columns: {{visible_columns}}
+          | visible_only_keys: {{visible_only_keys}}
         p
           | permalink_url: {{permalink_url}}

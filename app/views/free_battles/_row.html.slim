@@ -1,6 +1,6 @@
 template(slot-scope="props")
   template(v-if="table_columns_hash.id")
-    b-table-column(field="id" :label="table_columns_hash.id.label" :visible="table_columns_hash.id.visible" sortable numeric)
+    b-table-column(field="id" :label="table_columns_hash.id.label" :visible="visible_hash.id" sortable numeric)
       a(@click.stop :href="props.row.show_path")
         | {{props.row.key}}
 
@@ -16,13 +16,13 @@ template(slot-scope="props")
         span.has-text-grey.is-size-7
           | {{props.row.description}}
 
-  b-table-column(field="created_at" :label="table_columns_hash.created_at.label" :visible="table_columns_hash.created_at.visible" sortable)
+  b-table-column(field="created_at" :label="table_columns_hash.created_at.label" :visible="visible_hash.created_at" sortable)
     | {{props.row.formated_created_at}}
 
-  b-table-column(field="turn_max" :label="table_columns_hash.turn_max.label" :visible="table_columns_hash.turn_max.visible" sortable numeric)
+  b-table-column(field="turn_max" :label="table_columns_hash.turn_max.label" :visible="visible_hash.turn_max" sortable numeric)
     | {{props.row.turn_max}}
 
-  b-table-column(field="colosseum_user_id" :label="table_columns_hash.colosseum_user_id.label" :visible="table_columns_hash.colosseum_user_id.visible" sortable)
+  b-table-column(field="colosseum_user_id" :label="table_columns_hash.colosseum_user_id.label" :visible="visible_hash.colosseum_user_id" sortable)
     template(v-if="props.row.owner_info")
       a(@click.stop :href="props.row.owner_info.url")
         | {{props.row.owner_info.name}}

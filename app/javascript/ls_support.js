@@ -26,6 +26,19 @@
 //     },
 //   }
 //
+//
+// データの引っ越しをするときの例
+//
+//   beforeCreate() {
+//     const old_key = `${this.$options.table_column_storage_prefix_key}/table_column_storage_key`
+//     const new_key = `${this.$options.table_column_storage_prefix_key}/index`
+//     let v = localStorage.getItem(old_key)
+//     if (v) {
+//       localStorage.setItem(new_key, JSON.stringify({visible_hash: JSON.parse(v)}))
+//       localStorage.removeItem(old_key)
+//     }
+//   },
+//
 export default {
   created() {
     this.$_ls_load()
@@ -35,7 +48,7 @@ export default {
   methods: {
     $_ls_save() {
       if (this.development_p) {
-        console.log("$_ls_save", this.$_ls_hash)
+        console.log("$_ls_save", JSON.stringify(this.$_ls_hash))
       }
       localStorage.setItem(this.ls_key, JSON.stringify(this.$_ls_hash))
     },
