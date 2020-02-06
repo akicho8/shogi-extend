@@ -1,4 +1,4 @@
-require 'simplecov'
+# require 'simplecov'
 
 if defined?(SimpleCov)
   SimpleCov.start
