@@ -1,12 +1,13 @@
 - back_to_url = url_for([:swars, :battles, query: current_swars_user])
 
 - if external_app_mode?
-  - @override_page_title ||= current_external_app_info.shortcut_name
-  - @apple_touch_icon ||= current_external_app_info.apple_touch_icon
+  / セットアップのときだけでなくホームから飛んできたときも設定しないといけない。そうしないとアイコンが元に戻ってしまう
+  - @override_page_title = current_external_app_info.shortcut_name
+  - @apple_touch_icon = current_external_app_info.apple_touch_icon
 
 - if flash[:external_app_setup]
   javascript:
-    document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$buefy.dialog.alert({message: "<b>ホーム画面に追加</b>してください<br>(ブックマークでもよいです)", type: 'is-primary', trapFocus: true, onConfirm: () => { location.href = "#{raw back_to_url}" }}) })
+    document.addEventListener("DOMContentLoaded", () => { Vue.prototype.$buefy.dialog.alert({message: "<b>ホーム画面に追加</b>してください", type: 'is-primary', trapFocus: true, onConfirm: () => { location.href = "#{raw back_to_url}" }}) })
 
 - if @external_app_url
   javascript:
