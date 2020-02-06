@@ -86,80 +86,13 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
               /   | この検索条件で
               = "まとめてZIPダウンロード"
 
+template(v-if="fetched_count >= 1 && records.length >= 1")
+  .buttons.are-small
+    b-button.usage_modal_open_handle(@click="usage_modal_open_handle" icon-right="lightbulb-on-outline")
+    b-button.zip_dl_modal_open_handle(@click="zip_dl_modal_open_handle" icon-right="download")
+
 = render partial: "zip_dl_modal"
-
-/ - if AppConfig[:help_function]
-/   .columns
-/     .column
-/       article.message.is-primary.is-size-7
-/         .message-header
-/           | 使い方
-/         .message-body.has-text-left
-/           .content
-/             ol
-/               li 検索結果をタップすると盤面を開きます
-/               / li 「ぴよ将棋」のアイコンをタップすると、自動的に棋譜を読み込んで起動します
-/               li ShogiDroid や ShogiGUI では「棋譜コピー」を押したあとソフトのほうで「編集」→「張り付け」をしてみてください
-/               - if current_swars_user && params[:page].to_i <= 1
-/                 li 検索後のページをブックマークしておくと毎回ウォーズIDを入力する手間が省けます
-/                 li
-/                   b
-/                     = link_to "【こちら】", [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true]
-/                   | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから最新の対局をスムーズにぴよ将棋で開けます。直前の対局を必ず検討する人向けのショートカットです
-
-/ 最初のを自動的に開く
-- if true
-  template(v-if="fetched_count >= 1 && records.length >= 1")
-    .buttons
-      template(v-if="!usage_display_p")
-        b-button.usage_display_button(@click="usage_display_click_handle" size="is-small" icon-right="lightbulb-on-outline")
-      b-button(@click="zip_dl_modal_open_handle" size="is-small" icon-right="download")
-
-  / template(v-if="usage_display_p")
-  /   .columns
-  /     .column
-  /       article.message.is-primary.is-size-7
-  /         .message-header
-  /           | 便利な使い方
-  /         .message-body.has-text-left
-  /           .content
-  /             ol
-  /               - if current_swars_user && params[:page].to_i <= 1
-  /                 li 検索後の最初の画面 (今の画面) をホーム画面に追加しておくとウォーズIDを毎回入力する手間が省けます
-  /                 li
-  /                   | また直前の対局を必ず検討する人向けのショートカットがあります。
-  /                   | こちらの
-  /                   == ExternalAppInfo.collect { |e| link_to tag.b("【#{e.name}】"), [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key] }.join("または")
-  /                   | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから直前の対局をすぐに確認できるようになります
-  /                   br
-  /                   | ※ KENTO はどこからでも利用できるので PC の利用者もブックマークしておくと便利です
-
-  template(v-if="usage_display_p")
-    .columns
-      .column
-        b-message(title="便利な使い方" type="is-info" size="is-small" :closable="false")
-          .content
-            ol
-              - if controller.import_enable?
-                li 検索後の最初の画面 (今の画面) をホーム画面に追加しておくとウォーズIDを毎回入力する手間が省けます
-              li
-                | 直前の対局を必ず検討する人向けのショートカットがあります。
-                | こちらの
-                == ExternalAppInfo.collect { |e| link_to tag.b("【#{e.name}】"), [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key] }.join("または")
-                | をタップしたあと「ホーム画面に追加」しておくと、スマホのアイコンから直前の対局をすぐに確認できるようになります
-                br
-                | ※ KENTO はどこからでも利用できるので PC でもブックマークしておくと便利です
-
-/ b-modal(:active.sync="modal_p" has-modal-card)
-/   .modal-card
-/     header.modal-card-head
-/       p.modal-card-title
-/         | 全体通知
-/     section.modal-card-body
-/       b-field(label="")
-/         textarea.textarea(v-model.trim="message" @keydown.enter="message_enter_handle" autocomplete="off" ref="message_input")
-/     footer.modal-card-foot.space_between
-/       button.button(@click="message_post_button_handle") 送信
+= render partial: "usage_modal"
 
 - if Rails.env.development? && false
   = Swars::User.to_html

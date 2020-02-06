@@ -1,0 +1,14 @@
+b-modal(:active.sync="usage_modal_p" trap-focus :animation="false")
+  b-message(title="便利な使い方" type="is-info" :closable="false")
+    .content
+      ol
+        - if controller.import_enable?
+          li
+            | 検索後の最初の画面 (今の画面) をホーム画面に追加しておくとウォーズIDを毎回入力する手間が省けます
+        li
+          | 直前の対局を必ず検討する人向けのショートカットがあります<br>
+          | 下のボタンをタップした直後に「ホーム画面に追加」しておくと、ホーム画面のアイコンから、直前の対局をすぐに確認できるようになります<br>
+          .buttons
+            - ExternalAppInfo.each do |e|
+              = link_to(tag.b(e.name), [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key], :class => "button is-small")
+          | ※ KENTO はどこからでも利用できるので PC でもブックマークしておくと便利です

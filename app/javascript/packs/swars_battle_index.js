@@ -1,14 +1,16 @@
 import battle_index_shared from "battle_index_shared.js"
+import usage_mod from "usage_mod.js"
 
 window.SwarsBattleIndex = Vue.extend({
-  mixins: [battle_index_shared],
+  mixins: [
+    battle_index_shared,
+    usage_mod,
+  ],
 
   data() {
     return {
       submited: false,
       detailed: false,
-
-      usage_display_p: false,   // 使い方を表示する？
     }
   },
 
@@ -61,10 +63,6 @@ window.SwarsBattleIndex = Vue.extend({
       this.process_now()
 
       this.submited = true
-    },
-
-    usage_display_click_handle() {
-      this.usage_display_p = true
     },
   },
 })

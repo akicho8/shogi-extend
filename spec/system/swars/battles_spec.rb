@@ -31,11 +31,17 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     end
 
     it "アプリ起動できるブックマーク可能なページに飛ぶ" do
-      visit "/w-light?query=devuser1"
-      find(".usage_display_button").click
+      visit "/w?query=devuser1"
+      find(".usage_modal_open_handle").click
       click_on "【ぴよ将棋】"
       doc_image("検索画面下の使い方表示")
       expect(page).to have_content "ホーム画面に追加してください"
+      doc_image
+    end
+
+    it "ZIPダウンロード" do
+      visit "/w?query=devuser1"
+      find(".zip_dl_modal_open_handle").click
       doc_image
     end
 
