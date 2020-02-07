@@ -84,5 +84,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       expect(page).to have_content "記録係"
       doc_image
     end
+
+    it "レイアウト崩れの原因を伝えるダイアログ表示" do
+      visit "/w/#{@battle.key}?formal_sheet=true"
+      click_on("レイアウトがおかしいですか？")
+      expect(page).to have_content "最小フォントサイズ"
+      doc_image
+    end
   end
 end

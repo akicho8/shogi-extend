@@ -2,21 +2,29 @@
 
 - @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
 
-- if !((ua.platform == "Windows" || ua.platform == "Macintosh") && ua.browser == "Chrome") || params[:formal_sheet_debug]
-  javascript:
-    document.addEventListener("DOMContentLoaded", () => {
-      Vue.prototype.$buefy.dialog.alert({
-        title: "ブラウザ不適合かも？",
-        message: "#{ua.platform} 用 #{ua.browser} では印刷時に空ページが含まれてしまうかもしれません。<br><br>Mac PC 用の Google Chrome または Windows 用の Google Chrome でのみ正しく印刷(PDF化)できるのを確認しています。<br><br>おかしい場合はそちらで試してみてください。",
-        type: "is-warning",
-        hasIcon: true,
-        trapFocus: true,
+- if Rails.env.test?
+- else
+  - if !((ua.platform == "Windows" || ua.platform == "Macintosh") && ua.browser == "Chrome") || params[:formal_sheet_debug]
+    javascript:
+      document.addEventListener("DOMContentLoaded", () => {
+        Vue.prototype.$buefy.dialog.alert({
+          title: "ブラウザ不適合かも？",
+          message: "#{ua.platform} 用 #{ua.browser} では印刷時に空ページが含まれてしまうかもしれません。<br><br>Mac PC 用の Google Chrome または Windows 用の Google Chrome でのみ正しく印刷(PDF化)できるのを確認しています。<br><br>おかしい場合はそちらで試してみてください。",
+          type: "is-warning",
+          hasIcon: true,
+          trapFocus: true,
+        })
       })
-    })
 
 .fixed_printer_button_container.is_screen_only
   button.button.is-primary.is-large(@click="printer_handle")
     b-icon(icon="printer" size="is-medium")
+
+.font_size_limit_off_container.is_screen_only
+  b-button(@click="font_size_limit_off_modal_p = true" type="is-warning")
+    | レイアウトがおかしいですか？
+
+= render partial: "free_battles/font_size_limit_off"
 
 .formal_sheet_workspace(class=Rails.env)
   - decorator.page_count.times do |page_index|

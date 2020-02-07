@@ -10,6 +10,7 @@ export default {
       record: this.$options.record,
       decorator: this.$options.decorator,
       kifu_type_tab_index: 0,
+      font_size_limit_off_modal_p: false,
     }
   },
 

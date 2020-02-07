@@ -5,7 +5,7 @@ RSpec.describe BattleDecorator, type: :model do
     before do
       swars_battle_setup
       @battle = Swars::Battle.first
-      @decorator = @battle.battle_decorator
+      @decorator = @battle.battle_decorator(view_context: Object.new)
     end
 
     it "as_json" do
@@ -16,7 +16,7 @@ RSpec.describe BattleDecorator, type: :model do
   context "free_battle" do
     before do
       @battle = FreeBattle.create!
-      @decorator = @battle.battle_decorator
+      @decorator = @battle.battle_decorator(view_context: Object.new)
     end
 
     it "as_json" do
