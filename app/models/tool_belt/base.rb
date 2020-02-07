@@ -21,7 +21,11 @@ module ToolBelt
 
     def link_to_eval(name, **options, &block)
       if code = block.call
-        h.link_to(name, h.eval_path(options.merge(code: code)), method: :put, :class => "button is-small")
+        options = options.merge(code: code)
+        if options[:redirect_to]
+          options[:redirect_to] = h.url_for(options[:redirect_to])
+        end
+        h.link_to(name, h.eval_path(options), method: :put, :class => "button is-small")
       end
     end
 
