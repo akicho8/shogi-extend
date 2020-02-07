@@ -1,6 +1,12 @@
 / app/javascript/packs/formal_sheet/_all.sass
 
-- @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
+ruby:
+  if current_record.title.present?
+    @override_page_title = current_record.title
+  else
+    # @override_page_title = current_record.key
+  end
+  # @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
 
 - if Rails.env.test?
 - else
