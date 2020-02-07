@@ -179,6 +179,8 @@ module BattleDecorator
         end_at_s: end_at_s,
         preset_str: preset_str,
         hold_time_str: hold_time_str,
+        total_seconds_str_for_black: total_seconds_str_for(:black),
+        total_seconds_str_for_white: total_seconds_str_for(:white),
       }
     end
 

@@ -139,13 +139,14 @@
               tr
                 td.b_b.b_r.basic_label(rowspan="2")
                   | 消費時間
-                td.b_b.b_r.td_total_seconds
+                td.b_b.b_r.td_total_seconds(@click=(page_index.zero? ? "edit_to('total_seconds_str_for_black')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    = decorator.total_seconds_str_for(:black)
+                    | {{decorator.total_seconds_str_for_black}}
               tr
-                td.b_b.b_r.td_total_seconds
+                td.b_b.b_r.td_total_seconds(@click=(page_index.zero? ? "edit_to('total_seconds_str_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    = decorator.total_seconds_str_for(:white)
+                    | {{decorator.total_seconds_str_for_white}}
+
                 td.b_b.b_r.basic_label
                   | 記録係
                 td.b_b(@click=(page_index.zero? ? "edit_to('umpire_name')" : "") class=(page_index.zero? ? "editable" : ""))
