@@ -79,14 +79,24 @@ module BattleDecorator
     end
 
     def begin_at_s
-      if v = battle_begin_at
-        v.to_s(:ja_ad_format)
+      if battle_begin_at_available?
+        if v = battle_begin_at
+          v.to_s(:ja_ad_format)
+        end
       end
     end
 
     def end_at_s
-      if v = battle_end_at
-        v.to_s(:ja_ad_format)
+      if battle_begin_at_available?
+        if v = battle_end_at
+          v.to_s(:ja_ad_format)
+        end
+      end
+    end
+
+    def battle_begin_at_available?
+      if v = battle_begin_at
+        v != battle.fixed_defaut_time
       end
     end
 
