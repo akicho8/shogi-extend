@@ -12,9 +12,10 @@
       .tables_box
         .editable
           cursor: pointer
-          transition: background-color 0.2s 0.2s ease-in-out
+          // スムーズに背景色を変更したいとき
+          // transition: background-color 0.2s 0.2s ease-in-out
           &:hover
-            background-color: change_color($primary, $alpha: 0.2)
+            background-color: change_color($black, $alpha: 0.08)
 
         table
           user-select: none
