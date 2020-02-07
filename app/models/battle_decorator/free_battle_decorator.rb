@@ -13,7 +13,7 @@ module BattleDecorator
       heavy_parsed_info.header.to_h.values_at(*location.call_names).compact.first
     end
 
-    def strategy_pack_for(location)
+    def strategy_pack_core(location)
       player = heavy_parsed_info.mediator.player_at(location)
       sep = " #{params[:separator]} "
       max = params[:strategy_take_max]
@@ -21,8 +21,6 @@ module BattleDecorator
       s ||= player.skill_set.attack_infos.take(max).join(sep).presence
       s ||= player.skill_set.defense_infos.take(max).join(sep).presence
       s ||= player.skill_set.note_infos.take(max).first.to_s.presence
-      s ||= "不明"
-      s.remove(/△|▲/)
     end
 
     def battle_result_str

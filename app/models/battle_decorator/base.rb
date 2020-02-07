@@ -49,16 +49,10 @@ module BattleDecorator
     end
 
     def strategy_pack_for(location)
-      if m = membership_for(location)
-        sep = " #{params[:separator]} "
-        max = 3
-        s = nil
-        s ||= m.attack_tag_list.take(max).join(sep).presence
-        s ||= m.defense_tag_list.take(max).join(sep).presence
-        s ||= m.note_tag_list.take(max).grep_v(/指導対局/).first.to_s.presence
+      if battle.turn_max >= 1
+        s = strategy_pack_core(location)
         s ||= "不明"
         s = s.remove(/△|▲/)
-
         location = Bioshogi::Location.fetch(location)
         "#{location.hexagon_mark} #{s}"
       end

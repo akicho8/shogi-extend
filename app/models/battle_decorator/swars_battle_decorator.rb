@@ -59,6 +59,17 @@ module BattleDecorator
 
     private
 
+    def strategy_pack_core(location)
+      if m = membership_for(location)
+        sep = " #{params[:separator]} "
+        max = params[:strategy_take_max]
+        s = nil
+        s ||= m.attack_tag_list.take(max).join(sep).presence
+        s ||= m.defense_tag_list.take(max).join(sep).presence
+        s ||= m.note_tag_list.take(max).grep_v(/指導対局/).first.to_s.presence
+      end
+    end
+
     def memberships
       battle.memberships
     end
