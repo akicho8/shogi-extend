@@ -4,8 +4,8 @@ module BattleDecorator
       membership_for(location).user.key
     end
 
-    def end_at_s
-      battle_end_at.to_s(:ja_ad_format)
+    def battle_end_at
+      battle.end_at
     end
 
     def rule_name

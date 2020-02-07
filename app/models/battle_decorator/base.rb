@@ -49,15 +49,18 @@ module BattleDecorator
     end
 
     def strategy_pack_for(location)
-      sep = " #{params[:separator]} "
-      max = 3
       if m = membership_for(location)
+        sep = " #{params[:separator]} "
+        max = 3
         s = nil
         s ||= m.attack_tag_list.take(max).join(sep).presence
         s ||= m.defense_tag_list.take(max).join(sep).presence
         s ||= m.note_tag_list.take(max).grep_v(/指導対局/).first.to_s.presence
         s ||= "不明"
-        s.remove(/△|▲/)
+        s = s.remove(/△|▲/)
+
+        location = Bioshogi::Location.fetch(location)
+        "#{location.hexagon_mark} #{s}"
       end
     end
 
@@ -68,8 +71,23 @@ module BattleDecorator
       name.chars.first
     end
 
+    def battle_begin_at
+      battle.battled_at
+    end
+
     def battle_end_at
-      battle.end_at
+    end
+
+    def begin_at_s
+      if v = battle_begin_at
+        v.to_s(:ja_ad_format)
+      end
+    end
+
+    def end_at_s
+      if v = battle_end_at
+        v.to_s(:ja_ad_format)
+      end
     end
 
     def datetime_blank
@@ -157,7 +175,8 @@ module BattleDecorator
         grade_name_for_black: grade_name_for(:black),
         grade_name_for_white: grade_name_for(:white),
         umpire_name: "",
-        begin_at_to_s: begin_at_to_s
+        begin_at_s: begin_at_s,
+        end_at_s: end_at_s,
       }
     end
 

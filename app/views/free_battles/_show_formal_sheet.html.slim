@@ -53,16 +53,16 @@
                   | {{decorator.tournament_name}}
                 td.b_b.b_r.td_datetime_label
                   | 開始
-                td.b_b.td_datetime
-                  = decorator.battle.battled_at.to_s(:ja_ad_format)
+                td.b_b.td_datetime(@click=(page_index.zero? ? "edit_to('begin_at_s')" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.begin_at_s}}
 
               tr
                 td.b_b.b_r(@click=(page_index.zero? ? "edit_to('rule_name')" : "") class=(page_index.zero? ? "editable" : ""))
                   | {{decorator.rule_name}}
                 td.b_b.b_r.td_datetime_label
                   | 終了
-                td.b_b.td_datetime
-                  = decorator.end_at_s
+                td.b_b.td_datetime(@click=(page_index.zero? ? "edit_to('end_at_s')" : "") class=(page_index.zero? ? "editable" : ""))
+                  | {{decorator.end_at_s}}
 
               tr
                 td.b_b.b_r.td_grade(rowspan="2" @click=(page_index.zero? ? "edit_to('grade_name_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
@@ -130,12 +130,8 @@
                 td.double_border.td_strategy_pack_body(rowspan="2")
                   - if page_index.zero?
                     .value(@click=(page_index.zero? ? "edit_to('strategy_pack_for_black')" : "") class=(page_index.zero? ? "editable" : ""))
-                      | ☗
-                      = " "
                       | {{decorator.strategy_pack_for_black}}
                     .value(@click=(page_index.zero? ? "edit_to('strategy_pack_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
-                      | ☖
-                      = " "
                       | {{decorator.strategy_pack_for_white}}
 
               tr
