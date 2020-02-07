@@ -78,5 +78,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       expect(page).to have_content "記録係"
       doc_image
     end
+
+    it "棋譜用紙(デバッグ)" do
+      visit "/w/#{@battle.key}?formal_sheet=true&formal_sheet_debug=true"
+      expect(page).to have_content "記録係"
+      doc_image
+    end
   end
 end

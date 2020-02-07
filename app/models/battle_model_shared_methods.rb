@@ -184,6 +184,7 @@ module BattleModelSharedMethods
   end
 
   def battle_decorator(params = {})
+    raise ArgumentError, "view_context required" unless params[:view_context]
     @battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))
   end
 
@@ -191,7 +192,7 @@ module BattleModelSharedMethods
   end
 
   def player_info
-    decorator = battle_decorator({})
+    decorator = battle_decorator_class.new(battle: self)
     Bioshogi::Location.inject({}) { |a, e|
       name = decorator.player_name_for(e.key)
       if name
