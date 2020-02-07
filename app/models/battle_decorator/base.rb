@@ -99,7 +99,19 @@ module BattleDecorator
     def umpire_name
     end
 
+    # 備考を配列で返す
+    def desc_body_core
+    end
+
     def desc_body
+      if s = desc_body_core
+        # 3行以内なら折り返す
+        if s.size <= 3
+          s.join("<br>")
+        else
+          s.join(" ")
+        end
+      end
     end
 
     def preset_str

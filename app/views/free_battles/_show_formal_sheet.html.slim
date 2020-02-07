@@ -114,8 +114,7 @@
 
                 td.b_b.b_r.td_desc_body(rowspan="4" @click=(page_index.zero? ? "edit_to('desc_body')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    .value
-                      | {{decorator.desc_body}}
+                    .value(v-html="decorator.desc_body")
 
                 td.b_b.b_r
                   | 手数
@@ -133,7 +132,7 @@
                   | 戦型
                 td.double_border.td_strategy_pack_body(rowspan="2" @click=(page_index.zero? ? "edit_to('strategy_pack_for_all')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    span(v-html="decorator.strategy_pack_for_all")
+                    .value(v-html="decorator.strategy_pack_for_all")
 
               tr
                 td.b_b.b_r.basic_label(rowspan="2")

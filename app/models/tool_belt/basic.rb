@@ -27,6 +27,8 @@ module ToolBelt
           link_to_eval("FreeBattle.setup")                                    { "FreeBattle.setup"                                                        },
           h.link_to("将棋のエラーを発生(盤面なし)", [:root, bioshogi_error1: true], :class => "button is-small"),
           h.link_to("将棋のエラーを発生(盤面あり)", [:root, bioshogi_error2: true], :class => "button is-small"),
+          h.link_to("将棋ウォーズ棋譜用紙", [:swars, :battle, id: "devuser1-Yamada_Taro-20190111_230933", formal_sheet: true], :class => "button is-small"),
+
         ].compact.join.html_safe
       end
 

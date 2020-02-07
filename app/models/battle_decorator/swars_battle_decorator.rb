@@ -12,7 +12,7 @@ module BattleDecorator
       battle.rule_info.long_name
     end
 
-    def desc_body
+    def desc_body_core
       s = []
 
       if battle.final_info.draw
@@ -29,7 +29,7 @@ module BattleDecorator
 
       # s << "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
 
-      s.join(" ")
+      s
     end
 
     def battle_result_str
