@@ -180,6 +180,8 @@ module BattleDecorator
         hold_time_str: hold_time_str,
         total_seconds_str_for_black: total_seconds_str_for(:black),
         total_seconds_str_for_white: total_seconds_str_for(:white),
+        hirukyuu: "",
+        yuukyuu: "",
       }
     end
 

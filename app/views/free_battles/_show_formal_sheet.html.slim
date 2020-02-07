@@ -85,14 +85,16 @@
 
                 td.b_b.b_r
                   | 昼休
-                td.b_b
-                  = decorator.datetime_blank
+                td.b_b(@click=(page_index.zero? ? "edit_to('hirukyuu')" : "") class=(page_index.zero? ? "editable" : ""))
+                  - if page_index.zero?
+                    | {{decorator.hirukyuu}}
 
               tr
                 td.b_b.b_r
                   | 夕休
-                td.b_b
-                  = decorator.datetime_blank
+                td.b_b(@click=(page_index.zero? ? "edit_to('yuukyuu')" : "") class=(page_index.zero? ? "editable" : ""))
+                  - if page_index.zero?
+                    | {{decorator.yuukyuu}}
 
             ////////////////////////////////////////////////////////////////////////////////
 
