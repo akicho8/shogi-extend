@@ -129,12 +129,9 @@
 
                 td.double_border.basic_label(rowspan="2")
                   | 戦型
-                td.double_border.td_strategy_pack_body(rowspan="2")
+                td.double_border.td_strategy_pack_body(rowspan="2" @click=(page_index.zero? ? "edit_to('strategy_pack_for_all')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    .value(@click=(page_index.zero? ? "edit_to('strategy_pack_for_black')" : "") class=(page_index.zero? ? "editable" : ""))
-                      | {{decorator.strategy_pack_for_black}}
-                    .value(@click=(page_index.zero? ? "edit_to('strategy_pack_for_white')" : "") class=(page_index.zero? ? "editable" : ""))
-                      | {{decorator.strategy_pack_for_white}}
+                    span(v-html="decorator.strategy_pack_for_all")
 
               tr
                 td.b_b.b_r.basic_label(rowspan="2")

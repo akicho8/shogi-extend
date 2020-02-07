@@ -48,13 +48,19 @@ module BattleDecorator
     def end_at_s
     end
 
-    def strategy_pack_for(location)
+    # 戦型は空にすると .value の部分が入力できなくなるため td を edit できるようにした
+    # そのため先後まとめたテキストに変更した
+    # なかに <br> が含まれるのがいやだけど仕方ない
+    # もし buefy で textarea 対応の dialog がでたら改善できるかもしれない
+    # そのときはタグを pre にする
+    def strategy_pack_for_all
       if battle.turn_max >= 1
-        s = strategy_pack_core(location)
-        s ||= "不明"
-        s = s.remove(/△|▲/)
-        location = Bioshogi::Location.fetch(location)
-        "#{location.hexagon_mark} #{s}"
+        Bioshogi::Location.collect { |location|
+          s = strategy_pack_core(location)
+          s ||= "不明"
+          s = s.remove(/△|▲/)
+          "#{location.hexagon_mark} #{s}"
+        }.join("<br>")
       end
     end
 
@@ -161,8 +167,7 @@ module BattleDecorator
         desc_body: desc_body,
         tournament_name: tournament_name,
         rule_name: rule_name,
-        strategy_pack_for_black: strategy_pack_for(:black),
-        strategy_pack_for_white: strategy_pack_for(:white),
+        strategy_pack_for_all: strategy_pack_for_all,
         battle_result_str: battle_result_str,
         player_name_for_black: player_name_for(:black),
         player_name_for_white: player_name_for(:white),
