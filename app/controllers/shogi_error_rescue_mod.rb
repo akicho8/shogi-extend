@@ -2,17 +2,31 @@ module ShogiErrorRescueMod
   extend ActiveSupport::Concern
 
   included do
+    if Rails.env.development?
+      before_action do
+        if params[:bioshogi_error1]
+          raise Bioshogi::BioshogiError, "将棋関連のエラーのテスト"
+        end
+        if params[:bioshogi_error2]
+          Bioshogi::Parser.parse("11玉").to_kif
+        end
+      end
+    end
+
     rescue_from "Bioshogi::BioshogiError" do |error|
       if Rails.env.development?
         Rails.logger.info(error)
         sleep(0.5)
       end
 
-      ErrorNotifier.notify_error(error, env: request.env, data: {params: params.to_unsafe_h})
-
       if request.format.json?
+        # なんでも棋譜変換の場合は頻繁にエラーになるためエラー通知しない
         render json: as_shogi_error_attrs(error)
       else
+        # 野良棋譜投稿の場合は滅多に使われないので通知する
+        #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
+        # で確認できる
+        ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
         behavior_after_rescue(error_html_build(error))
       end
     end
@@ -47,13 +61,15 @@ module ShogiErrorRescueMod
 
   def error_html_build(e)
     h = ApplicationController.helpers
-    lines = error.message.lines
+    lines = e.message.lines
     s = lines.first.strip.html_safe
     if field = lines.drop(1).presence
       s += h.tag.div(field.join.html_safe, :class => "error_message_pre").html_safe
     end
-    if v = error.backtrace
-      s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre").html_safe
+    if Rails.env.development?
+      if v = e.backtrace
+        s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre").html_safe
+      end
     end
     s
   end

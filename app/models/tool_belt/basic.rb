@@ -25,6 +25,8 @@ module ToolBelt
           link_to_eval("RegularCrawler")                                      { "Swars::Crawler::RegularCrawler.new.run"                                  },
           link_to_eval("FreeBattle.destroy_all")                              { "FreeBattle.destroy_all"                                                  },
           link_to_eval("FreeBattle.setup")                                    { "FreeBattle.setup"                                                        },
+          h.link_to("将棋のエラーを発生(盤面なし)", [:root, bioshogi_error1: true], :class => "button is-small"),
+          h.link_to("将棋のエラーを発生(盤面あり)", [:root, bioshogi_error2: true], :class => "button is-small"),
         ].compact.join.html_safe
       end
 
