@@ -23,8 +23,13 @@ module BattleDecorator
       s ||= player.skill_set.note_infos.take(max).first.to_s.presence
     end
 
+    # 1手も指さないときは "0手で後手の勝ち" になる
+    # "#{battle.turn_max}手" でもよい
     def battle_result_str
-      "#{battle.turn_max}手"
+      if s = heavy_parsed_info.judgment_message
+        s = s.lines.grep_v(/^\*/).join # KIFの*で始まるコメントを含む場合があるため除外する
+        s.remove(/^まで/)
+      end
     end
 
     def total_seconds_for(location)
