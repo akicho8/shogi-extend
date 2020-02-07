@@ -103,10 +103,9 @@
                 td.b_b.b_r.td_preset
                   .value
                     | 手 合 割
-                td.b_b.b_r.td_preset_body
+                td.b_b.b_r.td_preset_body(@click=(page_index.zero? ? "edit_to('preset_str')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    .value(@click=(page_index.zero? ? "edit_to('preset_str')" : "") class=(page_index.zero? ? "editable" : ""))
-                      | {{decorator.preset_str}}
+                    | {{decorator.preset_str}}
 
                 td.b_b.td_desc_label(rowspan="4")
                   .value
