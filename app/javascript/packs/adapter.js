@@ -1,5 +1,5 @@
 import ls_support from "ls_support.js"
-import qs from "qs"
+import normalizeUrl from "normalize-url"
 
 window.Adapter = Vue.extend({
   mixins: [ls_support],
@@ -108,23 +108,12 @@ window.Adapter = Vue.extend({
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
-      this.record_fetch(() => {
-        const params = {
-          attachment: "true",
-          body_encode: this.body_encode,
-        }
-        this.self_window_open(`${this.record.show_path}.${kifu_type}?${qs.stringify(params)}`)
-      })
+      this.record_fetch(() => { this.self_window_open(this.show_url_for(kifu_type, {disposition: "attachment"})) })
     },
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.record_fetch(() => {
-        const params = {
-          body_encode: this.body_encode,
-        }
-        this.other_window_open(`${this.record.show_path}.${kifu_type}?${qs.stringify(params)}`)
-      })
+      this.record_fetch(() => { this.other_window_open(this.show_url_for(kifu_type)) })
     },
 
     // 画像 表示
@@ -143,10 +132,6 @@ window.Adapter = Vue.extend({
     },
 
     // private
-
-    // 「盤面」
-    build_params(params) {
-    },
 
     record_fetch(callback) {
       if (this.change_counter === 0) {
@@ -232,6 +217,21 @@ window.Adapter = Vue.extend({
         console.table([error.response])
         this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
+    },
+
+    // helper
+
+    show_url_for(kifu_type, other_params = {}) {
+      // やっぱり普通のハッシュで扱った方がわかりやすい
+      const params = {...other_params}
+      if (this.body_encode === "sjis") {
+        params["body_encode"] = this.body_encode
+      }
+
+      // 最後に変換
+      const usp = new URLSearchParams()
+      _.each(params, (v, k) => usp.set(k, v))
+      return normalizeUrl(`${this.record.show_path}.${kifu_type}?${usp}`)
     },
   },
 })
