@@ -87,7 +87,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
     it "レイアウト崩れの原因を伝えるダイアログ表示" do
       visit "/w/#{@battle.key}?formal_sheet=true"
-      click_on("レイアウトがおかしいですか？")
+      click_on("レイアウトが崩れてますか？")
       expect(page).to have_content "最小フォントサイズ"
       doc_image
     end
