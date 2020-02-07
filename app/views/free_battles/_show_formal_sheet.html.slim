@@ -123,9 +123,10 @@
               tr
                 td.b_b.b_r.basic_label
                   | 持 時 間
-                td.b_b.b_r
+                td.b_b.b_r(@click=(page_index.zero? ? "edit_to('hold_time_str')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    = decorator.hold_time_str
+                    | {{decorator.hold_time_str}}
+
                 td.double_border.basic_label(rowspan="2")
                   | 戦型
                 td.double_border.td_strategy_pack_body(rowspan="2")

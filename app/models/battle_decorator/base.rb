@@ -178,6 +178,7 @@ module BattleDecorator
         begin_at_s: begin_at_s,
         end_at_s: end_at_s,
         preset_str: preset_str,
+        hold_time_str: hold_time_str,
       }
     end
 
