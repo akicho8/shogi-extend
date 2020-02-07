@@ -4,9 +4,11 @@ module Swars
     # http://localhost:3000/w-user-stat?user_key=kinakom0chi&raise_duplicate_key_error=1
     # http://localhost:3000/w?query=kinakom0chi&raise_duplicate_key_error=1
     # http://tk2-221-20341.vs.sakura.ne.jp/shogi/w?raise_duplicate_key_error=1
-    prepend_before_action do
-      if params[:raise_duplicate_key_error]
-        raise ActiveRecord::RecordInvalid, Battle.create!(key: Battle.first.key)
+    if Rails.env.development?
+      prepend_before_action do
+        if params[:raise_duplicate_key_error]
+          raise ActiveRecord::RecordInvalid, Battle.create!(key: Battle.first.key)
+        end
       end
     end
 
