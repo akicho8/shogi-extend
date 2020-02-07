@@ -103,7 +103,8 @@
                     | 手 合 割
                 td.b_b.b_r.td_preset_body
                   - if page_index.zero?
-                    = decorator.preset_str
+                    .value(@click=(page_index.zero? ? "edit_to('preset_str')" : "") class=(page_index.zero? ? "editable" : ""))
+                      | {{decorator.preset_str}}
 
                 td.b_b.td_desc_label(rowspan="4")
                   .value

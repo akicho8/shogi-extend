@@ -177,6 +177,7 @@ module BattleDecorator
         umpire_name: "",
         begin_at_s: begin_at_s,
         end_at_s: end_at_s,
+        preset_str: preset_str,
       }
     end
 
