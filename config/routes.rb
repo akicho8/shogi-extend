@@ -102,11 +102,8 @@ Rails.application.routes.draw do
     "https://shogiwars.heroz.jp/users/mypage/#{user.user_key}?#{options.to_query}"
   end
 
-  direct :piyo_shogi_app do |url, **options|
-    options = {
-      url: url,
-    }.merge(options)
-    "piyoshogi://?#{options.to_query}"
+  direct :piyo_shogi_app do |url|
+    "piyoshogi://?url=#{url}"
   end
 
   direct :kento_app do |url, **options|
