@@ -22,7 +22,7 @@ template(slot-scope="props")
           swars_user_link_to(:membership="m")
 
         template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
-          template(v-if="table_columns_hash[key].visible")
+          template(v-if="visible_hash[key]")
             template(v-for="tag in m[key]")
               template(v-if="tag.url")
                 a.has-text-grey.is-size-7.tag_name(@click.stop :href="tag.url")
