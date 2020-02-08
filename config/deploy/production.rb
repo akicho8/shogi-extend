@@ -23,6 +23,20 @@ after "deploy:finished", :yarn_cache_clean
 # 起動確認
 set :my_heartbeat_urls, ["http://tk2-221-20341.vs.sakura.ne.jp/shogi", "http://shogi-flow.xyz/"]
 
+# 起動するURL
+set :open_urls, %w(
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/w
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/w?query=kinakom0chi
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/adapter
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/xy
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu/battles
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/stopwatch
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/x
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/x/new
+  http://tk2-221-20341.vs.sakura.ne.jp/shogi/board
+)
+
 if ENV["USE_NEW_DOMAIN"]
   set :application, "shogi_web2"
 

@@ -103,6 +103,13 @@ after "deploy:finished", :hb do
   end
 end
 
+desc "デプロイ後に確認したいURLを全部開いておく"
+after "deploy:finished", :open_urls do
+  Array(fetch(:open_urls)).each do |url|
+    system("open #{url}")
+  end
+end
+
 desc "デプロイ失敗"
 task "deploy:failed" do
   system "say 'デプロイに失敗しました'"
