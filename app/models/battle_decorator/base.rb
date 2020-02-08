@@ -185,6 +185,10 @@ module BattleDecorator
     end
 
     def as_json(*)
+      if params[:formal_sheet_blank]
+        return {}
+      end
+
       {
         desc_body: desc_body,
         tournament_name: tournament_name,

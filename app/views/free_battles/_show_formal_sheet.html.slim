@@ -127,7 +127,8 @@ ruby:
 
                 td.b_b.b_r.td_desc_body(rowspan="4" @click=(page_index.zero? ? "edit_to('desc_body')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    .value(v-html="decorator.desc_body")
+                    / 値がないときに .value のタグを取らないとCSSの :empty にマッチしないため v-if を入れている
+                    .value(v-if="decorator.desc_body" v-html="decorator.desc_body")
 
                 td.b_b.b_r
                   | 手数
@@ -145,7 +146,8 @@ ruby:
                   | 戦型
                 td.double_border.td_strategy_pack_body(rowspan="2" @click=(page_index.zero? ? "edit_to('strategy_pack_for_all')" : "") class=(page_index.zero? ? "editable" : ""))
                   - if page_index.zero?
-                    .value(v-html="decorator.strategy_pack_for_all")
+                    / 値がないときに .value のタグを取らないとCSSの :empty にマッチしないため v-if を入れている
+                    .value(v-html="decorator.strategy_pack_for_all" v-if="decorator.strategy_pack_for_all")
 
               tr
                 td.b_b.b_r.basic_label(rowspan="2")
@@ -192,6 +194,8 @@ ruby:
                     - decorator.outer_columns.times do |x|
                       - decorator.inner_fixed_columns.times do |left_or_right|
                           - hand_info = decorator.hand_info(page_index, x, y, left_or_right)
+                          - if params[:formal_sheet_blank]
+                            - hand_info = nil
                           td.td_kifu_data(class=(hand_info ? hand_info[:class] : nil))
                             = hand_info[:value] if hand_info
                           td.td_spend_times

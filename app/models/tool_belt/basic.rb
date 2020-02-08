@@ -29,6 +29,7 @@ module ToolBelt
           h.link_to("将棋のエラーを発生(盤面あり)", [:root, bioshogi_error2: true], :class => "button is-small"),
           h.link_to("将棋ウォーズ棋譜用紙", [:swars, :battle, id: "devuser1-Yamada_Taro-20190111_230933", formal_sheet: true], :class => "button is-small"),
           h.link_to("将棋ウォーズ棋譜用紙(デバッグ)", [:swars, :battle, id: "devuser1-Yamada_Taro-20190111_230933", formal_sheet: true, formal_sheet_debug: true], :class => "button is-small"),
+          h.link_to("将棋ウォーズ棋譜用紙(白紙)", [:swars, :battle, id: "devuser1-Yamada_Taro-20190111_230933", formal_sheet: true, formal_sheet_blank: true], :class => "button is-small"),
 
         ].compact.join.html_safe
       end
