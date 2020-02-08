@@ -11,7 +11,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
     visit "/adapter"
     find("textarea").set("68S")
     find(".kif_copy_link").click
-    expect(page).to have_content "クリップボードにコピーしました"
+    expect(page).to have_content "コピーしました"
     doc_image
   end
 
