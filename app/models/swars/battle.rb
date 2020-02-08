@@ -148,7 +148,7 @@ module Swars
 
       # def header_detail(h)
       #   if v = super
-      #     v.merge("場所" => h.link_to(key, official_swars_battle_url, target: "_blank"))
+      #     v.merge("場所" => h.link_to(key, official_swars_battle_url, target: "_self"))
       #   end
       # end
 

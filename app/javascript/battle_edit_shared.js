@@ -163,7 +163,7 @@ export default {
         const sfen = encodeURIComponent(this.board_sfen) // + をエスケープしないと空白になってしまうため
         const key = encodeURIComponent("free_battle[kifu_body]")
         const url = `${this.$options.new_path}?${key}=${sfen}`
-        window.open(url, "_blank")
+        window.open(url, "_self")
       }
     },
   },

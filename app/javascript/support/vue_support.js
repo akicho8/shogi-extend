@@ -47,7 +47,7 @@ export default {
 
     // 他のウィンドウで開く
     other_window_open(url) {
-      if (window.open(url, "_blank")) {
+      if (window.open(url, "_self")) {
         // Google Chrome では動く
       } else {
         // iOS Safari ではこちら
