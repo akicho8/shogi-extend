@@ -37,8 +37,8 @@ ruby:
     .column
       template(v-if="development_p")
         .buttons
-          .button.is-small(@click.stop.prevent="ng_test_handle") NG
-          .button.is-small(@click.stop.prevent="ok_test_handle") OK
+          .button.is-small(@click="ng_test_handle") NG
+          .button.is-small(@click="ok_test_handle") OK
 
       b-field(:type="field_type")
         b-input(type="textarea" ref="input_text" v-model="input_text")
@@ -49,13 +49,13 @@ ruby:
             | {{bs_error.board}}
 
       template(v-if="!bs_error")
-        a(@click.stop="piyo_shogi_open_handle")
+        a(@click="piyo_shogi_open_handle")
           = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
         | &nbsp;
-        .button.is-small.kento_app_button(@click.stop="kento_open_handle")
+        a.button.is-small.kento_app_button(@click="kento_open_handle" href="")
           | ☗ KENTO
         | &nbsp;
-        .button.is-small.kif_copy_link(@click.stop.prevent="kifu_copy_handle('kif')") 棋譜コピー
+        .button.is-small.kif_copy_link(@click="kifu_copy_handle('kif')") 棋譜コピー
 
   template(v-if="!bs_error")
 
