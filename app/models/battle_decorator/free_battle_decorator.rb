@@ -25,11 +25,27 @@ module BattleDecorator
 
     # 1手も指さないときは "0手で後手の勝ち" になる
     # "#{battle.turn_max}手" でもよい
+    #
+    # 自力で作る場合
+    # if location = heavy_parsed_info.mediator.win_player.location
+    #   str = player_name_for(location)
+    # end
     def battle_result_str
-      if s = heavy_parsed_info.judgment_message
-        s = s.lines.grep_v(/^\*/).join # KIFの*で始まるコメントを含む場合があるため除外する
-        s.remove(/^まで/)
+      str = heavy_parsed_info.judgment_message
+      str = str.lines.grep_v(/^\*/).join # KIFの*で始まるコメントを含む場合があるため除外する
+      str = str.remove(/^まで/)
+
+      if true
+        # 「先手」を実際の名前に置き換える場合
+        Bioshogi::Location.each do |location|
+          if name = player_name_for(location).presence
+            grade = grade_name_for(location) # FreeBattle の場合、常に空なので意味ない
+            str = str.gsub(/#{location.call_names.join("|")}/, "#{grade}#{name}")
+          end
+        end
       end
+
+      str
     end
 
     def total_seconds_for(location)
