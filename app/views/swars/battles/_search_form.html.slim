@@ -1,0 +1,10 @@
+.columns
+  .column
+    = form_with(url: [:swars, :battles], method: :get, skip_enforcing_utf8: true) do |form|
+      = form.submit("submit_button_for_test") if Rails.env.test?
+
+      b-field
+        b-input(name="query" placeholder=current_placeholder type="search" icon="magnify" v-model="query" ref="query_field" expanded list="search_field_query_completion")
+        = render partial: "search_field_query_completion"
+        p.control
+          = form.button("検索", name: nil, class: "button is-info")

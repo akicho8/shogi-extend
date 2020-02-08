@@ -1,17 +1,20 @@
-- cache([controller_path, :filter_block], expires_in: Rails.env.production? ? 1.day : 0) do
-  - args = params.to_unsafe_h.merge(page: nil)
-  b-dropdown(:hoverable="false")
-    button.button.is-small(slot="trigger")
-      span よく使うフィルタ
-      b-icon(icon="menu-down")
-    - Swars::FrequentlyUsedFilterInfo.each do |e|
-      b-dropdown-item(:has-link="true" :paddingless="true")
-        = link_to(e.name, args.merge(e.params), "@click.stop" => true)
-  - Bioshogi::TacticInfo.each do |e|
-    b-dropdown(:hoverable="false")
-      button.button.is-small(slot="trigger")
-        span= e.name
-        b-icon(icon="menu-down")
-      - e.model.each do |e|
-        b-dropdown-item(:has-link="true" :paddingless="true")
-          = link_to(e.name, args.merge(query: "tag:#{e.name}"), "@click.stop" => true)
+- if AppConfig[:swars_battles_index_filter_options_show]
+  .columns
+    .column
+      - cache([controller_path, :filter_block], expires_in: Rails.env.production? ? 1.day : 0) do
+        - args = params.to_unsafe_h.merge(page: nil)
+        b-dropdown(:hoverable="false")
+          button.button.is-small(slot="trigger")
+            span よく使うフィルタ
+            b-icon(icon="menu-down")
+          - Swars::FrequentlyUsedFilterInfo.each do |e|
+            b-dropdown-item(:has-link="true" :paddingless="true")
+              = link_to(e.name, args.merge(e.params), "@click.stop" => true)
+        - Bioshogi::TacticInfo.each do |e|
+          b-dropdown(:hoverable="false")
+            button.button.is-small(slot="trigger")
+              span= e.name
+              b-icon(icon="menu-down")
+            - e.model.each do |e|
+              b-dropdown-item(:has-link="true" :paddingless="true")
+                = link_to(e.name, args.merge(query: "tag:#{e.name}"), "@click.stop" => true)

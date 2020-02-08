@@ -1,83 +1,13 @@
 = render partial: "header"
-
-.columns
-  .column
-    = form_with(url: [:swars, :battles], method: :get, skip_enforcing_utf8: true) do |form|
-      = form.submit("submit_button_for_test") if Rails.env.test?
-
-      b-field
-        b-input(name="query" placeholder=current_placeholder type="search" icon="magnify" v-model="query" ref="query_field" expanded list="search_field_query_completion")
-        = render partial: "search_field_query_completion"
-        p.control
-          = form.button("検索", name: nil, class: "button is-info")
-
+= render partial: "search_form"
 = render partial: "search_bottom_share_links"
-
-- if AppConfig[:swars_battles_index_filter_options_show]
-  .columns
-    .column
-      = render partial: "filter_dropdown"
-
-template(v-if="fetched_count >= 1 && records.length >= 1")
-  .columns
-    .column
-      button.button.is-small(@click.stop.prevent="trick_show_handle")
-        | 仕掛け局面の表示
-        | &nbsp;&nbsp;&nbsp;
-        b-icon(:icon="!trick_show ? 'grid' : 'minus'" size="is-small")
-      template(v-if="trick_show")
-        b-switch.end_show(v-model="end_show") 終了図
-
-- if false
-  template(v-if="trick_show")
-    .columns.is-multiline
-      template(v-for="e in records")
-        .column.is-one-fifth.has-text-centered.is-narrow
-          a(@click.stop.prevent="show_handle(e)")
-            small.line_break_on.has-text-grey
-              | {{e.title}}
-            img(:src="e.twitter_staitc_image_url")
-
-.columns.is-multiline(v-show="trick_show")
-  template(v-for="e in records")
-    / https://bulma.io/documentation/columns/responsiveness/
-    / widescreen 1/5 (is-one-fifth-widescreen)
-    / desktop    1/4 (is-one-quarter-desktop)
-    / table      1/4 (is-one-quarter-tablet)
-    .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered
-      a.no-decoration(@click.stop.prevent="show_handle(e)")
-        small.line_break_on.has-text-black-ter
-          | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
-        / :size="!end_show ? 'x-small' : 'xx-small'"
-        shogi_player(
-          :run_mode="'view_mode'"
-          :debug_mode="false"
-          :start_turn="start_turn_for(e)"
-          :kifu_body="e.sfen_body"
-          :theme="'simple'"
-          :size="'x-small'"
-          :sound_effect="false"
-          :hidden_if_piece_stand_blank="!end_show ? true : false"
-          :vlayout="true"
-          :setting_button_show="false"
-          :summary_show="false"
-          :operation_disable="true"
-          :overlay_navi="false"
-          :flip="e.fliped"
-        )
-        small.line_break_on.has-text-black-ter
-          | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
-
+= render partial: "filter_dropdown"
+= render partial: "trick"
 = render partial: "free_battles/modal_shogi_player"
 = render partial: "free_battles/table"
 = render partial: "free_battles/index_footer"
 = render partial: "free_battles/parmalink"
-
-template(v-if="fetched_count >= 1 && records.length >= 1")
-  .buttons.are-small
-    b-button.usage_modal_open_handle(@click="usage_modal_open_handle" icon-right="lightbulb-on-outline")
-    b-button.zip_dl_modal_open_handle(@click="zip_dl_modal_open_handle" icon-right="download")
-
+= render partial: "footer_buttons"
 = render partial: "zip_dl_modal"
 = render partial: "usage_modal"
 
@@ -87,4 +17,3 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 
 - if Rails.env.development?
   = debug cookies.permanent.signed[:remember_swars_user_keys]
-

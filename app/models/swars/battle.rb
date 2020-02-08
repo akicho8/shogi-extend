@@ -41,16 +41,7 @@ module Swars
 
     has_many :access_logs, dependent: :destroy # アクセスログみたいもの
 
-    has_many :users, through: :memberships do
-      # # 先手/後手プレイヤー
-      # def black                 # FIXME: 使用禁止
-      #   first
-      # end
-      #
-      # def white
-      #   second
-      # end
-    end
+    has_many :users, through: :memberships
 
     before_validation on: :create do
       self.key ||= SecureRandom.hex
