@@ -24,7 +24,7 @@
 require 'rails_helper'
 
 RSpec.describe XyRecord, type: :model do
-  it do
+  it "記録と順位が正しい" do
     XyRecord.destroy_all
 
     Timecop.freeze("2000-01-01") do
@@ -63,7 +63,9 @@ RSpec.describe XyRecord, type: :model do
 
   def build(*args)
     v = XyRuleInfo[:xy_rule100].xy_records(*args)
-    tp v
+    if ENV["VERBOSE"]
+      tp v
+    end
     v.collect { |e | e["spent_sec"] }
   end
 end

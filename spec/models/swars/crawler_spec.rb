@@ -7,9 +7,12 @@ module Swars
       Swars::User.find_each { |e| e.search_logs.create! }
     end
 
-    it do
-      puts Crawler::RegularCrawler.new.run.rows.to_t
-      puts Crawler::ExpertCrawler.new.run.rows.to_t
+    it "実行" do
+      c = Crawler::RegularCrawler.new.run
+      tp c.rows if ENV["VERBOSE"]
+
+      c = Crawler::ExpertCrawler.new.run
+      tp c.rows.to_t if ENV["VERBOSE"]
     end
 
     it "model_name" do

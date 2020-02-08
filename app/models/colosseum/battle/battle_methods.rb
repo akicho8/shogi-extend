@@ -83,8 +83,11 @@ module Colosseum::Battle::BattleMethods
     def execute_one
       clock_counter = measure_time do
         hand = nil
+
         unless Rails.env.production?
-          puts mediator
+          if ENV["VERBOSE"]
+            puts mediator
+          end
         end
 
         # 先を読む

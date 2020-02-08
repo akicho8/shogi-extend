@@ -20,8 +20,11 @@ module Swars
       battle.memberships.build(user: @user2, judge_key: :win,  location_key: :white)
       battle.save!
 
-      tp @user1.secret_summary
-      tp @user2.secret_summary
+      v = @user1.secret_summary
+      tp v if ENV["VERBOSE"]
+
+      v = @user2.secret_summary
+      tp v if ENV["VERBOSE"]
 
       #       @user1.secret_summary.to_t.should == <<~EOS
       # |-----------------------------------------+---------|
@@ -71,8 +74,11 @@ module Swars
       battle.memberships.build(user: @user2, judge_key: :lose, location_key: :white)
       battle.save!
 
-      tp @user1.secret_summary
-      tp @user2.secret_summary
+      v = @user1.secret_summary
+      tp v if ENV["VERBOSE"]
+
+      v = @user2.secret_summary
+      tp v if ENV["VERBOSE"]
 
       #       @user1.secret_summary.to_t.should == <<~EOS
       # |----------------------------------------+-------|

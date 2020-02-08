@@ -100,7 +100,9 @@ module Swars
           row["差分"] = row["後"] - row["前"]
         end
 
-        tp [row]
+        if ENV["VERBOSE"]
+          tp [row]
+        end
 
         rows << row
       end
