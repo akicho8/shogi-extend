@@ -76,7 +76,7 @@ window.Adapter = Vue.extend({
 
   methods: {
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.other_window_open(this.record.piyo_shogi_app_url))
+      this.record_fetch(() => this.self_window_open(this.record.piyo_shogi_app_url))
     },
 
     kento_open_handle() {
