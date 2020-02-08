@@ -166,7 +166,7 @@ class ApplicationController < ActionController::Base
     end
 
     let :bot_agent? do
-      ua.bot?
+      ua.bot? || request.user_agent.to_s.include?("Barkrowler")
     end
   end
 
