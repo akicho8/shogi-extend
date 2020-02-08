@@ -63,4 +63,9 @@ EOT
    1 ５六歩(57)        ( 0:00/00:00:00)
 EOT
   end
+
+  it "ぴよ将棋？の日付フォーマット読み取り" do
+    free_battle = FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
+    assert { free_battle.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
+  end
 end

@@ -89,18 +89,11 @@ module BattleModelSharedMethods
       if t = (Time.zone.parse(v) rescue nil)
         self.battled_at ||= t
       else
-        values = v.scan(/\d+/).collect { |e|
-          e = e.to_i
-          if e.zero?
-            e = 1
-          end
-          e
-        }
-        self.battled_at ||= Time.zone.local(*values)
+        values = v.scan(/\d+/).collect(&:to_i)
+        self.battled_at ||= (Time.zone.local(*values) rescue nil)
       end
-    else
-      self.battled_at ||= fixed_defaut_time
     end
+    self.battled_at ||= fixed_defaut_time
 
     parser_exec_after(info)
     @parser_executed = true
