@@ -88,7 +88,7 @@ window.Adapter = Vue.extend({
     },
 
     validate_handle() {
-      this.record_fetch(() => this.$buefy.toast.open({message: "OK", position: "is-bottom", type: "is-success"}))
+      this.record_fetch(() => this.$buefy.toast.open({message: `${this.record.turn_max}手`, position: "is-bottom", queue: false, type: "is-success"}))
     },
 
     ng_test_handle() {

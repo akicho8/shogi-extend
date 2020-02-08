@@ -11,7 +11,7 @@ module AdapterMod
     if current_record.save
       all_kifs = current_record.all_kifs # エラーにならないことを確認する目的もある
       ok_notify
-      render json: { all_kifs: all_kifs, turn_max: turn_max, record: js_record_for(current_record) }
+      render json: { all_kifs: all_kifs, record: js_record_for(current_record) }
       return
     else
       # ここに来ることはない……ことない
@@ -44,12 +44,12 @@ module AdapterMod
 
     lines = current_input_text.lines
     body = (lines.take(8) + ["(snip)\n"] + lines.last(3)).join
-    if turn_max.zero?
+    if current_record.turn_max.zero?
       channel = "#adapter_error"
     else
       channel = "#adapter_success"
     end
-    slack_message(key: "変換#{turn_max}手", body: body, channel: channel)
+    slack_message(key: "変換#{current_record.turn_max}手", body: body, channel: channel)
   end
 
   def ng_notify(error)

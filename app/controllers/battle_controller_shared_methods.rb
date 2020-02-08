@@ -489,6 +489,8 @@ module BattleControllerSharedMethods
 
     private
 
+    # FIXME: これはやめて FreeBattle をつかうべき
+
     def output_kifs
       @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
     end
