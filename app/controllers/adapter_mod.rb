@@ -33,7 +33,7 @@ module AdapterMod
     if current_input_text.lines.count <= 2
       if url = Swars::Battle.battle_url_extract(current_input_text)
         slack_message(key: "なんでも棋譜変換にウォーズの対局URL入力した方を検知", body: current_input_text)
-        flash[:warning] = "ウォーズの対局URLはこっちに入力してください"
+        flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
         render json: { redirect_to: url_for([:swars, :battles, query: current_input_text]) }
       end
     end
