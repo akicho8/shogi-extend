@@ -4,18 +4,20 @@ export default {
       this.clipboard_copy({text: swars_tweet_text})
     },
 
+    // Rails の通常のビューから使う用
+    // とても使いにくい
     kifu_copy_exec_click(e) {
       const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
       this.kifu_copy_exec(params)
     },
 
     // 指定 URL の結果をクリップボードにコピー
+    // 引数の params を更新していって前回取得したテキストを保存し、2度目からはajaxしない
     kifu_copy_exec(params) {
-      params = Object.assign({}, {
-        success_message: "棋譜をクリップボードにコピーしました",
-      }, params)
+      if (params.success_message == null) { params.success_message = "棋譜をクリップボードにコピーしました" }
 
       if (params["text"]) {
+        this.debug_alert("パラメータにテキストが含まれる")
         this.clipboard_copy(params)
         return
       }
@@ -32,6 +34,7 @@ export default {
 
         if (true) {
           this.http_get_command(full_url, {}, data => {
+            this.debug_alert("AJAX後にテキスト取得")
             params["text"] = data
             this.clipboard_copy(params)
           })
@@ -49,12 +52,10 @@ export default {
 
     // str をクリップボードにコピー
     clipboard_copy(params) {
-      params = Object.assign({}, {
-        success_message: "クリップボードにコピーしました",
-        error_message: "クリップボードへのコピーに失敗しました",
-        success_yomiage: "コピーしました",
-        error_yomiage: "失敗しました",
-      }, params)
+      if (params.success_message == null) { params.success_message = "クリップボードにコピーしました"         }
+      if (params.error_message == null)   { params.error_message   = "クリップボードへのコピーに失敗しました" }
+      if (params.success_yomiage == null) { params.success_yomiage = "コピーしました"                         }
+      if (params.error_yomiage == null)   { params.error_yomiage   = "失敗しました"                           }
 
       let success = false
 
@@ -90,14 +91,25 @@ export default {
         }
 
         if (!success) {
-          // this.talk(params["error_yomiage"])
-          // this.$buefy.toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
-          this.clipboard_copy_error_dialog(params)
+          params.error_counter = (params.error_counter || 0) + 1
+          if (params.error_dialog_enable) {
+            this.clipboard_copy_error_dialog(params)
+          } else {
+            if (params.error_counter == 1) {
+              this.talk("失敗しました。もう一度タップしてみてください", {rate: 1.5})
+              this.$buefy.toast.open({message: "失敗しました。もう一度タップしてみてください", position: "is-bottom", queue: false, type: "is-warning"})
+            }
+            if (params.error_counter >= 2) {
+              this.talk("失敗しました。もう何回やってもだめそうです", {rate: 1.5})
+              this.$buefy.toast.open({message: "失敗しました。もう何回やってもだめそうです", position: "is-bottom", queue: false, type: "is-danger"})
+              this.clipboard_copy_error_dialog(params)
+            }
+          }
           return
         }
 
         this.talk(params["success_yomiage"], {rate: 1.5})
-        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", type: "is-info"})
+        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", queue: false, type: "is-info"})
       }
 
       // この方法は Windows Chrome で必ず失敗するというか navigator.clipboard が定義されてないので激指をメインで使う人は異様に使いにくくなってしまう
@@ -106,7 +118,7 @@ export default {
         if (navigator.clipboard) {
           navigator.clipboard.writeText(params["text"]).then(() => {
             this.talk(params["success_yomiage"])
-            this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", type: "is-success"})
+            this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", queue: false, type: "is-success"})
           }).catch(err => {
             this.clipboard_copy_error_dialog(params)
           })
@@ -117,8 +129,8 @@ export default {
     },
 
     clipboard_copy_error_dialog(params) {
-      this.talk(params["error_yomiage"], {rate: 2.0})
-      // this.$buefy.toast.open({message: params["error_message"], position: "is-bottom", type: "is-danger"})
+      // this.talk(params["error_yomiage"], {rate: 2.0})
+      // this.$buefy.toast.open({message: params["error_message"], position: "is-bottom", queue: false, type: "is-danger"})
 
       this.$buefy.modal.open({
         parent: this,
@@ -157,7 +169,6 @@ export default {
 
       // handle iOS as a special case
       if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-
         // save current contentEditable/readOnly status
         const editable = el.contentEditable
         const readOnly = el.readOnly
