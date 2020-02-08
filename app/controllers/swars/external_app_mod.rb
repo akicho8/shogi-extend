@@ -34,7 +34,7 @@ module Swars
     def external_app_setup
       if params[:external_app_setup]
         flash[:external_app_setup] = true
-        slack_message(key: "ブクマ移動", body: current_swars_user_key)
+        slack_message(key: "#{current_external_app_info.shortcut_name}セットアップ", body: current_swars_user_key)
         redirect_to [:swars, :battles, params.to_unsafe_h.slice(:query, :latest_open_index, :external_app_key)]
       end
     end
