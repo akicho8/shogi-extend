@@ -109,7 +109,8 @@ class Talk
   end
 
   def voice_id
-    if Time.current.hour.modulo(2).even? || HolidayJp.holiday?(Time.current)
+    t = Time.current
+    if t.saturday? || t.sunday? || t.hour.modulo(2).even? || HolidayJp.holiday?(t)
       "Mizuki"
     else
       "Takumi"
