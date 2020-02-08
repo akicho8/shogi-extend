@@ -67,21 +67,21 @@ ruby:
     .columns(v-if="!bs_error")
       .column
         template(v-if="option_show_p")
-          .buttons
-            .button.is-small(@click="board_show_handle") 盤面
-            .button.is-small(@click="kifu_paper_handle") 印刷
-            .button.is-small(@click="validate_handle") 検証
+          .buttons.are-small
+            b-button(@click="board_show_handle" icon-left="border-all") 盤面
+            b-button(@click="kifu_paper_handle" icon-left="pdf-box") 印刷
+            b-button(@click="validate_handle" :icon-left="record ? 'check' : 'help'") 検証
 
           b-field(grouped)
             b-field
               b-icon.icon_in_field(icon="clipboard-outline" size="is-small")
             b-field
               .buttons.has-addons.are-small
-                .button(@click="kifu_copy_handle('kif')") KIF
-                .button(@click="kifu_copy_handle('ki2')") KI2
-                .button(@click="kifu_copy_handle('csa')") CSA
-                .button(@click="kifu_copy_handle('sfen')") SFEN
-                .button(@click="kifu_copy_handle('bod')") BOD
+                b-button(@click="kifu_copy_handle('kif')") KIF
+                b-button(@click="kifu_copy_handle('ki2')") KI2
+                b-button(@click="kifu_copy_handle('csa')") CSA
+                b-button(@click="kifu_copy_handle('sfen')") SFEN
+                b-button(@click="kifu_copy_handle('bod')") BOD
 
           b-field(grouped)
             b-field
@@ -89,23 +89,23 @@ ruby:
             b-field
               .buttons.has-addons.are-small
                 .button.kif_show_button(@click="kifu_show_handle('kif')") KIF
-                .button(@click="kifu_show_handle('ki2')") KI2
-                .button(@click="kifu_show_handle('csa')") CSA
-                .button(@click="kifu_show_handle('sfen')") SFEN
-                .button(@click="kifu_show_handle('bod')") BOD
-                .button(@click="png_show_handle") PNG
+                b-button(@click="kifu_show_handle('ki2')") KI2
+                b-button(@click="kifu_show_handle('csa')") CSA
+                b-button(@click="kifu_show_handle('sfen')") SFEN
+                b-button(@click="kifu_show_handle('bod')") BOD
+                b-button(@click="png_show_handle") PNG
 
           b-field(grouped)
             b-field
               b-icon.icon_in_field(icon="download" size="is-small")
             b-field
               .buttons.has-addons.are-small
-                .button(@click="kifu_dl_handle('kif')") KIF
-                .button(@click="kifu_dl_handle('ki2')") KI2
-                .button(@click="kifu_dl_handle('csa')") CSA
-                .button(@click="kifu_dl_handle('sfen')") SFEN
-                .button(@click="kifu_dl_handle('bod')") BOD
-                .button(@click="png_dl_handle") PNG
+                b-button(@click="kifu_dl_handle('kif')") KIF
+                b-button(@click="kifu_dl_handle('ki2')") KI2
+                b-button(@click="kifu_dl_handle('csa')") CSA
+                b-button(@click="kifu_dl_handle('sfen')") SFEN
+                b-button(@click="kifu_dl_handle('bod')") BOD
+                b-button(@click="png_dl_handle") PNG
 
           template(v-if="development_p")
             b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
