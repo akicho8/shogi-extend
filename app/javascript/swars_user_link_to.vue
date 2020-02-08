@@ -13,15 +13,15 @@
             b-icon(icon="account" size="is-small")
             span.a_label プレイヤー情報
       b-dropdown-item(:has-link="true")
-        a(@click="() => {}" :href="membership.swars_home_url" target="_blank")
+        a(@click="() => {}" :href="membership.swars_home_url")
           b-icon(icon="open-in-new" size="is-small")
           span.a_label ウォーズに飛ぶ
       b-dropdown-item(:has-link="true")
-        a(@click="() => {}" :href="membership.google_search_url" target="_blank")
+        a(@click="() => {}" :href="membership.google_search_url")
           b-icon(icon="google" size="is-small")
           span.a_label ぐぐる
       b-dropdown-item(:has-link="true")
-        a(@click="() => {}" :href="membership.twitter_search_url" target="_blank")
+        a(@click="() => {}" :href="membership.twitter_search_url")
           b-icon(icon="twitter" size="is-small")
           span.a_label Twitter検索
 </template>

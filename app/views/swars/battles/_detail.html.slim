@@ -13,7 +13,7 @@ template(slot="detail" slot-scope="props")
     a.button(:href="`${props.row.show_path}.ki2?attachment=true`")
       | KI2 ダウンロード
 
-    a.button(:href="props.row.official_swars_battle_url" target="_blank")
+    a.button(:href="props.row.official_swars_battle_url")
       | ウォーズに飛ぶ
 
     a.button(@click.prevent="simple_clipboard_copy(props.row.swars_tweet_text)")

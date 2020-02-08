@@ -236,12 +236,12 @@ class TacticNotesController < ApplicationController
           else
             name = e.truncate(32)
           end
-          link_to(name, e, target: "_blank")
+          link_to(name, e)
         }.join(tag.br).html_safe
         row["参考URL"] = str
       else
         # str = urls.collect.with_index { |e, i|
-        #   link_to(("A".ord + i).chr, e, target: "_blank")
+        #   link_to(("A".ord + i).chr, e)
         # }.join(" ").html_safe
       end
     end

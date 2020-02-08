@@ -13,7 +13,7 @@
 
     template(v-if="record.formal_sheet_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="record.formal_sheet_path" target="_blank")
+        a(:href="record.formal_sheet_path")
           b-icon(icon="note-outline" size="is-small")
           span.a_label 棋譜用紙
 
@@ -81,13 +81,13 @@
 
     template(v-if="record.tweet_window_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="record.tweet_window_url" target="_blank")
+        a(:href="record.tweet_window_url")
           b-icon(icon="twitter" size="is-small")
           span.a_label ツイート
 
     template(v-if="record.official_swars_battle_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="record.official_swars_battle_url" target="_blank")
+        a(:href="record.official_swars_battle_url")
           b-icon(icon="link" size="is-small")
           span.a_label ウォーズに飛ぶ
 
