@@ -102,7 +102,11 @@ Rails.application.routes.draw do
     "https://shogiwars.heroz.jp/users/mypage/#{user.user_key}?#{options.to_query}"
   end
 
+  # 【需要】渡すURLをエスケープしてはいけない
   direct :piyo_shogi_app do |url|
+    if Rails.env.development?
+      url = "http://wdoor.c.u-tokyo.ac.jp/shogi/LATEST//2016/09/24/wdoor+floodgate-600-10F+gpsfish_normal_1c+gps_l+20160924113005.csa"
+    end
     "piyoshogi://?url=#{url}"
   end
 
