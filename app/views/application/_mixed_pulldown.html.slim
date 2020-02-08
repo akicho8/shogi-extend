@@ -22,7 +22,7 @@
       span 直リンク
       b-icon(icon="menu-down")
     - KifuFormatWithBodInfo.each do |e|
-      = link_to([current_record, format: e.key]) do
+      = link_to([current_record, format: e.key], target: "_blank") do
         b-dropdown-item
           = e.name
 
@@ -33,7 +33,7 @@
         button.button(slot="trigger")
           span ウォーズ関連
           b-icon icon="menu-down"
-        = content_tag("b-dropdown-item", "将棋ウォーズ", href: official_swars_battle_url(current_record))
+        = content_tag("b-dropdown-item", "将棋ウォーズ", href: official_swars_battle_url(current_record), target: "_blank")
         - if AppConfig[:swars_side_tweet_copy_function]
           b-dropdown-item(:has-link="true" :paddingless="true")
             = link_to("ウォーズTweetコピー", "#", "@click.prevent" => "simple_clipboard_copy('#{current_record.swars_tweet_text}')")
@@ -57,7 +57,7 @@
 
     - if current_record.kind_of?(Swars::Battle)
     - else
-      a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url)
+      a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_blank")
         b-icon(icon="twitter" size="is-small")
         | &nbsp;
         | &nbsp;

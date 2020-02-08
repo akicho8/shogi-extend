@@ -30,7 +30,7 @@ nav.navbar.is-primary.is_screen_only
             = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
 
     #header_app.navbar-end(v-cloak)
-      = link_to(icon_tag(:cancel, margin_right: 1) + "production", production_app_url, class: ["navbar-item"]) unless Rails.env.production?
+      = link_to(icon_tag(:cancel, margin_right: 1) + "production", production_app_url, class: ["navbar-item"], target: "_blank") unless Rails.env.production?
 
       / - unless current_user
       /   = link_to("アカウント作成", [:new, :colosseum, :session], class: "navbar-item")

@@ -33,9 +33,9 @@
       .columns
         .column
           .buttons
-            = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, class: "button is-small is-rounded")
-            = link_to(icon_tag(:twitter, size: "is-small") + "&nbsp;Twitterで探す".html_safe, twitter_search_url(current_swars_user.user_key), class: "button is-small is-rounded is-info")
-            = link_to(icon_tag(:google, size: "is-small") + "&nbsp;ぐぐる".html_safe, google_search_url(current_swars_user.user_key), class: "button is-small is-rounded is-danger")
+            = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, target: "_blank", class: "button is-small is-rounded")
+            = link_to(icon_tag(:twitter, size: "is-small") + "&nbsp;Twitterで探す".html_safe, twitter_search_url(current_swars_user.user_key), target: "_blank", class: "button is-small is-rounded is-info")
+            = link_to(icon_tag(:google, size: "is-small") + "&nbsp;ぐぐる".html_safe, google_search_url(current_swars_user.user_key), target: "_blank", class: "button is-small is-rounded is-danger")
       .columns
         .column
           - stat = current_swars_user.secret_summary

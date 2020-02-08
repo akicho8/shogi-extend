@@ -7,7 +7,7 @@
             li= link_to("プライバシー", [:about, id: :privacy_policy])
             li= link_to("利用規約", [:about, id: :terms])
             li= link_to("クレジット", [:about, id: :credit])
-            li= link_to("問い合わせ", "https://twitter.com/sgkinakomochi")
+            li= link_to("問い合わせ", "https://twitter.com/sgkinakomochi", target: "_blank")
             - if Rails.env.development?
               li= link_to("404", root_path + "404.html")
               li= link_to("422", root_path + "422.html")
@@ -16,22 +16,22 @@
           ul
             ul
               b GitHub
-            ul= link_to("shogi_web", "https://github.com/akicho8/shogi_web")
-            ul= link_to("shogi-player", "https://akicho8.github.io/shogi-player/")
-            ul= link_to("bioshogi", "https://github.com/akicho8/bioshogi")
+            ul= link_to("shogi_web", "https://github.com/akicho8/shogi_web", target: "_blank")
+            ul= link_to("shogi-player", "https://akicho8.github.io/shogi-player/", target: "_blank")
+            ul= link_to("bioshogi", "https://github.com/akicho8/bioshogi", target: "_blank")
             - if true
-              ul= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi")
-              ul= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode")
+              ul= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi", target: "_blank")
+              ul= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode", target: "_blank")
         - if false
           .column.has-text-centered
             ul
-              li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
+              li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io", target: "_blank")
       .column
         .column.has-text-centered
           = "Powered by "
-          = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/")
+          = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/", target: "_blank")
           = " and "
-          = link_to("Rails #{Rails.version}", "https://rubyonrails.org/")
+          = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", target: "_blank")
 
           #system_notification_app
             - if !Rails.env.production? || params[:debug_mode] == "1"

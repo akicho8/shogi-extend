@@ -101,7 +101,7 @@
 
       template(v-if="rows.length >= 1")
         .has-text-centered
-          a.button.is-info.is-rounded(:href="twitter_url")
+          a.button.is-info.is-rounded(:href="twitter_url" target="_blank")
             | &nbsp;
             b-icon(icon="twitter" size="is-small")
             | &nbsp;
