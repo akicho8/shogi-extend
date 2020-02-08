@@ -2,7 +2,7 @@ window.talk_sound = null
 
 export default {
   methods: {
-    wars_tweet_copy_click(swars_tweet_text) {
+    simple_clipboard_copy(swars_tweet_text) {
       this.clipboard_copy({text: swars_tweet_text})
     },
 

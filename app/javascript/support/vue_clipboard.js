@@ -1,93 +1,81 @@
 export default {
   methods: {
-    wars_tweet_copy_click(swars_tweet_text) {
-      this.clipboard_copy({text: swars_tweet_text})
+    // いちばん簡単なインターフェイス
+    simple_clipboard_copy(text) {
+      this.clipboard_copy({text: text})
     },
 
     // Rails の通常のビューから使う用
     // とても使いにくい
-    kifu_copy_exec_click(e) {
+    kif_clipboard_copy_for_rails_view(e) {
       const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
-      this.kifu_copy_exec(params)
+      this.kif_clipboard_copy(params)
     },
 
     // 指定 URL の結果をクリップボードにコピー
     // 引数の params を更新していって前回取得したテキストを保存し、2度目からはajaxしない
-    kifu_copy_exec(params) {
-      if (params.success_message == null) { params.success_message = "棋譜をクリップボードにコピーしました" }
-
-      if (params["text"]) {
+    kif_clipboard_copy(params) {
+      if (params.text) {
         this.debug_alert("パラメータにテキストが含まれる")
         this.clipboard_copy(params)
         return
       }
 
-      const kc_url = params["kc_url"]
-      const kc_title = params["kc_title"]
-      if (kc_title && false) {
-        params["success_yomiage"] = `${kc_title}の棋譜をクリップボードにコピーしました`
-      }
+      if (params.kc_url) {
+        const kc_format = params.kc_format || "kif"
+        const full_url = `${params.kc_url}.${kc_format}`
 
-      if (kc_url) {
-        const kc_format = params["kc_format"] || "kif"
-        const full_url = `${kc_url}.${kc_format}`
-
-        if (true) {
-          this.http_get_command(full_url, {}, data => {
-            this.debug_alert("AJAX後にテキスト取得")
-            params["text"] = data
-            this.clipboard_copy(params)
-          })
-        } else {
-          const kifu_text = $.ajax({ // このためだけに jQuery 使用
-            type: "GET",
-            url: `${full_url}?copy_trigger=true`,
-            async: false, // 実際のクリックのタイミングでしかクリップボードへのコピーは作動しないという鬼仕様のため同期(重要)
-          }).responseText
-          params["text"] = kifu_text
+        this.http_get_command(full_url, {}, data => {
+          this.debug_alert("AJAX後にテキスト取得")
+          params.text = data
           this.clipboard_copy(params)
-        }
+        })
+
+        return
       }
+
+      alert("must not happen")
     },
 
-    // str をクリップボードにコピー
+    // params.text をクリップボードにコピー
+    // params を破壊する
+    // params をずっと保持していれば1,2度目で挙動がかわる
     clipboard_copy(params) {
-      if (params.success_message == null) { params.success_message = "クリップボードにコピーしました"         }
-      if (params.error_message == null)   { params.error_message   = "クリップボードへのコピーに失敗しました" }
-      if (params.success_yomiage == null) { params.success_yomiage = "コピーしました"                         }
-      if (params.error_yomiage == null)   { params.error_yomiage   = "失敗しました"                           }
+      if (params.success_message  == null) { params.success_message  = "コピーしました"                                           }
+      if (params.failure_message1 == null) { params.failure_message1 = "なぜか最初だけ失敗するのでもう一回タップしてみてください" }
+      if (params.failure_message2 == null) { params.failure_message2 = "失敗しました。もう何回やってもダメそうです"               }
 
       let success = false
 
       if (true) {
         // この方法は iPhone で動かない。先に elem.select() を実行した時点で iPhone の方が作動しなくなる
         if (false) {
-          const elem = document.createElement("textarea")
-          elem.value = params["text"]
-          document.body.appendChild(elem)
-          elem.select() // この方法は Windows Chrome でのみ動く
+          const el = document.createElement("textarea")
+          el.value = params.text
+          document.body.appendChild(el)
+          el.select() // この方法は Windows Chrome でのみ動く
           success = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
           console.log(`クリップボードコピー試行1: select => ${success}`)
 
           if (!success) {
             // この方法は iPhone と Mac の Chrome で動く。Mac の Safari では未検証
             const range = document.createRange()
-            range.selectNode(elem)
+            range.selectNode(el)
             window.getSelection().addRange(range)
             success = document.execCommand("copy")
             console.log(`クリップボードコピー試行2: selectNode => ${success}`)
           }
 
-          document.body.removeChild(elem)
+          document.body.removeChild(el)
         }
 
         // https://marmooo.blogspot.com/2018/02/javascript.html
         if (true) {
-          const elem = document.createElement('textarea')
-          document.body.appendChild(elem)
-          elem.value = params["text"]
-          success = this.corresponded_to_ios_pc_android_copy_to_clipboard(elem)
-          document.body.removeChild(elem)
+          const el = document.createElement('textarea')
+          document.body.appendChild(el)
+          el.value = params.text
+          success = this.corresponded_to_ios_pc_android_copy_to_clipboard(el)
+          document.body.removeChild(el)
         }
 
         if (!success) {
@@ -96,28 +84,31 @@ export default {
             this.clipboard_copy_error_dialog(params)
           } else {
             if (params.error_counter == 1) {
-              this.talk("失敗しました。もう一度タップしてみてください", {rate: 1.5})
-              this.$buefy.toast.open({message: "失敗しました。もう一度タップしてみてください", position: "is-bottom", queue: false, type: "is-warning"})
+              this.talk(params.failure_message1, {rate: 1.5})
+              this.$buefy.toast.open({message: params.failure_message1, position: "is-bottom", queue: false, type: "is-warning"})
             }
             if (params.error_counter >= 2) {
-              this.talk("失敗しました。もう何回やってもだめそうです", {rate: 1.5})
-              this.$buefy.toast.open({message: "失敗しました。もう何回やってもだめそうです", position: "is-bottom", queue: false, type: "is-danger"})
+              this.talk(params.failure_message2, {rate: 1.5})
+              this.$buefy.toast.open({message: params.failure_message2, position: "is-bottom", queue: false, type: "is-danger"})
               this.clipboard_copy_error_dialog(params)
             }
           }
           return
         }
 
-        this.talk(params["success_yomiage"], {rate: 1.5})
-        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", queue: false, type: "is-info"})
+        this.talk(params["success_message"], {rate: 1.5})
+        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", queue: false, type: "is-success"})
       }
 
       // この方法は Windows Chrome で必ず失敗するというか navigator.clipboard が定義されてないので激指をメインで使う人は異様に使いにくくなってしまう
       // https://alligator.io/js/async-clipboard-api/
+      //
+      // PC Safari, iOS Safari も対応してない
+      // https://developer.mozilla.org/ja/docs/Web/API/Navigator/clipboard
       if (false) {
         if (navigator.clipboard) {
-          navigator.clipboard.writeText(params["text"]).then(() => {
-            this.talk(params["success_yomiage"])
+          navigator.clipboard.writeText(params.text).then(() => {
+            this.talk(params["success_message"])
             this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", queue: false, type: "is-success"})
           }).catch(err => {
             this.clipboard_copy_error_dialog(params)
@@ -129,8 +120,8 @@ export default {
     },
 
     clipboard_copy_error_dialog(params) {
-      // this.talk(params["error_yomiage"], {rate: 2.0})
-      // this.$buefy.toast.open({message: params["error_message"], position: "is-bottom", queue: false, type: "is-danger"})
+      // this.talk(params["failure_message"], {rate: 2.0})
+      // this.$buefy.toast.open({message: params["failure_message"], position: "is-bottom", queue: false, type: "is-danger"})
 
       this.$buefy.modal.open({
         parent: this,

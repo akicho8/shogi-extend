@@ -84,7 +84,7 @@ window.Adapter = Vue.extend({
     },
 
     kifu_copy_handle(kifu_type) {
-      this.record_fetch(() => this.clipboard_copy({text: this.all_kifs[kifu_type], success_message: "棋譜をクリップボードにコピーしました"}))
+      this.record_fetch(() => this.simple_clipboard_copy(this.all_kifs[kifu_type]))
     },
 
     validate_handle() {

@@ -93,7 +93,7 @@
 
     template(v-if="record.swars_tweet_text")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(@click="wars_tweet_copy_click(record.swars_tweet_text)")
+        a(@click="simple_clipboard_copy(record.swars_tweet_text)")
           b-icon(icon="clipboard-outline" size="is-small")
           span.a_label ウォーズ側のTweetコピー
 </template>

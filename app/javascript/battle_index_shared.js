@@ -124,7 +124,7 @@ export default {
     },
 
     kifu_copy_handle(params) {
-      this.kifu_copy_exec(params)
+      this.kif_clipboard_copy(params)
     },
 
     modal_url_copy() {

@@ -25,7 +25,9 @@ export default {
 
     debug_alert(message) {
       if (this.development_p) {
-        this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", duration: 1000 * 1.0})
+        if (message) {
+          this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", duration: 1000 * 1.0, queue: false})
+        }
       }
     },
 

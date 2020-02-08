@@ -134,7 +134,7 @@ class CpuBattlesController < ApplicationController
 
       # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).mediator.to_sfen
       # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
-      # render json: {error_message: error_message, before_sfen: before_sfen}
+      # render json: {failure_message: failure_message, before_sfen: before_sfen}
 
       final_decision(judge_key: :lose, irregular: true, message: message)
       return
