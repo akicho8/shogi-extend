@@ -49,13 +49,15 @@ ruby:
             | {{bs_error.board}}
 
       template(v-if="!bs_error")
-        a(@click="piyo_shogi_open_handle")
+        a(@click.prevent="piyo_shogi_open_handle" :href="record ? record.piyo_shogi_app_url : ''")
           = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
         | &nbsp;
-        a.button.is-small.kento_app_button(@click="kento_open_handle" href="")
+        / remote fetch が終わる前に href="" に対して遷移しようとするため .prevent が必要
+        / なぜ href で URL を入れるのか？ → 長押しで別タブで飛びたいため
+        b-button.kento_app_button(@click.prevent="kento_open_handle" size="is-small" tag="a" :href="record ? record.kento_app_url : 'https://www.kento-shogi.com/'")
           | ☗ KENTO
         | &nbsp;
-        .button.is-small.kif_copy_link(@click="kifu_copy_handle('kif')") 棋譜コピー
+        b-button.kif_copy_link(@click="kifu_copy_handle('kif')" size="is-small") 棋譜コピー
 
   template(v-if="!bs_error")
 
@@ -68,44 +70,46 @@ ruby:
       .column
         template(v-if="option_show_p")
           .buttons.are-small
-            b-button(@click="board_show_handle" icon-left="") 盤面
-            b-button(@click="kifu_paper_handle" icon-left="pdf-box") 印刷
             b-button(@click="validate_handle" :icon-left="record ? 'check' : 'help'") 検証
+            b-button(@click="board_show_handle" icon-left="") 盤面
+            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? record.formal_sheet_path : ''") 印刷
 
           b-field(grouped)
             b-field
               b-icon.icon_in_field(icon="clipboard-outline" size="is-small")
             b-field
               .buttons.has-addons.are-small
-                b-button(@click="kifu_copy_handle('kif')") KIF
-                b-button(@click="kifu_copy_handle('ki2')") KI2
-                b-button(@click="kifu_copy_handle('csa')") CSA
+                b-button(@click="kifu_copy_handle('kif')")  KIF
+                b-button(@click="kifu_copy_handle('ki2')")  KI2
+                b-button(@click="kifu_copy_handle('csa')")  CSA
                 b-button(@click="kifu_copy_handle('sfen')") SFEN
-                b-button(@click="kifu_copy_handle('bod')") BOD
+                b-button(@click="kifu_copy_handle('bod')")  BOD
 
           b-field(grouped)
             b-field
               b-icon.icon_in_field(icon="eye" size="is-small")
             b-field
               .buttons.has-addons.are-small
-                .button.kif_show_button(@click="kifu_show_handle('kif')") KIF
-                b-button(@click="kifu_show_handle('ki2')") KI2
-                b-button(@click="kifu_show_handle('csa')") CSA
-                b-button(@click="kifu_show_handle('sfen')") SFEN
-                b-button(@click="kifu_show_handle('bod')") BOD
-                b-button(@click="png_show_handle") PNG
+                b-button(@click.prevent="kifu_show_handle('kif')"  tag="a" :href="kifu_show_url('kif')")  KI2
+                b-button(@click.prevent="kifu_show_handle('ki2')"  tag="a" :href="kifu_show_url('ki2')")  KI2
+                b-button(@click.prevent="kifu_show_handle('csa')"  tag="a" :href="kifu_show_url('csa')")  CSA
+                b-button(@click.prevent="kifu_show_handle('sfen')" tag="a" :href="kifu_show_url('sfen')") SFEN
+                b-button(@click.prevent="kifu_show_handle('bod')"  tag="a" :href="kifu_show_url('bod')")  BOD
+                b-button(@click.prevent="png_show_handle()"        tag="a" :href="png_show_url()")        PNG
+                - if Rails.env.test?
+                  b-button.kif_show_button(@click="kifu_show_handle('kif')") KIF
 
           b-field(grouped)
             b-field
               b-icon.icon_in_field(icon="download" size="is-small")
             b-field
               .buttons.has-addons.are-small
-                b-button(@click="kifu_dl_handle('kif')") KIF
-                b-button(@click="kifu_dl_handle('ki2')") KI2
-                b-button(@click="kifu_dl_handle('csa')") CSA
-                b-button(@click="kifu_dl_handle('sfen')") SFEN
-                b-button(@click="kifu_dl_handle('bod')") BOD
-                b-button(@click="png_dl_handle") PNG
+                b-button(@click.prevent="kifu_dl_handle('kif')"  tag="a" :href="kifu_dl_url('kif')")  KI2
+                b-button(@click.prevent="kifu_dl_handle('ki2')"  tag="a" :href="kifu_dl_url('ki2')")  KI2
+                b-button(@click.prevent="kifu_dl_handle('csa')"  tag="a" :href="kifu_dl_url('csa')")  CSA
+                b-button(@click.prevent="kifu_dl_handle('sfen')" tag="a" :href="kifu_dl_url('sfen')") SFEN
+                b-button(@click.prevent="kifu_dl_handle('bod')"  tag="a" :href="kifu_dl_url('bod')")  BOD
+                b-button(@click.prevent="png_dl_handle()"        tag="a" :href="png_dl_url()")        PNG
 
           template(v-if="development_p")
             b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")

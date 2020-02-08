@@ -108,27 +108,60 @@ window.Adapter = Vue.extend({
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
-      this.record_fetch(() => { this.self_window_open(this.show_url_for(kifu_type, {disposition: "attachment"})) })
+      this.record_fetch(() => this.self_window_open(this.kifu_dl_url(kifu_type)))
     },
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.record_fetch(() => { this.other_window_open(this.show_url_for(kifu_type)) })
+      this.record_fetch(() => this.other_window_open(this.kifu_show_url(kifu_type)))
     },
 
     // 画像 表示
-    png_show_handle(disposition) {
-      this.record_fetch(() => this.other_window_open(`${this.record.show_path}.png?width=840&turn=${this.record.turn_max}`))
+    png_show_handle() {
+      this.record_fetch(() => this.other_window_open(this.png_show_url()))
     },
 
     // 画像 DL
     png_dl_handle() {
-      this.record_fetch(() => this.self_window_open(`${this.record.show_path}.png?width=840&turn=${this.record.turn_max}&disposition=attachment`))
+      this.record_fetch(() => this.self_window_open(this.png_dl_url()))
     },
 
     // 「盤面」
     board_show_handle() {
       this.record_fetch(() => this.board_show_p = true)
+    },
+
+    // helper
+
+    kifu_show_url(kifu_type, other_params = {}) {
+      if (this.record) {
+        // やっぱり普通のハッシュで扱った方がわかりやすい
+        const params = {...other_params}
+        if (this.body_encode === "sjis") {
+          params["body_encode"] = this.body_encode
+        }
+
+        // 最後に変換
+        const usp = new URLSearchParams()
+        _.each(params, (v, k) => usp.set(k, v))
+        return normalizeUrl(`${this.record.show_path}.${kifu_type}?${usp}`)
+      }
+    },
+
+    kifu_dl_url(kifu_type) {
+      return this.kifu_show_url(kifu_type, {disposition: "attachment"})
+    },
+
+    png_show_url() {
+      if (this.record) {
+        return `${this.record.show_path}.png?width=840&turn=${this.record.turn_max}`
+      }
+    },
+
+    png_dl_url() {
+      if (this.record) {
+        return `${this.record.show_path}.png?width=840&turn=${this.record.turn_max}&disposition=attachment`
+      }
     },
 
     // private
@@ -217,21 +250,6 @@ window.Adapter = Vue.extend({
         console.table([error.response])
         this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
-    },
-
-    // helper
-
-    show_url_for(kifu_type, other_params = {}) {
-      // やっぱり普通のハッシュで扱った方がわかりやすい
-      const params = {...other_params}
-      if (this.body_encode === "sjis") {
-        params["body_encode"] = this.body_encode
-      }
-
-      // 最後に変換
-      const usp = new URLSearchParams()
-      _.each(params, (v, k) => usp.set(k, v))
-      return normalizeUrl(`${this.record.show_path}.${kifu_type}?${usp}`)
     },
   },
 })

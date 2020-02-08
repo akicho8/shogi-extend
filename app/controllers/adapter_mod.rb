@@ -11,6 +11,7 @@ module AdapterMod
     if current_record.save
       all_kifs = current_record.all_kifs # エラーにならないことを確認する目的もある
       ok_notify
+      sleep(1) if Rails.env.development?
       render json: { all_kifs: all_kifs, record: js_record_for(current_record) }
       return
     else
