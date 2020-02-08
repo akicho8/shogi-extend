@@ -73,7 +73,7 @@ template(slot-scope="props")
 
       - if AppConfig[:kento_enable]
         | &nbsp;
-        a.button.is-small.kento_app_button(@click.stop :href="props.row.kento_app_url" target="_blank")
+        a.button.is-small.kento_app_button(@click.stop :href="props.row.kento_app_url")
           | ☗ KENTO
 
       template(v-if="props.row.kifu_copy_params")

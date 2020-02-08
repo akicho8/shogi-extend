@@ -43,7 +43,7 @@
 
     - if AppConfig[:kento_enable]
       - url = kento_app_url(full_url_for([current_record, format: "kif"]))
-      a.button.kento_app_button(href=url target="_blank")
+      a.button.kento_app_button(href=url)
         | ☗ KENTO
 
     = link_to("ポップアップURL", current_record.modal_on_index_url, class: "button")
