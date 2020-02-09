@@ -262,7 +262,7 @@ module BattleControllerSharedMethods
 
     let :modal_record do
       if v = params[:modal_id]
-        if record = current_scope.find_by(id: v)
+        if record = current_scope.find_by(key: v) || current_scope.find_by(id: v)
           access_log_create(record)
           record
         end
