@@ -5,7 +5,15 @@ module BattleDecorator
     end
 
     def tournament_name
-      heavy_parsed_info.header["棋戦"]
+      if md = tournament_name_md
+        md["tournament_name"]
+      end
+    end
+
+    def rule_name
+      if md = tournament_name_md
+        md["rule_name"]
+      end
     end
 
     def player_name_for(location)
@@ -50,6 +58,16 @@ module BattleDecorator
 
     def total_seconds_for(location)
       heavy_parsed_info.mediator.player_at(location).personal_clock.total_seconds
+    end
+
+    private
+
+    def normalized_full_tournament_name
+      normalize_str(heavy_parsed_info.header["棋戦"])
+    end
+
+    def tournament_name_md
+      normalized_full_tournament_name.match(/(?<tournament_name>.*)\s*\((?<rule_name>.*)\)\z/)
     end
   end
 end
