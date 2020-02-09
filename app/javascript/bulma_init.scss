@@ -15,6 +15,8 @@ $google: rgb(221, 75,  57);
 $google-invert: findColorInvert($google);
 $gold: hsl(38, 80%, 60%);
 $gold-invert: findColorInvert($gold);
+$piyo: #f29601;
+$piyo-invert: findColorInvert($piyo);
 
 @import "~bulma/sass/utilities/derived-variables";
 
@@ -24,6 +26,7 @@ $addColors: (
   "github": ($github, $github-invert),
   "google": ($google, $google-invert),
   "gold": ($gold, $gold-invert),
+  "piyo": ($piyo, $piyo-invert),
 );
 $colors: map-merge($colors, $addColors);
 
