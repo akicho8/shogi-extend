@@ -34,12 +34,10 @@
       @details-open="details_open_handle"
       :show-detail-icon="showDetailIcon"
 
-      @click="show_handle"
-
       :row-class="(row, index) => row.saturn_key"
 
       )
-
+      / @click="show_handle"
       / @details-open="(row, index) => $toast.open(`Expanded ${row.title} index:${index}`)"
 
       = render partial: "table_empty"

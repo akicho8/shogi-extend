@@ -1,9 +1,6 @@
 <template lang="pug">
-  b-dropdown(:hoverable="true" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
-    button.button.is-small(slot="trigger")
-      //- span もっと見る
-      .arrow_icon
-        b-icon(:icon="in_modal ? 'menu-up' : 'menu-down'")
+  b-dropdown(:hoverable="false" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
+    b-button.arrow_icon(slot="trigger" size="is-small" :icon-left="in_modal ? 'menu-up' : 'menu-down'")
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
@@ -14,7 +11,7 @@
     template(v-if="record.formal_sheet_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.formal_sheet_path" target="_self")
-          b-icon(icon="note-outline" size="is-small")
+          b-icon(icon="pdf-box" size="is-small")
           span.a_label 棋譜用紙
 
     template(v-if="record.edit_path")
