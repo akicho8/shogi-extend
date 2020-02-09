@@ -281,5 +281,11 @@ module BattleDecorator
     def vc
       params[:view_context]
     end
+
+    # helper methods
+
+    def normalize_str(str)
+      NKF.nkf('-w -Z', str.to_s).squish
+    end
   end
 end

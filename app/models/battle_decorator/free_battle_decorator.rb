@@ -17,8 +17,15 @@ module BattleDecorator
     end
 
     def player_name_for(location)
-      location = Bioshogi::Location[location]
-      heavy_parsed_info.header.to_h.values_at(*location.call_names).compact.first
+      if md = player_name_md(location)
+        md["player_name"]
+      end
+    end
+
+    def grade_name_for(location)
+      if md = player_name_md(location)
+        md["grade_name"]
+      end
     end
 
     def strategy_pack_core(location)
@@ -47,8 +54,9 @@ module BattleDecorator
         # 「先手」を実際の名前に置き換える場合
         Bioshogi::Location.each do |location|
           if name = player_name_for(location).presence
-            grade = grade_name_for(location) # FreeBattle の場合、常に空なので意味ない
-            str = str.gsub(/#{location.call_names.join("|")}/, "#{grade}#{name}")
+            # grade = grade_name_for(location) # FreeBattle の場合、常に空なので意味ない
+            grade = nil
+            str = str.gsub(/#{location.call_names.join("|")}/, " #{grade}#{name} ")
           end
         end
       end
@@ -68,6 +76,15 @@ module BattleDecorator
 
     def tournament_name_md
       normalized_full_tournament_name.match(/(?<tournament_name>.*)\s*\((?<rule_name>.*)\)\z/)
+    end
+
+    def full_player_name(location)
+      location = Bioshogi::Location[location]
+      heavy_parsed_info.header.to_h.values_at(*location.call_names).compact.first.to_s
+    end
+
+    def player_name_md(location)
+      full_player_name(location).match(/(?<player_name>.+?)\s*(\((?<grade_name>\d+)\))?\z/) # #<MatchData "niwapin(2298)" player_name:"niwapin" grade_name:"2298">
     end
   end
 end
