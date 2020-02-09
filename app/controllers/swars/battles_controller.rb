@@ -64,6 +64,11 @@ module Swars
         return
       end
 
+      kento_json_render
+      if performed?
+        return
+      end
+
       external_app_setup
       if performed?
         return
@@ -82,13 +87,7 @@ module Swars
         end
       end
 
-      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき
-      if primary_key
-        # 一覧に表示したいので取得
-        current_model.single_battle_import(key: primary_key)
-      else
-        import_process(flash.now)
-      end
+      import_process2(flash)
 
       external_app_run
       if performed?
@@ -121,7 +120,7 @@ module Swars
     end
 
     def create
-      import_process(flash)
+      import_process(flash)     # これはなに……？？？
       flash[:import_skip] = true
       redirect_to [:swars, :battles, query: current_swars_user]
     end
@@ -164,6 +163,16 @@ module Swars
     let :primary_key do
       if query = params[:query].presence
         Battle.battle_key_extract(query)
+      end
+    end
+
+    def import_process2(flash)
+      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき
+      if primary_key
+        # 一覧に表示したいので取得
+        current_model.single_battle_import(key: primary_key)
+      else
+        import_process(flash.now)
       end
     end
 

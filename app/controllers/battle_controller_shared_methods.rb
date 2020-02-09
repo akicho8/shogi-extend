@@ -3,6 +3,7 @@ module BattleControllerSharedMethods
 
   include ShogiErrorRescueMod
   include KifShowMod
+  include KentoJsonMod
 
   concerning :IndexMethods do
     included do
