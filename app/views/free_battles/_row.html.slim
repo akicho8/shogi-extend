@@ -32,19 +32,22 @@ template(slot-scope="props")
       | {{props.row.saturn_key}}
 
   b-table-column(label="")
-    .row_operations
-      a(@click.stop :href="props.row.piyo_shogi_app_url")
-        = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
+    .row_operations.is-inline-flex
+      .buttons.are-small
+        b-button.sp_modal_button(icon-pack="fas" icon-left="plus-square" @click="show_handle(props.row)")
+          b 盤面
 
-      - if AppConfig[:kento_enable]
-        | &nbsp;
+        a.button.piyo_button(type="button" :href="props.row.piyo_shogi_app_url")
+          span.icon
+            = image_tag("piyo_shogi_icon.png")
+          span ぴよ将棋
+
         b-button.kento_app_button(tag="a" size="is-small" @click.stop :href="props.row.kento_app_url")
           | ☗ KENTO
 
-      template(v-if="props.row.kifu_copy_params")
-        | &nbsp;
-        a.button.is-small(@click.stop.prevent="kifu_copy_handle({...props.row.kifu_copy_params, kc_format: 'kif'})")
-          | 棋譜コピー
+        template(v-if="props.row.kifu_copy_params")
+          a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row.kifu_copy_params)")
+            b 棋譜コピー
 
       | &nbsp;
       pulldown_menu(:record="props.row")
@@ -59,8 +62,8 @@ template(slot-scope="props")
       /     b-tooltip(label="編集")
       /       b-icon(custom-size="mdi-18px" icon="pencil")
 
-      template(v-if="props.row.tweet_origin_image_path")
-        | &nbsp;
-        a(@click.stop :href="props.row.tweet_origin_image_path" target="_self")
-          b-tooltip(label="OGP画像")
-            img.mini_img(:src="props.row.tweet_origin_image_path")
+      / template(v-if="props.row.tweet_origin_image_path")
+      /   | &nbsp;
+      /   a(@click.stop :href="props.row.tweet_origin_image_path" target="_self")
+      /     b-tooltip(label="OGP画像")
+      /       img.mini_img(:src="props.row.tweet_origin_image_path")

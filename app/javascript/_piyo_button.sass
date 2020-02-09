@@ -1,15 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700&display=swap')
 
 .piyo_button
-  @extend .has-background-piyo
-  border-color: lighten($piyo, 30%)
-  &:hover
-    border-color: lighten($piyo, 10%)
-
   img
-    position: relative
-    top: -0.08rem
-    height: 1.3rem
+    // display: inline-block
+    // position: relative
+    // top: -0.08rem
+    // max-height: 1.3rem
     transition: transform 0.5s 0.3s ease-in-out
 
     @at-root .piyo_button:hover
@@ -17,7 +13,15 @@
         transform: rotate(360deg * 2 * -1)
 
   span
-    font-family: 'M PLUS Rounded 1c', sans-serif
-    vertical-align: 40%
+    // font-family: 'M PLUS Rounded 1c', sans-serif
+    // vertical-align: 40%
     font-weight: 700
-    color: white
+
+  // 色も黄色にする
+  &.orange_paint
+    @extend .has-background-piyo
+    border-color: lighten($piyo, 30%)
+    &:hover
+      border-color: lighten($piyo, 10%)
+    span
+      color: white

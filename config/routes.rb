@@ -111,6 +111,10 @@ Rails.application.routes.draw do
   end
 
   direct :kento_app do |url, **options|
+    if Rails.env.development?
+      url = "http://tk2-221-20341.vs.sakura.ne.jp/shogi/x/e63d5d2a3ccd460676a6b6265c1a0c2d.kif"
+    end
+
     options = {
       kifu: url,
     }.merge(options)

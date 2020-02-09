@@ -49,15 +49,19 @@ ruby:
             | {{bs_error.board}}
 
       template(v-if="!bs_error")
-        a(@click.prevent="piyo_shogi_open_handle" :href="record ? record.piyo_shogi_app_url : ''")
-          = image_tag("piyo_shogi_banner.png", "class": "row_piyo_link")
-        | &nbsp;
-        / remote fetch が終わる前に href="" に対して遷移しようとするため .prevent が必要
-        / なぜ href で URL を入れるのか？ → 長押しで別タブで飛びたいため
-        b-button.kento_app_button(@click.prevent="kento_open_handle" size="is-small" tag="a" :href="record ? record.kento_app_url : 'https://www.kento-shogi.com/'")
-          | ☗ KENTO
-        | &nbsp;
-        b-button.kif_copy_link(@click="kifu_copy_handle('kif')" size="is-small") 棋譜コピー
+        .buttons.are-small
+          a.button.piyo_button(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="record ? record.piyo_shogi_app_url : ''")
+            span.icon
+              = image_tag("piyo_shogi_icon.png")
+            span ぴよ将棋
+
+          / remote fetch が終わる前に href="" に対して遷移しようとするため .prevent が必要
+          / なぜ href で URL を入れるのか？ → 長押しで別タブで飛びたいため
+          b-button.kento_app_button(@click.prevent="kento_open_handle" tag="a" :href="record ? record.kento_app_url : 'https://www.kento-shogi.com/'")
+            | ☗ KENTO
+
+          b-button.kif_copy_link(@click="kifu_copy_handle('kif')")
+            | 棋譜コピー
 
   template(v-if="!bs_error")
 
@@ -71,7 +75,7 @@ ruby:
         template(v-if="option_show_p")
           .buttons.are-small
             b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'" :disabled="record") 検証
-            b-button(@click="board_show_handle" icon-left="") 盤面
+            b-button.sp_modal_button(@click="board_show_handle" icon-pack="fas" icon-left="plus-square") 盤面
             b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? record.formal_sheet_path : ''") 印刷
 
           b-field(grouped)
@@ -90,7 +94,7 @@ ruby:
               b-icon.icon_in_field(icon="eye" size="is-small")
             b-field
               .buttons.has-addons.are-small
-                b-button(@click.prevent="kifu_show_handle('kif')"  tag="a" :href="kifu_show_url('kif')")  KI2
+                b-button(@click.prevent="kifu_show_handle('kif')"  tag="a" :href="kifu_show_url('kif')")  KIF
                 b-button(@click.prevent="kifu_show_handle('ki2')"  tag="a" :href="kifu_show_url('ki2')")  KI2
                 b-button(@click.prevent="kifu_show_handle('csa')"  tag="a" :href="kifu_show_url('csa')")  CSA
                 b-button(@click.prevent="kifu_show_handle('sfen')" tag="a" :href="kifu_show_url('sfen')") SFEN
@@ -104,7 +108,7 @@ ruby:
               b-icon.icon_in_field(icon="download" size="is-small")
             b-field
               .buttons.has-addons.are-small
-                b-button(@click.prevent="kifu_dl_handle('kif')"  tag="a" :href="kifu_dl_url('kif')")  KI2
+                b-button(@click.prevent="kifu_dl_handle('kif')"  tag="a" :href="kifu_dl_url('kif')")  KIF
                 b-button(@click.prevent="kifu_dl_handle('ki2')"  tag="a" :href="kifu_dl_url('ki2')")  KI2
                 b-button(@click.prevent="kifu_dl_handle('csa')"  tag="a" :href="kifu_dl_url('csa')")  CSA
                 b-button(@click.prevent="kifu_dl_handle('sfen')" tag="a" :href="kifu_dl_url('sfen')") SFEN
