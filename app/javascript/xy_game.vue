@@ -19,15 +19,13 @@
                 b-dropdown-item(:value="e.key") {{e.name}}
 
             template(v-if="$root.$options.xy_game_custom_mode")
-              b-tooltip(label="盤のカスタマイズ")
-                b-button(@click="sp_setting_handle" icon-right="settings")
+              b-button(@click="sp_setting_handle" icon-right="settings")
 
             b-button(@click="rule_display" icon-right="help")
 
             template(v-if="$root.$options.xy_game_custom_mode")
               b-switch(v-model="bg_mode")
-                b-tooltip(label="駒を並べてある状態で行う")
-                  | 駒配置
+                | 駒配置
 
           template(v-if="development_p")
             template(v-if="mode === 'running'")

@@ -42,8 +42,7 @@
                 = link_to("OGP画像確認", controller.twitter_staitc_image_url(current_record), class: "button is-small")
             hr
             .buttons
-              b-tooltip(label="削除")
-                = link_to(icon_tag("trash-can-outline"), [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
+              = link_to(icon_tag("trash-can-outline"), [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
 
     template(v-if="output_kifs")
       .column
