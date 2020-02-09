@@ -185,7 +185,8 @@
 
 .is_row_clickable
   tbody
-    tr.public
+    // ↓この public は saturn_key が反映されているだけなのでとること
+    tr
       &:hover
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
         cursor: zoom-in
