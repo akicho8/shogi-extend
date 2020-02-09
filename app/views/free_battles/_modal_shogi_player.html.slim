@@ -49,20 +49,20 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             b-loading(:is-full-page="false" :active="!modal_record.sfen_body" :can-cancel="true")
 
       footer.modal-card-foot.space_between
-        a(@click.stop :href="modal_record.piyo_shogi_app_url")
-          = image_tag("piyo_shogi_banner.png", "class": "modal_piyo_link")
+        a.button.piyo_button.is-small(@click.stop type="button" :href="modal_record.piyo_shogi_app_url")
+          span.icon
+            = image_tag("piyo_shogi_icon.png")
+          span ぴよ将棋
 
-        - if AppConfig[:kento_enable]
-          b-button.kento_app_button(tag="a" size="is-small" @click.stop :href="`${modal_record.kento_app_url}#${real_pos}`")
-            | ☗ KENTO
-            template(v-if="development_p")
-              | #
-              | {{real_pos}}
+        b-button.kento_app_button(tag="a" size="is-small" @click.stop :href="`${modal_record.kento_app_url}#${real_pos}`")
+          | ☗ KENTO
+          | &nbsp;#
+          | {{real_pos}}
 
         template(v-if="modal_record.kifu_copy_params")
           b-tooltip(label="棋譜をクリップボードにコピーする" position="is-top")
             a.button.is-small(@click.stop.prevent="kifu_copy_handle({...modal_record.kifu_copy_params, kc_format: 'kif'})")
-              | 棋譜コピー
+              b 棋譜コピー
 
         pulldown_menu(:record="modal_record" :in_modal="true")
 
