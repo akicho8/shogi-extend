@@ -52,8 +52,10 @@ module SlackAgent
       a = []
       a << ua.browser
       if ua.os
-        unless ua.os.include?(ua.platform)
-          a << ua.platform
+        if ua.platform
+          unless ua.os.include?(ua.platform)
+            a << ua.platform
+          end
         end
         a << ua.os
       end
