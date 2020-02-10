@@ -29,7 +29,7 @@ ruby:
 b-button.font_size_limit_off_button.is_screen_only(@click="font_size_limit_off_modal_p = true" type="is-warning" icon-left="alert" size="is-large")
   | レイアウトが崩れていませんか？
 
-= render partial: "free_battles/font_size_limit_off"
+= render partial: "free_battles/font_size_limit_off_modal"
 
 .formal_sheet_workspace(class=Rails.env)
   - decorator.page_count.times do |page_index|
