@@ -88,9 +88,10 @@ class Talk
     # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
     # のエラーになることがある
 
-    unless Rails.env.production?
-      tp params
-      tp resp.to_h
+    if Rails.env.production?
+    else
+      Rails.logger.debug(params.to_t)
+      Rails.logger.debug(resp.to_h.to_t)
       # >> |-------------+----------------------------------------|
       # >> |      region | us-west-2                              |
       # >> | credentials | #<Aws::Credentials:0x00007fdb7bc7ba10> |
@@ -101,6 +102,7 @@ class Talk
       # >> | request_characters | 5                                                   |
       # >> |--------------------+-----------------------------------------------------|
     end
+
     Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
   end
 
