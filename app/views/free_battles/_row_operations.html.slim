@@ -10,5 +10,5 @@ template(v-if="props.row.kifu_copy_params")
   a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row.kifu_copy_params)")
     b 棋譜コピー
 
-b-button.sp_modal_button(icon-pack="fas" icon-left="plus" @click="show_handle(props.row)")
+b-button.sp_modal_button(icon-left="play-circle" @click="show_handle(props.row)")
   b 盤面
