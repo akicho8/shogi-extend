@@ -63,7 +63,6 @@ RSpec.configure do |config|
     # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
     # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
 
-
     # 設定したいのはこっち
     # これ visit で移動してスクリーンショットを撮る前にリサイズしないと意味がない
     # height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
@@ -80,6 +79,8 @@ if true
     end
 
     def doc_image(name = nil)
+      return unless ENV["GENERATE_IMAGE"]
+
       max_resize
       name = [@__full_description__, name].compact.join("_").gsub(/\s+/, "_")
       path = Rails.root.join("doc/images/#{name}.png")
