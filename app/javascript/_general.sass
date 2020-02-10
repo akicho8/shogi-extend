@@ -40,13 +40,13 @@ pre
 
 ////////////////////////////////////////////////////////////////////////////// エラーメッセージ内のPRE相当
 
-.error_message_pre_base
+.error_message_pre
   @extend .fixed_font
-  white-space: pre
+  white-space: pre-wrap
   line-height: 110%
 
-.error_message_pre
-  @extend .error_message_pre_base
+.error_message_pre_with_margin
+  @extend .error_message_pre
   margin-top: 1rem
 
 ////////////////////////////////////////////////////////////////////////////// 綺麗な明朝体

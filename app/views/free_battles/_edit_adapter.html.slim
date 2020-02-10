@@ -45,7 +45,7 @@ ruby:
 
       template(v-if="bs_error")
         b-message(:title="field_message" type="is-danger" size="is-small" :closable="false")
-          .error_message_pre_base
+          .error_message_pre
             | {{bs_error.board}}
 
       template(v-if="!bs_error")

@@ -64,11 +64,11 @@ module ShogiErrorRescueMod
     lines = e.message.lines
     s = lines.first.strip.html_safe
     if field = lines.drop(1).presence
-      s += h.tag.div(field.join.html_safe, :class => "error_message_pre").html_safe
+      s += h.tag.div(field.join.html_safe, :class => "error_message_pre_with_margin").html_safe
     end
     if Rails.env.development?
       if v = e.backtrace
-        s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre").html_safe
+        s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre_with_margin").html_safe
       end
     end
     s

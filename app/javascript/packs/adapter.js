@@ -225,7 +225,7 @@ window.Adapter = Vue.extend({
           if (this.development_p && false) {
             this.$buefy.dialog.alert({
               title: "ERROR",
-              message: `<div>${e.bs_error.message}</div><div class="error_message_pre is-size-7">${e.bs_error.board}</div>`,
+              message: `<div>${e.bs_error.message}</div><div class="error_message_pre_with_margin is-size-7">${e.bs_error.board}</div>`,
               canCancel: ["outside", "escape"],
               type: "is-danger",
               hasIcon: true,
