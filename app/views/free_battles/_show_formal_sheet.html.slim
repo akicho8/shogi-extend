@@ -26,9 +26,8 @@ ruby:
   button.button.is-primary.is-large(@click="printer_handle")
     b-icon(icon="printer" size="is-medium")
 
-.font_size_limit_off_container.is_screen_only
-  b-button(@click="font_size_limit_off_modal_p = true" type="is-warning" icon-left="alert")
-    | レイアウトが崩れていませんか？
+b-button.font_size_limit_off_button.is_screen_only(@click="font_size_limit_off_modal_p = true" type="is-warning" icon-left="alert" size="is-large")
+  | レイアウトが崩れていませんか？
 
 = render partial: "free_battles/font_size_limit_off"
 
