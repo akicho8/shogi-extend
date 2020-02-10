@@ -173,37 +173,11 @@
 +brand_def("google",  $google)
 +brand_def("github",  $github)
 
-////////////////////////////////////////////////////////////////////////////// クリックできる行を GMail 風にする
+//////////////////////////////////////////////////////////////////////////////// バトル一覧のタグ
 
-.is_row_clickable
-  tbody
-    // ↓この public は saturn_key が反映されているだけなのでとること
-    tr
-      // &:hover
-      //   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
-      //   cursor: zoom-in
-
-      // &.public
-      //   background-color: $danger
-      .tag_name
-        margin-left: 0.25rem
-
-////////////////////////////////////////////////////////////////////////////// デスクトップのときは行のボタンを非表示にしておく
-
-+desktop
-  .is_row_clickable
-    tbody
-      tr
-        .row_operations
-          // a, span, .dropdown
-          //   margin-left: 0.3rem
-
-        // 行にカーソルを置いたときだけ表示する
-        // &:hover
-        //   .row_operations
-        //     visibility: visible
-        // .row_operations
-        //     visibility: hidden
+.battles_table
+  .tag_name
+    margin-left: 0.25rem
 
 //////////////////////////////////////////////////////////////////////////////// for pulldown_menu.vue
 .a_label

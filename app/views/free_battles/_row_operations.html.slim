@@ -1,0 +1,14 @@
+a.button.piyo_button(type="button" :href="props.row.piyo_shogi_app_url")
+  span.icon
+    = image_tag("piyo_shogi_icon.png")
+  span ぴよ将棋
+
+b-button.kento_app_button(tag="a" @click.stop :href="props.row.kento_app_url")
+  | ☗ KENTO
+
+template(v-if="props.row.kifu_copy_params")
+  a.button.is-small(@click.stop.prevent="kifu_copy_handle(props.row.kifu_copy_params)")
+    b 棋譜コピー
+
+b-button.sp_modal_button(icon-pack="fas" icon-left="plus" @click="show_handle(props.row)")
+  b 盤面
