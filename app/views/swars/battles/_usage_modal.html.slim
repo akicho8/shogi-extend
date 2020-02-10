@@ -7,7 +7,7 @@ b-modal(:active.sync="usage_modal_p" trap-focus animation="zoom-in")
             | 検索後の最初の画面 (今の画面) をホーム画面に追加しておくとウォーズIDを毎回入力する手間が省けます
         li
           | 直前の対局を必ず検討する人向けのショートカットがあります。
-          | 下のボタンをタップした直後に「ホーム画面に追加」しておくと、ホーム画面のアイコンから、直前の対局をすぐに開けるようになります<br>
+          | 下のボタンをタップした直後に「ホーム画面に追加」しておくとそのアイコンから直前の対局を1タップで開けるようになります<br>
           .buttons
             - ExternalAppInfo.each do |e|
               = link_to(e.name, [:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key], :class => "button is-small #{e.key}")
