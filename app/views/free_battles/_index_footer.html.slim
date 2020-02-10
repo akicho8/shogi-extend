@@ -5,7 +5,7 @@
         = paginate current_records
 
   template(v-if="fetched_count >= 1 && records.length >= 1")
-    .columns
+    .columns.is-unselectable
       .column
         - args = params.to_unsafe_h.except(:latest_open_index)
         = [Kaminari.config.default_per_page, *AppConfig[:per_page_list], Kaminari.config.max_per_page].collect { |per| link_to(" #{per} ", args.merge(per: per)) }.join(tag.span(" / ", :class => "has-text-grey-lighter")).html_safe
