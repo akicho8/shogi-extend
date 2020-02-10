@@ -8,8 +8,8 @@
 
     b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card
-        header.modal-card-head
-          p.modal-card-title
+        .modal-card-head
+          .modal-card-title
             a(:href="user_to.show_path")
               img.avatar_image_in_dialog(:src="user_to.avatar_url")
             a(:href="user_to.show_path")
@@ -21,7 +21,7 @@
               | 勝ち: {{user_to.win_count}}
               | &nbsp;
               | 負け: {{user_to.lose_count}}
-        section.modal-card-body
+        .modal-card-body
           b-field(label="")
             textarea.textarea(v-model.trim="message" @keydown.enter="message_enter_handle" autocomplete="off" ref="message_input" rows="3")
         footer.modal-card-foot.space_between

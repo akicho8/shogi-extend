@@ -1,17 +1,23 @@
 // オプション: full-screen
 // https://buefy.org/documentation/modal
-b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
+b-modal.sp_modal(:active.sync="sp_modal_p" trap-focus animation="zoom-in" :full-screen="true" :can-cancel="false" :has-modal-card="true")
   template(v-if="modal_record")
     .modal-card.is-shogi-player-modal-card(style="width:auto")
-      header.modal-card-head
-        p.modal-card-title.is-size-5.yumincho
-          template(v-if="modal_record.saturn_key === 'private'")
-            b-icon.has-text-grey-light(icon="lock" size="is-small")
-            | &nbsp;
-          | {{modal_record.title}}
-        button(class="delete" aria-label="close" @click="modal_p = false")
+      .modal-card-body
+        .delete.is-medium(aria-label="close" @click="sp_modal_p = false" v-if="true")
+        / button.modal-close.is-large(class="delete" aria-label="close" @click="sp_modal_p = false" v-if="true")
 
-      section.modal-card-body
+        template(v-if="modal_record.title")
+          .title.is-5.yumincho.has-text-centered
+            template(v-if="modal_record.saturn_key === 'private'")
+              b-icon.has-text-grey-light(icon="lock" size="is-small")
+              | &nbsp;
+            | {{modal_record.title}}
+
+        template(v-if="!modal_record.sfen_body")
+          .modal_loading_content
+            b-loading(:is-full-page="false" :active="!modal_record.sfen_body" :can-cancel="true")
+
         template(v-if="modal_record.sfen_body")
           shogi_player(
             :run_mode.sync="sp_run_mode"
@@ -30,24 +36,17 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
             :flip="modal_record.fliped"
             :player_info="modal_record.player_info"
             @update:start_turn="seek_to"
-            ref="modal_shogi_player"
+            ref="sp_modal"
           )
 
-          template(v-if="modal_record.description")
-            .modal_sp_description.is-size-6.has-text-grey.has-text-centered
-              | {{modal_record.description}}
-
-          .iikanjino_yoko.modal_sp_bottom_links
+          .sp_modal_branch.has-text-centered
             b-switch(v-model="sp_run_mode" true-value="play_mode" false-value="view_mode") 継盤
 
-            / b-tooltip(label="開戦")
-            /   b-button(size="is-small") 開戦
+          template(v-if="modal_record.description")
+            .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
+              | {{modal_record.description}}
 
-        template(v-else)
-          .modal_loading_content
-            b-loading(:is-full-page="false" :active="!modal_record.sfen_body" :can-cancel="true")
-
-      footer.modal-card-foot.space_between
+      footer.modal-card-foot
         a.button.piyo_button.is-small(@click.stop type="button" :href="modal_record.piyo_shogi_app_url")
           span.icon
             = image_tag("piyo_shogi_icon.png")
@@ -65,4 +64,4 @@ b-modal(:active.sync="modal_p" has-modal-card animation="zoom-in")
         pulldown_menu(:record="modal_record" :in_modal="true")
 
         template(v-if="false")
-          a.button.is-small(@click="modal_p = false") 閉じる
+          a.button.is-small(@click="sp_modal_p = false") 閉じる

@@ -8,10 +8,10 @@
 
     b-modal(:active.sync="modal_p" has-modal-card)
       .modal-card
-        header.modal-card-head
-          p.modal-card-title
+        .modal-card-head
+          .modal-card-title
             | 全体通知
-        section.modal-card-body
+        .modal-card-body
           b-field(label="")
             textarea.textarea(v-model.trim="message" @keydown.enter="message_enter_handle" autocomplete="off" ref="message_input")
         footer.modal-card-foot.space_between

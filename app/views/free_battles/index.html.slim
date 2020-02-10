@@ -11,7 +11,7 @@
     document.addEventListener('DOMContentLoaded', () => { new FreeBattleIndex(#{js_index_options.to_json.html_safe}).$mount("#free_battle_index") })
 
 #free_battle_index(v-cloak)
-  = render partial: "modal_shogi_player"
+  = render partial: "sp_modal"
 
   .title.is-2.yumincho= @page_title
 

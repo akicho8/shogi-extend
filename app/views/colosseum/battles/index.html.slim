@@ -6,10 +6,10 @@
 #colosseum_battle_index(v-cloak)
   b-modal(:active.sync="setting_modal_p")
     template(v-if="true")
-      header.modal-card-head
-       p.modal-card-title
+      .modal-card-head
+       .modal-card-title
          | ルール設定
-    section.modal-card-body
+    .modal-card-body
       b 持ち時間
       b-field
         template(v-for="e in LifetimeInfo.values")

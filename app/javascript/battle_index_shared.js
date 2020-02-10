@@ -23,7 +23,7 @@ export default {
       trick_show: this.$options.trick_show,
       end_show: this.$options.end_show,
 
-      modal_p: false,                 // モーダルを開くフラグ
+      sp_modal_p: false,                 // モーダルを開くフラグ
       modal_record: null,             // 選択したレコード
 
       loading: false,
@@ -110,7 +110,7 @@ export default {
     },
 
     modal_show() {
-      this.modal_p = true
+      this.sp_modal_p = true
       this.turn_slider_focus()
     },
 
