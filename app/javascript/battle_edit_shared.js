@@ -37,8 +37,15 @@ export default {
   },
 
   mounted() {
+    // コピペ新規の場合
+    if (this.record.kifu_body) {
+      this.input_text = this.record.kifu_body
+    }
+
     if (this.$options.free_battles_pro_mode) {
-      this.input_text = this.record.kifu_body || localStorage.getItem("free_battle.input_text")
+      if (!this.input_text && localStorage.getItem("free_battle.input_text")) {
+        this.input_text = localStorage.getItem("free_battle.input_text")
+      }
     }
 
     this.input_text_focus()

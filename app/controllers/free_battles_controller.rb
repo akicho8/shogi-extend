@@ -40,7 +40,7 @@ class FreeBattlesController < ApplicationController
     if id = params[:source_id]
       record = FreeBattle.find_by!(key: id)
       flash[:source_id] = record.to_param
-      redirect_to [:new, ns_prefix, current_single_key], notice: "#{record.title}の棋譜をコピペしました"
+      redirect_to [:new, ns_prefix, current_single_key], notice: "#{record.safe_title}の棋譜をコピペしました"
       return
     end
 
@@ -123,9 +123,9 @@ class FreeBattlesController < ApplicationController
     v = super
 
     if id = flash[:source_id]
-      record = FreeBattle.find_by!(key: id)
+      record = current_model.find_by!(key: id)
       v[:kifu_body] = record.kifu_body
-      v[:title] = "「#{record.title}」のコピー"
+      v[:title] = "「#{record.safe_title}」のコピー"
       v[:description] = record.description
       v[:start_turn] = record.start_turn
     end

@@ -18,11 +18,6 @@ export default {
       this.$buefy.loading.open()
     },
 
-    js_link_to(href) {
-      this.process_now()
-      location.href = href
-    },
-
     debug_alert(message) {
       if (this.development_p) {
         if (message) {
@@ -47,6 +42,7 @@ export default {
 
     // 他のウィンドウで開く
     other_window_open(url) {
+      // this.process_now()
       if (window.open(url, "_self")) {
         // Google Chrome では動く
       } else {
@@ -57,6 +53,7 @@ export default {
 
     // 他のウィンドウで開く
     self_window_open(url) {
+      // this.process_now()
       location.href = url
     },
 

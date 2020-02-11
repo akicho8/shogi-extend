@@ -263,7 +263,18 @@ module BattleControllerSharedMethods
 
     let :modal_record do
       if v = params[:modal_id]
-        if record = current_scope.find_by(key: v) || current_scope.find_by(id: v)
+        # record = current_scope.find_by(key: v) || current_scope.find_by(id: v)
+
+        s = current_model
+
+        record = s.find_by(key: v) # スコープを無視すること
+
+        unless record
+          # 元々公開しているものは id にアクセスできる
+          record = s.where(saturn_key: :public).find_by(id: v)
+        end
+
+        if record
           access_log_create(record)
           record
         end

@@ -159,7 +159,7 @@ window.Adapter = Vue.extend({
     },
 
     kifu_dl_url(kifu_type) {
-      return this.kifu_show_url(kifu_type, {disposition: "attachment"})
+      return this.kifu_show_url(kifu_type, {attachment: "true"})
     },
 
     png_show_url() {
@@ -170,7 +170,7 @@ window.Adapter = Vue.extend({
 
     png_dl_url() {
       if (this.record) {
-        return `${this.record.show_path}.png?width=840&turn=${this.record.turn_max}&disposition=attachment`
+        return `${this.record.show_path}.png?width=840&turn=${this.record.turn_max}&attachment=true`
       }
     },
 

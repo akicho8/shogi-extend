@@ -33,8 +33,7 @@
           b-tooltip(label="入力中の棋譜を複製して新しいタブで開く")
             a.button.is-small(@click="kifu_clone_and_new_tab_oepn_handle")
               b-icon(icon="content-copy" size="is-small")
-          b-tooltip(label="局面編集モードに切り替える(主に詰将棋作成用)")
-            b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 編集
+          b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 局面編集
 
 .field
   = form.label(:title, class: "label")
