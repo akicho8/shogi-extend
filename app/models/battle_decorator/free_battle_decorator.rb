@@ -84,7 +84,7 @@ module BattleDecorator
     end
 
     def player_name_md(location)
-      full_player_name(location).match(/(?<player_name>.+?)\s*(\((?<grade_name>\d+)\))?\z/) # #<MatchData "niwapin(2298)" player_name:"niwapin" grade_name:"2298">
+      full_player_name(location).match(/(?<player_name>.+?)\s*(\((?<grade_name>.+)\))?\z/) # #<MatchData "niwapin(2298)" player_name:"niwapin" grade_name:"2298">
     end
   end
 end
