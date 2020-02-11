@@ -284,6 +284,7 @@ module BattleDecorator
 
     # helper methods
 
+    # 半角化
     def normalize_str(str)
       NKF.nkf('-w -Z', str.to_s).squish
     end
