@@ -3,7 +3,7 @@
   = form.hidden_field(:hidden_kifu_body, "v-model": "input_text")
 
   b-tabs.input_method_tabs.is_lr_paddingless(type="" v-model="input_tab_index" expanded)
-    b-tab-item(label="テキスト")
+    b-tab-item(label="棋譜")
       .control
         - if AppConfig[:free_battles_pro_mode]
           = form.label(:kifu_body, class: "label")

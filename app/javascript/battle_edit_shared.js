@@ -3,7 +3,7 @@ import _ from "lodash"
 const TEXT_INPUT_UPDATE_DELAY = 0.5 // プレビューするまでの遅延時間(秒)
 
 const TAB_NAME_KEYS = [
-  "テキスト",
+  "棋譜",
   "操作入力",
 ]
 
@@ -14,7 +14,7 @@ export default {
       record: this.$options.record_attributes,
 
       // 左側
-      input_tab_index: 0,       // 入力タブ切り替え(テキストで開始したければ1にする)
+      input_tab_index: 0,       // 入力タブ切り替え(棋譜で開始したければ1にする)
       input_text: null,         // 入力された棋譜
       board_sfen: null,         // 操作入力に渡す棋譜
       default_start_turn: null, // 最初の start_turn の指定
@@ -64,7 +64,7 @@ export default {
     },
 
     text_mode_p() {
-      return this.input_tab_name === "テキスト"
+      return this.input_tab_name === "棋譜"
     },
 
     board_mode_p() {
@@ -73,7 +73,7 @@ export default {
   },
 
   methods: {
-    // テキスト
+    // 棋譜
     delayed_kifu_convert_by: _.debounce(function() { this.kifu_convert_by(this.input_text) }, 1000 * TEXT_INPUT_UPDATE_DELAY),
 
     // 操作入力
@@ -120,7 +120,7 @@ export default {
         this.record.start_turn = this.record.turn_max
       }
 
-      // テキスト編集したとき手数が範囲外なら調整する
+      // 棋譜編集したとき手数が範囲外なら調整する
       if (this.record.start_turn > this.record.turn_max) {
         this.record.start_turn = this.record.turn_max
       }
