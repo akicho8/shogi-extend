@@ -15,11 +15,11 @@ module Swars
         end
       end
 
-      private
-
       def kifu_body
         kifu_body_for_test || kifu_body_from_csa_seq
       end
+
+      private
 
       def kifu_body_from_csa_seq
         type = []

@@ -131,6 +131,7 @@ gem 'mechanize'
 gem 'acts_as_list'
 
 gem 'faraday'
+gem 'faraday_middleware'        # redirect 先おっかけ対応
 
 gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on', branch: 'master'
 

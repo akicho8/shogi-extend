@@ -45,23 +45,45 @@ module StrangeKifuBodyParserMod
 
   def url_in_kifu_body
     if kifu_body.strip.lines.count <= URL_CHECK_HEAD_LINES && kifu_body.match?(%{^https?://})
+
+      # ウォーズ
+      if key = Swars::Battle.battle_key_extract(kifu_body)
+        Swars::Battle.single_battle_import(key: key)
+        if battle = Swars::Battle.find_by(key: key)
+          self.kifu_body = battle.kifu_body
+          return
+        end
+      end
+
       url = URI.extract(kifu_body, ["http", "https"]).first
-      uri = URI(url)
-      sfen = nil
-      case
-      when uri.host == "shogidb2.com"
-        case
-        when uri.fragment
-          sfen = Rack::Utils.unescape(uri.fragment) # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"
-        when uri.query
-          hash = Rack::Utils.parse_query(uri.query) # => {"sfen"=>"lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2", "moves"=>"-3334FU+2726FU-8384FU+2625FU-8485FU+5958OU-4132KI+6978KI-8586FU+8786FU-8286HI+2524FU-2324FU+2824HI-8684HI+0087FU-0023FU+2428HI-2233KA+5868OU-7172GI+9796FU-3142GI+8833UM"}
-          sfen = hash["sfen"]
+      if url
+        uri = URI(url)
+
+        # 棋王戦
+        # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html
+        if uri.host == "live.shogi.or.jp"
+          uri.path = uri.path.sub(/html\z/, "kif")
+          self.kifu_body = http_get_body(uri.to_s)
+          return
         end
-        if sfen
-          self.kifu_body = ["position", "sfen", sfen].join(" ")
+
+        if uri.host == "shogidb2.com"
+          sfen = nil
+          if uri.fragment
+            sfen = Rack::Utils.unescape(uri.fragment) # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"
+          end
+          if uri.query
+            hash = Rack::Utils.parse_query(uri.query) # => {"sfen"=>"lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2", "moves"=>"-3334FU+2726FU-8384FU+2625FU-8485FU+5958OU-4132KI+6978KI-8586FU+8786FU-8286HI+2524FU-2324FU+2824HI-8684HI+0087FU-0023FU+2428HI-2233KA+5868OU-7172GI+9796FU-3142GI+8833UM"}
+            sfen = hash["sfen"]
+          end
+          if sfen.present?
+            self.kifu_body = ["position", "sfen", sfen].join(" ")
+            return
+          end
         end
-      else
-        self.kifu_body = open(url, &:read).toutf8
+
+        # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif
+        self.kifu_body = http_get_body(url)
       end
     end
   end

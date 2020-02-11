@@ -143,6 +143,48 @@ class FreeBattle < ApplicationRecord
     end
   end
 
+  before_validation do
+    self.title ||= default_title
+    self.description ||= ""
+    self.kifu_body ||= ""
+
+    if kifu_file
+      v = kifu_file.read
+      v = v.to_s.toutf8 rescue nil
+      self.kifu_body = v
+    end
+
+    if changes_to_save[:kifu_url]
+      if v = kifu_url.presence
+        self.kifu_body = http_get_body(v)
+        self.kifu_url = nil
+      end
+    end
+
+    if changes_to_save[:kifu_body]
+      if kifu_body
+        url_in_kifu_body
+      end
+    end
+  end
+
+  before_save do
+    if changes_to_save[:kifu_body]
+      if kifu_body
+        # 「**候補手」のようなのがついていると容量が大きすぎてDBに保存できなくなるためコメントを除外する
+        # コメントは残したいので ** で始まるものだけ除去する
+        if Bioshogi::Parser::KifParser.accept?(kifu_body)
+          self.kifu_body = Bioshogi::Parser.source_normalize(kifu_body).gsub(/^\*\*.*\R/, "")
+        end
+        parser_exec
+      end
+    end
+  end
+
+  def to_param
+    key
+  end
+
   def battle_decorator_class
     BattleDecorator::FreeBattleDecorator
   end
@@ -179,42 +221,17 @@ class FreeBattle < ApplicationRecord
     parts.join
   end
 
-  before_validation do
-    self.title ||= default_title
-    self.description ||= ""
-    self.kifu_body ||= ""
-
-    if kifu_file
-      v = kifu_file.read
-      v = v.to_s.toutf8 rescue nil
-      self.kifu_body = v
+  def http_get_body(url)
+    connection = Faraday.new do |builder|
+      builder.response :follow_redirects # リダイレクト先をおっかける
+      builder.adapter :net_http
     end
 
-    if changes_to_save[:kifu_url]
-      if v = kifu_url.presence
-        self.kifu_body = open(v, &:read).toutf8
-        self.kifu_url = nil
-      end
-    end
+    response = connection.get(url)
+    s = response.body
 
-    if changes_to_save[:kifu_body]
-      if kifu_body
-        url_in_kifu_body
-      end
-    end
-  end
-
-  before_save do
-    if changes_to_save[:kifu_body]
-      if kifu_body
-        # 「**候補手」のようなのがついていると容量が大きすぎてDBに保存できなくなるためコメントを除外する
-        # コメントは残したいので ** で始まるものだけ除去する
-        if Bioshogi::Parser::KifParser.accept?(kifu_body)
-          self.kifu_body = Bioshogi::Parser.source_normalize(kifu_body).gsub(/^\*\*.*\R/, "")
-        end
-        parser_exec
-      end
-    end
+    s = s.toutf8
+    s = s.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
   end
 
   concerning :TagMethods do
@@ -225,10 +242,6 @@ class FreeBattle < ApplicationRecord
       acts_as_ordered_taggable_on :note_tags
       acts_as_ordered_taggable_on :other_tags
     end
-  end
-
-  def to_param
-    key
   end
 
   concerning :UseInfoMethods do

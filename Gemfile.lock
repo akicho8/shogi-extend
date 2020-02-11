@@ -503,6 +503,7 @@ DEPENDENCIES
   exception_notification
   factory_bot_rails
   faraday
+  faraday_middleware
   ffi (= 1.9.18)
   foreman
   holiday_jp
