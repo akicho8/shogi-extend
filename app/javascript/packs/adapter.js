@@ -72,6 +72,17 @@ window.Adapter = Vue.extend({
         option_show_p: false,
       }
     },
+
+    //////////////////////////////////////////////////////////////////////////////// test
+
+    test_kifu_body_list() {
+      return [
+        { name: "正常",       input_text: "68銀、三4歩・☗七九角、8四歩五六歩△85歩78金",                                                                                                                                                                                                                                                                                    },
+        { name: "反則",       input_text: "12玉",                                                                                                                                                                                                                                                                                                                           },
+        { name: "shogidb2 A", input_text: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221#lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202",                                                                                                                                                                    },
+        { name: "shogidb2 B", input_text: "https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM", },
+      ]
+    },
   },
 
   methods: {
@@ -91,13 +102,8 @@ window.Adapter = Vue.extend({
       this.record_fetch(() => this.$buefy.toast.open({message: `${this.record.turn_max}手`, position: "is-bottom", queue: false, type: "is-success"}))
     },
 
-    ng_test_handle() {
-      this.input_text = "68銀 12玉"
-      this.$nextTick(() => this.validate_handle())
-    },
-
-    ok_test_handle() {
-      this.input_text = "68銀、三4歩・☗七九角、8四歩五六歩△85歩78金"
+    input_test_handle(input_text) {
+      this.input_text = input_text
       this.$nextTick(() => this.validate_handle())
     },
 

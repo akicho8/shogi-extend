@@ -36,9 +36,10 @@ ruby:
   .columns
     .column
       template(v-if="development_p")
-        .buttons
-          .button.is-small(@click="ng_test_handle") NG
-          .button.is-small(@click="ok_test_handle") OK
+        .box
+          .buttons.are-small
+            template(v-for="row in test_kifu_body_list")
+              .button(@click="input_test_handle(row.input_text)") {{row.name || row.input_text}}
 
       b-field(:type="field_type")
         b-input(type="textarea" ref="input_text" v-model="input_text")
