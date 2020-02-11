@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-dropdown(:hoverable="true" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
+  b-dropdown(:hoverable="false" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
     b-button.arrow_icon(slot="trigger" size="is-small" :icon-left="in_modal ? 'menu-up' : 'menu-down'")
 
     template(v-if="record.show_path")

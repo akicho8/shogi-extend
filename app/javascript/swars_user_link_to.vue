@@ -1,6 +1,6 @@
 <template lang="pug">
   span.swars_user_link_to
-    b-dropdown(:hoverable="true")
+    b-dropdown(:hoverable="false")
       a(slot="trigger")
         | {{membership.name_with_grade}}
       b-dropdown-item(:has-link="true")
