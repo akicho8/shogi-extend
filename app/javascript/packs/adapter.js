@@ -9,7 +9,7 @@ window.Adapter = Vue.extend({
       // フォーム関連
       input_text: null,    // 入力した棋譜
       option_show_p: null, // オプション有効か？ (永続化)
-      board_show_p: false, // 「盤面」を押した？
+      sp_modal_p: false, // 「盤面」を押した？
       body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
@@ -138,7 +138,7 @@ window.Adapter = Vue.extend({
 
     // 「盤面」
     board_show_handle() {
-      this.record_fetch(() => this.board_show_p = true)
+      this.record_fetch(() => this.sp_modal_p = true)
     },
 
     // helper

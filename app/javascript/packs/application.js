@@ -105,6 +105,7 @@ import vs_clock from "vs_clock.vue"
 import simple_board from "simple_board.vue"
 import xy_game from "xy_game.vue"
 import cpu_battle from "cpu_battle.vue"
+import sp_modal from "sp_modal.vue"
 
 // const router = new VueRouter({
 //   mode: 'history',
@@ -137,6 +138,7 @@ Vue.mixin({
     simple_board,
     xy_game,
     cpu_battle,
+    sp_modal,
   },
 })
 

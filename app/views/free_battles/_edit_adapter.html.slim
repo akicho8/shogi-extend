@@ -10,24 +10,26 @@ ruby:
     document.addEventListener('DOMContentLoaded', () => { new Adapter(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
-  b-modal(:active.sync="board_show_p" has-modal-card trap-focus animation="zoom-in")
-    template(v-if="record")
-      .modal-card.is-shogi-player-modal-card.box.is-paddingless(style="width:auto")
-        .modal-card-body
-          shogi_player(
-            :run_mode="'view_mode'"
-            :start_turn="9999"
-            :kifu_body="record.sfen_body"
-            :key_event_capture="false"
-            :slider_show="true"
-            :controller_show="true"
-            :theme="'simple'"
-            :size="'default'"
-            :sound_effect="true"
-            :volume=AppConfig[:volume]
-            :setting_button_show="false"
-            ref="sp_modal"
-          )
+  sp_modal(:sp_modal_p.sync="sp_modal_p" :modal_record="record" :pulldown_menu_p="false")
+  
+  // b-modal(:active.sync="sp_modal_p" has-modal-card trap-focus animation="zoom-in")
+  //   template(v-if="record")
+  //     .modal-card.is-shogi-player-modal-card.box.is-paddingless(style="width:auto")
+  //       .modal-card-body
+  //         shogi_player(
+  //           :run_mode="'view_mode'"
+  //           :start_turn="9999"
+  //           :kifu_body="record.sfen_body"
+  //           :key_event_capture="false"
+  //           :slider_show="true"
+  //           :controller_show="true"
+  //           :theme="'simple'"
+  //           :size="'default'"
+  //           :sound_effect="true"
+  //           :volume=AppConfig[:volume]
+  //           :setting_button_show="false"
+  //           ref="sp_modal"
+  //         )
 
   p.title.is-2.yumincho
     = @page_title
