@@ -63,6 +63,9 @@ ruby:
           b-button.kif_copy_link(@click="kifu_copy_handle('kif')")
             b 棋譜コピー
 
+          b-button.sp_modal_button(@click="board_show_handle" icon-left="play-circle")
+            b 盤面
+
   template(v-if="!bs_error")
 
     .columns(v-if="!bs_error")
@@ -75,7 +78,6 @@ ruby:
         template(v-if="option_show_p")
           .buttons.are-small
             b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'" :disabled="record") 検証
-            b-button.sp_modal_button(@click="board_show_handle" icon-left="play-circle") 盤面
             b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? record.formal_sheet_path : ''") 印刷
 
           b-field(grouped)
