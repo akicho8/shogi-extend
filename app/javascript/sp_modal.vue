@@ -60,7 +60,7 @@
               b 棋譜コピー
 
           template(v-if="pulldown_menu_p")
-            pulldown_menu(:record="record" :in_modal="true" :real_pos="real_pos")
+            pulldown_menu(:record="record" :in_modal_p="true" :real_pos="real_pos")
 
           template(v-if="false")
             a.button.is-small(@click="current_modal_p = false") 閉じる

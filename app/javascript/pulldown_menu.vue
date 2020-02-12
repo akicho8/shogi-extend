@@ -1,6 +1,6 @@
 <template lang="pug">
-  b-dropdown(:hoverable="false" :position="in_modal ? 'is-top-left' : 'is-bottom-left'")
-    b-button.arrow_icon(slot="trigger" size="is-small" :icon-left="in_modal ? 'menu-up' : 'menu-down'")
+  b-dropdown(:hoverable="false" :position="in_modal_p ? 'is-top-left' : 'is-bottom-left'")
+    b-button.arrow_icon(slot="trigger" size="is-small" :icon-left="in_modal_p ? 'menu-up' : 'menu-down'")
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
@@ -100,7 +100,7 @@
     //-       b-icon(icon="clipboard-outline" size="is-small")
     //-       span.a_label URLをコピー
     //-
-    //- template(v-if="in_modal")
+    //- template(v-if="in_modal_p")
     //-   template(v-if="record.modal_on_index_url")
     //-     template(v-if="real_pos != null")
     //-       b-dropdown-item(:has-link="true" :paddingless="true")
@@ -139,7 +139,7 @@
 export default {
   props: {
     record:   { required: false },
-    in_modal: { },
+    in_modal_p: { },
     real_pos: { },
   },
 
