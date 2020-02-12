@@ -35,7 +35,7 @@
               :setting_button_show="false"
               :flip="record.fliped"
               :player_info="record.player_info"
-              @update:start_turn="seek_to"
+              @update:start_turn="real_turn_update"
               ref="sp_modal"
             )
 
@@ -46,21 +46,28 @@
               .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
                 | {{record.description}}
 
+            pre(v-if="development_p")
+              | start_turn: {{start_turn}}
+              | real_turn: {{real_turn}}
+              | record.force_turn: {{record.force_turn}}
+              | record.sp_turn: {{record.sp_turn}}
+              | record.critical_turn: {{record.critical_turn}}
+
         footer.modal-card-foot
           a.button.piyo_button.is-small(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
             span.icon
               img(:src="piyo_shogi_icon")
             span ぴよ将棋
 
-          b-button.kento_app_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_pos}`")
-            | ☗ KENTO \#{{real_pos}}
+          b-button.kento_app_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_turn}`")
+            | ☗ KENTO \#{{real_turn}}
 
           template(v-if="record.kifu_copy_params")
             a.button.is-small(@click.stop.prevent="kif_clipboard_copy(record.kifu_copy_params)")
               b 棋譜コピー
 
           template(v-if="pulldown_menu_p")
-            pulldown_menu(:record="record" :in_modal_p="true" :real_pos="real_pos")
+            pulldown_menu(:record="record" :in_modal_p="true" :real_turn="real_turn")
 
           template(v-if="false")
             a.button.is-small(@click="current_modal_p = false") 閉じる
@@ -84,7 +91,7 @@ export default {
     return {
       current_modal_p: null,
       sp_run_mode: "view_mode",
-      real_pos: null,
+      real_turn: null,
     }
   },
 
@@ -92,7 +99,8 @@ export default {
     sp_modal_p: { immediate: true, handler(v) { this.current_modal_p = v }, }, // 外→内 sp_modal_p --> current_modal_p
     current_modal_p(v) { this.$emit("update:sp_modal_p", v) },                 // 外←内 sp_modal_p <-- current_modal_p
 
-    record() { this.real_pos = this.start_turn },                        // record がセットされた瞬間に開始手数を保存 (KENTOに渡すためでもある)
+    record() { this.real_turn = this.start_turn },                        // record がセットされた瞬間に開始手数を保存 (KENTOに渡すためでもある)
+
     // 最初にスライダーにフォーカスする
     // $nextTick だとフォーカスされないのは謎
     // record.sfen_body にフックしているのは shogi_player の表示条件だから
@@ -131,8 +139,8 @@ export default {
       }
     },
 
-    seek_to(pos) {
-      this.real_pos = pos
+    real_turn_update(pos) {
+      this.real_turn = pos
     },
 
     kif_clipboard_copy(params) {

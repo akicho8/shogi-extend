@@ -16,14 +16,14 @@
 
     template(v-if="record.modal_on_index_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        template(v-if="real_pos == null")
+        template(v-if="real_turn == null")
           a(:href="`${record.modal_on_index_url}`")
             b-icon(icon="open-in-new" size="is-small")
             span.a_label パーマリンク
         template(v-else="")
-          a(:href="`${record.modal_on_index_url}&turn=${real_pos}`")
+          a(:href="`${record.modal_on_index_url}&turn=${real_turn}`")
             b-icon(icon="open-in-new" size="is-small")
-            span.a_label パーマリンク \#{{real_pos}}
+            span.a_label パーマリンク \#{{real_turn}}
 
     //- template(v-if="record.show_path")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
@@ -102,11 +102,11 @@
     //-
     //- template(v-if="in_modal_p")
     //-   template(v-if="record.modal_on_index_url")
-    //-     template(v-if="real_pos != null")
+    //-     template(v-if="real_turn != null")
     //-       b-dropdown-item(:has-link="true" :paddingless="true")
-    //-         a(@click="clipboard_copy({text: `${record.modal_on_index_url}&turn=${real_pos}`})")
+    //-         a(@click="clipboard_copy({text: `${record.modal_on_index_url}&turn=${real_turn}`})")
     //-           b-icon(icon="clipboard-outline" size="is-small")
-    //-           span.a_label URLをコピー \#{{real_pos}}
+    //-           span.a_label URLをコピー \#{{real_turn}}
 
     //- b-dropdown-item(:separator="true")
     //-
@@ -140,7 +140,7 @@ export default {
   props: {
     record:   { required: false },
     in_modal_p: { },
-    real_pos: { },
+    real_turn: { },
   },
 
   data() {

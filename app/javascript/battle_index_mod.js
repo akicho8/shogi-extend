@@ -74,7 +74,7 @@ export default {
 
     show_handle(row) {
       this.modal_record = row
-      this.real_pos = this.start_turn
+      this.real_turn = this.start_turn
 
       if (this.modal_record.sfen_body) {
         this.debug_alert("棋譜はすでにある")
