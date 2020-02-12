@@ -1,5 +1,5 @@
 doctype 5
-html(lang="ja" class=([params[:formal_sheet] ? "has_formal_sheet" : "", iframe? ? "iframe" : ""]))
+html(lang="ja" class=([params[:formal_sheet] ? "has_formal_sheet" : "", iframe? ? "iframe" : "", Rails.env]))
   head
     = render partial: "layouts/head"
   body
