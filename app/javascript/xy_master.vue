@@ -1,5 +1,5 @@
 <template lang="pug">
-.xy_game
+.xy_master
   .columns
     .column
       .has-text-centered
@@ -18,12 +18,12 @@
               template(v-for="e in XyRuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
-            template(v-if="$root.$options.xy_game_custom_mode")
+            template(v-if="$root.$options.xy_master_custom_mode")
               b-button(@click="sp_setting_handle" icon-right="settings")
 
             b-button(@click="rule_display" icon-right="help")
 
-            template(v-if="$root.$options.xy_game_custom_mode")
+            template(v-if="$root.$options.xy_master_custom_mode")
               b-switch(v-model="bg_mode")
                 | 駒配置
 
@@ -180,7 +180,7 @@
 <script>
 import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
-import xy_game_chart_mod from './xy_game_chart_mod.js'
+import xy_master_chart_mod from './xy_master_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
 
 import Soldier from "shogi-player/src/soldier.js"
@@ -198,10 +198,10 @@ class XyChartScopeInfo extends MemoryRecord {
 const TALK_RATE = 2.0
 
 export default {
-  name: "xy_game",
+  name: "xy_master",
   mixins: [
     stopwatch_data_retention,
-    xy_game_chart_mod,
+    xy_master_chart_mod,
   ],
   data() {
     return {
@@ -402,7 +402,7 @@ export default {
     },
 
     data_restore_from_hash(hash) {
-      if (this.$root.$options.xy_game_custom_mode) {
+      if (this.$root.$options.xy_master_custom_mode) {
       } else {
         hash.bg_mode          = null
 
@@ -761,7 +761,7 @@ export default {
     },
 
     ls_key() {
-      return "xy_game"
+      return "xy_master"
     },
 
     twitter_url() {
@@ -862,7 +862,7 @@ export default {
 // FIXME: ↓buefyが二重に読み込まれてしまう
 @import "./bulma_init.scss"
 
-.xy_game
+.xy_master
   .level_container
     width: 10rem
     margin: 0 auto

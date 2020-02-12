@@ -3,12 +3,12 @@
 - twitter_card_tag(card: "summary", title: @page_title, description: XyRuleInfo.description, image: "#{controller_name}.png")
 
 - content_for :head do
-  = javascript_pack_tag("xy_game_app")
+  = javascript_pack_tag("xy_master_app")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new XyGameApp(#{js_index_options.to_json.html_safe}).$mount("#app") })
+    document.addEventListener('DOMContentLoaded', () => { new XyMasterApp(#{js_index_options.to_json.html_safe}).$mount("#app") })
 
 #app(v-cloak="true")
-  xy_game
+  xy_master
 
 - if Rails.env.development?
   .box

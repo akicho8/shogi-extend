@@ -103,7 +103,7 @@ import pulldown_menu from "pulldown_menu.vue"
 import stopwatch from "stopwatch.vue"
 import vs_clock from "vs_clock.vue"
 import simple_board from "simple_board.vue"
-import xy_game from "xy_game.vue"
+import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
 import sp_modal from "sp_modal.vue"
 
@@ -136,7 +136,7 @@ Vue.mixin({
     stopwatch,
     vs_clock,
     simple_board,
-    xy_game,
+    xy_master,
     cpu_battle,
     sp_modal,
   },

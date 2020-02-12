@@ -71,7 +71,7 @@ class XyRecordsController < ApplicationController
       per_page: XyRuleInfo.per_page,
       rank_max: XyRuleInfo.rank_max,
       count_all_gteq: XyRuleInfo.count_all_gteq,
-      xy_game_custom_mode: AppConfig[:xy_game_custom_mode],
+      xy_master_custom_mode: AppConfig[:xy_master_custom_mode],
       # chartjs_datasets: {
       #   data: {
       #     datasets: chartjs_datasets,
