@@ -150,7 +150,7 @@ export default {
   },
 
   created() {
-    this.ki2_copy_params = Object.assign({}, this.record.kifu_copy_params, {kc_format: 'ki2'})
+    this.ki2_copy_params = {...this.record.kifu_copy_params, kc_format: 'ki2'}
   },
 
   methods: {
