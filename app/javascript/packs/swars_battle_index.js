@@ -1,9 +1,9 @@
-import battle_index_shared from "battle_index_shared.js"
+import battle_index_mod from "battle_index_mod.js"
 import usage_mod from "usage_mod.js"
 
 window.SwarsBattleIndex = Vue.extend({
   mixins: [
-    battle_index_shared,
+    battle_index_mod,
     usage_mod,
   ],
 

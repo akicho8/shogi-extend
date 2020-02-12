@@ -18,13 +18,14 @@ export default {
 
   data() {
     return {
-      query: this.$options.query,     // 検索文字列
-      search_scope_key: this.$options.search_scope_key,     // スコープ
-      trick_show: this.$options.trick_show,
-      end_show: this.$options.end_show,
+      query: this.$options.query,                       // 検索文字列
+      search_scope_key: this.$options.search_scope_key, // スコープ
+
+      trick_show: this.$options.trick_show, // 仕掛局面の表示をするか？
+      end_show: this.$options.end_show,     // 終局図を表示するか？
 
       sp_modal_p: false,               // モーダルを開くフラグ
-      modal_record: null,             // 選択したレコード
+      modal_record: null,             //  選択したレコード
 
       loading: false,
 
@@ -42,10 +43,6 @@ export default {
       showDetailIcon: true,     // 行の下に開くやつ用のアイコンを表示する？
 
       fetched_count: 0,         // fetch した回数で 1 以上でレコード配列が空だったらデータがありませんを表示する
-
-      sp_run_mode: "view_mode",
-
-      real_pos: null,           // 現在表示している手数
     }
   },
 
@@ -83,70 +80,21 @@ export default {
       this.trick_show = !this.trick_show
     },
 
-    seek_to(pos) {
-      this.real_pos = pos
-    },
-
-    // 未使用
-    // toggle_run_mode() {
-    //   if (this.sp_run_mode === "view_mode") {
-    //     this.sp_run_mode = "play_mode"
-    //   } else {
-    //     this.sp_run_mode = "view_mode"
-    //   }
-    // },
-
     show_handle(row) {
       this.modal_record = row
       this.real_pos = this.start_turn
 
       if (this.modal_record.sfen_body) {
         this.debug_alert("棋譜はすでにある")
-        this.modal_show()
+        this.sp_modal_show()
       } else {
-        this.modal_show()
-        this.record_fetch_to(this.modal_record, () => this.turn_slider_focus())
+        this.record_fetch_to(this.modal_record, () => this.sp_modal_show())
       }
     },
 
-    modal_show() {
+    sp_modal_show() {
       this.sp_modal_p = true
-      this.turn_slider_focus()
     },
-
-    turn_slider_focus() {
-      this.$nextTick(() => {
-        const dom = document.querySelector(".turn_slider")
-        if (dom) {
-          dom.focus()
-        }
-      })
-    },
-
-    kifu_copy_handle(params) {
-      this.kif_clipboard_copy(params)
-    },
-
-    modal_url_copy() {
-      if (this.modal_record) {
-        this.clipboard_copy({text: this.modal_record.modal_on_index_url})
-      }
-    },
-
-    modal_url_with_turn_copy() {
-      if (this.modal_record) {
-        this.clipboard_copy({text: `${this.modal_record.modal_on_index_url}&turn=${this.real_pos}` })
-      }
-    },
-
-    // modal_url_with_turn_copy2() {
-    //   if (this.modal_record) {
-    //     this.modal_record.
-    //
-    //
-    //     this.clipboard_copy({text: `${this.modal_record.modal_on_index_url}&turn=${this.real_pos}` })
-    //   }
-    // },
 
     sort_handle(column, order) {
       this.sort_column = column
@@ -162,13 +110,10 @@ export default {
     async_records_load() {
       this.loading = true
 
-      this.$http.get(this.async_records_load_url).then(response => {
+      this.http_get_command(this.async_records_load_url, {}, data => {
         this.loading = false
-        this.records = response.data
+        this.records = data
         this.fetched_count += 1
-      }).catch(error => {
-        console.table([error.response])
-        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
 
@@ -198,7 +143,7 @@ export default {
           }
           // const record = this.records.find(e => e.id === this.modal_record)
           // this.$set(record, "sfen_body", response.data["sfen_body"])
-          // this.modal_show()
+          // this.sp_modal_show()
         }).catch(error => {
           console.table([error.response])
           this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})

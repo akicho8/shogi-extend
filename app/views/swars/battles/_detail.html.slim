@@ -34,4 +34,4 @@ template(slot="detail" slot-scope="props")
       / .columns
       /   .column
       /     .buttons
-      /       / = link_to(icon_tag("clipboard-text-outline") + "棋譜コピー", "#", "@click.prevent" => "kifu_copy_handle(props.row)", :class => "button is-small")
+      /       / = link_to(icon_tag("clipboard-text-outline") + "棋譜コピー", "#", "@click.prevent" => "kif_clipboard_copy(props.row)", :class => "button is-small")
