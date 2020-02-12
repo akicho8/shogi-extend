@@ -142,9 +142,9 @@ export default {
       this.kif_clipboard_copy(params)
     },
 
-    // setTimeout(() => this.turn_slider_focus(), 1) の方法だと失敗する
+    // this.$nextTick(() => this.turn_slider_focus()) の方法だと失敗する
     turn_slider_focus_delay() {
-      this.$nextTick(() => this.turn_slider_focus())
+      setTimeout(() => this.turn_slider_focus(), 1)
     },
 
     turn_slider_focus() {
