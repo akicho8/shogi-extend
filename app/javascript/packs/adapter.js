@@ -187,32 +187,16 @@ window.Adapter = Vue.extend({
       }
     },
 
-    loading_close() {
-      if (this.$data._loading) {
-        this.$data._loading.close()
-        this.$data._loading = null
-      }
-    },
-
     record_create(callback) {
-      if (this.$data._loading) {
-        return
-      }
-
-      this.$data._loading = this.$buefy.loading.open()
-
       const params = new URLSearchParams()
       params.set("input_text", this.input_text)
       params.set("edit_mode", "adapter")
 
-      this.$http.post(this.$options.post_path, params).then(response => {
-        this.loading_close()
+      this.http_command("POST", this.$options.post_path, params, e => {
         this.change_counter = 0
 
         this.bs_error = null
         this.all_kifs = null
-
-        const e = response.data
 
         if (e.redirect_to) {
           if (true) {
@@ -254,11 +238,6 @@ window.Adapter = Vue.extend({
           this.record = e.record
           callback()
         }
-
-      }).catch(error => {
-        this.loading_close()
-        console.table([error.response])
-        this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
       })
     },
   },
