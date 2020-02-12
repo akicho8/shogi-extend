@@ -97,19 +97,14 @@ export default {
 
   watch: {
     sp_modal_p: { immediate: true, handler(v) { this.current_modal_p = v }, }, // 外→内 sp_modal_p --> current_modal_p
-    current_modal_p(v) { this.$emit("update:sp_modal_p", v) },                 // 外←内 sp_modal_p <-- current_modal_p
+    current_modal_p(v) {
+      if (v) {
+        this.turn_slider_focus_delay() // 開き直したときに反応させるため record.sfen_body の watch にフックするのではだめ
+      }
+      this.$emit("update:sp_modal_p", v)
+    },                 // 外←内 sp_modal_p <-- current_modal_p
 
     record() { this.real_turn = this.start_turn },                        // record がセットされた瞬間に開始手数を保存 (KENTOに渡すためでもある)
-
-    // 最初にスライダーにフォーカスする
-    // $nextTick だとフォーカスされないのは謎
-    // record.sfen_body にフックしているのは shogi_player の表示条件だから
-    // TODO: でもこれは shogi-player 側でやる機能じゃないか？
-    "record.sfen_body": function(v) {
-      if (v) {
-        setTimeout(() => this.turn_slider_focus(), 1)
-      }
-    },
 
     sp_run_mode(v) {
       if (v === "play_mode") {
@@ -147,6 +142,7 @@ export default {
       this.kif_clipboard_copy(params)
     },
 
+    // setTimeout(() => this.turn_slider_focus(), 1) の方法だと失敗する
     turn_slider_focus_delay() {
       this.$nextTick(() => this.turn_slider_focus())
     },
