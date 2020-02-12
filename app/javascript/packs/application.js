@@ -31,7 +31,7 @@ import "css-browser-selector"   // 読み込んだ時点で htmlタグの class 
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
-import "application.sass"
+import "stylesheets/application.sass"
 import "bulma_burger.js"
 
 import Buefy from "buefy"
