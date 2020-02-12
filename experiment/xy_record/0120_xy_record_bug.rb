@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../../config/environment', __FILE__)
 
 XyRuleInfo.redis.flushdb
 XyRuleInfo[:xy_rule1].aggregate

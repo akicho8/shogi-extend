@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../../config/environment', __FILE__)
 
 XyRecord.destroy_all
 XyRuleInfo.redis.flushdb
 
 Timecop.freeze("2000-01-01") do
   10.times do
-    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 1, x_count: 0)
+o    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 1, x_count: 0)
   end
 end
 

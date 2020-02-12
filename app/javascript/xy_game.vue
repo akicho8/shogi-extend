@@ -561,12 +561,15 @@ export default {
     congrats_talk() {
       let message = ""
       if (this.entry_name) {
+        message += `${this.entry_name}さん`
         if (this.xy_record.rank_info.xy_scope_today.rank <= this.congrats_lteq) {
           message += `おめでとうございます。`
         }
+        if (this.xy_record.best_update_info) {
+          message += `自己ベストを${this.xy_record.best_update_info.updated_spent_sec}秒更新しました。`
+        }
         const t_r = this.xy_record.rank_info.xy_scope_today.rank
         const a_r = this.xy_record.rank_info.xy_scope_all.rank
-        message += `${this.entry_name}さんは`
         message += `本日${t_r}位です。`
         message += `全体で`
         if (t_r === a_r) {
@@ -712,7 +715,13 @@ export default {
         out += `本日: ${this.xy_record.rank_info.xy_scope_today.rank}位\n`
         out += `全体: ${this.xy_record.rank_info.xy_scope_all.rank}位\n`
       }
-      out += `タイム: ${this.time_format}\n`
+      out += `タイム: ${this.time_format}`
+      if (this.xy_record) {
+        if (this.xy_record.best_update_info) {
+          out += ` (↑ ${this.xy_record.best_update_info.updated_spent_sec} s)`
+        }
+      }
+      out += `\n`
       if (this.time_avg) {
         out += `平均: ${this.time_avg}\n`
       }

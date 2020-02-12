@@ -24,9 +24,12 @@
 require 'rails_helper'
 
 RSpec.describe XyRecord, type: :model do
-  it "記録と順位が正しい" do
+  before do
     XyRecord.destroy_all
+    XyRuleInfo.redis.flushdb
+  end
 
+  it "記録と順位が正しい" do
     Timecop.freeze("2000-01-01") do
       XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "a", spent_sec: 1, x_count: 0)
       XyRecord.create!(xy_rule_key: "xy_rule100", entry_name: "b", spent_sec: 1, x_count: 0)
@@ -49,9 +52,6 @@ RSpec.describe XyRecord, type: :model do
   end
 
   it "ユニークの場合は一番良い結果を更新してないと登録しない点に注意" do
-    XyRecord.destroy_all
-    XyRuleInfo.redis.flushdb
-
     XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0) # 登録する
     XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 20, x_count: 0) # 以降登録しない
     XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 30, x_count: 0)
@@ -59,6 +59,12 @@ RSpec.describe XyRecord, type: :model do
     XyRuleInfo.rebuild
     r = XyRecord.last
     assert { r.rank(xy_scope_key: "xy_scope_all", entry_name_unique: "true") == 2 } # 全体だと40は2位
+  end
+
+  it "自己ベスト更新" do
+    assert { XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0).best_update_info == nil                       }
+    assert { XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0).best_update_info == nil                       }
+    assert { XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 8,  x_count: 0).best_update_info == {updated_spent_sec: 2.0}  }
   end
 
   def build(*args)

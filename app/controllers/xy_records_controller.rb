@@ -85,7 +85,7 @@ class XyRecordsController < ApplicationController
   def result_attributes
     {
       xy_records: XyRuleInfo[@xy_record.xy_rule_key].xy_records(params),
-      xy_record: @xy_record.attributes.merge(rank_info: @xy_record.rank_info).as_json,
+      xy_record: @xy_record.as_json(methods: [:rank_info, :best_update_info]),
     }
   end
 

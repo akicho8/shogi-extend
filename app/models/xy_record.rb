@@ -104,6 +104,23 @@ class XyRecord < ApplicationRecord
     end
   end
 
+  # 自己ベストを更新したときの情報
+  #
+  #  XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0).best_update_info # => nil
+  #  XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0).best_update_info # => nil
+  #  XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 8,  x_count: 0).best_update_info # => {updated_spent_sec: 2.0}
+  #
+  def best_update_info
+    s = self.class.where(xy_rule_key: xy_rule_key).where(entry_name: entry_name)
+    next_record = s.where(self.class.arel_table[:spent_sec].gt(spent_sec)).first # 今回の記録の次の記録をもつレコード
+    if next_record
+      top = s.order(:spent_sec).first # 自己ベスト
+      if top == self
+        { updated_spent_sec: (next_record.spent_sec - spent_sec).floor(ACCURACY) }
+      end
+    end
+  end
+
   private
 
   def ranking_add
