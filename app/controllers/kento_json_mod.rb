@@ -24,10 +24,10 @@ module KentoJsonMod
 
   private
 
-  # http://localhost:3000/w.json?query=devuser1&app_for=kento
-  # http://tk2-221-20341.vs.sakura.ne.jp/shogi/w.json?query=kinakom0chi&app_for=kento
+  # http://localhost:3000/w.json?query=devuser1&json_format_type=kento
+  # http://tk2-221-20341.vs.sakura.ne.jp/shogi/w.json?query=kinakom0chi&json_format_type=kento
   def kento_json_render
-    if request.format.json? && params[:app_for] == "kento"
+    if request.format.json? && params[:json_format_type] == "kento"
       if current_swars_user
         import_process2(flash)
 
