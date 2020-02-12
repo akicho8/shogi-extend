@@ -860,7 +860,7 @@ export default {
 
 <style lang="sass">
 // FIXME: ↓buefyが二重に読み込まれてしまう
-@import "./bulma_init.scss"
+@import "./stylesheets/bulma_init.scss"
 
 .xy_master
   .level_container

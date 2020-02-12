@@ -170,6 +170,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./bulma_init.scss"
+@import "./stylesheets/bulma_init.scss"
 .sp_modal
 </style>

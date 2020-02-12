@@ -6,7 +6,7 @@ XyRuleInfo.redis.flushdb
 
 Timecop.freeze("2000-01-01") do
   10.times do
-o    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 1, x_count: 0)
+    XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 1, x_count: 0)
   end
 end
 

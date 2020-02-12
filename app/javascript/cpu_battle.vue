@@ -524,7 +524,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./bulma_init.scss"
+@import "./stylesheets/bulma_init.scss"
 
 .cpu_battle
   .table_format_area
