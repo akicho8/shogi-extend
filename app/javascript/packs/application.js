@@ -155,8 +155,10 @@ window.App = {}
 //   console.log(window.Vue)
 //   console.log(window.GVI)
 // })
-if (GVI.$route.path.includes("/colosseum/battles")) {
-  window.App.cable = ActionCable.createConsumer()
-  ActionCable.startDebugging()
+if (GVI.$route) {
+  if (GVI.$route.path.includes("/colosseum/battles")) {
+    window.App.cable = ActionCable.createConsumer()
+    ActionCable.startDebugging()
+  }
 }
 // import "action_cable_setup.js"
