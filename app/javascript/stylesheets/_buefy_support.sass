@@ -2,3 +2,19 @@
 
 .toast
   @extend .is-unselectable
+
+////////////////////////////////////////////////////////////////////////////// 棋譜入力の盤面入力の幅が狭くなるのを防ぐ
+
+.b-tabs
+  &.is_lr_paddingless
+    .tab-content
+      padding-left: 0em !important
+      padding-right: 0em !important
+
+////////////////////////////////////////////////////////////////////////////// テーブルの一行は基本改行しない
+
+.b-table
+  // .table-wrapper
+  //   overflow-x: scroll !important
+  //   -webkit-overflow-scrolling: touch
+  @extend .line_break_off

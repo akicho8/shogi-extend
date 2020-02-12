@@ -51,12 +51,6 @@
   height: 27px
   border: 1px solid $primary
 
-////////////////////////////////////////////////////////////////////////////// _sp_modal
-
-.modal_loading_content
-  width: 40vmin
-  height: 40vmin
-
 ////////////////////////////////////////////////////////////////////////////// 段級位
 
 // .versus_container
@@ -72,43 +66,6 @@
 
 .has_text_gold
   color: hsl(38, 80%, 60%)
-
-////////////////////////////////////////////////////////////////////////////// 持ち時間用フォント
-
-.digit_font
-  font-family: Consolas, 'Courier New', Courier, Monaco, monospace
-
-////////////////////////////////////////////////////////////////////////////// チャットのメッセージは強く折り返す
-
-.chat_container
-  word-break: break-all
-  figure.media-left
-    .image
-      img
-        border-radius: 5%
-
-//////////////////////////////////////////////////////////////////////////////// message_link_to
-
-.message_link_to
-  .avatar_image
-    cursor: pointer
-    height: 2em
-    border-radius: 5%
-  .user_name
-    margin: 0 0.2em
-    white-space: nowrap
-    cursor: pointer
-    font-weight: bold
-
-.mlt_chat_message
-  word-break: break-all
-  margin-left: 0.5em
-
-.avatar_image_in_dialog
-  height: 3.0em
-  vertical-align: middle
-  margin-right: 0.5em
-  border-radius: 5%
 
 ////////////////////////////////////////////////////////////////////////////// ヘッダーのアバター画像
 
@@ -139,22 +96,6 @@
     .html_format_type_hash
       td
         white-space: normal
-
-////////////////////////////////////////////////////////////////////////////// 棋譜入力の盤面入力の幅が狭くなるのを防ぐ
-
-.b-tabs
-  &.is_lr_paddingless
-    .tab-content
-      padding-left: 0em !important
-      padding-right: 0em !important
-
-////////////////////////////////////////////////////////////////////////////// テーブルの一行は基本改行しない
-
-.b-table
-  // .table-wrapper
-  //   overflow-x: scroll !important
-  //   -webkit-overflow-scrolling: touch
-  @extend .line_break_off
 
 ////////////////////////////////////////////////////////////////////////////// ログインボタン
 /* https://qiita.com/AcaiBowl/items/8ee0a5a6c994685fb1cd
