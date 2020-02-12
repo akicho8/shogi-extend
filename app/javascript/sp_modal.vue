@@ -93,6 +93,15 @@ export default {
     current_modal_p(v) { this.$emit("update:sp_modal_p", v) },                 // 外←内 sp_modal_p <-- current_modal_p
 
     record() { this.real_pos = this.start_turn },                        // record がセットされた瞬間に開始手数を保存 (KENTOに渡すためでもある)
+
+    sp_run_mode(v) {
+      if (v === "play_mode") {
+        this.$buefy.toast.open({message: "駒を操作できます", position: "is-top", type: "is-info", duration: 1000 * 1, queue: false})
+      } else {
+        this.$buefy.toast.open({message: "元に戻しました", position: "is-top", type: "is-info", duration: 1000 * 1, queue: false})
+      }
+      this.turn_slider_focus()
+    },
   },
 
   methods: {
@@ -107,9 +116,9 @@ export default {
 
         if ("force_turn" in record) {
           return record.force_turn
-        } else {
-          return record.sp_turn
         }
+
+        return record.sp_turn
       }
     },
 
@@ -119,6 +128,15 @@ export default {
 
     kif_clipboard_copy(params) {
       this.kif_clipboard_copy(params)
+    },
+
+    turn_slider_focus() {
+      this.$nextTick(() => {
+        const dom = document.querySelector(".turn_slider")
+        if (dom) {
+          dom.focus()
+        }
+      })
     },
   },
 

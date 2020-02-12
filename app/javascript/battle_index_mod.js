@@ -47,14 +47,6 @@ export default {
   },
 
   watch: {
-    sp_run_mode(v) {
-      if (v === "play_mode") {
-        this.$buefy.toast.open({message: "駒を操作できます", position: "is-top", type: "is-info", duration: 1000 * 1})
-      } else {
-        this.$buefy.toast.open({message: "元に戻しました", position: "is-top", type: "is-info", duration: 1000 * 1})
-      }
-      this.turn_slider_focus()
-    },
   },
 
   beforeCreate() {
