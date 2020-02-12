@@ -59,7 +59,7 @@ class XyRuleInfo
 
       time = Time.current.strftime("%-d日%-H時")
       if body.present?
-        "#{time}の今日の鬼1位は#{body}"
+        "#{time}時点の1位は#{body}"
       end
     end
 
