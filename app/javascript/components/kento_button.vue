@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-button.kento_button(v-bind="$attrs" v-on="$listeners")
+  b-button.kento_button.is-small(v-bind="$attrs" v-on="$listeners")
     span.left_icon
       | ☗
     span.name

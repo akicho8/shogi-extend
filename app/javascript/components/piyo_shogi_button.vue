@@ -1,5 +1,5 @@
 <template lang="pug">
-  a.button.piyo_shogi_button(v-bind="$attrs" v-on="$listeners" size="is-small")
+  a.button.piyo_shogi_button.is-small(v-bind="$attrs" v-on="$listeners")
     span.icon
       img.left_icon(:src="piyo_shogi_icon")
     span ぴよ将棋
