@@ -54,10 +54,7 @@
               | record.critical_turn: {{record.critical_turn}}
 
         footer.modal-card-foot
-          a.button.piyo_button.is-small(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
-            span.icon
-              img(:src="piyo_shogi_icon")
-            span ぴよ将棋
+          piyo_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
 
           kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_turn}`" :turn="real_turn")
 
@@ -73,8 +70,6 @@
 </template>
 
 <script>
-
-import piyo_shogi_icon from "piyo_shogi_icon.png"
 
 export default {
   name: "sp_modal",
@@ -155,8 +150,6 @@ export default {
   },
 
   computed: {
-    piyo_shogi_icon() { return piyo_shogi_icon }, // TODO: Vue.js の重複強制どうにかならんの？
-
     start_turn() {
       return this.start_turn_for(this.record)
     },

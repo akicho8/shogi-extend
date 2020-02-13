@@ -106,6 +106,7 @@ import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
 import sp_modal from "sp_modal.vue"
+import piyo_button from "components/piyo_button.vue"
 import kento_button from "components/kento_button.vue"
 
 // const router = new VueRouter({
@@ -140,6 +141,7 @@ Vue.mixin({
     xy_master,
     cpu_battle,
     sp_modal,
+    piyo_button,
     kento_button,
   },
 })
