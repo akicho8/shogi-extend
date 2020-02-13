@@ -196,7 +196,7 @@ class XyRuleInfo
 
   concerning :ChartMethods do
     included do
-      cattr_accessor(:count_all_gteq) { 3 }
+      cattr_accessor(:count_all_gteq) { 1 }
     end
 
     class_methods do
@@ -209,6 +209,13 @@ class XyRuleInfo
         if v = xy_chart_scope_info.date_gteq
           scope = scope.where(XyRecord.arel_table[:created_at].gteq(v.ago))
         end
+
+        # 今日プレイした人だけに絞る
+        if true
+          entry_names = XyRecord.where(XyRecord.arel_table[:created_at].gteq(Time.current.midnight)).group(:entry_name).count.keys
+          scope = scope.where(entry_name: entry_names)
+        end
+
         names_hash = scope.group("entry_name").order("count_all DESC").having("count_all >= #{count_all_gteq}").count
         correction_created_at = "CONVERT_TZ(created_at, 'UTC', 'Asia/Tokyo')"
         result = scope.select("entry_name, DATE(#{correction_created_at}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
@@ -223,9 +230,9 @@ class XyRuleInfo
             borderColor: palette.border_color,
             fill: false,
 
-            pointRadius: 5,           # 点半径
+            pointRadius: 2,           # 点半径
             borderWidth: 2,           # 点枠の太さ
-            pointHoverRadius: 6,      # 点半径(アクティブ時)
+            pointHoverRadius: 3,      # 点半径(アクティブ時)
             pointHoverBorderWidth: 2, # 点枠の太さ(アクティブ時)
             showLine: true,           # 線で繋げる
 
