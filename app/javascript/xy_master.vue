@@ -146,9 +146,9 @@
               template(v-for="e in XyChartScopeInfo.values")
                 b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small")
                   | {{e.name}}
-      .columns
-        .column
-          canvas#chart_canvas(ref="chart_canvas" style="height:50vh; width:90vw")
+      .columns.is-centered
+        .column.is-half
+          canvas#chart_canvas(ref="chart_canvas")
           template(v-if="$root.$options.count_all_gteq >= 2")
             .has-text-centered
               | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します

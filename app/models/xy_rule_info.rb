@@ -210,9 +210,9 @@ class XyRuleInfo
           scope = scope.where(XyRecord.arel_table[:created_at].gteq(v.ago))
         end
 
-        # 今日プレイした人だけに絞る
+        # 指定のルールで今日プレイした人だけに絞る
         if true
-          entry_names = XyRecord.where(XyRecord.arel_table[:created_at].gteq(Time.current.midnight)).group(:entry_name).count.keys
+          entry_names = XyRecord.where(xy_rule_key: xy_rule_key).where(XyRecord.arel_table[:created_at].gteq(Time.current.midnight)).group(:entry_name).count.keys
           scope = scope.where(entry_name: entry_names)
         end
 
