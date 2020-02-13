@@ -54,7 +54,7 @@
               | record.critical_turn: {{record.critical_turn}}
 
         footer.modal-card-foot
-          piyo_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
+          piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
 
           kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_turn}`" :turn="real_turn")
 
