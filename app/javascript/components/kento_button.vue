@@ -1,12 +1,11 @@
 <template lang="pug">
-  b-button.kento_app_button(v-on="$listeners")
+  b-button.kento_button(v-on="$listeners")
     span.left_icon
       | ☗
     span.name
       | KENTO
     span.turn(v-if="turn != null")
       | \#{{turn}}
-
 </template>
 
 <script>
@@ -22,7 +21,7 @@ export default {
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
 // https://www.kento-shogi.com/
-.kento_app_button
+.kento_button
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
   font-weight: 700
 

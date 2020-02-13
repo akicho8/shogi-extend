@@ -3,8 +3,7 @@ a.button.piyo_button(type="button" :href="props.row.piyo_shogi_app_url")
     = image_tag("piyo_shogi_icon.png", class: "left_icon")
   span ぴよ将棋
 
-b-button.kento_app_button(tag="a" @click.stop :href="props.row.kento_app_url")
-  | ☗ KENTO
+kento_button(tag="a" @click.stop :href="props.row.kento_app_url")
 
 template(v-if="props.row.kifu_copy_params")
   a.button.is-small(@click.stop.prevent="kif_clipboard_copy(props.row.kifu_copy_params)")

@@ -41,9 +41,6 @@ ruby:
 
           / remote fetch が終わる前に href="" に対して遷移しようとするため .prevent が必要
           / なぜ href で URL を入れるのか？ → 長押しで別タブで飛びたいため
-          b-button.kento_app_button(@click.prevent="kento_open_handle" tag="a" :href="record ? record.kento_app_url : 'https://www.kento-shogi.com/'")
-            | ☗ KENTO
-
           kento_button(@click.prevent="kento_open_handle" tag="a" :href="record ? record.kento_app_url : 'https://www.kento-shogi.com/'" :turn="1")
 
           b-button.kif_copy_link(@click="kifu_copy_handle('kif')")

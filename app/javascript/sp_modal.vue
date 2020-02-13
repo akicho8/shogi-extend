@@ -59,8 +59,7 @@
               img(:src="piyo_shogi_icon")
             span ぴよ将棋
 
-          b-button.kento_app_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_turn}`")
-            | ☗ KENTO \#{{real_turn}}
+          kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_turn}`" :turn="real_turn")
 
           template(v-if="record.kifu_copy_params")
             a.button.is-small(@click.stop.prevent="kif_clipboard_copy(record.kifu_copy_params)")

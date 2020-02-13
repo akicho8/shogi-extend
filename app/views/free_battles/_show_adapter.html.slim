@@ -12,8 +12,7 @@
 
     | &nbsp;
     - url = kento_app_url(full_url_for([current_record, format: "kif"]))
-    a.button.is-small.kento_app_button(href=url)
-      | ☗ KENTO
+    kento_button(href=url)
 
     / | &nbsp;
     / = link_to("棋譜用紙", [ns_prefix, current_record, formal_sheet: true], class: "button is-small", target: "_self")
