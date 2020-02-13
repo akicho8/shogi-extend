@@ -33,7 +33,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     it "アプリ起動できるブックマーク可能なページに飛ぶ" do
       visit "/w?query=devuser1"
       find(".usage_modal_open_handle").click
-      find(".button.piyo_shogi").click
+      find(".usage_modal .piyo_shogi_button").click
       doc_image("検索画面下の使い方表示")
       expect(page).to have_content "ホーム画面に追加してください"
       doc_image
