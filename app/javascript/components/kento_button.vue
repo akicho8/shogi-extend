@@ -26,11 +26,13 @@ export default {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
   font-weight: 700
 
+  &:hover
+    .left_icon
+      animation: rotation 0.5s -0.25s ease-in-out infinite alternate
+
   .left_icon
     display: inline-block
     color: hsl(33, 91%, 65%)
-    +icon_rorate_if_button_hover("kento_app_button")
-      animation: rotation
 
   .name
     color: hsl(218, 23%, 23%)
@@ -39,9 +41,9 @@ export default {
   .turn
     margin-left: 0.3rem
 
-// @keyframes rotation
-//   0%
-//     transform: rotate(-360deg)
-//   100%
-//     transform: rotate(360deg)
+  @keyframes rotation
+    0%
+      transform: rotate(-20deg)
+    100%
+      transform: rotate(20deg)
 </style>
