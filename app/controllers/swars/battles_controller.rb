@@ -214,7 +214,7 @@ module Swars
                 flash[:warning] = "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした"
               end
             else
-              flash[:info] = "#{hit_count}件、新しく見つかりました"
+              flash[:toast_info] = "#{hit_count}件、新しく見つかりました"
             end
             current_swars_user.search_logs.create!
           else
