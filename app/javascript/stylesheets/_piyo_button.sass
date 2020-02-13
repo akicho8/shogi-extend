@@ -1,16 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700&display=swap')
 
 .piyo_button
-  img
-    transition: transform 0.5s 0.3s ease-in-out
+  font-family: 'M PLUS Rounded 1c', sans-serif
+  font-weight: 700
 
-    @at-root .piyo_button:hover
-      img
-        transform: rotate(360deg * 2 * -1)
-
-  span
-    font-family: 'M PLUS Rounded 1c', sans-serif
-    font-weight: 700
+  .left_icon
+    +icon_rorate_if_button_hover("piyo_button")
 
   //////////////////////////////////////// 色も黄色にする
   @extend .has-background-piyo
