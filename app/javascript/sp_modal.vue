@@ -52,6 +52,7 @@
               | record.force_turn: {{record.force_turn}}
               | record.sp_turn: {{record.sp_turn}}
               | record.critical_turn: {{record.critical_turn}}
+              | record.turn_max: {{record.turn_max}}
 
         footer.modal-card-foot
           piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
