@@ -106,13 +106,15 @@ class XyRecord < ApplicationRecord
 
   # 自己ベストを更新したときの情報
   #
-  #  XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0).best_update_info # => nil
-  #  XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0).best_update_info # => nil
-  #  XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 8,  x_count: 0).best_update_info # => {updated_spent_sec: 2.0}
+  # assert { XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 100.333, x_count: 0).best_update_info == nil                       }
+  # assert { XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 100.334, x_count: 0).best_update_info == nil                       }
+  # assert { XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 100.332, x_count: 0).best_update_info == {updated_spent_sec: 0.001 }  }
   #
   def best_update_info
     s = self.class.where(xy_rule_key: xy_rule_key).where(entry_name: entry_name)
-    next_record = s.where(self.class.arel_table[:spent_sec].gt(spent_sec)).first # 今回の記録の次の記録をもつレコード
+
+    # 小数の比較だと自分が 1.1 として v > 1.1 としても自分が含まれてしまうため id で除外している
+    next_record = s.where.not(id: id).where(self.class.arel_table[:spent_sec].gt(spent_sec)).order(:spent_sec).first # 今回の記録の次の記録をもつレコード
     if next_record
       top = s.order(:spent_sec).first # 自己ベスト
       if top == self
