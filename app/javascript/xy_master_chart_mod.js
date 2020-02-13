@@ -47,9 +47,9 @@ export default {
         type: "line",
         options: {
           // サイズ
-          aspectRatio: 1.5, // 大きいほど横長方形になる
-          // maintainAspectRatio: false,
-          // responsive: false,
+          // aspectRatio: 1.5, // 大きいほど横長方形になる
+          maintainAspectRatio: false,
+          responsive: false,
           // responsive: true,
           // maintainAspectRatio: false,
 
@@ -67,10 +67,10 @@ export default {
           // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
           layout: {
             padding: {
-              left: 8,
-              right: 8,
-              top: 8,
-              bottom: 8,
+              left: 4,
+              right: 4,
+              top: 4,
+              bottom: 4,
             },
           },
 

@@ -126,7 +126,7 @@
         | プレイヤー毎の順位をわかりやすくする
 
   .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
-    .column.is-8
+    .column
       .columns
         template(v-if="development_p")
           .column
@@ -148,11 +148,12 @@
                   | {{e.name}}
       .columns
         .column
-          canvas#chart_canvas.is-centered.is-4(ref="chart_canvas")
-          .has-text-centered.has-text-grey.is-size-7
-            | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
+          canvas#chart_canvas(ref="chart_canvas" style="height:50vh; width:90vw")
+          template(v-if="$root.$options.count_all_gteq >= 2")
+            .has-text-centered
+              | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
 
-  template(v-if="development_p")
+  template(v-if="development_p && false")
     .columns
       .column
         table(border=1)
@@ -916,4 +917,6 @@ export default {
     margin-top: 0.75rem
   .chart_box_container
     margin-top: 4rem
+  #chart_canvas
+    margin: 0 auto
 </style>
