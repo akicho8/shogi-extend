@@ -29,7 +29,7 @@
               :sfen_show="false"
               :controller_show="true"
               :theme="'simple'"
-              :size="'default'"
+              :size="'medium'"
               :sound_effect="true"
               :volume="0.2"
               :setting_button_show="false"
