@@ -1,9 +1,2 @@
 javascript:
   var flash_light_notify = #{flash_light_notify.to_json.html_safe}
-  document.addEventListener('DOMContentLoaded', () => {
-    if (_) {
-      _.forIn(flash_light_notify, (message, key) => {
-        Vue.prototype.$buefy.toast.open({message: message, position: "is-top", type: `is-${key}`, duration: 1000 * 2, queue: false})
-      })
-    }
-  })

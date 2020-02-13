@@ -61,6 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
       el: "#flash_danger_notify_tag",
     })
   }
+  if (flash_light_notify) {
+    _.forIn(flash_light_notify, (message, key) => {
+      Vue.prototype.$buefy.toast.open({message: message, position: "is-top", type: `is-${key}`, duration: 1000 * 2, queue: false})
+    })
+  }
 })
 
 //////////////////////////////////////////////////////////////////////////////// タブがアクティブか？(見えているか？)
