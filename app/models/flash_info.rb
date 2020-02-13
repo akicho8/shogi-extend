@@ -22,12 +22,12 @@ class FlashInfo
     }
   end
 
-  cattr_accessor :tost_keys do
-    notify_keys.collect { |e| "tost_#{e}".to_sym }
+  cattr_accessor :toast_keys do
+    notify_keys.collect { |e| "toast_#{e}".to_sym }
   end
 
   cattr_accessor :flash_all_keys do
-    notify_keys + tost_keys
+    notify_keys + toast_keys
   end
 
   delegate :tag, :params, :flash, :content_tag, to: :view_context
@@ -63,6 +63,6 @@ class FlashInfo
 
   # 軽いもの success, info は toast を使う
   def flash_light_notify
-    normalized_flash.slice(*tost_keys).transform_keys { |e| e.to_s.remove(/^tost_/) }
+    normalized_flash.slice(*toast_keys).transform_keys { |e| e.to_s.remove(/^toast_/) }
   end
 end
