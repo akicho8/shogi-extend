@@ -167,7 +167,7 @@ export default {
     } else {
       if (!this.query) {
         // モバイルでは手動でフォーカスしたときにはじめて入力ツールが登場するので自動的にフォーカスしない方がいい
-        this.desktop_only_focus(this.$refs.query_field)
+        // this.desktop_only_focus(this.$refs.query_field)
       }
     }
   },

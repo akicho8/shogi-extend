@@ -34,11 +34,10 @@ module Swars
     include BattleControllerSharedMethods
     include ExternalAppMod
     include ZipDlMod
+    include RememberSwarsUserKeysMod
 
     helper_method :current_swars_user
     helper_method :current_query_info
-
-    cattr_accessor(:remember_swars_user_keys_max) { 10 }
 
     cattr_accessor(:labels_type1) { ["対象", "相手"] }
     cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
@@ -138,6 +137,7 @@ module Swars
       options = super.merge({
           current_swars_user_key: current_swars_user_key,
           required_query_for_search: AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
+          remember_swars_user_keys: remember_swars_user_keys,
         })
       if AppConfig[:player_info_function]
         if current_swars_user_key
@@ -178,11 +178,7 @@ module Swars
 
     def import_process(flash)
       if import_enable?
-        if current_swars_user
-          if remember_swars_user_keys_max
-            cookies.permanent.signed[:remember_swars_user_keys] = [current_swars_user.user_key, *cookies.permanent.signed[:remember_swars_user_keys]].uniq.take(remember_swars_user_keys_max)
-          end
-        end
+        remember_swars_user_keys_update
 
         before_count = 0
         if current_swars_user

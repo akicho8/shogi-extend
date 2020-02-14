@@ -24,6 +24,14 @@ window.SwarsBattleIndex = Vue.extend({
     }
   },
 
+  computed: {
+    search_form_complete_list() {
+      return this.$options.remember_swars_user_keys.filter((option) => {
+        return option.toString().toLowerCase().indexOf(this.query.toLowerCase()) >= 0
+      })
+    }
+  },
+
   methods: {
     // テーブルを表示する条件は検索文字列があること
     // フォームに割り当てられている this.query だと変動するので使ってはいけない

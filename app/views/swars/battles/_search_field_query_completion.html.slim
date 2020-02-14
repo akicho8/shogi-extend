@@ -1,5 +1,5 @@
 = tag.datalist(id: "search_field_query_completion") do
-  - Array(cookies.permanent.signed[:remember_swars_user_keys]).each do |e|
+  - remember_swars_user_keys.each do |e|
     = tag.option(value: e)
 
   - Swars::User.search_form_datalist.each do |e|

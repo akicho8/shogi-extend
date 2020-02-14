@@ -4,7 +4,10 @@
       = form.submit("submit_button_for_test") if Rails.env.test?
 
       b-field
-        b-input(name="query" placeholder=current_placeholder type="search" icon="magnify" v-model="query" ref="query_field" expanded list="search_field_query_completion")
-        = render partial: "search_field_query_completion"
+        - if false
+          b-input(name="query" placeholder=current_placeholder type="search" icon="magnify" v-model="query" ref="query_field" expanded list="search_field_query_completion")
+          = render partial: "search_field_query_completion"
+        - else
+          b-autocomplete(name="query" v-model="query" :data="search_form_complete_list" type="search" placeholder=current_placeholder icon="magnify" ref="query_field" :open-on-focus="true" expanded list="search_field_query_completion")
         p.control
           = form.button("検索", name: nil, class: "button is-info")
