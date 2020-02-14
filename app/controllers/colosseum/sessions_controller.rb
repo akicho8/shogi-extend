@@ -6,6 +6,7 @@ module Colosseum
       unless Rails.env.production?
         user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       end
+      current_user_set_id(user)
       sign_in_and_redirect user
     end
 
