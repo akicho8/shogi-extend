@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
       # user_id ||=
 
       user = nil
-      if id = session[:user_id]
+      if id = cookies.signed[:user_id]
         user ||= Colosseum::User.find_by(id: id)
       end
       user ||= current_xuser
@@ -120,6 +120,10 @@ class ApplicationController < ActionController::Base
         end
       end
 
+      if user
+        cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
+      end
+
       user
       # end
     end
@@ -129,10 +133,9 @@ class ApplicationController < ActionController::Base
         remove_instance_variable(:@current_user)
       end
       if user_id
-        session[:user_id] = user_id
-        request.session_options[:expire_after] = 20.years
+        cookies.signed[:user_id] = {value: user_id, expires: 1.years.from_now}
       else
-        session.delete(:user_id)
+        cookies.delete(:user_id)
       end
     end
 
