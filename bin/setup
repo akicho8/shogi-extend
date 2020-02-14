@@ -51,6 +51,10 @@ chdir APP_ROOT do
   # system! "cap production mail_log:download"
   # system! "cap production rails:log:download"
 
+  puts "\n== xy_record redis clear =="
+  system! 'rails r XyRecord.delete_all'
+  system! 'rails r XyRuleInfo.redis.flushdb'
+
   puts "\n== Restarting application server =="
   system! 'rails restart'
 
