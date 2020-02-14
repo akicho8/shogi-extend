@@ -12,4 +12,4 @@ html(lang="ja" class=([params[:formal_sheet] ? "has_formal_sheet" : "", iframe? 
         = yield
         = ToolBelt::Basic.new(view_context: self).to_html
     = render partial: "layouts/footer"
-    = render partial: "layouts/flash_light_notify"
+    = render partial: "layouts/toast_flash"

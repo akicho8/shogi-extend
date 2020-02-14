@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
       el: "#flash_danger_notify_tag",
     })
   }
-  if (flash_light_notify) {
-    _.forIn(flash_light_notify, (message, key) => {
-      Vue.prototype.$buefy.toast.open({message: message, position: "is-top", type: `is-${key}`, duration: 1000 * 2, queue: false})
+  if (toast_flash) {
+    _.forIn(toast_flash, (message, key) => {
+      Vue.prototype.$buefy.toast.open({message: message, position: "is-bottom", type: `is-${key}`, duration: 1000 * 3, queue: false})
     })
   }
 })

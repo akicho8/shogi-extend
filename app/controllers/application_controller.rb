@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   concerning :ChoreMethods do
     included do
-      add_flash_types *FlashInfo.flash_all_keys
+      add_flash_types *FlashInfo.all_keys
       helper_method :submitted?
       helper_method :iframe?
     end

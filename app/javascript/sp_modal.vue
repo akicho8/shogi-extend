@@ -103,9 +103,9 @@ export default {
 
     sp_run_mode(v) {
       if (v === "play_mode") {
-        this.$buefy.toast.open({message: "駒を操作できます", position: "is-top", type: "is-info", duration: 1000 * 1, queue: false})
+        this.$buefy.toast.open({message: "駒を操作できます", position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
       } else {
-        this.$buefy.toast.open({message: "元に戻しました", position: "is-top", type: "is-info", duration: 1000 * 1, queue: false})
+        this.$buefy.toast.open({message: "元に戻しました", position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
       }
       this.turn_slider_focus()
     },
