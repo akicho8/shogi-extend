@@ -49,6 +49,7 @@ RSpec.configure do |config|
   # you configure your source control system to ignore this file.
   config.example_status_persistence_file_path = "spec/examples.txt"
 
+  # rspec --tag slow_spec
   config.filter_run_excluding :slow_spec => true
 
 # The settings below are suggested to provide a good initial experience
