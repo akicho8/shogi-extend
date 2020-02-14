@@ -16,7 +16,7 @@ class SystemNotificationChannel < ApplicationCable::Channel
 
       # テストのときも転けるのでオフラインにしない
       if Rails.env.test?
-        p ["#{__FILE__}:#{__LINE__}", __method__, "切断"]
+        # p ["#{__FILE__}:#{__LINE__}", __method__, "切断"]
         return
       end
 

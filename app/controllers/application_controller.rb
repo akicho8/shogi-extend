@@ -108,7 +108,11 @@ class ApplicationController < ActionController::Base
       # user_id ||=
 
       user = nil
-      if id = cookies.signed[:user_id]
+      id = session[:user_id]
+      if AppConfig[:colosseum_battle_enable]
+        id ||= cookies.signed[:user_id]
+      end
+      if id
         user ||= Colosseum::User.find_by(id: id)
       end
       user ||= current_xuser
@@ -117,12 +121,13 @@ class ApplicationController < ActionController::Base
         if params[:__create_user_name__]
           user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
           user.lobby_in_handle
+          cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
         end
       end
 
-      if user
-        cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
-      end
+      # if user
+      #   cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
+      # end
 
       user
       # end
@@ -132,10 +137,19 @@ class ApplicationController < ActionController::Base
       if instance_variable_defined?(:@current_user)
         remove_instance_variable(:@current_user)
       end
+
       if user_id
-        cookies.signed[:user_id] = {value: user_id, expires: 1.years.from_now}
+        session[:user_id] = user_id
       else
-        cookies.delete(:user_id)
+        session.delete(:user_id)
+      end
+
+      if AppConfig[:colosseum_battle_enable]
+        if user_id
+          cookies.signed[:user_id] = {value: user_id, expires: 1.years.from_now}
+        else
+          cookies.delete(:user_id)
+        end
       end
     end
 
