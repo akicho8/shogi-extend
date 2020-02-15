@@ -3,6 +3,21 @@
 *
   touch-action: manipulation
 
+////////////////////////////////////////////////////////////////////////////// フォーカスしたら placeholder は消す
+
+// https://www.ameamelog.com/css-placeholder/
+input:focus::-webkit-input-placeholder
+	color: transparent
+
+input:focus::-moz-placeholder
+	color: transparent
+
+input:focus::-ms-input-placeholder
+	color: transparent
+
+input:focus::placeholder
+	color: transparent
+  
 ////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
 
 #flash_danger_notify_tag
