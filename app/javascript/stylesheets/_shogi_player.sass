@@ -13,6 +13,12 @@
 $sp_assets_dir: "../../../node_modules/shogi-player/src/assets"
 @import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
 
+////////////////////////////////////////////////////////////////////////////// bulma の .table のなかにあると td の padding が影響してしまう
+
+.shogi-player
+  td, th
+    padding: 0
+
 ////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
 
 $cell_blank_bg:      $grey
