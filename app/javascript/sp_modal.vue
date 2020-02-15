@@ -59,12 +59,9 @@
 
           kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_turn}`" :turn="real_turn")
 
-          template(v-if="record.kifu_copy_params")
-            a.button.is-small(@click.stop.prevent="kif_clipboard_copy(record.kifu_copy_params)")
-              b 棋譜コピー
+          kif_copy_button(@click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
 
-          template(v-if="pulldown_menu_p")
-            pulldown_menu(:record="record" :in_modal_p="true" :real_turn="real_turn")
+          pulldown_menu(:record="record" :in_modal_p="true" :real_turn="real_turn" v-if="pulldown_menu_p")
 
           template(v-if="false")
             a.button.is-small(@click="current_modal_p = false") 閉じる
@@ -131,10 +128,6 @@ export default {
 
     real_turn_update(pos) {
       this.real_turn = pos
-    },
-
-    kif_clipboard_copy(params) {
-      this.kif_clipboard_copy(params)
     },
 
     // this.$nextTick(() => this.turn_slider_focus()) の方法だと失敗する
