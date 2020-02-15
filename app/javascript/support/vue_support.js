@@ -81,6 +81,14 @@ export default {
       return process.env.NODE_ENV === "development"
     },
 
+    url_prefix() {
+      if (this.development_p) {
+        return ""
+      } else {
+        return "/shogi"
+      }
+    },
+
     RAILS_ENV() {
       return window.RAILS_ENV
     },

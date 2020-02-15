@@ -28,6 +28,9 @@ export default {
       sp_modal_p: false,               // モーダルを開くフラグ
       modal_record: null,             //  選択したレコード
 
+      tactic_modal_p: false,      // 戦術モーダルを表示するか？
+      tactic_name: null,             // 戦術名
+
       loading: false,
 
       records: this.$options.records, // 表示するレコード配列
@@ -67,6 +70,11 @@ export default {
     // テーブルを表示する条件
     table_display_p() {
       return true
+    },
+
+    tactic_name_click_handle(tactic_name) {
+      this.tactic_name = tactic_name
+      this.tactic_modal_p = true
     },
 
     trick_show_handle() {

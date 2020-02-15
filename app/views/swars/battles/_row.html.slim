@@ -14,22 +14,20 @@ template(slot-scope="props")
     b-table-column(:label="m.label")
       / span (divでもよい) で囲まないとアイコンと名前が離れてしまう
       span
-        span(v-html="m.icon_html")
-        template(v-if="false")
-          a(@click.stop :href="m.query_user_url")
-            | {{m.name_with_grade}}
-        template(v-else)
-          swars_user_link_to(:membership="m")
+        span.icon_with_name
+          span(v-html="m.icon_html")
+          template(v-if="false")
+            a(@click.stop :href="m.query_user_url")
+              | {{m.name_with_grade}}
+          template(v-else)
+            swars_user_link_to(:membership="m")
 
-        template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
-          template(v-if="visible_hash[key]")
-            template(v-for="tag in m[key]")
-              template(v-if="tag.url")
-                a.has-text-grey.is-size-7.tag_name(@click.stop :href="tag.url")
-                  | {{tag.name}}
-              template(v-else)
-                span.has-text-grey.is-size-7.tag_name
-                  | {{tag.name}}
+        b-taglist
+          template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
+            template(v-if="visible_hash[key]")
+              template(v-for="tag in m[key]")
+                a(@click="tactic_name_click_handle(tag.name)")
+                  b-tag(rounded) {{tag.name}}
 
   b-table-column(field="final_key" :label="table_columns_hash.final_info.label" :visible="visible_hash.final_info" sortable)
     template(v-if="props.row.final_info.url")

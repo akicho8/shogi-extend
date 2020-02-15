@@ -11,6 +11,10 @@
 = render partial: "zip_dl_modal"
 = render partial: "usage_modal"
 
+/ もともとはタグの表示と、モーダルを合体させていたけど table.has-mobile-cards が効いて shogi-player が崩れてしまう
+/ なので外に出している
+tactic_modal(:tactic_modal_p.sync="tactic_modal_p" :tactic_name="tactic_name")
+
 - if Rails.env.development? && false
   = Swars::User.to_html
   = Swars::Battle.to_html

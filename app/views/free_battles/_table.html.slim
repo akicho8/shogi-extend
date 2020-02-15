@@ -6,7 +6,7 @@
           b-checkbox.is-small(v-model="visible_hash[key]")
             | {{value.label}}
 
-    b-table.battles_table(
+    b-table.is_battle_table(
       v-if="table_display_p()"
 
       hoverable
@@ -34,7 +34,7 @@
       @details-open="details_open_handle"
       :show-detail-icon="showDetailIcon"
 
-      :row-class="(row, index) => row.saturn_key"
+      :row-class="(row, index) => [row.saturn_key]"
 
       )
       / @click="show_handle"

@@ -32,6 +32,11 @@ class TacticNotesController < ApplicationController
       return
     end
 
+    if request.format.json?
+      render json: current_record.as_json.merge(sfen_body: sfen_body)
+      return
+    end
+
     # ○ 何もない
     # ● 何かある
     # ☆ 移動元ではない
@@ -138,6 +143,12 @@ class TacticNotesController < ApplicationController
         a.merge(e.key => heavy_parsed_info.public_send("to_#{e.key}"))
       end
     end
+  end
+
+  let :sfen_body do
+    file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
+    heavy_parsed_info = Bioshogi::Parser.file_parse(file)
+    heavy_parsed_info.to_sfen
   end
 
   def current_record

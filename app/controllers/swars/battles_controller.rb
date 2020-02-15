@@ -416,7 +416,7 @@ module Swars
           list << { key: :id,             label: "ID",   visible: true, }
         end
         list << { key: :attack_tag_list,  label: "戦型", visible: true,  }
-        list << { key: :defense_tag_list, label: "囲い", visible: false, }
+        list << { key: :defense_tag_list, label: "囲い", visible: false,  }
         list << { key: :final_info,       label: "結果", visible: false, }
         list << { key: :turn_max,         label: "手数", visible: false, }
         if AppConfig[:columns_detail_show]
@@ -465,7 +465,7 @@ module Swars
             # end
 
             attrs["#{key}_tag_list"] = e.tag_names_for(key).collect { |name|
-              { name: name, url: swars_tag_search_path(name) }
+              { name: name, url: url_for([:tactic_note, id: name]) }
             }
 
             # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
