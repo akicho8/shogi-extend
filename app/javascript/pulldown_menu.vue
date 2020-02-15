@@ -62,7 +62,7 @@
     //- template(v-if="record.kifu_copy_params")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
     //-     a(@click="kif_clipboard_copy(ki2_copy_params)")
-    //-       b-icon(icon="clipboard-outline" size="is-small")
+    //-       b-icon(icon="clipboard-plus-outline" size="is-small")
     //-       span.a_label KI2 コピー
 
     b-dropdown-item(:separator="true")
@@ -97,7 +97,7 @@
     //- template(v-if="record.modal_on_index_url")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
     //-     a(@click="clipboard_copy({text: record.modal_on_index_url})")
-    //-       b-icon(icon="clipboard-outline" size="is-small")
+    //-       b-icon(icon="clipboard-plus-outline" size="is-small")
     //-       span.a_label URLをコピー
     //-
     //- template(v-if="in_modal_p")
@@ -105,7 +105,7 @@
     //-     template(v-if="real_turn != null")
     //-       b-dropdown-item(:has-link="true" :paddingless="true")
     //-         a(@click="clipboard_copy({text: `${record.modal_on_index_url}&turn=${real_turn}`})")
-    //-           b-icon(icon="clipboard-outline" size="is-small")
+    //-           b-icon(icon="clipboard-plus-outline" size="is-small")
     //-           span.a_label URLをコピー \#{{real_turn}}
 
     //- b-dropdown-item(:separator="true")
@@ -131,7 +131,7 @@
     //- template(v-if="record.swars_tweet_text")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
     //-     a(@click="simple_clipboard_copy(record.swars_tweet_text)")
-    //-       b-icon(icon="clipboard-outline" size="is-small")
+    //-       b-icon(icon="clipboard-plus-outline" size="is-small")
     //-       span.a_label ウォーズ側のTweetコピー
 </template>
 

@@ -55,7 +55,7 @@
                     pre.pre-wrap
                       a.is-pulled-right.clipboard_copy(@click.stop.prevent="kifu_copy_to_clipboard(e)")
                         b-tooltip(label="クリップボードにコピー" position="is-left" size="is-small")
-                          b-icon(icon="clipboard-outline")
+                          b-icon(icon="clipboard-plus-outline")
                       | {{e.value}}
               b-tab-item(:label="'盤面'")
                 template(v-if="output_kifs")

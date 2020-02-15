@@ -40,11 +40,8 @@ ruby:
           / なぜ href で URL を入れるのか？ → 長押しで別タブで飛びたいため
           kento_button(@click.prevent="kento_open_handle" tag="a" :href="record ? record.kento_app_url : 'https://www.kento-shogi.com/'")
 
-          b-button.kif_copy_link(@click="kifu_copy_handle('kif')")
-            b 棋譜コピー
-
-          b-button.sp_modal_button(@click="board_show_handle" icon-left="play-circle")
-            b 盤面
+          kif_copy_button(@click="kifu_copy_handle('kif')")
+          sp_modal_button(@click="board_show_handle")
 
   template(v-if="!bs_error")
 
@@ -62,7 +59,7 @@ ruby:
 
           b-field(grouped)
             b-field
-              b-icon.icon_in_field(icon="clipboard-outline" size="is-small")
+              b-icon.icon_in_field(icon="clipboard-plus-outline" size="is-small")
             b-field
               .buttons.has-addons.are-small
                 b-button(@click="kifu_copy_handle('kif')")  KIF

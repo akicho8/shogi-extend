@@ -95,7 +95,7 @@
         template(v-for="(value, key) in format_all")
           b-tab-item(:label="key")
             a.is-pulled-right.clipboard_copy(@click.stop.prevent="clipboard_copy({text: value})")
-              b-icon(icon="clipboard-outline")
+              b-icon(icon="clipboard-plus-outline")
             | {{value}}
 
       template(v-if="rows.length >= 1")

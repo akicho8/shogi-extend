@@ -10,7 +10,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
   it "正常系" do
     visit "/adapter"
     find("textarea").set("68S")
-    find(".kif_copy_link").click
+    find(".kif_copy_button").click
     expect(page).to have_content "コピーしました"
     doc_image
   end
@@ -18,7 +18,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
   it "エラー" do
     visit "/adapter"
     find("textarea").set("11玉")
-    find(".kif_copy_link").click
+    find(".kif_copy_button").click
     expect(page).to have_content "駒の上に打とうとしています"
     doc_image
   end
