@@ -108,6 +108,11 @@ class XyRuleInfo
     redis.zrevrange(table_key_for_today, 0, 0).collect do |id|
       XyRecord.find(id)
     end
+  rescue ActiveRecord::RecordNotFound => error
+    if Rails.env.production?
+      raise error
+    end
+    []
   end
 
   def rank_by_score(params, score)
