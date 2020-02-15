@@ -8,8 +8,7 @@ ruby:
   end
   # @override_page_title = [current_record.battled_at.strftime("%Y%m%d%H%M"), current_record.title].join("_").gsub(/\s+/, "_")
 
-- if Rails.env.test?
-- else
+- if Rails.env.development?
   - if !((ua.platform == "Windows" || ua.platform == "Macintosh") && ua.browser == "Chrome") || params[:formal_sheet_debug]
     javascript:
       document.addEventListener("DOMContentLoaded", () => {
