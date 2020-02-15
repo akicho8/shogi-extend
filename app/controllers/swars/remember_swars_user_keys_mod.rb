@@ -24,8 +24,9 @@ module Swars
 
     def remember_swars_user_keys
       v = Array(session[:remember_swars_user_keys])
-      if Rails.env.development?
-        v += %w(devuser1 foo bar baz 日本語 あいうえお)
+      if Rails.env.development? || Rails.env.test?
+        v += %w(devuser1 devuser2 補完される文字列の全体)
+        v = remember_swars_user_keys_normalize(v)
       end
       v
     end

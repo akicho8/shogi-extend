@@ -1,13 +1,12 @@
 .columns
   .column
-    = form_with(url: [:swars, :battles], method: :get, skip_enforcing_utf8: true) do |form|
-      = form.submit("submit_button_for_test") if Rails.env.test?
+    = form_with(url: [:swars, :battles], method: :get, skip_enforcing_utf8: true, html: { ref: "search_form" }) do |form|
 
       b-field
         - if false
           b-input(name="query" placeholder=current_placeholder type="search" icon="magnify" v-model="query" ref="query_field" expanded list="search_field_query_completion")
           = render partial: "search_field_query_completion"
         - else
-          b-autocomplete(name="query" v-model="query" :data="search_form_complete_list" type="search" placeholder=current_placeholder icon="magnify" ref="query_field" :open-on-focus="true" expanded list="search_field_query_completion")
+          b-autocomplete(name="query" v-model.trim="query" :data="search_form_complete_list" type="search" placeholder=current_placeholder icon="magnify" ref="query_field" :open-on-focus="true" expanded list="search_field_query_completion" @select="ac_select" @typing="ac_typing" @focus="ac_focus" @keypress.native.enter="ac_keypress_native_enter")
         p.control
-          = form.button("検索", name: nil, class: "button is-info")
+          = form.button("検索", name: nil, class: "button is-info search_form_submit_button")

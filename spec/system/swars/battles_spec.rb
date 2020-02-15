@@ -17,7 +17,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     it "通常検索" do
       visit "/w"
       fill_in "query", with: "devuser1"
-      click_button "submit_button_for_test"
+      find(".search_form_submit_button").click
       expect(page).to have_content "相手"
       doc_image
     end
@@ -25,7 +25,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     it "ぴよ将棋専用" do
       visit "/w-light"
       fill_in "query", with: "devuser1"
-      click_button "submit_button_for_test"
+      find(".search_form_submit_button").click
       expect(page).to have_content "相手"
       doc_image
     end
@@ -62,6 +62,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     it "終了の局面表示" do
       visit "/w?query=devuser1&trick_show=true&end_show=true"
       expect(page).to have_content "終了図"
+      doc_image
+    end
+
+    it "検索フォームでオートコンプリート作動" do
+      visit "/w"
+      fill_in "query", with: "補完される文字列"
+      expect(page).to have_content "補完される文字列の全体"
       doc_image
     end
   end

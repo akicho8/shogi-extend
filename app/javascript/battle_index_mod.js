@@ -2,23 +2,24 @@ import _ from "lodash"
 import dayjs from "dayjs"
 import MemoryRecord from 'js-memory-record'
 
-import battle_record_methods from "battle_record_methods.js"
-import battle_index_table_column from "battle_index_table_column.js"
+import battle_record_methods from "battle_record_methods"
+import battle_index_table_column from "battle_index_table_column"
 
-import zip_kifu_dl_mod from "zip_kifu_dl_mod.js"
-import ls_support from "ls_support.js"
+import zip_kifu_dl_mod from "zip_kifu_dl_mod"
+import search_form_mod from "search_form_mod"
+import ls_support from "ls_support"
 
 export default {
   mixins: [
     battle_record_methods,
     battle_index_table_column,
     zip_kifu_dl_mod,
+    search_form_mod,
     ls_support,
   ],
 
   data() {
     return {
-      query: this.$options.query,                       // 検索文字列
       search_scope_key: this.$options.search_scope_key, // スコープ
 
       trick_show: this.$options.trick_show, // 仕掛局面の表示をするか？
@@ -164,11 +165,6 @@ export default {
   mounted() {
     if (this.$options.modal_record) {
       this.show_handle(this.$options.modal_record)
-    } else {
-      if (!this.query) {
-        // モバイルでは手動でフォーカスしたときにはじめて入力ツールが登場するので自動的にフォーカスしない方がいい
-        // this.desktop_only_focus(this.$refs.query_field)
-      }
     }
   },
 
