@@ -32,12 +32,9 @@
 
   template(v-if="slider_show")
     .has-text-centered
-      / FIXME: view で $refs を使ってはいけないらしいけど、かわりにどうすれば？
-      / input.ogp_slider(type="range" :value="$refs.main_sp.real_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="ogp_turn_slider")
-      / input.ogp_slider(type="range" :value="start_turn" @input="$refs.main_sp.current_turn_set($event.target.value)" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="ogp_turn_slider")
-      input.ogp_slider(type="range" v-model.number="start_turn" :min="$refs.main_sp.turn_min" :max="$refs.main_sp.turn_max" ref="ogp_turn_slider")
+      input.ogp_slider(type="range" v-model.number="start_turn" :min="$refs.main_sp.turn_offset_min" :max="$refs.main_sp.turn_offset_max" ref="ogp_turn_slider")
       span.is-size-7
-        | {{$refs.main_sp.real_turn}}
+        | {{$refs.main_sp.turn_offset}}
 
   .has-text-centered
     .buttons.is-inline

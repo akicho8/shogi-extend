@@ -508,7 +508,7 @@ module BattleControllerSharedMethods
     end
 
     def turn_max
-      @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_max
+      @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_offset
     end
 
     def heavy_parsed_info

@@ -47,7 +47,7 @@ module ShogiErrorRescueMod
   def message_prefix_build(e)
     s = []
     if e.respond_to?(:mediator)
-      s << "#{e.mediator.turn_info.counter + 1}手目"
+      s << "#{e.mediator.turn_info.display_turn.next}手目"
       s << "#{e.mediator.current_player.call_name}番"
     end
     if e.respond_to?(:input)

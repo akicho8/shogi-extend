@@ -286,7 +286,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def evaluation_value_generation
-    @score_list << {x: @mediator.turn_info.turn_max, y: @mediator.player_at(:black).evaluator.score}
+    @score_list << {x: @mediator.turn_info.turn_offset, y: @mediator.player_at(:black).evaluator.score}
   end
 
   # 最後の手があれば読み上げる

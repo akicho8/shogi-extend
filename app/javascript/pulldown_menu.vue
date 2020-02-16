@@ -16,14 +16,14 @@
 
     template(v-if="record.modal_on_index_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        template(v-if="real_turn == null")
+        template(v-if="turn_offset == null")
           a(:href="`${record.modal_on_index_url}`")
             b-icon(icon="open-in-new" size="is-small")
             span.a_label パーマリンク
         template(v-else="")
-          a(:href="`${record.modal_on_index_url}&turn=${real_turn}`")
+          a(:href="`${record.modal_on_index_url}&turn=${turn_offset}`")
             b-icon(icon="open-in-new" size="is-small")
-            span.a_label パーマリンク \#{{real_turn}}
+            span.a_label パーマリンク \#{{turn_offset}}
 
     //- template(v-if="record.show_path")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
@@ -102,11 +102,11 @@
     //-
     //- template(v-if="in_modal_p")
     //-   template(v-if="record.modal_on_index_url")
-    //-     template(v-if="real_turn != null")
+    //-     template(v-if="turn_offset != null")
     //-       b-dropdown-item(:has-link="true" :paddingless="true")
-    //-         a(@click="clipboard_copy({text: `${record.modal_on_index_url}&turn=${real_turn}`})")
+    //-         a(@click="clipboard_copy({text: `${record.modal_on_index_url}&turn=${turn_offset}`})")
     //-           b-icon(icon="clipboard-plus-outline" size="is-small")
-    //-           span.a_label URLをコピー \#{{real_turn}}
+    //-           span.a_label URLをコピー \#{{turn_offset}}
 
     //- b-dropdown-item(:separator="true")
     //-
@@ -140,7 +140,7 @@ export default {
   props: {
     record:   { required: false },
     in_modal_p: { },
-    real_turn: { },
+    turn_offset: { },
   },
 
   data() {

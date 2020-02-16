@@ -17,11 +17,11 @@ module Colosseum::Battle::UserMethods
   end
 
   def turn_info
-    Bioshogi::TurnInfo.new(handicap: handicap, counter: turn_max)
+    Bioshogi::TurnInfo.new(handicap: handicap, turn_offset: turn_max)
   end
 
   def user_by_turn(turn)
-    index = turn_info.base_location.code + turn # turn=0 のとき駒落ちなら index=1 になる
+    index = turn_info.turn_offset_zero_location.code + turn # turn=0 のとき駒落ちなら index=1 になる
     position = index.modulo(memberships.size)
     memberships.find_by(position: position).user
   end

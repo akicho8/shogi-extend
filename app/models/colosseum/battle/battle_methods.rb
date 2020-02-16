@@ -196,11 +196,11 @@ module Colosseum::Battle::BattleMethods
 
     def mediator_broadcast
       battle.full_sfen = mediator.to_sfen
-      battle.turn_max = mediator.turn_info.turn_max
+      battle.turn_max = mediator.turn_info.turn_offset
       battle.save!
 
       broadcast_hash = {
-        :turn_max        => mediator.turn_info.turn_max,
+        :turn_max        => mediator.turn_info.turn_offset,
         :last_hand       => mediator.to_ki2_a.last, # 使ってない
         :full_sfen       => battle.full_sfen,
         :human_kifu_text => battle.human_kifu_text,

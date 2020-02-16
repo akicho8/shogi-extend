@@ -218,7 +218,7 @@ module Colosseum
       battle.next_run
 
       info = Bioshogi::Parser.parse(battle.full_sfen)
-      assert { info.mediator.turn_info.turn_max == 1 }
+      assert { info.mediator.turn_info.turn_offset == 1 }
     end
 
     def create_user(team_key, self_preset_key, oppo_preset_key, robot_accept_key = :not_accept)

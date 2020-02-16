@@ -41,7 +41,7 @@
 
         pre(v-if="development_p")
           | start_turn: {{start_turn}}
-          | real_turn: {{real_turn}}
+          | turn_offset: {{turn_offset}}
           | record.force_turn: {{record.force_turn}}
           | record.sp_turn: {{record.sp_turn}}
           | record.critical_turn: {{record.critical_turn}}
@@ -49,9 +49,9 @@
 
       footer.modal-card-foot
         piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
-        kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${real_turn}`" :turn="real_turn")
+        kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
         kif_copy_button(@click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
-        pulldown_menu(:record="record" :in_modal_p="true" :real_turn="real_turn" v-if="pulldown_menu_p")
+        pulldown_menu(:record="record" :in_modal_p="true" :turn_offset="turn_offset" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる
 </template>
 
@@ -70,8 +70,8 @@ export default {
   data() {
     return {
       new_modal_p: this.sp_modal_p,    // sp_modal_p の内部の値
-      run_mode: "view_mode",           // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      real_turn: null,
+      run_mode: null,                  // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
+      turn_offset: null,
     }
   },
 
@@ -79,7 +79,7 @@ export default {
     sp_modal_p(v)  { this.new_modal_p = v }, // 外→内 sp_modal_p --> new_modal_p
     new_modal_p(v) {                         // 外←内 sp_modal_p <-- new_modal_p
       if (v) {
-        this.slider_focus_delay() // 開き直したときに反応させるため record.sfen_body の watch にフックするのではだめ
+        this.slider_focus_delay()
       }
       this.$emit("update:sp_modal_p", v)
     },
@@ -88,25 +88,31 @@ export default {
     record(v) {
       if (v) {
         // 開始手数を保存 (KENTOに渡すためでもある)
-        this.real_turn = this.start_turn
+        this.turn_offset = this.start_turn
+
+        // record を変更したときに元に戻す
+        this.run_mode = "view_mode"
 
         // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
-        if (v.turn_max == 0) {
+        // これは勝手にやらない方がいい
+        if (v.turn_max === 0 && false) {
           this.run_mode = "play_mode"
         }
       }
     },
 
     run_mode(v) {
-      let message = null
-      if (v === "play_mode") {
-        message = "駒を操作できます"
-      } else {
-        message = "元に戻しました"
+      if (this.new_modal_p) {
+        let message = null
+        if (v === "play_mode") {
+          message = "駒を操作できます"
+        } else {
+          message = "元に戻しました"
+        }
+        this.talk(message, {rate: 1.5})
+        this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
+        this.slider_focus_delay()
       }
-      this.talk(message, {rate: 1.5})
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
-      this.slider_focus()
     },
   },
 
@@ -130,7 +136,7 @@ export default {
 
     // shogi-player の局面が変化したときの手数を取り出す
     real_turn_set(v) {
-      this.real_turn = v
+      this.turn_offset = v
     },
 
     // this.$nextTick(() => this.slider_focus()) の方法だと失敗する

@@ -51,7 +51,7 @@ module BattleModelSharedMethods
       end
     end
 
-    self.turn_max = info.mediator.turn_info.turn_max
+    self.turn_max = info.mediator.turn_info.turn_offset
     self.critical_turn = info.mediator.critical_turn
     self.sfen_body = info.mediator.to_sfen
 
