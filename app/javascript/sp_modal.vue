@@ -93,7 +93,7 @@ export default {
       } else {
         message = "元に戻しました"
       }
-      this.talk(message, rate: 0.5)
+      this.talk(message, {rate: 1.5})
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
       this.slider_focus()
     },
