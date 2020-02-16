@@ -84,7 +84,18 @@ export default {
       this.$emit("update:sp_modal_p", v)
     },
 
-    record() { this.real_turn = this.start_turn },  // record がセットされた瞬間に開始手数を保存 (KENTOに渡すためでもある)
+    // バトル情報がセットされたタイミングまたは変更されたタイミング
+    record(v) {
+      if (v) {
+        // 開始手数を保存 (KENTOに渡すためでもある)
+        this.real_turn = this.start_turn
+
+        // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
+        if (v.turn_max == 0) {
+          this.run_mode = "play_mode"
+        }
+      }
+    },
 
     run_mode(v) {
       let message = null
