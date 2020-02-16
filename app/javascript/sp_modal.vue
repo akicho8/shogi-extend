@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-modal.sp_modal(:active.sync="new_modal_p" trap-focus animation="zoom-in" :full-screen="true" :can-cancel="['escape', 'outside']" :has-modal-card="true" v-if="record && record.sfen_body")
+  b-modal.sp_modal(:active.sync="new_modal_p" trap-focus animation="zoom-in" :full-screen="true" :can-cancel="['escape', 'outside']" :has-modal-card="true" v-if="record")
     .modal-card.is-shogi-player-modal-card
       .modal-card-body
         // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
