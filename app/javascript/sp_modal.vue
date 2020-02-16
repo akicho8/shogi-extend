@@ -33,7 +33,7 @@
         )
 
         .sp_modal_branch.has-text-centered
-          b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode") 継盤
+          b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle") 継盤
 
         template(v-if="record.description")
           .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
@@ -71,6 +71,7 @@ export default {
     return {
       new_modal_p: this.sp_modal_p,    // sp_modal_p の内部の値
       run_mode: null,                  // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
+      run_mode: null,                 // b-switch 経由
       turn_offset: null,
     }
   },
@@ -90,33 +91,34 @@ export default {
         // 開始手数を保存 (KENTOに渡すためでもある)
         this.turn_offset = this.start_turn
 
-        // record を変更したときに元に戻す
+        // 継盤解除
         this.run_mode = "view_mode"
 
         // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
-        // これは勝手にやらない方がいい
-        if (v.turn_max === 0 && false) {
-          this.run_mode = "play_mode"
+        // これは勝手にやらない方がいい？
+        if (true) {
+          if (v.turn_max === 0) {
+            this.run_mode = "play_mode"
+          }
         }
-      }
-    },
-
-    run_mode(v) {
-      if (this.new_modal_p) {
-        let message = null
-        if (v === "play_mode") {
-          message = "駒を操作できます"
-        } else {
-          message = "元に戻しました"
-        }
-        this.talk(message, {rate: 1.5})
-        this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
-        this.slider_focus_delay()
       }
     },
   },
 
   methods: {
+    // マウスで操作したときだけ呼べる
+    run_mode_change_handle(v) {
+      let message = null
+      if (v === "play_mode") {
+        message = "駒を操作できます"
+      } else {
+        message = "元に戻しました"
+      }
+      this.talk(message, {rate: 1.5})
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
+      this.slider_focus_delay()
+    },
+
     // 開始局面
     // force_turn start_turn critical_turn の順に見る
     // force_turn は $options.modal_record にのみ入っている
