@@ -127,8 +127,9 @@ export default {
       setTimeout(() => this.slider_focus(), 1)
     },
 
+    // $el は使えるタイミング難しいため普通に document から探す
     slider_focus() {
-      const dom = this.$el.querySelector(".turn_slider")
+      const dom = document.querySelector(".turn_slider")
       if (dom) {
         dom.focus()
       }
