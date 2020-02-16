@@ -719,7 +719,7 @@ export default {
       out += `タイム: ${this.time_format}`
       if (this.xy_record) {
         if (this.xy_record.best_update_info) {
-          out += ` (↑ ${this.xy_record.best_update_info.updated_spent_sec} s)`
+          out += ` (↓ ${this.xy_record.best_update_info.updated_spent_sec} s)`
         }
       }
       out += `\n`
