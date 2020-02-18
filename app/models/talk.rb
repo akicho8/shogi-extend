@@ -111,6 +111,10 @@ class Talk
   end
 
   def voice_id
+    if Rails.env.production?
+      return "Mizuki"
+    end
+
     t = Time.current
     if t.saturday? || t.sunday? || t.hour.modulo(2).even? || HolidayJp.holiday?(t)
       "Mizuki"
