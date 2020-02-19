@@ -61,10 +61,10 @@ export default {
   name: "sp_modal",
 
   props: {
-    record:          {                 }, // バトル情報
-    sp_modal_p:      {                 }, // 表示する？
-    pulldown_menu_p: { default: true,  }, // 右のプルダウンを表示する？
-    end_show:        { default: false, }, // 終局図から始める？
+    record:          {                  }, // バトル情報
+    sp_modal_p:      {                  }, // 表示する？
+    pulldown_menu_p: { default: true,   }, // 右のプルダウンを表示する？
+    board_show_type: { default: "none", }, // どの局面から開始するか
   },
 
   data() {
@@ -124,7 +124,7 @@ export default {
     // force_turn は $options.modal_record にのみ入っている
     start_turn_for(record) {
       if (record) {
-        if (this.end_show) {
+        if (this.board_show_type === "last") {
           return record.turn_max
         }
 

@@ -1,14 +1,11 @@
 template(v-if="fetched_count >= 1 && records.length >= 1")
   .columns
     .column
-      button.button.is-small(@click.stop.prevent="trick_show_handle")
-        | 仕掛け局面の表示
-        | &nbsp;&nbsp;&nbsp;
-        b-icon(:icon="!trick_show ? 'grid' : 'minus'" size="is-small")
-      template(v-if="trick_show")
-        b-switch.end_show(v-model="end_show") 終了図
+      b-field
+        b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="critical") 仕掛け
+        b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="last") 終局図
 
-.columns.is-multiline(v-show="trick_show")
+.columns.is-multiline(v-show="board_show_type !== 'none'")
   template(v-for="e in records")
     / https://bulma.io/documentation/columns/responsiveness/
     / widescreen 1/5 (is-one-fifth-widescreen)
@@ -18,7 +15,6 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
       a.no-decoration(@click.stop.prevent="show_handle(e)")
         small.line_break_on.has-text-black-ter
           | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
-        / :size="!end_show ? 'x-small' : 'xx-small'"
         shogi_player(
           :run_mode="'view_mode'"
           :debug_mode="false"
@@ -27,7 +23,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
           :theme="'simple'"
           :size="'x-small'"
           :sound_effect="false"
-          :hidden_if_piece_stand_blank="!end_show ? true : false"
+          :hidden_if_piece_stand_blank="board_show_type === 'critical'"
           :vlayout="true"
           :setting_button_show="false"
           :summary_show="false"
@@ -40,11 +36,10 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
 
 - if false
   / 画像版。これだと終了図に対応できない
-  template(v-if="trick_show")
-    .columns.is-multiline
-      template(v-for="e in records")
-        .column.is-one-fifth.has-text-centered.is-narrow
-          a(@click.stop.prevent="show_handle(e)")
-            small.line_break_on.has-text-grey
-              | {{e.title}}
-            img(:src="e.twitter_staitc_image_url")
+  .columns.is-multiline
+    template(v-for="e in records")
+      .column.is-one-fifth.has-text-centered.is-narrow
+        a(@click.stop.prevent="show_handle(e)")
+          small.line_break_on.has-text-grey
+            | {{e.title}}
+          img(:src="e.twitter_staitc_image_url")

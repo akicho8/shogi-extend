@@ -22,8 +22,7 @@ export default {
     return {
       search_scope_key: this.$options.search_scope_key, // スコープ
 
-      trick_show: this.$options.trick_show, // 仕掛局面の表示をするか？
-      end_show: this.$options.end_show,     // 終局図を表示するか？
+      board_show_type: this.$options.board_show_type, // 何の局面の表示をするか？
 
       sp_modal_p: false,               // モーダルを開くフラグ
       modal_record: null,             //  選択したレコード
@@ -77,8 +76,11 @@ export default {
       this.tactic_modal_p = true
     },
 
-    trick_show_handle() {
-      this.trick_show = !this.trick_show
+    // 終了図ボタンが ON の状態で押されたら OFF にする
+    board_show_type_set_none() {
+      if (this.board_show_type !== "none") {
+        this.board_show_type = "none"
+      }
     },
 
     show_handle(row) {
@@ -157,7 +159,7 @@ export default {
     // force_turn は $options.modal_record にのみ入っている
     start_turn_for(record) {
       if (record) {
-        if (this.end_show) {
+        if (this.board_show_type === "last") {
           return record.turn_max
         }
 
@@ -181,8 +183,7 @@ export default {
       return {
         query:            this.query,
         search_scope_key: this.search_scope_key,
-        trick_show:       this.trick_show,
-        end_show:         this.end_show,
+        board_show_type:  this.board_show_type,
         page:             this.page,
         per:              this.per,
         sort_column:      this.sort_column,

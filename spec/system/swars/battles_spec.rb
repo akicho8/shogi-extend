@@ -54,14 +54,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     end
 
     it "仕掛けの局面表示" do
-      visit "/w?query=devuser1&trick_show=true"
-      expect(page).to have_content "終了図"
+      visit "/w?query=devuser1&board_show_type=critical"
+      assert { find(".radio.is-primary").text === "仕掛け" }
       doc_image
     end
 
     it "終了の局面表示" do
-      visit "/w?query=devuser1&trick_show=true&end_show=true"
-      expect(page).to have_content "終了図"
+      visit "/w?query=devuser1&board_show_type=last"
+      assert { find(".radio.is-primary").text === "終局図" }
       doc_image
     end
 

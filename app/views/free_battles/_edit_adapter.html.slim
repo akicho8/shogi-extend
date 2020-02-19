@@ -10,7 +10,7 @@ ruby:
     document.addEventListener('DOMContentLoaded', () => { new Adapter(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
-  sp_modal(:sp_modal_p.sync="sp_modal_p" :record="record" :pulldown_menu_p="true" :end_show="false")
+  sp_modal(:sp_modal_p.sync="sp_modal_p" :record="record" :pulldown_menu_p="true" :board_show_type="'last'")
 
   p.title.is-2.yumincho
     = @page_title
