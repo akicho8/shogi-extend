@@ -4,6 +4,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
       b-field
         b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="critical") 仕掛け
         b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="last") 終局図
+        b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="none" type="") OFF
 
 .columns.is-multiline(v-show="board_show_type !== 'none'")
   template(v-for="e in records")

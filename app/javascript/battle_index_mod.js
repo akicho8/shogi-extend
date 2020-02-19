@@ -50,6 +50,9 @@ export default {
   },
 
   watch: {
+    board_show_type(v) {
+      console.log("board_show_type", v)
+    },
   },
 
   beforeCreate() {
@@ -79,7 +82,9 @@ export default {
     // 終了図ボタンが ON の状態で押されたら OFF にする
     board_show_type_set_none() {
       if (this.board_show_type !== "none") {
-        this.board_show_type = "none"
+        if (this.development_p) {
+          this.board_show_type = "none"
+        }
       }
     },
 
