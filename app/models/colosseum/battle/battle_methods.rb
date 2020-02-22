@@ -65,7 +65,7 @@ module Colosseum::Battle::BattleMethods
     # 次の手番の合法手がない = 詰ました = 勝ち
     def win_check
       if mediator.current_player.legal_all_hands.none?
-        # if mediator.current_player.normal_all_hands.none? { |e| e.legal_move?(mediator) }
+        # if mediator.current_player.create_all_hands.none? { |e| e.legal_hand?(mediator) }
         User.sysop.chat_say(battle, "【詰み】#{mediator.current_player.call_name}はもう指す手がありません", msg_class: "has-text-danger")
         battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
       end
@@ -92,7 +92,7 @@ module Colosseum::Battle::BattleMethods
 
         # 先を読む
         if cpu_brain_info.depth_max_range
-          brain = mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, evaluator_class: Bioshogi::EvaluatorAdvance)
+          brain = mediator.current_player.brain(diver_class: Bioshogi::Diver::NegaScoutDiver, evaluator_class: Bioshogi::EvaluatorAdvance)
           records = []
 
           cpu_brain_info.time_limit.each.with_index(1) do |tl, i|
@@ -123,13 +123,13 @@ module Colosseum::Battle::BattleMethods
 
         # 読めなかった場合はランダムまたは合法手から選択する
         unless hand
-          hands = mediator.current_player.normal_all_hands.to_a
+          hands = mediator.current_player.create_all_hands.to_a
           legal = cpu_brain_info.legal_only
           if cpu_brain_info.mate_danger_check
             legal ||= mediator.current_player.mate_danger?
           end
           if legal
-            hands = hands.find_all { |e| e.legal_move?(mediator) }
+            hands = hands.find_all { |e| e.legal_hand?(mediator) }
           end
           hand = hands.sample
 

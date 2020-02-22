@@ -162,7 +162,7 @@ class CpuBattlesController < ApplicationController
 
     unless @hand
       if current_cpu_brain_info.mate_danger_check
-        @hand = @mediator.current_player.mate_move_hands.first
+        @hand = @mediator.current_player.king_capture_move_hands.first
 
         # 玉を取らない場合
         if false
@@ -189,7 +189,7 @@ class CpuBattlesController < ApplicationController
 
         # いちばん良いのを選択
         record = @candidate_records.first
-        if record[:score] <= -Bioshogi::INF_MAX
+        if record[:score] <= -Bioshogi::SCORE_MAX
           final_decision(judge_key: :win, message: "CPUが降参しました")
           return
         end
@@ -205,9 +205,9 @@ class CpuBattlesController < ApplicationController
     end
 
     unless @hand
-      hands = @mediator.current_player.normal_all_hands.to_a
+      hands = @mediator.current_player.create_all_hands.to_a
       if current_cpu_brain_info.legal_only
-        hands = hands.find_all { |e| e.legal_move?(@mediator) }
+        hands = hands.find_all { |e| e.legal_hand?(@mediator) }
       end
       @hand = hands.sample
     end
@@ -260,7 +260,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def iterative_deepening
-    brain = @mediator.current_player.brain(diver_class: Bioshogi::NegaScoutDiver, **evaluator_params)
+    brain = @mediator.current_player.brain(diver_class: Bioshogi::Diver::NegaScoutDiver, **evaluator_params)
     time_limit = current_cpu_brain_info.time_limit
 
     begin

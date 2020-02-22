@@ -122,8 +122,7 @@
                   b-table-column(field="created_at" label="日付" sortable)
                     | {{time_default_format(props.row.created_at)}}
 
-      b-switch(v-model="entry_name_unique")
-        | プレイヤー毎の順位をわかりやすくする
+      b-switch(v-model="entry_name_unique") プレイヤー別順位
 
   .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
     .column
