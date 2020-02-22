@@ -140,7 +140,7 @@ class TacticNotesController < ApplicationController
       file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
       heavy_parsed_info = Bioshogi::Parser.file_parse(file)
       Bioshogi::KifuFormatInfo.inject({}) do |a, e|
-        a.merge(e.key => heavy_parsed_info.public_send("to_#{e.key}"))
+        a.merge(e.key => heavy_parsed_info.public_send("to_#{e.key}", compact: true, no_embed_if_time_blank: true))
       end
     end
   end

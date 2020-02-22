@@ -46,7 +46,7 @@ module BattleModelSharedMethods
       # くそ重くなるのでこれはやってはいけない
       KifuFormatWithBodInfo.each do |e|
         converted_info = converted_infos.text_format_eq(e.key).take || converted_infos.build
-        converted_info.text_body = info.public_send("to_#{e.key}", compact: true)
+        converted_info.text_body = info.public_send("to_#{e.key}", compact: true, no_embed_if_time_blank: true)
         converted_info.text_format = e.key
       end
     end
@@ -200,7 +200,7 @@ module BattleModelSharedMethods
     def to_cached_kifu(key)
       if kifu_cache_enable
         # Rails.cache.fetch([cache_key, key].join("-"), expires_in: Rails.env.production? ? kifu_cache_expires_in : 0) do
-        heavy_parsed_info.public_send("to_#{key}", compact: true)
+        heavy_parsed_info.public_send("to_#{key}", compact: true, no_embed_if_time_blank: true)
         # end
       else
         if e = converted_infos.text_format_eq(key).take

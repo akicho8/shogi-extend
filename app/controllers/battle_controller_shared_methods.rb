@@ -503,7 +503,7 @@ module BattleControllerSharedMethods
     # FIXME: これはやめて FreeBattle をつかうべき
 
     def output_kifs
-      @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true) }) }
+      @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true, no_embed_if_time_blank: true) }) }
     end
 
     def turn_max
