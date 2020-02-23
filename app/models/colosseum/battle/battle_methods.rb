@@ -117,7 +117,7 @@ module Colosseum::Battle::BattleMethods
             end
             hand = record[:hand]
 
-            __trace("#{record[:best_pv].size}手先まで読んで#{hand}を指しました。評価値:#{record[:score2]} 読み筋:#{record[:best_pv].collect(&:to_s).join(' ')}")
+            __trace("#{record[:best_pv].size}手先まで読んで#{hand}を指しました。評価値:#{record[:block_side_score]} 読み筋:#{record[:best_pv].collect(&:to_s).join(' ')}")
           end
         end
 
