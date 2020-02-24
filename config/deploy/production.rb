@@ -65,3 +65,11 @@ tp({
     deploy_to: fetch(:deploy_to),
     bundle_servers: fetch(:bundle_servers).collect(&:hostname).join(", "),
   })
+
+# USE_NEW_DOMAIN=1 cap production server_setting
+task :server_setting do
+  on release_roles :all do
+    execute :env, "| grep PASSENGER"
+    execute :ls, "-al", "/var/run/passenger-instreg/*"
+  end
+end
