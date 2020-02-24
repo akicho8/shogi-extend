@@ -19,8 +19,6 @@ set :git_shallow_clone, 1
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 if ENV["USE_NEW_DOMAIN"]
-  set :repo_url, -> { "git@github.com:akicho8/shogi_web.git" }
-
   set :USE_NEW_DOMAIN, "true"
   set :ws_port, 28082
 else

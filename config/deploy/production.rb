@@ -1,12 +1,6 @@
-if ENV["USE_NEW_DOMAIN"]
-  server 'ik1-413-38753.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
-else
-  server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
-end
+server 'ik1-413-38753.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
 
-if ENV["USE_NEW_DOMAIN"]
-  set :rbenv_ruby, "2.6.5"
-end
+set :rbenv_ruby, "2.6.5"
 
 # 最初にアプリ削除する？
 if ENV["APP_RESET"] == "1"
@@ -29,24 +23,24 @@ before 'deploy:check:linked_files', 'deploy:database_yml_upload'
 after "deploy:finished", :yarn_cache_clean
 
 # 起動確認
-set :my_heartbeat_urls, ["http://tk2-221-20341.vs.sakura.ne.jp/shogi", "http://shogi-flow.xyz/"]
+set :my_heartbeat_urls, ["http://ik1-413-38753.vs.sakura.ne.jp/", "http://shogi-extend.com/"]
 
 # 起動するURL
 set :open_urls, %w(
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/w
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/w?query=kinakom0chi
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/adapter
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/xy
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu/battles
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/stopwatch
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/x
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/x/new
-  http://tk2-221-20341.vs.sakura.ne.jp/shogi/board
+  http://ik1-413-38753.vs.sakura.ne.jp
+  http://ik1-413-38753.vs.sakura.ne.jp/w
+  http://ik1-413-38753.vs.sakura.ne.jp/w?query=kinakom0chi
+  http://ik1-413-38753.vs.sakura.ne.jp/adapter
+  http://ik1-413-38753.vs.sakura.ne.jp/xy
+  http://ik1-413-38753.vs.sakura.ne.jp/cpu/battles
+  http://ik1-413-38753.vs.sakura.ne.jp/stopwatch
+  http://ik1-413-38753.vs.sakura.ne.jp/x
+  http://ik1-413-38753.vs.sakura.ne.jp/x/new
+  http://ik1-413-38753.vs.sakura.ne.jp/board
 )
 
 if ENV["USE_NEW_DOMAIN"] && false
-  set :application, "shogi_web2"
+  set :application, "shogi_web"
 
   desc "storage を shogi_web_production/shared/storage にリンクする"
   task :my_storeage_symlink do
