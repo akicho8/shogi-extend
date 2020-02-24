@@ -1,4 +1,12 @@
-server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
+if ENV["USE_NEW_DOMAIN"]
+  server 'ik1-413-38753.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
+else
+  server 'tk2-221-20341.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
+end
+
+if ENV["USE_NEW_DOMAIN"]
+  set :rbenv_ruby, "2.6.5"
+end
 
 # 最初にアプリ削除する？
 if ENV["APP_RESET"] == "1"
@@ -37,7 +45,7 @@ set :open_urls, %w(
   http://tk2-221-20341.vs.sakura.ne.jp/shogi/board
 )
 
-if ENV["USE_NEW_DOMAIN"]
+if ENV["USE_NEW_DOMAIN"] && false
   set :application, "shogi_web2"
 
   desc "storage を shogi_web_production/shared/storage にリンクする"
