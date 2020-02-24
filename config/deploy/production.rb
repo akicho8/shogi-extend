@@ -57,4 +57,9 @@ else
   append :linked_dirs, "storage"
 end
 
-tp(application: fetch(:application), deploy_to: fetch(:deploy_to))
+tp({
+    application: fetch(:application),
+    branch: fetch(:branch),
+    deploy_to: fetch(:deploy_to),
+    bundle_servers: fetch(:bundle_servers).collect(&:hostname).join(", "),
+  })
