@@ -85,7 +85,8 @@ export default {
       if (this.development_p) {
         return ""
       } else {
-        return "/shogi"
+        return ""
+        // return "/shogi"
       }
     },
 
