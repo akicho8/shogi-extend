@@ -19,8 +19,8 @@ set :rails_env, 'production'    # 必要
 # 専用の database.yml を転送
 before 'deploy:check:linked_files', 'deploy:database_yml_upload'
 
-# さくらサーバーの容量がないため yarn のパッケージのキャッシュはクリアする
-after "deploy:finished", :yarn_cache_clean
+# さくらサーバーの容量がないため yarn のパッケージのキャッシュはクリアする (そもそもサーバー側でビルドしてない)
+# after "deploy:finished", :yarn_cache_clean
 
 # 起動確認
 set :my_heartbeat_urls, ["http://ik1-413-38753.vs.sakura.ne.jp/", "http://shogi-extend.com/"]
@@ -69,7 +69,16 @@ tp({
 # USE_NEW_DOMAIN=1 cap production server_setting
 task :server_setting do
   on release_roles :all do
+    tp "Passenger の作業ディレクトリ"
     execute :env, "| grep PASSENGER"
     execute :ls, "-al", "/var/run/passenger-instreg/*"
+
+    tp "/var/run/* は再起動すると消されるためここで作る"
+    execute :ls, "-al", "/etc/tmpfiles.d/passenger.conf"
+    execute :cat, "/etc/tmpfiles.d/passenger.conf"
+
+    tp "Apacheの設定は config/ishikari_passenger.conf をコピーしている"
+    execute :ls, "-al", "/etc/httpd/conf.d/ishikari_passenger.conf"
+    execute :cat, "/etc/httpd/conf.d/ishikari_passenger.conf"
   end
 end
