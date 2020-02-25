@@ -20,9 +20,16 @@ task :production_db_backup_to_local do
   system "scp s:/tmp/shogi_web_production.sql db"
 end
 
-desc "新サーバーにコピー"
+desc "DBを新サーバーにコピー"
 task :db_copy_to_ishikari do
   Rake::Task[:production_db_backup_to_local].invoke
   system "scp db/shogi_web_production.sql i:~/"
   system "ssh i mysql -u root shogi_web_production < ~/shogi_web_production.sql"
 end
+
+desc "shared/storage を新サーバーにコピー"
+task :storage_copy_to_ishikari do
+  system "scp -r s:/var/www/shogi_web_production/shared/storage db/"
+  system "scp -r db/storage i:/var/www/shogi_web_production/shared/"
+end
+

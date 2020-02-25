@@ -5,6 +5,7 @@
 /public/packs
 /node_modules
 /storage
+/db/storage
 
 /public/packs
 /public/packs-test
