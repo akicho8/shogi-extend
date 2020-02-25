@@ -34,7 +34,7 @@ module KentoJsonMod
         json_hash = {
           "api_version" => "2020-02-02",                                    # (required) 固定値
           "api_name" => "将棋ウォーズ(ID:#{current_swars_user.user_key})",  # (required) 任意のAPI名
-          "game_list" => current_index_scope.order(battled_at: "desc").limit(10).collect { |e|
+          "game_list" => current_index_scope.order(battled_at: "desc").limit(kento_records_limit).collect { |e|
             {
               "tag": [                                                      # (optional) 任意のタグリスト
                 "将棋ウォーズ(#{e.rule_info.name})",
@@ -59,5 +59,9 @@ module KentoJsonMod
 
   def format_type
     params[:format_type] || params[:json_format_type]
+  end
+
+  def kento_records_limit
+    [params[:limit] || 10, 30].collect(&:to_i).min
   end
 end
