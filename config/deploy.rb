@@ -26,11 +26,7 @@ else
   set :ws_port, 28081
 end
 
-<<<<<<< HEAD
 set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env), ws_port: fetch(:ws_port), USE_NEW_DOMAIN: fetch(:USE_NEW_DOMAIN)} }
-=======
-set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env), ws_port: fetch(:ws_port), USE_NEW_DOMAIN: fetch(:use_new_domain)} }
->>>>>>> [chore] use_new_domain を大文字に統一
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }

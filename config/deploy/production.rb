@@ -2,6 +2,8 @@ server 'ik1-413-38753.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
 
 set :rbenv_ruby, "2.6.5"
 
+set :keep_releases, 5
+
 # 最初にアプリ削除する？
 if ENV["APP_RESET"] == "1"
   before 'deploy:starting', 'deploy:app_clean'
