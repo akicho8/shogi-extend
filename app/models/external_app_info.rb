@@ -10,7 +10,7 @@ class ExternalAppInfo
   end
 
   def external_url(h, record)
-    unless Rails.env.production?
+    if Rails.env.development?
       return "https://www.example.com/?a=1&b=2"
     end
 

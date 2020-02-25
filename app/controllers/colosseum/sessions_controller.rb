@@ -3,7 +3,8 @@ module Colosseum
     def create
       user = User.create!
       flash[:notice] = "名無しのアカウントを作成してログインしました。あなたは「#{user.name}」です"
-      unless Rails.env.production?
+      if Rails.env.production? || Rails.env.staging?
+      else
         user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       end
       current_user_set_id(user)

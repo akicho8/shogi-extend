@@ -16,6 +16,10 @@ production:
   <<: *defaults
   database: shogi_web_production
 
+staging:
+  <<: *defaults
+  database: shogi_web_staging
+
 test:
   <<: *defaults
   database: shogi_web_test

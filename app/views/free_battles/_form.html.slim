@@ -60,7 +60,7 @@
 
     = render partial: "form_start_turn", locals: { form: form }
 
-    - unless Rails.env.production?
+    - if Rails.env.development? || Rails.env.test?
       .field
         = form.label(:kifu_url, class: "label")
         .control

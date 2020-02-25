@@ -36,11 +36,12 @@ $any_exist_soldiers: $grey-light
 
 // 左右キーが効くように常にスライダーにフォーカスさせているけど、これがスマホだととても目立つし、スマホだと役にたたないため、色を消す(重要)
 // ただフォーカスが効いているのかわからなため production のみとする
-html.production
-  .shogi-player
-    .turn_slider
-      &:focus
-        outline: none
+html
+  &.production, &.staging
+    .shogi-player
+      .turn_slider
+        &:focus
+          outline: none
 
 /* 背景画像
 /* body

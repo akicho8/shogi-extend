@@ -28,7 +28,8 @@ module SlackAgent
     end
 
     env = ""
-    unless Rails.env.production?
+    if Rails.env.production? || Rails.env.staging?
+    else
       env = "(#{Rails.env})"
     end
 

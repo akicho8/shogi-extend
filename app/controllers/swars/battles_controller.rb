@@ -193,7 +193,8 @@ module Swars
           success = Battle.sometimes_user_import(user_key: current_swars_user_key, page_max: import_page_max)
           if !success
             # ここを有効にするには rails dev:cache してキャッシュを有効にすること
-            unless Rails.env.production?
+            if Rails.env.production? || Rails.env.staging?
+            else
               flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです"
             end
           end
@@ -206,7 +207,8 @@ module Swars
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
             if hit_count.zero?
-              unless Rails.env.production?
+              if Rails.env.production? || Rails.env.staging?
+              else
                 flash[:warning] = "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした"
               end
             else
@@ -218,7 +220,8 @@ module Swars
           end
 
           if hit_count.nonzero?
-            unless Rails.env.production?
+            if Rails.env.production? || Rails.env.staging?
+            else
               slack_message(key: "検索", body: "#{current_swars_user_key} #{hit_count}件")
             end
           end
@@ -412,7 +415,8 @@ module Swars
 
       let :table_column_list do
         list = []
-        unless Rails.env.production?
+        if Rails.env.production? || Rails.env.staging?
+        else
           list << { key: :id,             label: "ID",   visible: true, }
         end
         list << { key: :attack_tag_list,  label: "戦型", visible: true,  }

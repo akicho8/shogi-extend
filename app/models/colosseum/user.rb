@@ -49,7 +49,7 @@ module Colosseum
           self.key ||= SecureRandom.hex
           self.user_agent ||= ""
 
-          if Rails.env.production?
+          if Rails.env.production? || Rails.env.staging?
             self.password ||= Devise.friendly_token(32)
           else
             self.password ||= "password"
@@ -72,7 +72,7 @@ module Colosseum
         end
 
         after_create do
-          if Rails.env.production? || Rails.env.test?
+          if Rails.env.production? || Rails.env.staging?
             UserMailer.user_created(self).deliver_now
           end
 
@@ -428,7 +428,7 @@ module Colosseum
         a = [self, opponent]
         case
         when rule_cop.same_rule?
-          if Rails.env.production?
+          if Rails.env.production? || Rails.env.staging?
             a = a.shuffle
           else
             # CPUを後手にするため

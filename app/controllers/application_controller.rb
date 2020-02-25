@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
     let :current_user do
       # # unless bot_agent?       # ブロックの中なので guard return してはいけない
       # user_id = nil
-      # # unless Rails.env.production?
+      # # if Rails.env.development? || Rails.env.test?
       # #   user_id ||= params[:__user_id__]
       # # end
       # user_id ||=

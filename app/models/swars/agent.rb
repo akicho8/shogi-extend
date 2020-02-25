@@ -228,7 +228,7 @@ module Swars
         return false
       end
 
-      @options[:run_remote] || (ENV["RUN_REMOTE"] == "1") || Rails.env.production?
+      @options[:run_remote] || (ENV["RUN_REMOTE"] == "1") || Rails.env.production? || Rails.env.staging?
     end
 
     def local_html(key)

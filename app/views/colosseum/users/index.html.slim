@@ -1,4 +1,5 @@
-- unless Rails.env.production?
+- if Rails.env.production? || Rails.env.staging?
+- else
   .field
     = link_to("新規", [:new, ns_prefix, current_single_key], class: "button is-primary")
   .field

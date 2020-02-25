@@ -1,8 +1,9 @@
-- if !Rails.env.production? || AppConfig[:player_info_function] || AppConfig[:more_import_function]
+- if Rails.env.development? || Rails.env.test? || AppConfig[:player_info_function] || AppConfig[:more_import_function]
   - if current_swars_user
     .columns
       .column
-        - if !Rails.env.production?
+        - if Rails.env.production? || Rails.env.staging?
+        - else
           = link_to([:swars, :battles, query: current_swars_user, latest_open_index: 0], class: "button is-warning is-small is-rounded") do
             | 最新の対局を
             = image_tag("piyo_shogi_icon.png", "class": "piyo_icon_in_button")

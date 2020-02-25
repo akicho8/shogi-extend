@@ -27,7 +27,7 @@ template(slot-scope="props")
       a(@click.stop :href="props.row.owner_info.url")
         | {{props.row.owner_info.name}}
 
-  - unless Rails.env.production?
+  - if Rails.env.development? || Rails.env.test?
     b-table-column(field="saturn_key" label="公開設定" sortable)
       | {{props.row.saturn_key}}
 

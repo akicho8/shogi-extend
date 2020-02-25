@@ -13,8 +13,8 @@ class XyRuleInfo
     { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, flip: true,  tap_mode: false, },
   ]
 
-  cattr_accessor(:rank_max) { Rails.env.production? ? 100 : 100 }  # 位まで表示
-  cattr_accessor(:per_page) { Rails.env.production? ? 20 : 20 }
+  cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示
+  cattr_accessor(:per_page) { (Rails.env.production? || Rails.env.staging?) ? 20 : 20 }
 
   class << self
     def setup
@@ -29,7 +29,7 @@ class XyRuleInfo
     end
 
     # def clear_all
-    #   if Rails.env.production?
+    #   if Rails.env.production? || Rails.env.staging?
     #     raise "must not happen"
     #   end
     #   redis_clear_all
@@ -37,7 +37,7 @@ class XyRuleInfo
     # end
     #
     # def redis_clear_all
-    #   if Rails.env.production?
+    #   if Rails.env.production? || Rails.env.staging?
     #     raise "must not happen"
     #   end
     #   each(&:current_clean)
@@ -109,7 +109,7 @@ class XyRuleInfo
       XyRecord.find(id)
     end
   rescue ActiveRecord::RecordNotFound => error
-    if Rails.env.production?
+    if Rails.env.production? || Rails.env.staging?
       raise error
     end
     []

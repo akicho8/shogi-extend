@@ -84,7 +84,7 @@ module Colosseum::Battle::BattleMethods
       clock_counter = measure_time do
         hand = nil
 
-        unless Rails.env.production?
+        if Rails.env.development?
           if ENV["VERBOSE"]
             puts mediator
           end
@@ -107,12 +107,12 @@ module Colosseum::Battle::BattleMethods
           end
 
           unless records.empty?
-            unless Rails.env.production?
+            if Rails.env.development?
               tp Bioshogi::Brain.human_format(records)
             end
 
             record = records.first
-            unless Rails.env.production?
+            if Rails.env.development?
               tp record.keys
             end
             hand = record[:hand]
@@ -215,7 +215,7 @@ module Colosseum::Battle::BattleMethods
     end
 
     def __trace(message)
-      return if Rails.env.production?
+      return if Rails.env.production? || Rails.env.staging?
       active_user.chat_say(battle, message, msg_class: "has-text-danger")
     end
   end

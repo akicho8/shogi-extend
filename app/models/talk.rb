@@ -70,7 +70,7 @@ class Talk
 
   def generate_if_not_exist
     if direct_file_path.exist?
-      if Rails.env.production? || Rails.env.test?
+      if Rails.env.production? || Rails.env.staging? || Rails.env.test?
         # すでにファイルが生成されている場合はパスする
         return
       end
@@ -88,7 +88,7 @@ class Talk
     # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
     # のエラーになることがある
 
-    if Rails.env.production?
+    if Rails.env.production? || Rails.env.staging?
     else
       Rails.logger.debug(params.to_t)
       Rails.logger.debug(resp.to_h.to_t)
@@ -111,7 +111,7 @@ class Talk
   end
 
   def voice_id
-    if Rails.env.production?
+    if Rails.env.production? || Rails.env.staging?
       return "Mizuki"
     end
 

@@ -142,7 +142,8 @@ class CpuBattlesController < ApplicationController
 
     # Rails.logger.debug(@mediator.turn_info.inspect)
 
-    unless Rails.env.production?
+    if Rails.env.production? || Rails.env.staging?
+    else
       Rails.logger.debug(@mediator)
     end
 
@@ -178,7 +179,8 @@ class CpuBattlesController < ApplicationController
       if current_cpu_brain_info.depth_max_range
         iterative_deepening
 
-        unless Rails.env.production?
+        if Rails.env.production? || Rails.env.staging?
+        else
           Rails.logger.debug(candidate_report)
         end
 
@@ -337,7 +339,8 @@ class CpuBattlesController < ApplicationController
       response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
     end
 
-    unless Rails.env.production?
+    if Rails.env.production? || Rails.env.staging?
+    else
       response[:candidate_report] = candidate_report # そのまま表示できるテキスト
       # response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => rand(0..1.0)) }
       if @mediator
@@ -395,7 +398,7 @@ class CpuBattlesController < ApplicationController
 
     def self.values
       v = super
-      if Rails.env.production?
+      if Rails.env.production? || Rails.env.staging?
         v = v.reject(&:development_only)
       end
       v

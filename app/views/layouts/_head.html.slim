@@ -44,7 +44,8 @@ javascript:
 = stylesheet_pack_tag "application", media: "all"
 = javascript_pack_tag "application"
 
-= render "google_analytics" if Rails.env.production?
+- if Rails.env.production? || Rails.env.staging?
+  = render "google_analytics"
 
 / これはとる
 = javascript_pack_tag("system_notification")

@@ -94,7 +94,8 @@ class FreeBattlesController < ApplicationController
     record = nil
 
     if id = params[:id]
-      unless Rails.env.production?
+      if Rails.env.production? || Rails.env.staging?
+      else
         record ||= current_model.find_by(id: id)
       end
       record ||= current_model.find_by!(key: id)
@@ -187,7 +188,8 @@ class FreeBattlesController < ApplicationController
   concerning :IndexCustomMethods do
     let :table_column_list do
       list = []
-      unless Rails.env.production?
+      if Rails.env.production? || Rails.env.staging?
+      else
         list << { key: :key,       label: "KEY",      visible: false, }
       end
       list += [

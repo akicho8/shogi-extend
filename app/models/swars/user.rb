@@ -83,7 +83,7 @@ module Swars
             return []
           end
 
-          Rails.cache.fetch("search_form_datalist", expires_in: Rails.env.production? ? 1.days : 0) do
+          Rails.cache.fetch("search_form_datalist", expires_in: (Rails.env.production? || Rails.env.staging?) ? 1.days : 0) do
             user_keys = []
 
             # 利用者
@@ -93,7 +93,7 @@ module Swars
             user_keys += all.order(updated_at: :desc).limit(10).pluck(:user_key)
 
             # すごい人たち
-            user_keys += Rails.cache.fetch("great_only", expires_in: Rails.env.production? ? 1.days : 0) { great_only.limit(10).pluck(:user_key) }
+            user_keys += Rails.cache.fetch("great_only", expires_in: (Rails.env.production? || Rails.env.staging?) ? 1.days : 0) { great_only.limit(10).pluck(:user_key) }
 
             user_keys.sort.uniq
           end
