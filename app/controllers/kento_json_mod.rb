@@ -39,6 +39,8 @@ module KentoJsonMod
               "tag": [                                                      # (optional) 任意のタグリスト
                 "将棋ウォーズ(#{e.rule_info.name})",
                 judge_name_for_current_swars_user(e),
+                *e.attack_tag_list,
+                *e.defense_tag_list,
               ],
               "kifu_url"          => full_url_for([e, format: "kif"]),      # (required) .kif | .csa
               "display_name"      => e.title,                               # (required) 任意の表示名
