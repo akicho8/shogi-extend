@@ -19,3 +19,10 @@ task :production_db_backup_to_local do
   system "ssh s mysqldump -u root -i --add-drop-table shogi_web_production #{tables} --single-transaction --result-file /tmp/shogi_web_production.sql"
   system "scp s:/tmp/shogi_web_production.sql db"
 end
+
+desc "新サーバーにコピー"
+task :db_copy_to_ishikari do
+  Rake::Task[:production_db_backup_to_local].invoke
+  system "scp db/shogi_web_production.sql i:~/"
+  system "ssh i mysql -u root shogi_web_production < ~/shogi_web_production.sql"
+end
