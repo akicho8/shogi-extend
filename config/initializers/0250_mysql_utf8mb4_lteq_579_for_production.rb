@@ -12,11 +12,7 @@
 # $ cap production rails:runner CODE='p Mysql2::Client.info'
 # {:id=>50545, :version=>"5.5.45", :header_version=>"5.5.45"}
 
-<<<<<<< HEAD
 if Rails.env.production? || Rails.env.staging?
-=======
-if Rails.env.production?
->>>>>>> [chore] モンキーパッチに Mysql 5.7.9 未満だけの条件を追加
   if Mysql2::Client.info[:id] < 50709
     # http://3.1415.jp/mgeu6lf5/
     module InnodbRowFormat
