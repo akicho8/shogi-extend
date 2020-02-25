@@ -46,6 +46,12 @@ RSpec.describe Swars::BattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
+  it "KENTO棋譜リストAPI" do
+    get :index, params: { query: "devuser1", format: "json", format_type: "kento" }
+    expect(response).to have_http_status(:ok)
+    assert { JSON.parse(response.body) == {"api_version"=>"2020-02-02", "api_name"=>"将棋ウォーズ(ID:devuser1)", "game_list"=>[{"tag"=>["将棋ウォーズ(10分)", "勝ち"], "kifu_url"=>"http://test.host/w/devuser1-Yamada_Taro-20190111_230933.kif", "display_name"=>"devuser1 三段 対 Yamada_Taro 四段", "display_timestamp"=>1547215773}]} }
+  end
+
   it "検索窓にURLを指定" do
     get :index, params: {query: "https://shogiwars.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
     expect(response).to have_http_status(:ok)
