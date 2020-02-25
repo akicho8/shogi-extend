@@ -12,7 +12,7 @@ end
 
 set :rails_env, 'production'    # 必要
 
-append :linked_files, 'config/database.yml'
+# append :linked_files, 'config/database.yml'
 
 # 専用の database.yml を転送
 before 'deploy:check:linked_files', 'deploy:database_yml_upload'
