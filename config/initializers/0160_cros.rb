@@ -34,7 +34,7 @@
 # 外部から fetch("http://localhost:3000/w.json?query=devuser1").then(r => r.json()).then(r => console.log(r)) できるかどうかで確認できる
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    # if Rails.env.production?
+    # if Rails.env.production? || Rails.env.staging?
     #   origins ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp"
     # else
     # end

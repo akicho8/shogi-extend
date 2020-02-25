@@ -1,4 +1,4 @@
-if Rails.env.production? || Rails.env.development?
+if Rails.env.production? || Rails.env.staging? || Rails.env.development?
   Rails.application.configure do
     config.app_config.deep_merge!({admin_email: "pinpon.ikeda@gmail.com"})
     config.action_mailer.default_url_options = { host: ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp" }
