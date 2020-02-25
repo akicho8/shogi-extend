@@ -3,7 +3,7 @@
 #+html: <a href="https://codecov.io/gh/akicho8/shogi_web"><img src="https://codecov.io/gh/akicho8/shogi_web/branch/master/graph/badge.svg" /></a>
 # #+html: <a href='https://gemnasium.com/github.com/akicho8/shogi_web'><img src="https://gemnasium.com/badges/github.com/akicho8/shogi_web.svg" alt="Dependency Status" /></a>
 
-* 将棋のツール（仮）
+* SHOGI-EXTEND
 
 #+html: <p><a href="http://tk2-221-20341.vs.sakura.ne.jp/shogi"><img src="https://raw.github.com/akicho8/shogi_web/master/montage_for_doc.png" /></a></p>
 

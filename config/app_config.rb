@@ -1,5 +1,5 @@
 AppConfig.deep_merge!({
-    :app_name                                =>  "将棋のツール（仮）",
+    :app_name                                =>  "SHOGI-EXTEND",
     :volume                                  =>  0.2,
     :admin_email                             =>  "alice@localhost",
 
