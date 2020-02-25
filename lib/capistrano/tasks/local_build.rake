@@ -20,7 +20,9 @@ unless ENV["REMOTE_BUILD"] == "1"
         # initializers/* のなかでDBアクセスしてしまったりすることもあるので
         # database.yml がない場合は必要に応じても用意する
         # この例ではプリコンパイル時専用の database.precompile.yml を config/database.yml としています
-        execute :cp, "-v", "config/database.precompile.yml", "config/database.yml"
+        if Pathname("config/database.precompile.yml").exist?
+          execute :cp, "-v", "config/database.precompile.yml", "config/database.yml"
+        end
 
         # master.key も必要に応じてコピーする
         execute :cp, "-v", "#{__dir__}/../../../config/master.key", "config"
