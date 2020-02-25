@@ -12,3 +12,12 @@ b-modal.usage_modal(:active.sync="usage_modal_p" trap-focus animation="zoom-in")
             - ExternalAppInfo.each do |e|
               - url = url_for([:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key])
               = content_tag("#{e.key}_button", "", "href" => url, :tag => "a")
+        li
+          | KENTOの設定の棋譜ソースのAPI追加に下のURLを設定すると直近の対局がKENTO側で表示されるようになります
+          - url = full_url_for([:swars, :battles, query: current_swars_user, format: "json", format_type: "kento"])
+          b-field
+            b-input(type="text" value=url expanded size="is-small" readonly)
+            p.control
+              button.button.is-small(@click="clipboard_copy({text: '#{url}'})")
+                b-icon(icon="clipboard-plus-outline" size="is-small")
+          = link_to("KENTOの設定に移動", "https://www.kento-shogi.com/setting", :class => "button is-small") if Rails.env.development?
