@@ -22,9 +22,12 @@ end
 
 desc "DBを新サーバーにコピー"
 task :db_copy_to_ishikari do
+  p "ローカルに取得"
   Rake::Task[:production_db_backup_to_local].invoke
+  p "石狩へ"
   system "scp db/shogi_web_production.sql i:~/"
-  system "ssh i mysql -u root shogi_web_production < ~/shogi_web_production.sql"
+  p "インポート"
+  system "ssh i 'mysql -u root shogi_web_production < ~/shogi_web_production.sql'"
 end
 
 desc "shared/storage を新サーバーにコピー"
