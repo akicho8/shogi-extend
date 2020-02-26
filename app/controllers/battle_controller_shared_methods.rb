@@ -401,7 +401,7 @@ module BattleControllerSharedMethods
         a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
         a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ
         a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-        a[:kento_app_url] = kento_app_url(full_url_for([e, format: "kif"]))
+        a[:kento_app_url] = kento_app_url_switch(e)
         a[:battled_at] = e.battled_at.to_s(:battle_time)
         a[:show_path] = polymorphic_path([ns_prefix, e])
         a[:formal_sheet_path] = polymorphic_path([ns_prefix, e], formal_sheet: true)
@@ -417,6 +417,27 @@ module BattleControllerSharedMethods
     end
 
     private
+
+    # KENTOに何を渡すか
+    def kento_app_url_switch(record)
+      # KIFを渡す
+      if AppConfig[:kento_params_use_kifu_param_only]
+        return kento_app_url(kifu: full_url_for([record, format: "kif"]))
+      end
+
+      # 平手から始まっているなら kif を渡す
+      if false
+        if record.sfen_body.start_with?("position startpos")
+          args = { kifu: full_url_for([record, format: "kif"]) }
+        else
+          args = record.sfen_info.kento_app_query_hash
+        end
+        return kento_app_url(args)
+      end
+
+      # 常にSFENをURLパラメータとして生める
+      kento_app_url(record.sfen_info.kento_app_query_hash)
+    end
 
     def png_file_send
       disposition = params[:disposition] || :inline
