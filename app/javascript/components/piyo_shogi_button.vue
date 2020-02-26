@@ -20,11 +20,6 @@ export default {
 @import "../stylesheets/bulma_init.scss"
 @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700&display=swap')
 
-.navbar-brand
-  .navbar-item
-    font-family: 'M PLUS Rounded 1c', sans-serif
-    font-weight: 700
-
 .piyo_shogi_button
   font-family: 'M PLUS Rounded 1c', sans-serif
   font-weight: 700
