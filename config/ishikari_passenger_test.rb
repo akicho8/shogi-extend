@@ -26,11 +26,12 @@ RSpec.describe do
   it "旧サイトからのリダイレクト" do
     # assert { test("https://staging.shogi-extend.com", "新サイトへ")      == [301, "https://www.shogi-extend.com/"]   }
     # assert { test("http://tk2-221-20341.vs.sakura.ne.jp", "新サイトへ") == [301, "https://www.shogi-extend.com/"]   }
-    assert { test("https://staging.shogi-extend.com/shogi/w?query=kinakom0chi", "新サイトへ") == [301, "https://www.shogi-extend.com/w?query=kinakom0chi"] }
+    # assert { test("https://staging.shogi-extend.com/shogi/w?query=kinakom0chi", "新サイトへ") == [301, "https://www.shogi-extend.com/w?query=kinakom0chi"] }
+    assert { test("http://tk2-221-20341.vs.sakura.ne.jp/shogi/w?query=kinakom0chi", "新サイトへ") == [301, "https://www.shogi-extend.com/w?query=kinakom0chi"]   }
   end
 end
 # >> ..
 # >> 
-# >> Finished in 0.86884 seconds (files took 0.16693 seconds to load)
+# >> Finished in 1.05 seconds (files took 0.17027 seconds to load)
 # >> 2 examples, 0 failures
 # >> 
