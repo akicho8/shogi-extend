@@ -30,5 +30,5 @@ AppConfig.deep_merge!({
     :required_query_for_search               =>  true,  # js側から一覧のレコードを出すときは必ず query が入っていないといけないか？
     :swars_battles_index_filter_options_show =>  true,  # 将棋ウォーズ棋譜検索のフィルターオプションを表示する？
 
-    :login_link_disable                      =>  false, # ログインリンクを消すか？
+    :login_link_show_enable                  =>  true, # ログインリンクを表示する？
   })
