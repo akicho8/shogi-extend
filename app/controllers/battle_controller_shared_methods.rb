@@ -416,8 +416,6 @@ module BattleControllerSharedMethods
     def access_log_create(record)
     end
 
-    private
-
     # KENTOに何を渡すか
     def kento_app_url_switch(record)
       # KIFを渡す
@@ -438,6 +436,8 @@ module BattleControllerSharedMethods
       # 常にSFENをURLパラメータとして生める
       kento_app_url(record.sfen_info.kento_app_query_hash)
     end
+
+    private
 
     def png_file_send
       disposition = params[:disposition] || :inline

@@ -10,8 +10,15 @@ class ExternalAppInfo
   end
 
   def external_url(h, record)
-    if Rails.env.development?
-      return "https://www.example.com/?a=1&b=2"
+
+    # if Rails.env.development?
+    #   return "https://www.example.com/?a=1&b=2"
+    # end
+
+    if key == :kento
+      # raise h.kento_app_url_switch(record).inspect
+      return h.kento_app_url_switch(record)
+      # return h.kento_app_url(kifu: h.full_url_for([record, format: "kif"]))
     end
 
     h.public_send("#{key}_app_url", h.full_url_for([record, format: "kif"]))
