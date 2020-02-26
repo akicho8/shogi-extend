@@ -162,6 +162,10 @@ class ApplicationController < ActionController::Base
     end
 
     def login_display?
+      if AppConfig[:login_link_disable]
+        return false
+      end
+
       v = false
       v ||= params[:controller].start_with?("colosseum")
       v ||= params[:controller].start_with?("xy_records")
