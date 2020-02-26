@@ -35,12 +35,12 @@ module KentoJsonMod
           "api_version" => "2020-02-02",                                    # (required) 固定値
           "api_name" => "将棋ウォーズ(ID:#{current_swars_user.user_key})",  # (required) 任意のAPI名
           "game_list" => current_index_scope.order(battled_at: "desc").limit(kento_records_limit).collect { |e|
+            membership = current_swars_user_membership(e)
             {
               "tag": [                                                      # (optional) 任意のタグリスト
                 "将棋ウォーズ(#{e.rule_info.name})",
-                judge_name_for_current_swars_user(e),
-                *e.attack_tag_list,
-                *e.defense_tag_list,
+                membership.judge_info.name,
+                *membership.attack_tag_list,
               ],
               "kifu_url"          => full_url_for([e, format: "kif"]),      # (required) .kif | .csa
               "display_name"      => e.title,                               # (required) 任意の表示名
@@ -55,8 +55,8 @@ module KentoJsonMod
     end
   end
 
-  def judge_name_for_current_swars_user(battle)
-    battle.memberships.find { |e| e.user == current_swars_user }.judge_info.name
+  def current_swars_user_membership(battle)
+    battle.memberships.find { |e| e.user == current_swars_user }
   end
 
   def format_type
