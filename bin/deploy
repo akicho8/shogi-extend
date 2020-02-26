@@ -9,5 +9,5 @@
 # open http://shogi-flow.xyz/
 # open http://tk2-221-20341.vs.sakura.ne.jp/shogi/
 
-USE_NEW_DOMAIN=1 cap staging deploy
-USE_NEW_DOMAIN=1 cap production deploy
+DB_RESET=1 USE_NEW_DOMAIN=1 cap staging deploy
+DB_RESET=1 USE_NEW_DOMAIN=1 cap production deploy
