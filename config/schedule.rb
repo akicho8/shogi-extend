@@ -27,7 +27,7 @@ end
 
 if @environment == "production"
   every("0 3 * * 6") do
-    command "sudo certbot renew --force-renew --deploy-hook 'systemctl restart httpd'"
+    command "sudo certbot renew --deploy-hook 'systemctl restart httpd'"
   end
 end
 
