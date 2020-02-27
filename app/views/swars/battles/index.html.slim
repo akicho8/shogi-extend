@@ -1,14 +1,10 @@
 ruby:
   @page_title ||= "将棋ウォーズ棋譜検索"
-  if v = modal_record_twitter_options
-    twitter_card_tag(v)
-  else
-    twitter_card_tag(title: @page_title, description: "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます", image: "swars_battles_index.png")
-  end
   if mobile_agent?
     @override_page_title ||= "将棋ウ棋譜検索"
   end
-  @apple_touch_icon ||= "apple-touch-icon-search.png"
+  twitter_card_registry(twitter_card_options)
+  @apple_touch_icon ||= "apple-touch-icon-swars-search.png"
 
 = render partial: "external_app"
 

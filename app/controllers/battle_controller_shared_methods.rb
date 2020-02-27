@@ -230,11 +230,12 @@ module BattleControllerSharedMethods
 
   concerning :ModalMethods do
     included do
-      helper_method :modal_record_twitter_options
+      helper_method :modal_record
+      helper_method :record_to_twitter_options
     end
 
-    let :modal_record_twitter_options do
-      if e = modal_record
+    def record_to_twitter_options(e)
+      if e
         options = {}
 
         if v = current_force_turn

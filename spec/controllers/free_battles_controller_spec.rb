@@ -44,6 +44,11 @@ RSpec.describe FreeBattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
+  it "index + modal_id" do
+    get :index, params: { modal_id: @free_battle.to_param }
+    expect(response).to have_http_status(:ok)
+  end
+
   it "show" do
     get :show, params: {id: @free_battle.to_param}
     expect(response).to have_http_status(:ok)

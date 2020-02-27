@@ -1,9 +1,9 @@
 - @page_title ||= "野良棋譜一覧"
 
-- if v = modal_record_twitter_options
-  - twitter_card_tag(v)
+- if modal_record
+  - twitter_card_registry(record_to_twitter_options(modal_record))
 - else
-  - twitter_card_tag(title: @page_title)
+  - twitter_card_registry(title: @page_title)
 
 - content_for :head do
   = javascript_pack_tag("free_battle_index")

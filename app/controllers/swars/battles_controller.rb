@@ -38,6 +38,7 @@ module Swars
 
     helper_method :current_swars_user
     helper_method :current_query_info
+    helper_method :twitter_card_options
 
     cattr_accessor(:labels_type1) { ["対象", "相手"] }
     cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
@@ -158,6 +159,31 @@ module Swars
     end
 
     private
+
+    let :twitter_card_options do
+      case
+      when v = modal_record
+        # http://localhost:3000/w?modal_id=1
+        record_to_twitter_options(v)
+      when v = primary_record
+        # http://localhost:3000/w?query=https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1
+        record_to_twitter_options(v)
+      when current_swars_user
+        # http://localhost:3000/w?query=itoshinTV
+        {
+          :card        => "summary",
+          :title       => "#{current_swars_user.name_with_grade} の棋譜リスト",
+          :description => "#{current_swars_user.battles.count}件",
+        }
+      else
+        # http://localhost:3000/w
+        {
+          :title       => "将棋ウォーズ棋譜検索",
+          :description => "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます",
+          :image       => "swars_battles_index.png",
+        }
+      end
+    end
 
     # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
     let :primary_key do
@@ -404,6 +430,13 @@ module Swars
           end
           s
         }.call
+      end
+
+      # primary_key に対応するレコード
+      let :primary_record do
+        if primary_key
+          current_scope.find_by(key: primary_key)
+        end
       end
 
       def default_sort_column

@@ -1,7 +1,7 @@
 - @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
 - sp_title = current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + e.name_with_grade }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
 
-- twitter_card_tag(show_twitter_options)
+- twitter_card_registry(show_twitter_options)
 
 - content_for :head do
   = javascript_pack_tag("swars_battle_show")

@@ -46,6 +46,11 @@ RSpec.describe Swars::BattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
+  it "index + modal_id" do
+    get :index, params: {modal_id: @battle.to_param}
+    expect(response).to have_http_status(:ok)
+  end
+
   it "KENTO棋譜リストAPI" do
     get :index, params: { query: "devuser1", format: "json", format_type: "kento" }
     expect(response).to have_http_status(:ok)
