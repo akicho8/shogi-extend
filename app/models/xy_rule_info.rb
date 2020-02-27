@@ -64,7 +64,7 @@ class XyRuleInfo
     end
 
     def redis
-      @redis ||= Redis.new(host: "localhost", port: 6379, db: AppConfig[:redis_db_for_xy_rule_info])
+      @redis ||= Redis.new(db: AppConfig[:redis_db_for_xy_rule_info])
     end
   end
 
