@@ -2,6 +2,13 @@
   .column
     .card
       .card-content
+        / .title.is-4
+        /   = "ソーシャルログイン"
+        = render 'devise/shared/links'
+
+  .column
+    .card
+      .card-content
         .title.is-4
           = t('.sign_in', default: 'Sign in')
         = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
@@ -30,7 +37,3 @@
               = f.submit t('.sign_in', default: 'Sign in'), class: 'button is-primary'
 
         br
-  .column
-    .card
-      .card-content
-        = render 'devise/shared/links'
