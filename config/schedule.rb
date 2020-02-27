@@ -1,6 +1,12 @@
 # -*- coding: utf-8; compile-command: "cap production deploy:upload FILES=config/schedule.rb whenever:update_crontab crontab" -*-
 # capp rails:cron_log
 
+puts "=== 環境確認 ==="
+puts "ENV['RAILS_ENV'] --> #{ENV['RAILS_ENV'].inspect}"
+puts "@environment     --> #{@environment.inspect}"
+puts "Dir.pwd          --> #{Dir.pwd.inspect}"
+puts "================"
+
 set :output, {standard: "log/#{@environment}_cron.log"}
 
 job_type :command, "cd :path && :task :output"
@@ -17,6 +23,12 @@ every("5 4 * * *") do
     # "Swars::Crawler::ExpertCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
   ].join(";")
+end
+
+if @environment == "production"
+  every("0 3 * * 6") do
+    command "sudo certbot renew --force-renew && sudo systemctl restart httpd"
+  end
 end
 
 # every("30 6 * * *")   { runner "Swars::Battle.import(:expert_import, sleep: 5)"                                                                  }
