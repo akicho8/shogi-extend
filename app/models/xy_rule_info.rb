@@ -165,11 +165,19 @@ class XyRuleInfo
   end
 
   def table_key_for_today
-    time_table_key(Time.current)
+    ymd_table_key_for_time(Time.current)
   end
 
-  def time_table_key(created_at)
+  def table_key_for_month
+    ym_table_key_for_time(Time.current)
+  end
+
+  def ymd_table_key_for_time(created_at)
     [*prefix_keys, created_at.strftime("%Y%m%d")].join("/")
+  end
+
+  def ym_table_key_for_time(created_at)
+    [*prefix_keys, created_at.strftime("%Y%m")].join("/")
   end
 
   def prefix_keys
