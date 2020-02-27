@@ -5,9 +5,9 @@
 
 * SHOGI-EXTEND
 
-#+html: <p><a href="http://tk2-221-20341.vs.sakura.ne.jp/shogi"><img src="https://raw.github.com/akicho8/shogi_web/master/montage_for_doc.png" /></a></p>
+#+html: <p><a href="https://www.shogi-extend.com/"><img src="https://raw.github.com/akicho8/shogi_web/master/montage_for_doc.png" /></a></p>
 
-http://tk2-221-20341.vs.sakura.ne.jp/shogi
+https://www.shogi-extend.com
 
 * セットアップ
 

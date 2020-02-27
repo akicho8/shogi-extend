@@ -1,7 +1,7 @@
 if Rails.env.production? || Rails.env.staging? || Rails.env.development?
   Rails.application.configure do
     config.app_config.deep_merge!({admin_email: "pinpon.ikeda@gmail.com"})
-    config.action_mailer.default_url_options = { host: ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp" }
+    config.action_mailer.default_url_options = { host: ENV["MY_APP_HOST"] || "www.shogi-extend.com" }
 
     config.action_mailer.show_previews = true
     config.action_mailer.delivery_method = :smtp

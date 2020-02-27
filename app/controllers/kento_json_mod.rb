@@ -25,7 +25,7 @@ module KentoJsonMod
   private
 
   # http://localhost:3000/w.json?query=devuser1&format_type=kento
-  # http://tk2-221-20341.vs.sakura.ne.jp/shogi/w.json?query=kinakom0chi&format_type=kento
+  # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=kento
   def kento_json_render
     if request.format.json? && format_type == "kento"
       if current_swars_user

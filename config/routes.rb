@@ -112,7 +112,7 @@ Rails.application.routes.draw do
 
   direct :kento_app do |**options|
     # if Rails.env.development?
-    #   options[:kifu] = "http://tk2-221-20341.vs.sakura.ne.jp/shogi/x/e63d5d2a3ccd460676a6b6265c1a0c2d.kif"
+    #   options[:kifu] = "https://www.shogi-extend.com/x/e63d5d2a3ccd460676a6b6265c1a0c2d.kif"
     # end
 
     # options = {
