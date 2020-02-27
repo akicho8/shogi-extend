@@ -139,8 +139,11 @@ Rails.application.routes.draw do
   end
 
   direct :production_app do
-    "http://tk2-221-20341.vs.sakura.ne.jp/shogi"
-    # "http://shogi-flow.xyz/"
+    "https://www.shogi-extend.com/"
+  end
+
+  direct :staging_app do
+    "https://staging.shogi-extend.com/"
   end
 
   ################################################################################ admin
