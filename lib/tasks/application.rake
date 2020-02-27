@@ -7,6 +7,7 @@ task :create_montage do
   system "open montage.png"
 end
 
+# rake db_sync TABLES=xy_records
 desc "本番サーバーの production の DB をローカルの development にコピーする (オプション: TABLES=t1,t2,t3)"
 task :db_sync do
   Rake::Task[:production_db_backup_to_local].invoke
@@ -16,8 +17,8 @@ end
 desc "本番サーバーの production の DB をローカルにバックアップする"
 task :production_db_backup_to_local do
   tables = (ENV["TABLES"] || "").split(",").join(" ")
-  system "ssh s mysqldump -u root -i --add-drop-table shogi_web_production #{tables} --single-transaction --result-file /tmp/shogi_web_production.sql"
-  system "scp s:/tmp/shogi_web_production.sql db"
+  system "ssh i mysqldump -u root -i --add-drop-table shogi_web_production #{tables} --single-transaction --result-file /tmp/shogi_web_production.sql"
+  system "scp i:/tmp/shogi_web_production.sql db"
 end
 
 desc "DBを新サーバーにコピー"
