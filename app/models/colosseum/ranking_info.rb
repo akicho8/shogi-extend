@@ -37,7 +37,7 @@ module Colosseum
     end
 
     def redis
-      @redis ||= Redis.new(host: "localhost", port: 6379, db: 1)
+      @redis ||= Redis.new(host: "localhost", port: 6379, db: AppConfig[:redis_db_for_colosseum_ranking_info])
     end
 
     def win_ratio_scope
