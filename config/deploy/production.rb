@@ -41,25 +41,27 @@ set :open_urls, %w(
   https://www.shogi-extend.com/board
 )
 
-if ENV["USE_NEW_DOMAIN"] && false
-  set :application, "shogi_web"
+# if ENV["USE_NEW_DOMAIN"] && false
+#   set :application, "shogi_web"
+#
+#   desc "storage を shogi_web_production/shared/storage にリンクする"
+#   task :my_storeage_symlink do
+#     on release_roles :all do
+#       target = release_path.join("storage")
+#       source = Pathname("/var/www/shogi_web_production/shared").join("storage")
+#       if test "[ -d #{target} ]"
+#         execute :rm, "-rf", target
+#       end
+#       execute :ln, "-s", source, target
+#       execute :ls, "-al", "#{release_path}/"
+#     end
+#   end
+#   before "deploy:symlink:linked_dirs", "my_storeage_symlink"
+# else
+#   append :linked_dirs, "storage"
+# end
 
-  desc "storage を shogi_web_production/shared/storage にリンクする"
-  task :my_storeage_symlink do
-    on release_roles :all do
-      target = release_path.join("storage")
-      source = Pathname("/var/www/shogi_web_production/shared").join("storage")
-      if test "[ -d #{target} ]"
-        execute :rm, "-rf", target
-      end
-      execute :ln, "-s", source, target
-      execute :ls, "-al", "#{release_path}/"
-    end
-  end
-  before "deploy:symlink:linked_dirs", "my_storeage_symlink"
-else
-  append :linked_dirs, "storage"
-end
+append :linked_dirs, "storage"
 
 tp({
     application: fetch(:application),

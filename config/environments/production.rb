@@ -95,15 +95,12 @@ Rails.application.configure do
   # ################################################################################ ActionCable
   # ActionCable.server.config.disable_request_forgery_protection = true
   config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
-  host = ENV["MY_APP_HOST"] || "www.shogi-extend.com"
-  ws_port = ENV.fetch("WS_PORT") { 28081 }
-  protocol = ENV["USE_NEW_DOMAIN"] ? "wss" : "ws"
-  config.action_cable.url = "#{protocol}://#{host}:#{ws_port}"
+  config.action_cable.url = "wss://www.shogi-extend.com:28081"
 
   # ################################################################################ ActiveStorage
   # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩
   # https://shinkufencer.hateblo.jp/entry/2018/07/25/230537
-  Rails.application.routes.default_url_options[:host] = ENV["MY_APP_HOST"] || "www.shogi-extend.com"
+  Rails.application.routes.default_url_options[:host] = "www.shogi-extend.com"
 
   # for AppConfig
   config.to_prepare do

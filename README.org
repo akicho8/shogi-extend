@@ -7,7 +7,7 @@
 
 #+html: <p><a href="https://www.shogi-extend.com/"><img src="https://raw.github.com/akicho8/shogi_web/master/montage_for_doc.png" /></a></p>
 
-https://www.shogi-extend.com
+https://www.shogi-extend.com/
 
 * セットアップ
 
@@ -31,6 +31,4 @@ rake
 
 * 自分用メモ
 
-| USE_NEW_DOMAIN | 新しいドメインにデプロイしたいとき。サーバー側の httpd.conf でも設定しているので一方的にリネームしてはいけない |
 | MY_APP_HOST    | httpd.conf で定義している                                                                                      |
-| WS_PORT        | デプロイ時だけでなく、サーバー側で restart したときも必要なので  httpd.conf の https 側で定義している。        |

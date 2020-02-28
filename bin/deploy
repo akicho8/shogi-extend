@@ -12,5 +12,5 @@
 # DB_RESET=1 USE_NEW_DOMAIN=1 cap staging deploy
 # DB_RESET=1 USE_NEW_DOMAIN=1 cap production deploy
 
-USE_NEW_DOMAIN=1 cap staging deploy
-USE_NEW_DOMAIN=1 cap production deploy
+cap staging deploy
+cap production deploy

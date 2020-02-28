@@ -18,15 +18,15 @@ set :git_shallow_clone, 1
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-if ENV["USE_NEW_DOMAIN"]
-  set :USE_NEW_DOMAIN, "true"
-  set :ws_port, 28082
-else
-  set :USE_NEW_DOMAIN, nil
-  set :ws_port, 28081
-end
+# if ENV["USE_NEW_DOMAIN"]
+#   set :USE_NEW_DOMAIN, "true"
+#   set :ws_port, 28082
+# else
+#   set :USE_NEW_DOMAIN, nil
+#   set :ws_port, 28081
+# end
 
-set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env), ws_port: fetch(:ws_port), USE_NEW_DOMAIN: fetch(:USE_NEW_DOMAIN)} }
+set :default_env, -> { {"DISABLE_DATABASE_ENVIRONMENT_CHECK" => "1", rails_env: fetch(:rails_env), } }
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
@@ -49,7 +49,7 @@ set :keep_releases, 1
 # set :print_config_variables, true # デプロイ前に設定した変数値を確認
 
 # set :my_rails_relative_url_root, "/#{fetch(:application).underscore.dasherize}"
-if ENV["USE_NEW_DOMAIN"]
-else
-  set :my_rails_relative_url_root, "/shogi"
-end
+# if ENV["USE_NEW_DOMAIN"]
+# else
+#   set :my_rails_relative_url_root, "/shogi"
+# end
