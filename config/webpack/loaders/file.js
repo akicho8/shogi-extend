@@ -3,7 +3,8 @@
 // で WEBPACKER_RELATIVE_URL_ROOT が追加されたのでそのうち↓これは不要になるはず
 
 const publicPath = {
-  production:  process.env.USE_NEW_DOMAIN ? '/packs/' : '/shogi/packs/',
+  // production:  process.env.USE_NEW_DOMAIN ? '/packs/' : '/shogi/packs/',
+  production:  '/packs/',
   development: '/packs/',
   test:        '/packs-test/',
 }[process.env.NODE_ENV]
