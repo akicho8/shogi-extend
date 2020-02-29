@@ -3,7 +3,7 @@
     .box.has-text-weight-bold.has-text-centered.is-size-7
       slot
     img(src="~assets/robot2_green.png")
-    a(href="/shogi" class="") TOP
+    a(href="/" class="") TOP
   </div>
 </template>
 

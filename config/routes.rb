@@ -110,14 +110,13 @@ Rails.application.routes.draw do
     "piyoshogi://?url=#{url}"
   end
 
-  direct :kento_app do |url, **options|
-    if Rails.env.development?
-      url = "http://tk2-221-20341.vs.sakura.ne.jp/shogi/x/e63d5d2a3ccd460676a6b6265c1a0c2d.kif"
-    end
+  direct :kento_app do |**options|
+    # if Rails.env.development?
+    #   options[:kifu] = "https://www.shogi-extend.com/x/e63d5d2a3ccd460676a6b6265c1a0c2d.kif"
+    # end
 
-    options = {
-      kifu: url,
-    }.merge(options)
+    # options = {
+    # }.merge(options)
 
     "https://www.kento-shogi.com/?#{options.to_query}"
   end
@@ -140,9 +139,16 @@ Rails.application.routes.draw do
   end
 
   direct :production_app do
-    "http://tk2-221-20341.vs.sakura.ne.jp/shogi"
-    # "http://shogi-flow.xyz/"
+    "https://www.shogi-extend.com/"
   end
+
+  direct :staging_app do
+    "https://staging.shogi-extend.com/"
+  end
+
+  ################################################################################ front_scripts
+
+  resources :front_scripts, :path => "scripts", :only => [:show, :update]
 
   ################################################################################ admin
 
@@ -150,4 +156,32 @@ Rails.application.routes.draw do
   #   resources :users
   #   root "users#index"
   # end
+
+  get "admin" => "admin/homes#show", :as => :admin
+  namespace :admin do
+    resource :session, only: :destroy
+    resource :home, only: :show
+    # resource :system, :only => :show
+
+    # get "/login" => "sessions#new"
+
+    # resources :users do
+    #   get "delete_confirm", :on => :member
+    #   delete "delete_all", :on => :collection
+    # end
+
+    # resources :scripticles, :concerns => :admin_shared_routes do
+    #   member do
+    #     get :readonly_interactive_run # 読み込み実行
+    #     put :writable_interactive_run # 更新実行
+    #     get :download                 # CSVダウンロード
+    #     post :csv_mail_deliver        # CSVメール送信
+    #   end
+    # end
+
+    resources :admin_scripts, :path => "scripts", :only => [:show, :update]
+    get "scripts" => redirect("/admin/scripts/index_script")
+
+    root :to => "homes#show"
+  end
 end

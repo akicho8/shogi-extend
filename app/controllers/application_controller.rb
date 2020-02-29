@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   # http://localhost:3000/?force_error=1
-  # http://tk2-221-20341.vs.sakura.ne.jp/shogi?force_error=1
+  # https://www.shogi-extend.com/?force_error=1
   prepend_before_action do
     if params[:force_error]
       1 / 0
@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
       add_flash_types *FlashInfo.all_keys
       helper_method :submitted?
       helper_method :iframe?
+      helper_method :slack_message
     end
 
     def submitted?(name)
@@ -162,10 +163,6 @@ class ApplicationController < ActionController::Base
     end
 
     def login_display?
-      if AppConfig[:login_link_disable]
-        return false
-      end
-
       v = false
       v ||= params[:controller].start_with?("colosseum")
       v ||= params[:controller].start_with?("xy_records")

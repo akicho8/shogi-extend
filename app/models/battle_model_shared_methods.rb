@@ -232,6 +232,65 @@ module BattleModelSharedMethods
       @all_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => to_cached_kifu(e.key)) }
     end
 
+    # # # 平手から開始した76歩の場合
+    # #
+    # # {
+    # #   "initial_state_board_sfen": "startpos",
+    # #   "last_sfen": "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2",
+    # #   "moves": [
+    # #     "7g7f"
+    # #   ]
+    # # }
+    # #
+    # # # 72手目からの局面図
+    # # {
+    # #   "initial_state_board_sfen": "sfen lr4knl/3g2gs1/4ppP2/p4bNpp/2pSsN3/PPPP1P2P/2N1P1G2/2G6/L1K4RL w BPs3p 72",
+    # #   "last_sfen": "sfen lr4knl/3g2gs1/4ppP2/p4bNpp/2pSsN3/PPPP1P2P/2N1P1G2/2G6/L1K4RL w BPs3p 72",
+    # #   "moves": []
+    # # }
+    # #
+    # def sfen_attrs
+    #   @sfen_attrs ||= -> {
+    #     mediator = heavy_parsed_info.mediator
+    #
+    #     args = {}
+    #     if mediator.initial_state_board_sfen != "startpos"
+    #       args[:initpos] = mediator.initial_state_board_sfen.remove(/^sfen\s*/)
+    #     end
+    #     if mediator.hand_logs.present?
+    #       args[:moves] = mediator.hand_logs.collect(&:to_sfen).join(".")
+    #     end
+    #     kent_query = args.to_query
+    #
+    #     {
+    #       initial_state_board_sfen: mediator.initial_state_board_sfen, # => "startpos"
+    #       last_sfen: mediator.to_current_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
+    #       moves: mediator.hand_logs.collect(&:to_sfen),                # => ["7i6h", "S*2d"]
+    #       kent_query: kent_query,
+    #     }
+    #   }.call
+    # end
+    #
+    # def kento_app_embed_url
+    #   @kento_app_embed_url ||= -> {
+    #     mediator = heavy_parsed_info.mediator
+    #
+    #     args = {}
+    #     if mediator.initial_state_board_sfen != "startpos"
+    #       args[:initpos] = mediator.initial_state_board_sfen.remove(/^sfen\s*/)
+    #     end
+    #     if mediator.hand_logs.present?
+    #       args[:moves] = mediator.hand_logs.collect(&:to_sfen).join(".")
+    #     end
+    #
+    #     "https://www.kento-shogi.com/?#{args.to_query}"
+    #   }.call
+    # end
+
+    def sfen_info
+      @sfen_info ||= Bioshogi::Sfen.parse(sfen_body)
+    end
+
     def parser_class
       Bioshogi::Parser
     end

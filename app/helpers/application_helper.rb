@@ -36,13 +36,14 @@ module ApplicationHelper
     }.html_safe
   end
 
-  def twitter_card_tag(**options)
-    provide(:twitter_card_tag, __twitter_card_tag(options))
+  def twitter_card_registry(**options)
+    provide(:twitter_card_registry, twitter_card_tag_build(options))
   end
 
-  def __twitter_card_tag(**options)
+  # twitter は投稿時に指定された URL を見ているだけで og:url や twitter:url を見ていない
+  def twitter_card_tag_build(**options)
     options = {
-      card: "summary_large_image",
+      card: "summary_large_image", # summary or summary_large_image
       site: "@sgkinakomochi",
       title: AppConfig[:app_name],
       creator: "@sgkinakomochi",
@@ -50,33 +51,20 @@ module ApplicationHelper
       image: "apple-touch-icon.png",
     }.merge(options)
 
-    o = []
-    if v = options[:card]
-      o << tag.meta(name: "twitter:card", content: v)
-    end
-    if v = options[:site]
-      o << tag.meta(name: "twitter:site", content: v)
-    end
-    if v = options[:creator]
-      o << tag.meta(name: "twitter:creator", content: v)
-    end
-    # twitter は投稿時に指定された URL を見ているだけで og:url や twitter:url を見ていない
-    # if v = options[:url]
-    #   o << tag.meta(name: "twitter:url", content: v)
-    # end
-    if v = options[:url]
-      o << tag.meta(property: "og:url", content: v)
-    end
-    if v = options[:title]
-      o << tag.meta(property: "og:title", content: v)
-    end
-    if v = options[:description]
-      o << tag.meta(property: "og:description", content: v)
-    end
-    if v = options[:image]
-      o << tag.meta(property: "og:image", content: image_url(v))
-    end
+    twitter_prefix_set = [:site, :creator].to_set
 
-    o.join.html_safe
+    options.collect { |key, val|
+      if val.present?
+        if twitter_prefix_set.include?(key)
+          prefix = :twitter
+        else
+          prefix = :og
+        end
+        if key == :image
+          val = image_url(val)
+        end
+        tag.meta(name: "#{prefix}:#{key}", content: val)
+      end
+    }.compact.join.html_safe
   end
 end

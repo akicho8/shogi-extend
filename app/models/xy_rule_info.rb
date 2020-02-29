@@ -64,7 +64,7 @@ class XyRuleInfo
     end
 
     def redis
-      @redis ||= Redis.new(host: "localhost", port: 6379, db: 2)
+      @redis ||= Redis.new(db: AppConfig[:redis_db_for_xy_rule_info])
     end
   end
 
@@ -165,11 +165,19 @@ class XyRuleInfo
   end
 
   def table_key_for_today
-    time_table_key(Time.current)
+    ymd_table_key_for_time(Time.current)
   end
 
-  def time_table_key(created_at)
+  def table_key_for_month
+    ym_table_key_for_time(Time.current)
+  end
+
+  def ymd_table_key_for_time(created_at)
     [*prefix_keys, created_at.strftime("%Y%m%d")].join("/")
+  end
+
+  def ym_table_key_for_time(created_at)
+    [*prefix_keys, created_at.strftime("%Y%m")].join("/")
   end
 
   def prefix_keys
@@ -206,6 +214,8 @@ class XyRuleInfo
 
     class_methods do
       def chartjs_datasets(params)
+        mysql_convert_tz_with_time_zone_validate!
+
         xy_rule_key = params[:xy_chart_rule_key]
         xy_chart_scope_info = XyChartScopeInfo.fetch(params[:xy_chart_scope_key])
 
@@ -263,6 +273,12 @@ class XyRuleInfo
         #     showLine: false,          # 線で繋げない
         #   }
         # },
+      end
+
+      def mysql_convert_tz_with_time_zone_validate!
+        unless ActiveRecord::Base.connection.select_all("SELECT CONVERT_TZ(now(), 'UTC', 'Asia/Tokyo')")
+          raise "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql を実行してください"
+        end
       end
     end
   end

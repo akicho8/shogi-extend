@@ -7,7 +7,7 @@ after "deploy:updated", "error_page:upload"
 namespace :error_page do
   desc "静的エラーページのアップロード"
   task :upload do
-    Dir.chdir("static_app") { system "BASE_DIR=/shogi/system/static/ yarn build" }
+    Dir.chdir("static_app") { system "BASE_DIR=/system/static/ yarn build" }
     on roles(:web) do |host|
       # いったん消さないと2度目で static/dist ディレクトリに転送してしまう
       execute :rm, "-rf", "#{shared_path}/public/system/static"
@@ -20,7 +20,7 @@ namespace :error_page do
         else
           # ダサいが meta refresh で遷移させる
           # なぜ /public/404.html のような形で置く理由は Rails が読んでいるから
-          upload! StringIO.new(%(<html><head><meta http-equiv="refresh" content="0;url=/shogi/system/static/page#{code}/"></head></html>)), "#{release_path}/public/#{code}.html"
+          upload! StringIO.new(%(<html><head><meta http-equiv="refresh" content="0;url=/system/static/page#{code}/"></head></html>)), "#{release_path}/public/#{code}.html"
         end
       end
       execute :ls, "-al #{release_path}/public/"

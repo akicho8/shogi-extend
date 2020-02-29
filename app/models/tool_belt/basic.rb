@@ -19,7 +19,7 @@ module ToolBelt
           link_to_eval("flash確認", redirect_to: h.root_path(debug: "true"))  { ""                                                                        },
           link_to_eval("Swars::Battle.destroy_all")                           { "Swars::Battle.destroy_all"                                               },
           link_to_eval("itoshinTV 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'itoshinTV', run_remote: true)"      },
-          link_to_eval("Kadokura_Keita 取り込み (指導対局)")                  { "Swars::Battle.user_import(user_key: 'Kadokura_Keita', run_remote: true)" },
+          link_to_eval("Yamamoto_Hiroshi 取り込み (指導対局)")                  { "Swars::Battle.user_import(user_key: 'Yamamoto_Hiroshi', run_remote: true)" },
           link_to_eval("kinakom0chi 取り込み")                                { "Swars::Battle.user_import(user_key: 'kinakom0chi', run_remote: true)"    },
           link_to_eval("メール書式確認", redirect_to: "/rails/mailers")       { ""                                                                        },
           link_to_eval("RegularCrawler")                                      { "Swars::Crawler::RegularCrawler.new.run"                                  },

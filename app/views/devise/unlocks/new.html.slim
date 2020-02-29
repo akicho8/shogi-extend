@@ -9,4 +9,5 @@
         = f.label :email
         = f.email_field :email, autofocus: true, class: 'input'
       = f.submit t('.resend_unlock_instructions', default: 'Resend unlock instructions'), class: 'button is-primary'
+
 = render 'devise/shared/links'

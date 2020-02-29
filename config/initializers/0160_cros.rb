@@ -35,7 +35,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # if Rails.env.production? || Rails.env.staging?
-    #   origins ENV["MY_APP_HOST"] || "tk2-221-20341.vs.sakura.ne.jp"
+    #   origins ENV["MY_APP_HOST"] || "www.shogi-extend.com"
     # else
     # end
     origins "*"                 # クッキーが欲しいときはそのサーバーを明示的に指定する必要があり)

@@ -1,5 +1,5 @@
 AppConfig.deep_merge!({
-    :app_name                                =>  "将棋のツール（仮）",
+    :app_name                                =>  "SHOGI-EXTEND",
     :volume                                  =>  0.2,
     :admin_email                             =>  "alice@localhost",
 
@@ -19,6 +19,7 @@ AppConfig.deep_merge!({
     :free_battles_pro_mode                   =>  false, # 野良棋譜にいろいろ入れる？
     :force_convert_for_twitter_image         =>  false, # 作成した画像を強制的に 1600x630 に変更する
     :html2canvas_enable                      =>  false, # html2canvas を使って盤面を取り込む機能を入れる？
+    :kento_params_use_kifu_param_only        =>  false, # KENTOには kifu=*.kif だけ渡す？
 
     :zip_download_function =>  true,  # 一括ダウンロード機能
     :zip_dl_max_default    =>  30,    # 一括ダウンロードするときの件数(初期値)
@@ -29,5 +30,6 @@ AppConfig.deep_merge!({
     :required_query_for_search               =>  true,  # js側から一覧のレコードを出すときは必ず query が入っていないといけないか？
     :swars_battles_index_filter_options_show =>  true,  # 将棋ウォーズ棋譜検索のフィルターオプションを表示する？
 
-    :login_link_disable                      =>  false, # ログインリンクを消すか？
+    :redis_db_for_colosseum_ranking_info => 1,    # 対戦のランキング用
+    :redis_db_for_xy_rule_info           => 2     # 符号の鬼のランキング用
   })

@@ -7,17 +7,17 @@
 
 // https://www.ameamelog.com/css-placeholder/
 input:focus::-webkit-input-placeholder
-	color: transparent
+  color: transparent
 
 input:focus::-moz-placeholder
-	color: transparent
+  color: transparent
 
 input:focus::-ms-input-placeholder
-	color: transparent
+  color: transparent
 
 input:focus::placeholder
-	color: transparent
-  
+  color: transparent
+
 ////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
 
 #flash_danger_notify_tag
@@ -135,3 +135,17 @@ input:focus::placeholder
 .icon_in_field
   position: relative
   top: 0.225rem
+
+//////////////////////////////////////////////////////////////////////////////// サイト名
+
+@import url('https://fonts.googleapis.com/css?family=Candal&display=swap')
+
+.navbar-brand
+  .navbar-item
+    font-family: 'Candal'
+
+//////////////////////////////////////////////////////////////////////////////// 便利な使い方
+
+.usage_modal
+  li:not(:first-child)
+    margin-top: 0.8rem

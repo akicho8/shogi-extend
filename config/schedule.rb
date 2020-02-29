@@ -1,23 +1,33 @@
 # -*- coding: utf-8; compile-command: "cap production deploy:upload FILES=config/schedule.rb whenever:update_crontab crontab" -*-
 # capp rails:cron_log
 
+puts "=== 環境確認 ==="
+puts "ENV['RAILS_ENV'] --> #{ENV['RAILS_ENV'].inspect}"
+puts "@environment     --> #{@environment.inspect}"
+puts "Dir.pwd          --> #{Dir.pwd.inspect}"
+puts "================"
+
 set :output, {standard: "log/#{@environment}_cron.log"}
 
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
-if ENV["USE_NEW_DOMAIN"].to_s == ""
-  every("5 4 * * *") do
-    runner [
-      "Colosseum::Battle.auto_close",
-      "XyRecord.entry_name_blank_scope.destroy_all",
-      "Swars::Battle.old_record_destroy",
-      "FreeBattle.old_record_destroy",
-      # "Swars::Battle.rule_key_bugfix_process",
-      # "Swars::Crawler::RegularCrawler.run",
-      # "Swars::Crawler::ExpertCrawler.run",
-      # "Swars::Crawler::RecentlyCrawler.run",
-    ].join(";")
+every("5 4 * * *") do
+  runner [
+    "Colosseum::Battle.auto_close",
+    "XyRecord.entry_name_blank_scope.destroy_all",
+    "Swars::Battle.old_record_destroy",
+    "FreeBattle.old_record_destroy",
+    # "Swars::Battle.rule_key_bugfix_process",
+    # "Swars::Crawler::RegularCrawler.run",
+    # "Swars::Crawler::ExpertCrawler.run",
+    # "Swars::Crawler::RecentlyCrawler.run",
+  ].join(";")
+end
+
+if @environment == "production"
+  every("0 3 * * 6") do
+    command "sudo certbot renew --deploy-hook 'systemctl restart httpd'"
   end
 end
 

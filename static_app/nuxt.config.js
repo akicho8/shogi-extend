@@ -2,7 +2,7 @@ export default {
   mode: 'spa',
 
   router: {
-    base: process.env.BASE_DIR || "/", // BASE_DIR=/shogi/system/static/ yarn build
+    base: process.env.BASE_DIR || "/", // BASE_DIR=/system/static/ yarn build
   },
 
   // server: {

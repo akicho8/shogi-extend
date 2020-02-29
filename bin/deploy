@@ -1,9 +1,16 @@
 #!/bin/sh
-git push
-say 'デプロイ1つめ'
+
+# git push
+# say 'デプロイ1つめ'
+# cap production deploy
+# say 'デプロイ2つめ'
+# USE_NEW_DOMAIN=1 cap production deploy
+# say 'デプロイ終わった'
+# open http://shogi-flow.xyz/
+# open https://www.shogi-extend.com/
+
+# DB_RESET=1 USE_NEW_DOMAIN=1 cap staging deploy
+# DB_RESET=1 USE_NEW_DOMAIN=1 cap production deploy
+
+cap staging deploy
 cap production deploy
-say 'デプロイ2つめ'
-USE_NEW_DOMAIN=1 cap production deploy
-say 'デプロイ終わった'
-open http://shogi-flow.xyz/
-open http://tk2-221-20341.vs.sakura.ne.jp/shogi/
