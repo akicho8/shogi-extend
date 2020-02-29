@@ -30,7 +30,7 @@ nav.navbar.is-primary.is_screen_only
           - if AppConfig[:colosseum_battle_enable]
             = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
 
-      - if Rails.env.development? || true
+      - if Rails.env.development? || Rails.env.staging?
         .navbar-item.has-dropdown.is-hoverable
           span.navbar-link
             | スクリプト
