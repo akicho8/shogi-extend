@@ -15,6 +15,14 @@ nav.navbar.is-primary.is_screen_only
       = link_to(icon_tag(:apps, margin_right: 1) + "符号の鬼", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
       = link_to(icon_tag(:clock, margin_right: 1) + "詰将棋RTA", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
 
+      - if Rails.env.development? || Rails.env.staging? || true
+        .navbar-item.has-dropdown.is-hoverable
+          span.navbar-link
+            | スクリプト
+          .navbar-dropdown.is-boxed
+            - FrontScript.bundle_classes.each do |klass|
+              = link_to(klass.label_name, [:front_script, id: klass.key], class: ["navbar-item", ("is-active" if params[:controller] == "front_scripts" && params[:id] == klass.key)])
+
       .navbar-item.has-dropdown.is-hoverable
         span.navbar-link
           | もっと見る
@@ -29,14 +37,6 @@ nav.navbar.is-primary.is_screen_only
             = link_to(icon_tag(:clock, margin_right: 1) + "チェスクロック", :vs_clock, class: ["navbar-item", ("is-active" if params[:controller] == "vs_clocks")])
           - if AppConfig[:colosseum_battle_enable]
             = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
-
-      - if Rails.env.development? || Rails.env.staging?
-        .navbar-item.has-dropdown.is-hoverable
-          span.navbar-link
-            | スクリプト
-          .navbar-dropdown.is-boxed
-            - FrontScript.bundle_classes.each do |klass|
-              = link_to(klass.label_name, [:front_script, id: klass.key], class: ["navbar-item", ("is-active" if params[:controller] == "front_scripts" && params[:id] == klass.key)])
 
       - if Rails.env.development?
         = link_to("管理画面", :admin, class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
