@@ -1,0 +1,27 @@
+module AdminScript
+  class SlackScript < Base
+    self.category = "ツール"
+    self.label_name = "Slack通知"
+
+    def form_parts
+      [
+        {
+          :label   => "発言",
+          :key     => :message,
+          :type    => :string,
+          :default => current_message,
+        },
+      ]
+    end
+
+    def script_body
+      if submitted?
+        h.slack_message(key: "admin", body: current_message)
+      end
+    end
+
+    def current_message
+      params[:message].presence
+    end
+  end
+end

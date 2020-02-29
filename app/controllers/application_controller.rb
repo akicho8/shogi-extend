@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
       add_flash_types *FlashInfo.all_keys
       helper_method :submitted?
       helper_method :iframe?
+      helper_method :slack_message
     end
 
     def submitted?(name)

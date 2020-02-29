@@ -30,6 +30,23 @@ nav.navbar.is-primary.is_screen_only
           - if AppConfig[:colosseum_battle_enable]
             = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
 
+      - if Rails.env.development? || true
+        .navbar-item.has-dropdown.is-hoverable
+          span.navbar-link
+            | スクリプト
+          .navbar-dropdown.is-boxed
+            - FrontScript.bundle_classes.each do |klass|
+              = link_to(klass.label_name, [:front_script, id: klass.key], class: ["navbar-item", ("is-active" if params[:controller] == "front_scripts" && params[:id] == klass.key)])
+
+      - if Rails.env.development?
+        = link_to("管理画面", :admin, class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
+      - if session[:admin_user]
+        .navbar-item.has-dropdown.is-hoverable
+          = link_to("管理スクリプト", [:admin, :admin_script, id: "index_script"], class: "navbar-link")
+          .navbar-dropdown.is-boxed
+            - AdminScript.bundle_classes.each do |klass|
+              = link_to(klass.label_name, [:admin, :admin_script, id: klass.key], class: ["navbar-item", ("is-active" if params[:controller] == "admin/admin_scripts" && params[:id] == klass.key)])
+
     #header_app.navbar-end(v-cloak)
       = render partial: "rails_env_links"
 

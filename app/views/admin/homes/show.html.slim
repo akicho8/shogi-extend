@@ -1,0 +1,11 @@
+.title.is-4
+  | 管理画面
+
+.content
+  ul
+    li ログイン: #{admin_user.inspect}
+
+.buttons.are-small
+  = link_to("ログアウト", [:admin, :session], method: :delete, :class => "button") if admin_user
+  = link_to("BASIC認証強制失敗", [:admin, request_http_basic_authentication: 1], :class => "button" )
+  = link_to("スクリプト", [:admin, :admin_script, id: "index_script"], :class => "button")
