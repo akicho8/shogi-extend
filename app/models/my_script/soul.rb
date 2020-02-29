@@ -4,7 +4,7 @@
 #
 #   def show_action
 #     unless target_record.group_info
-#       c.redirect_to(script_link_path(:id => :foo_script))
+#       c.redirect_to(script_link_path(:id => :foo))
 #     end
 #     super
 #   end
@@ -18,7 +18,7 @@
 # ▼post後に別のところにリダイレクトするには？
 #
 #   def post_redirect_path(redirect_params)
-#     script_link_path(:id => :foo_script)
+#     script_link_path(:id => :foo)
 #   end
 #
 module MyScript
@@ -305,7 +305,7 @@ module MyScript
       # 自分のページにリンクするには？
       #   self_link_to("確認", :foo => 1)
       # 別のスクリプトにリンクするには？
-      #   self_link_to("確認", :id => "abc_script", :foo => 1)
+      #   self_link_to("確認", :id => "abc", :foo => 1)
       def script_link_to(name, params, **html_options)
         if request.format.html?
           h.link_to(name, script_link_path(params), html_options) # ← テストするとここで大量の警告がでる。action が文字列なのがまずい。そもそもどこからやってきている？

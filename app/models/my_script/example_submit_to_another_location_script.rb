@@ -16,7 +16,7 @@ module MyScript
     end
 
     def submit_path
-      script_link_path(:id => :index_script)
+      script_link_path(:id => :index)
     end
   end
 end

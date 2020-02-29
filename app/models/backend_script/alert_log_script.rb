@@ -30,7 +30,7 @@ module BackendScript
 
     def row_build(alert_log)
       {
-        "ID"   => alert_log.id, # script_link_to(alert_log.id, :id => "ar_search_script", :model => current_model.name,:record_id => alert_log.id),
+        "ID"   => alert_log.id, # script_link_to(alert_log.id, :id => "ar_search", :model => current_model.name,:record_id => alert_log.id),
         "題名" => alert_log.subject,
         "本文" => alert_log.body,
         "日時" => alert_log.created_at.to_s,

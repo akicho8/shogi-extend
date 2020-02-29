@@ -4,7 +4,7 @@
 #
 #   def show_action
 #     unless target_record.group_info
-#       c.redirect_to(script_link_path(:id => :foo_script))
+#       c.redirect_to(script_link_path(:id => :foo))
 #     end
 #     super
 #   end
@@ -18,7 +18,7 @@
 # ▼post後に別のところにリダイレクトするには？
 #
 #   def post_redirect_path(redirect_params)
-#     script_link_path(:id => :foo_script)
+#     script_link_path(:id => :foo)
 #   end
 #
 module BackendScript
