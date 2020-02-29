@@ -1,4 +1,4 @@
-module AdminScript
+module BackendScript
   class EnvScript < Base
     self.category = "その他"
     self.label_name = "ENV"

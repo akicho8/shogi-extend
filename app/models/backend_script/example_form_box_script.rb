@@ -2,7 +2,7 @@
 # フォームなし
 #
 # http://localhost:3000/admin/scripts/example_form_box_script
-module AdminScript
+module BackendScript
   class ExampleFormBoxScript < Base
     self.category = "スクリプト例"
     self.label_name = "簡単フォーム例"

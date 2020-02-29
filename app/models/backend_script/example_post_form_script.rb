@@ -2,7 +2,7 @@
 # フォームなし
 #
 # http://localhost:3000/admin/scripts/example_post_form_page
-module AdminScript
+module BackendScript
   class ExamplePostFormScript < Base
     self.category = "スクリプト例"
     self.label_name = "POSTフォーム"

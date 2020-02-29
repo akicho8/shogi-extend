@@ -1,4 +1,4 @@
 module Admin
-  class HomesController < ApplicationController
+  class HomesController < ::Admin::ApplicationController
   end
 end

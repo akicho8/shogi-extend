@@ -42,10 +42,10 @@ nav.navbar.is-primary.is_screen_only
         = link_to("管理画面", :admin, class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
       - if session[:admin_user]
         .navbar-item.has-dropdown.is-hoverable
-          = link_to("管理スクリプト", [:admin, :admin_script, id: "index_script"], class: "navbar-link")
+          = link_to("管理スクリプト", [:admin, :backend_script, id: "index_script"], class: "navbar-link")
           .navbar-dropdown.is-boxed
-            - AdminScript.bundle_classes.each do |klass|
-              = link_to(klass.label_name, [:admin, :admin_script, id: klass.key], class: ["navbar-item", ("is-active" if params[:controller] == "admin/admin_scripts" && params[:id] == klass.key)])
+            - BackendScript.bundle_classes.each do |klass|
+              = link_to(klass.label_name, [:admin, :backend_script, id: klass.key], class: ["navbar-item", ("is-active" if params[:controller] == "admin/backend_scripts" && params[:id] == klass.key)])
 
     #header_app.navbar-end(v-cloak)
       = render partial: "rails_env_links"

@@ -1,4 +1,4 @@
-module AdminScript
+module BackendScript
   class SqlScript < Base
     self.category = "コンソール"
     self.label_name = "SQL"

@@ -1,4 +1,4 @@
-module AdminScript
+module BackendScript
   class ExampleArPaggingScript < Base
     self.category = "スクリプト例"
     self.label_name = "ARページングのテスト"

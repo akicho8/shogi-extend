@@ -1,5 +1,5 @@
 module FrontScript
-  class AttackTagsScript < Base
+  class AttackRarityScript < Base
     self.label_name = "戦法レア度"
 
     def script_body

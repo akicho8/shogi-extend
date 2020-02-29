@@ -1,4 +1,4 @@
-module AdminScript
+module BackendScript
   class SlackScript < Base
     self.category = "ツール"
     self.label_name = "Slack通知"

@@ -1,4 +1,4 @@
-module AdminScript
+module BackendScript
   class ShellScript < Base
     self.category = "コンソール"
     self.label_name = "シェル実行"

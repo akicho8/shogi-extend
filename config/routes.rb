@@ -148,7 +148,7 @@ Rails.application.routes.draw do
 
   ################################################################################ front_scripts
 
-  resources :front_scripts, :path => "scripts", :only => [:show, :update]
+  resources :front_scripts, :path => "script", :only => [:show, :update]
 
   ################################################################################ admin
 
@@ -179,8 +179,8 @@ Rails.application.routes.draw do
     #   end
     # end
 
-    resources :admin_scripts, :path => "scripts", :only => [:show, :update]
-    get "scripts" => redirect("/admin/scripts/index_script")
+    resources :backend_scripts, :path => "script", :only => [:show, :update]
+    # get "scripts" => redirect("/admin/scripts/index")
 
     root :to => "homes#show"
   end

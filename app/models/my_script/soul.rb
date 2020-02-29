@@ -37,7 +37,7 @@ module MyScript
     self.post_submit = false
 
     def self.key
-      name.demodulize.underscore
+      name.demodulize.underscore.remove(/_script\z/)
     end
 
     def self.url_prefix
@@ -205,7 +205,7 @@ module MyScript
 
     def to_title_html
       h.instance_variable_set(:@page_title, label_name)
-      h.tag.div(h.instance_variable_get(:@page_title), :class => "title is-4")
+      h.tag.div(h.instance_variable_get(:@page_title), :class => "title is-4 yumincho")
     end
 
     # オーバーライド微推奨

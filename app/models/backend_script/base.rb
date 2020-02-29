@@ -21,7 +21,7 @@
 #     script_link_path(:id => :oshirase_search_script)
 #   end
 #
-module AdminScript
+module BackendScript
   class Base < MyScript::Soul
     class_attribute :category
     self.category = "その他"
@@ -36,7 +36,7 @@ module AdminScript
     self.sql_log_display = true
 
     def self.url_prefix
-      [:admin, :admin_script]
+      [:admin, :backend_script]
     end
 
     def create_or_update_action
@@ -131,7 +131,7 @@ module AdminScript
       #
       #   out << h.tag(:hr)
       #   out << h.content_tag(:div, :class => "well") do
-      #     AdminScript.cloud_links(h)
+      #     BackendScript.cloud_links(h)
       #   end
       # end
 
@@ -312,7 +312,7 @@ module AdminScript
           {
             :name     => h.bootstrap_icon(icon_key) + (options[:name] || label_name),
             :url      => script_link_path(params),
-            # :if_match => {:controller => Admin::AdminScriptsController, :id => key},
+            # :if_match => {:controller => Admin::BackendScriptsController, :id => key},
           }
         end
       end

@@ -1,3 +1,3 @@
-module FrontScript
+module BackendScript
   extend ScriptGroup
 end

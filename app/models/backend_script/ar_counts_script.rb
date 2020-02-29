@@ -1,4 +1,4 @@
-module AdminScript
+module BackendScript
   class ArCountsScript < Base
     self.category = "その他"
     self.label_name = "データ数"

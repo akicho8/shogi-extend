@@ -1,5 +1,5 @@
 # http://localhost:3000/admin/scripts/example_get_form_page
-module AdminScript
+module BackendScript
   class ExampleGetFormScript < Base
     self.category = "スクリプト例"
     self.label_name = "GETフォーム"
