@@ -18,7 +18,21 @@ module BackendScript
     end
 
     def script_body
-      params
+      if submitted?
+        # POST実行時
+        params
+      else
+        return "動かないときは rails dev:cache すること"
+
+        hex = SecureRandom.hex
+        val = SecureRandom.hex
+        Rails.cache.write(hex, val, :expires_in => 1.minutes)
+        if Rails.cache.read(hex) == val
+          "キャッシュ有効"
+        else
+          "キャッシュ無効"
+        end
+      end
     end
   end
 end

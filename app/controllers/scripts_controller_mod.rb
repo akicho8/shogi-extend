@@ -3,25 +3,18 @@ module ScriptsControllerMod
 
   included do
     before_action :load_object
-    before_action :create_or_update, :only => [:create, :update]
   end
 
   def show
-    @script.show_action
-    if performed?
-      return
-    end
+    # @script.show_action
+    # if performed?
+    #   return
+    # end
 
     render :html => @script.render_in_view, layout: true
   end
 
-  def create
-  end
-
   def update
-  end
-
-  def create_or_update
     @script.create_or_update_action
   end
 

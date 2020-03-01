@@ -28,10 +28,6 @@ module EasyScript
       class_attribute :script_name
       self.script_name = nil
 
-      # POSTでフォームを送信するか？
-      class_attribute :post_method_use_p
-      self.post_method_use_p = false
-
       # URLを生成するときのプレフィクス
       class_attribute :url_prefix
       self.url_prefix = []
@@ -88,88 +84,18 @@ module EasyScript
     #     super
     #   end
     #
-    def show_action
-      if c.performed?
-        return
-      end
-
-      # unless c.performed?
-      #   controller.respond_to do |format|
-      #     # format.csv { controller.send_data(to_body_html.to_ucsv, :type => Mime[:csv], :disposition => "attachment; filename=#{script_name}.csv") }
-      #     format.all
-      #   end
-      # end
-    end
-
-    def create_or_update_action
-      # code = run_and_result_cache_write # ここで実行している
-
-      _ret = script_body_run
-
-      # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
-      if c.performed?
-        return
-      end
-
-      if true
-        # エラーだったらリダイレクトせずに描画する
-        if _ret[:alert_message]
-          c.render :text => response_render(Response[_ret]), :layout => true
-          return
-        end
-      end
-
-      as_rails_cache_store_key = SecureRandom.hex
-      # POST で User.all.to_a などを返すと AR の配列が Marshal.dump されて undefined class/module な現象が起きる。
-      # これはmemcachedへのMarshalの不具合。
-      #
-      # undefined class/module とか言われてアプリの起動ができなくなってしまう
-      # http://xibbar.hatenablog.com/entry/20130221/1361556846
-      #
-      Rails.cache.write(as_rails_cache_store_key, _ret, :expires_in => 3.minutes)
-
-      redirect_params = clean_params
-      redirect_params.update(:as_rails_cache_store_key => as_rails_cache_store_key)
-      # _resp = Rails.cache.read(code)
-
-      if false
-        # エラーだったら同じとこにリダイレクトする
-        if _ret[:alert_message]
-          c.redirect_to [*url_prefix, redirect_params]
-          return
-        end
-      end
-
-      c.redirect_to post_redirect_path(redirect_params)
-    end
-
-    def create_or_update_action
-      _ret = script_body_run
-
-      # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
-      if c.performed?
-        return
-      end
-
-      # POST で User.all.to_a などを返すと AR の配列が Marshal.dump されて undefined class/module な現象が起きる。
-      # これはmemcachedへのMarshalの不具合。
-      #
-      # undefined class/module とか言われてアプリの起動ができなくなってしまう
-      # http://xibbar.hatenablog.com/entry/20130221/1361556846
-      #
-      as_rails_cache_store_key = SecureRandom.hex
-      Rails.cache.write(as_rails_cache_store_key, _ret, :expires_in => 3.minutes)
-
-      c.redirect_to post_redirect_path(clean_params.merge(:as_rails_cache_store_key => as_rails_cache_store_key))
-    end
-
-    # def url_prefix
-    #   self.class.url_prefix
+    # def show_action
+    #   if c.performed?
+    #     return
+    #   end
+    # 
+    #   # unless c.performed?
+    #   #   controller.respond_to do |format|
+    #   #     # format.csv { controller.send_data(to_body_html.to_ucsv, :type => Mime[:csv], :disposition => "attachment; filename=#{script_name}.csv") }
+    #   #     format.all
+    #   #   end
+    #   # end
     # end
-
-    def post_redirect_path(redirect_params)
-      [*url_prefix, redirect_params]
-    end
 
     def render_in_view
       response_render(to_body_html)
@@ -202,11 +128,13 @@ module EasyScript
         end
       end
 
-      # if Rails.env.development? || Rails.env.test?
-      #   out << h.tag(:hr)
-      #   out << resp.to_html(:title => "resp") if resp
-      #   out << params.to_unsafe_h.to_html(:title => "params")
-      # end
+      if Rails.env.development? || Rails.env.test?
+        # out << h.tag(:hr)
+        # if resp
+        #   out << h.tag.div(:class => "box") { resp.to_html(:title => "response") }
+        # end
+        out << h.tag.div(:class => "box") { params.to_html(:title => "params") }
+      end
 
       out
     end
@@ -221,20 +149,16 @@ module EasyScript
     end
 
     def to_body_html
-      if get? # このクラス固定のタイプであって controller.request.get? ではない
-        v = script_body_run
-      else
-        # POSTのタイプのはリダイレクトしてキャッシュした内容を表示する
-        v = cached_result
-      end
+      v = script_body_run
       if v
-        Response[v]
+        v = Response[v]
       end
+      v
     end
 
     def to_form_html
       out = []
-      if form_parts.present? || post_method_use_p
+      if form_render?
         out << h.form_with(url: submit_path, method: form_action_method, multipart: multipart?, skip_enforcing_utf8: true) do |;out|
           out = []
           out << FormBox::InputsBuilder::Default.inputs_render(form_parts)
@@ -249,8 +173,8 @@ module EasyScript
       out.join.html_safe
     end
 
-    def clean_params
-      params.except(:controller, :action, :_method, :authenticity_token, :id, :utf8, :_submit)
+    def form_render?
+      form_parts.present?
     end
 
     private
@@ -346,12 +270,8 @@ module EasyScript
       Array.wrap(form_parts).any? { |e| e[:type] == :file }
     end
 
-    def get?
-      !post_method_use_p
-    end
-
     def form_action_method
-      post_method_use_p ? :put : :get
+      :get
     end
 
     def cached_result
@@ -361,7 +281,7 @@ module EasyScript
     end
 
     def redirected?
-      as_rails_cache_store_key
+      as_rails_cache_store_key.present?
     end
 
     def as_rails_cache_store_key
@@ -373,19 +293,11 @@ module EasyScript
     end
 
     def buttun_label
-      if get?
-        get_buttun_label
-      else
-        post_buttun_label
-      end
+      get_buttun_label
     end
 
     def get_buttun_label
       "実行"
-    end
-
-    def post_buttun_label
-      "本当に実行する"
     end
 
     def form_submit_button_class
@@ -393,18 +305,14 @@ module EasyScript
     end
 
     def form_submit_button_color
-      if get?
-        'is-primary'
-      else
-        'is-danger'
-      end
+      'is-primary'
     end
 
     # script_body の中で使うために用意したメソッド
     concerning :Helper do
-      def submitted?
-        @params[:_submit].present?
-      end
+    def submitted?
+      @params[:_submit].present?
+    end
     end
   end
 end
