@@ -26,5 +26,6 @@ module EasyScript
     include Core
     include SupportMod
     include LinkMod
+    include DevelopmentOnlyMod
   end
 end

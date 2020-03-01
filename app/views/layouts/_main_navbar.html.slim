@@ -20,8 +20,7 @@ nav.navbar.is-primary.is_screen_only
           span.navbar-link
             | スクリプト
           .navbar-dropdown.is-boxed
-            - FrontScript.bundle_scripts.each do |e|
-              = link_to(e.script_name, e.script_link_path, class: ["navbar-item", ("is-active" if params[:controller] == "front_scripts" && params[:id] == e.key)])
+            = FrontScript.render_html(self, "front_scripts")
 
       .navbar-item.has-dropdown.is-hoverable
         span.navbar-link
@@ -44,8 +43,7 @@ nav.navbar.is-primary.is_screen_only
         .navbar-item.has-dropdown.is-hoverable
           = link_to("管理スクリプト", BackendScript::IndexScript.script_link_path, class: "navbar-link")
           .navbar-dropdown.is-boxed
-            - BackendScript.bundle_scripts.each do |e|
-              = link_to(e.script_name, e.script_link_path, class: ["navbar-item", ("is-active" if params[:controller] == "admin/backend_scripts" && params[:id] == e.key)])
+            = BackendScript.render_html(self, "admin/backend_scripts")
 
     #header_app.navbar-end(v-cloak)
       = render partial: "rails_env_links"
