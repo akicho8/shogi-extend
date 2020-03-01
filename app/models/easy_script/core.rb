@@ -21,28 +21,39 @@
 #     script_link_path(:id => :foo)
 #   end
 #
-module MyScript
-  class Soul
+module EasyScript
+  concern :Core do
+    included do
+      # 人間向けスクリプト名
+      class_attribute :script_name
+      self.script_name = nil
+
+      # POSTでフォームを送信するか？
+      class_attribute :post_method_use_p
+      self.post_method_use_p = false
+
+      # URLを生成するときのプレフィクス
+      class_attribute :url_prefix
+      self.url_prefix = []
+
+      delegate :key, :to => "self.class"
+    end
+
+    class_methods do
+      def key
+        name.demodulize.underscore.remove(/_script\z/).dasherize
+      end
+    end
+
     extend ActiveModel::Translation
 
-    attr_accessor :params, :view_context, :request, :controller
+    attr_accessor :params
+    attr_accessor :view_context
+    attr_accessor :request
+    attr_accessor :controller
 
     alias :h :view_context
     alias :c :controller
-
-    class_attribute :label_name
-    self.label_name = nil
-
-    class_attribute :post_submit
-    self.post_submit = false
-
-    def self.key
-      name.demodulize.underscore.remove(/_script\z/)
-    end
-
-    def self.url_prefix
-      [:my_script]
-    end
 
     def initialize(params)
       if params.respond_to?(:to_unsafe_h)
@@ -84,10 +95,52 @@ module MyScript
 
       # unless c.performed?
       #   controller.respond_to do |format|
-      #     # format.csv { controller.send_data(to_body_html.to_ucsv, :type => Mime[:csv], :disposition => "attachment; filename=#{label_name}.csv") }
+      #     # format.csv { controller.send_data(to_body_html.to_ucsv, :type => Mime[:csv], :disposition => "attachment; filename=#{script_name}.csv") }
       #     format.all
       #   end
       # end
+    end
+
+    def create_or_update_action
+      # code = run_and_result_cache_write # ここで実行している
+
+      _ret = script_body_run
+
+      # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
+      if c.performed?
+        return
+      end
+
+      if true
+        # エラーだったらリダイレクトせずに描画する
+        if _ret[:alert_message]
+          c.render :text => response_render(Response[_ret]), :layout => true
+          return
+        end
+      end
+
+      as_rails_cache_store_key = SecureRandom.hex
+      # POST で User.all.to_a などを返すと AR の配列が Marshal.dump されて undefined class/module な現象が起きる。
+      # これはmemcachedへのMarshalの不具合。
+      #
+      # undefined class/module とか言われてアプリの起動ができなくなってしまう
+      # http://xibbar.hatenablog.com/entry/20130221/1361556846
+      #
+      Rails.cache.write(as_rails_cache_store_key, _ret, :expires_in => 3.minutes)
+
+      redirect_params = clean_params
+      redirect_params.update(:as_rails_cache_store_key => as_rails_cache_store_key)
+      # _resp = Rails.cache.read(code)
+
+      if false
+        # エラーだったら同じとこにリダイレクトする
+        if _ret[:alert_message]
+          c.redirect_to [*url_prefix, redirect_params]
+          return
+        end
+      end
+
+      c.redirect_to post_redirect_path(redirect_params)
     end
 
     def create_or_update_action
@@ -110,9 +163,9 @@ module MyScript
       c.redirect_to post_redirect_path(clean_params.merge(:as_rails_cache_store_key => as_rails_cache_store_key))
     end
 
-    def url_prefix
-      self.class.url_prefix
-    end
+    # def url_prefix
+    #   self.class.url_prefix
+    # end
 
     def post_redirect_path(redirect_params)
       [*url_prefix, redirect_params]
@@ -123,7 +176,7 @@ module MyScript
     end
 
     def response_render(resp)
-      # リダイレクトできた場合POSTの場合(_cache_ident付きで飛んでくる)は前回の実行結果を読み出している
+      # リダイレクトできた場合POSTの場合( as_rails_cache_store_key t付きで飛んでくる)は前回の実行結果を読み出している
       # as_rails_cache_store_key なしで来たときは実行している
       if resp
         if v = resp[:alert_message]
@@ -136,26 +189,52 @@ module MyScript
       out << to_form_html
 
       if resp
-        if resp[:script_retval].present?
-          out << resp[:script_retval]
+        if resp[:result_rows].present?
+          # グラフ用のフォーマットでないなら普通に表示
+          if resp[:result_rows].kind_of?(String)
+            out << resp[:result_rows].html_safe
+          else
+            # 得体の知れないオブジェクトは to_html が無い場合がある。たとえば true では to_html が使えない。
+            out << html_format(resp[:result_rows]) # , :table_class => resp[:table_class])
+            out << basic_paginate(resp[:result_object])
+          end
+          # end
         end
       end
 
+      # if Rails.env.development? || Rails.env.test?
+      #   out << h.tag(:hr)
+      #   out << resp.to_html(:title => "resp") if resp
+      #   out << params.to_unsafe_h.to_html(:title => "params")
+      # end
+
+      out
+    end
+
+    def basic_paginate(s, **options)
+      out = "".html_safe
+      if s.respond_to?(:total_pages)
+        out << h.content_tag(:div, h.page_entries_info(s))
+        out << h.paginate(s, options)
+      end
       out
     end
 
     def to_body_html
       if get? # このクラス固定のタイプであって controller.request.get? ではない
-        script_body_run
+        v = script_body_run
       else
         # POSTのタイプのはリダイレクトしてキャッシュした内容を表示する
-        cached_result
+        v = cached_result
+      end
+      if v
+        Response[v]
       end
     end
 
     def to_form_html
       out = []
-      if form_parts.present? || post_submit
+      if form_parts.present? || post_method_use_p
         out << h.form_with(url: submit_path, method: form_action_method, multipart: multipart?, skip_enforcing_utf8: true) do |;out|
           out = []
           out << FormBox::InputsBuilder::Default.inputs_render(form_parts)
@@ -204,22 +283,62 @@ module MyScript
     end
 
     def to_title_html
-      h.instance_variable_set(:@page_title, label_name)
+      h.instance_variable_set(:@page_title, script_name)
       h.tag.div(h.instance_variable_get(:@page_title), :class => "title is-4 yumincho")
     end
 
     # オーバーライド微推奨
     # これをオーバーライドすれば run_log や alert_message などをも書き換えられる
-    def script_body_run
-      {:script_retval => script_body}
-    end
 
-    # オーバーライド推奨
+    # resp = {}
+    # begin
+    #   result_object = nil
+    #   run_log     = nil
+    #   bm_ms = Benchmark.ms do
+    #     run_log = LogCapture.log_capture_sw(log_capture?) do
+    #       result_object = script_body || ""  # ここで実行している
+    #     end
+    #   end
+    #   resp[:result_object] = result_object
+    #   resp[:result_rows] = any_object_to_result_rows(result_object)
+    #   resp[:run_log] = run_log
+    #   resp[:time] = Time.current
+    #   resp[:bm_ms] = bm_ms
+    # rescue Exception => error
+    #   resp[:alert_message] = alert_message_build(error)
+    #   resp[:error_backtrace] = error.backtrace.join("<br/>").html_safe
+    #   alert_log_track(error)
+    #   if Rails.env.test?
+    #     pp error
+    #     pp error.backtrace
+    #   end
+    # ensure
+    #   unless Rails.env.test?
+    #     unless error
+    #       AlertLog.track("#{alert_log_subject}[終了] #{'%.2f' % (resp[:bm_ms].to_f / 1000)} s", :body => params.pretty_inspect)
+    #     end
+    #   end
+    # end
+    # resp.merge(other_response_params)
+
+    # オーバーライド微推奨
+    # これをオーバーライドすれば run_log や alert_message などをも書き換えられる
+    def script_body_run
+      result_object = script_body || ""  # ここで実行している
+      resp = {}
+      resp[:result_rows] = any_object_to_result_rows(result_object)
+      resp
+    end
+    # def script_body_run
+    #   {:script_retval => script_body}
+    # end
+
+    # オーバーライド
     def form_parts
       []
     end
 
-    # オーバーライド推奨
+    # オーバーライド
     def script_body
     end
 
@@ -228,11 +347,11 @@ module MyScript
     end
 
     def get?
-      !post_submit
+      !post_method_use_p
     end
 
     def form_action_method
-      post_submit ? :put : :get
+      post_method_use_p ? :put : :get
     end
 
     def cached_result
@@ -248,8 +367,6 @@ module MyScript
     def as_rails_cache_store_key
       @params[:as_rails_cache_store_key]
     end
-
-    delegate :key, :to => :class
 
     def submit_path
       @params[:_submit_path] || [*url_prefix, :id => key]
@@ -285,33 +402,8 @@ module MyScript
 
     # script_body の中で使うために用意したメソッド
     concerning :Helper do
-      included do
-        delegate :script_link_path, :to => "self.class"
-      end
-
-      class_methods do
-        def script_link_path(params = {})
-          if params[:anchor]
-            params = params.merge(:__anchor__ => params[:anchor]) # アンカーを使おうとしたことをわかるようにするため
-          end
-          [*url_prefix, {:id => key}.merge(params)]
-        end
-      end
-
       def submitted?
         @params[:_submit].present?
-      end
-
-      # 自分のページにリンクするには？
-      #   self_link_to("確認", :foo => 1)
-      # 別のスクリプトにリンクするには？
-      #   self_link_to("確認", :id => "abc", :foo => 1)
-      def script_link_to(name, params, **html_options)
-        if request.format.html?
-          h.link_to(name, script_link_path(params), html_options) # ← テストするとここで大量の警告がでる。action が文字列なのがまずい。そもそもどこからやってきている？
-        else
-          name
-        end
       end
     end
   end

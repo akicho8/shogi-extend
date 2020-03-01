@@ -1,7 +1,7 @@
 module BackendScript
   class AlertLogScript < Base
     self.category = "その他"
-    self.label_name = "アラートログ"
+    self.script_name = "アラートログ"
 
     private
 

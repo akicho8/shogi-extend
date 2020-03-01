@@ -1,6 +1,6 @@
-module MyScript
+module EasyScript
   class ExampleSubmitToAnotherLocationScript < Base
-    self.label_name = "別のところにsubmit"
+    self.script_name = "別のところにsubmit"
 
     def form_parts
       [

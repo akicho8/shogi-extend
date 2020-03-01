@@ -1,3 +1,3 @@
 module BackendScript
-  extend ScriptGroup
+  extend EasyScript::ScriptGroup
 end

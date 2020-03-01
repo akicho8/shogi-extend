@@ -5,8 +5,8 @@
 module BackendScript
   class ExamplePostFormScript < Base
     self.category = "スクリプト例"
-    self.label_name = "POSTフォーム"
-    self.post_submit = true
+    self.script_name = "POSTフォーム"
+    self.post_method_use_p = true
 
     def form_parts
       {

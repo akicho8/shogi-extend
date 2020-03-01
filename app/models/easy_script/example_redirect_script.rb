@@ -1,6 +1,6 @@
-module MyScript
+module EasyScript
   class ExampleRedirectScript < Base
-    self.label_name = "いきなりリダイレクト"
+    self.script_name = "いきなりリダイレクト"
 
     # 実行した瞬間飛ぶので特定ページのエイリアスとして利用可
     def script_body

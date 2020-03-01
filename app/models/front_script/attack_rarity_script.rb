@@ -1,6 +1,6 @@
 module FrontScript
   class AttackRarityScript < Base
-    self.label_name = "戦法レアリティ"
+    self.script_name = "戦法レアリティ"
 
     def script_body
       Rails.cache.fetch(self.class.name, :expires_in => 1.days) do

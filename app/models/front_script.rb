@@ -1,3 +1,3 @@
 module FrontScript
-  extend ScriptGroup
+  extend EasyScript::ScriptGroup
 end

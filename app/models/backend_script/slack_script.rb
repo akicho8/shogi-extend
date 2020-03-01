@@ -1,7 +1,7 @@
 module BackendScript
   class SlackScript < Base
     self.category = "ツール"
-    self.label_name = "Slack通知"
+    self.script_name = "Slack通知"
 
     def form_parts
       [

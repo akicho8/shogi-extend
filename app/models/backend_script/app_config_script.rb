@@ -1,8 +1,7 @@
 module BackendScript
   class AppConfigScript < Base
     self.category = "その他"
-    self.label_name = "AppConfig"
-    self.icon_key = :info
+    self.script_name = "AppConfig"
 
     def script_body
       AppConfig

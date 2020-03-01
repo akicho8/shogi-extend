@@ -1,6 +1,6 @@
-module MyScript
+module EasyScript
   class ExampleTableCheckboxScript < Base
-    self.label_name = "チェックボックスのテスト"
+    self.script_name = "チェックボックスのテスト"
 
     def script_body
       list = 3.times.collect do |e|

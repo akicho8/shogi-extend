@@ -1,6 +1,6 @@
-module MyScript
+module EasyScript
   class ExampleGetFormScript < Base
-    self.label_name = "GETフォーム"
+    self.script_name = "GETフォーム"
 
     def form_parts
       {

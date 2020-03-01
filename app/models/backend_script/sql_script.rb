@@ -1,7 +1,7 @@
 module BackendScript
   class SqlScript < Base
     self.category = "コンソール"
-    self.label_name = "SQL"
+    self.script_name = "SQL"
 
     def form_parts
       [

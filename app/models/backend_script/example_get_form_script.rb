@@ -2,7 +2,7 @@
 module BackendScript
   class ExampleGetFormScript < Base
     self.category = "スクリプト例"
-    self.label_name = "GETフォーム"
+    self.script_name = "GETフォーム"
 
     def form_parts
       {

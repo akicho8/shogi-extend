@@ -43,7 +43,7 @@ module SlackAgent
       end
       client.chat_postMessage(args)
     end
-  rescue Slack::Web::Api::Errors::TooManyRequestsError, Faraday::ParsingError => error
+  rescue Slack::Web::Api::Errors::TooManyRequestsError, Faraday::ParsingError, Faraday::ConnectionFailed => error
     # エラー通知はするが Slack 通知自体はなかったことにして処理を続行する
     # Slack は最悪 HTML のエラー画面を返してくる場合があり、そのときのエラーが Faraday::ParsingError
     ExceptionNotifier.notify_exception(error)

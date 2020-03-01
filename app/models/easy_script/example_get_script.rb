@@ -1,6 +1,6 @@
-module MyScript
+module EasyScript
   class ExampleGetScript < Base
-    self.label_name = "フォームなし"
+    self.script_name = "フォームなし"
 
     def script_body
       "OK"

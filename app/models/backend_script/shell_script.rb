@@ -1,8 +1,7 @@
 module BackendScript
   class ShellScript < Base
     self.category = "コンソール"
-    self.label_name = "シェル実行"
-    self.icon_key = :terminal
+    self.script_name = "シェル実行"
 
     def form_parts
       [

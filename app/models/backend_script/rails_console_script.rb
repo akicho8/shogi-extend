@@ -1,7 +1,7 @@
 module BackendScript
   class RailsConsoleScript < Base
     self.category = "コンソール"
-    self.label_name = "コード実行"
+    self.script_name = "コード実行"
 
     def form_parts
       [

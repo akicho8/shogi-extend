@@ -1,7 +1,7 @@
 module BackendScript
   class ExampleArPaggingScript < Base
     self.category = "スクリプト例"
-    self.label_name = "ARページングのテスト"
+    self.script_name = "ARページングのテスト"
 
     def form_parts
       [

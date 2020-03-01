@@ -1,7 +1,7 @@
 module BackendScript
   class ArCountsScript < Base
     self.category = "その他"
-    self.label_name = "データ数"
+    self.script_name = "データ数"
 
     def script_body
       ApplicationRecord.subclasses.sort_by(&:count).reverse.collect do |e|

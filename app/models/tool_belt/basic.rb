@@ -34,7 +34,7 @@ module ToolBelt
         ].compact.join.html_safe
       end
 
-      list = Colosseum::User.all.collect do |e|
+      list = Colosseum::User.all.limit(25).collect do |e|
         {}.tap do |row|
           row[:id] = h.link_to(e.id, e)
           row[:name] = h.link_to(e.name, e)
