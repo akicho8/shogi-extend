@@ -7,13 +7,13 @@ b-modal.usage_modal(:active.sync="usage_modal_p" trap-focus animation="zoom-in")
             | 検索後の最初の画面 (今の画面) をホーム画面に追加しておくとウォーズIDを毎回入力する手間が省けます
         li
           | 直前の対局を必ず検討する人向けのショートカットがあります。
-          | 下のボタンをタップした直後に「ホーム画面に追加」しておくと直前の対局を1タップで開けるようになります<br>
+          | 下のボタンをタップした直後に「ホーム画面に追加」しておくと1タップで直前の対局を開きます<br>
           .buttons
             - ExternalAppInfo.each do |e|
               - url = url_for([:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key])
               = content_tag("#{e.key}_button", "", "href" => url, :tag => "a")
         li
-          | KENTOの設定の<b>API追加</b>に下のURLを設定すると棋譜一覧がKENTO側でも表示できるようになります
+          | KENTOの<b>API追加</b>に下のURLをコピペするとKENTO側でも棋譜一覧を表示できます
           - url = full_url_for([:swars, :battles, query: current_swars_user, format: "json", format_type: "kento"])
           b-field
             b-input(type="text" value=url expanded size="is-small" readonly)
