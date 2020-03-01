@@ -7,7 +7,7 @@
           template(v-if="mode === 'stop' || mode === 'goal'")
             button.button.is-primary(@click="standby_handle") START
           template(v-if="mode === 'running' || mode === 'standby'")
-            b-button(@click="retry_handle" type="is-danger") やりなおす
+            b-button(@click="retry_handle" type="is-danger") RESTART
             b-button(@click="stop_handle") やめる
 
           template(v-if="mode === 'stop' || mode === 'goal'")
