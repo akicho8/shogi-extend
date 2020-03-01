@@ -1,6 +1,9 @@
 load "#{__dir__}/production.rb"
 
 Rails.application.configure do
+  config.action_cable.url = "wss://staging.shogi-extend.com:28081"
+  Rails.application.routes.default_url_options[:host] = "staging.shogi-extend.com"
+
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
