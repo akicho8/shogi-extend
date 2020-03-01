@@ -43,6 +43,6 @@ RSpec.describe do
 end
 # >> .....
 # >> 
-# >> Finished in 1.25 seconds (files took 0.59306 seconds to load)
+# >> Finished in 0.96771 seconds (files took 4.2 seconds to load)
 # >> 5 examples, 0 failures
 # >> 
