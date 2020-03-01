@@ -104,6 +104,8 @@ class Talk
     end
 
     Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
+  rescue Aws::Errors::NoSuchEndpointError => error
+    Rails.logger.info ["#{__FILE__}:#{__LINE__}", __method__, error].to_t
   end
 
   def polly_params
