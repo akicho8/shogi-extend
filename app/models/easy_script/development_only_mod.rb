@@ -8,7 +8,7 @@ module EasyScript
 
     class_methods do
       def menu_display?
-        if Rails.env.production?
+        if Rails.env.production? || Rails.env.staging?
           if development_only_show_on_menu
             return false
           end
