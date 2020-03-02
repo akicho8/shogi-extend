@@ -1,15 +1,15 @@
-module EasyScript
-  concern :DevelopmentOnlyMod do
+module AtomicScript
+  concern :VisibilityHiddenMod do
     included do
       # メニューには表示したくないとき true にする
-      class_attribute :development_only_show_on_menu
-      self.development_only_show_on_menu = false
+      class_attribute :visibility_hidden
+      self.visibility_hidden = false
     end
 
     class_methods do
       def menu_display?
         if Rails.env.production? || Rails.env.staging?
-          if development_only_show_on_menu
+          if visibility_hidden
             return false
           end
         end

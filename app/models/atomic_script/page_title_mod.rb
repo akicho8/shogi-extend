@@ -1,4 +1,4 @@
-module EasyScript
+module AtomicScript
   concern :PageTitleMod do
     def to_title_html
       # h.instance_variable_set(:@page_title, script_name)

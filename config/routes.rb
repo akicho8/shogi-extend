@@ -158,6 +158,8 @@ Rails.application.routes.draw do
 
     resources :scripts, path: "script", only: [:show, :update]
 
+    resources :example_scripts, path: "example-script", only: [:show, :update]
+
     root "homes#show"
 
     ################################################################################ fastentry

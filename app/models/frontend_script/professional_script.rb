@@ -1,5 +1,5 @@
 module FrontendScript
-  class ProfessionalScript < Base
+  class ProfessionalScript < ::FrontendScript::Base
     self.script_name = "指導対局の棋譜"
 
     class ProfessionalInfo

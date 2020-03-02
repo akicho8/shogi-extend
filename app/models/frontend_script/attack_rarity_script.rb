@@ -1,5 +1,5 @@
 module FrontendScript
-  class AttackRarityScript < Base
+  class AttackRarityScript < ::FrontendScript::Base
     self.script_name = "戦法レアリティ"
 
     def script_body

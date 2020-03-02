@@ -1,19 +1,10 @@
-module EasyScript
+module AtomicScript
   concern :ScriptGroup do
     # 保持しているスクリプトクラスたちを返す
     # [Frontend::FooScript, Frontend::BarScript, ...]
     def bundle_scripts
       @bundle_scripts ||= keys.collect(&method(:find))
     end
-
-    # def cloud_links(h)
-    #   h.content_tag(:ul) do
-    #     bundle_scripts.collect {|e|
-    #       active = (h.params[:id].to_s == e.key.to_s)
-    #       h.content_tag(:li, h.link_to(e.script_name, h.polymorphic_path([:admin, :backend_script], :id => e.key)), :class => active ? "is-active" : nil)
-    #     }.join.html_safe
-    #   end
-    # end
 
     # キーからクラスへの変換
     # find("foo-bar") => "Frontend::FooBarScript"

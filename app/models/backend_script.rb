@@ -1,4 +1,4 @@
 module BackendScript
-  extend EasyScript::ScriptGroup
-  extend EasyScript::ScriptGroupRender
+  extend AtomicScript::ScriptGroup
+  extend AtomicScript::ScriptGroupRender
 end

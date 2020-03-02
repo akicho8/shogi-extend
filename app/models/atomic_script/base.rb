@@ -21,13 +21,13 @@
 #     script_link_path(:id => :foo)
 #   end
 #
-module EasyScript
+module AtomicScript
   class Base
     include Core
     include PageTitleMod
     include PostMod
     include SupportMod
     include LinkMod
-    include DevelopmentOnlyMod
+    include VisibilityHiddenMod
   end
 end

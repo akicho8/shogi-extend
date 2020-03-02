@@ -1,5 +1,5 @@
 module BackendScript
-  class Base < EasyScript::Base
+  class Base < ::AtomicScript::Base
     class_attribute :category
     self.category = "その他"
 

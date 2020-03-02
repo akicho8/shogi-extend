@@ -1,5 +1,5 @@
 module BackendScript
-  class ExampleArPaggingScript < Base
+  class ExampleArPaggingScript < ::BackendScript::Base
     self.category = "スクリプト例"
     self.script_name = "ARページングのテスト"
 

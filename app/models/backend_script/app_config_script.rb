@@ -1,5 +1,5 @@
 module BackendScript
-  class AppConfigScript < Base
+  class AppConfigScript < ::BackendScript::Base
     self.category = "その他"
     self.script_name = "AppConfig"
 

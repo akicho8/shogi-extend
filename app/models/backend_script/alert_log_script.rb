@@ -1,5 +1,5 @@
 module BackendScript
-  class AlertLogScript < Base
+  class AlertLogScript < ::BackendScript::Base
     self.category = "その他"
     self.script_name = "アラートログ"
 

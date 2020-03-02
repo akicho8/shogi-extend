@@ -21,7 +21,7 @@
 #     script_link_path(:id => :foo)
 #   end
 #
-module EasyScript
+module AtomicScript
   class Response < Hash
     def to_result_label
       if time_label && bm_ms_str

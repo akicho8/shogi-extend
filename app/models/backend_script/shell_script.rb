@@ -1,5 +1,5 @@
 module BackendScript
-  class ShellScript < Base
+  class ShellScript < ::BackendScript::Base
     self.category = "コンソール"
     self.script_name = "シェル実行"
 

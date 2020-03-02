@@ -1,5 +1,5 @@
 module BackendScript
-  class SqlScript < Base
+  class SqlScript < ::BackendScript::Base
     self.category = "コンソール"
     self.script_name = "SQL"
 

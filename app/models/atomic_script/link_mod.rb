@@ -1,4 +1,4 @@
-module EasyScript
+module AtomicScript
   concern :LinkMod do
     included do
       # URLを生成するときのプレフィクス

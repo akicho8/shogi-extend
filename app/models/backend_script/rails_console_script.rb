@@ -1,5 +1,5 @@
 module BackendScript
-  class RailsConsoleScript < Base
+  class RailsConsoleScript < ::BackendScript::Base
     self.category = "コンソール"
     self.script_name = "コード実行"
 

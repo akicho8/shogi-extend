@@ -21,7 +21,7 @@
 #     script_link_path(:id => :foo)
 #   end
 #
-module EasyScript
+module AtomicScript
   concern :Core do
     included do
       # 人間向けスクリプト名
@@ -95,10 +95,10 @@ module EasyScript
     end
 
     def response_render(resp)
-      # リダイレクトできた場合POSTの場合( as_rails_cache_store_key t付きで飛んでくる)は前回の実行結果を読み出している
-      # as_rails_cache_store_key なしで来たときは実行している
+      # リダイレクトできた場合POSTの場合( _store_key t付きで飛んでくる)は前回の実行結果を読み出している
+      # _store_key なしで来たときは実行している
       if resp
-        if v = resp[:alert_message]
+        if v = resp[:error_message]
           h.flash.now[:alert] = v
         end
       end
@@ -108,13 +108,13 @@ module EasyScript
       out << to_form_html
 
       if resp
-        if resp[:result_rows].present?
+        if resp[:rows].present?
           # グラフ用のフォーマットでないなら普通に表示
-          if resp[:result_rows].kind_of?(String)
-            out << resp[:result_rows].html_safe
+          if resp[:rows].kind_of?(String)
+            out << resp[:rows].html_safe
           else
             # 得体の知れないオブジェクトは to_html が無い場合がある。たとえば true では to_html が使えない。
-            out << html_format(resp[:result_rows]) # , :table_class => resp[:table_class])
+            out << html_format(resp[:rows]) # , :table_class => resp[:table_class])
             out << basic_paginate(resp[:result_object])
           end
           # end
@@ -131,6 +131,8 @@ module EasyScript
 
       out
     end
+
+    private
 
     def basic_paginate(s, **options)
       out = "".html_safe
@@ -157,7 +159,7 @@ module EasyScript
           out << FormBox::InputsBuilder::Default.inputs_render(form_parts)
           out << h.tag.div(:class => "field is-grouped") do
             h.tag.div(:class => "control") do
-              h.submit_tag(buttun_label, :class => form_submit_button_class, :name => "_submit")
+              h.submit_tag(buttun_name, :class => form_submit_button_class, :name => "_submit")
             end
           end
           out.join.html_safe
@@ -170,84 +172,6 @@ module EasyScript
       form_parts.present?
     end
 
-    private
-
-    #
-    # 実行結果を可能な限り配列の配列に変換する
-    #
-    #   any_object_as_rows(1)           #=> 1
-    #   any_object_as_rows([{:a => 1]}) #=> [[:a],[1]]
-    #
-    def any_object_as_rows(object)
-      object ||= []
-      case
-      when object.kind_of?(ApplicationRecord) # AR.find(1)
-        # Article.first などの結果
-        object.attributes
-      when object.kind_of?(ActiveRecord::Relation) # && object.first.kind_of?(ApplicationRecord)
-        # Article.page(params[:page]).per(params[:per_page]) で取得した結果
-        object.to_a.collect(&:attributes) # ここで SQL を生成するので db_anchor の外になってしまう場合がある
-      when object.kind_of?(Array) && object.all?{|e|e.kind_of?(ApplicationRecord)}
-        # db_anchor のなかで仕方なく to_a したときの戻り値を拾う
-        object.collect(&:attributes)
-      when object.kind_of?(Proc) # AR.find(1)
-        # 大事なコードをバックグラウンドで実行して最後にエラーになるのは厭なので例外にはしない
-        object.inspect
-      else
-        # そのまま
-        object
-      end
-    end
-
-    def to_title_html
-    end
-
-    # オーバーライド微推奨
-    # これをオーバーライドすれば run_log や alert_message などをも書き換えられる
-
-    # resp = {}
-    # begin
-    #   result_object = nil
-    #   run_log     = nil
-    #   bm_ms = Benchmark.ms do
-    #     run_log = LogCapture.log_capture_sw(log_capture?) do
-    #       result_object = script_body || ""  # ここで実行している
-    #     end
-    #   end
-    #   resp[:result_object] = result_object
-    #   resp[:result_rows] = any_object_as_rows(result_object)
-    #   resp[:run_log] = run_log
-    #   resp[:time] = Time.current
-    #   resp[:bm_ms] = bm_ms
-    # rescue Exception => error
-    #   resp[:alert_message] = alert_message_build(error)
-    #   resp[:error_backtrace] = error.backtrace.join("<br/>").html_safe
-    #   alert_log_track(error)
-    #   if Rails.env.test?
-    #     pp error
-    #     pp error.backtrace
-    #   end
-    # ensure
-    #   unless Rails.env.test?
-    #     unless error
-    #       AlertLog.track("#{alert_log_subject}[終了] #{'%.2f' % (resp[:bm_ms].to_f / 1000)} s", :body => params.pretty_inspect)
-    #     end
-    #   end
-    # end
-    # resp.merge(other_response_params)
-
-    # オーバーライド微推奨
-    # これをオーバーライドすれば run_log や alert_message などをも書き換えられる
-    def script_body_run
-      result_object = script_body || ""  # ここで実行している
-      resp = {}
-      resp[:result_rows] = any_object_as_rows(result_object)
-      resp
-    end
-    # def script_body_run
-    #   {:script_retval => script_body}
-    # end
-
     # オーバーライド
     def form_parts
       []
@@ -255,6 +179,39 @@ module EasyScript
 
     # オーバーライド
     def script_body
+    end
+
+    def script_body_run
+      resp = {}
+      begin
+        resp[:rows] = any_value_as_rows(script_body)
+      rescue Exception => error
+        resp[:error_message] = "#{error.class.name}: #{error.message}"
+        resp[:error_backtrace] = error.backtrace.join("<br/>").html_safe
+      end
+      resp
+    end
+
+    # 実行結果を可能な限り配列の配列に変換する
+    #
+    #   any_value_as_rows(1)           #=> 1
+    #   any_value_as_rows([{:a => 1]}) #=> [[:a],[1]]
+    #
+    def any_value_as_rows(value)
+      value ||= []
+      case
+      when value.kind_of?(ApplicationRecord) # Article.first
+        value.attributes
+      when value.kind_of?(ActiveRecord::Relation) # Article.all
+        value.to_a.collect(&:attributes)
+      when value.kind_of?(Array) && value.all? { |e| e.kind_of?(ApplicationRecord) } # Article.all.to_a
+        value.collect(&:attributes)
+      else
+        value
+      end
+    end
+
+    def to_title_html
     end
 
     def multipart?
@@ -265,29 +222,15 @@ module EasyScript
       :get
     end
 
-    def cached_result
-      if redirected?
-        Rails.cache.read(as_rails_cache_store_key)
-      end
-    end
-
-    def redirected?
-      as_rails_cache_store_key.present?
-    end
-
-    def as_rails_cache_store_key
-      @params[:as_rails_cache_store_key]
-    end
-
     def submit_path
-      @params[:_submit_path] || [*url_prefix, :id => key]
+      [*url_prefix, id: key]
     end
 
-    def buttun_label
-      get_buttun_label
+    def buttun_name
+      get_buttun_name
     end
 
-    def get_buttun_label
+    def get_buttun_name
       "実行"
     end
 
@@ -299,11 +242,8 @@ module EasyScript
       "is-primary"
     end
 
-    # script_body の中で使うために用意したメソッド
-    concerning :Helper do
     def submitted?
       @params[:_submit].present?
-    end
     end
   end
 end

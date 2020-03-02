@@ -20,7 +20,7 @@ nav.navbar.is-primary.is_screen_only
           span.navbar-link
             | スクリプト
           .navbar-dropdown.is-boxed
-            = FrontendScript.render_html(self, "scripts")
+            = FrontendScript.to_navbar_items(self, controller: "scripts")
 
       .navbar-item.has-dropdown.is-hoverable
         span.navbar-link
@@ -41,9 +41,15 @@ nav.navbar.is-primary.is_screen_only
         = link_to("管理画面", [:admin, :root], class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
       - if session[:admin_user]
         .navbar-item.has-dropdown.is-hoverable
-          = link_to("管理スクリプト", [:admin, :script, id: :index], class: "navbar-link")
+          = link_to("管理", [:admin, :script, id: :index], class: "navbar-link")
           .navbar-dropdown.is-boxed
-            = BackendScript.render_html(self, "admin/scripts")
+            = BackendScript.to_navbar_items(self, controller: "admin/scripts")
+      - if Rails.env.development?
+        .navbar-item.has-dropdown.is-hoverable
+          span.navbar-link
+            | テスト
+          .navbar-dropdown.is-boxed
+            = AtomicScript::ExampleScript.to_navbar_items(self, controller: "admin/example_scripts")
 
     #header_app.navbar-end(v-cloak)
       = render partial: "rails_env_links"

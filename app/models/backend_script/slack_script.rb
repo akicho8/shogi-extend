@@ -1,5 +1,5 @@
 module BackendScript
-  class SlackScript < Base
+  class SlackScript < ::BackendScript::Base
     self.category = "ツール"
     self.script_name = "Slack通知"
 

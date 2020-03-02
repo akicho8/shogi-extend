@@ -1,5 +1,5 @@
 module BackendScript
-  class IndexScript < Base
+  class IndexScript < ::BackendScript::Base
     self.category = "その他"
     self.script_name = "スクリプト一覧"
 

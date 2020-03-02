@@ -1,5 +1,5 @@
 module FrontendScript
-  class Base < EasyScript::Base
+  class Base < AtomicScript::Base
     self.url_prefix = [:script]
   end
 end

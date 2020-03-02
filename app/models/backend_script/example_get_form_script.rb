@@ -1,6 +1,6 @@
 # http://localhost:3000/admin/scripts/example_get_form_page
 module BackendScript
-  class ExampleGetFormScript < Base
+  class ExampleGetFormScript < ::BackendScript::Base
     self.category = "スクリプト例"
     self.script_name = "GETフォーム"
 

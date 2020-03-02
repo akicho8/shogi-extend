@@ -1,5 +1,5 @@
 module BackendScript
-  class ArCountsScript < Base
+  class ArCountsScript < ::BackendScript::Base
     self.category = "その他"
     self.script_name = "データ数"
 

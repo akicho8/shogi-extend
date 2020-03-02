@@ -3,7 +3,7 @@
 #
 # http://localhost:3000/admin/scripts/example_form_box_script
 module BackendScript
-  class ExampleFormBoxScript < Base
+  class ExampleFormBoxScript < ::BackendScript::Base
     self.category = "スクリプト例"
     self.script_name = "簡単フォーム例"
 
