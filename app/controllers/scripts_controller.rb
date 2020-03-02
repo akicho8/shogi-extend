@@ -1,4 +1,4 @@
-class FrontendScriptsController < ApplicationController
+class ScriptsController < ApplicationController
   include ScriptsControllerMod
 
   def script_group

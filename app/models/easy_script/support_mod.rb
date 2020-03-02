@@ -94,7 +94,7 @@ module EasyScript
           {
             :name     => (options[:name] || script_name),
             :url      => script_link_path(params),
-            # :if_match => {:controller => Admin::FrontendScriptsController, :id => key},
+            # :if_match => {:controller => Admin::ScriptsController, :id => key},
           }
         end
       end

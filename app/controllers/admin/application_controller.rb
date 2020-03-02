@@ -23,7 +23,7 @@ module Admin
 
     def admin_password
       if Rails.env.test?
-        return "password"
+        return "password_for_test"
       end
 
       Rails.application.credentials[:admin_password]

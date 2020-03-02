@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FrontendScriptsController, type: :controller do
+RSpec.describe ScriptsController, type: :controller do
   describe "すべてのスクリプト" do
     FrontendScript.bundle_scripts.each do |e|
       it e.script_name do

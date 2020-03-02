@@ -146,9 +146,9 @@ Rails.application.routes.draw do
     "https://staging.shogi-extend.com/"
   end
 
-  ################################################################################ frontend_scripts
+  ################################################################################ scripts
 
-  resources :frontend_scripts, :path => "script", :only => [:show, :update]
+  resources :scripts, :path => "script", :only => [:show, :update]
 
   ################################################################################ admin
 
@@ -156,8 +156,7 @@ Rails.application.routes.draw do
     resource :session, only: :destroy
     resource :home, only: :show
 
-    resources :backend_scripts, path: "script", only: [:show, :update]
-    get "script" => "backend_scripts#show", id: "index"
+    resources :scripts, path: "script", only: [:show, :update]
 
     root "homes#show"
   end

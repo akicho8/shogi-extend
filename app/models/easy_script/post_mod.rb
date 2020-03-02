@@ -10,7 +10,7 @@ module EasyScript
     def create_or_update_action
       # code = run_and_result_cache_write # ここで実行している
 
-      _ret = script_body_run
+      retv = script_body_run
 
       # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
       if c.performed?
@@ -19,8 +19,8 @@ module EasyScript
 
       if true
         # エラーだったらリダイレクトせずに描画する
-        if _ret[:alert_message]
-          c.render :text => response_render(Response[_ret]), :layout => true
+        if retv[:alert_message]
+          c.render :text => response_render(Response[retv]), :layout => true
           return
         end
       end
@@ -32,7 +32,7 @@ module EasyScript
       # undefined class/module とか言われてアプリの起動ができなくなってしまう
       # http://xibbar.hatenablog.com/entry/20130221/1361556846
       #
-      Rails.cache.write(as_rails_cache_store_key, _ret, :expires_in => 3.minutes)
+      Rails.cache.write(as_rails_cache_store_key, retv, :expires_in => 3.minutes)
 
       redirect_params = clean_params
       redirect_params[:as_rails_cache_store_key] = as_rails_cache_store_key
@@ -40,7 +40,7 @@ module EasyScript
 
       if false
         # エラーだったら同じとこにリダイレクトする
-        if _ret[:alert_message]
+        if retv[:alert_message]
           c.redirect_to [*url_prefix, redirect_params]
           return
         end
@@ -53,7 +53,7 @@ module EasyScript
     end
 
     # def create_or_update_action
-    #   _ret = script_body_run
+    #   retv = script_body_run
     #
     #   # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
     #   if c.performed?
@@ -67,7 +67,7 @@ module EasyScript
     #   # http://xibbar.hatenablog.com/entry/20130221/1361556846
     #   #
     #   as_rails_cache_store_key = SecureRandom.hex
-    #   Rails.cache.write(as_rails_cache_store_key, _ret, :expires_in => 3.minutes)
+    #   Rails.cache.write(as_rails_cache_store_key, retv, :expires_in => 3.minutes)
     #
     #   c.redirect_to post_redirect_path(clean_params.merge(:as_rails_cache_store_key => as_rails_cache_store_key))
     # end

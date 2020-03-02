@@ -7,7 +7,7 @@ RSpec.describe Admin::HomesController, type: :controller do
   end
 
   it "show" do
-    request.env["HTTP_AUTHORIZATION"] = ActionController::HttpAuthentication::Basic.encode_credentials("xxx", "password")
+    request.env["HTTP_AUTHORIZATION"] = ActionController::HttpAuthentication::Basic.encode_credentials("xxx", "password_for_test")
     get :show
     expect(response).to have_http_status(:ok)
   end
