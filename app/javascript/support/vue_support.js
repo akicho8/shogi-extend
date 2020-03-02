@@ -27,11 +27,15 @@ export default {
     },
 
     // #以降を除いた現在のパス
+    // http://localhost:3000/xy?abc=1#1 ↓
+    // http://localhost:3000/xy?abc=1
     location_url_without_hash() {
       return window.location.href.replace(window.location.hash, "")
     },
 
     // ?foo=1#xxx を除いた現在のパス
+    // http://localhost:3000/xy?abc=1 ↓
+    // http://localhost:3000/xy
     location_url_without_search_and_hash() {
       return this.location_url_without_hash().replace(window.location.search, "")
     },

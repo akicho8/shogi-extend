@@ -85,7 +85,7 @@
                 | {{summary}}
               .tweet_button_container
                 .buttons.is-centered
-                  a.button.is-info.is-rounded(:href="twitter_url" target="_self")
+                  a.button.is-info.is-rounded(:href="twitter_url")
                     | &nbsp;
                     b-icon(icon="twitter" size="is-small")
                     | &nbsp;
@@ -771,10 +771,9 @@ export default {
 
     tweet_body() {
       let out = ""
-      out += "#符号の鬼\n"
       out += this.summary
-      // out += "\n"
-      out += window.location.href.replace(window.location.hash, "") + "?" + this.magic_number()
+      out += "#符号の鬼\n"
+      out += this.location_url_without_search_and_hash() + "?" + this.magic_number()
       return out
     },
 
