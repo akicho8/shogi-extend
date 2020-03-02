@@ -51,7 +51,7 @@ module ApplicationHelper
       image: "apple-touch-icon.png",
     }.merge(options)
 
-    twitter_prefix_set = [:site, :creator].to_set
+    twitter_prefix_set = [:card, :site, :creator].to_set
 
     options.collect { |key, val|
       if val.present?
