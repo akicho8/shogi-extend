@@ -183,5 +183,3 @@ gem "useragent"
 
 # 休日判定
 gem "holiday_jp"
-
-gem "redis-namespace"

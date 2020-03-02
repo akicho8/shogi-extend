@@ -341,8 +341,6 @@ GEM
       ffi (~> 1.0)
     redcarpet (3.5.0)
     redis (3.3.5)
-    redis-namespace (1.7.0)
-      redis (>= 3.0.4)
     regexp_parser (1.6.0)
     responders (3.0.0)
       actionpack (>= 5.0)
@@ -531,7 +529,6 @@ DEPENDENCIES
   ransack
   redcarpet
   redis (~> 3.0)
-  redis-namespace
   rmagick
   rspec-power_assert
   rspec-rails
