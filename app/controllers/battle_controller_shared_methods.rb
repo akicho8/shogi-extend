@@ -446,7 +446,7 @@ module BattleControllerSharedMethods
       # 手数の指定があればリアルタイムに作成
       if current_force_turn && params[:dynamic]
         options = current_record.param_as_to_png_options(params.to_unsafe_h)
-        png = Rails.cache.fetch(options, expires_in: (Rails.env.production? || Rails.env.staging?) ? 1.days : 0) do
+        png = Rails.cache.fetch(options, expires_in: 1.days) do
           parser = Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn)
           parser.to_png(options)
         end

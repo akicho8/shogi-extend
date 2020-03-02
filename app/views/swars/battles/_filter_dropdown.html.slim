@@ -1,7 +1,7 @@
 - if AppConfig[:swars_battles_index_filter_options_show]
   .columns
     .column
-      - cache([controller_path, :filter_block], expires_in: (Rails.env.production? || Rails.env.staging?) ? 1.day : 0) do
+      - cache([controller_path, :filter_block], expires_in: 1.day) do
         - args = params.to_unsafe_h.merge(page: nil)
         b-dropdown(:hoverable="false")
           button.button.is-small(slot="trigger")
