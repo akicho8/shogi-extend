@@ -21,8 +21,8 @@ module FrontendScript
           ratio = count.fdiv(total) * 100      # 割合
 
           row = {}
-          row["名前"] = name
-          row["レア度"] = "⭐" * rarity(ratio)
+          row["名前"] = h.tag.small(name)
+          row["レア度"] = h.tag.small("⭐" * rarity(ratio))
           row["割合"] = "%.3f %%" % ratio
           row["偏差値"] = "%.3f" % dv
 
@@ -67,7 +67,7 @@ module FrontendScript
 
     # 偏差値
     def deviation_value(score, avg, sd)
-      (((score - avg) / sd) * 10 + 50)
+      ((score - avg) / sd) * 10 + 50
     end
   end
 end
