@@ -5,9 +5,9 @@
       .has-text-centered
         .buttons.is-centered
           template(v-if="mode === 'stop' || mode === 'goal'")
-            button.button.is-primary(@click="standby_handle") START
+            button.button.is-primary(@click="start_handle") START
           template(v-if="mode === 'running' || mode === 'standby'")
-            b-button(@click="retry_handle" type="is-danger") RESTART
+            b-button(@click="restart_handle" type="is-danger") RESTART
             b-button(@click="stop_handle") やめる
 
           template(v-if="mode === 'stop' || mode === 'goal'")
@@ -149,7 +149,7 @@
       .columns.is-centered
         .column.is-half
           canvas#chart_canvas(ref="chart_canvas")
-          template(v-if="$root.$options.count_all_gteq >= 2")
+          template(v-if="$root.$options.count_all_gteq > 1")
             .has-text-centered
               | {{$root.$options.count_all_gteq}}回以上やるとチャートに登場します
 
@@ -253,7 +253,7 @@ export default {
   created() {
     this.init_other_variables()
     this.timer_setup()
-    document.addEventListener("keydown", this.key_handle, false)
+    document.addEventListener("keydown", this.keydown_handle, false)
   },
 
   // mounted() {
@@ -466,7 +466,7 @@ export default {
       this.xy_record = null
     },
 
-    standby_handle() {
+    start_handle() {
       this.mode = "standby"
       this.count_down_counter = 0
       this.init_other_variables()
@@ -504,9 +504,9 @@ export default {
       this.countdown_interval_stop()
     },
 
-    retry_handle() {
+    restart_handle() {
       this.stop_handle()
-      this.standby_handle()
+      this.start_handle()
     },
 
     goal_handle() {
@@ -597,7 +597,7 @@ export default {
       }
     },
 
-    key_handle(e) {
+    keydown_handle(e) {
       if (this.mode != "running") {
         return
       }
@@ -747,16 +747,16 @@ export default {
 
     $_ls_hash() {
       return {
-        xy_scope_key: this.xy_scope_key,
-        xy_rule_key: this.xy_rule_key,
+        xy_scope_key:      this.xy_scope_key,
+        xy_rule_key:       this.xy_rule_key,
         xy_chart_rule_key: this.xy_chart_rule_key,
-        entry_name: this.entry_name,
-        current_pages: this.current_pages,
-        bg_mode: this.bg_mode,
+        entry_name:        this.entry_name,
+        current_pages:     this.current_pages,
+        bg_mode:           this.bg_mode,
 
-        sp_theme: this.sp_theme,
-        sp_bg_variant: this.sp_bg_variant,
-        sp_size: this.sp_size,
+        sp_theme:         this.sp_theme,
+        sp_bg_variant:    this.sp_bg_variant,
+        sp_size:          this.sp_size,
         sp_piece_variant: this.sp_piece_variant,
       }
     },
@@ -860,7 +860,6 @@ export default {
 </script>
 
 <style lang="sass">
-// FIXME: ↓buefyが二重に読み込まれてしまう
 @import "./stylesheets/bulma_init.scss"
 
 .xy_master
