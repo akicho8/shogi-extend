@@ -186,7 +186,8 @@ gem "useragent"
 gem "holiday_jp"
 
 # Rails Cache
-gem "hiredis"
+# たいして速くないのとCのビルドしたのがロードされないので使わない
+# gem "hiredis"
 
 # Redis用の管理画面
 gem "fastentry"
