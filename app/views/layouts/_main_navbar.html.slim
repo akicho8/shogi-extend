@@ -20,7 +20,7 @@ nav.navbar.is-primary.is_screen_only
           span.navbar-link
             | スクリプト
           .navbar-dropdown.is-boxed
-            = FrontScript.render_html(self, "front_scripts")
+            = FrontendScript.render_html(self, "frontend_scripts")
 
       .navbar-item.has-dropdown.is-hoverable
         span.navbar-link
@@ -38,10 +38,10 @@ nav.navbar.is-primary.is_screen_only
             = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
 
       - if Rails.env.development?
-        = link_to("管理画面", :admin, class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
+        = link_to("管理画面", [:admin, :root], class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
       - if session[:admin_user]
         .navbar-item.has-dropdown.is-hoverable
-          = link_to("管理スクリプト", BackendScript::IndexScript.script_link_path, class: "navbar-link")
+          = link_to("管理スクリプト", [:admin, :script], class: "navbar-link")
           .navbar-dropdown.is-boxed
             = BackendScript.render_html(self, "admin/backend_scripts")
 

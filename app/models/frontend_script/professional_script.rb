@@ -1,4 +1,4 @@
-module FrontScript
+module FrontendScript
   class ProfessionalScript < Base
     self.script_name = "指導対局の棋譜"
 

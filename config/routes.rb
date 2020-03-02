@@ -146,42 +146,19 @@ Rails.application.routes.draw do
     "https://staging.shogi-extend.com/"
   end
 
-  ################################################################################ front_scripts
+  ################################################################################ frontend_scripts
 
-  resources :front_scripts, :path => "script", :only => [:show, :update]
+  resources :frontend_scripts, :path => "script", :only => [:show, :update]
 
   ################################################################################ admin
 
-  # namespace :admin do
-  #   resources :users
-  #   root "users#index"
-  # end
-
-  get "admin" => "admin/homes#show", :as => :admin
   namespace :admin do
     resource :session, only: :destroy
     resource :home, only: :show
-    # resource :system, :only => :show
 
-    # get "/login" => "sessions#new"
+    resources :backend_scripts, path: "script", only: [:show, :update]
+    get "script" => "backend_scripts#show", id: "index"
 
-    # resources :users do
-    #   get "delete_confirm", :on => :member
-    #   delete "delete_all", :on => :collection
-    # end
-
-    # resources :scripticles, :concerns => :admin_shared_routes do
-    #   member do
-    #     get :readonly_interactive_run # 読み込み実行
-    #     put :writable_interactive_run # 更新実行
-    #     get :download                 # CSVダウンロード
-    #     post :csv_mail_deliver        # CSVメール送信
-    #   end
-    # end
-
-    resources :backend_scripts, :path => "script", :only => [:show, :update]
-    # get "scripts" => redirect("/admin/scripts/index")
-
-    root :to => "homes#show"
+    root "homes#show"
   end
 end

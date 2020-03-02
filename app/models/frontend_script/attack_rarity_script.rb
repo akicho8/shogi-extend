@@ -1,4 +1,4 @@
-module FrontScript
+module FrontendScript
   class AttackRarityScript < Base
     self.script_name = "戦法レアリティ"
 

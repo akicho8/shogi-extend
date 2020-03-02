@@ -7,5 +7,5 @@
 
 .buttons.are-small
   = link_to("ログアウト", [:admin, :session], method: :delete, :class => "button") if admin_user
-  = link_to("BASIC認証強制失敗", [:admin, request_http_basic_authentication: 1], :class => "button" )
-  = link_to("スクリプト", [:admin, :backend_script, id: "index"], :class => "button")
+  = link_to("BASIC認証強制失敗", [:admin, :root, request_http_basic_authentication: 1], :class => "button" )
+  = link_to("スクリプト", [:admin, :script], :class => "button")

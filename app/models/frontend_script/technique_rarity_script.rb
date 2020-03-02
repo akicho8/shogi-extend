@@ -1,4 +1,4 @@
-module FrontScript
+module FrontendScript
   class TechniqueRarityScript < AttackRarityScript
     self.script_name = "手筋レアリティ"
     self.development_only_show_on_menu = true
