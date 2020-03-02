@@ -159,5 +159,18 @@ Rails.application.routes.draw do
     resources :scripts, path: "script", only: [:show, :update]
 
     root "homes#show"
+
+    ################################################################################ fastentry
+
+    if true
+      require "fastentry/engine"
+
+      if Rails.env.production? || Rails.env.staging?
+        Fastentry::ApplicationController.http_basic_authenticate_with name: "admin", password: Rails.application.credentials[:admin_password]
+      end
+
+      # http://localhost:3000/admin/rails-cache
+      mount Fastentry::Engine, at: "rails-cache"
+    end
   end
 end

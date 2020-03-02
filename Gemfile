@@ -188,3 +188,6 @@ gem "holiday_jp"
 # Rails Cache
 gem "hiredis"
 
+# Redis用の管理画面
+gem "fastentry"
+

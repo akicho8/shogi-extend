@@ -8,7 +8,7 @@ module Admin
     # スキップできるようにメソッド化
     def admin_login_required
       authenticate_or_request_with_http_basic do |name, password|
-        retv = name.present? && password == admin_password
+        retv = name.present? && password == Rails.application.credentials[:admin_password]
         Rails.cache.fetch(__method__, :expires_in => 30.minutes) do
           slack_message(key: "管理画面ログイン", body: [retv, name, password].inspect)
           nil
@@ -19,14 +19,6 @@ module Admin
         end
         retv
       end
-    end
-
-    def admin_password
-      if Rails.env.test?
-        return "password_for_test"
-      end
-
-      Rails.application.credentials[:admin_password]
     end
 
     helper_method :admin_user
