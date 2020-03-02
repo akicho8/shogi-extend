@@ -1,11 +1,15 @@
 module EasyScript
   concern :LinkMod do
     included do
+      # URLを生成するときのプレフィクス
+      class_attribute :url_prefix
+      self.url_prefix = []
+
       delegate :script_link_path, :to => "self.class"
     end
 
     class_methods do
-      def script_link_path(params = {})
+      def script_link_path(**params)
         [*url_prefix, {:id => key}.merge(params)]
       end
     end

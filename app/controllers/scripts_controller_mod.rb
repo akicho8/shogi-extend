@@ -11,11 +11,12 @@ module ScriptsControllerMod
     #   return
     # end
 
+    @page_title ||= @script.script_name
     render :html => @script.render_in_view, layout: true
   end
 
   def update
-    @script.create_or_update_action
+    @script.put_action
   end
 
   def load_object

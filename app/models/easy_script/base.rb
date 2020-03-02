@@ -24,6 +24,7 @@
 module EasyScript
   class Base
     include Core
+    include PageTitleMod
     include PostMod
     include SupportMod
     include LinkMod

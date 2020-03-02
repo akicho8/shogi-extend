@@ -7,7 +7,7 @@ module EasyScript
     end
 
     # POST
-    def create_or_update_action
+    def put_action
       # code = run_and_result_cache_write # ここで実行している
 
       retv = script_body_run
@@ -52,7 +52,7 @@ module EasyScript
       c.redirect_to url
     end
 
-    # def create_or_update_action
+    # def put_action
     #   retv = script_body_run
     #
     #   # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
