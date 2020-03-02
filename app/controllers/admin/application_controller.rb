@@ -7,13 +7,13 @@ module Admin
 
     # スキップできるようにメソッド化
     def admin_login_required
+      session.delete(:admin_user)
       authenticate_or_request_with_http_basic do |name, password|
         retv = name.present? && password == Rails.application.credentials[:admin_password]
         Rails.cache.fetch(__method__, :expires_in => 30.minutes) do
           slack_message(key: "管理画面ログイン", body: [retv, name, password].inspect)
           nil
         end
-        session.delete(:admin_user)
         if retv
           session[:admin_user] ||= name.presence || "(admin_user)"
         end
