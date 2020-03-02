@@ -26,7 +26,8 @@ gem "coffee-rails", "~> 4.2"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.5"
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 3.0" # <-------------------------------------------------------------------------------- 重要(消すなよ)
+# gem "redis", "~> 3.0" # <-------------------------------------------------------------------------------- 重要(消すなよ)
+gem "redis"
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
 
@@ -183,3 +184,7 @@ gem "useragent"
 
 # 休日判定
 gem "holiday_jp"
+
+# Rails Cache
+gem "hiredis"
+

@@ -102,6 +102,9 @@ Rails.application.configure do
   # https://shinkufencer.hateblo.jp/entry/2018/07/25/230537
   Rails.application.routes.default_url_options[:host] = "www.shogi-extend.com"
 
+  # ################################################################################ cache_store
+  config.cache_store = :redis_cache_store, { db: AppConfig.fetch(:redis_db_for_cache) }
+
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
