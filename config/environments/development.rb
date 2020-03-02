@@ -20,7 +20,7 @@ Rails.application.configure do
     if false
       config.cache_store = :memory_store
     else
-      config.cache_store = :redis_cache_store, { db: AppConfig.fetch(:redis_db_for_cache) }
+      config.cache_store = :redis_cache_store, { db: 1 }
     end
 
     config.public_file_server.headers = {

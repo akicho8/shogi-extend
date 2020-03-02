@@ -103,7 +103,7 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:host] = "www.shogi-extend.com"
 
   # ################################################################################ cache_store
-  config.cache_store = :redis_cache_store, { db: AppConfig.fetch(:redis_db_for_cache) }
+  config.cache_store = :redis_cache_store, { db: 1 }
 
   # for AppConfig
   config.to_prepare do
