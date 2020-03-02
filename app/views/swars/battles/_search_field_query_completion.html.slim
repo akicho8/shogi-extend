@@ -6,6 +6,6 @@
     = tag.option(value: e)
 
   - if AppConfig[:swars_tag_search_function]
-    = cache do
+    = cache(expires_in: 1.day) do
       - Bioshogi::TacticInfo.all_elements.each do |e|
         = tag.option(value: "tag:#{e.name}")
