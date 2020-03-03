@@ -1,12 +1,5 @@
 module AtomicScript
   concern :PostMod do
-    included do
-      # POSTでフォームを送信するか？
-      class_attribute :post_method_use_p
-      self.post_method_use_p = false
-    end
-
-    # POST
     def put_action
       resp = script_body_run
       if c.performed?
@@ -28,24 +21,11 @@ module AtomicScript
 
     def to_body_html
       # POSTの場合は結果だけを表示する場合
-      if post_method_use_p
-        v = restore_resp
-        if v
-          v = Response[v]
-        end
-        return v
+      v = restore_resp
+      if v
+        v = Response[v]
       end
-
-      # # これだと submit? してないときに script_body を実行する(危険)
-      # if redirected?
-      #   v = restore_resp
-      #   if v
-      #     v = Response[v]
-      #   end
-      #   return v
-      # end
-
-      super
+      return v
     end
 
     def post_redirect_path(redirect_params)
@@ -56,39 +36,19 @@ module AtomicScript
     end
 
     def form_render?
-      if post_method_use_p
-        true
-      else
-        super
-      end
+      true
     end
 
     def buttun_name
-      if post_method_use_p
-        post_buttun_name
-      else
-        super
-      end
-    end
-
-    def form_submit_button_color
-      if post_method_use_p
-        'is-danger'
-      else
-        super
-      end
-    end
-
-    def post_buttun_name
       "本当に実行する"
     end
 
+    def form_submit_button_color
+      'is-danger'
+    end
+
     def form_action_method
-      if post_method_use_p
-        :put
-      else
-        super
-      end
+      :put
     end
 
     def _store_key

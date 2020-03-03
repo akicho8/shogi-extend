@@ -1,8 +1,9 @@
 module AtomicScript
   module ExampleScript
     class PostFormScript < ::AtomicScript::ExampleScript::Base
+      include AtomicScript::PostMod
+
       self.script_name = "POSTフォーム"
-      self.post_method_use_p = true
 
       def form_parts
         {
@@ -19,4 +20,3 @@ module AtomicScript
     end
   end
 end
-
