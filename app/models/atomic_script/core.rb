@@ -58,45 +58,11 @@ module AtomicScript
       end
     end
 
-    # オーバーライドして PNG に対応する例
-    #
-    #   def show_action
-    #     if request.format.png?
-    #       xfile = Xfile.find(params[:xfile_id])
-    #       if Pathname(xfile.attachment.path).exist?
-    #         path = xfile.attachment.path
-    #       else
-    #         path = xfile.attachment.url
-    #       end
-    #       bin = open(path).read
-    #       image = Magick::Image.from_blob(bin).first
-    #       image.format = "PNG"
-    #       c.send_data(image.to_blob, :type => Mime[:png], :filename => "#{xfile.key}.png")
-    #     end
-    #
-    #     super
-    #   end
-    #
-    # def show_action
-    #   if c.performed?
-    #     return
-    #   end
-    #
-    #   # unless c.performed?
-    #   #   controller.respond_to do |format|
-    #   #     # format.csv { controller.send_data(to_body_html.to_ucsv, :type => Mime[:csv], :disposition => "attachment; filename=#{script_name}.csv") }
-    #   #     format.all
-    #   #   end
-    #   # end
-    # end
-
     def render_in_view
       response_render(to_body_html)
     end
 
     def response_render(resp)
-      # リダイレクトできた場合POSTの場合( _store_key t付きで飛んでくる)は前回の実行結果を読み出している
-      # _store_key なしで来たときは実行している
       if resp
         if v = resp[:error_message]
           h.flash.now[:alert] = v
@@ -109,23 +75,16 @@ module AtomicScript
 
       if resp
         if resp[:rows].present?
-          # グラフ用のフォーマットでないなら普通に表示
           if resp[:rows].kind_of?(String)
             out << resp[:rows].html_safe
           else
-            # 得体の知れないオブジェクトは to_html が無い場合がある。たとえば true では to_html が使えない。
-            out << html_format(resp[:rows]) # , :table_class => resp[:table_class])
-            out << basic_paginate(resp[:result_object])
+            out << html_format(resp[:rows])
+            out << basic_paginate(resp[:object])
           end
-          # end
         end
       end
 
       if Rails.env.development? || Rails.env.test?
-        # out << h.tag(:hr)
-        # if resp
-        #   out << h.tag.div(:class => "box") { resp.to_html(:title => "response") }
-        # end
         out << h.tag.div(:class => "box") { params.to_html(:title => "params") }
       end
 
@@ -184,7 +143,9 @@ module AtomicScript
     def script_body_run
       resp = {}
       begin
-        resp[:rows] = any_value_as_rows(script_body)
+        object = any_value_as_rows(script_body)
+        resp[:object] = object
+        resp[:rows] = any_value_as_rows(object)
       rescue Exception => error
         resp[:error_message] = "#{error.class.name}: #{error.message}"
         resp[:error_backtrace] = error.backtrace.join("<br/>").html_safe

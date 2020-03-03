@@ -9,29 +9,19 @@ module AtomicScript
     # POST
     def put_action
       resp = script_body_run
-
-      # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
       if c.performed?
+        # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
         return
       end
 
-      if true
-        # エラーだったらリダイレクトせずに描画する
-        if resp[:error_message]
-          c.render :text => response_render(Response[resp]), :layout => true
-          return
-        end
+      # エラーだったらリダイレクトせずに描画する
+      if resp[:error_message]
+        c.render :text => response_render(Response[resp]), :layout => true
+        return
       end
 
       Rails.cache.write(_restore_key, resp, expires_in: 1.minutes)
-
-      redirect_params = clean_params
-      redirect_params[:_restore_key] = _store_key
-
-      # id は入っていないがなぜか補完される
-      url = post_redirect_path(redirect_params)
-
-      c.redirect_to url
+      c.redirect_to [*url_prefix, clean_params.merge(_restore_key: _store_key)]
     end
 
     private
@@ -59,7 +49,6 @@ module AtomicScript
     end
 
     def post_redirect_path(redirect_params)
-      [*url_prefix, redirect_params]
     end
 
     def clean_params
@@ -115,6 +104,5 @@ module AtomicScript
     def redirected?
       @params[:_restore_key].present?
     end
-
   end
 end
