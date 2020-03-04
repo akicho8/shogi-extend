@@ -26,8 +26,8 @@ module ShogiWeb
     end
 
     if Rails.env.development? || Rails.env.test?
+      config.action_mailer.default_url_options = {host: "localhost", port: 3000} # update だと nil.update になる
       # https://github.com/rails/rails/issues/32500
-      config.action_mailer.default_url_options.update(host: "localhost", port: 3000)
       Rails.application.routes.default_url_options.update(host: "localhost", port: 3000)
     end
 
