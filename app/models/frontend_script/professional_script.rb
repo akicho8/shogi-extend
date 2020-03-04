@@ -1,6 +1,6 @@
 module FrontendScript
   class ProfessionalScript < ::FrontendScript::Base
-    self.script_name = "指導対局の棋譜"
+    self.script_name = "指導対局"
 
     class ProfessionalInfo
       include ApplicationMemoryRecord
