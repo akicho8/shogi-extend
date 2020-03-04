@@ -2,7 +2,7 @@ load "#{__dir__}/production.rb"
 
 Rails.application.configure do
   config.action_cable.url = "wss://staging.shogi-extend.com:28081"
-  Rails.application.routes.default_url_options[:host] = "staging.shogi-extend.com"
+  Rails.application.routes.default_url_options.update(protocol: "https", host: "staging.shogi-extend.com")
 
   # ################################################################################ cache_store
   config.cache_store = :redis_cache_store, { db: 4 }

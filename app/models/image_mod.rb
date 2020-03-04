@@ -53,7 +53,7 @@ module ImageMod
       turn: "",
     }.merge(params)
 
-    Rails.application.routes.url_helpers.full_url_for([self.class, params])
+    Rails.application.routes.url_helpers.gfull_url_for([self.class, params])
   end
 
   def tweet_show_url(**params)

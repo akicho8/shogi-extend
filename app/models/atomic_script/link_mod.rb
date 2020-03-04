@@ -1,6 +1,9 @@
 module AtomicScript
   concern :LinkMod do
+    # include Rails.application.routes.url_helpers
+
     included do
+
       # URLを生成するときのプレフィクス
       class_attribute :url_prefix
       self.url_prefix = []

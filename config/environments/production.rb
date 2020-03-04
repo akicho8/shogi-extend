@@ -100,7 +100,7 @@ Rails.application.configure do
   # ################################################################################ ActiveStorage
   # ▼Railsと関係ないところでActiveStorageのURLを生成する - コード日進月歩
   # https://shinkufencer.hateblo.jp/entry/2018/07/25/230537
-  Rails.application.routes.default_url_options[:host] = "www.shogi-extend.com"
+  Rails.application.routes.default_url_options.update(protocol: "https", host: "www.shogi-extend.com")
 
   # ################################################################################ cache_store
   config.cache_store = :redis_cache_store, { db: 1 }
