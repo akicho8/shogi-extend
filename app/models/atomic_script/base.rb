@@ -25,9 +25,10 @@ module AtomicScript
   class Base
     include Core
     include PageTitleMod
-    include PostMod
     include SupportMod
     include LinkMod
     include VisibilityHiddenMod
+
+    # include PostMod
   end
 end
