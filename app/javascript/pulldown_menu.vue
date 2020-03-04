@@ -16,14 +16,13 @@
 
     template(v-if="record.modal_on_index_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        template(v-if="turn_offset == null")
-          a(:href="`${record.modal_on_index_url}`")
-            b-icon(icon="open-in-new" size="is-small")
-            span.a_label パーマリンク
-        template(v-else="")
-          a(:href="`${record.modal_on_index_url}&turn=${turn_offset}`")
-            b-icon(icon="open-in-new" size="is-small")
-            span.a_label パーマリンク \#{{turn_offset}}
+        a(:href="permalink_url")
+          b-icon(icon="open-in-new" size="is-small")
+          span.a_label
+            template(v-if="turn_offset != null")
+              | パーマリンク \#{{turn_offset}}
+            template(v-else="")
+              | パーマリンク
 
     //- template(v-if="record.show_path")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
@@ -155,5 +154,16 @@ export default {
 
   methods: {
   },
+
+  computed: {
+    permalink_url() {
+      const url = new URL(this.record.modal_on_index_url)
+      if (this.turn_offset != null) {
+        url.searchParams.set("turn", this.turn_offset)
+      }
+      return url.toString()
+    },
+  },
+
 }
 </script>
