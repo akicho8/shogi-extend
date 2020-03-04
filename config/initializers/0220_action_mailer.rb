@@ -4,11 +4,11 @@ if Rails.env.production? || Rails.env.staging? || Rails.env.development?
 
     case
     when Rails.env.production?
-      config.action_mailer.default_url_options.update(protocol: "https", host: "www.shogi-extend.com")
+      config.action_mailer.default_url_options = { protocol: "https", host: "www.shogi-extend.com" }
     when Rails.env.staging?
-      config.action_mailer.default_url_options.update(protocol: "https", host: "staging.shogi-extend.com")
+      config.action_mailer.default_url_options = { protocol: "https", host: "staging.shogi-extend.com" }
     else
-      config.action_mailer.default_url_options.update(port: 3000, host: host)
+      config.action_mailer.default_url_options = { port: 3000, host: host }
     end
 
     config.action_mailer.show_previews = true
