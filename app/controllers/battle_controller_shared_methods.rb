@@ -238,11 +238,9 @@ module BattleControllerSharedMethods
       if e
         options = {}
 
-        if v = current_force_turn
-          options[:title] = "#{e.title}【#{v}手目】"
-        else
-          options[:title] = e.title
-        end
+        v = current_force_turn || e.og_turn
+        v = [v, e.turn_max].min # turn=9999 とされても turn_max を超えないようにする
+        options[:title] = params[:title].presence || "#{e.title}【#{v}手目】"
 
         if v = current_force_turn
           options[:url] = e.modal_on_index_url(turn: v)
@@ -250,8 +248,13 @@ module BattleControllerSharedMethods
           options[:url] = e.modal_on_index_url
         end
 
-        options[:description] = e.description
-        options[:image] = twitter_staitc_image_url(e)
+        if v = current_force_turn
+          options[:image] = twitter_staitc_image_url(e, turn: v)
+        else
+          options[:image] = twitter_staitc_image_url(e)
+        end
+
+        options[:description] = params[:description].presence || e.description
 
         options
       end
@@ -271,15 +274,16 @@ module BattleControllerSharedMethods
 
         record = s.find_by(key: v) # スコープを無視すること
 
+        # 元々公開しているものは id にアクセスできる
         unless record
-          # 元々公開しているものは id にアクセスできる
           record = s.where(saturn_key: :public).find_by(id: v)
         end
 
         if record
           access_log_create(record)
-          record
         end
+
+        record
       end
     end
 
@@ -361,11 +365,11 @@ module BattleControllerSharedMethods
       options
     end
 
-    def twitter_staitc_image_url(record)
+    def twitter_staitc_image_url(record, **options)
       # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
       # とした場合はリダイレクトするURLになってしまうため使えない
       # 固定URL化する
-      polymorphic_url([ns_prefix, record], format: "png", updated_at: record.updated_at.to_i)
+      polymorphic_url([ns_prefix, record], {format: "png", updated_at: record.updated_at.to_i}.merge(options))
     end
 
     def js_record_for(e)
@@ -444,7 +448,7 @@ module BattleControllerSharedMethods
       disposition = params[:disposition] || :inline
 
       # 手数の指定があればリアルタイムに作成
-      if current_force_turn && params[:dynamic]
+      if current_force_turn
         options = current_record.param_as_to_png_options(params.to_unsafe_h)
         png = Rails.cache.fetch(options, expires_in: 1.days) do
           parser = Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn)

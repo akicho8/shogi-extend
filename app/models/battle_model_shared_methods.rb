@@ -173,7 +173,7 @@ module BattleModelSharedMethods
   end
 
   def og_turn
-    image_turn || start_turn || critical_turn || 9999
+    image_turn || start_turn || critical_turn || turn_max
   end
 
   def battle_decorator(params = {})

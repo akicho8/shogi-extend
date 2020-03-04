@@ -42,14 +42,12 @@ module ApplicationHelper
 
   # twitter は投稿時に指定された URL を見ているだけで og:url や twitter:url を見ていない
   def twitter_card_tag_build(**options)
-    options = {
-      card: "summary_large_image", # summary or summary_large_image
-      site: "@sgkinakomochi",
-      title: AppConfig[:app_name],
-      creator: "@sgkinakomochi",
-      url: request.url,
-      image: "apple-touch-icon.png",
-    }.merge(options)
+    options = options.clone
+
+    # title などは空にすると twitter card がでない
+    twitter_card_default.each do |key, value|
+      options[key] = options[key].presence || value
+    end
 
     twitter_prefix_set = [:card, :site, :creator].to_set
 
@@ -66,5 +64,16 @@ module ApplicationHelper
         tag.meta(name: "#{prefix}:#{key}", content: val)
       end
     }.compact.join.html_safe
+  end
+
+  def twitter_card_default
+    {
+      card: "summary_large_image", # summary or summary_large_image
+      site: "@sgkinakomochi",
+      title: AppConfig[:app_name],
+      creator: "@sgkinakomochi",
+      url: request.url,
+      image: "apple-touch-icon.png",
+    }
   end
 end

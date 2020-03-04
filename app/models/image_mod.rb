@@ -48,6 +48,9 @@ module ImageMod
   def modal_on_index_url(**params)
     params = {
       modal_id: to_param,
+      title: "",
+      description: "",
+      turn: "",
     }.merge(params)
 
     Rails.application.routes.url_helpers.full_url_for([self.class, params])
@@ -56,6 +59,7 @@ module ImageMod
   def tweet_show_url(**params)
     params = {
     }.merge(params)
+
     Rails.application.routes.url_helpers.full_url_for([self, params])
   end
 
@@ -63,7 +67,8 @@ module ImageMod
     out = []
     out << title
     out << description
-    out << (options[:url] || tweet_show_url) # Twitter側の仕様でURLは最後にすることでURLの表示がツイート内容から消える
+    # out << (options[:url] || tweet_show_url) # Twitter側の仕様でURLは最後にすることでURLの表示がツイート内容から消える
+    out << (options[:url] || modal_on_index_url) # Twitter側の仕様でURLは最後にすることでURLの表示がツイート内容から消える
     out.reject(&:blank?).join("\n")
   end
 

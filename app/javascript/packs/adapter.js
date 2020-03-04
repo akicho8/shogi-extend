@@ -102,6 +102,10 @@ window.Adapter = Vue.extend({
       this.record_fetch(() => this.simple_clipboard_copy(this.all_kifs[kifu_type]))
     },
 
+    tweet_handle() {
+      this.record_fetch(() => this.self_window_open(this.record.tweet_window_url))
+    },
+
     validate_handle() {
       this.record_fetch(() => this.$buefy.toast.open({message: `${this.record.turn_max}手`, position: "is-bottom", queue: false, type: "is-success"}))
     },

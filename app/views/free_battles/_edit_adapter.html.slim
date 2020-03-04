@@ -42,6 +42,7 @@ ruby:
 
           kif_copy_button(@click="kifu_copy_handle('kif')")
           sp_modal_button(@click="board_show_handle")
+          b-button.is-info(@click="tweet_handle" icon-left="twitter") ツイート
 
   template(v-if="!bs_error")
 
