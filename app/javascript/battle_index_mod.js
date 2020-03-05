@@ -189,6 +189,7 @@ export default {
         query:            this.query,
         search_scope_key: this.search_scope_key,
         board_show_type:  this.board_show_type,
+        modal_id:         this.$options.modal_record ? this.$options.modal_record.key : null,
         page:             this.page,
         per:              this.per,
         sort_column:      this.sort_column,

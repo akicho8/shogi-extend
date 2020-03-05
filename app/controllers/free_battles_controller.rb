@@ -87,7 +87,13 @@ class FreeBattlesController < ApplicationController
   end
 
   def current_index_scope
-    current_scope
+    @current_index_scope ||= -> {
+      s = current_scope
+      if modal_record
+        s = s.unscoped.where(key: modal_record.key)
+      end
+      s
+    }.call
   end
 
   let :current_record do
