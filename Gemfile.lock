@@ -433,7 +433,7 @@ GEM
       net-ssh (>= 2.8.0)
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
-    table_format (0.0.7)
+    table_format (0.0.8)
       activesupport
     temple (0.8.1)
     thor (0.19.4)
