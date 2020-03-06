@@ -22,7 +22,7 @@ module FrontendScript
 
           row = {}
           row["名前"] = h.tag.small(name)
-          row["レア度"] = h.tag.small("⭐" * rarity(ratio))
+          row["レア度"] = h.tag.span("⭐" * rarity(ratio), :style => "font-size: 50%")
           row["割合"] = "%.3f %%" % ratio
           row["偏差値"] = "%.3f" % dv
 
