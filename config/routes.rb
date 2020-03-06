@@ -122,7 +122,11 @@ Rails.application.routes.draw do
   end
 
   direct :google_search do |query|
-    "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&q=#{query}"
+    "https://www.google.co.jp/search?q=#{query}"
+  end
+
+  direct :google_image_search do |query|
+    "https://www.google.co.jp/search?tbm=isch&q=#{query}"
   end
 
   direct :twitter_search do |query|

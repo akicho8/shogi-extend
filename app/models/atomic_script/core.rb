@@ -75,11 +75,17 @@ module AtomicScript
 
       if resp
         if resp[:rows].present?
-          if resp[:rows].kind_of?(String)
-            out << resp[:rows].html_safe
-          else
-            out << html_format(resp[:rows])
-            out << basic_paginate(resp[:object])
+          out << h.tag.div(:class => "columns") do
+            h.tag.div(:class => "column") do
+              o = "".html_safe
+              if resp[:rows].kind_of?(String)
+                o << resp[:rows].html_safe
+              else
+                o << html_format(resp[:rows])
+                o << basic_paginate(resp[:object])
+              end
+              o
+            end
           end
         end
       end
@@ -113,15 +119,19 @@ module AtomicScript
     def to_form_html
       out = []
       if form_render?
-        out << h.form_with(url: submit_path, method: form_action_method, multipart: multipart?, skip_enforcing_utf8: true) do |;out|
-          out = []
-          out << FormBox::InputsBuilder::Default.inputs_render(form_parts)
-          out << h.tag.div(:class => "field is-grouped") do
-            h.tag.div(:class => "control") do
-              h.submit_tag(buttun_name, :class => form_submit_button_class, :name => "_submit")
+        out << h.tag.div(:class => "columns") do
+          h.tag.div(:class => "column") do
+            out << h.form_with(url: submit_path, method: form_action_method, multipart: multipart?, skip_enforcing_utf8: true) do |;out|
+              out = []
+              out << FormBox::InputsBuilder::Default.inputs_render(form_parts)
+              out << h.tag.div(:class => "field is-grouped") do
+                h.tag.div(:class => "control") do
+                  h.submit_tag(buttun_name, :class => form_submit_button_class, :name => "_submit")
+                end
+              end
+              out.join.html_safe
             end
           end
-          out.join.html_safe
         end
       end
       out.join.html_safe
@@ -141,16 +151,25 @@ module AtomicScript
     end
 
     def script_body_run
-      resp = {}
-      begin
-        object = any_value_as_rows(script_body)
+      if false
+        resp = {}
+        begin
+          object = script_body
+          resp[:object] = object
+          resp[:rows] = any_value_as_rows(object)
+        rescue Exception => error
+          resp[:error_message] = "#{error.class.name}: #{error.message}"
+          resp[:error_backtrace] = error.backtrace.join("<br/>").html_safe
+        end
+        resp
+      else
+        resp = {}
+        object = script_body
         resp[:object] = object
         resp[:rows] = any_value_as_rows(object)
-      rescue Exception => error
-        resp[:error_message] = "#{error.class.name}: #{error.message}"
-        resp[:error_backtrace] = error.backtrace.join("<br/>").html_safe
+        resp
       end
-      resp
+
     end
 
     # 実行結果を可能な限り配列の配列に変換する
@@ -188,10 +207,6 @@ module AtomicScript
     end
 
     def buttun_name
-      get_buttun_name
-    end
-
-    def get_buttun_name
       "実行"
     end
 
