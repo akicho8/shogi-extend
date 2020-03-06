@@ -128,6 +128,7 @@ export default {
           return record.turn_max
         }
 
+        // modal_record の場合は for;
         if ("force_turn" in record) {
           return record.force_turn
         }

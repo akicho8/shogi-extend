@@ -3,6 +3,7 @@ module BattleControllerSharedMethods
 
   include ShogiErrorRescueMod
   include KifShowMod
+  include PngShowMod
   include KentoJsonMod
   include ModalMod
 
@@ -292,15 +293,8 @@ module BattleControllerSharedMethods
       options[:title] = current_record.title
       options[:url] = current_record.modal_on_index_url
       options[:description] = current_record.description
-      options[:image] = twitter_card_image_url(current_record)
+      options[:image] = current_record.twitter_card_image_url(self)
       options
-    end
-
-    def twitter_card_image_url(record, **options)
-      # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
-      # とした場合はリダイレクトするURLになってしまうため使えない
-      # 固定URL化する
-      polymorphic_url([ns_prefix, record], {format: "png", updated_at: record.updated_at.to_i}.merge(options))
     end
 
     def js_record_for(e)
@@ -332,7 +326,7 @@ module BattleControllerSharedMethods
 
         a[:title] = e.title
         a[:description] = e.description
-        a[:twitter_card_image_url] = twitter_card_image_url(e)
+        a[:twitter_card_image_url] = e.twitter_card_image_url(self)
         a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
         a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
         a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ
@@ -371,33 +365,6 @@ module BattleControllerSharedMethods
 
       # 常にSFENをURLパラメータとして生める
       kento_app_url(record.sfen_info.kento_app_query_hash)
-    end
-
-    private
-
-    def png_file_send
-      disposition = params[:disposition] || :inline
-
-      # 手数の指定があればリアルタイムに作成
-      if current_force_turn
-        options = current_record.param_as_to_png_options(params.to_unsafe_h)
-        png = Rails.cache.fetch(options, expires_in: 1.days) do
-          parser = Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: current_force_turn)
-          parser.to_png(options)
-        end
-        send_data png, type: Mime[:png], disposition: disposition, filename: "#{current_record.to_param}-#{current_force_turn}.png"
-        return
-      end
-
-      # 画像がなければ1回だけ作る
-      current_record.image_auto_cerate_onece(params.to_unsafe_h)
-      if AppConfig[:force_convert_for_twitter_image]
-        key = current_record.tweet_image.processed.key
-      else
-        key = current_record.thumbnail_image.key
-      end
-      path = ActiveStorage::Blob.service.path_for(key)
-      send_file path, type: current_record.thumbnail_image.content_type, disposition: disposition, filename: "#{current_record.to_param}.png"
     end
   end
 

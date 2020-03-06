@@ -176,6 +176,62 @@ module BattleModelSharedMethods
     image_turn || start_turn || critical_turn || turn_max
   end
 
+  def adjust_turn(turn)
+    # turn = turn.presence
+    #
+    # if turn
+    #   turn = turn.to_i
+    # end
+
+    turn ||= og_turn
+
+    # 99手までのとき -1 を指定すると99手目にする
+    if turn.negative?
+      turn = turn_max + turn + 1
+    end
+
+    # 99手までのとき 100 を指定すると99手目にする
+    # 99手までのとき -1000 を指定すると0手目にする
+    turn = turn.clamp(0, turn_max)
+
+    # raise self.attributes.inspect
+    #
+    # raise turn_max.inspect
+    # raise turn.inspect
+
+    turn
+  end
+
+  def record_to_twitter_options(h)
+    options = {}
+
+    options[:title] = h.params[:title].presence || "#{title}【#{adjust_turn(h.current_force_turn)}手目】"
+
+    if turn = h.current_force_turn
+      options[:url] = modal_on_index_url(turn: turn)
+    else
+      options[:url] = modal_on_index_url
+    end
+
+    if turn = h.current_force_turn
+      options[:image] = twitter_card_image_url(h, turn: turn)
+    else
+      options[:image] = twitter_card_image_url(h)
+    end
+
+    options[:description] = h.params[:description].presence || description
+
+    options
+  end
+
+  def twitter_card_image_url(h, options = {})
+    # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
+    # とした場合はリダイレクトするURLになってしまうため使えない
+    # 固定URL化する
+    # h.polymorphic_url([h.ns_prefix, self], {format: "png", updated_at: updated_at.to_i}.merge(options))
+    h.polymorphic_url([h.ns_prefix, self], {format: "png"}.merge(options))
+  end
+
   def battle_decorator(params = {})
     raise ArgumentError, "view_context required" unless params[:view_context]
     @battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))
