@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_185500) do
+ActiveRecord::Schema.define(version: 2020_03_07_194400) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_185500) do
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_url", comment: "入力した棋譜URL"
-    t.text "kifu_body", null: false, comment: "棋譜本文"
+    t.text "kifu_body", limit: 16777215, null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "battled_at", null: false, comment: "対局開始日時"

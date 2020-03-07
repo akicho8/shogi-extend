@@ -382,7 +382,7 @@ module Swars
     end
 
     let :exclude_column_names do
-      ["meta_info", "csa_seq"]
+      ["meta_info", "csa_seq", "kifu_body"]
     end
 
     concerning :IndexCustomMethods do
