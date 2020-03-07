@@ -10,7 +10,8 @@
             template(v-if="record.saturn_key === 'private'")
               b-icon.has-text-grey-light(icon="lock" size="is-small")
               | &nbsp;
-            | {{record.title}}
+            span(:style="{visibility: player_info_show_p ? 'visible' : 'hidden'}")
+              | {{record.title}}
 
         shogi_player(
           :run_mode.sync="run_mode"
@@ -27,13 +28,18 @@
           :volume="0.2"
           :setting_button_show="false"
           :flip="record.fliped"
-          :player_info="record.player_info"
+          :player_info="player_info"
           @update:start_turn="real_turn_set"
           ref="sp_modal"
         )
 
-        .sp_modal_branch.has-text-centered
-          b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle") 継盤
+        .sp_modal_switches.has-text-centered
+          // 継盤
+          b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle" size="is-small")
+            b-icon(icon="source-branch" size="is-small")
+          // 名前非表示
+          b-switch(v-model="player_info_show_p" :true-value="false" :false-value="true" size="is-small")
+            b-icon(icon="eye-off" size="is-small")
 
         template(v-if="record.description")
           .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
@@ -73,6 +79,7 @@ export default {
       run_mode: null,                  // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       run_mode: null,                 // b-switch 経由
       turn_offset: null,
+      player_info_show_p: true,      // プレイヤーの名前を表示する？
     }
   },
 
@@ -160,6 +167,12 @@ export default {
     start_turn() {
       return this.start_turn_for(this.record)
     },
+
+    player_info() {
+      if (this.player_info_show_p) {
+        return this.record.player_info
+      }
+    },
   },
 }
 </script>
@@ -181,8 +194,10 @@ export default {
     padding-top: 3em
 
   // 継盤
-  .sp_modal_branch
+  .sp_modal_switches
     margin-top: 0.5rem
+    .switch
+      margin: 0 1rem
 
   // 説明分
   .sp_modal_desc
