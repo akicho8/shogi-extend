@@ -64,7 +64,7 @@ module FrontendScript
 
     def user_infos_fetch
       if html = html_fetch
-        doc = Nokogiri::HTML(html.toutf8)
+        doc = Nokogiri::HTML(html)
         doc.search("tbody tr").collect do |tr|
           {}.tap do |user|
             values = tr.search("td").collect do |e|
@@ -113,7 +113,7 @@ module FrontendScript
     def html_fetch
       Rails.cache.fetch(source_url, :expires_in => 1.hour) do
         begin
-          URI(source_url).read
+          URI(source_url).read.toutf8 # この時点で UTF-8 にしておかないと fastentry が死ぬ
         rescue OpenURI::HTTPError
         end
       end
