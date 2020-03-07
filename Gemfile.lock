@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: ae77f5ba9fd7cf7a74b051ab46668db5aae8796f
+  revision: ce2028aa6b9357730ac2397ca5702b75010a3aea
   specs:
     bioshogi (0.0.1)
       actionview
@@ -260,7 +260,7 @@ GEM
     net-ssh (5.2.0)
     net-telnet (0.2.0)
     nio4r (2.4.0)
-    nokogiri (1.10.8)
+    nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     ntlm-http (0.1.1)
     oauth (0.5.4)
