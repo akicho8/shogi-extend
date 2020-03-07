@@ -18,30 +18,7 @@ module FrontendScript
     end
 
     def script_body
-      Rails.cache.fetch([self.class.name, current_generation], :expires_in => 1.hour) do
-        begin
-          html = URI(source_url).read
-        rescue OpenURI::HTTPError => error
-          return error.message
-        end
-
-        doc = Nokogiri::HTML(html.toutf8)
-        users = doc.search("tbody tr").collect do |tr|
-          values = tr.search("td").collect do |e|
-            e.text.remove(/\p{Space}+/)
-          end
-
-          values = values.drop(2)
-          user = [:name, :parent, :age, :win, :lose].zip(values).to_h
-          user[:ox] = values.join.scan(/[○●]/).join
-
-          [:age, :win, :lose].each do |e|
-            user[e] = user[e].to_i
-          end
-
-          user
-        end
-
+      if users = user_infos_fetch
         users = users.sort_by { |e| -e[:win] }
 
         # ランキング追加
@@ -59,23 +36,65 @@ module FrontendScript
         end
 
         rows = users.collect do |user|
-          row = {}
+          {}.tap do |row|
+            if v = user[:rank]
+              row[""] = v
+            end
 
-          if user.has_key?(:rank)
-            row[""] = user[:rank]
+            name = user[:name]
+            if v = user[:age]
+              name += "(#{v})"
+            end
+            query = ["将棋", user[:name]].join(" ")
+            row["名前"] = h.link_to(name, h.google_image_search_url(query))
+
+            row["勝"]   = user[:win]
+
+            row["勝敗"] = h.tag.span(user[:ox], :class => "line_break_on")
           end
-
-          query = ["将棋", user[:name]].join(" ")
-          row["名前"] = h.link_to("#{user[:name]}(#{user[:age]})", h.google_image_search_url(query))
-          row["勝"]   = user[:win]
-          row["勝敗"] = h.tag.div(user[:ox], :class => "fixed_font")
-          row
         end
 
         [
           rows.to_html,
           h.link_to("本家", source_url, :class => "button is-small"),
         ].join(h.tag.br)
+
+      end
+    end
+
+    def user_infos_fetch
+      if html = html_fetch
+        doc = Nokogiri::HTML(html.toutf8)
+        doc.search("tbody tr").collect do |tr|
+          {}.tap do |user|
+            values = tr.search("td").collect do |e|
+              e.text.remove(/\p{Space}+/)
+            end
+
+            values = values.drop(2)
+
+            # 昔と今でフォーマットが異なる
+            # ・昔 https://www.shogi.or.jp/match/shoreikai/sandan/28/index.html
+            # ・今 https://www.shogi.or.jp/match/shoreikai/sandan/66/index.html
+            if current_generation < 31
+              user.update([:name, :win, :lose].zip(values).to_h)
+            else
+              user.update([:name, :parent, :age, :win, :lose].zip(values).to_h)
+            end
+
+            user[:ox] = values.join.scan(/[○●]/).join
+
+            # # 勝敗のマークから勝数を調べる
+            # user[:win]  = user[:ox].count("○")
+            # user[:lose] = user[:ox].count("●")
+
+            [:age, :win, :lose].each do |e|
+              if v = user[e]
+                user[e] = v.to_i
+              end
+            end
+          end
+        end
       end
     end
 
@@ -88,7 +107,16 @@ module FrontendScript
     end
 
     def current_generation
-      params[:generation].presence || LEAGUE_MATCH.last
+      (params[:generation].presence || LEAGUE_MATCH.last).to_i
+    end
+
+    def html_fetch
+      Rails.cache.fetch(source_url, :expires_in => 1.hour) do
+        begin
+          URI(source_url).read
+        rescue OpenURI::HTTPError
+        end
+      end
     end
   end
 end
