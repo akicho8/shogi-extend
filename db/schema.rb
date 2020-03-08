@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_185500) do
+ActiveRecord::Schema.define(version: 2020_03_08_202300) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -231,8 +231,10 @@ ActiveRecord::Schema.define(version: 2020_03_02_185500) do
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
+    t.index ["outbreak_turn"], name: "index_free_battles_on_outbreak_turn"
     t.index ["saturn_key"], name: "index_free_battles_on_saturn_key"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
+    t.index ["use_key"], name: "index_free_battles_on_use_key"
   end
 
   create_table "swars_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -258,6 +260,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_185500) do
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
+    t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
     t.index ["saturn_key"], name: "index_swars_battles_on_saturn_key"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
