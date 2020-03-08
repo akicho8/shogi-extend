@@ -50,7 +50,7 @@ module FrontendScript
 
             row["勝"]   = user[:win]
 
-            row["勝敗"] = h.tag.span(user[:ox], :class => "line_break_on")
+            row["勝敗"] = h.tag.small(user[:ox], :class => "line_break_on")
           end
         end
 
