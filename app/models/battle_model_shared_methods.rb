@@ -20,6 +20,7 @@ module BattleModelSharedMethods
     before_validation do
       self.meta_info ||= {}
       self.turn_max ||= 0
+      self.accessed_at ||= Time.current
     end
   end
 

@@ -220,7 +220,7 @@ class CpuBattlesController < ApplicationController
     end
 
     # CPUの手を指す
-    @mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
+    @mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorHuman)
     @current_sfen = @mediator.to_sfen
     evaluation_value_generation
 
@@ -295,23 +295,28 @@ class CpuBattlesController < ApplicationController
   def yomiage_process
     if params[:yomiage_mode]
       if last = @mediator.hand_logs.last
+
         # 方法1
         if false
-          last.skill_set.each do |e|
-            e.each do |e|
-              talk(e.name, talk_method: :queue)
+          if last.skill_set
+            last.skill_set.each do |e|
+              e.each do |e|
+                talk(e.name, talk_method: :queue)
+              end
             end
           end
         end
 
         # 方法2
         if true
-          names = last.skill_set.flat_map { |e| e.collect(&:name) }
-          names = names.reject { |e| e.in?(["居飛車", "振り飛車"]) }
-          if names.present?
-            sound_play(:shine)
-            talk(names.join("、"))
-            names.each { |e| toast_message(e) }
+          if last.skill_set
+            names = last.skill_set.flat_map { |e| e.collect(&:name) }
+            names = names.reject { |e| e.in?(["居飛車", "振り飛車"]) }
+            if names.present?
+              sound_play(:shine)
+              talk(names.join("、"))
+              names.each { |e| toast_message(e) }
+            end
           end
         end
 

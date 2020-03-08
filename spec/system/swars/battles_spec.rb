@@ -54,7 +54,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     end
 
     it "仕掛けの局面表示" do
-      visit "/w?query=devuser1&board_show_type=critical"
+      visit "/w?query=devuser1&board_show_type=outbreak_turn"
       assert { find(".radio.is-primary").text === "仕掛け" }
       doc_image
     end
@@ -75,25 +75,35 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
   describe "show" do
     it "詳細" do
-      visit "/w/#{@battle.key}"
+      visit "/w/#{@battle.to_param}"
       expect(page).to have_content "消費時間"
       doc_image
     end
 
+    it "画像" do
+      visit "/w/#{@battle.to_param}.png"
+      doc_image
+    end
+
+    it "画像 + turn" do
+      visit "/w/#{@battle.to_param}.png?turn=-1"
+      doc_image
+    end
+
     it "棋譜用紙" do
-      visit "/w/#{@battle.key}?formal_sheet=true"
+      visit "/w/#{@battle.to_param}?formal_sheet=true"
       expect(page).to have_content "記録係"
       doc_image
     end
 
     it "棋譜用紙(デバッグ)" do
-      visit "/w/#{@battle.key}?formal_sheet=true&formal_sheet_debug=true"
+      visit "/w/#{@battle.to_param}?formal_sheet=true&formal_sheet_debug=true"
       expect(page).to have_content "記録係"
       doc_image
     end
 
     it "レイアウト崩れの原因を伝えるダイアログ表示" do
-      visit "/w/#{@battle.key}?formal_sheet=true"
+      visit "/w/#{@battle.to_param}?formal_sheet=true"
       click_on("レイアウトが崩れていませんか？")
       expect(page).to have_content "最小フォントサイズ"
       doc_image

@@ -147,7 +147,7 @@ module Colosseum::Battle::BattleMethods
           battle.game_end_exit(win_location_key: mediator.opponent_player.location.key, last_action_key: "TSUMI")
         end
 
-        mediator.execute(hand.to_sfen, executor_class: Bioshogi::PlayerExecutorCpu)
+        mediator.execute(hand.to_sfen, executor_class: Bioshogi::PlayerExecutorHuman)
         validate_checkmate_ignore
       end
 
@@ -167,9 +167,11 @@ module Colosseum::Battle::BattleMethods
     # 戦法を自動発言
     def tactic_notify
       if hand = mediator.hand_logs.last
-        hand.skill_set.each do |e|
-          e.each do |e|
-            active_user.chat_say(battle, e.name, msg_class: "has-text-info")
+        if hand.skill_set
+          hand.skill_set.each do |e|
+            e.each do |e|
+              active_user.chat_say(battle, e.name, msg_class: "has-text-info")
+            end
           end
         end
       end

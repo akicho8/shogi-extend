@@ -25,6 +25,7 @@
 # | image_turn        | OGP画像の局面      | integer(4)     |             |                                   |       |
 # | use_key           | Use key            | string(255)    | NOT NULL    |                                   |       |
 # | outbreak_turn     | Outbreak turn      | integer(4)     |             |                                   |       |
+# | accessed_at       | Accessed at        | datetime       | NOT NULL    |                                   |       |
 # |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -119,10 +120,10 @@ class FreeBattle < ApplicationRecord
 
     def old_record_destroy(**params)
       params = {
-        expires_in: 2.weeks,
+        expires_in: 4.weeks,
       }.merge(params)
 
-      all.where(use_key: "adapter").where(arel_table[:updated_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
+      all.where(use_key: "adapter").where(arel_table[:accessed_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
         begin
           g.each(&:destroy)
         rescue ActiveRecord::Deadlocked => error

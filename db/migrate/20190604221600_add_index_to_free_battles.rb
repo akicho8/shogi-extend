@@ -25,6 +25,7 @@
 # | image_turn        | OGP画像の局面      | integer(4)     |             |                                   |       |
 # | use_key           | Use key            | string(255)    | NOT NULL    |                                   |       |
 # | outbreak_turn     | Outbreak turn      | integer(4)     |             |                                   |       |
+# | accessed_at       | Accessed at        | datetime       | NOT NULL    |                                   |       |
 # |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

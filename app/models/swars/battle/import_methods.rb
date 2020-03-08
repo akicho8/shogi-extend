@@ -60,7 +60,7 @@ module Swars
             expires_in: 4.weeks,
           }.merge(params)
 
-          all.where(arel_table[:last_accessd_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
+          all.where(arel_table[:accessed_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
             begin
               g.each(&:destroy)
             rescue ActiveRecord::Deadlocked => error
@@ -76,7 +76,7 @@ module Swars
           }.merge(params)
 
           c = Hash.new(0)
-          all.order(last_accessd_at: :desc).limit(params[:limit]).each do |e|
+          all.order(accessed_at: :desc).limit(params[:limit]).each do |e|
             c[e.remake] += 1
           end
           puts

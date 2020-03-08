@@ -32,10 +32,9 @@
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
-class RenamePurposeKeyToFreeBattles < ActiveRecord::Migration[5.2]
+class RemoveAccessLogs < ActiveRecord::Migration[5.2]
   def change
-    change_table :free_battles do |t|
-      t.rename :purpose_key, :use_key
-    end
+    drop_table :access_logs, if_exists: true
+    remove_column :swars_battles, :access_logs_count
   end
 end

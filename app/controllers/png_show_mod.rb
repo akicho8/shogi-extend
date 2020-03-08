@@ -33,8 +33,10 @@ module PngShowMod
       if Rails.env.development?
         Rails.logger.debug ["#{__FILE__}:#{__LINE__}", __method__, cache_key_source]
       end
-      png = Rails.cache.fetch(Digest::MD5.hexdigest(cache_key_source.to_s), expires_in: 1.week) do
-        parser = Bioshogi::Parser.parse(current_record.existing_sfen, typical_error_case: :embed, turn_limit: turn)
+      hex = Digest::MD5.hexdigest(cache_key_source.to_s)
+      cache_key = [current_record.to_param, "png", turn, hex].join(":")
+      png = Rails.cache.fetch(cache_key, expires_in: 1.week) do
+        parser = Bioshogi::Parser.parse(current_record.existing_sfen, bioshogi_parser_options.merge(turn_limit: turn))
         parser.to_png(options)
       end
       send_data png, type: Mime[:png], disposition: disposition, filename: "#{current_record.to_param}-#{turn}.png"
@@ -50,5 +52,17 @@ module PngShowMod
     end
     path = ActiveStorage::Blob.service.path_for(key)
     send_file path, type: current_record.thumbnail_image.content_type, disposition: disposition, filename: "#{current_record.to_param}.png"
+  end
+
+  # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
+  def bioshogi_parser_options
+    {
+      # :skill_monitor_enable           => false,
+      # :skill_monitor_technique_enable => false,
+      :typical_error_case => :embed, # validate_skip しているのでこのオプションは使わない？
+      :candidate_skip     => true,
+      :validate_skip      => true,
+      :mediator_class     => Bioshogi::MediatorFast,
+    }
   end
 end

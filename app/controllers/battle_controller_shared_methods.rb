@@ -276,6 +276,14 @@ module BattleControllerSharedMethods
       end
     end
 
+    def access_log_create(record)
+      if bot_agent?
+        return
+      end
+
+      record.update!(accessed_at: Time.current)
+    end
+
     let :js_show_options do
       a = {}
       a[:record] = js_modal_record_for(current_record)
@@ -342,9 +350,6 @@ module BattleControllerSharedMethods
           a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
         end
       end
-    end
-
-    def access_log_create(record)
     end
 
     # KENTOに何を渡すか

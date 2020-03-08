@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_08_141600) do
+ActiveRecord::Schema.define(version: 2020_03_08_181500) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 2020_03_08_141600) do
     t.integer "image_turn"
     t.string "use_key", null: false
     t.integer "outbreak_turn"
+    t.datetime "accessed_at", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
@@ -294,8 +295,6 @@ ActiveRecord::Schema.define(version: 2020_03_08_141600) do
     t.bigint "win_user_id", comment: "勝者(ショートカット用)"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", limit: 16777215, null: false, comment: "棋譜メタ情報"
-    t.datetime "last_accessd_at", null: false, comment: "最終参照日時"
-    t.integer "access_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "preset_key", null: false
@@ -305,6 +304,7 @@ ActiveRecord::Schema.define(version: 2020_03_08_141600) do
     t.string "sfen_body", limit: 8192
     t.integer "image_turn"
     t.integer "outbreak_turn"
+    t.datetime "accessed_at", null: false
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"

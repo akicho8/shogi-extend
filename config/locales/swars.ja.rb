@@ -33,8 +33,7 @@
           win_user_id:       "勝者",
           turn_max:          "手数",
           meta_info:         "メタ情報",
-          last_accessd_at:   "最終アクセス日時",
-          access_logs_count: "アクセス数",
+          accessed_at:        "最終アクセス日時",
           preset_key:        "手合割",
         },
         "swars/membership": {

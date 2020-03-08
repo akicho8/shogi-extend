@@ -25,6 +25,7 @@
 # | image_turn        | OGP画像の局面      | integer(4)     |             |                                   |       |
 # | use_key           | Use key            | string(255)    | NOT NULL    |                                   |       |
 # | outbreak_turn     | Outbreak turn      | integer(4)     |             |                                   |       |
+# | accessed_at       | Accessed at        | datetime       | NOT NULL    |                                   |       |
 # |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -50,8 +51,18 @@ RSpec.describe FreeBattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
-  it "show" do
+  it "show html" do
     get :show, params: {id: @free_battle.to_param}
+    expect(response).to have_http_status(:ok)
+  end
+
+  it "show png" do
+    get :show, params: {id: @free_battle.to_param, format: "png"}
+    expect(response).to have_http_status(:ok)
+  end
+
+  it "show png turn" do
+    get :show, params: {id: @free_battle.to_param, format: "png", turn: -1}
     expect(response).to have_http_status(:ok)
   end
 
