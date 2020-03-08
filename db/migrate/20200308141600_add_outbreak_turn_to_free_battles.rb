@@ -44,7 +44,7 @@ class AddOutbreakTurnToFreeBattles < ActiveRecord::Migration[5.2]
 
     model = Swars::Battle
     change_table model.table_name do |t|
-      t.datetime :accessed_at, null: true
+      # t.datetime :accessed_at, null: true
     end
     model.reset_column_information
     model.update_all("accessed_at = last_accessd_at")
