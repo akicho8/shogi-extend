@@ -552,7 +552,6 @@ DEPENDENCIES
   table_format
   timecop
   tree_support
-  tzinfo-data
   uglifier (>= 1.3.0)
   useragent
   web-console (>= 3.3.0)
