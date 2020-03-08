@@ -34,13 +34,13 @@
 
 class AddOutbreakTurnToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles].each do |table|
-      change_table table do |t|
-        # t.remove :accessed_at rescue nil
-        # t.remove :outbreak_turn rescue nil
-        t.integer :outbreak_turn, null: true
-      end
-    end
+    # [:swars_battles, :free_battles].each do |table|
+    #   change_table table do |t|
+    #     # t.remove :accessed_at rescue nil
+    #     # t.remove :outbreak_turn rescue nil
+    #     t.integer :outbreak_turn, null: true
+    #   end
+    # end
 
     model = Swars::Battle
     change_table model.table_name do |t|
