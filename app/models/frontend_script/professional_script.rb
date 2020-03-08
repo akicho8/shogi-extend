@@ -56,7 +56,7 @@ module FrontendScript
           row["指導棋士"] = h.link_to(name, [:swars, :battles, query: user.key])
 
           ox = user.memberships.sort_by(&:created_at).collect { |e| e.judge_info.wb_mark }.join
-          row["勝敗"] = h.tag.span(ox, :class => "line_break_on")
+          row["勝敗"] = h.tag.small(ox, :class => "line_break_on")
         end
       end
     end
