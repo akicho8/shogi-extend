@@ -46,7 +46,7 @@ module FrontendScript
       user_infos_hash = user_infos_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
 
       grade = Swars::Grade.find_by!(key: "十段")
-      users = Swars::User.where(grade: grade).order(created_at: :desc).includes(:memberships) # joins(:memberships) するとデータがないレコードは表示されなくなる
+      users = Swars::User.where(grade: grade).order(created_at: :desc).includes(:memberships).joins(:memberships) # joins を取るとデータがないデータも表示できる
       users.collect do |user|
         {}.tap do |row|
           name = user.key
