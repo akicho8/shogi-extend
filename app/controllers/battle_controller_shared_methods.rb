@@ -309,6 +309,7 @@ module BattleControllerSharedMethods
           # :preset_key,
           # :start_turn,
           :critical_turn,
+          :outbreak_turn,
           :saturn_key,
           :sfen_body,
           :image_turn,

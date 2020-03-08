@@ -44,6 +44,9 @@ template(slot-scope="props")
     b-table-column(field="critical_turn" :label="table_columns_hash.critical_turn.label" :visible="visible_hash.critical_turn" sortable numeric)
       | {{props.row.critical_turn}}
 
+    b-table-column(field="outbreak_turn" :label="table_columns_hash.outbreak_turn.label" :visible="visible_hash.outbreak_turn" sortable numeric)
+      | {{props.row.outbreak_turn}}
+
     b-table-column(field="grade_diff" :label="table_columns_hash.grade_diff.label" :visible="visible_hash.grade_diff" sortable numeric)
       | {{props.row.grade_diff}}
 

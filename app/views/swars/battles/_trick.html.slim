@@ -2,7 +2,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
   .columns
     .column
       b-field
-        b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="critical") 仕掛け
+        b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="outbreak_turn") 仕掛け
         b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="last") 終局図
         b-radio-button(v-model="board_show_type" size="is-small" @click.native="board_show_type_set_none" native-value="none" type="") OFF
 
@@ -15,7 +15,8 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
     .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered
       a.no-decoration(@click.stop.prevent="show_handle(e)")
         small.line_break_on.has-text-black-ter
-          | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
+          / | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
+          | {{e.memberships[1].name_with_grade}}
         shogi_player(
           :run_mode="'view_mode'"
           :debug_mode="false"
@@ -24,7 +25,6 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
           :theme="'simple'"
           :size="'x-small'"
           :sound_effect="false"
-          :hidden_if_piece_stand_blank="board_show_type === 'critical'"
           :vlayout="true"
           :setting_button_show="false"
           :summary_show="false"
@@ -32,8 +32,10 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
           :overlay_navi="false"
           :flip="e.fliped"
         )
+        / :hidden_if_piece_stand_blank="board_show_type === 'outbreak_turn'"
         small.line_break_on.has-text-black-ter
-          | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
+          / | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
+          | {{e.memberships[0].name_with_grade}}
 
 - if false
   / 画像版。これだと終了図に対応できない

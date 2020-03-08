@@ -31,15 +31,12 @@
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
-class AddCriticalTurnToFreeBattles < ActiveRecord::Migration[5.2]
+class AddOutbreakTurnToFreeBattles < ActiveRecord::Migration[5.2]
   def change
     [:swars_battles, :free_battles].each do |table|
       change_table table do |t|
-        t.change :start_turn, :integer, null: true
-        t.integer :critical_turn, null: true
+        t.integer :outbreak_turn, null: true
       end
     end
-
-    Swars::Battle.where(start_turn: 0).update_all(start_turn: nil)
   end
 end

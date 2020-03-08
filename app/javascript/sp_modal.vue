@@ -51,6 +51,7 @@
           | record.force_turn: {{record.force_turn}}
           | record.sp_turn: {{record.sp_turn}}
           | record.critical_turn: {{record.critical_turn}}
+          | record.outbreak_turn: {{record.outbreak_turn}}
           | record.turn_max: {{record.turn_max}}
 
       footer.modal-card-foot
@@ -135,7 +136,7 @@ export default {
           return record.turn_max
         }
 
-        // modal_record の場合は for;
+        // modal_record の場合
         if ("force_turn" in record) {
           return record.force_turn
         }

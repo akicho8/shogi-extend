@@ -53,6 +53,7 @@ module BattleModelSharedMethods
 
     self.turn_max = info.mediator.turn_info.turn_offset
     self.critical_turn = info.mediator.critical_turn
+    self.outbreak_turn = info.mediator.outbreak_turn
     self.sfen_body = info.mediator.to_sfen
 
     if AppConfig[:swars_tag_search_function]
@@ -169,11 +170,11 @@ module BattleModelSharedMethods
   end
 
   def sp_turn
-    start_turn || critical_turn || 0
+    start_turn || outbreak_turn || critical_turn || 0
   end
 
   def og_turn
-    image_turn || start_turn || critical_turn || turn_max
+    image_turn || start_turn || outbreak_turn || critical_turn || turn_max
   end
 
   def adjust_turn(turn)

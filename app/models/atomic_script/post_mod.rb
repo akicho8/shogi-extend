@@ -13,7 +13,7 @@ module AtomicScript
         return
       end
 
-      Rails.cache.write(_restore_key, resp, expires_in: 1.minutes)
+      Rails.cache.write(_store_key, resp, expires_in: 1.minutes)
       c.redirect_to [*url_prefix, clean_params.merge(_restore_key: _store_key)]
     end
 

@@ -3,15 +3,15 @@
 #
 # Auth info (colosseum_auth_infos as Colosseum::AuthInfo)
 #
-# |-----------+--------------+-------------+-------------+------+-------|
-# | name      | desc         | type        | opts        | refs | index |
-# |-----------+--------------+-------------+-------------+------+-------|
-# | id        | ID           | integer(8)  | NOT NULL PK |      |       |
-# | user_id   | User         | integer(8)  | NOT NULL    |      | B     |
-# | provider  | プロバイダー | string(255) | NOT NULL    |      | A!    |
-# | uid       | UID          | string(255) | NOT NULL    |      | A!    |
-# | meta_info | 棋譜ヘッダー | text(65535) |             |      |       |
-# |-----------+--------------+-------------+-------------+------+-------|
+# |-----------+--------------+----------------+-------------+------+-------|
+# | name      | desc         | type           | opts        | refs | index |
+# |-----------+--------------+----------------+-------------+------+-------|
+# | id        | ID           | integer(8)     | NOT NULL PK |      |       |
+# | user_id   | User         | integer(8)     | NOT NULL    |      | B     |
+# | provider  | プロバイダー | string(255)    | NOT NULL    |      | A!    |
+# | uid       | UID          | string(255)    | NOT NULL    |      | A!    |
+# | meta_info | 棋譜ヘッダー | text(16777215) |             |      |       |
+# |-----------+--------------+----------------+-------------+------+-------|
 
 module Colosseum
   class AuthInfo < ApplicationRecord
