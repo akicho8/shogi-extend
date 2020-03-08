@@ -205,7 +205,13 @@ module BattleModelSharedMethods
   def record_to_twitter_options(h)
     options = {}
 
-    options[:title] = h.params[:title].presence || "#{title}【#{adjust_turn(h.current_force_turn)}手目】"
+    v = adjust_turn(h.current_force_turn)
+    if v == turn_max
+      turn = "#{turn}手目(終了図)"
+    else
+      turn = "#{turn}手目"
+    end
+    options[:title] = h.params[:title].presence || "#{title}【#{turn}】"
 
     if turn = h.current_force_turn
       options[:url] = modal_on_index_url(turn: turn)
