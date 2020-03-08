@@ -8,9 +8,9 @@
 # |-------------------+----------------+-------------+-------------+-----------------------------+-------|
 # | id                | ID             | integer(8)  | NOT NULL PK |                             |       |
 # | colosseum_user_id | Colosseum user | integer(8)  |             | :user => Colosseum::User#id | A     |
-# | entry_name        | Entry name     | string(255) | NOT NULL    |                             | C     |
+# | entry_name        | Entry name     | string(255) | NOT NULL    |                             | B     |
 # | summary           | Summary        | string(255) |             |                             |       |
-# | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |                             | B     |
+# | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |                             | C     |
 # | x_count           | X count        | integer(4)  | NOT NULL    |                             |       |
 # | spent_sec         | Spent sec      | float(24)   | NOT NULL    |                             |       |
 # | created_at        | 作成日時       | datetime    | NOT NULL    |                             |       |

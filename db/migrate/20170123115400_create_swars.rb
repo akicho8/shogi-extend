@@ -20,7 +20,7 @@ class CreateSwars < ActiveRecord::Migration[5.1]
       t.text :meta_info, null: false, comment: "棋譜メタ情報"
 
       t.datetime :accessed_at, null: false, comment: "最終参照日時"
-      t.integer :outbreak_turn, null: true, comment: "仕掛手数"
+      t.integer :outbreak_turn, index: true, null: true, comment: "仕掛手数"
 
       t.timestamps null: false
     end
