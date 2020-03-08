@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(version: 2020_03_08_181500) do
     t.integer "image_turn"
     t.string "use_key", null: false
     t.integer "outbreak_turn"
-    t.datetime "accessed_at", null: false
+    t.datetime "accessed_at"
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(version: 2020_03_08_181500) do
     t.string "sfen_body", limit: 8192
     t.integer "image_turn"
     t.integer "outbreak_turn"
-    t.datetime "accessed_at", null: false
+    t.datetime "accessed_at"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"

@@ -10,7 +10,7 @@ end
 # rake db_sync TABLES=xy_records
 desc "本番サーバーの production の DB をローカルの development にコピーする (オプション: TABLES=t1,t2,t3)"
 task :db_sync do
-  Rake::Task[:production_db_backup_to_local].invoke
+  # Rake::Task[:production_db_backup_to_local].invoke
   system "mysql -u root shogi_web_development < db/shogi_web_production.sql"
 end
 

@@ -32,25 +32,19 @@
 # Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
 #--------------------------------------------------------------------------------
 
-class AddOutbreakTurnToFreeBattles < ActiveRecord::Migration[5.2]
+class AddOutbreakTurnToFreeBattles2 < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles].each do |table|
-      change_table table do |t|
-        # t.remove :accessed_at rescue nil
-        # t.remove :outbreak_turn rescue nil
-        t.integer :outbreak_turn, null: true
+    if Rails.env.production? || Rails.env.development?
+      model = FreeBattle
+      change_table model.table_name do |t|
+        t.datetime :accessed_at, null: true
       end
+      model.reset_column_information
+      model.update_all("accessed_at = updated_at")
+      change_table model.table_name do |t|
+        # t.change :accessed_at, :datetime, null: false
+      end
+      model.reset_column_information
     end
-
-    model = Swars::Battle
-    change_table model.table_name do |t|
-      t.datetime :accessed_at, null: true
-    end
-    model.reset_column_information
-    model.update_all("accessed_at = last_accessd_at")
-    change_table model.table_name do |t|
-      # t.change :accessed_at, :datetime, null: false
-    end
-    model.reset_column_information
   end
 end
