@@ -19,8 +19,8 @@ class CreateSwars < ActiveRecord::Migration[5.1]
       t.integer :turn_max, null: false, comment: "手数"
       t.text :meta_info, null: false, comment: "棋譜メタ情報"
 
-      t.datetime :last_accessd_at, null: false, comment: "最終参照日時"
-      t.integer :access_logs_count, default: 0
+      t.datetime :accessed_at, null: false, comment: "最終参照日時"
+      t.integer :outbreak_turn, null: true, comment: "仕掛手数"
 
       t.timestamps null: false
     end
@@ -46,11 +46,6 @@ class CreateSwars < ActiveRecord::Migration[5.1]
 
     create_table :swars_search_logs, force: true do |t|
       t.belongs_to :user, null: false, comment: "プレイヤー"
-      t.timestamps null: false
-    end
-
-    create_table :swars_access_logs, force: true do |t|
-      t.belongs_to :battle, null: false, comment: "対局"
       t.timestamps null: false
     end
   end
