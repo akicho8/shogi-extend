@@ -72,8 +72,8 @@ module Swars
 
     concerning :ScopeMethods do
       included do
-        scope :recently_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc) } # よく使ってくれる人
-        scope :regular_only, -> { order(search_logs_count: :desc) }                                  # よく使ってくれる人
+        scope :recently_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc) }                     # よく使ってくれる人
+        scope :regular_only, -> { order(search_logs_count: :desc) }                                                        # よく使ってくれる人
         scope :great_only, -> { joins(:grade).order(Swars::Grade.arel_table[:priority].desc).order(:updated_at => :desc) } # すごい人
       end
 

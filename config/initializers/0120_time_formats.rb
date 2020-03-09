@@ -7,36 +7,6 @@ Time::DATE_FORMATS.update({
     battle_short: "%H:%M",
     csa_ymdhms: "%Y/%m/%d %H:%M:%S",
 
-    # 西暦→和暦に変換
-    # https://qiita.com/mashi/items/4e6a3142bfe1062fbda7
-    :wareki_format => proc { |t|
-      d = t.strftime("%Y%m%d").to_i
-      case
-      when d > 20190501
-        y = t.year - 2018
-        prefix = "令和"
-      when d > 19890108
-        y = t.year - 1988
-        prefix = "平成"
-      when d > 19261225
-        y = t.year - 1925
-        prefix = "昭和"
-      when d > 19120730
-        y = t.year - 1911
-        prefix = "大正"
-      when d >= 18680908
-        y = t.year - 1867
-        prefix = "明治"
-      else
-        y = t.year
-        prefix = ""
-      end
-      if y == 1
-        y = "元"
-      end
-      t.strftime("#{prefix}#{y}年%-m月%-d日%-H時%-M分")
-    },
-
     :ja_ad_format => proc { |t|
       t.strftime("%Y年%-m月%-d日%-H時%-M分")
     },
@@ -52,14 +22,14 @@ Time::DATE_FORMATS.update({
     :battle_time_today => proc { |time|
     },
 
-    :battle_time_relative => proc { |time|
+    :distance => proc { |time|
       d = time - Time.current
       suffix = d.negative? ? '前' : '後'
       t = d.abs
       case
         # when time >= Time.current.midnight
-      when time >= 1.days.ago
-        time.to_s(:battle_short)
+      # when time >= 1.days.ago
+      #   time.to_s(:battle_short)
       when t < 1.minute then "#{t.div(1.second)}秒#{suffix}"
       when t < 1.hour   then "#{t.div(1.minute)}分#{suffix}"
       when t < 1.day    then "#{t.div(1.hour)}時間#{suffix}"

@@ -4,6 +4,12 @@ require File.expand_path('../../config/environment', __FILE__)
 Swars::Grade.setup
 tp Swars::Grade
 
+user = Swars::User.find_by(key: "PonaInfinity")
+user.grade = Swars::Grade.find_by(key: "十段")
+user.valid?
+
+
+
 # a = Swars::Grade.find_or_create_by(key: Swars::GradeInfo["十段"].key)
 # a.destroy!
 

@@ -7,7 +7,6 @@ module Swars
 
           if Rails.env.development?
             user_import(user_key: "devuser1")
-            User.find_each { |e| e.search_logs.create! }
             puts Crawler::RegularCrawler.new.run.rows.to_t
             puts Crawler::ExpertCrawler.new.run.rows.to_t
             find_each(&:remake)
