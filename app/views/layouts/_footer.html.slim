@@ -40,4 +40,3 @@
                   summary.has-text-grey-lighter
                     | DEBUG
                   | ActionCable: {{latest_system_logs}}
-                  = ["WS_PORT", "USE_NEW_DOMAIN", "MY_APP_HOST"].inject({}) { |a, e| a.merge(e => ENV[e]) }.to_html

@@ -28,7 +28,3 @@ RUN_REMOTE=1 foreman s
 #+BEGIN_SRC shell
 rake
 #+END_SRC
-
-* 自分用メモ
-
-| MY_APP_HOST    | httpd.conf で定義している                                                                                      |
