@@ -40,10 +40,16 @@
           // 名前非表示
           b-switch(v-model="player_info_show_p" :true-value="false" :false-value="true" size="is-small")
             b-icon(icon="eye-off" size="is-small")
+          // 時間
+          b-switch(v-model="time_chart_p" size="is-small")
+            b-icon(icon="clock-outline" size="is-small")
 
         template(v-if="record.description")
           .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
             | {{record.description}}
+
+        .time_chart_container(v-show="time_chart_p")
+          canvas#think_canvas(ref="think_canvas")
 
         pre(v-if="development_p")
           | start_turn: {{start_turn}}
@@ -58,14 +64,19 @@
         piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
         kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
         kif_copy_button(@click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
+
         pulldown_menu(:record="record" :in_modal_p="true" :turn_offset="turn_offset" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる
 </template>
 
 <script>
+import sp_modal_time_chart from "./sp_modal_time_chart.js"
 
 export default {
   name: "sp_modal",
+  mixins: [
+    sp_modal_time_chart,
+  ],
 
   props: {
     record:          {                  }, // バトル情報
@@ -78,7 +89,6 @@ export default {
     return {
       new_modal_p: this.sp_modal_p,    // sp_modal_p の内部の値
       run_mode: null,                  // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      run_mode: null,                 // b-switch 経由
       turn_offset: null,
       player_info_show_p: true,      // プレイヤーの名前を表示する？
     }
@@ -109,6 +119,9 @@ export default {
             this.run_mode = "play_mode"
           }
         }
+
+        this.time_chart_fetch_counter = 0
+        // this.$nextTick(() => { this.time_handle() })
       }
     },
   },
@@ -122,8 +135,7 @@ export default {
       } else {
         message = "元に戻しました"
       }
-      this.talk(message, {rate: 1.5})
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
+      this.simple_notify(message)
       this.slider_focus_delay()
     },
 
@@ -214,7 +226,10 @@ export default {
   //   justify-content: space-around
 
   ////////////////////////////////////////////////////////////////////////////// _sp_modal
-  .modal_loading_content
-    width: 40vmin
-    height: 40vmin
+  // .modal_loading_content
+  //   width: 40vmin
+  //   height: 40vmin
+  .time_chart_container
+    margin-top: 1rem
+
 </style>

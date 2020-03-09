@@ -339,7 +339,7 @@ module Swars
 
     def js_show_options
       super.merge({
-          think_chart_params: {
+          time_chart_params: {
             type: "line",
             data: {
               labels: (1..current_record.turn_max).to_a,
@@ -373,6 +373,7 @@ module Swars
 
     let :exclude_column_names do
       ["meta_info", "csa_seq", "kifu_body"]
+      # ["meta_info", "kifu_body"]
     end
 
     concerning :IndexCustomMethods do
@@ -459,6 +460,8 @@ module Swars
 
       def js_record_for(e)
         a = super
+
+        # a[:time_chart_params] = e.time_chart_params
 
         a[:final_info] = { name: e.final_info.name, url: swars_tag_search_path(e.final_info.name), "class": e.final_info.has_text_color, }
         a[:preset_info] = { name: e.preset_info.name, url: swars_tag_search_path(e.preset_info.name),  }

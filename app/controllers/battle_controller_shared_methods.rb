@@ -252,7 +252,12 @@ module BattleControllerSharedMethods
     end
 
     def show
-      if request.xhr? && request.format.json?
+      if request.format.json?
+        if params[:time_chart_fetch]
+          render json: { time_chart_params: current_record.time_chart_params }
+          return
+        end
+
         render json: { sfen_body: current_record.existing_sfen }
         return
       end

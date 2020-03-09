@@ -10,13 +10,13 @@ window.SwarsBattleShow = Vue.extend({
 
   mounted() {
     if (this.$refs.think_canvas) {
-      new Chart(this.$refs.think_canvas, this.think_chart_params)
+      new Chart(this.$refs.think_canvas, this.time_chart_params)
     }
   },
 
   computed: {
-    think_chart_params() {
-      return Object.assign({}, this.$options.think_chart_params, {
+    time_chart_params() {
+      return Object.assign({}, this.$options.time_chart_params, {
         options: {
           title: {
             display: true,

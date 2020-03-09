@@ -284,6 +284,7 @@ module BattleModelSharedMethods
     # バリデーションをはずして KI2 への変換もしない前提の軽い版
     # ヘッダーやタグが欲しいとき用
     def fast_parsed_info
+      tp self
       @fast_parsed_info ||= parser_class.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parsed_options))
     end
 
