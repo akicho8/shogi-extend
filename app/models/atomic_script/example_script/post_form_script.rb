@@ -1,7 +1,7 @@
 module AtomicScript
   module ExampleScript
     class PostFormScript < ::AtomicScript::ExampleScript::Base
-      include AtomicScript::PostMod
+      include AtomicScript::PostRedirectMod
 
       self.script_name = "POSTフォーム"
 
@@ -15,7 +15,7 @@ module AtomicScript
       end
 
       def script_body
-        params
+        params.slice(:foo)
       end
     end
   end

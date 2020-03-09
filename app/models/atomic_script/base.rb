@@ -15,12 +15,6 @@
 #   または
 #   FooScript.new(@org_params).script_body
 #
-# ▼post後に別のところにリダイレクトするには？
-#
-#   def post_redirect_path(redirect_params)
-#     script_link_path(:id => :foo)
-#   end
-#
 module AtomicScript
   class Base
     include Core
@@ -29,6 +23,6 @@ module AtomicScript
     include LinkMod
     include VisibilityHiddenMod
 
-    # include PostMod
+    # include PostRedirectMod
   end
 end

@@ -15,12 +15,6 @@
 #   または
 #   FooScript.new(@params).script_body
 #
-# ▼post後に別のところにリダイレクトするには？
-#
-#   def post_redirect_path(redirect_params)
-#     script_link_path(:id => :foo)
-#   end
-#
 module AtomicScript
   concern :Core do
     included do
@@ -64,9 +58,7 @@ module AtomicScript
 
     def response_render(resp)
       if resp
-        if v = resp[:error_message]
-          h.flash.now[:alert] = v
-        end
+        resp = ResponseDecorator[resp]
       end
 
       out = "".html_safe
@@ -74,20 +66,7 @@ module AtomicScript
       out << to_form_html
 
       if resp
-        if resp[:rows].present?
-          out << h.tag.div(:class => "columns") do
-            h.tag.div(:class => "column") do
-              o = "".html_safe
-              if resp[:rows].kind_of?(String)
-                o << resp[:rows].html_safe
-              else
-                o << html_format(resp[:rows])
-                o << basic_paginate(resp[:object])
-              end
-              o
-            end
-          end
-        end
+        out << response_render_body(resp) || ""
       end
 
       if Rails.env.development? || Rails.env.test?
@@ -99,7 +78,24 @@ module AtomicScript
 
     private
 
-    def basic_paginate(s, **options)
+    def response_render_body(resp)
+      if resp[:rows].present?
+        h.tag.div(:class => "columns") do
+          h.tag.div(:class => "column") do
+            o = "".html_safe
+            if resp[:rows].kind_of?(String)
+              o << resp[:rows].html_safe
+            else
+              o << html_format(resp[:rows])
+              o << basic_paginate(resp[:object])
+            end
+            o
+          end
+        end
+      end
+    end
+
+    def basic_paginate(s, options = {})
       out = "".html_safe
       if s.respond_to?(:total_pages)
         out << h.content_tag(:div, h.page_entries_info(s))
@@ -109,11 +105,7 @@ module AtomicScript
     end
 
     def to_body_html
-      v = script_body_run
-      if v
-        v = Response[v]
-      end
-      v
+      script_body_run
     end
 
     def to_form_html
@@ -151,25 +143,12 @@ module AtomicScript
     end
 
     def script_body_run
-      if false
-        resp = {}
-        begin
-          object = script_body
-          resp[:object] = object
-          resp[:rows] = any_value_as_rows(object)
-        rescue Exception => error
-          resp[:error_message] = "#{error.class.name}: #{error.message}"
-          resp[:error_backtrace] = error.backtrace.join("<br/>").html_safe
-        end
-        resp
-      else
-        resp = {}
-        object = script_body
-        resp[:object] = object
-        resp[:rows] = any_value_as_rows(object)
-        resp
-      end
+      object = script_body
 
+      resp = {}
+      resp[:object] = object
+      resp[:rows] = any_value_as_rows(object)
+      resp
     end
 
     # 実行結果を可能な限り配列の配列に変換する

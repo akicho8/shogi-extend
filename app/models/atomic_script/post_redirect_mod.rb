@@ -1,34 +1,29 @@
 module AtomicScript
-  concern :PostMod do
+  concern :PostRedirectMod do
     def put_action
       resp = script_body_run
       if c.performed?
-        # script_body の中ですでにリダイレクトしていればそれを優先してこちらでは何もしない
         return
       end
 
       # エラーだったらリダイレクトせずに描画する
-      if resp[:error_message]
-        c.render :text => response_render(Response[resp]), :layout => true
+      if resp[:error]
+        c.render :html => response_render(resp), layout: true
         return
       end
 
-      Rails.cache.write(_store_key, resp, expires_in: 1.minutes)
+      if store_to_cookie_flash?
+        h.flash[_store_key] = resp
+      else
+        Rails.cache.write(_store_key, resp, expires_in: 1.minutes)
+      end
       c.redirect_to [*url_prefix, clean_params.merge(_restore_key: _store_key)]
     end
 
     private
 
     def to_body_html
-      # POSTの場合は結果だけを表示する場合
-      v = restore_resp
-      if v
-        v = Response[v]
-      end
-      return v
-    end
-
-    def post_redirect_path(redirect_params)
+      restored_response
     end
 
     def clean_params
@@ -44,7 +39,7 @@ module AtomicScript
     end
 
     def form_submit_button_color
-      'is-danger'
+      "is-danger"
     end
 
     def form_action_method
@@ -55,14 +50,24 @@ module AtomicScript
       @_store_key ||= SecureRandom.hex
     end
 
-    def restore_resp
+    def restored_response
       if v = @params[:_restore_key]
-        Rails.cache.read(v)
+        if store_to_cookie_flash?
+          if v = h.flash[v]
+            v.symbolize_keys # Cookieはシンボルを文字列にしてしまうため復元時に戻す
+          end
+        else
+          Rails.cache.read(v)
+        end
       end
     end
 
     def redirected?
       @params[:_restore_key].present?
+    end
+
+    def store_to_cookie_flash?
+      Rails.cache.kind_of?(ActiveSupport::Cache::NullStore)
     end
   end
 end

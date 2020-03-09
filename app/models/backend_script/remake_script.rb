@@ -1,7 +1,7 @@
 # http://localhost:3000/admin/script/remake
 module BackendScript
   class RemakeScript < ::BackendScript::Base
-    include AtomicScript::PostMod
+    include AtomicScript::PostRedirectMod
 
     self.category = "将棋ウォーズ"
     self.script_name = "リメイク"
