@@ -85,7 +85,7 @@
                 | {{summary}}
               .tweet_button_container
                 .buttons.is-centered
-                  a.button.is-info.is-rounded(:href="twitter_url")
+                  a.button.is-info.is-rounded(:href="tweet_url")
                     | &nbsp;
                     b-icon(icon="twitter" size="is-small")
                     | &nbsp;
@@ -765,8 +765,8 @@ export default {
       return "xy_master"
     },
 
-    twitter_url() {
-      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.tweet_body)}`
+    tweet_url() {
+      return this.tweet_url_for(this.tweet_body)
     },
 
     tweet_body() {

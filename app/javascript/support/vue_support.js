@@ -84,6 +84,12 @@ export default {
       this.talk(message, {rate: 1.5})
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
     },
+
+    tweet_url_for(text) {
+      if (text) {
+        return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+      }
+    },
   },
 
   computed: {

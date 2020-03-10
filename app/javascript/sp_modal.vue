@@ -47,7 +47,6 @@
           b-switch(v-model="time_chart_p" size="is-small")
             b-icon(icon="clock-outline" size="is-small")
 
-
         sp_modal_time_chart(:record="record" :show_p="time_chart_p" ref="sp_modal_time_chart" @update:turn="turn_set_from_chart")
 
         pre(v-if="development_p")
@@ -63,8 +62,9 @@
         piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
         kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
         kif_copy_button(@click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
+        b-button(icon-left="twitter" tag="a" :href="tweet_url" size="is-small" type="is-info")
 
-        pulldown_menu(:record="record" :in_modal_p="true" :turn_offset="turn_offset" v-if="pulldown_menu_p")
+        pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる
 </template>
 
@@ -198,6 +198,20 @@ export default {
       if (this.name_show_p) {
         return this.record.player_info
       }
+    },
+
+    permalink_url() {
+      if (this.record) {
+        const url = new URL(this.record.modal_on_index_url)
+        if (this.turn_offset != null) {
+          url.searchParams.set("turn", this.turn_offset)
+        }
+        return url.toString()
+      }
+    },
+
+    tweet_url() {
+      return this.tweet_url_for(this.permalink_url)
     },
   },
 }
