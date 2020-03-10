@@ -53,6 +53,16 @@ window._ = _
 import Chart from "chart.js"
 window.Chart = Chart
 
+// 画像をダウンロードしたときに背景色が透明になる問題への対処法
+// http://wordpress.ideacompo.com/?p=12888
+Chart.plugins.register({
+  beforeDraw(c) {
+    const ctx = c.chart.ctx
+    ctx.fillStyle = "rgba(255, 255, 255, 1)"
+    ctx.fillRect(0, 0, c.chart.width, c.chart.height)
+  }
+})
+
 //////////////////////////////////////////////////////////////////////////////// 通知
 
 document.addEventListener("DOMContentLoaded", () => {
