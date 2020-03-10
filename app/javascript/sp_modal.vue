@@ -45,7 +45,7 @@
             b-icon(icon="eye-off" size="is-small")
           // 時間
           b-switch(v-model="time_chart_p" size="is-small")
-            b-icon(icon="clock-outline" size="is-small")
+            b-icon(icon="chart-timeline-variant" size="is-small")
 
         sp_modal_time_chart(:record="record" :show_p="time_chart_p" ref="sp_modal_time_chart" @update:turn="turn_set_from_chart")
 
