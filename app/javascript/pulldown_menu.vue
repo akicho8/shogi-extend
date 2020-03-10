@@ -9,18 +9,6 @@
           span.a_label
             | ツイート
 
-    template(v-if="record.show_path")
-      b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.kif`")
-          b-icon(icon="eye" size="is-small")
-          span.a_label KIF 表示
-
-    template(v-if="record.show_path")
-      b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.kif?attachment=true`")
-          b-icon(icon="download" size="is-small")
-          span.a_label KIF ダウンロード
-
     template(v-if="new_permalink_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="new_permalink_url")
@@ -69,6 +57,18 @@
     //-       span.a_label KI2 コピー
 
     b-dropdown-item(:separator="true")
+
+    template(v-if="record.show_path")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="`${record.show_path}.kif`")
+          b-icon(icon="eye" size="is-small")
+          span.a_label KIF 表示
+
+    template(v-if="record.show_path")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="`${record.show_path}.kif?attachment=true`")
+          b-icon(icon="download" size="is-small")
+          span.a_label KIF ダウンロード
 
     template(v-if="record.kifu_copy_params")
       b-dropdown-item(:has-link="true" :paddingless="true")
