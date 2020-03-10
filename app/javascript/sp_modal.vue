@@ -44,7 +44,7 @@
           b-switch(v-model="time_chart_p" size="is-small")
             b-icon(icon="clock-outline" size="is-small")
 
-        template(v-if="record.description")
+        template(v-if="record.description && false")
           .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
             | {{record.description}}
 
