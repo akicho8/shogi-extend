@@ -178,5 +178,28 @@ module Swars
       end
       SlackAgent.message_send(key: "rule_key_bugfix_process", body: c.to_s)
     end
+
+    def time_chart_params
+      {
+        labels: (1..turn_max).to_a,
+        # labels: (0..turn_max).collect { |e| e.modulo(50).zero? ? e : ""},
+        datasets: memberships.collect.with_index { |e, i|
+          {
+            label: e.user.key,        # グラフの上に出る名前
+            data: e.chartjs_data,
+            borderColor: PaletteInfo[i].border_color,
+            backgroundColor: PaletteInfo[i].background_color,
+            fill: true,               # 塗り潰す？
+            pointRadius: 1.2,         # 点半径
+            borderWidth: 1,           # 点枠の太さ
+            pointHoverRadius: 5,      # 点半径(アクティブ時)
+            pointHoverBorderWidth: 2, # 点枠の太さ(アクティブ時)
+            pointHitRadius: 5,        # タップできる大きさ
+            showLine: true,           # 線で繋げる
+            lineTension: 0.2,         # 0なら線がカクカクになる
+          }
+        },
+      }
+    end
   end
 end

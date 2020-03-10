@@ -6,12 +6,15 @@
         .delete.is-medium(aria-label="close" @click="new_modal_p = false" v-if="true")
 
         template(v-if="record.title")
-          .title.is-5.yumincho.has-text-centered
+          .is-size-7.has-text-centered
             template(v-if="record.saturn_key === 'private'")
               b-icon.has-text-grey-light(icon="lock" size="is-small")
               | &nbsp;
-            span(:style="{visibility: player_info_show_p ? 'visible' : 'hidden'}")
+            span(:style="{visibility: name_show_p ? 'visible' : 'hidden'}")
               | {{record.title}}
+        template(v-if="record.description && false")
+          .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
+            | {{record.description}}
 
         shogi_player(
           :run_mode.sync="run_mode"
@@ -38,12 +41,13 @@
           b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle" size="is-small")
             b-icon(icon="source-branch" size="is-small")
           // 名前非表示
-          b-switch(v-model="player_info_show_p" :true-value="false" :false-value="true" size="is-small")
+          b-switch(v-model="name_show_p" :true-value="false" :false-value="true" size="is-small")
             b-icon(icon="eye-off" size="is-small")
+          // 時間
+          b-switch(v-model="time_chart_p" size="is-small")
+            b-icon(icon="clock-outline" size="is-small")
 
-        template(v-if="record.description")
-          .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
-            | {{record.description}}
+        sp_modal_time_chart(:record="record" :show_p="time_chart_p" ref="sp_modal_time_chart" @update:turn="turn_set_from_chart")
 
         pre(v-if="development_p")
           | start_turn: {{start_turn}}
@@ -58,14 +62,20 @@
         piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
         kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
         kif_copy_button(@click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
-        pulldown_menu(:record="record" :in_modal_p="true" :turn_offset="turn_offset" v-if="pulldown_menu_p")
+        b-button(icon-left="twitter" tag="a" :href="tweet_url" size="is-small" type="is-info")
+
+        pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる
 </template>
 
 <script>
+import sp_modal_time_chart from "./sp_modal_time_chart.vue"
 
 export default {
   name: "sp_modal",
+  components: {
+    sp_modal_time_chart,
+  },
 
   props: {
     record:          {                  }, // バトル情報
@@ -78,9 +88,9 @@ export default {
     return {
       new_modal_p: this.sp_modal_p,    // sp_modal_p の内部の値
       run_mode: null,                  // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      run_mode: null,                 // b-switch 経由
-      turn_offset: null,
-      player_info_show_p: true,      // プレイヤーの名前を表示する？
+      turn_offset: null,               // KENTOに渡すための手番
+      name_show_p: true,        // プレイヤーの名前を表示する？
+      time_chart_p: false,             // 時間チャートを表示する？
     }
   },
 
@@ -109,8 +119,18 @@ export default {
             this.run_mode = "play_mode"
           }
         }
+
+        this.time_chart_fetch_counter = 0
+        // this.$nextTick(() => { this.time_handle() })
       }
     },
+  },
+
+  mounted() {
+    console.log(this.$refs.sp_modal_time_chart)
+    if (this.$refs.sp_modal_time_chart) {
+      console.log(this.$refs.sp_modal_time_chart)
+    }
   },
 
   methods: {
@@ -122,8 +142,7 @@ export default {
       } else {
         message = "元に戻しました"
       }
-      this.talk(message, {rate: 1.5})
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
+      this.simple_notify(message)
       this.slider_focus_delay()
     },
 
@@ -143,6 +162,12 @@ export default {
 
         return record.sp_turn
       }
+    },
+
+    // sp_modal_time_chart でチャートをクリックしたときに変更する
+    turn_set_from_chart(v) {
+      this.$refs.sp_modal.api_board_turn_set(v) // 直接 shogi-player に設定
+      this.turn_offset = v                      // KENTO用に設定 (shogi-playerからイベントが来ないため)
     },
 
     // shogi-player の局面が変化したときの手数を取り出す
@@ -170,9 +195,23 @@ export default {
     },
 
     player_info() {
-      if (this.player_info_show_p) {
+      if (this.name_show_p) {
         return this.record.player_info
       }
+    },
+
+    permalink_url() {
+      if (this.record) {
+        const url = new URL(this.record.modal_on_index_url)
+        if (this.turn_offset != null) {
+          url.searchParams.set("turn", this.turn_offset)
+        }
+        return url.toString()
+      }
+    },
+
+    tweet_url() {
+      return this.tweet_url_for(this.permalink_url)
     },
   },
 }
@@ -192,7 +231,8 @@ export default {
 
   // 上のスペース
   .modal-card-body
-    padding-top: 3em
+    padding: 0
+    padding-top: 0.5rem
 
   // 継盤
   .sp_modal_switches
@@ -202,19 +242,23 @@ export default {
 
   // 説明分
   .sp_modal_desc
-    margin-top: 0.8rem
+    // margin-top: 0.8rem
 
   //////////////////////////////////////////////////////////////////////////////// フッターの色を取る場合
   .modal-card-foot
     border: none
     background-color: $scheme-main
 
+  // .title
+  //   border: 1px solid blue
+  //   margin-top: 0px
+
   //////////////////////////////////////////////////////////////////////////////// フッターのボタンの配置(is-shogi-player-modal-card の方で指定あり)
   // .modal-card-foot
   //   justify-content: space-around
 
   ////////////////////////////////////////////////////////////////////////////// _sp_modal
-  .modal_loading_content
-    width: 40vmin
-    height: 40vmin
+  // .modal_loading_content
+  //   width: 40vmin
+  //   height: 40vmin
 </style>

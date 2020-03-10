@@ -172,7 +172,18 @@ module Swars
         @chartjs_data ||= -> {
           c = Bioshogi::Location.count
           loc = battle.preset_info.to_turn_info.current_location(position)
+          # sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
           sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
+
+          # pos = battle.preset_info.to_turn_info.current_location(position).code
+          # list = battle.fast_parsed_info.move_infos.find_all.collect.with_index { |e, i|
+          #   if i.modulo(c) == pos
+          #     { x: (1 + loc.code + i * c).to_s, y: location.value_sign * e[:used_seconds] }
+          #   else
+          #     nil
+          #   end
+          # }.compact
+
         }.call
       end
 

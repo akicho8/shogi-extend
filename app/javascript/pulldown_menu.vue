@@ -2,6 +2,13 @@
   b-dropdown(:hoverable="false" :position="in_modal_p ? 'is-top-left' : 'is-bottom-left'")
     b-button.arrow_icon(slot="trigger" size="is-small" :icon-left="in_modal_p ? 'menu-up' : 'menu-down'")
 
+    template(v-if="new_permalink_url")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="tweet_url_for(new_permalink_url)")
+          b-icon(icon="twitter" size="is-small")
+          span.a_label
+            | ツイート
+
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.show_path}.kif`")
@@ -14,15 +21,12 @@
           b-icon(icon="download" size="is-small")
           span.a_label KIF ダウンロード
 
-    template(v-if="record.modal_on_index_url")
+    template(v-if="new_permalink_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="permalink_url")
+        a(:href="new_permalink_url")
           b-icon(icon="open-in-new" size="is-small")
           span.a_label
-            template(v-if="turn_offset != null")
-              | パーマリンク \#{{turn_offset}}
-            template(v-else="")
-              | パーマリンク
+            | パーマリンク
 
     //- template(v-if="record.show_path")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
@@ -139,7 +143,7 @@ export default {
   props: {
     record:   { required: false },
     in_modal_p: { },
-    turn_offset: { },
+    permalink_url: { },
   },
 
   data() {
@@ -156,14 +160,9 @@ export default {
   },
 
   computed: {
-    permalink_url() {
-      const url = new URL(this.record.modal_on_index_url)
-      if (this.turn_offset != null) {
-        url.searchParams.set("turn", this.turn_offset)
-      }
-      return url.toString()
+    new_permalink_url() {
+      return this.permalink_url || this.record.modal_on_index_url
     },
   },
-
 }
 </script>
