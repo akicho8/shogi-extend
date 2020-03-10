@@ -865,6 +865,12 @@ export default {
   .level_container
     width: 10rem
     margin: 0 auto
+    .title
+      font-size: $size-7
+      font-weight: normal
+      position: relative
+      top: -0.2rem
+
   .tap_digits_container
     margin-top: 0.7rem
     .value
