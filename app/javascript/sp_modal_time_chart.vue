@@ -11,7 +11,7 @@
 const CHART_CONFIG_DEFAULT = {
   type: "line",
   options: {
-    aspectRatio: 1.5, // 大きいほど横長方形になる
+    aspectRatio: 2.0, // 大きいほど横長方形になる
 
     title: {
       display: false,
