@@ -6,12 +6,15 @@
         .delete.is-medium(aria-label="close" @click="new_modal_p = false" v-if="true")
 
         template(v-if="record.title")
-          .title.is-5.yumincho.has-text-centered
+          .is-size-7.has-text-centered
             template(v-if="record.saturn_key === 'private'")
               b-icon.has-text-grey-light(icon="lock" size="is-small")
               | &nbsp;
             span(:style="{visibility: name_show_p ? 'visible' : 'hidden'}")
               | {{record.title}}
+        template(v-if="record.description && false")
+          .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
+            | {{record.description}}
 
         shogi_player(
           :run_mode.sync="run_mode"
@@ -44,9 +47,6 @@
           b-switch(v-model="time_chart_p" size="is-small")
             b-icon(icon="clock-outline" size="is-small")
 
-        template(v-if="record.description && false")
-          .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
-            | {{record.description}}
 
         sp_modal_time_chart(:record="record" :show_p="time_chart_p" ref="sp_modal_time_chart" @update:turn="turn_set_from_chart")
 
@@ -217,7 +217,8 @@ export default {
 
   // 上のスペース
   .modal-card-body
-    padding-top: 3em
+    padding: 0
+    padding-top: 0.5rem
 
   // 継盤
   .sp_modal_switches
@@ -227,12 +228,16 @@ export default {
 
   // 説明分
   .sp_modal_desc
-    margin-top: 0.8rem
+    // margin-top: 0.8rem
 
   //////////////////////////////////////////////////////////////////////////////// フッターの色を取る場合
   .modal-card-foot
     border: none
     background-color: $scheme-main
+
+  // .title
+  //   border: 1px solid blue
+  //   margin-top: 0px
 
   //////////////////////////////////////////////////////////////////////////////// フッターのボタンの配置(is-shogi-player-modal-card の方で指定あり)
   // .modal-card-foot
