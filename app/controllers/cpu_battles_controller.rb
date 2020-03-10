@@ -262,7 +262,7 @@ class CpuBattlesController < ApplicationController
   end
 
   def iterative_deepening
-    brain = @mediator.current_player.brain(diver_class: Bioshogi::Diver::NegaScoutDiver, **evaluator_params)
+    brain = @mediator.current_player.brain(diver_class: Bioshogi::Diver::NegaScoutDiver, evaluator_params)
     time_limit = current_cpu_brain_info.time_limit
 
     begin
