@@ -5,6 +5,11 @@ module ToolBelt
     def build
       out = super
 
+      if v = h.content_for(:twitter_card_registry)
+        out << h.tag.b("twitter_card_registry")
+        out << h.tag.pre(v.gsub(/\>/, ">\n"))
+      end
+
       out << h.tag.div(:class => "buttons") do
         [
           link_to_eval("ユーザーセットアップ")                                { "Colosseum::User.setup"                                                   },
