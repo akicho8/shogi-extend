@@ -10,7 +10,7 @@
             template(v-if="record.saturn_key === 'private'")
               b-icon.has-text-grey-light(icon="lock" size="is-small")
               | &nbsp;
-            span(:style="{visibility: player_info_show_p ? 'visible' : 'hidden'}")
+            span(:style="{visibility: name_show_p ? 'visible' : 'hidden'}")
               | {{record.title}}
 
         shogi_player(
@@ -38,7 +38,7 @@
           b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle" size="is-small")
             b-icon(icon="source-branch" size="is-small")
           // 名前非表示
-          b-switch(v-model="player_info_show_p" :true-value="false" :false-value="true" size="is-small")
+          b-switch(v-model="name_show_p" :true-value="false" :false-value="true" size="is-small")
             b-icon(icon="eye-off" size="is-small")
           // 時間
           b-switch(v-model="time_chart_p" size="is-small")
@@ -48,8 +48,7 @@
           .sp_modal_desc.has-text-centered.is-size-7.has-text-grey
             | {{record.description}}
 
-        .time_chart_container(v-show="time_chart_p")
-          canvas#think_canvas(ref="think_canvas")
+        sp_modal_time_chart(:record="record" :show_p="time_chart_p" ref="sp_modal_time_chart" @update:turn="turn_set_from_chart")
 
         pre(v-if="development_p")
           | start_turn: {{start_turn}}
@@ -70,13 +69,13 @@
 </template>
 
 <script>
-import sp_modal_time_chart from "./sp_modal_time_chart.js"
+import sp_modal_time_chart from "./sp_modal_time_chart.vue"
 
 export default {
   name: "sp_modal",
-  mixins: [
+  components: {
     sp_modal_time_chart,
-  ],
+  },
 
   props: {
     record:          {                  }, // バトル情報
@@ -89,8 +88,9 @@ export default {
     return {
       new_modal_p: this.sp_modal_p,    // sp_modal_p の内部の値
       run_mode: null,                  // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      turn_offset: null,
-      player_info_show_p: true,      // プレイヤーの名前を表示する？
+      turn_offset: null,               // KENTOに渡すための手番
+      name_show_p: true,        // プレイヤーの名前を表示する？
+      time_chart_p: false,             // 時間チャートを表示する？
     }
   },
 
@@ -126,6 +126,13 @@ export default {
     },
   },
 
+  mounted() {
+    console.log(this.$refs.sp_modal_time_chart)
+    if (this.$refs.sp_modal_time_chart) {
+      console.log(this.$refs.sp_modal_time_chart)
+    }
+  },
+
   methods: {
     // マウスで操作したときだけ呼べる
     run_mode_change_handle(v) {
@@ -157,6 +164,12 @@ export default {
       }
     },
 
+    // sp_modal_time_chart でチャートをクリックしたときに変更する
+    turn_set_from_chart(v) {
+      this.$refs.sp_modal.api_board_turn_set(v) // 直接 shogi-player に設定
+      this.turn_offset = v                      // KENTO用に設定 (shogi-playerからイベントが来ないため)
+    },
+
     // shogi-player の局面が変化したときの手数を取り出す
     real_turn_set(v) {
       this.turn_offset = v
@@ -182,7 +195,7 @@ export default {
     },
 
     player_info() {
-      if (this.player_info_show_p) {
+      if (this.name_show_p) {
         return this.record.player_info
       }
     },
@@ -229,7 +242,4 @@ export default {
   // .modal_loading_content
   //   width: 40vmin
   //   height: 40vmin
-  .time_chart_container
-    margin-top: 1rem
-
 </style>

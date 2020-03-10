@@ -6,7 +6,7 @@ module PaletteSharedMethods
   end
 
   def border_color
-    @border_color ||= color.css_rgba(0.5)
+    @border_color ||= color.css_rgba(0.6)
   end
 
   def background_color

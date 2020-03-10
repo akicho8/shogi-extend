@@ -9,8 +9,8 @@ window.SwarsBattleShow = Vue.extend({
   },
 
   mounted() {
-    if (this.$refs.think_canvas) {
-      new Chart(this.$refs.think_canvas, this.time_chart_params)
+    if (this.$refs.time_chart_canvas) {
+      new Chart(this.$refs.time_chart_canvas, this.time_chart_params)
     }
   },
 

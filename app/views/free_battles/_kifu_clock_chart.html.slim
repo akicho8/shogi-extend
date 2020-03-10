@@ -3,7 +3,7 @@
     hr
     .section
       / .title.is-4.yumincho 消費時間
-      canvas(ref="think_canvas")
+      canvas(ref="time_chart_canvas")
 
     - if Rails.env.development? && false
       = current_record.fast_parsed_info.move_infos.take(4).to_html

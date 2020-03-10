@@ -185,20 +185,18 @@ module Swars
         # labels: (0..turn_max).collect { |e| e.modulo(50).zero? ? e : ""},
         datasets: memberships.collect.with_index { |e, i|
           {
-            label: e.user.key,
+            label: e.user.key,        # グラフの上に出る名前
             data: e.chartjs_data,
             borderColor: PaletteInfo[i].border_color,
             backgroundColor: PaletteInfo[i].background_color,
-            fill: true,
+            fill: true,               # 塗り潰す？
             pointRadius: 1.2,         # 点半径
             borderWidth: 1,           # 点枠の太さ
             pointHoverRadius: 5,      # 点半径(アクティブ時)
             pointHoverBorderWidth: 2, # 点枠の太さ(アクティブ時)
             pointHitRadius: 5,        # タップできる大きさ
             showLine: true,           # 線で繋げる
-            # spanGaps: false,
-            lineTension: 0.3,
-            # clip: {left: 5, top: false, right: -2, bottom: 0},
+            lineTension: 0.2,         # 0なら線がカクカクになる
           }
         },
       }
