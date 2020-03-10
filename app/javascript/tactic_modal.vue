@@ -10,7 +10,7 @@
         shogi_player(
           :run_mode="'view_mode'"
           :debug_mode="false"
-          :start_turn="-1"
+          :start_turn="0"
           :kifu_body="record.sfen_body"
           :key_event_capture="true"
           :slider_show="true"
