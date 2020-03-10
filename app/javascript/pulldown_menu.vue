@@ -5,7 +5,7 @@
     template(v-if="new_permalink_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="tweet_url_for(new_permalink_url)")
-          b-icon(icon="twitter" size="is-small")
+          b-icon(icon="twitter" size="is-small" type="is-info")
           span.a_label
             | ツイート
 
