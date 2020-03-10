@@ -1,5 +1,5 @@
 <template lang="pug">
-  .sp_modal_time_chart(v-show="show_p")
+  .sp_modal_time_chart.is-unselectable(v-show="show_p")
     canvas#chart_el(ref="chart_el")
     .bottom_buttons.has-text-centered
       b-switch(v-model="zoom_p" size="is-small")
