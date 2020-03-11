@@ -1,4 +1,4 @@
-.title.is-2= current_record.new_record? ? "部屋の作成" : "部屋名の編集"
+.title.is-3= current_record.new_record? ? "部屋の作成" : "部屋名の編集"
 hr
 
 = form_with(model: [:colosseum, current_record]) do |form|
