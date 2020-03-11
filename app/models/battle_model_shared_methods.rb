@@ -420,7 +420,7 @@ module BattleModelSharedMethods
     def time_chart_xy_hash_list(location)
       c = Bioshogi::Location.count
       loc = preset_info.to_turn_info.current_location(location.code)
-      sec_list(location).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
+      sec_list(location).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * (e || 0) } } # 表示上「1手目」と表記したいので +1
     end
   end
 end

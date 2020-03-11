@@ -36,7 +36,8 @@ require 'rails_helper'
 
 RSpec.describe FreeBattle, type: :model do
   before do
-    @record = FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.kif").read)
+    @kif_record = FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.kif").read)
+    @ki2_record = FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
 
     tempfile = Tempfile.open
     tempfile.write("68S")
@@ -74,11 +75,13 @@ EOT
   end
 
   it "sec_list" do
-    assert { @record.sec_list(Bioshogi::Location[:black]) == [ 1,  2] }
-    assert { @record.sec_list(Bioshogi::Location[:white]) == [10, 20] }
+    assert { @kif_record.sec_list(Bioshogi::Location[:black]) == [ 1,  2]   }
+    assert { @kif_record.sec_list(Bioshogi::Location[:white]) == [10, 20]   }
+    assert { @ki2_record.sec_list(Bioshogi::Location[:white]) == [nil, nil] }
   end
 
   it "time_chart_params" do
-    assert { @record.time_chart_params.has_key?(:datasets) }
+    assert { @kif_record.time_chart_params.has_key?(:datasets) }
+    assert { @ki2_record.time_chart_params.has_key?(:datasets) }
   end
 end
