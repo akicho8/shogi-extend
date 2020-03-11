@@ -62,9 +62,7 @@
         piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
         kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
         kif_copy_button(@click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
-        //- b-button(icon-left="twitter" tag="a" :href="tweet_url" size="is-small" type="is-info" is-rounded)
-        b-button(tag="a" :href="tweet_url" size="is-small")
-          b-icon(icon="twitter" type="is-info" size="is-small")
+        tweet_button(tag="a" :href="tweet_url")
 
         pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる

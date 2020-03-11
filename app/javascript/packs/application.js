@@ -126,6 +126,7 @@ import piyo_shogi_button from "components/piyo_shogi_button.vue"
 import kento_button from "components/kento_button.vue"
 import kif_copy_button from "components/kif_copy_button.vue"
 import sp_modal_button from "components/sp_modal_button.vue"
+import tweet_button from "components/tweet_button.vue"
 
 // const router = new VueRouter({
 //   mode: 'history',
@@ -164,6 +165,7 @@ Vue.mixin({
     kento_button,
     kif_copy_button,
     sp_modal_button,
+    tweet_button,
   },
 })
 
