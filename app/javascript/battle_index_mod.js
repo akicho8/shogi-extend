@@ -90,7 +90,7 @@ export default {
 
     show_handle(row) {
       this.modal_record = row
-      this.turn_offset = this.start_turn
+      // this.turn_offset = this.start_turn // this.modal_record の start_turn を計算
 
       if (this.modal_record.sfen_body) {
         this.debug_alert("棋譜はすでにある")
@@ -162,19 +162,20 @@ export default {
     // 開始局面
     // force_turn start_turn critical_turn の順に見る
     // force_turn は $options.modal_record にのみ入っている
-    start_turn_for(record) {
-      if (record) {
-        if (this.board_show_type === "last") {
-          return record.turn_max
-        }
-
-        if ("force_turn" in record) {
-          return record.force_turn
-        } else {
-          return record.sp_turn
-        }
-      }
-    },
+    // start_turn_for(record) {
+    //   alert(1)
+    //   if (record) {
+    //     if (this.board_show_type === "last") {
+    //       return record.turn_max
+    //     }
+    //
+    //     // if ("turn" in record) {
+    //     //   return record.turn
+    //     // }
+    //
+    //     return record.sp_turn
+    //   }
+    // },
   },
 
   mounted() {
@@ -227,11 +228,11 @@ export default {
     // },
 
     // 開始局面
-    // force_turn start_turn critical_turn の順に見る
-    // force_turn は $options.modal_record にのみ入っている
-    start_turn() {
-      return this.start_turn_for(this.modal_record)
-    },
+    // turn start_turn critical_turn の順に見る
+    // turn は $options.modal_record にのみ入っている
+    // start_turn() {
+    //   return this.start_turn_for(this.modal_record)
+    // },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 

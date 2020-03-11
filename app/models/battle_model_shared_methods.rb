@@ -214,7 +214,7 @@ module BattleModelSharedMethods
     options = {}
 
     if true
-      v = adjust_turn(h.current_force_turn)
+      v = adjust_turn(h.current_turn)
       if v == turn_max
         turn = "#{v}手目(終了図)"
       else
@@ -223,13 +223,13 @@ module BattleModelSharedMethods
       options[:title] = h.params[:title].presence || title.presence || turn
     end
 
-    if turn = h.current_force_turn
+    if turn = h.current_turn
       options[:url] = modal_on_index_url(turn: turn)
     else
       options[:url] = modal_on_index_url
     end
 
-    if turn = h.current_force_turn
+    if turn = h.current_turn
       options[:image] = twitter_card_image_url(h, turn: turn)
     else
       options[:image] = twitter_card_image_url(h)

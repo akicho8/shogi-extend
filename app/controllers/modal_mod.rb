@@ -42,8 +42,11 @@ module ModalMod
   def js_modal_record_for(e)
     js_record_for(e).tap do |a|
       a[:sfen_body] ||= e.existing_sfen
-      if v = current_force_turn
-        a[:force_turn] = e.adjust_turn(v)
+
+      # 明示的に turn が指定されているときのみ設定
+      # turn は sp_modal.vue で拾う
+      if v = current_turn
+        a[:turn] = e.adjust_turn(v)
       end
     end
   end

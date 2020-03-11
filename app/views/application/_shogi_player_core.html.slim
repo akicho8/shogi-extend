@@ -1,7 +1,7 @@
 - if sfen = current_record.existing_sfen
   shogi_player(
     :kifu_body="'#{sfen}'"
-    :start_turn="#{current_record_turn}"
+    :start_turn="-1"
     :key_event_capture="true"
     :slider_show="true"
     :sfen_show="false"
