@@ -224,6 +224,7 @@ export default {
     position: absolute
     top: 0.6rem
     left: 0.6rem
+    z-index: 2                  // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
 
   // 上のスペース
   .modal-card-body
