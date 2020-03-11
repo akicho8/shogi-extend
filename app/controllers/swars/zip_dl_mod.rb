@@ -1,9 +1,7 @@
 require "kconv"
 
 module Swars
-  module ZipDlMod
-    extend ActiveSupport::Concern
-
+  concern :ZipDlMod do
     private
 
     def zip_dl_perform

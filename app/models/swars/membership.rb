@@ -160,31 +160,34 @@ module Swars
       end
 
       def sec_list
-        @sec_list ||= -> {
-          c = Bioshogi::Location.count
-          pos = battle.preset_info.to_turn_info.current_location(position).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
-          v = battle.fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
-          v.collect { |e| e[:used_seconds] }
-        }.call
+        # @sec_list ||= -> {
+        #   c = Bioshogi::Location.count
+        #   pos = battle.preset_info.to_turn_info.current_location(position).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
+        #   v = battle.fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
+        #   v.collect { |e| e[:used_seconds] }
+        # }.call
+
+        @sec_list ||= battle.sec_list(location)
       end
 
-      def chartjs_data
-        @chartjs_data ||= -> {
-          c = Bioshogi::Location.count
-          loc = battle.preset_info.to_turn_info.current_location(position)
-          # sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
-          sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
+      def time_chart_xy_hash_list
+        @time_chart_xy_hash_list ||= battle.time_chart_xy_hash_list(location)
 
-          # pos = battle.preset_info.to_turn_info.current_location(position).code
-          # list = battle.fast_parsed_info.move_infos.find_all.collect.with_index { |e, i|
-          #   if i.modulo(c) == pos
-          #     { x: (1 + loc.code + i * c).to_s, y: location.value_sign * e[:used_seconds] }
-          #   else
-          #     nil
-          #   end
-          # }.compact
-
-        }.call
+        # @time_chart_xy_hash_list ||= -> {
+        #   c = Bioshogi::Location.count
+        #   loc = battle.preset_info.to_turn_info.current_location(position)
+        #   # sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
+        #   sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
+        #
+        #   # pos = battle.preset_info.to_turn_info.current_location(position).code
+        #   # list = battle.fast_parsed_info.move_infos.find_all.collect.with_index { |e, i|
+        #   #   if i.modulo(c) == pos
+        #   #     { x: (1 + loc.code + i * c).to_s, y: location.value_sign * e[:used_seconds] }
+        #   #   else
+        #   #     nil
+        #   #   end
+        #   # }.compact
+        # }.call
       end
 
       def swgod_level1_used?

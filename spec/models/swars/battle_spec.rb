@@ -35,15 +35,15 @@ module Swars
       Swars.setup
     end
 
-    it "作成" do
+    before do
       user1 = User.create!
       user2 = User.create!
 
-      battle = Battle.new
-      battle.csa_seq = [["-7162GI", 599],  ["+2726FU", 597],  ["-4132KI", 594],  ["+6978KI", 590]]
-      battle.memberships.build(user: user1, judge_key: :win,  location_key: :black)
-      battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
-      assert { battle.save! }
+      @record = Battle.new
+      @record.csa_seq = [["-7162GI", 599],  ["+2726FU", 597],  ["-4132KI", 594],  ["+6978KI", 590]]
+      @record.memberships.build(user: user1, judge_key: :win,  location_key: :black)
+      @record.memberships.build(user: user2, judge_key: :lose, location_key: :white)
+      @record.save!
     end
 
     it "相入玉タグ" do
@@ -60,6 +60,15 @@ module Swars
       assert { battle.note_tag_list                == ["入玉", "相入玉", "居飛車", "相居飛車"] }
       assert { battle.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
       assert { battle.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
+    end
+
+    it "sec_list" do
+      assert { @record.sec_list(Bioshogi::Location[:black]) == [1, 5] }
+      assert { @record.sec_list(Bioshogi::Location[:white]) == [3, 7] }
+    end
+
+    it "time_chart_params" do
+      assert { @record.time_chart_params.has_key?(:datasets) }
     end
   end
 end

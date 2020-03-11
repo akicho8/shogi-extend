@@ -36,18 +36,20 @@ require 'rails_helper'
 
 RSpec.describe FreeBattle, type: :model do
   before do
+    @record = FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.kif").read)
+
     tempfile = Tempfile.open
     tempfile.write("68S")
     @kifu_file = ActionDispatch::Http::UploadedFile.new(filename: "嬉野流.kif", type: "text/plain", tempfile: tempfile.open)
   end
 
   it "ファイルアップロードして変換" do
-    free_battle = FreeBattle.create!(kifu_file: @kifu_file)
-    assert { free_battle.kifu_body == "68S" }
+    record = FreeBattle.create!(kifu_file: @kifu_file)
+    assert { record.kifu_body == "68S" }
   end
 
   it "「**解析」などが含まれる巨大なKIFはいったん綺麗にする" do
-    free_battle = FreeBattle.create!(kifu_body: <<~EOT)
+    record = FreeBattle.create!(kifu_body: <<~EOT)
 手数----指手---------消費時間--
 **Engines 0 HoneyWaffle WCSC28
 **解析
@@ -58,7 +60,7 @@ RSpec.describe FreeBattle, type: :model do
 **候補手
 EOT
 
-    assert { free_battle.kifu_body == <<~EOT }
+    assert { record.kifu_body == <<~EOT }
 手数----指手---------消費時間--
 *一致率 先手 21% = 14/64  後手 40% = 26/64
 *棋戦詳細：ライバル対決
@@ -67,7 +69,16 @@ EOT
   end
 
   it "ぴよ将棋？の日付フォーマット読み取り" do
-    free_battle = FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
-    assert { free_battle.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
+    record = FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
+    assert { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
+  end
+
+  it "sec_list" do
+    assert { @record.sec_list(Bioshogi::Location[:black]) == [ 1,  2] }
+    assert { @record.sec_list(Bioshogi::Location[:white]) == [10, 20] }
+  end
+
+  it "time_chart_params" do
+    assert { @record.time_chart_params.has_key?(:datasets) }
   end
 end

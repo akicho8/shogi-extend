@@ -269,4 +269,20 @@ class FreeBattle < ApplicationRecord
       UseInfo.fetch(use_key)
     end
   end
+
+  concerning :TimeChartMod do
+    # FreeBattle の方は preset_info がないため
+    def preset_info
+      @preset_info ||= fast_parsed_info.preset_info
+    end
+
+    def time_chart_datasets
+      Bioshogi::Location.collect do |location|
+        {
+          label: location.name,
+          data: time_chart_xy_hash_list(location),
+        }
+      end
+    end
+  end
 end

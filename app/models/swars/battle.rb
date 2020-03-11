@@ -57,7 +57,6 @@ module Swars
 
       self.battled_at ||= Time.current
       self.final_key ||= :TORYO
-      self.preset_key ||= :"平手"
     end
 
     with_options presence: true do
@@ -65,12 +64,10 @@ module Swars
       validates :battled_at
       validates :rule_key
       validates :final_key
-      validates :preset_key
     end
 
     with_options allow_blank: true do
       validates :key, uniqueness: true
-      validates :preset_key, inclusion: Bioshogi::PresetInfo.keys.collect(&:to_s)
       validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
     end
 
@@ -84,10 +81,6 @@ module Swars
 
     def final_info
       FinalInfo.fetch(final_key)
-    end
-
-    def preset_info
-      Bioshogi::PresetInfo.fetch(preset_key)
     end
 
     def battle_decorator_class
@@ -179,26 +172,12 @@ module Swars
       SlackAgent.message_send(key: "rule_key_bugfix_process", body: c.to_s)
     end
 
-    def time_chart_params
-      {
-        labels: (1..turn_max).to_a,
-        # labels: (0..turn_max).collect { |e| e.modulo(50).zero? ? e : ""},
-        datasets: memberships.collect.with_index { |e, i|
-          {
-            label: e.user.key,        # グラフの上に出る名前
-            data: e.chartjs_data,
-            borderColor: PaletteInfo[i].border_color,
-            backgroundColor: PaletteInfo[i].background_color,
-            fill: true,               # 塗り潰す？
-            pointRadius: 1.2,         # 点半径
-            borderWidth: 1,           # 点枠の太さ
-            pointHoverRadius: 5,      # 点半径(アクティブ時)
-            pointHoverBorderWidth: 2, # 点枠の太さ(アクティブ時)
-            pointHitRadius: 5,        # タップできる大きさ
-            showLine: true,           # 線で繋げる
-            lineTension: 0.2,         # 0なら線がカクカクになる
-          }
-        },
+    def time_chart_datasets
+      memberships.collect.with_index { |e, i|
+        {
+          label: e.user.key,  # グラフの上に出る名前
+          data: e.time_chart_xy_hash_list,
+        }
       }
     end
   end
