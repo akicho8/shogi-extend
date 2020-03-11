@@ -7,9 +7,9 @@
 
         template(v-if="record.title")
           .is-size-7.has-text-centered
-            template(v-if="record.saturn_key === 'private'")
-              b-icon.has-text-grey-light(icon="lock" size="is-small")
-              | &nbsp;
+            //- template(v-if="record.saturn_key === 'private'")
+            //-   b-icon.has-text-grey-light(icon="lock" size="is-small")
+            //-   | &nbsp;
             span(:style="{visibility: name_show_p ? 'visible' : 'hidden'}")
               | {{record.title}}
         template(v-if="record.description && false")
