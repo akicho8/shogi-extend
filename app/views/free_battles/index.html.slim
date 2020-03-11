@@ -44,11 +44,8 @@
 
   .columns
     .column
-      = link_to([:new, ns_prefix, current_single_key], class: "button is-primary") do
-        b-icon(icon="clipboard-arrow-up-outline" size="is-small")
-        | &nbsp;
-        | &nbsp;
-        | 投稿
+      - url = polymorphic_path([:new, ns_prefix, current_single_key])
+      b-button(tag="a" :href="'#{url}'" icon-left="clipboard-arrow-up-outline") 投稿
 
   = render partial: "parmalink"
 
