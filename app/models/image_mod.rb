@@ -33,7 +33,8 @@ module ImageMod
       params = params.to_unsafe_h
     end
 
-    hash = params.to_options.transform_values { |e| Float(e) rescue e }
+    params = params.to_options
+    hash = params.transform_values { |e| Float(e) rescue e }
 
     options = image_default_options.merge(hash)
 
@@ -43,6 +44,35 @@ module ImageMod
     end
 
     options
+  end
+
+  def to_dynamic_png(params = {})
+    options = param_as_to_png_options(params)
+    turn = adjust_turn(options[:turn])
+
+    cache_key_source = [sfen_body, options]
+    if Rails.env.development?
+      Rails.logger.debug ["#{__FILE__}:#{__LINE__}", __method__, cache_key_source]
+    end
+    hex = Digest::MD5.hexdigest(cache_key_source.to_s)
+    cache_key = [to_param, "png", turn, hex].join(":")
+
+    Rails.cache.fetch(cache_key, expires_in: 1.week) do
+      parser = Bioshogi::Parser.parse(existing_sfen, bioshogi_parser_options.merge(turn_limit: turn))
+      parser.to_png(options)
+    end
+  end
+
+  # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
+  def bioshogi_parser_options
+    {
+      # :skill_monitor_enable           => false,
+      # :skill_monitor_technique_enable => false,
+      :typical_error_case => :embed, # validate_skip しているのでこのオプションは使わない？
+      :candidate_skip     => true,
+      :validate_skip      => true,
+      :mediator_class     => Bioshogi::MediatorFast,
+    }
   end
 
   def modal_on_index_url(**params)
