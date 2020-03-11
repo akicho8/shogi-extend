@@ -191,7 +191,7 @@ module BattleModelSharedMethods
     image_turn || start_turn || outbreak_turn || critical_turn || turn_max
   end
 
-  def adjust_turn(turn)
+  def adjust_turn(turn = nil)
     turn = turn.presence
 
     if turn

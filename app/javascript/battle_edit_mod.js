@@ -3,7 +3,7 @@ import _ from "lodash"
 const TEXT_INPUT_UPDATE_DELAY = 0.5 // プレビューするまでの遅延時間(秒)
 
 const TAB_NAME_KEYS = [
-  "棋譜",
+  "棋譜入力",
   "操作入力",
 ]
 
@@ -71,7 +71,7 @@ export default {
     },
 
     text_mode_p() {
-      return this.input_tab_name === "棋譜"
+      return this.input_tab_name === "棋譜入力"
     },
 
     board_mode_p() {

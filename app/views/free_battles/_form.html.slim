@@ -3,11 +3,11 @@
   = form.hidden_field(:hidden_kifu_body, "v-model": "input_text")
 
   b-tabs.input_method_tabs.is_lr_paddingless(type="" v-model="input_tab_index" expanded)
-    b-tab-item(label="棋譜")
+    b-tab-item(label="棋譜入力")
       .control
         - if AppConfig[:free_battles_pro_mode]
           = form.label(:kifu_body, class: "label")
-        = form.text_area(:kifu_body, rows: 12, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "input_text", ref: "input_text")
+        = form.text_area(:kifu_body, rows: 8, class: "textarea is-small", placeholder: "#{KifuFormatWithBodInfo.collect(&:name).join(', ')} に対応しています\n68S ３四歩 ▲７九角 八四歩 のような指し手の羅列だけでもかまいません", "v-model": "input_text", ref: "input_text")
 
       - if AppConfig[:free_battles_pro_mode]
         .is-size-7
@@ -43,7 +43,7 @@
 .field
   = form.label(:description, class: "label")
   .control
-    = form.text_area(:description, class: "textarea is-small", rows: 1)
+    = form.text_area(:description, class: "textarea is-small", rows: 2)
 
 - if current_user
   b-field
