@@ -53,20 +53,21 @@
           b-icon(:icon="e.icon" size="is-small")
         | {{e.name}}
 
-.field
-  details
-    summary.is-size-6
-      | その他
+- if false
+  .field
+    details
+      summary.is-size-6
+        | その他
 
-    = render partial: "form_start_turn", locals: { form: form }
+      = render partial: "form_start_turn", locals: { form: form }
 
-    - if Rails.env.development? || Rails.env.test?
-      .field
-        = form.label(:kifu_url, class: "label")
-        .control
-          = form.url_field(:kifu_url, class: "input is-small", placeholder: "別のサイトにある場合は URL を指定します")
+      - if Rails.env.development? || Rails.env.test?
+        .field
+          = form.label(:kifu_url, class: "label")
+          .control
+            = form.url_field(:kifu_url, class: "input is-small", placeholder: "別のサイトにある場合は URL を指定します")
 
-      .field
-        = form.label(:kifu_file, class: "label")
-        .control
-          = form.file_field(:kifu_file)
+        .field
+          = form.label(:kifu_file, class: "label")
+          .control
+            = form.file_field(:kifu_file)
