@@ -20,7 +20,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
         shogi_player(
           :run_mode="'view_mode'"
           :debug_mode="false"
-          :start_turn="start_turn_for(e)"
+          :start_turn="trick_start_turn_for(e)"
           :kifu_body="e.sfen_body"
           :theme="'simple'"
           :size="'x-small'"
@@ -37,12 +37,3 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
           / | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
           | {{e.memberships[0].name_with_grade}}
 
-- if false
-  / 画像版。これだと終了図に対応できない
-  .columns.is-multiline
-    template(v-for="e in records")
-      .column.is-one-fifth.has-text-centered.is-narrow
-        a(@click.stop.prevent="show_handle(e)")
-          small.line_break_on.has-text-grey
-            | {{e.title}}
-          img(:src="e.twitter_card_image_url")

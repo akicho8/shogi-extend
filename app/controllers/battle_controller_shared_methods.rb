@@ -301,12 +301,13 @@ module BattleControllerSharedMethods
       current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: view_context))
     end
 
+    # 使ってない？
     let :show_twitter_options do
       options = {}
       options[:title] = current_record.title
       options[:url] = current_record.modal_on_index_url
       options[:description] = current_record.description
-      options[:image] = current_record.twitter_card_image_url(self)
+      options[:image] = current_record.twitter_card_image_url(params)
       options
     end
 
@@ -318,16 +319,20 @@ module BattleControllerSharedMethods
           :id,
           :key,
           # :battled_at,
-          :turn_max,
           # :preset_key,
           # :start_turn,
-          :critical_turn,
-          :outbreak_turn,
           :saturn_key,
           :sfen_body,
           :image_turn,
           :sp_turn,
           :og_turn,
+
+          :turn_max,
+          :image_turn,
+          :start_turn,
+          :critical_turn,
+          :outbreak_turn,
+
         ],
         methods: [
           :sp_turn,
@@ -340,7 +345,7 @@ module BattleControllerSharedMethods
 
         a[:title] = e.title
         a[:description] = e.description
-        a[:twitter_card_image_url] = e.twitter_card_image_url(self)
+        a[:twitter_card_image_url] = e.twitter_card_image_url(params)
         a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
         a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
         a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ

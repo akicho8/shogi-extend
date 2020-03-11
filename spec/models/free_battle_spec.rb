@@ -37,8 +37,8 @@ require 'rails_helper'
 
 RSpec.describe FreeBattle, type: :model do
   before do
-    @kif_record = FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.kif").read)
-    @ki2_record = FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
+    @kif_record = FreeBattle.create!(key: "battle_key1", kifu_body: Pathname(__dir__).join("sample.kif").read)
+    @ki2_record = FreeBattle.create!(key: "key2", kifu_body: Pathname(__dir__).join("sample.ki2").read)
 
     tempfile = Tempfile.open
     tempfile.write("68S")
@@ -84,5 +84,20 @@ EOT
   it "time_chart_params" do
     assert { @kif_record.time_chart_params.has_key?(:datasets) }
     assert { @ki2_record.time_chart_params.has_key?(:datasets) }
+  end
+
+  it "adjust_turn" do
+    assert { @kif_record.adjust_turn(-1) == 4 }
+    assert { @kif_record.adjust_turn( 5) == 4 }
+    assert { @kif_record.adjust_turn(-6) == 0 }
+  end
+
+  it "turn" do
+    assert { @kif_record.sp_turn == 0 }
+    assert { @kif_record.og_turn == 4 }
+  end
+
+  it "record_to_twitter_options" do
+    assert { @kif_record.record_to_twitter_options(turn: 1, description: "a", title: "b") == {:title=>"b", :url=>"http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=1", :image=>"http://localhost:3000/x/battle_key1.png?turn=1", :description=>"a"} }
   end
 end

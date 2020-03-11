@@ -25,8 +25,10 @@ RSpec.describe "棋譜投稿", type: :system do
     doc_image("入力")
     click_button "保存"
 
-    expect(page).to have_content "嬉野流"
-    expect(page).to have_content "６八銀"
+    expect(page).to have_content "(題名)"
+
+    # expect(page).to have_content "嬉野流"
+    # expect(page).to have_content "６八銀"
 
     doc_image("詳細")
   end

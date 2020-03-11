@@ -184,11 +184,13 @@ module BattleModelSharedMethods
   end
 
   def sp_turn
-    start_turn || outbreak_turn || critical_turn || 0
+    # start_turn || outbreak_turn || critical_turn || 0
+    start_turn || critical_turn || 0
   end
 
   def og_turn
-    image_turn || start_turn || outbreak_turn || critical_turn || turn_max
+    # image_turn || start_turn || outbreak_turn || critical_turn || turn_max
+    image_turn || start_turn || critical_turn || turn_max
   end
 
   def adjust_turn(turn = nil)
@@ -210,42 +212,19 @@ module BattleModelSharedMethods
     turn.clamp(0, turn_max)
   end
 
-  def record_to_twitter_options(h)
-    options = {}
-
-    if true
-      v = adjust_turn(h.current_turn)
-      if v == turn_max
-        turn = "#{v}手目(終了図)"
-      else
-        turn = "#{v}手目"
-      end
-      options[:title] = h.params[:title].presence || title.presence || turn
+  def record_to_twitter_options(params = {})
+    {}.tap do |e|
+      turn = adjust_turn(params[:turn])
+      e[:title]       = params[:title].presence || title.presence || "#{turn}手目"
+      e[:url]         = modal_on_index_url(turn: turn)
+      e[:image]       = twitter_card_image_url(turn: turn)
+      e[:description] = params[:description].presence || description
     end
-
-    if turn = h.current_turn
-      options[:url] = modal_on_index_url(turn: turn)
-    else
-      options[:url] = modal_on_index_url
-    end
-
-    if turn = h.current_turn
-      options[:image] = twitter_card_image_url(h, turn: turn)
-    else
-      options[:image] = twitter_card_image_url(h)
-    end
-
-    options[:description] = h.params[:description].presence || description
-
-    options
   end
 
-  def twitter_card_image_url(h, options = {})
-    # rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale))
-    # とした場合はリダイレクトするURLになってしまうため使えない
-    # 固定URL化する
-    # h.polymorphic_url([h.ns_prefix, self], {format: "png", updated_at: updated_at.to_i}.merge(options))
-    h.polymorphic_url([h.ns_prefix, self], {format: "png"}.merge(options))
+  def twitter_card_image_url(options = {})
+    turn = adjust_turn(options[:turn])
+    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn})
   end
 
   def battle_decorator(params = {})

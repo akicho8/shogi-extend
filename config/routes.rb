@@ -54,6 +54,14 @@ Rails.application.routes.draw do
 
   resources :free_battles, path: "x"
 
+  # resolve "FreeBattle" do |record, options|
+  #   [record, options]
+  # end
+
+  # resolve "FreeBattle" do |record, options|
+  #   [record, options]
+  # end
+
   get "adapter", to: "free_battles#new", defaults: { edit_mode: "adapter" }
 
   # resolve "FreeBattle" do |free_battle, options|

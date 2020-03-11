@@ -39,7 +39,7 @@
             .field
               .buttons
                 = link_to("OGP画像設定", [:edit, ns_prefix, current_record, edit_mode: "ogp"], class: "button is-small")
-                = link_to("OGP画像確認", current_record.twitter_card_image_url(self), class: "button is-small")
+                = link_to("OGP画像確認", current_record.twitter_card_image_url(params), class: "button is-small")
             hr
             .buttons
               = link_to(icon_tag("trash-can-outline"), [ns_prefix, current_record], class: "button is-danger is-small", method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})

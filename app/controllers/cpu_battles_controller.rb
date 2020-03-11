@@ -9,7 +9,7 @@ class CpuBattlesController < ApplicationController
     options = {}
     options[:title] = "CPU対戦"
     options[:description] = "ものすごく弱いです"
-    options[:image] = ApplicationController.helpers.image_url("cpu_battle_show.png")
+    options[:image] = "cpu_battle_show.png"
     options
   end
 

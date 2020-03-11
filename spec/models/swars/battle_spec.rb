@@ -36,10 +36,10 @@ module Swars
     end
 
     before do
-      user1 = User.create!
-      user2 = User.create!
+      user1 = User.create!(key: "user1")
+      user2 = User.create!(key: "user2")
 
-      @record = Battle.new
+      @record = Battle.new(key: "battle_key1")
       @record.csa_seq = [["-7162GI", 599],  ["+2726FU", 597],  ["-4132KI", 594],  ["+6978KI", 590]]
       @record.memberships.build(user: user1, judge_key: :win,  location_key: :black)
       @record.memberships.build(user: user2, judge_key: :lose, location_key: :white)
@@ -69,6 +69,10 @@ module Swars
 
     it "time_chart_params" do
       assert { @record.time_chart_params.has_key?(:datasets) }
+    end
+
+    it "record_to_twitter_options" do
+      assert { @record.record_to_twitter_options == {:title => "user1 30級 対 user2 30級", :url => "http://localhost:3000/w?description=&modal_id=battle_key1&title=&turn=4", :image => "http://localhost:3000/w/battle_key1.png?turn=4", :description => "将棋ウォーズ10分切れ負け その他 vs その他"} }
     end
   end
 end

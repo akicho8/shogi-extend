@@ -100,10 +100,10 @@ module Swars
       case
       when v = modal_record
         # http://localhost:3000/w?modal_id=1
-        v.record_to_twitter_options(self)
+        v.record_to_twitter_options(params)
       when v = primary_record
         # http://localhost:3000/w?query=https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1
-        v.record_to_twitter_options(self)
+        v.record_to_twitter_options(params)
       when current_swars_user
         # http://localhost:3000/w?query=itoshinTV
         {

@@ -162,20 +162,17 @@ export default {
     // 開始局面
     // force_turn start_turn critical_turn の順に見る
     // force_turn は $options.modal_record にのみ入っている
-    // start_turn_for(record) {
-    //   alert(1)
-    //   if (record) {
-    //     if (this.board_show_type === "last") {
-    //       return record.turn_max
-    //     }
-    //
-    //     // if ("turn" in record) {
-    //     //   return record.turn
-    //     // }
-    //
-    //     return record.sp_turn
-    //   }
-    // },
+    trick_start_turn_for(record) {
+      if (this.board_show_type === "last") {
+        return record.turn_max
+      }
+
+      if ("turn" in record) {
+        return record.turn
+      }
+
+      return record.og_turn
+    },
   },
 
   mounted() {
