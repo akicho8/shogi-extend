@@ -75,13 +75,15 @@ module ImageMod
     }
   end
 
-  def modal_on_index_url(**params)
+  def modal_on_index_url(params = {})
     params = {
       modal_id: to_param,
       title: "",
       description: "",
       turn: "",
     }.merge(params)
+
+    # params[:turn] = adjust_turn(params[:turn])
 
     Rails.application.routes.url_helpers.full_url_for([self.class, params])
   end
