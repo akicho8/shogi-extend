@@ -192,11 +192,11 @@ module BattleModelSharedMethods
   end
 
   def adjust_turn(turn)
-    # turn = turn.presence
-    #
-    # if turn
-    #   turn = turn.to_i
-    # end
+    turn = turn.presence
+
+    if turn
+      turn = turn.to_i
+    end
 
     turn ||= og_turn
 
@@ -207,14 +207,7 @@ module BattleModelSharedMethods
 
     # 99手までのとき 100 を指定すると99手目にする
     # 99手までのとき -1000 を指定すると0手目にする
-    turn = turn.clamp(0, turn_max)
-
-    # raise self.attributes.inspect
-    #
-    # raise turn_max.inspect
-    # raise turn.inspect
-
-    turn
+    turn.clamp(0, turn_max)
   end
 
   def record_to_twitter_options(h)
