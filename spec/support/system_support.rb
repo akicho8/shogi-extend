@@ -107,3 +107,12 @@ if true
     end
   end
 end
+
+# ダウンロードした ZIP を削除する
+RSpec.configure do |config|
+  config.after(:suite) do
+    Dir.chdir(Rails.root) do
+      system "rm -f *.zip"
+    end
+  end
+end
