@@ -168,23 +168,27 @@ class FreeBattlesController < ApplicationController
   end
 
   def redirect_to_where
-    # 自動的にOGP画像設定に移動する場合
-    if false
-      if current_record.saved_changes[:id]
-        if editable_record?(current_record)
-          return [:edit, ns_prefix, current_record, edit_mode: :ogp]
-        end
-      end
+    if params[:_submit_and_redirect_to_modal]
+      return [ns_prefix, current_plural_key, modal_id: current_record.to_param]
     end
 
-    # 自動的にOGP画像設定する場合
-    if true
-      if current_record.saved_changes[:image_turn]
-        if editable_record?(current_record)
-          return [:edit, ns_prefix, current_record, edit_mode: :ogp, auto_write: true]
-        end
-      end
-    end
+    # 自動的にOGP画像設定に移動する場合
+    # if false
+    #   if current_record.saved_changes[:id]
+    #     if editable_record?(current_record)
+    #       return [:edit, ns_prefix, current_record, edit_mode: :ogp]
+    #     end
+    #   end
+    # end
+
+    # # 自動的にOGP画像設定する場合
+    # if true
+    #   if current_record.saved_changes[:image_turn]
+    #     if editable_record?(current_record)
+    #       return [:edit, ns_prefix, current_record, edit_mode: :ogp, auto_write: true]
+    #     end
+    #   end
+    # end
 
     super
   end

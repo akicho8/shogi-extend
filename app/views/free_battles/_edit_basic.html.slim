@@ -17,7 +17,7 @@
         - else
           a= "投稿"
 
-  / p.title.is-2.yumincho
+  / p.title.is-3.yumincho
   /   = @page_title
   / hr
 
@@ -28,7 +28,7 @@
         = render partial: "form", locals: {form: form}
         .field
           p.control
-            =<> form.submit(name: :_submit_and_redirect_to_show, class: "button is-primary")
+            =<> form.submit(name: :_submit_and_redirect_to_modal, class: "button is-primary")
           - if current_record.new_record?
             p.has-text-grey.is-size-7
               | 保存すると固定URL化できます。ログインしてから保存したときのみ再編集やOGP画像の設定ができます

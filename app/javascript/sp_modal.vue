@@ -127,10 +127,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$refs.sp_modal_time_chart)
-    if (this.$refs.sp_modal_time_chart) {
-      console.log(this.$refs.sp_modal_time_chart)
-    }
   },
 
   methods: {
