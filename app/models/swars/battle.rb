@@ -139,7 +139,7 @@ module Swars
 
       def description
         out = []
-        out << "将棋ウォーズ#{rule_info.long_name}"
+        out << "将棋ウォーズ(#{rule_info.name})"
         # out << final_info.name
         out << memberships.collect { |e| (e.tag_names_for(:attack).presence || ["その他"]).join(" ") }.join(" vs ")
         out.join(" ")
