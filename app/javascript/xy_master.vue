@@ -18,9 +18,6 @@
               template(v-for="e in XyRuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
-            template(v-if="$root.$options.xy_master_custom_mode")
-              b-button(@click="sp_setting_handle" icon-right="settings")
-
             b-button(@click="rule_display" icon-right="help")
 
             template(v-if="$root.$options.xy_master_custom_mode")
@@ -64,11 +61,9 @@
             :summary_show="false"
             :hidden_if_piece_stand_blank="true"
             :setting_button_show="false"
-            :theme.sync="sp_theme"
-            :bg_variant.sync="sp_bg_variant"
-            :size.sync="sp_size"
+            :theme="'simple'"
+            :size="'default'"
             :flip="current_rule.flip"
-            :piece_variant.sync="sp_piece_variant"
             :board_piece_back_user_class="board_piece_back_user_class"
             :overlay_navi="false"
             :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
@@ -234,11 +229,6 @@ export default {
       current_pages: null,
       saved_rule: null,
 
-      sp_theme: null,
-      sp_bg_variant: null,
-      sp_size: null,
-      sp_piece_variant: null,
-
       bg_mode: null,
       kifu_body: null,
     }
@@ -262,10 +252,6 @@ export default {
 
   watch: {
     entry_name()       { this.data_save_to_local_storage() },
-    sp_theme()         { this.data_save_to_local_storage() },
-    sp_bg_variant()    { this.data_save_to_local_storage() },
-    sp_size()          { this.data_save_to_local_storage() },
-    sp_piece_variant() { this.data_save_to_local_storage() },
 
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
 
@@ -348,10 +334,6 @@ export default {
       })
     },
 
-    sp_setting_handle() {
-      this.$refs.main_sp.setting_modal_p = true
-    },
-
     rule_display() {
       this.talk_stop()
 
@@ -394,11 +376,6 @@ export default {
 
       this.bg_mode          = null
 
-      this.sp_theme         = null
-      this.sp_bg_variant    = null
-      this.sp_size          = null
-      this.sp_piece_variant = null
-
       this.data_restore_from_hash({})
     },
 
@@ -406,11 +383,6 @@ export default {
       if (this.$root.$options.xy_master_custom_mode) {
       } else {
         hash.bg_mode          = null
-
-        hash.sp_theme         = null
-        hash.sp_bg_variant    = null
-        hash.sp_size          = null
-        hash.sp_piece_variant = null
       }
 
       this.xy_rule_key = hash.xy_rule_key
@@ -436,11 +408,6 @@ export default {
       this.entry_name = hash.entry_name || this.fixed_handle_name
       this.current_pages = hash.current_pages || {}
       this.bg_mode = hash.bg_mode != null ? hash.bg_mode : false
-
-      this.sp_theme = hash.sp_theme || "simple"
-      this.sp_bg_variant = hash.sp_bg_variant || "a"
-      this.sp_size = hash.sp_size || "default"
-      this.sp_piece_variant = hash.sp_piece_variant || "a"
     },
 
     timer_setup() {
@@ -753,11 +720,6 @@ export default {
         entry_name:        this.entry_name,
         current_pages:     this.current_pages,
         bg_mode:           this.bg_mode,
-
-        sp_theme:         this.sp_theme,
-        sp_bg_variant:    this.sp_bg_variant,
-        sp_size:          this.sp_size,
-        sp_piece_variant: this.sp_piece_variant,
       }
     },
 
