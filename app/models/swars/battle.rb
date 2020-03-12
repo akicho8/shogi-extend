@@ -133,13 +133,17 @@ module Swars
       #   end
       # end
 
+      def tournament_name
+        "将棋ウォーズ(#{rule_info.name})"
+      end
+
       def title
         memberships.collect(&:name_with_grade).join(" vs ")
       end
 
       def description
         out = []
-        out << "将棋ウォーズ(#{rule_info.name})"
+        # out << tournament_name
         # out << final_info.name
         out << memberships.collect { |e|
           names = nil

@@ -224,11 +224,15 @@ module BattleModelSharedMethods
   def record_to_twitter_options(params = {})
     {}.tap do |e|
       turn = adjust_turn(params[:turn])
-      e[:title]       = params[:title].presence || title.presence || "#{turn}手目"
+      e[:title]       = params[:title].presence || twitter_card_title || "#{turn}手目"
       e[:url]         = modal_on_index_url(turn: turn)
       e[:image]       = twitter_card_image_url(turn: turn)
       e[:description] = params[:description].presence || description
     end
+  end
+
+  def twitter_card_title
+    [tournament_name, title].collect(&:presence).compact.join(" ").presence
   end
 
   def twitter_card_image_url(options = {})

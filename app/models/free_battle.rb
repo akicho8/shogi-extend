@@ -192,6 +192,10 @@ class FreeBattle < ApplicationRecord
     BattleDecorator::FreeBattleDecorator
   end
 
+  def tournament_name
+    meta_info.header["棋戦"]
+  end
+
   def default_title
     # "#{self.class.count.next}番目の何かの棋譜"
     ""
