@@ -72,7 +72,15 @@ module Swars
     end
 
     it "record_to_twitter_options" do
-      assert { @record.record_to_twitter_options == {:title => "user1 30級 対 user2 30級", :url => "http://localhost:3000/w?description=&modal_id=battle_key1&title=&turn=4", :image => "http://localhost:3000/w/battle_key1.png?turn=4", :description => "将棋ウォーズ10分切れ負け その他 vs その他"} }
+      assert { @record.record_to_twitter_options == {:title => "user1 30級 vs user2 30級", :url => "http://localhost:3000/w?description=&modal_id=battle_key1&title=&turn=4", :image => "http://localhost:3000/w/battle_key1.png?turn=4", :description => "将棋ウォーズ(10分) その他 vs その他"} }
+    end
+
+    it "title" do
+      assert { @record.title }
+    end
+
+    it "description" do
+      assert { @record.description }
     end
   end
 end
