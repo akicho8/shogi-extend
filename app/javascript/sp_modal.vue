@@ -98,6 +98,7 @@ export default {
     sp_modal_p(v)  { this.new_modal_p = v }, // 外→内 sp_modal_p --> new_modal_p
     new_modal_p(v) {                         // 外←内 sp_modal_p <-- new_modal_p
       if (v) {
+        this.chart_show_auto()
         this.slider_focus_delay()
       } else {
       }
@@ -120,12 +121,6 @@ export default {
             this.run_mode = "play_mode"
           }
         }
-
-        // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
-        // 本当は sp_modal_time_chart の中で処理したかった
-        if (this.time_chart_p) {
-          this.$nextTick(() => { this.$refs.sp_modal_time_chart.chart_show() })
-        }
       }
     },
   },
@@ -134,6 +129,14 @@ export default {
   },
 
   methods: {
+    // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
+    // 本当は sp_modal_time_chart の中で処理したかった
+    chart_show_auto() {
+      if (this.time_chart_p) {
+        this.$nextTick(() => { this.$refs.sp_modal_time_chart.chart_show() })
+      }
+    },
+
     // マウスで操作したときだけ呼べる
     run_mode_change_handle(v) {
       let message = null
