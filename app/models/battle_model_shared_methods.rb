@@ -22,6 +22,11 @@ module BattleModelSharedMethods
       self.turn_max ||= 0
       self.accessed_at ||= Time.current
       self.preset_key ||= :"平手"
+
+      # 盤面が変化したことが一瞬でわかるように盤面をハッシュ化しておく
+      if changes_to_save[:sfen_body] || !sfen_hash
+        self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
+      end
     end
 
     with_options presence: true do
@@ -260,12 +265,22 @@ module BattleModelSharedMethods
       end
     end
 
-    def existing_sfen
+    # sfen_body を取得するが、なければ作成する
+    def sfen_body_or_create
       unless sfen_body
         update!(sfen_body: fast_parsed_info.to_sfen)
       end
 
       sfen_body
+    end
+
+    # sfen_hash を取得するが、なければ作成する
+    def sfen_hash_or_create
+      unless sfen_hash
+        update!
+      end
+
+      sfen_hash
     end
 
     # バリデーションをはずして KI2 への変換もしない前提の軽い版

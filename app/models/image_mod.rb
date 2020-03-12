@@ -46,19 +46,14 @@ module ImageMod
     options
   end
 
+  # 局面画像の動的生成
   def to_dynamic_png(params = {})
+    turn = adjust_turn(params[:turn])
     options = param_as_to_png_options(params)
-    turn = adjust_turn(options[:turn])
-
-    cache_key_source = [sfen_body, options]
-    if Rails.env.development?
-      Rails.logger.debug ["#{__FILE__}:#{__LINE__}", __method__, cache_key_source]
-    end
-    hex = Digest::MD5.hexdigest(cache_key_source.to_s)
-    cache_key = [to_param, "png", turn, hex].join(":")
-
+    options_hash = Digest::MD5.hexdigest(options.to_s)
+    cache_key = [to_param, "png", sfen_hash_or_create, turn, options_hash].join(":") # id:png:board:turn:options
     Rails.cache.fetch(cache_key, expires_in: 1.week) do
-      parser = Bioshogi::Parser.parse(existing_sfen, bioshogi_parser_options.merge(turn_limit: turn))
+      parser = Bioshogi::Parser.parse(sfen_body_or_create, bioshogi_parser_options.merge(turn_limit: turn))
       parser.to_png(options)
     end
   end

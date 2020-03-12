@@ -21,7 +21,7 @@
   #capture_container
     #capture_main
       shogi_player(
-        :kifu_body="'#{current_record.existing_sfen}'"
+        :kifu_body="'#{current_record.sfen_body_or_create}'"
         :theme="'simple'"
         :key_event_capture="true"
         :start_turn.sync="start_turn"

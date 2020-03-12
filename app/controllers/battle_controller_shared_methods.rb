@@ -258,7 +258,7 @@ module BattleControllerSharedMethods
           return
         end
 
-        render json: { sfen_body: current_record.existing_sfen }
+        render json: { sfen_body: current_record.sfen_body_or_create }
         return
       end
 
