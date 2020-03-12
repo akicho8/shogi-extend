@@ -6,8 +6,7 @@
         | {{book_title}}
       .box.main_box.has-text-centered.line_break_off.is-shadowless
         b-dropdown.options_doropdown.is-pulled-left
-          button.button(slot="trigger")
-            b-icon(icon="menu-down")
+          b-button(slot="trigger" size="is-small" icon-left="menu")
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット (r)
           b-dropdown-item(@click="revert_handle") 1つ前に戻す (z)
           b-dropdown-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
@@ -46,19 +45,20 @@
         template(v-if="mode !== 'playing'")
           button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
 
-      template(v-if="quest_list.length === 0 || true")
-        .field
-          label.label
-            | 問題番号
-            | &nbsp;
-            a.is-link(@click.prevent="current_track = 1")
-              | (1に設定)
-          .control
-            b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" size="is-large")
+      template(v-if="mode === 'standby'")
+        template(v-if="quest_list.length === 0 || true")
+          .field.is-small
+            label.label.is-small
+              | 問題番号
+              | &nbsp;
+              a.is-link(@click.prevent="current_track = 1")
+                | (1に設定)
+            .control
+              b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" size="is-small")
 
-      .field
+      .field(v-if="mode === 'standby'")
         .control
-          textarea.textarea(v-model.trim="quest_text" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
+          textarea.textarea.is-small(v-model.trim="quest_text" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
           a.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
           | &nbsp;
           a.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
@@ -78,7 +78,7 @@
       //-   b-field(label="分" expanded)
       //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
       //-   b-field(label="分" expanded)
-      .columns
+      .columns(v-if="mode === 'standby'")
         .column
           b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
             b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
@@ -86,7 +86,7 @@
           b-field(label="全体の制限時間(分)" expanded custom-class="is-small")
             b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
 
-      .columns
+      .columns(v-if="mode === 'standby'")
         .column
           b-button(@click="log_display") 履歴
 
@@ -100,13 +100,9 @@
 
       template(v-if="rows.length >= 1")
         .has-text-centered
-          a.button.is-info.is-rounded(:href="tweet_url" target="_self")
-            | &nbsp;
-            b-icon(icon="twitter" size="is-small")
-            | &nbsp;
-            | ツイート
+          b-button(tag="a" :href="tweet_url" icon-left="twitter" size="is-small" type="is-info" rounded) ツイート
 
-  .columns
+  .columns(v-if="mode === 'standby'")
     .column
       .box.content.has-text-grey.is-size-7
         b-field(label="ショートカット" custom-class="is-small")
@@ -130,7 +126,7 @@
               th t
               td 最後の解答の正誤を反転する
 
-  .columns
+  .columns(v-if="mode === 'standby'")
     .column
       .box
         .columns
@@ -693,6 +689,9 @@ export default {
   },
 
   computed: {
+    standby() { return this.mode === "standby" },
+    playing() { return this.mode === "playing" },
+
     timeout_p() {
       if (this.mode === "playing") {
         if (this.timeout_sec >= 1) {
@@ -966,7 +965,7 @@ export default {
 
     .lap_time
       margin-top: 1.2rem
-      font-size: 5rem
+      font-size: 4rem
       line-height: 100%
       .quest_digit
         cursor: pointer
