@@ -265,7 +265,8 @@ module Swars
     end
 
     let :exclude_column_names do
-      ["meta_info", "csa_seq", "kifu_body"]
+      # ["meta_info", "csa_seq", "kifu_body"]
+      ["csa_seq", "kifu_body"]
       # ["meta_info", "kifu_body"]
     end
 
