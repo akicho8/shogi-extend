@@ -47,7 +47,7 @@
           b-switch(v-model="time_chart_p" size="is-small")
             b-icon(icon="chart-timeline-variant" size="is-small")
 
-        sp_modal_time_chart(:record="record" :show_p="time_chart_p" ref="sp_modal_time_chart" @update:turn="turn_set_from_chart")
+        sp_modal_time_chart(:record="record" :show_p="time_chart_p" ref="sp_modal_time_chart" @update:turn="turn_set_from_chart" refs="sp_modal_time_chart")
 
         pre(v-if="development_p")
           | start_turn: {{start_turn}}
@@ -99,6 +99,7 @@ export default {
     new_modal_p(v) {                         // 外←内 sp_modal_p <-- new_modal_p
       if (v) {
         this.slider_focus_delay()
+      } else {
       }
       this.$emit("update:sp_modal_p", v)
     },
@@ -120,8 +121,11 @@ export default {
           }
         }
 
-        this.time_chart_fetch_counter = 0
-        // this.$nextTick(() => { this.time_handle() })
+        // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
+        // 本当は sp_modal_time_chart の中で処理したかった
+        if (this.time_chart_p) {
+          this.$nextTick(() => { this.$refs.sp_modal_time_chart.chart_show() })
+        }
       }
     },
   },

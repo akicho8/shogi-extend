@@ -84,24 +84,19 @@ export default {
   },
 
   watch: {
+    record(v) {
+      alert("レコードが切り替わったときにチャートONなら表示する、としたいのになんで呼ばれんの？")
+      if (this.show_p) {
+        this.chart_show()
+      }
+    },
+
     // 時間チャートスイッチ ON / OFF
     // 1回目 _chart_config.data がないので xhr で取得
     // 2回目 _chart_config.data があるのでそのまま表示
     show_p(v) {
       if (v) {
-        if (this._chart_config.data) {
-          this.chart_show()
-        } else {
-          if (this.xhr_counter == 0) {
-            this.xhr_counter += 1
-            this.http_get_command(this.record.show_path, { time_chart_fetch: true }, data => {
-              this._chart_config.data = data.time_chart_params
-
-              this.xhr_counter = 0
-              this.chart_show()
-            })
-          }
-        }
+        this.chart_show()
       } else {
         this.chart_destroy()
       }
@@ -125,8 +120,24 @@ export default {
   },
 
   methods: {
-    // 時間チャート表示
     chart_show() {
+      if (this._chart_config.data) {
+        this.chart_create()
+      } else {
+        if (this.xhr_counter == 0) {
+          this.xhr_counter += 1
+          this.http_get_command(this.record.show_path, { time_chart_fetch: true }, data => {
+            this._chart_config.data = data.time_chart_params
+
+            this.xhr_counter = 0
+            this.chart_create()
+          })
+        }
+      }
+    },
+
+    // 時間チャート表示
+    chart_create() {
       this.chart_destroy()
       window.chart_instance = new Chart(this.$refs.chart_el, this._chart_config)
       this.$refs.chart_el.addEventListener("click", this.click_handle)
