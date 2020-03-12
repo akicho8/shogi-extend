@@ -171,7 +171,7 @@ export default {
         return record.turn
       }
 
-      return record.og_turn
+      return record.display_turn
     },
   },
 

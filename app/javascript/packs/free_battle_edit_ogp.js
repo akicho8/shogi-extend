@@ -2,7 +2,7 @@ window.FreeBattleEditOgp = Vue.extend({
   data() {
     return {
       tweet_origin_image_path: this.$options.tweet_origin_image_path,
-      start_turn: this.$options.og_turn,
+      start_turn: this.$options.display_turn,
       slider_show: false,
     }
   },

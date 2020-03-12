@@ -93,8 +93,7 @@ EOT
   end
 
   it "turn" do
-    assert { @kif_record.sp_turn == 0 }
-    assert { @kif_record.og_turn == 4 }
+    assert { @kif_record.display_turn == 4 }
   end
 
   it "record_to_twitter_options" do

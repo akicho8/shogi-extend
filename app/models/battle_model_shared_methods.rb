@@ -24,8 +24,10 @@ module BattleModelSharedMethods
       self.preset_key ||= :"平手"
 
       # 盤面が変化したことが一瞬でわかるように盤面をハッシュ化しておく
-      if changes_to_save[:sfen_body] || !sfen_hash
-        self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
+      if changes_to_save[:sfen_body] || sfen_hash.nil?
+        if sfen_body
+          self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
+        end
       end
     end
 
@@ -74,6 +76,7 @@ module BattleModelSharedMethods
     self.critical_turn = info.mediator.critical_turn
     self.outbreak_turn = info.mediator.outbreak_turn
     self.sfen_body = info.mediator.to_sfen
+    self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
 
     if AppConfig[:swars_tag_search_function]
       self.meta_info = {
@@ -188,14 +191,15 @@ module BattleModelSharedMethods
     }
   end
 
-  def sp_turn
-    # start_turn || outbreak_turn || critical_turn || 0
-    start_turn || critical_turn || 0
-  end
+  # def display_turn
+  #   # start_turn || outbreak_turn || critical_turn || 0
+  #   start_turn || critical_turn || 0
+  # end
 
-  def og_turn
+  def display_turn
     # image_turn || start_turn || outbreak_turn || critical_turn || turn_max
-    image_turn || start_turn || critical_turn || turn_max
+    # image_turn || start_turn || critical_turn || turn_max
+    critical_turn || turn_max
   end
 
   def adjust_turn(turn = nil)
@@ -205,7 +209,7 @@ module BattleModelSharedMethods
       turn = turn.to_i
     end
 
-    turn ||= og_turn
+    turn ||= display_turn
 
     # 99手までのとき -1 を指定すると99手目にする
     if turn.negative?

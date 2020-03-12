@@ -53,7 +53,7 @@
           | start_turn: {{start_turn}}
           | turn_offset: {{turn_offset}}
           | record.turn: {{record.turn}}
-          | record.sp_turn: {{record.sp_turn}}
+          | record.display_turn: {{record.display_turn}}
           | record.critical_turn: {{record.critical_turn}}
           | record.outbreak_turn: {{record.outbreak_turn}}
           | record.turn_max: {{record.turn_max}}
@@ -156,7 +156,7 @@ export default {
           return record.turn
         }
 
-        return record.sp_turn
+        return record.display_turn
       }
     },
 

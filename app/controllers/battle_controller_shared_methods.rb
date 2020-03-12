@@ -324,8 +324,7 @@ module BattleControllerSharedMethods
           :saturn_key,
           :sfen_body,
           :image_turn,
-          :sp_turn,
-          :og_turn,
+          :display_turn,
 
           :turn_max,
           :image_turn,
@@ -335,8 +334,7 @@ module BattleControllerSharedMethods
 
         ],
         methods: [
-          :sp_turn,
-          :og_turn,
+          :display_turn,
           :player_info,
         ],
         ).tap do |a|
