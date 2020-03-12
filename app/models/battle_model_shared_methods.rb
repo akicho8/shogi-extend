@@ -285,7 +285,7 @@ module BattleModelSharedMethods
     # sfen_hash を取得するが、なければ作成する
     def sfen_hash_or_create
       unless sfen_hash
-        update!
+        save!
       end
 
       sfen_hash
