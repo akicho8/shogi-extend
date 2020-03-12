@@ -518,7 +518,7 @@ export default {
         // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
         this.xy_chart_rule_key = this.xy_rule_key
         this.xy_chart_scope_key = "chart_scope_recently"
-        // this.chart_show()
+        this.chart_show()
       })
     },
 
