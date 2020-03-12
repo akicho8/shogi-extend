@@ -120,6 +120,10 @@ export default {
     },
   },
 
+  beforeDestroy() {
+    this.chart_destroy()
+  },
+
   methods: {
     chart_show() {
       if (this._chart_config.data) {
