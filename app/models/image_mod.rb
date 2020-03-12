@@ -78,7 +78,7 @@ module ImageMod
       turn: "",
     }.merge(params)
 
-    # params[:turn] = adjust_turn(params[:turn])
+    params[:turn] = adjust_turn(params[:turn])
 
     Rails.application.routes.url_helpers.full_url_for([self.class, params])
   end

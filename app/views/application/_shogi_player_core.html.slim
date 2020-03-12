@@ -1,4 +1,4 @@
-- if sfen = current_record.existing_sfen
+- if sfen = current_record.sfen_body_or_create
   shogi_player(
     :kifu_body="'#{sfen}'"
     :start_turn="-1"
