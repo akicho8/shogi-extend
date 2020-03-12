@@ -1,9 +1,10 @@
 <template lang="pug">
-  .sp_modal_time_chart.is-unselectable(v-show="show_p")
-    canvas#chart_el(ref="chart_el")
-    .bottom_buttons.has-text-centered
-      b-switch(v-model="zoom_p" size="is-small")
-        b-icon(icon="magnify-plus-outline" size="is-small")
+  .columns.is-centered.is-unselectable.sp_modal_time_chart(v-show="show_p")
+    .column.is-half
+      canvas#chart_el(ref="chart_el")
+      .bottom_buttons.has-text-centered
+        b-switch(v-model="zoom_p" size="is-small")
+          b-icon(icon="magnify-plus-outline" size="is-small")
 </template>
 
 <script>
@@ -180,6 +181,6 @@ export default {
 @import "./stylesheets/bulma_init.scss"
 
 .sp_modal_time_chart
-  margin-top: 1rem
+  margin-top: 0.15rem
   .bottom_buttons
 </style>
