@@ -134,7 +134,7 @@ module Swars
       # end
 
       def title
-        memberships.collect(&:name_with_grade).join(" 対 ")
+        memberships.collect(&:name_with_grade).join(" - ")
       end
 
       def description
