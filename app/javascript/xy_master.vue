@@ -127,7 +127,7 @@
           .column
             .has-text-centered
               b-field.is-inline-flex
-                b-button(@click="xy_chart_fetch" size="is-small")
+                b-button(@click="chart_show" size="is-small")
                   | 更新
         .column
           .has-text-centered
@@ -501,10 +501,11 @@ export default {
       }
     },
 
+    // 名前を確定してからサーバーに保存する
     record_post() {
       this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
-        this.entry_name_unique = false
-        this.data_update(data)
+        this.entry_name_unique = false // 「プレイヤー別順位」の解除
+        this.data_update(data)         // ランキングに反映
 
         // ランク内ならランキングのページをそのページに移動する
         if (this.current_rank <= this.$root.$options.rank_max) {
@@ -517,6 +518,7 @@ export default {
         // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
         this.xy_chart_rule_key = this.xy_rule_key
         this.xy_chart_scope_key = "chart_scope_recently"
+        // this.chart_show()
       })
     },
 
@@ -772,6 +774,7 @@ export default {
       return this.micro_seconds / 1000
     },
 
+    // ログインしているとユーザー名がわかる
     fixed_handle_name() {
       if (this.global_current_user) {
         return this.global_current_user.name
