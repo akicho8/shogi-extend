@@ -227,12 +227,16 @@ module BattleModelSharedMethods
       e[:title]       = params[:title].presence || twitter_card_title || "#{turn}手目"
       e[:url]         = modal_on_index_url(turn: turn)
       e[:image]       = twitter_card_image_url(turn: turn)
-      e[:description] = params[:description].presence || description
+      e[:description] = params[:description].presence || twitter_card_description
     end
   end
 
   def twitter_card_title
     [tournament_name, title].collect(&:presence).compact.join(" ").presence
+  end
+
+  def twitter_card_description
+    [description].collect(&:presence).compact.join(" ").presence
   end
 
   def twitter_card_image_url(options = {})
