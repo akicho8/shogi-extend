@@ -97,6 +97,6 @@ EOT
   end
 
   it "record_to_twitter_options" do
-    assert { @kif_record.record_to_twitter_options(turn: 1, description: "a", title: "b") == {:title=>"b", :url=>"http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=1", :image=>"http://localhost:3000/x/battle_key1.png?turn=1", :description=>"a"} }
+    assert { @kif_record.record_to_twitter_options == {:title=>"将棋ウォーズ(10分切れ負け)", :url=>"http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=4", :image=>"http://localhost:3000/x/battle_key1.png?turn=4", :description=>nil} }
   end
 end

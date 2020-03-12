@@ -193,7 +193,7 @@ class FreeBattle < ApplicationRecord
   end
 
   def tournament_name
-    meta_info.header["棋戦"]
+    meta_info[:header]["棋戦"]
   end
 
   def default_title
