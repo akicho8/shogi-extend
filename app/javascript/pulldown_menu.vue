@@ -1,6 +1,6 @@
 <template lang="pug">
   b-dropdown(:hoverable="false" :position="in_modal_p ? 'is-top-left' : 'is-bottom-left'")
-    b-button(slot="trigger" icon-left="menu")
+    b-button(slot="trigger" icon-left="menu" size="is-small")
 
     template(v-if="new_permalink_url")
       b-dropdown-item(:has-link="true" :paddingless="true")

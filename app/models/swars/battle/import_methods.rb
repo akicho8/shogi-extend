@@ -54,16 +54,23 @@ module Swars
           import(*args, params, &block)
         end
 
+        # 参照されていないレコードを消していく
+        # rails r 'Swars::Battle.old_record_destroy(time_limit: 0)'
         def old_record_destroy(**params)
           params = {
-            expires_in: 4.weeks,
+            expires_in: 4.weeks, # 4週間前のものは消す
+            time_limit: 2.hours, # 最大処理時間(朝4時に実行して6時には必ず終了させる)
           }.merge(params)
 
+          t = Time.current
           all.where(arel_table[:accessed_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
+            if params[:time_limit] <= (Time.current - t)
+              break
+            end
             begin
               g.each(&:destroy)
             rescue ActiveRecord::Deadlocked => error
-              puts error
+              Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, error])
             end
           end
         end
