@@ -108,7 +108,7 @@ module Swars
         # http://localhost:3000/w?query=itoshinTV
         {
           :card        => "summary",
-          :title       => "#{current_swars_user.name_with_grade} の棋譜リスト",
+          :title       => "#{current_swars_user.name_with_grade}の棋譜リスト",
           :description => "#{current_swars_user.battles.count}件",
         }
       else
