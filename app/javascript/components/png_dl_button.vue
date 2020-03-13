@@ -1,6 +1,5 @@
 <template lang="pug">
-  b-button.png_dl(v-bind="$attrs" v-on="$listeners" size="is-small")
-    b-icon(icon="file-image-outline" size="is-small")
+  b-button.png_dl(v-bind="$attrs" v-on="$listeners" size="is-small" icon-left="file-image-outline")
     span.turn(v-if="turn != null")
       | \#{{turn}}
 </template>
