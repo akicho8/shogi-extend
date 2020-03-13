@@ -70,4 +70,4 @@ template(slot-scope="props")
   b-table-column
     .buttons.are-small
       = render partial: "free_battles/row_operations"
-      pulldown_menu(:record="props.row" position="is-bottom-left")
+      pulldown_menu(:record="props.row" position="is-bottom-left" :turn_offset="trick_start_turn_for(props.row)")

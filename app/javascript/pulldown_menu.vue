@@ -7,14 +7,14 @@
         a(:href="tweet_url_for(new_permalink_url)")
           b-icon(icon="twitter" size="is-small" type="is-info")
           span.a_label
-            | ツイート
+            | ツイート {{turn_mark}}
 
     template(v-if="new_permalink_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="new_permalink_url")
           b-icon(icon="open-in-new" size="is-small")
           span.a_label
-            | パーマリンク
+            | パーマリンク {{turn_mark}}
 
     //- template(v-if="record.show_path")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
@@ -60,33 +60,47 @@
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="`${record.show_path}.kif?attachment=true`")
+          b-icon(icon="download" size="is-small")
+          span.a_label KIF ダウンロード
+
+    template(v-if="record.show_path")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="`${record.show_path}.png?attachment=true&turn=${turn_offset}`")
+          b-icon(icon="download" size="is-small")
+          span.a_label PNG ダウンロード {{turn_mark}}
+
+    b-dropdown-item(:separator="true")
+
+    template(v-if="record.show_path")
+      b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.show_path}.kif`")
           b-icon(icon="eye" size="is-small")
           span.a_label KIF 表示
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.kif?attachment=true`")
-          b-icon(icon="download" size="is-small")
-          span.a_label KIF ダウンロード
-
-    template(v-if="record.kifu_copy_params")
-      b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.show_path}.ki2`")
           b-icon(icon="eye" size="is-small")
           span.a_label KI2 表示
 
-    template(v-if="record.kifu_copy_params")
+    template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.show_path}.csa`")
           b-icon(icon="eye" size="is-small")
           span.a_label CSA 表示
 
-    template(v-if="record.kifu_copy_params")
+    template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="`${record.show_path}.sfen`")
           b-icon(icon="eye" size="is-small")
           span.a_label SFEN 表示
+
+    template(v-if="record.show_path")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="`${record.show_path}.png?width=&turn=${turn_offset}`")
+          b-icon(icon="eye" size="is-small")
+          span.a_label PNG 表示 {{turn_mark}}
 
     b-dropdown-item(:separator="true")
 
@@ -144,6 +158,7 @@ export default {
     record:   { required: false },
     in_modal_p: { },
     permalink_url: { },
+    turn_offset: { },
   },
 
   data() {
@@ -162,6 +177,10 @@ export default {
   computed: {
     new_permalink_url() {
       return this.permalink_url || this.record.modal_on_index_url
+    },
+
+    turn_mark() {
+      return `#${this.turn_offset}`
     },
   },
 }
