@@ -55,7 +55,7 @@ ruby:
         template(v-if="option_show_p")
           .buttons.are-small
             b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'" :disabled="record") 検証
-            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? record.formal_sheet_path : ''") 印刷
+            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? record.formal_sheet_path : ''") 棋譜用紙
 
           b-field(grouped)
             b-field

@@ -94,7 +94,7 @@
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="record.formal_sheet_path" target="_self")
           b-icon(icon="pdf-box" size="is-small")
-          span.a_label 印刷
+          span.a_label 棋譜用紙
 
     //- // @click.stop にするとURLをコピーしたあとプルダウンが閉じなくなる
     //- template(v-if="record.modal_on_index_url")
