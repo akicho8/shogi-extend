@@ -252,6 +252,8 @@ module BattleControllerSharedMethods
     end
 
     def show
+      access_log_create(current_record)
+
       if request.format.json?
         if params[:time_chart_fetch]
           render json: { time_chart_params: current_record.time_chart_params }
@@ -261,8 +263,6 @@ module BattleControllerSharedMethods
         render json: { sfen_body: current_record.sfen_body_or_create }
         return
       end
-
-      access_log_create(current_record)
 
       if params[:formal_sheet]
         if (Rails.env.production? || Rails.env.staging?) && !bot_agent?
