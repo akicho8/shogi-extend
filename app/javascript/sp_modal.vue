@@ -61,10 +61,11 @@
           | record.turn_max: {{record.turn_max}}
 
       footer.modal-card-foot
-        piyo_shogi_button(@click.stop="" type="button" :href="record.piyo_shogi_app_url")
-        kento_button(tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
-        kif_copy_button(@click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
+        piyo_shogi_button(:icon_only="true" @click.stop="" type="button" :href="record.piyo_shogi_app_url")
+        kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
+        kif_copy_button(:icon_only="true" @click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
         tweet_button(tag="a" :href="tweet_url" :turn="turn_offset")
+        png_dl_button(tag="a" :href="`${record.show_path}.png?attachment=true&turn=${turn_offset}`" :turn="turn_offset")
 
         pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる

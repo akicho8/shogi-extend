@@ -2,7 +2,8 @@
   a.button.piyo_shogi_button.is-small(v-bind="$attrs" v-on="$listeners")
     span.icon
       img.left_icon(:src="piyo_shogi_icon")
-    span ぴよ将棋
+    span(v-if="!icon_only")
+      | ぴよ将棋
 </template>
 
 <script>
@@ -10,6 +11,9 @@ import piyo_shogi_icon from "piyo_shogi_icon.png"
 
 export default {
   name: "piyo_shogi_button",
+  props: {
+    icon_only: { default: false, },
+  },
   computed: {
     piyo_shogi_icon() { return piyo_shogi_icon }, // TODO: Vue.js の重複強制どうにかならんの？
   },

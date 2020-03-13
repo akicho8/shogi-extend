@@ -1,12 +1,16 @@
 <template lang="pug">
   b-button.kif_copy_button.is-small(v-bind="$attrs" v-on="$listeners" icon-left="clipboard-plus-outline")
-    | コピー
+    template(v-if="!icon_only")
+      | コピー
 </template>
 
 <script>
 
 export default {
   name: "kif_copy_button",
+  props: {
+    icon_only: { default: false, },
+  },
 }
 </script>
 

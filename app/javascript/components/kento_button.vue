@@ -2,7 +2,7 @@
   b-button.kento_button.is-small(v-bind="$attrs" v-on="$listeners")
     span.left_icon
       | ☗
-    span.name
+    span.name(v-if="!icon_only")
       | KENTO
     span.turn(v-if="turn != null")
       | \#{{turn}}
@@ -14,6 +14,7 @@ export default {
   name: "kento_button",
   props: {
     turn: { required: false },
+    icon_only: { default: false, },
   },
 }
 </script>
