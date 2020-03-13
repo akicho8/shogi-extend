@@ -28,19 +28,21 @@ module ImageMod
     end
   end
 
+  # http://localhost:3000/w/hatae72-kinakom0chi-20200311_231857.png?width=&turn=21
   def param_as_to_png_options(params)
     if params.respond_to?(:to_unsafe_h)
       params = params.to_unsafe_h
     end
 
-    params = params.to_options
-    hash = params.transform_values { |e| Float(e) rescue e }
-
-    options = image_default_options.merge(hash)
+    params                                                                     # => {"width" => "",   "height" => "1234" }
+    params = params.to_options                                                 # => {:width  => "",   :height  => "1234" }
+    hash = params.transform_values { |e| Integer(e) rescue Float(e) rescue e } # => {:width  => "",   :height  => 1234   }
+    hash = hash.reject { |k, v| v.blank? }                                     # => {                 :height  => 1234   }
+    options = image_default_options.merge(hash)                                # => {:width  => 1200, :height  => 1234   }
 
     # 最大値を超えないように補正
     image_default_options.each do |key, val|
-      options[key] = options[key].clamp(1, val)
+      options[key] = options[key].clamp(1, val)                                # => {:width  => 1200, :height  => 630    }
     end
 
     options
