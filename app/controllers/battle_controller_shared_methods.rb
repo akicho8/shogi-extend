@@ -282,10 +282,6 @@ module BattleControllerSharedMethods
     end
 
     def access_log_create(record)
-      if bot_agent?
-        return
-      end
-
       record.update!(accessed_at: Time.current)
     end
 
