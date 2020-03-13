@@ -37,7 +37,7 @@ require 'rails_helper'
 
 RSpec.describe FreeBattle, type: :model do
   before do
-    @kif_record = FreeBattle.create!(key: "battle_key1", kifu_body: Pathname(__dir__).join("sample.kif").read)
+    @record = FreeBattle.create!(key: "battle_key1", kifu_body: Pathname(__dir__).join("sample.kif").read)
     @ki2_record = FreeBattle.create!(key: "key2", kifu_body: Pathname(__dir__).join("sample.ki2").read)
 
     tempfile = Tempfile.open
@@ -76,27 +76,43 @@ EOT
   end
 
   it "sec_list" do
-    assert { @kif_record.sec_list(Bioshogi::Location[:black]) == [ 1,  2]   }
-    assert { @kif_record.sec_list(Bioshogi::Location[:white]) == [10, 20]   }
+    assert { @record.sec_list(Bioshogi::Location[:black]) == [ 1,  2]   }
+    assert { @record.sec_list(Bioshogi::Location[:white]) == [10, 20]   }
     assert { @ki2_record.sec_list(Bioshogi::Location[:white]) == [nil, nil] }
   end
 
   it "time_chart_params" do
-    assert { @kif_record.time_chart_params.has_key?(:datasets) }
+    assert { @record.time_chart_params.has_key?(:datasets) }
     assert { @ki2_record.time_chart_params.has_key?(:datasets) }
   end
 
   it "adjust_turn" do
-    assert { @kif_record.adjust_turn(-1) == 4 }
-    assert { @kif_record.adjust_turn( 5) == 4 }
-    assert { @kif_record.adjust_turn(-6) == 0 }
+    assert { @record.adjust_turn(-1) == 4 }
+    assert { @record.adjust_turn( 5) == 4 }
+    assert { @record.adjust_turn(-6) == 0 }
   end
 
   it "turn" do
-    assert { @kif_record.display_turn == 4 }
+    assert { @record.display_turn == 4 }
   end
 
   it "record_to_twitter_options" do
-    assert { @kif_record.record_to_twitter_options == {:title=>"将棋ウォーズ(10分切れ負け)", :url=>"http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=4", :image=>"http://localhost:3000/x/battle_key1.png?turn=4", :description=>nil} }
+    assert { @record.record_to_twitter_options == {:title=>"将棋ウォーズ(10分切れ負け)", :url=>"http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=4", :image=>"http://localhost:3000/x/battle_key1.png?turn=4", :description=>nil} }
+  end
+
+  it "param_as_to_png_options" do
+    assert { @record.param_as_to_png_options                     == {width: 1200, height: 630} }
+    assert { @record.param_as_to_png_options("width" => "")      == {width: 1200, height: 630} }
+    assert { @record.param_as_to_png_options("width" => "800")   == {width:  800, height: 630} }
+    assert { @record.param_as_to_png_options("height" => "9999") == {width: 1200, height: 630} }
+    assert { @record.param_as_to_png_options("other" => "12.34") == {width: 1200, height: 630, other: 12.34} }
+  end
+
+  it "to_dynamic_png" do
+    assert { @record.to_dynamic_png.include?("PNG") }
+  end
+
+  it "modal_on_index_url" do
+    assert { @record.modal_on_index_url == "http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=4" }
   end
 end

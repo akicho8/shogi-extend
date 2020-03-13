@@ -29,7 +29,7 @@ module ImageMod
   end
 
   # http://localhost:3000/w/hatae72-kinakom0chi-20200311_231857.png?width=&turn=21
-  def param_as_to_png_options(params)
+  def param_as_to_png_options(params = {})
     if params.respond_to?(:to_unsafe_h)
       params = params.to_unsafe_h
     end
@@ -85,10 +85,7 @@ module ImageMod
     Rails.application.routes.url_helpers.full_url_for([self.class, params])
   end
 
-  def tweet_show_url(**params)
-    params = {
-    }.merge(params)
-
+  def tweet_show_url(params = {})
     Rails.application.routes.url_helpers.full_url_for([self, params])
   end
 
