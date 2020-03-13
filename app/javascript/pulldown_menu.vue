@@ -9,6 +9,12 @@
           span.a_label
             | ツイート {{turn_mark}}
 
+    template(v-if="record.show_path")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(:href="`${record.show_path}.png?attachment=true&turn=${turn_offset}`")
+          b-icon(icon="download" size="is-small")
+          span.a_label PNG ダウンロード {{turn_mark}}
+
     template(v-if="new_permalink_url")
       b-dropdown-item(:has-link="true" :paddingless="true")
         a(:href="new_permalink_url")
@@ -63,12 +69,6 @@
         a(:href="`${record.show_path}.kif?attachment=true`")
           b-icon(icon="download" size="is-small")
           span.a_label KIF ダウンロード
-
-    template(v-if="record.show_path")
-      b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.png?attachment=true&turn=${turn_offset}`")
-          b-icon(icon="download" size="is-small")
-          span.a_label PNG ダウンロード {{turn_mark}}
 
     b-dropdown-item(:separator="true")
 
