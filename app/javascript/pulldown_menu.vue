@@ -22,6 +22,13 @@
           span.a_label
             | パーマリンク {{turn_mark}}
 
+    template(v-if="new_permalink_url")
+      b-dropdown-item(:has-link="true" :paddingless="true")
+        a(@click="clipboard_copy({text: new_permalink_url})")
+          b-icon(icon="clipboard-plus-outline" size="is-small")
+          span.a_label
+            | パーマリンクコピー {{turn_mark}}
+
     //- template(v-if="record.show_path")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
     //-     a(:href="record.show_path")
