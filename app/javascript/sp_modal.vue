@@ -44,7 +44,7 @@
             b-icon(icon="source-branch" size="is-small")
           // 名前非表示
           b-switch(v-model="name_show_p" :true-value="false" :false-value="true" size="is-small")
-            b-icon(icon="eye-off" size="is-small")
+            b-icon(icon="account-remove" size="is-small")
           // 時間
           b-switch(v-model="time_chart_p" size="is-small")
             b-icon(icon="chart-timeline-variant" size="is-small")
