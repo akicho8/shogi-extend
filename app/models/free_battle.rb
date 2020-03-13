@@ -193,7 +193,9 @@ class FreeBattle < ApplicationRecord
   end
 
   def tournament_name
-    meta_info[:header]["棋戦"]
+    if meta_info
+      meta_info.dig(:header, "棋戦")
+    end
   end
 
   def default_title

@@ -32,7 +32,7 @@ module BattleControllerSharedMethods
 
     let :exclude_column_names do
       [
-        "meta_info",
+        # "meta_info",
       ]
     end
 
