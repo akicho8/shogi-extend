@@ -38,10 +38,16 @@ RSpec.describe Swars::BattlesController, type: :controller do
   it "index" do
     get :index
     expect(response).to have_http_status(:ok)
+  end
 
+  it "index + query" do
     get :index, params: {query: "devuser1"}
     expect(response).to have_http_status(:ok)
+    assert { assigns(:current_records).size == 1 }
+    assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
+  end
 
+  it "index + tag" do
     get :index, params: {query: "turn_max_gteq:200"}
     expect(response).to have_http_status(:ok)
   end
@@ -67,6 +73,11 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
   it "詳細" do
     get :show, params: {id: @battle.to_param}
+    expect(response).to have_http_status(:ok)
+  end
+
+  it "png" do
+    get :show, params: {id: @battle.to_param, format: "png", width: "", turn: 999}
     expect(response).to have_http_status(:ok)
   end
 

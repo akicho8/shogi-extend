@@ -264,10 +264,8 @@ module Swars
       end
     end
 
-    let :exclude_column_names do
-      # ["meta_info", "csa_seq", "kifu_body"]
-      ["csa_seq", "kifu_body"]
-      # ["meta_info", "kifu_body"]
+    def exclude_column_names
+      ["meta_info", "csa_seq"]
     end
 
     let :current_placeholder do

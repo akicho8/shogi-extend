@@ -30,10 +30,8 @@ module BattleControllerSharedMethods
       s.page(params[:page]).per(current_per)
     end
 
-    let :exclude_column_names do
-      [
-        # "meta_info",
-      ]
+    def exclude_column_names
+      ["meta_info"]
     end
 
     let :current_per do

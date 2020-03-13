@@ -192,9 +192,20 @@ class FreeBattle < ApplicationRecord
     BattleDecorator::FreeBattleDecorator
   end
 
+  # ここは nil でよくね？
   def tournament_name
-    if meta_info
-      meta_info.dig(:header, "棋戦")
+    if v = safe_meta_info
+      v.dig(:header, "棋戦")
+    end
+  end
+
+  # コントローラーでは meta_info を除外しているため取れない場合がある
+  # そういうとき meta_info にアクセスする用
+  def safe_meta_info
+    if has_attribute?(:meta_info)
+      meta_info
+    else
+      self.class.where(id: id).pluck(:meta_info).first
     end
   end
 
