@@ -13,11 +13,14 @@ module TagMod
 
   # includes(taggings: tag) としたときは taggings.loaded? になるので一覧ではかなり速くなる
   def tag_names_for(key)
-    context = "#{key}_tags"
-    if taggings.loaded?
-      taggings.find_all { |e| e.context == context }.collect { |e| e.tag.name }
-    else
-      send("#{key}_tags").pluck(:name)
-    end
+    @tag_names_for ||= {}
+    @tag_names_for[key] ||= -> {
+      context = "#{key}_tags"
+      if taggings.loaded?
+        taggings.find_all { |e| e.context == context }.collect { |e| e.tag.name }
+      else
+        send("#{key}_tags").pluck(:name)
+      end
+    }.call
   end
 end
