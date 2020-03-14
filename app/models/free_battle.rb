@@ -265,16 +265,6 @@ class FreeBattle < ApplicationRecord
     s = s.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
   end
 
-  concerning :TagMethods do
-    included do
-      acts_as_ordered_taggable_on :defense_tags
-      acts_as_ordered_taggable_on :attack_tags
-      acts_as_ordered_taggable_on :technique_tags
-      acts_as_ordered_taggable_on :note_tags
-      acts_as_ordered_taggable_on :other_tags
-    end
-  end
-
   concerning :UseInfoMethods do
     included do
       before_validation do
