@@ -37,21 +37,80 @@ require 'rails_helper'
 
 RSpec.describe FreeBattle, type: :model do
   before do
-    @record = FreeBattle.create!(key: "battle_key1", kifu_body: Pathname(__dir__).join("sample.kif").read)
-    @ki2_record = FreeBattle.create!(key: "key2", kifu_body: Pathname(__dir__).join("sample.ki2").read)
-
-    tempfile = Tempfile.open
-    tempfile.write("68S")
-    @kifu_file = ActionDispatch::Http::UploadedFile.new(filename: "嬉野流.kif", type: "text/plain", tempfile: tempfile.open)
   end
 
-  it "ファイルアップロードして変換" do
-    record = FreeBattle.create!(kifu_file: @kifu_file)
+  let :record do
+    FreeBattle.create!
+  end
+
+  let :ki2_record do
+    FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
+  end
+
+  describe "ファイルアップロードして変換" do
+    let :uploaded_file do
+      tempfile = Tempfile.open
+      tempfile.write("68S")
+      ActionDispatch::Http::UploadedFile.new(filename: "嬉野流.kif", type: "text/plain", tempfile: tempfile.open)
+    end
+    let :record do
+      FreeBattle.create!(kifu_file: uploaded_file)
+    end
     assert { record.kifu_body == "68S" }
   end
 
-  it "「**解析」などが含まれる巨大なKIFはいったん綺麗にする" do
-    record = FreeBattle.create!(kifu_body: <<~EOT)
+  it "raw_sec_list" do
+    assert { record.raw_sec_list(:black)     == [ 1, 5, 2]   }
+    assert { record.raw_sec_list(:white)     == [ 3, 7]      }
+    assert { ki2_record.raw_sec_list(:white) == [nil, nil]   }
+  end
+
+  it "time_chart_params" do
+    assert { record.time_chart_params.has_key?(:datasets) }
+    assert { ki2_record.time_chart_params.has_key?(:datasets) }
+  end
+
+  describe "Twitterカード" do
+    describe "to_twitter_card_params" do
+      let :value do
+        record.to_twitter_card_params
+      end
+      it { assert { value[:title]       == "(tournament_name)"                                                        } }
+      it { assert { value[:url]         == "http://localhost:3000/x?description=&modal_id=free_battle1&title=&turn=5" } }
+      it { assert { value[:image]       == "http://localhost:3000/x/free_battle1.png?turn=5"                          } }
+      it { assert { value[:description] == nil                                                                        } }
+    end
+
+    it "param_as_to_png_options" do
+      assert { record.param_as_to_png_options                     == {width: 1200, height: 630} }
+      assert { record.param_as_to_png_options("width" => "")      == {width: 1200, height: 630} }
+      assert { record.param_as_to_png_options("width" => "800")   == {width:  800, height: 630} }
+      assert { record.param_as_to_png_options("height" => "9999") == {width: 1200, height: 630} }
+      assert { record.param_as_to_png_options("other" => "12.34") == {width: 1200, height: 630, other: 12.34} }
+    end
+
+    it "to_dynamic_png" do
+      assert { record.to_dynamic_png.include?("PNG") }
+    end
+
+    it "modal_on_index_url" do
+      assert { record.modal_on_index_url == "http://localhost:3000/x?description=&modal_id=free_battle1&title=&turn=5" }
+    end
+
+    it "adjust_turn" do
+      assert { record.adjust_turn(-1) == 5 }
+      assert { record.adjust_turn( 6) == 5 }
+      assert { record.adjust_turn(-9) == 0 }
+    end
+
+    it "turn" do
+      assert { record.display_turn == 5 }
+    end
+  end
+
+  describe "「**解析」などが含まれる巨大なKIFはいったん綺麗にする" do
+    let :record do
+      FreeBattle.create!(kifu_body: <<~EOT)
 手数----指手---------消費時間--
 **Engines 0 HoneyWaffle WCSC28
 **解析
@@ -61,58 +120,24 @@ RSpec.describe FreeBattle, type: :model do
 **解析
 **候補手
 EOT
+    end
 
-    assert { record.kifu_body == <<~EOT }
+    it do
+      assert { record.kifu_body == <<~EOT }
 手数----指手---------消費時間--
 *一致率 先手 21% = 14/64  後手 40% = 26/64
 *棋戦詳細：ライバル対決
    1 ５六歩(57)        ( 0:00/00:00:00)
 EOT
+    end
   end
 
-  it "ぴよ将棋？の日付フォーマット読み取り" do
-    record = FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
-    assert { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
-  end
-
-  it "sec_list" do
-    assert { @record.sec_list(Bioshogi::Location[:black]) == [ 1,  2]   }
-    assert { @record.sec_list(Bioshogi::Location[:white]) == [10, 20]   }
-    assert { @ki2_record.sec_list(Bioshogi::Location[:white]) == [nil, nil] }
-  end
-
-  it "time_chart_params" do
-    assert { @record.time_chart_params.has_key?(:datasets) }
-    assert { @ki2_record.time_chart_params.has_key?(:datasets) }
-  end
-
-  it "adjust_turn" do
-    assert { @record.adjust_turn(-1) == 4 }
-    assert { @record.adjust_turn( 5) == 4 }
-    assert { @record.adjust_turn(-6) == 0 }
-  end
-
-  it "turn" do
-    assert { @record.display_turn == 4 }
-  end
-
-  it "record_to_twitter_options" do
-    assert { @record.record_to_twitter_options == {:title=>"将棋ウォーズ(10分切れ負け)", :url=>"http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=4", :image=>"http://localhost:3000/x/battle_key1.png?turn=4", :description=>nil} }
-  end
-
-  it "param_as_to_png_options" do
-    assert { @record.param_as_to_png_options                     == {width: 1200, height: 630} }
-    assert { @record.param_as_to_png_options("width" => "")      == {width: 1200, height: 630} }
-    assert { @record.param_as_to_png_options("width" => "800")   == {width:  800, height: 630} }
-    assert { @record.param_as_to_png_options("height" => "9999") == {width: 1200, height: 630} }
-    assert { @record.param_as_to_png_options("other" => "12.34") == {width: 1200, height: 630, other: 12.34} }
-  end
-
-  it "to_dynamic_png" do
-    assert { @record.to_dynamic_png.include?("PNG") }
-  end
-
-  it "modal_on_index_url" do
-    assert { @record.modal_on_index_url == "http://localhost:3000/x?description=&modal_id=battle_key1&title=&turn=4" }
+  describe "ぴよ将棋？の日付フォーマット読み取り" do
+    let :record do
+      FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
+    end
+    it do
+      assert { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
+    end
   end
 end

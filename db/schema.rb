@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_12_105200) do
+ActiveRecord::Schema.define(version: 2020_03_13_203800) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_105200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "grade_diff", null: false
+    t.integer "think_max"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"

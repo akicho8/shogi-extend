@@ -3,12 +3,12 @@ module ModalMod
 
   included do
     helper_method :modal_record
-    # helper_method :record_to_twitter_options
+    # helper_method :to_twitter_card_params
   end
 
-  # def record_to_twitter_options(record)
+  # def to_twitter_card_params(record)
   #   if record
-  #     record.record_to_twitter_options(self)
+  #     record.to_twitter_card_params(self)
   #   end
   # end
 

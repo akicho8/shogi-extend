@@ -35,52 +35,120 @@ module Swars
       Swars.setup
     end
 
-    before do
-      user1 = User.create!(key: "user1")
-      user2 = User.create!(key: "user2")
-
-      @record = Battle.new(key: "battle_key1")
-      @record.csa_seq = [["-7162GI", 599],  ["+2726FU", 597],  ["-4132KI", 594],  ["+6978KI", 590]]
-      @record.memberships.build(user: user1, judge_key: :win,  location_key: :black)
-      @record.memberships.build(user: user2, judge_key: :lose, location_key: :white)
-      @record.save!
+    let :record do
+      Battle.create!
     end
 
-    it "相入玉タグ" do
-      user1 = User.create!
-      user2 = User.create!
-
-      battle = Battle.new
-      battle.csa_seq = [["+5756FU", 0],["-5354FU", 0],["+5958OU", 0],["-5152OU", 0],["+5857OU", 0],["-5253OU", 0],["+5746OU", 0],["-5364OU", 0],["+4645OU", 0],["-6465OU", 0],["+4544OU", 0],["-6566OU", 0],["+4453OU", 0],["-6657OU", 0]]
-      battle.memberships.build(user: user1, judge_key: :win,  location_key: :black)
-      battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
-      battle.save!                  # => true
-
-      # puts battle.to_cached_kifu(:kif)
-      assert { battle.note_tag_list                == ["入玉", "相入玉", "居飛車", "相居飛車"] }
-      assert { battle.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
-      assert { battle.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
+    describe "アイコン" do
+      describe "基本" do
+        def test(*keys)
+          Battle.create! do |e|
+            keys.each do |key|
+              e.memberships.build(user: User.create!(grade: Grade.find_by(key: key)))
+            end
+          end
+        end
+        it do
+          test("初段", "二段").memberships[0].icon_html.include?("numeric-1-circle")
+          test("初段", "二段").memberships[1].icon_html.include?("emoticon-dead-outline")
+        end
+      end
+      describe "寝る" do
+        def test(a)
+          Battle.create!(csa_seq: [["+7968GI", 600], ["-8232HI", 600], ["+5756FU", 600 - a]])
+        end
+        it do
+          test(119).memberships[0].icon_html.include?("star")
+          test(120).memberships[0].icon_html == "😪"
+          test(180).memberships[0].icon_html == "😴"
+        end
+      end
     end
 
-    it "sec_list" do
-      assert { @record.sec_list(Bioshogi::Location[:black]) == [1, 5] }
-      assert { @record.sec_list(Bioshogi::Location[:white]) == [3, 7] }
+    describe "Twitterカード" do
+      describe "to_twitter_card_params" do
+        let :value do
+          record.to_twitter_card_params
+        end
+        it { assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"                         }}
+        it { assert { value[:url]         == "http://localhost:3000/w?description=&modal_id=battle1&title=&turn=5" }}
+        it { assert { value[:image]       == "http://localhost:3000/w/battle1.png?turn=5"                          }}
+        it { assert { value[:description] == "嬉野流 vs △３ニ飛戦法"                                              }}
+
+        it "turnを変更できる" do
+          assert { record.to_twitter_card_params(turn: 0)[:url].include?("turn=0") }
+        end
+      end
+
+      it "title" do
+        assert { record.title == "user1 30級 vs user2 30級" }
+      end
+
+      it "description" do
+        assert { record.description == "嬉野流 vs △３ニ飛戦法" }
+      end
     end
 
-    it "time_chart_params" do
-      assert { @record.time_chart_params.has_key?(:datasets) }
+    describe "時間チャート" do
+      it "raw_sec_list: それぞれの消費時間" do
+        assert { record.raw_sec_list(:black) == [1, 5, 2] }
+        assert { record.raw_sec_list(:white) == [3, 7]    }
+      end
+
+      it "time_chart_params: chart.jsに渡すデータ" do
+        assert { record.time_chart_params.has_key?(:datasets) }
+      end
+
+      describe "投了" do
+        let :record do
+          Swars::Battle.create!(final_key: :TORYO)
+        end
+
+        it "後手は時間切れでないので放置時間は無し" do
+          assert { record.memberships[1].leave_alone_seconds == nil }
+        end
+        it "それぞれの最大考慮時間が取れる" do
+          assert { record.memberships[0].think_max == 5 }
+          assert { record.memberships[1].think_max == 7 }
+        end
+        it "それぞれの時間チャートデータが取れる" do
+          assert { record.memberships[0].time_chart_xy_hash_list == [{x: 1, y: 1 }, {x: 3, y:  5}, {x: 5, y: 2}] }
+          assert { record.memberships[1].time_chart_xy_hash_list == [{x: 2, y: -3}, {x: 4, y: -7},             ] }
+        end
+        it "なのでラベルは3つのみ" do
+          assert { record.time_chart_label_max == 5 }
+        end
+      end
+
+      describe "時間切れ" do
+        let :record do
+          Swars::Battle.create!(final_key: :TIMEOUT)
+        end
+
+        it "後手の手番で時間切れなので残り秒数が取得できる" do
+          assert { record.memberships[1].leave_alone_seconds == 590 }
+        end
+        it "後手の最大考慮時間は100ではなく500になっている" do
+          assert { record.memberships[1].think_max == 590 }
+        end
+        it "後手のチャートの最後にそれを追加してある" do
+          assert { record.memberships[1].time_chart_xy_hash_list == [{x: 2, y: -3}, {x: 4, y: -7}, {x: 6, y: -590} ] }
+        end
+        it "そのためチャートのラベルは4つに増えている" do
+          assert { record.time_chart_label_max == 6 }
+        end
+      end
     end
 
-    it "record_to_twitter_options" do
-      assert { @record.record_to_twitter_options == {:title => "将棋ウォーズ(10分) user1 30級 vs user2 30級", :url => "http://localhost:3000/w?description=&modal_id=battle_key1&title=&turn=4", :image => "http://localhost:3000/w/battle_key1.png?turn=4", :description => "その他 vs その他"} }
-    end
-
-    it "title" do
-      assert { @record.title }
-    end
-
-    it "description" do
-      assert { @record.description }
+    describe "相入玉タグ" do
+      let :record do
+        Battle.create!(csa_seq: [["+5756FU", 0], ["-5354FU", 0], ["+5958OU", 0], ["-5152OU", 0], ["+5857OU", 0], ["-5253OU", 0], ["+5746OU", 0], ["-5364OU", 0], ["+4645OU", 0], ["-6465OU", 0], ["+4544OU", 0], ["-6566OU", 0], ["+4453OU", 0], ["-6657OU", 0]])
+      end
+      it do
+        assert { record.note_tag_list                == ["入玉", "相入玉", "居飛車", "相居飛車"] }
+        assert { record.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
+        assert { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車"] }
+      end
     end
   end
 end

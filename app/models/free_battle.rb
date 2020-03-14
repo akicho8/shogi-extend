@@ -142,11 +142,18 @@ class FreeBattle < ApplicationRecord
 
   class << self
     def generate_unique_secure_token
+      if Rails.env.test?
+        return "#{name.demodulize.underscore}#{count.next}"
+      end
       SecureRandom.hex
     end
   end
 
   before_validation do
+    if Rails.env.test?
+      self.kifu_body ||= Pathname(__dir__).join("嬉野流.kif").read
+    end
+
     self.title ||= default_title
     self.description ||= ""
     self.kifu_body ||= ""

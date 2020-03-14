@@ -42,7 +42,19 @@ module Swars
     has_many :users, through: :memberships
 
     before_validation on: :create do
+      if Rails.env.test?
+        self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
+
+        (Bioshogi::Location.count - memberships.size).times do
+          memberships.build
+        end
+      end
+
+      if Rails.env.test?
+        self.key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
+      end
       self.key ||= SecureRandom.hex
+
       self.rule_key ||= :ten_min
 
       # "" から ten_min への変換
@@ -183,13 +195,19 @@ module Swars
       SlackAgent.message_send(key: "rule_key_bugfix_process", body: c.to_s)
     end
 
-    def time_chart_datasets
-      memberships.collect.with_index { |e, i|
-        {
-          label: e.user.key,  # グラフの上に出る名前
-          data: e.time_chart_xy_hash_list,
+    concerning :TimeChartMod do
+      def time_chart_datasets
+        memberships.collect.with_index { |e, i|
+          {
+            label: e.user.key,  # グラフの上に出る名前
+            data: e.time_chart_xy_hash_list,
+          }
         }
-      }
+      end
+
+      def time_chart_sec_list_of(location)
+        memberships[location.code].sec_list
+      end
     end
   end
 end

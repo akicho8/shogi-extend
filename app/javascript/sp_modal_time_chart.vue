@@ -52,12 +52,17 @@ const CHART_CONFIG_DEFAULT = {
           return ""
         },
         label(tooltipItem, data) {
-          return [
-            // data.labels[tooltipItem.index]
-            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x, "手目",
-            " ",
-            Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y), "秒",
-          ].join("")
+          const x = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x           // 手数
+          const t = Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y) // 秒数
+
+          if (__sp_modal_time_chart_record__) {
+            if (x > __sp_modal_time_chart_record__.turn_max) {
+              return `時間切れ ${t}秒`
+            }
+          }
+
+          // data.labels[tooltipItem.index]
+          return `${x}手目 ${t}秒`
         },
       },
     },
@@ -82,6 +87,7 @@ export default {
 
   created() {
     this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT)
+    window.__sp_modal_time_chart_record__ = this.record // こんなことしていいのか？
   },
 
   watch: {
@@ -174,6 +180,11 @@ export default {
 
     // 盤面の手数を変更
     api_board_turn_set(turn) {
+      if (turn > this.record.turn_max) {
+        this.simple_notify("時間切れ")
+        return
+      }
+
       this.$emit("update:turn", turn)
       this.simple_notify(`${turn}手目`)
     },

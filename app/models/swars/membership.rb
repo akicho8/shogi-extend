@@ -21,6 +21,7 @@
 module Swars
   class Membership < ApplicationRecord
     include TaggingModel
+    include ::Swars::MembershipTimeChartMod
 
     belongs_to :battle            # 対局
     belongs_to :user, touch: true # 対局者
@@ -33,6 +34,18 @@ module Swars
     scope :judge_key_eq, -> v { where(judge_key: v).take }
 
     before_validation do
+      # テストを書きやすいようにする
+      if Rails.env.test?
+        if index = battle.memberships.find_index { |e| e == self }
+          self.location_key ||= Bioshogi::Location[index].key
+          self.judge_key ||= JudgeInfo[index].key
+        end
+      end
+
+      if Rails.env.test?
+        self.user ||= User.create!
+      end
+
       if user
         # 無かったときだけ入れる(絶対あるんだけど)
         self.grade ||= user.grade
@@ -49,6 +62,7 @@ module Swars
         self.grade ||= Grade.first
       end
 
+      # 対戦相手との段級位の差を保持しておく
       if battle
         rival = (battle.memberships - [self]).first
         if grade && rival.grade
@@ -88,13 +102,11 @@ module Swars
 
     concerning :HelperMethods do
       def icon_html
-        final_info = battle.final_info
-
         # judge_info = JudgeInfo.to_a.sample
         # final_info = FinalInfo.to_a.sample
         # grade_diff = rand(-1..1)
 
-        if icon = judge_info.icon_params(grade_diff) || final_info.icon_params(grade_diff)
+        if icon = judge_info.icon_params(self) || battle.final_info.icon_params(self)
           if icon.kind_of?(String)
             icon
           else
@@ -157,37 +169,6 @@ module Swars
         cattr_accessor(:swgod_last_n)     { 10 } # 最後の片方の手の N 手内に
         cattr_accessor(:swgod_hand_times) { 5  } # 棋神は1回でN手指される
         cattr_accessor(:swgod_time_limit) { 9  } # 5手がN秒以内なら
-      end
-
-      def sec_list
-        # @sec_list ||= -> {
-        #   c = Bioshogi::Location.count
-        #   pos = battle.preset_info.to_turn_info.current_location(position).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
-        #   v = battle.fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
-        #   v.collect { |e| e[:used_seconds] }
-        # }.call
-
-        @sec_list ||= battle.sec_list(location)
-      end
-
-      def time_chart_xy_hash_list
-        @time_chart_xy_hash_list ||= battle.time_chart_xy_hash_list(location)
-
-        # @time_chart_xy_hash_list ||= -> {
-        #   c = Bioshogi::Location.count
-        #   loc = battle.preset_info.to_turn_info.current_location(position)
-        #   # sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
-        #   sec_list.collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * e } } # 表示上「1手目」と表記したいので +1
-        #
-        #   # pos = battle.preset_info.to_turn_info.current_location(position).code
-        #   # list = battle.fast_parsed_info.move_infos.find_all.collect.with_index { |e, i|
-        #   #   if i.modulo(c) == pos
-        #   #     { x: (1 + loc.code + i * c).to_s, y: location.value_sign * e[:used_seconds] }
-        #   #   else
-        #   #     nil
-        #   #   end
-        #   # }.compact
-        # }.call
       end
 
       def swgod_level1_used?

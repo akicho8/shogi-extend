@@ -38,7 +38,8 @@ module Swars
       last_action_key
     end
 
-    def icon_params(grade_diff)
+    def icon_params(membership)
+      # ここに来るのは負けたときだけ
       if emoji_char
         return emoji_char
       end
@@ -46,9 +47,9 @@ module Swars
         { :key => icon_key, :class => icon_class }
       else
         case
-        when grade_diff >= 1
+        when membership.grade_diff >= 1
           { :key => "emoticon-neutral-outline", :class => icon_class }
-        when grade_diff == 0
+        when membership.grade_diff == 0
           { :key => "emoticon-sad-outline", :class => icon_class }
         else
           { :key => "emoticon-dead-outline", :class => icon_class }

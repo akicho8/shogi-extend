@@ -85,6 +85,13 @@ module Swars
       end
 
       def parser_exec_after(info)
+        # いちばん考えた時間(放置時間切れを含む)
+        info.mediator.players.each_index do |i|
+          memberships[i].tap do |e|
+            e.think_max = e.sec_list.max
+          end
+        end
+
         # 囲い対決などに使う
         if true
           info.mediator.players.each.with_index do |player, i|

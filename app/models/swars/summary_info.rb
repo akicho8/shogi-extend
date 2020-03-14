@@ -49,35 +49,35 @@ module Swars
           if rule_info.related_time_p
             ms = ships.max_by { |e| e.sec_list.max.to_i }
             sec = ms.sec_list.max.to_i
-            sec_set(stat, "【#{rule_info.name}】最大長考", sec, alert_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
+            sec_set(stat, "【#{rule_info.name}】最大長考", sec, alert_p: sec && sec >= rule_info.leave_alone_limit1, membership: ms)
 
             ms = ships.max_by { |e| e.sec_list.last.to_i }
             sec = ms.sec_list.last.to_i
-            sec_set(stat, "【#{rule_info.name}】最終着手の最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
+            sec_set(stat, "【#{rule_info.name}】最終着手の最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit1, membership: ms)
 
-            ms_a = ships.find_all { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit }
+            ms_a = ships.find_all { |e| e.judge_info.key == :lose && e.sec_list.last.to_i >= rule_info.leave_alone_limit1 }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】最終着手に#{sec_to_human(rule_info.leave_alone_limit)}以上かけて負け", count, danger_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】最終着手に#{sec_to_human(rule_info.leave_alone_limit1)}以上かけて負け", count, danger_p: count.nonzero?, memberships: ms_a)
 
-            ms_a = ships.find_all { |e| e.summary_key == "詰ました" && e.sec_list.last >= rule_info.leave_alone_limit }
+            ms_a = ships.find_all { |e| e.summary_key == "詰ました" && e.sec_list.last >= rule_info.leave_alone_limit1 }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit)}以上かけて詰ました", count, danger_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】1手詰を#{sec_to_human(rule_info.leave_alone_limit1)}以上かけて詰ました", count, danger_p: count.nonzero?, memberships: ms_a)
 
             scope = ships.find_all { |e| e.summary_key == "詰ました" }
             if ms = scope.max_by { |e| e.sec_list.last.to_i }
               sec = ms.sec_list.last.to_i
-              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
+              sec_set(stat, "【#{rule_info.name}】1手詰勝ちのときの着手最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit1, membership: ms)
             end
 
             scope = ships.find_all { |e| e.summary_key == "切れ負け" }
             if ms = scope.max_by { |e| e.rest_sec }
               sec = ms.rest_sec.to_i
-              sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit, membership: ms)
+              sec_set(stat, "【#{rule_info.name}】切れ負けるときの思考時間最長", sec, danger_p: sec && sec >= rule_info.leave_alone_limit1, membership: ms)
             end
 
-            ms_a = ships.find_all { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit }
+            ms_a = ships.find_all { |e| e.summary_key == "切れ負け" && e.rest_sec >= rule_info.leave_alone_limit1 }
             count = ms_a.count
-            count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit)}以上かけて切れ負け", count, danger_p: count.nonzero?, memberships: ms_a)
+            count_set(stat, "【#{rule_info.name}】#{sec_to_human(rule_info.leave_alone_limit1)}以上かけて切れ負け", count, danger_p: count.nonzero?, memberships: ms_a)
           end
 
           # e.summary_key == "投了した" || e.summary_key == "詰まされた" }.presence

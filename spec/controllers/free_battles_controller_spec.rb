@@ -45,7 +45,7 @@ RSpec.describe FreeBattlesController, type: :controller do
   it "index" do
     get :index
     expect(response).to have_http_status(:ok)
-    assert { assigns(:current_records).first.tournament_name == nil }
+    assert { assigns(:current_records).first.tournament_name == "(tournament_name)" }
   end
 
   it "index + modal_id" do

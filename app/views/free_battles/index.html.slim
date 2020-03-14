@@ -1,7 +1,7 @@
 - @page_title ||= "野良棋譜一覧"
 
 - if modal_record
-  - twitter_card_registry(modal_record.record_to_twitter_options(params))
+  - twitter_card_registry(modal_record.to_twitter_card_params(params))
 - else
   - twitter_card_registry(title: @page_title)
 
