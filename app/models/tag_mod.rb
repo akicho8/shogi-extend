@@ -1,7 +1,7 @@
 module TagMod
   extend ActiveSupport::Concern
 
-  mattr_accessor(:reject_note_tag_names) { ["対振り", "対抗型", "相居玉", "大駒コンプリート"] }
+  mattr_accessor(:reject_note_tag_names) { ["対振り", "対抗型", "相居玉", "大駒コンプリート", "大駒全消失"] }
 
   included do
     acts_as_ordered_taggable_on :defense_tags
