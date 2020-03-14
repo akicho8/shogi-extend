@@ -140,7 +140,7 @@ module ImageMod
 
   def image_auto_cerate_force(params)
     image_file_delete
-    turn_limit = (params[:turn] || display_turn).to_i
+    turn_limit = (params[:turn] || display_turn).to_i # FIXME: 補正してない
     parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: turn_limit)
     png = parser.to_png(param_as_to_png_options(params))
     thumbnail_image.attach(io: StringIO.new(png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
