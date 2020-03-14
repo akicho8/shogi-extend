@@ -46,7 +46,7 @@ module Swars
               datasets: current_record.memberships.collect.with_index { |e, i|
                 {
                   label: e.name_with_grade,
-                  data: e.time_chart_xy_hash_list,
+                  data: e.time_chart_xy_list,
                   borderColor: PaletteInfo[i].border_color,
                   backgroundColor: PaletteInfo[i].background_color,
                   borderWidth: 3,

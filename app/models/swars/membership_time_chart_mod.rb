@@ -30,8 +30,8 @@ module Swars
     end
 
     # [{:x=>1, :y=>10 seconds}, {:x=>3, :y=>20 seconds}]
-    def time_chart_xy_hash_list
-      @time_chart_xy_hash_list ||= battle.time_chart_xy_hash_list(location)
+    def time_chart_xy_list
+      @time_chart_xy_list ||= battle.time_chart_xy_list(location)
     end
   end
 end

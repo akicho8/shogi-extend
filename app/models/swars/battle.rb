@@ -42,7 +42,7 @@ module Swars
     has_many :users, through: :memberships
 
     before_validation on: :create do
-      if Rails.env.test?
+      if Rails.env.development? || Rails.env.test?
         self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
 
         (Bioshogi::Location.count - memberships.size).times do
@@ -50,7 +50,7 @@ module Swars
         end
       end
 
-      if Rails.env.test?
+      if Rails.env.development? || Rails.env.test?
         self.key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
       end
       self.key ||= SecureRandom.hex
@@ -200,7 +200,7 @@ module Swars
         memberships.collect.with_index { |e, i|
           {
             label: e.user.key,  # グラフの上に出る名前
-            data: e.time_chart_xy_hash_list,
+            data: e.time_chart_xy_list,
           }
         }
       end

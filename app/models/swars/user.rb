@@ -25,11 +25,11 @@ module Swars
     has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
 
     before_validation do
-      if Rails.env.test?
-        self.user_key ||= "user#{User.count.next}"
+      if Rails.env.development? || Rails.env.test?
+        self.user_key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
       end
-
       self.user_key ||= SecureRandom.hex
+
       self.grade ||= Grade.last
 
       # Grade が下がらないようにする

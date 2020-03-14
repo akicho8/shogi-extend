@@ -305,7 +305,7 @@ class FreeBattle < ApplicationRecord
       Bioshogi::Location.collect do |location|
         {
           label: location.name,
-          data: time_chart_xy_hash_list(location),
+          data: time_chart_xy_list(location),
         }
       end
     end

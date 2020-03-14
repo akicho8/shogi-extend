@@ -1,3 +1,23 @@
+# 時間チャート
+#
+# user1 = Swars::User.create!(:key => "devuser1")
+# user2 = Swars::User.create!(:key => "devuser2")
+#
+# record = Swars::Battle.new
+# record.final_key = :TIMEOUT
+# record.memberships.build(user: user1)
+# record.memberships.build(user: user2)
+# record.save!
+#
+# record.memberships[1].leave_alone_seconds # => 10 minutes and -10 seconds
+# record.memberships[0].think_max           # => 5
+# record.memberships[1].think_max           # => 590
+# record.memberships[0].time_chart_xy_list  # => [{:x=>1, :y=>1 second}, {:x=>3, :y=>5 seconds}, {:x=>5, :y=>2 seconds}]
+# record.memberships[1].time_chart_xy_list  # => [{:x=>2, :y=>-3 seconds}, {:x=>4, :y=>-7 seconds}, {:x=>6, :y=>-10 minutes and 10 seconds}]
+# record.time_chart_label_max               # => 6
+#
+# experiment/0260_swars_battle_time_chart.rb
+#
 module TimeChartMod
   extend ActiveSupport::Concern
 
@@ -37,7 +57,7 @@ module TimeChartMod
   end
 
   # location の [{:x=>1, :y=>10 seconds}, {:x=>3, :y=>20 seconds}] を返す
-  def time_chart_xy_hash_list(location)
+  def time_chart_xy_list(location)
     c = Bioshogi::Location.count
     loc = preset_info.to_turn_info.current_location(location.code)
     time_chart_sec_list_of(location).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * (e || 0) } } # 表示上「1手目」と表記したいので +1

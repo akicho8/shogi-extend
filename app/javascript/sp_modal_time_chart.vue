@@ -181,6 +181,7 @@ export default {
     // 盤面の手数を変更
     api_board_turn_set(turn) {
       if (turn > this.record.turn_max) {
+        this.$emit("update:turn", this.record.turn_max)
         this.simple_notify("時間切れ")
         return
       }

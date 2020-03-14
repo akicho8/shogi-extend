@@ -112,8 +112,8 @@ module Swars
           assert { record.memberships[1].think_max == 7 }
         end
         it "それぞれの時間チャートデータが取れる" do
-          assert { record.memberships[0].time_chart_xy_hash_list == [{x: 1, y: 1 }, {x: 3, y:  5}, {x: 5, y: 2}] }
-          assert { record.memberships[1].time_chart_xy_hash_list == [{x: 2, y: -3}, {x: 4, y: -7},             ] }
+          assert { record.memberships[0].time_chart_xy_list == [{x: 1, y: 1 }, {x: 3, y:  5}, {x: 5, y: 2}] }
+          assert { record.memberships[1].time_chart_xy_list == [{x: 2, y: -3}, {x: 4, y: -7},             ] }
         end
         it "なのでラベルは3つのみ" do
           assert { record.time_chart_label_max == 5 }
@@ -132,7 +132,7 @@ module Swars
           assert { record.memberships[1].think_max == 590 }
         end
         it "後手のチャートの最後にそれを追加してある" do
-          assert { record.memberships[1].time_chart_xy_hash_list == [{x: 2, y: -3}, {x: 4, y: -7}, {x: 6, y: -590} ] }
+          assert { record.memberships[1].time_chart_xy_list == [{x: 2, y: -3}, {x: 4, y: -7}, {x: 6, y: -590} ] }
         end
         it "そのためチャートのラベルは4つに増えている" do
           assert { record.time_chart_label_max == 6 }

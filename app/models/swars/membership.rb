@@ -35,14 +35,14 @@ module Swars
 
     before_validation do
       # テストを書きやすいようにする
-      if Rails.env.test?
+      if Rails.env.development? || Rails.env.test?
         if index = battle.memberships.find_index { |e| e == self }
           self.location_key ||= Bioshogi::Location[index].key
           self.judge_key ||= JudgeInfo[index].key
         end
       end
 
-      if Rails.env.test?
+      if Rails.env.development? || Rails.env.test?
         self.user ||= User.create!
       end
 
@@ -58,7 +58,7 @@ module Swars
         end
       end
 
-      if Rails.env.test?
+      if Rails.env.development? || Rails.env.test?
         self.grade ||= Grade.first
       end
 
