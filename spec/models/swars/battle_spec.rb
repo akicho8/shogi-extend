@@ -140,6 +140,16 @@ module Swars
           assert { record.time_chart_label_max == 6 }
         end
       end
+
+      describe "0手目で終了" do
+        let :record do
+          Swars::Battle.create!(csa_seq: [])
+        end
+        it "データがないときは0" do
+          assert { record.memberships[0].think_max == 0 }
+          assert { record.memberships[1].think_max == 0 }
+        end
+      end
     end
 
     describe "相入玉タグ" do
