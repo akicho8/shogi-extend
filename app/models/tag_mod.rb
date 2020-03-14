@@ -1,11 +1,14 @@
-module TaggingModel
+module TagMod
   extend ActiveSupport::Concern
+
+  mattr_accessor(:reject_note_tag_names) { ["対振り", "対抗型", "相居玉", "大駒コンプリート"] }
 
   included do
     acts_as_ordered_taggable_on :defense_tags
     acts_as_ordered_taggable_on :attack_tags
     acts_as_ordered_taggable_on :technique_tags
     acts_as_ordered_taggable_on :note_tags
+    acts_as_ordered_taggable_on :other_tags
   end
 
   # includes(taggings: tag) としたときは taggings.loaded? になるので一覧ではかなり速くなる

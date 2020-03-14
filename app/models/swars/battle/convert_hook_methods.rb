@@ -94,14 +94,15 @@ module Swars
 
         # 囲い対決などに使う
         if true
+          reject_keys = reject_note_tag_names.collect(&:to_sym)
           info.mediator.players.each.with_index do |player, i|
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
                 if AppConfig[:swars_tag_search_function]
-                  e.send("#{key}_tag_list=", values)
+                  e.send("#{key}_tag_list=", values - reject_keys)
                 else
-                  if [:attack, :defense].include?(key)
-                    e.send("#{key}_tag_list=", values)
+                  if [:attack, :defense, :note].include?(key)
+                    e.send("#{key}_tag_list=", values - reject_keys)
                   end
                 end
               end

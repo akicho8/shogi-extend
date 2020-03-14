@@ -20,7 +20,7 @@
 
 module Swars
   class Membership < ApplicationRecord
-    include TaggingModel
+    include TagMod
     include ::Swars::MembershipTimeChartMod
 
     belongs_to :battle            # 対局

@@ -43,6 +43,7 @@ module Swars
       if emoji_char
         return emoji_char
       end
+
       if icon_key
         { :key => icon_key, :class => icon_class }
       else

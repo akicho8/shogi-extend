@@ -3,7 +3,7 @@ module BattleModelSharedMethods
 
   included do
     include ImageMod
-    include TaggingModel
+    include TagMod
     include TimeChartMod
 
     cattr_accessor(:kifu_cache_enable)     { true }
