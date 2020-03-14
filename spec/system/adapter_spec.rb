@@ -30,6 +30,14 @@ RSpec.describe "なんでも棋譜変換", type: :system do
     doc_image
   end
 
+  # http://localhost:3000/adapter?body=foo
+  it "bodyパラメータで棋譜を渡せる" do
+    visit "/adapter?body=(foo)"
+    value = find("textarea").value
+    assert { value == "(foo)" }
+    doc_image
+  end
+
   it "KIF変換表示" do
     assert_convert("68銀", "まで1手で先手の勝ち")
   end

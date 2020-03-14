@@ -141,6 +141,10 @@ class FreeBattlesController < ApplicationController
       v[:kifu_body] = hidden_kifu_body
     end
 
+    if body = params[:body].presence
+      v[:kifu_body] = body
+    end
+
     v
   end
 

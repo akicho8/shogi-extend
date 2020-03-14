@@ -27,8 +27,8 @@ window.Adapter = Vue.extend({
     // デスクトップのときだけ棋譜のテキストエリアにフォーカス
     this.desktop_only_focus(this.$refs.input_text)
 
-    // 変更した状態にしておく
-    this.input_text = ""
+    // ?body=xxx の値を反映する
+    this.input_text = this.$options.record_attributes.kifu_body || ""
   },
 
   watch: {
