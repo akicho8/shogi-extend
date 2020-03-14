@@ -75,10 +75,12 @@ RSpec.describe FreeBattle, type: :model do
       let :value do
         record.to_twitter_card_params
       end
-      it { assert { value[:title]       == "(tournament_name)"                                                        } }
-      it { assert { value[:url]         == "http://localhost:3000/x?description=&modal_id=free_battle1&title=&turn=5" } }
-      it { assert { value[:image]       == "http://localhost:3000/x/free_battle1.png?turn=5"                          } }
-      it { assert { value[:description] == nil                                                                        } }
+      it do
+        assert { value[:title]       == "(tournament_name)"                                                        }
+        assert { value[:url]         == "http://localhost:3000/x?description=&modal_id=free_battle1&title=&turn=5" }
+        assert { value[:image]       == "http://localhost:3000/x/free_battle1.png?turn=5"                          }
+        assert { value[:description] == nil                                                                         }
+      end
     end
 
     it "param_as_to_png_options" do

@@ -70,11 +70,12 @@ module Swars
         let :value do
           record.to_twitter_card_params
         end
-        it { assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"                         }}
-        it { assert { value[:url]         == "http://localhost:3000/w?description=&modal_id=battle1&title=&turn=5" }}
-        it { assert { value[:image]       == "http://localhost:3000/w/battle1.png?turn=5"                          }}
-        it { assert { value[:description] == "嬉野流 vs △３ニ飛戦法"                                              }}
-
+        it do
+          assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"                         }
+          assert { value[:url]         == "http://localhost:3000/w?description=&modal_id=battle1&title=&turn=5" }
+          assert { value[:image]       == "http://localhost:3000/w/battle1.png?turn=5"                          }
+          assert { value[:description] == "嬉野流 居飛車 居玉 vs △３ニ飛戦法 振り飛車 居玉"                    }
+        end
         it "turnを変更できる" do
           assert { record.to_twitter_card_params(turn: 0)[:url].include?("turn=0") }
         end
@@ -85,7 +86,7 @@ module Swars
       end
 
       it "description" do
-        assert { record.description == "嬉野流 vs △３ニ飛戦法" }
+        assert { record.description == "嬉野流 居飛車 居玉 vs △３ニ飛戦法 振り飛車 居玉" }
       end
     end
 

@@ -36,12 +36,12 @@ module ApplicationHelper
     }.html_safe
   end
 
-  def twitter_card_registry(**options)
+  def twitter_card_registry(options = {})
     provide(:twitter_card_registry, twitter_card_tag_build(options))
   end
 
   # twitter は投稿時に指定された URL を見ているだけで og:url や twitter:url を見ていない
-  def twitter_card_tag_build(**options)
+  def twitter_card_tag_build(options = {})
     options = options.clone
 
     # title などは空にすると twitter card がでない
