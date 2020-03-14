@@ -10,7 +10,7 @@ class JudgeInfo
     Swars::Membership.where(judge_key: key)
   end
 
-  def icon_params(membership)
+  def card_emoji(membership)
     if true
       rule_info = membership.battle.rule_info
       if t = rule_info.leave_alone_limit2
@@ -38,6 +38,25 @@ class JudgeInfo
 
     if emoji_char
       return emoji_char
+    end
+
+    # if key == :win
+    #   grade_diff = membership.grade_diff
+    #   case
+    #   when grade_diff >= 1
+    #     return "🍣"
+    #   when grade_diff == 0
+    #     # return "👑"
+    #     return "⭐"
+    #   else
+    #     return "⭐"
+    #   end
+    # end
+  end
+
+  def icon_params(membership)
+    if v = card_emoji(membership)
+      return v
     end
 
     if icon_key

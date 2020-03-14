@@ -38,10 +38,16 @@ module Swars
       last_action_key
     end
 
-    def icon_params(membership)
-      # ここに来るのは負けたときだけ
+    def card_emoji(membership)
       if emoji_char
         return emoji_char
+      end
+    end
+
+    def icon_params(membership)
+      # ここに来るのは負けたときだけ
+      if v = card_emoji(membership)
+        return v
       end
 
       if icon_key

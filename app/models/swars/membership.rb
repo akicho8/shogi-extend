@@ -120,6 +120,10 @@ module Swars
           icon_html
         end
       end
+
+      def card_emoji
+        judge_info.card_emoji(self) || battle.final_info.card_emoji(self)
+      end
     end
 
     concerning :SummaryMethods do
