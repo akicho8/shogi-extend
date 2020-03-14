@@ -88,7 +88,7 @@ module Swars
         # いちばん考えた時間(放置時間切れを含む)
         info.mediator.players.each_index do |i|
           memberships[i].tap do |e|
-            e.think_max = e.sec_list.max
+            e.think_max = e.sec_list.max || 0
           end
         end
 
