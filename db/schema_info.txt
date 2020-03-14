@@ -64,6 +64,7 @@
 # | saturn_key    | 公開範囲         | string(255)  | NOT NULL    |      | I     |
 # | sfen_body     | SFEN形式棋譜     | string(8192) |             |      |       |
 # | image_turn    | OGP画像の局面    | integer(4)   |             |      |       |
+# | sfen_hash     | Sfen hash        | string(255)  |             |      |       |
 # |---------------+------------------+--------------+-------------+------+-------|
 
 # == Schema Information ==
@@ -275,6 +276,7 @@
 # | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
 # | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
 # | grade_diff   | Grade diff   | integer(4)  | NOT NULL    |      | I       |
+# | think_max    | Think max    | integer(4)  |             |      |         |
 # |--------------+--------------+-------------+-------------+------+---------|
 
 # == Schema Information ==
@@ -363,6 +365,7 @@
 # | sfen_body         | SFEN形式棋譜       | string(8192)   |             |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)     |             |                                   |       |
 # | preset_key        | Preset key         | string(255)    | NOT NULL    |                                   |       |
+# | sfen_hash         | Sfen hash          | string(255)    |             |                                   |       |
 # |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

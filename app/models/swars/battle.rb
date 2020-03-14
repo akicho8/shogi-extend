@@ -25,6 +25,7 @@
 # | saturn_key    | 公開範囲         | string(255)  | NOT NULL    |      | I     |
 # | sfen_body     | SFEN形式棋譜     | string(8192) |             |      |       |
 # | image_turn    | OGP画像の局面    | integer(4)   |             |      |       |
+# | sfen_hash     | Sfen hash        | string(255)  |             |      |       |
 # |---------------+------------------+--------------+-------------+------+-------|
 
 require "matrix"
