@@ -161,7 +161,7 @@ module Swars
           names = []
           names += e.tag_names_for(:attack)
           names += e.tag_names_for(:defense)
-          names += e.tag_names_for(:node) - reject_note_tag_names
+          names += e.tag_names_for(:note) - reject_note_tag_names
           names = names.presence || ["その他"]
           names.join(" ")
         }.join(" vs ")
