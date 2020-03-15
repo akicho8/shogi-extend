@@ -166,11 +166,10 @@ export default {
 
     kifu_clone_and_new_tab_oepn_handle() {
       if (this.output_kifs) {
-        // const sfen = this.output_kifs["sfen"]["value"]
-        const sfen = encodeURIComponent(this.board_sfen) // + をエスケープしないと空白になってしまうため
+        const sfen = encodeURIComponent(this.output_kifs.sfen.value) // + をエスケープしないと空白になってしまうため
         const key = encodeURIComponent("free_battle[kifu_body]")
         const url = `${this.$options.new_path}?${key}=${sfen}`
-        window.open(url, "_self")
+        window.open(url, "_blank")
       }
     },
   },
