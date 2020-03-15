@@ -4,7 +4,7 @@ template(slot-scope="props")
       a(@click.stop :href="props.row.show_path")
         | {{props.row.key}}
 
-  b-table-column(field="title" label="題名" sortable)
+  b-table-column(field="title" label="タイトル" sortable)
     .line_break_on
       template(v-if="props.row.saturn_key === 'private'")
         b-icon.has-text-grey-light(icon="lock" size="is-small")

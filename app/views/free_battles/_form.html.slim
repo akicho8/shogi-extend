@@ -29,10 +29,9 @@
       .field
         = render partial: "form_shogi_player", locals: { form: form }
       .field
-        .iikanjino_yoko
+        .bottom_controlls.has-text-centered
           b-tooltip(label="入力中の棋譜を複製して新しいタブで開く")
-            a.button.is-small(@click="kifu_clone_and_new_tab_oepn_handle")
-              b-icon(icon="content-copy" size="is-small")
+            b-button(@click="kifu_clone_and_new_tab_oepn_handle" size="is-small" icon-left="content-copy")
           b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 局面編集
 
 .field
