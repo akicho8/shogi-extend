@@ -3,7 +3,10 @@ require "rails_helper"
 RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   before do
     swars_battle_setup
-    @battle = Swars::Battle.first
+  end
+
+  let :record do
+    Swars::Battle.first
   end
 
   describe "index" do
@@ -71,39 +74,46 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       expect(page).to have_content "補完される文字列の全体"
       doc_image
     end
+
+    it "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
+      visit "/w?modal_id=#{record.to_param}"
+      find(".delete").click
+      expect(page).to have_content "1-1"
+      doc_image
+    end
   end
 
   describe "show" do
     it "詳細" do
-      visit "/w/#{@battle.to_param}"
+      visit "/w/#{record.to_param}"
       expect(page).to have_content "消費時間"
       doc_image
     end
 
     it "画像" do
-      visit "/w/#{@battle.to_param}.png"
+      visit "/w/#{record.to_param}.png"
       doc_image
     end
 
     it "画像 + turn" do
-      visit "/w/#{@battle.to_param}.png?turn=-1"
+      visit "/w/#{record.to_param}.png?turn=-1"
       doc_image
     end
 
     it "棋譜用紙" do
-      visit "/w/#{@battle.to_param}?formal_sheet=true"
+      visit "/w/#{record.to_param}?formal_sheet=true"
       expect(page).to have_content "記録係"
       doc_image
     end
 
     it "棋譜用紙(デバッグ)" do
-      visit "/w/#{@battle.to_param}?formal_sheet=true&formal_sheet_debug=true"
+      visit "/w/#{record.to_param}?formal_sheet=true&formal_sheet_debug=true"
       expect(page).to have_content "記録係"
       doc_image
     end
 
     it "レイアウト崩れの原因を伝えるダイアログ表示" do
-      visit "/w/#{@battle.to_param}?formal_sheet=true"
+      visit "/w/#{record.to_param}?formal_sheet=true"
       click_on("レイアウトが崩れていませんか？")
       expect(page).to have_content "最小フォントサイズ"
       doc_image

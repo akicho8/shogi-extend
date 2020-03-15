@@ -46,8 +46,8 @@ module Swars
 
       # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき詳細に飛ばす
       if false
-        if primary_key
-          redirect_to [:swars, :battle, id: primary_key]
+        if primary_record_key
+          redirect_to [:swars, :battle, id: primary_record_key]
           return
         end
       end
@@ -122,7 +122,7 @@ module Swars
     end
 
     # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
-    let :primary_key do
+    let :primary_record_key do
       if query = params[:query].presence
         Battle.battle_key_extract(query)
       end
@@ -130,9 +130,9 @@ module Swars
 
     def import_process2(flash)
       # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき
-      if primary_key
+      if primary_record_key
         # 一覧に表示したいので取得
-        current_model.single_battle_import(key: primary_key)
+        current_model.single_battle_import(key: primary_record_key)
       else
         import_process(flash.now)
       end
@@ -243,7 +243,7 @@ module Swars
     # 拾うと次の文字列の先頭をウォーズIDと解釈してしまう
     # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1"
     let :current_swars_user_key do
-      unless primary_key
+      unless primary_record_key
         current_swars_user_key_from_url || current_query_info.values.first
       end
     end
@@ -300,8 +300,11 @@ module Swars
     def current_index_scope
       @current_index_scope ||= -> {
         s = current_scope
-        if primary_key
-          s = s.where(key: primary_key)
+        case
+        when primary_record_key
+          s = s.where(key: primary_record_key)
+        when modal_record
+          s = s.where(key: modal_record.to_param)
         else
           if current_swars_user
           else
@@ -314,10 +317,10 @@ module Swars
       }.call
     end
 
-    # primary_key に対応するレコード
+    # primary_record_key に対応するレコード
     let :primary_record do
-      if primary_key
-        current_scope.find_by(key: primary_key)
+      if primary_record_key
+        current_scope.find_by(key: primary_record_key)
       end
     end
 

@@ -69,11 +69,6 @@ export default {
   },
 
   methods: {
-    // テーブルを表示する条件
-    table_display_p() {
-      return true
-    },
-
     tactic_name_click_handle(tactic_name) {
       this.tactic_name = tactic_name
       this.tactic_modal_p = true
@@ -119,6 +114,7 @@ export default {
       this.loading = true
 
       this.silent_http_get_command(this.async_records_load_url, {}, data => {
+        this.debug_alert(`loaded: ${data.length}`)
         this.loading = false
         this.records = data
         this.fetched_count += 1
@@ -182,6 +178,11 @@ export default {
   },
 
   computed: {
+    // テーブルを表示する条件
+    index_table_show_p() {
+      return true
+    },
+
     async_records_load_url_params() {
       return {
         query:            this.query,

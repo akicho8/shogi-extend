@@ -70,21 +70,21 @@ module BattleControllerSharedMethods
 
     def js_index_options
       {
-        query: current_query || "",
-        search_scope_key: current_search_scope_key,
-        board_show_type: params[:board_show_type].presence || "none",
-        xhr_index_path: polymorphic_path([ns_prefix, current_plural_key]),
-        total: current_records.total_count, # ここで事前にSQLが走るのは仕方ない
-        page: current_records.current_page,
-        per: current_per,
-        sort_column: sort_column,
-        sort_order: sort_order,
-        sort_order_default: "desc", # カラムをクリックしたときの最初の向き
-        records: [],                # JS側から最初のリクエストをしない場合は js_current_records を渡す
-        table_columns_hash: table_columns_hash,
-        modal_record: js_modal_record,
-        table_column_storage_prefix_key: controller_path,
-        zip_kifu_info: ZipKifuInfo.as_json,
+        :query                           => current_query || "",
+        :modal_record                    => js_modal_record,
+        :search_scope_key                => current_search_scope_key,
+        :board_show_type                 => params[:board_show_type].presence || "none",
+        :xhr_index_path                  => polymorphic_path([ns_prefix, current_plural_key]),
+        :total                           => current_records.total_count, # ここで事前にSQLが走るのは仕方ない
+        :page                            => current_records.current_page,
+        :per                             => current_per,
+        :sort_column                     => sort_column,
+        :sort_order                      => sort_order,
+        :sort_order_default              => "desc",                      # カラムをクリックしたときの最初の向き
+        :records                         => [],                          # JS側から最初のリクエストをしない場合は js_current_records を渡す
+        :table_columns_hash              => table_columns_hash,
+        :table_column_storage_prefix_key => controller_path,
+        :zip_kifu_info                   => ZipKifuInfo.as_json,
       }
     end
 

@@ -15,16 +15,23 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   mounted() {
-    if (this.$options.required_query_for_search) { // js側から一覧のレコードを出すときは必ず query が入っていないといけない場合
-      if (this.query) {
-        this.async_records_load()
-      }
-    } else {
+    if (this.index_table_show_p) {
       this.async_records_load()
     }
   },
 
   computed: {
+    // 最初に一覧を表示するか？
+    index_table_show_p() {
+      // required_query_for_search の指定がなければ常に表示する
+      if (!this.$options.required_query_for_search) {
+        return true
+      }
+      // テーブルを表示する条件は検索文字列があること。または modal_record があること。
+      // フォームに割り当てられている this.query だと変動するので使ってはいけない
+      return this.$options.query || this.$options.modal_record
+    },
+
     search_form_complete_list() {
       return this.$options.remember_swars_user_keys.filter((option) => {
         return option.toString().toLowerCase().indexOf(this.query.toLowerCase()) >= 0
@@ -33,11 +40,11 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   methods: {
-    // テーブルを表示する条件は検索文字列があること
-    // フォームに割り当てられている this.query だと変動するので使ってはいけない
-    table_display_p() {
-      return this.$options.query
-    },
+    // // テーブルを表示する条件は検索文字列があること
+    // // フォームに割り当てられている this.query だと変動するので使ってはいけない
+    // table_display_p() {
+    //   return this.$options.query
+    // },
 
     player_info_click_hadle(e) {
       if (this.$options.player_info_path) {
