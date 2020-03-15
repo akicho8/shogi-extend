@@ -34,15 +34,11 @@
             b-button(@click="kifu_clone_and_new_tab_oepn_handle" size="is-small" icon-left="content-copy")
           b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 局面編集
 
-.field
-  = form.label(:title, class: "label")
-  .control
-    = form.text_field(:title, class: "input is-small", required: false)
+b-field(label="タイトル" label-position="on-border")
+  b-input(name="free_battle[title]" :value="$options.record_attributes.title" size="is-small")
 
-.field
-  = form.label(:description, class: "label")
-  .control
-    = form.text_area(:description, class: "textarea is-small", rows: 2)
+b-field(label="説明" label-position="on-border")
+  b-input(name="free_battle[description]" :value="$options.record_attributes.description" size="is-small" type="textarea" rows="2")
 
 - if current_user
   b-field
