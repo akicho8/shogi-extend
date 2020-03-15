@@ -280,7 +280,7 @@ module BattleControllerSharedMethods
     end
 
     def access_log_create(record)
-      record.update!(accessed_at: Time.current)
+      record.update_columns(accessed_at: Time.current)
     end
 
     let :js_show_options do
