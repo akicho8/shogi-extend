@@ -71,7 +71,7 @@ const ChartVlinePlugin = {
 
 export default {
   props: {
-    chart_turn: { required: false, },
+    chart_turn: { required: true, },
   },
 
   watch: {
