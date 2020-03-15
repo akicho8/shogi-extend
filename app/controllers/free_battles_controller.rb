@@ -141,8 +141,17 @@ class FreeBattlesController < ApplicationController
       v[:kifu_body] = hidden_kifu_body
     end
 
-    if body = params[:body].presence
-      v[:kifu_body] = body
+    # ショートカット
+    # http://localhost:3000/x/new?body=xxx
+    # のときの xxx などを拾う
+    {
+      :title       => :title,
+      :body        => :kifu_body,
+      :description => :description,
+    }.each do |key, column|
+      if s = params[key].presence
+        v[column] = s
+      end
     end
 
     v
