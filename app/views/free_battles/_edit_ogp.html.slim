@@ -1,0 +1,108 @@
+- @page_title = "【#{current_record.title}】のOGP画像設定"
+
+- content_for :head do
+  = javascript_pack_tag("free_battle_edit_ogp")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleEditOgp(#{js_edit_ogp_options.to_json.html_safe}).$mount("#free_battle_edit_ogp") })
+
+#free_battle_edit_ogp
+  nav.breadcrumb
+    ul
+      li= link_to("野良棋譜一覧", [ns_prefix, current_plural_key])
+      li= link_to("##{current_record.id}", [ns_prefix, current_record])
+      li= link_to("編集", [:edit, ns_prefix, current_record])
+      li.is-active
+        = link_to("OGP画像設定", "#")
+
+  p.title.is-5.yumincho
+    = @page_title
+  hr
+
+  #capture_container
+    #capture_main
+      shogi_player(
+        :kifu_body="'#{current_record.sfen_body_or_create}'"
+        :theme="'simple'"
+        :key_event_capture="true"
+        :start_turn.sync="start_turn"
+        :summary_show="false"
+        :setting_button_show="false"
+        ref="main_sp"
+      )
+
+  template(v-if="slider_show")
+    .has-text-centered
+      input.ogp_slider(type="range" v-model.number="start_turn" :min="$refs.main_sp.turn_offset_min" :max="$refs.main_sp.turn_offset_max" ref="ogp_turn_slider")
+      span.is-size-7
+        | {{$refs.main_sp.turn_offset}}
+
+  .has-text-centered
+    .buttons.is-inline
+      a.button(@click="og_image_create_by_rmagick")
+        | この局面を画像化
+
+      / p.has-text-grey-light.is-size-7
+      /   | 開始局面も同時に保存します
+
+  .has-text-centered
+    .section
+      .title.is-6.paddingless 現在のOGP画像
+      template(v-if="tweet_origin_image_path")
+        .img_size_check
+          a(:href="tweet_origin_image_path" target="_self")
+            img(:src="tweet_origin_image_path" width="600")
+        b-tooltip(label="削除")
+          a.button.is-danger(@click="og_image_destroy")
+            b-icon(icon="trash-can-outline")
+
+      template(v-else="tweet_origin_image_path")
+        | なし
+
+      br
+      br
+      a.is-size-7(href="https://cards-dev.twitter.com/validator" target="_self") Twitter Card validator
+      br
+      a.is-size-7(href="https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image" target="_self") 仕様
+      br
+      br
+      a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_self")
+        | &nbsp;
+        b-icon(icon="twitter" size="")
+        | &nbsp;
+        | &nbsp;
+        | &nbsp;
+        | ツイート
+        | &nbsp;
+      br
+      br
+      textarea.textarea(rows="3" readonly)
+        | {{$options.tweet_body}}
+
+  - if Rails.env.development?
+    table(border=1)
+      caption
+        | data
+      tr(v-for="(value, key) in $data")
+        th(v-text="key")
+        td(v-text="value")
+
+  / - if current_record.thumbnail_image.attached? && false
+  /   .box.img_size_check
+  /     = image_tag current_record.thumbnail_image, size: "200"
+  /   .box.img_size_check
+  /     = image_tag current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale, quality: 100)
+  /   .box.img_size_check
+  /     = image_tag polymorphic_path([ns_prefix, current_record], format: "png")
+  /   .box
+  /     ruby:
+  /       list = {
+  /         service_url: current_record.thumbnail_image.blob.service_url,
+  /         polymorphic_url: polymorphic_url(current_record.thumbnail_image),
+  /         rails_blob_url: rails_blob_url(current_record.thumbnail_image),
+  /         polymorphic_path: polymorphic_path(current_record.thumbnail_image),
+  /         rails_blob_path: rails_blob_path(current_record.thumbnail_image),
+  /         url_for: url_for(current_record.thumbnail_image),
+  /         rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
+  /         rails_representation_path: rails_representation_path(current_record.thumbnail_image.variant(resize: "1200x630!", type: :grayscale)),
+  /       }
+  /     = list.to_html

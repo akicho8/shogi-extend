@@ -14,11 +14,18 @@ hr
 = render partial: "shogi_player_shared"
 
 - if !iframe?
+  - if current_user || Rails.env.development?
+    .columns
+      .column
+        .buttons.is-centered
+          = link_to("OGP画像設定", [:edit, ns_prefix, current_record, edit_mode: "ogp"], class: "button is-primary", target: "_self")
+
   .columns
     .column
       .buttons.is-centered
         - if editable_record?(current_record)
           = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
+          / = link_to("OGP画像確認", current_record.twitter_card_image_url(params), class: "button")
           = link_to("詳細", [ns_prefix, current_record], class: "button") if false
         - if current_record.kind_of?(FreeBattle)
           = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.to_param], class: "button")

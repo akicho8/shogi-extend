@@ -99,6 +99,11 @@ RSpec.describe FreeBattlesController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
+  it "OGP設定" do
+    get :edit, params: {id: @free_battle.to_param, mode: "ogp"}
+    expect(response).to have_http_status(:ok)
+  end
+
   it "update" do
     put :update, params: {id: @free_battle.to_param}
     expect(response).to have_http_status(:redirect)

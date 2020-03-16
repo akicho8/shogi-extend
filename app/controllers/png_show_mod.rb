@@ -25,5 +25,15 @@ module PngShowMod
     turn = current_record.adjust_turn(params[:turn])
     png = current_record.to_dynamic_png(params)
     send_data png, type: Mime[:png], disposition: current_disposition, filename: "#{current_record.to_param}-#{turn}.png"
+
+    # # 画像がなければ1回だけ作る
+    # current_record.image_auto_cerate_onece(params.to_unsafe_h)
+    # if AppConfig[:force_convert_for_twitter_image]
+    #   key = current_record.tweet_image.processed.key
+    # else
+    #   key = current_record.thumbnail_image.key
+    # end
+    # path = ActiveStorage::Blob.service.path_for(key)
+    # send_file path, type: current_record.thumbnail_image.content_type, disposition: disposition, filename: "#{current_record.to_param}.png"
   end
 end

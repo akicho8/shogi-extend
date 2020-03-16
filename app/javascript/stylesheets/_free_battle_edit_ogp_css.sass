@@ -1,0 +1,82 @@
+$base_size: 40px
+
+#capture_container
+  margin: 0 auto
+
+  // https://bulma.io/documentation/overview/responsiveness/
+  width: 1200px
+  height: 630px
+  box-sizing: content-box
+  border: 1px solid $primary
+  
+  // これを使うと中央にくるけど長方形になる
+  // display: flex
+  // justify-content: center
+  // align-items: center
+  
+  #capture_main
+    .shogi-player
+      .font_size_base
+        font-size: $base_size
+
+      .board_container
+        padding: 0.45em 0
+
+        .piece_fore.promoted_false
+          color: #222
+
+        .board_inner
+          width: 200px
+
+          border-color: #888          // 外枠
+          background-color: #999      // 罫線
+          margin: 0 $base_size * 0.5
+
+          td
+            // width:  $base_size * 1.6
+            // height: $base_size * 1.6
+            font-size: $base_size
+            .piece_back
+              &.origin_place
+                background-color: hsl(0,0%,94%)
+              &.current
+                background-color: hsl(0,0%,94%)
+                animation: none
+              .piece_fore
+                // line-height: auto
+                // padding-top: 0
+                // width:  $base_size * 1.3
+                // height: $base_size * 1.3
+
+        .piece_stand_outer
+          font-size: $base_size * 0.9
+          .location_mark
+          .piece_stand
+            .piece_back
+              .piece_fore
+            .piece_count
+              color: #888
+              padding-left: 5px
+
+        .turn_active
+          .location_mark
+            text-shadow: 0 0 2rem hsl(0,50%,50%)
+
+.img_size_check
+  img
+    border: 1px solid $primary
+
+.ogp_slider
+  width: 25%
+
+// // Windows の Google Chrome だと mac とちがって駒が下りすぎる対策
+// .win
+//   $sp_simple_piece_fore_transform_y: -5px
+//   #capture_container
+//     .board_inner
+//       .piece_back
+//         .piece_fore
+//           &.location_black
+//             transform: translateY($sp_simple_piece_fore_transform_y)
+//           &.location_white
+//             transform: rotate(180deg) translateY($sp_simple_piece_fore_transform_y)

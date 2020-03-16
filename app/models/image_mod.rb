@@ -1,11 +1,31 @@
 module ImageMod
   extend ActiveSupport::Concern
 
+  included do
+    has_one_attached :thumbnail_image # , dependent: :purge
+
+    before_destroy :image_file_delete # 不具合を回避するため dependent: :purge をつけずに自力で削除する
+  end
+
   def image_default_options
     {
       width: 1200,
       height: 630,
     }
+  end
+
+  # rmagick で盤面作成
+  def image_auto_cerate_onece(params)
+    unless thumbnail_image.attached?
+      image_auto_cerate_force(params)
+    end
+  end
+
+  # has_one_attached :thumbnail_image, dependent: :purge とすると thumbnail_image.attached? が false になる不具合あり
+  def image_file_delete
+    if thumbnail_image.attached?
+      thumbnail_image.purge
+    end
   end
 
   # http://localhost:3000/w/hatae72-kinakom0chi-20200311_231857.png?width=&turn=21
@@ -83,7 +103,48 @@ module ImageMod
     "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_body(options))}"
   end
 
+  def tweet_image
+    if thumbnail_image.attached?
+      thumbnail_image.variant(resize: "1200x630!", quality: 100, normalize: true)
+    end
+  end
+
+  def tweet_origin_image_path
+    if tweet_image
+      Rails.application.routes.url_helpers.rails_representation_path(tweet_image)
+    end
+  end
+
+  def canvas_data_save_by_rmagick(params)
+    image_auto_cerate_force(params)
+    canvas_data_save_result
+  end
+
+  def canvas_data_save_result
+    {
+      message: "OGP画像を設定しました",
+      # https://edgeguides.rubyonrails.org/active_storage_overview.html
+      # Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
+      tweet_origin_image_path: tweet_origin_image_path,
+    }
+  end
+
+  def canvas_data_destroy(params)
+    thumbnail_image.purge
+    {
+      message: "削除しました",
+    }
+  end
+
   private
+
+  def image_auto_cerate_force(params)
+    image_file_delete
+    turn_limit = (params[:turn] || display_turn).to_i # FIXME: 補正してない
+    parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: turn_limit)
+    png = parser.to_png(param_as_to_png_options(params))
+    thumbnail_image.attach(io: StringIO.new(png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+  end
 
   def str_to_native_value(e)
     case

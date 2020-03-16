@@ -140,6 +140,20 @@
     //-           b-icon(icon="clipboard-plus-outline" size="is-small")
     //-           span.a_label URLをコピー \#{{turn_offset}}
 
+    //- b-dropdown-item(:separator="true")
+    //-
+    //- template(v-if="record.edit_path")
+    //-   b-dropdown-item(:has-link="true" :paddingless="true")
+    //-     a(:href="`${record.edit_path}?edit_mode=ogp`")
+    //-       b-icon(icon="settings-outline" size="is-small")
+    //-       span.a_label OGP画像設定
+    //-
+    //- template(v-if="record.tweet_window_url")
+    //-   b-dropdown-item(:has-link="true" :paddingless="true")
+    //-     a(:href="record.tweet_window_url" target="_self")
+    //-       b-icon(icon="twitter" size="is-small")
+    //-       span.a_label ツイート
+    //-
     //- template(v-if="record.official_swars_battle_url")
     //-   b-dropdown-item(:has-link="true" :paddingless="true")
     //-     a(:href="record.official_swars_battle_url" target="_self")
