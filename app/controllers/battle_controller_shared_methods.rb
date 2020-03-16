@@ -129,7 +129,6 @@ module BattleControllerSharedMethods
 
     let :current_scope do
       s = current_model.all
-      s = s.public_send("with_attached_#{'thumbnail_image'}")
       s = tag_scope_add(s)
       s = search_scope_add(s)
       s = other_scope_add(s)
@@ -345,7 +344,6 @@ module BattleControllerSharedMethods
         a[:show_path] = polymorphic_path([ns_prefix, e])
         a[:formal_sheet_path] = polymorphic_path([ns_prefix, e], formal_sheet: true)
         a[:modal_on_index_url] = e.modal_on_index_url
-        a[:kifu_canvas_image_attached] = e.thumbnail_image.attached?
         if editable_record?(e) || Rails.env.development?
           a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
         end
@@ -376,18 +374,11 @@ module BattleControllerSharedMethods
 
   concerning :EditMethods do
     included do
-      helper_method :js_edit_ogp_options
       helper_method :current_edit_mode
     end
 
     let :current_edit_mode do
       (params[:edit_mode].presence || :basic).to_sym
-    end
-
-    let :js_edit_ogp_options do
-      js_show_options.merge({
-          index_path: polymorphic_path([ns_prefix, current_plural_key]),
-        })
     end
 
     def update

@@ -63,10 +63,6 @@ RSpec.describe "棋譜投稿", type: :system do
     it "編集" do
       visit "/x/#{record.to_param}/edit"
     end
-
-    it "OGP画像設定" do
-      visit "/x/#{record.to_param}/edit?mode=ogp"
-    end
   end
 
   # click_on("棋譜入力") 相当
