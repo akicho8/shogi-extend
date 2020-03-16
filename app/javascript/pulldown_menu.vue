@@ -11,7 +11,7 @@
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.png?attachment=true&turn=${turn_offset}`")
+        a(:href="`${record.show_path}.png?attachment=true&width=&flip=${flip}&turn=${turn_offset}`")
           b-icon(icon="download" size="is-small")
           span.a_label PNG ダウンロード {{turn_mark}}
 
@@ -105,7 +105,7 @@
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.png?width=&turn=${turn_offset}`")
+        a(:href="`${record.show_path}.png?width=&flip=${flip}&turn=${turn_offset}`")
           b-icon(icon="eye" size="is-small")
           span.a_label PNG 表示 {{turn_mark}}
 
@@ -162,10 +162,11 @@
 <script>
 export default {
   props: {
-    record:   { required: false },
-    in_modal_p: { },
-    permalink_url: { },
-    turn_offset: { },
+    record:        { required: false },
+    in_modal_p:    {                 },
+    permalink_url: {                 },
+    turn_offset:   {                 },
+    flip:          { required: true  },
   },
 
   data() {

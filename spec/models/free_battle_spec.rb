@@ -90,6 +90,7 @@ RSpec.describe FreeBattle, type: :model do
       assert { record.param_as_to_png_options("width" => "800")   == {width:  800, height: 630} }
       assert { record.param_as_to_png_options("height" => "9999") == {width: 1200, height: 630} }
       assert { record.param_as_to_png_options("other" => "12.34") == {width: 1200, height: 630, other: 12.34} }
+      assert { record.param_as_to_png_options("other" => "true")  == {width: 1200, height: 630, other: true}  }
     end
 
     it "to_dynamic_png" do

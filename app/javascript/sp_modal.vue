@@ -32,7 +32,7 @@
           :sound_effect="true"
           :volume="0.2"
           :setting_button_show="false"
-          :flip="record.fliped"
+          :flip.sync="new_flip"
           :player_info="player_info"
           @update:start_turn="real_turn_set"
           ref="sp_modal"
@@ -59,15 +59,17 @@
           | record.critical_turn: {{record.critical_turn}}
           | record.outbreak_turn: {{record.outbreak_turn}}
           | record.turn_max: {{record.turn_max}}
+          | record.turn: {{record.turn}}
+          | new_flip: {{new_flip}}
 
       footer.modal-card-foot
         piyo_shogi_button(:icon_only="true" @click.stop="" type="button" :href="record.piyo_shogi_app_url")
         kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
         kif_copy_button(:icon_only="true" @click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
         tweet_button(tag="a" :href="tweet_url" :turn="turn_offset")
-        png_dl_button(tag="a" :href="`${record.show_path}.png?attachment=true&turn=${turn_offset}`" :turn="turn_offset")
+        png_dl_button(tag="a" :href="`${record.show_path}.png?attachment=true&flip=${new_flip}&turn=${turn_offset}`" :turn="turn_offset")
 
-        pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" v-if="pulldown_menu_p")
+        pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる
 </template>
 
@@ -92,8 +94,9 @@ export default {
       new_modal_p: this.sp_modal_p,    // sp_modal_p の内部の値
       run_mode: null,                  // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       turn_offset: null,               // KENTOに渡すための手番
-      name_show_p: true,        // プレイヤーの名前を表示する？
+      name_show_p: true,               // プレイヤーの名前を表示する？
       time_chart_p: false,             // 時間チャートを表示する？
+      new_flip: null,                  // 上下反転している？
     }
   },
 
@@ -116,6 +119,9 @@ export default {
 
         // 継盤解除
         this.run_mode = "view_mode"
+
+        // 最初の上下反転状態
+        this.new_flip = this.record.fliped
 
         // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
         // これは勝手にやらない方がいい？

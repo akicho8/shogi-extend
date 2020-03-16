@@ -34,15 +34,15 @@ module ImageMod
       params = params.to_unsafe_h
     end
 
-    params                                                                     # => {"width" => "",   "height" => "1234" }
-    params = params.to_options                                                 # => {:width  => "",   :height  => "1234" }
-    hash = params.transform_values { |e| Integer(e) rescue Float(e) rescue e } # => {:width  => "",   :height  => 1234   }
-    hash = hash.reject { |k, v| v.blank? }                                     # => {                 :height  => 1234   }
-    options = image_default_options.merge(hash)                                # => {:width  => 1200, :height  => 1234   }
+    params                                                        # => {"width" => "",   "height" => "1234" }
+    params = params.to_options                                    # => {:width  => "",   :height  => "1234" }
+    hash = params.transform_values { |e| str_to_native_value(e) } # => {:width  => "",   :height  => 1234   }
+    hash = hash.reject { |k, v| v.blank? }                        # => {                 :height  => 1234   }
+    options = image_default_options.merge(hash)                   # => {:width  => 1200, :height  => 1234   }
 
-    # 最大値を超えないように補正
+                                                                  # 最大値を超えないように補正
     image_default_options.each do |key, val|
-      options[key] = options[key].clamp(1, val)                                # => {:width  => 1200, :height  => 630    }
+      options[key] = options[key].clamp(1, val)                   # => {:width  => 1200, :height  => 630    }
     end
 
     options
@@ -77,7 +77,7 @@ module ImageMod
       modal_id: to_param,
       title: "",
       description: "",
-      turn: "",
+      flip: false,
     }.merge(params)
 
     params[:turn] = adjust_turn(params[:turn])
@@ -144,5 +144,16 @@ module ImageMod
     parser = Bioshogi::Parser.parse(kifu_body, typical_error_case: :embed, turn_limit: turn_limit)
     png = parser.to_png(param_as_to_png_options(params))
     thumbnail_image.attach(io: StringIO.new(png), filename: "#{SecureRandom.hex}.png", content_type: "image/png")
+  end
+
+  def str_to_native_value(e)
+    case
+    when e == "true"
+      true
+    when e == "false"
+      false
+    else
+      Integer(e) rescue Float(e) rescue e
+    end
   end
 end
