@@ -166,7 +166,7 @@ export default {
     in_modal_p:    {                 },
     permalink_url: {                 },
     turn_offset:   {                 },
-    flip:          { required: true  },
+    flip:          { required: false },
   },
 
   data() {
