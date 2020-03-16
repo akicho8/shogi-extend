@@ -113,9 +113,8 @@
                   | {{props.row.entry_name || '？？？'}}
                 b-table-column(field="spent_sec" label="タイム" sortable)
                   | {{time_format_from_msec(props.row.spent_sec)}}
-                template(v-if="curent_scope.date_visible")
-                  b-table-column(field="created_at" label="日付" sortable)
-                    | {{time_default_format(props.row.created_at)}}
+                b-table-column(field="created_at" label="日付" sortable :visible="curent_scope.date_visible")
+                  | {{time_default_format(props.row.created_at)}}
 
       .has-text-centered-mobile
         b-switch(v-model="entry_name_unique") プレイヤー別順位
