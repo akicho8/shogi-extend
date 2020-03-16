@@ -221,12 +221,18 @@ module BattleModelSharedMethods
     turn.clamp(0, turn_max)
   end
 
+  def adjust_flip(flip = nil)
+    flip.to_s == "true"
+  end
+
   def to_twitter_card_params(params = {})
+    turn = adjust_turn(params[:turn])
+    flip = adjust_flip(params[:flip])
+
     {}.tap do |e|
-      turn = adjust_turn(params[:turn])
       e[:title]       = params[:title].presence || twitter_card_title || "#{turn}手目"
-      e[:url]         = modal_on_index_url(turn: turn)
-      e[:image]       = twitter_card_image_url(turn: turn)
+      e[:url]         = modal_on_index_url(turn: turn, flip: flip)
+      e[:image]       = twitter_card_image_url(turn: turn, flip: flip)
       e[:description] = params[:description].presence || twitter_card_description
     end
   end
@@ -241,7 +247,9 @@ module BattleModelSharedMethods
 
   def twitter_card_image_url(options = {})
     turn = adjust_turn(options[:turn])
-    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn})
+    flip = adjust_flip(options[:flip])
+
+    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn, flip: flip})
   end
 
   def battle_decorator(params = {})

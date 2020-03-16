@@ -211,5 +211,34 @@ module Swars
         memberships[location.code].sec_list
       end
     end
+
+    concerning :ViewHelper do
+      included do
+        cattr_accessor(:labels_type1) { ["対象", "相手"] }
+        cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
+      end
+
+      def left_right_memberships(current_swars_user)
+        flip = false
+        a = memberships.to_a
+        if current_swars_user
+          labels = labels_type1
+          if a.last.user == current_swars_user
+            flip = true
+          end
+        else
+          labels = labels_type2
+          if win_user_id
+            if a.last.judge_key == "win"
+              flip = true
+            end
+          end
+        end
+        if flip
+          a = a.reverse
+        end
+        [flip, labels.zip(a)]
+      end
+    end
   end
 end

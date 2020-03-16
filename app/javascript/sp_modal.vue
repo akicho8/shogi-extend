@@ -67,7 +67,7 @@
         kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
         kif_copy_button(:icon_only="true" @click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
         tweet_button(tag="a" :href="tweet_url" :turn="turn_offset")
-        png_dl_button(tag="a" :href="`${record.show_path}.png?attachment=true&flip=${new_flip}&turn=${turn_offset}`" :turn="turn_offset")
+        png_dl_button(tag="a" :href="png_dl_url" :turn="turn_offset")
 
         pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
         a.button.is-small(@click="new_modal_p = false" v-if="false") 閉じる
@@ -121,7 +121,7 @@ export default {
         this.run_mode = "view_mode"
 
         // 最初の上下反転状態
-        this.new_flip = this.record.fliped
+        this.new_flip = this.record.flip
 
         // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
         // これは勝手にやらない方がいい？
@@ -215,10 +215,20 @@ export default {
     permalink_url() {
       if (this.record) {
         const url = new URL(this.record.modal_on_index_url)
-        if (this.turn_offset != null) {
-          url.searchParams.set("turn", this.turn_offset)
-        }
+        url.searchParams.set("turn", this.turn_offset)
+        url.searchParams.set("flip", this.new_flip)
         return url.toString()
+      }
+    },
+
+    // これはメソッドにする必要なかったけどまぁいい
+    png_dl_url() {
+      if (this.record) {
+        const params = new URLSearchParams()
+        params.set("attachment", true)
+        params.set("turn", this.turn_offset)
+        params.set("flip", this.new_flip)
+        return `${this.record.show_path}.png?${params}`
       }
     },
 

@@ -5,9 +5,6 @@ module Swars
       helper_method :current_query_info
       helper_method :twitter_card_options
 
-      cattr_accessor(:labels_type1) { ["対象", "相手"] }
-      cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
-
       rescue_from "Mechanize::ResponseCodeError" do |exception|
         message = "該当のデータが見つからないか混み合っています"
         flash.now[:warning] = message
@@ -193,28 +190,6 @@ module Swars
 
     let :import_page_max do
       (params[:page_max].presence || 1).to_i
-    end
-
-    def left_right_pairs(record)
-      fliped = false
-      a = record.memberships.to_a
-      if current_swars_user
-        labels = labels_type1
-        if a.last.user == current_swars_user
-          fliped = true
-        end
-      else
-        labels = labels_type2
-        if record.win_user_id
-          if a.last.judge_key == "win"
-            fliped = true
-          end
-        end
-      end
-      if fliped
-        a = a.reverse
-      end
-      [fliped, labels.zip(a)]
     end
 
     def slow_processing_error_redirect_url

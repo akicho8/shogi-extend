@@ -239,6 +239,9 @@ class FreeBattlesController < ApplicationController
       a[:formated_created_at] = h.time_ago_in_words(e.created_at) + "前"
       a[:new_and_copy_url] = url_for([:new, ns_prefix, current_single_key, source_id: e.to_param])
 
+      a[:flip] = false
+      a[:modal_on_index_url] = e.modal_on_index_url(flip: false)
+
       a
     end
   end

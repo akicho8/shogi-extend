@@ -295,7 +295,7 @@ module BattleControllerSharedMethods
       current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: view_context))
     end
 
-    # 使ってない？
+    # 消す
     let :show_twitter_options do
       options = {}
       options[:title] = current_record.title
@@ -333,11 +333,9 @@ module BattleControllerSharedMethods
         ],
         ).tap do |a|
 
-        a[:fliped] = false      # free_battles の方では設定してないので初期値を入れとく
-
         a[:title] = e.title
         a[:description] = e.description
-        a[:twitter_card_image_url] = e.twitter_card_image_url(params)
+        # a[:twitter_card_image_url] = e.twitter_card_image_url(params)
         a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
         a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
         a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ

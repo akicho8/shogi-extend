@@ -11,7 +11,7 @@
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.png?attachment=true&width=&flip=${flip}&turn=${turn_offset}`")
+        a(:href="`${record.show_path}.png?attachment=true&width=&flip=${new_flip}&turn=${turn_offset}`")
           b-icon(icon="download" size="is-small")
           span.a_label PNG ダウンロード {{turn_mark}}
 
@@ -105,7 +105,7 @@
 
     template(v-if="record.show_path")
       b-dropdown-item(:has-link="true" :paddingless="true")
-        a(:href="`${record.show_path}.png?width=&flip=${flip}&turn=${turn_offset}`")
+        a(:href="`${record.show_path}.png?width=&flip=${new_flip}&turn=${turn_offset}`")
           b-icon(icon="eye" size="is-small")
           span.a_label PNG 表示 {{turn_mark}}
 
@@ -116,6 +116,14 @@
         a(:href="record.formal_sheet_path" target="_self")
           b-icon(icon="pdf-box" size="is-small")
           span.a_label 棋譜用紙
+
+    template(v-if="development_p")
+      b-dropdown-item
+        pre
+          | flip: {{flip}}
+          | record.flip: {{record.flip}}
+          | new_flip: {{new_flip}}
+          | new_permalink_url: {{new_permalink_url}}
 
     //- // @click.stop にするとURLをコピーしたあとプルダウンが閉じなくなる
     //- template(v-if="record.modal_on_index_url")
@@ -162,11 +170,11 @@
 <script>
 export default {
   props: {
-    record:        { required: false },
-    in_modal_p:    {                 },
-    permalink_url: {                 },
-    turn_offset:   {                 },
-    flip:          { required: false },
+    record:        { required: true },
+    in_modal_p:    { },
+    permalink_url: { },
+    turn_offset:   { },
+    flip:          { }, // かならず record.flip を渡してもらう
   },
 
   data() {
@@ -184,11 +192,30 @@ export default {
 
   computed: {
     new_permalink_url() {
+      // sp_modal で作られた permalink_url を使うが、なければコントローラーで埋められたのを使う
       return this.permalink_url || this.record.modal_on_index_url
     },
 
+    new_flip() {
+      // 引数が明示的に渡されたときにはそれに従う。sp_modal からのみ flip が動的に渡されている
+      if (this.flip != null) {
+        return this.flip
+      }
+
+      // コントローラーで record に埋められたのを使う
+      return this.record.flip
+    },
+
     turn_mark() {
-      return `#${this.turn_offset}`
+      let v = `#${this.turn_offset}`
+
+      if (this.development_p) {
+        if (this.new_flip) {
+          v = `-${v}`
+        }
+      }
+
+      return v
     },
   },
 }

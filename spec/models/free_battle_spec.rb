@@ -78,8 +78,8 @@ RSpec.describe FreeBattle, type: :model do
       end
       it do
         assert { value[:title]       == "(tournament_name)"                                                        }
-        assert { value[:url]         == "http://localhost:3000/x?description=&modal_id=free_battle1&title=&turn=5" }
-        assert { value[:image]       == "http://localhost:3000/x/free_battle1.png?turn=5"                          }
+        assert { value[:url]         == "http://localhost:3000/x?description=&flip=false&modal_id=free_battle1&title=&turn=5" }
+        assert { value[:image]       == "http://localhost:3000/x/free_battle1.png?flip=false&turn=5"                          }
         assert { value[:description] == nil                                                                         }
       end
     end
@@ -98,7 +98,7 @@ RSpec.describe FreeBattle, type: :model do
     end
 
     it "modal_on_index_url" do
-      assert { record.modal_on_index_url == "http://localhost:3000/x?description=&modal_id=free_battle1&title=&turn=5" }
+      assert { record.modal_on_index_url == "http://localhost:3000/x?description=&flip=false&modal_id=free_battle1&title=&turn=5" }
     end
 
     it "adjust_turn" do

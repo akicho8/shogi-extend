@@ -77,10 +77,10 @@ module ImageMod
       modal_id: to_param,
       title: "",
       description: "",
-      flip: false,
     }.merge(params)
 
     params[:turn] = adjust_turn(params[:turn])
+    params[:flip] = adjust_flip(params[:flip])
 
     Rails.application.routes.url_helpers.full_url_for([self.class, params])
   end
