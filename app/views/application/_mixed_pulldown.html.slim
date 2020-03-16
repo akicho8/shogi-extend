@@ -54,11 +54,3 @@
       - if current_record.kind_of?(Swars::Battle)
         - current_record.memberships.each do |e|
           = link_to("#{e.user.name_with_grade} 情報", [:swars, :player_infos, user_key: e.user.key], class: "button")
-
-    - if current_record.kind_of?(Swars::Battle)
-    - else
-      a.button.is-info.is-rounded.tweet_button(href=current_record.tweet_window_url target="_self")
-        b-icon(icon="twitter" size="is-small")
-        | &nbsp;
-        | &nbsp;
-        | ツイート
