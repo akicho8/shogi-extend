@@ -21,26 +21,3 @@
       | &nbsp;
       a.button.is-small(@click.stop.prevent="kif_clipboard_copy(record.kifu_copy_params)")
         | 棋譜コピー
-
-    / .columns
-    /   .column
-    /     .virtual_box
-    /       .title.is-5 Vue Internal Variables
-    /       table.table(border=1)
-    /         tr(v-for="(value, key) in $data")
-    /           th v-text="key"
-    /           td v-text="value"
-    /     .virtual_box
-    /       .title.is-5 Vue Computed Results
-    /       table.table(border=1)
-    /         tr(v-for="(e, key) in _computedWatchers")
-    /           th v-text="key"
-    /           td v-text="e.value"
-
-    / template(v-if="kifu_copy_params")
-    /   | &nbsp;
-    /   a.button.is-small(@click.stop.prevent="kif_clipboard_copy(kifu_copy_params)")
-    /     | 棋譜コピー
-
-/ = render partial: "mixed_pulldown"
-/ = render partial: "free_battles/kifu_clock_chart"

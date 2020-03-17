@@ -1,10 +1,6 @@
-- @page_title ||= current_record.title
-- sp_title = current_record.title
-- twitter_card_registry(show_twitter_options)
-
 - content_for :head do
   = javascript_pack_tag("free_battle_show")
   javascript:
-    document.addEventListener('DOMContentLoaded', () => { new FreeBattleShowApp(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
+    document.addEventListener('DOMContentLoaded', () => { new FreeBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
-= render partial: "free_battles/show_shared", locals: { sp_title: sp_title }
+= render partial: "free_battles/show_shared"

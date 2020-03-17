@@ -1,10 +1,10 @@
 doctype 5
-html(lang="ja" class=([params[:formal_sheet] ? "has_formal_sheet" : "", iframe? ? "iframe" : "", Rails.env]))
+html(lang="ja" class=([params[:formal_sheet] ? "has_formal_sheet" : "", iframe_p ? "iframe" : "", Rails.env]))
   head
     = render partial: "layouts/head"
   body
     #single_notification_app
-    - if !@simple_layout && !iframe?
+    - if !@simple_layout && !iframe_p
       = render partial: "layouts/main_navbar"
     section.section
       .container.is-fluid.main_container

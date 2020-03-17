@@ -86,7 +86,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   describe "show" do
     it "詳細" do
       visit "/w/#{record.to_param}"
-      expect(page).to have_content "消費時間"
+      expect(page).to have_content "devuser1"
       doc_image
     end
 
@@ -95,8 +95,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "画像 + turn" do
-      visit "/w/#{record.to_param}.png?turn=-1"
+    it "画像 + turn + flip" do
+      visit "/w/#{record.to_param}.png?turn=-1&flip=true"
       doc_image
     end
 

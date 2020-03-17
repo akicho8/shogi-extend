@@ -49,7 +49,7 @@ module ModalMod
         a[:turn] = e.adjust_turn(v)
       end
 
-      unless current_flip.nil?
+      if !current_flip.nil?
         a[:flip] = current_flip
       end
     end

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "棋譜投稿", type: :system do
   let :record do
-    FreeBattle.create!(kifu_body: "48玉")
+    FreeBattle.create!(kifu_body: "48玉", title: "(test_title)")
   end
 
   describe "一覧" do
@@ -45,17 +45,17 @@ RSpec.describe "棋譜投稿", type: :system do
   end
 
   describe "詳細(非公開)" do
-    it "コピペ新規" do
-      visit "/x/#{record.to_param}"
-      click_on "コピペ新規"
-      text_input_click
-      expect(page).to have_content "48玉"
-      doc_image
-    end
+    # it "コピペ新規" do
+    #   visit "/x/#{record.to_param}"
+    #   click_on "コピペ新規"
+    #   text_input_click
+    #   expect(page).to have_content "48玉"
+    #   doc_image
+    # end
 
     it "詳細" do
       visit "/x/#{record.to_param}"
-      expect(page).to have_content "新米長玉"
+      expect(page).to have_content "(test_title)"
     end
   end
 

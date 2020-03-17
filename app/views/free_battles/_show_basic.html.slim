@@ -1,42 +1,59 @@
-- if !iframe?
-  nav.breadcrumb
-    ul
-      li= link_to("棋譜一覧", [ns_prefix, current_plural_key])
-      / li.is-active= link_to(current_record.title, current_record)
-      li.is-active= link_to("##{current_record.id}", [ns_prefix, current_record])
+template(v-if="!iframe_p")
+  sp_modal(:sp_modal_p.sync="sp_modal_p" :record="record" :pulldown_menu_p="true")
 
-.versus_container
-  .has-text-centered
-    .title.is-5.yumincho
-      == sp_title
-hr
+template(v-if="iframe_p")
+  shogi_player(
+    :kifu_body="record.sfen_body"
+    :start_turn="-1"
+    :key_event_capture="false"
+    :slider_show="true"
+    :controller_show="true"
+    :size="'medium'"
+    :sound_effect="true"
+    :volume="0.2"
+    )
 
-= render partial: "shogi_player_shared"
+  /   = render partial: "sfen_link"
+  /
+  / - if current_record.description.present?
+  /   .has-text-centered
+  /     .message.is-size-7
+  /       .message-body
+  /         = current_record.description
+  /
+  / - if AppConfig[:swars_tag_search_function]
+  /     br
+  /     .has-text-centered
+  /       .tags.is-inline
+  /         - current_record.showable_tag_list.each do |e|
+  /          span.tag= link_to(e, [:swars, :battles, query: "tag:#{e}"])
 
-- if !iframe?
-  .columns
-    .column
-      .buttons.is-centered
-        - if editable_record?(current_record)
-          = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
-          = link_to("詳細", [ns_prefix, current_record], class: "button") if false
-        - if current_record.kind_of?(FreeBattle)
-          = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.to_param], class: "button")
-
-  template(v-if="$options.tweet_body")
-    .columns
-      .column
-        textarea.textarea(rows="3" readonly)
-          | {{$options.tweet_body}}
-
-  = render partial: "mixed_pulldown"
-  = render partial: "free_battles/kifu_clock_chart"
-
-  - if current_record.respond_to?(:memberships)
-    .columns
-      - current_record.memberships.each do |e|
-        .column
-          .box.is-size-7.hash_value_only_nowrap
-            = e.swgod_info(detail: params[:detail]).to_html(table_class: "table is-hoverable is-fullwidth is-narrow")
-
-  = render partial: "shogi_player_shared_tabs_div"
+/ - if !iframe_p
+/   nav.breadcrumb
+/     ul
+/       li= link_to("棋譜一覧", [ns_prefix, current_plural_key])
+/       li.is-active= link_to("#{current_record.to_param}", [ns_prefix, current_record])
+/
+/ .versus_container
+/   .has-text-centered
+/     .title.is-5.yumincho
+/       == sp_title
+/ hr
+/
+/ = render partial: "shogi_player_shared"
+/
+/ - if !iframe_p
+/   .columns
+/     .column
+/       .buttons.is-centered
+/         - if editable_record?(current_record)
+/           = link_to("編集", [:edit, ns_prefix, current_record], class: "button")
+/           = link_to("詳細", [ns_prefix, current_record], class: "button") if false
+/         - if current_record.kind_of?(FreeBattle)
+/           = link_to("コピペ新規", [:new, ns_prefix, current_single_key, source_id: current_record.to_param], class: "button")
+/
+/   template(v-if="$options.tweet_body")
+/     .columns
+/       .column
+/         textarea.textarea(rows="3" readonly)
+/           | {{$options.tweet_body}}

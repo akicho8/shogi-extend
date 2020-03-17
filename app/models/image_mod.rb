@@ -20,7 +20,7 @@ module ImageMod
     hash = hash.reject { |k, v| v.blank? }                        # => {                 :height  => 1234   }
     options = image_default_options.merge(hash)                   # => {:width  => 1200, :height  => 1234   }
 
-                                                                  # 最大値を超えないように補正
+    # 最大値を超えないように補正
     image_default_options.each do |key, val|
       options[key] = options[key].clamp(1, val)                   # => {:width  => 1200, :height  => 630    }
     end
@@ -38,18 +38,6 @@ module ImageMod
       parser = Bioshogi::Parser.parse(sfen_body_or_create, bioshogi_parser_options.merge(turn_limit: turn))
       parser.to_png(options)
     end
-  end
-
-  # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
-  def bioshogi_parser_options
-    {
-      # :skill_monitor_enable           => false,
-      # :skill_monitor_technique_enable => false,
-      :typical_error_case => :embed, # validate_skip しているのでこのオプションは使わない？
-      :candidate_skip     => true,
-      :validate_skip      => true,
-      :mediator_class     => Bioshogi::MediatorFast,
-    }
   end
 
   def modal_on_index_url(params = {})
@@ -94,5 +82,17 @@ module ImageMod
     else
       Integer(e) rescue Float(e) rescue e
     end
+  end
+
+  # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
+  def bioshogi_parser_options
+    {
+      # :skill_monitor_enable           => false,
+      # :skill_monitor_technique_enable => false,
+      :typical_error_case => :embed, # validate_skip しているのでこのオプションは使わない？
+      :candidate_skip     => true,
+      :validate_skip      => true,
+      :mediator_class     => Bioshogi::MediatorFast,
+    }
   end
 end

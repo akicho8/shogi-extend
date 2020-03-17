@@ -1,15 +1,6 @@
-- @page_title ||= current_record.memberships.collect(&:name_with_grade).join(" vs ")
-- sp_title = current_record.memberships.collect { |e| e.winner_only_icon_html.to_s + e.name_with_grade }.join(tag.span(" vs ", class: "versus has-text-grey-lighter"))
-
-- twitter_card_registry(show_twitter_options)
-
 - content_for :head do
   = javascript_pack_tag("swars_battle_show")
   javascript:
     document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
 
-#show_app.battle_show_container(v-cloak)
-  - if params[:formal_sheet]
-    = render partial: "free_battles/show_formal_sheet", locals: { sp_title: sp_title }
-  - else
-    = render partial: "free_battles/show_basic", locals: { sp_title: sp_title }
+= render partial: "free_battles/show_shared"

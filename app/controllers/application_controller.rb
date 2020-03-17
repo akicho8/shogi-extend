@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
     included do
       add_flash_types *FlashInfo.all_keys
       helper_method :submitted?
-      helper_method :iframe?
+      helper_method :iframe_p
       helper_method :slack_message
     end
 
@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
       SlackAgent.message_send(params.merge(ua: ua))
     end
 
-    def iframe?
+    def iframe_p
       !!params[:iframe]
     end
 

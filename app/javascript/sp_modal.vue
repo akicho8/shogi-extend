@@ -100,6 +100,13 @@ export default {
     }
   },
 
+  created() {
+    // 最初から record がある場合
+    if (this.record) {
+      this.record_setup()
+    }
+  },
+
   watch: {
     sp_modal_p(v)  { this.new_modal_p = v }, // 外→内 sp_modal_p --> new_modal_p
     new_modal_p(v) {                         // 外←内 sp_modal_p <-- new_modal_p
@@ -111,33 +118,35 @@ export default {
       this.$emit("update:sp_modal_p", v)
     },
 
-    // バトル情報がセットされたタイミングまたは変更されたタイミング
+    // あとからレコードが渡されたとき
     record(v) {
       if (v) {
-        // 開始手数を保存 (KENTOに渡すためでもある)
-        this.turn_offset = this.start_turn
-
-        // 継盤解除
-        this.run_mode = "view_mode"
-
-        // 最初の上下反転状態
-        this.new_flip = this.record.flip
-
-        // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
-        // これは勝手にやらない方がいい？
-        if (true) {
-          if (v.turn_max === 0) {
-            this.run_mode = "play_mode"
-          }
-        }
+        this.record_setup()
       }
     },
   },
 
-  mounted() {
-  },
-
   methods: {
+    // バトル情報がセットされたタイミングまたは変更されたタイミング
+    record_setup() {
+      // 開始手数を保存 (KENTOに渡すためでもある)
+      this.turn_offset = this.start_turn
+
+      // 継盤解除
+      this.run_mode = "view_mode"
+
+      // 最初の上下反転状態
+      this.new_flip = this.record.flip
+
+      // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
+      // これは勝手にやらない方がいい？
+      if (true) {
+        if (this.record.turn_max === 0) {
+          this.run_mode = "play_mode"
+        }
+      }
+    },
+
     // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
     // 本当は sp_modal_time_chart の中で処理したかった
     chart_show_auto() {

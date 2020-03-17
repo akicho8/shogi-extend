@@ -33,83 +33,110 @@ require 'rails_helper'
 RSpec.describe Swars::BattlesController, type: :controller do
   before do
     swars_battle_setup
-    @battle = Swars::Battle.first
   end
 
-  it "index" do
-    get :index
-    expect(response).to have_http_status(:ok)
+  let :record do
+    Swars::Battle.first
   end
 
-  it "index + query" do
-    get :index, params: {query: "devuser1"}
-    expect(response).to have_http_status(:ok)
-    assert { assigns(:current_records).size == 1 }
-    assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
+  describe "index" do
+    it "index" do
+      get :index
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "index + query" do
+      get :index, params: {query: "devuser1"}
+      expect(response).to have_http_status(:ok)
+      assert { assigns(:current_records).size == 1 }
+      assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
+    end
+
+    it "index + tag" do
+      get :index, params: {query: "turn_max_gteq:200"}
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "index + modal_id" do
+      get :index, params: {modal_id: record.to_param}
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "ウォーズの対局キーが含まれるURLで検索" do
+      get :index, params: {query: "https://shogiwars.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
+      expect(response).to have_http_status(:ok)
+
+      get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "ZIPダウンロード" do
+      get :index, params: { query: "devuser1", format: "zip" }
+      expect(response).to have_http_status(:ok)
+      assert { response.content_type == "application/zip" }
+    end
+
+    it "KENTO棋譜リストAPI" do
+      get :index, params: { query: "devuser1", format: "json", format_type: "kento" }
+      expect(response).to have_http_status(:ok)
+
+      body = JSON.parse(response.body)
+      assert { body["api_version"]                       == "2020-02-02"                                                  }
+      assert { body["api_name"]                          == "将棋ウォーズ(ID:devuser1)"                                   }
+      assert { body["game_list"].size                    == 1                                                             }
+      assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                                }
+      assert { body["game_list"][0]["kifu_url"]          == "http://test.host/w/devuser1-Yamada_Taro-20190111_230933.kif" }
+      assert { body["game_list"][0]["display_name"]      == "devuser1 三段 vs Yamada_Taro 四段"                           }
+      assert { body["game_list"][0]["display_timestamp"] == 1547215773                                                    }
+    end
   end
 
-  it "index + tag" do
-    get :index, params: {query: "turn_max_gteq:200"}
-    expect(response).to have_http_status(:ok)
-  end
+  describe "show" do
+    describe "ogp" do
+      it do
+        get :show, params: { id: record.to_param, turn: 12, flip: true }
+        expect(response).to have_http_status(:ok)
 
-  it "index + modal_id" do
-    get :index, params: {modal_id: @battle.to_param}
-    expect(response).to have_http_status(:ok)
-  end
+        doc = Nokogiri::HTML.parse(response.body)
+        og_url = doc.at(%(meta[name="og:url"]))[:content]
+        assert { og_url == "http://localhost:3000/w?description=&flip=true&modal_id=devuser1-Yamada_Taro-20190111_230933&title=&turn=12" }
+      end
+    end
 
-  it "KENTO棋譜リストAPI" do
-    get :index, params: { query: "devuser1", format: "json", format_type: "kento" }
-    expect(response).to have_http_status(:ok)
-    assert { JSON.parse(response.body) == {"api_version"=>"2020-02-02", "api_name"=>"将棋ウォーズ(ID:devuser1)", "game_list"=>[{"tag"=>["将棋ウォーズ(10分)", "勝ち"], "kifu_url"=>"http://test.host/w/devuser1-Yamada_Taro-20190111_230933.kif", "display_name"=>"devuser1 三段 vs Yamada_Taro 四段", "display_timestamp"=>1547215773}]} }
-  end
+    it "png" do
+      get :show, params: {id: record.to_param, format: "png", width: "", turn: 999}
+      expect(response).to have_http_status(:ok)
+    end
 
-  it "検索窓にURLを指定" do
-    get :index, params: {query: "https://shogiwars.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
-    expect(response).to have_http_status(:ok)
+    it "棋譜印刷" do
+      get :show, params: {id: record.to_param, formal_sheet: true, formal_sheet_debug: true}
+      expect(response).to have_http_status(:ok)
+    end
 
-    get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
-    expect(response).to have_http_status(:ok)
-  end
+    describe "KIF 表示/DL" do
+      it "表示(UTF-8)" do
+        get :show, params: { id: record.to_param, format: "kif" }
+        assert { response.content_type == "text/plain" }
+        assert { response.body.encoding == Encoding::UTF_8 }
+        assert { response.header["Content-Type"] == "text/plain; charset=UTF-8" }
+        assert { response.header["Content-Disposition"] == nil }
+      end
 
-  it "詳細" do
-    get :show, params: {id: @battle.to_param}
-    expect(response).to have_http_status(:ok)
-  end
+      it "表示(Shift_JIS)" do
+        get :show, params: { id: record.to_param, format: "kif", body_encode: "sjis" }
+        assert { response.content_type == "text/plain" }
+        assert { response.body.encoding == Encoding::Shift_JIS }
+        assert { response.header["Content-Type"] == "text/plain; charset=Shift_JIS" }
+        assert { response.header["Content-Disposition"] == nil }
+      end
 
-  it "png" do
-    get :show, params: {id: @battle.to_param, format: "png", width: "", turn: 999}
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "棋譜印刷" do
-    get :show, params: {id: @battle.to_param, formal_sheet: true, formal_sheet_debug: true}
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "ZIPダウンロード" do
-    get :index, params: { query: "devuser1", format: "zip" }
-    expect(response).to have_http_status(:ok)
-    assert { response.content_type == "application/zip" }
-  end
-
-  it "KIF 表示/DL" do
-    get :show, params: { id: @battle.to_param, format: "kif" }
-    assert { response.content_type == "text/plain" }
-    assert { response.body.encoding == Encoding::UTF_8 }
-    assert { response.header["Content-Type"] == "text/plain; charset=UTF-8" }
-    assert { response.header["Content-Disposition"] == nil }
-
-    get :show, params: { id: @battle.to_param, format: "kif", body_encode: "sjis" }
-    assert { response.content_type == "text/plain" }
-    assert { response.body.encoding == Encoding::Shift_JIS }
-    assert { response.header["Content-Type"] == "text/plain; charset=Shift_JIS" }
-    assert { response.header["Content-Disposition"] == nil }
-
-    get :show, params: { id: @battle.to_param, format: "kif", body_encode: "sjis", attachment: "true" }
-    assert { response.content_type == "text/plain" }
-    assert { response.body.encoding == Encoding::Shift_JIS }
-    assert { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
-    assert { response.header["Content-Disposition"].include?("attachment") }
+      it "ダウンロード(Shift_JIS)" do
+        get :show, params: { id: record.to_param, format: "kif", body_encode: "sjis", attachment: "true" }
+        assert { response.content_type == "text/plain" }
+        assert { response.body.encoding == Encoding::Shift_JIS }
+        assert { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
+        assert { response.header["Content-Disposition"].include?("attachment") }
+      end
+    end
   end
 end

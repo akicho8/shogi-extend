@@ -284,24 +284,24 @@ module BattleControllerSharedMethods
 
     let :js_show_options do
       a = {}
-      a[:record] = js_modal_record_for(current_record)
-      a[:formal_sheet] = !!params[:formal_sheet]
-      a[:decorator] = decorator.as_json
+      a[:iframe_p]        = iframe_p
+      a[:formal_sheet]    = !!params[:formal_sheet]
+      a[:record]          = js_modal_record_for(current_record)
+
+      if Rails.env.production? || Rails.env.staging?
+        a[:close_back_path] = polymorphic_path([ns_prefix, current_plural_key])
+      end
+
+      # 重いので印刷するときだけ入れる
+      if params[:formal_sheet]
+        a[:decorator] = decorator.as_json
+      end
+
       a
     end
 
     let :decorator do
       current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: view_context))
-    end
-
-    # 消す
-    let :show_twitter_options do
-      options = {}
-      options[:title] = current_record.title
-      options[:url] = current_record.modal_on_index_url
-      options[:description] = current_record.description
-      options[:image] = current_record.twitter_card_image_url(params)
-      options
     end
 
     def js_record_for(e)

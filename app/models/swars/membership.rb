@@ -199,25 +199,6 @@ module Swars
         # battle.win_user == user
         judge_info.key == :win
       end
-
-      def swgod_info(**options)
-        options = {
-          detail: false,
-        }.merge(options)
-
-        info = {
-          "対局者"   => name_with_grade,
-          "消費時間" => sec_list,
-          "結末"   => summary_key,
-        }
-
-        if Rails.env.development? || options[:detail]
-          info["一審"] = swgod_level1_used? ? "有罪" : "無罪"
-          info["二審"] = swgod_10min_winner_used? ? "有罪" : "無罪"
-        end
-
-        info
-      end
     end
   end
 end

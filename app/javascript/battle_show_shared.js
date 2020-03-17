@@ -1,51 +1,33 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import battle_record_methods from "battle_record_methods.js"
+import formal_sheet from "formal_sheet.js"
 
 export default {
-  mixins: [battle_record_methods],
+  mixins: [
+    battle_record_methods,
+    formal_sheet,
+  ],
 
   data() {
     return {
+      sp_modal_p: true,
+
+      // const
       record: this.$options.record,
-      decorator: this.$options.decorator,
-      kifu_type_tab_index: 0,
-      font_size_limit_off_modal_p: false,
+      iframe_p: this.$options.iframe_p,
     }
   },
 
   watch: {
-  },
-
-  methods: {
-    printer_handle() {
-      window.print()
+    sp_modal_p(v) {
+      if (v) {
+      } else {
+        if (this.$options.close_back_path) {
+          this.self_window_open(this.$options.close_back_path)
+        }
+      }
     },
-
-    edit_to(key) {
-      this.$buefy.dialog.prompt({
-        title: "編集",
-        inputAttrs: {type: "text", value: this.decorator[key], required: false},
-        confirmText: "更新",
-        cancelText: "キャンセル",
-        onConfirm: (value) => {
-          if (this.decorator[key] !== value) {
-            this.$set(this.decorator, key, value)
-            this.$buefy.toast.open({message: `更新しました`, position: "is-bottom"})
-          }
-        },
-      })
-    },
-
-  },
-
-  mounted() {
-    if (this.$options.formal_sheet) {
-      setTimeout(function () {
-        // window.print()
-        // window.close()
-      }, 200)
-    }
   },
 
   computed: {
