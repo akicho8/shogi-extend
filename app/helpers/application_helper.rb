@@ -52,7 +52,6 @@ module ApplicationHelper
     twitter_prefix_set = [:card, :site, :creator].to_set
 
     options.collect { |key, val|
-      next if key == :url
       if val.present?
         if twitter_prefix_set.include?(key)
           prefix = :twitter
@@ -73,7 +72,7 @@ module ApplicationHelper
       site: "@sgkinakomochi",
       title: AppConfig[:app_name],
       creator: "@sgkinakomochi",
-      url: request.url,
+      # url: request.url,
       image: "apple-touch-icon.png",
     }
   end
