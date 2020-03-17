@@ -1,4 +1,4 @@
-module PaletteSharedMethods
+module PaletteMod
   extend ActiveSupport::Concern
 
   def pie_color

@@ -1,5 +1,5 @@
 class WinLosePaletteInfo
-  include PaletteSharedMethods
+  include PaletteMod
   include ApplicationMemoryRecord
   memory_record [
     # https://bulma.io/documentation/modifiers/color-helpers/

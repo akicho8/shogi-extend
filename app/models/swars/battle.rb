@@ -32,7 +32,7 @@ require "matrix"
 
 module Swars
   class Battle < ApplicationRecord
-    include BattleModelSharedMethods
+    include BattleModelMod
     include ImportMethods
     include ConvertHookMethods
 

@@ -1,4 +1,4 @@
-module BattleModelSharedMethods
+module BattleModelMod
   extend ActiveSupport::Concern
 
   included do

@@ -37,7 +37,7 @@
 require "open-uri"
 
 class FreeBattle < ApplicationRecord
-  include BattleModelSharedMethods
+  include BattleModelMod
   include StrangeKifuBodyParserMod
 
   class << self
