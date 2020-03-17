@@ -825,6 +825,8 @@ export default {
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
 
+$board_color: hsl(0, 0%, 60%)
+
 .xy_master
   .level_container
     width: 10rem
@@ -865,16 +867,25 @@ export default {
         color: $primary
         -webkit-text-stroke: 4px white
     .shogi-player
+      margin-top: 1em
       .font_size_base
         // モバイルのときに画面幅に合わせて盤面を大きくする
         +mobile
           font-size: 6.0vmin
-      margin-top: 1em
       .current_place
         border: 0.1em solid darken($orange, 0)
       .piece_back
         &:hover
           background-color: hsl(0, 0%, 92%)
+      .board_inner
+        border: 1px solid darken($board_color, 0%)
+        background-color: $board_color
+        // 星
+        tr:nth-child(3n+4)
+          td:nth-child(3n+4)
+            &:after
+              background: darken($board_color, 20%)
+
   .time_container
     margin-top: 0.1rem
   .tweet_box_container
