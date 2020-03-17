@@ -72,7 +72,6 @@ module ApplicationHelper
       site: "@sgkinakomochi",
       title: AppConfig[:app_name],
       creator: "@sgkinakomochi",
-      url: request.url,
       image: "apple-touch-icon.png",
     }
   end
