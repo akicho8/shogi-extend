@@ -83,8 +83,9 @@ const CHART_CONFIG_DEFAULT = {
           //   [2] {x: 5, y: 1}
           //
 
-          const x = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x           // 手数
-          const t = Math.abs(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y) // 秒数
+          const e = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+          const x = e.x           // 手数
+          const t = Math.abs(e.y) // 秒数
 
           if (this._chart.config.__record__) {
             if (x > this._chart.config.__record__.turn_max) {
