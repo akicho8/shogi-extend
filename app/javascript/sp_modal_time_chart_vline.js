@@ -1,6 +1,11 @@
 // chart.js に縦線を入れる方法
 // https://stackoverflow.com/questions/30256695/chart-js-drawing-an-arbitrary-vertical-line
 
+const LocationColorList = [
+  "hsla(204, 86%,  53%, 0.4)", // $cyan   先手
+  "hsla(348, 100%, 61%, 0.4)", // $danger 後手
+]
+
 const ChartVlinePlugin = {
   // Plugin API
   // https://misc.0o0o.org/chartjs-doc-ja/developers/plugins.html
@@ -41,22 +46,24 @@ const ChartVlinePlugin = {
       //   yAxisID: "y-axis-0"
       //   $filler: {visible: true, fill: "origin", chart: Chart, el: ChartElement, boundary: {…}, …}
       const data = meta.data
-      return data[index_info.index]._model.x
+      return data[index_info.index]
     } else {
       // 0手目の場合
     }
   },
 
   vertical_line_render(instance, chart_turn) {
-    const lineLeftOffset = this.line_position_get(instance, chart_turn)
-    if (lineLeftOffset) {
+    const chart_element = this.line_position_get(instance, chart_turn)
+    if (chart_element) {
+      const lineLeftOffset = chart_element._model.x       // chart_turn に対応するX座標
+      const _datasetIndex = chart_element._datasetIndex   // chart_turn は先後どちらか
+
       const scale = instance.scales['y-axis-0']
       const context = instance.chart.ctx
 
       // render vertical line
       context.beginPath()
-      context.strokeStyle = "hsla(204, 86%,  53%, 0.4)" // $cyan
-      // context.strokeStyle = "hsla(0, 0%,  0%, 0.3)" // $cyan
+      context.strokeStyle = LocationColorList[_datasetIndex]
       context.moveTo(lineLeftOffset, scale.top)
       context.lineTo(lineLeftOffset, scale.bottom)
       context.stroke()
