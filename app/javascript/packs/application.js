@@ -63,6 +63,15 @@ Chart.plugins.register({
   }
 })
 
+Chart.defaults.global.elements.line.tension           = 0.2  // 0なら線がカクカクになる
+Chart.defaults.global.elements.line.borderWidth       = 1    // 点枠の太さ
+Chart.defaults.global.elements.line.fill              = true // 塗り潰す？
+
+Chart.defaults.global.elements.point.radius           = 1.2 // 点半径
+Chart.defaults.global.elements.point.hoverRadius      = 5   // 点半径(アクティブ時)
+Chart.defaults.global.elements.point.hoverBorderWidth = 2   // 点枠の太さ(アクティブ時)
+Chart.defaults.global.elements.point.hitRadius        = 5   // タップできる大きさ
+
 //////////////////////////////////////////////////////////////////////////////// 通知
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -67,14 +67,7 @@ module TimeChartMod
     {
       borderColor: PaletteInfo[i].border_color,
       backgroundColor: PaletteInfo[i].background_color,
-      fill: true,               # 塗り潰す？
-      pointRadius: 1.2,         # 点半径
-      borderWidth: 1,           # 点枠の太さ
-      pointHoverRadius: 5,      # 点半径(アクティブ時)
-      pointHoverBorderWidth: 2, # 点枠の太さ(アクティブ時)
-      pointHitRadius: 5,        # タップできる大きさ
-      showLine: true,           # 線で繋げる
-      lineTension: 0.2,         # 0なら線がカクカクになる
+      showLine: true, # 線で繋げる(このパラメータだけはここでしか指定できないみたい)
     }
   end
 end

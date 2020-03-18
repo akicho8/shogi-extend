@@ -20,6 +20,7 @@ const CHART_CONFIG_DEFAULT = {
     },
 
     // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
+    // https://qiita.com/muuuuminn/items/2e977add604dcec920d3
     scales: {
       xAxes: [{
         scaleLabel: {
@@ -31,7 +32,10 @@ const CHART_CONFIG_DEFAULT = {
           maxRotation: 0,   // 表示角度水平
           maxTicksLimit: 5, // 最大横N個の目盛りにする
           callback(value, index, values) { return value + "" }, // 単位をつける
-        }
+        },
+        gridLines: {
+          display: false,    // x軸の中間の縦線
+        },
       }],
       yAxes: [{
         ticks: {
@@ -40,6 +44,13 @@ const CHART_CONFIG_DEFAULT = {
           callback(value, index, values) { return Math.abs(value) +  "s" }, // 単位
         },
       }],
+    },
+
+    elements: {
+      line: {
+        // 折れ線グラフのすべてに線に適用する設定なのでこれがあると dataset 毎に設定しなくてよい
+        // または app/javascript/packs/application.js で指定する
+      },
     },
 
     // https://tr.you84815.space/chartjs/configuration/tooltip.html

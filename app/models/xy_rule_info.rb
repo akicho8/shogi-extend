@@ -243,14 +243,9 @@ class XyRuleInfo
             data: v.collect { |e| {x: e.created_on, y: e.spent_sec } },
             backgroundColor: palette.background_color,
             borderColor: palette.border_color,
-            fill: false,
-
-            pointRadius: 2,           # 点半径
-            borderWidth: 2,           # 点枠の太さ
-            pointHoverRadius: 3,      # 点半径(アクティブ時)
-            pointHoverBorderWidth: 2, # 点枠の太さ(アクティブ時)
-            showLine: true,           # 線で繋げる
-
+            # その他のパラメータは共通なので次のファイルで指定する
+            # app/javascript/packs/application.js
+            # app/javascript/xy_master_chart_mod.js
           }
         }.compact
 

@@ -12,9 +12,6 @@ const CHART_CONFIG_DEFAULT = {
       {
         label: "戦力グラフ",    // legend: true のときに表示するラベル
         data: [],
-        borderColor:     "hsla(204, 86%,  53%, 1.0)",
-        backgroundColor: "hsla(204, 86%,  53%, 0.1)",
-        fill: true,
       },
     ],
   },
@@ -29,8 +26,12 @@ const CHART_CONFIG_DEFAULT = {
     },
 
     elements: {
+      // 共通設定
       line: {
-        tension: 0.0, // disables bezier curves (https://www.chartjs.org/docs/latest/charts/line.html#disable-bezier-curves)
+        borderColor:     "hsla(204, 86%,  53%, 1.0)",
+        backgroundColor: "hsla(204, 86%,  53%, 0.1)",
+        fill: true,
+        tension: 0,
       },
     },
 
@@ -55,7 +56,8 @@ const CHART_CONFIG_DEFAULT = {
           return ""
         },
         label(tooltipItem, data) {
-          return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y
+          const e = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+          return e.y
         },
       },
     },

@@ -63,6 +63,14 @@ const CHART_CONFIG_DEFAULT = {
       ],
     },
 
+    elements: {
+      line: {
+        // 折れ線グラフのすべてに線に適用する設定なのでこれがあると dataset 毎に設定しなくてよい
+        // または app/javascript/packs/application.js で指定する
+        fill: false,
+      },
+    },
+
     // https://tr.you84815.space/chartjs/configuration/tooltip.html
     legend: {
       display: true,
