@@ -65,9 +65,8 @@ module TimeChartMod
 
   def time_chart_dataset_default(i)
     {
-      borderColor: PaletteInfo[i].border_color,
+      borderColor: PaletteInfo[i].border_color, # FIXME: js 側で定義
       backgroundColor: PaletteInfo[i].background_color,
-      showLine: true, # 線で繋げる(このパラメータだけはここでしか指定できないみたい)
     }
   end
 end
