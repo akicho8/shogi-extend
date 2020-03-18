@@ -14,11 +14,6 @@ const CHART_CONFIG_DEFAULT = {
   options: {
     aspectRatio: 2.0, // 大きいほど横長方形になる
 
-    title: {
-      display: false,
-      text: "消費時間",
-    },
-
     // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
     scales: {
       xAxes: [{
@@ -43,9 +38,6 @@ const CHART_CONFIG_DEFAULT = {
     },
 
     // https://tr.you84815.space/chartjs/configuration/tooltip.html
-    legend: {
-      display: false,
-    },
     tooltips: {
       callbacks: {
         title(tooltipItems, data) {
