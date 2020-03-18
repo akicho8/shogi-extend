@@ -72,6 +72,11 @@ Chart.defaults.global.elements.point.hoverRadius      = 5   // 点半径(アク�
 Chart.defaults.global.elements.point.hoverBorderWidth = 2   // 点枠の太さ(アクティブ時)
 Chart.defaults.global.elements.point.hitRadius        = 5   // タップできる大きさ
 
+// Chart.defaults.global responsiveAnimationDuration
+
+// Chart.defaults.global.hover.mode = 'dataset'
+Chart.defaults.global.hover.mode = 'single'
+
 //////////////////////////////////////////////////////////////////////////////// 通知
 
 document.addEventListener("DOMContentLoaded", () => {
