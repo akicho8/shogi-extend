@@ -1,4 +1,5 @@
 #!/bin/sh
+ncu /chart/ -u
 ncu /shogi-player/ -u
 ncu /buefy/ -u
 ncu /bulma/ -u
