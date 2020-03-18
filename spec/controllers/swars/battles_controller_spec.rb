@@ -98,8 +98,8 @@ RSpec.describe Swars::BattlesController, type: :controller do
         expect(response).to have_http_status(:ok)
 
         doc = Nokogiri::HTML.parse(response.body)
-        og_url = doc.at(%(meta[name="og:url"]))[:content]
-        assert { og_url == "http://localhost:3000/w?description=&flip=true&modal_id=devuser1-Yamada_Taro-20190111_230933&title=&turn=12" }
+        assert { doc.at(%(meta[name="og:url"])).dig(:content)   == nil                                                                                  }
+        assert { doc.at(%(meta[name="og:image"])).dig(:content) == "http://localhost:3000/w/devuser1-Yamada_Taro-20190111_230933.png?flip=true&turn=12" }
       end
     end
 
