@@ -162,7 +162,12 @@ module Swars
           names = []
           names += e.tag_names_for(:attack)
           names += e.tag_names_for(:defense)
-          names += e.tag_names_for(:note) - reject_note_tag_names
+
+          # 「居飛車」という情報は戦型から自明なので戦型も囲いもないときだけ入れる
+          if names.blank?
+            names += e.tag_names_for(:note) - reject_note_tag_names
+          end
+
           names = names.presence || ["その他"]
           names.join(" ")
         }.join(" vs ")
