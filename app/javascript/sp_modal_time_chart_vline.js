@@ -17,6 +17,7 @@ const ChartVlinePlugin = {
 
   // private methods
 
+  // chart_turn 手目に対応する ChartElement インスタンスを取得する
   line_position_get(instance, chart_turn) {
     const index_info = instance.config.index_info_hash[chart_turn]
     if (index_info) {
