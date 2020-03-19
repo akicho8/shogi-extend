@@ -168,13 +168,13 @@ window.Adapter = Vue.extend({
 
     png_show_url() {
       if (this.record) {
-        return `${this.record.show_path}.png?width=840&turn=${this.record.turn_max}`
+        return `${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
       }
     },
 
     png_dl_url() {
       if (this.record) {
-        return `${this.record.show_path}.png?width=840&turn=${this.record.turn_max}&attachment=true`
+        return `${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
       }
     },
 
