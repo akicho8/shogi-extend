@@ -333,6 +333,7 @@ module BattleControllerSharedMethods
         ],
         ).tap do |a|
 
+        a[:handicap_shift] = e.preset_info.handicap ? 1 : 0
         a[:title] = e.title
         a[:description] = e.description
         # a[:twitter_card_image_url] = e.twitter_card_image_url(params)

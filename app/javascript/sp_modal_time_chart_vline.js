@@ -23,7 +23,8 @@ const ChartVlinePlugin = {
     // assert { record.time_chart_xy_list2(:black) == [{x: 0, y: nil}, {x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, {x: 6, y: nil}] }
     // assert { record.time_chart_xy_list2(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, {x: 6, y: -590}] }
     if (true) {
-      const meta = instance.getDatasetMeta(0) // 0 も 1 も同じ長さなので 0 で良い
+      const datasetIndex = (1 + instance.config.__vm__.record.handicap_shift + chart_turn) % 2
+      const meta = instance.getDatasetMeta(datasetIndex) // 0 も 1 も同じ長さなので 0 で良いが色が関係するので合わせる
       const data = meta.data
       return data[chart_turn]
     }
