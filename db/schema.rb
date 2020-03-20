@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_203800) do
+ActiveRecord::Schema.define(version: 2020_03_21_005132) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_203800) do
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_url", comment: "入力した棋譜URL"
-    t.text "kifu_body", limit: 16777215, null: false, comment: "棋譜本文"
+    t.text "kifu_body", size: :medium, null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_203800) do
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_free_battles_on_outbreak_turn"
     t.index ["saturn_key"], name: "index_free_battles_on_saturn_key"
+    t.index ["start_turn"], name: "index_free_battles_on_start_turn"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
     t.index ["use_key"], name: "index_free_battles_on_use_key"
   end
@@ -264,8 +265,10 @@ ActiveRecord::Schema.define(version: 2020_03_13_203800) do
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
+    t.index ["preset_key"], name: "index_swars_battles_on_preset_key"
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
     t.index ["saturn_key"], name: "index_swars_battles_on_saturn_key"
+    t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
   end
@@ -360,4 +363,5 @@ ActiveRecord::Schema.define(version: 2020_03_13_203800) do
     t.index ["xy_rule_key"], name: "index_xy_records_on_xy_rule_key"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
 end

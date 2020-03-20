@@ -8,21 +8,21 @@
 # |---------------+------------------+--------------+-------------+------+-------|
 # | id            | ID               | integer(8)   | NOT NULL PK |      |       |
 # | key           | 対局ユニークキー | string(255)  | NOT NULL    |      | A!    |
-# | battled_at    | 対局日時         | datetime     | NOT NULL    |      | F     |
+# | battled_at    | 対局日時         | datetime     | NOT NULL    |      | G     |
 # | rule_key      | ルール           | string(255)  | NOT NULL    |      | B     |
 # | csa_seq       | 棋譜             | text(65535)  | NOT NULL    |      |       |
 # | final_key     | 結末             | string(255)  | NOT NULL    |      | C     |
 # | win_user_id   | 勝者             | integer(8)   |             |      | D     |
-# | turn_max      | 手数             | integer(4)   | NOT NULL    |      | G     |
+# | turn_max      | 手数             | integer(4)   | NOT NULL    |      | H     |
 # | meta_info     | メタ情報         | text(65535)  | NOT NULL    |      |       |
 # | accessed_at   | 最終アクセス日時 | datetime     | NOT NULL    |      |       |
 # | outbreak_turn | Outbreak turn    | integer(4)   |             |      | E     |
 # | created_at    | 作成日時         | datetime     | NOT NULL    |      |       |
 # | updated_at    | 更新日時         | datetime     | NOT NULL    |      |       |
-# | preset_key    | 手合割           | string(255)  | NOT NULL    |      |       |
-# | start_turn    | 開始局面         | integer(4)   |             |      |       |
-# | critical_turn | 開戦             | integer(4)   |             |      | H     |
-# | saturn_key    | 公開範囲         | string(255)  | NOT NULL    |      | I     |
+# | preset_key    | 手合割           | string(255)  | NOT NULL    |      | F     |
+# | start_turn    | 開始局面         | integer(4)   |             |      | I     |
+# | critical_turn | 開戦             | integer(4)   |             |      | J     |
+# | saturn_key    | 公開範囲         | string(255)  | NOT NULL    |      | K     |
 # | sfen_body     | SFEN形式棋譜     | string(8192) |             |      |       |
 # | image_turn    | OGP画像の局面    | integer(4)   |             |      |       |
 # | sfen_hash     | Sfen hash        | string(255)  |             |      |       |
@@ -73,7 +73,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
     it "ZIPダウンロード" do
       get :index, params: { query: "devuser1", format: "zip" }
       expect(response).to have_http_status(:ok)
-      assert { response.content_type == "application/zip" }
+      assert { response.media_type == "application/zip" }
     end
 
     it "KENTO棋譜リストAPI" do
@@ -116,7 +116,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
     describe "KIF 表示/DL" do
       it "表示(UTF-8)" do
         get :show, params: { id: record.to_param, format: "kif" }
-        assert { response.content_type == "text/plain" }
+        assert { response.media_type == "text/plain" }
         assert { response.body.encoding == Encoding::UTF_8 }
         assert { response.header["Content-Type"] == "text/plain; charset=UTF-8" }
         assert { response.header["Content-Disposition"] == nil }
@@ -124,7 +124,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
       it "表示(Shift_JIS)" do
         get :show, params: { id: record.to_param, format: "kif", body_encode: "sjis" }
-        assert { response.content_type == "text/plain" }
+        assert { response.media_type == "text/plain" }
         assert { response.body.encoding == Encoding::Shift_JIS }
         assert { response.header["Content-Type"] == "text/plain; charset=Shift_JIS" }
         assert { response.header["Content-Disposition"] == nil }
@@ -132,7 +132,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
       it "ダウンロード(Shift_JIS)" do
         get :show, params: { id: record.to_param, format: "kif", body_encode: "sjis", attachment: "true" }
-        assert { response.content_type == "text/plain" }
+        assert { response.media_type == "text/plain" }
         assert { response.body.encoding == Encoding::Shift_JIS }
         assert { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
         assert { response.header["Content-Disposition"].include?("attachment") }

@@ -79,7 +79,7 @@ module Swars
 
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-      validates :user_id, uniqueness: {scope: :battle_id}
+      validates :user_id, uniqueness: { scope: :battle_id, case_sensitive: true }
       validates :location_key, uniqueness: { scope: :battle_id, case_sensitive: true }
       validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
     end

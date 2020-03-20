@@ -35,7 +35,7 @@ module Colosseum
     end
 
     with_options allow_blank: true do
-      validates :uid, uniqueness: {scope: :provider, message: "が重複しています。すでに他のアカウントと連携しているようです。いったんログアウトしてそのアカウントを使うか、そのアカウントとの連携を解除してからこちらと連携してみてください"}
+      validates :uid, uniqueness: { scope: :provider, case_sensitive: true, message: "が重複しています。すでに他のアカウントと連携しているようです。いったんログアウトしてそのアカウントを使うか、そのアカウントとの連携を解除してからこちらと連携してみてください" }
     end
   end
 end
