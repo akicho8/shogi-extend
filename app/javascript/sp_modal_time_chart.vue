@@ -47,14 +47,18 @@ const CHART_CONFIG_DEFAULT = {
           labelString: "手数",
         },
         ticks: {
-          // FIXME: 50ずつ表示したい
+          // 50ずつ表示したいけどできない。その理由↓
+          // http://www.kogures.com/hitoshi/javascript/chartjs/scale.html
+          // Ｙ軸と同様にＸ軸でも、Ｂのようにmin/maxの指定ができます。このときはsuggestedMin/suggestedMaxは使えませんし、stepSize も使えません（無視されます）。
+          // その理由は、Ｘ軸のラベルは単なる文字列で数値のような大小関係を示していないからです。同様な機能は maxTicksLimit で設定します。
+
           minRotation: 0,   // 表示角度水平
           maxRotation: 0,   // 表示角度水平
           maxTicksLimit: 5, // 最大横N個の目盛りにする
-          callback(value, index, values) { return value + "" }, // 単位をつける
+          // callback(value, index, values) { return value + "" }, // 単位をつける
         },
         gridLines: {
-          display: true,    // x軸の中間の縦線
+          display: false,    // x軸の中間の縦線
         },
       }],
       yAxes: [{
@@ -106,6 +110,10 @@ const CHART_CONFIG_DEFAULT = {
             return this.chart.config.__vm__.second_to_human(value)
           },
         },
+        gridLines: {
+          display: true,
+          // zeroLineWidth: 0,
+        },
       }],
     },
 
@@ -124,9 +132,9 @@ const CHART_CONFIG_DEFAULT = {
 
     // https://www.chartjs.org/docs/latest/general/interactions/
     hover: {
-      mode: "index",              // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
+      mode: "index",          // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
       intersect: false,       // Y座標のチェックは無視する
-      animationDuration: 200, // デフォルト400
+      animationDuration: 400, // デフォルト400
     },
 
     // https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
