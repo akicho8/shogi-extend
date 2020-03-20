@@ -12,7 +12,6 @@ const CHART_CONFIG_DEFAULT = {
 
     elements: {
       line: {
-        tension: 0.2, // disables bezier curves (https://www.chartjs.org/docs/latest/charts/line.html#disable-bezier-curves)
       },
     },
 
@@ -22,45 +21,48 @@ const CHART_CONFIG_DEFAULT = {
     },
 
     // https://misc.0o0o.org/chartjs-doc-ja/configuration/layout.html
-    layout: {
-      padding: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-      },
-    },
+    // layout: {
+    //   padding: {
+    //     left: 0,
+    //     right: 0,
+    //     top: 0,
+    //     bottom: 0,
+    //   },
+    // },
 
     // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
     scales: {
-      xAxes: [
-        {
-          type: 'time',
-          time: {
-            unit: "day",
-            displayFormats: {
-              day: "M/D",
-            },
+      xAxes: [{
+        type: 'time',
+        time: {
+          unit: "day",
+          displayFormats: {
+            day: "M/D",
           },
         },
-      ],
-      yAxes: [
-        {
-          scaleLabel: {
-            display: false,
-            labelString: "タイム",
-          },
-          ticks: {
-            // suggestedMax: 25,
-            // suggestedMin: 0,
-            // stepSize: 60,
-            callback(value, index, values) {
-              return dayjs.unix(value).format("mm:ss")
-              // return Math.trunc(value / 60) + "時"
-            }
+        ticks: {
+          minRotation: 0,   // 表示角度水平
+          maxRotation: 0,   // 表示角度水平
+          maxTicksLimit: 4, // 最大横N個の目盛りにする
+        },
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: false,
+          labelString: "タイム",
+        },
+        ticks: {
+          maxTicksLimit: 7, // 最大横N個の目盛りにする
+          // suggestedMax: 30,
+          // suggestedMin: 0,
+          // stepSize: 15,
+          // max: 60*3,
+          callback(value, index, values) {
+            return dayjs.unix(value).format("mm:ss")
+            // return Math.trunc(value / 60) + "時"
           }
-        },
-      ],
+        }
+      }],
     },
 
     elements: {
@@ -76,14 +78,26 @@ const CHART_CONFIG_DEFAULT = {
       display: true,
     },
 
+    // hover: {
+    //   mode: "x",          // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
+    //   intersect: false,       // Y座標のチェックは無視する
+    //   animationDuration: 400, // デフォルト400
+    // },
+
     tooltips: {
+      // mode: "x",            // マウスに対してツールチップが出る条件
+      // intersect: false,     // Y座標のチェックは無視する
+      // displayColors: false, // 左に「■」を表示するか？
+      yAlign: 'bottom',     // 下側にキャロットがでるようにする。マニュアルに載ってない。https://stackoverflow.com/questions/44050238/change-chart-js-tooltip-caret-position
+
       callbacks: {
         title(tooltipItems, data) {
           return ""
         },
         label(tooltipItem, data) {
-          const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || ""
-          const y = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y
+          const dataset = data.datasets[tooltipItem.datasetIndex]
+          const datasetLabel = dataset.label || ""
+          const y = dataset.data[tooltipItem.index].y
           return datasetLabel + " " + dayjs.unix(y).format("mm:ss.SSS")
         },
       },
