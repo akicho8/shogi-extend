@@ -38,7 +38,7 @@ function color_select(context, alpha) {
   const index = context.datasetIndex
   const value = context.dataset.data[index]
   const n = index % PaletteInfo.values.length
-  return PaletteInfo.fetch(n).base_color.alpha(alpha).css()
+  return PaletteInfo.fetch(n).alpha(alpha)
 }
 
 // https://www.chartjs.org/docs/latest/configuration/elements.html#line-configuration

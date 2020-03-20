@@ -16,16 +16,21 @@ export default class PaletteInfo extends MemoryRecord {
     ]
   }
 
+  // PaletteInfo.fetch(0).base_color.alpha(0.6).css()
   get base_color() {
-    console.log(this.hsl)
     return chroma.hsl(...this.hsl)
   }
 
-  get borderColor() {
-    return this.base_color.alpha(0.6).css()
+  // PaletteInfo.fetch(0).alpha(0.6)
+  alpha(v) {
+    return this.base_color.alpha(v).css()
   }
-  
-  get backgroundColor() {
-    return this.base_color.alpha(0.1).css()
-  }
+
+  // get borderColor() {
+  //   return this.base_color.alpha(0.6).css()
+  // }
+  //
+  // get backgroundColor() {
+  //   return this.base_color.alpha(0.1).css()
+  // }
 }

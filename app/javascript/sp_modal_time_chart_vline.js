@@ -1,10 +1,7 @@
 // chart.js に縦線を入れる方法
 // https://stackoverflow.com/questions/30256695/chart-js-drawing-an-arbitrary-vertical-line
 
-const LocationColorList = [
-  "hsla(204, 86%,  53%, 0.4)", // $cyan   先手
-  "hsla(348, 100%, 61%, 0.4)", // $danger 後手
-]
+import PaletteInfo from "palette_info.js"
 
 const ChartVlinePlugin = {
   // Plugin API
@@ -79,7 +76,7 @@ const ChartVlinePlugin = {
 
       // render vertical line
       context.beginPath()
-      context.strokeStyle = LocationColorList[_datasetIndex]
+      context.strokeStyle = PaletteInfo.fetch(_datasetIndex).alpha(0.6)
       context.moveTo(lineLeftOffset, scale.top)
       context.lineTo(lineLeftOffset, scale.bottom)
       context.stroke()
