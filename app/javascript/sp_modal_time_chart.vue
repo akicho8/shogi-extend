@@ -10,7 +10,7 @@
 <script>
 
 const CHART_CONFIG_DEFAULT = {
-  type: "bar",
+  type: "line",
   options: {
     aspectRatio: 2.0, // 大きいほど横長方形になる
 
@@ -36,10 +36,8 @@ const CHART_CONFIG_DEFAULT = {
     scales: {
       xAxes: [{
         // http://www.kogures.com/hitoshi/javascript/chartjs/bar-width.html
-        categoryPercentage: 1.0, // 目盛り線の幅に対する棒（複数棒）の占める幅の割合
-        barPercentage: 1.0,      // categoryPercentageに対する単独棒の幅。1にすると複数棒間間隔がなくなり、1より小さくすると棒が細くなり間隔が広がる
-
-        offset: false,
+        // categoryPercentage: 0.8, // 目盛り線の幅に対する棒（複数棒）の占める幅の割合
+        // barPercentage: 0.9,      // categoryPercentageに対する単独棒の幅。1にすると複数棒間間隔がなくなり、1より小さくすると棒が細くなり間隔が広がる
 
         scaleLabel: {
           display: false,
@@ -54,7 +52,6 @@ const CHART_CONFIG_DEFAULT = {
         },
         gridLines: {
           display: false,    // x軸の中間の縦線
-          offsetGridLines: false,
         },
       }],
       yAxes: [{
@@ -114,16 +111,6 @@ const CHART_CONFIG_DEFAULT = {
         // 折れ線グラフのすべてに線に適用する設定なのでこれがあると dataset 毎に設定しなくてよい
         // または app/javascript/packs/application.js で指定する
         // background-color
-      },
-      bar: {
-        // borderWidth: 1,
-        // barThickness: "flex",
-
-        // barPercentage: 0.5,
-        // barThickness: 6,
-        // maxBarThickness: 8,
-        // minBarLength: 2,
-
       },
     },
 
