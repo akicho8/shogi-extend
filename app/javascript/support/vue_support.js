@@ -26,6 +26,12 @@ export default {
       }
     },
 
+    debug_print(...args) {
+      if (this.development_p) {
+        console.log(...args)
+      }
+    },
+
     // #以降を除いた現在のパス
     // http://localhost:3000/xy?abc=1#1 ↓
     // http://localhost:3000/xy?abc=1
