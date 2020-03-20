@@ -131,7 +131,9 @@ export default {
       const hash = {}
       time_chart_params.datasets.forEach((dataset, i) => {
         dataset.data.forEach((e, j) => {
-          hash[e.x] = { datasetIndex: i, index: j }
+          if (e.y != null) {
+            hash[e.x] = { datasetIndex: i, index: j }
+          }
         })
       })
       return hash

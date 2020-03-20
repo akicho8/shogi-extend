@@ -92,6 +92,10 @@ module Swars
     end
 
     describe "時間チャート" do
+      it "raw_sec_list_all: 消費時間" do
+        assert { record.raw_sec_list_all == [1, 3, 5, 7, 2] }
+      end
+
       it "raw_sec_list: それぞれの消費時間" do
         assert { record.raw_sec_list(:black) == [1, 5, 2] }
         assert { record.raw_sec_list(:white) == [3, 7]    }
@@ -99,6 +103,11 @@ module Swars
 
       it "time_chart_params: chart.jsに渡すデータ" do
         assert { record.time_chart_params.has_key?(:datasets) }
+      end
+
+      it "time_chart_xy_list2: それぞれの消費時間" do
+        assert { record.time_chart_xy_list2(:black) == [{x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}] }
+        assert { record.time_chart_xy_list2(:white) == [{x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}] }
       end
 
       describe "投了" do
@@ -138,6 +147,11 @@ module Swars
         end
         it "そのためチャートのラベルは4つに増えている" do
           assert { record.time_chart_label_max == 6 }
+        end
+
+        it "time_chart_xy_list2" do
+          assert { record.time_chart_xy_list2(:black) == [{x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, {x: 6, y: nil}] }
+          assert { record.time_chart_xy_list2(:white) == [{x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, {x: 6, y: -590}] }
         end
       end
 

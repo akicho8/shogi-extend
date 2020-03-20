@@ -17,6 +17,9 @@ const CHART_CONFIG_DEFAULT = {
     // datasets 内に適応
     showLines: true,
 
+    // nil のデータは飛ばしてつなげる
+    spanGaps: true,
+
     // https://www.chartjs.org/docs/latest/general/performance.html?h=animation
     //
     // これはどこで作用するのかよくわからないので保留
@@ -121,14 +124,14 @@ const CHART_CONFIG_DEFAULT = {
 
     // https://www.chartjs.org/docs/latest/general/interactions/
     hover: {
-      mode: "x",              // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
+      mode: "index",              // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
       intersect: false,       // Y座標のチェックは無視する
       animationDuration: 200, // デフォルト400
     },
 
     // https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
     tooltips: {
-      mode: "x",        // マウスに対してツールチップが出る条件
+      mode: "index",        // マウスに対してツールチップが出る条件
       intersect: false, // Y座標のチェックは無視する
 
       displayColors: false, // 左に「■」を表示するか？

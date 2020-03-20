@@ -52,15 +52,39 @@ module TimeChartMod
       c = Bioshogi::Location.count
       pos = preset_info.to_turn_info.current_location(location.code).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
       v = fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
-      v.collect { |e| e[:used_seconds] }
+      v.collect { |e| e[:used_seconds].to_i }
     }.call
   end
 
-  # location の [{:x=>1, :y=>10 seconds}, {:x=>3, :y=>20 seconds}] を返す
+  def raw_sec_list_all
+    @raw_sec_list_all ||= fast_parsed_info.move_infos.find_all.collect { |e| e[:used_seconds] }
+  end
+
+  # location の [{:x=>1, :y=>10}, {:x=>3, :y=>20}] を返す
   def time_chart_xy_list(location)
+    return time_chart_xy_list2(location)
+
     c = Bioshogi::Location.count
     loc = preset_info.to_turn_info.current_location(location.code)
     time_chart_sec_list_of(location).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * (e || 0) } } # 表示上「1手目」と表記したいので +1
+  end
+
+  def time_chart_xy_list2(location)
+    location = Bioshogi::Location[location]
+
+    c = Bioshogi::Location.count
+    loc = preset_info.to_turn_info.current_location(location.code)
+
+    a = time_chart_sec_list_of(location)
+    it = a.each
+    (1..time_chart_label_max).collect.with_index do |turn, i|
+      x = turn
+      y = nil
+      if (loc.code + i).modulo(c).zero?
+        y = location.value_sign * it.next
+      end
+      { x: x, y: y }
+    end
   end
 
   def time_chart_dataset_default(i)
