@@ -27,7 +27,7 @@ module TimeChartMod
 
   def time_chart_params
     {
-      labels: (1..time_chart_label_max).to_a, # (1..turn_max) ではなくデータを元に作る
+      labels: (0..time_chart_label_max).to_a, # (1..turn_max) ではなくデータを元に作る
       datasets: time_chart_datasets.collect.with_index { |e, i| e.merge(time_chart_dataset_default(i)) },
     }
   end
@@ -77,11 +77,13 @@ module TimeChartMod
 
     a = time_chart_sec_list_of(location)
     it = a.each
-    (1..time_chart_label_max).collect.with_index do |turn, i|
+    (0..time_chart_label_max).collect.with_index do |turn, i|
       x = turn
       y = nil
-      if (loc.code + i).modulo(c).zero?
-        y = location.value_sign * it.next
+      if i >= 1
+        if (loc.code + i).modulo(c).nonzero?
+          y = location.value_sign * it.next
+        end
       end
       { x: x, y: y }
     end

@@ -420,9 +420,9 @@ export default {
             this.chart_flip_set()
 
             // N手目はdatasets配列のどの要素を見るかすぐにわかるテーブルを作成する
-            if (this.index_info_hash) {
-              this._chart_config.index_info_hash = this.index_info_hash(time_chart_params)
-            }
+            // if (this.index_info_hash) {
+            //   this._chart_config.index_info_hash = this.index_info_hash(time_chart_params)
+            // }
 
             this.chart_create()
 

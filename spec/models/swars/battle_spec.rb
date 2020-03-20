@@ -105,10 +105,10 @@ module Swars
         assert { record.time_chart_params.has_key?(:datasets) }
       end
 
-      it "time_chart_xy_list2: それぞれの消費時間" do
-        assert { record.time_chart_xy_list2(:black) == [{x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}] }
-        assert { record.time_chart_xy_list2(:white) == [{x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}] }
-      end
+      # it "time_chart_xy_list2: それぞれの消費時間" do
+      #   assert { record.time_chart_xy_list2(:black) == [{x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}] }
+      #   assert { record.time_chart_xy_list2(:white) == [{x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}] }
+      # end
 
       describe "投了" do
         let :record do
@@ -150,8 +150,8 @@ module Swars
         end
 
         it "time_chart_xy_list2" do
-          assert { record.time_chart_xy_list2(:black) == [{x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, {x: 6, y: nil}] }
-          assert { record.time_chart_xy_list2(:white) == [{x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, {x: 6, y: -590}] }
+          assert { record.time_chart_xy_list2(:black) == [{x: 0, y: nil}, {x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, {x: 6, y: nil}] }
+          assert { record.time_chart_xy_list2(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, {x: 6, y: -590}] }
         end
       end
 
