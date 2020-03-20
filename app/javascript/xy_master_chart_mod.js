@@ -78,11 +78,11 @@ const CHART_CONFIG_DEFAULT = {
       display: true,
     },
 
-    // hover: {
-    //   mode: "x",          // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
-    //   intersect: false,       // Y座標のチェックは無視する
-    //   animationDuration: 400, // デフォルト400
-    // },
+    hover: {
+      mode: "nearest",          // 近くの点だけにマッチさせる(必須) https:www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
+      // intersect: true,       // Y座標のチェックは無視する
+      // animationDuration: 400, // デフォルト400
+    },
 
     tooltips: {
       // mode: "x",            // マウスに対してツールチップが出る条件
