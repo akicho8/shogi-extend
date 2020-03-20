@@ -105,11 +105,6 @@ module Swars
         assert { record.time_chart_params.has_key?(:datasets) }
       end
 
-      # it "time_chart_xy_list2: それぞれの消費時間" do
-      #   assert { record.time_chart_xy_list2(:black) == [{x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}] }
-      #   assert { record.time_chart_xy_list2(:white) == [{x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}] }
-      # end
-
       describe "投了" do
         let :record do
           Swars::Battle.create!(final_key: :TORYO)
@@ -122,12 +117,12 @@ module Swars
           assert { record.memberships[0].think_max == 5 }
           assert { record.memberships[1].think_max == 7 }
         end
-        it "それぞれの時間チャートデータが取れる" do
-          assert { record.memberships[0].time_chart_xy_list == [{x: 1, y: 1 }, {x: 3, y:  5}, {x: 5, y: 2}] }
-          assert { record.memberships[1].time_chart_xy_list == [{x: 2, y: -3}, {x: 4, y: -7},             ] }
-        end
-        it "なのでラベルは3つのみ" do
+        it "なのでラベルの最大は5" do
           assert { record.time_chart_label_max == 5 }
+        end
+        it "それぞれの時間チャートデータが取れる" do
+          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, ] }
+          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, ] }
         end
       end
 
@@ -143,15 +138,11 @@ module Swars
           assert { record.memberships[1].think_max == 590 }
         end
         it "後手のチャートの最後にそれを追加してある" do
-          assert { record.memberships[1].time_chart_xy_list == [{x: 2, y: -3}, {x: 4, y: -7}, {x: 6, y: -590} ] }
+          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, {x: 6, y:  nil}] }
+          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, {x: 6, y: -590}] }
         end
-        it "そのためチャートのラベルは4つに増えている" do
+        it "そのためチャートのラベルは増えている" do
           assert { record.time_chart_label_max == 6 }
-        end
-
-        it "time_chart_xy_list2" do
-          assert { record.time_chart_xy_list2(:black) == [{x: 0, y: nil}, {x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, {x: 6, y: nil}] }
-          assert { record.time_chart_xy_list2(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, {x: 6, y: -590}] }
         end
       end
 
@@ -171,7 +162,7 @@ module Swars
         Battle.create!(csa_seq: [["+5756FU", 0], ["-5354FU", 0], ["+5958OU", 0], ["-5152OU", 0], ["+5857OU", 0], ["-5253OU", 0], ["+5746OU", 0], ["-5364OU", 0], ["+4645OU", 0], ["-6465OU", 0], ["+4544OU", 0], ["-6566OU", 0], ["+4453OU", 0], ["-6657OU", 0]])
       end
       it do
-        assert { record.note_tag_list                == ["入玉", "相入玉", "居飛車"] }
+        assert { record.note_tag_list                == ["入玉", "相入玉", "居飛車", "相居飛車"] }
         assert { record.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車"] }
         assert { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車"] }
       end
