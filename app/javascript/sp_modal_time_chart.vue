@@ -217,38 +217,38 @@ const CHART_CONFIG_DEFAULT = {
     //   "touchmove",
     // ],
 
-    // 点の上を通過したとき
-    onHover(event, chart_elements) {
-      // console.log("chart_elements", chart_elements)
-      // 0: ChartElement {_chart: Chart, _datasetIndex: 1, _index: 7, hidden: false, _xScale: ChartElement, …}
-      //     _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
-      //     _datasetIndex: 1
-      //     _index: 8
-      //     hidden: false
-      //     _xScale: ChartElement {id: "x-axis-0", type: "category", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
-      //     _yScale: ChartElement {id: "y-axis-0", type: "linear", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
-      //     _options: {backgroundColor: "rgba(100.00%, 22.00%, 37.60%, 0.10)", borderColor: "rgba(100.00%, 22.00%, 37.60%, 0.60)", borderWidth: 1, hitRadius: 1, hoverBackgroundColor: undefined, …}
-      //     _model: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
-      //     _view: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
-      //     _start: null
-
-      // 第二引数から取れるものと同じ
-      if (false) {
-        const chart_elements2 = this.getElementAtEvent(event)
-        console.log(chart_elements2)
-      }
-
-      const chart_instance = this
-      const __vm__ = chart_instance.config.__vm__
-      __vm__.debug_print("onHover", "chart_elements.length", chart_elements.length)
-
-      if (chart_elements.length >= 1) {
-        const chart_element = chart_elements[0]
-        const datasets = chart_element._chart.config.data.datasets
-        const xy_info = datasets[chart_element._datasetIndex].data[chart_element._index]
-        chart_instance.config.__last_xy_info__ = xy_info
-      }
-    },
+    // // 点の上を通過したとき
+    // onHover(event, chart_elements) {
+    //   // console.log("chart_elements", chart_elements)
+    //   // 0: ChartElement {_chart: Chart, _datasetIndex: 1, _index: 7, hidden: false, _xScale: ChartElement, …}
+    //   //     _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+    //   //     _datasetIndex: 1
+    //   //     _index: 8
+    //   //     hidden: false
+    //   //     _xScale: ChartElement {id: "x-axis-0", type: "category", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
+    //   //     _yScale: ChartElement {id: "y-axis-0", type: "linear", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
+    //   //     _options: {backgroundColor: "rgba(100.00%, 22.00%, 37.60%, 0.10)", borderColor: "rgba(100.00%, 22.00%, 37.60%, 0.60)", borderWidth: 1, hitRadius: 1, hoverBackgroundColor: undefined, …}
+    //   //     _model: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
+    //   //     _view: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
+    //   //     _start: null
+    //
+    //   // 第二引数から取れるものと同じ
+    //   if (false) {
+    //     const chart_elements2 = this.getElementAtEvent(event)
+    //     console.log(chart_elements2)
+    //   }
+    //
+    //   const chart_instance = this
+    //   const __vm__ = chart_instance.config.__vm__
+    //   __vm__.debug_print("onHover", "chart_elements.length", chart_elements.length)
+    //
+    //   if (chart_elements.length >= 1) {
+    //     const chart_element = chart_elements[0]
+    //     const datasets = chart_element._chart.config.data.datasets
+    //     const xy_info = datasets[chart_element._datasetIndex].data[chart_element._index]
+    //     chart_instance.config.__last_xy_info__ = xy_info
+    //   }
+    // },
 
     // 点をクリックしたとき
     onClick(event, chart_elements) {
@@ -436,7 +436,7 @@ export default {
     chart_create() {
       this.chart_destroy()
       window.chart_instance = new Chart(this.$refs.main_canvas, this._chart_config)
-      this.$refs.main_canvas.addEventListener("click", this.click_handle)
+      // this.$refs.main_canvas.addEventListener("click", this.click_handle)
     },
 
     // 時間チャート更新
@@ -449,7 +449,7 @@ export default {
     // 時間チャート非表示
     chart_destroy() {
       if (window.chart_instance) {
-        this.$refs.main_canvas.removeEventListener('click', this.click_handle)
+        // this.$refs.main_canvas.removeEventListener('click', this.click_handle)
 
         window.chart_instance.destroy()
         window.chart_instance = null
@@ -461,7 +461,7 @@ export default {
     // 1. マウスに対応する、Y軸を無視した点の配列ががあればその中央の値の手数を使う
     // 2. その配列がなければ、前回表示したツールチップの手数を使う
     click_handle(event) {
-      return
+      alert("click_handle")
 
       this.debug_alert("click_handle")
 
