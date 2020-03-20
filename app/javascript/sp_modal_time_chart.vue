@@ -35,6 +35,10 @@ const CHART_CONFIG_DEFAULT = {
     // https://qiita.com/muuuuminn/items/2e977add604dcec920d3
     scales: {
       xAxes: [{
+        // http://www.kogures.com/hitoshi/javascript/chartjs/bar-width.html
+        // categoryPercentage: 0.8, // 目盛り線の幅に対する棒（複数棒）の占める幅の割合
+        // barPercentage: 0.9,      // categoryPercentageに対する単独棒の幅。1にすると複数棒間間隔がなくなり、1より小さくすると棒が細くなり間隔が広がる
+
         scaleLabel: {
           display: false,
           labelString: "手数",
@@ -117,9 +121,9 @@ const CHART_CONFIG_DEFAULT = {
 
     // https://www.chartjs.org/docs/latest/general/interactions/
     hover: {
-      mode: "x",            // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
-      intersect: false,     // Y座標のチェックは無視する
-      animationDuration: 0, // デフォルト400
+      mode: "x",              // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
+      intersect: false,       // Y座標のチェックは無視する
+      animationDuration: 200, // デフォルト400
     },
 
     // https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
@@ -137,7 +141,8 @@ const CHART_CONFIG_DEFAULT = {
           return ""
         },
         label(tooltipItem, data) {
-          const __vm__ = this._chart.config.__vm__
+          const chart_element = this
+          const __vm__ = chart_element._chart.config.__vm__
 
           // this:
           //   ChartElement {_chart: Chart, _chartInstance: Chart, _data: {…}, _options: {…}, _model: {…}, …}
@@ -178,27 +183,16 @@ const CHART_CONFIG_DEFAULT = {
           //   [2] {x: 5, y: 1}
           //
 
-          const e = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+          const xy_info = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
 
-          // ここを false にすると __last_x__ 機能がOFFになって別の方法で動く
-          if (true) {
-            this._chart.config.__last_x__ = e.x
-
-            __vm__.api_board_turn_set(e.x)
-
-            if (__vm__.development_p) {
-              __vm__.debug_alert(`__last_x__ = ${e.x}`)
-            }
-          }
-
-          let s = this._chart.config.__vm__.second_to_human(e.y)
+          let s = chart_element._chart.config.__vm__.second_to_human(xy_info.y)
 
           if (__vm__.development_p) {
-            s = `(${e.x}, ${e.y}) ${s}`
+            s = `(${xy_info.x}, ${xy_info.y}) ${s}`
           }
 
           if (__vm__.record) {
-            if (e.x > __vm__.record.turn_max) {
+            if (xy_info.x > __vm__.record.turn_max) {
               return `${s} (時間切れ)`
             }
           }
@@ -208,6 +202,116 @@ const CHART_CONFIG_DEFAULT = {
           return s
         },
       },
+    },
+
+    // スマホで touchmove すると動きすぎてしまう場合は touchmove を外す
+    // https://www.chartjs.org/docs/latest/general/interactions/events.html
+    // events: [
+    //   "mousemove",
+    //   "mouseout",
+    //   "click",
+    //   "touchstart",
+    //   "touchmove",
+    // ],
+
+    // 点の上を通過したとき
+    onHover(event, chart_elements) {
+      // console.log("chart_elements", chart_elements)
+      // 0: ChartElement {_chart: Chart, _datasetIndex: 1, _index: 7, hidden: false, _xScale: ChartElement, …}
+      //     _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+      //     _datasetIndex: 1
+      //     _index: 8
+      //     hidden: false
+      //     _xScale: ChartElement {id: "x-axis-0", type: "category", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
+      //     _yScale: ChartElement {id: "y-axis-0", type: "linear", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
+      //     _options: {backgroundColor: "rgba(100.00%, 22.00%, 37.60%, 0.10)", borderColor: "rgba(100.00%, 22.00%, 37.60%, 0.60)", borderWidth: 1, hitRadius: 1, hoverBackgroundColor: undefined, …}
+      //     _model: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
+      //     _view: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
+      //     _start: null
+
+      // 第二引数から取れるものと同じ
+      if (false) {
+        const chart_elements2 = this.getElementAtEvent(event)
+        console.log(chart_elements2)
+      }
+
+      const chart_instance = this
+      const __vm__ = chart_instance.config.__vm__
+      __vm__.debug_print("onHover", "chart_elements.length", chart_elements.length)
+
+      if (chart_elements.length >= 1) {
+        const chart_element = chart_elements[0]
+        const datasets = chart_element._chart.config.data.datasets
+        const xy_info = datasets[chart_element._datasetIndex].data[chart_element._index]
+        chart_instance.config.__last_xy_info__ = xy_info
+      }
+    },
+
+    // 点をクリックしたとき
+    onClick(event, chart_elements) {
+      const chart_instance = this
+      const __vm__ = chart_instance.config.__vm__
+      __vm__.debug_print("onClick", "chart_elements.length", chart_elements.length)
+      let xy_info = null
+
+      // 点にホバーできている状態でクリックしたらその点を使う
+      if (chart_elements.length >= 1) {
+        const chart_element = chart_elements[0]
+        const datasets = chart_element._chart.config.data.datasets
+        xy_info = datasets[chart_element._datasetIndex].data[chart_element._index]
+      } else {
+        // 点にホバーできていないときは onHover で前回マッチした点を使う
+        xy_info = chart_instance.config.__last_xy_info__
+      }
+      // その手数に移動する
+      if (xy_info) {
+        __vm__.api_board_turn_set(xy_info.x)
+      }
+
+      // console.log(this)
+      //   Chart
+      //   data: (...)
+      //   id: 0
+      //   ctx: CanvasRenderingContext2D {canvas: canvas#main_canvas.chartjs-render-monitor, globalAlpha: 1, globalCompositeOperation: "source-over", filter: "none", imageSmoothingEnabled: true, …}
+      //   canvas: canvas#main_canvas.chartjs-render-monitor
+      //   config: {type: "line", options: {…}, __vm__: VueComponent, plugins: Array(1), chart_turn: 9, …}
+      //   width: 375
+      //   height: 187
+      //   aspectRatio: 2
+      //   options: {defaultColor: "rgba(0,0,0,0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
+      //   _bufferedRender: false
+      //   _layers: (4) [{…}, {…}, {…}, {…}]
+      //   chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+      //   controller: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+      //   boxes: (4) [ChartElement, ChartElement, ChartElement, ChartElement]
+      //   legend: ChartElement {ctx: CanvasRenderingContext2D, options: {…}, chart: Chart, legendHitBoxes: Array(0), _hoveredItem: null, …}
+      //   titleBlock: ChartElement {ctx: CanvasRenderingContext2D, options: {…}, chart: Chart, legendHitBoxes: Array(0), fullWidth: true, …}
+      //   currentDevicePixelRatio: 2
+      //   _listeners: {mousemove: ƒ, mouseout: ƒ, click: ƒ, touchstart: ƒ, touchmove: ƒ, …}
+      //   tooltip: ChartElement {_chart: Chart, _chartInstance: Chart, _data: {…}, _options: {…}, _model: {…}, …}
+      //   scales: {x-axis-0: ChartElement, y-axis-0: ChartElement}
+      //   chartArea: {left: 41.103994140625, top: 7.199999999999999, right: 365.3280029296875, bottom: 156.83999999999997}
+      //   lastActive: []
+      //   animating: false
+      //   _bufferedRequest: null
+      //   active: []
+      //   $plugins: {descriptors: Array(5), id: 4}
+      //   get data: ƒ ()
+      //   set data: ƒ (value)
+      //   __proto__: Object
+
+      // console.log("chart_elements", chart_elements)
+      //   0: ChartElement {_chart: Chart, _datasetIndex: 1, _index: 7, hidden: false, _xScale: ChartElement, …}
+      //       _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+      //       _datasetIndex: 1
+      //       _index: 8
+      //       hidden: false
+      //       _xScale: ChartElement {id: "x-axis-0", type: "category", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
+      //       _yScale: ChartElement {id: "y-axis-0", type: "linear", options: {…}, ctx: CanvasRenderingContext2D, chart: Chart, …}
+      //       _options: {backgroundColor: "rgba(100.00%, 22.00%, 37.60%, 0.10)", borderColor: "rgba(100.00%, 22.00%, 37.60%, 0.60)", borderWidth: 1, hitRadius: 1, hoverBackgroundColor: undefined, …}
+      //       _model: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
+      //       _view: {x: 303.571048874628, y: 77.032, skip: false, radius: 1.2, pointStyle: "circle", …}
+      //       _start: null
     },
   },
 }
@@ -349,10 +453,15 @@ export default {
       }
     },
 
-    // 対応する点をタップしたとき盤面の手数を変更
+    // chart.js の方でイベントフックがあってそっちを使っているので、こっちは使うのをやめた
+    //
     // 1. マウスに対応する、Y軸を無視した点の配列ががあればその中央の値の手数を使う
     // 2. その配列がなければ、前回表示したツールチップの手数を使う
     click_handle(event) {
+      return
+
+      this.debug_alert("click_handle")
+
       if (this.development_p) {
         console.log(window.chart_instance.getElementsAtEvent(event))
         console.log(window.chart_instance.getElementAtEvent(event))
@@ -413,12 +522,12 @@ export default {
       if (true) {
         const datasets = window.chart_instance.data.datasets        // 実データ
         const lastActive = window.chart_instance.lastActive         // 最後にアクセスした点の配列(公開APIなのか不明)
-        const __last_x__ = window.chart_instance.config.__last_x__  // 前回表示したツールチップでの手数
+        const __last_xy_info__ = window.chart_instance.config.__last_xy_info__  // 前回表示したツールチップでの手数
 
         if (lastActive.length === 0) {
-          // this.debug_alert(`lastActiveが空なので __last_x__(${__last_x__}) を使う`)
-          if (__last_x__ != null) {
-            this.api_board_turn_set(__last_x__)
+          // this.debug_alert(`lastActiveが空なので __last_xy_info__(${__last_xy_info__}) を使う`)
+          if (__last_xy_info__ != null) {
+            this.api_board_turn_set(__last_xy_info__)
           }
         }
 
@@ -443,14 +552,14 @@ export default {
       // getElementAtEvent を使うとイベントから点に変換できる
       // しかし点にマウスが完全に重なっているときにしかこの方法は使えない
       if (false) {
-        let item = window.chart_instance.getElementAtEvent(event)
-        if (item.length == 0) {
+        const chart_elements = window.chart_instance.getElementAtEvent(event)
+        if (chart_elements.length == 0) {
           return
         }
-        item = item[0]
-        const data = item._chart.config.data.datasets[item._datasetIndex].data[item._index]
+        const chart_element = chart_elements[0]
+        const data = chart_element._chart.config.data.datasets[chart_element._datasetIndex].data[chart_element._index]
         if (this.development_p) {
-          console.log(`click_handle: (${item._index}, ${data.x}, ${data.y})`)
+          console.log(`click_handle: (${chart_element._index}, ${data.x}, ${data.y})`)
         }
         this.api_board_turn_set(data.x)
       }
