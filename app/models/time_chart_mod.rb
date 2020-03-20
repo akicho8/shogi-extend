@@ -78,7 +78,7 @@ module TimeChartMod
       y = nil
       if i >= 1
         if (loc.code + i).modulo(c).nonzero?
-          y = location.value_sign * it.next
+          y = location.value_sign * (it.next || 0)
         end
       end
       # いまのところ x は 0 から始まるインデックスと同じなので省略して値だけにもできる
