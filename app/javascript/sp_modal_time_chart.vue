@@ -136,6 +136,8 @@ const CHART_CONFIG_DEFAULT = {
 
       displayColors: false, // 左に「■」を表示するか？
 
+      yAlign: 'bottom', // 下側にキャロットがでるようにする。マニュアルに載ってない。https://stackoverflow.com/questions/44050238/change-chart-js-tooltip-caret-position
+
       callbacks: {
         title(tooltipItems, data) {
           return ""
