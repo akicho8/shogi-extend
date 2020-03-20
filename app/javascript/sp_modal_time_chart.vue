@@ -18,7 +18,7 @@ const CHART_CONFIG_DEFAULT = {
     showLines: true,
 
     // nil のデータは飛ばしてつなげる
-    spanGaps: true,
+    // spanGaps: true,
 
     // https://www.chartjs.org/docs/latest/general/performance.html?h=animation
     //
@@ -54,7 +54,7 @@ const CHART_CONFIG_DEFAULT = {
           callback(value, index, values) { return value + "" }, // 単位をつける
         },
         gridLines: {
-          display: false,    // x軸の中間の縦線
+          display: true,    // x軸の中間の縦線
         },
       }],
       yAxes: [{

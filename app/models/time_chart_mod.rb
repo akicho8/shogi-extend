@@ -28,7 +28,7 @@ module TimeChartMod
   def time_chart_params
     {
       labels: (0..time_chart_label_max).to_a, # (1..turn_max) ではなくデータを元に作る
-      datasets: time_chart_datasets.collect.with_index { |e, i| e.merge(time_chart_dataset_default(i)) },
+      datasets: time_chart_datasets,
     }
   end
 
@@ -85,12 +85,5 @@ module TimeChartMod
       # x, y は予約語。他にも追加していい
       { x: x, y: y }
     end
-  end
-
-  def time_chart_dataset_default(i)
-    {
-      borderColor: PaletteInfo[i].border_color, # FIXME: js 側で定義
-      backgroundColor: PaletteInfo[i].background_color,
-    }
   end
 end

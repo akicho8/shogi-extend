@@ -50,27 +50,9 @@ window._ = _
 
 //////////////////////////////////////////////////////////////////////////////// Chart.js
 
-import Chart from "chart.js"
-window.Chart = Chart
+import "chart_init.js"
 
-// 画像をダウンロードしたときに背景色が透明になる問題への対処法
-// http://wordpress.ideacompo.com/?p=12888
-Chart.plugins.register({
-  beforeDraw(c) {
-    const ctx = c.chart.ctx
-    ctx.fillStyle = "rgba(255, 255, 255, 1)"
-    ctx.fillRect(0, 0, c.chart.width, c.chart.height)
-  }
-})
-
-Chart.defaults.global.elements.line.tension           = 0.2  // 0なら線がカクカクになる
-Chart.defaults.global.elements.line.borderWidth       = 1    // 点枠の太さ
-Chart.defaults.global.elements.line.fill              = true // 塗り潰す？
-
-Chart.defaults.global.elements.point.radius           = 1.2 // 点半径
-Chart.defaults.global.elements.point.hoverRadius      = 3   // 点半径(アクティブ時)
-Chart.defaults.global.elements.point.hoverBorderWidth = 2   // 点枠の太さ(アクティブ時)
-Chart.defaults.global.elements.point.hitRadius        = 1   // タップできる大きさ(1:干渉しない 2:干渉しにくい 3:干渉する)
+////////////////////////////////////////////////////////////////////////////////
 
 document.addEventListener("DOMContentLoaded", () => {
   if (document.querySelector("#flash_danger_notify_tag")) {
