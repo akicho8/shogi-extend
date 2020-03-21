@@ -6,7 +6,7 @@ module LightSessionMethods
   end
 
   let :custom_session_id do
-    Digest::MD5.hexdigest(session.id || SecureRandom.hex) # Rails.env.test? のとき session.id がないんだが
+    session.id || SecureRandom.hex
   end
 
   # talk("こんにちは")
@@ -49,7 +49,9 @@ module LightSessionMethods
 
   # broadcast だけど購読者は本人のみ
   def light_session_channel_command(command, options)
-    ActionCable.server.broadcast(light_session_channel_key, options.merge(command: command))
+    if AppConfig[:action_cable_enable]
+      ActionCable.server.broadcast(light_session_channel_key, options.merge(command: command))
+    end
   end
 
   def light_session_channel_key

@@ -141,6 +141,7 @@ Rails.application.configure do
         swars_tweet_function: false,
         xy_master_custom_mode: false,
         columns_detail_show: false,
+        action_cable_enable: false,
       })
   end
 end
