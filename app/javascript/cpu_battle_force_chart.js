@@ -3,6 +3,10 @@
 const CHART_TOP_PADDING_RATE = 1.0   // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
 const SUGGESTED_MAX_DEFAULT = 10000  // 評価値の初期値
 
+import PaletteInfo from './palette_info.js'
+
+const MainPalette = PaletteInfo.fetch("info")
+
 const CHART_CONFIG_DEFAULT = {
   type: "line",
 
@@ -28,8 +32,8 @@ const CHART_CONFIG_DEFAULT = {
     elements: {
       // 共通設定
       line: {
-        borderColor:     "hsla(204, 86%,  53%, 1.0)",
-        backgroundColor: "hsla(204, 86%,  53%, 0.1)",
+        borderColor:     MainPalette.alpha(1.0),
+        backgroundColor: MainPalette.alpha(0.1),
         fill: true,
         tension: 0,
       },
@@ -37,19 +41,41 @@ const CHART_CONFIG_DEFAULT = {
 
     // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
     scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: false,
+        },
+        ticks: {
+          minRotation: 0,   // 表示角度水平
+          maxRotation: 0,   // 表示角度水平
+          maxTicksLimit: 5, // 最大横N個の目盛りにする
+        },
+        gridLines: {
+          display: false,    // x軸の中間の縦線
+        },
+      }],
       yAxes: [{
         display: true,
         ticks: {
-          maxTicksLimit: 7,
+          maxTicksLimit: 5,
         },
       }],
     },
 
-    // https://tr.you84815.space/chartjs/chart_configuration/tooltip.html
+    // https://www.chartjs.org/docs/latest/general/interactions/
+    hover: {
+      mode: "index",          // マウスに対して点が強調される条件 X軸にマッチしたら点を強調する https://www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
+      intersect: false,       // Y座標のチェックは無視する
+      animationDuration: 400, // デフォルト400
+    },
+
+    // https://tr.you84815.space/chartjs/_chart_configuration/tooltip.html
     legend: {
       display: false,
     },
     tooltips: {
+      mode: "index",    // マウスに対してツールチップが出る条件
+      intersect: false, // Y座標のチェックは無視する
       displayColors: false,
       callbacks: {
         title(tooltipItems, data) {
@@ -57,9 +83,23 @@ const CHART_CONFIG_DEFAULT = {
         },
         label(tooltipItem, data) {
           const e = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
-          return e.y
+          return e.y.toString()
         },
       },
+    },
+
+    // 点をクリックしたとき
+    onClick(event, chart_elements) {
+      const chart_instance = this
+      const __vm__ = chart_instance.config.__vm__
+      if (chart_elements.length >= 1) {
+        const chart_element = chart_elements[0]
+        const datasets = chart_element._chart.config.data.datasets
+        const xy_info = datasets[chart_element._datasetIndex].data[chart_element._index]
+        if (__vm__.mode === "standby") {
+          __vm__.$refs.sp_vm.api_board_turn_set(xy_info.x)
+        }
+      }
     },
   },
 }
@@ -67,58 +107,68 @@ const CHART_CONFIG_DEFAULT = {
 export default {
   data() {
     return {
-      chart_config: null,
-      chart_instance: null,
+      _chart_config: null,
       chart_value_max: null,
     }
   },
 
   created() {
-    this.chart_config = CHART_CONFIG_DEFAULT
-    this.chart_config_reset()
+    this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT)
+    this._chart_config_reset()
   },
 
   mounted() {
-    this.chart_instance = new Chart(this.$refs.chart_canvas, this.chart_config)
-    this.chart_click_handler_set()
+    this.chart_create()
+  },
+
+  beforeDestroy() {
+    this.chart_destroy()
   },
 
   methods: {
-    // チャートクリック時にその手数に局面を変更する処理の登録
-    chart_click_handler_set() {
-      this.$refs.chart_canvas.addEventListener('click', event => {
-        let item = this.chart_instance.getElementAtEvent(event)
-        if (item.length >= 1) {
-          item = item[0]
-          let data = item._chart.config.data.datasets[item._datasetIndex].data[item._index]
-          console.log(`Clicked at (${data.x}, ${data.y})`)
-          if (this.mode === "standby") {
-            this.$refs.sp_vm.api_board_turn_set(data.x)
-          }
-        }
-      })
-    },
-
     // 開始時の初期化
     chart_reset() {
-      this.chart_config_reset()
-      this.chart_instance.update()
+      this._chart_config_reset()
+      this.chart_update()
 
       this.chart_value_max = 0
+    },
+
+    // 時間チャート表示
+    chart_create() {
+      this.chart_destroy()
+      window.chart_instance = new Chart(this.$refs.main_canvas, this._chart_config)
+    },
+
+    // 時間チャート更新
+    chart_update() {
+      if (window.chart_instance) {
+        window.chart_instance.update()
+      }
+    },
+
+    // 時間チャート非表示
+    chart_destroy() {
+      if (window.chart_instance) {
+        window.chart_instance.destroy()
+        window.chart_instance = null
+      }
     },
 
     // 戦力情報の反映
     score_list_reflection(e) {
       if (e["score_list"]) {
+        console.log(e["score_list"])
         e["score_list"].forEach(e => {
-          this.chart_config.data.labels.push(e.x)
-          this.chart_config.data.datasets[0].data.push(e)
+          this._chart_config.data.labels.push(e.x)
+          this._chart_config.data.datasets[0].data.push(e)
+
           const v = Math.abs(e.y)
           if (v > this.chart_value_max) {
             this.chart_value_max = v
           }
         })
-        const ticks = this.chart_config.options.scales.yAxes[0].ticks
+        const ticks = this._chart_config.options.scales.yAxes[0].ticks
         const v = this.chart_value_max * CHART_TOP_PADDING_RATE
         if (false) {
           ticks.max = v
@@ -127,17 +177,18 @@ export default {
           ticks.suggestedMax = v
           ticks.suggestedMin = -v
         }
-        this.chart_instance.update()
+        this.chart_update()
       }
     },
 
     // private
 
-    chart_config_reset() {
-      this.chart_config.data.labels = []
-      this.chart_config.data.datasets[0].data = []
-      this.chart_config.options.scales.yAxes[0].ticks.suggestedMax = SUGGESTED_MAX_DEFAULT
-      this.chart_config.options.scales.yAxes[0].ticks.suggestedMin = -SUGGESTED_MAX_DEFAULT
+    _chart_config_reset() {
+      this._chart_config.__vm__ = this
+      this._chart_config.data.labels = []
+      this._chart_config.data.datasets[0].data = []
+      this._chart_config.options.scales.yAxes[0].ticks.suggestedMax = SUGGESTED_MAX_DEFAULT
+      this._chart_config.options.scales.yAxes[0].ticks.suggestedMin = -SUGGESTED_MAX_DEFAULT
     },
   },
 }

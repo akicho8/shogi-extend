@@ -114,7 +114,7 @@
             | {{pressure_rate_hash}}
 
       .box
-        canvas#chart_canvas(ref="chart_canvas")
+        canvas#chart_canvas(ref="main_canvas")
         template(v-if="development_p && false")
           | {{chart_config.data.datasets[0].data}}
 
