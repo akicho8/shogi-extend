@@ -3,7 +3,7 @@ module Colosseum::Battle::BattleMethods
 
   class_methods do
     # cap production rails:runner CODE='Colosseum::Battle.auto_close'
-    def auto_close(**options)
+    def auto_close(options = {})
       options = {
         time: nil,
       }.merge(options)

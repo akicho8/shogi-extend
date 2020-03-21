@@ -7,12 +7,12 @@ module Swars
       extend ActiveModel::Translation # for model_name.human
 
       class << self
-        def run(**params)
+        def run(params = {})
           new(params).run
         end
       end
 
-      def initialize(**params)
+      def initialize(params = {})
         @params = {
           developper_notice: true,
           sleep: (Rails.env.production? || Rails.env.staging?) ? 4 : 0,

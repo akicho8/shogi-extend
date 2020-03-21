@@ -81,7 +81,7 @@ module Colosseum
       end
 
       class_methods do
-        def setup(**options)
+        def setup(options = {})
           super
 
           sysop
@@ -352,7 +352,7 @@ module Colosseum
           })
       end
 
-      def matching_start(**options)
+      def matching_start(options = {})
         options = {
           with_robot: false,
         }.merge(options)
@@ -447,7 +447,7 @@ module Colosseum
       private
 
       # class method or battle のインスタンスにする
-      def battle_setup(pair_list, **attributes)
+      def battle_setup(pair_list, attributes = {})
         battle = battle_create(attributes)
 
         pair_list.flatten.each { |e| e.update!(matching_at: nil) } # マッチング状態をリセット

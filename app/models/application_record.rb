@@ -2,7 +2,7 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   class << self
-    def setup(**options)
+    def setup(options = {})
     end
 
     def han(*args)

@@ -7,7 +7,7 @@ class ApplicationMailer < ActionMailer::Base
   layout "mailer"
 
   # ApplicationMailer.developper_notice.deliver_now
-  def developper_notice(**params)
+  def developper_notice(params = {})
     body = measures_new_line_in_gmail_is_to_double(params[:body].to_s)
     mail(subject: subject_for(params[:subject]), content_type: "text/html", body: monospaced_text(body))
   end

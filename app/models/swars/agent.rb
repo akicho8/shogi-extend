@@ -8,14 +8,14 @@ module Swars
   class Agent
     cattr_accessor(:items_per_page) { 10 }
 
-    def initialize(**options)
+    def initialize(options = {})
       @options = {
         run_remote: false,
       }.merge(options)
     end
 
     concerning :HistoryGetMethods do
-      def index_get(**params)
+      def index_get(params = {})
         params = {
           gtype: "",    # 空:10分 sb:3分 s1:10秒
           user_key: nil,
@@ -205,7 +205,7 @@ module Swars
 
     concerning :LegendSwarsUserKeysMethods do
       # 騎士団フェスのときは何もとれない
-      def legend_user_keys(**params)
+      def legend_user_keys(params = {})
         if run_remote?
           str = agent.get("https://shogiwars.heroz.jp/?locale=en").body
         else

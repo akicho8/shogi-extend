@@ -13,7 +13,7 @@ class QueryInfo
   attr_accessor :values
   attr_accessor :urls
 
-  def initialize(query, **options)
+  def initialize(query, options = {})
     @options = {
       available_keys: nil,
     }.merge(options)

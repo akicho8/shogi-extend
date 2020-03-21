@@ -32,7 +32,7 @@ module Colosseum
     cattr_accessor(:yomiage_enable) { false }
 
     class << self
-      def setup(**options)
+      def setup(options = {})
         super
 
         if Rails.env.development?

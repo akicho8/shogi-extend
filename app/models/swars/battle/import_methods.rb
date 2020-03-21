@@ -2,7 +2,7 @@ module Swars
   class Battle
     concern :ImportMethods do
       class_methods do
-        def setup(**options)
+        def setup(options = {})
           super
 
           if Rails.env.development?
@@ -50,13 +50,13 @@ module Swars
           end
         end
 
-        def run(*args, **params, &block)
-          import(*args, params, &block)
-        end
+        # def run(...)
+        #   import(...)
+        # end
 
         # 参照されていないレコードを消していく
         # rails r 'Swars::Battle.old_record_destroy(time_limit: 0)'
-        def old_record_destroy(**params)
+        def old_record_destroy(params = {})
           params = {
             expires_in: 4.weeks, # 4週間前のものは消す
             time_limit: 2.hours, # 最大処理時間(朝4時に実行して6時には必ず終了させる)
@@ -76,7 +76,7 @@ module Swars
         end
 
         # cap production rails:runner CODE='Swars::Battle.remake'
-        def remake(**params)
+        def remake(params = {})
           params = {
             limit: 256,
           }.merge(params)
@@ -89,7 +89,7 @@ module Swars
           p c
         end
 
-        def sometimes_user_import(**params)
+        def sometimes_user_import(params = {})
           # キャッシュの有効時間のみ利用して連続実行を防ぐ
           if true
             if Rails.env.production? || Rails.env.staging?
@@ -111,14 +111,14 @@ module Swars
         # Battle.user_import(user_key: "DarkPonamin9")
         # Battle.user_import(user_key: "micro77")
         # Battle.user_import(user_key: "micro77", page_max: 3)
-        def user_import(**params)
+        def user_import(params = {})
           RuleInfo.each do |e|
             multiple_battle_import(params.merge(gtype: e.swars_real_key))
           end
         end
 
         # Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
-        def multiple_battle_import(**params)
+        def multiple_battle_import(params = {})
           params = {
             verbose: Rails.env.development?,
             early_break: false, # 1ページ目で新しいものが見つからなければ終わる
@@ -188,7 +188,7 @@ module Swars
           end
         end
 
-        def single_battle_import(**params)
+        def single_battle_import(params = {})
           params = {
             verbose: Rails.env.development?,
           }.merge(params)

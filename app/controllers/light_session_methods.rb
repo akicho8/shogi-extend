@@ -24,20 +24,20 @@ module LightSessionMethods
   #
   #   ActionCable.server.broadcast("light_session_channel_#{custom_session_id}", talk: Talk.new(source_text: "こんにちは").as_json)
   #
-  def talk(message, **options)
+  def talk(message, options = {})
     light_session_channel_command(:talk, options.merge(message: message))
   end
 
-  def direct_talk(message, **options)
+  def direct_talk(message, options = {})
     talk = Talk.new(source_text: message)
     light_session_channel_command(:direct_talk, options.merge(talk: talk))
   end
 
-  def sound_play(key, **options)
+  def sound_play(key, options = {})
     light_session_channel_command(:sound_play, options.merge(key: key))
   end
 
-  def toast_message(message, **options)
+  def toast_message(message, options = {})
     options = {
       position: "is-bottom",
     }.merge(options)

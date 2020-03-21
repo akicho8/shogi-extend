@@ -3,7 +3,7 @@ module Lettable
     private
 
     # https://gist.github.com/eric1234/375ad4a79972467d6f30af3bd0146584
-    def let(name, **options, &block)
+    def let(name, options = {}, &block)
       options = {
         # as_helper_method: true,
         return_value_if_exist: false,
@@ -40,7 +40,7 @@ module Lettable
       end
     end
 
-    # def let(name, **options, &block)
+    # def let(name, options = {}, &block)
     #   let(name, options.merge(as_helper_method: false), &block)
     # end
   end

@@ -41,7 +41,7 @@ class FreeBattle < ApplicationRecord
   include StrangeKifuBodyParserMod
 
   class << self
-    def setup(**options)
+    def setup(options = {})
       super
 
       # if Rails.env.development?
@@ -120,7 +120,7 @@ class FreeBattle < ApplicationRecord
       end
     end
 
-    def old_record_destroy(**params)
+    def old_record_destroy(params = {})
       params = {
         expires_in: 4.weeks,
       }.merge(params)

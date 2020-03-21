@@ -19,7 +19,7 @@ module ToolBelt
       []
     end
 
-    def link_to_eval(name, **options, &block)
+    def link_to_eval(name, options = {}, &block)
       if code = block.call
         options = options.merge(code: code)
         if options[:redirect_to]

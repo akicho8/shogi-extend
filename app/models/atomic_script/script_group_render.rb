@@ -12,7 +12,7 @@ module AtomicScript
     end
 
     # メニュー表示用リンク
-    def to_navbar_items(h, **options)
+    def to_navbar_items(h, options = {})
       options = {
         controller: /\b(scripts)\b/,
       }.merge(options)

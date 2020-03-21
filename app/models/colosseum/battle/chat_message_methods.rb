@@ -11,7 +11,7 @@ module Colosseum::Battle::ChatMessageMethods
     end
   end
 
-  def chat_say(user, message, **msg_options)
+  def chat_say(user, message, msg_options = {})
     user.chat_say(battle, message, msg_options)
   end
 end

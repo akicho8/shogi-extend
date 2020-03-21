@@ -200,7 +200,7 @@ module Swars
 
     private
 
-    def win_range_for(stat, **params)
+    def win_range_for(stat, params = {})
       # 格上 or 格下
       win_range_info = WinRangeInfo.fetch(params[:win_range_key])
       win_lose_info = WinLoseInfo.fetch(params[:key])
@@ -272,7 +272,7 @@ module Swars
       @win_lose_total_count ||= judge_count_for(:win) + judge_count_for(:lose)
     end
 
-    def count_set(stat, key, value, **options)
+    def count_set(stat, key, value, options = {})
       if value.zero? && false
         return
       end
@@ -284,7 +284,7 @@ module Swars
       stat[key_wrap(key, options)] = value
     end
 
-    def sec_set(stat, key, value, **options)
+    def sec_set(stat, key, value, options = {})
       if value.nil?
         return
       end
@@ -295,7 +295,7 @@ module Swars
       stat[key_wrap(key, options)] = value
     end
 
-    def link_set(value, **options)
+    def link_set(value, options = {})
       ids = nil
       url = nil
 
@@ -320,11 +320,11 @@ module Swars
       value
     end
 
-    def query_path(query, **options)
+    def query_path(query, options = {})
       Rails.application.routes.url_helpers.url_for([:swars, :battles, options.merge(query: query, only_path: true, per: Kaminari.config.max_per_page)])
     end
 
-    def parcentage_set(stat, key, numerator, denominator, **options)
+    def parcentage_set(stat, key, numerator, denominator, options = {})
       if denominator.zero?
         return
       end
@@ -335,7 +335,7 @@ module Swars
       stat[key_wrap(key, options)] = value
     end
 
-    def key_wrap(key, **options)
+    def key_wrap(key, options = {})
       if v = options[:tooltip]
         # key = h.content_tag("b-tooltip", key, label: "あいうえお", position: "is-left", size: "is-small")
         key = h.content_tag("b-tooltip", key, label: v, position: "is-top", size: "is-small") # multilined: false

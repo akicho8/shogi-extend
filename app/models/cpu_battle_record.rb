@@ -19,7 +19,7 @@
 
 class CpuBattleRecord < ApplicationRecord
   class << self
-    def setup(**options)
+    def setup(options = {})
       if Rails.env.production? || Rails.env.staging?
       else
         create!(user: Colosseum::User.sysop, judge_key: :win)

@@ -3,7 +3,7 @@ module Swars
     name.underscore.gsub("/", "_") + "_"
   end
 
-  def self.setup(**options)
+  def self.setup(options = {})
     Grade.setup
   end
 end

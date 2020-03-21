@@ -16,7 +16,7 @@ class Talk
   attr_accessor :source_text
   attr_accessor :params
 
-  def initialize(**params)
+  def initialize(params = {})
     @params = {
       polly_params: {},
     }.merge(params)

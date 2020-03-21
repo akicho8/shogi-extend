@@ -16,7 +16,7 @@
 module Swars
   class Grade < ApplicationRecord
     class << self
-      def setup(**options)
+      def setup(options = {})
         super
 
         if true

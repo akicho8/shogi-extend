@@ -17,7 +17,7 @@ class AlertLog < ApplicationRecord
   #   AlertLog.track("メッセージ")
   #   AlertLog.track("メッセージ", :body => "詳しい内容")
   #
-  def self.track(subject, **options)
+  def self.track(subject, options = {})
     create!(options.merge(subject: subject))
   end
 

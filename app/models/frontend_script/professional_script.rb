@@ -88,7 +88,7 @@ module FrontendScript
       url = "https://shogiwars.heroz.jp/premium/coach_list?page=#{page}"
       Rails.cache.fetch(url, :expires_in => 1.days) do
         Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "GET", url])
-        open(url, &:read)
+        URI.open(url, &:read)
       end
     end
   end

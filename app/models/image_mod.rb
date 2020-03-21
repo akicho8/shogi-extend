@@ -57,7 +57,7 @@ module ImageMod
     Rails.application.routes.url_helpers.full_url_for([self, params])
   end
 
-  def tweet_body(**options)
+  def tweet_body(options = {})
     out = []
     out << title
     out << description
@@ -67,7 +67,7 @@ module ImageMod
   end
 
   # FIXME: これは js の方に書くべき
-  def tweet_window_url(**options)
+  def tweet_window_url(options = {})
     "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_body(options))}"
   end
 

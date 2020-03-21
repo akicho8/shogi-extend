@@ -52,7 +52,7 @@ module BattleModelMod
   # ActiveRecord::Base.logger = nil
   # Swars::Battle.find_each { |e| e.tap(&:parser_exec).save! }
   # Swars::Battle.find_each { |e| e.parser_exec; print(e.changed? ? "U" : "."); e.save! } rescue $!
-  def parser_exec(**options)
+  def parser_exec(options = {})
     return if @parser_executed
 
     options = {
@@ -125,7 +125,7 @@ module BattleModelMod
   def parser_exec_after(info)
   end
 
-  def remake(**options)
+  def remake(options = {})
     b = taggings.collect { |e| e.tag.name }.sort
     parser_exec
     save!
@@ -183,7 +183,7 @@ module BattleModelMod
     end
   end
 
-  def to_kifu_copy_params(h, **options)
+  def to_kifu_copy_params(h, options = {})
     {
       kc_url: h.url_for(self),
       kc_title: title,
