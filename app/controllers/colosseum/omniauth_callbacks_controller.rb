@@ -111,6 +111,7 @@ module Colosseum
     end
 
     def image_uri
+      require "open-uri" # for URI#open
       URI(auth.info.image)
     end
   end
