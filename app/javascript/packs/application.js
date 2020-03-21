@@ -110,6 +110,7 @@ import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
 import sp_modal from "sp_modal.vue"
+import ox_modal from "ox_modal.vue"
 import tactic_modal from "tactic_modal.vue"
 import piyo_shogi_button from "components/piyo_shogi_button.vue"
 import kento_button from "components/kento_button.vue"
@@ -117,6 +118,7 @@ import kif_copy_button from "components/kif_copy_button.vue"
 import sp_modal_button from "components/sp_modal_button.vue"
 import png_dl_button from "components/png_dl_button.vue"
 import tweet_button from "components/tweet_button.vue"
+import win_lose_circle from "win_lose_circle.vue"
 
 // const router = new VueRouter({
 //   mode: 'history',
@@ -150,8 +152,10 @@ Vue.mixin({
     xy_master,
     cpu_battle,
     sp_modal,
+    ox_modal,
     tactic_modal,
     piyo_shogi_button,
+    win_lose_circle,
     kento_button,
     kif_copy_button,
     sp_modal_button,

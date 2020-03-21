@@ -1,5 +1,7 @@
 window.talk_sound = null
 
+import user_info_show from "../user_info_show.vue"
+
 export default {
   methods: {
     simple_clipboard_copy(swars_tweet_text) {
@@ -59,6 +61,20 @@ export default {
         window.talk_sound.stop()
         window.talk_sound = null
       }
+    },
+
+    user_info_show_modal(user_key) {
+      this.http_get_command("/w.json", { query: user_key, format_type: "user" }, data => {
+        // https://buefy.org/documentation/modal
+        this.$buefy.modal.open({
+          parent: this,
+          props: { info: data },
+          hasModalCard: true,
+          animation: "",
+          fullScreen: true,
+          component: user_info_show,
+        })
+      })
     },
   },
 

@@ -1,3 +1,5 @@
+# TODO: modelに移動
+
 # (開発者向け)棋譜リストAPI
 # https://note.com/shogi_kento/n/nea5e736f5311
 #

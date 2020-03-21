@@ -88,6 +88,9 @@ module Swars
       flip, memberships = e.left_right_memberships(current_swars_user)
       a[:memberships] = memberships.collect do |label, e|
         attrs = {
+          user: {
+            key: e.user.key,
+          },
           label: label,
           icon_html: e.icon_html,
           name_with_grade: e.name_with_grade,

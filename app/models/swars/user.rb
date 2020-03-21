@@ -74,6 +74,12 @@ module Swars
       end
     end
 
+    concerning :SummaryInfo2Mod do
+      def summary_info2
+        @summary_info2 ||= SummaryInfo2.new(self)
+      end
+    end
+
     concerning :ScopeMethods do
       included do
         scope :recently_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc) }                     # よく使ってくれる人

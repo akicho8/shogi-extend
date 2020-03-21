@@ -1,6 +1,6 @@
 <template lang="pug">
   b-modal.tactic_modal(:active.sync="new_modal_p" trap-focus animation="zoom-in" :full-screen="false" :can-cancel="['escape', 'outside']" :has-modal-card="true" v-if="record")
-    .modal-card.is-shogi-player-modal-card(style="width:auto")
+    .modal-card.is-shogi-player-modal-card
       .modal-card-body.box
         .delete.is-medium(aria-label="close" @click="new_modal_p = false")
 
@@ -38,9 +38,13 @@ export default {
 
   data() {
     return {
-      new_modal_p: this.tactic_modal_p,
+      new_modal_p: null,
       record: null,
     }
+  },
+
+  mounted() {
+    this.new_modal_p = this.tactic_modal_p
   },
 
   watch: {
@@ -48,9 +52,7 @@ export default {
     new_modal_p(v)    {                                           // 外←内 tactic_modal_p <-- new_modal_p
       this.$emit("update:tactic_modal_p", v)
       if (v) {
-        this.http_get_command(this.get_url, {}, data => {
-          this.record = data
-        })
+        this.record_fetch()
       } else {
         this.record = null
       }
@@ -59,6 +61,14 @@ export default {
       if (v) {
         this.talk(v.key, {rate: 1.5})
       }
+    },
+  },
+
+  methods: {
+    record_fetch() {
+      this.http_get_command(this.get_url, {}, data => {
+        this.record = data
+      })
     },
   },
 
@@ -73,14 +83,8 @@ export default {
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
 .tactic_modal
-  // 閉じボタン
-  .delete
-    position: absolute
-    top: 0.6rem
-    left: 0.6rem
-
   // 上下のスペース
   .modal-card-body
-    padding-top: 3rem
-    padding-bottom: 3rem
+    // padding-top: 3rem
+    // padding-bottom: 3rem
 </style>

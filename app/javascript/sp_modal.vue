@@ -254,18 +254,6 @@ export default {
   .is-shogi-player-modal-card
     width: auto
 
-  // 閉じボタン
-  .delete
-    position: absolute
-    top: 0.6rem
-    left: 0.6rem
-    z-index: 2                  // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
-
-  // 上のスペース
-  .modal-card-body
-    padding: 0
-    padding-top: 0.5rem
-
   // 継盤
   .sp_modal_switches
     margin-top: 0.5rem
@@ -275,11 +263,6 @@ export default {
   // 説明分
   .sp_modal_desc
     // margin-top: 0.8rem
-
-  //////////////////////////////////////////////////////////////////////////////// フッターの色を取る場合
-  .modal-card-foot
-    border: none
-    background-color: $scheme-main
 
   // .title
   //   border: 1px solid blue

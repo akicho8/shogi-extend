@@ -175,6 +175,12 @@ export default {
     if (this.$options.modal_record) {
       this.show_handle(this.$options.modal_record)
     }
+
+    if (this.$options.current_swars_user_key) {
+      if (this.$route.query.user_info_show) {
+        this.user_info_show_modal(this.$options.current_swars_user_key)
+      }
+    }
   },
 
   computed: {

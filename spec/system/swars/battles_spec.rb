@@ -81,6 +81,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       expect(page).to have_content "1-1"
       doc_image
     end
+
+    it "プレイヤー情報" do
+      visit "/w?query=devuser1&user_info_show=1"
+      expect(page).to have_content "10分"
+      debug
+      doc_image
+    end
   end
 
   describe "show" do

@@ -31,6 +31,13 @@ module Swars
         return
       end
 
+      if request.format.json? && format_type == "user"
+        if current_swars_user
+          render json: current_swars_user.summary_info2.to_hash.as_json
+          return
+        end
+      end
+
       external_app_setup
       if performed?
         return
