@@ -146,7 +146,7 @@ class TacticNotesController < ApplicationController
   end
 
   let :sfen_body do
-    Bioshogi::Parser.file_parse(current_record.sample_kif_file, candidate_skip: true, validate_skip: true, mediator_class: Bioshogi::MediatorFast).to_sfen
+    Bioshogi::Parser.file_parse(current_record.sample_kif_file, candidate_skip: true, validate_skip: true).to_sfen
   end
 
   def current_record
