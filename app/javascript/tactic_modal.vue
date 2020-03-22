@@ -21,6 +21,7 @@
           :sound_effect="true"
           :volume="0.2"
           :setting_button_show="false"
+          :flip="(record.hit_turn % 2) === 0"
           ref="sp_modal"
         )
 </template>
