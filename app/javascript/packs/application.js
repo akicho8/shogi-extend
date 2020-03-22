@@ -95,6 +95,7 @@ Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
 
 import vue_application from "support/vue_application.js"
 import vue_support from "support/vue_support.js"
+import vue_storage from "support/vue_storage.js"
 import vue_fetch from "support/vue_fetch.js"
 import vue_clipboard from "support/vue_clipboard.js"
 import vue_sound from "support/vue_sound.js"
@@ -134,6 +135,7 @@ Vue.mixin({
   mixins: [
     vue_application,
     vue_support,
+    vue_storage,
     vue_fetch,
     vue_clipboard,
     vue_sound,

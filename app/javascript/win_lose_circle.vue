@@ -1,5 +1,5 @@
 <template lang="pug">
-.win_lose_circle(:class="size")
+.win_lose_circle(:class="[size, {'is-narrow': narrowed}]")
   .level.is-mobile.win_lose_container
     .level-item.has-text-centered.win.win_lose_counts
       div
@@ -7,12 +7,12 @@
         .title {{info.judge_counts["win"]}}
     .level-item.has-text-centered.doughnut.is-narrow
       div.chart_container
-        canvas(ref="main_canvas" :width="size === 'is-small' ? 96 : 138")
-        .win_rate_container.has-text-weight-bold
+        canvas(ref="main_canvas" :width="size === 'is-small' ? 64 : 80")
+        .win_rate_container
           .win_rate_label.has-text-grey-light
             | 勝率
           .win_rate_value_with_p
-            span.win_rate_value
+            span.win_rate_value.has-text-weight-bold
               | {{win_rate_value}}
             span.parcent.has-text-grey-light
               | %
@@ -33,9 +33,8 @@ const CHART_CONFIG_DEFAULT = {
       ],
       backgroundColor: [
         PaletteInfo.fetch("danger").alpha(1),
-        PaletteInfo.fetch("success").alpha(0.5),
+        PaletteInfo.fetch("success").alpha(0.4),
       ],
-      label: 'Dataset 1'
     }],
     labels: [
       "WIN",
@@ -44,7 +43,7 @@ const CHART_CONFIG_DEFAULT = {
   },
   // https://misc.0o0o.org/chartjs-doc-ja/charts/doughnut.html
   options: {
-    cutoutPercentage: 90,
+    cutoutPercentage: 86,
     rotation: Math.PI * 0.5,
 
     aspectRatio: 1.0, // 大きいほど横長方形になる
@@ -72,8 +71,9 @@ const CHART_CONFIG_DEFAULT = {
 // http://localhost:3000/w?query=kinakom0chi&user_info_show=1
 export default {
   props: {
-    info: { required: true,        },
-    size: { default: "is-default", },
+    info:     { required: true,        },
+    size:     { default: "is-default", },
+    narrowed: { default: false,        },
   },
 
   data() {
@@ -129,7 +129,14 @@ export default {
 
   computed: {
     win_rate_value() {
-      return Math.floor(this.info.win_rate * 100)
+      const w = this.info.judge_counts["win"]
+      const l = this.info.judge_counts["lose"]
+      const count = w + l
+      if (count === 0) {
+        return "0"
+      }
+      const value = w / count
+      return Math.floor(value * 100)
     },
 
     win_lose_count_list() {
@@ -145,18 +152,21 @@ export default {
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
 
-$parcent_size: 0.8em
+$parcent_size: 0.7em
 
 .win_lose_circle
   &.is-default
-    font-size: 14px
+    font-size: 12px
 
   &.is-small
     font-size: 10px
 
+  &.is-narrow
+    .chart_container
+      margin: auto -0.75rem
+
   // 勝敗
   .win_lose_container
-    margin-top: 1rem
     .win
       justify-content: flex-end   // 寄せ→
       .heading, .title
@@ -169,12 +179,12 @@ $parcent_size: 0.8em
       font-weight: bold
     .win_lose_counts
       position: relative
-      top: 0em
+      top: -0.25em
       .heading
-        font-size: 0.9em
+        font-size: 0.8em
         margin-bottom: 0
       .title
-        font-size: 3em
+        font-size: 2.3em
 
   // 中央の勝率
   .chart_container
@@ -187,10 +197,12 @@ $parcent_size: 0.8em
       position: absolute
       left: 0%
       right: 0%
-      bottom: 27%     // 大きくすると勝率が上に移動する
+      bottom: 24%     // 大きくすると勝率が上に移動する
       margin: auto
 
       .win_rate_label
+        position: relative
+        top: 0.2rem
         font-size: 1em        // 「勝率」
       .win_rate_value_with_p
         // 「%」があるぶん左にずれるため、そのぶんだけ右にずらす
@@ -198,9 +210,11 @@ $parcent_size: 0.8em
         left: $parcent_size / 2
 
         .win_rate_value
-          font-size: 3.6em
+          font-size: 2.6em
           line-height: 100%   // 上の空白をなくすため
 
         .parcent
+          position: relative
+          left: -0.1rem
           font-size: $parcent_size     // % の大きさ
 </style>
