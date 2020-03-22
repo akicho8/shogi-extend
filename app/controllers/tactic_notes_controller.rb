@@ -33,7 +33,7 @@ class TacticNotesController < ApplicationController
     end
 
     if request.format.json?
-      render json: current_record.as_json.merge(sfen_body: sfen_body)
+      render json: current_record.as_json.merge(sfen_body: sfen_body, hit_turn: current_record.hit_turn)
       return
     end
 
@@ -146,9 +146,7 @@ class TacticNotesController < ApplicationController
   end
 
   let :sfen_body do
-    file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
-    heavy_parsed_info = Bioshogi::Parser.file_parse(file)
-    heavy_parsed_info.to_sfen
+    Bioshogi::Parser.file_parse(current_record.sample_kif_file, candidate_skip: true, validate_skip: true, mediator_class: Bioshogi::MediatorFast).to_sfen
   end
 
   def current_record
