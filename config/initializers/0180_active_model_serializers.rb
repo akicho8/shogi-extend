@@ -11,8 +11,8 @@ if defined?(ActiveModelSerializers)
   end
 
   Kernel.module_eval do
-    def ams_sr(...)
-      ActiveModelSerializers::SerializableResource.new(...).as_json
+    def ams_sr(*args)
+      ActiveModelSerializers::SerializableResource.new(*args).as_json
     end
   end
 end
