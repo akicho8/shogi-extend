@@ -1,6 +1,6 @@
 server 'ik1-413-38753.vs.sakura.ne.jp', user: 'deploy', roles: %w{app db web}
 
-set :rbenv_ruby, '2.7.0'
+set :rbenv_ruby, '2.6.5'
 
 set :keep_releases, 5
 
