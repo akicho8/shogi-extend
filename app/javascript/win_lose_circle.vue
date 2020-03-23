@@ -1,5 +1,5 @@
 <template lang="pug">
-.win_lose_circle(:class="[size, {'is-narrow': narrowed}]")
+.win_lose_circle.is-unselectable(:class="[size, {'is-narrow': narrowed}]")
   .level.is-mobile.win_lose_container
     .level-item.has-text-centered.win.win_lose_counts
       div
