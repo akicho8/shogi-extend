@@ -5,5 +5,4 @@ require File.expand_path('../../config/environment', __FILE__)
 
 Swars::Membership.find_each(&:save!)
 
-# ruby 2.7.0 にすると動かない
 tp Swars::Membership
