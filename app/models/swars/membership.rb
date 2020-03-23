@@ -26,6 +26,8 @@ module Swars
 
     belongs_to :battle            # 対局
     belongs_to :user, touch: true # 対局者
+    belongs_to :op_user, :class_name => "User" # 相手
+
     belongs_to :grade             # 対局したときの段位
 
     acts_as_list top_of_list: 0, scope: :battle
@@ -63,23 +65,34 @@ module Swars
         self.grade ||= Grade.first
       end
 
+      # 対戦相手
+      if battle
+        unless op_user
+          if membership = (battle.memberships - [self]).first
+            self.op_user = membership.user
+          end
+        end
+      end
+
       # 対戦相手との段級位の差を保持しておく
       if battle
-        rival = (battle.memberships - [self]).first
-        if grade && rival.grade
-          self.grade_diff = -(rival.grade.priority - grade.priority)
+        if grade && op_user.grade
+          self.grade_diff = -(op_user.grade.priority - grade.priority)
         end
       end
     end
 
     with_options presence: true do
       validates :judge_key
+      validates :user_id
+      validates :op_user_id
       validates :location_key
     end
 
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
       validates :user_id, uniqueness: { scope: :battle_id, case_sensitive: true }
+      validates :op_user_id, uniqueness: { scope: :battle_id, case_sensitive: true }
       validates :location_key, uniqueness: { scope: :battle_id, case_sensitive: true }
       validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
     end
@@ -96,7 +109,7 @@ module Swars
       JudgeInfo.fetch(judge_key)
     end
 
-    # 相手
+    # 相手 FIXME: 消す
     def opponent
       @opponent ||= battle.memberships.where.not(position: position).take
     end

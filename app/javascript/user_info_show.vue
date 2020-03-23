@@ -54,28 +54,30 @@
       .box.one_box.two_column(v-for="row in info.day_list" :key="row.battled_at")
         .columns.is-mobile
           .column.is-paddingless
-            .one_box_title.has-text-weight-bold.is-size-6
-              | {{battled_at_human(row.battled_at)}}
+            .one_box_title.has-text-weight-bold.is-size-5
+              | {{battled_at_to_ymd(row) + " "}}
+              span(:class="battled_at_to_class(row)")
+                | {{battled_at_to_wday(row)}}
         .columns.is-mobile
           .column.is-paddingless
             win_lose_circle(:info="row" size="is-small" narrowed)
-          .column.is-paddingless
-            .is-flex
-              b-field(grouped group-multiline)
-                template(v-for="tag in row.all_tags")
-                  .control
-                    b-taglist.is-marginless(attached @click.native="tactic_modal_start(tag)")
-                      b-tag(type="is-light")
-                        | {{tag.name}}
-                      template(v-if="tag.count >= 2")
-                        b-tag(type="is-primary")
-                          | {{tag.count}}
+          .column.is-paddingless.is-flex
+            template(v-for="tag in row.all_tags")
+              .tag_wrapper.has-text-weight-bold.is-size-5(@click="tactic_modal_start(tag)")
+                | {{tag.name}}
+
+              //- b-taglist.tag_wrapper(attached @click.native="tactic_modal_start(tag)")
+              //-   b-tag(type="is-light" size="is-medium")
+              //-     | {{tag.name}}
+              //-   template(v-if="tag.count >= 2")
+              //-     b-tag(type="is-primary")
+              //-       | {{tag.count}}
 
     template(v-if="main_tab_index === 1")
       .box.one_box.one_column(v-for="row in info.buki_list" :key="row.tag.name")
         .columns.is-mobile
           .column.is-paddingless
-            .one_box_title.has-text-weight-bold.is-size-6
+            .one_box_title.has-text-weight-bold.is-size-5
               | {{row.tag.name}}
           .column.is-paddingless
             .has-text-right
@@ -128,9 +130,17 @@ export default {
       this.$emit("close") // 昔は this.$parent.close() だった
     },
 
-    battled_at_human(v) {
-      if (v) {
-        return dayjs(v).format("YYYY-MM-DD (ddd)")
+    battled_at_to_ymd(row) {
+      return dayjs(row.battled_at).format("YYYY-MM-DD")
+    },
+
+    battled_at_to_wday(row) {
+      return dayjs(row.battled_at).format("ddd")
+    },
+
+    battled_at_to_class(row) {
+      if (row.day_color) {
+        return `has-text-${row.day_color}`
       }
     },
 
@@ -153,16 +163,15 @@ export default {
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
 .user_info_show
-  @at-root
-    .development
-      .user_info_show
-        .columns
-          border: 1px solid blue
-        .column
-          border: 1px solid red
-        .tile
-          border: 1px solid cyan
-
+  // @at-root
+  //   .development
+  //     .user_info_show
+  //       .columns
+  //         border: 1px solid blue
+  //       .column
+  //         border: 1px solid red
+  //       .tile
+  //         border: 1px solid cyan
   .top_container
     .rule_container
       justify-content: center
@@ -177,27 +186,58 @@ export default {
     .win_lose_circle
       margin-top: 1rem
 
+    .ox_container
+      margin: 1rem 2rem
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  .b-tabs, .tab-content
+    padding: 0
+
+  ////////////////////////////////////////////////////////////////////////////////
+
   .one_box
     margin: 1rem 0.5rem
     padding: 1.5rem
     .one_box_title
-    .tags.has-addons
-      cursor: pointer
     .use_rate_label
       vertical-align: 5%
     .use_rate
-      margin-left: 0.3rem
+      margin-left: 0.4rem
     .use_rate_unit
-      margin-left: 0.3rem
+      margin-left: 0.2rem
       vertical-align: 5%
     &.two_column
       .win_lose_circle
         margin-top: 0.25rem
 
-  .ox_container
-    margin: 1rem 2rem
+    .is-flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      .tag_wrapper
+        cursor: pointer
+        margin: 0rem
 
-  .b-tabs, .tab-content
-    padding: 0
+      // flex-wrap: wrap
+      // justify-content: flex-start
+      // align-content: space-around
+      // align-items: center
+      // .buttons
 
+      // align-items: center
+      // display: flex
+      // flex-wrap: wrap
+      // justify-content: flex-start
+
+      // .tag_wrapper
+      //   margin-bottom: 0.5rem
+      //   margin-right: 0.5rem
+
+    // b-taglist は本来 "棒銀 棒金" のようなタグの並びを折り返すためにある
+    // しかし "棒銀[2]" のように数字をくっつける場合にも(不適切な形でbuefyの本家が)使っている
+    // そのため幅が狭いと "棒銀[2]" の数字が改行してしまう場合がある
+    // その対策
+    .tag_wrapper
+      flex-wrap: nowrap
 </style>

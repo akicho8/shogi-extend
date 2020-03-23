@@ -50,6 +50,17 @@ module Swars
 
         hash = {}
         hash[:battled_at] = battled_at
+
+        case
+        when HolidayJp.holiday?(battled_at)
+          color = "danger"
+        when battled_at.saturday?
+          color = "info"
+        else
+          color = nil
+        end
+        hash[:day_color] = color
+
         hash[:judge_counts] = judge_counts
         # if memberships.present?
         #   hash[:win_rate] = judge_counts["win"].fdiv(memberships.count)
@@ -63,10 +74,19 @@ module Swars
         # end
         # hash.update(hash2)
 
-        tags = [:attack_tags, :defense_tags].flat_map do |tags_method|
-          s.tag_counts_on(tags_method, at_least: 1, order: "count desc")
+        # 戦法と囲いをまぜて一番使われている順にN個
+        if false
+          tags = [:attack_tags, :defense_tags].flat_map do |tags_method|
+            s.tag_counts_on(tags_method, at_least: 1, order: "count desc")
+          end
+          tags = tags.sort_by { |e| -e.count }
+          hash[:all_tags] = tags.take(1).collect { |e| e.attributes.slice("name", "count") }
         end
-        hash[:all_tags] = tags.sort_by { |e| -e.count }.collect { |e| e.attributes.slice("name", "count") }
+
+        # 戦法と囲いそれぞれ一番使われているもの1個ずつ計2個
+        hash[:all_tags] = [:attack_tags, :defense_tags].flat_map { |tags_method|
+          s.tag_counts_on(tags_method, at_least: 1, order: "count desc", limit: 1)
+        }.collect{ |e| e.attributes.slice("name", "count") }
 
         hash
       end
@@ -74,6 +94,54 @@ module Swars
 
     def buki_list
       count = current_scope.count
+      tags = current_scope.tag_counts_on(:attack_tags, at_least: 1, order: "count desc")
+      tags.collect do |tag|
+        hash = {}
+        hash[:tag] = tag.attributes.slice("name", "count")
+        counts_hash = current_scope.tagged_with(tag.name, on: :attack_tags).group("judge_key").count
+        hash[:judge_counts] = {"win" => 0, "lose" => 0}.merge(counts_hash)
+        hash[:use_ratio] = tag.count.fdiv(count)
+        hash
+      end
+      # group = current_scope.group_by { |e| e.battle.battled_at.midnight }
+      # group.collect do |battled_at, memberships|
+      #   judge_counts = judge_counts_of(memberships)
+      #
+      #   hash = {}
+      #   hash[:battled_at] = battled_at
+      #   hash[:judge_counts] = judge_counts
+      #   if memberships.present?
+      #     hash[:win_rate] = judge_counts["win"].fdiv(memberships.count)
+      #   end
+      #
+      #   s = current_scope.where(id: memberships.collect(&:id))
+      #
+      #   hash2 = [:attack_tags, :defense_tags].inject({}) do |a, tags_method|
+      #     tags = s.tag_counts_on(tags_method, at_least: 1, order: "count desc")
+      #     a.merge(tags_method => tags.collect { |e| e.attributes.slice("name", "count") })
+      #   end
+      #   hash.update(hash2)
+      #
+      #   tags = [:attack_tags, :defense_tags].flat_map do |tags_method|
+      #     s.tag_counts_on(tags_method, at_least: 1, order: "count desc")
+      #   end
+      #   hash[:all_tags] = tags.sort_by { |e| -e.count }.collect { |e| e.attributes.slice("name", "count") }
+      #
+      #   hash
+    end
+
+    def jakuten_list
+      s = user.battles
+      s = s.joins(:user, :memberships)
+      s = s.where(Swars::Battle.arel_table[:win_user_id].not_eq(nil)) # 勝敗が必ずあるもの
+      s = s.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
+      s = s.where(Swars::Memberships.arel_table[:user_id].not_eq(user.id))        # 自分を除く
+      s = s.limit(50)
+
+      scope = current_scope
+      scope = scope.joins(:user).where(Swars::User.arel_table[:id].not_eq(user.id)) # 対戦
+
+      count = scope.count
       tags = current_scope.tag_counts_on(:attack_tags, at_least: 1, order: "count desc")
       tags.collect do |tag|
         hash = {}
@@ -132,6 +200,7 @@ module Swars
 
       retv[:day_list] = day_list
       retv[:buki_list] = buki_list
+      retv[:jakuten_list] = jakuten_list
 
       retv
     end

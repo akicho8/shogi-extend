@@ -163,7 +163,7 @@ $parcent_size: 0.7em
 
   &.is-narrow
     .chart_container
-      margin: auto -0.75rem
+      margin: auto -0.0rem
 
   // 勝敗
   .win_lose_container
