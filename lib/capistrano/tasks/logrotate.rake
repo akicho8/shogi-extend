@@ -17,8 +17,8 @@ namespace :logrotate do
 
   desc "cap production logrotate:upload ローカルのテンプレートをアップロード"
   task :upload do
-    tmp_file = "/tmp/logrotate.#{fetch(:application)}.conf"
-    etc_file = "/etc/logrotate.d/#{fetch(:application)}"
+    tmp_file = "/tmp/logrotate.#{fetch(:application)}_#{fetch(:stage)}.conf"
+    etc_file = "/etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)}"
 
     body = ERB.new(File.read("config/logrotate.erb")).result(binding)
 
@@ -47,7 +47,7 @@ namespace :logrotate do
   desc "cap production logrotate:run 必要なら実行"
   task :run do
     on roles(:all) do |host|
-      sudo :logrotate, "--verbose /etc/logrotate.d/#{fetch(:application)}"
+      sudo :logrotate, "--verbose /etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)}"
       execute :ls, "-al", "#{current_path}/log/*"
     end
   end
@@ -55,7 +55,7 @@ namespace :logrotate do
   desc "cap production logrotate:force_run 強制実行"
   task :force_run do
     on roles(:all) do |host|
-      sudo :logrotate, "--verbose --force /etc/logrotate.d/#{fetch(:application)} || true" # 実行する必要がなかったときに 0 を返さないため || true としている(が、それなら logrotate:run だけでよくね？)
+      sudo :logrotate, "--verbose --force /etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)} || true" # 実行する必要がなかったときに 0 を返さないため || true としている(が、それなら logrotate:run だけでよくね？)
       execute :ls, "-al", "#{current_path}/log/*"
     end
   end
@@ -63,7 +63,7 @@ namespace :logrotate do
   desc "cap production logrotate:status 状態確認"
   task :status do
     on roles(:all) do |host|
-      execute :cat, "/etc/logrotate.d/#{fetch(:application)}"
+      execute :cat, "/etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)}"
       # 最初のデプロイのとき current_path はまだ存在しないため
       if test "[ -d #{current_path}/log ]"
         execute :ls, "-al", "#{current_path}/log/*"

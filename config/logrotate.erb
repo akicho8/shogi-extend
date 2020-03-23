@@ -1,6 +1,6 @@
 <%= shared_path %>/log/*.log {
   daily
-  rotate 3
+  rotate 10
 
   missingok
   compress
@@ -8,4 +8,5 @@
   notifempty
   copytruncate
   dateext
+  su deploy deploy
 }
