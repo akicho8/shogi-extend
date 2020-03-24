@@ -20,7 +20,19 @@ task :yarn_cache_clean do
   end
 end
 
+desc 'httpd を再起動'
+task :httpd_restart do
+  on roles(:all) do
+    execute "sudo systemctl restart httpd"
+  end
+end
+# HTTPD_RESTART=1 cap production deploy
+if ENV["HTTPD_RESTART"]
+  after :publishing, "httpd_restart"
+end
+
 namespace :deploy do
+
   # desc 'Restart application'
   # task :restart do
   #   on roles(:app), in: :sequence, wait: 5 do
