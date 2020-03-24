@@ -38,17 +38,17 @@
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    b-tabs(type="is-toggle" size="is-small" v-model="main_tab_index" position="is-centered")
+    b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered")
       b-tab-item(label="日付")
       b-tab-item(label="戦法")
       b-tab-item(label="対抗")
 
     //- b-field(position="is-centered")
-    //-   b-radio-button(v-model="main_tab_index" native-value="0" size="is-small") 日付
-    //-   b-radio-button(v-model="main_tab_index" native-value="1" size="is-small") 戦法
+    //-   b-radio-button(v-model="tab_index" native-value="0" size="is-small") 日付
+    //-   b-radio-button(v-model="tab_index" native-value="1" size="is-small") 戦法
 
     .tab_content
-      template(v-if="main_tab_index === 0")
+      template(v-if="tab_index === 0")
         .box.one_box.two_column(v-for="row in info.day_list" :key="`day_list/${row.battled_at}`")
           .columns.is-mobile
             .column.is-paddingless
@@ -71,7 +71,7 @@
                 //-     b-tag(type="is-primary")
                 //-       | {{tag.count}}
 
-      template(v-if="main_tab_index === 1")
+      template(v-if="tab_index === 1")
         .box.one_box.one_column(v-for="row in info.buki_list" :key="`buki_list/${row.tag.name}`")
           .columns.is-mobile
             .column.is-paddingless
@@ -89,19 +89,19 @@
             .column.is-paddingless
               win_lose_circle(:info="row" size="is-small")
 
-      template(v-if="main_tab_index === 2")
+      template(v-if="tab_index === 2")
         .box.one_box.one_column(v-for="row in info.jakuten_list" :key="`jakuten_list/${row.tag.name}`")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title
-                span.has-text-weight-bold.is-size-6.vs_mark
+                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
                   | vs
                 span.has-text-weight-bold.is-size-5.vs_name
                   | {{row.tag.name}}
             .column.is-paddingless
               .has-text-right
                 span.has-text-grey-light.is-size-7.use_rate_label
-                  | 対戦率
+                  | 遭遇率
                 span.use_rate
                   | {{number_to_percentage2(row.appear_ratio, 1)}}
                 span.has-text-grey-light.is-size-7.use_rate_unit
@@ -112,8 +112,10 @@
 
   //- pre
   //-   | {{info}}
-  //- .modal-card-foot
-  //-    button.button(type="button" @click="$parent.close()") 閉じる
+  .modal-card-foot
+    b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
+
+    b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") リンクURL
 </template>
 
 <script>
@@ -134,7 +136,7 @@ export default {
 
   data() {
     return {
-      main_tab_index: null,
+      tab_index: null,
 
       tactic_name: null,
       tactic_modal_p: false,
@@ -142,6 +144,9 @@ export default {
   },
 
   created() {
+    if ("tab_index" in this.$route.query) {
+      this.tab_index = parseInt(this.$route.query.tab_index)
+    }
   },
 
   methods: {
@@ -172,8 +177,16 @@ export default {
   computed: {
     ls_data() {
       return {
-        main_tab_index: 0, // 初期値
+        tab_index: 0, // 初期値
       }
+    },
+
+    permalink_url() {
+      const params = new URLSearchParams()
+      params.set("query", this.info.user.key)
+      params.set("user_info_show", true)
+      params.set("tab_index", this.tab_index)
+      return `/w?${params}`
     },
   },
 }
