@@ -28,12 +28,8 @@ export default {
 </script>
 
 <style lang="sass">
-*
-  --balloon-bg-color: white
-  --balloon-fg-color: transparent
-
 html
-  background-color: #004
+  background-color: hsl(0, 0%, 100%)
 
   .container_body
     display: flex

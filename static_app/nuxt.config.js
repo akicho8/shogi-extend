@@ -18,7 +18,7 @@ export default {
   */
   head: {
     title: 'ERROR' || process.env.npm_package_name || '',
-    titleTemplate: "%s - 将棋のツール(仮)",
+    titleTemplate: "%s - SHOGI-EXTEND",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

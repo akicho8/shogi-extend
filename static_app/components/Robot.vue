@@ -1,9 +1,9 @@
 <template lang="pug">
   .robot_container.is-unselectable
-    .box.has-text-weight-bold.has-text-centered.is-size-7
+    .box.has-text-weight-bold.has-text-centered.is-size-6.has-background-white-bis
       slot
     img(src="~assets/robot2_green.png")
-    a(href="/" class="") TOP
+    a.button.is-rounded.has-text-weight-bold.is-info(href="/") TOPページに戻る
   </div>
 </template>
 
@@ -29,13 +29,12 @@ export default {
   align-items: center
 
   .box
-    border-radius: 25px
-    background-color: var(--balloon-bg-color)
-    border: 1px solid var(--balloon-fg-color)
+    padding: 1.5rem
+    border-radius: 40px
 
   img
     width: 20vmin
 
   a
-    margin-top: 2em
+    margin-top: 4rem
 </style>
