@@ -45,10 +45,6 @@ module Swars
         end
       end
 
-      if Rails.env.development? || Rails.env.test?
-        self.user ||= User.create!
-      end
-
       if user
         # 無かったときだけ入れる(絶対あるんだけど)
         self.grade ||= user.grade

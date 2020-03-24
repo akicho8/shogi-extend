@@ -1,9 +1,18 @@
 module Swars
-  class SummaryInfo2
-    attr_reader :user
+  class UserInfo
+    attr_accessor :user
+    attr_accessor :params
 
-    def initialize(user)
+    cattr_accessor(:default_params) {
+      {
+        :max    => 50, # データ対象直近n件
+        :ox_max => 20, # 表示勝敗直近n件
+      }
+    }
+
+    def initialize(user, params = {})
       @user = user
+      @params = default_params.merge(params)
     end
 
     # http://localhost:3000/w.json?query=devuser1&format_type=user
@@ -16,10 +25,10 @@ module Swars
       retv[:rules_hash] = rules_hash
 
       # 直近勝敗リスト
-      retv[:judge_keys] = current_scope0.limit(10).collect(&:judge_key).reverse
+      retv[:judge_keys] = current_scope0.limit(current_ox_max).collect(&:judge_key).reverse
 
       # トータル勝敗数
-      retv[:judge_counts] = judge_counts_normalize(current_scope.group("judge_key").count)
+      retv[:judge_counts] = judge_counts_wrap(current_scope.group("judge_key").count)
 
       # # 勝率
       # if current_memberships.present?
@@ -35,16 +44,29 @@ module Swars
 
     private
 
-    def current_scope0
-      s = user.memberships
-      s = s.joins(:battle).includes(:battle)
+    def current_max
+      (params[:max].presence || default_params[:max]).to_i
+    end
+
+    def current_ox_max
+      (params[:ox_max].presence || default_params[:ox_max]).to_i
+    end
+
+    def current_scope5(s)
+      s = s.joins(:battle)
       s = s.where(Swars::Battle.arel_table[:win_user_id].not_eq(nil)) # 勝敗が必ずあるもの
       s = s.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
     end
 
+    def current_scope0
+      s = user.memberships
+      s = current_scope5(s)
+      s = s.includes(:battle)
+    end
+
     let :current_scope do
       s = current_scope0
-      s = s.limit(50)
+      s = s.limit(current_max)
     end
 
     let :current_memberships do
@@ -108,15 +130,13 @@ module Swars
     end
 
     def buki_list
-      jakuten_list_for(user.memberships, win_lose_filp: false)
+      jakuten_list_for(user.memberships)
     end
 
     def jakuten_list_for(memberships, options = {})
       s = memberships
-      s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:win_user_id].not_eq(nil)) # 勝敗が必ずあるもの
-      s = s.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
-      s = s.limit(50)
+      s = current_scope5(s)
+      s = s.limit(current_max)
 
       s2 = memberships.where(id: s.collect(&:id))
 
@@ -125,23 +145,23 @@ module Swars
       tags.collect do |tag|
         hash = {}
         hash[:tag] = tag.attributes.slice("name", "count")
-        judge_counts = judge_counts_normalize(s2.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 2}
-        if options[:win_lose_filp]
+        judge_counts = judge_counts_wrap(s2.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 2}
+        if options[:judge_flip]
           judge_counts = judge_counts.keys.zip(judge_counts.values.reverse).to_h   # => {"win" => 2, "lose" => 1}    ; 自分視点に変更
         end
         hash[:judge_counts] = judge_counts
-        hash[:use_ratio] = tag.count.fdiv(count)
+        hash[:appear_ratio] = tag.count.fdiv(count)
         hash
       end
     end
 
     def jakuten_list
-      jakuten_list_for(user.op_memberships, win_lose_filp: true)
+      jakuten_list_for(user.op_memberships, judge_flip: true)
     end
 
-    # judge_counts_normalize("win" => 1) # => {"win" => 1, "lose" => 0}
-    def judge_counts_normalize(v)
-      {"win" => 0, "lose" => 0}.merge(v)
+    # judge_counts_wrap("win" => 1) # => {"win" => 1, "lose" => 0}
+    def judge_counts_wrap(hash)
+      {"win" => 0, "lose" => 0}.merge(hash)
     end
 
     def day_color_of(t)

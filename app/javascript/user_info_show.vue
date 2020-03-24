@@ -82,7 +82,7 @@
                 span.has-text-grey-light.is-size-7.use_rate_label
                   | 使用率
                 span.use_rate
-                  | {{number_to_percentage2(row.use_ratio, 1)}}
+                  | {{number_to_percentage2(row.appear_ratio, 1)}}
                 span.has-text-grey-light.is-size-7.use_rate_unit
                   | %
           .columns
@@ -103,7 +103,7 @@
                 span.has-text-grey-light.is-size-7.use_rate_label
                   | 対戦率
                 span.use_rate
-                  | {{number_to_percentage2(row.use_ratio, 1)}}
+                  | {{number_to_percentage2(row.appear_ratio, 1)}}
                 span.has-text-grey-light.is-size-7.use_rate_unit
                   | %
           .columns
@@ -124,7 +124,7 @@ dayjs.locale('ja')
 import ls_support from "ls_support.js"
 
 export default {
-  name: "foo",
+  name: "user_info_show",
 
   mixins: [ls_support],
 
@@ -205,7 +205,7 @@ export default {
     .win_lose_circle
       margin-top: 1rem
 
-    border-bottom: 1px solid $grey-lighter
+    border-bottom: 1px dashed $grey-lighter
 
     .ox_container
       font-size: 0.8rem

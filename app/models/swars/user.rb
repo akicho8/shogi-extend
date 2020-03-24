@@ -24,10 +24,6 @@ module Swars
 
     has_many :op_memberships, :class_name => "Membership", foreign_key: "op_user_id", :dependent => :destroy # (対戦相手の)対局時の情報(複数)
 
-    has_many :inviteships, :dependent => :destroy                               # この連合軍への招待情報
-    has_many :x_invite_owners, :through => :inviteships, :source => :from_owner # この連合軍に招待しようとしている人たち
-    has_many :y_invite_owners, :through => :inviteships, :source => :to_owner   # この連合軍に招待されようとしている人たち
-
     belongs_to :grade                          # すべてのモードのなかで一番よい段級位
     has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
 
@@ -81,9 +77,9 @@ module Swars
       end
     end
 
-    concerning :SummaryInfo2Mod do
-      def summary_info2
-        @summary_info2 ||= SummaryInfo2.new(self)
+    concerning :UserInfoMod do
+      def user_info(params = {})
+        UserInfo.new(self, params)
       end
     end
 

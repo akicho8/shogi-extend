@@ -47,7 +47,7 @@ module Swars
         self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
 
         (Bioshogi::Location.count - memberships.size).times do
-          memberships.build
+          memberships.build(user: User.create!)
         end
       end
 

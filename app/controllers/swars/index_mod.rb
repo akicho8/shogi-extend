@@ -33,7 +33,7 @@ module Swars
 
       if request.format.json? && format_type == "user"
         if current_swars_user
-          render json: current_swars_user.summary_info2.to_hash.as_json
+          render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
           return
         end
       end
