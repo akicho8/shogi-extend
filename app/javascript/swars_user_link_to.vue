@@ -1,9 +1,9 @@
 <template lang="pug">
-b-dropdown.swars_user_link_to(:hoverable="false")
+b-dropdown.swars_user_link_to
   a(slot="trigger")
     | {{membership.name_with_grade}}
 
-  b-dropdown-item(@click="click_handle")
+  b-dropdown-item(@click="user_info_show_handle")
     b-icon(icon="account" size="is-small")
     | プレイヤー情報
 
@@ -49,13 +49,13 @@ export default {
     // if (this.development_p) {
     //   if (!window.PlayerInfoComponentShowOnce) {
     //     window.PlayerInfoComponentShowOnce = true
-    //     this.click_handle()
+    //     this.user_info_show_handle()
     //   }
     // }
   },
 
   methods: {
-    click_handle() {
+    user_info_show_handle() {
       this.user_info_show_modal(this.membership.user.key)
     },
   },
