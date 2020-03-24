@@ -72,6 +72,8 @@ export default {
           hasModalCard: true,
           animation: "",
           fullScreen: true,
+          canCancel: ['escape', 'outside'],
+          trapFocus: true,
           component: user_info_show,
         })
       })
