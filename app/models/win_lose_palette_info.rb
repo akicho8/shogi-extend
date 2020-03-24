@@ -1,4 +1,4 @@
-class WinLoseCirclePaletteInfo
+class WinLosePaletteInfo
   include PaletteMod
   include ApplicationMemoryRecord
   memory_record [

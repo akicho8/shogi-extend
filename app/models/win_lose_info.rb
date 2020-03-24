@@ -6,6 +6,6 @@ class WinLoseInfo
   ]
 
   def palette
-    WinLoseCirclePaletteInfo.fetch(key)
+    WinLosePaletteInfo.fetch(key)
   end
 end
