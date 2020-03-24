@@ -1,4 +1,4 @@
-# static_app
+# error_page_app
 
 > Railsアプリの静的エラーページ生成用
 
