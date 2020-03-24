@@ -2,7 +2,7 @@
   b-modal.tactic_modal(:active.sync="new_modal_p" trap-focus animation="zoom-in" :full-screen="false" :can-cancel="['escape', 'outside']" :has-modal-card="true" v-if="record")
     .modal-card.is-shogi-player-modal-card
       .modal-card-body.box
-        .delete.is-medium(aria-label="close" @click="new_modal_p = false")
+        .delete.is-large(aria-label="close" @click="new_modal_p = false")
 
         .title.is-5.yumincho.has-text-centered
           | {{record.key}}
