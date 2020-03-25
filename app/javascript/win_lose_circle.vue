@@ -173,13 +173,13 @@ $parcent_size: 0.7em
       justify-content: flex-start // ←寄せ
       .heading, .title
         color: $success
-    .heading
-      font-weight: bold
 
     .win_lose_counts
       position: relative
       top: -0.4em
       .heading
+        font-weight: bold
+        min-width: 4em          // WIN LOSE と並べると3,4文字で左にずれるため WIN を4文字相当にする
         font-size: 0.8em
         margin-bottom: 0
       .title
