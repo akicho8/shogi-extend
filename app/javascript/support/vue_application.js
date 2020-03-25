@@ -74,6 +74,7 @@ export default {
           fullScreen: this.mobile_p,
           canCancel: ['escape', 'outside'],
           trapFocus: true,
+          // scroll: "keep",
           component: user_info_show,
         })
       })

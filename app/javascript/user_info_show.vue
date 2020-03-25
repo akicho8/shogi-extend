@@ -6,7 +6,7 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(aria-label="close" @click="delete_click_handle")
 
-    b-dropdown.drop_down_menu(position="is-bottom-left")
+    b-dropdown.top_right_menu(position="is-bottom-left")
       b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
       b-dropdown-item(:href="permalink_url")
@@ -231,11 +231,11 @@ export default {
   //       .tile
   //         border: 1px solid cyan
 
-  .drop_down_menu
+  .top_right_menu
     position: absolute
     top: 0.9rem
     right: 0.75rem
-    > .icon
+    .dropdown-trigger
       cursor: pointer
     .dropdown-item
       .icon
@@ -273,7 +273,7 @@ export default {
         margin: auto 0.1rem
       > .icon
         position: relative
-        bottom: -0.2rem
+        bottom: -0.052rem
         margin: auto 0.1rem
 
   ////////////////////////////////////////////////////////////////////////////////
