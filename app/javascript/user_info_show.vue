@@ -6,6 +6,16 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(aria-label="close" @click="delete_click_handle")
 
+    b-dropdown.drop_down_menu(position="is-bottom-left")
+      b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
+
+      b-dropdown-item(:href="permalink_url")
+        b-icon(icon="link-variant" size="is-small")
+        | リンクURL
+
+      b-dropdown-item(:href="`${permalink_url}&debug=true`" v-if="development_p")
+        b-icon(icon="link-variant" size="is-small")
+        | リンクURL(DEBUGモード)
 
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
@@ -125,13 +135,13 @@
 
   //- pre
   //-   | {{info}}
-  .modal-card-foot
-    b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
-
-    b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") リンクURL
-
-    template(v-if="development_p")
-      b-button(tag="a" :href="`${permalink_url}&debug=true`" size="is-small" icon-left="link-variant") リンクURL(DEBUGモード)
+  //- .modal-card-foot
+  //-   b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
+  //- 
+  //-   b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") リンクURL
+  //- 
+  //-   template(v-if="development_p")
+  //-     b-button(tag="a" :href="`${permalink_url}&debug=true`" size="is-small" icon-left="link-variant") リンクURL(DEBUGモード)
 </template>
 
 <script>
@@ -220,6 +230,17 @@ export default {
   //         border: 1px solid red
   //       .tile
   //         border: 1px solid cyan
+
+  .drop_down_menu
+    position: absolute
+    top: 0.9rem
+    right: 0.75rem
+    > .icon
+      cursor: pointer
+    .dropdown-item
+      .icon
+        margin-right: 0.5rem
+
   .top_container
     padding-bottom: 0.3rem
     border-bottom: 1px solid $grey-lighter
