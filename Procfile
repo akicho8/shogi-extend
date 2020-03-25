@@ -1,4 +1,4 @@
 web: bundle exec bin/rails server -p $PORT
 webpack-watcher: bundle exec bin/webpack-dev-server
-# static_app: cd static_app; nuxt -p 4000 -o
-static_app: cd static_app; nuxt -p 4000
+# error_page_app: cd error_page_app; nuxt -p 4000 -o
+error_page_app: cd error_page_app; nuxt -p 4000
