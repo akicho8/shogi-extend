@@ -71,7 +71,7 @@ export default {
           props: { info: data },
           hasModalCard: true,
           animation: "",
-          fullScreen: true,
+          fullScreen: this.mobile_p,
           canCancel: ['escape', 'outside'],
           trapFocus: true,
           component: user_info_show,

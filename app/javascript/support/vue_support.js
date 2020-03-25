@@ -69,8 +69,7 @@ export default {
 
     // モバイルでないときだけ elem にフォーカスする
     desktop_only_focus(elem) {
-      const html_el = document.querySelector("html")
-      if (!html_el.classList.contains("mobile")) {
+      if (this.desktop_p) {
         if (elem) {
           elem.focus()
         }
@@ -101,6 +100,15 @@ export default {
   computed: {
     development_p() {
       return process.env.NODE_ENV === "development"
+    },
+
+    mobile_p() {
+      const html_el = document.querySelector("html")
+      return html_el.classList.contains("mobile")
+    },
+
+    desktop_p() {
+      return !this.mobile_p
     },
 
     url_prefix() {
