@@ -6,8 +6,8 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(aria-label="close" @click="delete_click_handle")
 
-    .top_container
 
+    .top_container
       ////////////////////////////////////////////////////////////////////////////////
       // 名前
       .user_key.has-text-weight-bold.has-text-centered
@@ -30,8 +30,8 @@
       ////////////////////////////////////////////////////////////////////////////////
       .ox_container.has-text-centered.line_break_on
         template(v-for="judge_key in info.judge_keys")
-          span.has-text-success(v-if="judge_key === 'win'") ○
-          span.has-text-danger(v-if="judge_key === 'lose'") ●
+          span.has-text-danger(v-if="judge_key === 'win'") ●
+          span.has-text-success(v-if="judge_key === 'lose'") ×
 
       .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
         template(v-for="(row, i) in info.medal_list")
@@ -40,7 +40,11 @@
           template(v-else-if="row.method == 'raw'")
             span.raw(:key="`medal_list/${i}`") {{row.name}}
           template(v-else-if="row.method == 'icon'")
-            b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
+            template(v-if="row.tag_wrap")
+              b-tag(:key="`medal_list/${i}`" :type="row.tag_wrap.type" rounded)
+                b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
+            template(v-else)
+              b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
 
     // ここにあるのおかしくね？
     tactic_modal(:tactic_modal_p.sync="tactic_modal_p" :tactic_name="tactic_name")
@@ -125,6 +129,9 @@
     b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
 
     b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") リンクURL
+
+    template(v-if="development_p")
+      b-button(tag="a" :href="`${permalink_url}&debug=true`" size="is-small" icon-left="link-variant") リンクURL(DEBUGモード)
 </template>
 
 <script>
@@ -237,13 +244,13 @@ export default {
 
     .medal_container
       margin-top: 0.1rem
-      .tag
+      > .tag                // .tag > .icon の場合もあるため最初の .tag だけに適用
         margin: auto 0.1rem
-      .raw
+      > .raw
         position: relative
         bottom: -0.2rem     // 絵文字は大きいので若干下げる
         margin: auto 0.1rem
-      .icon
+      > .icon
         position: relative
         bottom: -0.2rem
         margin: auto 0.1rem

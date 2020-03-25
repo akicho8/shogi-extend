@@ -204,7 +204,6 @@ module Swars
       ids = current_scope.pluck(:id)
       count = ids.count
 
-      # TODO: 分けたほうがはやいのか、一度の方がいいのか検証する
       s2 = current_scope
       s2 = s2.where(id: ids)
 
@@ -238,10 +237,15 @@ module Swars
         medals << { method: "tag", name: "💩", type: "is-white" }
         medals << { method: "raw", name: "💩" }
         medals << { method: "icon", name: "link", type: "is-warning" }
+        medals << { method: "icon", name: "pac-man", type: "is-warning", tag_wrap: {type: "is-black"} }
       end
 
       if all_hash["嬉野流"].fdiv(count) >= 0.25
         medals << { method: "tag", name: "嬉", type: "is-light" }
+      end
+
+      if all_hash["パックマン戦法"].fdiv(count) >= 0.25 || true
+        medals << { method: "icon", name: "pac-man", type: "is-warning" }
       end
 
       medals
