@@ -54,7 +54,7 @@
               b-tag(:key="`medal_list/${i}`" :type="row.tag_wrap.type" rounded)
                 b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
             template(v-else)
-              b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type")
+              b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
 
     // ここにあるのおかしくね？
     tactic_modal(:tactic_modal_p.sync="tactic_modal_p" :tactic_name="tactic_name")
@@ -273,7 +273,7 @@ export default {
         margin: auto 0.1rem
       > .icon
         position: relative
-        bottom: -0.3rem
+        bottom: -0.052rem
         margin: auto 0.1rem
 
   ////////////////////////////////////////////////////////////////////////////////
