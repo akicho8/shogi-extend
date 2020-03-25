@@ -40,8 +40,10 @@
       ////////////////////////////////////////////////////////////////////////////////
       .ox_container.has-text-centered.line_break_on
         template(v-for="judge_key in info.judge_keys")
-          span.has-text-danger(v-if="judge_key === 'win'") ●
-          span.has-text-success(v-if="judge_key === 'lose'") ×
+          span.has-text-danger(v-if="judge_key === 'win'")
+            b-icon(icon="checkbox-blank-circle" size="is-small" type="is-danger")
+          span.has-text-success(v-if="judge_key === 'lose'")
+            b-icon(icon="close" size="is-small" type="is-success")
 
       .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
         template(v-for="(row, i) in info.medal_list")

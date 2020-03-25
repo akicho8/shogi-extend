@@ -222,8 +222,10 @@ module Swars
       when ratio <= 1.0 - threshold
         medals << { method: "tag", name: "振", type: "is-light" }
       else
-        medals << { method: "tag", name: "A", type: "is-dark" }
+        # medals << { method: "tag", name: "A", type: "is-dark" }
+        medals << { method: "icon", name: "augmented-reality" } # [AR]
       end
+      medals << { method: "icon", name: "augmented-reality" }
 
       if params[:debug]
         medals << { method: "tag", name: "X", type: "is-white" }
