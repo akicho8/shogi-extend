@@ -28,7 +28,7 @@ task :httpd_restart do
 end
 # HTTPD_RESTART=1 cap production deploy
 if ENV["HTTPD_RESTART"]
-  after :publishing, "httpd_restart"
+  after "deploy:publishing", "httpd_restart"
 end
 
 namespace :deploy do
