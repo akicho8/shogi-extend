@@ -131,6 +131,8 @@ module Swars
         end
       end
 
+      # FIXME: 消す
+      # どこで使われている？
       def card_emoji
         judge_info.card_emoji(self) || battle.final_info.card_emoji(self)
       end

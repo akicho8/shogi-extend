@@ -75,9 +75,14 @@ module Swars
       retv[:day_list] = day_list
       retv[:buki_list] = buki_list
       retv[:jakuten_list] = jakuten_list
-      retv[:medal_list] = medal_list
+      retv[:medal_list] = MedalList.new(self).to_a
 
       retv
+    end
+
+    let :current_scope do
+      s = current_scope0
+      s = s.limit(current_max)
     end
 
     private
@@ -90,7 +95,7 @@ module Swars
       (params[:ox_max].presence || default_params[:ox_max]).to_i
     end
 
-    def current_scope5(s)
+    def condition_add(s)
       s = s.joins(:battle)
       s = s.where(Swars::Battle.arel_table[:win_user_id].not_eq(nil)) # 勝敗が必ずあるもの
       s = s.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
@@ -98,13 +103,8 @@ module Swars
 
     def current_scope0
       s = user.memberships
-      s = current_scope5(s)
+      s = condition_add(s)
       s = s.includes(:battle)
-    end
-
-    let :current_scope do
-      s = current_scope0
-      s = s.limit(current_max)
     end
 
     let :current_memberships do
@@ -173,7 +173,7 @@ module Swars
 
     def jakuten_list_for(memberships, options = {})
       s = memberships
-      s = current_scope5(s)
+      s = condition_add(s)
       s = s.limit(current_max)
 
       s2 = memberships.where(id: s.collect(&:id))
@@ -195,85 +195,6 @@ module Swars
 
     def jakuten_list
       jakuten_list_for(user.op_memberships, judge_flip: true)
-    end
-
-    def medal_list
-      medals = []
-
-      # current_scope.tag_counts_on(:attack_tags, at_least: 1, order: "count desc")
-      ids = current_scope.pluck(:id)
-      count = ids.count
-
-      s2 = current_scope
-      s2 = s2.where(id: ids)
-
-      all_tag_counts = s2.all_tag_counts(at_least: 1)
-      all_hash = all_tag_counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
-
-      # note_tag_counts = s2.tag_counts_on(:note_tags, at_least: 1)
-      # hash = note_tag_counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
-
-      total = all_hash["居飛車"] + all_hash["振り飛車"]
-      ratio = all_hash["居飛車"].fdiv(total)
-      threshold = 0.7
-      case
-      when ratio >= threshold
-        medals << { method: "tag", name: "居", type: "is-light" }
-      when ratio <= 1.0 - threshold
-        medals << { method: "tag", name: "振", type: "is-light" }
-      else
-        # medals << { method: "tag", name: "A", type: "is-dark" }
-        medals << { method: "icon", name: "augmented-reality" } # [AR]
-      end
-      medals << { method: "icon", name: "augmented-reality" }
-
-      if params[:debug]
-        medals << { method: "tag", name: "X", type: "is-white" }
-        medals << { method: "tag", name: "X", type: "is-black" }
-        medals << { method: "tag", name: "X", type: "is-light" }
-        medals << { method: "tag", name: "X", type: "is-dark" }
-        medals << { method: "tag", name: "X", type: "is-info" }
-        # medals << { method: "tag", name: "X", type: "is-success" }
-        medals << { method: "tag", name: "X", type: "is-warning" }
-        # medals << { method: "tag", name: "X", type: "is-danger" }
-        medals << { method: "tag", name: "💩", type: "is-white" }
-        medals << { method: "raw", name: "💩" }
-        medals << { method: "icon", name: "link", type: "is-warning" }
-        medals << { method: "icon", name: "pac-man", type: "is-warning", tag_wrap: {type: "is-black"} }
-      end
-
-      if all_hash["嬉野流"].fdiv(count) >= 0.25
-        medals << { method: "tag", name: "嬉", type: "is-light" }
-      end
-
-      if all_hash["パックマン戦法"].fdiv(count) >= 0.25 || true
-        medals << { method: "icon", name: "pac-man", type: "is-warning" }
-      end
-
-      medals
-
-      # ロケット
-      # 角換わり
-
-      # s = memberships
-      # s = current_scope5(s)
-      # s = s.limit(current_max)
-      #
-      # s2 = memberships.where(id: s.collect(&:id))
-      #
-      # count = s.count
-      # tags = s.tag_counts_on(:attack_tags, at_least: 1, order: "count desc")
-      # tags.collect do |tag|
-      #   hash = {}
-      #   hash[:tag] = tag.attributes.slice("name", "count")
-      #   judge_counts = judge_counts_wrap(s2.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 2}
-      #   if options[:judge_flip]
-      #     judge_counts = judge_counts.keys.zip(judge_counts.values.reverse).to_h   # => {"win" => 2, "lose" => 1}    ; 自分視点に変更
-      #   end
-      #   hash[:judge_counts] = judge_counts
-      #   hash[:appear_ratio] = tag.count.fdiv(count)
-      #   hash
-      # end
     end
 
     # judge_counts_wrap("win" => 1) # => {"win" => 1, "lose" => 0}

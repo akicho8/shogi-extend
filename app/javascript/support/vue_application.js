@@ -64,14 +64,14 @@ export default {
     },
 
     user_info_show_modal(user_key) {
-      this.http_get_command("/w.json", { query: user_key, format_type: "user" }, data => {
+      this.http_get_command("/w.json", { query: user_key, format_type: "user", debug: this.$route.query.debug }, data => {
         // https://buefy.org/documentation/modal
         this.$buefy.modal.open({
           parent: this,
           props: { info: data },
           hasModalCard: true,
           animation: "",
-          fullScreen: this.mobile_p,
+          fullScreen: true, // this.mobile_p,
           canCancel: ['escape', 'outside'],
           trapFocus: true,
           // scroll: "keep",

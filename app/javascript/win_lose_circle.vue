@@ -52,8 +52,8 @@ const CHART_CONFIG_DEFAULT = {
     },
 
     animation: {
-      animateScale: false,  // true: 中央から外側に向かってグラフが大きくなるアニメーション
-      animateRotate: true,  // true: グラフは回転するアニメーション
+      animateScale: false,   // true: 中央から外側に向かってグラフが大きくなるアニメーション
+      animateRotate: false,  // true: グラフは回転するアニメーション
     },
 
     tooltips: {
@@ -87,6 +87,11 @@ export default {
     // ・function が必要なときは直接 Vue の方に書いた方がいいのかもしれない
     this._chart_config = _.cloneDeep(CHART_CONFIG_DEFAULT)
     this._chart_config.data.datasets[0].data = this.win_lose_pair
+
+    if (this.development_p) {
+      this._chart_config.options.animation.animateScale = true
+      this._chart_config.options.animation.animateRotate = true
+    }
   },
 
   mounted() {

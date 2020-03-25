@@ -47,11 +47,11 @@
 
       .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
         template(v-for="(row, i) in info.medal_list")
-          template(v-if="row.method == 'tag'")
+          template(v-if="row.method === 'tag'")
             b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
-          template(v-else-if="row.method == 'raw'")
+          template(v-else-if="row.method === 'raw'")
             span.raw(:key="`medal_list/${i}`") {{row.name}}
-          template(v-else-if="row.method == 'icon'")
+          template(v-else-if="row.method === 'icon'")
             template(v-if="row.tag_wrap")
               b-tag(:key="`medal_list/${i}`" :type="row.tag_wrap.type" rounded)
                 b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
@@ -135,15 +135,13 @@
             .column.is-paddingless
               win_lose_circle(:info="row" size="is-small")
 
-  //- pre
-  //-   | {{info}}
-  //- .modal-card-foot
-  //-   b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
-  //- 
-  //-   b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") リンクURL
-  //- 
-  //-   template(v-if="development_p")
-  //-     b-button(tag="a" :href="`${permalink_url}&debug=true`" size="is-small" icon-left="link-variant") リンクURL(DEBUGモード)
+  template(v-if="development_p")
+    //- pre
+    //-   | {{info}}
+    .modal-card-foot
+      b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
+      b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") リンクURL
+      b-button(tag="a" :href="`${permalink_url}&debug=true`" size="is-small" icon-left="link-variant") リンクURL(DEBUGモード)
 </template>
 
 <script>
