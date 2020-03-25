@@ -29,9 +29,18 @@
 
       ////////////////////////////////////////////////////////////////////////////////
       .ox_container.has-text-centered.line_break_on
-          template(v-for="judge_key in info.judge_keys")
-            span.has-text-success(v-if="judge_key === 'win'") ○
-            span.has-text-danger(v-if="judge_key === 'lose'") ●
+        template(v-for="judge_key in info.judge_keys")
+          span.has-text-success(v-if="judge_key === 'win'") ○
+          span.has-text-danger(v-if="judge_key === 'lose'") ●
+
+      .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
+        template(v-for="(row, i) in info.medal_list")
+          template(v-if="row.method == 'tag'")
+            b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
+          template(v-else-if="row.method == 'raw'")
+            span.raw(:key="`medal_list/${i}`") {{row.name}}
+          template(v-else-if="row.method == 'icon'")
+            b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
 
     // ここにあるのおかしくね？
     tactic_modal(:tactic_modal_p.sync="tactic_modal_p" :tactic_name="tactic_name")
@@ -205,6 +214,10 @@ export default {
   //       .tile
   //         border: 1px solid cyan
   .top_container
+    padding-bottom: 0.3rem
+    border-bottom: 1px solid $grey-lighter
+
+    .user_key
     .rule_container
       justify-content: center
       // 一つのルール
@@ -218,11 +231,22 @@ export default {
     .win_lose_circle
       margin-top: 1rem
 
-    border-bottom: 1px dashed $grey-lighter
-
     .ox_container
       font-size: 0.8rem
-      margin: 0.5rem auto
+      margin-top: 0.5rem
+
+    .medal_container
+      margin-top: 0.1rem
+      .tag
+        margin: auto 0.1rem
+      .raw
+        position: relative
+        bottom: -0.2rem     // 絵文字は大きいので若干下げる
+        margin: auto 0.1rem
+      .icon
+        position: relative
+        bottom: -0.2rem
+        margin: auto 0.1rem
 
   ////////////////////////////////////////////////////////////////////////////////
 
