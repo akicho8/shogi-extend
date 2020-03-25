@@ -14,8 +14,6 @@
           .rate_human_with_p
             span.rate_human.has-text-weight-bold
               | {{rate_human}}
-            span.parcent.has-text-grey-light
-              | %
         .total.has-text-weight-bold(v-if="total_show_p")
           | {{total}}
     .level-item.has-text-centered.lose.win_lose_counts
@@ -158,8 +156,6 @@ export default {
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
 
-$parcent_size: 0.7em
-
 .win_lose_circle
   font-size: 14px
 
@@ -204,18 +200,9 @@ $parcent_size: 0.7em
         top: 0.1em
         font-size: 0.75em        // 「勝率」
       .rate_human_with_p
-        // 「%」があるぶん左にずれるため、そのぶんだけ右にずらす
-        position: relative
-        left: $parcent_size / 2
-
         .rate_human
           font-size: 2.8em
           line-height: 100%   // 上の空白をなくすため
-
-        .parcent
-          position: relative
-          left: -0.1em
-          font-size: $parcent_size     // % の大きさ
 
     // 円の下に合計
     .total
