@@ -88,6 +88,7 @@ export default {
     auto_submit() {
       if (this.$refs.search_form) {
         if (_.trim(this.query) !== "") {
+          this.$buefy.loading.open()
           this.$refs.search_form.submit()
         }
       }
