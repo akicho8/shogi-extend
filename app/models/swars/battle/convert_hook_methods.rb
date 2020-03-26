@@ -89,6 +89,7 @@ module Swars
         info.mediator.players.each_index do |i|
           memberships[i].tap do |e|
             e.think_max = e.sec_list.max || 0
+            e.think_last = e.sec_list.last || 0
           end
         end
 

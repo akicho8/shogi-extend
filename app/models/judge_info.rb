@@ -12,7 +12,9 @@ class JudgeInfo
 
   def card_emoji(membership)
     if true
-      rule_info = membership.battle.rule_info
+      battle = membership.battle
+      rule_info = battle.rule_info
+
       if t = rule_info.leave_alone_limit2
         if membership.think_max >= t
           return "😴"

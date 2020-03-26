@@ -119,6 +119,7 @@ import kif_copy_button from "components/kif_copy_button.vue"
 import sp_modal_button from "components/sp_modal_button.vue"
 import png_dl_button from "components/png_dl_button.vue"
 import tweet_button from "components/tweet_button.vue"
+import membership_icon from "components/membership_icon.vue"
 import win_lose_circle from "win_lose_circle.vue"
 
 // const router = new VueRouter({
@@ -160,6 +161,7 @@ Vue.mixin({
     win_lose_circle,
     kento_button,
     kif_copy_button,
+    membership_icon,
     sp_modal_button,
     png_dl_button,
     tweet_button,

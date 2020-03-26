@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_210000) do
+ActiveRecord::Schema.define(version: 2020_03_26_155401) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -294,6 +294,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_210000) do
     t.integer "grade_diff", null: false
     t.integer "think_max"
     t.bigint "op_user_id", comment: "相手"
+    t.integer "think_last"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
@@ -320,8 +321,10 @@ ActiveRecord::Schema.define(version: 2020_03_23_210000) do
     t.integer "search_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "think_last"
     t.index ["grade_id"], name: "index_swars_users_on_grade_id"
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
+    t.index ["think_last"], name: "index_swars_users_on_think_last"
     t.index ["updated_at"], name: "index_swars_users_on_updated_at"
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
   end

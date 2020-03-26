@@ -116,6 +116,12 @@ module Swars
         # final_info = FinalInfo.to_a.sample
         # grade_diff = rand(-1..1)
 
+        # MembershipIconInfo.each do |e|
+        #   if v = e.func.call(self)
+        #     return v
+        #   end
+        # end
+
         if icon = judge_info.icon_params(self) || battle.final_info.icon_params(self)
           if icon.kind_of?(String)
             icon
