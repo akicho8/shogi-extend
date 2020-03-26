@@ -77,8 +77,12 @@ module Swars
 
     def current_scope
       s = current_scope_base
-      s = s.includes(:battle)
       s = s.limit(current_max)
+    end
+
+    def at_least_value
+      # 1だったら指定しなくていいんじゃね？
+      # 1
     end
 
     private
@@ -102,10 +106,6 @@ module Swars
       s = s.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
     end
 
-    let :current_memberships do
-      current_scope.to_a
-    end
-
     # memberships が配列になっているとき用
     def judge_counts_of(memberships)
       group = memberships.group_by(&:judge_key)
@@ -113,7 +113,7 @@ module Swars
     end
 
     def rules_hash
-      group = current_memberships.group_by { |e| e.battle.rule_key }
+      group = current_scope.includes(:battle).group_by { |e| e.battle.rule_key }
 
       Swars::RuleInfo.inject({}) do |a, e|
         hash = {}
@@ -128,7 +128,7 @@ module Swars
     end
 
     def every_day_list
-      group = current_scope.group_by { |e| e.battle.battled_at.midnight }
+      group = current_scope.includes(:battle).group_by { |e| e.battle.battled_at.midnight }
       group.collect do |battled_at, memberships|
 
         hash = {}
@@ -210,11 +210,6 @@ module Swars
       when HolidayJp.holiday?(t)
         :danger
       end
-    end
-
-    def at_least_value
-      # 1だったら指定しなくていいんじゃね？
-      # 1
     end
   end
 end
