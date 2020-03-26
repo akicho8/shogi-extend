@@ -17,6 +17,14 @@
         b-icon(icon="link-variant" size="is-small")
         | リンクURL(DEBUGモード)
 
+      b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user`" v-if="development_p")
+        b-icon(icon="link-variant" size="is-small")
+        | json
+
+      b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user&debug=true`" v-if="development_p")
+        b-icon(icon="link-variant" size="is-small")
+        | json (debug)
+
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
       // 名前
@@ -74,7 +82,7 @@
 
     .tab_content
       template(v-if="tab_index === 0")
-        .box.one_box.two_column(v-for="row in info.day_list" :key="`day_list/${row.battled_at}`")
+        .box.one_box.two_column(v-for="row in info.every_day_list" :key="`every_day_list/${row.battled_at}`")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -97,7 +105,7 @@
                 //-       | {{tag.count}}
 
       template(v-if="tab_index === 1")
-        .box.one_box.one_column(v-for="row in info.buki_list" :key="`buki_list/${row.tag.name}`")
+        .box.one_box.one_column(v-for="row in info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -115,7 +123,7 @@
               win_lose_circle(:info="row" size="is-small")
 
       template(v-if="tab_index === 2")
-        .box.one_box.one_column(v-for="row in info.jakuten_list" :key="`jakuten_list/${row.tag.name}`")
+        .box.one_box.one_column(v-for="row in info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title
@@ -181,7 +189,16 @@ export default {
     },
 
     battled_at_to_ymd(row) {
-      return dayjs(row.battled_at).format("YYYY-MM-DD")
+      return dayjs(row.battled_at).format(this.battled_at_format(row))
+    },
+
+    battled_at_format(row) {
+      const date = dayjs(row.battled_at)
+      if (date.year() === dayjs().year()) {
+        return "M / D"
+      } else {
+        return "YYYY-MM-DD"
+      }
     },
 
     battled_at_to_wday(row) {
