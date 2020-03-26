@@ -6,7 +6,7 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(aria-label="close" @click="delete_click_handle")
 
-    b-dropdown.top_right_menu(position="is-bottom-left")
+    b-dropdown.top_right_menu(position="is-bottom-left" v-if="development_p")
       b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
       b-dropdown-item(:href="permalink_url")
@@ -177,7 +177,25 @@ export default {
     }
   },
 
+  beforeCreate() {
+    window.history.pushState(this.$options.name, null, "")
+  },
+
+  watch: {
+    tab_index(v) {
+      window.history.replaceState(v, null, this.permalink_url)
+    },
+  },
+
+  beforeDestroy() {
+    window.history.back()
+  },
+
   created() {
+    if (this.development_p) {
+      window.addEventListener('popstate', e => this.debug_alert(e.state))
+    }
+
     if ("tab_index" in this.$route.query) {
       this.tab_index = parseInt(this.$route.query.tab_index)
     }
