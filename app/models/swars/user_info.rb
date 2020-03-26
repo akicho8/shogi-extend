@@ -138,25 +138,21 @@ module Swars
 
         s = Swars::Membership.where(id: memberships.collect(&:id))
 
-        # hash2 = [:attack_tags, :defense_tags].inject({}) do |a, tags_method|
-        #   tags = s.tag_counts_on(tags_method, at_least: 1, order: "count desc")
-        #   a.merge(tags_method => tags.collect { |e| e.attributes.slice("name", "count") })
-        # end
-        # hash.update(hash2)
-
-        # 戦法と囲いをまぜて一番使われている順にN個
+        # 戦法と囲いをまぜて一番使われている順にN個表示する場合
         if false
           tags = [:attack_tags, :defense_tags].flat_map do |tags_method|
-            s.tag_counts_on(tags_method, at_least: 1, order: "count desc")
+            s.tag_counts_on(tags_method, at_least: at_least_value, order: "count desc")
           end
           tags = tags.sort_by { |e| -e.count }
-          hash[:all_tags] = tags.take(1).collect { |e| e.attributes.slice("name", "count") }
+          hash[:all_tags] = tags.take(2).collect { |e| e.attributes.slice("name", "count") }
         end
 
         # 戦法と囲いそれぞれ一番使われているもの1個ずつ計2個
-        hash[:all_tags] = [:attack_tags, :defense_tags].flat_map { |tags_method|
-          s.tag_counts_on(tags_method, at_least: 1, order: "count desc", limit: 1)
-        }.collect{ |e| e.attributes.slice("name", "count") }
+        if true
+          hash[:all_tags] = [:attack_tags, :defense_tags].flat_map { |tags_method|
+            s.tag_counts_on(tags_method, at_least: at_least_value, order: "count desc", limit: 1)
+          }.collect{ |e| e.attributes.slice("name", "count") }
+        end
 
         hash
       end
@@ -183,7 +179,7 @@ module Swars
       end
 
       count = s.count
-      tags = s.tag_counts_on(:attack_tags, at_least: 1, order: "count desc")
+      tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc")
       tags.collect do |tag|
         {}.tap do |hash|
           hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
@@ -214,6 +210,11 @@ module Swars
       when HolidayJp.holiday?(t)
         :danger
       end
+    end
+
+    def at_least_value
+      # 1だったら指定しなくていいんじゃね？
+      # 1
     end
   end
 end

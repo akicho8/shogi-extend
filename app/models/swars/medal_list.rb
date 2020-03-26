@@ -15,7 +15,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :current_scope, :params, to: :user_info
+    delegate :user, :current_scope, :params, :at_least_value, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -89,14 +89,14 @@ module Swars
     # all_hash["存在しない戦法"] # => 0
     def all_hash
       @all_hash ||= -> {
-        all_tag_counts = new_scope.all_tag_counts(at_least: 1)
+        all_tag_counts = new_scope.all_tag_counts(at_least: at_least_value)
         all_tag_counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
       }.call
     end
 
     # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
     def new_scope
-      @new_scope ||= user.memberships.where(id: memberships_ids)
+      @new_scope ||= Swars::Membership.where(id: memberships_ids)
     end
 
     def all_count
