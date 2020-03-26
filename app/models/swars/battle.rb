@@ -111,6 +111,9 @@ module Swars
 
     # 将棋ウォーズの形式はCSAなのでパーサーを明示すると理論上は速くなる
     def parser_class
+      if kifu_body_for_test
+        return Bioshogi::Parser
+      end
       Bioshogi::Parser::CsaParser
     end
 

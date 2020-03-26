@@ -62,12 +62,12 @@ module Swars
         hash[:rules_hash] = rules_hash
 
         # トータル勝敗数
-        hash[:judge_counts] = judge_counts_wrap(current_scope.group(:judge_key).count)
+        hash[:judge_counts] = judge_counts_wrap(ids_scope.group(:judge_key).count)
 
         # 直近勝敗リスト
         hash[:judge_keys] = current_scope_base.limit(current_ox_max).pluck(:judge_key).reverse
 
-        hash[:medal_list] = MedalList.new(self).to_a
+        hash[:medal_list] = medal_list.to_a
 
         hash[:every_day_list]       = every_day_list
         hash[:every_my_attack_list] = every_my_attack_list
@@ -75,9 +75,23 @@ module Swars
       end
     end
 
+    def medal_list
+      MedalList.new(self)
+    end
+
     def current_scope
       s = current_scope_base
       s = s.limit(current_max)
+    end
+
+    # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
+    # また group するときも order が入っていると MySQL では group に order のカラムも含めないと正しく動かなくてわけわからんんことになるのでそれの回避
+    def ids_scope
+      Swars::Membership.where(id: current_scope.pluck(:id))
+    end
+
+    def real_count
+      @real_count ||= current_scope.count
     end
 
     def at_least_value
@@ -175,7 +189,7 @@ module Swars
 
       # SQLを作り直すか？ (tag_counts_on をシンプルなSQLで実行させると若干速くなる)
       if true
-        s = memberships.where(id: s.pluck(:id))
+        s = Swars::Membership.where(id: s.pluck(:id))
       end
 
       count = s.count

@@ -321,10 +321,8 @@ ActiveRecord::Schema.define(version: 2020_03_26_155401) do
     t.integer "search_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "think_last"
     t.index ["grade_id"], name: "index_swars_users_on_grade_id"
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
-    t.index ["think_last"], name: "index_swars_users_on_think_last"
     t.index ["updated_at"], name: "index_swars_users_on_updated_at"
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
   end

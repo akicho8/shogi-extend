@@ -17,6 +17,8 @@
 # | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
 # | grade_diff   | Grade diff   | integer(4)  | NOT NULL    |      | I       |
 # | think_max    | Think max    | integer(4)  |             |      |         |
+# | op_user_id   | Op user      | integer(8)  |             |      | J       |
+# | think_last   | Think last   | integer(4)  |             |      |         |
 # |--------------+--------------+-------------+-------------+------+---------|
 
 module Swars
