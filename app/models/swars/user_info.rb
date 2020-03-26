@@ -128,7 +128,7 @@ module Swars
     end
 
     def every_day_list
-      group = current_scope.group_by { |e| e.battle.battled_at.midnight } # FIXME
+      group = current_scope.group_by { |e| e.battle.battled_at.midnight }
       group.collect do |battled_at, memberships|
 
         hash = {}

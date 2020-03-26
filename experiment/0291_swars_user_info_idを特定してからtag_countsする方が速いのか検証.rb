@@ -13,6 +13,13 @@ user2 = Swars::User.create!
   battle.save!
 end
 
+Swars::Battle.all.each do |e|
+  p e.kifu_body.lines.grep(/START_TIME/)
+end
+
+exit
+
+
 p Swars::Battle.count             # => 2529
 
 user = Swars::User.first

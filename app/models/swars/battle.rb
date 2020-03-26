@@ -65,8 +65,17 @@ module Swars
 
       # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
       if key
-        self.battled_at ||= (Time.zone.parse(key.split("-").last) rescue nil)
+        if key.include?("-")
+          ymd_str = key.split("-").last
+          if ymd_str.match?(/\A\d+_\d+\z/)
+            self.battled_at ||= Time.zone.parse(ymd_str) rescue nil
+          end
+        end
       end
+
+      # if Rails.env.development? || Rails.env.test?
+      #   self.battled_at ||= Time.current + (self.class.count * 6.hour)
+      # end
 
       self.battled_at ||= Time.current
       self.final_key ||= :TORYO
