@@ -1,4 +1,4 @@
-# idを特定してからall_tag_countsした方が速いのか検証 → 結果:変わらないというか気持ち程度は速くなっている
+# id を特定してから all_tag_counts した方が速いのか検証 → 結果:変わらないというか気持ち程度は速くなっている
 #
 #   user1 = Swars::User.create!
 #   user2 = Swars::User.create!
@@ -31,7 +31,7 @@
 #   require "active_support/core_ext/benchmark"
 #   def _; "%7.2f ms" % Benchmark.ms { 2000.times { yield } } end
 #   p _ { f.(s1) } # => "4051.89 ms"
-#   p _ { f.(s2) } # => "3771.33 ms"
+#   p _ { f.(s2) } # => "3771.33 ms" ← 若干速くなっている
 #   # >> "4051.89 ms"
 #   # >> "3771.33 ms"
 
@@ -43,7 +43,7 @@ module Swars
     cattr_accessor(:default_params) {
       {
         :max    => 50, # データ対象直近n件
-        :ox_max => 20, # 表示勝敗直近n件
+        :ox_max => 16, # 表示勝敗直近n件
       }
     }
 
@@ -53,35 +53,31 @@ module Swars
     end
 
     # http://localhost:3000/w.json?query=devuser1&format_type=user
+    # http://localhost:3000/w.json?query=devuser1&format_type=user&debug=true
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
-      retv = {}
+      {}.tap do |hash|
+        hash[:user] = { key: user.key }
 
-      retv[:user] = { key: user.key }
+        hash[:rules_hash] = rules_hash
 
-      retv[:rules_hash] = rules_hash
+        # トータル勝敗数
+        hash[:judge_counts] = judge_counts_wrap(current_scope.group(:judge_key).count)
 
-      # 直近勝敗リスト
-      retv[:judge_keys] = current_scope0.limit(current_ox_max).collect(&:judge_key).reverse
+        # 直近勝敗リスト
+        hash[:judge_keys] = current_scope_base.limit(current_ox_max).pluck(:judge_key).reverse
 
-      # トータル勝敗数
-      retv[:judge_counts] = judge_counts_wrap(current_scope.group("judge_key").count)
+        hash[:medal_list] = MedalList.new(self).to_a
 
-      # # 勝率
-      # if current_memberships.present?
-      #   retv[:win_rate] = judge_counts["win"].fdiv(current_memberships.count)
-      # end
-
-      retv[:day_list] = day_list
-      retv[:buki_list] = buki_list
-      retv[:jakuten_list] = jakuten_list
-      retv[:medal_list] = MedalList.new(self).to_a
-
-      retv
+        hash[:every_day_list]       = every_day_list
+        hash[:every_my_attack_list] = every_my_attack_list
+        hash[:every_vs_attack_list] = every_vs_attack_list
+      end
     end
 
-    let :current_scope do
-      s = current_scope0
+    def current_scope
+      s = current_scope_base
+      s = s.includes(:battle)
       s = s.limit(current_max)
     end
 
@@ -95,16 +91,15 @@ module Swars
       (params[:ox_max].presence || default_params[:ox_max]).to_i
     end
 
+    def current_scope_base
+      s = user.memberships
+      s = condition_add(s)
+    end
+
     def condition_add(s)
       s = s.joins(:battle)
       s = s.where(Swars::Battle.arel_table[:win_user_id].not_eq(nil)) # 勝敗が必ずあるもの
       s = s.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
-    end
-
-    def current_scope0
-      s = user.memberships
-      s = condition_add(s)
-      s = s.includes(:battle)
     end
 
     let :current_memberships do
@@ -118,8 +113,8 @@ module Swars
     end
 
     def rules_hash
-      # grade はここだけで定義うる
       group = current_memberships.group_by { |e| e.battle.rule_key }
+
       Swars::RuleInfo.inject({}) do |a, e|
         hash = {}
         hash[:rule_name] = e.name
@@ -132,13 +127,13 @@ module Swars
       end
     end
 
-    def day_list
+    def every_day_list
       group = current_scope.group_by { |e| e.battle.battled_at.midnight } # FIXME
       group.collect do |battled_at, memberships|
 
         hash = {}
         hash[:battled_at]   = battled_at
-        hash[:day_color]    = day_color_of(battled_at)
+        hash[:day_color]    = day_color_for(battled_at)
         hash[:judge_counts] = judge_counts_of(memberships)
 
         s = Swars::Membership.where(id: memberships.collect(&:id))
@@ -167,49 +162,57 @@ module Swars
       end
     end
 
-    def buki_list
-      jakuten_list_for(user.memberships)
+    # 戦法
+    def every_my_attack_list
+      list_build(user.memberships)
     end
 
-    def jakuten_list_for(memberships, options = {})
+    # 相手
+    def every_vs_attack_list
+      list_build(user.op_memberships, judge_flip: true)
+    end
+
+    def list_build(memberships, options = {})
       s = memberships
       s = condition_add(s)
       s = s.limit(current_max)
 
-      s2 = memberships.where(id: s.collect(&:id))
+      # SQLを作り直すか？ (tag_counts_on をシンプルなSQLで実行させると若干速くなる)
+      if true
+        s = memberships.where(id: s.pluck(:id))
+      end
 
       count = s.count
       tags = s.tag_counts_on(:attack_tags, at_least: 1, order: "count desc")
       tags.collect do |tag|
-        hash = {}
-        hash[:tag] = tag.attributes.slice("name", "count")
-        judge_counts = judge_counts_wrap(s2.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 2}
-        if options[:judge_flip]
-          judge_counts = judge_counts.keys.zip(judge_counts.values.reverse).to_h   # => {"win" => 2, "lose" => 1}    ; 自分視点に変更
+        {}.tap do |hash|
+          hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
+          hash[:appear_ratio] = tag.count.fdiv(count)         # 使用率, 遭遇率
+
+          # 勝ち負け数
+          c = judge_counts_wrap(s.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 0}
+          if options[:judge_flip]
+            c = c.keys.zip(c.values.reverse).to_h   # => {"win" => 0, "lose" => 1}    ; 自分視点に変更
+          end
+          hash[:judge_counts] = c
         end
-        hash[:judge_counts] = judge_counts
-        hash[:appear_ratio] = tag.count.fdiv(count)
-        hash
       end
     end
 
-    def jakuten_list
-      jakuten_list_for(user.op_memberships, judge_flip: true)
-    end
-
+    # judge_counts_wrap({})         # => {"win" => 0, "lose" => 0}
     # judge_counts_wrap("win" => 1) # => {"win" => 1, "lose" => 0}
     def judge_counts_wrap(hash)
       {"win" => 0, "lose" => 0}.merge(hash)
     end
 
-    def day_color_of(t)
+    def day_color_for(t)
       case
       when t.sunday?
-        "danger"
+        :danger
       when t.saturday?
-        "info"
+        :info
       when HolidayJp.holiday?(t)
-        "danger"
+        :danger
       end
     end
   end

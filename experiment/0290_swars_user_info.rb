@@ -22,7 +22,7 @@ tp Swars::User.first.user_info.to_hash
 # >> |   judge_keys | ["win", "lose", "win", "lose", "win"]                                                                                                                          |
 # >> | judge_counts | {"win"=>3, "lose"=>2}                                                                                                                                          |
 # >> |     day_list | [{:battled_at=>Wed, 25 Mar 2020 00:00:00 JST +09:00, :day_color=>nil, :judge_counts=>{"win"=>3, "lose"=>2}, :all_tags=>[{"name"=>"嬉野流", "count"=>5}]}]      |
-# >> |    buki_list | [{:tag=>{"name"=>"嬉野流", "count"=>5}, :judge_counts=>{"win"=>3, "lose"=>2}, :appear_ratio=>1.0}]                                                             |
-# >> | jakuten_list | [{:tag=>{"name"=>"△３ニ飛戦法", "count"=>5}, :judge_counts=>{"win"=>3, "lose"=>2}, :appear_ratio=>1.0}]                                                       |
+# >> |    every_my_attack_list | [{:tag=>{"name"=>"嬉野流", "count"=>5}, :judge_counts=>{"win"=>3, "lose"=>2}, :appear_ratio=>1.0}]                                                             |
+# >> | every_vs_attack_list | [{:tag=>{"name"=>"△３ニ飛戦法", "count"=>5}, :judge_counts=>{"win"=>3, "lose"=>2}, :appear_ratio=>1.0}]                                                       |
 # >> |   medal_list | [{:method=>"tag", :name=>"居", :type=>"is-light"}, {:method=>"tag", :name=>"嬉", :type=>"is-light"}, {:method=>"icon", :name=>"pac-man", :type=>"is-warning"}] |
 # >> |--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
