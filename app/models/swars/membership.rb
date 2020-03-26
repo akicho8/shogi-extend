@@ -111,36 +111,22 @@ module Swars
     end
 
     concerning :HelperMethods do
-      def icon_html
-        # judge_info = JudgeInfo.to_a.sample
-        # final_info = FinalInfo.to_a.sample
-        # grade_diff = rand(-1..1)
+      def icon_params(params = {})
+        if params[:debug] || ENV["ICON_DEBUG"]
+          return MembershipIconInfo[id.modulo(MembershipIconInfo.count)].icon_params
+        end
 
-        # MembershipIconInfo.each do |e|
-        #   if v = e.func.call(self)
-        #     return v
-        #   end
-        # end
-
-        if icon = judge_info.icon_params(self) || battle.final_info.icon_params(self)
-          if icon.kind_of?(String)
-            icon
-          else
-            Icon.icon_tag(*icon[:key], :class => icon[:class])
+        MembershipIconInfo.find do |e|
+          if v = e.func.call(self)
+            if v == true
+              return e.icon_params
+            else
+              return v
+            end
           end
         end
-      end
 
-      def winner_only_icon_html
-        if judge_info.key == :win
-          icon_html
-        end
-      end
-
-      # FIXME: 消す
-      # どこで使われている？
-      def card_emoji
-        judge_info.card_emoji(self) || battle.final_info.card_emoji(self)
+        raise "must not happen"
       end
     end
 

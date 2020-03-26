@@ -92,7 +92,7 @@ module Swars
             key: e.user.key,
           },
           label: label,
-          icon_html: e.icon_html,
+          icon_params: e.icon_params,
           name_with_grade: e.name_with_grade,
           query_user_url: polymorphic_path(e.user),
           swars_home_url: e.user.swars_home_url,

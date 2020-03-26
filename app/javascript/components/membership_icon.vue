@@ -1,10 +1,9 @@
 <template lang="pug">
-  div
+span.membership_icon
+  template(v-if="typeof params === 'string'")
     | {{params}}
-  //- b-icon.membership_icon(v-bind="$attrs" v-on="$listeners" size="is-small")
-  //-   b-icon(icon="twitter" type="is-info" size="is-small")
-  //-   span.turn(v-if="turn != null")
-  //-     | \#{{turn}}
+  template(v-else)
+    b-icon(:icon="params.icon" :type="params.type" size="is-small" :class="params.class")
 </template>
 
 <script>
@@ -20,4 +19,5 @@ export default {
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
 .membership_icon
+  margin-right: 0.5rem
 </style>
