@@ -13,7 +13,7 @@ export default {
   },
   head: {
     title: 'Not Found',
-    meta: [ { "http-equiv": "refresh", content: "30;url=/" } ],
+    meta: [ { "http-equiv": "refresh", content: "60;url=/" } ],
   },
 }
 </script>

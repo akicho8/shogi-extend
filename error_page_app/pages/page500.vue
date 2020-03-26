@@ -15,7 +15,7 @@ export default {
   },
   head: {
     title: 'Internal Server Error',
-    meta: [ { "http-equiv": "refresh", content: "30;url=/" } ],
+    meta: [ { "http-equiv": "refresh", content: "60;url=/" } ],
   },
 }
 </script>
