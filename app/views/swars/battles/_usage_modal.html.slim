@@ -2,9 +2,8 @@ b-modal.usage_modal(:active.sync="usage_modal_p" trap-focus animation="zoom-in")
   b-message(title="便利な使い方" type="is-info" :closable="false")
     .content
       ol
-        - if controller.import_enable?
-          li
-            | 検索後の最初の画面 (今の画面) を「ホーム画面に追加」しておくとウォーズIDを毎回入力する手間が省けます
+        li
+          | 検索後の最初の画面 (今の画面) を「ホーム画面に追加」しておくとウォーズIDを毎回入力する手間が省けます
         li
           | 下のボタンをタップした直後に「ホーム画面に追加」しておくと1タップで直前の対局を指定のアプリで開けます。<br>
           | これは直前の対局をどちらかのアプリで必ず検討する人向けのショートカットです
