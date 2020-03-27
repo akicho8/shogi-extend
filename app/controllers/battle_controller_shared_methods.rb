@@ -253,6 +253,7 @@ module BattleControllerSharedMethods
 
       if request.format.json?
         if params[:time_chart_fetch]
+          slack_message(key: "時間チャート", body: current_record.title)
           # Rails.logger.debug(current_record.time_chart_params)
           render json: { time_chart_params: current_record.time_chart_params }
           return

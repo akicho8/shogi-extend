@@ -51,6 +51,7 @@ module KentoJsonMod
           },
         }
 
+        slack_message(key: "KENTO API", body: current_swars_user.key)
         render json: json_hash.as_json
         return
       end
