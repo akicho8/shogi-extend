@@ -27,9 +27,6 @@ export default {
       sp_modal_p: false,               // モーダルを開くフラグ
       selected_record: null,             //  選択したレコード
 
-      tactic_modal_p: false,      // 戦術モーダルを表示するか？
-      tactic_name: null,             // 戦術名
-
       loading: false,
 
       records: this.$options.records, // 表示するレコード配列
@@ -69,20 +66,6 @@ export default {
   },
 
   methods: {
-    tactic_name_click_handle(tactic_name) {
-      this.tactic_name = tactic_name
-      this.tactic_modal_p = true
-    },
-
-    // 終了図ボタンが ON の状態で押されたら OFF にする
-    board_show_type_set_none() {
-      if (this.board_show_type !== "none") {
-        if (this.development_p) {
-          this.board_show_type = "none"
-        }
-      }
-    },
-
     show_handle(row) {
       this.selected_record = row
       // this.turn_offset = this.start_turn // this.selected_record の start_turn を計算

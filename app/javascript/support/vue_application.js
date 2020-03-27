@@ -1,6 +1,7 @@
 window.talk_sound = null
 
 import user_info_show from "../user_info_show.vue"
+import tactic_show from "../tactic_show.vue"
 
 export default {
   methods: {
@@ -76,6 +77,21 @@ export default {
           trapFocus: true,
           // scroll: "keep",
           component: user_info_show,
+        })
+      })
+    },
+
+    tactic_show_modal(tactic_key) {
+      this.http_get_command(`/tactics/${tactic_key}.json`, {}, data => {
+        // https://buefy.org/documentation/modal
+        this.$buefy.modal.open({
+          parent: this,
+          props: { record: data },
+          hasModalCard: true,
+          animation: "",
+          fullScreen: false,
+          trapFocus: true,
+          component: tactic_show,
         })
       })
     },

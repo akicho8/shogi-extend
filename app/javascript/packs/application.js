@@ -112,7 +112,7 @@ import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
 import sp_modal from "sp_modal.vue"
 import ox_modal from "ox_modal.vue"
-import tactic_modal from "tactic_modal.vue"
+import tactic_show from "tactic_show.vue"
 import piyo_shogi_button from "components/piyo_shogi_button.vue"
 import kento_button from "components/kento_button.vue"
 import kif_copy_button from "components/kif_copy_button.vue"
@@ -156,15 +156,21 @@ Vue.mixin({
     cpu_battle,
     sp_modal,
     ox_modal,
-    tactic_modal,
-    piyo_shogi_button,
     win_lose_circle,
+
+    // for buefy modal
+    tactic_show,
+
+    // buttons
+    piyo_shogi_button,
     kento_button,
     kif_copy_button,
-    membership_icon,
     sp_modal_button,
     png_dl_button,
     tweet_button,
+
+    // icon
+    membership_icon,
   },
 })
 

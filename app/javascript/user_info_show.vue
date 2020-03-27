@@ -4,7 +4,7 @@
   //-   .modal-card-title {{membership.user.key}}
   .modal-card-body
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-    .delete.is-large(aria-label="close" @click="delete_click_handle")
+    .delete.is-large(@click="delete_click_handle")
 
     b-dropdown.top_right_menu(position="is-bottom-left" v-if="development_p")
       b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
@@ -66,9 +66,6 @@
             template(v-else)
               b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
 
-    // ここにあるのおかしくね？
-    tactic_modal(:tactic_modal_p.sync="tactic_modal_p" :tactic_name="tactic_name")
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered")
@@ -94,7 +91,7 @@
               win_lose_circle(:info="row" size="is-small" narrowed)
             .column.is-paddingless.is-flex
               template(v-for="tag in row.all_tags")
-                .tag_wrapper.has-text-weight-bold.is-size-5(@click="tactic_modal_start(tag)")
+                .tag_wrapper.has-text-weight-bold.is-size-5(@click="tactic_show_modal(tag)")
                   | {{tag.name}}
 
                 //- b-taglist.tag_wrapper(attached @click.native="tactic_modal_start(tag)")
@@ -171,9 +168,6 @@ export default {
   data() {
     return {
       tab_index: null,
-
-      tactic_name: null,
-      tactic_modal_p: false,
     }
   },
 
@@ -227,11 +221,6 @@ export default {
       if (row.day_color) {
         return `has-text-${row.day_color}`
       }
-    },
-
-    tactic_modal_start(tag) {
-      this.tactic_name = tag.name
-      this.tactic_modal_p = true
     },
   },
 

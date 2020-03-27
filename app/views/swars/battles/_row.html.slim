@@ -26,7 +26,7 @@ template(slot-scope="props")
           template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
             template(v-if="visible_hash[key]")
               template(v-for="tag in m[key]")
-                a(@click="tactic_name_click_handle(tag.name)")
+                a(@click="tactic_show_modal(tag.name)")
                   b-tag(rounded) {{tag.name}}
 
   b-table-column(field="final_key" :label="table_columns_hash.final_info.label" :visible="visible_hash.final_info" sortable)
