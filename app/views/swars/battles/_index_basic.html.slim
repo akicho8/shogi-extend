@@ -11,6 +11,12 @@
 = render partial: "zip_dl_modal"
 = render partial: "usage_modal"
 
+.columns(v-if="development_p")
+  .column
+    .buttons.are-small.is-centered
+      b-button(tag="a" href="/w.json?query=user1") index json
+      b-button(tag="a" href="/w.json?query=user1&format_type=user") user json
+
 / もともとはタグの表示と、モーダルを合体させていたけど table.has-mobile-cards が効いて shogi-player が崩れてしまう
 / なので外に出している
 tactic_modal(:tactic_modal_p.sync="tactic_modal_p" :tactic_name="tactic_name")
