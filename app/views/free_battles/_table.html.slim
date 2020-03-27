@@ -1,4 +1,4 @@
-.columns
+.columns(v-if="board_show_type === 'none'")
   .column
     template(v-if="records.length >= 1")
       b-field(grouped group-multiline)
