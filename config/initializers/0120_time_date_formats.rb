@@ -16,7 +16,7 @@ Time::DATE_FORMATS.update({
       case
       when time >= 1.days.ago
         time.to_s(:battle_short)
-      when time >= 1.year.ago
+      when time.year == Time.current.year
         time.to_s(:battle_medium)
       else
         time.to_s(:battle_long)
