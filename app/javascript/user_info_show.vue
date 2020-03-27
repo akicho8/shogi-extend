@@ -11,11 +11,11 @@
 
       b-dropdown-item(:href="permalink_url")
         b-icon(icon="link-variant" size="is-small")
-        | リンクURL
+        | パーマリンク
 
       b-dropdown-item(:href="`${permalink_url}&debug=true`" v-if="development_p")
         b-icon(icon="link-variant" size="is-small")
-        | リンクURL(DEBUGモード)
+        | パーマリンク(DEBUGモード)
 
       b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user`" v-if="development_p")
         b-icon(icon="link-variant" size="is-small")
@@ -145,8 +145,8 @@
     //-   | {{info}}
     .modal-card-foot
       b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
-      b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") リンクURL
-      b-button(tag="a" :href="`${permalink_url}&debug=true`" size="is-small" icon-left="link-variant") リンクURL(DEBUGモード)
+      b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") パーマリンク
+      b-button(tag="a" :href="`${permalink_url}&debug=true`" size="is-small" icon-left="link-variant") パーマリンク(DEBUGモード)
 </template>
 
 <script>
