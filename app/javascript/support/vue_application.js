@@ -2,6 +2,7 @@ window.talk_sound = null
 
 import user_info_show from "../user_info_show.vue"
 import tactic_show from "../tactic_show.vue"
+import sp_show from "../sp_show.vue"
 
 export default {
   methods: {
@@ -95,6 +96,21 @@ export default {
         })
       })
     },
+
+    sp_show_modal(record, pulldown_menu_p, board_show_type) {
+      // https://buefy.org/documentation/modal
+      this.$buefy.modal.open({
+        parent: this,
+        props: { record: record, pulldown_menu_p: pulldown_menu_p, board_show_type: board_show_type },
+        hasModalCard: true,
+        animation: "",
+        fullScreen: true,
+        canCancel: ['escape', 'outside'],
+        trapFocus: true,
+        component: sp_show,
+      })
+    },
+
   },
 
   computed: {

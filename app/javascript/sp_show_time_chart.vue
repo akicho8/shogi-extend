@@ -1,5 +1,5 @@
 <template lang="pug">
-  .columns.is-centered.is-unselectable.sp_modal_time_chart(v-show="show_p")
+  .columns.is-centered.is-unselectable.sp_show_time_chart(v-show="show_p")
     .column.is-half
       canvas#main_canvas(ref="main_canvas")
       .bottom_buttons.has-text-centered
@@ -329,12 +329,12 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import sp_modal_time_chart_vline from './sp_modal_time_chart_vline.js'
+import sp_show_time_chart_vline from './sp_show_time_chart_vline.js'
 import PaletteInfo from './palette_info.js'
 
 export default {
   mixins: [
-    sp_modal_time_chart_vline, // 縦線表示機能(コメントアウトでOFF)
+    sp_show_time_chart_vline, // 縦線表示機能(コメントアウトでOFF)
   ],
 
   props: {
@@ -620,7 +620,7 @@ export default {
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
 
-.sp_modal_time_chart
+.sp_show_time_chart
   margin-top: 0.15rem
   .bottom_buttons
 </style>

@@ -149,12 +149,12 @@ export default {
 
   computed: {
     new_permalink_url() {
-      // sp_modal で作られた permalink_url を使うが、なければコントローラーで埋められたのを使う
+      // sp_show で作られた permalink_url を使うが、なければコントローラーで埋められたのを使う
       return this.permalink_url || this.record.modal_on_index_url
     },
 
     new_flip() {
-      // 引数が明示的に渡されたときにはそれに従う。sp_modal からのみ flip が動的に渡されている
+      // 引数が明示的に渡されたときにはそれに従う。sp_show からのみ flip が動的に渡されている
       if (this.flip != null) {
         return this.flip
       }

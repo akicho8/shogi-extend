@@ -11,25 +11,32 @@ export default {
 
   data() {
     return {
-      sp_modal_p: true,
-
-      // const
       record: this.$options.record,
       iframe_p: this.$options.iframe_p,
     }
   },
 
-  watch: {
-    sp_modal_p(v) {
-      if (v) {
+  mounted() {
+    if (this.$route.query.formal_sheet === "true") {
+      // 棋譜印刷モード
+    } else {
+      if (this.iframe_p) {
+        // iframeモード
       } else {
-        if (this.$options.close_back_path) {
-          this.self_window_open(this.$options.close_back_path)
-        }
+        // 通常の詳細
+        this.sp_show_modal(this.record, true)
       }
-    },
+    }
   },
 
-  computed: {
+  watch: {
+    // sp_show_p(v) {
+    //   if (v) {
+    //   } else {
+    //     if (this.$options.close_back_path) {
+    //       this.self_window_open(this.$options.close_back_path)
+    //     }
+    //   }
+    // },
   },
 }

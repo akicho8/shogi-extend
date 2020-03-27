@@ -110,13 +110,13 @@ import vs_clock from "vs_clock.vue"
 import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
-import sp_modal from "sp_modal.vue"
+import sp_show from "sp_show.vue"
 import ox_modal from "ox_modal.vue"
 import tactic_show from "tactic_show.vue"
 import piyo_shogi_button from "components/piyo_shogi_button.vue"
 import kento_button from "components/kento_button.vue"
 import kif_copy_button from "components/kif_copy_button.vue"
-import sp_modal_button from "components/sp_modal_button.vue"
+import sp_show_button from "components/sp_show_button.vue"
 import png_dl_button from "components/png_dl_button.vue"
 import tweet_button from "components/tweet_button.vue"
 import membership_icon from "components/membership_icon.vue"
@@ -154,7 +154,7 @@ Vue.mixin({
     simple_board,
     xy_master,
     cpu_battle,
-    sp_modal,
+    sp_show,
     ox_modal,
     win_lose_circle,
 
@@ -165,7 +165,7 @@ Vue.mixin({
     piyo_shogi_button,
     kento_button,
     kif_copy_button,
-    sp_modal_button,
+    sp_show_button,
     png_dl_button,
     tweet_button,
 
