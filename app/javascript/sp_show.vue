@@ -90,7 +90,7 @@ export default {
   },
 
   props: {
-    record:          {                  }, // バトル情報
+    record:          { required: true   }, // バトル情報
     pulldown_menu_p: { default: true,   }, // 右のプルダウンを表示する？
     board_show_type: { default: "none", }, // どの局面から開始するか
   },
@@ -174,18 +174,16 @@ export default {
     // turn start_turn critical_turn の順に見る
     // turn は $options.modal_record にのみ入っている
     start_turn_for(record) {
-      if (record) {
-        if (this.board_show_type === "last") {
-          return record.turn_max
-        }
-
-        // modal_record の場合
-        if ("turn" in record) {
-          return record.turn
-        }
-
-        return record.display_turn
+      if (this.board_show_type === "last") {
+        return record.turn_max
       }
+
+      // modal_record の場合
+      if ("turn" in record) {
+        return record.turn
+      }
+
+      return record.display_turn
     },
 
     // sp_show_time_chart でチャートをクリックしたときに変更する
@@ -225,23 +223,19 @@ export default {
     },
 
     permalink_url() {
-      if (this.record) {
-        const url = new URL(this.record.modal_on_index_url)
-        url.searchParams.set("turn", this.turn_offset)
-        url.searchParams.set("flip", this.new_flip)
-        return url.toString()
-      }
+      const url = new URL(this.record.modal_on_index_url)
+      url.searchParams.set("turn", this.turn_offset)
+      url.searchParams.set("flip", this.new_flip)
+      return url.toString()
     },
 
     // これはメソッドにする必要なかったけどまぁいい
     png_dl_url() {
-      if (this.record) {
-        const params = new URLSearchParams()
-        params.set("attachment", true)
-        params.set("turn", this.turn_offset)
-        params.set("flip", this.new_flip)
-        return `${this.record.show_path}.png?${params}`
-      }
+      const params = new URLSearchParams()
+      params.set("attachment", true)
+      params.set("turn", this.turn_offset)
+      params.set("flip", this.new_flip)
+      return `${this.record.show_path}.png?${params}`
     },
 
     tweet_url() {
