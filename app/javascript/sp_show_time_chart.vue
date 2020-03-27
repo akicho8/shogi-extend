@@ -1,5 +1,5 @@
 <template lang="pug">
-  .columns.is-centered.is-unselectable.sp_show_time_chart(v-show="show_p")
+  .columns.is-centered.is-unselectable.sp_show_time_chart
     .column.is-half
       canvas#main_canvas(ref="main_canvas")
       .bottom_buttons.has-text-centered
@@ -338,53 +338,46 @@ export default {
   ],
 
   props: {
-    record: { required: true, }, // バトル情報
-    show_p: { required: true, }, // 時間チャートを表示する？
-    flip:   { required: true, }, // フリップしたか？
+    record:            { required: true, }, // バトル情報
+    flip:              { required: true, }, // フリップしたか？
+    time_chart_params: { required: true, }, // 表示する内容
   },
 
   data() {
     return {
       zoom_p: false,       // 拡大する？
 
-                           // private
+      // private
       _chart_config: null, // 現在表示しているチャートの設定(updateするとチャートの方もupdateで更新できる)
-      xhr_counter: 0,      // 時間チャート用データを取得中なら1以上
     }
   },
 
   created() {
     this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT)
+    this._chart_config.data = this.time_chart_params
 
     // chart.js のインスタンスに他のデータを渡す
     // 予約キーと衝突しなかったら自由に引数を追加できる
     this._chart_config.__vm__ = this
 
+    this.chart_flip_set()
+
+    // N手目はdatasets配列のどの要素を見るかすぐにわかるテーブルを作成する
+    // if (this.index_info_hash) {
+    //   this._chart_config.index_info_hash = this.index_info_hash(time_chart_params)
+    // }
+
     if (this.vline_setup) {
       this.vline_setup()
     }
+
+  },
+
+  mounted() {
+    this.chart_create()
   },
 
   watch: {
-    record(v) {
-      alert("レコードが切り替わったときにチャートONなら表示する、としたいのになんで呼ばれんの？")
-      if (this.show_p) {
-        this.chart_show()
-      }
-    },
-
-    // 時間チャートスイッチ ON / OFF
-    // 1回目 _chart_config.data がないので xhr で取得
-    // 2回目 _chart_config.data があるのでそのまま表示
-    show_p(v, ov) {
-      this.debug_alert(`show_p: ${ov} -> ${v}`)
-      if (v) {
-        this.chart_show()
-      } else {
-        this.chart_destroy()
-      }
-    },
-
     zoom_p(v) {
       if (v) {
         // 拡大
@@ -417,31 +410,6 @@ export default {
   },
 
   methods: {
-    chart_show() {
-      if (this._chart_config.data) {
-        this.chart_create()
-      } else {
-        if (this.xhr_counter == 0) {
-          this.xhr_counter += 1
-          this.http_get_command(this.record.show_path, { time_chart_fetch: true }, data => {
-            const time_chart_params = data.time_chart_params
-
-            this._chart_config.data = time_chart_params
-            this.chart_flip_set()
-
-            // N手目はdatasets配列のどの要素を見るかすぐにわかるテーブルを作成する
-            // if (this.index_info_hash) {
-            //   this._chart_config.index_info_hash = this.index_info_hash(time_chart_params)
-            // }
-
-            this.chart_create()
-
-            this.xhr_counter = 0
-          })
-        }
-      }
-    },
-
     // 時間チャート表示
     chart_create() {
       this.chart_destroy()

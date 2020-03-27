@@ -51,8 +51,9 @@
           b-icon(icon="chart-timeline-variant" size="is-small")
 
       sp_show_time_chart(
+        v-if="time_chart_p && time_chart_params"
         :record="record"
-        :show_p="time_chart_p"
+        :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="turn_offset"
         :flip="new_flip"
@@ -100,8 +101,10 @@ export default {
       run_mode: null,      // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       turn_offset: null,   // KENTOに渡すための手番
       name_show_p: true,   // プレイヤーの名前を表示する？
-      time_chart_p: false, // 時間チャートを表示する？
       new_flip: null,      // 上下反転している？
+
+      time_chart_p: false,     // 時間チャートを表示する？
+      time_chart_params: null, // 時間チャートのデータ
     }
   },
 
@@ -123,6 +126,15 @@ export default {
     permalink_url() {
       window.history.replaceState("", null, this.permalink_url)
     },
+    time_chart_p() {
+      if (this.time_chart_p) {
+        if (!this.time_chart_params) {
+          this.http_get_command(this.record.show_path, { time_chart_fetch: true }, data => {
+            this.time_chart_params = data.time_chart_params
+          })
+        }
+      }
+    }
   },
 
   methods: {
