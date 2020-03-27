@@ -141,7 +141,7 @@ window.Adapter = Vue.extend({
 
     // 「盤面」
     board_show_handle() {
-      this.record_fetch(() => this.sp_show_modal(this.record, true, 'last'))
+      this.record_fetch(() => this.sp_show_modal({record: this.record, board_show_type: "last"}))
     },
 
     // helper

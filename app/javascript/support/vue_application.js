@@ -74,7 +74,7 @@ export default {
           hasModalCard: true,
           animation: "",
           fullScreen: true, // this.mobile_p,
-          canCancel: ['escape', 'outside'],
+          canCancel: ["escape", "outside"],
           trapFocus: true,
           // scroll: "keep",
           component: user_info_show,
@@ -97,20 +97,19 @@ export default {
       })
     },
 
-    sp_show_modal(record, pulldown_menu_p, board_show_type) {
+    sp_show_modal(props) {
       // https://buefy.org/documentation/modal
       this.$buefy.modal.open({
         parent: this,
-        props: { record: record, pulldown_menu_p: pulldown_menu_p, board_show_type: board_show_type },
+        props: props,
         hasModalCard: true,
         animation: "",
         fullScreen: true,
-        canCancel: ['escape', 'outside'],
+        canCancel: ["escape", "outside"],
         trapFocus: true,
         component: sp_show,
       })
     },
-
   },
 
   computed: {

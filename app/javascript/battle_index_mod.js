@@ -79,7 +79,7 @@ export default {
     },
 
     sp_show_show() {
-      this.sp_show_modal(this.selected_record, true, this.board_show_type)
+      this.sp_show_modal({record: this.selected_record, board_show_type: this.board_show_type})
     },
 
     sort_handle(column, order) {

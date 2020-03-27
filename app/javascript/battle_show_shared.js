@@ -24,7 +24,7 @@ export default {
         // iframeモード
       } else {
         // 通常の詳細
-        this.sp_show_modal(this.record, true)
+        this.sp_show_modal({record: this.record})
       }
     }
   },
