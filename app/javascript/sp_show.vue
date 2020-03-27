@@ -105,10 +105,24 @@ export default {
     }
   },
 
+  beforeCreate() {
+    window.history.pushState(this.$options.name, null, this.permalink_url)
+  },
+
+  beforeDestroy() {
+    window.history.back()
+  },
+
   created() {
     this.record_setup()
     this.chart_show_auto()
     this.slider_focus_delay()
+  },
+
+  watch: {
+    permalink_url() {
+      window.history.replaceState("", null, this.permalink_url)
+    },
   },
 
   methods: {
