@@ -11,7 +11,7 @@ module Swars
     end
 
     def to_a
-      list = matched_medal_infos.collect(&:icon)
+      list = matched_medal_infos.collect(&:medal_params)
 
       if params[:debug]
         list << { method: "tag", name: "X", type: "is-white" }
@@ -39,27 +39,31 @@ module Swars
         "負け数"                          => lose_count,
         "勝率"                            => win_ratio,
         "引き分け率"                      => draw_ratio,
-        "切れ負け / 負け数"               => lose_ratio_of("TIMEOUT"),
-        "居飛車率"                        => i_ratio,
+        "切れ負け率(分母:負け数)"         => lose_ratio_of("TIMEOUT"),
+        "切断率(分母:負け数)"             => lose_ratio_of("DISCONNECT"),
+        "居飛車率"                        => ibisha_ratio,
         "居玉勝率"                        => igyoku_win_ratio,
         "アヒル囲い率"                    => ratio_of("アヒル囲い"),
+        "嬉野流率"                        => ratio_of("嬉野流"),
         "タグ平均偏差値"                  => deviation_avg,
         "1手詰を詰まさないでじらした割合" => jirasi_ratio,
         "絶対投了しない率"                => zettai_toryo_sinai_ratio,
         "大長考または放置率"              => long_think_ratio,
-        "棋神降臨疑惑対局数"              => kishin_use_battle_count,
+        "棋神降臨疑惑対局数"              => ai_use_battle_count,
         "長考または放置率"                => short_think_ratio,
-        "タグの重み"                      => all_hash,
+        "タグの重み"                      => all_tag_names_hash,
       }
     end
 
     def matched_medal_infos
-      MedalInfo.find_all { |e| instance_eval(&e.func) || params[:debug] }
+      MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:debug] }
     end
 
     def ratio_of(key)
-      all_hash[key].fdiv(real_count)
+      all_tag_names_hash[key].fdiv(real_count)
     end
+
+    ################################################################################ 居玉勝ちマン
 
     # 居玉で勝った率
     def igyoku_win_ratio
@@ -73,10 +77,12 @@ module Swars
       end
     end
 
+    ################################################################################ レアマン
+
     # タグの偏差値の平均
     def deviation_avg
-      if tag_count.positive?
-        total = all_keys.sum do |key|
+      if all_tag_count.positive?
+        total = all_tag_names.sum do |key|
           v = 50.0
           if e = Bioshogi::TacticInfo.flat_lookup(key)
             if e = e.distribution_ratio
@@ -85,11 +91,12 @@ module Swars
           end
           v
         end
-        total.fdiv(tag_count)
+        total.fdiv(all_tag_count)
       end
     end
 
-    # 1手詰を詰まさないでじらした割合
+    ################################################################################ 一手詰じらしマン
+
     def jirasi_ratio
       if real_count.positive?
         c = RuleInfo.sum { |e| teasing_count_for(e) || 0 }
@@ -108,7 +115,8 @@ module Swars
       end
     end
 
-    # 絶対投了しないマン
+    ################################################################################ 絶対投了しないマン
+
     def zettai_toryo_sinai_ratio
       if real_count.positive?
         c = RuleInfo.sum { |e| zettai_toryo_sinai_count_for(e) || 0 }
@@ -126,6 +134,8 @@ module Swars
         s.count
       end
     end
+
+    ################################################################################ 長考
 
     # 大長考または放置
     def long_think_ratio
@@ -165,31 +175,36 @@ module Swars
       end
     end
 
+    ################################################################################ 引き分け
+
     # 引き分け率
     def draw_ratio
       @draw_ratio ||= -> {
-        if all_count.positive?
-          c = all_scope.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI")).count
-          c.fdiv(all_count)
+        if new_scope_count.positive?
+          c = new_scope.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI")).count
+          c.fdiv(new_scope_count)
         end
       }.call
     end
 
-    def all_scope
+    # 引き分けを含むため current_scope は使わずに作り直す
+    def new_scope
       s = user.memberships
       s = s.joins(:battle)
       s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
       s = s.limit(current_max)
     end
 
-    def all_count
-      @all_scope ||= all_scope.count
+    def new_scope_count
+      @new_scope ||= new_scope.count
     end
+
+    ################################################################################
 
     # 棋神
     # turn_max >= 2 なら think_all_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
-    def kishin_use_battle_count
-      @kishin_use_battle_count ||= -> {
+    def ai_use_battle_count
+      @ai_use_battle_count ||= -> {
         # A
         s = win_scope                                                                           # 勝っている
         s = s.joins(:battle)
@@ -215,10 +230,6 @@ module Swars
       50
     end
 
-    # def toal_counts_for(*key)
-    #   key.sum { |e| all_hash[key] }
-    # end
-
     # 勝率
     def win_ratio
       @win_ratio ||= -> {
@@ -243,49 +254,50 @@ module Swars
       }.call
     end
 
-    def win_count
-      @win_count ||= win_scope.count
-    end
-
-    def lose_count
-      @lose_count ||= lose_scope.count
-    end
-
-    # 負けた memberships のみ
-    def lose_scope
-      @lose_scope ||= ids_scope.where(judge_key: "lose")
-    end
-
-    # 勝った memberships のみ
-    def win_scope
-      @win_scope ||= ids_scope.where(judge_key: "win")
-    end
-
     # 居飛車率
-    def i_ratio
-      @i_ratio ||= -> {
-        total = all_hash["居飛車"] + all_hash["振り飛車"]
+    def ibisha_ratio
+      @ibisha_ratio ||= -> {
+        total = all_tag_names_hash["居飛車"] + all_tag_names_hash["振り飛車"]
         if total.positive?
-          all_hash["居飛車"].fdiv(total)
+          all_tag_names_hash["居飛車"].fdiv(total)
         end
       }.call
     end
 
-    # all_hash["居飛車"]         # => 1
-    # all_hash["存在しない戦法"] # => 0
-    def all_hash
-      @all_hash ||= -> {
-        all_tag_counts = ids_scope.all_tag_counts(at_least: at_least_value)
-        all_tag_counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
+    # all_tag_names_hash["居飛車"]         # => 1
+    # all_tag_names_hash["存在しない戦法"] # => 0
+    def all_tag_names_hash
+      @all_tag_names_hash ||= -> {
+        counts = ids_scope.all_tag_counts(at_least: at_least_value)
+        counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
       }.call
     end
 
-    def all_keys
-      @all_keys ||= all_hash.keys
+    def all_tag_names
+      @all_tag_names ||= all_tag_names_hash.keys
     end
 
-    def tag_count
-      @tag_count ||= all_hash.size
+    # タグの種類数
+    def all_tag_count
+      @all_tag_count ||= all_tag_names_hash.size
+    end
+
+    ########################################
+
+    def win_scope
+      @win_scope ||= ids_scope.where(judge_key: "win")
+    end
+
+    def win_count
+      @win_count ||= win_scope.count
+    end
+
+    def lose_scope
+      @lose_scope ||= ids_scope.where(judge_key: "lose")
+    end
+
+    def lose_count
+      @lose_count ||= lose_scope.count
     end
   end
 end

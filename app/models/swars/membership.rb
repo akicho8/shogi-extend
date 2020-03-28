@@ -114,7 +114,7 @@ module Swars
 
     concerning :MedalMethods do
       def first_matched_medal
-        MembershipMedalInfo.find { |e| e.func.call(self) }
+        MembershipMedalInfo.find { |e| e.if_cond.call(self) }
       end
 
       def medal_params(params = {})
@@ -123,7 +123,7 @@ module Swars
         end
 
         MembershipMedalInfo.each do |e|
-          if v = e.func.call(self)
+          if v = e.if_cond.call(self)
             return e.medal_params || v
           end
         end
