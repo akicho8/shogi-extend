@@ -177,11 +177,26 @@ module Swars
 
     ################################################################################ 引き分け
 
+    # 開幕千日手数
+    def start_draw_ratio
+      @start_draw_ratio ||= -> {
+        if new_scope_count.positive?
+          s = new_scope
+          s = s.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI"))
+          s = s.where(Swars::Battle.arel_table[:turn_max].eq(12))
+          c = s.count
+          c.fdiv(new_scope_count)
+        end
+      }.call
+    end
+
     # 引き分け率
     def draw_ratio
       @draw_ratio ||= -> {
         if new_scope_count.positive?
-          c = new_scope.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI")).count
+          s = new_scope
+          s = s.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI"))
+          c = s.count
           c.fdiv(new_scope_count)
         end
       }.call
@@ -209,15 +224,19 @@ module Swars
         s = win_scope                                                                           # 勝っている
         s = s.joins(:battle)
         s = s.where(Swars::Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
-        s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))                       # しかも詰ませた
+        # s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
         s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
 
-        # (B or C)
-        a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
-        a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
+        if false
+          # (B or C)
+          a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
+          a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
 
-        # A and (B or C)
-        s = s.merge(a)
+          # A and (B or C)
+          s = s.merge(a)
+        else
+          s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(15))
+        end
 
         s.count
       }.call

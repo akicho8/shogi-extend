@@ -6,7 +6,7 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
-    b-dropdown.top_right_menu(position="is-bottom-left")
+    b-dropdown.top_right_menu(position="is-bottom-left" v-if="development_p")
       b-icon.has-text-white(slot="trigger" icon="dots-vertical")
 
       b-dropdown-item(:href="permalink_url")

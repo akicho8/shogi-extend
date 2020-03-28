@@ -99,17 +99,23 @@ module Swars
     end
 
     describe "ただの千日手" do
-      before do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]] * n
+      end
+
+      def test(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: [["+7968GI", 600], ["-8232HI", 597]], final_key: :DRAW_SENNICHI) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DRAW_SENNICHI) do |e|
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
+        @black.memberships.first.first_matched_medal.key
       end
 
       it do
-        assert { @black.memberships.first.first_matched_medal.key == :"ただの千日手" }
+        assert { test(4) == :"ただの千日手" }
+        assert { test(3) == :"開幕千日手"   }
       end
     end
 
@@ -139,25 +145,23 @@ module Swars
     describe "棋神マン" do
       def csa_seq_generate(n)
         n.times.flat_map do |i|
-          seconds = 600 - (i * 2.seconds)
-          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds], ["-5251OU", seconds]]
+          seconds = 600 - (i * 4.seconds)
+          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
         end
       end
 
       def test(n)
         @black = User.create!
         @white = User.create!
-        n.times do
-          Swars::Battle.create!(csa_seq: csa_seq_generate(20), final_key: :CHECKMATE) do |e|
-            e.memberships.build(user: @black, judge_key: :win)
-            e.memberships.build(user: @white, judge_key: :lose)
-          end
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :CHECKMATE) do |e|
+          e.memberships.build(user: @black, judge_key: :win)
+          e.memberships.build(user: @white, judge_key: :lose)
         end
         @black.memberships.first.first_matched_medal.key
       end
 
       it do
-        assert { test(1) == :"棋神マン" }
+        assert { test(20) == :"棋神マン" }
       end
     end
 

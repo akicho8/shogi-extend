@@ -37,7 +37,7 @@ module Swars
       { key: "長考マン",         medal_params: { method: "raw",  name: "😪", type: nil, },                                if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
 
       { key: "ただの千日手",     medal_params: { method: "medal_params", name: "autorenew",    type: "is-danger" },                  if_cond: proc { (r = draw_ratio) && r > 0    } },
-      { key: "千日手異常",       medal_params: { method: "medal_params", name: "alert-circle", type: "is-danger" },                  if_cond: proc { (r = draw_ratio) && r >= 0.1 && new_scope_count >= 10 } },
+      { key: "開幕千日手",       medal_params: { method: "medal_params", name: "alert-circle", type: "is-danger" },                  if_cond: proc { (r = start_draw_ratio) && r > 0 } },
 
       { key: "棋神マン",         medal_params: { method: "raw",  name: "🤖",     type: nil },                             if_cond: proc { ai_use_battle_count >= 1 } },
 

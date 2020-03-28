@@ -105,6 +105,14 @@ module Swars
             if d.positive?
               e.think_end_avg = c.div(d)
             end
+
+            a = e.sec_list                             # => [2, 3, 3, 2, 2, 2]
+            x = a.chunk { |e| e == 2 }                 # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
+            x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
+            v = x.compact.max                          # => 3
+            if v
+              e.two_serial_max = v
+            end
           end
         end
 

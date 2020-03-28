@@ -5,7 +5,8 @@ module Swars
     memory_record [
       # ヒットしたらbreakなので順序重要
       { key: "切断マン",               medal_params: "💩", if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
-      { key: "棋神マン",               medal_params: "🤖", if_cond: -> m { m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE && m.battle.turn_max >= 50 && (m.think_all_avg <= 3 || m.think_end_avg <= 2) } }, # m.battle.turn_max >= 2 が通れば think_all_avg は nil ではない
+      # { key: "棋神マン",               medal_params: "🤖", if_cond: -> m { m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE && m.battle.turn_max >= 50 && (m.think_all_avg <= 3 || m.think_end_avg <= 2) } }, # m.battle.turn_max >= 2 が通れば think_all_avg は nil ではない
+      { key: "棋神マン",               medal_params: "🤖", if_cond: -> m { m.judge_key == "win" && m.battle.turn_max >= 50 && (m.two_serial_max || 0) >= 15 } },
       { key: "角不成マン",             medal_params: "☠",  if_cond: -> m { m.tag_names_for(:note).include?("角不成") }                       },
       { key: "飛車不成マン",           medal_params: "💀", if_cond: -> m { m.tag_names_for(:note).include?("飛車不成") }                     },
 
@@ -15,7 +16,9 @@ module Swars
       { key: "大長考マン",             medal_params: "😴", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t } },
       { key: "長考マン",               medal_params: "😪", if_cond: -> m { (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t } },
       { key: "切れ負けマン",           medal_params: { icon: "timer-sand-empty", :class => "has-text-grey-light" },  if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
-      { key: "ただの千日手",           medal_params: { icon: "autorenew",        :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" } },
+
+      { key: "開幕千日手",             medal_params: { icon: "alert-circle",     :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max == 12 } },
+      { key: "ただの千日手",           medal_params: { icon: "autorenew",        :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max > 12 } },
 
       {
         key: "段級位差",

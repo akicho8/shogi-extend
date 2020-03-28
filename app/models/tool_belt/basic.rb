@@ -25,6 +25,8 @@ module ToolBelt
           link_to_eval("Swars::Battle.destroy_all")                           { "Swars::Battle.destroy_all"                                               },
           link_to_eval("itoshinTV 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'itoshinTV', run_remote: true)"      },
           link_to_eval("misaka_level5 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'misaka_level5', run_remote: true)"      },
+          link_to_eval("aika0603 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'aika0603', run_remote: true)"      },
+          link_to_eval("chrono_ 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'chrono_', run_remote: true)"      },
           link_to_eval("Yamamoto_Hiroshi 取り込み (指導対局)")                  { "Swars::Battle.user_import(user_key: 'Yamamoto_Hiroshi', run_remote: true)" },
           link_to_eval("kinakom0chi 取り込み")                                { "Swars::Battle.user_import(user_key: 'kinakom0chi', run_remote: true)"    },
           link_to_eval("メール書式確認", redirect_to: "/rails/mailers")       { ""                                                                        },
