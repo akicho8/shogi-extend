@@ -112,23 +112,21 @@ module Swars
       @opponent ||= battle.memberships.where.not(position: position).take
     end
 
-    concerning :HelperMethods do
-      def icon_params(params = {})
-        if params[:debug] || ENV["ICON_DEBUG"]
-          return MembershipMedalInfo[id.modulo(MembershipMedalInfo.count)].icon_params
+    concerning :MedalMethods do
+      def first_matched_medal
+        MembershipMedalInfo.find { |e| e.func.call(self) }
+      end
+
+      def medal_params(params = {})
+        if params[:debug] || ENV["MEDAL_DEBUG"]
+          return MembershipMedalInfo[id.modulo(MembershipMedalInfo.count)].medal_params
         end
 
-        MembershipMedalInfo.find do |e|
+        MembershipMedalInfo.each do |e|
           if v = e.func.call(self)
-            if v == true
-              return e.icon_params
-            else
-              return v
-            end
+            return e.medal_params || v
           end
         end
-
-        raise "must not happen"
       end
     end
 

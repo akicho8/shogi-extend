@@ -42,6 +42,9 @@ module Swars
 
     has_many :users, through: :memberships
 
+    scope :win_lose_only, -> { where.not(win_user_id: nil) } # 勝敗が必ずあるもの
+    scope :latest_order, -> { order(battled_at: :desc) }     # 新しい順
+
     before_validation on: :create do
       if Rails.env.development? || Rails.env.test?
         self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]

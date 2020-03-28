@@ -16,7 +16,7 @@ module Swars
       end
 
       it do
-        assert { user.user_info.medal_list.to_a == [{:method=>"tag", :name=>"居", :type=>"is-light"}, {:method=>"tag", :name=>"嬉", :type=>"is-light"},{:method=>"raw", :name=>"🐤", :type=>nil}] }
+        assert { user.user_info.medal_list.to_a == [{:method=>"tag", :name=>"居", :type=>"is-light"}, {:method=>"tag", :name=>"嬉", :type=>"is-light"}] }
       end
     end
 
@@ -41,22 +41,6 @@ module Swars
 
       it do
         assert { user.user_info.medal_list.deviation_avg < 50.0 }
-      end
-    end
-
-    describe "igyoku_win_ratio" do
-      before do
-        Battle.create! do |e|
-          e.memberships.build(user: user, judge_key: "win")
-        end
-      end
-
-      it do
-        assert { user.user_info.medal_list.igyoku_win_ratio == 1.0 }
-      end
-
-      it do
-        assert { User.create!.user_info.medal_list.igyoku_win_ratio == nil }
       end
     end
   end

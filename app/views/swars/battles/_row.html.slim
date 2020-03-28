@@ -15,7 +15,7 @@ template(slot-scope="props")
       / span (divでもよい) で囲まないとアイコンと名前が離れてしまう
       span
         span.icon_with_name
-          membership_medal(:params="m.icon_params" v-if="m.icon_params")
+          membership_medal(:params="m.medal_params" v-if="m.medal_params")
           template(v-if="false")
             a(@click.stop :href="m.query_user_url")
               | {{m.name_with_grade}}

@@ -9,7 +9,7 @@
       div.chart_container
         canvas(ref="main_canvas" :width="size === 'is-small' ? 68 : 92")
         .win_rate_container
-          .win_rate_label.has-text-grey-light.has-text-weight-bold
+          .win_rate_label.has-text-grey-light.has-text-weight-bold(v-if="total >= 1")
             | 勝率
           .rate_human_with_p
             span.rate_human.has-text-weight-bold
@@ -130,7 +130,7 @@ export default {
   computed: {
     rate_human() {
       if (this.total === 0) {
-        return "？"
+        return ""
       }
       return Math.floor(this.rate * 100)
     },

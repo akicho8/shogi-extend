@@ -50,8 +50,8 @@ module Swars
           end
         end
         it do
-          assert { test("初段", "二段").memberships[0].icon_params == {:icon => "numeric-1-circle",      :class => "has-text-gold"       }}
-          assert { test("初段", "二段").memberships[1].icon_params == {:icon => "emoticon-dead-outline", :class => "has-text-grey-light" }}
+          assert { test("初段", "二段").memberships[0].medal_params == {:icon => "numeric-1-circle",      :class => "has-text-gold"       }}
+          assert { test("初段", "二段").memberships[1].medal_params == {:icon => "emoticon-dead-outline", :class => "has-text-grey-light" }}
         end
       end
       describe "寝る" do
@@ -59,9 +59,9 @@ module Swars
           Battle.create!(csa_seq: [["+7968GI", 600], ["-8232HI", 600], ["+5756FU", 600 - a]])
         end
         it do
-          assert { test(60*2.5 - 1).memberships[0].icon_params == { :icon => "star", :class => "has-text-gold"} }
-          assert { test(60*2.5).memberships[0].icon_params == "😪" }
-          assert { test(60*3).memberships[0].icon_params == "😴" }
+          assert { test(60*2.5 - 1).memberships[0].medal_params == { :icon => "star", :class => "has-text-gold"} }
+          assert { test(60*2.5).memberships[0].medal_params == "😪" }
+          assert { test(60*3).memberships[0].medal_params == "😴" }
         end
       end
     end

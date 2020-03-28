@@ -92,6 +92,19 @@ module Swars
           memberships[i].tap do |e|
             e.think_max = e.sec_list.max || 0
             e.think_last = e.sec_list.last || 0
+
+            d = e.sec_list.size
+            c = e.sec_list.sum
+            if d.positive?
+              e.think_all_avg = c.div(d)
+            end
+
+            list = e.sec_list.last(5)
+            d = list.size
+            c = list.sum
+            if d.positive?
+              e.think_end_avg = c.div(d)
+            end
           end
         end
 

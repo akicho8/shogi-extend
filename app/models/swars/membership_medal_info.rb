@@ -1,18 +1,25 @@
+# app/models/swars/medal_info.rb
 module Swars
-  class MembershipIconInfo
+  class MembershipMedalInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :haiseisetsudanman,       icon_params: "💩", func: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
-      { key: :kakuhunariman,           icon_params: "☠",  func: -> m { m.tag_names_for(:note).include?("角不成") }                       },
-      { key: :hisyahunariman,          icon_params: "💀", func: -> m { m.tag_names_for(:note).include?("飛車不成") }                     },
-      { key: :zettainitouryousinaiman, icon_params: "🧟", func: -> m { (t = m.battle.rule_info.leave_alone_limit2) && m.think_max >= t && m.think_max == m.think_last && m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
-      { key: :ittedumejirasuman,       icon_params: "😈", func: -> m { (t = m.battle.rule_info.leave_alone_limit1) && m.think_max >= t && m.think_max == m.think_last && m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE } },
-      { key: :arienaihodonochokoman,   icon_params: "😴", func: -> m { (t = m.battle.rule_info.leave_alone_limit2) && m.think_max >= t } },
-      { key: :tyoukousuruman,          icon_params: "😪", func: -> m { (t = m.battle.rule_info.leave_alone_limit1) && m.think_max >= t } },
-      { key: :tadanosennichite,        icon_params: { icon: "autorenew",        :class => "has-text-danger" }, func: -> m { m.judge_key == "draw" } },
-      { key: :kiremakesitayo,          icon_params: { icon: "timer-sand-empty", :class => "has-text-grey-light" },                func: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
+      # ヒットしたらbreakなので順序重要
+      { key: "棋神マン",               medal_params: "🤖", func: -> m { m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE && m.battle.turn_max >= 50 && (m.think_all_avg <= 3 || m.think_end_avg <= 2) } }, # m.battle.turn_max >= 2 が通れば think_all_avg は nil ではない
+      { key: "切断マン",               medal_params: "💩", func: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
+      { key: "角不成マン",             medal_params: "☠",  func: -> m { m.tag_names_for(:note).include?("角不成") }                       },
+      { key: "飛車不成マン",           medal_params: "💀", func: -> m { m.tag_names_for(:note).include?("飛車不成") }                     },
+
+      { key: "一手詰じらしマン",       medal_params: "😈", func: -> m { (t = m.battle.rule_info.teasing_limit) && m.think_last >= t && m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE } },
+      { key: "絶対投了しないマン",     medal_params: "🧟", func: -> m { (t = m.battle.rule_info.long_leave_alone) && m.think_last >= t && m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
+
+      { key: "大長考マン",             medal_params: "😴", func: -> m { (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t } },
+      { key: "長考マン",               medal_params: "😪", func: -> m { (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t } },
+      { key: "切れ負けマン",           medal_params: { icon: "timer-sand-empty", :class => "has-text-grey-light" },  func: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
+      { key: "ただの千日手",           medal_params: { icon: "autorenew",        :class => "has-text-danger" }, func: -> m { m.judge_key == "draw" } },
+
       {
-        icon_params: nil,
+        key: "段級位差",
+        medal_params: nil,
         func: -> m {
           d = m.grade_diff
           case

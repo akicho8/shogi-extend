@@ -70,6 +70,7 @@ module Swars
         hash[:judge_keys] = current_scope_base.limit(current_ox_max).pluck(:judge_key).reverse
 
         hash[:medal_list] = medal_list.to_a
+        hash[:debug_hash] = medal_list.to_debug_hash
 
         hash[:every_day_list]       = every_day_list
         hash[:every_my_attack_list] = every_my_attack_list
@@ -82,7 +83,7 @@ module Swars
     end
 
     def medal_list
-      MedalList.new(self)
+      @medal_list ||= MedalList.new(self)
     end
 
     def current_scope
@@ -105,11 +106,11 @@ module Swars
       # 1
     end
 
-    private
-
     def current_max
       (params[:max].presence || default_params[:max]).to_i
     end
+
+    private
 
     def current_ox_max
       (params[:ox_max].presence || default_params[:ox_max]).to_i
@@ -122,8 +123,8 @@ module Swars
 
     def condition_add(s)
       s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:win_user_id].not_eq(nil)) # 勝敗が必ずあるもの
-      s = s.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
+      s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
+      s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
     end
 
     # memberships が配列になっているとき用
@@ -208,7 +209,7 @@ module Swars
           # 勝ち負け数
           c = judge_counts_wrap(s.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 0}
           if options[:judge_flip]
-            c = c.keys.zip(c.values.reverse).to_h   # => {"win" => 0, "lose" => 1}    ; 自分視点に変更
+            c["win"], c["lose"] = c["lose"], c["win"] # => {"win" => 0, "lose" => 1}    ; 自分視点に変更
           end
           hash[:judge_counts] = c
         end
@@ -218,7 +219,7 @@ module Swars
     # judge_counts_wrap({})         # => {"win" => 0, "lose" => 0}
     # judge_counts_wrap("win" => 1) # => {"win" => 1, "lose" => 0}
     def judge_counts_wrap(hash)
-      {"win" => 0, "lose" => 0}.merge(hash)
+      {"win" => 0, "lose" => 0}.merge(hash) # JudgeInfo.inject({}) { |a, e| a.merge(e.key.to_s => 0) }.merge(hash)
     end
 
     def day_color_for(t)

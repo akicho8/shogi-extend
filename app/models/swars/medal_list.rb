@@ -4,7 +4,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :current_max, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -32,6 +32,27 @@ module Swars
       list
     end
 
+    def to_debug_hash
+      {
+        "引き分けを除く対象サンプル数"    => real_count,
+        "勝ち数"                          => win_count,
+        "負け数"                          => lose_count,
+        "勝率"                            => win_ratio,
+        "引き分け率"                      => draw_ratio,
+        "切れ負け / 負け数"               => lose_ratio_of("TIMEOUT"),
+        "居飛車率"                        => i_ratio,
+        "居玉勝率"                        => igyoku_win_ratio,
+        "アヒル囲い率"                    => ratio_of("アヒル囲い"),
+        "タグ平均偏差値"                  => deviation_avg,
+        "1手詰を詰まさないでじらした割合" => jirasi_ratio,
+        "絶対投了しない率"                => zettai_toryo_sinai_ratio,
+        "大長考または放置率"              => long_think_ratio,
+        "棋神降臨疑惑対局数"              => kishin_use_battle_count,
+        "長考または放置率"                => short_think_ratio,
+        "タグの重み"                      => all_hash,
+      }
+    end
+
     def matched_medal_infos
       MedalInfo.find_all { |e| instance_eval(&e.func) || params[:debug] }
     end
@@ -42,12 +63,11 @@ module Swars
 
     # 居玉で勝った率
     def igyoku_win_ratio
-      if real_count.nonzero?
-        s = ids_scope
-        s = s.where(judge_key: "win")
+      if real_count.positive?
+        s = win_scope
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
-        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(Rails.env.production? ? 50 : 1))
+        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
         s = s.tagged_with("居玉", on: :note_tags)
         s.count.fdiv(real_count)
       end
@@ -55,7 +75,7 @@ module Swars
 
     # タグの偏差値の平均
     def deviation_avg
-      if tag_count.nonzero?
+      if tag_count.positive?
         total = all_keys.sum do |key|
           v = 50.0
           if e = Bioshogi::TacticInfo.flat_lookup(key)
@@ -69,7 +89,131 @@ module Swars
       end
     end
 
+    # 1手詰を詰まさないでじらした割合
+    def jirasi_ratio
+      if real_count.positive?
+        c = RuleInfo.sum { |e| teasing_count_for(e) || 0 }
+        c.fdiv(real_count)
+      end
+    end
+
+    def teasing_count_for(rule_info)
+      if t = rule_info.teasing_limit
+        s = win_scope
+        s = s.where(Swars::Membership.arel_table[:think_last].gteq(t))
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:rule_key].eq(rule_info.key))
+        s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))
+        s.count
+      end
+    end
+
+    # 絶対投了しないマン
+    def zettai_toryo_sinai_ratio
+      if real_count.positive?
+        c = RuleInfo.sum { |e| zettai_toryo_sinai_count_for(e) || 0 }
+        c.fdiv(real_count)
+      end
+    end
+
+    def zettai_toryo_sinai_count_for(rule_info)
+      if t = rule_info.long_leave_alone
+        s = lose_scope
+        s = s.where(Swars::Membership.arel_table[:think_last].gteq(t))
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:rule_key].eq(rule_info.key))
+        s = s.where(Swars::Battle.arel_table[:final_key].eq("TIMEOUT"))
+        s.count
+      end
+    end
+
+    # 大長考または放置
+    def long_think_ratio
+      if real_count.positive?
+        c = RuleInfo.sum { |e| long_think_count_for(e) || 0 }
+        c.fdiv(real_count)
+      end
+    end
+
+    def long_think_count_for(rule_info)
+      if t = rule_info.long_leave_alone
+        s = ids_scope
+        s = s.where(Swars::Membership.arel_table[:think_max].gteq(t))
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:rule_key].eq(rule_info.key))
+        s.count
+      end
+    end
+
+    # 小考
+    def short_think_ratio
+      if real_count.positive?
+        c = RuleInfo.sum { |e| short_think_count_for(e) || 0 }
+        c.fdiv(real_count)
+      end
+    end
+
+    def short_think_count_for(rule_info)
+      a = rule_info.short_leave_alone
+      b = rule_info.long_leave_alone
+      if a && b
+        s = ids_scope
+        s = s.where(Swars::Membership.arel_table[:think_max].between(a...b))
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:rule_key].eq(rule_info.key))
+        s.count
+      end
+    end
+
+    # 引き分け率
+    def draw_ratio
+      @draw_ratio ||= -> {
+        if all_count.positive?
+          c = all_scope.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI")).count
+          c.fdiv(all_count)
+        end
+      }.call
+    end
+
+    def all_scope
+      s = user.memberships
+      s = s.joins(:battle)
+      s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
+      s = s.limit(current_max)
+    end
+
+    def all_count
+      @all_scope ||= all_scope.count
+    end
+
+    # 棋神
+    # turn_max >= 2 なら think_all_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
+    def kishin_use_battle_count
+      @kishin_use_battle_count ||= -> {
+        # A
+        s = win_scope                                                                           # 勝っている
+        s = s.joins(:battle)
+        s = s.where(Swars::Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
+        s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))                       # しかも詰ませた
+        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
+
+        # (B or C)
+        a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
+        a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
+
+        # A and (B or C)
+        s = s.merge(a)
+
+        s.count
+      }.call
+    end
+
     private
+
+    # 最低でも2以上にすること
+    def turn_max_gteq
+      50
+    end
 
     # def toal_counts_for(*key)
     #   key.sum { |e| all_hash[key] }
@@ -81,7 +225,7 @@ module Swars
         w = judge_counts["win"]
         l = judge_counts["lose"]
         s = w + l
-        if s.nonzero?
+        if s.positive?
           w.fdiv(s)
         end
       }.call
@@ -91,13 +235,18 @@ module Swars
     def lose_ratio_of(final_key)
       @lose_ratio_of ||= {}
       @lose_ratio_of[final_key] ||= -> {
-        if lose_count.nonzero?
-          lose_scope.joins(:battle).where(Swars::Battle.arel_table[:final_key].eq(final_key)).count.fdiv(lose_count)
+        if lose_count.positive?
+          s = lose_scope.joins(:battle).where(Swars::Battle.arel_table[:final_key].eq(final_key))
+          c = s.count
+          c.fdiv(lose_count)
         end
       }.call
     end
 
-    # 負け数
+    def win_count
+      @win_count ||= win_scope.count
+    end
+
     def lose_count
       @lose_count ||= lose_scope.count
     end
@@ -107,11 +256,16 @@ module Swars
       @lose_scope ||= ids_scope.where(judge_key: "lose")
     end
 
+    # 勝った memberships のみ
+    def win_scope
+      @win_scope ||= ids_scope.where(judge_key: "win")
+    end
+
     # 居飛車率
     def i_ratio
       @i_ratio ||= -> {
         total = all_hash["居飛車"] + all_hash["振り飛車"]
-        if total.nonzero?
+        if total.positive?
           all_hash["居飛車"].fdiv(total)
         end
       }.call

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_155401) do
+ActiveRecord::Schema.define(version: 2020_03_28_200200) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -295,6 +295,8 @@ ActiveRecord::Schema.define(version: 2020_03_26_155401) do
     t.integer "think_max"
     t.bigint "op_user_id", comment: "相手"
     t.integer "think_last"
+    t.integer "think_all_avg"
+    t.integer "think_end_avg"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"

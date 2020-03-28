@@ -6,8 +6,8 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
-    b-dropdown.top_right_menu(position="is-bottom-left" v-if="development_p")
-      b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
+    b-dropdown.top_right_menu(position="is-bottom-left")
+      b-icon.has-text-white(slot="trigger" icon="dots-vertical")
 
       b-dropdown-item(:href="permalink_url")
         b-icon(icon="link-variant" size="is-small")
@@ -17,13 +17,17 @@
         b-icon(icon="link-variant" size="is-small")
         | パーマリンク(DEBUGモード)
 
-      b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user`" v-if="development_p")
+      b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user`")
         b-icon(icon="link-variant" size="is-small")
         | json
 
       b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user&debug=true`" v-if="development_p")
         b-icon(icon="link-variant" size="is-small")
         | json (debug)
+
+      b-dropdown-item.is-paddingless(custom)
+        pre
+          | {{info.debug_hash}}
 
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
