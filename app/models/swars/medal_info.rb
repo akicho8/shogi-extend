@@ -1,4 +1,5 @@
 # app/models/swars/membership_medal_info.rb
+# app/javascript/user_info_show.vue
 module Swars
   class MedalInfo
     include ApplicationMemoryRecord
@@ -7,10 +8,10 @@ module Swars
 
       { key: "居飛車党",         medal_params: { method: "tag",  name: "居",                type: "is-light",   },        if_cond: proc { ibisha_ratio && threshold <= ibisha_ratio                            },},
       { key: "振り飛車党",       medal_params: { method: "tag",  name: "振",                type: "is-light",   },        if_cond: proc { ibisha_ratio && ibisha_ratio < (1.0 - threshold)                     },},
-      { key: "オールラウンダー", medal_params: { method: "medal_params", name: "augmented-reality", type: nil,          },        if_cond: proc { ibisha_ratio && ((1.0 - threshold)...threshold).cover?(ibisha_ratio) },},
+      { key: "オールラウンダー", medal_params: { method: "icon", name: "augmented-reality", type: nil,          },        if_cond: proc { ibisha_ratio && ((1.0 - threshold)...threshold).cover?(ibisha_ratio) },},
 
       { key: "嬉野マン",         medal_params: { method: "tag",  name: "嬉",                type: "is-light",   },        if_cond: proc { ratio_of("嬉野流") >= 0.2                                 },},
-      { key: "パックマン",       medal_params: { method: "medal_params", name: "pac-man",           type: "is-warning", },        if_cond: proc { ratio_of("パックマン戦法") > 0                            },},
+      { key: "パックマン",       medal_params: { method: "icon", name: "pac-man",           type: "is-warning", },        if_cond: proc { ratio_of("パックマン戦法") > 0                            },},
       { key: "耀龍マン",         medal_params: { method: "raw",  name: "🐉",                type: nil,          },        if_cond: proc { (ratio_of("耀龍四間飛車") + ratio_of("耀龍ひねり飛車")) > 0  },},
       { key: "ロケットマン",     medal_params: { method: "raw",  name: "🚀",                type: nil,          },        if_cond: proc { ratio_of("ロケット") > 0  },},
       { key: "UFOマン",          medal_params: { method: "raw",  name: "🛸",                type: nil,          },        if_cond: proc { ratio_of("UFO銀") > 0  },},
@@ -21,7 +22,7 @@ module Swars
 
       { key: "居玉勝ちマン",     medal_params: { method: "raw",  name: "🗿",                type: nil,          },        if_cond: proc { (r = igyoku_win_ratio) && r >= 0.01                  },},
 
-      { key: "切れ負けマン", medal_params: { method: "medal_params", name: "timer-sand-empty",  tag_wrap: { type: "is-light" } }, if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},
+      { key: "切れ負けマン", medal_params: { method: "icon", name: "timer-sand-empty",  tag_wrap: { type: "is-light" } }, if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},
 
       { key: "レアマン",         medal_params: { method: "raw",  name: "🍀",                type: nil, },                 if_cond: proc { (r = deviation_avg) && r < 50.0                 },},
 
@@ -36,8 +37,8 @@ module Swars
       { key: "大長考マン",       medal_params: { method: "raw",  name: "😴", type: nil, },                                if_cond: proc { (r = long_think_ratio) && r > 0 } },
       { key: "長考マン",         medal_params: { method: "raw",  name: "😪", type: nil, },                                if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
 
-      { key: "ただの千日手",     medal_params: { method: "medal_params", name: "autorenew",    type: "is-danger" },                  if_cond: proc { (r = draw_ratio) && r > 0    } },
-      { key: "開幕千日手",       medal_params: { method: "medal_params", name: "alert-circle", type: "is-danger" },                  if_cond: proc { (r = start_draw_ratio) && r > 0 } },
+      { key: "ただの千日手",     medal_params: { method: "icon", name: "autorenew",    type: "is-danger" },                  if_cond: proc { (r = draw_ratio) && r > 0    } },
+      { key: "開幕千日手",       medal_params: { method: "icon", name: "alert-circle", type: "is-danger" },                  if_cond: proc { (r = start_draw_ratio) && r > 0 } },
 
       { key: "棋神マン",         medal_params: { method: "raw",  name: "🤖",     type: nil },                             if_cond: proc { ai_use_battle_count >= 1 } },
 
