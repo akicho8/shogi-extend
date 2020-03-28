@@ -67,18 +67,22 @@ export default {
 
     user_info_show_modal(user_key) {
       this.http_get_command("/w.json", { query: user_key, format_type: "user", debug: this.$route.query.debug }, data => {
-        // https://buefy.org/documentation/modal
-        this.$buefy.modal.open({
-          parent: this,
-          props: { info: data },
-          hasModalCard: true,
-          animation: "",
-          fullScreen: true, // this.mobile_p,
-          canCancel: ["escape", "outside"],
-          trapFocus: true,
-          // scroll: "keep",
-          component: user_info_show,
-        })
+        if (_.isEmpty(data)) {
+          this.debug_alert(`${user_key} は存在しません`)
+        } else {
+          // https://buefy.org/documentation/modal
+          this.$buefy.modal.open({
+            parent: this,
+            props: { info: data },
+            hasModalCard: true,
+            animation: "",
+            fullScreen: true, // this.mobile_p,
+            canCancel: ["escape", "outside"],
+            trapFocus: true,
+            // scroll: "keep",
+            component: user_info_show,
+          })
+        }
       })
     },
 
