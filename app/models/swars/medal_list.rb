@@ -4,42 +4,69 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
     end
 
     def to_a
-      @medals = []
-
-      MedalInfo.each do |e|
-        if v = instance_eval(&e.func) || params[:debug]
-          @medals << e.icon
-        end
-      end
+      list = matched_medal_infos.collect(&:icon)
 
       if params[:debug]
-        @medals << { method: "tag", name: "X", type: "is-white" }
-        @medals << { method: "tag", name: "X", type: "is-black" }
-        @medals << { method: "tag", name: "X", type: "is-light" }
-        @medals << { method: "tag", name: "X", type: "is-dark" }
-        @medals << { method: "tag", name: "X", type: "is-info" }
-        # @medals << { method: "tag", name: "X", type: "is-success" }
-        @medals << { method: "tag", name: "X", type: "is-warning" }
-        # @medals << { method: "tag", name: "X", type: "is-danger" }
-        @medals << { method: "tag", name: "💩", type: "is-white" }
-        @medals << { method: "raw", name: "💩" }
-        @medals << { method: "icon", name: "link", type: "is-warning" }
-        @medals << { method: "icon", name: "pac-man", type: "is-warning", tag_wrap: {type: "is-black"} }
-        @medals << { method: "icon", name: "timer-sand-empty", type: nil, tag_wrap: { type: "is-light" } }
+        list << { method: "tag", name: "X", type: "is-white" }
+        list << { method: "tag", name: "X", type: "is-black" }
+        list << { method: "tag", name: "X", type: "is-light" }
+        list << { method: "tag", name: "X", type: "is-dark" }
+        list << { method: "tag", name: "X", type: "is-info" }
+        # list << { method: "tag", name: "X", type: "is-success" }
+        list << { method: "tag", name: "X", type: "is-warning" }
+        # list << { method: "tag", name: "X", type: "is-danger" }
+        list << { method: "tag", name: "💩", type: "is-white" }
+        list << { method: "raw", name: "💩" }
+        list << { method: "icon", name: "link", type: "is-warning" }
+        list << { method: "icon", name: "pac-man", type: "is-warning", tag_wrap: {type: "is-black"} }
+        list << { method: "icon", name: "timer-sand-empty", type: nil, tag_wrap: { type: "is-light" } }
       end
 
-      @medals
+      list
+    end
+
+    def matched_medal_infos
+      MedalInfo.find_all { |e| instance_eval(&e.func) || params[:debug] }
     end
 
     def ratio_of(key)
       all_hash[key].fdiv(real_count)
+    end
+
+    # 居玉で勝った率
+    def igyoku_win_ratio
+      if real_count.nonzero?
+        s = ids_scope
+        s = s.where(judge_key: "win")
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(Rails.env.production? ? 50 : 1))
+        s = s.tagged_with("居玉", on: :note_tags)
+        s.count.fdiv(real_count)
+      end
+    end
+
+    # タグの偏差値の平均
+    def deviation_avg
+      if tag_count.nonzero?
+        total = all_keys.sum do |key|
+          v = 50.0
+          if e = Bioshogi::TacticInfo.flat_lookup(key)
+            if e = e.distribution_ratio
+              v = e[:deviation]
+            end
+          end
+          v
+        end
+        total.fdiv(tag_count)
+      end
     end
 
     private
@@ -47,6 +74,18 @@ module Swars
     # def toal_counts_for(*key)
     #   key.sum { |e| all_hash[key] }
     # end
+
+    # 勝率
+    def win_ratio
+      @win_ratio ||= -> {
+        w = judge_counts["win"]
+        l = judge_counts["lose"]
+        s = w + l
+        if s.nonzero?
+          w.fdiv(s)
+        end
+      }.call
+    end
 
     # 負けた数のうち final_key の方法で負けた率
     def lose_ratio_of(final_key)
@@ -89,6 +128,10 @@ module Swars
 
     def all_keys
       @all_keys ||= all_hash.keys
+    end
+
+    def tag_count
+      @tag_count ||= all_hash.size
     end
   end
 end

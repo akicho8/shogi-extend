@@ -4,18 +4,20 @@ module Swars
       included do
         serialize :csa_seq
         attribute :kifu_body_for_test
-
-        before_validation do
-        end
+        attribute :tactic_key
 
         before_save do
-          if (changes_to_save[:csa_seq] && csa_seq) || (changes_to_save[:kifu_body_for_test] && kifu_body_for_test)
+          if (changes_to_save[:tactic_key] && tactic_key) || (changes_to_save[:kifu_body_for_test] && kifu_body_for_test) || (changes_to_save[:csa_seq] && csa_seq)
             parser_exec
           end
         end
       end
 
       def kifu_body
+        if tactic_key
+          return Bioshogi::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read
+        end
+
         kifu_body_for_test || kifu_body_from_csa_seq
       end
 
@@ -95,17 +97,10 @@ module Swars
 
         # 囲い対決などに使う
         if true
-          reject_keys = reject_note_tag_names.collect(&:to_sym)
           info.mediator.players.each.with_index do |player, i|
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
-                if AppConfig[:swars_tag_search_function]
-                  e.send("#{key}_tag_list=", values - reject_keys)
-                else
-                  if [:attack, :defense, :note].include?(key)
-                    e.send("#{key}_tag_list=", values - reject_keys)
-                  end
-                end
+                e.send("#{key}_tag_list=", values - (reject_tag_keys[key] || []))
               end
             end
           end

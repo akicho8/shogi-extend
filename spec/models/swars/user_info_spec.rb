@@ -33,5 +33,9 @@ module Swars
     it "メダル" do
       assert { value["medal_list"]   == [{"method"=>"tag", "name"=>"居", "type"=>"is-light"},{"method"=>"tag", "name"=>"嬉", "type"=>"is-light"}] }
     end
+
+    it "対局数0" do
+      assert { User.create!.user_info.to_hash }
+    end
   end
 end

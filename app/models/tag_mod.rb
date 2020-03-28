@@ -1,7 +1,23 @@
 module TagMod
   extend ActiveSupport::Concern
 
-  mattr_accessor(:reject_note_tag_names) { ["対振り", "対抗型", "相居玉", "大駒コンプリート", "大駒全消失", "相居飛車"] }
+  mattr_accessor(:reject_tag_keys) {
+    {
+      :note => ["対振り", "対抗型", "相居玉", "大駒コンプリート", "大駒全消失", "相居飛車"],
+      :technique => [
+        "金底の歩",
+        "パンツを脱ぐ",
+        "腹銀",
+        "垂れ歩",
+        "遠見の角",
+        "割り打ちの銀",
+        "桂頭の銀",
+        # "ロケット",
+        "ふんどしの桂",
+        "継ぎ桂",
+      ],
+    }.transform_values { |e| e.collect(&:to_sym) }
+  }
 
   included do
     acts_as_ordered_taggable_on :defense_tags

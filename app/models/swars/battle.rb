@@ -111,7 +111,7 @@ module Swars
 
     # 将棋ウォーズの形式はCSAなのでパーサーを明示すると理論上は速くなる
     def parser_class
-      if kifu_body_for_test
+      if kifu_body_for_test || tactic_key
         return Bioshogi::Parser
       end
       Bioshogi::Parser::CsaParser
@@ -177,7 +177,7 @@ module Swars
 
           # 「居飛車」という情報は戦型から自明なので戦型も囲いもないときだけ入れる
           if names.blank?
-            names += e.tag_names_for(:note) - reject_note_tag_names
+            names += e.tag_names_for(:note) - (reject_tag_keys[:note] || []).collect(&:to_s)
           end
 
           names = names.presence || ["その他"]

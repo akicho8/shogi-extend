@@ -1,3 +1,5 @@
+# -*- frozen_string_literal: true -*-
+#
 # id を特定してから all_tag_counts した方が速いのか検証 → 結果:変わらないというか気持ち程度は速くなっている
 #
 #   user1 = Swars::User.create!
@@ -62,7 +64,7 @@ module Swars
         hash[:rules_hash] = rules_hash
 
         # トータル勝敗数
-        hash[:judge_counts] = judge_counts_wrap(ids_scope.group(:judge_key).count)
+        hash[:judge_counts] = judge_counts
 
         # 直近勝敗リスト
         hash[:judge_keys] = current_scope_base.limit(current_ox_max).pluck(:judge_key).reverse
@@ -73,6 +75,10 @@ module Swars
         hash[:every_my_attack_list] = every_my_attack_list
         hash[:every_vs_attack_list] = every_vs_attack_list
       end
+    end
+
+    def judge_counts
+      @judge_counts ||= judge_counts_wrap(ids_scope.group(:judge_key).count)
     end
 
     def medal_list
