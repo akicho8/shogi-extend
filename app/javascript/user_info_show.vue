@@ -270,7 +270,7 @@ export default {
         margin-right: 0.5rem
 
   .top_container
-    padding-bottom: 0.3rem
+    padding-bottom: 0.2rem // アイコンの下の隙間
     border-bottom: 1px solid $grey-lighter
 
     .user_key
@@ -297,11 +297,11 @@ export default {
         margin: auto 0.1rem
       > .raw
         position: relative
-        bottom: -0.2rem     // 絵文字は大きいので若干下げる
+        bottom: -0.1rem     // 絵文字は大きいので若干下げる
         margin: auto 0.1rem
       > .icon
         position: relative
-        bottom: -0.052rem
+        bottom: -0.152rem
         margin: auto 0.1rem
 
   ////////////////////////////////////////////////////////////////////////////////
