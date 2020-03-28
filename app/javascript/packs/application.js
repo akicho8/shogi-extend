@@ -119,7 +119,7 @@ import kif_copy_button from "components/kif_copy_button.vue"
 import sp_show_button from "components/sp_show_button.vue"
 import png_dl_button from "components/png_dl_button.vue"
 import tweet_button from "components/tweet_button.vue"
-import membership_icon from "components/membership_icon.vue"
+import membership_medal from "components/membership_medal.vue"
 import win_lose_circle from "win_lose_circle.vue"
 
 // const router = new VueRouter({
@@ -170,7 +170,7 @@ Vue.mixin({
     tweet_button,
 
     // icon
-    membership_icon,
+    membership_medal,
   },
 })
 

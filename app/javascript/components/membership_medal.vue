@@ -1,5 +1,5 @@
 <template lang="pug">
-span.membership_icon
+span.membership_medal
   template(v-if="typeof params === 'string'")
     | {{params}}
   template(v-else)
@@ -9,7 +9,7 @@ span.membership_icon
 <script>
 
 export default {
-  name: "membership_icon",
+  name: "membership_medal",
   props: {
     params: { required: true },
   },
@@ -18,6 +18,6 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.membership_icon
+.membership_medal
   margin-right: 0.5rem
 </style>

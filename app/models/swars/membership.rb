@@ -115,10 +115,10 @@ module Swars
     concerning :HelperMethods do
       def icon_params(params = {})
         if params[:debug] || ENV["ICON_DEBUG"]
-          return MembershipIconInfo[id.modulo(MembershipIconInfo.count)].icon_params
+          return MembershipMedalInfo[id.modulo(MembershipMedalInfo.count)].icon_params
         end
 
-        MembershipIconInfo.find do |e|
+        MembershipMedalInfo.find do |e|
           if v = e.func.call(self)
             if v == true
               return e.icon_params
