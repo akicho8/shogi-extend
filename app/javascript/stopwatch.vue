@@ -134,7 +134,7 @@
             b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンクです")
               a.button.is-text(:href="permalink_url") {{book_title}}
           .column
-            b-field(label="モバイル用リンクURL" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
+            b-field(label="モバイル用パーマリンク" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
               b-input(:value="permalink_url")
 
 </template>

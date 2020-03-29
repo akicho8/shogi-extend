@@ -1,0 +1,68 @@
+require 'rails_helper'
+
+module Swars
+  RSpec.describe type: :model do
+    before do
+      Swars.setup
+    end
+
+    let :user do
+      User.create!
+    end
+
+    describe "methods" do
+      before do
+        Battle.create! { |e| e.memberships.build(user: user) }
+      end
+
+      it do
+        assert { user.user_info.medal_list.all_tag_ratio_for("嬉野流")           == 1.0 }
+        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
+      end
+    end
+
+    describe "レコードが0件" do
+      it do
+        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0 }
+      end
+    end
+
+    describe "to_a" do
+      before do
+        Battle.create! { |e| e.memberships.build(user: user) }
+      end
+
+      it do
+        assert { user.user_info.medal_list.to_a == [{:method=>"tag", :name=>"居", :type=>"is-light"}, {:method=>"tag", :name=>"嬉", :type=>"is-light"}] }
+      end
+    end
+
+    describe "all_tag_ratio_for" do
+      before do
+        @black = User.create!
+        @white = User.create!
+        Battle.create!(tactic_key: "パックマン戦法") do |e|
+          e.memberships.build(user: @black, judge_key: "lose")
+          e.memberships.build(user: @white, judge_key: "win")
+        end
+      end
+
+      it do
+        assert { @black.user_info.medal_list.all_tag_ratio_for("パックマン戦法") == 0           }
+        assert { @white.user_info.medal_list.win_and_all_tag_ratio_for("パックマン戦法") == 1.0 }
+      end
+    end
+
+    describe "deviation_avg" do
+      before do
+        Battle.create!(tactic_key: "アヒル囲い") do |e|
+          e.memberships.build(user: user)
+        end
+      end
+
+      it do
+        assert { user.user_info.medal_list.deviation_avg < 50.0 }
+      end
+    end
+  end
+end

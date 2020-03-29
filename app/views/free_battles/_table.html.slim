@@ -1,9 +1,9 @@
-.columns
+.columns(v-if="board_show_type === 'none'")
   .column
     template(v-if="records.length >= 1")
-      b-field(grouped group-multiline)
-        div(v-for="(value, key, index) in table_columns_hash" :key="index" class="control")
-          b-checkbox.is-small(v-model="visible_hash[key]")
+      b-field.table_column_toggle_checkboxes(grouped group-multiline)
+        .control(v-for="(value, key, index) in table_columns_hash" :key="index")
+          b-checkbox(v-model="visible_hash[key]" size="is-small")
             | {{value.label}}
 
     b-table.is_battle_table(

@@ -4,18 +4,19 @@ module Swars
       included do
         serialize :csa_seq
         attribute :kifu_body_for_test
-
-        before_validation do
-        end
+        attribute :tactic_key
 
         before_save do
-          if (changes_to_save[:csa_seq] && csa_seq) || (changes_to_save[:kifu_body_for_test] && kifu_body_for_test)
+          if (changes_to_save[:tactic_key] && tactic_key) || (changes_to_save[:kifu_body_for_test] && kifu_body_for_test) || (changes_to_save[:csa_seq] && csa_seq)
             parser_exec
           end
         end
       end
 
       def kifu_body
+        if tactic_key
+          return Bioshogi::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read
+        end
         kifu_body_for_test || kifu_body_from_csa_seq
       end
 
@@ -89,22 +90,43 @@ module Swars
         info.mediator.players.each_index do |i|
           memberships[i].tap do |e|
             e.think_max = e.sec_list.max || 0
+            e.think_last = e.sec_list.last || 0
+
+            sec_list = e.sec_list
+
+            if Rails.env.development? || Rails.env.test?
+              sec_list = sec_list.compact # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ。
+            end
+
+            d = sec_list.size
+            c = sec_list.sum
+            if d.positive?
+              e.think_all_avg = c.div(d)
+            end
+
+            list = sec_list.last(5)
+            d = list.size
+            c = list.sum
+            if d.positive?
+              e.think_end_avg = c.div(d)
+            end
+
+            a = sec_list                               # => [2, 3, 3, 2, 2, 2]
+            x = a.chunk { |e| e == 2 }                 # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
+            x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
+            v = x.compact.max                          # => 3
+            if v
+              e.two_serial_max = v
+            end
           end
         end
 
         # 囲い対決などに使う
         if true
-          reject_keys = reject_note_tag_names.collect(&:to_sym)
           info.mediator.players.each.with_index do |player, i|
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
-                if AppConfig[:swars_tag_search_function]
-                  e.send("#{key}_tag_list=", values - reject_keys)
-                else
-                  if [:attack, :defense, :note].include?(key)
-                    e.send("#{key}_tag_list=", values - reject_keys)
-                  end
-                end
+                e.send("#{key}_tag_list=", values - (reject_tag_keys[key] || []))
               end
             end
           end

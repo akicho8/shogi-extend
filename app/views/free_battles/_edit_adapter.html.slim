@@ -10,8 +10,6 @@ ruby:
     document.addEventListener('DOMContentLoaded', () => { new Adapter(#{js_edit_options.to_json.html_safe}).$mount("#app") })
 
 #app
-  sp_modal(:sp_modal_p.sync="sp_modal_p" :record="record" :pulldown_menu_p="true" :board_show_type="'last'")
-
   p.title.is-3.yumincho
     = @page_title
 
@@ -40,7 +38,7 @@ ruby:
           kento_button(@click.prevent="kento_open_handle" tag="a" :href="record ? record.kento_app_url : 'https://www.kento-shogi.com/'")
 
           kif_copy_button(@click="kifu_copy_handle('kif')")
-          sp_modal_button(@click="board_show_handle")
+          sp_show_button(@click="board_show_handle")
           tweet_button(@click="tweet_handle" :href="record ? record.tweet_window_url : ''")
 
   template(v-if="!bs_error")

@@ -98,7 +98,7 @@ export default {
     chart_turn(v, ov) {
       this.debug_alert(`watch chart_turn ${ov} => ${v}`)
       this._chart_config.chart_turn = v
-      window.chart_instance.update()
+      this.chart_update()
     },
   },
 

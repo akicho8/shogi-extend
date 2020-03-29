@@ -3,21 +3,26 @@
 #
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
-# |--------------+--------------+-------------+-------------+------+---------|
-# | name         | desc         | type        | opts        | refs | index   |
-# |--------------+--------------+-------------+-------------+------+---------|
-# | id           | ID           | integer(8)  | NOT NULL PK |      |         |
-# | battle_id    | 対局共通情報 | integer(8)  | NOT NULL    |      | A! B! C |
-# | user_id      | ユーザー     | integer(8)  | NOT NULL    |      | B! D    |
-# | grade_id     | 棋力         | integer(8)  | NOT NULL    |      | E       |
-# | judge_key    | 結果         | string(255) | NOT NULL    |      | F       |
-# | location_key | 先手or後手   | string(255) | NOT NULL    |      | A! G    |
-# | position     | 順序         | integer(4)  |             |      | H       |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |      |         |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |         |
-# | grade_diff   | Grade diff   | integer(4)  | NOT NULL    |      | I       |
-# | think_max    | Think max    | integer(4)  |             |      |         |
-# |--------------+--------------+-------------+-------------+------+---------|
+# |----------------+----------------+-------------+-------------+------+---------|
+# | name           | desc           | type        | opts        | refs | index   |
+# |----------------+----------------+-------------+-------------+------+---------|
+# | id             | ID             | integer(8)  | NOT NULL PK |      |         |
+# | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |      | A! B! C |
+# | user_id        | ユーザー       | integer(8)  | NOT NULL    |      | B! D    |
+# | grade_id       | 棋力           | integer(8)  | NOT NULL    |      | E       |
+# | judge_key      | 結果           | string(255) | NOT NULL    |      | F       |
+# | location_key   | 先手or後手     | string(255) | NOT NULL    |      | A! G    |
+# | position       | 順序           | integer(4)  |             |      | H       |
+# | created_at     | 作成日時       | datetime    | NOT NULL    |      |         |
+# | updated_at     | 更新日時       | datetime    | NOT NULL    |      |         |
+# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |      | I       |
+# | think_max      | Think max      | integer(4)  |             |      |         |
+# | op_user_id     | Op user        | integer(8)  |             |      | J       |
+# | think_last     | Think last     | integer(4)  |             |      |         |
+# | think_all_avg  | Think all avg  | integer(4)  |             |      |         |
+# | think_end_avg  | Think end avg  | integer(4)  |             |      |         |
+# | two_serial_max | Two serial max | integer(4)  |             |      |         |
+# |----------------+----------------+-------------+-------------+------+---------|
 
 module Swars
   class Membership < ApplicationRecord
@@ -26,6 +31,8 @@ module Swars
 
     belongs_to :battle            # 対局
     belongs_to :user, touch: true # 対局者
+    belongs_to :op_user, :class_name => "User" # 相手
+
     belongs_to :grade             # 対局したときの段位
 
     acts_as_list top_of_list: 0, scope: :battle
@@ -41,10 +48,6 @@ module Swars
           self.location_key ||= Bioshogi::Location[index].key
           self.judge_key ||= JudgeInfo[index].key
         end
-      end
-
-      if Rails.env.development? || Rails.env.test?
-        self.user ||= User.create!
       end
 
       if user
@@ -63,23 +66,34 @@ module Swars
         self.grade ||= Grade.first
       end
 
+      # 対戦相手
+      if battle
+        unless op_user
+          if membership = (battle.memberships - [self]).first
+            self.op_user = membership.user
+          end
+        end
+      end
+
       # 対戦相手との段級位の差を保持しておく
       if battle
-        rival = (battle.memberships - [self]).first
-        if grade && rival.grade
-          self.grade_diff = -(rival.grade.priority - grade.priority)
+        if grade && op_user.grade
+          self.grade_diff = -(op_user.grade.priority - grade.priority)
         end
       end
     end
 
     with_options presence: true do
       validates :judge_key
+      validates :user_id
+      validates :op_user_id
       validates :location_key
     end
 
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
       validates :user_id, uniqueness: { scope: :battle_id, case_sensitive: true }
+      validates :op_user_id, uniqueness: { scope: :battle_id, case_sensitive: true }
       validates :location_key, uniqueness: { scope: :battle_id, case_sensitive: true }
       validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
     end
@@ -96,34 +110,26 @@ module Swars
       JudgeInfo.fetch(judge_key)
     end
 
-    # 相手
+    # 相手 FIXME: 消す
     def opponent
       @opponent ||= battle.memberships.where.not(position: position).take
     end
 
-    concerning :HelperMethods do
-      def icon_html
-        # judge_info = JudgeInfo.to_a.sample
-        # final_info = FinalInfo.to_a.sample
-        # grade_diff = rand(-1..1)
+    concerning :MedalMethods do
+      def first_matched_medal
+        MembershipMedalInfo.find { |e| e.if_cond.call(self) }
+      end
 
-        if icon = judge_info.icon_params(self) || battle.final_info.icon_params(self)
-          if icon.kind_of?(String)
-            icon
-          else
-            Icon.icon_tag(*icon[:key], :class => icon[:class])
+      def medal_params(params = {})
+        if params[:debug] || ENV["MEDAL_DEBUG"]
+          return MembershipMedalInfo[id.modulo(MembershipMedalInfo.count)].medal_params
+        end
+
+        MembershipMedalInfo.each do |e|
+          if v = e.if_cond.call(self)
+            return e.medal_params || v
           end
         end
-      end
-
-      def winner_only_icon_html
-        if judge_info.key == :win
-          icon_html
-        end
-      end
-
-      def card_emoji
-        judge_info.card_emoji(self) || battle.final_info.card_emoji(self)
       end
     end
 

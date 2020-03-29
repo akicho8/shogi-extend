@@ -42,12 +42,18 @@ module Swars
 
     has_many :users, through: :memberships
 
+    scope :win_lose_only, -> { where.not(win_user_id: nil) } # 勝敗が必ずあるもの
+    scope :latest_order, -> { order(battled_at: :desc) }     # 新しい順
+
     before_validation on: :create do
       if Rails.env.development? || Rails.env.test?
-        self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
+        # Bioshogi::Parser.parse(Bioshogi::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read).to_csa
+        if kifu_body_for_test.blank? && tactic_key.blank?
+          self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
+        end
 
         (Bioshogi::Location.count - memberships.size).times do
-          memberships.build
+          memberships.build(user: User.create!)
         end
       end
 
@@ -55,6 +61,8 @@ module Swars
         self.key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
       end
       self.key ||= SecureRandom.hex
+
+      self.csa_seq ||= []
 
       self.rule_key ||= :ten_min
 
@@ -65,8 +73,17 @@ module Swars
 
       # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
       if key
-        self.battled_at ||= (Time.zone.parse(key.split("-").last) rescue nil)
+        if key.include?("-")
+          ymd_str = key.split("-").last
+          if ymd_str.match?(/\A\d+_\d+\z/)
+            self.battled_at ||= Time.zone.parse(ymd_str) rescue nil
+          end
+        end
       end
+
+      # if Rails.env.development? || Rails.env.test?
+      #   self.battled_at ||= Time.current + (self.class.count * 6.hour)
+      # end
 
       self.battled_at ||= Time.current
       self.final_key ||= :TORYO
@@ -102,6 +119,9 @@ module Swars
 
     # 将棋ウォーズの形式はCSAなのでパーサーを明示すると理論上は速くなる
     def parser_class
+      if kifu_body_for_test || tactic_key
+        return Bioshogi::Parser
+      end
       Bioshogi::Parser::CsaParser
     end
 
@@ -165,7 +185,7 @@ module Swars
 
           # 「居飛車」という情報は戦型から自明なので戦型も囲いもないときだけ入れる
           if names.blank?
-            names += e.tag_names_for(:note) - reject_note_tag_names
+            names += e.tag_names_for(:note) - (reject_tag_keys[:note] || []).collect(&:to_s)
           end
 
           names = names.presence || ["その他"]

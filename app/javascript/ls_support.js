@@ -15,7 +15,7 @@
 //
 //     computed: {
 //       ls_key() {
-//         return "my_app" // localStorage のキー
+//         return "my_app" // localStorage のキー ← デフォルトでは this.$options.name なのでそのままでもよい
 //       },
 //
 //       ls_data() {
@@ -50,19 +50,14 @@ export default {
       if (this.development_p) {
         console.log("$_ls_save", JSON.stringify(this.$_ls_hash))
       }
-      localStorage.setItem(this.ls_key, JSON.stringify(this.$_ls_hash))
+      this.lst_save(this.ls_key, this.$_ls_hash)
     },
 
     $_ls_load() {
-      let v = {}
-      const value = localStorage.getItem(this.ls_key)
-      if (value) {
-        v = JSON.parse(value)
-      }
       if (this.development_p) {
-        console.log("$_ls_load", v)
+        console.log("$_ls_load", this.lst_load(this.ls_key))
       }
-      this.$_ls_set_vars(v)
+      this.$_ls_set_vars(this.lst_load(this.ls_key))
     },
 
     $_ls_set_vars(v) {
@@ -72,14 +67,14 @@ export default {
     },
 
     $_ls_reset() {
-      localStorage.removeItem(this.ls_key)
+      this.lst_delete(this.ls_key)
       this.$_ls_load()
     },
   },
 
   computed: {
     ls_key() {
-      alert("ls_key is not implemented")
+      return this.$options.name || alert("ls_key is not implemented")
     },
 
     ls_data() {

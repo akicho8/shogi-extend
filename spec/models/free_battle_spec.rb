@@ -63,7 +63,7 @@ RSpec.describe FreeBattle, type: :model do
   it "raw_sec_list" do
     assert { record.raw_sec_list(:black)     == [ 1, 5, 2]   }
     assert { record.raw_sec_list(:white)     == [ 3, 7]      }
-    assert { ki2_record.raw_sec_list(:white) == [nil, nil]   }
+    assert { ki2_record.raw_sec_list(:white) == [ nil, nil]  }
   end
 
   it "time_chart_params" do

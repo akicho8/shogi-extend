@@ -40,32 +40,6 @@ module Swars
       Battle.create!
     end
 
-    describe "アイコン" do
-      describe "基本" do
-        def test(*keys)
-          Battle.create! do |e|
-            keys.each do |key|
-              e.memberships.build(user: User.create!(grade: Grade.find_by(key: key)))
-            end
-          end
-        end
-        it do
-          test("初段", "二段").memberships[0].icon_html.include?("numeric-1-circle")
-          test("初段", "二段").memberships[1].icon_html.include?("emoticon-dead-outline")
-        end
-      end
-      describe "寝る" do
-        def test(a)
-          Battle.create!(csa_seq: [["+7968GI", 600], ["-8232HI", 600], ["+5756FU", 600 - a]])
-        end
-        it do
-          test(119).memberships[0].icon_html.include?("star")
-          test(120).memberships[0].icon_html == "😪"
-          test(180).memberships[0].icon_html == "😴"
-        end
-      end
-    end
-
     describe "Twitterカード" do
       describe "to_twitter_card_params" do
         let :value do

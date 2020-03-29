@@ -6,6 +6,10 @@ module Swars
           super
 
           if Rails.env.development?
+            create!
+          end
+
+          if Rails.env.development?
             user_import(user_key: "devuser1")
             puts Crawler::RegularCrawler.new.run.rows.to_t
             puts Crawler::ExpertCrawler.new.run.rows.to_t

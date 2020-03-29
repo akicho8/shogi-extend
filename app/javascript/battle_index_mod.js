@@ -24,11 +24,8 @@ export default {
 
       board_show_type: this.$options.board_show_type, // 何の局面の表示をするか？
 
-      sp_modal_p: false,               // モーダルを開くフラグ
+      sp_show_p: false,               // モーダルを開くフラグ
       selected_record: null,             //  選択したレコード
-
-      tactic_modal_p: false,      // 戦術モーダルを表示するか？
-      tactic_name: null,             // 戦術名
 
       loading: false,
 
@@ -69,34 +66,20 @@ export default {
   },
 
   methods: {
-    tactic_name_click_handle(tactic_name) {
-      this.tactic_name = tactic_name
-      this.tactic_modal_p = true
-    },
-
-    // 終了図ボタンが ON の状態で押されたら OFF にする
-    board_show_type_set_none() {
-      if (this.board_show_type !== "none") {
-        if (this.development_p) {
-          this.board_show_type = "none"
-        }
-      }
-    },
-
     show_handle(row) {
       this.selected_record = row
       // this.turn_offset = this.start_turn // this.selected_record の start_turn を計算
 
       if (this.selected_record.sfen_body) {
         this.debug_alert("棋譜はすでにある")
-        this.sp_modal_show()
+        this.sp_show_show()
       } else {
-        this.record_fetch_to(this.selected_record, () => this.sp_modal_show())
+        this.record_fetch_to(this.selected_record, () => this.sp_show_show())
       }
     },
 
-    sp_modal_show() {
-      this.sp_modal_p = true
+    sp_show_show() {
+      this.sp_show_modal({record: this.selected_record, board_show_type: this.board_show_type})
     },
 
     sort_handle(column, order) {
@@ -147,7 +130,7 @@ export default {
           }
           // const record = this.records.find(e => e.id === this.selected_record)
           // this.$set(record, "sfen_body", response.data["sfen_body"])
-          // this.sp_modal_show()
+          // this.sp_show_show()
         }).catch(error => {
           console.table([error.response])
           this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
@@ -174,6 +157,12 @@ export default {
   mounted() {
     if (this.$options.modal_record) {
       this.show_handle(this.$options.modal_record)
+    }
+
+    if (this.$options.current_swars_user_key) {
+      if (this.$route.query.user_info_show) {
+        this.user_info_show_modal(this.$options.current_swars_user_key)
+      }
     }
   },
 

@@ -143,3 +143,25 @@ input:focus::placeholder
 .usage_modal
   li:not(:first-child)
     margin-top: 0.8rem
+
+//////////////////////////////////////////////////////////////////////////////// 検索の下のところ
+
+.search_bottom_controllers
+  .is-flex
+    justify-content: space-around
+    +desktop
+      justify-content: flex-start
+  .player_info_show_button
+    margin-left: 1rem
+
+//////////////////////////////////////////////////////////////////////////////// 検索ボタン
+
+.search_form_submit_button
+  min-width: 4rem
+
+//////////////////////////////////////////////////////////////////////////////// テーブル上のチェックボックス
+
+.table_column_toggle_checkboxes
+  &.field.is-grouped
+    +mobile
+      justify-content: center

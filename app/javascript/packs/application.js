@@ -95,6 +95,7 @@ Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
 
 import vue_application from "support/vue_application.js"
 import vue_support from "support/vue_support.js"
+import vue_storage from "support/vue_storage.js"
 import vue_fetch from "support/vue_fetch.js"
 import vue_clipboard from "support/vue_clipboard.js"
 import vue_sound from "support/vue_sound.js"
@@ -109,14 +110,17 @@ import vs_clock from "vs_clock.vue"
 import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
-import sp_modal from "sp_modal.vue"
-import tactic_modal from "tactic_modal.vue"
+import sp_show from "sp_show.vue"
+import ox_modal from "ox_modal.vue"
+import tactic_show from "tactic_show.vue"
 import piyo_shogi_button from "components/piyo_shogi_button.vue"
 import kento_button from "components/kento_button.vue"
 import kif_copy_button from "components/kif_copy_button.vue"
-import sp_modal_button from "components/sp_modal_button.vue"
+import sp_show_button from "components/sp_show_button.vue"
 import png_dl_button from "components/png_dl_button.vue"
 import tweet_button from "components/tweet_button.vue"
+import membership_medal from "components/membership_medal.vue"
+import win_lose_circle from "win_lose_circle.vue"
 
 // const router = new VueRouter({
 //   mode: 'history',
@@ -132,6 +136,7 @@ Vue.mixin({
   mixins: [
     vue_application,
     vue_support,
+    vue_storage,
     vue_fetch,
     vue_clipboard,
     vue_sound,
@@ -149,14 +154,23 @@ Vue.mixin({
     simple_board,
     xy_master,
     cpu_battle,
-    sp_modal,
-    tactic_modal,
+    sp_show,
+    ox_modal,
+    win_lose_circle,
+
+    // for buefy modal
+    tactic_show,
+
+    // buttons
     piyo_shogi_button,
     kento_button,
     kif_copy_button,
-    sp_modal_button,
+    sp_show_button,
     png_dl_button,
     tweet_button,
+
+    // icon
+    membership_medal,
   },
 })
 

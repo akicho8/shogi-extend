@@ -3,8 +3,9 @@ Time::DATE_FORMATS.update({
     ymdhms: "%F %T",
     ymd: "%F",
 
-    battle_long: "%F %H:%M",
-    battle_short: "%H:%M",
+    battle_short: "%H:%M",               # 12:34
+    battle_medium: "%-m/%-d %H:%M",      # 1/2 12:34
+    battle_long: "%F %H:%M",             # 2020-01-02 12:34
     csa_ymdhms: "%Y/%m/%d %H:%M:%S",
 
     :ja_ad_format => proc { |t|
@@ -12,8 +13,11 @@ Time::DATE_FORMATS.update({
     },
 
     :battle_time => proc { |time|
-      if time >= 1.days.ago
+      case
+      when time >= 1.days.ago
         time.to_s(:battle_short)
+      when time.year == Time.current.year
+        time.to_s(:battle_medium)
       else
         time.to_s(:battle_long)
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_005132) do
+ActiveRecord::Schema.define(version: 2020_03_28_200201) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -293,6 +293,11 @@ ActiveRecord::Schema.define(version: 2020_03_21_005132) do
     t.datetime "updated_at", null: false
     t.integer "grade_diff", null: false
     t.integer "think_max"
+    t.bigint "op_user_id", comment: "相手"
+    t.integer "think_last"
+    t.integer "think_all_avg"
+    t.integer "think_end_avg"
+    t.integer "two_serial_max"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
@@ -300,6 +305,7 @@ ActiveRecord::Schema.define(version: 2020_03_21_005132) do
     t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
     t.index ["judge_key"], name: "index_swars_memberships_on_judge_key"
     t.index ["location_key"], name: "index_swars_memberships_on_location_key"
+    t.index ["op_user_id"], name: "index_swars_memberships_on_op_user_id"
     t.index ["position"], name: "index_swars_memberships_on_position"
     t.index ["user_id"], name: "index_swars_memberships_on_user_id"
   end

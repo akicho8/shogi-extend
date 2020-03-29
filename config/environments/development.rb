@@ -80,4 +80,7 @@ Rails.application.configure do
     #     zip_download_function: false,
     #   })
   end
+
+  # https://qiita.com/taiteam/items/a37c60fc15c1aa5bb606
+  config.hosts << "ikeda-mac3.local"
 end

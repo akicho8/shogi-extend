@@ -132,7 +132,8 @@ gem "mechanize"
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
 
-gem "acts-as-taggable-on", github: "mbleigh/acts-as-taggable-on", branch: "master"
+# gem "acts-as-taggable-on", github: "mbleigh/acts-as-taggable-on", branch: "master"
+gem "acts-as-taggable-on"
 
 gem "rubyzip", require: "zip" # KIF一括ダウンロード用
 

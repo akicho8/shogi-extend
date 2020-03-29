@@ -31,6 +31,17 @@ module Swars
         return
       end
 
+      if request.format.json? && format_type == "user"
+        if current_swars_user
+          if params[:try_fetch] == "true"
+            import_process2(flash)
+          end
+          slack_message(key: "新プ情報", body: current_swars_user.key)
+          render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
+          return
+        end
+      end
+
       external_app_setup
       if performed?
         return
@@ -102,6 +113,13 @@ module Swars
       when v = primary_record
         # http://localhost:3000/w?query=https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1
         v.to_twitter_card_params(params)
+      when current_swars_user && params[:user_info_show] == "true"
+        # http://localhost:3000/w?query=itoshinTV&user_info_show=true
+        {
+          :card        => "summary",
+          :title       => "#{current_swars_user.name_with_grade}のプレイヤー情報",
+          # :description => "#{current_swars_user.battles.count}件",
+        }
       when current_swars_user
         # http://localhost:3000/w?query=itoshinTV
         {

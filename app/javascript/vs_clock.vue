@@ -106,8 +106,7 @@ export default {
         use_seconds: 0,
       }
     })
-    
-    
+
     this.shortcut_key_assign()
   },
 
@@ -267,7 +266,7 @@ export default {
       }
       return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
-    
+
     time_format(seconds) {
       let format = null
       if ((seconds / 60) >= 60) {

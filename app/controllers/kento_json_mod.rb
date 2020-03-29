@@ -1,3 +1,5 @@
+# TODO: modelに移動
+
 # (開発者向け)棋譜リストAPI
 # https://note.com/shogi_kento/n/nea5e736f5311
 #
@@ -49,6 +51,7 @@ module KentoJsonMod
           },
         }
 
+        slack_message(key: "KENTO API", body: current_swars_user.key)
         render json: json_hash.as_json
         return
       end
