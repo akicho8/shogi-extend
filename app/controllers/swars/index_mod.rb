@@ -33,6 +33,9 @@ module Swars
 
       if request.format.json? && format_type == "user"
         if current_swars_user
+          if params[:try_fetch] == "true"
+            import_process2(flash)
+          end
           slack_message(key: "新プ情報", body: current_swars_user.key)
           render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
           return

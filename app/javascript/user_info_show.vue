@@ -6,37 +6,42 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
-    b-dropdown.top_right_menu(position="is-bottom-left" v-if="development_p")
-      b-icon.has-text-white(slot="trigger" icon="dots-vertical")
+    b-dropdown.top_right_menu(position="is-bottom-left")
+      b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
-      b-dropdown-item(:href="permalink_url")
-        b-icon(icon="link-variant" size="is-small")
-        | パーマリンク
+      b-dropdown-item(@click="update_handle")
+        b-icon(icon="sync" size="is-small")
+        | 更新
 
-      b-dropdown-item(:href="`${permalink_url}&debug=true`" v-if="development_p")
-        b-icon(icon="link-variant" size="is-small")
-        | パーマリンク(DEBUGモード)
+      template(v-if="development_p")
+        b-dropdown-item(:href="permalink_url")
+          b-icon(icon="link-variant" size="is-small")
+          | パーマリンク
 
-      b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user`")
-        b-icon(icon="link-variant" size="is-small")
-        | json
+        b-dropdown-item(:href="`${permalink_url}&debug=true`")
+          b-icon(icon="link-variant" size="is-small")
+          | パーマリンク(DEBUGモード)
 
-      b-dropdown-item(:href="`/w.json?query=${info.user.key}&format_type=user&debug=true`" v-if="development_p")
-        b-icon(icon="link-variant" size="is-small")
-        | json (debug)
+        b-dropdown-item(:href="`/w.json?query=${new_info.user.key}&format_type=user`")
+          b-icon(icon="link-variant" size="is-small")
+          | json
 
-      b-dropdown-item.is-paddingless(custom)
-        pre
-          | {{info.debug_hash}}
+        b-dropdown-item(:href="`/w.json?query=${new_info.user.key}&format_type=user&debug=true`" v-if="development_p")
+          b-icon(icon="link-variant" size="is-small")
+          | json (debug)
+
+        b-dropdown-item.is-paddingless(custom)
+          pre
+            | {{new_info.debug_hash}}
 
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
       // 名前
       .user_key.has-text-weight-bold.has-text-centered
-        | {{info.user.key}}
+        | {{new_info.user.key}}
       // 段級位
       .is-flex.rule_container
-        .rule_one(v-for="(row, key) in info.rules_hash")
+        .rule_one(v-for="(row, key) in new_info.rules_hash")
           span.rule_name.is-size-7.has-text-grey
             | {{row.rule_name}}
           span.grade_name.is-size-5
@@ -47,18 +52,18 @@
                 | ？
 
       ////////////////////////////////////////////////////////////////////////////////
-      win_lose_circle(:info="info")
+      win_lose_circle(:info="new_info")
 
       ////////////////////////////////////////////////////////////////////////////////
       .ox_container.has-text-centered.line_break_on
-        template(v-for="judge_key in info.judge_keys")
+        template(v-for="judge_key in new_info.judge_keys")
           span.has-text-danger(v-if="judge_key === 'win'")
             b-icon(icon="checkbox-blank-circle" size="is-small" type="is-danger")
           span.has-text-success(v-if="judge_key === 'lose'")
             b-icon(icon="close" size="is-small" type="is-success")
 
-      .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
-        template(v-for="(row, i) in info.medal_list")
+      .medal_container.has-text-centered.has-text-weight-bold(v-if="new_info.medal_list.length >= 1")
+        template(v-for="(row, i) in new_info.medal_list")
           template(v-if="row.method === 'tag'")
             b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
           template(v-else-if="row.method === 'raw'")
@@ -83,7 +88,7 @@
 
     .tab_content
       template(v-if="tab_index === 0")
-        .box.one_box.two_column(v-for="row in info.every_day_list" :key="`every_day_list/${row.battled_at}`")
+        .box.one_box.two_column(v-for="row in new_info.every_day_list" :key="`every_day_list/${row.battled_at}`")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -106,7 +111,7 @@
                 //-       | {{tag.count}}
 
       template(v-if="tab_index === 1")
-        .box.one_box.one_column(v-for="row in info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`")
+        .box.one_box.one_column(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -124,7 +129,7 @@
               win_lose_circle(:info="row" size="is-small")
 
       template(v-if="tab_index === 2")
-        .box.one_box.one_column(v-for="row in info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`")
+        .box.one_box.one_column(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title
@@ -146,7 +151,7 @@
 
   template(v-if="development_p")
     //- pre
-    //-   | {{info}}
+    //-   | {{new_info}}
     .modal-card-foot
       b-button(@click="$parent.close()" size="is-small" v-if="false") 閉じる
       b-button(tag="a" :href="permalink_url" size="is-small" icon-left="link-variant") パーマリンク
@@ -171,6 +176,7 @@ export default {
 
   data() {
     return {
+      new_info: this.info,
       tab_index: null,
     }
   },
@@ -200,6 +206,10 @@ export default {
   },
 
   methods: {
+    update_handle() {
+      this.http_get_command("/w.json", { query: this.new_info.user.key, format_type: "user", debug: this.$route.query.debug, try_fetch: "true" }, data => this.new_info = data)
+    },
+
     delete_click_handle() {
       this.$emit("close") // 昔は this.$parent.close() だった
     },
@@ -237,7 +247,7 @@ export default {
 
     permalink_url() {
       const params = new URLSearchParams()
-      params.set("query", this.info.user.key)
+      params.set("query", this.new_info.user.key)
       params.set("user_info_show", true)
       params.set("tab_index", this.tab_index)
       return `/w?${params}`
