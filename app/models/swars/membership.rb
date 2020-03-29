@@ -67,20 +67,19 @@ module Swars
       end
 
       # 対戦相手
-      if battle
-        unless op_user
-          if membership = (battle.memberships - [self]).first
-            self.op_user = membership.user
-          end
-        end
-      end
+      op_user_set_if_blank
 
       # 対戦相手との段級位の差を保持しておく
-      if battle
+      unless grade_diff
         if grade && op_user.grade
           self.grade_diff = -(op_user.grade.priority - grade.priority)
         end
       end
+
+      # if think_max && think_last && think_all_avg && think_end_avg && two_serial_max
+      # else
+      #   # think_columns_update
+      # end
     end
 
     with_options presence: true do
@@ -113,6 +112,49 @@ module Swars
     # 相手 FIXME: 消す
     def opponent
       @opponent ||= battle.memberships.where.not(position: position).take
+    end
+
+    def op_user_set_if_blank
+      unless op_user
+        if battle
+          if membership = (battle.memberships - [self]).first
+            self.op_user = membership.user
+          end
+        end
+      end
+    end
+
+    def think_columns_update
+      list = sec_list
+
+      if Rails.env.development? || Rails.env.test?
+        # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ
+        list = list.compact
+      end
+
+      self.think_max  = list.max || 0
+      self.think_last = list.last || 0
+
+      d = list.size
+      c = list.sum
+      if d.positive?
+        self.think_all_avg = c.div(d)
+      end
+
+      a = list.last(5)
+      d = a.size
+      c = a.sum
+      if d.positive?
+        self.think_end_avg = c.div(d)
+      end
+
+      a = list                                   # => [2, 3, 3, 2, 2, 2]
+      x = a.chunk { |e| e == 2 }                 # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
+      x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
+      v = x.compact.max                          # => 3
+      if v
+        self.two_serial_max = v
+      end
     end
 
     concerning :MedalMethods do
