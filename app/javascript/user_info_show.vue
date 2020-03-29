@@ -118,7 +118,7 @@
               win_lose_circle(:info="row" size="is-small" narrowed)
             .column.is-paddingless.is-flex
               template(v-for="tag in row.all_tags")
-                .tag_wrapper.has-text-weight-bold.is-size-5(@click="tactic_show_modal(tag)")
+                .tag_wrapper.has-text-weight-bold.is-size-5(@click="tactic_show_modal(tag.name)")
                   | {{tag.name}}
 
                 //- b-taglist.tag_wrapper(attached @click.native="tactic_modal_start(tag)")
