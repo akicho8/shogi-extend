@@ -34,19 +34,24 @@ module Swars
       end
 
       it do
+        assert { b("角不成").include?("角不成マン")     }
+        assert { b("飛車不成").include?("飛車不成マン") }
+
+        # プレイヤー情報だけにあるもの
         assert { b("棒銀").include?("居飛車党")                   }
         assert { b("早石田").include?("振り飛車党")               }
         assert { b("棒銀", "早石田").include?("オールラウンダー") }
         assert { b("ロケット").include?("ロケットマン")           }
         assert { b("嬉野流").include?("嬉野マン")                 }
-        assert { w("パックマン戦法").include?("パックマン野郎")     }
+        assert { w("パックマン戦法").include?("パックマン野郎")   }
         assert { b("耀龍四間飛車").include?("耀龍マン")           }
         assert { b("耀龍ひねり飛車").include?("耀龍マン")         }
         assert { b("アヒル囲い").include?("アヒル上級")           }
         assert { b("UFO銀").include?("UFOマン")                   }
         assert { b("裏アヒル囲い").include?("レアマン")           }
-        assert { b("角不成").include?("角不成マン")           }
-        assert { b("飛車不成").include?("飛車不成マン")           }
+        assert { b("カニカニ金").include?("カニ執着マン")         }
+        assert { b("ダイヤモンド美濃").include?("ダイヤマン")     }
+        assert { b("音無しの構え").include?("音無しマン")         }
       end
     end
 

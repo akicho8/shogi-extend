@@ -83,6 +83,10 @@ module Swars
       @all_tag_names ||= all_tag_names_hash.keys
     end
 
+    def all_tag_names_join
+      @all_tag_names_join ||= all_tag_names_hash.keys.join
+    end
+
     # タグの種類数
     def all_tag_count
       @all_tag_count ||= all_tag_names_hash.size
