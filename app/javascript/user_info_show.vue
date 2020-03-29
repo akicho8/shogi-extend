@@ -13,6 +13,24 @@
         b-icon(icon="sync" size="is-small")
         | 更新
 
+      b-dropdown-item(:href="`/w?query=${new_info.user.key}`")
+        b-icon(icon="magnify" size="is-small")
+        | 棋譜検索
+
+      b-dropdown-item(separator)
+
+      b-dropdown-item(:href="`https://twitter.com/search?q=${new_info.user.key}`")
+        b-icon(icon="twitter" size="is-small" type="is-info")
+        | Twitter検索
+
+      b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${new_info.user.key}`")
+        b-icon(icon="link" size="is-small")
+        | ウォーズ
+
+      b-dropdown-item(:href="`https://www.google.co.jp/search?q=${new_info.user.key}`")
+        b-icon(icon="google" size="is-small")
+        | ぐぐる
+
       template(v-if="development_p")
         b-dropdown-item(:href="permalink_url")
           b-icon(icon="link-variant" size="is-small")

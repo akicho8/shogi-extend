@@ -19,7 +19,9 @@ template(slot-scope="props")
           template(v-if="false")
             a(@click.stop :href="m.query_user_url")
               | {{m.name_with_grade}}
-          template(v-else)
+          template(v-if="false")
+            swars_user_link_to(:membership="m")
+          template(v-if="true")
             swars_user_link_to(:membership="m")
 
         b-taglist
