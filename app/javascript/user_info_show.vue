@@ -13,7 +13,7 @@
         b-icon(icon="sync" size="is-small")
         | 更新
 
-      b-dropdown-item(:href="`/w?query=${new_info.user.key}`")
+      b-dropdown-item(:href="`/w?query=${new_info.user.key}`" @click="$buefy.loading.open()")
         b-icon(icon="magnify" size="is-small")
         | 棋譜検索
 
