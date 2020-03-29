@@ -59,7 +59,7 @@ export default {
 
   methods: {
     user_info_show_handle() {
-      this.user_info_show_modal(this.membership.user.key)
+      // this.user_info_show_modal(this.membership.user.key)
     },
   },
 }
