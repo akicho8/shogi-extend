@@ -11,13 +11,13 @@ module Swars
     end
 
     describe "タグ依存メダル" do
-      def test(tactic_keys)
+      def test(tactic_keys, win, lose)
         black = User.create!
         white = User.create!
         tactic_keys.each do |e|
           Battle.create!(tactic_key: e) do |e|
-            e.memberships.build(user: black)
-            e.memberships.build(user: white)
+            e.memberships.build(user: black, judge_key: win)
+            e.memberships.build(user: white, judge_key: lose)
           end
         end
         [black, white].collect { |e|
@@ -26,11 +26,11 @@ module Swars
       end
 
       def b(*tactic_keys)
-        test(tactic_keys)[Bioshogi::Location.fetch(:black).code]
+        test(tactic_keys, :win, :lose)[Bioshogi::Location.fetch(:black).code]
       end
 
       def w(*tactic_keys)
-        test(tactic_keys)[Bioshogi::Location.fetch(:white).code]
+        test(tactic_keys, :lose, :win)[Bioshogi::Location.fetch(:white).code]
       end
 
       it do
@@ -39,7 +39,7 @@ module Swars
         assert { b("棒銀", "早石田").include?("オールラウンダー") }
         assert { b("ロケット").include?("ロケットマン")           }
         assert { b("嬉野流").include?("嬉野マン")                 }
-        assert { w("パックマン戦法").include?("パックマン")       }
+        assert { w("パックマン戦法").include?("パックマン野郎")     }
         assert { b("耀龍四間飛車").include?("耀龍マン")           }
         assert { b("耀龍ひねり飛車").include?("耀龍マン")         }
         assert { b("アヒル囲い").include?("アヒル上級")           }

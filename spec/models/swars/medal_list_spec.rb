@@ -10,6 +10,23 @@ module Swars
       User.create!
     end
 
+    describe "methods" do
+      before do
+        Battle.create! { |e| e.memberships.build(user: user) }
+      end
+
+      it do
+        assert { user.user_info.medal_list.all_tag_ratio_for("嬉野流")           == 1.0 }
+        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
+      end
+    end
+
+    describe "レコードが0件" do
+      it do
+        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0 }
+      end
+    end
+
     describe "to_a" do
       before do
         Battle.create! { |e| e.memberships.build(user: user) }
@@ -20,15 +37,19 @@ module Swars
       end
     end
 
-    describe "ratio_of" do
+    describe "all_tag_ratio_for" do
       before do
-        Battle.create!(tactic_key: "アヒル囲い") do |e|
-          e.memberships.build(user: user)
+        @black = User.create!
+        @white = User.create!
+        Battle.create!(tactic_key: "パックマン戦法") do |e|
+          e.memberships.build(user: @black, judge_key: "lose")
+          e.memberships.build(user: @white, judge_key: "win")
         end
       end
 
       it do
-        assert { user.user_info.medal_list.ratio_of("アヒル囲い") == 1.0 }
+        assert { @black.user_info.medal_list.all_tag_ratio_for("パックマン戦法") == 0           }
+        assert { @white.user_info.medal_list.win_and_all_tag_ratio_for("パックマン戦法") == 1.0 }
       end
     end
 

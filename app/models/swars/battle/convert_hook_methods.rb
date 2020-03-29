@@ -17,7 +17,6 @@ module Swars
         if tactic_key
           return Bioshogi::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read
         end
-
         kifu_body_for_test || kifu_body_from_csa_seq
       end
 

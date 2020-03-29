@@ -43,8 +43,8 @@ module Swars
         "切断率(分母:負け数)"             => lose_ratio_of("DISCONNECT"),
         "居飛車率"                        => ibisha_ratio,
         "居玉勝率"                        => igyoku_win_ratio,
-        "アヒル囲い率"                    => ratio_of("アヒル囲い"),
-        "嬉野流率"                        => ratio_of("嬉野流"),
+        "アヒル囲い率"                    => all_tag_ratio_for("アヒル囲い"),
+        "嬉野流率"                        => all_tag_ratio_for("嬉野流"),
         "タグ平均偏差値"                  => deviation_avg,
         "1手詰を詰まさないでじらした割合" => jirasi_ratio,
         "絶対投了しない率"                => zettai_toryo_sinai_ratio,
@@ -59,8 +59,62 @@ module Swars
       MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:debug] }
     end
 
-    def ratio_of(key)
-      all_tag_names_hash[key].fdiv(real_count)
+    ################################################################################ 戦法・戦術を使った回数
+
+    # 率
+    def all_tag_ratio_for(key)
+      if real_count.positive?
+        all_tag_names_hash[key].fdiv(real_count)
+      else
+        0
+      end
+    end
+
+    # all_tag_names_hash["居飛車"]         # => 1
+    # all_tag_names_hash["存在しない戦法"] # => 0
+    def all_tag_names_hash
+      @all_tag_names_hash ||= -> {
+        counts = ids_scope.all_tag_counts(at_least: at_least_value)
+        counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
+      }.call
+    end
+
+    def all_tag_names
+      @all_tag_names ||= all_tag_names_hash.keys
+    end
+
+    # タグの種類数
+    def all_tag_count
+      @all_tag_count ||= all_tag_names_hash.size
+    end
+
+    ################################################################################ 勝ったときの、戦法・戦術を使った回数
+
+    # 率
+    def win_and_all_tag_ratio_for(key)
+      if real_count.positive?
+        win_and_all_tag_names_hash[key].fdiv(real_count)
+      else
+        0
+      end
+    end
+
+    # win_and_all_tag_names_hash["居飛車"]         # => 1
+    # win_and_all_tag_names_hash["存在しない戦法"] # => 0
+    def win_and_all_tag_names_hash
+      @win_and_all_tag_names_hash ||= -> {
+        counts = win_scope.all_tag_counts(at_least: at_least_value)
+        counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
+      }.call
+    end
+
+    def win_and_all_tag_names
+      @win_and_all_tag_names ||= win_and_all_tag_names_hash.keys
+    end
+
+    # タグの種類数
+    def win_and_all_tag_count
+      @win_and_all_tag_count ||= win_and_all_tag_names_hash.size
     end
 
     ################################################################################ 居玉勝ちマン
@@ -281,24 +335,6 @@ module Swars
           all_tag_names_hash["居飛車"].fdiv(total)
         end
       }.call
-    end
-
-    # all_tag_names_hash["居飛車"]         # => 1
-    # all_tag_names_hash["存在しない戦法"] # => 0
-    def all_tag_names_hash
-      @all_tag_names_hash ||= -> {
-        counts = ids_scope.all_tag_counts(at_least: at_least_value)
-        counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
-      }.call
-    end
-
-    def all_tag_names
-      @all_tag_names ||= all_tag_names_hash.keys
-    end
-
-    # タグの種類数
-    def all_tag_count
-      @all_tag_count ||= all_tag_names_hash.size
     end
 
     ########################################
