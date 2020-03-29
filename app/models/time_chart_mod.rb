@@ -52,12 +52,12 @@ module TimeChartMod
       c = Bioshogi::Location.count
       pos = preset_info.to_turn_info.current_location(location.code).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
       v = fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
-      v.collect { |e| e[:used_seconds] || 0 }
+      v.collect { |e| e[:used_seconds] }
     }.call
   end
 
   def raw_sec_list_all
-    @raw_sec_list_all ||= fast_parsed_info.move_infos.find_all.collect { |e| e[:used_seconds] || 0 }
+    @raw_sec_list_all ||= fast_parsed_info.move_infos.find_all.collect { |e| e[:used_seconds] }
   end
 
   # location の [{:x=>1, :y=>10}, {:x=>3, :y=>20}] を返す

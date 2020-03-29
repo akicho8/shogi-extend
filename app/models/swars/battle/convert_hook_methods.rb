@@ -92,20 +92,26 @@ module Swars
             e.think_max = e.sec_list.max || 0
             e.think_last = e.sec_list.last || 0
 
-            d = e.sec_list.size
-            c = e.sec_list.sum
+            sec_list = e.sec_list
+
+            if Rails.env.development? || Rails.env.test?
+              sec_list = sec_list.compact # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ。
+            end
+
+            d = sec_list.size
+            c = sec_list.sum
             if d.positive?
               e.think_all_avg = c.div(d)
             end
 
-            list = e.sec_list.last(5)
+            list = sec_list.last(5)
             d = list.size
             c = list.sum
             if d.positive?
               e.think_end_avg = c.div(d)
             end
 
-            a = e.sec_list                             # => [2, 3, 3, 2, 2, 2]
+            a = sec_list                               # => [2, 3, 3, 2, 2, 2]
             x = a.chunk { |e| e == 2 }                 # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
             x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
             v = x.compact.max                          # => 3
