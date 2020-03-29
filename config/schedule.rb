@@ -12,7 +12,7 @@ set :output, {standard: "log/#{@environment}_cron.log"}
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
-every("5 4 * * *") do
+every("5 3 * * *") do
   runner [
     "Colosseum::Battle.auto_close",
     "XyRecord.entry_name_blank_scope.destroy_all",
@@ -22,6 +22,10 @@ every("5 4 * * *") do
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::ExpertCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
+
+    "ActiveRecord::Base.logger = nil",
+    "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
+    "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
   ].join(";")
 end
 
