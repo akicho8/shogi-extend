@@ -38,8 +38,8 @@ module Swars
       { key: "一手詰じらしマン",    medal_params: { method: "raw",  name: "😈", type: nil, },                             if_cond: proc { (r = jirasi_ratio) && r > 0             } },
       { key: "絶対投了しないマン",  medal_params: { method: "raw",  name: "🧟", type: nil, },                             if_cond: proc { (r = zettai_toryo_sinai_ratio) && r > 0 } },
 
-      { key: "大長考マン",       medal_params: { method: "raw",  name: "😴", type: nil, },                                if_cond: proc { (r = long_think_ratio) && r > 0 } },
-      { key: "長考マン",         medal_params: { method: "raw",  name: "😪", type: nil, },                                if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
+      { key: "大長考マン",       medal_params: { method: "raw",  name: "🚫", type: nil, },                                if_cond: proc { (r = long_think_ratio) && r > 0 } },
+      { key: "長考マン",         medal_params: { method: "raw",  name: "🤯", type: nil, },                                if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
 
       { key: "ただの千日手",     medal_params: { method: "icon", name: "autorenew",    type: "is-danger" },                  if_cond: proc { (r = draw_ratio) && r > 0    } },
       { key: "開幕千日手",       medal_params: { method: "icon", name: "alert-circle", type: "is-danger" },                  if_cond: proc { (r = start_draw_ratio) && r > 0 } },

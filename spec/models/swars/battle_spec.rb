@@ -60,8 +60,8 @@ module Swars
         end
         it do
           assert { test(60*2.5 - 1).memberships[0].medal_params == { :icon => "star", :class => "has-text-gold"} }
-          assert { test(60*2.5).memberships[0].medal_params == "😪" }
-          assert { test(60*3).memberships[0].medal_params == "😴" }
+          assert { test(60*2.5).memberships[0].medal_params == "🤯" }
+          assert { test(60*3).memberships[0].medal_params == "🚫" }
         end
       end
     end

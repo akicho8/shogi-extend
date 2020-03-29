@@ -141,8 +141,8 @@ module Swars
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: [["+7968GI", 600 - seconds], ["-8232HI", 597], ["+5756FU", 600 - seconds - 1]], final_key: :CHECKMATE) do |e|
-          e.memberships.build(user: @black, judge_key: :win)
-          e.memberships.build(user: @white, judge_key: :lose)
+          e.memberships.build(user: @black, judge_key: :lose)
+          e.memberships.build(user: @white, judge_key: :win)
         end
 
         @black.user_info.medal_list.matched_medal_infos.collect(&:key)

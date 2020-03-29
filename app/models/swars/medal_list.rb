@@ -195,7 +195,7 @@ module Swars
 
     ################################################################################ 長考
 
-    # 大長考または放置
+    # 大長考または放置 (勝ち負け関係なし)
     def long_think_ratio
       if real_count.positive?
         c = RuleInfo.sum { |e| long_think_count_for(e) || 0 }
@@ -213,7 +213,7 @@ module Swars
       end
     end
 
-    # 小考
+    # 小考 (負けたとき)
     def short_think_ratio
       if real_count.positive?
         c = RuleInfo.sum { |e| short_think_count_for(e) || 0 }
@@ -225,7 +225,7 @@ module Swars
       a = rule_info.short_leave_alone
       b = rule_info.long_leave_alone
       if a && b
-        s = ids_scope
+        s = lose_scope
         s = s.where(Swars::Membership.arel_table[:think_max].between(a...b))
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:rule_key].eq(rule_info.key))
