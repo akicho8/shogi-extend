@@ -118,7 +118,7 @@
               win_lose_circle(:info="row" size="is-small" narrowed)
             .column.is-paddingless.is-flex
               template(v-for="tag in row.all_tags")
-                .tag_wrapper.has-text-weight-bold.is-size-5(@click="tactic_show_modal(tag.name)")
+                .tag_wrapper.is_clickable.has-text-weight-bold.is-size-5(@click="tactic_show_modal(tag.name)")
                   | {{tag.name}}
 
                 //- b-taglist.tag_wrapper(attached @click.native="tactic_modal_start(tag)")
@@ -132,7 +132,7 @@
         .box.one_box.one_column(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`")
           .columns.is-mobile
             .column.is-paddingless
-              .one_box_title.has-text-weight-bold.is-size-5
+              .one_box_title.is_clickable.has-text-weight-bold.is-size-5(@click="tactic_show_modal(row.tag.name)")
                 | {{row.tag.name}}
             .column.is-paddingless
               .has-text-right
@@ -153,7 +153,7 @@
               .one_box_title
                 span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
                   | vs
-                span.has-text-weight-bold.is-size-5.vs_name
+                span.is_clickable.has-text-weight-bold.is-size-5.vs_name(@click="tactic_show_modal(row.tag.name)")
                   | {{row.tag.name}}
             .column.is-paddingless
               .has-text-right
@@ -367,7 +367,6 @@ export default {
         justify-content: center
         align-items: center
         .tag_wrapper
-          cursor: pointer
           margin: 0rem
 
         // flex-wrap: wrap
