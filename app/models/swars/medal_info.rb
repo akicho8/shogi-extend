@@ -26,6 +26,7 @@ module Swars
 
       { key: "五連勝",       medal_params: { method: "raw",  name: "🍰",                type: nil,          },        if_cond: proc { (5..7).cover?(win_lose_streak_max_hash["win"]) },},
       { key: "八連勝",       medal_params: { method: "raw",  name: "🍣",                type: nil,          },        if_cond: proc { (8..255).cover?(win_lose_streak_max_hash["win"]) },},
+      { key: "波が激しいマン",       medal_params: { method: "raw",  name: "🌊",        type: nil,          },        if_cond: proc { win_lose_streak_max_hash["win"] >= 5 && win_lose_streak_max_hash["lose"] >= 5 },},
 
       { key: "居玉勝ちマン",     medal_params: { method: "raw",  name: "🗿",                type: nil,          },        if_cond: proc { (r = igyoku_win_ratio) && r >= 0.01                  },},
 

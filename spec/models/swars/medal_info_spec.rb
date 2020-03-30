@@ -217,6 +217,7 @@ module Swars
         assert { test(["win"] * 7).include?(:"五連勝") }
         assert { test(["win"] * 8).include?(:"八連勝") }
         assert { test(["win"] * 9).include?(:"八連勝") }
+        assert { test(["win"] * 5 + ["lose"] * 5).include?(:"波が激しいマン") }
       end
     end
   end
