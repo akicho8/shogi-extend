@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: ec4ea4d638c6829e24092cff65830f4ec88e8715
+  revision: 4c4a334f021348a3bb3a21ca0f74195876a44bfd
   specs:
     bioshogi (0.0.1)
       actionview

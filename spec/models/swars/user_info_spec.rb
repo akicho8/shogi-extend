@@ -25,7 +25,7 @@ module Swars
     end
 
     it "各タブの情報" do
-      assert { value["every_day_list"]     == [{"battled_at" => "2000-01-01T00:00:00.000+09:00", "day_color" => "info", "judge_counts" => {"win" => 1, "lose" => 0}, "all_tags" => [{"name" => "嬉野流", "count" => 1}]}] }
+      assert { value["every_day_list"]     == [{"battled_on" => "2000-01-01", "day_color" => "info", "judge_counts" => {"win" => 1, "lose" => 0}, "all_tags" => [{"name" => "嬉野流", "count" => 1}]}] }
       assert { value["every_my_attack_list"]    == [{"tag" => {"name" => "嬉野流", "count" => 1}, "judge_counts" => {"win" => 1, "lose" => 0}, "appear_ratio" => 1.0}] }
       assert { value["every_vs_attack_list"] == [{"tag" => {"name" => "△３ニ飛戦法", "count" => 1}, "judge_counts" => {"win" => 1, "lose" => 0}, "appear_ratio" => 1.0}] }
     end
