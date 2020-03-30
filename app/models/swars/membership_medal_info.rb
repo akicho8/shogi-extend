@@ -15,7 +15,7 @@ module Swars
 
       { key: "大長考マン",             medal_params: "🚫", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t } },
       { key: "長考マン",               medal_params: "🤯", if_cond: -> m { (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t && m.judge_key == "lose" } },
-      { key: "切れ負けマン",           medal_params: { icon: "timer-sand-empty", :class => "has-text-grey-light" },  if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
+      { key: "切れ負けマン",           medal_params: "⌛",  if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
 
       { key: "開幕千日手",             medal_params: { icon: "alert-circle",     :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max == 12 } },
       { key: "ただの千日手",           medal_params: { icon: "autorenew",        :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max > 12 } },

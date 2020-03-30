@@ -29,7 +29,7 @@ module Swars
 
       { key: "居玉勝ちマン",     medal_params: { method: "raw",  name: "🗿",                type: nil,          },        if_cond: proc { (r = igyoku_win_ratio) && r >= 0.01                  },},
 
-      { key: "切れ負けマン", medal_params: { method: "icon", name: "timer-sand-empty",  tag_wrap: { type: "is-light" } }, if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},
+      { key: "切れ負けマン", medal_params: { method: "raw", name: "⌛",                     type: nil,                     }, if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},
 
       { key: "レアマン",         medal_params: { method: "raw",  name: "🍀",                type: nil, },                 if_cond: proc { (r = deviation_avg) && r < 50.0                 },},
 
