@@ -335,7 +335,7 @@ module Swars
       }.call
     end
 
-    # 負けた数のうち final_key の方法で負けた率
+    # final_key の方法で負けた率 (分母: 負け数)
     def lose_ratio_of(final_key)
       @lose_ratio_of ||= {}
       @lose_ratio_of[final_key] ||= -> {
