@@ -14,6 +14,14 @@ window.SwarsBattleIndex = Vue.extend({
     }
   },
 
+  created() {
+    GVI.$on("query_search", e => this.query_search(e))
+  },
+
+  beforeDestroy() {
+    GVI.$off("query_search")
+  },
+
   mounted() {
     if (this.index_table_show_p) {
       this.async_records_load()
@@ -21,6 +29,12 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   computed: {
+    permalink_url() {
+      const params = new URLSearchParams()
+      params.set("query", this.query)
+      return `/w?${params}`
+    },
+
     // 最初に一覧を表示するか？
     index_table_show_p() {
       // required_query_for_search の指定がなければ常に表示する
@@ -40,6 +54,12 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   methods: {
+    query_search(query) {
+      this.query = query
+      window.history.replaceState("", null, this.permalink_url)
+      this.async_records_load()
+    },
+
     // // テーブルを表示する条件は検索文字列があること
     // // フォームに割り当てられている this.query だと変動するので使ってはいけない
     // table_display_p() {

@@ -154,7 +154,7 @@ module Swars
       group.collect do |battled_at, memberships|
 
         hash = {}
-        hash[:battled_at]   = battled_at
+        hash[:battled_on]   = battled_at.to_date
         hash[:day_color]    = day_color_for(battled_at)
         hash[:judge_counts] = judge_counts_of(memberships)
 

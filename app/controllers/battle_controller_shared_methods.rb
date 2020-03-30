@@ -130,6 +130,12 @@ module BattleControllerSharedMethods
     let :current_scope do
       s = current_model.all
       s = tag_scope_add(s)
+
+      if v = query_hash.dig(:date)&.first
+        v = v.to_time.midnight
+        s = s.where(battled_at: v...v.tomorrow)
+      end
+
       s = search_scope_add(s)
       s = other_scope_add(s)
       if v = query_hash.dig(:ids)
