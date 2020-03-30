@@ -24,6 +24,9 @@ module Swars
       { key: "アヒル中級",       medal_params: { method: "raw",  name: "🐥",                type: nil,          },        if_cond: proc { (0.3...0.5).cover?(all_tag_ratio_for("アヒル囲い"))                       },},
       { key: "アヒル上級",       medal_params: { method: "raw",  name: "🐤",                type: nil,          },        if_cond: proc { (0.5..1.0).cover?(all_tag_ratio_for("アヒル囲い")) && win_ratio >= 0.5    },},
 
+      { key: "五連勝",       medal_params: { method: "raw",  name: "🍰",                type: nil,          },        if_cond: proc { (5..7).cover?(win_lose_streak_max_hash["win"]) },},
+      { key: "八連勝",       medal_params: { method: "raw",  name: "🍣",                type: nil,          },        if_cond: proc { (8..255).cover?(win_lose_streak_max_hash["win"]) },},
+
       { key: "居玉勝ちマン",     medal_params: { method: "raw",  name: "🗿",                type: nil,          },        if_cond: proc { (r = igyoku_win_ratio) && r >= 0.01                  },},
 
       { key: "切れ負けマン", medal_params: { method: "icon", name: "timer-sand-empty",  tag_wrap: { type: "is-light" } }, if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},

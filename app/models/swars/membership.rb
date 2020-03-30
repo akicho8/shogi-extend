@@ -44,6 +44,12 @@ module Swars
     before_validation do
       # テストを書きやすいようにする
       if Rails.env.development? || Rails.env.test?
+        op_membership = (battle.memberships - [self]).first
+        if op_membership
+          self.location_key ||= op_membership.location&.flip&.key
+          self.judge_key ||= op_membership.judge_info&.flip&.key
+        end
+
         if index = battle.memberships.find_index { |e| e == self }
           self.location_key ||= Bioshogi::Location[index].key
           self.judge_key ||= JudgeInfo[index].key
@@ -102,11 +108,11 @@ module Swars
     end
 
     def location
-      Bioshogi::Location.fetch(location_key)
+      Bioshogi::Location[location_key]
     end
 
     def judge_info
-      JudgeInfo.fetch(judge_key)
+      JudgeInfo[judge_key]
     end
 
     # 相手 FIXME: 消す

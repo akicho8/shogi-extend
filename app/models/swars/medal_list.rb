@@ -4,7 +4,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :current_max, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :current_max, :current_scope, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -51,6 +51,7 @@ module Swars
         "大長考または放置率"              => long_think_ratio,
         "棋神降臨疑惑対局数"              => ai_use_battle_count,
         "長考または放置率"                => short_think_ratio,
+        "最大連勝連敗"                    => win_lose_streak_max_hash,
         "タグの重み"                      => all_tag_names_hash,
       }
     end
@@ -300,6 +301,21 @@ module Swars
       }.call
     end
 
+    ################################################################################ 連勝
+
+    def win_lose_streak_max_hash
+      @win_lose_streak_max_hash ||= win_lose_streak_max_hash_for(current_scope.pluck(:judge_key))
+    end
+
+    # []                            # => {"win" => 0, "lose" => 0}
+    # ["win", "lose", "win", "win"] # => {"win" => 2, "lose" => 1}
+    def win_lose_streak_max_hash_for(list)
+      default = {"win" => 0, "lose" => 0}
+      list                                                                        # => [:w, :w, :w, :l, :w, :w]
+      list = list.chunk(&:itself)                                                 # => [:w, [:w, :w, :w], [:l, [:l], [:w, [:w, :w]]]]
+      list.inject(default) { |a, (k, v)| a.merge(k => v.size) { |_, *v| v.max } } # => {:w => 3, :l => 1}
+    end
+
     private
 
     # 最低でも2以上にすること
@@ -312,9 +328,9 @@ module Swars
       @win_ratio ||= -> {
         w = judge_counts["win"]
         l = judge_counts["lose"]
-        s = w + l
-        if s.positive?
-          w.fdiv(s)
+        d = w + l
+        if d.positive?
+          w.fdiv(d)
         end
       }.call
     end
@@ -334,9 +350,9 @@ module Swars
     # 居飛車率
     def ibisha_ratio
       @ibisha_ratio ||= -> {
-        total = all_tag_names_hash["居飛車"] + all_tag_names_hash["振り飛車"]
-        if total.positive?
-          all_tag_names_hash["居飛車"].fdiv(total)
+        d = all_tag_names_hash["居飛車"] + all_tag_names_hash["振り飛車"]
+        if d.positive?
+          all_tag_names_hash["居飛車"].fdiv(d)
         end
       }.call
     end

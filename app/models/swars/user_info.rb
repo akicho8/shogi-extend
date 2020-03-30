@@ -71,6 +71,7 @@ module Swars
 
         hash[:medal_list] = medal_list.to_a
         hash[:debug_hash] = medal_list.to_debug_hash
+        hash[:win_lose_streak_max_hash] = medal_list.win_lose_streak_max_hash
 
         hash[:every_day_list]       = every_day_list
         hash[:every_my_attack_list] = every_my_attack_list

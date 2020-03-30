@@ -9,4 +9,12 @@ class JudgeInfo
   def swars_memberships
     Swars::Membership.where(judge_key: key)
   end
+
+  def flip
+    if key == :draw
+      self.class.fetch(:draw)
+    else
+      self.class.fetch(key == :win ? :lose : :win)
+    end
+  end
 end

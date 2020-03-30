@@ -64,5 +64,21 @@ module Swars
         assert { user.user_info.medal_list.deviation_avg < 50.0 }
       end
     end
+
+    describe "win_lose_streak_max_hash" do
+      def test(*list)
+        list.each do |win_or_lose|
+          Battle.create! do |e|
+            e.memberships.build(user: user, judge_key: win_or_lose)
+          end
+        end
+        user.user_info.medal_list.win_lose_streak_max_hash
+      end
+
+      it do
+        assert { test == {"win" => 0, "lose" => 0 } }
+        assert { test("win", "lose", "win", "win") == {"win" => 2, "lose" => 1 } }
+      end
+    end
   end
 end

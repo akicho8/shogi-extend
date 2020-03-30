@@ -198,5 +198,26 @@ module Swars
         assert { test(20).include?(:"棋神マン") }
       end
     end
+
+    describe "連勝" do
+      def test(list)
+        user = User.create!
+        list.each do |win_or_lose|
+          Battle.create! do |e|
+            e.memberships.build(user: user, judge_key: win_or_lose)
+          end
+        end
+        user.user_info.medal_list.matched_medal_infos.collect(&:key)
+      end
+
+      it do
+        assert { test(["win"] * 4).exclude?(:"五連勝") }
+        assert { test(["win"] * 5).include?(:"五連勝") }
+        assert { test(["win"] * 6).include?(:"五連勝") }
+        assert { test(["win"] * 7).include?(:"五連勝") }
+        assert { test(["win"] * 8).include?(:"八連勝") }
+        assert { test(["win"] * 9).include?(:"八連勝") }
+      end
+    end
   end
 end
