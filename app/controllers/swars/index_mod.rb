@@ -2,7 +2,7 @@ module Swars
   concern :IndexMod do
     included do
       helper_method :current_swars_user
-      helper_method :current_query_info
+      helper_method :query_info
       helper_method :twitter_card_options
 
       rescue_from "Mechanize::ResponseCodeError" do |exception|
@@ -228,11 +228,11 @@ module Swars
     end
 
     let :current_musers do
-      query_hash.dig(:muser)
+      query_info.lookup(:muser)
     end
 
     let :current_ms_tags do
-      query_hash.dig(:ms_tag)
+      query_info.lookup(:ms_tag)
     end
 
     # 対局URLが指定されているときはそれを優先するので current_swars_user_key を拾ってはいけない
@@ -240,14 +240,14 @@ module Swars
     # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1"
     let :current_swars_user_key do
       unless primary_record_key
-        current_swars_user_key_from_url || current_query_info.values.first
+        current_swars_user_key_from_url || query_info.values.first
       end
     end
 
     # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
     # https://shogiwars.heroz.jp/users/foo                          -> foo
     def current_swars_user_key_from_url
-      if url = current_query_info.urls.first
+      if url = query_info.urls.first
         if url = URI::Parser.new.extract(url).first
           uri = URI(url)
           if uri.path
@@ -274,16 +274,21 @@ module Swars
         # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
         s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
 
-        if v = query_hash.dig(:vs_grade)&.first
-          if current_swars_user
-            if grade = Grade.find_by!(key: v)
-              s = s.joins(memberships: :user)
-              s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
-              s = s.where(Membership.arel_table[:grade_id].eq(grade.id)) # 指定の段級位
-            end
-          end
-        else
-          if current_swars_user
+        if current_swars_user
+          if v = query_info.lookup_one(:"tag")
+            s = s.joins(memberships: :user)
+            s = s.where(Membership.arel_table[:user_id].eq(current_swars_user.id))
+            s = s.merge(Membership.tagged_with(v))
+          elsif v = query_info.lookup_one(:"vs-tag")
+            s = s.joins(memberships: :user)
+            s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
+            s = s.merge(Membership.tagged_with(v))
+          elsif v = query_info.lookup_one(:"vs-grade")
+            grade = Grade.find_by!(key: v)
+            s = s.joins(memberships: :user)
+            s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
+            s = s.where(Membership.arel_table[:grade_id].eq(grade.id)) # 指定の段級位
+          else
             s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
           end
         end

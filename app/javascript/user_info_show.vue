@@ -111,7 +111,7 @@
 
     .tab_content
       template(v-if="tab_index === 0")
-        .box.one_box.two_column.is_clickable(v-for="row in new_info.every_day_list" :key="`every_day_list/${row.battled_on}`" @click="day_row_click_handle(row)")
+        .box.one_box.two_column.is_clickable(v-for="row in new_info.every_day_list" :key="`every_day_list/${row.battled_on}`" @click="every_day_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -134,7 +134,7 @@
                 //-       | {{tag.count}}
 
       template(v-if="tab_index === 1")
-        .box.one_box.is_clickable(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`" @click="tactic_show_modal(row.tag.name)")
+        .box.one_box.is_clickable(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`" @click="every_my_attack_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -152,7 +152,7 @@
               win_lose_circle(:info="row" size="is-small")
 
       template(v-if="tab_index === 2")
-        .box.one_box.is_clickable(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`" @click="tactic_show_modal(row.tag.name)")
+        .box.one_box.is_clickable(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`" @click="every_vs_attack_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title
@@ -173,7 +173,7 @@
               win_lose_circle(:info="row" size="is-small")
 
       template(v-if="tab_index === 3")
-        .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="grade_row_click_handle(row)")
+        .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="every_grade_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title
@@ -252,14 +252,24 @@ export default {
   },
 
   methods: {
-    day_row_click_handle(row) {
+    every_day_click_handle(row) {
       this.$emit("close")
       GVI.$emit("query_search", `${this.new_info.user.key} date:${this.date_to_ymd(row.battled_on)}`)
     },
 
-    grade_row_click_handle(row) {
+    every_my_attack_click_handle(row) {
       this.$emit("close")
-      GVI.$emit("query_search", `${this.new_info.user.key} vs_grade:${row.grade_name}`)
+      GVI.$emit("query_search", `${this.new_info.user.key} tag:${row.tag.name}`)
+    },
+
+    every_vs_attack_click_handle(row) {
+      this.$emit("close")
+      GVI.$emit("query_search", `${this.new_info.user.key} vs-tag:${row.tag.name}`)
+    },
+
+    every_grade_click_handle(row) {
+      this.$emit("close")
+      GVI.$emit("query_search", `${this.new_info.user.key} vs-grade:${row.grade_name}`)
     },
 
     update_handle(options = {}) {

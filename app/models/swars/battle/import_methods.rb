@@ -94,22 +94,27 @@ module Swars
         end
 
         def sometimes_user_import(params = {})
+          params = {
+            seconds: sometimes_user_import_skip_seconds_default,
+          }
+
           # キャッシュの有効時間のみ利用して連続実行を防ぐ
-          if true
-            if Rails.env.production? || Rails.env.staging?
-              seconds = 3.minutes
-            else
-              seconds = 30.seconds
-            end
-            cache_key = ["sometimes_user_import", params[:user_key], params[:page_max]].join("/")
-            if Rails.cache.exist?(cache_key)
-              return false
-            end
-            Rails.cache.write(cache_key, true, expires_in: seconds)
+          cache_key = ["sometimes_user_import", params[:user_key], params[:page_max]].join("/")
+          if Rails.cache.exist?(cache_key)
+            return false
           end
+          Rails.cache.write(cache_key, true, expires_in: params[:seconds])
 
           user_import(params)
           true
+        end
+
+        def sometimes_user_import_skip_seconds_default
+          if Rails.env.production? || Rails.env.staging?
+            3.minutes
+          else
+            30.seconds
+          end
         end
 
         # Battle.user_import(user_key: "DarkPonamin9")

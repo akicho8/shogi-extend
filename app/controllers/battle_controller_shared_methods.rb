@@ -119,26 +119,26 @@ module BattleControllerSharedMethods
       end
     end
 
-    let :current_query_info do
+    let :query_info do
       QueryInfo.parse(current_query)
     end
 
     let :query_hash do
-      current_query_info.attributes
+      query_info.attributes
     end
 
     let :current_scope do
       s = current_model.all
       s = tag_scope_add(s)
 
-      if v = query_hash.dig(:date)&.first
+      if v = query_info.lookup_one(:date)
         v = v.to_time.midnight
         s = s.where(battled_at: v...v.tomorrow)
       end
 
       s = search_scope_add(s)
       s = other_scope_add(s)
-      if v = query_hash.dig(:ids)
+      if v = query_info.lookup(:ids)
         s = s.where(id: v)
       end
       if v = ransack_params
@@ -183,15 +183,15 @@ module BattleControllerSharedMethods
     end
 
     def tag_scope_add(s)
-      if v = query_hash.dig(:tag)
+      if v = query_info.lookup(:tag)
         s = s.tagged_with(v)
       end
 
-      if v = query_hash.dig(:or_tag)
+      if v = query_info.lookup(:or_tag)
         s = s.tagged_with(v, any: true)
       end
 
-      if v = query_hash.dig(:exclude_tag)
+      if v = query_info.lookup(:exclude_tag)
         s = s.tagged_with(v, exclude: true)
       end
 
@@ -199,11 +199,11 @@ module BattleControllerSharedMethods
     end
 
     def other_scope_add(s)
-      if v = query_hash.dig(:turn_max_gteq)&.first
+      if v = query_info.lookup_one(:turn_max_gteq)
         s = s.where(current_model.arel_table[:turn_max].gteq(v))
       end
 
-      if v = query_hash.dig(:turn_max_lt)&.first
+      if v = query_info.lookup_one(:turn_max_lt)
         s = s.where(current_model.arel_table[:turn_max].lt(v))
       end
 
