@@ -31,5 +31,10 @@ RSpec.describe "新プレイヤー情報", type: :system do
       expect(page).to have_content "遭遇率"
       doc_image
     end
+    it "段級" do
+      find(".tabs li:nth-of-type(4)").click
+      expect(page).to have_content "遭遇率"
+      doc_image
+    end
   end
 end

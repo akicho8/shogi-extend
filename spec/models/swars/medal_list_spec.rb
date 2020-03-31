@@ -80,5 +80,25 @@ module Swars
         assert { test("win", "lose", "win", "win") == {"win" => 2, "lose" => 1 } }
       end
     end
+
+    describe "every_grade_list" do
+      def test(white, judge_key)
+        Battle.create! do |e|
+          e.memberships.build(user: user, judge_key: judge_key)
+          e.memberships.build(user: User.create!, grade: Grade.find_by(key: white))
+        end
+      end
+
+      before do
+        test("初段", "win")
+        test("九段", "win")
+        test("九段", "win")
+        test("九段", "lose")
+      end
+
+      it do
+        assert { user.user_info.every_grade_list == [{grade_name: "九段", judge_counts: {win: 2, lose: 1}, appear_ratio: 0.375},{grade_name: "初段", judge_counts: {win: 1, lose: 0}, appear_ratio: 0.125}] }
+      end
+    end
   end
 end

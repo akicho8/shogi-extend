@@ -76,6 +76,7 @@ module Swars
         hash[:every_day_list]       = every_day_list
         hash[:every_my_attack_list] = every_my_attack_list
         hash[:every_vs_attack_list] = every_vs_attack_list
+        hash[:every_grade_list]     = every_grade_list
       end
     end
 
@@ -109,6 +110,32 @@ module Swars
 
     def current_max
       [(params[:max].presence || default_params[:max]).to_i, 100].min
+    end
+
+    def every_grade_list
+      s = user.op_memberships
+      s = s.joins(:battle)
+      s = s.merge(Swars::Battle.win_lose_only)
+      s = s.limit(current_max)
+      all_count = s.count
+
+      hash = s.joins(:grade).group(Swars::Grade.arel_table[:key]).group(:judge_key).order(Swars::Grade.arel_table[:priority]).count # => {["九段", "lose"]=>2, ["九段", "win"]=>1}
+
+      counts = {}
+      hash.each do |(grade_key, win_or_lose), count|
+        counts[grade_key] ||= {win: 0, lose: 0}
+        judge_info = JudgeInfo.fetch(win_or_lose)
+        counts[grade_key][judge_info.flip.key] = count  # 勝敗反転
+      end
+
+      counts # => {"九段"=>{:win=>2, :lose=>1}, "初段"=>{:win=>1, :lose=>0}}
+
+      ary = counts.collect do |k, v|
+        total = v.sum { |_, c| c }
+        { grade_name: k, judge_counts: v, appear_ratio: total.fdiv(all_count.size) }
+      end
+
+      ary # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}}]
     end
 
     private
