@@ -270,7 +270,34 @@ module Swars
 
     def current_scope
       @current_scope ||= -> {
-        s = super
+
+        s = current_model.all
+        # s = tag_scope_add(s)
+
+        if v = query_info.lookup_one(:date)
+          v = v.to_time.midnight
+          s = s.where(battled_at: v...v.tomorrow)
+        end
+
+        # s = search_scope_add(s)
+        # s = other_scope_add(s)
+
+        if v = query_info.lookup(:ids)
+          s = s.where(id: v)
+        end
+
+        # if v = ransack_params
+        # if true
+        #   s = s.merge(current_model.ransack(v).result)
+        # else
+        # current_queries.each do |e|
+        #   m = current_model
+        #   w = m.where(["title LIKE BINARY ?", "%#{e}%"])
+        #   w = w.or(m.where(["description LIKE BINARY ?", "%#{e}%"]))
+        #   s = s.merge(w)
+        # end
+        # # raise s.to_sql.inspect
+
         # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
         s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
 
@@ -295,14 +322,14 @@ module Swars
 
         # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
         # tag:username だと相手が「角換わり」したのも出てきてしまう
-        if current_ms_tags
-          m = Membership.all
-          if current_musers
-            m = m.where(user: User.where(user_key: current_musers))
-          end
-          m = m.tagged_with(current_ms_tags)
-          s = s.merge(m)
-        end
+        # if current_ms_tags
+        #   m = Membership.all
+        #   if current_musers
+        #     m = m.where(user: User.where(user_key: current_musers))
+        #   end
+        #   m = m.tagged_with(current_ms_tags)
+        #   s = s.merge(m)
+        # end
 
         s
       }.call
