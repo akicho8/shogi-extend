@@ -72,7 +72,7 @@
         | new_flip: {{new_flip}}
 
     footer.modal-card-foot
-      piyo_shogi_button(:icon_only="true" @click.stop="" type="button" :href="record.piyo_shogi_app_url")
+      piyo_shogi_button(:icon_only="true" :href="record.piyo_shogi_app_url")
       kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
       kif_copy_button(:icon_only="true" @click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
       tweet_button(tag="a" :href="tweet_url" :turn="turn_offset")
@@ -120,6 +120,10 @@ export default {
     this.record_setup()
     this.chart_show_auto()
     this.slider_focus_delay()
+  },
+
+  mounted() {
+    this.$gtag.event("open", {event_category: "盤面"})
   },
 
   watch: {

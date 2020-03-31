@@ -300,6 +300,8 @@ export default {
 
     // 開始
     start_handle() {
+      this.$gtag.event("start", {event_category: "CPU対戦"})
+
       this.sound_play("click")
 
       this.current_sfen_set()

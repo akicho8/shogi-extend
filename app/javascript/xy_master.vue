@@ -433,6 +433,8 @@ export default {
     },
 
     start_handle() {
+      this.$gtag.event("start", {event_category: "符号の鬼"})
+
       this.mode = "standby"
       this.count_down_counter = 0
       this.init_other_variables()

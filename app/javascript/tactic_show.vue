@@ -31,6 +31,8 @@ export default {
   },
 
   mounted() {
+    this.$gtag.event("open", {event_category: "戦法盤面"})
+
     this.talk(this.record.key, {rate: 1.5})
   },
 }

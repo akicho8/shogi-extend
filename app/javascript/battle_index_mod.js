@@ -48,7 +48,9 @@ export default {
 
   watch: {
     board_show_type(v) {
-      console.log("board_show_type", v)
+      if (v === "outbreak_turn" || v === "last") {
+        this.$gtag.event("open", {event_category: `盤面表示(${this.board_show_type_name})`})
+      }
     },
   },
 
@@ -220,6 +222,10 @@ export default {
     // start_turn() {
     //   return this.start_turn_for(this.selected_record)
     // },
+
+    board_show_type_name() {
+      return {none: "リスト", outbreak_turn: "仕掛け", last: "終局図"}[this.board_show_type]
+    },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 

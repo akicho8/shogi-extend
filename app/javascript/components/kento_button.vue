@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-button.kento_button.is-small(v-bind="$attrs" v-on="$listeners")
+  b-button.kento_button.is-small(v-bind="$attrs" v-on="$listeners" @click="click_handle")
     span.left_icon
       | ☗
     span.name(v-if="!icon_only")
@@ -15,6 +15,11 @@ export default {
   props: {
     turn: { required: false },
     icon_only: { default: false, },
+  },
+  methods: {
+    click_handle() {
+      this.$gtag.event("click", {event_category: "KENTO"})
+    },
   },
 }
 </script>

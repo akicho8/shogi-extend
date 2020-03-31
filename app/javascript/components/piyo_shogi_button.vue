@@ -1,5 +1,5 @@
 <template lang="pug">
-  a.button.piyo_shogi_button.is-small(v-bind="$attrs" v-on="$listeners")
+  a.button.piyo_shogi_button.is-small(v-bind="$attrs" v-on="$listeners" @click="click_handle")
     span.icon
       img.left_icon(:src="piyo_shogi_icon")
     span(v-if="!icon_only")
@@ -13,6 +13,11 @@ export default {
   name: "piyo_shogi_button",
   props: {
     icon_only: { default: false, },
+  },
+  methods: {
+    click_handle() {
+      this.$gtag.event("click", {event_category: "ぴよ将棋"})
+    },
   },
   computed: {
     piyo_shogi_icon() { return piyo_shogi_icon }, // TODO: Vue.js の重複強制どうにかならんの？

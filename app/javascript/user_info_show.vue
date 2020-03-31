@@ -199,18 +199,25 @@ export default {
     }
   },
 
+  mounted() {
+    // https://developers.google.com/analytics/devguides/collection/gtagjs/pages?hl=ja
+    this.$gtag.pageview({page_title: "プレイヤー情報", page_location: this.permalink_url})
+  },
+
   beforeCreate() {
     window.history.pushState(this.$options.name, null, "")
   },
 
-  watch: {
-    tab_index(v) {
-      window.history.replaceState(v, null, this.permalink_url)
-    },
-  },
-
   beforeDestroy() {
     window.history.back()
+  },
+
+  watch: {
+    tab_index(v) {
+      this.$gtag.event("open", {event_category: `プレイヤー情報(${this.tab_name})`})
+
+      window.history.replaceState(v, null, this.permalink_url)
+    },
   },
 
   created() {
@@ -257,6 +264,10 @@ export default {
   },
 
   computed: {
+    tab_name() {
+      return ["日付", "戦法", "対抗"][this.tab_index]
+    },
+
     ls_data() {
       return {
         tab_index: 0, // 初期値

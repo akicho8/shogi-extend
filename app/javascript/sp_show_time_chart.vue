@@ -374,6 +374,7 @@ export default {
   },
 
   mounted() {
+    this.$gtag.event("open", {event_category: "時間チャート"})
     this.chart_create()
   },
 

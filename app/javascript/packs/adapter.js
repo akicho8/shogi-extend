@@ -191,6 +191,8 @@ window.Adapter = Vue.extend({
     },
 
     record_create(callback) {
+      this.$gtag.event("create", {event_category: "なんでも棋譜変換"})
+
       const params = new URLSearchParams()
       params.set("input_text", this.input_text)
       params.set("edit_mode", "adapter")
