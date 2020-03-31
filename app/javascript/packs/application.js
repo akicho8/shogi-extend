@@ -24,6 +24,20 @@ Vue.use(Vuex)                   // これは一箇所だけで実行すること
 import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
+import VueGtag from "vue-gtag"
+Vue.use(VueGtag, {
+  config: {
+    id: 'UA-109851345-1',
+    params: {
+      // send_page_view: false,
+
+      // https://developers.google.com/analytics/devguides/collection/gtagjs/cookies-user-id?hl=ja
+      // > サーバーがローカル環境（例: localhost）で実行されていることが検出されると、cookie_domain は自動的に 'none' に設定されます
+      // cookie_domain: 'none',
+    },
+  },
+})
+
 import Repository from "Repository.js"
 Vue.prototype.$http = Repository
 
