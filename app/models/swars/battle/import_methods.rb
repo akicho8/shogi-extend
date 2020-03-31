@@ -96,7 +96,7 @@ module Swars
         def sometimes_user_import(params = {})
           params = {
             seconds: sometimes_user_import_skip_seconds_default,
-          }
+          }.merge(params)
 
           # キャッシュの有効時間のみ利用して連続実行を防ぐ
           cache_key = ["sometimes_user_import", params[:user_key], params[:page_max]].join("/")
