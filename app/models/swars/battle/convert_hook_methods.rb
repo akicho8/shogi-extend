@@ -38,7 +38,7 @@ module Swars
         s << ["N-", memberships.second.name_with_grade].join
         s << ["$START_TIME", battled_at.to_s(:csa_ymdhms)] * ":"
         s << ["$EVENT", "将棋ウォーズ(#{type.join(' ')})"] * ":"
-        s << ["$SITE", official_swars_battle_url] * ":"
+        # s << ["$SITE", official_swars_battle_url] * ":"
         s << ["$TIME_LIMIT", rule_info.csa_time_limit] * ":"
 
         # $OPENING は 戦型 のことで、これが判明するのはパースの後なのでいまはわからない。
