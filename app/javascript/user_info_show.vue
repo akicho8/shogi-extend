@@ -9,9 +9,13 @@
     b-dropdown.top_right_menu(position="is-bottom-left")
       b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
-      b-dropdown-item(@click="update_handle")
+      b-dropdown-item(@click="update_handle({try_fetch: true})")
         b-icon(icon="sync" size="is-small")
         | 更新
+
+      b-dropdown-item(@click="update_handle({max: 100})")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大100件
 
       b-dropdown-item(:href="`/w?query=${new_info.user.key}`" @click="$buefy.loading.open()")
         b-icon(icon="magnify" size="is-small")
@@ -231,8 +235,8 @@ export default {
       GVI.$emit("query_search", `${this.new_info.user.key} date:${this.date_to_ymd(row.battled_on)}`)
     },
 
-    update_handle() {
-      this.http_get_command("/w.json", { query: this.new_info.user.key, format_type: "user", debug: this.$route.query.debug, try_fetch: "true" }, data => this.new_info = data)
+    update_handle(options = {}) {
+      this.http_get_command("/w.json", { query: this.new_info.user.key, format_type: "user", debug: this.$route.query.debug, ...options}, data => this.new_info = data)
     },
 
     delete_click_handle() {

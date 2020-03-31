@@ -108,13 +108,13 @@ module Swars
     end
 
     def current_max
-      (params[:max].presence || default_params[:max]).to_i
+      [(params[:max].presence || default_params[:max]).to_i, 100].min
     end
 
     private
 
     def current_ox_max
-      (params[:ox_max].presence || default_params[:ox_max]).to_i
+      [(params[:ox_max].presence || default_params[:ox_max]).to_i, 100].min
     end
 
     def current_scope_base
