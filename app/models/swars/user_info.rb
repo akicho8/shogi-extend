@@ -131,7 +131,7 @@ module Swars
       counts # => {"九段"=>{:win=>2, :lose=>1}, "初段"=>{:win=>1, :lose=>0}}
 
       ary = counts.collect do |k, v|
-        total = v.sum { |_, c| c }
+        total = v.sum { |_, c| c } # total = v[:win] + v[:lose]
         { grade_name: k, judge_counts: v, appear_ratio: total.fdiv(all_count.size) }
       end
 

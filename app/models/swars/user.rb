@@ -33,6 +33,12 @@ module Swars
       end
       self.user_key ||= SecureRandom.hex
 
+      if Rails.env.development? || Rails.env.test?
+        if Grade.count.zero?
+          raise "Swars.setup してください"
+        end
+      end
+
       self.grade ||= Grade.last
 
       # Grade が下がらないようにする

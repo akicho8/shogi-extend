@@ -36,7 +36,9 @@ module Swars
           if params[:try_fetch] == "true"
             import_process2(flash)
           end
-          slack_message(key: "新プ情報", body: current_swars_user.key)
+          if Rails.env.production? || Rails.env.staging? || Rails.env.test?
+            slack_message(key: "新プ情報", body: current_swars_user.key)
+          end
           render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
           return
         end
@@ -272,8 +274,18 @@ module Swars
         # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
         s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
 
-        if current_swars_user
-          s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
+        if v = query_hash.dig(:vs_grade)&.first
+          if current_swars_user
+            if grade = Grade.find_by!(key: v)
+              s = s.joins(memberships: :user)
+              s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
+              s = s.where(Membership.arel_table[:grade_id].eq(grade.id)) # 指定の段級位
+            end
+          end
+        else
+          if current_swars_user
+            s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
+          end
         end
 
         # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる

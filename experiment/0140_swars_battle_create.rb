@@ -1,43 +1,36 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-module Swars
-  user1 = User.create!
-  user2 = User.create!
+# list = ActiveRecord::Base.connection.tables.sort.flat_map do |table|
+#   ActiveRecord::Base.connection.indexes(table).collect do |obj|
+#     [:table, :name, :unique, :columns, :lengths, :orders, :opclasses, :where, :type, :using, :comment].inject({}) { |a, e| a.merge(e => obj.send(e)) }
+#   end
+# end
+# tp list
 
-  battle = Battle.new
-  battle.csa_seq = [["-7162GI", 599],  ["+2726FU", 597],  ["-4132KI", 598],  ["+6978KI", 590],  ["-5354FU", 596],  ["+3948GI", 588],  ["-6253GI", 595],  ["+9796FU", 582],  ["-9394FU", 594],  ["+7776FU", 568],  ["-4344FU", 592],  ["+7968GI", 563],  ["-5162OU", 589],  ["+6877GI", 552],  ["-6172KI", 587],  ["+6766FU", 550],  ["-7374FU", 582],  ["+4958KI", 548],  ["-3142GI", 573],  ["+5867KI", 541],  ["-5455FU", 572],  ["+4746FU", 538],  ["-4243GI", 566],  ["+4847GI", 536],  ["-4354GI", 552],  ["+3736FU", 517],  ["-3334FU", 544],  ["+2625FU", 504],  ["-3233KI", 543],  ["+2937KE", 489],  ["-1314FU", 536],  ["+1716FU", 479],  ["-7273KI", 525],  ["+4645FU", 462],  ["-3435FU", 504],  ["+5756FU", 430],  ["-5556FU", 490],  ["+6756KI", 426],  ["-3536FU", 475],  ["+4736GI", 421],  ["-0035FU", 473],  ["+3647GI", 413],  ["-0055FU", 467],  ["+5646KI", 400],  ["-3334KI", 465],  ["+2524FU", 385],  ["-4445FU", 445],  ["+3745KE", 379],  ["-5445GI", 442],  ["+2423TO", 369],  ["-4546GI", 419],  ["+4746GI", 365],  ["-0025FU", 410],  ["+0044FU", 323],  ["-0047KI", 368],  ["+4443TO", 298],  ["-5364GI", 350],  ["+8879KA", 267],  ["-0036KE", 346],  ["+2818HI", 231],  ["-5556FU", 345],  ["+4635GI", 191],  ["-5657TO", 341],  ["+0049FU", 143],  ["-3435KI", 337],  ["+6665FU", 118],  ["-0058GI", 334]]
-  battle.memberships.build(user: user1, judge_key: :win,  location_key: :black)
-  battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
-  battle.save!                  # => true
+Swars::User.destroy_all
+Swars::Battle.destroy_all
+Swars.setup
 
-  tp Battle.last
+user1 = Swars::User.create!
+user2 = Swars::User.create!
+
+# ActiveSupport::LogSubscriber.colorize_logging = false
+# logger = ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
+# ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
+
+battle = Swars::Battle.create! do |e|
+  e.csa_seq = [["-7162GI", 599],  ["+2726FU", 597]]
+  e.memberships.build(user: user1, judge_key: :win,  location_key: :black)
+  e.memberships.build(user: user2, judge_key: :lose, location_key: :white)
 end
-# >> |--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |                 id | 22                                                                                                                                                                                                                                                                                                       |
-# >> |                key | b378ce67a1502c25ac6d693c32627d6c                                                                                                                                                                                                                                                                         |
-# >> |         battled_at | 2020-01-06 00:00:00 +0900                                                                                                                                                                                                                                                                                |
-# >> |           rule_key | ten_min                                                                                                                                                                                                                                                                                                  |
-# >> |            csa_seq | [["-7162GI", 599], ["+2726FU", 597], ["-4132KI", 598], ["+6978KI", 590], ["-5354FU", 596], ["+3948GI", 588], ["-6253GI", 595], ["+9796FU", 582], ["-9394FU", 594], ["+7776FU", 568], ["-4344FU", 592], ["+7968GI", 563], ["-5162OU", 589], ["+6877GI", 552], ["-...                                      |
-# >> |          final_key | TORYO                                                                                                                                                                                                                                                                                                    |
-# >> |        win_user_id | 34                                                                                                                                                                                                                                                                                                       |
-# >> |           turn_max | 67                                                                                                                                                                                                                                                                                                       |
-# >> |          meta_info | {:header=>{"先手"=>"10f97fe6199ce3e1e590c07c65ebb1a6 30級", "後手"=>"a39b503378e98947c30cfa2070709234 30級", "開始日時"=>"2020/01/06", "棋戦"=>"将棋ウォーズ(10分切れ負け)", "場所"=>"https://shogiwars.heroz.jp/games/b378ce67a1502c25ac6d693c32627d6c", "持ち時間"=>"00:10+00", "先手の備考"=>"居飛車... |
-# >> |    last_accessd_at | 2020-01-06 10:55:57 +0900                                                                                                                                                                                                                                                                                |
-# >> |  access_logs_count | 0                                                                                                                                                                                                                                                                                                        |
-# >> |         created_at | 2020-01-06 10:55:58 +0900                                                                                                                                                                                                                                                                                |
-# >> |         updated_at | 2020-01-06 10:55:58 +0900                                                                                                                                                                                                                                                                                |
-# >> |         preset_key | 平手                                                                                                                                                                                                                                                                                                     |
-# >> |         start_turn |                                                                                                                                                                                                                                                                                                          |
-# >> |      critical_turn | 36                                                                                                                                                                                                                                                                                                       |
-# >> |         saturn_key | public                                                                                                                                                                                                                                                                                                   |
-# >> |          sfen_body | position startpos moves 7a6b 2g2f 4a3b 6i7h 5c5d 3i4h 6b5c 9g9f 9c9d 7g7f 4c4d 7i6h 5a6b 6h7g 6a7b 6g6f 7c7d 4i5h 3a4b 5h6g 5d5e 4g4f 4b4c 4h4g 4c5d 3g3f 3c3d 2f2e 3b3c 2i3g 1c1d 1g1f 7b7c 4f4e 3d3e 5g5f 5e5f 6g5f 3e3f 4g3f P*3e 3f4g P*5e 5f4f 3c3d 2e2d 4d...                                      |
-# >> |         image_turn |                                                                                                                                                                                                                                                                                                          |
-# >> |   defense_tag_list |                                                                                                                                                                                                                                                                                                          |
-# >> |    attack_tag_list |                                                                                                                                                                                                                                                                                                          |
-# >> | technique_tag_list |                                                                                                                                                                                                                                                                                                          |
-# >> |      note_tag_list |                                                                                                                                                                                                                                                                                                          |
-# >> |     other_tag_list |                                                                                                                                                                                                                                                                                                          |
-# >> |    secret_tag_list |                                                                                                                                                                                                                                                                                                          |
-# >> | kifu_body_for_test |                                                                                                                                                                                                                                                                                                          |
-# >> |--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+# ActiveRecord::Base.logger = logger
+
+tp battle.memberships
+# >> |----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------+-----------+------------+------------+---------------+---------------+----------------+-------------+------------------+-----------------+--------------------+---------------+----------------|
+# >> | id | battle_id | user_id | grade_id | judge_key | location_key | position | created_at                | updated_at                | grade_diff | think_max | op_user_id | think_last | think_all_avg | think_end_avg | two_serial_max | opponent_id | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list | other_tag_list |
+# >> |----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------+-----------+------------+------------+---------------+---------------+----------------+-------------+------------------+-----------------+--------------------+---------------+----------------|
+# >> |  1 |         1 |       1 |       40 | win       | black        |        0 | 2020-03-31 19:22:50 +0900 | 2020-03-31 19:22:50 +0900 |          0 |         1 |          2 |          1 |             1 |             1 |                |           2 |                  |                 |                    | 居飛車 居玉   |                |
+# >> |  2 |         1 |       2 |       40 | lose      | white        |        1 | 2020-03-31 19:22:50 +0900 | 2020-03-31 19:22:50 +0900 |          0 |         3 |          1 |          3 |             3 |             3 |                |           1 |                  |                 |                    | 居飛車 居玉   |                |
+# >> |----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------+-----------+------------+------------+---------------+---------------+----------------+-------------+------------------+-----------------+--------------------+---------------+----------------|

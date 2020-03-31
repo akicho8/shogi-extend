@@ -101,6 +101,10 @@ module Swars
       validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
     end
 
+    # after_create do
+    #   memberships.each(&:opponent_id_set_if_blank)
+    # end
+
     def to_param
       key
     end

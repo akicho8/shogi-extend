@@ -256,7 +256,7 @@ module Swars
               judge_key = :draw
             end
 
-            battle.memberships.build(user:  user, grade: grade, judge_key: judge_key, location_key: Bioshogi::Location.fetch(i).key)
+            battle.memberships.build(user: user, grade: grade, judge_key: judge_key, location_key: Bioshogi::Location.fetch(i).key)
           end
 
           # SQLをシンプルにするために勝者だけ、所有者的な意味で、Battle 自体に入れとく
