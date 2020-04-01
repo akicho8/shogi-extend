@@ -101,6 +101,19 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    row_time_format(t) {
+      const date = dayjs(t)
+      const diff_day = dayjs().diff(date, "day")
+      const diff_year = dayjs().diff(date, "year")
+      if (diff_day < 1) {
+        return date.format("HH:MM")
+      }
+      if (diff_year < 1) {
+        return date.format("M/D HH:MM")
+      }
+      return date.format("YYYY-MM-DD")
+    },
+
     date_to_custom_format(t) {
       return dayjs(t).format(this.md_or_yyyymmdd_format(t))
     },

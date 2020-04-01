@@ -67,7 +67,7 @@ template(slot-scope="props")
       | {{props.row.preset_info.name}}
 
   b-table-column(field="battled_at" :label="table_columns_hash.battled_at.label" :visible="visible_hash.battled_at" sortable)
-    | {{props.row.battled_at}}
+    | {{row_time_format(props.row.battled_at)}}
 
   b-table-column
     .buttons.are-small
