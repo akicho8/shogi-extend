@@ -26,9 +26,11 @@ module ModalMod
 
       record = s.find_by(key: v) # スコープを無視すること
 
-      # 元々公開しているものは id にアクセスできる
-      unless record
-        record = s.where(saturn_key: :public).find_by(id: v)
+      if current_model.columns_hash["saturn_key"]
+        # 元々公開しているものは id にアクセスできる
+        unless record
+          record = s.where(saturn_key: :public).find_by(id: v)
+        end
       end
 
       if record

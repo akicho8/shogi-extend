@@ -387,16 +387,4 @@ module BattleModelMod
       {}
     end
   end
-
-  concerning :SaturnMethods do
-    included do
-      before_validation do
-        self.saturn_key ||= "public"
-      end
-    end
-
-    def saturn_info
-      SaturnInfo.fetch(saturn_key)
-    end
-  end
 end

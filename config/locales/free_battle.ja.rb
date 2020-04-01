@@ -1,6 +1,7 @@
 {
   ja: {
     attributes: {
+      saturn_key: "公開範囲",
     },
     helpers: {
       submit: {

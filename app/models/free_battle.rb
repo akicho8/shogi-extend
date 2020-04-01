@@ -200,6 +200,18 @@ class FreeBattle < ApplicationRecord
     BattleDecorator::FreeBattleDecorator
   end
 
+  concerning :SaturnMethods do
+    included do
+      before_validation do
+        self.saturn_key ||= "public"
+      end
+    end
+
+    def saturn_info
+      SaturnInfo.fetch(saturn_key)
+    end
+  end
+
   # ここは nil でよくね？
   def tournament_name
     if v = safe_meta_info

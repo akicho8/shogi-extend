@@ -322,7 +322,6 @@ module BattleControllerSharedMethods
           # :battled_at,
           # :preset_key,
           # :start_turn,
-          :saturn_key,
           :sfen_body,
           :image_turn,
           :display_turn,

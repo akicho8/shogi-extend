@@ -209,6 +209,8 @@ class FreeBattlesController < ApplicationController
       a[:tweet_body] = e.tweet_body
       a[:tweet_window_url] = e.tweet_window_url
 
+      a[:saturn_key] = e.saturn_key
+
       a[:title] = e.title
       a[:description] = e.description
 

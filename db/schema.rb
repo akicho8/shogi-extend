@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_163900) do
+ActiveRecord::Schema.define(version: 2020_03_31_163901) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -256,7 +256,6 @@ ActiveRecord::Schema.define(version: 2020_03_31_163900) do
     t.string "preset_key", null: false
     t.integer "start_turn"
     t.integer "critical_turn"
-    t.string "saturn_key", null: false
     t.string "sfen_body", limit: 8192
     t.integer "image_turn"
     t.string "sfen_hash"
@@ -267,7 +266,6 @@ ActiveRecord::Schema.define(version: 2020_03_31_163900) do
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
     t.index ["preset_key"], name: "index_swars_battles_on_preset_key"
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
-    t.index ["saturn_key"], name: "index_swars_battles_on_saturn_key"
     t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
