@@ -31,7 +31,8 @@ module KentoJsonMod
   def kento_json_render
     if request.format.json? && format_type == "kento"
       if current_swars_user
-        counter = Swars::Battle.continuity_run_counter(["kento", request.env["REMOTE_ADDR"]].join("/"))
+        ip = request.env["REMOTE_ADDR"]
+        counter = Swars::Battle.continuity_run_counter(["kento", ip].join("/"))
         if counter == 1
           import_process2(flash)
         end
@@ -54,7 +55,7 @@ module KentoJsonMod
           },
         }
 
-        slack_message(key: "KENTO API(#{counter})", body: current_swars_user.key)
+        slack_message(key: "KENTO API(#{counter} #{ip} #{Time.current})", body: current_swars_user.key)
         render json: json_hash.as_json
         return
       end
