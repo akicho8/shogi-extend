@@ -84,7 +84,7 @@ b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left
       b-icon(icon="eye" size="is-small")
       | SFEN 表示
 
-    b-dropdown-item(v-if="record.formal_sheet_path" :href="record.formal_sheet_path")
+    b-dropdown-item(v-if="record.show_path" :href="`${record.show_path}?formal_sheet=true`")
       b-icon(icon="pdf-box" size="is-small")
       | 棋譜用紙
 

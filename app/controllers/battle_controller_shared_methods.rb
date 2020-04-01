@@ -342,7 +342,6 @@ module BattleControllerSharedMethods
 
         a[:handicap_shift]     = e.preset_info.handicap ? 1 : 0
         a[:kifu_copy_params]   = { kc_path: polymorphic_path([ns_prefix, e]) }
-        a[:formal_sheet_path]  = polymorphic_path([ns_prefix, e], formal_sheet: true)
 
         a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
         a[:kento_app_url]      = kento_app_url_switch(e)
