@@ -31,7 +31,7 @@ module KentoJsonMod
   def kento_json_render
     if request.format.json? && format_type == "kento"
       if current_swars_user
-        counter = Swars::Battle.continuity_run_counter("kento_access")
+        counter = Swars::Battle.continuity_run_counter(["kento", request.env["REMOTE_ADDR"]].join("/"))
         if counter == 1
           import_process2(flash)
         end
@@ -66,7 +66,7 @@ module KentoJsonMod
   end
 
   def format_type
-    params[:format_type] || params[:json_format_type]
+    params[:format_type]
   end
 
   def kento_records_limit
