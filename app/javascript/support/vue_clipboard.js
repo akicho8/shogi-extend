@@ -21,9 +21,9 @@ export default {
         return
       }
 
-      if (params.kc_url) {
+      if (params.kc_path) {
         const kc_format = params.kc_format || "kif"
-        const full_url = `${params.kc_url}.${kc_format}`
+        const full_url = `${params.kc_path}.${kc_format}`
 
         this.http_get_command(full_url, {}, data => {
           this.debug_alert("AJAX後にテキスト取得")

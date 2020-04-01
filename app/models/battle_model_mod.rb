@@ -183,14 +183,6 @@ module BattleModelMod
     end
   end
 
-  def to_kifu_copy_params(h, options = {})
-    {
-      kc_url: h.url_for(self),
-      kc_title: title,
-      **options,
-    }
-  end
-
   # def display_turn
   #   # start_turn || outbreak_turn || critical_turn || 0
   #   start_turn || critical_turn || 0
