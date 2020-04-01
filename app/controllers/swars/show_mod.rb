@@ -85,7 +85,7 @@ module Swars
       a[:grade_diff] = memberships.first.last.grade_diff
 
       a[:final_info]  = { name: e.final_info.name, :class => e.final_info.has_text_color, }
-      a[:preset_info] = { name: e.preset_info.name                                        }
+      a[:preset_info] = { name: e.preset_info.name, handicap_shift: e.preset_info.handicap ? 1 : 0 }
       a[:rule_info]   = { name: e.rule_info.name                                          }
 
       a[:memberships] = memberships.collect do |label, e|
