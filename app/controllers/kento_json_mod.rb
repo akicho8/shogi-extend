@@ -55,7 +55,7 @@ module KentoJsonMod
           },
         }
 
-        slack_message(key: "KENTO API(#{counter})", body: [ip, Time.current.strftime("HH:MM:SS"), current_swars_user.key].join(" "))
+        slack_message(key: "KENTO API(#{counter})", body: [ip, Time.current.strftime("%H:%M:%S"), current_swars_user.key].join(" "))
         render json: json_hash.as_json
         return
       end
