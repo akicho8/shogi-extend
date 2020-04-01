@@ -1,9 +1,11 @@
+require "open-uri"
+
 module FrontendScript
   class ThreeStageLeagueScript < ::FrontendScript::Base
     self.script_name = "奨励会三段リーグ"
 
     RANKING_ENABLE = false
-    LEAGUE_MATCH = 28..66
+    LEAGUE_MATCH = 28..67
 
     def form_parts
       [
@@ -19,7 +21,7 @@ module FrontendScript
 
     def script_body
       if users = user_infos_fetch
-        users = users.sort_by { |e| -e[:win] }
+        users = users.sort_by { |e| [-e[:win], e[:index]] }
 
         # ランキング追加
         if RANKING_ENABLE
@@ -58,7 +60,6 @@ module FrontendScript
           rows.to_html,
           h.link_to("本家", source_url, :class => "button is-small"),
         ].join(h.tag.br)
-
       end
     end
 
@@ -71,18 +72,19 @@ module FrontendScript
               e.text.remove(/\p{Space}+/)
             end
 
-            values = values.drop(2)
+            values = values.drop(1)
 
             # 昔と今でフォーマットが異なる
             # ・昔 https://www.shogi.or.jp/match/shoreikai/sandan/28/index.html
             # ・今 https://www.shogi.or.jp/match/shoreikai/sandan/66/index.html
             if current_generation < 31
-              user.update([:name, :win, :lose].zip(values).to_h)
+              user.update([:index, :name, :win, :lose].zip(values).to_h)
             else
-              user.update([:name, :parent, :age, :win, :lose].zip(values).to_h)
+              user.update([:index, :name, :parent, :age, :win, :lose].zip(values).to_h)
             end
 
             user[:ox] = values.join.scan(/[○●]/).join
+            user[:index] = user[:index].to_i
 
             # # 勝敗のマークから勝数を調べる
             # user[:win]  = user[:ox].count("○")
