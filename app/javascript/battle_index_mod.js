@@ -25,7 +25,6 @@ export default {
       board_show_type: this.$options.board_show_type, // 何の局面の表示をするか？
 
       sp_show_p: false,               // モーダルを開くフラグ
-      selected_record: null,             //  選択したレコード
 
       loading: false,
 
@@ -69,8 +68,7 @@ export default {
 
   methods: {
     show_handle(row) {
-      this.selected_record = row
-      this.sp_show_modal({record: this.selected_record, board_show_type: this.board_show_type})
+      this.sp_show_modal({record: row, board_show_type: this.board_show_type})
     },
 
     sort_handle(column, order) {
@@ -166,28 +164,6 @@ export default {
     records_hash() {
       return this.records.reduce((a, e, i) => ({...a, [e.id]: {code: i, ...e}}), {})
     },
-
-    // // selected_record に対応するレコード
-    // selected_record() {
-    //   return this.selected_record
-    //   // if (this.selected_record) {
-    //   //   return this.records_hash[this.selected_record]
-    //   // }
-    // },
-
-    // selected_record に対応する sfen
-    // selected_record_sp_sfen() {
-    //   if (this.selected_record) {
-    //     return this.selected_record.sfen_body
-    //   }
-    // },
-
-    // 開始局面
-    // turn start_turn critical_turn の順に見る
-    // turn は $options.modal_record にのみ入っている
-    // start_turn() {
-    //   return this.start_turn_for(this.selected_record)
-    // },
 
     board_show_type_name() {
       return {none: "リスト", outbreak_turn: "仕掛け", last: "終局図"}[this.board_show_type]
