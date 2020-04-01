@@ -378,24 +378,6 @@ module BattleControllerSharedMethods
     let :current_edit_mode do
       (params[:edit_mode].presence || :basic).to_sym
     end
-
-    def update
-      if v = params[:image_turn]
-        current_record.update!(image_turn: v) # FIXME: 削除予定
-      end
-
-      if params[:create_by_rmagick] # FIXME: 削除予定
-        render json: current_record.canvas_data_save_by_rmagick(params)
-        return
-      end
-
-      if params[:og_image_destroy]
-        render json: current_record.canvas_data_destroy(params) # FIXME: 削除予定
-        return
-      end
-
-      super
-    end
   end
 
   concerning :EditCustomMethods do
