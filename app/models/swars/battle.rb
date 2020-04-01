@@ -166,14 +166,6 @@ module Swars
         end
       end
 
-      def swars_tweet_text
-        "将棋ウォーズ棋譜(#{title}) #{official_swars_battle_url} #shogiwars #将棋"
-      end
-
-      def official_swars_battle_url
-        Rails.application.routes.url_helpers.official_swars_battle_url(self)
-      end
-
       # def header_detail(h)
       #   if v = super
       #     v.merge("場所" => h.link_to(key, official_swars_battle_url, target: "_self"))

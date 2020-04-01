@@ -79,11 +79,6 @@ module Swars
       a[:final_info]  = { name: e.final_info.name, :class => e.final_info.has_text_color, }
       a[:preset_info] = { name: e.preset_info.name                                        }
       a[:rule_info]   = { name: e.rule_info.name                                          }
-      a[:official_swars_battle_url] = official_swars_battle_url(e)
-
-      if AppConfig[:swars_side_tweet_copy_function]
-        a[:swars_tweet_text] = e.swars_tweet_text
-      end
 
       flip, memberships = e.left_right_memberships(current_swars_user)
       a[:memberships] = memberships.collect do |label, e|

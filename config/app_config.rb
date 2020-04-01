@@ -9,7 +9,6 @@ AppConfig.deep_merge!({
     :more_import_function                    =>  true,  # もっと取り込む
     :swars_tag_search_function               =>  true,  # タグ検索
     :battle_index_permalink_show             =>  true,  # 固定リンクを表示するか？
-    :swars_side_tweet_copy_function          =>  true,  # 将棋ウォーズ側のツイートと同じ文言を取得機能を入れる？
     :search_form_datalist_function           =>  false, # 検索で入力したユーザー名を共有して検索候補にするか？
     :swars_tweet_function                    =>  true,  # 将棋ウォーズ棋譜詳細へのツイートできる？
     :kento_enable                            =>  true,  # KENTO にリンクする？

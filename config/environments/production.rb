@@ -136,7 +136,6 @@ Rails.application.configure do
         player_info_function: false,
         more_import_function: false,
         swars_tag_search_function: false,
-        swars_side_tweet_copy_function: false,
         search_form_datalist_function: false,
         swars_tweet_function: false,
         xy_master_custom_mode: false,

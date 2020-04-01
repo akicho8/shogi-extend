@@ -115,12 +115,6 @@ b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left
   //-     a(:href="record.official_swars_battle_url" target="_self")
   //-       b-icon(icon="link" size="is-small")
   //-       | ウォーズに飛ぶ
-  //-
-  //- template(v-if="record.swars_tweet_text")
-  //-   b-dropdown-item()
-  //-     a(@click="simple_clipboard_copy(record.swars_tweet_text)")
-  //-       b-icon(icon="clipboard-plus-outline" size="is-small")
-  //-       | ウォーズ側のTweetコピー
 </template>
 
 <script>
