@@ -23,7 +23,7 @@
 
       b-dropdown-item(separator)
 
-      b-dropdown-item(:href="`https://twitter.com/search?q=${new_info.user.key}`")
+      b-dropdown-item(:href="`https://twitter.com/search?q=将棋 ${new_info.user.key}`")
         b-icon(icon="twitter" size="is-small" type="is-info")
         | Twitter検索
 
