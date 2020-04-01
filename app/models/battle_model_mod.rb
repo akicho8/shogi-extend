@@ -22,6 +22,12 @@ module BattleModelMod
       self.turn_max ||= 0
       self.accessed_at ||= Time.current
       self.preset_key ||= :"平手"
+    end
+
+    before_validation on: :update do
+      unless sfen_body
+        self.sfen_body ||= fast_parsed_info.to_sfen
+      end
 
       # 盤面が変化したことが一瞬でわかるように盤面をハッシュ化しておく
       if changes_to_save[:sfen_body] || sfen_hash.nil?
@@ -33,6 +39,8 @@ module BattleModelMod
 
     with_options presence: true do
       validates :preset_key
+      # validates :sfen_body
+      # validates :sfen_hash
     end
 
     with_options allow_blank: true do
@@ -274,24 +282,6 @@ module BattleModelMod
           e.text_body
         end
       end
-    end
-
-    # sfen_body を取得するが、なければ作成する
-    def sfen_body_or_create
-      unless sfen_body
-        update!(sfen_body: fast_parsed_info.to_sfen)
-      end
-
-      sfen_body
-    end
-
-    # sfen_hash を取得するが、なければ作成する
-    def sfen_hash_or_create
-      unless sfen_hash
-        save!
-      end
-
-      sfen_hash
     end
 
     # バリデーションをはずして KI2 への変換もしない前提の軽い版

@@ -33,9 +33,9 @@ module ImageMod
     turn = adjust_turn(params[:turn])
     options = param_as_to_png_options(params)
     options_hash = Digest::MD5.hexdigest(options.to_s)
-    cache_key = [to_param, "png", sfen_hash_or_create, turn, options_hash].join(":") # id:png:board:turn:options
+    cache_key = [to_param, "png", sfen_hash, turn, options_hash].join(":") # id:png:board:turn:options
     Rails.cache.fetch(cache_key, expires_in: 1.week) do
-      parser = Bioshogi::Parser.parse(sfen_body_or_create, bioshogi_parser_options.merge(turn_limit: turn))
+      parser = Bioshogi::Parser.parse(sfen_body, bioshogi_parser_options.merge(turn_limit: turn))
       parser.to_png(options)
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_163901) do
+ActiveRecord::Schema.define(version: 2020_03_31_163902) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -225,10 +225,10 @@ ActiveRecord::Schema.define(version: 2020_03_31_163901) do
     t.integer "start_turn"
     t.integer "critical_turn"
     t.string "saturn_key", null: false
-    t.string "sfen_body", limit: 8192
+    t.string "sfen_body", limit: 8192, null: false
     t.integer "image_turn"
     t.string "preset_key", null: false
-    t.string "sfen_hash"
+    t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
@@ -256,9 +256,9 @@ ActiveRecord::Schema.define(version: 2020_03_31_163901) do
     t.string "preset_key", null: false
     t.integer "start_turn"
     t.integer "critical_turn"
-    t.string "sfen_body", limit: 8192
+    t.string "sfen_body", limit: 8192, null: false
     t.integer "image_turn"
-    t.string "sfen_hash"
+    t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"

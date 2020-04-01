@@ -22,10 +22,9 @@
 # | preset_key    | 手合割           | string(255)  | NOT NULL    |      | F     |
 # | start_turn    | 開始局面         | integer(4)   |             |      | I     |
 # | critical_turn | 開戦             | integer(4)   |             |      | J     |
-# | saturn_key    | 公開範囲         | string(255)  | NOT NULL    |      | K     |
-# | sfen_body     | SFEN形式棋譜     | string(8192) |             |      |       |
+# | sfen_body     | SFEN形式棋譜     | string(8192) | NOT NULL    |      |       |
 # | image_turn    | OGP画像の局面    | integer(4)   |             |      |       |
-# | sfen_hash     | Sfen hash        | string(255)  |             |      |       |
+# | sfen_hash     | Sfen hash        | string(255)  | NOT NULL    |      |       |
 # |---------------+------------------+--------------+-------------+------+-------|
 
 module Swars

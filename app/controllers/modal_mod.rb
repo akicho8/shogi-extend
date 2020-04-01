@@ -43,7 +43,7 @@ module ModalMod
 
   def js_modal_record_for(e)
     js_record_for(e).tap do |a|
-      a[:sfen_body] ||= e.sfen_body_or_create
+      a[:sfen_body] ||= e.sfen_body
 
       # 明示的に turn が指定されているときのみ設定
       # turn は sp_show.vue で拾う
