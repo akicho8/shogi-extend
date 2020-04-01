@@ -65,10 +65,6 @@ module Swars
       user_key
     end
 
-    def swars_home_url
-      Rails.application.routes.url_helpers.swars_home_url(self)
-    end
-
     def name_with_grade
       "#{user_key} #{grade.name}"
     end

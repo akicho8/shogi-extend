@@ -16,13 +16,7 @@ template(slot-scope="props")
       span
         span.icon_with_name
           membership_medal(:params="m.medal_params" v-if="m.medal_params")
-          template(v-if="false")
-            a(@click.stop :href="m.query_user_url")
-              | {{m.name_with_grade}}
-          template(v-if="false")
-            swars_user_link_to(:membership="m")
-          template(v-if="true")
-            swars_user_link_to(:membership="m")
+          swars_user_link_to(:membership="m")
 
         b-taglist
           template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
