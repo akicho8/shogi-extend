@@ -74,50 +74,34 @@ module Swars
     def js_record_for(e)
       a = super
 
+      flip, memberships = e.left_right_memberships(current_swars_user)
+
+      a[:flip] = flip
+      a[:modal_on_index_url] = e.modal_on_index_url(flip: flip)
+
       # a[:time_chart_params] = e.time_chart_params
+
+      # 左側にいるひとから見た右側の人の力差
+      a[:grade_diff] = memberships.first.last.grade_diff
 
       a[:final_info]  = { name: e.final_info.name, :class => e.final_info.has_text_color, }
       a[:preset_info] = { name: e.preset_info.name                                        }
       a[:rule_info]   = { name: e.rule_info.name                                          }
 
-      flip, memberships = e.left_right_memberships(current_swars_user)
       a[:memberships] = memberships.collect do |label, e|
         attrs = {
-          user: {
-            key: e.user.key,
-          },
+          user: { key: e.user.key },
           label: label,
           medal_params: e.medal_params,
           name_with_grade: e.name_with_grade,
-          # query_user_url: polymorphic_path(e.user),
-          # google_search_url: google_search_url(e.user.user_key),
-          # twitter_search_url: twitter_search_url(e.user.user_key),
           location: { hexagon_mark: e.location.hexagon_mark },
-          # position: e.position,
         }
 
         [:attack, :defense].each do |key|
-          # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
-          #   { name: e, url: swars_tag_search_path(e) }
-          # end
-
-          attrs["#{key}_tag_list"] = e.tag_names_for(key).collect { |name|
-            { name: name, url: url_for([:tactic_note, id: name]) }
-          }
-
-          # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
-          #   { name: e, url: swars_tag_search_path(e) }
-          # end
+          attrs["#{key}_tag_list"] = e.tag_names_for(key)
         end
+
         attrs
-      end
-
-      a[:flip] = flip
-      a[:modal_on_index_url] = e.modal_on_index_url(flip: flip)
-
-      if AppConfig[:columns_detail_show]
-        # 左側にいるひとから見た右側の人の力差
-        a[:grade_diff] = memberships.first.last.grade_diff
       end
 
       a
