@@ -3,11 +3,11 @@ module Swars
     concern :ConvertHookMethods do
       included do
         serialize :csa_seq
-        attribute :kifu_body_for_test
-        attribute :tactic_key
+        attr_accessor :kifu_body_for_test
+        attr_accessor :tactic_key
 
         before_save do
-          if (changes_to_save[:tactic_key] && tactic_key) || (changes_to_save[:kifu_body_for_test] && kifu_body_for_test) || (changes_to_save[:csa_seq] && csa_seq)
+          if tactic_key || kifu_body_for_test || (changes_to_save[:csa_seq] && csa_seq)
             parser_exec
           end
         end
