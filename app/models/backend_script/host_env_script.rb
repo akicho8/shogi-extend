@@ -1,5 +1,5 @@
 module BackendScript
-  class EnvScript < ::BackendScript::Base
+  class HostEnvScript < ::BackendScript::Base
     self.category = "その他"
     self.script_name = "ENV"
 
