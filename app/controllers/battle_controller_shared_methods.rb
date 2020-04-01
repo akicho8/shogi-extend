@@ -331,29 +331,29 @@ module BattleControllerSharedMethods
           :start_turn,
           :critical_turn,
           :outbreak_turn,
-
+          :battled_at,
         ],
         methods: [
           :display_turn,
           :player_info,
+          :title,
+          :description,
+          :modal_on_index_url,
         ],
         ).tap do |a|
 
-        a[:handicap_shift] = e.preset_info.handicap ? 1 : 0
-        a[:title] = e.title
-        a[:description] = e.description
-        # a[:twitter_card_image_url] = e.twitter_card_image_url(params)
-        a[:kifu_copy_params] = { kc_path: polymorphic_path([ns_prefix, e]) }
-        a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ
-        a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-        a[:kento_app_url] = kento_app_url_switch(e)
-        a[:battled_at] = e.battled_at
-        a[:show_path] = polymorphic_path([ns_prefix, e])
-        a[:formal_sheet_path] = polymorphic_path([ns_prefix, e], formal_sheet: true)
-        a[:modal_on_index_url] = e.modal_on_index_url
+        a[:show_path]          = polymorphic_path([ns_prefix, e])
         if editable_record?(e) || Rails.env.development?
           a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
         end
+
+        a[:handicap_shift]     = e.preset_info.handicap ? 1 : 0
+        a[:kifu_copy_params]   = { kc_path: polymorphic_path([ns_prefix, e]) }
+        a[:formal_sheet_path]  = polymorphic_path([ns_prefix, e], formal_sheet: true)
+
+        a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+        a[:kento_app_url]      = kento_app_url_switch(e)
+
       end
     end
 
@@ -420,7 +420,7 @@ module BattleControllerSharedMethods
 
         post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
         new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
-        xhr_put_path: url_for([ns_prefix, current_record, format: "json"]),
+        show_path: polymorphic_path([ns_prefix, current_record]),
 
         saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
         free_battles_pro_mode: AppConfig[:free_battles_pro_mode],
