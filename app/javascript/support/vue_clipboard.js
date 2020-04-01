@@ -5,13 +5,6 @@ export default {
       this.clipboard_copy({text: text})
     },
 
-    // Rails の通常のビューから使う用
-    // とても使いにくい
-    kif_clipboard_copy_for_rails_view(e) {
-      const params = JSON.parse(e.target.dataset[_.camelCase("kifu_copy_params")])
-      this.kif_clipboard_copy(params)
-    },
-
     // 指定 URL の結果をクリップボードにコピー
     // 引数の params を更新していって前回取得したテキストを保存し、2度目からはajaxしない
     kif_clipboard_copy(params) {
