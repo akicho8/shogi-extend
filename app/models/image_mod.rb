@@ -43,8 +43,6 @@ module ImageMod
   def modal_on_index_url(params = {})
     params = {
       modal_id: to_param,
-      title: "",
-      description: "",
     }.merge(params)
 
     params[:turn] = adjust_turn(params[:turn])
