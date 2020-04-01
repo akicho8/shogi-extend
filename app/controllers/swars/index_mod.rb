@@ -93,18 +93,12 @@ module Swars
     private
 
     def js_index_options
-      options = super.merge({
+      super.merge({
           current_swars_user_key: current_swars_user_key,
           required_query_for_search: AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
           remember_swars_user_keys: remember_swars_user_keys,
           import_enable_p: import_enable?,
         })
-      if AppConfig[:player_info_function]
-        if current_swars_user_key
-          options[:player_info_path] = url_for([:swars, :player_infos, user_key: current_swars_user_key, only_path: true])
-        end
-      end
-      options
     end
 
     let :twitter_card_options do

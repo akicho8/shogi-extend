@@ -18,10 +18,10 @@ b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left
     b-icon(icon="link-variant-plus" size="is-small")
     | パーマリンクコピー {{turn_mark}}
 
-  template(v-if="record.memberships" v-for="e in record.memberships")
-    b-dropdown-item(v-if="e.player_info_path" :href="e.player_info_path")
-      b-icon(icon="account" size="is-small")
-      | {{e.name_with_grade}} 情報
+  //- template(v-if="record.memberships" v-for="e in record.memberships")
+  //-   b-dropdown-item(v-if="e.player_info_path" :href="e.player_info_path")
+  //-     b-icon(icon="account" size="is-small")
+  //-     | {{e.name_with_grade}} 情報
 
   //- b-dropdown-item(separator)
 

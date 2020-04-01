@@ -97,10 +97,6 @@ module Swars
           # position: e.position,
         }
 
-        if AppConfig[:player_info_function]
-          attrs[:player_info_path] = url_for([:swars, :player_infos, user_key: e.user.user_key, only_path: true])
-        end
-
         [:attack, :defense].each do |key|
           # attrs["#{key}_tag_list"] = e.send("#{key}_tags").pluck(:name).collect do |e|
           #   { name: e, url: swars_tag_search_path(e) }
