@@ -344,7 +344,6 @@ module BattleControllerSharedMethods
         a[:description] = e.description
         # a[:twitter_card_image_url] = e.twitter_card_image_url(params)
         a[:kifu_copy_params] = { kc_path: polymorphic_path([ns_prefix, e]) }
-        a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
         a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ
         a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
         a[:kento_app_url] = kento_app_url_switch(e)
