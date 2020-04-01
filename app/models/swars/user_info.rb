@@ -117,7 +117,7 @@ module Swars
       s = s.joins(:battle)
       s = s.merge(Swars::Battle.win_lose_only)
       s = s.limit(current_max)
-      all_count = s.count
+      denominator = s.count
 
       hash = s.joins(:grade).group(Swars::Grade.arel_table[:key]).group(:judge_key).order(Swars::Grade.arel_table[:priority]).count # => {["九段", "lose"]=>2, ["九段", "win"]=>1}
 
@@ -132,7 +132,7 @@ module Swars
 
       ary = counts.collect do |k, v|
         total = v.sum { |_, c| c } # total = v[:win] + v[:lose]
-        { grade_name: k, judge_counts: v, appear_ratio: total.fdiv(all_count.size) }
+        { grade_name: k, judge_counts: v, appear_ratio: total.fdiv(denominator) }
       end
 
       ary # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}}]

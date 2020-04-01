@@ -97,7 +97,7 @@ module Swars
       end
 
       it do
-        assert { user.user_info.every_grade_list == [{grade_name: "九段", judge_counts: {win: 2, lose: 1}, appear_ratio: 0.375},{grade_name: "初段", judge_counts: {win: 1, lose: 0}, appear_ratio: 0.125}] }
+        assert { user.user_info.every_grade_list == [{grade_name: "九段", judge_counts: {win: 2, lose: 1}, appear_ratio: 0.75},{grade_name: "初段", judge_counts: {win: 1, lose: 0}, appear_ratio: 0.25}] }
       end
     end
   end

@@ -28,7 +28,7 @@ module Swars
       assert { value["every_day_list"]     == [{"battled_on" => "2000-01-01", "day_color" => "info", "judge_counts" => {"win" => 1, "lose" => 0}, "all_tags" => [{"name" => "嬉野流", "count" => 1}]}] }
       assert { value["every_my_attack_list"]    == [{"tag" => {"name" => "嬉野流", "count" => 1}, "judge_counts" => {"win" => 1, "lose" => 0}, "appear_ratio" => 1.0}] }
       assert { value["every_vs_attack_list"] == [{"tag" => {"name" => "△３ニ飛戦法", "count" => 1}, "judge_counts" => {"win" => 1, "lose" => 0}, "appear_ratio" => 1.0}] }
-      assert { value["every_grade_list"] == [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>0.125}] }
+      assert { value["every_grade_list"] == [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}] }
     end
 
     it "メダル" do
