@@ -20,6 +20,7 @@ module Swars
       { key: "ダイヤマン",       medal_params: { method: "raw",  name: "💎",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("ダイヤモンド美濃") > 0  },},
       { key: "音無しマン",       medal_params: { method: "raw",  name: "🦉",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("音無しの構え") > 0  },},
       { key: "筋違い角おじさん", medal_params: { method: "raw",  name: "🧓",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("筋違い角") > 0  },},
+      { key: "スイーツマン",     medal_params: { method: "raw",  name: "🍓",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("いちご囲い") > 0  },},
 
       { key: "アヒル初級",       medal_params: { method: "raw",  name: "🐣",                type: nil,          },        if_cond: proc { (0.1...0.3).cover?(all_tag_ratio_for("アヒル囲い"))                       },},
       { key: "アヒル中級",       medal_params: { method: "raw",  name: "🐥",                type: nil,          },        if_cond: proc { (0.3...0.5).cover?(all_tag_ratio_for("アヒル囲い"))                       },},

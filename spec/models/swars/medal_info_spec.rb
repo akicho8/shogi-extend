@@ -53,6 +53,7 @@ module Swars
         assert { b("ダイヤモンド美濃").include?("ダイヤマン")     }
         assert { b("音無しの構え").include?("音無しマン")         }
         assert { b("筋違い角").include?("筋違い角おじさん")       }
+        assert { b("いちご囲い").include?("スイーツマン")         }
       end
     end
 
