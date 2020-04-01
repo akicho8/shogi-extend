@@ -31,7 +31,10 @@ module KentoJsonMod
   def kento_json_render
     if request.format.json? && format_type == "kento"
       if current_swars_user
-        import_process2(flash)
+        counter = Swars::Battle.continuity_run_counter("kento_access")
+        if counter == 1
+          import_process2(flash)
+        end
 
         json_hash = {
           "api_version" => "2020-02-02",                                    # (required) 固定値
@@ -51,7 +54,7 @@ module KentoJsonMod
           },
         }
 
-        slack_message(key: "KENTO API", body: current_swars_user.key)
+        slack_message(key: "KENTO API(#{counter})", body: current_swars_user.key)
         render json: json_hash.as_json
         return
       end
