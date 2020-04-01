@@ -1,6 +1,6 @@
 <template lang="pug">
   a(@click="user_info_show_handle")
-    | {{membership.name_with_grade}}
+    | {{membership.user.key}} {{membership.grade_info.name}}
 
   //- b-dropdown.swars_user_link_to
   //-   a(slot="trigger")

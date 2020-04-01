@@ -245,7 +245,7 @@ module Swars
 
     concerning :ViewHelper do
       included do
-        cattr_accessor(:labels_type1) { ["対象", "相手"] }
+        cattr_accessor(:labels_type1) { ["自分", "相手"] }
         cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
       end
 

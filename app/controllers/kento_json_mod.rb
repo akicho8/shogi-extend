@@ -34,7 +34,7 @@ module KentoJsonMod
         ip = request.env["REMOTE_ADDR"]
         counter = Swars::Battle.continuity_run_counter("kento")
         if counter == 1
-          Battle.sometimes_user_import(user_key: current_swars_user.key, page_max: 1)
+          Swars::Battle.sometimes_user_import(user_key: current_swars_user.key, page_max: 1)
         end
 
         json_hash = {

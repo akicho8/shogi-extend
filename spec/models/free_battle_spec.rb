@@ -98,7 +98,7 @@ RSpec.describe FreeBattle, type: :model do
     end
 
     it "modal_on_index_url" do
-      assert { record.modal_on_index_url == "http://localhost:3000/x?description=&flip=false&modal_id=free_battle1&title=&turn=5" }
+      assert { record.modal_on_index_url == "http://localhost:3000/x?flip=false&modal_id=free_battle1&turn=5" }
     end
 
     it "adjust_turn" do

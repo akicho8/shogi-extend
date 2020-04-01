@@ -90,13 +90,12 @@ module Swars
 
       a[:memberships] = memberships.collect do |label, e|
         attrs = {
-          user: { key: e.user.key },
           label: label,
+          user: { key: e.user.key },
           medal_params: e.medal_params,
-          name_with_grade: e.name_with_grade,
+          grade_info: { name: e.grade.name, priority: e.grade.priority },
           location: { hexagon_mark: e.location.hexagon_mark },
         }
-
         [:attack, :defense].each do |key|
           attrs["#{key}_tag_list"] = e.tag_names_for(key)
         end

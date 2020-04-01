@@ -19,8 +19,7 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
     .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered
       a.no-decoration(@click.stop.prevent="show_handle(e)")
         small.line_break_on.has-text-black-ter
-          / | {{e.memberships[1].location.hexagon_mark}} {{e.memberships[1].name_with_grade}}
-          | {{e.memberships[1].name_with_grade}}
+          | {{e.memberships[1].user.key}} {{e.memberships[1].grade_info.name}}
         shogi_player(
           :run_mode="'view_mode'"
           :debug_mode="false"
@@ -38,5 +37,4 @@ template(v-if="fetched_count >= 1 && records.length >= 1")
         )
         / :hidden_if_piece_stand_blank="board_show_type === 'outbreak_turn'"
         small.line_break_on.has-text-black-ter
-          / | {{e.memberships[0].location.hexagon_mark}} {{e.memberships[0].name_with_grade}}
-          | {{e.memberships[0].name_with_grade}}
+          | {{e.memberships[0].user.key}} {{e.memberships[0].grade_info.name}}
