@@ -313,18 +313,11 @@ module BattleControllerSharedMethods
     end
 
     def js_record_for(e)
-      # e.attributes は継承しない
-
       e.as_json(
         only: [
           :id,
           :key,
-          # :battled_at,
-          # :preset_key,
-          # :start_turn,
           :sfen_body,
-          :image_turn,
-          :display_turn,
 
           :turn_max,
           :image_turn,
