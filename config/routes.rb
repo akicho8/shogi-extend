@@ -79,7 +79,6 @@ Rails.application.routes.draw do
   ################################################################################ 符号の鬼
 
   resource :stopwatch, only: [:show, :create]
-  resource :vs_clock, only: [:show, :create]
   resource :simple_board, path: "board", only: [:show, :create]
 
   resources :xy_records, path: "xy", only: [:index, :create, :update]

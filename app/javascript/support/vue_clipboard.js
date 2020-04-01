@@ -1,4 +1,10 @@
 export default {
+  data() {
+    return {
+      kif_clipboard_copy_cache: {},
+    }
+  },
+
   methods: {
     // いちばん簡単なインターフェイス
     simple_clipboard_copy(text) {
@@ -6,37 +12,29 @@ export default {
     },
 
     // 指定 URL の結果をクリップボードにコピー
-    // 引数の params を更新していって前回取得したテキストを保存し、2度目からはajaxしない
+    // 前回取得したテキストを保存し、2度目からはajaxしない
     kif_clipboard_copy(params) {
-      if (params.text) {
-        this.debug_alert("パラメータにテキストが含まれる")
-        this.clipboard_copy(params)
-        return
-      }
+      const kc_format = params.kc_format || "kif"
+      const url = `${params.kc_path}.${kc_format}`
+      const text = this.kif_clipboard_copy_cache[url]
 
-      if (params.kc_path) {
-        const kc_format = params.kc_format || "kif"
-        const full_url = `${params.kc_path}.${kc_format}`
-
-        this.http_get_command(full_url, {}, data => {
-          this.debug_alert("AJAX後にテキスト取得")
-          params.text = data
-          this.clipboard_copy(params)
+      if (text) {
+        this.clipboard_copy({text: text})
+      } else {
+        this.http_get_command(url, {}, text => {
+          this.$set(this.kif_clipboard_copy_cache, url, text)
+          this.clipboard_copy({text: text})
         })
-
-        return
       }
-
-      alert("must not happen")
     },
 
     // params.text をクリップボードにコピー
     // params を破壊する
     // params をずっと保持していれば1,2度目で挙動がかわる
     clipboard_copy(params) {
-      if (params.success_message  == null) { params.success_message  = "コピーしました"                                           }
-      if (params.failure_message1 == null) { params.failure_message1 = "なぜか最初だけ失敗するのでもう一回タップしてみてください" }
-      if (params.failure_message2 == null) { params.failure_message2 = "失敗しました。もう何回やってもダメそうです"               }
+      const success_message  = "コピーしました"
+      const failure_message1 = "なぜか最初だけ失敗するのでもう一回タップしてみてください"
+      const failure_message2 = "失敗しました。もう何回やってもダメそうです"
 
       let success = false
 
@@ -77,20 +75,21 @@ export default {
             this.clipboard_copy_error_dialog(params)
           } else {
             if (params.error_counter == 1) {
-              this.talk(params.failure_message1, {rate: 1.5})
-              this.$buefy.toast.open({message: params.failure_message1, position: "is-bottom", queue: false, type: "is-warning"})
+              this.talk(failure_message1, {rate: 1.5})
+              this.$buefy.toast.open({message: failure_message1, position: "is-bottom", queue: false, type: "is-warning"})
             }
             if (params.error_counter >= 2) {
-              this.talk(params.failure_message2, {rate: 1.5})
-              this.$buefy.toast.open({message: params.failure_message2, position: "is-bottom", queue: false, type: "is-danger"})
+              this.talk(failure_message2, {rate: 1.5})
+              this.$buefy.toast.open({message: failure_message2, position: "is-bottom", queue: false, type: "is-danger"})
               this.clipboard_copy_error_dialog(params)
             }
           }
-          return
+          return false
         }
 
-        this.talk(params["success_message"], {rate: 1.5})
-        this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", queue: false, type: "is-success"})
+        this.talk(success_message, {rate: 1.5})
+        this.$buefy.toast.open({message: success_message, position: "is-bottom", queue: false, type: "is-success"})
+        return true
       }
 
       // この方法は Windows Chrome で必ず失敗するというか navigator.clipboard が定義されてないので激指をメインで使う人は異様に使いにくくなってしまう
@@ -101,8 +100,8 @@ export default {
       if (false) {
         if (navigator.clipboard) {
           navigator.clipboard.writeText(params.text).then(() => {
-            this.talk(params["success_message"])
-            this.$buefy.toast.open({message: params["success_message"], position: "is-bottom", queue: false, type: "is-success"})
+            this.talk(success_message)
+            this.$buefy.toast.open({message: success_message, position: "is-bottom", queue: false, type: "is-success"})
           }).catch(err => {
             this.clipboard_copy_error_dialog(params)
           })

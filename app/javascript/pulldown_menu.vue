@@ -25,18 +25,6 @@ b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left
 
   //- b-dropdown-item(separator)
 
-  //- template(v-if="record.show_path")
-  //-   b-dropdown-item()
-  //-     a(:href="`${record.show_path}.ki2?attachment=true`")
-  //-       b-icon(icon="download" size="is-small")
-  //-       | KI2 ダウンロード
-  //-
-  //- template(v-if="record.kifu_copy_params")
-  //-   b-dropdown-item()
-  //-     a(@click="kif_clipboard_copy(ki2_copy_params)")
-  //-       b-icon(icon="clipboard-plus-outline" size="is-small")
-  //-       | KI2 コピー
-
   b-dropdown-item(v-if="record.show_path" :href="`${record.show_path}.kif?attachment=true`")
     b-icon(icon="download" size="is-small")
     | KIF ダウンロード
@@ -129,16 +117,8 @@ export default {
 
   data() {
     return {
-      ki2_copy_params: null, // モバイルのとき1回目が失敗するのでそのときに棋譜を保存する
       expand_more: false,
     }
-  },
-
-  created() {
-    this.ki2_copy_params = {...this.record.kifu_copy_params, kc_format: 'ki2'}
-  },
-
-  methods: {
   },
 
   computed: {
