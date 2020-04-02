@@ -54,6 +54,7 @@ module Swars
         assert { b("音無しの構え").include?("音無しマン")         }
         assert { b("筋違い角").include?("筋違い角おじさん")       }
         assert { b("いちご囲い").include?("スイーツマン")         }
+        assert { b("最強囲い").include?("最強囲いマン")           }
       end
     end
 
@@ -219,6 +220,7 @@ module Swars
         assert { test(["win"] * 7).include?(:"五連勝") }
         assert { test(["win"] * 8).include?(:"八連勝") }
         assert { test(["win"] * 9).include?(:"八連勝") }
+        assert { test(["win"] *10).include?(:"十連勝") }
         assert { test(["win"] * 5 + ["lose"] * 5).include?(:"波が激しいマン") }
       end
     end

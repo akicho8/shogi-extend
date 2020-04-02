@@ -21,13 +21,16 @@ module Swars
       { key: "音無しマン",       medal_params: { method: "raw",  name: "🦉",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("音無しの構え") > 0  },},
       { key: "筋違い角おじさん", medal_params: { method: "raw",  name: "🧓",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("筋違い角") > 0  },},
       { key: "スイーツマン",     medal_params: { method: "raw",  name: "🍓",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("いちご囲い") > 0  },},
+      { key: "最強囲いマン",     medal_params: { method: "raw",  name: "🔰",                type: nil,          },        if_cond: proc { all_tag_ratio_for("最強囲い") > 0  },},
 
       { key: "アヒル初級",       medal_params: { method: "raw",  name: "🐣",                type: nil,          },        if_cond: proc { (0.1...0.3).cover?(all_tag_ratio_for("アヒル囲い"))                       },},
       { key: "アヒル中級",       medal_params: { method: "raw",  name: "🐥",                type: nil,          },        if_cond: proc { (0.3...0.5).cover?(all_tag_ratio_for("アヒル囲い"))                       },},
       { key: "アヒル上級",       medal_params: { method: "raw",  name: "🐤",                type: nil,          },        if_cond: proc { (0.5..1.0).cover?(all_tag_ratio_for("アヒル囲い")) && win_ratio >= 0.5    },},
 
       { key: "五連勝",       medal_params: { method: "raw",  name: "🍰",                type: nil,          },        if_cond: proc { (5..7).cover?(win_lose_streak_max_hash["win"]) },},
-      { key: "八連勝",       medal_params: { method: "raw",  name: "🍣",                type: nil,          },        if_cond: proc { (8..255).cover?(win_lose_streak_max_hash["win"]) },},
+      { key: "八連勝",       medal_params: { method: "raw",  name: "🍣",                type: nil,          },        if_cond: proc { (8..10).cover?(win_lose_streak_max_hash["win"]) },},
+      { key: "十連勝",       medal_params: { method: "raw",  name: "🏆",                type: nil,          },        if_cond: proc { (10..255).cover?(win_lose_streak_max_hash["win"]) },},
+
       { key: "波が激しいマン",       medal_params: { method: "raw",  name: "🌊",        type: nil,          },        if_cond: proc { win_lose_streak_max_hash["win"] >= 5 && win_lose_streak_max_hash["lose"] >= 5 },},
 
       { key: "居玉勝ちマン",     medal_params: { method: "raw",  name: "🗿",                type: nil,          },        if_cond: proc { (r = igyoku_win_ratio) && r >= 0.01                  },},
