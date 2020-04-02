@@ -52,9 +52,16 @@ module Swars
         end
 
         (Bioshogi::Location.count - memberships.size).times do
-          memberships.build(user: User.create!)
+          memberships.build
+        end
+
+        memberships.each do |m|
+          m.user ||= User.create!
         end
       end
+
+      memberships[0].op_user ||= memberships[1].user
+      memberships[1].op_user ||= memberships[0].user
 
       if Rails.env.development? || Rails.env.test?
         self.key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"

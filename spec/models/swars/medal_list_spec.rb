@@ -21,6 +21,18 @@ module Swars
       end
     end
 
+    describe "負かされた戦法" do
+      def test
+        Battle.create! { |e| e.memberships.build(user: user, judge_key: :lose) }
+        Battle.create! { |e| e.memberships.build(user: user, judge_key: :win)  } # 2戦目勝ったけど分母は負け数なので結果は変わらない
+        user.user_info.medal_list.defeated_tag_counts
+      end
+
+      it do
+        assert { test == {"居玉" => 1.0, "△３ニ飛戦法" => 1.0, "振り飛車" => 1.0} }
+      end
+    end
+
     describe "レコードが0件" do
       it do
         assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0 }
@@ -85,7 +97,7 @@ module Swars
       def test(white, judge_key)
         Battle.create! do |e|
           e.memberships.build(user: user, judge_key: judge_key)
-          e.memberships.build(user: User.create!, grade: Grade.find_by(key: white))
+          e.memberships.build(grade: Grade.find_by(key: white))
         end
       end
 

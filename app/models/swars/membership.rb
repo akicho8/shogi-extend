@@ -45,10 +45,12 @@ module Swars
     before_validation do
       # テストを書きやすいようにする
       if Rails.env.development? || Rails.env.test?
-        op_membership = (battle.memberships - [self]).first
-        if op_membership
-          self.location_key ||= op_membership.location&.flip&.key
-          self.judge_key ||= op_membership.judge_info&.flip&.key
+        # self.user ||= User.create!
+
+        m = (battle.memberships - [self]).first
+        if m
+          self.location_key ||= m.location&.flip&.key
+          self.judge_key ||= m.judge_info&.flip&.key
         end
 
         if index = battle.memberships.find_index { |e| e == self }
@@ -83,9 +85,10 @@ module Swars
 
       # 対戦相手との段級位の差を保持しておく
       unless grade_diff
-        m = (battle.memberships - [self]).first
-        if grade && m.grade
-          self.grade_diff = -(m.grade.priority - grade.priority)
+        if m = (battle.memberships - [self]).first
+          if grade && m.grade
+            self.grade_diff = -(m.grade.priority - grade.priority)
+          end
         end
       end
 

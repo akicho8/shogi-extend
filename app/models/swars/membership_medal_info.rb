@@ -20,6 +20,8 @@ module Swars
       { key: "開幕千日手",             medal_params: { icon: "alert-circle",     :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max == 12 } },
       { key: "ただの千日手",           medal_params: { icon: "autorenew",        :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max > 12 } },
 
+      { key: "背水マン",               medal_params: "🧠",  if_cond: -> m { m.tag_names_for(:note).include?("背水の陣") && m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi },},
+
       {
         key: "段級位差",
         medal_params: nil,

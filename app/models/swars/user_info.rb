@@ -138,6 +138,12 @@ module Swars
       ary # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}}]
     end
 
+    def condition_add(s)
+      s = s.joins(:battle)
+      s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
+      s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
+    end
+
     private
 
     def current_ox_max
@@ -147,12 +153,6 @@ module Swars
     def current_scope_base
       s = user.memberships
       s = condition_add(s)
-    end
-
-    def condition_add(s)
-      s = s.joins(:battle)
-      s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
-      s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
     end
 
     # memberships が配列になっているとき用
@@ -227,12 +227,12 @@ module Swars
         s = Swars::Membership.where(id: s.pluck(:id))
       end
 
-      count = s.count
-      tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc")
+      denominator = s.count
+      tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
       tags.collect do |tag|
         {}.tap do |hash|
           hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
-          hash[:appear_ratio] = tag.count.fdiv(count)         # 使用率, 遭遇率
+          hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用率, 遭遇率
 
           # 勝ち負け数
           c = judge_counts_wrap(s.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 0}

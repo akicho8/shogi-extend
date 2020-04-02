@@ -21,7 +21,9 @@ module Swars
       { key: "音無しマン",       medal_params: { method: "raw",  name: "🦉",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("音無しの構え") > 0  },},
       { key: "筋違い角おじさん", medal_params: { method: "raw",  name: "🧓",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("筋違い角") > 0  },},
       { key: "スイーツマン",     medal_params: { method: "raw",  name: "🍓",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("いちご囲い") > 0  },},
-      { key: "最強囲いマン",     medal_params: { method: "raw",  name: "🔰",                type: nil,          },        if_cond: proc { all_tag_ratio_for("最強囲い") > 0  },},
+      { key: "無敵囲いマン",     medal_params: { method: "raw",  name: "🔰",                type: nil,          },        if_cond: proc { all_tag_ratio_for("無敵囲い") > 0  },},
+      { key: "背水マン",         medal_params: { method: "raw",  name: "🧠",                type: nil,          },        if_cond: proc { win_and_all_tag_ratio_for("背水の陣") > 0  },},
+      { key: "鬼殺されマン",     medal_params: { method: "raw",  name: "👹",                type: nil,          },        if_cond: proc { defeated_tag_counts["鬼殺し向かい飛車"] > 0 || defeated_tag_counts["鬼殺し"] > 0 || defeated_tag_counts["新鬼殺し"] > 0 },},
 
       { key: "アヒル初級",       medal_params: { method: "raw",  name: "🐣",                type: nil,          },        if_cond: proc { (0.1...0.3).cover?(all_tag_ratio_for("アヒル囲い"))                       },},
       { key: "アヒル中級",       medal_params: { method: "raw",  name: "🐥",                type: nil,          },        if_cond: proc { (0.3...0.5).cover?(all_tag_ratio_for("アヒル囲い"))                       },},
