@@ -83,8 +83,9 @@ module Swars
 
       # 対戦相手との段級位の差を保持しておく
       unless grade_diff
-        if grade && op_user.grade
-          self.grade_diff = -(op_user.grade.priority - grade.priority)
+        m = (battle.memberships - [self]).first
+        if grade && m.grade
+          self.grade_diff = -(m.grade.priority - grade.priority)
         end
       end
 
