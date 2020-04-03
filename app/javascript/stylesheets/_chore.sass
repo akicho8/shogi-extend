@@ -5,32 +5,41 @@
 
 ////////////////////////////////////////////////////////////////////////////// placeholder の色
 
-input::-webkit-input-placeholder
-  opacity: 0.4
+// FIXME: こんなに書かないといけないわけがない
+=placeholder_opacity($opacity)
+  ::-webkit-input-placeholder
+    opacity: $opacity
+  *:focus::-webkit-input-placeholder
+    color: transparent
+  ::-moz-placeholder
+    opacity: $opacity
+  *:focus::-moz-placeholder
+    color: transparent
+  ::-ms-input-placeholder
+    opacity: $opacity
+  *:focus::-ms-placeholder
+    color: transparent
+  ::placeholder
+    opacity: $opacity
+  *:focus::placeholder
+    color: transparent
 
-input::-moz-placeholder
-  opacity: 0.4
-
-input::-ms-input-placeholder
-  opacity: 0.4
-
-input::placeholder
-  opacity: 0.4
++placeholder_opacity(0.3)
 
 ////////////////////////////////////////////////////////////////////////////// フォーカスしたら placeholder は消す
 
-// https://www.ameamelog.com/css-placeholder/
-input:focus::-webkit-input-placeholder
-  color: transparent
-
-input:focus::-moz-placeholder
-  color: transparent
-
-input:focus::-ms-input-placeholder
-  color: transparent
-
-input:focus::placeholder
-  color: transparent
+// // https://www.ameamelog.com/css-placeholder/
+// :focus::-webkit--placeholder
+//   color: transparent
+//
+// :focus::-moz-placeholder
+//   color: transparent
+//
+// :focus::-ms--placeholder
+//   color: transparent
+//
+// :focus::placeholder
+//   color: transparent
 
 ////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
 
