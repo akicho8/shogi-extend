@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-ENV["RUN_REMOTE"] = "1"
+ENV["RUN_REMOTE"] = "true"
 
 tp Swars::User
 

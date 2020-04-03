@@ -203,7 +203,6 @@ module Swars
       end
     end
 
-
     def agent
       @agent ||= Mechanize.new.tap do |e|
         e.log = Rails.logger
@@ -217,7 +216,7 @@ module Swars
         return false
       end
 
-      @options[:run_remote] || (ENV["RUN_REMOTE"] == "1") || Rails.env.production? || Rails.env.staging?
+      @options[:run_remote] || (ENV["RUN_REMOTE"] == "true") || Rails.env.production? || Rails.env.staging?
     end
 
     def local_html(key)

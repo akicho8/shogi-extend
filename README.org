@@ -20,7 +20,7 @@ open http://localhost:3000/
 ** 実際にオンラインでクロールする場合
 
 #+BEGIN_SRC shell
-RUN_REMOTE=1 foreman s
+RUN_REMOTE=true foreman s
 #+END_SRC
 
 * テスト
