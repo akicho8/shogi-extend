@@ -203,17 +203,6 @@ module Swars
       end
     end
 
-    concerning :LegendSwarsUserKeysMethods do
-      # 騎士団フェスのときは何もとれない
-      def legend_user_keys(params = {})
-        if run_remote?
-          str = agent.get("https://shogiwars.heroz.jp/?locale=en").body
-        else
-          str = local_html("https_shogiwars_heroz_jp_locale_en")
-        end
-        str.scan(%r{shogiwars.heroz.jp/users/(\w+)}).flatten.uniq
-      end
-    end
 
     def agent
       @agent ||= Mechanize.new.tap do |e|
@@ -258,7 +247,6 @@ module Swars
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "kinakom0chi")
     # tp Agent.new(run_remote: true).index_get(gtype: "",  user_key: "masaya0918a")
 
-    # tp Agent.new.legend_user_keys
     # tp Agent.new.index_get(gtype: "",  user_key: "Apery8")
     # tp Agent.new.index_get(gtype: "",  user_key: "Apery8", page_index: 1)
     #
