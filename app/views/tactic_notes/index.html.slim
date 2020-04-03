@@ -1,4 +1,4 @@
-.title.is-3.yumincho= "戦法トリガー事典"
+.title.is-3= "戦法トリガー事典"
 
 .tabs
   ul
@@ -15,7 +15,7 @@
     == @tree.join
 
 - if params[:mode] == "fortune"
-  .has-text-centered.yumincho.is-size-1
+  .has-text-centered.is-size-1
     p= link_to(@attack_info.name, [:tactic_note, id: @attack_info.key])
     p= link_to(@defense_info.name, [:tactic_note, id: @defense_info.key])
 

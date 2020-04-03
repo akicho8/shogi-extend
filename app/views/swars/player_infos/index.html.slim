@@ -6,7 +6,7 @@
     document.addEventListener('DOMContentLoaded', () => { new SwarsPlayerInfoApp(#{js_swars_player_info_app_params.to_json.html_safe}).$mount("#swars_player_info_app") })
 
 #swars_player_info_app
-  .title.yumincho.is-2
+  .title.is-2
     = "将棋ウォーズプレイヤー情報"
 
   .columns
@@ -34,14 +34,14 @@
         .column
           - stat = current_swars_user.secret_summary
           .field
-            .title.yumincho.is-4 作法
+            .title.is-4 作法
             - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
             == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
         .column
           - stat = current_swars_user.basic_summary
           .field
-            .title.yumincho.is-4 戦績
+            .title.is-4 戦績
             - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
             == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 

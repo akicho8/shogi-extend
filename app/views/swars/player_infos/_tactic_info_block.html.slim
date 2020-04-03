@@ -2,5 +2,5 @@
 
 - if stat = current_swars_user.tactic_summary_for(tactic_info.key).presence
   .field
-    .title.yumincho.is-4= tactic_info.name
+    .title.is-4= tactic_info.name
     == stat.to_html(table_class: "table is-fullwidth is-narrow")
