@@ -182,7 +182,7 @@ module Swars
 
         hash = {}
         hash[:battled_on]   = battled_at.to_date
-        hash[:day_color]    = day_color_for(battled_at)
+        hash[:day_type]    = day_type_for(battled_at)
         hash[:judge_counts] = judge_counts_of(memberships)
 
         s = Swars::Membership.where(id: memberships.collect(&:id))
@@ -250,7 +250,7 @@ module Swars
       {"win" => 0, "lose" => 0}.merge(hash) # JudgeInfo.inject({}) { |a, e| a.merge(e.key.to_s => 0) }.merge(hash)
     end
 
-    def day_color_for(t)
+    def day_type_for(t)
       case
       when t.sunday?
         :danger

@@ -282,8 +282,8 @@ export default {
     },
 
     battled_on_to_class(row) {
-      if (row.day_color) {
-        return `has-text-${row.day_color}`
+      if (row.day_type) {
+        return `has-text-${row.day_type}`
       }
     },
   },
