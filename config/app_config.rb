@@ -28,7 +28,6 @@ AppConfig.deep_merge!({
     :per_page_list                           =>  [25],  # 1ページあたりの項目数選択肢リストの最初と最後を除いたもの
     :required_user_key_for_search            =>  true,  # 検索にはユーザー名を必ず指定するか？
     :required_query_for_search               =>  true,  # js側から一覧のレコードを出すときは必ず query が入っていないといけないか？
-    :swars_battles_index_filter_options_show =>  true,  # 将棋ウォーズ棋譜検索のフィルターオプションを表示する？
 
     :redis_db_for_xy_rule_info           => 2,    # 符号の鬼のランキング用
     :redis_db_for_colosseum_ranking_info => 3,    # 対戦のランキング用
