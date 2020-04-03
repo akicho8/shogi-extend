@@ -56,6 +56,7 @@ module Swars
         assert { b("いちご囲い").include?("スイーツマン")         }
         assert { b("背水の陣").include?("背水マン")               }
         assert { b("elmo囲い").include?("elmoマン")               }
+        assert { b("レグスペ").include?("レグスペマン")           }
         assert { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
         assert { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン") }
       end
