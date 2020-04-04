@@ -2,13 +2,9 @@ require 'rails_helper'
 
 module Swars
   RSpec.describe Agent, type: :model do
-    let :agent do
-      Agent.new
-    end
-
-    describe "index_get" do
+    describe "index" do
       let :value do
-        agent.index_get(gtype: "", user_key: "devuser1", page_index: 0)
+        Agent::Index.new.fetch(gtype: "", user_key: "devuser1", page_index: 0)
       end
 
       let :ret_value do
@@ -24,9 +20,9 @@ module Swars
       end
     end
 
-    describe "record_get" do
+    describe "record" do
       let :value do
-        agent.record_get("devuser1-devuser2-20200101_123456")
+        Agent::Record.new.fetch("devuser1-devuser2-20200101_123456")
       end
 
       it do

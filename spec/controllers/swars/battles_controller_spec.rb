@@ -86,7 +86,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
       assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                                }
       assert { body["game_list"][0]["kifu_url"]          == "http://test.host/w/devuser1-Yamada_Taro-20200101_123401.kif" }
       assert { body["game_list"][0]["display_name"]      == "devuser1 三段 vs Yamada_Taro 四段"                           }
-      assert { body["game_list"][0]["display_timestamp"] == 1547215773                                                    }
+      assert { body["game_list"][0]["display_timestamp"] == 1577849641                                                    }
     end
   end
 
