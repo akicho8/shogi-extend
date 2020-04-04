@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-Swars::Battle.import(:remake)
+# Swars::Battle.import(:remake)
+
+Swars::Battle.first.remake      # => false
+
 
 # tp Swars::Battle
-# >> ["2019-04-05 11:49:37", :remake, "begin", [143, 140]]
-# >> ............................................................................................................................................
-# >> {false=>140}
-# >> ["2019-04-05 11:50:05", :remake, "end__", [143, 140], [0, 0]]
+# >> .
