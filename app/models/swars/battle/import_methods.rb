@@ -137,7 +137,7 @@ module Swars
           (params[:page_max] || 1).times do |i|
             list = []
             unless params[:dry_run]
-              list = Agent.new(params).index_get(params.merge(page_index: i))
+              list = Agent::Index.new(params).fetch(params.merge(page_index: i))
             end
             sleep_on(params)
 
@@ -145,9 +145,9 @@ module Swars
             keys += page_keys
 
             # アクセス数を減らすために10件未満なら終了する
-            if page_keys.size < Agent.items_per_page
+            if page_keys.size < Agent::Index.items_per_page
               if params[:verbose]
-                tp "#{page_keys.size} < #{Agent.items_per_page}"
+                tp "#{page_keys.size} < #{Agent::Index.items_per_page}"
               end
               break
             end
@@ -209,10 +209,10 @@ module Swars
             end
           end
 
-          info = Agent.new(params).record_get(params[:key])
+          info = Agent::Record.new(params).fetch(params[:key])
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
-          unless info[:st_done]
+          unless info[:fetch_successed]
             return
           end
 
