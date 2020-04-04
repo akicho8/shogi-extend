@@ -106,10 +106,10 @@ export default {
       const diff_day = dayjs().diff(date, "day")
       const diff_year = dayjs().diff(date, "year")
       if (diff_day < 1) {
-        return date.format("HH:MM")
+        return date.format("HH:mm")
       }
       if (diff_year < 1) {
-        return date.format("M/D HH:MM")
+        return date.format("M/D HH:mm")
       }
       return date.format("YYYY-MM-DD")
     },
