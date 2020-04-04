@@ -20,7 +20,6 @@ module Swars
           gtype: "",    # 空:10分 sb:3分 s1:10秒
           user_key: nil,
           page_index: 0,
-          grade_get_on_inex: false,
         }.merge(params)
 
         q = {
@@ -84,22 +83,6 @@ module Swars
           # if row[:key] == "Takechan831-Yamada_Taro-20190111_223848"
           #   puts elem.to_s
           # end
-
-          # key から行けるページで次の情報もとれるのでここで取得しなくてもいい
-          # と思ったが、指定の段位以上の人だけ取り込みたいとき、対局ページにGETする前に判断することができるので取っといた方がいい
-          if @options[:grade_get_on_inex]
-            if true
-              row[:user_infos] = elem.search(".history_prof").collect do |e|
-                [:user_key, :grade_key].zip(e.inner_text.scan(/\S+/)).to_h
-              end
-            end
-
-            if row[:user_infos].blank?
-              row[:user_infos] = elem.text.scan(/(\w+)\p{blank}+(.*?[級段])/).collect do |e|
-                [:user_key, :grade_key].zip(e).to_h
-              end
-            end
-          end
 
           row
         }.compact
