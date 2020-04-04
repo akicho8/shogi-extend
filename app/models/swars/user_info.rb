@@ -45,7 +45,7 @@ module Swars
     cattr_accessor(:default_params) {
       {
         :max    => 50, # データ対象直近n件
-        :ox_max => 16, # 表示勝敗直近n件
+        :ox_max => 17, # 表示勝敗直近n件
       }
     }
 
