@@ -21,17 +21,17 @@ RSpec.describe "新プレイヤー情報", type: :system do
       expect(page).to have_content "勝率"
       doc_image
     end
-    it "戦法" do
+    it "段級" do
       find(".tabs li:nth-of-type(2)").click
+      expect(page).to have_content "遭遇率"
+      doc_image
+    end
+    it "戦法" do
+      find(".tabs li:nth-of-type(3)").click
       expect(page).to have_content "使用率"
       doc_image
     end
     it "対抗" do
-      find(".tabs li:nth-of-type(3)").click
-      expect(page).to have_content "遭遇率"
-      doc_image
-    end
-    it "段級" do
       find(".tabs li:nth-of-type(4)").click
       expect(page).to have_content "遭遇率"
       doc_image

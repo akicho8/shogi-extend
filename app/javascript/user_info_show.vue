@@ -101,9 +101,9 @@
 
     b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered")
       b-tab-item(label="日付")
+      b-tab-item(label="段級")
       b-tab-item(label="戦法")
       b-tab-item(label="対抗")
-      b-tab-item(label="段級")
 
     //- b-field(position="is-centered")
     //-   b-radio-button(v-model="tab_index" native-value="0" size="is-small") 日付
@@ -133,7 +133,28 @@
                 //-     b-tag(type="is-primary")
                 //-       | {{tag.count}}
 
+
       template(v-if="tab_index === 1")
+        .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="every_grade_click_handle(row)")
+          .columns.is-mobile
+            .column.is-paddingless
+              .one_box_title
+                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
+                  | vs
+                span.has-text-weight-bold.is-size-5.vs_name
+                  | {{row.grade_name}}
+            .column.is-paddingless
+              .has-text-right
+                span.has-text-grey-light.is-size-7.use_rate_label
+                  | 遭遇率
+                span.use_rate
+                  | {{number_to_percentage2(row.appear_ratio, 1)}}
+                span.has-text-grey-light.is-size-7.use_rate_unit
+                  | %
+          .columns
+            .column.is-paddingless
+              win_lose_circle(:info="row" size="is-small")
+      template(v-if="tab_index === 2")
         .box.one_box.is_clickable(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`" @click="every_my_attack_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
@@ -151,7 +172,7 @@
             .column.is-paddingless
               win_lose_circle(:info="row" size="is-small")
 
-      template(v-if="tab_index === 2")
+      template(v-if="tab_index === 3")
         .box.one_box.is_clickable(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`" @click="every_vs_attack_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
@@ -160,27 +181,6 @@
                   | vs
                 span.has-text-weight-bold.is-size-5.vs_name
                   | {{row.tag.name}}
-            .column.is-paddingless
-              .has-text-right
-                span.has-text-grey-light.is-size-7.use_rate_label
-                  | 遭遇率
-                span.use_rate
-                  | {{number_to_percentage2(row.appear_ratio, 1)}}
-                span.has-text-grey-light.is-size-7.use_rate_unit
-                  | %
-          .columns
-            .column.is-paddingless
-              win_lose_circle(:info="row" size="is-small")
-
-      template(v-if="tab_index === 3")
-        .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="every_grade_click_handle(row)")
-          .columns.is-mobile
-            .column.is-paddingless
-              .one_box_title
-                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
-                  | vs
-                span.has-text-weight-bold.is-size-5.vs_name
-                  | {{row.grade_name}}
             .column.is-paddingless
               .has-text-right
                 span.has-text-grey-light.is-size-7.use_rate_label
@@ -290,7 +290,7 @@ export default {
 
   computed: {
     tab_name() {
-      return ["日付", "戦法", "対抗", "段級"][this.tab_index]
+      return ["日付", "段級", "戦法", "対抗"][this.tab_index]
     },
 
     ls_data() {
