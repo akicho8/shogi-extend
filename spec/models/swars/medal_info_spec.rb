@@ -208,7 +208,6 @@ module Swars
 
     describe "連勝" do
       def test(list)
-        user = User.create!
         list.each do |win_or_lose|
           Battle.create! do |e|
             e.memberships.build(user: user, judge_key: win_or_lose)
@@ -218,14 +217,17 @@ module Swars
       end
 
       it do
-        assert { test(["win"] * 4).exclude?(:"五連勝") }
-        assert { test(["win"] * 5).include?(:"五連勝") }
-        assert { test(["win"] * 6).include?(:"五連勝") }
-        assert { test(["win"] * 7).include?(:"五連勝") }
-        assert { test(["win"] * 8).include?(:"八連勝") }
-        assert { test(["win"] * 9).include?(:"八連勝") }
-        assert { test(["win"] *10).include?(:"十連勝") }
-        assert { test(["win"] * 5 + ["lose"] * 5).include?(:"波が激しいマン") }
+        assert { test(["win"] * 4).exclude?(:"5連勝") }
+
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"8連勝") }
+        assert { test(["win"]).include?(:"8連勝") }
+        assert { test(["win"]).include?(:"8連勝") }
+        assert { test(["win"]).include?(:"11連勝") }
+
+        assert { test(["lose"] * 5).include?(:"波が激しいマン") }
       end
     end
   end
