@@ -670,7 +670,7 @@ export default {
     },
 
     magic_number() {
-      return dayjs().format("YYMMDDHHMM")
+      return dayjs().format("YYMMDDHHmm")
     },
   },
 
