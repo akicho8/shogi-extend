@@ -4,7 +4,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :current_max, :current_scope, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :current_max, :current_scope, :condition_add, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -93,7 +93,7 @@ module Swars
       @all_tag_count ||= all_tag_names_hash.size
     end
 
-    ################################################################################ 勝ったときの、戦法・戦術を使った回数
+    ################################################################################ 投了または詰みで勝ったときの、戦法・戦術を使った回数
 
     # 率
     def win_and_all_tag_ratio_for(key)
@@ -108,7 +108,10 @@ module Swars
     # win_and_all_tag_names_hash["存在しない戦法"] # => 0
     def win_and_all_tag_names_hash
       @win_and_all_tag_names_hash ||= -> {
-        counts = win_scope.all_tag_counts(at_least: at_least_value)
+        s = win_scope
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "CHECKMATE"]))
+        counts = s.all_tag_counts(at_least: at_least_value)
         counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
       }.call
     end
@@ -120,6 +123,52 @@ module Swars
     # タグの種類数
     def win_and_all_tag_count
       @win_and_all_tag_count ||= win_and_all_tag_names_hash.size
+    end
+
+    # ################################################################################ 負けたときの、戦法・戦術を使った回数
+    #
+    # # 率
+    # def lose_and_all_tag_ratio_for(key)
+    #   if real_count.positive?
+    #     lose_and_all_tag_names_hash[key].fdiv(real_count)
+    #   else
+    #     0
+    #   end
+    # end
+    #
+    # # lose_and_all_tag_names_hash["居飛車"]         # => 1
+    # # lose_and_all_tag_names_hash["存在しない戦法"] # => 0
+    # def lose_and_all_tag_names_hash
+    #   @lose_and_all_tag_names_hash ||= -> {
+    #     counts = lose_scope.all_tag_counts(at_least: at_least_value)
+    #     counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
+    #   }.call
+    # end
+    #
+    # def lose_and_all_tag_names
+    #   @lose_and_all_tag_names ||= lose_and_all_tag_names_hash.keys
+    # end
+    #
+    # # タグの種類数
+    # def lose_and_all_tag_count
+    #   @lose_and_all_tag_count ||= lose_and_all_tag_names_hash.size
+    # end
+
+    ################################################################################ 相手に指定のタグを使われて自分が負けた
+
+    def defeated_tag_counts
+      @defeated_tag_counts ||= -> {
+        s = user.op_memberships   # 相手が
+        s = condition_add(s)
+        s = s.where(judge_key: "win") # 勝った = 自分が負けた
+        s = s.limit(current_max)
+        denominator = s.count
+
+        s = Swars::Membership.where(id: s.pluck(:id))
+
+        tags = s.all_tag_counts(at_least: at_least_value) # 全タグ
+        tags.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count.fdiv(denominator)) } # 分母は負かされ数
+      }.call
     end
 
     ################################################################################ 居玉勝ちマン

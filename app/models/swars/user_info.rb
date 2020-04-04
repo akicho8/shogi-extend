@@ -45,7 +45,7 @@ module Swars
     cattr_accessor(:default_params) {
       {
         :max    => 50, # データ対象直近n件
-        :ox_max => 16, # 表示勝敗直近n件
+        :ox_max => 17, # 表示勝敗直近n件
       }
     }
 
@@ -76,6 +76,7 @@ module Swars
         hash[:every_day_list]       = every_day_list
         hash[:every_my_attack_list] = every_my_attack_list
         hash[:every_vs_attack_list] = every_vs_attack_list
+        hash[:every_grade_list]     = every_grade_list
       end
     end
 
@@ -108,24 +109,50 @@ module Swars
     end
 
     def current_max
-      (params[:max].presence || default_params[:max]).to_i
+      [(params[:max].presence || default_params[:max]).to_i, 100].min
     end
 
-    private
+    def every_grade_list
+      s = user.op_memberships
+      s = s.joins(:battle)
+      s = s.merge(Swars::Battle.win_lose_only)
+      s = s.limit(current_max)
+      denominator = s.count
 
-    def current_ox_max
-      (params[:ox_max].presence || default_params[:ox_max]).to_i
-    end
+      hash = s.joins(:grade).group(Swars::Grade.arel_table[:key]).group(:judge_key).order(Swars::Grade.arel_table[:priority]).count # => {["九段", "lose"]=>2, ["九段", "win"]=>1}
 
-    def current_scope_base
-      s = user.memberships
-      s = condition_add(s)
+      counts = {}
+      hash.each do |(grade_key, win_or_lose), count|
+        counts[grade_key] ||= {win: 0, lose: 0}
+        judge_info = JudgeInfo.fetch(win_or_lose)
+        counts[grade_key][judge_info.flip.key] = count  # 勝敗反転
+      end
+
+      counts # => {"九段"=>{:win=>2, :lose=>1}, "初段"=>{:win=>1, :lose=>0}}
+
+      ary = counts.collect do |k, v|
+        total = v.sum { |_, c| c } # total = v[:win] + v[:lose]
+        { grade_name: k, judge_counts: v, appear_ratio: total.fdiv(denominator) }
+      end
+
+      ary # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}}]
     end
 
     def condition_add(s)
       s = s.joins(:battle)
       s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
       s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
+    end
+
+    private
+
+    def current_ox_max
+      [(params[:ox_max].presence || default_params[:ox_max]).to_i, 100].min
+    end
+
+    def current_scope_base
+      s = user.memberships
+      s = condition_add(s)
     end
 
     # memberships が配列になっているとき用
@@ -154,8 +181,8 @@ module Swars
       group.collect do |battled_at, memberships|
 
         hash = {}
-        hash[:battled_at]   = battled_at
-        hash[:day_color]    = day_color_for(battled_at)
+        hash[:battled_on]   = battled_at.to_date
+        hash[:day_type]    = day_type_for(battled_at)
         hash[:judge_counts] = judge_counts_of(memberships)
 
         s = Swars::Membership.where(id: memberships.collect(&:id))
@@ -200,12 +227,12 @@ module Swars
         s = Swars::Membership.where(id: s.pluck(:id))
       end
 
-      count = s.count
-      tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc")
+      denominator = s.count
+      tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
       tags.collect do |tag|
         {}.tap do |hash|
           hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
-          hash[:appear_ratio] = tag.count.fdiv(count)         # 使用率, 遭遇率
+          hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用率, 遭遇率
 
           # 勝ち負け数
           c = judge_counts_wrap(s.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 0}
@@ -223,7 +250,7 @@ module Swars
       {"win" => 0, "lose" => 0}.merge(hash) # JudgeInfo.inject({}) { |a, e| a.merge(e.key.to_s => 0) }.merge(hash)
     end
 
-    def day_color_for(t)
+    def day_type_for(t)
       case
       when t.sunday?
         :danger

@@ -22,10 +22,9 @@
 # | preset_key    | 手合割           | string(255)  | NOT NULL    |      | F     |
 # | start_turn    | 開始局面         | integer(4)   |             |      | I     |
 # | critical_turn | 開戦             | integer(4)   |             |      | J     |
-# | saturn_key    | 公開範囲         | string(255)  | NOT NULL    |      | K     |
-# | sfen_body     | SFEN形式棋譜     | string(8192) |             |      |       |
+# | sfen_body     | SFEN形式棋譜     | string(8192) | NOT NULL    |      |       |
 # | image_turn    | OGP画像の局面    | integer(4)   |             |      |       |
-# | sfen_hash     | Sfen hash        | string(255)  |             |      |       |
+# | sfen_hash     | Sfen hash        | string(255)  | NOT NULL    |      |       |
 # |---------------+------------------+--------------+-------------+------+-------|
 
 require "matrix"
@@ -53,9 +52,16 @@ module Swars
         end
 
         (Bioshogi::Location.count - memberships.size).times do
-          memberships.build(user: User.create!)
+          memberships.build
+        end
+
+        memberships.each do |m|
+          m.user ||= User.create!
         end
       end
+
+      memberships[0].op_user ||= memberships[1].user
+      memberships[1].op_user ||= memberships[0].user
 
       if Rails.env.development? || Rails.env.test?
         self.key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
@@ -100,6 +106,10 @@ module Swars
       validates :key, uniqueness: { case_sensitive: true }
       validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
     end
+
+    # after_create do
+    #   memberships.each(&:opponent_id_set_if_blank)
+    # end
 
     def to_param
       key
@@ -161,14 +171,6 @@ module Swars
             URI(url).path.split("/").last
           end
         end
-      end
-
-      def swars_tweet_text
-        "将棋ウォーズ棋譜(#{title}) #{official_swars_battle_url} #shogiwars #将棋"
-      end
-
-      def official_swars_battle_url
-        Rails.application.routes.url_helpers.official_swars_battle_url(self)
       end
 
       # def header_detail(h)
@@ -250,7 +252,7 @@ module Swars
 
     concerning :ViewHelper do
       included do
-        cattr_accessor(:labels_type1) { ["対象", "相手"] }
+        cattr_accessor(:labels_type1) { ["自分", "相手"] }
         cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
       end
 

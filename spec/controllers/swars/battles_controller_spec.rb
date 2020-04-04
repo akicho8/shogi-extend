@@ -22,10 +22,9 @@
 # | preset_key    | 手合割           | string(255)  | NOT NULL    |      | F     |
 # | start_turn    | 開始局面         | integer(4)   |             |      | I     |
 # | critical_turn | 開戦             | integer(4)   |             |      | J     |
-# | saturn_key    | 公開範囲         | string(255)  | NOT NULL    |      | K     |
-# | sfen_body     | SFEN形式棋譜     | string(8192) |             |      |       |
+# | sfen_body     | SFEN形式棋譜     | string(8192) | NOT NULL    |      |       |
 # | image_turn    | OGP画像の局面    | integer(4)   |             |      |       |
-# | sfen_hash     | Sfen hash        | string(255)  |             |      |       |
+# | sfen_hash     | Sfen hash        | string(255)  | NOT NULL    |      |       |
 # |---------------+------------------+--------------+-------------+------+-------|
 
 require 'rails_helper'
@@ -85,9 +84,9 @@ RSpec.describe Swars::BattlesController, type: :controller do
       assert { body["api_name"]                          == "将棋ウォーズ(ID:devuser1)"                                   }
       assert { body["game_list"].size                    == 1                                                             }
       assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                                }
-      assert { body["game_list"][0]["kifu_url"]          == "http://test.host/w/devuser1-Yamada_Taro-20190111_230933.kif" }
+      assert { body["game_list"][0]["kifu_url"]          == "http://test.host/w/devuser1-Yamada_Taro-20200101_123401.kif" }
       assert { body["game_list"][0]["display_name"]      == "devuser1 三段 vs Yamada_Taro 四段"                           }
-      assert { body["game_list"][0]["display_timestamp"] == 1547215773                                                    }
+      assert { body["game_list"][0]["display_timestamp"] == 1577849641                                                    }
     end
   end
 
@@ -99,7 +98,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
         doc = Nokogiri::HTML.parse(response.body)
         assert { doc.at(%(meta[name="og:url"])) == nil }
-        assert { doc.at(%(meta[name="og:image"]))[:content] == "http://localhost:3000/w/devuser1-Yamada_Taro-20190111_230933.png?flip=true&turn=12" }
+        assert { doc.at(%(meta[name="og:image"]))[:content] == "http://localhost:3000/w/devuser1-Yamada_Taro-20200101_123401.png?flip=true&turn=12" }
       end
     end
 

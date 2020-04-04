@@ -24,10 +24,10 @@
 # | start_turn        | 開始局面           | integer(4)     |             |                                   | G     |
 # | critical_turn     | 開戦               | integer(4)     |             |                                   | H     |
 # | saturn_key        | 公開範囲           | string(255)    | NOT NULL    |                                   | I     |
-# | sfen_body         | SFEN形式棋譜       | string(8192)   |             |                                   |       |
+# | sfen_body         | SFEN形式棋譜       | string(8192)   | NOT NULL    |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)     |             |                                   |       |
 # | preset_key        | Preset key         | string(255)    | NOT NULL    |                                   |       |
-# | sfen_hash         | Sfen hash          | string(255)    |             |                                   |       |
+# | sfen_hash         | Sfen hash          | string(255)    | NOT NULL    |                                   |       |
 # |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -98,7 +98,7 @@ RSpec.describe FreeBattle, type: :model do
     end
 
     it "modal_on_index_url" do
-      assert { record.modal_on_index_url == "http://localhost:3000/x?description=&flip=false&modal_id=free_battle1&title=&turn=5" }
+      assert { record.modal_on_index_url == "http://localhost:3000/x?flip=false&modal_id=free_battle1&turn=5" }
     end
 
     it "adjust_turn" do

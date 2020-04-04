@@ -131,12 +131,10 @@ Rails.application.configure do
     Rails.application.config.app_config.deep_merge!({
         zip_download_function: false,
         battle_index_permalink_show: false,
-        swars_battles_index_filter_options_show: false,
         colosseum_battle_enable: false,
         player_info_function: false,
         more_import_function: false,
         swars_tag_search_function: false,
-        swars_side_tweet_copy_function: false,
         search_form_datalist_function: false,
         swars_tweet_function: false,
         xy_master_custom_mode: false,

@@ -31,6 +31,16 @@ class QueryInfo
     @attributes = @attributes.transform_values(&:uniq)
   end
 
+  def lookup(key)
+    @attributes[key.to_sym]
+  end
+
+  def lookup_one(key)
+    if v = lookup(key)
+      v.first
+    end
+  end
+
   private
 
   def reset
@@ -56,7 +66,7 @@ class QueryInfo
     if v = @options[:available_keys]
       Regexp.union(v)
     else
-      /\w+/
+      /[\w\-]+/
     end
   end
 end

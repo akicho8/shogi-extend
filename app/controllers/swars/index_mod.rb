@@ -2,7 +2,7 @@ module Swars
   concern :IndexMod do
     included do
       helper_method :current_swars_user
-      helper_method :current_query_info
+      helper_method :query_info
       helper_method :twitter_card_options
 
       rescue_from "Mechanize::ResponseCodeError" do |exception|
@@ -36,7 +36,9 @@ module Swars
           if params[:try_fetch] == "true"
             import_process2(flash)
           end
-          slack_message(key: "新プ情報", body: current_swars_user.key)
+          if Rails.env.production? || Rails.env.staging? || Rails.env.test?
+            slack_message(key: "新プ情報", body: current_swars_user.key)
+          end
           render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
           return
         end
@@ -91,18 +93,12 @@ module Swars
     private
 
     def js_index_options
-      options = super.merge({
+      super.merge({
           current_swars_user_key: current_swars_user_key,
           required_query_for_search: AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
           remember_swars_user_keys: remember_swars_user_keys,
           import_enable_p: import_enable?,
         })
-      if AppConfig[:player_info_function]
-        if current_swars_user_key
-          options[:player_info_path] = url_for([:swars, :player_infos, user_key: current_swars_user_key, only_path: true])
-        end
-      end
-      options
     end
 
     let :twitter_card_options do
@@ -226,11 +222,11 @@ module Swars
     end
 
     let :current_musers do
-      query_hash.dig(:muser)
+      query_info.lookup(:muser)
     end
 
     let :current_ms_tags do
-      query_hash.dig(:ms_tag)
+      query_info.lookup(:ms_tag)
     end
 
     # 対局URLが指定されているときはそれを優先するので current_swars_user_key を拾ってはいけない
@@ -238,14 +234,14 @@ module Swars
     # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1"
     let :current_swars_user_key do
       unless primary_record_key
-        current_swars_user_key_from_url || current_query_info.values.first
+        current_swars_user_key_from_url || query_info.values.first
       end
     end
 
     # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
     # https://shogiwars.heroz.jp/users/foo                          -> foo
     def current_swars_user_key_from_url
-      if url = current_query_info.urls.first
+      if url = query_info.urls.first
         if url = URI::Parser.new.extract(url).first
           uri = URI(url)
           if uri.path
@@ -268,24 +264,66 @@ module Swars
 
     def current_scope
       @current_scope ||= -> {
-        s = super
+
+        s = current_model.all
+        # s = tag_scope_add(s)
+
+        if v = query_info.lookup_one(:date)
+          v = v.to_time.midnight
+          s = s.where(battled_at: v...v.tomorrow)
+        end
+
+        # s = search_scope_add(s)
+        # s = other_scope_add(s)
+
+        if v = query_info.lookup(:ids)
+          s = s.where(id: v)
+        end
+
+        # if v = ransack_params
+        # if true
+        #   s = s.merge(current_model.ransack(v).result)
+        # else
+        # current_queries.each do |e|
+        #   m = current_model
+        #   w = m.where(["title LIKE BINARY ?", "%#{e}%"])
+        #   w = w.or(m.where(["description LIKE BINARY ?", "%#{e}%"]))
+        #   s = s.merge(w)
+        # end
+        # # raise s.to_sql.inspect
+
         # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
         s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
 
         if current_swars_user
-          s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
+          if v = query_info.lookup_one(:"tag")
+            s = s.joins(memberships: :user)
+            s = s.where(Membership.arel_table[:user_id].eq(current_swars_user.id))
+            s = s.merge(Membership.tagged_with(v))
+          elsif v = query_info.lookup_one(:"vs-tag")
+            s = s.joins(memberships: :user)
+            s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
+            s = s.merge(Membership.tagged_with(v))
+          elsif v = query_info.lookup_one(:"vs-grade")
+            grade = Grade.find_by!(key: v)
+            s = s.joins(memberships: :user)
+            s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
+            s = s.where(Membership.arel_table[:grade_id].eq(grade.id)) # 指定の段級位
+          else
+            s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
+          end
         end
 
         # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
         # tag:username だと相手が「角換わり」したのも出てきてしまう
-        if current_ms_tags
-          m = Membership.all
-          if current_musers
-            m = m.where(user: User.where(user_key: current_musers))
-          end
-          m = m.tagged_with(current_ms_tags)
-          s = s.merge(m)
-        end
+        # if current_ms_tags
+        #   m = Membership.all
+        #   if current_musers
+        #     m = m.where(user: User.where(user_key: current_musers))
+        #   end
+        #   m = m.tagged_with(current_ms_tags)
+        #   s = s.merge(m)
+        # end
 
         s
       }.call

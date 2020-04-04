@@ -94,22 +94,27 @@ module Swars
         end
 
         def sometimes_user_import(params = {})
+          params = {
+            seconds: sometimes_user_import_skip_seconds_default,
+          }.merge(params)
+
           # キャッシュの有効時間のみ利用して連続実行を防ぐ
-          if true
-            if Rails.env.production? || Rails.env.staging?
-              seconds = 3.minutes
-            else
-              seconds = 30.seconds
-            end
-            cache_key = ["sometimes_user_import", params[:user_key], params[:page_max]].join("/")
-            if Rails.cache.exist?(cache_key)
-              return false
-            end
-            Rails.cache.write(cache_key, true, expires_in: seconds)
+          cache_key = ["sometimes_user_import", params[:user_key], params[:page_max]].join("/")
+          if Rails.cache.exist?(cache_key)
+            return false
           end
+          Rails.cache.write(cache_key, true, expires_in: params[:seconds])
 
           user_import(params)
           true
+        end
+
+        def sometimes_user_import_skip_seconds_default
+          if Rails.env.production? || Rails.env.staging?
+            3.minutes
+          else
+            30.seconds
+          end
         end
 
         # Battle.user_import(user_key: "DarkPonamin9")
@@ -132,7 +137,7 @@ module Swars
           (params[:page_max] || 1).times do |i|
             list = []
             unless params[:dry_run]
-              list = Agent.new(params).index_get(params.merge(page_index: i))
+              list = Agent::Index.new(params).fetch(params.merge(page_index: i))
             end
             sleep_on(params)
 
@@ -140,9 +145,9 @@ module Swars
             keys += page_keys
 
             # アクセス数を減らすために10件未満なら終了する
-            if page_keys.size < Agent.items_per_page
+            if page_keys.size < Agent::Index.items_per_page
               if params[:verbose]
-                tp "#{page_keys.size} < #{Agent.items_per_page}"
+                tp "#{page_keys.size} < #{Agent::Index.items_per_page}"
               end
               break
             end
@@ -204,10 +209,10 @@ module Swars
             end
           end
 
-          info = Agent.new(params).record_get(params[:key])
+          info = Agent::Record.new(params).fetch(params[:key])
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
-          unless info[:st_done]
+          unless info[:fetch_successed]
             return
           end
 
@@ -256,7 +261,7 @@ module Swars
               judge_key = :draw
             end
 
-            battle.memberships.build(user:  user, grade: grade, judge_key: judge_key, location_key: Bioshogi::Location.fetch(i).key)
+            battle.memberships.build(user: user, grade: grade, judge_key: judge_key, location_key: Bioshogi::Location.fetch(i).key)
           end
 
           # SQLをシンプルにするために勝者だけ、所有者的な意味で、Battle 自体に入れとく

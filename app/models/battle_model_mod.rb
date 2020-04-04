@@ -22,6 +22,12 @@ module BattleModelMod
       self.turn_max ||= 0
       self.accessed_at ||= Time.current
       self.preset_key ||= :"平手"
+    end
+
+    before_validation on: :update do
+      unless sfen_body
+        self.sfen_body ||= fast_parsed_info.to_sfen
+      end
 
       # 盤面が変化したことが一瞬でわかるように盤面をハッシュ化しておく
       if changes_to_save[:sfen_body] || sfen_hash.nil?
@@ -33,6 +39,8 @@ module BattleModelMod
 
     with_options presence: true do
       validates :preset_key
+      # validates :sfen_body
+      # validates :sfen_hash
     end
 
     with_options allow_blank: true do
@@ -108,15 +116,17 @@ module BattleModelMod
       other_tag_list.add info.header["手合割"]
     end
 
-    if v = info.header["開始日時"].presence
-      if t = (Time.zone.parse(v) rescue nil)
-        self.battled_at ||= t
-      else
-        values = v.scan(/\d+/).collect(&:to_i)
-        self.battled_at ||= (Time.zone.local(*values) rescue nil)
+    unless battled_at
+      if v = info.header["開始日時"].presence
+        if t = (Time.zone.parse(v) rescue nil)
+          self.battled_at ||= t
+        else
+          values = v.scan(/\d+/).collect(&:to_i)
+          self.battled_at ||= (Time.zone.local(*values) rescue nil)
+        end
       end
+      self.battled_at ||= fixed_defaut_time
     end
-    self.battled_at ||= fixed_defaut_time
 
     parser_exec_after(info)
     @parser_executed = true
@@ -181,14 +191,6 @@ module BattleModelMod
     def tournament_list
       Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
     end
-  end
-
-  def to_kifu_copy_params(h, options = {})
-    {
-      kc_url: h.url_for(self),
-      kc_title: title,
-      **options,
-    }
   end
 
   # def display_turn
@@ -284,24 +286,6 @@ module BattleModelMod
       end
     end
 
-    # sfen_body を取得するが、なければ作成する
-    def sfen_body_or_create
-      unless sfen_body
-        update!(sfen_body: fast_parsed_info.to_sfen)
-      end
-
-      sfen_body
-    end
-
-    # sfen_hash を取得するが、なければ作成する
-    def sfen_hash_or_create
-      unless sfen_hash
-        save!
-      end
-
-      sfen_hash
-    end
-
     # バリデーションをはずして KI2 への変換もしない前提の軽い版
     # ヘッダーやタグが欲しいとき用
     def fast_parsed_info
@@ -385,18 +369,6 @@ module BattleModelMod
     # オプションはサブクラスで渡してもらう
     def fast_parsed_options
       {}
-    end
-  end
-
-  concerning :SaturnMethods do
-    included do
-      before_validation do
-        self.saturn_key ||= "public"
-      end
-    end
-
-    def saturn_info
-      SaturnInfo.fetch(saturn_key)
     end
   end
 end

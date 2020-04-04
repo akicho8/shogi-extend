@@ -116,7 +116,7 @@ window.Adapter = Vue.extend({
 
     // 「棋譜印刷」
     kifu_paper_handle() {
-      this.record_fetch(() => this.other_window_open(this.record.formal_sheet_path))
+      this.record_fetch(() => this.other_window_open(`${this.record.show_path}?formal_sheet=true`))
     },
 
     // 「KIFダウンロード」

@@ -14,6 +14,14 @@ window.SwarsBattleIndex = Vue.extend({
     }
   },
 
+  created() {
+    GVI.$on("query_search", e => this.query_search(e))
+  },
+
+  beforeDestroy() {
+    GVI.$off("query_search")
+  },
+
   mounted() {
     if (this.index_table_show_p) {
       this.async_records_load()
@@ -21,6 +29,12 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   computed: {
+    permalink_url() {
+      const params = new URLSearchParams()
+      params.set("query", this.query)
+      return `/w?${params}`
+    },
+
     // 最初に一覧を表示するか？
     index_table_show_p() {
       // required_query_for_search の指定がなければ常に表示する
@@ -40,38 +54,10 @@ window.SwarsBattleIndex = Vue.extend({
   },
 
   methods: {
-    // // テーブルを表示する条件は検索文字列があること
-    // // フォームに割り当てられている this.query だと変動するので使ってはいけない
-    // table_display_p() {
-    //   return this.$options.query
-    // },
-
-    player_info_click_hadle(e) {
-      if (this.$options.player_info_path) {
-        this.$buefy.dialog.confirm({
-          message: "20秒ぐらいかかる場合がありますがよろしいですか？",
-          confirmText: "取得する",
-          cancelText: "やめとく",
-          onCancel: () => this.talk("やめときました"),
-          onConfirm: () => {
-            this.process_now()
-            location.href = this.$options.player_info_path
-          },
-        })
-      }
-    },
-
-    many_import_handle(e) {
-      this.$buefy.dialog.confirm({
-        message: "1分ぐらいかかる場合がありますがよろしいですか？",
-        confirmText: "取り込む",
-        cancelText: "やめとく",
-        onCancel: () => this.talk("やめときました"),
-        onConfirm: () => {
-          this.process_now()
-          this.$refs.many_import_link.click()
-        },
-      })
+    query_search(query) {
+      this.query = query
+      window.history.replaceState("", null, this.permalink_url)
+      this.async_records_load()
     },
 
     form_submited(e) {

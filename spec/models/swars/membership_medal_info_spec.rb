@@ -6,30 +6,33 @@ module Swars
       Swars.setup
     end
 
-    describe "角不成マン" do
-      def test(tactic_keys)
+    describe "タグ依存メダル" do
+      def test(tactic_keys, win_or_lose)
         black = User.create!
         white = User.create!
         tactic_keys.each do |e|
           Battle.create!(tactic_key: e) do |e|
-            e.memberships.build(user: black)
+            e.memberships.build(user: black, judge_key: win_or_lose)
             e.memberships.build(user: white)
           end
         end
-        [black, white].collect { |e| e.memberships.first.first_matched_medal.key.to_s }
+        {black: black, white: white}.inject({}) { |a, (k, v)|
+          a.merge(k => v.memberships.first.first_matched_medal.key.to_s)
+        }
       end
 
       def b(*tactic_keys)
-        test(tactic_keys)[Bioshogi::Location.fetch(:black).code]
+        test(tactic_keys, :win)[:black]
       end
 
       def w(*tactic_keys)
-        test(tactic_keys)[Bioshogi::Location.fetch(:white).code]
+        test(tactic_keys, :lose)[:white]
       end
 
       it do
         assert { b("角不成")   == "角不成マン"   }
         assert { b("飛車不成") == "飛車不成マン" }
+        assert { b("背水の陣") == "背水マン"     }
       end
     end
 

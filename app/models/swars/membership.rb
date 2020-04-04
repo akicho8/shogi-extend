@@ -3,26 +3,26 @@
 #
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
-# |----------------+----------------+-------------+-------------+------+---------|
-# | name           | desc           | type        | opts        | refs | index   |
-# |----------------+----------------+-------------+-------------+------+---------|
-# | id             | ID             | integer(8)  | NOT NULL PK |      |         |
-# | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |      | A! B! C |
-# | user_id        | ユーザー       | integer(8)  | NOT NULL    |      | B! D    |
-# | grade_id       | 棋力           | integer(8)  | NOT NULL    |      | E       |
-# | judge_key      | 結果           | string(255) | NOT NULL    |      | F       |
-# | location_key   | 先手or後手     | string(255) | NOT NULL    |      | A! G    |
-# | position       | 順序           | integer(4)  |             |      | H       |
-# | created_at     | 作成日時       | datetime    | NOT NULL    |      |         |
-# | updated_at     | 更新日時       | datetime    | NOT NULL    |      |         |
-# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |      | I       |
-# | think_max      | Think max      | integer(4)  |             |      |         |
-# | op_user_id     | Op user        | integer(8)  |             |      | J       |
-# | think_last     | Think last     | integer(4)  |             |      |         |
-# | think_all_avg  | Think all avg  | integer(4)  |             |      |         |
-# | think_end_avg  | Think end avg  | integer(4)  |             |      |         |
-# | two_serial_max | Two serial max | integer(4)  |             |      |         |
-# |----------------+----------------+-------------+-------------+------+---------|
+# |----------------+----------------+-------------+-------------+------+------------|
+# | name           | desc           | type        | opts        | refs | index      |
+# |----------------+----------------+-------------+-------------+------+------------|
+# | id             | ID             | integer(8)  | NOT NULL PK |      |            |
+# | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |      | A! B! C! D |
+# | user_id        | ユーザー       | integer(8)  | NOT NULL    |      | B! E       |
+# | grade_id       | 棋力           | integer(8)  | NOT NULL    |      | F          |
+# | judge_key      | 結果           | string(255) | NOT NULL    |      | G          |
+# | location_key   | 先手or後手     | string(255) | NOT NULL    |      | A! H       |
+# | position       | 順序           | integer(4)  |             |      | I          |
+# | created_at     | 作成日時       | datetime    | NOT NULL    |      |            |
+# | updated_at     | 更新日時       | datetime    | NOT NULL    |      |            |
+# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |      | J          |
+# | think_max      | Think max      | integer(4)  |             |      |            |
+# | op_user_id     | Op user        | integer(8)  |             |      | C! K       |
+# | think_last     | Think last     | integer(4)  |             |      |            |
+# | think_all_avg  | Think all avg  | integer(4)  |             |      |            |
+# | think_end_avg  | Think end avg  | integer(4)  |             |      |            |
+# | two_serial_max | Two serial max | integer(4)  |             |      |            |
+# |----------------+----------------+-------------+-------------+------+------------|
 
 module Swars
   class Membership < ApplicationRecord
@@ -32,6 +32,7 @@ module Swars
     belongs_to :battle            # 対局
     belongs_to :user, touch: true # 対局者
     belongs_to :op_user, :class_name => "User" # 相手
+    belongs_to :opponent, :class_name => "Membership", optional: true
 
     belongs_to :grade             # 対局したときの段位
 
@@ -44,10 +45,12 @@ module Swars
     before_validation do
       # テストを書きやすいようにする
       if Rails.env.development? || Rails.env.test?
-        op_membership = (battle.memberships - [self]).first
-        if op_membership
-          self.location_key ||= op_membership.location&.flip&.key
-          self.judge_key ||= op_membership.judge_info&.flip&.key
+        # self.user ||= User.create!
+
+        m = (battle.memberships - [self]).first
+        if m
+          self.location_key ||= m.location&.flip&.key
+          self.judge_key ||= m.judge_info&.flip&.key
         end
 
         if index = battle.memberships.find_index { |e| e == self }
@@ -72,15 +75,25 @@ module Swars
         self.grade ||= Grade.first
       end
 
-      # 対戦相手
-      op_user_set_if_blank
+      unless op_user_id
+        if battle
+          if m = (battle.memberships - [self]).first
+            self.op_user_id = m.user_id
+          end
+        end
+      end
 
       # 対戦相手との段級位の差を保持しておく
       unless grade_diff
-        if grade && op_user.grade
-          self.grade_diff = -(op_user.grade.priority - grade.priority)
+        if m = (battle.memberships - [self]).first
+          if grade && m.grade
+            self.grade_diff = -(m.grade.priority - grade.priority)
+          end
         end
       end
+
+      # NOT NULL にしたいので仕方なく 0 を入れておく
+      # self.opponent_id ||= 0
 
       # if think_max && think_last && think_all_avg && think_end_avg && two_serial_max
       # else
@@ -93,15 +106,30 @@ module Swars
       validates :user_id
       validates :op_user_id
       validates :location_key
+      # validates :opponent_id, on: :update
     end
 
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-      validates :user_id, uniqueness: { scope: :battle_id, case_sensitive: true }
-      validates :op_user_id, uniqueness: { scope: :battle_id, case_sensitive: true }
-      validates :location_key, uniqueness: { scope: :battle_id, case_sensitive: true }
       validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
+
+      if Rails.env.development? || Rails.env.test?
+        with_options uniqueness: { scope: :battle_id, case_sensitive: true } do
+          validates :user_id
+          validates :op_user_id
+          validates :location_key
+          # validates :opponent_id, on: :update
+        end
+      end
     end
+
+    # def opponent_id_set_if_blank
+    #   if m = (battle.memberships - [self]).first
+    #     if m.id
+    #       update_column(:opponent_id, m.id)
+    #     end
+    #   end
+    # end
 
     def name_with_grade
       "#{user.user_key} #{grade.name}"
@@ -119,16 +147,9 @@ module Swars
     def opponent
       @opponent ||= battle.memberships.where.not(position: position).take
     end
-
-    def op_user_set_if_blank
-      unless op_user
-        if battle
-          if membership = (battle.memberships - [self]).first
-            self.op_user = membership.user
-          end
-        end
-      end
-    end
+    # def opponent
+    #   @opponent ||= battle.memberships.where.not(position: position).take
+    # end
 
     def think_columns_update
       list = sec_list

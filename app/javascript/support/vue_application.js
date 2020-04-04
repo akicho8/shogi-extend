@@ -6,8 +6,8 @@ import sp_show from "../sp_show.vue"
 
 export default {
   methods: {
-    simple_clipboard_copy(swars_tweet_text) {
-      this.clipboard_copy({text: swars_tweet_text})
+    simple_clipboard_copy(str) {
+      this.clipboard_copy({text: str})
     },
 
     // ログイン強制

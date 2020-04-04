@@ -14,10 +14,10 @@
     :"javascript.log_level" => "error",
   },
   :gameHash => {
-    :name               => "myasuMan-chrono_-20200116_232605",
+    :name               => "devuser1-chrono_-20200116_232605",
     :gtype              => "",
     :opponent_type      => 0,
-    :sente              => "myasuMan",
+    :sente              => "devuser1",
     :gote               => "chrono_",
     :sente_dan          => 2,   # 三段
     :gote_dan           => 3,   # 四段

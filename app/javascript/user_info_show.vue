@@ -9,9 +9,13 @@
     b-dropdown.top_right_menu(position="is-bottom-left")
       b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
-      b-dropdown-item(@click="update_handle")
+      b-dropdown-item(@click="update_handle({try_fetch: true})")
         b-icon(icon="sync" size="is-small")
         | 更新
+
+      b-dropdown-item(@click="update_handle({max: 100})")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大100件
 
       b-dropdown-item(:href="`/w?query=${new_info.user.key}`" @click="$buefy.loading.open()")
         b-icon(icon="magnify" size="is-small")
@@ -19,7 +23,7 @@
 
       b-dropdown-item(separator)
 
-      b-dropdown-item(:href="`https://twitter.com/search?q=${new_info.user.key}`")
+      b-dropdown-item(:href="`https://twitter.com/search?q=将棋 ${new_info.user.key}`")
         b-icon(icon="twitter" size="is-small" type="is-info")
         | Twitter検索
 
@@ -97,6 +101,7 @@
 
     b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered")
       b-tab-item(label="日付")
+      b-tab-item(label="段級")
       b-tab-item(label="戦法")
       b-tab-item(label="対抗")
 
@@ -106,19 +111,19 @@
 
     .tab_content
       template(v-if="tab_index === 0")
-        .box.one_box.two_column(v-for="row in new_info.every_day_list" :key="`every_day_list/${row.battled_at}`")
+        .box.one_box.two_column.is_clickable(v-for="row in new_info.every_day_list" :key="`every_day_list/${row.battled_on}`" @click="every_day_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
-                | {{battled_at_to_ymd(row) + " "}}
-                span(:class="battled_at_to_class(row)")
-                  | {{battled_at_to_wday(row)}}
+                | {{date_to_custom_format(row.battled_on) + " "}}
+                span(:class="battled_on_to_class(row)")
+                  | {{date_to_wday(row.battled_on)}}
           .columns.is-mobile
             .column.is-paddingless
               win_lose_circle(:info="row" size="is-small" narrowed)
             .column.is-paddingless.is-flex
               template(v-for="tag in row.all_tags")
-                .tag_wrapper.is_clickable.has-text-weight-bold.is-size-5(@click="tactic_show_modal(tag.name)")
+                .tag_wrapper.is_clickable.has-text-weight-bold.is-size-5(@click.stop="tactic_show_modal(tag.name)")
                   | {{tag.name}}
 
                 //- b-taglist.tag_wrapper(attached @click.native="tactic_modal_start(tag)")
@@ -128,11 +133,32 @@
                 //-     b-tag(type="is-primary")
                 //-       | {{tag.count}}
 
+
       template(v-if="tab_index === 1")
-        .box.one_box.one_column(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`")
+        .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="every_grade_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
-              .one_box_title.is_clickable.has-text-weight-bold.is-size-5(@click="tactic_show_modal(row.tag.name)")
+              .one_box_title
+                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
+                  | vs
+                span.has-text-weight-bold.is-size-5.vs_name
+                  | {{row.grade_name}}
+            .column.is-paddingless
+              .has-text-right
+                span.has-text-grey-light.is-size-7.use_rate_label
+                  | 遭遇率
+                span.use_rate
+                  | {{number_to_percentage2(row.appear_ratio, 1)}}
+                span.has-text-grey-light.is-size-7.use_rate_unit
+                  | %
+          .columns
+            .column.is-paddingless
+              win_lose_circle(:info="row" size="is-small")
+      template(v-if="tab_index === 2")
+        .box.one_box.is_clickable(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`" @click="every_my_attack_click_handle(row)")
+          .columns.is-mobile
+            .column.is-paddingless
+              .one_box_title.has-text-weight-bold.is-size-5
                 | {{row.tag.name}}
             .column.is-paddingless
               .has-text-right
@@ -146,14 +172,14 @@
             .column.is-paddingless
               win_lose_circle(:info="row" size="is-small")
 
-      template(v-if="tab_index === 2")
-        .box.one_box.one_column(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`")
+      template(v-if="tab_index === 3")
+        .box.one_box.is_clickable(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`" @click="every_vs_attack_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title
                 span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
                   | vs
-                span.is_clickable.has-text-weight-bold.is-size-5.vs_name(@click="tactic_show_modal(row.tag.name)")
+                span.has-text-weight-bold.is-size-5.vs_name
                   | {{row.tag.name}}
             .column.is-paddingless
               .has-text-right
@@ -177,10 +203,6 @@
 </template>
 
 <script>
-import dayjs from "dayjs"
-import "dayjs/locale/ja.js"
-dayjs.locale('ja')
-
 import ls_support from "ls_support.js"
 
 export default {
@@ -189,7 +211,7 @@ export default {
   mixins: [ls_support],
 
   props: {
-    info: { required: true },
+    info:         { required: true },
   },
 
   data() {
@@ -209,7 +231,6 @@ export default {
   },
 
   beforeDestroy() {
-    window.history.back()
   },
 
   watch: {
@@ -231,41 +252,45 @@ export default {
   },
 
   methods: {
-    update_handle() {
-      this.http_get_command("/w.json", { query: this.new_info.user.key, format_type: "user", debug: this.$route.query.debug, try_fetch: "true" }, data => this.new_info = data)
+    every_day_click_handle(row) {
+      this.$emit("close")
+      GVI.$emit("query_search", `${this.new_info.user.key} date:${this.date_to_ymd(row.battled_on)}`)
+    },
+
+    every_my_attack_click_handle(row) {
+      this.$emit("close")
+      GVI.$emit("query_search", `${this.new_info.user.key} tag:${row.tag.name}`)
+    },
+
+    every_vs_attack_click_handle(row) {
+      this.$emit("close")
+      GVI.$emit("query_search", `${this.new_info.user.key} vs-tag:${row.tag.name}`)
+    },
+
+    every_grade_click_handle(row) {
+      this.$emit("close")
+      GVI.$emit("query_search", `${this.new_info.user.key} vs-grade:${row.grade_name}`)
+    },
+
+    update_handle(options = {}) {
+      this.http_get_command("/w.json", { query: this.new_info.user.key, format_type: "user", debug: this.$route.query.debug, ...options}, data => this.new_info = data)
     },
 
     delete_click_handle() {
-      this.$emit("close") // 昔は this.$parent.close() だった
+      this.$emit("close")
+      window.history.back()
     },
 
-    battled_at_to_ymd(row) {
-      return dayjs(row.battled_at).format(this.battled_at_format(row))
-    },
-
-    battled_at_format(row) {
-      const date = dayjs(row.battled_at)
-      if (date.year() === dayjs().year()) {
-        return "M / D"
-      } else {
-        return "YYYY-MM-DD"
-      }
-    },
-
-    battled_at_to_wday(row) {
-      return dayjs(row.battled_at).format("ddd")
-    },
-
-    battled_at_to_class(row) {
-      if (row.day_color) {
-        return `has-text-${row.day_color}`
+    battled_on_to_class(row) {
+      if (row.day_type) {
+        return `has-text-${row.day_type}`
       }
     },
   },
 
   computed: {
     tab_name() {
-      return ["日付", "戦法", "対抗"][this.tab_index]
+      return ["日付", "段級", "戦法", "対抗"][this.tab_index]
     },
 
     ls_data() {
@@ -372,7 +397,10 @@ export default {
       &.two_column
         .win_lose_circle
           margin-top: 0.25rem
-
+      +desktop
+        margin-left: auto
+        margin-right: auto
+        max-width: 24rem
       .is-flex
         flex-direction: column
         justify-content: center

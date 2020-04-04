@@ -34,12 +34,12 @@ module KentoJsonMod
         ip = request.env["REMOTE_ADDR"]
         counter = Swars::Battle.continuity_run_counter("kento")
         if counter == 1
-          import_process2(flash)
+          Swars::Battle.sometimes_user_import(user_key: current_swars_user.key, page_max: 1)
         end
 
         json_hash = {
           "api_version" => "2020-02-02",                                    # (required) 固定値
-          "api_name" => "将棋ウォーズ(ID:#{current_swars_user.user_key})",  # (required) 任意のAPI名
+          "api_name" => "将棋ウォーズ(ID:#{current_swars_user.key})",  # (required) 任意のAPI名
           "game_list" => current_index_scope.order(battled_at: "desc").limit(kento_records_limit).collect { |e|
             membership = current_swars_user_membership(e)
             {
@@ -71,6 +71,6 @@ module KentoJsonMod
   end
 
   def kento_records_limit
-    [params[:limit] || 20, 30].collect(&:to_i).min
+    [params[:limit] || 10, 30].collect(&:to_i).min
   end
 end

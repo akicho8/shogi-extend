@@ -3,35 +3,13 @@
 *
   touch-action: manipulation
 
-////////////////////////////////////////////////////////////////////////////// placeholder の色
+////////////////////////////////////////////////////////////////////////////// placeholder を薄くして focus で透明化
 
-input::-webkit-input-placeholder
-  opacity: 0.4
-
-input::-moz-placeholder
-  opacity: 0.4
-
-input::-ms-input-placeholder
-  opacity: 0.4
-
-input::placeholder
-  opacity: 0.4
-
-////////////////////////////////////////////////////////////////////////////// フォーカスしたら placeholder は消す
-
-// https://www.ameamelog.com/css-placeholder/
-input:focus::-webkit-input-placeholder
-  color: transparent
-
-input:focus::-moz-placeholder
-  color: transparent
-
-input:focus::-ms-input-placeholder
-  color: transparent
-
-input:focus::placeholder
-  color: transparent
-
+*:placeholder-shown
+  color: hsl(0, 0%, 80%)
+  &:focus
+    color: transparent
+  
 ////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
 
 #flash_danger_notify_tag
@@ -53,30 +31,7 @@ input:focus::placeholder
   max-width: none
   height: 1.6rem
 
-.row_piyo_link
-  display: inline-block
-  margin-top: 0.15rem
-  max-width: none
-  height: 1.6rem
-  // width: 1.4rem
-
-.piyo_icon_in_button
-  height: 1.0rem
-
-.modal_piyo_link
-  display: inline-block
-  margin-top: 0.15rem
-  height: 1.6rem
-
-////////////////////////////////////////////////////////////////////////////// 棋譜のtwitter用画像の小さいの
-
-.mini_img
-  height: 27px
-  border: 1px solid $primary
-
 ////////////////////////////////////////////////////////////////////////////// 段級位
-
-// .versus_container
 
 .battle_show_container
   .shogi-player
@@ -84,11 +39,6 @@ input:focus::placeholder
 
 .versus
   margin: 0rem 0.25rem
-
-////////////////////////////////////////////////////////////////////////////// アイコン
-
-.has_text_gold
-  color: hsl(38, 80%, 60%)
 
 ////////////////////////////////////////////////////////////////////////////// ヘッダーのアバター画像
 
@@ -136,13 +86,6 @@ input:focus::placeholder
 +brand_def("twitter", $twitter)
 +brand_def("google",  $google)
 +brand_def("github",  $github)
-
-//////////////////////////////////////////////////////////////////////////////// for pulldown_menu.vue
-.a_label
-  margin-left: 1rem
-
-// .arrow_icon
-//   min-width: 2.2rem
 
 //////////////////////////////////////////////////////////////////////////////// サイト名
 

@@ -16,21 +16,32 @@ module FrontendScript
         avg = total.fdiv(list.size)        # => 3.5
         sd = standard_deviation(list, avg) # 標準偏差
 
-        counts_hash.sort_by { |k, v| v }.collect do |name, count|
+        rows = counts_hash.sort_by { |k, v| v }.collect do |name, count|
           dv = deviation_value(count, avg, sd) # 偏差値
-          ratio = count.fdiv(total) * 100      # 割合
+          ratio = count.fdiv(total)            # 割合
 
           row = {}
-          row["名前"] = h.tag.small(name)
-          row["レア度"] = h.tag.span("⭐" * rarity(ratio), :style => "font-size: 50%")
-          row["割合"] = "%.3f %%" % ratio
-          row["偏差値"] = "%.3f" % dv
-
-          if Rails.env.development? || params[:with_count]
-            row["個数"] = count
-          end
+          row[:name] = name
+          row[:ratio] = ratio
+          row[:deviation] = dv
+          row[:count] = count
 
           row
+        end
+
+        if request.format.json?
+          return rows
+        end
+
+        rows.collect do |row|
+          new_row = {}
+          new_row["名前"] = h.tag.small(row[:name])
+          new_row["出現率"] = "%.3f %%" % (row[:ratio] * 100.0)
+          new_row["偏差値"] = "%.3f" % row[:deviation]
+          if Rails.env.development? || params[:with_count]
+            new_row["個数"] = row[:count]
+          end
+          new_row
         end
       end
     end
@@ -39,22 +50,6 @@ module FrontendScript
 
     def tactic_key
       @tactic_key ||= key.underscore.remove("_rarity")
-    end
-
-    # レア度
-    def rarity(r)
-      case
-      when r < 0.006
-        5
-      when r < 0.03
-        4
-      when r < 0.20
-        3
-      when r < 2.0
-        2
-      else
-        1
-      end
     end
 
     # 標準偏差

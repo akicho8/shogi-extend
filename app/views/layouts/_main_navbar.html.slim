@@ -33,7 +33,6 @@ nav.navbar.is-primary.is_screen_only
           - if Rails.env.development? || Rails.env.test?
             = link_to(icon_tag(:pencil, margin_right: 1) + "局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
             = link_to(icon_tag(:book, margin_right: 1) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
-            = link_to(icon_tag(:clock, margin_right: 1) + "チェスクロック", :vs_clock, class: ["navbar-item", ("is-active" if params[:controller] == "vs_clocks")])
           - if AppConfig[:colosseum_battle_enable]
             = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
 

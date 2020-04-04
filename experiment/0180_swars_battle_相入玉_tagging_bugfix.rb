@@ -4,7 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 module Swars
   Battle.destroy_all
 
-  ENV["RUN_REMOTE"] = "1"
+  ENV["RUN_REMOTE"] = "true"
   Battle.find_by(key: "Yosikawakun-soybean-20190226_095952")&.destroy
   Battle.single_battle_import(key: "Yosikawakun-soybean-20190226_095952")
   battle = Battle.last

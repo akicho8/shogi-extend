@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_28_200201) do
+ActiveRecord::Schema.define(version: 2020_03_31_163902) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -225,10 +225,10 @@ ActiveRecord::Schema.define(version: 2020_03_28_200201) do
     t.integer "start_turn"
     t.integer "critical_turn"
     t.string "saturn_key", null: false
-    t.string "sfen_body", limit: 8192
+    t.string "sfen_body", limit: 8192, null: false
     t.integer "image_turn"
     t.string "preset_key", null: false
-    t.string "sfen_hash"
+    t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
@@ -256,10 +256,9 @@ ActiveRecord::Schema.define(version: 2020_03_28_200201) do
     t.string "preset_key", null: false
     t.integer "start_turn"
     t.integer "critical_turn"
-    t.string "saturn_key", null: false
-    t.string "sfen_body", limit: 8192
+    t.string "sfen_body", limit: 8192, null: false
     t.integer "image_turn"
-    t.string "sfen_hash"
+    t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
@@ -267,7 +266,6 @@ ActiveRecord::Schema.define(version: 2020_03_28_200201) do
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
     t.index ["preset_key"], name: "index_swars_battles_on_preset_key"
     t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
-    t.index ["saturn_key"], name: "index_swars_battles_on_saturn_key"
     t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
@@ -299,6 +297,7 @@ ActiveRecord::Schema.define(version: 2020_03_28_200201) do
     t.integer "think_end_avg"
     t.integer "two_serial_max"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
+    t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
     t.index ["grade_diff"], name: "index_swars_memberships_on_grade_diff"

@@ -2,7 +2,6 @@ require File.expand_path('../../../../config/environment', __FILE__) if $0 == __
 
 module Colosseum
   class SimpleUserSerializer < BasicUserSerializer
-    attributes :show_path
     attributes :avatar_url
     attributes :show_path
     attributes :race_key

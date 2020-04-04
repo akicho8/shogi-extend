@@ -74,7 +74,7 @@
     footer.modal-card-foot
       piyo_shogi_button(:icon_only="true" :href="record.piyo_shogi_app_url")
       kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
-      kif_copy_button(:icon_only="true" @click="kif_clipboard_copy(record.kifu_copy_params)" v-if="record.kifu_copy_params")
+      kif_copy_button(:icon_only="true" @click="kif_clipboard_copy({kc_path: record.show_path})")
       tweet_button(tag="a" :href="tweet_url" :turn="turn_offset")
       png_dl_button(tag="a" :href="png_dl_url" :turn="turn_offset")
 

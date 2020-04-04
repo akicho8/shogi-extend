@@ -24,10 +24,10 @@
 # | start_turn        | 開始局面           | integer(4)     |             |                                   | G     |
 # | critical_turn     | 開戦               | integer(4)     |             |                                   | H     |
 # | saturn_key        | 公開範囲           | string(255)    | NOT NULL    |                                   | I     |
-# | sfen_body         | SFEN形式棋譜       | string(8192)   |             |                                   |       |
+# | sfen_body         | SFEN形式棋譜       | string(8192)   | NOT NULL    |                                   |       |
 # | image_turn        | OGP画像の局面      | integer(4)     |             |                                   |       |
 # | preset_key        | Preset key         | string(255)    | NOT NULL    |                                   |       |
-# | sfen_hash         | Sfen hash          | string(255)    |             |                                   |       |
+# | sfen_hash         | Sfen hash          | string(255)    | NOT NULL    |                                   |       |
 # |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -198,6 +198,18 @@ class FreeBattle < ApplicationRecord
 
   def battle_decorator_class
     BattleDecorator::FreeBattleDecorator
+  end
+
+  concerning :SaturnMethods do
+    included do
+      before_validation do
+        self.saturn_key ||= "public"
+      end
+    end
+
+    def saturn_info
+      SaturnInfo.fetch(saturn_key)
+    end
   end
 
   # ここは nil でよくね？

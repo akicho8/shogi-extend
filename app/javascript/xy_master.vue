@@ -47,7 +47,7 @@
                 p.title {{x_count}}
 
         .tap_digits_container(v-if="tap_mode")
-          .value.yumincho
+          .value
             | {{kanji_human}}
 
         .shogi_player_container
@@ -670,7 +670,7 @@ export default {
     },
 
     magic_number() {
-      return dayjs().format("YYMMDDHHMM")
+      return dayjs().format("YYMMDDHHmm")
     },
   },
 

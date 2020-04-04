@@ -11,26 +11,26 @@ module Swars
     end
 
     describe "タグ依存メダル" do
-      def test(tactic_keys, win, lose)
+      def test(tactic_keys, win_or_lose)
         black = User.create!
         white = User.create!
         tactic_keys.each do |e|
           Battle.create!(tactic_key: e) do |e|
-            e.memberships.build(user: black, judge_key: win)
-            e.memberships.build(user: white, judge_key: lose)
+            e.memberships.build(user: black, judge_key: win_or_lose)
+            e.memberships.build(user: white)
           end
         end
-        [black, white].collect { |e|
-          e.user_info.medal_list.matched_medal_infos.collect(&:key).collect(&:to_s)
+        {black: black, white: white}.inject({}) { |a, (k, v)|
+          a.merge(k => v.user_info.medal_list.matched_medal_infos.collect(&:key).collect(&:to_s))
         }
       end
 
       def b(*tactic_keys)
-        test(tactic_keys, :win, :lose)[Bioshogi::Location.fetch(:black).code]
+        test(tactic_keys, :win)[:black]
       end
 
       def w(*tactic_keys)
-        test(tactic_keys, :lose, :win)[Bioshogi::Location.fetch(:white).code]
+        test(tactic_keys, :lose)[:white]
       end
 
       it do
@@ -52,6 +52,13 @@ module Swars
         assert { b("カニカニ金").include?("カニ執着マン")         }
         assert { b("ダイヤモンド美濃").include?("ダイヤマン")     }
         assert { b("音無しの構え").include?("音無しマン")         }
+        assert { b("筋違い角").include?("筋違い角おじさん")       }
+        assert { b("いちご囲い").include?("スイーツマン")         }
+        assert { b("背水の陣").include?("背水マン")               }
+        assert { b("elmo囲い").include?("エルモマン")               }
+        assert { b("レグスペ").include?("レグスペマン")           }
+        assert { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
+        assert { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン") }
       end
     end
 
@@ -201,7 +208,6 @@ module Swars
 
     describe "連勝" do
       def test(list)
-        user = User.create!
         list.each do |win_or_lose|
           Battle.create! do |e|
             e.memberships.build(user: user, judge_key: win_or_lose)
@@ -211,13 +217,17 @@ module Swars
       end
 
       it do
-        assert { test(["win"] * 4).exclude?(:"五連勝") }
-        assert { test(["win"] * 5).include?(:"五連勝") }
-        assert { test(["win"] * 6).include?(:"五連勝") }
-        assert { test(["win"] * 7).include?(:"五連勝") }
-        assert { test(["win"] * 8).include?(:"八連勝") }
-        assert { test(["win"] * 9).include?(:"八連勝") }
-        assert { test(["win"] * 5 + ["lose"] * 5).include?(:"波が激しいマン") }
+        assert { test(["win"] * 4).exclude?(:"5連勝") }
+
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"8連勝") }
+        assert { test(["win"]).include?(:"8連勝") }
+        assert { test(["win"]).include?(:"8連勝") }
+        assert { test(["win"]).include?(:"11連勝") }
+
+        assert { test(["lose"] * 5).include?(:"波が激しいマン") }
       end
     end
   end

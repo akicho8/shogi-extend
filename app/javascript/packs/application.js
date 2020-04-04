@@ -119,8 +119,8 @@ import message_link_to from "message_link_to.vue"
 import global_message_link from "global_message_link.vue"
 import swars_user_link_to from "swars_user_link_to.vue"
 import pulldown_menu from "pulldown_menu.vue"
+import buefy_table_wrapper from "buefy_table_wrapper.vue"
 import stopwatch from "stopwatch.vue"
-import vs_clock from "vs_clock.vue"
 import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
@@ -164,13 +164,13 @@ Vue.mixin({
     swars_user_link_to,
     pulldown_menu,
     stopwatch,
-    vs_clock,
     simple_board,
     xy_master,
     cpu_battle,
     sp_show,
     ox_modal,
     win_lose_circle,
+    buefy_table_wrapper,
 
     // for buefy modal
     tactic_show,

@@ -25,7 +25,6 @@ export default {
       board_show_type: this.$options.board_show_type, // 何の局面の表示をするか？
 
       sp_show_p: false,               // モーダルを開くフラグ
-      selected_record: null,             //  選択したレコード
 
       loading: false,
 
@@ -69,19 +68,7 @@ export default {
 
   methods: {
     show_handle(row) {
-      this.selected_record = row
-      // this.turn_offset = this.start_turn // this.selected_record の start_turn を計算
-
-      if (this.selected_record.sfen_body) {
-        this.debug_alert("棋譜はすでにある")
-        this.sp_show_show()
-      } else {
-        this.record_fetch_to(this.selected_record, () => this.sp_show_show())
-      }
-    },
-
-    sp_show_show() {
-      this.sp_show_modal({record: this.selected_record, board_show_type: this.board_show_type})
+      this.sp_show_modal({record: row, board_show_type: this.board_show_type})
     },
 
     sort_handle(column, order) {
@@ -99,7 +86,6 @@ export default {
       this.loading = true
 
       this.silent_http_get_command(this.async_records_load_url, {}, data => {
-        this.debug_alert(`loaded: ${data.length}`)
         this.loading = false
         this.records = data
         this.fetched_count += 1
@@ -116,28 +102,6 @@ export default {
 
     details_open_handle(row) {
       this.record_fetch_to(row) // ポップアップしないけどデータだけ取得している
-    },
-
-    // row の棋譜がなければ取得して block があれば呼ぶ
-    record_fetch_to(row, block) {
-      if (row.sfen_body) {
-        this.debug_alert("棋譜はすでにある")
-      } else {
-        this.debug_alert("新規取得")
-
-        this.$http.get(row.sp_sfen_get_path).then(response => {
-          this.$set(row, "sfen_body", response.data["sfen_body"])
-          if (block) {
-            block("success")
-          }
-          // const record = this.records.find(e => e.id === this.selected_record)
-          // this.$set(record, "sfen_body", response.data["sfen_body"])
-          // this.sp_show_show()
-        }).catch(error => {
-          console.table([error.response])
-          this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
-        })
-      }
     },
 
     // 開始局面
@@ -200,28 +164,6 @@ export default {
     records_hash() {
       return this.records.reduce((a, e, i) => ({...a, [e.id]: {code: i, ...e}}), {})
     },
-
-    // // selected_record に対応するレコード
-    // selected_record() {
-    //   return this.selected_record
-    //   // if (this.selected_record) {
-    //   //   return this.records_hash[this.selected_record]
-    //   // }
-    // },
-
-    // selected_record に対応する sfen
-    // selected_record_sp_sfen() {
-    //   if (this.selected_record) {
-    //     return this.selected_record.sfen_body
-    //   }
-    // },
-
-    // 開始局面
-    // turn start_turn critical_turn の順に見る
-    // turn は $options.modal_record にのみ入っている
-    // start_turn() {
-    //   return this.start_turn_for(this.selected_record)
-    // },
 
     board_show_type_name() {
       return {none: "リスト", outbreak_turn: "仕掛け", last: "終局図"}[this.board_show_type]

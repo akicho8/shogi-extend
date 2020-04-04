@@ -119,20 +119,26 @@ module BattleControllerSharedMethods
       end
     end
 
-    let :current_query_info do
+    let :query_info do
       QueryInfo.parse(current_query)
     end
 
     let :query_hash do
-      current_query_info.attributes
+      query_info.attributes
     end
 
     let :current_scope do
       s = current_model.all
       s = tag_scope_add(s)
+
+      if v = query_info.lookup_one(:date)
+        v = v.to_time.midnight
+        s = s.where(battled_at: v...v.tomorrow)
+      end
+
       s = search_scope_add(s)
       s = other_scope_add(s)
-      if v = query_hash.dig(:ids)
+      if v = query_info.lookup(:ids)
         s = s.where(id: v)
       end
       if v = ransack_params
@@ -177,15 +183,15 @@ module BattleControllerSharedMethods
     end
 
     def tag_scope_add(s)
-      if v = query_hash.dig(:tag)
+      if v = query_info.lookup(:tag)
         s = s.tagged_with(v)
       end
 
-      if v = query_hash.dig(:or_tag)
+      if v = query_info.lookup(:or_tag)
         s = s.tagged_with(v, any: true)
       end
 
-      if v = query_hash.dig(:exclude_tag)
+      if v = query_info.lookup(:exclude_tag)
         s = s.tagged_with(v, exclude: true)
       end
 
@@ -193,11 +199,11 @@ module BattleControllerSharedMethods
     end
 
     def other_scope_add(s)
-      if v = query_hash.dig(:turn_max_gteq)&.first
+      if v = query_info.lookup_one(:turn_max_gteq)
         s = s.where(current_model.arel_table[:turn_max].gteq(v))
       end
 
-      if v = query_hash.dig(:turn_max_lt)&.first
+      if v = query_info.lookup_one(:turn_max_lt)
         s = s.where(current_model.arel_table[:turn_max].lt(v))
       end
 
@@ -259,7 +265,7 @@ module BattleControllerSharedMethods
           return
         end
 
-        render json: { sfen_body: current_record.sfen_body_or_create }
+        render json: { sfen_body: current_record.sfen_body }
         return
       end
 
@@ -307,49 +313,36 @@ module BattleControllerSharedMethods
     end
 
     def js_record_for(e)
-      # e.attributes は継承しない
-
       e.as_json(
         only: [
           :id,
           :key,
-          # :battled_at,
-          # :preset_key,
-          # :start_turn,
-          :saturn_key,
           :sfen_body,
-          :image_turn,
-          :display_turn,
 
           :turn_max,
           :image_turn,
           :start_turn,
           :critical_turn,
           :outbreak_turn,
-
+          :battled_at,
         ],
         methods: [
           :display_turn,
           :player_info,
+          :title,
+          :description,
+          :modal_on_index_url,
         ],
         ).tap do |a|
 
-        a[:handicap_shift] = e.preset_info.handicap ? 1 : 0
-        a[:title] = e.title
-        a[:description] = e.description
-        # a[:twitter_card_image_url] = e.twitter_card_image_url(params)
-        a[:kifu_copy_params] = e.to_kifu_copy_params(view_context)
-        a[:sp_sfen_get_path] = polymorphic_path([ns_prefix, e], format: "json")
-        a[:xhr_put_path] = url_for([ns_prefix, e, format: "json"]) # FIXME: ↑とおなじ
-        a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-        a[:kento_app_url] = kento_app_url_switch(e)
-        a[:battled_at] = e.battled_at.to_s(:battle_time)
-        a[:show_path] = polymorphic_path([ns_prefix, e])
-        a[:formal_sheet_path] = polymorphic_path([ns_prefix, e], formal_sheet: true)
-        a[:modal_on_index_url] = e.modal_on_index_url
+        a[:show_path]          = polymorphic_path([ns_prefix, e])
         if editable_record?(e) || Rails.env.development?
           a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
         end
+
+        a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
+        a[:kento_app_url]      = kento_app_url_switch(e)
+
       end
     end
 
@@ -383,24 +376,6 @@ module BattleControllerSharedMethods
     let :current_edit_mode do
       (params[:edit_mode].presence || :basic).to_sym
     end
-
-    def update
-      if v = params[:image_turn]
-        current_record.update!(image_turn: v) # FIXME: 削除予定
-      end
-
-      if params[:create_by_rmagick] # FIXME: 削除予定
-        render json: current_record.canvas_data_save_by_rmagick(params)
-        return
-      end
-
-      if params[:og_image_destroy]
-        render json: current_record.canvas_data_destroy(params) # FIXME: 削除予定
-        return
-      end
-
-      super
-    end
   end
 
   concerning :EditCustomMethods do
@@ -416,7 +391,7 @@ module BattleControllerSharedMethods
 
         post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
         new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
-        xhr_put_path: url_for([ns_prefix, current_record, format: "json"]),
+        show_path: polymorphic_path([ns_prefix, current_record]),
 
         saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
         free_battles_pro_mode: AppConfig[:free_battles_pro_mode],

@@ -33,6 +33,12 @@ module Swars
       end
       self.user_key ||= SecureRandom.hex
 
+      if Rails.env.development? || Rails.env.test?
+        if Grade.count.zero?
+          raise "Swars.setup してください"
+        end
+      end
+
       self.grade ||= Grade.last
 
       # Grade が下がらないようにする
@@ -57,10 +63,6 @@ module Swars
 
     def to_param
       user_key
-    end
-
-    def swars_home_url
-      Rails.application.routes.url_helpers.swars_home_url(self)
     end
 
     def name_with_grade

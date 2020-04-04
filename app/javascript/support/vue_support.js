@@ -1,8 +1,11 @@
 // 汎用コード
 
 import Bowser from "bowser"
-import dayjs from "dayjs"
 import qs from "qs"
+
+import dayjs from "dayjs"
+import "dayjs/locale/ja.js"
+dayjs.locale('ja')
 
 export default {
   methods: {
@@ -94,6 +97,42 @@ export default {
       if (text) {
         return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
       }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    row_time_format(t) {
+      const date = dayjs(t)
+      const diff_day = dayjs().diff(date, "day")
+      const diff_year = dayjs().diff(date, "year")
+      if (diff_day < 1) {
+        return date.format("HH:mm")
+      }
+      if (diff_year < 1) {
+        return date.format("M/D HH:mm")
+      }
+      return date.format("YYYY-MM-DD")
+    },
+
+    date_to_custom_format(t) {
+      return dayjs(t).format(this.md_or_yyyymmdd_format(t))
+    },
+
+    md_or_yyyymmdd_format(t) {
+      const date = dayjs(t)
+      if (date.year() === dayjs().year()) {
+        return "M / D"
+      } else {
+        return "YYYY-MM-DD"
+      }
+    },
+
+    date_to_ymd(t) {
+      return dayjs(t).format("YYYY-MM-DD")
+    },
+
+    date_to_wday(t) {
+      return dayjs(t).format("ddd")
     },
   },
 

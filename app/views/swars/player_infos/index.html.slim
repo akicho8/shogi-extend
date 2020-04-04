@@ -6,7 +6,7 @@
     document.addEventListener('DOMContentLoaded', () => { new SwarsPlayerInfoApp(#{js_swars_player_info_app_params.to_json.html_safe}).$mount("#swars_player_info_app") })
 
 #swars_player_info_app
-  .title.yumincho.is-2
+  .title.is-2
     = "将棋ウォーズプレイヤー情報"
 
   .columns
@@ -32,22 +32,16 @@
     small
       .columns
         .column
-          .buttons
-            = link_to("ウォーズのマイページ", current_swars_user.swars_home_url, target: "_self", class: "button is-small is-rounded")
-            = link_to(icon_tag(:twitter, size: "is-small") + "&nbsp;Twitterで探す".html_safe, twitter_search_url(current_swars_user.user_key), target: "_self", class: "button is-small is-rounded is-info")
-            = link_to(icon_tag(:google, size: "is-small") + "&nbsp;ぐぐる".html_safe, google_search_url(current_swars_user.user_key), target: "_self", class: "button is-small is-rounded is-danger")
-      .columns
-        .column
           - stat = current_swars_user.secret_summary
           .field
-            .title.yumincho.is-4 作法
+            .title.is-4 作法
             - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
             == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 
         .column
           - stat = current_swars_user.basic_summary
           .field
-            .title.yumincho.is-4 戦績
+            .title.is-4 戦績
             - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
             == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
 

@@ -26,9 +26,11 @@ module ModalMod
 
       record = s.find_by(key: v) # スコープを無視すること
 
-      # 元々公開しているものは id にアクセスできる
-      unless record
-        record = s.where(saturn_key: :public).find_by(id: v)
+      if current_model.columns_hash["saturn_key"]
+        # 元々公開しているものは id にアクセスできる
+        unless record
+          record = s.where(saturn_key: :public).find_by(id: v)
+        end
       end
 
       if record
@@ -41,7 +43,7 @@ module ModalMod
 
   def js_modal_record_for(e)
     js_record_for(e).tap do |a|
-      a[:sfen_body] ||= e.sfen_body_or_create
+      a[:sfen_body] ||= e.sfen_body
 
       # 明示的に turn が指定されているときのみ設定
       # turn は sp_show.vue で拾う
