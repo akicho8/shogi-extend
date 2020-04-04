@@ -11,6 +11,11 @@ module ScriptsControllerMod
     #   return
     # end
 
+    if request.format.json?
+      render json: @script.script_body
+      return
+    end
+
     @page_title ||= @script.script_name
     render :html => @script.render_in_view, layout: true
   end
