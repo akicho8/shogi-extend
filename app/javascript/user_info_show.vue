@@ -137,7 +137,7 @@
       template(v-if="tab_index === 1")
         .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="every_grade_click_handle(row)")
           .columns.is-mobile
-            .column.is-paddingless
+            .column.is-three-quarters.is-paddingless
               .one_box_title
                 span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
                   | vs
@@ -157,7 +157,7 @@
       template(v-if="tab_index === 2")
         .box.one_box.is_clickable(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`" @click="every_my_attack_click_handle(row)")
           .columns.is-mobile
-            .column.is-paddingless
+            .column.is-three-quarters.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
                 | {{row.tag.name}}
             .column.is-paddingless
@@ -175,7 +175,7 @@
       template(v-if="tab_index === 3")
         .box.one_box.is_clickable(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`" @click="every_vs_attack_click_handle(row)")
           .columns.is-mobile
-            .column.is-paddingless
+            .column.is-three-quarters.is-paddingless
               .one_box_title
                 span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
                   | vs
