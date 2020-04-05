@@ -162,8 +162,8 @@ module Swars
         s = condition_add(s)
         s = s.where(judge_key: "win") # 勝った = 自分が負けた
         s = s.limit(current_max)
-        denominator = s.count
 
+        denominator = s.count
         s = Swars::Membership.where(id: s.pluck(:id))
 
         tags = s.all_tag_counts(at_least: at_least_value) # 全タグ
