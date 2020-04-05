@@ -120,6 +120,7 @@ import global_message_link from "global_message_link.vue"
 import swars_user_link_to from "swars_user_link_to.vue"
 import pulldown_menu from "pulldown_menu.vue"
 import buefy_table_wrapper from "buefy_table_wrapper.vue"
+import three_stage_league_player_chart from "three_stage_league_player_chart.vue"
 import stopwatch from "stopwatch.vue"
 import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
@@ -171,6 +172,7 @@ Vue.mixin({
     ox_modal,
     win_lose_circle,
     buefy_table_wrapper,
+    three_stage_league_player_chart,
 
     // for buefy modal
     tactic_show,

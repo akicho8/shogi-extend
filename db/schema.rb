@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_163902) do
+ActiveRecord::Schema.define(version: 2020_04_04_191500) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -352,6 +352,43 @@ ActiveRecord::Schema.define(version: 2020_03_31_163902) do
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "tsl_leagues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "generation", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["generation"], name: "index_tsl_leagues_on_generation"
+  end
+
+  create_table "tsl_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "league_id", null: false
+    t.bigint "user_id", null: false
+    t.string "result_key", null: false, comment: "結果"
+    t.integer "start_pos", null: false, comment: "初期順位"
+    t.integer "age"
+    t.integer "win"
+    t.integer "lose"
+    t.string "ox", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["league_id", "user_id"], name: "index_tsl_memberships_on_league_id_and_user_id", unique: true
+    t.index ["league_id"], name: "index_tsl_memberships_on_league_id"
+    t.index ["lose"], name: "index_tsl_memberships_on_lose"
+    t.index ["result_key"], name: "index_tsl_memberships_on_result_key"
+    t.index ["start_pos"], name: "index_tsl_memberships_on_start_pos"
+    t.index ["user_id"], name: "index_tsl_memberships_on_user_id"
+    t.index ["win"], name: "index_tsl_memberships_on_win"
+  end
+
+  create_table "tsl_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "first_age", comment: "リーグ入り年齢"
+    t.integer "last_age", comment: "リーグ最後の年齢"
+    t.integer "memberships_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tsl_users_on_name", unique: true
   end
 
   create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

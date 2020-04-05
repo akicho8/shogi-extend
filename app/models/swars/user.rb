@@ -15,6 +15,8 @@
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      | D     |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 
+require "swars"
+
 module Swars
   class User < ApplicationRecord
     alias_attribute :key, :user_key

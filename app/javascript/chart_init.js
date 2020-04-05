@@ -47,3 +47,7 @@ Chart.defaults.global.elements.line.borderColor      = function(context) { retur
 // https://www.chartjs.org/docs/latest/configuration/elements.html#point-configuration
 Chart.defaults.global.elements.point.backgroundColor = function(context) { return color_select(context, 0.1) }
 Chart.defaults.global.elements.point.borderColor     = function(context) { return color_select(context, 0.6) }
+// https://www.chartjs.org/docs/latest/configuration/elements.html#rectangle-configuration
+Chart.defaults.global.elements.rectangle.backgroundColor = function(context) { return color_select(context, 0.1) }
+Chart.defaults.global.elements.rectangle.borderColor     = function(context) { return color_select(context, 0.6) }
+Chart.defaults.global.elements.rectangle.borderWidth     = 1

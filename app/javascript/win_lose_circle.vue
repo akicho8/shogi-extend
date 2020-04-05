@@ -62,8 +62,12 @@ const CHART_CONFIG_DEFAULT = {
   }
 }
 
+import chart_mod from './chart_mod.js'
+
 // http://localhost:3000/w?query=kinakom0chi&user_info_show=true
 export default {
+  mixins: [chart_mod],
+
   props: {
     info:         { required: true,        },  // {win: 1, lose: 2}
     size:         { default: "is-default", },  // is-default or is-small
@@ -73,8 +77,6 @@ export default {
 
   data() {
     return {
-      _chart_instance: null,
-      _chart_config: null,
     }
   },
 
@@ -98,30 +100,7 @@ export default {
     this.chart_create()
   },
 
-  beforeDestroy() {
-    this.chart_destroy()
-  },
-
   methods: {
-    // TODO: 共通化する。というかクラス化する
-    chart_create() {
-      this.chart_destroy()
-      this._chart_instance = new Chart(this.$refs.main_canvas, this._chart_config)
-    },
-
-    chart_update() {
-      if (this._chart_instance) {
-        this._chart_instance.update()
-      }
-    },
-
-    chart_destroy() {
-      if (this._chart_instance) {
-        this._chart_instance.destroy()
-        this._chart_instance = null
-      }
-    },
-
     delete_click_handle() {
       this.$emit("close") // 昔は this.$parent.close() だった
     },

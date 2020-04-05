@@ -12,6 +12,8 @@
 # | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
 # |------------+----------+------------+-------------+------+-------|
 
+require "swars"
+
 module Swars
   class SearchLog < ApplicationRecord
     belongs_to :user, counter_cache: true, touch: :last_reception_at

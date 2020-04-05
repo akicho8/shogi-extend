@@ -331,10 +331,12 @@ const CHART_CONFIG_DEFAULT = {
 
 import sp_show_time_chart_vline from './sp_show_time_chart_vline.js'
 import PaletteInfo from './palette_info.js'
+import chart_mod from './chart_mod.js'
 
 export default {
   mixins: [
     sp_show_time_chart_vline, // 縦線表示機能(コメントアウトでOFF)
+    chart_mod,
   ],
 
   props: {
@@ -346,19 +348,12 @@ export default {
   data() {
     return {
       zoom_p: false,       // 拡大する？
-
-      // private
-      _chart_config: null, // 現在表示しているチャートの設定(updateするとチャートの方もupdateで更新できる)
     }
   },
 
   created() {
-    this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT)
+    this.chart_setup(CHART_CONFIG_DEFAULT)
     this._chart_config.data = this.time_chart_params
-
-    // chart.js のインスタンスに他のデータを渡す
-    // 予約キーと衝突しなかったら自由に引数を追加できる
-    this._chart_config.__vm__ = this
 
     this.chart_flip_set()
 
@@ -403,38 +398,10 @@ export default {
     },
   },
 
-  beforeDestroy() {
-    this.chart_destroy()
-  },
-
   computed: {
   },
 
   methods: {
-    // 時間チャート表示
-    chart_create() {
-      this.chart_destroy()
-      window.chart_instance = new Chart(this.$refs.main_canvas, this._chart_config)
-      // this.$refs.main_canvas.addEventListener("click", this.click_handle)
-    },
-
-    // 時間チャート更新
-    chart_update() {
-      if (window.chart_instance) {
-        window.chart_instance.update()
-      }
-    },
-
-    // 時間チャート非表示
-    chart_destroy() {
-      if (window.chart_instance) {
-        // this.$refs.main_canvas.removeEventListener('click', this.click_handle)
-
-        window.chart_instance.destroy()
-        window.chart_instance = null
-      }
-    },
-
     // chart.js の方でイベントフックがあってそっちを使っているので、こっちは使うのをやめた
     //
     // 1. マウスに対応する、Y軸を無視した点の配列ががあればその中央の値の手数を使う
