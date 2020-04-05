@@ -10,6 +10,7 @@ ENV["SLACK_AGENT_DISABLE"] = "1"
   Colosseum::LobbyMessage,
   XyRuleInfo,
   XyRecord,
+  Tsl,
 ].each do |e|
   e.setup
 end

@@ -1,18 +1,13 @@
-require "open-uri"
-
 module FrontendScript
   class ThreeStageLeagueScript < ::FrontendScript::Base
-    self.script_name = "奨励会三段リーグ"
-
-    RANKING_ENABLE = false
-    LEAGUE_MATCH = 28..67
+    self.script_name = "奨励会三段リーグ(一覧)"
 
     def form_parts
       [
         {
           :label   => "第？回",
           :key     => :generation,
-          :elems   => LEAGUE_MATCH.to_a.reverse,
+          :elems   => Tsl::Scraping.league_range.to_a.reverse,
           :type    => :select,
           :default => current_generation,
         },
@@ -20,83 +15,32 @@ module FrontendScript
     end
 
     def script_body
-      if users = user_infos_fetch
-        users = users.sort_by { |e| [-e[:win], e[:index]] }
+      # 最新三段リーグは表示する直前でときどきクロールする
+      if current_generation == Tsl::Scraping.league_range.last
+        Rails.cache.fetch([self.class.name, current_generation].join("/"), :expires_in => 1.hour) do
+          Tsl::League.generation_update(current_generation)
+        end
+      end
 
-        # ランキング追加
-        if RANKING_ENABLE
-          redis = Redis.new(db: AppConfig[:redis_db_for_colosseum_ranking_info])
-          redis.del(self.class.name)
-          users.each do |user|
-            redis.zadd(self.class.name, user[:win], user[:name])
-          end
-          ranking = redis.zrevrange(self.class.name, 0, -1, with_scores: true)
-          users.each do |user|
-            user[:rank] = redis.zcount(self.class.name, user[:win] + 1, "+inf") + 1
-          end
-          redis.del(self.class.name)
+      if league = Tsl::League.find_by(generation: current_generation)
+        memberships = league.memberships.includes(:user, :league).order(win: :desc, start_pos: :asc)
+
+        if request.format.json?
+          return memberships.as_json(include: [:user, :league], except: [:league_id, :user_id])
         end
 
-        rows = users.collect do |user|
+        rows = memberships.collect do |m|
           {}.tap do |row|
-            if v = user[:rank]
-              row[""] = v
-            end
-
-            name = user[:name]
-            if v = user[:age]
-              name += "(#{v})"
-            end
-            query = ["将棋", user[:name]].join(" ")
-            row["名前"] = h.link_to(name, h.google_image_search_url(query))
-
-            row["勝"]   = user[:win]
-
-            row["勝敗"] = h.tag.small(user[:ox], :class => "line_break_on")
+            row["名前"] = h.link_to(m.name_with_age, ThreeStageLeaguePlayerScript.script_link_path(user_name: m.user.name))
+            row["勝"]   = m.win
+            row["勝敗"] = [h.tag.small(m.ox_human, :class => "ox_sequense line_break_on"), h.tag.b(m.result_mark)].join(" ").html_safe
           end
         end
 
         [
           rows.to_html,
-          h.link_to("本家", source_url, :class => "button is-small"),
+          h.link_to("本家", league.source_url, :class => "button is-small"),
         ].join(h.tag.br)
-      end
-    end
-
-    def user_infos_fetch
-      if html = html_fetch
-        doc = Nokogiri::HTML(html)
-        doc.search("tbody tr").collect do |tr|
-          {}.tap do |user|
-            values = tr.search("td").collect do |e|
-              e.text.remove(/\p{Space}+/)
-            end
-
-            values = values.drop(1)
-
-            # 昔と今でフォーマットが異なる
-            # ・昔 https://www.shogi.or.jp/match/shoreikai/sandan/28/index.html
-            # ・今 https://www.shogi.or.jp/match/shoreikai/sandan/66/index.html
-            if current_generation < 31
-              user.update([:index, :name, :win, :lose].zip(values).to_h)
-            else
-              user.update([:index, :name, :parent, :age, :win, :lose].zip(values).to_h)
-            end
-
-            user[:ox] = values.join.scan(/[○●]/).join
-            user[:index] = user[:index].to_i
-
-            # # 勝敗のマークから勝数を調べる
-            # user[:win]  = user[:ox].count("○")
-            # user[:lose] = user[:ox].count("●")
-
-            [:age, :win, :lose].each do |e|
-              if v = user[e]
-                user[e] = v.to_i
-              end
-            end
-          end
-        end
       end
     end
 
@@ -104,21 +48,8 @@ module FrontendScript
       "表示"
     end
 
-    def source_url
-      "https://www.shogi.or.jp/match/shoreikai/sandan/#{current_generation}/index.html"
-    end
-
     def current_generation
-      (params[:generation].presence || LEAGUE_MATCH.last).to_i
-    end
-
-    def html_fetch
-      Rails.cache.fetch(source_url, :expires_in => 1.hour) do
-        begin
-          URI(source_url).read.toutf8 # この時点で UTF-8 にしておかないと fastentry が死ぬ
-        rescue OpenURI::HTTPError
-        end
-      end
+      (params[:generation].presence || Tsl::Scraping.league_range.last).to_i
     end
   end
 end

@@ -38,6 +38,8 @@
 # | 斎藤明日斗 <Asuto Saito>     |      311 | 1998年07月17日 | 神奈川県川崎市   | 宮田利男八段           | -                                | Saito_Asuto      |
 # |-------------------------------+----------+----------------+------------------+------------------------+----------------------------------+------------------|
 
+require "open-uri"
+
 module FrontendScript
   class ProfessionalScript < ::FrontendScript::Base
     self.script_name = "指導対局"
@@ -87,7 +89,7 @@ module FrontendScript
     def html_fetch(page)
       url = "https://shogiwars.heroz.jp/premium/coach_list?page=#{page}"
       Rails.cache.fetch(url, :expires_in => 1.days) do
-        URI.open(url, &:read).toutf8
+        URI(url).read.toutf8
       end
     end
   end

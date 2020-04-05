@@ -24,6 +24,8 @@
 # | two_serial_max | Two serial max | integer(4)  |             |      |            |
 # |----------------+----------------+-------------+-------------+------+------------|
 
+require "swars"
+
 module Swars
   class Membership < ApplicationRecord
     include TagMod

@@ -28,6 +28,7 @@ every("5 3 * * *") do
     "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
     "Swars::Battle.where(:sfen_hash => nil).find_each{|e|e.save!}",
     "FreeBattle.where(:sfen_hash => nil).find_each{|e|e.save!}",
+    "Tsl::League.setup",
   ].join(";")
 end
 

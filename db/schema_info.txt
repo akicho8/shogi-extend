@@ -238,6 +238,55 @@
 
 # == Schema Information ==
 #
+# Membership (tsl_memberships as Tsl::Membership)
+#
+# |------------+------------+-------------+-------------+------+-------|
+# | name       | desc       | type        | opts        | refs | index |
+# |------------+------------+-------------+-------------+------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |      |       |
+# | league_id  | League     | integer(8)  | NOT NULL    |      | A! B  |
+# | user_id    | User       | integer(8)  | NOT NULL    |      | A! C  |
+# | result_key | Result key | string(255) | NOT NULL    |      | D     |
+# | start_pos  | Start pos  | integer(4)  | NOT NULL    |      | E     |
+# | age        | Age        | integer(4)  |             |      |       |
+# | win        | Win        | integer(4)  |             |      | F     |
+# | lose       | Lose       | integer(4)  |             |      | G     |
+# | ox         | Ox         | string(255) | NOT NULL    |      |       |
+# | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
+# |------------+------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# League (tsl_leagues as Tsl::League)
+#
+# |------------+------------+------------+-------------+------+-------|
+# | name       | desc       | type       | opts        | refs | index |
+# |------------+------------+------------+-------------+------+-------|
+# | id         | ID         | integer(8) | NOT NULL PK |      |       |
+# | generation | Generation | integer(4) | NOT NULL    |      | A     |
+# | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
+# |------------+------------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# User (tsl_users as Tsl::User)
+#
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | name              | desc              | type        | opts        | refs | index |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
+# | name              | Name              | string(255) | NOT NULL    |      | A!    |
+# | first_age         | First age         | integer(4)  |             |      |       |
+# | last_age          | Last age          | integer(4)  |             |      |       |
+# | memberships_count | Memberships count | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Xy record (xy_records as XyRecord)
 #
 # |-------------------+----------------+-------------+-------------+-----------------------------+-------|
