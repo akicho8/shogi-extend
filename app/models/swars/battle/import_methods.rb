@@ -62,12 +62,15 @@ module Swars
         # rails r 'Swars::Battle.old_record_destroy(time_limit: 0)'
         def old_record_destroy(params = {})
           params = {
-            expires_in: 4.weeks, # 4週間前のものは消す
+            expires_in: 8.weeks, # 8週間前のものは消す
             time_limit: 2.hours, # 最大処理時間(朝4時に実行して6時には必ず終了させる)
           }.merge(params)
 
           t = Time.current
-          all.where(arel_table[:accessed_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
+
+          s = all
+          s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].ago))
+          s.find_in_batches(batch_size: 100) do |g|
             if params[:time_limit] <= (Time.current - t)
               break
             end
