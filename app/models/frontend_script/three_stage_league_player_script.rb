@@ -53,7 +53,7 @@ module FrontendScript
     end
 
     def current_user_name
-      params[:user_name].presence
+      params[:user_name].presence || Tsl::User.order(:name).first&.name
     end
 
     def current_uesr
