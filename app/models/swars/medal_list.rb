@@ -164,7 +164,7 @@ module Swars
         s = s.limit(current_max)
 
         denominator = s.count
-        s = Swars::Membership.where(id: s.pluck(:id))
+        s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
 
         tags = s.all_tag_counts(at_least: at_least_value) # 全タグ
         tags.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count.fdiv(denominator)) } # 分母は負かされ数
