@@ -96,7 +96,7 @@ module Swars
     # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
     # また group するときも order が入っていると MySQL では group に order のカラムも含めないと正しく動かなくてわけわからんんことになるのでそれの回避
     def ids_scope
-      Swars::Membership.where(id: current_scope.pluck(:id))
+      Swars::Membership.where(id: current_scope.pluck(:id)) # 再スコープ化
     end
 
     def real_count
@@ -114,10 +114,11 @@ module Swars
 
     def every_grade_list
       s = user.op_memberships
-      s = s.joins(:battle)
-      s = s.merge(Swars::Battle.win_lose_only)
+      s = condition_add(s)
       s = s.limit(current_max)
       denominator = s.count
+
+      s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
 
       hash = s.joins(:grade).group(Swars::Grade.arel_table[:key]).group(:judge_key).order(Swars::Grade.arel_table[:priority]).count # => {["九段", "lose"]=>2, ["九段", "win"]=>1}
 
@@ -185,7 +186,7 @@ module Swars
         hash[:day_type]    = day_type_for(battled_at)
         hash[:judge_counts] = judge_counts_of(memberships)
 
-        s = Swars::Membership.where(id: memberships.collect(&:id))
+        s = Swars::Membership.where(id: memberships.collect(&:id)) # 再スコープ化
 
         # 戦法と囲いをまぜて一番使われている順にN個表示する場合
         if false
@@ -221,13 +222,12 @@ module Swars
       s = memberships
       s = condition_add(s)
       s = s.limit(current_max)
-
-      # SQLを作り直すか？ (tag_counts_on をシンプルなSQLで実行させると若干速くなる)
-      if true
-        s = Swars::Membership.where(id: s.pluck(:id))
-      end
-
       denominator = s.count
+
+      # tag_counts_on をシンプルなSQLで実行させると若干速くなるが、それのためではなく
+      # current_max 件で最初に絞らないといけない
+      s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
+
       tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
       tags.collect do |tag|
         {}.tap do |hash|
