@@ -71,6 +71,6 @@ module KentoJsonMod
   end
 
   def kento_records_limit
-    [params[:limit] || 10, 30].collect(&:to_i).min
+    [params[:limit] || 50, 50].collect(&:to_i).min
   end
 end
