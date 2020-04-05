@@ -400,7 +400,7 @@ export default {
       +desktop
         margin-left: auto
         margin-right: auto
-        max-width: 24rem
+        max-width: 28rem
       .is-flex
         flex-direction: column
         justify-content: center
