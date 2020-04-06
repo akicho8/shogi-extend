@@ -11,20 +11,27 @@ module FrontendScript
         # タグにない戦法も抽出するため
         counts_hash = Bioshogi::TacticInfo.fetch(tactic_key).model.inject({}) { |a, e| a.merge(e.name => counts_hash[e.name] || 0) } # => { "棒銀" => 3, "棒金" => 4, "風車" => 0 }
 
+        # いらんタグを消す
+        if Rails.env.production? || Rails.env.staging? || Rails.env.test?
+          Array(TagMod.reject_tag_keys[tactic_key]).each do |e|
+            counts_hash.delete(e.to_s)
+          end
+        end
+
         list = counts_hash.values          # => [3, 4, 0]
         total = list.sum                   # => 7
         avg = total.fdiv(list.size)        # => 3.5
         sd = standard_deviation(list, avg) # 標準偏差
 
         rows = counts_hash.sort_by { |k, v| v }.collect do |name, count|
-          dv = deviation_value(count, avg, sd) # 偏差値
+          deviation = deviation_value(count, avg, sd) # 偏差値
           ratio = count.fdiv(total)            # 割合
 
           row = {}
-          row[:name] = name
-          row[:ratio] = ratio
-          row[:deviation] = dv
-          row[:count] = count
+          row[:name]      = name
+          row[:ratio]     = ratio
+          row[:deviation] = deviation
+          row[:count]     = count
 
           row
         end
@@ -49,7 +56,7 @@ module FrontendScript
     private
 
     def tactic_key
-      @tactic_key ||= key.underscore.remove("_rarity")
+      @tactic_key ||= key.underscore.remove("_rarity").to_sym
     end
 
     # 標準偏差
