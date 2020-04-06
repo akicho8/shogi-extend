@@ -35,6 +35,11 @@ nav.navbar.is-primary.is_screen_only
             = link_to(icon_tag(:book, margin_right: 1) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
           - if AppConfig[:colosseum_battle_enable]
             = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
+          hr.navbar-divider.is-hidden-tablet
+          = link_to("プライバシーポリシー", [:about, id: "privacy_policy"],    class: ["navbar-item", "is-hidden-tablet", ("is-active" if params[:controller] == "about" && params[:id] == "privacy_policy")])
+          = link_to("利用規約",     [:about, id: "terms"],             class: ["navbar-item", "is-hidden-tablet", ("is-active" if params[:controller] == "about" && params[:id] == "terms")])
+          = link_to("クレジット",   [:about, id: "credit"],            class: ["navbar-item", "is-hidden-tablet", ("is-active" if params[:controller] == "about" && params[:id] == "credit")])
+          = link_to("問い合わせ", "https://twitter.com/sgkinakomochi", class: ["navbar-item", "is-hidden-tablet"])
 
       - if Rails.env.development?
         = link_to("管理画面", [:admin, :root], class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
