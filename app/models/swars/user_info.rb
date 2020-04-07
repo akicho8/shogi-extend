@@ -120,13 +120,16 @@ module Swars
 
       s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
 
-      hash = s.joins(:grade).group(Swars::Grade.arel_table[:key]).group(:judge_key).order(Swars::Grade.arel_table[:priority]).count # => {["九段", "lose"]=>2, ["九段", "win"]=>1}
+      s = s.joins(:grade).group(Swars::Grade.arel_table[:key]) # 段級と
+      s = s.group(:judge_key)                                  # 勝ち負けでグループ化
+      s = s.order(Swars::Grade.arel_table[:priority])          # 相手が強い順
+      hash = s.count                                           # => {["九段", "lose"]=>2, ["九段", "win"]=>1}
 
       counts = {}
       hash.each do |(grade_key, win_or_lose), count|
-        counts[grade_key] ||= {win: 0, lose: 0}
+        counts[grade_key] ||= { win: 0, lose: 0 }
         judge_info = JudgeInfo.fetch(win_or_lose)
-        counts[grade_key][judge_info.flip.key] = count  # 勝敗反転
+        counts[grade_key][judge_info.flip.key] = count # 勝敗反転
       end
 
       counts # => {"九段"=>{:win=>2, :lose=>1}, "初段"=>{:win=>1, :lose=>0}}
