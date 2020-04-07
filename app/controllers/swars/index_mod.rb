@@ -264,90 +264,53 @@ module Swars
 
     def current_scope
       @current_scope ||= -> {
-
         s = current_model.all
-        # s = tag_scope_add(s)
-
-        if v = query_info.lookup_one(:date)
-          v = v.to_time.midnight
-          s = s.where(battled_at: v...v.tomorrow)
-        end
-
-        # s = search_scope_add(s)
-        # s = other_scope_add(s)
 
         if v = query_info.lookup(:ids)
           s = s.where(id: v)
         end
 
-        # if v = ransack_params
-        # if true
-        #   s = s.merge(current_model.ransack(v).result)
-        # else
-        # current_queries.each do |e|
-        #   m = current_model
-        #   w = m.where(["title LIKE BINARY ?", "%#{e}%"])
-        #   w = w.or(m.where(["description LIKE BINARY ?", "%#{e}%"]))
-        #   s = s.merge(w)
-        # end
-        # # raise s.to_sql.inspect
-
-        # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
-
         if current_swars_user
-          if false
-          elsif v = query_info.lookup_one(:"tag")
-            s = s.joins(:memberships)
-            s = s.where(Membership.arel_table[:user_id].eq(current_swars_user.id))
-            s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
-            if sample = query_info.lookup_one(:"sample")
-              s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
-              s = s.limit(sample)                      # N件抽出
-              s = current_model.where(id: s.ids)       # 再スコープ
-              s = s.joins(:memberships)                # joinsが外れているのであらめて追加
-            end
-            s = s.merge(Membership.tagged_with(v))
-          elsif v = query_info.lookup_one(:"vs-tag")
-            s = s.joins(:memberships)
-            s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
-            if sample = query_info.lookup_one(:"sample")
-              s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
-              s = s.limit(sample)                      # N件抽出
-              s = current_model.where(id: s.ids)       # 再スコープ
-              s = s.joins(:memberships)                # joinsが外れているのであらめて追加
-            end
-            s = s.merge(Membership.tagged_with(v))
-          elsif v = query_info.lookup_one(:"vs-grade")
+          case
+          when t = query_info.lookup_one(:"date") # 日付
+            t = t.to_time.midnight
+
+            m = sampled_memberships(current_swars_user.memberships)
+            s = s.where(id: m.pluck(:battle_id))
+
+            s = s.where(battled_at: t...t.tomorrow)
+          when v = query_info.lookup_one(:"tag") # 戦法
+            m = sampled_memberships(current_swars_user.memberships)
+            m = m.tagged_with(v)
+            s = s.where(id: m.pluck(:battle_id))
+          when v = query_info.lookup_one(:"vs-tag") # 対抗
+            m = sampled_memberships(current_swars_user.op_memberships)
+            m = m.tagged_with(v)
+            s = s.where(id: m.pluck(:battle_id))
+          when v = query_info.lookup_one(:"vs-grade") # 段級
             grade = Grade.find_by!(key: v)
-            s = s.joins(:memberships)
-            s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
-            if sample = query_info.lookup_one(:"sample")
-              s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
-              s = s.limit(sample)                      # N件抽出
-              s = current_model.where(id: s.ids)       # 再スコープ
-              s = s.joins(:memberships)                # joinsが外れているのであらめて追加
-            end
-            s = s.where(Membership.arel_table[:grade_id].eq(grade.id)) # 指定の段級位
+            m = sampled_memberships(current_swars_user.op_memberships)
+            m = m.where(grade: grade)
+            s = s.where(id: m.pluck(:battle_id))
           else
-            s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
+            s = s.joins(:memberships).merge(Membership.where(user_id: current_swars_user.id))
           end
         end
 
-        s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
-
-        # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
-        # tag:username だと相手が「角換わり」したのも出てきてしまう
-        # if current_ms_tags
-        #   m = Membership.all
-        #   if current_musers
-        #     m = m.where(user: User.where(user_key: current_musers))
-        #   end
-        #   m = m.tagged_with(current_ms_tags)
-        #   s = s.merge(m)
-        # end
-
-        s
+        s.includes(win_user: nil, memberships: {user: nil, grade: nil, taggings: :tag})
       }.call
+    end
+
+    def sampled_memberships(m)
+      m = m.joins(:battle)
+      m = m.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
+      m = m.merge(Swars::Battle.latest_order)  # 直近のものから取得
+      if v = query_info.lookup_one(:"sample")
+        m = m.limit(v)          # N件抽出
+      else
+        # 指定しなくてもすでにuserで絞っているので爆発しない
+      end
+      Swars::Membership.where(id: m.ids)   # 再スコープ
     end
 
     def current_index_scope
