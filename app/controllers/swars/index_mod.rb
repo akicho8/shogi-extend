@@ -321,6 +321,12 @@ module Swars
             grade = Grade.find_by!(key: v)
             s = s.joins(:memberships)
             s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
+            if sample = query_info.lookup_one(:"sample")
+              s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
+              s = s.limit(sample)                      # N件抽出
+              s = current_model.where(id: s.ids)       # 再スコープ
+              s = s.joins(:memberships)                # joinsが外れているのであらめて追加
+            end
             s = s.where(Membership.arel_table[:grade_id].eq(grade.id)) # 指定の段級位
           else
             s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
