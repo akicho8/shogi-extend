@@ -87,7 +87,7 @@
                     | ツイート
 
     .column.is-4(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
-      b-field
+      b-field.xy_scope_info_field
         template(v-for="e in XyScopeInfo.values")
           b-radio-button(v-model="xy_scope_key" :native-value="e.key")
             | {{e.name}}
@@ -888,6 +888,9 @@ $board_color: hsl(0, 0%, 60%)
             &:after
               background: darken($board_color, 20%)
 
+  .xy_scope_info_field
+    +mobile
+      justify-content: center
   .time_container
     margin-top: 0.1rem
   .tweet_box_container
