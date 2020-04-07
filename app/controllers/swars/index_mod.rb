@@ -293,12 +293,18 @@ module Swars
         # # raise s.to_sql.inspect
 
         # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
-        s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
 
         if current_swars_user
           if v = query_info.lookup_one(:"tag")
-            s = s.joins(memberships: :user)
+            s = s.joins(:memberships)
             s = s.where(Membership.arel_table[:user_id].eq(current_swars_user.id))
+            s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
+            if sample = query_info.lookup_one(:"sample")
+              s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
+              s = s.limit(sample)                      # N件抽出
+              s = current_model.where(id: s.ids)       # 再スコープ
+              s = s.joins(:memberships)                # joinsが外れているのであらめて追加
+            end
             s = s.merge(Membership.tagged_with(v))
           elsif v = query_info.lookup_one(:"vs-tag")
             s = s.joins(memberships: :user)
@@ -313,6 +319,8 @@ module Swars
             s = s.joins(memberships: :user).merge(Membership.where(user: current_swars_user))
           end
         end
+
+        s = s.includes(win_user: nil, memberships: {:user => nil, :grade => nil, taggings: :tag})
 
         # "muser:username ms_tag:角換わり" で絞り込むと memberships の user が username かつ「角換わり」で絞れる
         # tag:username だと相手が「角換わり」したのも出てきてしまう

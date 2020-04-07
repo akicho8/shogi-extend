@@ -24,9 +24,9 @@ module BattleControllerSharedMethods
       s = current_index_scope
       s = s.select(current_model.column_names - exclude_column_names)
       if sort_column && sort_order
-        s = s.order(sort_column => sort_order)
+        s = s.order(sort_column => sort_order) # 1番目 order(battled_at: :desc)
       end
-      s = s.order(id: :desc)
+      s = s.order(id: :desc)                   # 2番目 order(id: desc)
       s.page(params[:page]).per(current_per)
     end
 

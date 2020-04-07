@@ -267,7 +267,7 @@ export default {
 
     every_my_attack_click_handle(row) {
       this.$emit("close")
-      GVI.$emit("query_search", `${this.new_info.user.key} tag:${row.tag.name}`)
+      GVI.$emit("query_search", `${this.new_info.user.key} tag:${row.tag.name} sample:${this.new_info.sample_max}`)
     },
 
     every_vs_attack_click_handle(row) {

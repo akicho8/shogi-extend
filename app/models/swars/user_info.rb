@@ -59,7 +59,8 @@ module Swars
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
-        hash[:key] = SecureRandom.hex
+        hash[:key]        = SecureRandom.hex # vue.js の :key に使うため
+        hash[:sample_max] = current_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)
 
         hash[:user] = { key: user.key }
 
