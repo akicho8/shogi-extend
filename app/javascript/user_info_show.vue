@@ -120,7 +120,7 @@
 
     .tab_content
       template(v-if="tab_index === 0")
-        .box.one_box.two_column.is_clickable(v-for="row in new_info.every_day_list" :key="`every_day_list/${row.battled_on}`" @click="every_day_click_handle(row)")
+        .box.one_box.two_column.is_clickable(v-for="(row, i) in new_info.every_day_list" :key="`every_day_list/${i}`" @click="every_day_click_handle(row)")
           .columns.is-mobile
             .column.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -143,7 +143,7 @@
                 //-       | {{tag.count}}
 
       template(v-if="tab_index === 1")
-        .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="every_grade_click_handle(row)")
+        .box.one_box.is_clickable(v-for="(row, i) in new_info.every_grade_list" :key="`every_grade_list/${i}`" @click="every_grade_click_handle(row)")
           .columns.is-mobile
             .column.is-three-quarters.is-paddingless
               .one_box_title
@@ -163,7 +163,7 @@
             .column.is-paddingless
               win_lose_circle(:info="row" size="is-small")
       template(v-if="tab_index === 2")
-        .box.one_box.is_clickable(v-for="row in new_info.every_my_attack_list" :key="`every_my_attack_list/${row.tag.name}`" @click="every_my_attack_click_handle(row)")
+        .box.one_box.is_clickable(v-for="(row, i) in new_info.every_my_attack_list" :key="`every_my_attack_list/${i}`" @click="every_my_attack_click_handle(row)")
           .columns.is-mobile
             .column.is-three-quarters.is-paddingless
               .one_box_title.has-text-weight-bold.is-size-5
@@ -181,7 +181,7 @@
               win_lose_circle(:info="row" size="is-small")
 
       template(v-if="tab_index === 3")
-        .box.one_box.is_clickable(v-for="row in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${row.tag.name}`" @click="every_vs_attack_click_handle(row)")
+        .box.one_box.is_clickable(v-for="(row, i) in new_info.every_vs_attack_list" :key="`every_vs_attack_list/${i}`" @click="every_vs_attack_click_handle(row)")
           .columns.is-mobile
             .column.is-three-quarters.is-paddingless
               .one_box_title
