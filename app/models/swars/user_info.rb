@@ -59,6 +59,8 @@ module Swars
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
+        hash[:key] = SecureRandom.hex
+
         hash[:user] = { key: user.key }
 
         hash[:rules_hash] = rules_hash

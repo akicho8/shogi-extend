@@ -1,5 +1,6 @@
 <template lang="pug">
-.user_info_show.modal-card
+//- new_info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
+.user_info_show.modal-card(:key="new_info.key")
   //- .modal-card-head
   //-   .modal-card-title {{membership.user.key}}
   .modal-card-body
@@ -12,6 +13,14 @@
       b-dropdown-item(@click="update_handle({try_fetch: true})")
         b-icon(icon="sync" size="is-small")
         | 更新
+
+      b-dropdown-item(@click="update_handle({max: 0})" v-if="development_p")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大0件
+
+      b-dropdown-item(@click="update_handle({max: 1})" v-if="development_p")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大1件
 
       b-dropdown-item(@click="update_handle({max: 100})")
         b-icon(icon="arrow-up-bold" size="is-small")
@@ -132,7 +141,6 @@
                 //-   template(v-if="tag.count >= 2")
                 //-     b-tag(type="is-primary")
                 //-       | {{tag.count}}
-
 
       template(v-if="tab_index === 1")
         .box.one_box.is_clickable(v-for="row in new_info.every_grade_list" :key="`every_grade_list/${row.grade_name}`" @click="every_grade_click_handle(row)")
