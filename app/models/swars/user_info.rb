@@ -22,7 +22,7 @@
 #   s1 = s1.includes(:battle)
 #   s1 = s1.limit(50)
 #
-#   s2 = user.memberships.where(id: s1.pluck(:id))
+#   s2 = user.memberships.where(id: s1.ids)
 #
 #   require 'active_support/core_ext/benchmark'
 #
@@ -99,7 +99,7 @@ module Swars
     # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
     # また group するときも order が入っていると MySQL では group に order のカラムも含めないと正しく動かなくてわけわからんんことになるのでそれの回避
     def ids_scope
-      Swars::Membership.where(id: current_scope.pluck(:id)) # 再スコープ化
+      Swars::Membership.where(id: current_scope.ids) # 再スコープ化
     end
 
     def real_count
@@ -121,7 +121,7 @@ module Swars
       s = s.limit(sample_max)
       denominator = s.count
 
-      s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
+      s = Swars::Membership.where(id: s.ids) # 再スコープ化
 
       s = s.joins(:grade).group(Swars::Grade.arel_table[:key]) # 段級と
       s = s.group(:judge_key)                                  # 勝ち負けでグループ化
@@ -232,7 +232,7 @@ module Swars
 
       # tag_counts_on をシンプルなSQLで実行させると若干速くなるが、それのためではなく
       # sample_max 件で最初に絞らないといけない
-      s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
+      s = Swars::Membership.where(id: s.ids) # 再スコープ化
 
       tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
       tags.collect do |tag|
