@@ -109,7 +109,7 @@ module Swars
     end
 
     def current_max
-      [(params[:max].presence || default_params[:max]).to_i, 100].min
+      @current_max ||= [(params[:max].presence || default_params[:max]).to_i, 100].min
     end
 
     def every_grade_list
