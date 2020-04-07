@@ -42,10 +42,12 @@ module Swars
     attr_accessor :user
     attr_accessor :params
 
+    cattr_accessor(:max_of_max) { 200 }
+
     cattr_accessor(:default_params) {
       {
-        :max    => 50, # データ対象直近n件
-        :ox_max => 17, # 表示勝敗直近n件
+        :sample_max => 50, # データ対象直近n件
+        :ox_max     => 17, # 表示勝敗直近n件
       }
     }
 
@@ -112,7 +114,7 @@ module Swars
     end
 
     def sample_max
-      @sample_max ||= [(params[:max].presence || default_params[:max]).to_i, 100].min
+      @sample_max ||= [(params[:sample_max].presence || default_params[:sample_max]).to_i, max_of_max].min
     end
 
     def every_grade_list
