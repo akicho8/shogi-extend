@@ -295,7 +295,8 @@ module Swars
         # s = s.includes(win_user: nil, memberships: [:user, :grade, :attack_tags, :defense_tags])
 
         if current_swars_user
-          if v = query_info.lookup_one(:"tag")
+          if false
+          elsif v = query_info.lookup_one(:"tag")
             s = s.joins(:memberships)
             s = s.where(Membership.arel_table[:user_id].eq(current_swars_user.id))
             s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
@@ -307,12 +308,18 @@ module Swars
             end
             s = s.merge(Membership.tagged_with(v))
           elsif v = query_info.lookup_one(:"vs-tag")
-            s = s.joins(memberships: :user)
+            s = s.joins(:memberships)
             s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
+            if sample = query_info.lookup_one(:"sample")
+              s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
+              s = s.limit(sample)                      # N件抽出
+              s = current_model.where(id: s.ids)       # 再スコープ
+              s = s.joins(:memberships)                # joinsが外れているのであらめて追加
+            end
             s = s.merge(Membership.tagged_with(v))
           elsif v = query_info.lookup_one(:"vs-grade")
             grade = Grade.find_by!(key: v)
-            s = s.joins(memberships: :user)
+            s = s.joins(:memberships)
             s = s.where(Membership.arel_table[:op_user_id].eq(current_swars_user.id)) # user_id ではなく相手が自分と対戦している人なので op_user_id と一致するものを選択
             s = s.where(Membership.arel_table[:grade_id].eq(grade.id)) # 指定の段級位
           else

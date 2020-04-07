@@ -4,7 +4,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :current_max, :current_scope, :condition_add, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -161,7 +161,7 @@ module Swars
         s = user.op_memberships   # 相手が
         s = condition_add(s)
         s = s.where(judge_key: "win") # 勝った = 自分が負けた
-        s = s.limit(current_max)
+        s = s.limit(sample_max)
 
         denominator = s.count
         s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
@@ -315,7 +315,7 @@ module Swars
       s = user.memberships
       s = s.joins(:battle)
       s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
-      s = s.limit(current_max)
+      s = s.limit(sample_max)
     end
 
     def new_scope_count

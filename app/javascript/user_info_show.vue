@@ -14,15 +14,15 @@
         b-icon(icon="sync" size="is-small")
         | 更新
 
-      b-dropdown-item(@click="update_handle({max: 0})" v-if="development_p")
+      b-dropdown-item(@click="update_handle({sample_max: 0})" v-if="development_p")
         b-icon(icon="arrow-up-bold" size="is-small")
         | 最大0件
 
-      b-dropdown-item(@click="update_handle({max: 1})" v-if="development_p")
+      b-dropdown-item(@click="update_handle({sample_max: 1})" v-if="development_p")
         b-icon(icon="arrow-up-bold" size="is-small")
         | 最大1件
 
-      b-dropdown-item(@click="update_handle({max: 100})")
+      b-dropdown-item(@click="update_handle({sample_max: 100})")
         b-icon(icon="arrow-up-bold" size="is-small")
         | 最大100件
 
@@ -262,22 +262,22 @@ export default {
   methods: {
     every_day_click_handle(row) {
       this.$emit("close")
-      GVI.$emit("query_search", `${this.new_info.user.key} date:${this.date_to_ymd(row.battled_on)}`)
+      GVI.$emit("query_search", `${this.new_info.user.key} sample:${this.new_info.sample_max} date:${this.date_to_ymd(row.battled_on)}`)
     },
 
     every_my_attack_click_handle(row) {
       this.$emit("close")
-      GVI.$emit("query_search", `${this.new_info.user.key} tag:${row.tag.name} sample:${this.new_info.sample_max}`)
+      GVI.$emit("query_search", `${this.new_info.user.key} sample:${this.new_info.sample_max} tag:${row.tag.name}`)
     },
 
     every_vs_attack_click_handle(row) {
       this.$emit("close")
-      GVI.$emit("query_search", `${this.new_info.user.key} vs-tag:${row.tag.name}`)
+      GVI.$emit("query_search", `${this.new_info.user.key} sample:${this.new_info.sample_max} vs-tag:${row.tag.name}`)
     },
 
     every_grade_click_handle(row) {
       this.$emit("close")
-      GVI.$emit("query_search", `${this.new_info.user.key} vs-grade:${row.grade_name}`)
+      GVI.$emit("query_search", `${this.new_info.user.key} sample:${this.new_info.sample_max} vs-grade:${row.grade_name}`)
     },
 
     update_handle(options = {}) {

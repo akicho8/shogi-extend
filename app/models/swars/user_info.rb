@@ -60,7 +60,7 @@ module Swars
     def to_hash
       {}.tap do |hash|
         hash[:key]        = SecureRandom.hex # vue.js の :key に使うため
-        hash[:sample_max] = current_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)
+        hash[:sample_max] = sample_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)
 
         hash[:user] = { key: user.key }
 
@@ -93,7 +93,7 @@ module Swars
 
     def current_scope
       s = current_scope_base
-      s = s.limit(current_max)
+      s = s.limit(sample_max)
     end
 
     # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
@@ -111,14 +111,14 @@ module Swars
       # 1
     end
 
-    def current_max
-      @current_max ||= [(params[:max].presence || default_params[:max]).to_i, 100].min
+    def sample_max
+      @sample_max ||= [(params[:max].presence || default_params[:max]).to_i, 100].min
     end
 
     def every_grade_list
       s = user.op_memberships
       s = condition_add(s)
-      s = s.limit(current_max)
+      s = s.limit(sample_max)
       denominator = s.count
 
       s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
@@ -227,11 +227,11 @@ module Swars
     def list_build(memberships, options = {})
       s = memberships
       s = condition_add(s)
-      s = s.limit(current_max)
+      s = s.limit(sample_max)
       denominator = s.count
 
       # tag_counts_on をシンプルなSQLで実行させると若干速くなるが、それのためではなく
-      # current_max 件で最初に絞らないといけない
+      # sample_max 件で最初に絞らないといけない
       s = Swars::Membership.where(id: s.pluck(:id)) # 再スコープ化
 
       tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
