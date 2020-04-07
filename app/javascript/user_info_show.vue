@@ -148,7 +148,7 @@
                 span.has-text-grey-light.is-size-7.use_rate_label
                   | 遭遇率
                 span.use_rate
-                  | {{number_to_percentage2(row.appear_ratio, 1)}}
+                  | {{float_to_percentage(row.appear_ratio, 1)}}
                 span.has-text-grey-light.is-size-7.use_rate_unit
                   | %
           .columns
@@ -165,7 +165,7 @@
                 span.has-text-grey-light.is-size-7.use_rate_label
                   | 使用率
                 span.use_rate
-                  | {{number_to_percentage2(row.appear_ratio, 1)}}
+                  | {{float_to_percentage(row.appear_ratio, 1)}}
                 span.has-text-grey-light.is-size-7.use_rate_unit
                   | %
           .columns
@@ -186,7 +186,7 @@
                 span.has-text-grey-light.is-size-7.use_rate_label
                   | 遭遇率
                 span.use_rate
-                  | {{number_to_percentage2(row.appear_ratio, 1)}}
+                  | {{float_to_percentage(row.appear_ratio, 1)}}
                 span.has-text-grey-light.is-size-7.use_rate_unit
                   | %
           .columns
