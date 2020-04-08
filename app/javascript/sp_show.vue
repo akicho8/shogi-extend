@@ -144,6 +144,7 @@ export default {
   methods: {
     delete_click_handle() {
       this.$emit("close")
+      window.history.back()
     },
 
     // バトル情報がセットされたタイミングまたは変更されたタイミング
