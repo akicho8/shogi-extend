@@ -78,6 +78,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     it "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
       visit "/w?modal_id=#{record.to_param}"
       find(".delete").click
+      page.refresh
       expect(page).to have_content "1-1"
       doc_image
     end

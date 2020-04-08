@@ -113,7 +113,6 @@ export default {
   },
 
   beforeDestroy() {
-    window.history.back()
   },
 
   created() {
