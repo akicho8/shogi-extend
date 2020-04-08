@@ -27,7 +27,7 @@ module FrontendScript
         {
           name: name,
           count: count,
-          deviation_value: sdc.deviation_value(count, -1),
+          deviation_score: sdc.deviation_score(count, -1),
           ratio: sdc.appear_ratio(count),
         }
       end
@@ -40,7 +40,7 @@ module FrontendScript
         row = {}
         row["名前"]   = h.tag.small(e[:name])
         row["出現率"] = "%.3f %%" % (e[:ratio] * 100.0)
-        row["偏差値"] = "%.3f" % e[:deviation_value]
+        row["偏差値"] = "%.3f" % e[:deviation_score]
         if Rails.env.development? || params[:with_count]
           row["個数"] = e[:count]
         end

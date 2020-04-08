@@ -15,7 +15,7 @@ module FrontendScript
         {
           name: name,
           count: count,
-          deviation_value: sdc.deviation_value(count, -1),
+          deviation_score: sdc.deviation_score(count, -1),
           ratio: sdc.appear_ratio(count),
         }
       end
@@ -27,7 +27,7 @@ module FrontendScript
       rows.collect do |e|
         row = {}
         row["段級"]   = e[:name]
-        row["偏差値"] = "%.2f" % e[:deviation_value]
+        row["偏差値"] = "%.2f" % e[:deviation_score]
         row["割合"]   = "%.2f %%" % (e[:ratio] * 100)
         if Rails.env.development? || params[:with_count]
           row["個数"] = e[:count]
