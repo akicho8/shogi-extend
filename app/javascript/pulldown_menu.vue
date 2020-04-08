@@ -6,11 +6,11 @@ b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left
     b-icon(icon="twitter" size="is-small" type="is-info")
     | ツイート {{turn_mark}}
 
-  b-dropdown-item(v-if="new_permalink_url" :href="new_permalink_url")
+  b-dropdown-item(v-if="development_p && new_permalink_url" :href="new_permalink_url")
     b-icon(icon="link-variant" size="is-small")
     | パーマリンク {{turn_mark}}
 
-  b-dropdown-item(v-if="new_permalink_url" @click="clipboard_copy({text: new_permalink_url})")
+  b-dropdown-item(v-if="development_p && new_permalink_url" @click="clipboard_copy({text: new_permalink_url})")
     b-icon(icon="link-variant-plus" size="is-small")
     | パーマリンクコピー {{turn_mark}}
 
