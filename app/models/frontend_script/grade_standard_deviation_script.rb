@@ -7,6 +7,8 @@ module FrontendScript
         Swars::User.group(:grade).count.inject({}) { |a, (e, count)| a.merge(e.name => count) }
       end
 
+      counts_hash.delete("十段")
+
       sdc = StandardDeviation.new(counts_hash.values)
 
       rows = counts_hash.collect do |name, count|
