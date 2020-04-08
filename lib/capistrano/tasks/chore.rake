@@ -115,6 +115,13 @@ after "deploy:finished", :hb do
   end
 end
 
+desc "デプロイ後にキャッシュクリア"
+after "deploy:finished", :rails_cache_clear do
+  on roles(:all) do
+    execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner 'Rails.cache.clear'"
+  end
+end
+
 desc "デプロイ後に確認したいURLを全部開いておく"
 after "deploy:finished", :open_urls do
   Array(fetch(:open_urls)).reverse.each do |url|
