@@ -1,6 +1,6 @@
 module FrontendScript
-  class AttackRarityScript < ::FrontendScript::Base
-    self.script_name = "戦法レアリティ"
+  class AttackHistogramScript < ::FrontendScript::Base
+    self.script_name = "戦法ヒストグラム"
 
     def script_body
       counts_hash = Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
@@ -40,8 +40,8 @@ module FrontendScript
         row = {}
         row["名前"]   = h.tag.small(e[:name])
         row["出現率"] = "%.3f %%" % (e[:ratio] * 100.0)
-        row["偏差値"] = "%.3f" % e[:deviation_score]
-        if Rails.env.development? || params[:with_count]
+        if Rails.env.development? || params[:vervose]
+          row["偏差値"] = "%.3f" % e[:deviation_score]
           row["個数"] = e[:count]
         end
         row
@@ -51,7 +51,7 @@ module FrontendScript
     private
 
     def tactic_key
-      @tactic_key ||= key.underscore.remove("_rarity").to_sym
+      @tactic_key ||= key.underscore.remove("_histogram").to_sym
     end
   end
 end

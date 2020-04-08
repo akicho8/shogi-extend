@@ -1,6 +1,6 @@
 module FrontendScript
   class ThreeStageLeaguePlayerScript < ::FrontendScript::Base
-    self.script_name = "奨励会三段リーグ(個別)"
+    self.script_name = "奨励会三段リーグ(個人別)"
 
     def form_parts
       [

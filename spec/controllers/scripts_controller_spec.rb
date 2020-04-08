@@ -16,7 +16,7 @@ RSpec.describe ScriptsController, type: :controller do
 
   describe "attack-rarity (json対応)" do
     before do
-      get :show, params: { id: "attack-rarity", format: "json" }
+      get :show, params: { id: "attack-histogram", format: "json" }
     end
     let :value do
       JSON.parse(response.body)

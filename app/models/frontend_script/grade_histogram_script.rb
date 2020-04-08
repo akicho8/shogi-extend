@@ -1,6 +1,6 @@
 module FrontendScript
-  class GradeStandardDeviationScript < ::FrontendScript::Base
-    self.script_name = "段級位の偏差値"
+  class GradeHistogramScript < ::FrontendScript::Base
+    self.script_name = "段級位ヒストグラム"
 
     def script_body
       counts_hash = Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
@@ -8,6 +8,15 @@ module FrontendScript
       end
 
       counts_hash.delete("十段")
+
+      # 6級以下はまとめる
+      if true
+        start = "6級"
+        total = (Swars::GradeInfo[start].code..Swars::GradeInfo.values.last.code).sum do |code|
+          counts_hash.delete(Swars::GradeInfo[code].name) || 0
+        end
+        counts_hash["#{start}以下"] = total
+      end
 
       sdc = StandardDeviation.new(counts_hash.values)
 
@@ -27,9 +36,9 @@ module FrontendScript
       rows.collect do |e|
         row = {}
         row["段級"]   = e[:name]
-        row["偏差値"] = "%.2f" % e[:deviation_score]
-        row["割合"]   = "%.2f %%" % (e[:ratio] * 100)
-        if Rails.env.development? || params[:with_count]
+        row["割合"]   = "%.3f %%" % [e[:ratio] * 100]
+        if Rails.env.development? || params[:vervose]
+          row["偏差値"] = "%.2f" % e[:deviation_score]
           row["個数"] = e[:count]
         end
         row
