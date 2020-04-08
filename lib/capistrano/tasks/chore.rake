@@ -115,10 +115,12 @@ after "deploy:finished", :hb do
   end
 end
 
-desc "デプロイ後にキャッシュクリア"
+desc "RAILS_CACHE_CLEAR=1 cap production deploy ならデプロイ後にキャッシュクリア"
 after "deploy:finished", :rails_cache_clear do
   on roles(:all) do
-    execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner 'Rails.cache.clear'"
+    if ENV["RAILS_CACHE_CLEAR"]
+      execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner 'Rails.cache.clear'"
+    end
   end
 end
 
