@@ -24,14 +24,17 @@
 module KentoJsonMod
   extend ActiveSupport::Concern
 
+  mattr_accessor(:kento_records_max)        { 20 }
+  mattr_accessor(:kento_records_max_of_max) { 50 }
+
   private
 
-  # http://localhost:3000/w.json?query=devuser1&format_type=kento
+  # http://localhost:3000/w.json?query=user1&format_type=kento
   # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=kento
   def kento_json_render
     if request.format.json? && format_type == "kento"
       if current_swars_user
-        ip = request.env["REMOTE_ADDR"]
+        ip = request.remote_ip
         counter = Swars::Battle.continuity_run_counter("kento")
         if counter == 1
           Swars::Battle.sometimes_user_import(user_key: current_swars_user.key, page_max: 1)
@@ -71,6 +74,6 @@ module KentoJsonMod
   end
 
   def kento_records_limit
-    [params[:limit] || 50, 50].collect(&:to_i).min
+    [params[:limit].presence || kento_records_max, kento_records_max_of_max].collect(&:to_i).min
   end
 end
