@@ -59,9 +59,3 @@ javascript:
         - sample_kifu_body.each do |key, value|
           b-tab-item(label=KifuFormatWithBodInfo[key].name)
             pre.pre-wrap= value
-
-  / .has-text-centered
-  / - count = Swars::Battle.tagged_with(current_record.name).count
-  / - if count >= 1
-  /   =<> link_to("将棋ウォーズ棋譜検索".html_safe +  tag.span(count, class: "badge"), [:swars_search, query: current_record.key])
-  / b-pagination :total="total" :current.sync="current" :order="order" :size="size" :simple="false" :per-page="perPage"

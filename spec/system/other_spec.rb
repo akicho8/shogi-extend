@@ -59,11 +59,5 @@ RSpec.describe "その他", type: :system do
       expect(page).to have_content "Rails"
       doc_image
     end
-
-    it "今日の戦法占い" do
-      visit "/tactics-fortune"
-      expect(page).to have_content "Rails"
-      doc_image
-    end
   end
 end

@@ -20,9 +20,6 @@ class TacticNotesController < ApplicationController
           end
         }.join
       end
-    when "fortune"
-      @attack_info = Bioshogi::AttackInfo.to_a.sample
-      @defense_info = Bioshogi::DefenseInfo.to_a.sample
     end
   end
 

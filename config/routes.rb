@@ -74,7 +74,6 @@ Rails.application.routes.draw do
   resources :tactic_notes, path: "tactics", only: [:index, :show]
 
   get "tactics-tree",    to: "tactic_notes#index", defaults: {mode: "tree"},    as: :tree
-  get "tactics-fortune", to: "tactic_notes#index", defaults: {mode: "fortune"}, as: :fortune
 
   ################################################################################ 符号の鬼
 

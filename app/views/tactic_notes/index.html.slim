@@ -4,7 +4,6 @@
   ul
     li class=("is-active" if params["mode"] == "list")    = link_to("一覧", :tactic_notes)
     li class=("is-active" if params["mode"] == "tree")    = link_to("ツリー", :tree)
-    li class=("is-active" if params["mode"] == "fortune") = link_to("今日の戦法占い", :fortune)
 
 - if params[:mode] == "list"
   small
@@ -13,9 +12,3 @@
 - if params[:mode] == "tree"
   pre
     == @tree.join
-
-- if params[:mode] == "fortune"
-  .has-text-centered.is-size-1
-    p= link_to(@attack_info.name, [:tactic_note, id: @attack_info.key])
-    p= link_to(@defense_info.name, [:tactic_note, id: @defense_info.key])
-
