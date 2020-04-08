@@ -3,7 +3,7 @@ module FrontendScript
     self.script_name = "戦法レアリティ"
 
     def script_body
-      Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
+      counts_hash = Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
         # DBに入っているものを取得
         tags = Swars::Membership.tag_counts_on("#{tactic_key}_tags")
         counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
@@ -18,38 +18,33 @@ module FrontendScript
           end
         end
 
-        list = counts_hash.values          # => [3, 4, 0]
-        total = list.sum                   # => 7
-        avg = total.fdiv(list.size)        # => 3.5
-        sd = standard_deviation(list, avg) # 標準偏差
+        counts_hash
+      end
 
-        rows = counts_hash.sort_by { |k, v| v }.collect do |name, count|
-          deviation = deviation_value(count, avg, sd) # 偏差値
-          ratio = count.fdiv(total)            # 割合
+      sdc = StandardDeviation.new(counts_hash.values)
 
-          row = {}
-          row[:name]      = name
-          row[:ratio]     = ratio
-          row[:deviation] = deviation
-          row[:count]     = count
+      rows = counts_hash.sort_by { |name, count| count }.collect do |name, count|
+        {
+          name: name,
+          count: count,
+          deviation_value: sdc.deviation_value(count, -1),
+          ratio: sdc.appear_ratio(count),
+        }
+      end
 
-          row
+      if request.format.json?
+        return rows
+      end
+
+      rows.collect do |e|
+        row = {}
+        row["名前"]   = h.tag.small(e[:name])
+        row["出現率"] = "%.3f %%" % (e[:ratio] * 100.0)
+        row["偏差値"] = "%.3f" % e[:deviation_value]
+        if Rails.env.development? || params[:with_count]
+          row["個数"] = e[:count]
         end
-
-        if request.format.json?
-          return rows
-        end
-
-        rows.collect do |row|
-          new_row = {}
-          new_row["名前"] = h.tag.small(row[:name])
-          new_row["出現率"] = "%.3f %%" % (row[:ratio] * 100.0)
-          new_row["偏差値"] = "%.3f" % row[:deviation]
-          if Rails.env.development? || params[:with_count]
-            new_row["個数"] = row[:count]
-          end
-          new_row
-        end
+        row
       end
     end
 
@@ -57,19 +52,6 @@ module FrontendScript
 
     def tactic_key
       @tactic_key ||= key.underscore.remove("_rarity").to_sym
-    end
-
-    # 標準偏差
-    def standard_deviation(list, avg)
-      v = list.collect { |v| (v - avg) ** 2 }
-      v = v.sum
-      v = v.fdiv(list.size)
-      Math.sqrt(v)
-    end
-
-    # 偏差値
-    def deviation_value(score, avg, sd)
-      ((score - avg) / sd) * 10 + 50
     end
   end
 end

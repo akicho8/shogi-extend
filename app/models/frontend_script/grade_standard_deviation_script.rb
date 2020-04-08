@@ -4,17 +4,17 @@ module FrontendScript
 
     def script_body
       counts_hash = Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
-        Swars::User.group(:grade).count
+        Swars::User.group(:grade).count.inject({}) { |a, (e, count)| a.merge(e.name => count) }
       end
 
       sdc = StandardDeviation.new(counts_hash.values)
 
-      rows = counts_hash.collect do |k, v|
+      rows = counts_hash.collect do |name, count|
         {
-          name: k.name,
-          count: v,
-          sd: sdc.deviation_value(v, -1),
-          ratio: sdc.appear_ratio(v),
+          name: name,
+          count: count,
+          deviation_value: sdc.deviation_value(count, -1),
+          ratio: sdc.appear_ratio(count),
         }
       end
 
@@ -24,10 +24,10 @@ module FrontendScript
 
       rows.collect do |e|
         row = {}
-        row["段級位"] = e[:grade]
-        row["偏差値"] = "%.2f" % e[:sd]
-        row["割合"] = "%.2f %%" % (e[:ratio] * 100)
-        if Rails.env.development?
+        row["段級"]   = e[:name]
+        row["偏差値"] = "%.2f" % e[:deviation_value]
+        row["割合"]   = "%.2f %%" % (e[:ratio] * 100)
+        if Rails.env.development? || params[:with_count]
           row["個数"] = e[:count]
         end
         row
