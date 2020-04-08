@@ -26,6 +26,10 @@
         b-icon(icon="arrow-up-bold" size="is-small")
         | 最大100件
 
+      b-dropdown-item(@click="update_handle({sample_max: 200})")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大200件
+
       b-dropdown-item(:href="`/w?query=${new_info.user.key}`" @click="$buefy.loading.open()")
         b-icon(icon="magnify" size="is-small")
         | 棋譜検索
