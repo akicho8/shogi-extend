@@ -49,16 +49,26 @@ module FrontendScript
 
       grade = Swars::Grade.find_by!(key: "十段")
       users = Swars::User.where(grade: grade).order(created_at: :desc).includes(:memberships).joins(:memberships) # joins を取るとデータがないデータも表示できる
-      users.collect do |user|
+
+      rows = users.collect do |user|
         {}.tap do |row|
           name = user.key
           if user_info = user_infos_hash[user.key.downcase]
             name = user_info["名前"].to_s.remove(/\s*\<.*?\>/)
           end
-          row["指導棋士"] = h.link_to(name, [:swars, :battles, query: user.key])
+          row[:user] = { name: name, key: user.key }
+          row[:judge] = user.memberships.joins(:battle).order(Swars::Battle.arel_table[:battled_at]).collect { |e| e.judge_info.wb_mark }.join
+        end
+      end
 
-          ox = user.memberships.sort_by(&:created_at).collect { |e| e.judge_info.wb_mark }.join
-          row["勝敗"] = h.tag.small(ox, :class => "line_break_on")
+      if request.format.json?
+        return rows
+      end
+
+      rows.collect do |e|
+        {}.tap do |row|
+          row["指導棋士"] = h.link_to(e[:user][:name], [:swars, :battles, query: e[:user][:key]])
+          row["勝敗"] = h.tag.small(e[:judge], :class => "ox_sequense line_break_on")
         end
       end
     end
