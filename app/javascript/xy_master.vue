@@ -743,7 +743,7 @@ export default {
     },
 
     rate_per() {
-      return this.float_to_percentage(this.rate)
+      return this.float_to_perc(this.rate)
     },
 
     rate() {

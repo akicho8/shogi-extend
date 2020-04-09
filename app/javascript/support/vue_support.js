@@ -13,7 +13,7 @@ export default {
       return Math.floor(Math.random() * n)
     },
 
-    float_to_percentage(v, precision = 0) {
+    float_to_perc(v, precision = 0) {
       return _.floor(v * 100, precision)
     },
 

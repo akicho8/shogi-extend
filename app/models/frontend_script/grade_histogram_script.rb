@@ -29,7 +29,7 @@ module FrontendScript
 
       sdc = StandardDeviation.new(counts_hash.values)
 
-      rows = counts_hash.collect do |name, count|
+      rows = counts_hash.reverse_each.collect do |name, count|
         {
           name: name,
           count: count,
