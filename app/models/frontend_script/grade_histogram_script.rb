@@ -11,7 +11,7 @@ module FrontendScript
 
       # まとめるんじゃなくて削除する
       if true
-        range = "8級".."30級"
+        range = "10級".."30級"
         (Swars::GradeInfo[range.first].code..Swars::GradeInfo[range.last].code).each do |code|
           grade_info = Swars::GradeInfo[code]
           counts_hash.delete(grade_info.name)
@@ -63,7 +63,7 @@ module FrontendScript
       out += %(<div id="app"><custom_chart :info='#{info.to_json}' /></div>)
 
       if rows.present?
-        out += rows.collect { |e|
+        out += rows.reverse.collect { |e|
           row = {}
           row["段級"]   = e[:name]
           row["割合"]   = "%.2f %%" % [e[:ratio] * 100]
