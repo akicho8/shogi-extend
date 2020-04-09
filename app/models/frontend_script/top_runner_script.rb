@@ -1,6 +1,6 @@
 module FrontendScript
   class TopRunnerScript < ::FrontendScript::Base
-    self.script_name = "将棋ウォーズ上位者"
+    self.script_name = "将棋ウォーズ急上昇者"
 
     def script_body
       Rails.cache.fetch(self.class.name, :expires_in => 1.hour) do

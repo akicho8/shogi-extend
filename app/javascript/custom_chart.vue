@@ -1,9 +1,9 @@
 <template lang="pug">
-.three_stage_league_player_chart
-  .columns.is-centered.is-unselectable
-    .column.is-half
+.custom_chart
+  .columns.is-unselectable
+    .column.is-4
       canvas#main_canvas(ref="main_canvas")
-  template(v-if="development_p")
+  template(v-if="development_p && false")
     | {{info}}
 </template>
 
@@ -39,7 +39,7 @@ const CHART_CONFIG_DEFAULT = {
       padding: {
         // left: 0,
         // right: 12,
-        top: 14,                // ツールチップが欠けるのを防ぐ
+        // top: 14,                // ツールチップが欠けるのを防ぐ
         // bottom: 0
       },
     },
@@ -72,9 +72,9 @@ const CHART_CONFIG_DEFAULT = {
       }],
       yAxes: [{
         ticks: {
-          suggestedMax: 15,
-          beginAtZero: true,
-          stepSize: 2,         // N秒毎の表示
+          // suggestedMax: 15,
+          // beginAtZero: true,
+          // stepSize: 2,         // N秒毎の表示
           // maxTicksLimit: 7,     // 縦の最大目盛り数
           // callback(value, index, values) {
           //   return this.chart.config.__vm__.second_to_human(value)
@@ -109,12 +109,14 @@ const CHART_CONFIG_DEFAULT = {
 
     // https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
     tooltips: {
+      enabled: false,
+
       mode: "index",    // マウスに対してツールチップが出る条件
       intersect: false, // Y座標のチェックは無視する
 
       displayColors: false, // 左に「■」を表示するか？
 
-      yAlign: 'bottom', // 下側にキャロットがでるようにする。マニュアルに載ってない。https://stackoverflow.com/questions/44050238/change-chart-js-tooltip-caret-position
+      // yAlign: 'bottom', // 下側にキャロットがでるようにする。マニュアルに載ってない。https://stackoverflow.com/questions/44050238/change-chart-js-tooltip-caret-position
 
       callbacks: {
         title(tooltipItems, data) {
@@ -123,34 +125,18 @@ const CHART_CONFIG_DEFAULT = {
         beforeLabel(tooltipItems, data) {
           return ""
         },
-        label(tooltipItem, data) {
-          const chart_element = this
-          const __vm__ = chart_element._chart.config.__vm__
-          const membership = __vm__.info.memberships[tooltipItem.index]
-          const v = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
-          let s = `${v}勝`
-          if (membership.result_key !== "none") {
-            s += ` (${membership.result_key})`
-          }
-          return s
-        },
+        // label(tooltipItem, data) {
+        //   const chart_element = this
+        //   const __vm__ = chart_element._chart.config.__vm__
+        //   const membership = __vm__.info.memberships[tooltipItem.index]
+        //   const v = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+        //   let s = `${v}勝`
+        //   if (membership.result_key !== "none") {
+        //     s += ` (${membership.result_key})`
+        //   }
+        //   return s
+        // },
       },
-    },
-
-    // バーをクリックしたとき
-    onClick(event, chart_elements) {
-      const chart_instance = this
-      const __vm__ = chart_instance.config.__vm__
-
-      // 点にホバーできている状態でクリックしたらその点を使う
-      if (chart_elements.length >= 1) {
-        const chart_element = chart_elements[0]
-        const data = chart_element._chart.config.data
-        const labels = data.labels
-        const datasets = data.datasets
-        const label = labels[chart_element._index]
-        __vm__.bar_click_handle(label)
-      }
     },
   },
 }
@@ -158,7 +144,7 @@ const CHART_CONFIG_DEFAULT = {
 import chart_mod from './chart_mod.js'
 
 export default {
-  name: "three_stage_league_player_chart",
+  name: "custom_chart",
   mixins: [chart_mod],
   props: {
     info: { required: true },
@@ -170,19 +156,20 @@ export default {
   created() {
     this.chart_setup(CHART_CONFIG_DEFAULT)
     this._chart_config.data = this.info.data
+
+    if (this.info.scales_yAxes_ticks) {
+      this._chart_config.options.scales.yAxes[0].ticks = this.info.scales_yAxes_ticks
+    }
   },
   mounted() {
     this.chart_create()
   },
   methods: {
-    bar_click_handle(generation) {
-      this.self_window_open(`/script/three-stage-league?generation=${generation}`)
-    },
   },
 }
 </script>
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
-.three_stage_league_player_chart
+.custom_chart
 </style>

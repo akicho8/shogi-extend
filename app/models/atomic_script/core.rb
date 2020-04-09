@@ -69,10 +69,6 @@ module AtomicScript
         out << response_render_body(resp) || ""
       end
 
-      if Rails.env.development? || Rails.env.test?
-        out << h.tag.div(:class => "box") { params.to_html(:title => "params") }
-      end
-
       out
     end
 
