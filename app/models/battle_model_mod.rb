@@ -87,12 +87,7 @@ module BattleModelMod
     self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
 
     if AppConfig[:swars_tag_search_function]
-      self.meta_info = {
-        :header          => info.header.to_h,
-        # :detail_names    => info.header.sente_gote.collect { |e| Splitter.split(info.header["#{e}詳細"]) },
-        # :simple_names    => info.header.sente_gote.collect { |e| Splitter.pair_split(info.header[e]) },
-        # :skill_set_hash  => info.skill_set_hash,
-      }
+      self.meta_info = { header: info.header.to_h }
 
       self.defense_tag_list = ""
       self.attack_tag_list = ""
@@ -104,16 +99,6 @@ module BattleModelMod
       attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
       technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
       note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-
-      other_tag_list.add info.header["棋戦"]
-      other_tag_list.add info.header["持ち時間"]
-      other_tag_list.add tournament_list
-      other_tag_list.add Splitter.split(info.header["掲載"].to_s)
-      other_tag_list.add Splitter.split(info.header["備考"].to_s)
-      other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}詳細"]) }
-      other_tag_list.add info.header.sente_gote.flat_map { |e| Splitter.split(info.header["#{e}"])     }
-      other_tag_list.add place_list
-      other_tag_list.add info.header["手合割"]
     end
 
     unless battled_at
@@ -174,23 +159,6 @@ module BattleModelMod
       *note_tag_list,
       *other_tag_list,
     ]
-  end
-
-  if AppConfig[:swars_tag_search_function]
-    def place_list
-      v = meta_info[:header]["場所"].to_s
-      if v.start_with?("http")
-        return []
-      end
-      if md = v.match(/(.*)「(.*?)」/)
-        v = md.captures
-      end
-      Array(v).reject(&:blank?)
-    end
-
-    def tournament_list
-      Splitter.split(meta_info[:header]["棋戦詳細"].to_s)
-    end
   end
 
   # def display_turn
