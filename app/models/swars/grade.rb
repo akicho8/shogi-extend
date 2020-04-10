@@ -21,20 +21,10 @@ module Swars
       def setup(options = {})
         super
 
-        if true
-          # これなら新しい段位が生まれても GradeInfo と同期できる
-          GradeInfo.each do |e|
-            record = find_or_create_by(key: e.key)
-            record.priority = e.priority
-            record.save!
-          end
-        else
-          unless exists?
-            GradeInfo.each { |e| create!(key: e.key) }
-            if Rails.env.development?
-              tp self
-            end
-          end
+        GradeInfo.each do |e|
+          record = find_or_initialize_by(key: e.key)
+          record.priority = e.priority
+          record.save!
         end
       end
     end
@@ -59,6 +49,8 @@ module Swars
       @grade_info ||= GradeInfo.fetch(key)
     end
 
-    delegate :name, to: :grade_info
+    def name
+      key
+    end
   end
 end
