@@ -1,3 +1,11 @@
+# 使い方
+#
+#   module FrontendScript
+#     extend AtomicScript::ScriptGroup
+#   end
+#
+#   app/models/frontend_script/*_script.rb
+#
 module AtomicScript
   concern :ScriptGroup do
     # 保持しているスクリプトクラスたちを返す
