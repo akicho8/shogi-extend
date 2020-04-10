@@ -93,7 +93,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 外部リンク
 
-  direct :official_swars_battle do |battle, **options|
+  direct :official_swars_battle do |battle, options = {}|
     # options = {
     #   locale: "ja",
     # }.merge(options)
@@ -102,7 +102,7 @@ Rails.application.routes.draw do
     "https://shogiwars.heroz.jp/games/#{battle.key}"
   end
 
-  direct :swars_home do |user, **options|
+  direct :swars_home do |user, options = {}|
     options = {
       locale: "ja",
     }.merge(options)
@@ -110,14 +110,14 @@ Rails.application.routes.draw do
   end
 
   # 【需要】渡すURLをエスケープしてはいけない
-  direct :piyo_shogi_app do |url|
+  direct :piyo_shogi_app do |url, options = {}|
     if Rails.env.development?
       url = "http://wdoor.c.u-tokyo.ac.jp/shogi/LATEST//2016/09/24/wdoor+floodgate-600-10F+gpsfish_normal_1c+gps_l+20160924113005.csa"
     end
     "piyoshogi://?url=#{url}"
   end
 
-  direct :kento_app do |**options|
+  direct :kento_app do |options = {}|
     # if Rails.env.development?
     #   options[:kifu] = "https://www.shogi-extend.com/x/e63d5d2a3ccd460676a6b6265c1a0c2d.kif"
     # end
