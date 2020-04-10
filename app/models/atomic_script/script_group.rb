@@ -17,7 +17,7 @@ module AtomicScript
     # キーからクラスへの変換
     # find("foo-bar") => "Frontend::FooBarScript"
     def find(key)
-      "#{name}/#{key}_#{name_prefix}".underscore.classify.constantize
+      "#{name}/#{key}_#{name_prefix}".underscore.classify.safe_constantize
     end
 
     private

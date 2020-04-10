@@ -26,6 +26,9 @@ module ScriptsControllerMod
 
   def load_object
     klass = script_group.find(params[:id])
+    unless klass
+      raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
+    end
     @script = klass.new(params.merge(:view_context => view_context, :controller => self))
   end
 
