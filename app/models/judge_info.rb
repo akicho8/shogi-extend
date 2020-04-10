@@ -1,9 +1,9 @@
 class JudgeInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: :win,  name: "勝ち",     wb_mark: "○" },
-    { key: :lose, name: "負け",     wb_mark: "●" },
-    { key: :draw, name: "引き分け", wb_mark: "─" },
+    { key: :win,  name: "勝ち",     ox_mark: "○" },
+    { key: :lose, name: "負け",     ox_mark: "●" },
+    { key: :draw, name: "引き分け", ox_mark: "─" },
   ]
 
   def swars_memberships
@@ -12,9 +12,9 @@ class JudgeInfo
 
   def flip
     if key == :draw
-      self.class.fetch(:draw)
-    else
-      self.class.fetch(key == :win ? :lose : :win)
+      return self
     end
+
+    self.class.fetch(key == :win ? :lose : :win)
   end
 end

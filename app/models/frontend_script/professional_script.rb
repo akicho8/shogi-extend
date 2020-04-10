@@ -57,7 +57,7 @@ module FrontendScript
             name = user_info["名前"].to_s.remove(/\s*\<.*?\>/)
           end
           row[:user] = { name: name, key: user.key }
-          row[:judge] = user.memberships.joins(:battle).order(Swars::Battle.arel_table[:battled_at]).collect { |e| e.judge_info.wb_mark }.join
+          row[:judge] = user.memberships.joins(:battle).order(Swars::Battle.arel_table[:battled_at]).collect { |e| e.judge_info.ox_mark }.join
         end
       end
 
