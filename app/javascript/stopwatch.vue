@@ -729,7 +729,7 @@ export default {
     },
 
     tweet_url() {
-      return this.tweet_url_for(this.tweet_body)
+      return this.tweet_intent_url(this.tweet_body)
     },
 
     tweet_body() {

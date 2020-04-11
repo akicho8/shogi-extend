@@ -47,7 +47,7 @@
       - url = polymorphic_path([:new, ns_prefix, current_single_key])
       b-button(tag="a" :href="'#{url}'" icon-left="clipboard-arrow-up-outline") 投稿
 
-  = render partial: "parmalink"
+  = render partial: "permalink"
 
   - if AppConfig[:help_function]
     .columns

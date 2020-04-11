@@ -64,7 +64,7 @@ window.Adapter = Vue.extend({
 
     piyo_shogi_app_with_turn_url() {
       if (this.record) {
-        const url = `${window.location.origin}${this.record.show_path}.kif`
+        const url = this.as_full_url(`${this.record.show_path}.kif`)
         const num = this.record.display_turn
         const flip = this.record.flip
         return `piyoshogi://?url=${url}&num=${num}`
@@ -77,6 +77,10 @@ window.Adapter = Vue.extend({
       } else {
         return "https://www.kento-shogi.com/"
       }
+    },
+
+    tweet_body() {
+      return this.as_full_url(this.record.modal_on_index_path)
     },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
@@ -121,7 +125,7 @@ window.Adapter = Vue.extend({
     },
 
     tweet_handle() {
-      this.record_fetch(() => this.self_window_open(this.record.tweet_window_url))
+      this.record_fetch(() => this.self_window_open(this.tweet_intent_url(this.tweet_body)))
     },
 
     validate_handle() {

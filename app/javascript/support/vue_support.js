@@ -93,10 +93,17 @@ export default {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
     },
 
-    tweet_url_for(text) {
+    tweet_intent_url(text) {
       if (text) {
         return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
       }
+    },
+
+    as_full_url(url) {
+      if (url.match(/^http/)) {
+        alert(`すでにフルURL化されている : ${url}`)
+      }
+      return window.location.origin + url
     },
 
     ////////////////////////////////////////////////////////////////////////////////

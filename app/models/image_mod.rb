@@ -40,33 +40,16 @@ module ImageMod
     end
   end
 
-  def modal_on_index_url(params = {})
+  def modal_on_index_path(params = {})
     params = {
       modal_id: to_param,
+      only_path: true,
     }.merge(params)
 
     params[:turn] = adjust_turn(params[:turn])
     params[:flip] = adjust_flip(params[:flip])
 
-    Rails.application.routes.url_helpers.full_url_for([self.class, params])
-  end
-
-  def tweet_show_url(params = {})
-    Rails.application.routes.url_helpers.full_url_for([self, params])
-  end
-
-  def tweet_body(options = {})
-    out = []
-    out << title
-    out << description
-    # out << (options[:url] || tweet_show_url) # Twitter側の仕様でURLは最後にすることでURLの表示がツイート内容から消える
-    out << (options[:url] || modal_on_index_url) # Twitter側の仕様でURLは最後にすることでURLの表示がツイート内容から消える
-    out.reject(&:blank?).join("\n")
-  end
-
-  # FIXME: これは js の方に書くべき
-  def tweet_window_url(options = {})
-    "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_body(options))}"
+    Rails.application.routes.url_helpers.url_for([self.class, params])
   end
 
   private

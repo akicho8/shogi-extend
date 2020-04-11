@@ -115,7 +115,7 @@ export default {
     },
 
     piyo_shogi_app_with_turn_url(record) {
-      const url = `${window.location.origin}${record.show_path}.kif`
+      const url = this.as_full_url(`${record.show_path}.kif`)
       const num = this.trick_start_turn_for(record)
       const flip = record.flip
       return `piyoshogi://?url=${url}&num=${num}`

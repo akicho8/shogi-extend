@@ -39,7 +39,7 @@ ruby:
 
           kif_copy_button(@click="kifu_copy_handle('kif')")
           sp_show_button(@click="board_show_handle")
-          tweet_button(@click="tweet_handle" :href="record ? record.tweet_window_url : ''")
+          tweet_button(@click="tweet_handle" :href="record ? tweet_intent_url(tweet_body) : ''")
 
   template(v-if="!bs_error")
 

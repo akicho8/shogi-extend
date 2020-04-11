@@ -233,7 +233,7 @@ export default {
     },
 
     permalink_url() {
-      const url = new URL(this.record.modal_on_index_url)
+      const url = new URL(this.as_full_url(this.record.modal_on_index_path))
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("flip", this.new_flip)
       return url.toString()
@@ -260,7 +260,7 @@ export default {
     },
 
     tweet_url() {
-      return this.tweet_url_for(this.permalink_url)
+      return this.tweet_intent_url(this.permalink_url)
     },
   },
 }

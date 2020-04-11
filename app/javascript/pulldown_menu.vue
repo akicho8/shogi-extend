@@ -2,7 +2,7 @@
 b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left' : 'is-bottom-left'")
   b-button(slot="trigger" icon-left="menu" size="is-small")
 
-  b-dropdown-item(v-if="new_permalink_url" :href="tweet_url_for(new_permalink_url)")
+  b-dropdown-item(v-if="new_permalink_url" :href="tweet_intent_url(new_permalink_url)")
     b-icon(icon="twitter" size="is-small" type="is-info")
     | ツイート {{turn_mark}}
 
@@ -112,27 +112,6 @@ b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left
       | record.flip: {{record.flip}}
       | new_flip: {{new_flip}}
       | new_permalink_url: {{new_permalink_url}}
-
-  //- // @click.stop にするとURLをコピーしたあとプルダウンが閉じなくなる
-  //- template(v-if="record.modal_on_index_url")
-  //-   b-dropdown-item()
-  //-     a(@click="clipboard_copy({text: record.modal_on_index_url})")
-  //-       b-icon(icon="clipboard-plus-outline" size="is-small")
-  //-       | URLをコピー
-  //-
-  //- template(v-if="in_modal_p")
-  //-   template(v-if="record.modal_on_index_url")
-  //-     template(v-if="turn_offset != null")
-  //-       b-dropdown-item()
-  //-         a(@click="clipboard_copy({text: `${record.modal_on_index_url}&turn=${turn_offset}`})")
-  //-           b-icon(icon="clipboard-plus-outline" size="is-small")
-  //-           | URLをコピー \#{{turn_offset}}
-
-  //- template(v-if="record.official_swars_battle_url")
-  //-   b-dropdown-item()
-  //-     a(:href="record.official_swars_battle_url" target="_self")
-  //-       b-icon(icon="link" size="is-small")
-  //-       | ウォーズに飛ぶ
 </template>
 
 <script>
@@ -140,7 +119,7 @@ export default {
   props: {
     record:        { required: true },
     in_modal_p:    { },
-    permalink_url: { },
+    permalink_url: { required: false, },
     turn_offset:   { },
     flip:          { }, // かならず record.flip を渡してもらう
   },
@@ -152,9 +131,10 @@ export default {
   },
 
   computed: {
+    // 棋譜検索一覧では modal_on_index_path を使う
+    // sp_show では渡された permalink_url を使う
     new_permalink_url() {
-      // sp_show で作られた permalink_url を使うが、なければコントローラーで埋められたのを使う
-      return this.permalink_url || this.record.modal_on_index_url
+      return this.permalink_url || this.as_full_url(this.record.modal_on_index_path)
     },
 
     new_flip() {

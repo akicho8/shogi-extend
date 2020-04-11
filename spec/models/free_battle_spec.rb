@@ -97,8 +97,8 @@ RSpec.describe FreeBattle, type: :model do
       assert { record.to_dynamic_png.include?("PNG") }
     end
 
-    it "modal_on_index_url" do
-      assert { record.modal_on_index_url == "http://localhost:3000/x?flip=false&modal_id=free_battle1&turn=5" }
+    it "modal_on_index_path" do
+      assert { record.modal_on_index_path == "/x?flip=false&modal_id=free_battle1&turn=5" }
     end
 
     it "adjust_turn" do

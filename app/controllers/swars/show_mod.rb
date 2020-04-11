@@ -77,7 +77,7 @@ module Swars
       flip, memberships = e.left_right_memberships(current_swars_user)
 
       a[:flip] = flip
-      a[:modal_on_index_url] = e.modal_on_index_url(flip: flip)
+      a[:modal_on_index_path] = e.modal_on_index_path(flip: flip)
 
       # a[:time_chart_params] = e.time_chart_params
 

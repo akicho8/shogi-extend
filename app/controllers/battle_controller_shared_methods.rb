@@ -331,7 +331,6 @@ module BattleControllerSharedMethods
           :player_info,
           :title,
           :description,
-          :modal_on_index_url,
         ],
         ).tap do |a|
 
