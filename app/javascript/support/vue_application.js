@@ -114,6 +114,14 @@ export default {
         component: sp_show,
       })
     },
+
+    turn_or_display_turn(record) {
+      if ("turn" in record) {
+        return record.turn
+      }
+
+      return record.display_turn
+    },
   },
 
   computed: {

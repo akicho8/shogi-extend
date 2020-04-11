@@ -363,7 +363,7 @@ module BattleControllerSharedMethods
         return kento_app_url(args)
       end
 
-      # 常にSFENをURLパラメータとして生める
+      # 常にSFENをURLパラメータとして埋める
       kento_app_url(record.sfen_info.kento_app_query_hash)
     end
   end

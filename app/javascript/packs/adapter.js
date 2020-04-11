@@ -60,6 +60,25 @@ window.Adapter = Vue.extend({
       }
     },
 
+    //////////////////////////////////////////////////////////////////////////////// piyoshogi
+
+    piyo_shogi_app_with_turn_url() {
+      if (this.record) {
+        const url = `${window.location.origin}${this.record.show_path}.kif`
+        const num = this.turn_or_display_turn(this.record)
+        const flip = this.record.flip
+        return `piyoshogi://?url=${url}&num=${num}`
+      }
+    },
+
+    kento_app_with_turn_url() {
+      if (this.record) {
+        return `${this.record.kento_app_url}#${this.turn_or_display_turn(this.record)}`
+      } else {
+        return "https://www.kento-shogi.com/"
+      }
+    },
+
     //////////////////////////////////////////////////////////////////////////////// ls_support
 
     ls_key() {

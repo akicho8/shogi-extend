@@ -72,10 +72,10 @@
         | new_flip: {{new_flip}}
 
     footer.modal-card-foot
-      piyo_shogi_button(:icon_only="true" :href="record.piyo_shogi_app_url")
-      kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
+      piyo_shogi_button(:icon_only="true" :href="piyo_shogi_app_with_turn_url")
+      kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="kento_app_with_turn_url" :turn="turn_offset")
       kif_copy_button(:icon_only="true" @click="kif_clipboard_copy({kc_path: record.show_path})")
-      tweet_button(tag="a" :href="tweet_url" :turn="turn_offset")
+      tweet_button(tag="a" :href="tweet_url" :turn="turn_offset" v-if="false")
       png_dl_button(tag="a" :href="png_dl_url" :turn="turn_offset")
 
       pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
@@ -193,13 +193,7 @@ export default {
       if (this.board_show_type === "last") {
         return record.turn_max
       }
-
-      // modal_record の場合
-      if ("turn" in record) {
-        return record.turn
-      }
-
-      return record.display_turn
+      return this.turn_or_display_turn(record)
     },
 
     // sp_show_time_chart でチャートをクリックしたときに変更する
@@ -252,6 +246,17 @@ export default {
       params.set("turn", this.turn_offset)
       params.set("flip", this.new_flip)
       return `${this.record.show_path}.png?${params}`
+    },
+
+    piyo_shogi_app_with_turn_url() {
+      const url = `${window.location.origin}${this.record.show_path}.kif`
+      const num = this.turn_offset
+      const flip = this.new_flip
+      return `piyoshogi://?url=${url}&num=${num}`
+    },
+
+    kento_app_with_turn_url() {
+      return `${this.record.kento_app_url}#${this.turn_offset}`
     },
 
     tweet_url() {

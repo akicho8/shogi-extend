@@ -111,12 +111,27 @@ export default {
       if (this.board_show_type === "last") {
         return record.turn_max
       }
+      return this.turn_or_display_turn(record)
+    },
 
-      if ("turn" in record) {
-        return record.turn
-      }
+    piyo_shogi_app_with_turn_url(record) {
+      const url = `${window.location.origin}${record.show_path}.kif`
+      const num = this.trick_start_turn_for(record)
+      const flip = record.flip
+      return `piyoshogi://?url=${url}&num=${num}`
 
-      return record.display_turn
+      // 本当は次のようにURLをエスケープするのが正しい
+      // しかし、 そうすると「ぴよ将棋」で読み込めない
+      //
+      // const url = new URL("piyoshogi://")
+      // url.searchParams.set("url", url)
+      // url.searchParams.set("num", num)
+      // url.searchParams.set("flip", this.new_flip)
+      // return url.toString()
+    },
+
+    kento_app_with_turn_url(record) {
+      return `${record.kento_app_url}#${this.trick_start_turn_for(record)}`
     },
   },
 
