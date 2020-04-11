@@ -37,7 +37,7 @@ module Swars
 
       if Rails.env.development? || Rails.env.test?
         if Grade.count.zero?
-          raise "Swars.setup してください"
+          Swars.setup
         end
       end
 

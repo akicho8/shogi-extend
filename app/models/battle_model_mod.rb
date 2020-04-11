@@ -240,6 +240,14 @@ module BattleModelMod
     }
   end
 
+  def kento_app_path
+    Rails.application.routes.url_helpers.kento_app_path(sfen_info.kento_app_query_hash)
+  end
+
+  def kento_app_url
+    Rails.application.routes.url_helpers.kento_app_url(sfen_info.kento_app_query_hash)
+  end
+
   concerning :KifuConvertMethods do
     # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
     def to_cached_kifu(key)

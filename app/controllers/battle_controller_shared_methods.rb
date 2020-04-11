@@ -331,6 +331,7 @@ module BattleControllerSharedMethods
           :player_info,
           :title,
           :description,
+          :kento_app_path,
         ],
         ).tap do |a|
 
@@ -338,23 +339,6 @@ module BattleControllerSharedMethods
         if editable_record?(e) || Rails.env.development?
           a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
         end
-
-        a[:kento_app_path]      = kento_app_url_switch(e)
-      end
-    end
-
-    # KENTOに何を渡すか
-    def kento_app_url_switch(record, options = {})
-      # # KIFを渡す
-      # if AppConfig[:kento_params_use_kifu_param_only]
-      #   return kento_app_path(kifu: full_url_for([record, {format: "kif", **options}]))
-      # end
-
-      # 常にSFENをURLパラメータとして埋める
-      if options[:only_path]
-        kento_app_path(record.sfen_info.kento_app_query_hash)
-      else
-        kento_app_url(record.sfen_info.kento_app_query_hash)
       end
     end
   end
