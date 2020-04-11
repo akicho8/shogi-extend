@@ -23,7 +23,7 @@ export default {
       if (this.iframe_p) {
         // iframeモード
       } else {
-        // 通常の詳細
+        // 通常の詳細(TODO: iframeの場合は表示しない)
         this.sp_show_modal({record: this.record})
       }
     }
