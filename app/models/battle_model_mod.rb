@@ -240,12 +240,25 @@ module BattleModelMod
     }
   end
 
-  def kento_app_path
-    Rails.application.routes.url_helpers.kento_app_path(sfen_info.kento_app_query_hash)
-  end
+  concerning :PathMethods do
+    def kento_app_path
+      h.kento_app_path(sfen_info.kento_app_query_hash, display_turn)
+    end
 
-  def kento_app_url
-    Rails.application.routes.url_helpers.kento_app_url(sfen_info.kento_app_query_hash)
+    def kento_app_url
+      h.kento_app_url(sfen_info.kento_app_query_hash, display_turn)
+    end
+
+    def piyo_shogi_app_url
+      url = h.full_url_for([self, format: :kif])
+      h.piyo_shogi_app_url(url, num: display_turn)
+    end
+
+    private
+
+    def h
+      @h ||= Rails.application.routes.url_helpers
+    end
   end
 
   concerning :KifuConvertMethods do

@@ -105,7 +105,10 @@ export default {
     },
 
     kento_full_url(record, turn, flip) {
-      return `https://www.kento-shogi.com${record.kento_app_path}#${turn}` // TODO: flip つけたい
+      const full = "https://www.kento-shogi.com" + record.kento_app_path
+      const url = new URL(full)
+      url.hash = turn
+      return url.toString()
     },
 
     as_full_url(path) {

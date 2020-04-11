@@ -101,12 +101,12 @@ Rails.application.routes.draw do
     "https://shogiwars.heroz.jp/users/mypage/#{user.user_key}"
   end
 
-  direct :piyo_shogi_app do |url, options = {}|
-    "piyoshogi://?url=#{url}"   # 渡すURLをエスケープするとぴよ将棋で読めなくなるので to_query してはいけない
+  direct :piyo_shogi_app do |url, options|
+    "piyoshogi://?url=#{url}&#{options.to_query}" # 渡すURLをエスケープするとぴよ将棋で読めなくなるので to_query してはいけない
   end
 
-  direct :kento_app do |options = {}|
-    "https://www.kento-shogi.com/?#{options.to_query}"
+  direct :kento_app do |options, turn|
+    "https://www.kento-shogi.com/?#{options.to_query}##{turn}"
   end
 
   direct :google_search do |query|
