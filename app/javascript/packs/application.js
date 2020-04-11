@@ -11,7 +11,7 @@ import Rails from "rails-ujs"
 Rails.start()
 
 import "modulable_crud.js"
-import "rails_env_set.js"
+import "global_variable_set.js"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
