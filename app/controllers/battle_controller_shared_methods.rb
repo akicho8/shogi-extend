@@ -344,24 +344,18 @@ module BattleControllerSharedMethods
     end
 
     # KENTOに何を渡すか
-    def kento_app_url_switch(record)
-      # KIFを渡す
-      if AppConfig[:kento_params_use_kifu_param_only]
-        return kento_app_path(kifu: full_url_for([record, format: "kif"]))
-      end
-
-      # 平手から始まっているなら kif を渡す
-      if false
-        if record.sfen_body.start_with?("position startpos")
-          args = { kifu: full_url_for([record, format: "kif"]) }
-        else
-          args = record.sfen_info.kento_app_query_hash
-        end
-        return kento_app_path(args)
-      end
+    def kento_app_url_switch(record, options = {})
+      # # KIFを渡す
+      # if AppConfig[:kento_params_use_kifu_param_only]
+      #   return kento_app_path(kifu: full_url_for([record, {format: "kif", **options}]))
+      # end
 
       # 常にSFENをURLパラメータとして埋める
-      kento_app_path(record.sfen_info.kento_app_query_hash)
+      if options[:only_path]
+        kento_app_path(record.sfen_info.kento_app_query_hash)
+      else
+        kento_app_url(record.sfen_info.kento_app_query_hash)
+      end
     end
   end
 
