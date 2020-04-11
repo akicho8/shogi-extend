@@ -60,6 +60,26 @@ window.Adapter = Vue.extend({
       }
     },
 
+    //////////////////////////////////////////////////////////////////////////////// piyoshogi
+
+    piyo_shogi_app_with_params_url() {
+      if (this.record) {
+        return this.piyo_shogi_full_url(this.record, this.record.display_turn, this.record.flip)
+      }
+    },
+
+    kento_app_with_params_url() {
+      if (this.record) {
+        return this.kento_full_url(this.record, this.record.display_turn, this.record.flip)
+      }
+    },
+
+    tweet_body() {
+      if (this.record) {
+        return this.as_full_url(this.record.modal_on_index_path)
+      }
+    },
+
     //////////////////////////////////////////////////////////////////////////////// ls_support
 
     ls_key() {
@@ -90,11 +110,11 @@ window.Adapter = Vue.extend({
 
   methods: {
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.self_window_open(this.record.piyo_shogi_app_url))
+      this.record_fetch(() => this.self_window_open(this.piyo_shogi_app_with_params_url))
     },
 
     kento_open_handle() {
-      this.record_fetch(() => this.other_window_open(this.record.kento_app_url))
+      this.record_fetch(() => this.other_window_open(this.kento_app_with_params_url))
     },
 
     kifu_copy_handle(kifu_type) {
@@ -102,7 +122,7 @@ window.Adapter = Vue.extend({
     },
 
     tweet_handle() {
-      this.record_fetch(() => this.self_window_open(this.record.tweet_window_url))
+      this.record_fetch(() => this.self_window_open(this.tweet_intent_url(this.tweet_body)))
     },
 
     validate_handle() {

@@ -93,9 +93,31 @@ export default {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
     },
 
-    tweet_url_for(text) {
+    tweet_intent_url(text) {
       if (text) {
         return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+      }
+    },
+
+    piyo_shogi_full_url(record, turn, flip) {
+      const url = this.as_full_url(record.show_path) + ".kif"
+      return `piyoshogi://?url=${url}&num=${turn}` // TODO: flip つけたい
+    },
+
+    kento_full_url(record, turn, flip) {
+      return `https://www.kento-shogi.com${record.kento_app_path}#${turn}` // TODO: flip つけたい
+    },
+
+    as_full_url(path) {
+      if (path) {
+        this.assert_path(path)
+        return window.location.origin + path
+      }
+    },
+
+    assert_path(path) {
+      if (path.match(/^http/)) {
+        alert(`すでにフルURL化されている : ${path}`)
       }
     },
 

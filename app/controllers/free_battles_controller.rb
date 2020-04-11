@@ -206,8 +206,8 @@ class FreeBattlesController < ApplicationController
     def js_record_for(e)
       a = super
 
-      a[:tweet_body] = e.tweet_body
-      a[:tweet_window_url] = e.tweet_window_url
+      # a[:tweet_body] = e.tweet_body
+      # a[:tweet_window_url] = e.tweet_window_url
 
       a[:saturn_key] = e.saturn_key
 
@@ -222,7 +222,7 @@ class FreeBattlesController < ApplicationController
       a[:new_and_copy_url] = url_for([:new, ns_prefix, current_single_key, source_id: e.to_param])
 
       a[:flip] = false
-      a[:modal_on_index_url] = e.modal_on_index_url(flip: false)
+      a[:modal_on_index_path] = e.modal_on_index_path(flip: false)
 
       a
     end

@@ -72,10 +72,10 @@
         | new_flip: {{new_flip}}
 
     footer.modal-card-foot
-      piyo_shogi_button(:icon_only="true" :href="record.piyo_shogi_app_url")
-      kento_button(:icon_only="true" tag="a" size="is-small" @click.stop="" :href="`${record.kento_app_url}#${turn_offset}`" :turn="turn_offset")
-      kif_copy_button(:icon_only="true" @click="kif_clipboard_copy({kc_path: record.show_path})")
-      tweet_button(tag="a" :href="tweet_url" :turn="turn_offset")
+      piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
+      kento_button(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+      kif_copy_button(@click="kif_clipboard_copy({kc_path: record.show_path})")
+      tweet_button(tag="a" :href="tweet_url" :turn="turn_offset" v-if="false")
       png_dl_button(tag="a" :href="png_dl_url" :turn="turn_offset")
 
       pulldown_menu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
@@ -193,12 +193,6 @@ export default {
       if (this.board_show_type === "last") {
         return record.turn_max
       }
-
-      // modal_record の場合
-      if ("turn" in record) {
-        return record.turn
-      }
-
       return record.display_turn
     },
 
@@ -239,7 +233,7 @@ export default {
     },
 
     permalink_url() {
-      const url = new URL(this.record.modal_on_index_url)
+      const url = new URL(this.as_full_url(this.record.modal_on_index_path))
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("flip", this.new_flip)
       return url.toString()
@@ -254,8 +248,16 @@ export default {
       return `${this.record.show_path}.png?${params}`
     },
 
+    piyo_shogi_app_with_params_url() {
+      return this.piyo_shogi_full_url(this.record, this.turn_offset, this.new_flip)
+    },
+
+    kento_app_with_params_url() {
+      return this.kento_full_url(this.record, this.turn_offset, this.new_flip)
+    },
+
     tweet_url() {
-      return this.tweet_url_for(this.permalink_url)
+      return this.tweet_intent_url(this.permalink_url)
     },
   },
 }

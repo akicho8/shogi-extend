@@ -4,8 +4,6 @@
       | ☗
     span.name(v-if="!icon_only")
       | KENTO
-    span.turn(v-if="turn != null")
-      | \#{{turn}}
 </template>
 
 <script>
@@ -13,7 +11,6 @@
 export default {
   name: "kento_button",
   props: {
-    turn: { required: false },
     icon_only: { default: false, },
   },
   methods: {
@@ -41,9 +38,6 @@ export default {
 
   .name
     color: hsl(218, 23%, 23%)
-    margin-left: 0.3rem
-
-  .turn
     margin-left: 0.3rem
 
   @keyframes rotation

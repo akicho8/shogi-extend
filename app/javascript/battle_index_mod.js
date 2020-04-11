@@ -111,12 +111,15 @@ export default {
       if (this.board_show_type === "last") {
         return record.turn_max
       }
-
-      if ("turn" in record) {
-        return record.turn
-      }
-
       return record.display_turn
+    },
+
+    piyo_shogi_app_with_params_url(record) {
+      return this.piyo_shogi_full_url(record, this.trick_start_turn_for(record), record.flip)
+    },
+
+    kento_app_with_params_url(record) {
+      return this.kento_full_url(record, this.trick_start_turn_for(record), record.flip)
     },
   },
 

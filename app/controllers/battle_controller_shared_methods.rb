@@ -331,7 +331,6 @@ module BattleControllerSharedMethods
           :player_info,
           :title,
           :description,
-          :modal_on_index_url,
         ],
         ).tap do |a|
 
@@ -340,9 +339,7 @@ module BattleControllerSharedMethods
           a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
         end
 
-        a[:piyo_shogi_app_url] = piyo_shogi_app_url(full_url_for([e, format: "kif"]))
-        a[:kento_app_url]      = kento_app_url_switch(e)
-
+        a[:kento_app_path]      = kento_app_url_switch(e)
       end
     end
 
@@ -350,7 +347,7 @@ module BattleControllerSharedMethods
     def kento_app_url_switch(record)
       # KIFを渡す
       if AppConfig[:kento_params_use_kifu_param_only]
-        return kento_app_url(kifu: full_url_for([record, format: "kif"]))
+        return kento_app_path(kifu: full_url_for([record, format: "kif"]))
       end
 
       # 平手から始まっているなら kif を渡す
@@ -360,11 +357,11 @@ module BattleControllerSharedMethods
         else
           args = record.sfen_info.kento_app_query_hash
         end
-        return kento_app_url(args)
+        return kento_app_path(args)
       end
 
-      # 常にSFENをURLパラメータとして生める
-      kento_app_url(record.sfen_info.kento_app_query_hash)
+      # 常にSFENをURLパラメータとして埋める
+      kento_app_path(record.sfen_info.kento_app_query_hash)
     end
   end
 
