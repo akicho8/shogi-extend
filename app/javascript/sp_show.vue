@@ -249,14 +249,11 @@ export default {
     },
 
     piyo_shogi_app_with_turn_url() {
-      const url = `${window.location.origin}${this.record.show_path}.kif`
-      const num = this.turn_offset
-      const flip = this.new_flip
-      return `piyoshogi://?url=${url}&num=${num}`
+      return this.piyo_shogi_full_url(this.record, this.turn_offset, this.new_flip)
     },
 
     kento_app_with_turn_url() {
-      return `${this.record.kento_app_url}#${this.turn_offset}`
+      return this.kento_full_url(this.record, this.turn_offset, this.new_flip)
     },
 
     tweet_url() {

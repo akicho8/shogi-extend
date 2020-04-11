@@ -99,11 +99,26 @@ export default {
       }
     },
 
-    as_full_url(url) {
-      if (url.match(/^http/)) {
-        alert(`すでにフルURL化されている : ${url}`)
+    piyo_shogi_full_url(record, turn, flip) {
+      const url = this.as_full_url(record.show_path) + ".kif"
+      return `piyoshogi://?url=${url}&num=${turn}` // TODO: flip つけたい
+    },
+
+    kento_full_url(record, turn, flip) {
+      return `https://www.kento-shogi.com${record.kento_app_path}#${turn}` // TODO: flip つけたい
+    },
+
+    as_full_url(path) {
+      if (path) {
+        this.assert_path(path)
+        return window.location.origin + path
       }
-      return window.location.origin + url
+    },
+
+    assert_path(path) {
+      if (path.match(/^http/)) {
+        alert(`すでにフルURL化されている : ${path}`)
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////

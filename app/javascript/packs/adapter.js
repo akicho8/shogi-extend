@@ -64,23 +64,20 @@ window.Adapter = Vue.extend({
 
     piyo_shogi_app_with_turn_url() {
       if (this.record) {
-        const url = this.as_full_url(`${this.record.show_path}.kif`)
-        const num = this.record.display_turn
-        const flip = this.record.flip
-        return `piyoshogi://?url=${url}&num=${num}`
+        return this.piyo_shogi_full_url(this.record, this.record.display_turn, this.record.flip)
       }
     },
 
     kento_app_with_turn_url() {
       if (this.record) {
-        return `${this.record.kento_app_url}#${this.record.display_turn}`
-      } else {
-        return "https://www.kento-shogi.com/"
+        return this.kento_full_url(this.record, this.record.display_turn, this.record.flip)
       }
     },
 
     tweet_body() {
-      return this.as_full_url(this.record.modal_on_index_path)
+      if (this.record) {
+        return this.as_full_url(this.record.modal_on_index_path)
+      }
     },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
@@ -113,11 +110,11 @@ window.Adapter = Vue.extend({
 
   methods: {
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.self_window_open(this.record.piyo_shogi_app_url))
+      this.record_fetch(() => this.self_window_open(this.piyo_shogi_app_with_turn_url))
     },
 
     kento_open_handle() {
-      this.record_fetch(() => this.other_window_open(this.record.kento_app_url))
+      this.record_fetch(() => this.other_window_open(this.kento_app_with_turn_url))
     },
 
     kifu_copy_handle(kifu_type) {
