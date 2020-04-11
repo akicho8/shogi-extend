@@ -254,7 +254,7 @@ module BattleModelMod
       h.piyo_shogi_app_url(url, num: display_turn)
     end
 
-    private
+    attr_accessor :h
 
     def h
       @h ||= Rails.application.routes.url_helpers
