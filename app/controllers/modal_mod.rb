@@ -48,7 +48,7 @@ module ModalMod
       # 明示的に turn が指定されているときのみ設定
       # turn は sp_show.vue で拾う
       if v = current_turn
-        a[:turn] = e.adjust_turn(v)
+        a[:display_turn] = e.adjust_turn(v)
       end
 
       if !current_flip.nil?
