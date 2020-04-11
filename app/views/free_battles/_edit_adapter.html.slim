@@ -31,11 +31,11 @@ ruby:
 
       template(v-if="!bs_error")
         .buttons.are-small
-          piyo_shogi_button(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_turn_url")
+          piyo_shogi_button(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
 
           / remote fetch が終わる前に href="" に対して遷移しようとするため .prevent が必要
           / なぜ href で URL を入れるのか？ → 長押しで別タブで飛びたいため
-          kento_button(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_turn_url")
+          kento_button(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
 
           kif_copy_button(@click="kifu_copy_handle('kif')")
           sp_show_button(@click="board_show_handle")

@@ -94,24 +94,15 @@ Rails.application.routes.draw do
   ################################################################################ 外部リンク
 
   direct :official_swars_battle do |battle, options = {}|
-    # options = {
-    #   locale: "ja",
-    # }.merge(options)
-    #
-    # "https://shogiwars.heroz.jp/games/#{battle.key}?#{options.to_query}"
     "https://shogiwars.heroz.jp/games/#{battle.key}"
   end
 
   direct :swars_home do |user, options = {}|
-    options = {
-      locale: "ja",
-    }.merge(options)
-    "https://shogiwars.heroz.jp/users/mypage/#{user.user_key}?#{options.to_query}"
+    "https://shogiwars.heroz.jp/users/mypage/#{user.user_key}"
   end
 
-  # 【需要】渡すURLをエスケープしてはいけない
   direct :piyo_shogi_app do |url, options = {}|
-    "piyoshogi://?url=#{url}"
+    "piyoshogi://?url=#{url}"   # 渡すURLをエスケープするとぴよ将棋で読めなくなるので to_query してはいけない
   end
 
   direct :kento_app do |options = {}|
@@ -127,7 +118,6 @@ Rails.application.routes.draw do
   end
 
   direct :twitter_search do |query|
-    # "https://search.yahoo.co.jp/realtime/search?p=#{query}&ei=UTF-8"
     "https://twitter.com/search?q=#{query}"
   end
 

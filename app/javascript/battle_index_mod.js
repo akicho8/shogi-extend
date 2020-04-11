@@ -114,11 +114,11 @@ export default {
       return record.display_turn
     },
 
-    piyo_shogi_app_with_turn_url(record) {
+    piyo_shogi_app_with_params_url(record) {
       return this.piyo_shogi_full_url(record, this.trick_start_turn_for(record), record.flip)
     },
 
-    kento_app_with_turn_url(record) {
+    kento_app_with_params_url(record) {
       return this.kento_full_url(record, this.trick_start_turn_for(record), record.flip)
     },
   },
