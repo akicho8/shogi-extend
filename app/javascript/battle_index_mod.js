@@ -111,7 +111,7 @@ export default {
       if (this.board_show_type === "last") {
         return record.turn_max
       }
-      return this.turn_or_display_turn(record)
+      return record.display_turn
     },
 
     piyo_shogi_app_with_turn_url(record) {

@@ -193,7 +193,7 @@ export default {
       if (this.board_show_type === "last") {
         return record.turn_max
       }
-      return this.turn_or_display_turn(record)
+      return record.display_turn
     },
 
     // sp_show_time_chart でチャートをクリックしたときに変更する
