@@ -26,10 +26,6 @@ module KifShowMod
   def kif_data_send
     text_body = current_record.to_cached_kifu(params[:format])
 
-    if as_b(params[:copy_trigger])
-      slack_message(key: "#{params[:format]}コピー", body: current_record.title)
-    end
-
     if current_body_encode == :sjis
       text_body = text_body.tosjis
     end

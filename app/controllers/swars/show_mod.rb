@@ -37,40 +37,6 @@ module Swars
       end
     end
 
-    # def js_show_options
-    #   super.merge({
-    #       time_chart_params: {
-    #         type: "line",
-    #         data: {
-    #           labels: (1..current_record.turn_max).to_a,
-    #           datasets: current_record.memberships.collect.with_index { |e, i|
-    #             {
-    #               label: e.name_with_grade,
-    #               data: e.time_chart_xy_list,
-    #               borderColor: PaletteInfo[i].border_color,
-    #               backgroundColor: PaletteInfo[i].background_color,
-    #               borderWidth: 3,
-    #               fill: true,
-    #             }
-    #           },
-    #         },
-    #         options: {
-    #           # https://misc.0o0o.org/chartjs-doc-ja/general/responsive.html
-    #           # responsive: true,
-    #           # maintainAspectRatio: true,
-    #           # elements: {
-    #           #   line: {
-    #           #     tension: 0, # ベジェ曲線無効
-    #           #   },
-    #           # },
-    #           # animation: {
-    #           #   duration: 0, # 一般的なアニメーションの時間
-    #           # },
-    #         },
-    #       },
-    #     })
-    # end
-
     def js_record_for(e)
       a = super
 
