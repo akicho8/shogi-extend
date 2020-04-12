@@ -138,19 +138,18 @@ module Swars
 
           keys = []
           (params[:page_max] || 1).times do |i|
-            list = []
+            page_keys = []
             unless params[:dry_run]
-              list = Agent::Index.fetch(params.merge(page_index: i))
+              page_keys = Agent::Index.fetch(params.merge(page_index: i))
             end
             sleep_on(params)
 
-            page_keys = list.collect { |e| e[:key] }
             keys += page_keys
 
             # アクセス数を減らすために10件未満なら終了する
             if page_keys.size < Agent::Index.items_per_page
               if params[:verbose]
-                tp "#{page_keys.size} < #{Agent::Index.items_per_page}"
+                tp "(#{page_keys.size} < #{Agent::Index.items_per_page}) --> break"
               end
               break
             end

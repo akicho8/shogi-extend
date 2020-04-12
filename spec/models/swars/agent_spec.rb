@@ -9,9 +9,9 @@ module Swars
 
       let :ret_value do
         [
-          { key: "devuser1-Yamada_Taro-20200101_123401" },
-          { key: "devuser2-Yamada_Taro-20200101_123402" },
-          { key: "devuser3-Yamada_Taro-20200101_123403" },
+          "devuser1-Yamada_Taro-20200101_123401",
+          "devuser2-Yamada_Taro-20200101_123402",
+          "devuser3-Yamada_Taro-20200101_123403",
         ]
       end
 

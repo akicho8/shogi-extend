@@ -5,17 +5,15 @@ module Swars
       helper_method :query_info
       helper_method :twitter_card_options
 
-      rescue_from "Mechanize::ResponseCodeError" do |exception|
-        message = "該当のデータが見つからないか混み合っています"
-        flash.now[:warning] = message
-        if Rails.env.development?
-          flash.now[:danger] = %(<div class="has-text-weight-bold">#{message}</div><br/>#{exception.class.name}<br/>#{exception.message}<br/><br/>#{exception.backtrace.take(8).join("<br/>")}).html_safe
-        end
+      rescue_from "Swars::Agent::OfficialFormatChanged" do |exception|
+        flash.now[:danger] = exception.message
         render :index
       end
     end
 
     def index
+      # raise Swars::Agent::OfficialFormatChanged
+
       # FIXME: BOTを許可する
       if bot_agent?
         return

@@ -6,6 +6,12 @@ end
 
 module Swars
   module Agent
+    class OfficialFormatChanged < StandardError
+      def initialize(message = nil)
+        super(message || "将棋ウォーズの構造が変わったので取り込めません")
+      end
+    end
+
     class Base
       BASE_URL   = "https://shogiwars.heroz.jp"
       USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36"
@@ -17,7 +23,7 @@ module Swars
 
         def agent
           @agent ||= Faraday.new(url: BASE_URL) do |conn|
-            if Rails.env.development?
+            if Rails.env.development? && false
               conn.response :logger
             end
             conn.use FaradayMiddleware::Instrumentation # config/initializers/0260_faraday_logger.rb
@@ -60,33 +66,34 @@ module Swars
       end
 
       def fetch
-        q = {
-          gtype: params[:gtype],
-          user_id: params[:user_key],
-        }
+        url = url_build
 
-        if v = params[:page_index]
-          if v.nonzero?
-            q[:page] = v.next
-          end
-        end
-
-        url = "/games/history?#{q.to_query}"
-        if params[:verbose]
-          tp url
-        end
         if run_remote?
           html = agent.get(url).body
         else
           html = mock_html("index")
         end
 
-        doc = Nokogiri.HTML(html)
-        doc.search(".contents").collect { |elem|
-          if md = elem.to_s.match(/game_id=([\w-]+)/)
-            { key: md.captures.first }
-          end
-        }.compact
+        html.scan(/game_id=([\w-]+)/).flatten
+      end
+
+      private
+
+      def url_build
+        q = {
+          user_id: params[:user_key],
+          gtype: params[:gtype],
+        }
+
+        if v = params[:page_index]
+          q[:page] = v.next
+        end
+
+        if params[:verbose]
+          tp q.inspect
+        end
+
+        "/games/history?#{q.to_query}"
       end
     end
 
@@ -100,13 +107,13 @@ module Swars
       def fetch
         info = { key: key }
 
-        url = battle_key_to_url(key)
+        url = key_to_url(key)
 
         url_info = battle_key_split(key)
         info[:battled_at] = url_info[:battled_at]
 
         if params[:verbose]
-          tp info[:url]
+          tp "record: #{info[:url]}"
         end
 
         if run_remote?
@@ -115,35 +122,35 @@ module Swars
           html = mock_html("show")
         end
 
-        doc = Nokogiri::HTML(html)
-        elem = doc.at("//div[@data-react-props]")
-        props = JSON.parse(elem["data-react-props"], symbolize_names: true)
+        md = html.match(/data-react-props="(.*?)"/)
+        md or raise OfficialFormatChanged
+        props = JSON.parse(CGI.unescapeHTML(md.captures.first))
         if params[:show_props]
           pp props
         end
 
-        game_hash = props[:gameHash]
+        game_hash = props["gameHash"]
 
-        info[:rule_key] = game_hash[:gtype]
+        info[:rule_key] = game_hash["gtype"]
 
         # 手合割
-        info[:preset_dirty_code] = game_hash[:handicap]
+        info[:preset_dirty_code] = game_hash["handicap"]
 
         # 詰み・投了・切断などの結果がわかるキー(対局中はキーがない)
-        if game_hash[:result]
-          info[:__final_key] = game_hash[:result]
+        if game_hash["result"]
+          info[:__final_key] = game_hash["result"]
 
           info[:user_infos] = [
-            { user_key: url_info[:black], grade_key: signed_number_to_grade_key(game_hash[:sente_dan]), },
-            { user_key: url_info[:white], grade_key: signed_number_to_grade_key(game_hash[:gote_dan]),  },
+            { user_key: url_info[:black], grade_key: signed_number_to_grade_key(game_hash["sente_dan"]), },
+            { user_key: url_info[:white], grade_key: signed_number_to_grade_key(game_hash["gote_dan"]),  },
           ]
 
           # moves がない場合がある
-          if game_hash[:moves]
+          if game_hash["moves"]
             # CSA形式の棋譜
             # 開始直後に切断している場合は空文字列になる
             # だから空ではないチェックをしてはいけない
-            info[:csa_seq] = game_hash[:moves].collect { |e| [e[:m], e[:t]] }
+            info[:csa_seq] = game_hash["moves"].collect { |e| [e["m"], e["t"]] }
 
             # 対局完了
             info[:fetch_successed] = true
@@ -170,8 +177,7 @@ module Swars
         end
       end
 
-      # xxx -> /games/xxx
-      def battle_key_to_url(key)
+      def key_to_url(key)
         "/games/#{key}"
       end
 
@@ -189,26 +195,21 @@ if $0 == __FILE__
   tp Swars::Agent::Record.fetch(run_remote: false, key: "GRAN0215-kinakom0chi-20200411_195834")
 end
 # >> |--------------------------------------|
-# >> | key                                  |
+# >> | devuser1-Yamada_Taro-20200101_123401 |
+# >> | devuser2-Yamada_Taro-20200101_123402 |
+# >> | devuser3-Yamada_Taro-20200101_123403 |
+# >> |--------------------------------------|
 # >> |--------------------------------------|
 # >> | devuser1-Yamada_Taro-20200101_123401 |
 # >> | devuser2-Yamada_Taro-20200101_123402 |
 # >> | devuser3-Yamada_Taro-20200101_123403 |
 # >> |--------------------------------------|
 # >> |--------------------------------------|
-# >> | key                                  |
-# >> |--------------------------------------|
 # >> | devuser1-Yamada_Taro-20200101_123401 |
 # >> | devuser2-Yamada_Taro-20200101_123402 |
 # >> | devuser3-Yamada_Taro-20200101_123403 |
 # >> |--------------------------------------|
-# >> |--------------------------------------|
-# >> | key                                  |
-# >> |--------------------------------------|
-# >> | devuser1-Yamada_Taro-20200101_123401 |
-# >> | devuser2-Yamada_Taro-20200101_123402 |
-# >> | devuser3-Yamada_Taro-20200101_123403 |
-# >> |--------------------------------------|
+# >> ""
 # >> |-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |               key | GRAN0215-kinakom0chi-20200411_195834                                                                                                                                                                                                                                |
 # >> |        battled_at | 20200411_195834                                                                                                                                                                                                                                                     |
