@@ -11,6 +11,10 @@ module Swars
       USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36"
 
       class << self
+        def fetch(*args)
+          new(*args).fetch
+        end
+
         def agent
           @agent ||= Faraday.new(url: BASE_URL) do |conn|
             if Rails.env.development?
@@ -25,10 +29,10 @@ module Swars
 
       delegate :agent, to: "self.class"
 
-      def initialize(options = {})
-        @options = {
-          run_remote: false,
-        }.merge(options)
+      attr_accessor :params
+
+      def initialize(params)
+        @params = default_params.merge(params)
       end
 
       def run_remote?
@@ -36,7 +40,7 @@ module Swars
           return false
         end
 
-        @options[:run_remote] || (ENV["RUN_REMOTE"] == "true") || Rails.env.production? || Rails.env.staging?
+        params[:run_remote] || (ENV["RUN_REMOTE"] == "true") || Rails.env.production? || Rails.env.staging?
       end
 
       def mock_html(name)
@@ -47,13 +51,15 @@ module Swars
     class Index < Base
       cattr_accessor(:items_per_page) { 10 }
 
-      def fetch(params = {})
-        params = {
-          gtype: "",    # 空:10分 sb:3分 s1:10秒
+      def default_params
+        {
+          gtype: "",    # "":10分 "sb":3分 "s1":10秒
           user_key: nil,
           page_index: 0,
-        }.merge(params)
+        }
+      end
 
+      def fetch
         q = {
           gtype: params[:gtype],
           user_id: params[:user_key],
@@ -66,7 +72,7 @@ module Swars
         end
 
         url = "/games/history?#{q.to_query}"
-        if @options[:verbose]
+        if params[:verbose]
           tp url
         end
         if run_remote?
@@ -85,28 +91,34 @@ module Swars
     end
 
     class Record < Base
-      def fetch(key)
+      def default_params
+        {
+          key: nil,
+        }
+      end
+
+      def fetch
         info = { key: key }
 
         url = battle_key_to_url(key)
-        
+
         url_info = battle_key_split(key)
         info[:battled_at] = url_info[:battled_at]
 
-        if @options[:verbose]
+        if params[:verbose]
           tp info[:url]
         end
 
         if run_remote?
-          str = agent.get(url).body
+          html = agent.get(url).body
         else
-          str = mock_html("show")
+          html = mock_html("show")
         end
 
-        doc = Nokogiri::HTML(str)
+        doc = Nokogiri::HTML(html)
         elem = doc.at("//div[@data-react-props]")
         props = JSON.parse(elem["data-react-props"], symbolize_names: true)
-        if @options[:show_props]
+        if params[:show_props]
           pp props
         end
 
@@ -141,6 +153,10 @@ module Swars
         info
       end
 
+      def key
+        params[:key] or raise "must not happen"
+      end
+
       # -2 → "2級"
       # -1 → "1級"
       #  0 → "初段"
@@ -167,10 +183,10 @@ module Swars
 end
 
 if $0 == __FILE__
-  tp Swars::Agent::Index.new(run_remote: false).fetch(gtype: "",   user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Index.new(run_remote: false).fetch(gtype: "sb", user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Index.new(run_remote: false).fetch(gtype: "s1", user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Record.new(run_remote: false).fetch("GRAN0215-kinakom0chi-20200411_195834")
+  tp Swars::Agent::Index.fetch(run_remote: false, gtype: "",   user_key: "kinakom0chi", page_index: 0)
+  tp Swars::Agent::Index.fetch(run_remote: false, gtype: "sb", user_key: "kinakom0chi", page_index: 0)
+  tp Swars::Agent::Index.fetch(run_remote: false, gtype: "s1", user_key: "kinakom0chi", page_index: 0)
+  tp Swars::Agent::Record.fetch(run_remote: false, key: "GRAN0215-kinakom0chi-20200411_195834")
 end
 # >> |--------------------------------------|
 # >> | key                                  |

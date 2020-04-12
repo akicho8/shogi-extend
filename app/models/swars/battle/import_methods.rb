@@ -140,7 +140,7 @@ module Swars
           (params[:page_max] || 1).times do |i|
             list = []
             unless params[:dry_run]
-              list = Agent::Index.new(params).fetch(params.merge(page_index: i))
+              list = Agent::Index.fetch(params.merge(page_index: i))
             end
             sleep_on(params)
 
@@ -212,7 +212,7 @@ module Swars
             end
           end
 
-          info = Agent::Record.new(params).fetch(params[:key])
+          info = Agent::Record.fetch(params)
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
           unless info[:fetch_successed]
