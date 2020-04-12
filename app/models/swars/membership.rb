@@ -31,18 +31,14 @@ module Swars
     include TagMod
     include ::Swars::MembershipTimeChartMod
 
-    belongs_to :battle            # 対局
-    belongs_to :user, touch: true # 対局者
-    belongs_to :op_user, :class_name => "User" # 相手
-    belongs_to :opponent, :class_name => "Membership", optional: true
+    belongs_to :battle                      # 対局
+    belongs_to :user, touch: true           # 対局者
+    belongs_to :op_user, class_name: "User" # 相手
+    belongs_to :opponent, class_name: "Membership", optional: true
 
     belongs_to :grade             # 対局したときの段位
 
     acts_as_list top_of_list: 0, scope: :battle
-
-    # default_scope { order(:position) }
-
-    scope :judge_key_eq, -> v { where(judge_key: v).take }
 
     before_validation do
       # テストを書きやすいようにする
