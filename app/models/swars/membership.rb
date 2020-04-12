@@ -90,9 +90,6 @@ module Swars
         end
       end
 
-      # NOT NULL にしたいので仕方なく 0 を入れておく
-      # self.opponent_id ||= 0
-
       # if think_max && think_last && think_all_avg && think_end_avg && two_serial_max
       # else
       #   # think_columns_update
@@ -104,7 +101,6 @@ module Swars
       validates :user_id
       validates :op_user_id
       validates :location_key
-      # validates :opponent_id, on: :update
     end
 
     with_options allow_blank: true do
@@ -116,18 +112,9 @@ module Swars
           validates :user_id
           validates :op_user_id
           validates :location_key
-          # validates :opponent_id, on: :update
         end
       end
     end
-
-    # def opponent_id_set_if_blank
-    #   if m = (battle.memberships - [self]).first
-    #     if m.id
-    #       update_column(:opponent_id, m.id)
-    #     end
-    #   end
-    # end
 
     def name_with_grade
       "#{user.user_key} #{grade.name}"
@@ -145,9 +132,6 @@ module Swars
     def opponent
       @opponent ||= battle.memberships.where.not(position: position).take
     end
-    # def opponent
-    #   @opponent ||= battle.memberships.where.not(position: position).take
-    # end
 
     def think_columns_update
       list = sec_list
