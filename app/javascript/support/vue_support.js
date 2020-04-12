@@ -101,7 +101,7 @@ export default {
 
     piyo_shogi_full_url(record, turn, flip) {
       const url = this.as_full_url(record.show_path) + ".kif"
-      return `piyoshogi://?url=${url}&num=${turn}` // TODO: flip つけたい
+      return `piyoshogi://?num=${turn}&url=${url}` // TODO: flip つけたい
     },
 
     kento_full_url(record, turn, flip) {

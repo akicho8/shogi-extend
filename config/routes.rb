@@ -105,7 +105,7 @@ Rails.application.routes.draw do
     # if Rails.env.development?
     #   url = "http://wdoor.c.u-tokyo.ac.jp/shogi/LATEST//2016/09/24/wdoor+floodgate-600-10F+gpsfish_normal_1c+gps_l+20160924113005.csa"
     # end
-    "piyoshogi://?url=#{url}&#{options.to_query}" # 渡すURLをエスケープするとぴよ将棋で読めなくなるので to_query してはいけない
+    "piyoshogi://?#{options.to_query}&url=#{url}" # 渡すURLをエスケープするとぴよ将棋で読めなくなるので to_query してはいけない
   end
 
   direct :kento_app do |options, turn|

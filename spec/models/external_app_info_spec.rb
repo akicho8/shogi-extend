@@ -6,8 +6,8 @@ RSpec.describe ExternalAppInfo, type: :model do
     let(:free_record)  { FreeBattle.create!    }
 
     it "piyo_shogi" do
-      assert { ExternalAppInfo[:piyo_shogi].external_url(swars_record) == "piyoshogi://?url=http://localhost:3000/w/battle1.kif&num=5"      }
-      assert { ExternalAppInfo[:piyo_shogi].external_url(free_record)  == "piyoshogi://?url=http://localhost:3000/x/free_battle1.kif&num=5" }
+      assert { ExternalAppInfo[:piyo_shogi].external_url(swars_record) == "piyoshogi://?num=5&url=http://localhost:3000/w/battle1.kif"      }
+      assert { ExternalAppInfo[:piyo_shogi].external_url(free_record)  == "piyoshogi://?num=5&url=http://localhost:3000/x/free_battle1.kif" }
     end
 
     it "kento" do
