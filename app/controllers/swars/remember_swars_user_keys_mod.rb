@@ -3,7 +3,7 @@ module Swars
     extend ActiveSupport::Concern
 
     included do
-      cattr_accessor(:remember_swars_user_keys_max) { 10 }
+      cattr_accessor(:remember_swars_user_keys_max) { 20 }
 
       helper_method :remember_swars_user_keys
     end
