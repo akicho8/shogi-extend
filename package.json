@@ -1,10 +1,10 @@
 {
   "license": "UNLICENSED",
   "dependencies": {
-    "@rails/ujs": "^6.0.0",
+    "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "3.2.0",
-    "actioncable": "^5.2.3",
     "assert": "^1.4.1",
     "autolinker": "^3.11.0",
     "autoprefixer": "^7.1.2",

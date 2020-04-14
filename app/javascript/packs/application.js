@@ -1,15 +1,19 @@
-/* eslint no-console:0 */
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-//
-// To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
-// layout file, like app/views/layouts/application.html.erb
 
 require("@rails/ujs").start()
 // require("turbolinks").start()
 require("@rails/activestorage").start()
+require("channels")
+
+// Uncomment to copy all static images under ../images to the output folder and reference
+// them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
+// or the `imagePath` JavaScript helper below.
+//
+// const images = require.context('../images', true)
+// const imagePath = (name) => images(name, true)
 
 import "modulable_crud.js"
 import "global_variable_set.js"
@@ -123,6 +127,7 @@ import pulldown_menu from "pulldown_menu.vue"
 import buefy_table_wrapper from "buefy_table_wrapper.vue"
 import three_stage_league_player_chart from "three_stage_league_player_chart.vue"
 import custom_chart from "custom_chart.vue"
+import chat_sample1 from "chat_sample1.vue"
 import stopwatch from "stopwatch.vue"
 import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
@@ -176,6 +181,7 @@ Vue.mixin({
     buefy_table_wrapper,
     three_stage_league_player_chart,
     custom_chart,
+    chat_sample1,
 
     // for buefy modal
     tactic_show,
@@ -198,7 +204,7 @@ window.GVI = new Vue()           // ActionCable 側から Vue のグローバル
 import "audio_queue.js"
 import "light_session_app.js"
 
-import ActionCable from "actioncable"
+// import ActionCable from "actioncable"
 
 // このような書き方でいいのかどうかはわからない
 window.App = {}
@@ -206,10 +212,10 @@ window.App = {}
 //   console.log(window.Vue)
 //   console.log(window.GVI)
 // })
-if (GVI.$route) {
-  if (GVI.$route.path.includes("/colosseum/battles")) {
-    window.App.cable = ActionCable.createConsumer()
-    ActionCable.startDebugging()
-  }
-}
+// if (GVI.$route) {
+//   if (GVI.$route.path.includes("/colosseum/battles")) {
+//     window.App.cable = ActionCable.createConsumer()
+//     ActionCable.startDebugging()
+//   }
+// }
 // import "action_cable_setup.js"
