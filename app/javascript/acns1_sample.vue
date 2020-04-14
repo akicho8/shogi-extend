@@ -1,5 +1,5 @@
 <template lang="pug">
-.chat_sample1
+.acns1_sample
   .columns
     .column
       b-field
@@ -15,7 +15,7 @@
 import consumer from "channels/consumer"
 
 export default {
-  name: "chat_sample1",
+  name: "acns1_sample",
   props: {
     info: { required: true },
   },
@@ -33,7 +33,7 @@ export default {
     this.messages = this.info.messages
     this.message = this.messages.length
 
-    this.$channel = consumer.subscriptions.create({ channel: "Tsume::RoomChannel", room_id: this.info.room.id }, {
+    this.$channel = consumer.subscriptions.create({ channel: "Acns1::RoomChannel", room_id: this.info.room.id }, {
       connected: () => {
         this.debug_alert("connected")
       },
@@ -66,7 +66,7 @@ export default {
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
-.chat_sample1
+.acns1_sample
   .messages_box
     height: 20rem
     overflow-y: scroll

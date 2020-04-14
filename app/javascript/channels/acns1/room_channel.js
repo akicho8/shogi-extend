@@ -1,6 +1,6 @@
 // import consumer from '../consumer'
 //
-//   const chatChannel = consumer.subscriptions.create({ channel: 'Tsume::RoomChannel', room_id: $('#messages').data('room_id') }, {
+//   const chatChannel = consumer.subscriptions.create({ channel: 'Acns1::RoomChannel', room_id: $('#messages').data('room_id') }, {
 //     connected() {
 //       // Called when the subscription is ready for use on the server
 //     },

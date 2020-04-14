@@ -1,4 +1,4 @@
-module Tsume
+module Acns1
   class RoomsController < ApplicationController
     def index
       @rooms = Room.all.order(:id)

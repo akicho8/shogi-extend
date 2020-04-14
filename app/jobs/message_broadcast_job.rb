@@ -8,6 +8,6 @@ class MessageBroadcastJob < ApplicationJob
   private
 
   def render_message(message)
-    ApplicationController.renderer.render(partial: 'tsume/messages/message', locals: { message: message })
+    ApplicationController.renderer.render(partial: 'acns1/messages/message', locals: { message: message })
   end
 end

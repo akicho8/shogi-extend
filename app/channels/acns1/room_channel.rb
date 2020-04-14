@@ -1,4 +1,4 @@
-class Tsume::RoomChannel < ApplicationCable::Channel
+class Acns1::RoomChannel < ApplicationCable::Channel
   def subscribed
     stream_from "room_channel_#{params['room_id']}"
   end
@@ -8,6 +8,6 @@ class Tsume::RoomChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    Tsume::Message.create!(body: data['message'], user: current_user, room_id: params['room_id'])
+    Acns1::Message.create!(body: data['message'], user: current_user, room_id: params['room_id'])
   end
 end

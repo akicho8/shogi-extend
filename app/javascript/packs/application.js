@@ -127,7 +127,7 @@ import pulldown_menu from "pulldown_menu.vue"
 import buefy_table_wrapper from "buefy_table_wrapper.vue"
 import three_stage_league_player_chart from "three_stage_league_player_chart.vue"
 import custom_chart from "custom_chart.vue"
-import chat_sample1 from "chat_sample1.vue"
+import acns1_sample from "acns1_sample.vue"
 import stopwatch from "stopwatch.vue"
 import simple_board from "simple_board.vue"
 import xy_master from "xy_master.vue"
@@ -181,7 +181,7 @@ Vue.mixin({
     buefy_table_wrapper,
     three_stage_league_player_chart,
     custom_chart,
-    chat_sample1,
+    acns1_sample,
 
     // for buefy modal
     tactic_show,
