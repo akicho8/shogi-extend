@@ -27,6 +27,24 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "acns2_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "対局部屋"
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.string "judge_key", null: false, comment: "勝・敗・引き分け"
+    t.integer "rensho_count", null: false, comment: "連勝数"
+    t.integer "renpai_count", null: false, comment: "連敗数"
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["judge_key"], name: "index_acns2_memberships_on_judge_key"
+    t.index ["position"], name: "index_acns2_memberships_on_position"
+    t.index ["renpai_count"], name: "index_acns2_memberships_on_renpai_count"
+    t.index ["rensho_count"], name: "index_acns2_memberships_on_rensho_count"
+    t.index ["room_id", "user_id"], name: "index_acns2_memberships_on_room_id_and_user_id", unique: true
+    t.index ["room_id"], name: "index_acns2_memberships_on_room_id"
+    t.index ["user_id"], name: "index_acns2_memberships_on_user_id"
+  end
+
   create_table "acns2_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "room_id"

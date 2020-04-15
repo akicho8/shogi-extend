@@ -110,9 +110,7 @@ class ApplicationController < ActionController::Base
 
       user = nil
       id = session[:user_id]
-      if AppConfig[:colosseum_battle_enable]
-        id ||= cookies.signed[:user_id]
-      end
+      id ||= cookies.signed[:user_id]
       if id
         user ||= Colosseum::User.find_by(id: id)
       end
@@ -145,12 +143,16 @@ class ApplicationController < ActionController::Base
         session.delete(:user_id)
       end
 
-      if AppConfig[:colosseum_battle_enable]
-        if user_id
-          cookies.signed[:user_id] = {value: user_id, expires: 1.years.from_now}
-        else
-          cookies.delete(:user_id)
-        end
+      if user_id
+        cookies.signed[:user_id] = { value: user_id, expires: 1.years.from_now }
+      else
+        cookies.delete(:user_id)
+      end
+    end
+
+    def current_user_set_sysop_unless_logout
+      unless current_user
+        current_user_set_id(Colosseum::User.sysop.id)
       end
     end
 

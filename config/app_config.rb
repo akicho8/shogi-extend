@@ -31,4 +31,5 @@ AppConfig.deep_merge!({
 
     :redis_db_for_xy_rule_info           => 2,    # 符号の鬼のランキング用
     :redis_db_for_colosseum_ranking_info => 3,    # 対戦のランキング用
+    :redis_db_for_acns2                  => 4,    # acns2
   })

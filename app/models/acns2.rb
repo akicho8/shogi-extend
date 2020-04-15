@@ -4,10 +4,10 @@ module Acns2
   end
 
   def self.setup(options = {})
-    if Acns2::Room.count.zero?
-      3.times do |i|
-        tp Acns2::Room.create!
-      end
-    end
+    # if Acns2::Room.count.zero?
+    #   3.times do |i|
+    #     tp Acns2::Room.create!
+    #   end
+    # end
   end
 end

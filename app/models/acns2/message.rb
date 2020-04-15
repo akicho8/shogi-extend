@@ -8,7 +8,7 @@ module Acns2
     end
 
     after_create_commit do
-      MessageBroadcastJob.perform_later(self)
+      Acns2::MessageBroadcastJob.perform_later(self)
     end
   end
 end
