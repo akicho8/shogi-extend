@@ -28,11 +28,12 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
   end
 
   create_table "acns2_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "room_id", null: false, comment: "対局部屋"
-    t.bigint "user_id", null: false, comment: "対局者"
-    t.string "judge_key", null: false, comment: "勝・敗・引き分け"
+    t.bigint "room_id", comment: "対戦部屋"
+    t.bigint "user_id", comment: "対戦者"
+    t.string "judge_key", null: false, comment: "勝敗"
     t.integer "rensho_count", null: false, comment: "連勝数"
     t.integer "renpai_count", null: false, comment: "連敗数"
+    t.integer "quest_index", comment: "解答中の問題"
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -46,9 +47,9 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
   end
 
   create_table "acns2_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "room_id"
-    t.text "body"
+    t.bigint "user_id", comment: "対戦者"
+    t.bigint "room_id", comment: "対戦部屋"
+    t.string "body", limit: 512, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_acns2_messages_on_room_id"
@@ -56,8 +57,14 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
   end
 
   create_table "acns2_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.datetime "begin_at", null: false, comment: "対戦開始日時"
+    t.datetime "end_at", comment: "対戦終了日時"
+    t.string "final_key", comment: "結果"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["begin_at"], name: "index_acns2_rooms_on_begin_at"
+    t.index ["end_at"], name: "index_acns2_rooms_on_end_at"
+    t.index ["final_key"], name: "index_acns2_rooms_on_final_key"
   end
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

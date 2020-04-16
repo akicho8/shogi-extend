@@ -26,6 +26,7 @@ class Acns2::LobbyChannel < ApplicationCable::Channel
           e.memberships.build(user: op_user)
           e.memberships.build(user: current_user)
         end
+        # --> app/jobs/acns2/lobby_broadcast_job.rb
       end
     end
 

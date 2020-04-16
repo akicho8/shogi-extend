@@ -1,26 +1,33 @@
+# app/javascript/acns2_sample.vue
+#
+# app/models/acns2/membership.rb
+# app/models/acns2/room.rb
+#
 # app/channels/acns2/lobby_channel.rb
+# app/channels/acns2/room_channel.rb
+#
 # app/jobs/acns2/lobby_broadcast_job.rb
 # app/jobs/acns2/message_broadcast_job.rb
 # app/jobs/message_broadcast_job.rb
 # app/models/acns2/membership.rb
-# app/models/acns2/user.rb
+# app/models/acns2/room.rb
 # app/models/backend_script/acns2_sample_script.rb
 # app/models/backend_script/action_cable_info_script.rb
 # app/models/colosseum/user_acns2_mod.rb
-# app/models/colosseum/user_chronicle_methods.rb
 # experiment/0850_acns2.rb
 module BackendScript
   class Acns2SampleScript < ::BackendScript::Base
     include AtomicScript::AddJsonLinkMod
 
     self.script_name = "詰将棋ファイター"
+    self.page_title = ""
 
     def form_parts
       [
         {
           :label   => "画面",
           :key     => :debug_scene,
-          :elems   => { "ロビー" => nil, "YOU WIN" => :room_owari },
+          :elems   => { "ロビー" => nil, "対戦" => :ready_go, "YOU WIN" => :room_owari },
           :type    => :select,
           :default => current_debug_scene,
         },
@@ -62,18 +69,30 @@ module BackendScript
       if true
         info[:debug_scene] = current_debug_scene
 
-        case current_debug_scene
-        when :room_owari
+        if current_debug_scene == :ready_go
           c.current_user_set_sysop_unless_logout
 
           user = Colosseum::User.create!
           room = Acns2::Room.create! do |e|
+            e.memberships.build(user: h.current_user)
+            e.memberships.build(user: user)
+          end
+
+          info[:mode] = "ready_go"
+          info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } }, methods: [:simple_quest_infos, :final_info])
+        end
+
+        if current_debug_scene == :room_owari
+          c.current_user_set_sysop_unless_logout
+
+          user = Colosseum::User.create!
+          room = Acns2::Room.create!(final_key: :disconnect) do |e|
             e.memberships.build(user: h.current_user, judge_key: :win)
             e.memberships.build(user: user, judge_key: :lose)
           end
 
           info[:mode] = "room_owari"
-          info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } })
+          info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url] }} }}, methods: [:simple_quest_infos, :final_info])
         end
       end
 
