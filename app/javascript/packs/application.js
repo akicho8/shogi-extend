@@ -29,6 +29,11 @@ Vue.use(Vuex)                   // これは一箇所だけで実行すること
 import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
+// https://www.npmjs.com/package/vue-dump
+import "vue-dump/dist/vue-dump.css"
+import VueDump from "vue-dump/dist/vue-dump.common"
+Vue.use(VueDump)
+
 import VueGtag from "vue-gtag"
 Vue.use(VueGtag, {
   config: {

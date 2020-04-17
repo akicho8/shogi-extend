@@ -65,6 +65,7 @@
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
+    "vue-dump": "^1.0.0",
     "webpack-dev-server": "2.9.7"
   }
 }
