@@ -31,7 +31,7 @@ module Acns2
 
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-      validates :judge_key, uniqueness: { scope: :room_id }
+      validates :judge_key, uniqueness: { scope: :room_id, case_sensitive: true }
     end
 
     after_save do

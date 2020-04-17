@@ -1,20 +1,31 @@
-# app/javascript/acns2_sample.vue
+# 詰将棋ファイター
 #
-# app/models/acns2/membership.rb
-# app/models/acns2/room.rb
+# entry
+#   app/models/backend_script/acns2_sample_script.rb
 #
-# app/channels/acns2/lobby_channel.rb
-# app/channels/acns2/room_channel.rb
+# vue
+#   app/javascript/acns2_sample.vue
 #
-# app/jobs/acns2/lobby_broadcast_job.rb
-# app/jobs/acns2/message_broadcast_job.rb
-# app/jobs/message_broadcast_job.rb
-# app/models/acns2/membership.rb
-# app/models/acns2/room.rb
-# app/models/backend_script/acns2_sample_script.rb
-# app/models/backend_script/action_cable_info_script.rb
-# app/models/colosseum/user_acns2_mod.rb
-# experiment/0850_acns2.rb
+# db
+#   db/migrate/20200414142200_create_acns2.rb
+#
+# test
+#   experiment/0850_acns2.rb
+#
+# model
+#   app/models/acns2/membership.rb
+#   app/models/acns2/room.rb
+#   app/models/acns2.rb
+#   app/models/colosseum/user_acns2_mod.rb
+#
+# channel
+#   app/channels/acns2/lobby_channel.rb
+#   app/channels/acns2/room_channel.rb
+#
+# job
+#   app/jobs/acns2/lobby_broadcast_job.rb
+#   app/jobs/acns2/message_broadcast_job.rb
+#
 module BackendScript
   class Acns2SampleScript < ::BackendScript::Base
     include AtomicScript::AddJsonLinkMod
@@ -35,7 +46,7 @@ module BackendScript
     end
 
     def script_body
-      Acns2.setup
+      # Acns2.setup
 
       if params[:login_required]
         unless h.current_user
@@ -74,35 +85,7 @@ module BackendScript
 
       info = {}
 
-      if true
-        info[:debug_scene] = current_debug_scene
-
-        if current_debug_scene == :ready_go
-          c.current_user_set_sysop_unless_logout
-
-          user = Colosseum::User.create!
-          room = Acns2::Room.create! do |e|
-            e.memberships.build(user: h.current_user)
-            e.memberships.build(user: user)
-          end
-
-          info[:mode] = "ready_go"
-          info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } }, methods: [:simple_quest_infos, :final_info])
-        end
-
-        if current_debug_scene == :result_show
-          c.current_user_set_sysop_unless_logout
-
-          user = Colosseum::User.create!
-          room = Acns2::Room.create!(final_key: :disconnect) do |e|
-            e.memberships.build(user: h.current_user, judge_key: :win)
-            e.memberships.build(user: user, judge_key: :lose)
-          end
-
-          info[:mode] = "result_show"
-          info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url], include: [:acns2_profile] }} }}, methods: [:simple_quest_infos, :final_info])
-        end
-      end
+      debug_scene_set(info)
 
       info[:mode] ||= "lobby"
 
@@ -138,6 +121,37 @@ module BackendScript
     def current_debug_scene
       if v = params[:debug_scene].presence
         v.to_sym
+      end
+    end
+
+    def debug_scene_set(info)
+      info[:debug_scene] = current_debug_scene
+
+      if current_debug_scene == :ready_go
+        c.current_user_set_sysop_unless_logout
+
+        user = Colosseum::User.create!
+        room = Acns2::Room.create! do |e|
+          e.memberships.build(user: h.current_user)
+          e.memberships.build(user: user)
+        end
+
+        info[:mode] = "ready_go"
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } }, methods: [:simple_quest_infos, :final_info])
+      end
+
+      if current_debug_scene == :result_show
+        c.current_user_set_sysop_unless_logout
+
+        user1 = h.current_user
+        user2 = Colosseum::User.create!
+        room = Acns2::Room.create!(final_key: :disconnect) do |e|
+          e.memberships.build(user: user1, judge_key: :win,  quest_index: 1)
+          e.memberships.build(user: user2, judge_key: :lose, quest_index: 2)
+        end
+
+        info[:mode] = "result_show"
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_url], include: {acns2_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
       end
     end
   end

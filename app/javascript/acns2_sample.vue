@@ -6,8 +6,14 @@
         .title.is-3.has-text-centered 詰将棋ファイター
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
-        .box.is-shadowless.taikityu.has-text-centered.has-background-light(v-if="matching_set && matching_set.length >= 1")
-          | {{matching_set.length}}人待機中...
+        .box.is-shadowless.taikityu.has-text-centered.has-background-light(v-if="matching_list && matching_list.length >= 1")
+          | {{matching_list.length}}人待機中...
+
+        .content.has-text-centered
+          p(v-if="online_user_ids")
+            | オンライン: {{online_user_ids.length}}人
+          p(v-if="online_user_ids2")
+            | 対戦中: {{online_user_ids2.length}}人
 
   template(v-if="mode === 'matching_start'")
     b-notification.wait_notification(:closable="false")
@@ -22,7 +28,7 @@
   template(v-if="mode === 'ready_go'")
     .columns.is-centered.is-mobile
       template(v-for="(membership, i) in room.memberships")
-        .column.user_continaer.is-flex
+        .column.user_container.is-flex
           template(v-if="membership.rensho_count >= 2")
             .rensho_count
               | {{membership.rensho_count}}連勝中！
@@ -70,7 +76,7 @@
               b-icon.play_icon(icon="play")
 
   template(v-if="mode === 'result_show'")
-    .columns
+    .columns.is-mobile.result_container
       .column
         .has-text-centered.is-size-3.has-text-weight-bold
           template(v-if="current_membership.judge_key === 'win'")
@@ -79,9 +85,9 @@
           template(v-if="current_membership.judge_key === 'lose'")
             .has-text-success
               | YOU LOSE !
-    .columns.is-mobile
+    .columns.is-mobile.result_container
       template(v-for="(membership, i) in room.memberships")
-        .column.user_continaer.is-flex
+        .column.user_container.is-flex
           template(v-if="membership.rensho_count >= 2")
             .icon_up_message.has-text-weight-bold
               | {{membership.rensho_count}}連勝中！
@@ -93,9 +99,21 @@
           .user_name.has-text-weight-bold
             | {{membership.user.name}}
           .user_quest_index.has-text-weight-bold.is-size-4
+            | {{membership.quest_index}}
+          .user_rating.has-text-weight-bold
+            | {{membership.user.acns2_profile.rating}}
+            span.user_rating_diff
+              template(v-if="membership.user.acns2_profile.rating_last_diff >= 0")
+                span.has-text-primary
+                  | (+{{membership.user.acns2_profile.rating_last_diff}})
+              template(v-if="membership.user.acns2_profile.rating_last_diff < 0")
+                span.has-text-danger
+                  | ({{membership.user.acns2_profile.rating_last_diff}})
+
+          .user_quest_index.has-text-weight-bold.is-size-4
             | {{quest_index_for(membership)}}
         template(v-if="i === 0")
-          .column.vs_mark.is-flex.has-text-weight-bold.is-size-4
+          .column.is-1.vs_mark.is-flex.has-text-weight-bold.is-size-4
             | vs
 
     .columns.is-mobile
@@ -104,12 +122,12 @@
           b-button.has-text-weight-bold(@click="lobby_button_handle" type="is-primary")
             | ロビーに戻る
 
+  debug_print
+
   .columns
     .column
       .box
-        div mode={{mode}}
-        div matching_set={{matching_set}}
-        div current_membership={{current_membership}}
+        dump(:data="info" label="info")
 
   .columns
     .column
@@ -119,21 +137,29 @@
             | props
           tr(v-for="(value, key) in $props")
             th(v-text="key")
-            td(v-text="value")
+            td(style="white-space: pre" v-text="JSON.stringify(value, null, 4)")
 
         table(border=1)
           caption
             | data
           tr(v-for="(value, key) in $data")
             th(v-text="key")
-            td(v-text="value")
+            td(style="white-space: pre" v-text="JSON.stringify(value, null, 4)")
 
         table(border=1)
           caption
             | computed
           tr(v-for="(e, key) in _computedWatchers")
             th(v-text="key")
-            td(v-text="e.value")
+            td(style="white-space: pre" v-text="JSON.stringify(e.value, null, 4)")
+
+        template(v-if="'$store' in this")
+          table(border=1)
+            caption
+              | $store
+            tr(v-for="(value, key) in $store.state")
+              th(v-text="key")
+              td(style="white-space: pre" v-text="JSON.stringify(value, null, 4)")
 </template>
 
 <script>
@@ -151,16 +177,19 @@ export default {
       mode: "lobby",
       room: this.info.room,
 
-      messages: null,
-      message: null,
-      matching_set: null,
+      matching_list: null,       // 対戦待ちの人のIDを列挙している
+      online_user_ids: null,       // オンライン人数
       quest_index: null,        // 解答中の問題インデックス
-      freeze_mode: null,        //
-      totyu_info: null,
+      freeze_mode: null,        // 解答直後に間を開けているとき true になっている
+      progress_info: null,      // 各 membership_id はどこまで進んでいるかわかる {"1" => 2, "3" => 4}
+
+      // チャット用
+      messages: null,           // メッセージ(複数)
+      message: null,            // 入力中のメッセージ
 
       // private
-      $lobby: null, // --> app/channels/acns2/lobby_channel.rb
-      $room: null,  // --> app/channels/acns2/room_channel.rb
+      $lobby: null,         // --> app/channels/acns2/lobby_channel.rb
+      $room: null,          // --> app/channels/acns2/room_channel.rb
     }
   },
 
@@ -197,19 +226,24 @@ export default {
     },
     lobby_setup() {
       if (!this.$lobby) {
+        this.debug_alert("lobby_setup")
         this.$lobby = consumer.subscriptions.create({channel: "Acns2::LobbyChannel"}, {
           connected: () => {
-            this.debug_alert("lobby connected")
+            this.debug_alert("lobby 接続")
           },
           disconnected: () => {
-            this.debug_alert("lobby disconnected")
+            this.debug_alert("lobby 切断")
           },
           received: (data) => {
-            this.debug_alert("lobby received")
+            this.debug_alert("lobby 受信")
             console.log(data)
 
-            if (data.matching_set) {
-              this.matching_set = data.matching_set
+            if (data.matching_list) {
+              this.matching_list = data.matching_list
+            }
+
+            if (data.online_user_ids) {
+              this.online_user_ids = data.online_user_ids
             }
 
             if (data.room) {
@@ -240,37 +274,38 @@ export default {
       this.messages = []
       this.message = ""
       this.freeze_mode = false
-      this.totyu_info = {}
+      this.progress_info = {}
 
       this.quest_index = 0
       this.sound_play("deden")
 
       this.$room = consumer.subscriptions.create({ channel: "Acns2::RoomChannel", room_id: this.room.id }, {
         connected: () => {
-          this.debug_alert("room connected")
+          this.debug_alert("room 接続")
         },
         disconnected: () => {
-          this.debug_alert("room disconnected")
+          this.debug_alert("room 切断")
         },
         received: (data) => {
-          this.debug_alert("room received")
+          this.debug_alert("room 受信")
 
+          // チャット
           if (data.message) {
             this.messages.push(data.message)
             this.message = ""
           }
 
-          // 状況を反映する
-          if (data.totyu_info_share) {
-            const e = data.totyu_info_share
-            this.$set(this.totyu_info, e.membership_id, e.quest_index)
+          // 状況を反映する (なるべく小さなデータで共有する)
+          if (data.progress_info_share) {
+            const e = data.progress_info_share
+            this.$set(this.progress_info, e.membership_id, e.quest_index)
             if (e.membership_id !== this.current_membership.id) {
               this.sound_play("pipopipo")
             }
           }
 
           // 終了
-          if (data.result_show) {
+          if (data.switch_to === "result_show") {
             this.mode = "result_show"
             this.room = data.room
             if (this.current_membership) {
@@ -298,7 +333,7 @@ export default {
 
       if (this.current_quest_answers.includes(long_sfen)) {
         this.sound_play("pipopipo")
-        this.$room.perform("totyu_info_share", {membership_id: this.current_membership.id, quest_index: this.quest_index + 1}) // --> app/channels/acns2/room_channel.rb
+        this.$room.perform("progress_info_share", {membership_id: this.current_membership.id, quest_index: this.quest_index + 1}) // --> app/channels/acns2/room_channel.rb
 
         this.freeze_mode = true
         setTimeout(() => {
@@ -318,8 +353,8 @@ export default {
     },
 
     quest_index_for(membership) {
-      if (this.totyu_info) {
-        return this.totyu_info[membership.id] || 0
+      if (this.progress_info) {
+        return this.progress_info[membership.id] || 0
       }
     },
 
@@ -395,7 +430,8 @@ export default {
       .play_icon
         min-width: 3rem
 
-  .user_continaer
+  // ユーザー情報
+  .user_container
     flex-direction: column
     justify-content: flex-end
     align-items: center
@@ -409,12 +445,17 @@ export default {
 
     // ユーザー名
     .user_name
-      padding-top: 0.5rem
+      margin-top: 0.5rem
       font-size: $size-7
 
-  .vs_mark
-    flex-direction: column
-    justify-content: center
-    align-items: center
+    .user_rating_diff
+      margin-left: 0.25rem
+
+  // リザルト
+  .result_container
+    .vs_mark
+      flex-direction: column
+      justify-content: center
+      align-items: center
 
 </style>

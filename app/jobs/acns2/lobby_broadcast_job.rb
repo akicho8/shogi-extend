@@ -8,7 +8,7 @@ module Acns2
     end
 
     # private
-    # 
+    #
     # def render_message(message)
     #   ApplicationController.renderer.render(partial: 'acns2/messages/message', locals: { message: message })
     # end
