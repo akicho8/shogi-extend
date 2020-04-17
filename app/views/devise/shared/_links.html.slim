@@ -1,45 +1,48 @@
-- if devise_mapping.omniauthable?
-  .content
-    - SocialMediaInfo.each do |e|
-      p
-        = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-primary", "is-outlined", "brand_button", e.key]) do
-          span(class="icon is-medium")
-            i(class="fab fa-#{e.key}")
-          span
-            = t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}")
+.columns
+  .column
+    .card
+      .card-content
+        .title.is-4.has-text-centered
+          | 簡単ログイン
+        - if devise_mapping.omniauthable?
+          .content
+            - if v = session[:provider_remember]
+              - s = SocialMediaInfo[v["provider"]]
+              p.has-text-grey.is-size-7.has-text-centered
+                = v["user_name"]
+                = "さんは以前"
+                = s.name
+                = "でログインしました"
 
-        - if v = session[:provider_remember]
-          - if v["provider"] == e.key.to_s
-            span.has-text-grey-light.is-size-6
-              == "←以前これでアクセス"
+            - SocialMediaInfo.each do |e|
+              p
+                = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-primary", "is-fullwidth", "is-rounded", "brand_button", e.key, "has-text-weight-bold"]) do
+                  span.icon.is-medium
+                    i(class="fab fa-#{e.key}")
+                  span
+                    = t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}")
+                    - if session.dig(:provider_remember, "provider") == e.key.to_s
+                      = " ←"
 
-    - if v = session[:provider_remember]
-      - s = SocialMediaInfo[v["provider"]]
-      p.has-text-grey-light.is-size-7
-        = v["user_name"]
-        = "さんは以前"
-        = s.name
-        = "でログインしました"
-    p
-      = link_to("名無しのアカウントを作成してログイン", [:colosseum, :session], method: :post, class: "button is-primary is-outlined")
+            hr
+            p
+              = link_to("名無しの匿名アカウントを作成してログイン", [:colosseum, :session], method: :post, class: "button has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button")
+.columns
+  .column
+    .card
+      .card-content
+        .buttons.is-centered
+          - if controller_name != 'sessions'
+            = link_to t('.sign_in', default: 'Sign in'), new_session_path(resource_name), :class => "button"
+          - if devise_mapping.registerable? && controller_name != 'registrations'
+            = link_to t('.sign_up', default: 'Sign up'), new_registration_path(resource_name), :class => "button"
+          - if devise_mapping.recoverable? && controller_name != 'passwords'
+            = link_to t('.forgot_your_password', default: 'Forgot your password?'), new_password_path(resource_name), :class => "button"
+          - if devise_mapping.confirmable? && controller_name != 'confirmations'
+            = link_to t('.didn_t_receive_confirmation_instructions', default: "Didn't receive confirmation instructions?"), new_confirmation_path(resource_name), :class => "button"
+          - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+            = link_to t('.didn_t_receive_unlock_instructions', default: "Didn't receive unlock instructions?"), new_unlock_path(resource_name), :class => "button"
 
-- if controller_name != 'sessions'
-  = link_to t('.sign_in', default: 'Sign in'), new_session_path(resource_name)
-  br
-- if devise_mapping.registerable? && controller_name != 'registrations'
-  = link_to t('.sign_up', default: 'Sign up'), new_registration_path(resource_name)
-  br
-
-- if devise_mapping.recoverable? && controller_name != 'passwords'
-  = link_to t('.forgot_your_password', default: 'Forgot your password?'), new_password_path(resource_name)
-  br
-- if devise_mapping.confirmable? && controller_name != 'confirmations'
-  = link_to t('.didn_t_receive_confirmation_instructions', default: "Didn't receive confirmation instructions?"), new_confirmation_path(resource_name)
-  br
-- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
-  = link_to t('.didn_t_receive_unlock_instructions', default: "Didn't receive unlock instructions?"), new_unlock_path(resource_name)
-  br
-
-- if Rails.env.development?
-  = debug(resource_class.omniauth_providers)
-  = debug(session[:provider_remember])
+        - if Rails.env.development?
+          = debug(resource_class.omniauth_providers)
+          = debug(session[:provider_remember])

@@ -1,16 +1,12 @@
 .columns
   .column
-    .card
-      .card-content
-        / .title.is-4
-        /   = "ソーシャルログイン"
-        = render 'devise/shared/links'
+    = render 'devise/shared/links'
 
   .column
     .card
       .card-content
         .title.is-4
-          = t('.sign_in', default: 'Sign in')
+          | 面倒ログイン
         = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
           .field
             .control.has-icons-left.has-icons-right

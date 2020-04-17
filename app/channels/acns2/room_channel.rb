@@ -48,31 +48,40 @@ class Acns2::RoomChannel < ApplicationCable::Channel
   private
 
   def katimashita(judge_key, final_key)
-    judge_info = Acns2::JudgeInfo.fetch(judge_key)
-
     room = current_room
 
-    if room.end_at
-      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data, "すでに終了している"])
+    if room.final_key
+      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "すでに終了している"])
       return
     end
 
+    judge_info = Acns2::JudgeInfo.fetch(judge_key)
+
     ActiveRecord::Base.transaction do
-      membership = room.memberships.find_by!(user: current_user)
-      membership.judge_key = judge_info.key
-      membership.save!
+      m1 = room.memberships.find_by!(user: current_user)
+      m2 = (room.memberships - [m1]).first
 
-      m = (room.memberships - [membership]).first
-      m.judge_key = judge_info.flip.key
-      m.save!
+      m1.judge_key = judge_info.key
+      m2.judge_key = judge_info.flip.key
 
+      if m1.judge_key == "win"
+        mm = [m1, m2]
+      else
+        mm = [m2, m1]
+      end
+
+      ab = mm.collect { |e| e.user.acns2_profile.rating }
+      ab = Acns2::EloRating.rating_update(*ab)
+      mm.each.with_index { |m, i| m.user.acns2_profile.update!(rating: ab[i]) }
+
+      mm.each(&:save!)
       room.update!(final_key: final_key)
     end
 
     room.reload              # 最新の memberships の情報を反映するため
 
-    room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } }, methods: [:final_info])
-    ActionCable.server.broadcast("acns2/room_channel/#{params["room_id"]}", {room_owari: true, room: room_json})
+    room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url], include: [:acns2_profile] } } }}, methods: [:final_info])
+    ActionCable.server.broadcast("acns2/room_channel/#{params["room_id"]}", {result_show: true, room: room_json})
     # --> app/javascript/acns2_sample.vue
   end
 

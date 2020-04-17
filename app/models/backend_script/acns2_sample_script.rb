@@ -27,7 +27,7 @@ module BackendScript
         {
           :label   => "画面",
           :key     => :debug_scene,
-          :elems   => { "ロビー" => nil, "対戦" => :ready_go, "YOU WIN" => :room_owari },
+          :elems   => { "ロビー" => nil, "対戦" => :ready_go, "結果" => :result_show },
           :type    => :select,
           :default => current_debug_scene,
         },
@@ -36,6 +36,14 @@ module BackendScript
 
     def script_body
       Acns2.setup
+
+      if params[:login_required]
+        unless h.current_user
+          h.session[:return_to] = h.url_for(script_link_path)
+          c.redirect_to :new_xuser_session
+          return
+        end
+      end
 
       out = ""
 
@@ -82,7 +90,7 @@ module BackendScript
           info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } }, methods: [:simple_quest_infos, :final_info])
         end
 
-        if current_debug_scene == :room_owari
+        if current_debug_scene == :result_show
           c.current_user_set_sysop_unless_logout
 
           user = Colosseum::User.create!
@@ -91,8 +99,8 @@ module BackendScript
             e.memberships.build(user: user, judge_key: :lose)
           end
 
-          info[:mode] = "room_owari"
-          info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url] }} }}, methods: [:simple_quest_infos, :final_info])
+          info[:mode] = "result_show"
+          info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count], include: {user: { only: [:id, :name], methods: [:avatar_url], include: [:acns2_profile] }} }}, methods: [:simple_quest_infos, :final_info])
         end
       end
 

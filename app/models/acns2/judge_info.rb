@@ -7,7 +7,6 @@ module Acns2
     ]
 
     def flip
-      
       self.class.fetch(key == :win ? :lose : :win)
     end
   end

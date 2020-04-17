@@ -4,6 +4,10 @@ module Acns2
   end
 
   def self.setup(options = {})
+    Colosseum::User.find_each do |e|
+      e.acns2_profile || e.create_acns2_profile!
+    end
+
     # if Acns2::Room.count.zero?
     #   3.times do |i|
     #     tp Acns2::Room.create!

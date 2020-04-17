@@ -80,7 +80,7 @@ module Colosseum
             UserMailer.user_created(self).deliver_now
           end
 
-          SlackAgent.message_send(key: "ユーザー登録", body: "#{name}: #{attributes.inspect}")
+          SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name"))
         end
       end
 

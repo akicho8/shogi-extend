@@ -5,7 +5,7 @@
       .column
         .title.is-3.has-text-centered 詰将棋ファイター
         .buttons.is-centered
-          b-button(@click="start_handle" type="is-primary") START
+          b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
         .box.is-shadowless.taikityu.has-text-centered.has-background-light(v-if="matching_set && matching_set.length >= 1")
           | {{matching_set.length}}人待機中...
 
@@ -17,7 +17,7 @@
 
     template(v-if="development_p")
       .buttons.is-centered
-        b-button(@click="cancel_handle" rounded size="is-small") キャンセル
+        b-button.has-text-weight-bold(@click="cancel_handle" rounded size="is-small") キャンセル
 
   template(v-if="mode === 'ready_go'")
     .columns.is-centered.is-mobile
@@ -69,7 +69,7 @@
             button.button.is-primary(@click="speak")
               b-icon.play_icon(icon="play")
 
-  template(v-if="mode === 'room_owari'")
+  template(v-if="mode === 'result_show'")
     .columns
       .column
         .has-text-centered.is-size-3.has-text-weight-bold
@@ -101,7 +101,7 @@
     .columns.is-mobile
       .column
         .buttons.is-centered
-          b-button(@click="lobby_button_handle" type="is-primary")
+          b-button.has-text-weight-bold(@click="lobby_button_handle" type="is-primary")
             | ロビーに戻る
 
   .columns
@@ -169,8 +169,8 @@ export default {
       this.mode = "ready_go"
       this.ready_go_setup()
     }
-    if (this.info.debug_scene === "room_owari") {
-      this.mode = "room_owari"
+    if (this.info.debug_scene === "result_show") {
+      this.mode = "result_show"
     }
 
     if (this.mode === "lobby") {
@@ -224,10 +224,7 @@ export default {
       }
     },
     start_handle() {
-      if (!this.current_user) {
-        this.self_window_open("/xusers/sign_in")
-        return
-      }
+      if (this.login_required2()) { return }
       this.sound_play("click")
       this.mode = "matching_start"
       this.$lobby.perform("matching_start")
@@ -273,8 +270,8 @@ export default {
           }
 
           // 終了
-          if (data.room_owari) {
-            this.mode = "room_owari"
+          if (data.result_show) {
+            this.mode = "result_show"
             this.room = data.room
             if (this.current_membership) {
               if (this.current_membership.judge_key === "win") {
@@ -326,6 +323,13 @@ export default {
       }
     },
 
+    login_required2() {
+      if (!this.current_user) {
+        this.self_window_open(this.login_path)
+        return true
+        // this.self_window_open("/xusers/sign_in")
+      }
+    },
   },
 
   computed: {
@@ -358,6 +362,13 @@ export default {
       if (info) {
         return info.seq_answers.map(e => [info.base_sfen, "moves", e].join(" "))
       }
+    },
+
+    // いったんスクリプトに飛ばしているのは sessions[:return_to] を設定するため
+    login_path() {
+      const url = new URL(location)
+      url.searchParams.set("login_required", true)
+      return url.toString()
     },
   },
 }

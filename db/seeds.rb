@@ -12,6 +12,7 @@ ENV["SLACK_AGENT_DISABLE"] = "1"
   XyRecord,
   Tsl,
   Acns1,
+  Acns2,
 ].each do |e|
   e.setup
 end

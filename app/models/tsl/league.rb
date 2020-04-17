@@ -18,16 +18,18 @@ module Tsl
   class League < ApplicationRecord
     class << self
       def setup(options = {})
-        Tsl::Scraping.league_range.each do |e|
-          generation_update(e, options)
+        Tsl::Scraping.league_range.each do |generation|
+          generation_update(generation, options)
         end
       end
 
       # rails r 'Tsl::League.generation_update(30)'
       def generation_update(generation, options = {})
         tp({"三段リーグ取得": generation}) unless Rails.env.test?
+
         league = Tsl::League.find_or_create_by!(generation: generation)
         scraping = Tsl::Scraping.new(options.merge(generation: generation))
+
         Array(scraping.user_infos).each do |user_info|
           user = Tsl::User.find_or_create_by!(name: user_info[:name])
           membership = league.memberships.find_by(user: user) || league.memberships.build(user: user)

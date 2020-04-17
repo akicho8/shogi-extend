@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
   create_table "acns2_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "room_id", comment: "対戦部屋"
     t.bigint "user_id", comment: "対戦者"
-    t.string "judge_key", null: false, comment: "勝敗"
+    t.string "judge_key", comment: "勝敗"
     t.integer "rensho_count", null: false, comment: "連勝数"
     t.integer "renpai_count", null: false, comment: "連敗数"
     t.integer "quest_index", comment: "解答中の問題"
@@ -54,6 +54,27 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_acns2_messages_on_room_id"
     t.index ["user_id"], name: "index_acns2_messages_on_user_id"
+  end
+
+  create_table "acns2_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "対戦者"
+    t.integer "rating", null: false, comment: "レーティング"
+    t.integer "rating_last_diff", null: false, comment: "直近レーティング変化"
+    t.integer "rating_max", null: false, comment: "レーティング(最大)"
+    t.integer "rensho_count", null: false, comment: "連勝数"
+    t.integer "renpai_count", null: false, comment: "連敗数"
+    t.integer "rensho_max", null: false, comment: "連勝数(最大)"
+    t.integer "renpai_max", null: false, comment: "連敗数(最大)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rating"], name: "index_acns2_profiles_on_rating"
+    t.index ["rating_last_diff"], name: "index_acns2_profiles_on_rating_last_diff"
+    t.index ["rating_max"], name: "index_acns2_profiles_on_rating_max"
+    t.index ["renpai_count"], name: "index_acns2_profiles_on_renpai_count"
+    t.index ["renpai_max"], name: "index_acns2_profiles_on_renpai_max"
+    t.index ["rensho_count"], name: "index_acns2_profiles_on_rensho_count"
+    t.index ["rensho_max"], name: "index_acns2_profiles_on_rensho_max"
+    t.index ["user_id"], name: "index_acns2_profiles_on_user_id"
   end
 
   create_table "acns2_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
