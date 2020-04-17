@@ -14,26 +14,27 @@ import mp3_win      from "soundeffect_lab/kansei.mp3"
 
 import { Howl, Howler } from 'howler'
 
-window.sound_objects = {}
+window.HowlObjects = {}
+
+const SoundPresets = {
+  o:        { file: mp3_o,        volume: null, },
+  x:        { file: mp3_x,        volume: null, },
+  start:    { file: mp3_start,    volume: null, },
+  lose:     { file: mp3_lose,     volume: 0.5,  },
+  win:      { file: mp3_win,      volume: 0.5,  },
+  click:    { file: mp3_click,    volume: 0.5,  },
+  shine:    { file: mp3_shine,    volume: 0.1,  },
+  stupid:   { file: mp3_stupid,   volume: 0.5,  }, // 使いにくい
+  deden:    { file: mp3_deden,    volume: 0.5,  },
+  pipopipo: { file: mp3_pipopipo, volume: 0.5,  },
+}
 
 export default {
   data() {
     return {
       sound_silent_p: false,
 
-      // sound_objects: {},
-      sound_presets: {
-        o:        { file: mp3_o,        volume: null, },
-        x:        { file: mp3_x,        volume: null, },
-        start:    { file: mp3_start,    volume: null, },
-        lose:     { file: mp3_lose,     volume: 0.5,  },
-        win:      { file: mp3_win,      volume: 0.5,  },
-        click:    { file: mp3_click,    volume: 0.5,  },
-        shine:    { file: mp3_shine,    volume: 0.1,  },
-        stupid:   { file: mp3_stupid,   volume: 0.5,  }, // 使いにくい
-        deden:    { file: mp3_deden,    volume: 0.5,  },
-        pipopipo: { file: mp3_pipopipo, volume: 0.5,  },
-      },
+      // HowlObjects: {},
     }
   },
 
@@ -43,7 +44,7 @@ export default {
         return
       }
 
-      const sound_preset = this.sound_presets[key]
+      const sound_preset = SoundPresets[key]
       if (sound_preset) {
         options = Object.assign({
           volume: sound_preset.volume || SOUND_VOLUME,
@@ -63,10 +64,10 @@ export default {
       }
 
       if (true) {
-        if (!window.sound_objects[src]) {
-          window.sound_objects[src] = new Howl({src: src, autoplay: true, volume: volume})
+        if (!window.HowlObjects[src]) {
+          window.HowlObjects[src] = new Howl({src: src, autoplay: true, volume: volume})
         }
-        const obj = window.sound_objects[src]
+        const obj = window.HowlObjects[src]
         obj.stop()
         obj.seek(0)
         obj.play()
