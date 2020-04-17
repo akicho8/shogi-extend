@@ -26,6 +26,9 @@ module Acns2
         end
         self.rensho_count = w
         self.renpai_count = l
+
+        # 一問も答えてないとき nil になるため
+        self.quest_index ||= 0
       end
     end
 
