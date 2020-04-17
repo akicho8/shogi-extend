@@ -3,11 +3,22 @@ module Acns2
     def subscribed
       Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_user&.name, params])
       stream_from "acns2/room_channel/#{params["room_id"]}"
+
+      if current_user
+        redis.sadd(:room_user_ids, current_user.id)
+        room_user_ids_broadcast
+      end
     end
 
     def unsubscribed
       # Any cleanup needed when channel is unsubscribed
       Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_user&.name])
+
+      if current_user
+        redis.srem(:room_user_ids, current_user.id)
+        room_user_ids_broadcast
+      end
+
       katimashita(:lose, :disconnect)
     end
 
@@ -42,7 +53,6 @@ module Acns2
 
     # <-- app/javascript/acns2_sample.vue
     def katimasitayo(data)
-      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data])
       katimashita(:win, :all_clear)
     end
 
@@ -79,16 +89,29 @@ module Acns2
         room.update!(final_key: final_key)
       end
 
-      room.reload              # 最新の memberships の情報を反映するため
+      room.reload
+
+      memberships_user_ids_remove(room)
 
       # 終了時
-      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_url], include: [:acns2_profile] } } }}, methods: [:final_info])
+      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_url], include: {acns2_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("acns2/room_channel/#{params["room_id"]}", {switch_to: "result_show", room: room_json})
       # --> app/javascript/acns2_sample.vue
     end
 
     def current_room
       Room.find(params["room_id"])
+    end
+
+    def room_user_ids_broadcast
+      ActionCable.server.broadcast("acns2/school_channel", room_user_ids: room_user_ids)
+    end
+
+    def memberships_user_ids_remove(room)
+      room.memberships.each do |m|
+        redis.srem(:room_user_ids, m.user.id)
+      end
+      room_user_ids_broadcast
     end
   end
 end

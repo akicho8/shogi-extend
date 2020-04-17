@@ -5,5 +5,9 @@ module Acns2
     def redis
       @redis ||= Redis.new(db: AppConfig[:redis_db_for_acns2])
     end
+
+    def room_user_ids
+      redis.smembers(:room_user_ids)
+    end
   end
 end

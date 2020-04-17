@@ -1,5 +1,17 @@
 <template lang="pug">
 .acns2_sample(:class="mode")
+  .columns
+    .column
+      .main_info.is-flex
+        p
+          | 購読数: {{ac_subscriptions_count()}}
+        //- p
+        //-   | 購読リスト: {{ac_info()}}
+        p(v-if="online_user_ids != null")
+          | オンライン: {{online_user_ids.length}}人
+        p(v-if="room_user_ids != null")
+          | 対戦中: {{room_user_ids.length}}人
+
   template(v-if="mode === 'lobby'")
     .columns
       .column
@@ -8,12 +20,6 @@
           b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
         .box.is-shadowless.taikityu.has-text-centered.has-background-light(v-if="matching_list && matching_list.length >= 1")
           | {{matching_list.length}}人待機中...
-
-        .content.has-text-centered
-          p(v-if="online_user_ids")
-            | オンライン: {{online_user_ids.length}}人
-          p(v-if="online_user_ids2")
-            | 対戦中: {{online_user_ids2.length}}人
 
   template(v-if="mode === 'matching_start'")
     b-notification.wait_notification(:closable="false")
@@ -109,9 +115,6 @@
               template(v-if="membership.user.acns2_profile.rating_last_diff < 0")
                 span.has-text-danger
                   | ({{membership.user.acns2_profile.rating_last_diff}})
-
-          .user_quest_index.has-text-weight-bold.is-size-4
-            | {{quest_index_for(membership)}}
         template(v-if="i === 0")
           .column.is-1.vs_mark.is-flex.has-text-weight-bold.is-size-4
             | vs
@@ -124,42 +127,7 @@
 
   debug_print
 
-  .columns
-    .column
-      .box
-        dump(:data="info" label="info")
-
-  .columns
-    .column
-      template(v-show="true")
-        table(border=1)
-          caption
-            | props
-          tr(v-for="(value, key) in $props")
-            th(v-text="key")
-            td(style="white-space: pre" v-text="JSON.stringify(value, null, 4)")
-
-        table(border=1)
-          caption
-            | data
-          tr(v-for="(value, key) in $data")
-            th(v-text="key")
-            td(style="white-space: pre" v-text="JSON.stringify(value, null, 4)")
-
-        table(border=1)
-          caption
-            | computed
-          tr(v-for="(e, key) in _computedWatchers")
-            th(v-text="key")
-            td(style="white-space: pre" v-text="JSON.stringify(e.value, null, 4)")
-
-        template(v-if="'$store' in this")
-          table(border=1)
-            caption
-              | $store
-            tr(v-for="(value, key) in $store.state")
-              th(v-text="key")
-              td(style="white-space: pre" v-text="JSON.stringify(value, null, 4)")
+  dump(:data="info" label="info")
 </template>
 
 <script>
@@ -179,6 +147,7 @@ export default {
 
       matching_list: null,       // 対戦待ちの人のIDを列挙している
       online_user_ids: null,       // オンライン人数
+      room_user_ids: null,       // オンライン人数
       quest_index: null,        // 解答中の問題インデックス
       freeze_mode: null,        // 解答直後に間を開けているとき true になっている
       progress_info: null,      // 各 membership_id はどこまで進んでいるかわかる {"1" => 2, "3" => 4}
@@ -188,15 +157,18 @@ export default {
       message: null,            // 入力中のメッセージ
 
       // private
+      $school: null,        // --> app/channels/acns2/school_channel.rb
       $lobby: null,         // --> app/channels/acns2/lobby_channel.rb
       $room: null,          // --> app/channels/acns2/room_channel.rb
     }
   },
 
   created() {
+    this.school_setup()
+
     if (this.info.debug_scene === "ready_go") {
       this.mode = "ready_go"
-      this.ready_go_setup()
+      this.room_setup()
     }
     if (this.info.debug_scene === "result_show") {
       this.mode = "result_show"
@@ -224,66 +196,90 @@ export default {
         })
       }
     },
-    lobby_setup() {
-      if (!this.$lobby) {
-        this.debug_alert("lobby_setup")
-        this.$lobby = consumer.subscriptions.create({channel: "Acns2::LobbyChannel"}, {
-          connected: () => {
-            this.debug_alert("lobby 接続")
-          },
-          disconnected: () => {
-            this.debug_alert("lobby 切断")
-          },
-          received: (data) => {
-            this.debug_alert("lobby 受信")
-            console.log(data)
 
-            if (data.matching_list) {
-              this.matching_list = data.matching_list
-            }
-
-            if (data.online_user_ids) {
-              this.online_user_ids = data.online_user_ids
-            }
-
-            if (data.room) {
-              const membership = data.room.memberships.find(e => e.user.id === this.current_user.id)
-              if (membership) {
-                this.room = data.room
-                this.ready_go_setup()
-              }
-            }
-          },
-        })
-      }
+    school_setup() {
+      this.$school = consumer.subscriptions.create({channel: "Acns2::SchoolChannel"}, {
+        connected: () => {
+          this.debug_alert("school 接続")
+        },
+        disconnected: () => {
+          this.debug_alert("school 切断")
+        },
+        received: (data) => {
+          if (data.online_user_ids) {
+            this.online_user_ids = data.online_user_ids
+          }
+          if (data.room_user_ids) {
+            this.room_user_ids = data.room_user_ids
+          }
+          this.$forceUpdate()
+        },
+      })
     },
+
+    lobby_setup() {
+      this.debug_alert("lobby_setup")
+      this.__assert(this.$lobby == null)
+      this.$lobby = consumer.subscriptions.create({channel: "Acns2::LobbyChannel"}, {
+        connected: () => {
+          this.debug_alert("lobby 接続")
+        },
+        disconnected: () => {
+          this.debug_alert("lobby 切断")
+        },
+        received: (data) => {
+          this.debug_alert("lobby 受信")
+
+          if (data.matching_list) {
+            this.matching_list = data.matching_list
+          }
+
+          if (data.room) {
+            const membership = data.room.memberships.find(e => e.user.id === this.current_user.id)
+            if (membership) {
+              this.lobby_unsubscribe()
+
+              this.room = data.room
+              this.room_setup()
+            }
+          }
+        },
+      })
+    },
+
     start_handle() {
       if (this.login_required2()) { return }
+
       this.sound_play("click")
       this.mode = "matching_start"
       this.$lobby.perform("matching_start")
     },
+
     cancel_handle() {
       this.sound_play("click")
       this.mode = "lobby"
       this.$lobby.perform("matching_cancel")
     },
-    ready_go_setup() {
+
+    room_setup() {
       this.mode = "ready_go"
 
       this.messages = []
       this.message = ""
+
       this.freeze_mode = false
       this.progress_info = {}
 
       this.quest_index = 0
       this.sound_play("deden")
 
+      this.__assert(this.$room == null)
       this.$room = consumer.subscriptions.create({ channel: "Acns2::RoomChannel", room_id: this.room.id }, {
         connected: () => {
           this.debug_alert("room 接続")
         },
         disconnected: () => {
+          alert("room disconnected")
           this.debug_alert("room 切断")
         },
         received: (data) => {
@@ -322,6 +318,9 @@ export default {
     },
     lobby_button_handle() {
       this.sound_play("click")
+
+      this.room_unsubscribe()
+
       this.mode = "lobby"
       this.lobby_setup()
     },
@@ -363,6 +362,30 @@ export default {
         this.self_window_open(this.login_path)
         return true
         // this.self_window_open("/xusers/sign_in")
+      }
+    },
+
+    ac_subscriptions_count() {
+      return consumer.subscriptions['subscriptions'].length
+    },
+
+    ac_info() {
+      return consumer.subscriptions['subscriptions'].map(e => JSON.parse(e.identifier))
+    },
+
+    lobby_unsubscribe() {
+      if (this.$lobby) {
+        this.$lobby.unsubscribe()
+        this.$lobby = null
+        this.$forceUpdate()
+      }
+    },
+
+    room_unsubscribe() {
+      if (this.$room) {
+        this.$room.unsubscribe()
+        this.$room = null
+        this.$forceUpdate()
       }
     },
   },
@@ -412,6 +435,9 @@ export default {
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
 .acns2_sample
+  .main_info
+    justify-content: space-between
+
   // lobby_mode
   .taikityu
     margin-top: 0.8rem
