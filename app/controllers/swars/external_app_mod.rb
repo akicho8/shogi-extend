@@ -48,10 +48,13 @@ module Swars
 
       if latest_open_limit
         if record = current_scope.order(battled_at: :desc).limit(latest_open_limit).last
-          record.h = view_context # 開発環境を iPhone で確認したいので
+          # 開発環境を iPhone で確認する
+          # ・これがないと @external_app_url が http://localhost:3000 から始まる
+          # ・そうするとするとぴよ将棋から .kif にアクセスできない
+          record.h = view_context
+
           @external_app_url = current_external_app_info.external_url(record)
-          slack_message(key: current_external_app_info.shortcut_name, body: [current_swars_user_key, @external_app_url].join(" "))
-          Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, @external_app_url])
+          slack_message(key: current_external_app_info.shortcut_name, body: current_swars_user_key)
           if current_external_app_info.redirect_in_controller
             redirect_to @external_app_url
           end
