@@ -128,7 +128,7 @@ module BackendScript
       info[:debug_scene] = current_debug_scene
 
       if current_debug_scene == :ready_go
-        c.current_user_set_sysop_unless_logout
+        c.sysop_login_unless_logout
 
         user = Colosseum::User.create!
         room = Acns2::Room.create! do |e|
@@ -141,7 +141,7 @@ module BackendScript
       end
 
       if current_debug_scene == :result_show
-        c.current_user_set_sysop_unless_logout
+        c.sysop_login_unless_logout
 
         user1 = h.current_user
         user2 = Colosseum::User.create!
