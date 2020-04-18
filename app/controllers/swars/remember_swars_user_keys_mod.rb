@@ -11,13 +11,10 @@ module Swars
     private
 
     def remember_swars_user_keys_update
-      if current_swars_user
-        if remember_swars_user_keys_max
-          if v = cookies.permanent.signed[:remember_swars_user_keys]
-            session[:remember_swars_user_keys] = v
-            cookies.delete(:remember_swars_user_keys)
-          end
-          session[:remember_swars_user_keys] = remember_swars_user_keys_normalize([current_swars_user.user_key, *session[:remember_swars_user_keys]])
+      if remember_swars_user_keys_max
+        if user = current_swars_user
+          list = [user.user_key, *session[:remember_swars_user_keys]]
+          session[:remember_swars_user_keys] = remember_swars_user_keys_normalize(list)
         end
       end
     end
