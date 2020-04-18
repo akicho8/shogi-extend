@@ -32,7 +32,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"最大1分考えるCPU",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/assets/robot/0110_robot-e704feafb4d5b9c5bdc19e6e70d310f7bccafa00f22cdb9e32f7c8cdc321b71a.png",
 # >>       :race_key=>"robot",
 # >>       :win_count=>0,
@@ -44,7 +44,7 @@ end
 # >>      {:id=>1,
 # >>       :name=>"運営",
 # >>       :show_path=>"/colosseum/users/1",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/assets/human/0013_fallback_avatar_icon-7ccc24e76f53875ea71137f6079ae8ad0657b15e80aeed6852501da430e757df.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>0,
@@ -56,7 +56,7 @@ end
 # >>      {:id=>6,
 # >>       :name=>"かなり弱いCPU",
 # >>       :show_path=>"/colosseum/users/6",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/assets/robot/0130_robot-fd50cb547420b0fd51a8f0c0e2c101d0ea25c5b93e47f66a3dd5e71c5ba51b62.png",
 # >>       :race_key=>"robot",
 # >>       :win_count=>0,
@@ -68,7 +68,7 @@ end
 # >>      {:id=>11,
 # >>       :name=>"名無しの棋士2号",
 # >>       :show_path=>"/colosseum/users/11",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/assets/human/0029_fallback_avatar_icon-b0ed0ceabf44431543557975f9b1653d14e2cf93e0ace0d981301c8adebcc57f.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>0,

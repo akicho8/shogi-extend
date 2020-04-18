@@ -65,7 +65,7 @@ nav.navbar.is-primary.is_screen_only
       /   .navbar-item
       /     b-dropdown(hoverable)
       /       = link_to([current_user], class: "navbar-link", slot: "trigger") do
-      /         = image_tag(current_user.avatar_url, class: "header_avatar_image")
+      /         = image_tag(current_user.avatar_path, class: "header_avatar_image")
       /         span.my_name
       /           = current_user.name
       /       b-dropdown-item(:has-link="true" :paddingless="true")
@@ -84,7 +84,7 @@ nav.navbar.is-primary.is_screen_only
         - if current_user
           .navbar-item.has-dropdown.is-hoverable
             = link_to([current_user], class: "navbar-link", slot: "trigger") do
-              = image_tag(current_user.avatar_url, class: "header_avatar_image")
+              = image_tag(current_user.avatar_path, class: "header_avatar_image")
               - if Rails.env.development? || Rails.env.test?
                 span.my_name
                   b= current_user.name
@@ -99,7 +99,7 @@ nav.navbar.is-primary.is_screen_only
           / span.navbar-item
           /   b-dropdown(hoverable)
           /     = link_to([current_user], class: "navbar-link", slot: "trigger") do
-          /       = image_tag(current_user.avatar_url, class: "header_avatar_image")
+          /       = image_tag(current_user.avatar_path, class: "header_avatar_image")
           /       span.my_name
           /         = current_user.name
           /     b-dropdown-item(:has-link="true" :paddingless="true")

@@ -18,7 +18,7 @@ end
 # >>   {:id=>1,
 # >>    :name=>"運営",
 # >>    :show_path=>"/colosseum/users/1",
-# >>    :avatar_url=>
+# >>    :avatar_path=>
 # >>     "/assets/human/0013_fallback_avatar_icon-7ccc24e76f53875ea71137f6079ae8ad0657b15e80aeed6852501da430e757df.png",
 # >>    :race_key=>"human",
 # >>    :win_count=>0,

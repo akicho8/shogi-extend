@@ -39,7 +39,7 @@
             .rensho_count
               | {{membership.rensho_count}}連勝中！
           figure.image.is-32x32
-            img.is-rounded(:src="membership.user.avatar_url")
+            img.is-rounded(:src="membership.user.avatar_path")
           .user_name.has-text-weight-bold
             | {{membership.user.name}}
           .user_quest_index.has-text-weight-bold.is-size-4
@@ -101,7 +101,7 @@
             .icon_up_message.has-text-danger.has-text-weight-bold
               | {{room.final_info.name}}
           figure.image.is-64x64
-            img.is-rounded(:src="membership.user.avatar_url")
+            img.is-rounded(:src="membership.user.avatar_path")
           .user_name.has-text-weight-bold
             | {{membership.user.name}}
           .user_quest_index.has-text-weight-bold.is-size-4

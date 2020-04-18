@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     methods: {
       memberships_format(battle) {
         return battle.memberships.map(e => {
-          return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
+          return `<img class="avatar_image" src="${e.user.avatar_path}" />${e.user.name}`
         }).join(" ")
       },
 

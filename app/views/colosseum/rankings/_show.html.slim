@@ -17,6 +17,6 @@ table.table.is-fullwidth
         td= record[:rank]
         td
           = link_to(user) do
-            = image_tag(user.avatar_url, class: "ranking_avatar")
+            = image_tag(user.avatar_path, class: "ranking_avatar")
             = user.name
         td= record[:win_ratio]

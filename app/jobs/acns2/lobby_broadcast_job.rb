@@ -3,7 +3,7 @@ module Acns2
     queue_as :default
 
     def perform(room)
-      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } }, methods: [:simple_quest_infos])
+      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:simple_quest_infos])
       ActionCable.server.broadcast("acns2/lobby_channel", room: room_json)
     end
 

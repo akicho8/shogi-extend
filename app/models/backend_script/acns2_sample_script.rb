@@ -90,7 +90,7 @@ module BackendScript
       info[:mode] ||= "lobby"
 
       if h.current_user
-        info[:current_user] = h.current_user.as_json(only: [:id, :name], methods: [:avatar_url])
+        info[:current_user] = h.current_user.as_json(only: [:id, :name], methods: [:avatar_path])
       end
 
       # info[:room] = current_room
@@ -137,7 +137,7 @@ module BackendScript
         end
 
         info[:mode] = "ready_go"
-        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_url] }} } }, methods: [:simple_quest_infos, :final_info])
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:simple_quest_infos, :final_info])
       end
 
       if current_debug_scene == :result_show
@@ -151,7 +151,7 @@ module BackendScript
         end
 
         info[:mode] = "result_show"
-        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_url], include: {acns2_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {acns2_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
       end
     end
   end

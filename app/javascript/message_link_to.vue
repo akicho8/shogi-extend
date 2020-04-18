@@ -1,7 +1,7 @@
 <template lang="pug">
   .message_link_to.inline_iikanjino_yoko_ljust
     template(v-if="icon_show")
-      img.avatar_image(@click.prevent="modal_open" :src="user_to.avatar_url" :class="`user_${user_to.id}`")
+      img.avatar_image(@click.prevent="modal_open" :src="user_to.avatar_path" :class="`user_${user_to.id}`")
     template(v-if="name_show")
       span.user_name(@click.prevent="modal_open" v-text="user_to.name" :class="`user_${user_to.id}`")
     slot
@@ -11,7 +11,7 @@
         .modal-card-head
           .modal-card-title
             a(:href="user_to.show_path")
-              img.avatar_image_in_dialog(:src="user_to.avatar_url")
+              img.avatar_image_in_dialog(:src="user_to.avatar_path")
             a(:href="user_to.show_path")
               | {{user_to.name}}
             | さんに送信

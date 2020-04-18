@@ -244,13 +244,13 @@ window.ColosseumBattleIndex = Vue.extend({
     memberships_format(battle) {
       if (true) {
         return battle.memberships.map(e => {
-          return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
+          return `<img class="avatar_image" src="${e.user.avatar_path}" />${e.user.name}`
         }).join(" ")
       } else {
         const list = _.groupBy(battle.memberships, "location_key")
         return _.map(list, (list, key) => {
           return list.map(e => {
-            return `<img class="avatar_image" src="${e.user.avatar_url}" />${e.user.name}`
+            return `<img class="avatar_image" src="${e.user.avatar_path}" />${e.user.name}`
           }).join("・")
         }).join(" vs ")
       }

@@ -33,7 +33,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -48,7 +48,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -64,7 +64,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -79,7 +79,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -94,7 +94,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -110,7 +110,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -125,7 +125,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -140,7 +140,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -155,7 +155,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -170,7 +170,7 @@ end
 # >>      {:id=>8,
 # >>       :name=>"きなこもち",
 # >>       :show_path=>"/colosseum/users/8",
-# >>       :avatar_url=>
+# >>       :avatar_path=>
 # >>        "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0f9af388bf27f702de208f3e186632294ee9b7c2/sgkinakomochi.png",
 # >>       :race_key=>"human",
 # >>       :win_count=>12,
@@ -181,7 +181,7 @@ end
 # >>   [{:id=>7,
 # >>     :name=>"弱いCPU",
 # >>     :show_path=>"/colosseum/users/7",
-# >>     :avatar_url=>
+# >>     :avatar_path=>
 # >>      "/assets/robot/0140_robot-31e558f84b967f63efd70bcfd54af2398ab701b0102470e503d349192dbb35da.png",
 # >>     :race_key=>"robot",
 # >>     :win_count=>5,
@@ -195,7 +195,7 @@ end
 # >>    {:id=>3,
 # >>     :name=>"あきれるほど弱いCPU",
 # >>     :show_path=>"/colosseum/users/3",
-# >>     :avatar_url=>
+# >>     :avatar_path=>
 # >>      "/assets/robot/0120_robot-da4aa855dd2b8d97caf50f6c9a2155fc19e8fea5252c86a38f23c864a743f2b1.png",
 # >>     :race_key=>"robot",
 # >>     :win_count=>6,
@@ -209,7 +209,7 @@ end
 # >>    {:id=>4,
 # >>     :name=>"ありえないほど弱いCPU",
 # >>     :show_path=>"/colosseum/users/4",
-# >>     :avatar_url=>
+# >>     :avatar_path=>
 # >>      "/assets/robot/0100_robot-66c73ea6ee9d1d87bad3f3b22739b74cbe9bdba17b06e9f65a8f7f63b6fb2467.png",
 # >>     :race_key=>"robot",
 # >>     :win_count=>13,
@@ -223,7 +223,7 @@ end
 # >>    {:id=>5,
 # >>     :name=>"めちゃくちゃ弱いCPU",
 # >>     :show_path=>"/colosseum/users/5",
-# >>     :avatar_url=>
+# >>     :avatar_path=>
 # >>      "/assets/robot/0150_robot-619f7c7c4831fffd861716e3c76fe47c8605b2a036522a89d2635078b20bc213.png",
 # >>     :race_key=>"robot",
 # >>     :win_count=>7,
@@ -237,7 +237,7 @@ end
 # >>    {:id=>6,
 # >>     :name=>"かなり弱いCPU",
 # >>     :show_path=>"/colosseum/users/6",
-# >>     :avatar_url=>
+# >>     :avatar_path=>
 # >>      "/assets/robot/0130_robot-fd50cb547420b0fd51a8f0c0e2c101d0ea25c5b93e47f66a3dd5e71c5ba51b62.png",
 # >>     :race_key=>"robot",
 # >>     :win_count=>1,
@@ -250,7 +250,7 @@ end
 # >>    {:id=>2,
 # >>     :name=>"ルール覚えたてのCPU",
 # >>     :show_path=>"/colosseum/users/2",
-# >>     :avatar_url=>
+# >>     :avatar_path=>
 # >>      "/assets/robot/0110_robot-e704feafb4d5b9c5bdc19e6e70d310f7bccafa00f22cdb9e32f7c8cdc321b71a.png",
 # >>     :race_key=>"robot",
 # >>     :win_count=>5,

@@ -222,7 +222,7 @@ module Colosseum
       end
 
       # FALLBACK_ICONS_DEBUG=1 foreman s
-      def avatar_url
+      def avatar_path
         if ENV["FALLBACK_ICONS_DEBUG"]
           return ActionController::Base.helpers.asset_path(self.class.image_files(:robot).sample)
         end

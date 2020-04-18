@@ -11,7 +11,7 @@ javascript:
 
   .columns
     .column.is-one-quarter
-      = image_tag(current_record.avatar_url, size: "100%")
+      = image_tag(current_record.avatar_path, size: "100%")
       - if current_user == current_record
         .content
           p
