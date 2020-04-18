@@ -22,14 +22,16 @@
           | {{matching_list.length}}人待機中...
 
   template(v-if="mode === 'matching_start'")
-    b-notification.wait_notification(:closable="false")
-      .has-text-centered.has-text-weight-bold
-        | 対戦相手を待機中...
-      b-loading.is_clickable(:active="true" :is-full-page="false" :can-cancel="true" :on-cancel="cancel_handle")
+    .columns
+      .column
+        b-notification(:closable="false" type="is-white")
+          .has-text-centered.has-text-weight-bold
+            | 対戦相手を待機中...
+          b-progress(type="is-primary")
 
-    template(v-if="development_p")
-      .buttons.is-centered
-        b-button.has-text-weight-bold(@click="cancel_handle" rounded size="is-small") キャンセル
+        template(v-if="development_p")
+          .buttons.is-centered
+            b-button.has-text-weight-bold(@click="cancel_handle" rounded size="is-small") キャンセル
 
   template(v-if="mode === 'ready_go'")
     .columns.is-centered.is-mobile
