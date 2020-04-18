@@ -14,8 +14,8 @@ module Swars
 
       def perform
         User.recently_only.limit(params[:limit]).each do |user|
-          report_for(user.user_key) do
-            Battle.user_import(params.merge(user_key: user.user_key))
+          report_for(user.key) do
+            Battle.user_import(params.merge(user_key: user.key))
           end
         end
       end

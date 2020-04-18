@@ -129,7 +129,7 @@ module Swars
     def basic_summary
       stat = Hash.new(0)
 
-      count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.user_key}"), suffix: "")
+      count_set(stat, "サンプル対局数", memberships.count, url: query_path("tag:#{user.key}"), suffix: "")
 
       ms_a = judge_group_memberships(:win)
       parcentage_set(stat, "勝率", ms_a.size, win_lose_total_count, great_p: win_rate >= 0.6, memberships: ms_a)
@@ -189,7 +189,7 @@ module Swars
       v = v.group_by(&:itself).transform_values(&:size) # TODO: ruby 2.6 の新しいメソッドで置き換えれるはず
       v = v.sort_by { |k, v| -v }
       v.inject({}) do |a, (key, val)|
-        path = query_path("#{user.user_key} muser:#{user.user_key} ms_tag:#{key}", import_skip: true)
+        path = query_path("#{user.key} muser:#{user.key} ms_tag:#{key}", import_skip: true)
         if Bioshogi::TacticInfo.flat_lookup(key)
           key = h.link_to(key, Rails.application.routes.url_helpers.url_for([:tactic_note, id: key, only_path: true]), :class => "no-decoration")
         end

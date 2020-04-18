@@ -34,7 +34,7 @@ module Swars
       parts = []
       parts << "shogiwars"
       if current_swars_user
-        parts << current_swars_user.user_key
+        parts << current_swars_user.key
       end
       parts << Time.current.strftime("%Y%m%d%H%M%S")
       parts << kifu_format_info.key

@@ -117,7 +117,7 @@ module Swars
     end
 
     def name_with_grade
-      "#{user.user_key} #{grade.name}"
+      "#{user.key} #{grade.name}"
     end
 
     def location
