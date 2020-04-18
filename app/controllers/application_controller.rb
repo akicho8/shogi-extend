@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
 
       user = nil
       id = session[:user_id]
-      id ||= cookies.signed[:user_id]
+      id ||= cookies.encrypted[:user_id]
       if id
         user ||= Colosseum::User.find_by(id: id)
       end
@@ -120,12 +120,12 @@ class ApplicationController < ActionController::Base
         if params[:__create_user_name__]
           user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
           user.lobby_in_handle
-          cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
+          cookies.encrypted[:user_id] = {value: user.id, expires: 1.years.from_now}
         end
       end
 
       # if user
-      #   cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
+      #   cookies.encrypted[:user_id] = {value: user.id, expires: 1.years.from_now}
       # end
 
       user
@@ -144,13 +144,13 @@ class ApplicationController < ActionController::Base
       end
 
       if user_id
-        cookies.signed[:user_id] = { value: user_id, expires: 1.years.from_now }
+        cookies.encrypted[:user_id] = { value: user_id, expires: 1.years.from_now }
       else
         cookies.delete(:user_id)
       end
     end
 
-    def current_user_set_sysop_unless_logout
+    def sysop_login_unless_logout
       unless current_user
         current_user_set_id(Colosseum::User.sysop.id)
       end

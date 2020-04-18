@@ -16,8 +16,8 @@ module ApplicationCable
     private
 
     def find_verified_user
-      if cookies.signed[:user_id]
-        user = Colosseum::User.find_by(id: cookies.signed[:user_id])
+      if cookies.encrypted[:user_id]
+        user = Colosseum::User.find_by(id: cookies.encrypted[:user_id])
         #
         # ここで reject するとログインしていない人が観戦できなくる
         # unless user
