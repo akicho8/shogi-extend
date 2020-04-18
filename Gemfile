@@ -127,7 +127,6 @@ gem "rmagick"                   # for Bioshogi to_img method (mini-magickに変�
 
 # for Swars::Agent
 gem "nokogiri"
-gem "mechanize"
 
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
