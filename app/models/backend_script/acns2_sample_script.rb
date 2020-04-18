@@ -38,7 +38,7 @@ module BackendScript
         {
           :label   => "画面",
           :key     => :debug_scene,
-          :elems   => { "ロビー" => nil, "対戦" => :ready_go, "結果" => :result_show },
+          :elems   => { "ロビー" => nil, "対戦" => :ready_go, "結果" => :result_show, "編集"  => :edit, },
           :type    => :select,
           :default => current_debug_scene,
         },
@@ -136,7 +136,6 @@ module BackendScript
           e.memberships.build(user: user)
         end
 
-        info[:mode] = "ready_go"
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:simple_quest_infos, :final_info])
       end
 
@@ -150,8 +149,11 @@ module BackendScript
           e.memberships.build(user: user2, judge_key: :lose, quest_index: 2)
         end
 
-        info[:mode] = "result_show"
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {acns2_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
+      end
+
+      if current_debug_scene == :edit
+        c.sysop_login_unless_logout
       end
     end
   end

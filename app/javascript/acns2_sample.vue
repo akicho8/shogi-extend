@@ -11,6 +11,8 @@
           | オンライン: {{online_user_ids.length}}人
         p(v-if="room_user_ids != null")
           | 対戦中: {{room_user_ids.length}}人
+        p(v-if="matching_list != null")
+          | 対戦待ち: {{matching_list.length}}人
 
   template(v-if="mode === 'lobby'")
     .columns
@@ -18,8 +20,8 @@
         .title.is-3.has-text-centered 詰将棋ファイター
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
-        .box.is-shadowless.taikityu.has-text-centered.has-background-light(v-if="matching_list && matching_list.length >= 1")
-          | {{matching_list.length}}人待機中...
+        .buttons.is-centered
+          b-button.has-text-weight-bold(@click="post_handle") 投稿
 
   template(v-if="mode === 'matching_start'")
     .columns.is-paddingless
@@ -28,7 +30,7 @@
           | 対戦相手を待機中
         b-progress(type="is-primary")
         .buttons.is-centered
-          a.delete.is-large(@click="cancel_handle")
+          button.delete.is-large(@click="cancel_handle")
 
   template(v-if="mode === 'ready_go'")
     .columns.is-centered.is-mobile
@@ -51,7 +53,7 @@
         shogi_player(
           :key="`quest_${quest_index}`"
           ref="main_sp"
-          :run_mode="'play_mode'"
+          :sp_run_mode="'play_mode'"
           :kifu_body="current_quest_base_sfen"
           :summary_show="false"
           :setting_button_show="false"
@@ -124,6 +126,74 @@
           b-button.has-text-weight-bold(@click="lobby_button_handle" type="is-primary")
             | ロビーに戻る
 
+  template(v-if="mode === 'edit'")
+    .columns.is-centered
+      .column.is-half
+        //- b-field.switch_grouped_container(grouped position="is-centered")
+        //-   .control
+        //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
+
+        template(v-for="(e, i) in answers")
+          b-tag
+            | {{i + 1}}
+
+        b-field(position="is-centered")
+          p.control
+            b-button(@click="edit_mode_handle") 配置
+          p.control
+            b-button(@click="play_mode_handle") 配置
+          p.control
+            b-button(@click="edit_mode_handle") 情報
+
+        b-field(position="is-centered")
+          b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
+          b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 解答
+
+        shogi_player(
+          :run_mode="sp_run_mode"
+          :kifu_body="sp_sfen_body"
+          :start_turn="-1"
+          :debug_mode="false"
+          :key_event_capture="false"
+          :slider_show="true"
+          :controller_show="true"
+          :theme="'simple'"
+          :size="'default'"
+          :sound_effect="true"
+          :volume="0.2"
+          @update:play_mode_long_sfen="edit_play_mode_long_sfen_set"
+          ref="edit_sp"
+          )
+
+        .buttons.is-centered.konotejunsiikai(v-if="sp_run_mode === 'play_mode'")
+          b-button(@click="edit_save_handle" type="is-primary") この手順を正解とする
+
+        b-tabs.kotaenonarabi(v-model="answer_index" position="is-centered" expanded :animated="false" v-if="answers.length >= 1")
+          template(v-for="(e, i) in answers")
+            b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e}`")
+              shogi_player(
+                :run_mode="'view_mode'"
+                :kifu_body="e"
+                :start_turn="-1"
+                :debug_mode="false"
+                :key_event_capture="false"
+                :slider_show="true"
+                :controller_show="true"
+                :theme="'simple'"
+                :size="'default'"
+                :sound_effect="true"
+                :volume="0.2"
+                )
+              .buttons.is-centered
+                b-button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)")
+
+        .input_forms
+          b-field(label="タイトル" label-position="on-border")
+            b-input(v-model="sp_title" size="is-small")
+
+          b-field(label="説明" label-position="on-border")
+            b-input(v-model="sp_desc" size="is-small" type="textarea" rows="2")
+
   debug_print
 
   dump(:data="info" label="info")
@@ -159,6 +229,14 @@ export default {
       $school: null,        // --> app/channels/acns2/school_channel.rb
       $lobby: null,         // --> app/channels/acns2/lobby_channel.rb
       $room: null,          // --> app/channels/acns2/room_channel.rb
+
+      // editモード
+      sp_run_mode: null,
+      sp_sfen_body: null,
+      sp_title: null,
+      sp_desc: null,
+      answers: null,
+      answer_index: null,
     }
   },
 
@@ -171,6 +249,10 @@ export default {
     }
     if (this.info.debug_scene === "result_show") {
       this.mode = "result_show"
+    }
+    if (this.info.debug_scene === "edit") {
+      this.mode = "edit"
+      this.edit_setup()
     }
 
     if (this.mode === "lobby") {
@@ -387,6 +469,152 @@ export default {
         this.$forceUpdate()
       }
     },
+
+    post_handle() {
+      this.sound_play("click")
+      this.mode = "edit"
+      this.edit_setup()
+    },
+
+    edit_setup() {
+      this.sp_run_mode = "edit_mode"
+      this.sp_sfen_body = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      this.sp_title = ""
+      this.sp_desc = ""
+      this.answers_init()
+    },
+
+    edit_play_mode_long_sfen_set(long_sfen) {
+      this.debug_alert(long_sfen)
+    },
+
+    sfen_to_save() {
+      const sp = this.$refs.edit_sp
+
+      console.log(sp.init_sfen)
+      console.log(sp.moves)
+      console.log(sp.turn_offset)
+
+      if (sp.init_sfen) {
+        const parts = []
+        parts.push(sp.init_sfen)
+        if (sp.turn_offset >= 1) {
+          parts.push(" moves ")
+          parts.push(_.take(sp.moves, sp.turn_offset).join(" "))
+        }
+        const sfen = parts.join(" ")
+        return sfen
+      }
+    },
+
+    edit_save_handle() {
+      const sfen = this.sfen_to_save()
+
+      if (sfen) {
+        if (!this.answers.includes(sfen) || this.development_p) {
+          this.answers.push(sfen)
+          this.$nextTick(() => this.answer_index = this.answers.length - 1)
+          console.log(this.answer_index)
+        }
+      }
+
+      // this.$gtag.event("create", {event_category: "詰将棋保存"})
+
+      // const params = new URLSearchParams()
+      // params.set("input_text", this.input_text)
+      // params.set("edit_mode", "adapter")
+
+    //   this.http_command("POST", this.$options.post_path, params, e => {
+    //     this.change_counter = 0
+    //
+    //     this.bs_error = null
+    //     this.all_kifs = null
+    //
+    //     if (e.redirect_to) {
+    //       if (true) {
+    //         // リダイレクトしたあとブラウザバックで戻ると前の入力が残っている状態になる
+    //         // このとき内部の変数 input_text は空！なので、KENTOを押すと空の棋譜を作って飛んでします
+    //         // それを防ぐためにリダイレクト前に消している
+    //         this.input_text = ""
+    //       }
+    //       this.self_window_open(e.redirect_to)
+    //     }
+    //
+    //     if (e.bs_error) {
+    //       this.bs_error = e.bs_error
+    //       this.talk(this.bs_error.message, {rate: 1.0})
+    //
+    //       if (this.development_p) {
+    //         this.$buefy.toast.open({message: e.bs_error.message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
+    //       }
+    //
+    //       if (this.development_p && false) {
+    //         this.$buefy.dialog.alert({
+    //           title: "ERROR",
+    //           message: `<div>${e.bs_error.message}</div><div class="error_message_pre_with_margin is-size-7">${e.bs_error.board}</div>`,
+    //           canCancel: ["outside", "escape"],
+    //           type: "is-danger",
+    //           hasIcon: true,
+    //           icon: "times-circle",
+    //           iconPack: "fa",
+    //           trapFocus: true,
+    //         })
+    //       }
+    //     }
+    //
+    //     if (e.all_kifs) {
+    //       this.all_kifs = e.all_kifs
+    //     }
+    //
+    //     if (e.record) {
+    //       this.record = e.record
+    //       callback()
+    //     }
+    //   })
+    //
+    },
+
+    kotae_delete_handle(index) {
+      this.answers = this.answers.filter((e, i) => i !== index)
+      this.$nextTick(() => this.answer_index = _.clamp(this.answer_index, 0, this.answers.length - 1))
+    },
+
+    edit_mode_handle(e) {
+      const confirmed = await new Promise((resolve, reject) => {
+        this.$buefy.dialog.confirm({
+          message: `Are you sure?`,
+          onCancel: () => reject(false),
+          onConfirm: () => resolve(true)
+        })
+      })
+
+      // const confirmed = await this.$buefy.dialog.confirm({
+      //   message: `Are you sure?`
+      // }).promise()
+
+      // await this.$buefy.dialog.confirm({
+      //   title: 'Deleting account',
+      //   message: 'Are you sure you want to <b>delete</b> your account? This action cannot be undone.',
+      //   confirmText: 'Delete Account',
+      //   type: 'is-danger',
+      //   hasIcon: true,
+      //   // onConfirm: () => this.sp_run_mode = "edit_mode"
+      // })
+      alert(1)
+
+      // e.preventDefault()
+      return
+
+      // this.answers_init()
+    },
+
+    play_mode_handle() {
+    },
+
+    answers_init() {
+      this.answers = []
+      this.answer_index = 0
+    },
   },
 
   computed: {
@@ -438,8 +666,6 @@ export default {
     justify-content: space-between
 
   // lobby_mode
-  .taikityu
-    margin-top: 0.8rem
 
   // 対戦相手を待機中...
   .wait_notification
@@ -482,5 +708,21 @@ export default {
       flex-direction: column
       justify-content: center
       align-items: center
+
+  // 編集
+  // .switch_grouped_container
+  //   margin-top: 0.5rem
+
+  // この手順を正解にする
+  .konotejunsiikai
+    margin-top: 0.8rem
+
+  // 答えのタブ
+  .kotaenonarabi
+    margin-top: 0.8rem
+
+  // タイトルと説明
+  .input_forms
+    margin-top: 0.8rem
 
 </style>
