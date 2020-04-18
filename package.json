@@ -1,6 +1,8 @@
 {
   "license": "UNLICENSED",
   "dependencies": {
+    "@rails/ujs": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
     "@rails/webpacker": "3.2.0",
     "actioncable": "^5.2.3",
     "assert": "^1.4.1",
@@ -45,7 +47,6 @@
     "pug": "^2.0.4",
     "qs": "^6.9.1",
     "rails-erb-loader": "^5.5.2",
-    "rails-ujs": "^5.1.5",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "shogi-player": "^0.0.175",
