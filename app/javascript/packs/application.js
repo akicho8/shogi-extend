@@ -123,6 +123,7 @@ import vue_storage from "support/vue_storage.js"
 import vue_fetch from "support/vue_fetch.js"
 import vue_clipboard from "support/vue_clipboard.js"
 import vue_sound from "support/vue_sound.js"
+import vue_actioncable from "support/vue_actioncable.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import message_link_to from "message_link_to.vue"
@@ -169,6 +170,7 @@ Vue.mixin({
     vue_fetch,
     vue_clipboard,
     vue_sound,
+    vue_actioncable,
   ],
 
   // よくない命名規則だけどこっちの方が開発しやすい
