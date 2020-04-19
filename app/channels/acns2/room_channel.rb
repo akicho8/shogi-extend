@@ -82,7 +82,8 @@ module Acns2
         end
 
         ab = mm.collect { |e| e.user.acns2_profile.rating }
-        ab = EloRating.rating_update(*ab)
+        ab = EloRating.rating_update2(*ab)
+        ab = ab.collect(&:round)
         mm.each.with_index { |m, i| m.user.acns2_profile.update!(rating: ab[i]) }
 
         mm.each(&:save!)
