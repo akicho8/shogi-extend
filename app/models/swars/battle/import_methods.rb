@@ -11,13 +11,14 @@ module Swars
 
           if Rails.env.development?
             user_import(user_key: "devuser1")
-            puts Crawler::RegularCrawler.new.run.rows.to_t
-            puts Crawler::ExpertCrawler.new.run.rows.to_t
+            if ENV["IT_IS_CALLED_THE_CRAWLER_AT_THE_TIME_OF_SETUP"]
+              puts Crawler::RegularCrawler.new.run.rows.to_t
+              puts Crawler::ExpertCrawler.new.run.rows.to_t
+            end
             find_each(&:remake)
-            p count
           end
 
-          if Rails.env.development?
+          if Rails.env.development? && ENV["SEED_GAME_RECORD_BOUNDARY_LINE_CHECK_FOR_DATA_INPUT_OF_THE_PAPER"]
             tp "棋譜用紙の境界線チェック用データ投入"
             [
               { turn_max:   0, preset_key: "平手",   },
