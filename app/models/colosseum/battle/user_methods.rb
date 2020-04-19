@@ -2,7 +2,7 @@ module Colosseum::Battle::UserMethods
   extend ActiveSupport::Concern
 
   included do
-    has_many :memberships, dependent: :destroy
+    has_many :memberships, dependent: :restrict_with_exception
     has_many :users, through: :memberships
   end
 
