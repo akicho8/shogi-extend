@@ -5,8 +5,6 @@
       .main_info.is-flex
         p
           | 購読数: {{ac_subscriptions_count()}}
-        //- p
-        //-   | 購読リスト: {{ac_info()}}
         p(v-if="online_user_ids != null")
           | オンライン: {{online_user_ids.length}}人
         p(v-if="room_user_ids != null")
@@ -53,7 +51,7 @@
         shogi_player(
           :key="`quest_${quest_index}`"
           ref="main_sp"
-          :sp_run_mode="'play_mode'"
+          :run_mode="'play_mode'"
           :kifu_body="current_quest_base_sfen"
           :summary_show="false"
           :setting_button_show="false"
@@ -133,66 +131,79 @@
         //-   .control
         //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
 
-        template(v-for="(e, i) in answers")
-          b-tag
-            | {{i + 1}}
+        //- template(v-for="(e, i) in answers")
+        //-   b-tag
+        //-     | {{i + 1}}
 
-        b-field(position="is-centered")
-          p.control
-            b-button(@click="edit_mode_handle") 配置
-          p.control
-            b-button(@click="play_mode_handle") 配置
-          p.control
-            b-button(@click="edit_mode_handle") 情報
+        //- b-field(position="is-centered" grouped)
+        //-   p.control
+        //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 配置
+        //-   p.control
+        //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 解答
+        //-   p.control
+        //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
+        //-   b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
 
-        b-field(position="is-centered")
-          b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
-          b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 解答
+        //- b-field(position="is-centered")
+        //-   b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
+        //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 解答
 
-        shogi_player(
-          :run_mode="sp_run_mode"
-          :kifu_body="sp_sfen_body"
-          :start_turn="-1"
-          :debug_mode="false"
-          :key_event_capture="false"
-          :slider_show="true"
-          :controller_show="true"
-          :theme="'simple'"
-          :size="'default'"
-          :sound_effect="true"
-          :volume="0.2"
-          @update:play_mode_long_sfen="edit_play_mode_long_sfen_set"
-          ref="edit_sp"
-          )
+        b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
+          b-tab-item(label="配置")
+          b-tab-item
+            template(slot="header")
+              span
+                | 解答
+              b-tag(rounded) {{answers.length}}
+          b-tab-item(label="情報")
 
-        .buttons.is-centered.konotejunsiikai(v-if="sp_run_mode === 'play_mode'")
-          b-button(@click="edit_save_handle" type="is-primary") この手順を正解とする
+        template(v-if="edit_tab_key === 'edit_mode' || edit_tab_key === 'play_mode'")
+          shogi_player(
+            :run_mode="sp_run_mode"
+            :kifu_body="sp_sfen_body"
+            :start_turn="-1"
+            :debug_mode="false"
+            :key_event_capture="false"
+            :slider_show="true"
+            :controller_show="true"
+            :theme="'simple'"
+            :size="'default'"
+            :sound_effect="true"
+            :volume="0.2"
+            @update:play_mode_long_sfen="edit_play_mode_long_sfen_set"
+            ref="edit_sp"
+            )
 
-        b-tabs.kotaenonarabi(v-model="answer_index" position="is-centered" expanded :animated="false" v-if="answers.length >= 1")
-          template(v-for="(e, i) in answers")
-            b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e}`")
-              shogi_player(
-                :run_mode="'view_mode'"
-                :kifu_body="e"
-                :start_turn="-1"
-                :debug_mode="false"
-                :key_event_capture="false"
-                :slider_show="true"
-                :controller_show="true"
-                :theme="'simple'"
-                :size="'default'"
-                :sound_effect="true"
-                :volume="0.2"
-                )
-              .buttons.is-centered
-                b-button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)")
+        template(v-if="edit_tab_key === 'play_mode'")
+          .buttons.is-centered.konotejunsiikai
+            b-button(@click="edit_save_handle" type="is-primary") この手順を正解とする
 
-        .input_forms
-          b-field(label="タイトル" label-position="on-border")
-            b-input(v-model="sp_title" size="is-small")
+          b-tabs.kotaenonarabi(v-model="answer_index" position="is-centered" expanded :animated="false" v-if="answers.length >= 1")
+            template(v-for="(e, i) in answers")
+              b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e}`")
+                shogi_player(
+                  :run_mode="'view_mode'"
+                  :kifu_body="e"
+                  :start_turn="-1"
+                  :debug_mode="false"
+                  :key_event_capture="false"
+                  :slider_show="true"
+                  :controller_show="true"
+                  :theme="'simple'"
+                  :size="'default'"
+                  :sound_effect="true"
+                  :volume="0.2"
+                  )
+                .buttons.is-centered
+                  b-button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)")
 
-          b-field(label="説明" label-position="on-border")
-            b-input(v-model="sp_desc" size="is-small" type="textarea" rows="2")
+        template(v-if="edit_tab_key === 'form_mode'")
+          .input_forms
+            b-field(label="タイトル" label-position="on-border")
+              b-input(v-model="sp_title" size="is-small")
+
+            b-field(label="説明" label-position="on-border")
+              b-input(v-model="sp_desc" size="is-small" type="textarea" rows="2")
 
   debug_print
 
@@ -203,6 +214,18 @@
 const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
+
+import MemoryRecord from 'js-memory-record'
+
+class TabInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { key: "edit_mode", name: "配置", },
+      { key: "play_mode", name: "解答", },
+      { key: "form_mode", name: "情報", },
+    ]
+  }
+}
 
 export default {
   name: "acns2_sample",
@@ -232,6 +255,7 @@ export default {
 
       // editモード
       sp_run_mode: null,
+      edit_tab_index: null,
       sp_sfen_body: null,
       sp_title: null,
       sp_desc: null,
@@ -470,6 +494,7 @@ export default {
 
     edit_setup() {
       this.sp_run_mode = "edit_mode"
+      this.edit_tab_index = TabInfo.fetch("edit_mode").code
       this.sp_sfen_body = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
       this.sp_title = ""
       this.sp_desc = ""
@@ -571,41 +596,34 @@ export default {
       this.$nextTick(() => this.answer_index = _.clamp(this.answer_index, 0, this.answers.length - 1))
     },
 
-    edit_mode_handle(e) {
-      const confirmed = await new Promise((resolve, reject) => {
-        this.$buefy.dialog.confirm({
-          message: `Are you sure?`,
-          onCancel: () => reject(false),
-          onConfirm: () => resolve(true)
-        })
-      })
-
-      // const confirmed = await this.$buefy.dialog.confirm({
-      //   message: `Are you sure?`
-      // }).promise()
-
-      // await this.$buefy.dialog.confirm({
-      //   title: 'Deleting account',
-      //   message: 'Are you sure you want to <b>delete</b> your account? This action cannot be undone.',
-      //   confirmText: 'Delete Account',
-      //   type: 'is-danger',
-      //   hasIcon: true,
-      //   // onConfirm: () => this.sp_run_mode = "edit_mode"
-      // })
-      alert(1)
-
-      // e.preventDefault()
-      return
-
-      // this.answers_init()
+    edit_mode_handle() {
+      this.edit_setup()
     },
 
     play_mode_handle() {
+      this.sp_run_mode = "play_mode"
+      this.edit_tab_index = TabInfo.fetch("play_mode").code
+    },
+
+    form_mode_handle() {
+      this.edit_tab_index = TabInfo.fetch("form_mode").code
     },
 
     answers_init() {
       this.answers = []
       this.answer_index = 0
+    },
+
+    tab_change_handle() {
+      if (this.edit_tab_key === "edit_mode") {
+        this.edit_mode_handle()
+      }
+      if (this.edit_tab_key === "play_mode") {
+        this.play_mode_handle()
+      }
+      if (this.edit_tab_key === "form_mode") {
+        this.form_mode_handle()
+      }
     },
   },
 
@@ -646,6 +664,10 @@ export default {
       const url = new URL(location)
       url.searchParams.set("login_required", true)
       return url.toString()
+    },
+
+    edit_tab_key() {
+      return TabInfo.fetch(this.edit_tab_index).key
     },
   },
 }
@@ -704,6 +726,11 @@ export default {
   // 編集
   // .switch_grouped_container
   //   margin-top: 0.5rem
+  .main_tabs
+    .tab-content
+      padding: 0
+    .tag
+      margin-left: 0.5rem
 
   // この手順を正解にする
   .konotejunsiikai
