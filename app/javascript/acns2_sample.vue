@@ -152,12 +152,11 @@
           b-tab-item(label="配置")
           b-tab-item
             template(slot="header")
-              span
-                | 解答
+              span 解答
               b-tag(rounded) {{answers.length}}
           b-tab-item(label="情報")
 
-        template(v-if="edit_tab_key === 'edit_mode' || edit_tab_key === 'play_mode'")
+        template(v-if="edit_tab_info.sp_show")
           shogi_player(
             :run_mode="sp_run_mode"
             :kifu_body="sp_sfen_body"
@@ -174,9 +173,9 @@
             ref="edit_sp"
             )
 
-        template(v-if="edit_tab_key === 'play_mode'")
+        template(v-if="edit_tab_info.key === 'play_mode'")
           .buttons.is-centered.konotejunsiikai
-            b-button(@click="edit_save_handle" type="is-primary") この手順を正解とする
+            b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
 
           b-tabs.kotaenonarabi(v-model="answer_index" position="is-centered" expanded :animated="false" v-if="answers.length >= 1")
             template(v-for="(e, i) in answers")
@@ -197,13 +196,17 @@
                 .buttons.is-centered
                   b-button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)")
 
-        template(v-if="edit_tab_key === 'form_mode'")
+        template(v-if="edit_tab_info.key === 'form_mode'")
           .input_forms
             b-field(label="タイトル" label-position="on-border")
               b-input(v-model="sp_title" size="is-small")
 
             b-field(label="説明" label-position="on-border")
               b-input(v-model="sp_desc" size="is-small" type="textarea" rows="2")
+
+        .buttons.is-centered
+          b-button.has-text-weight-bold(@click="save_handle" type="is-primary")
+            | 保存
 
   debug_print
 
@@ -214,16 +217,19 @@
 const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
-
 import MemoryRecord from 'js-memory-record'
 
-class TabInfo extends MemoryRecord {
+class EditTabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "edit_mode", name: "配置", },
-      { key: "play_mode", name: "解答", },
-      { key: "form_mode", name: "情報", },
+      { key: "edit_mode", name: "配置", sp_show: true,  },
+      { key: "play_mode", name: "解答", sp_show: true,  },
+      { key: "form_mode", name: "情報", sp_show: false, },
     ]
+  }
+
+  get handle_method_name() {
+    return `${this.key}_handle`
   }
 }
 
@@ -494,10 +500,11 @@ export default {
 
     edit_setup() {
       this.sp_run_mode = "edit_mode"
-      this.edit_tab_index = TabInfo.fetch("edit_mode").code
+      this.edit_tab_index = EditTabInfo.fetch("edit_mode").code
       this.sp_sfen_body = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
       this.sp_title = ""
       this.sp_desc = ""
+      this.init_sfen = null
       this.answers_init()
     },
 
@@ -513,6 +520,8 @@ export default {
       console.log(sp.turn_offset)
 
       if (sp.init_sfen) {
+        this.init_sfen = sp.init_sfen
+
         const parts = []
         parts.push(sp.init_sfen)
         if (sp.turn_offset >= 1) {
@@ -524,24 +533,64 @@ export default {
       }
     },
 
-    edit_save_handle() {
+    edit_answer_force_push() {
+      const sfen = this.sfen_to_save()
+      if (sfen) {
+        this.answers.push(sfen)
+        this.$nextTick(() => this.answer_index = this.answers.length - 1)
+      }
+    },
+
+    edit_stock_handle() {
       const sfen = this.sfen_to_save()
 
       if (sfen) {
-        if (!this.answers.includes(sfen) || this.development_p) {
-          this.answers.push(sfen)
-          this.$nextTick(() => this.answer_index = this.answers.length - 1)
-          console.log(this.answer_index)
+        if (this.answers.includes(sfen)) {
+          this.warning_notice("すでに登録済みです")
+          if (this.development_p) {
+            this.edit_answer_force_push()
+          }
+        } else {
+          this.edit_answer_force_push()
         }
       }
+    },
 
-      // this.$gtag.event("create", {event_category: "詰将棋保存"})
+    kotae_delete_handle(index) {
+      this.answers = this.answers.filter((e, i) => i !== index)
+      this.$nextTick(() => this.answer_index = _.clamp(this.answer_index, 0, this.answers.length - 1))
+    },
 
-      // const params = new URLSearchParams()
-      // params.set("input_text", this.input_text)
-      // params.set("edit_mode", "adapter")
+    edit_mode_handle() {
+      this.edit_setup()
+    },
 
-    //   this.http_command("POST", this.$options.post_path, params, e => {
+    play_mode_handle() {
+      this.sp_run_mode = "play_mode"
+      this.edit_tab_index = EditTabInfo.fetch("play_mode").code
+    },
+
+    form_mode_handle() {
+      this.edit_tab_index = EditTabInfo.fetch("form_mode").code
+    },
+
+    answers_init() {
+      this.answers = []
+      this.answer_index = 0
+    },
+
+    tab_change_handle() {
+      this[this.edit_tab_info.handle_method_name]()
+    },
+
+    save_handle() {
+      const params = new URLSearchParams()
+      params.set("sp_title", this.sp_title)
+      params.set("sp_desc", this.sp_desc)
+      params.set("init_sfen", this.init_sfen)
+      params.set("answers", this.answers)
+
+      this.http_command("PUT", this.info.put_path, params, e => {
     //     this.change_counter = 0
     //
     //     this.bs_error = null
@@ -587,43 +636,18 @@ export default {
     //       this.record = e.record
     //       callback()
     //     }
-    //   })
-    //
+      })
+
     },
 
-    kotae_delete_handle(index) {
-      this.answers = this.answers.filter((e, i) => i !== index)
-      this.$nextTick(() => this.answer_index = _.clamp(this.answer_index, 0, this.answers.length - 1))
+    notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-bottom"})
+      this.talk(message)
     },
 
-    edit_mode_handle() {
-      this.edit_setup()
-    },
-
-    play_mode_handle() {
-      this.sp_run_mode = "play_mode"
-      this.edit_tab_index = TabInfo.fetch("play_mode").code
-    },
-
-    form_mode_handle() {
-      this.edit_tab_index = TabInfo.fetch("form_mode").code
-    },
-
-    answers_init() {
-      this.answers = []
-      this.answer_index = 0
-    },
-
-    tab_change_handle() {
-      if (this.edit_tab_key === "edit_mode") {
-        this.edit_mode_handle()
-      }
-      if (this.edit_tab_key === "play_mode") {
-        this.play_mode_handle()
-      }
-      if (this.edit_tab_key === "form_mode") {
-        this.form_mode_handle()
-      }
+    warning_notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-top", type: "is-danger"})
+      this.talk(message)
     },
   },
 
@@ -666,8 +690,8 @@ export default {
       return url.toString()
     },
 
-    edit_tab_key() {
-      return TabInfo.fetch(this.edit_tab_index).key
+    edit_tab_info() {
+      return EditTabInfo.fetch(this.edit_tab_index)
     },
   },
 }

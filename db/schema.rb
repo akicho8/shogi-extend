@@ -27,6 +27,16 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "acns2_endpos_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "question_id", comment: "問題"
+    t.integer "limit_turn", null: false, comment: "N手"
+    t.string "sfen_endpos", null: false, comment: "最後の局面"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["limit_turn"], name: "index_acns2_endpos_answers_on_limit_turn"
+    t.index ["question_id"], name: "index_acns2_endpos_answers_on_question_id"
+  end
+
   create_table "acns2_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "room_id", comment: "対戦部屋"
     t.bigint "user_id", comment: "対戦者"
@@ -56,6 +66,16 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.index ["user_id"], name: "index_acns2_messages_on_user_id"
   end
 
+  create_table "acns2_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "question_id", comment: "問題"
+    t.integer "limit_turn", null: false, comment: "N手"
+    t.string "sfen_moves_pack", null: false, comment: "連続した指し手"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["limit_turn"], name: "index_acns2_moves_answers_on_limit_turn"
+    t.index ["question_id"], name: "index_acns2_moves_answers_on_question_id"
+  end
+
   create_table "acns2_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "対戦者"
     t.integer "rating", null: false, comment: "レーティング"
@@ -75,6 +95,26 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.index ["rensho_count"], name: "index_acns2_profiles_on_rensho_count"
     t.index ["rensho_max"], name: "index_acns2_profiles_on_rensho_max"
     t.index ["user_id"], name: "index_acns2_profiles_on_user_id"
+  end
+
+  create_table "acns2_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "作成者"
+    t.string "init_sfen", null: false, comment: "問題"
+    t.integer "time_limit_sec", comment: "制限時間(秒)"
+    t.string "title", comment: "タイトル"
+    t.string "description", limit: 512, comment: "説明"
+    t.string "hint_description", comment: "ヒント"
+    t.string "source_desc", comment: "出典"
+    t.string "other_twitter_account", comment: "自分以外が作者の場合"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "o_count", null: false, comment: "正解数"
+    t.integer "x_count", null: false, comment: "不正解数"
+    t.index ["init_sfen"], name: "index_acns2_questions_on_init_sfen", unique: true
+    t.index ["o_count"], name: "index_acns2_questions_on_o_count"
+    t.index ["time_limit_sec"], name: "index_acns2_questions_on_time_limit_sec"
+    t.index ["user_id"], name: "index_acns2_questions_on_user_id"
+    t.index ["x_count"], name: "index_acns2_questions_on_x_count"
   end
 
   create_table "acns2_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

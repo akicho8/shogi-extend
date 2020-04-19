@@ -18,6 +18,11 @@
 #   app/models/acns2.rb
 #   app/models/colosseum/user_acns2_mod.rb
 #
+#   question
+#     app/models/acns2/question.rb
+#     app/models/acns2/moves_answer.rb
+#     app/models/acns2/endpos_answer.rb
+#
 # channel
 #   app/channels/acns2/lobby_channel.rb
 #   app/channels/acns2/room_channel.rb
@@ -88,6 +93,7 @@ module BackendScript
       debug_scene_set(info)
 
       info[:mode] ||= "lobby"
+      info[:put_path] = h.url_for(script_link_path)
 
       if h.current_user
         info[:current_user] = h.current_user.as_json(only: [:id, :name], methods: [:avatar_path])
@@ -106,6 +112,11 @@ module BackendScript
       # end
 
       out
+    end
+
+    def put_action
+      {:sp_title, :sp_desc, :init_sfen, :answers}
+
     end
 
     def current_room_id

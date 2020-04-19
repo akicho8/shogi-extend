@@ -5,6 +5,11 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# app/models/acns2.rb などを明示的に読み込む (Ruby 2.7 ではこのあたりの対策がされているとの噂)
+Acns2
+Swars
+Colosseum
+
 if true
   # 1. Colosseum::UsersController の spec で次のようになっているとき user_login 内で controller を参照する
   # 2. このタイミングで app/controllers/swars/battles_controller.rb の親クラスの参照がおかしなる
