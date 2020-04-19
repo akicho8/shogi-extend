@@ -1,5 +1,6 @@
 export default {
   methods: {
+    // POST の場合 data はHashをそのまま渡せばよい
     http_command(method, url, data, callback = null) {
       const loading = this.$buefy.loading.open()
       this.$http({method: method, url: url, data: data})

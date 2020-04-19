@@ -131,7 +131,7 @@
         //-   .control
         //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
 
-        //- template(v-for="(e, i) in answers")
+        //- template(v-for="(e, i) in question.moves_answers_attributes")
         //-   b-tag
         //-     | {{i + 1}}
 
@@ -153,7 +153,7 @@
           b-tab-item
             template(slot="header")
               span 解答
-              b-tag(rounded) {{answers.length}}
+              b-tag(rounded) {{question.moves_answers_attributes.length}}
           b-tab-item(label="情報")
 
         template(v-if="edit_tab_info.sp_show")
@@ -177,12 +177,12 @@
           .buttons.is-centered.konotejunsiikai
             b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
 
-          b-tabs.kotaenonarabi(v-model="answer_index" position="is-centered" expanded :animated="false" v-if="answers.length >= 1")
-            template(v-for="(e, i) in answers")
-              b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e}`")
+          b-tabs.kotaenonarabi(v-model="answer_index" position="is-centered" expanded :animated="false" v-if="question.moves_answers_attributes.length >= 1")
+            template(v-for="(e, i) in question.moves_answers_attributes")
+              b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.sfen_moves_pack}`")
                 shogi_player(
                   :run_mode="'view_mode'"
-                  :kifu_body="e"
+                  :kifu_body="full_sfen_build(e)"
                   :start_turn="-1"
                   :debug_mode="false"
                   :key_event_capture="false"
@@ -199,10 +199,22 @@
         template(v-if="edit_tab_info.key === 'form_mode'")
           .input_forms
             b-field(label="タイトル" label-position="on-border")
-              b-input(v-model="sp_title" size="is-small")
+              b-input(v-model="question.title" size="is-small")
 
             b-field(label="説明" label-position="on-border")
-              b-input(v-model="sp_desc" size="is-small" type="textarea" rows="2")
+              b-input(v-model="question.description" size="is-small" type="textarea" rows="2")
+
+            b-field(label="ヒント" label-position="on-border")
+              b-input(v-model="question.hint_description" size="is-small")
+
+            b-field(label="出典" label-position="on-border")
+              b-input(v-model="question.source_desc" size="is-small")
+
+            b-field(label="制限時間" label-position="on-border")
+              //- :default-seconds="0" :default-minutes="0"
+              b-timepicker(v-model="question.time_limit_sec" icon="clock" :enable-seconds="true")
+              //- b-numberinput(v-model="question.time_limit_sec" :min="0")
+              //- b-numberinput(v-model="question.time_limit_sec" :min="0")
 
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="save_handle" type="is-primary")
@@ -218,6 +230,7 @@ const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
 import MemoryRecord from 'js-memory-record'
+import dayjs from "dayjs"
 
 class EditTabInfo extends MemoryRecord {
   static get define() {
@@ -263,8 +276,7 @@ export default {
       sp_run_mode: null,
       edit_tab_index: null,
       sp_sfen_body: null,
-      sp_title: null,
-      sp_desc: null,
+      question: null,
       answers: null,
       answer_index: null,
     }
@@ -502,9 +514,12 @@ export default {
       this.sp_run_mode = "edit_mode"
       this.edit_tab_index = EditTabInfo.fetch("edit_mode").code
       this.sp_sfen_body = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
-      this.sp_title = ""
-      this.sp_desc = ""
-      this.init_sfen = null
+
+      this.question = {
+        time_limit_sec: dayjs("2000-01-01T00:03:00+09:00").toDate(),
+        moves_answers_attributes: [],
+      }
+
       this.answers_init()
     },
 
@@ -519,33 +534,35 @@ export default {
       console.log(sp.moves)
       console.log(sp.turn_offset)
 
-      if (sp.init_sfen) {
-        this.init_sfen = sp.init_sfen
+      // if (sp.init_sfen) {
+        // this.question.init_sfen = sp.init_sfen // ここで設定するのはおかしい
 
-        const parts = []
-        parts.push(sp.init_sfen)
-        if (sp.turn_offset >= 1) {
-          parts.push(" moves ")
-          parts.push(_.take(sp.moves, sp.turn_offset).join(" "))
-        }
-        const sfen = parts.join(" ")
-        return sfen
-      }
+        // const parts = []
+        // let sfen_moves_pack = ""
+        // parts.push(sp.init_sfen)
+        // if (sp.turn_offset >= 1) {
+        //   sfen_moves_pack = _.take(sp.moves, sp.turn_offset).join(" ")
+        //   // parts.push(" moves ")
+        //   // parts.push(sfen_moves_pack)
+        // }
+        // full_sfen: parts.join(" "),
+      return { sfen_moves_pack: _.take(sp.moves, sp.turn_offset).join(" ") }
+      // }
     },
 
     edit_answer_force_push() {
-      const sfen = this.sfen_to_save()
-      if (sfen) {
-        this.answers.push(sfen)
-        this.$nextTick(() => this.answer_index = this.answers.length - 1)
+      const sfen_info = this.sfen_to_save()
+      if (sfen_info) {
+        this.question.moves_answers_attributes.push(sfen_info)
+        this.$nextTick(() => this.answer_index = this.question.moves_answers_attributes.length - 1)
       }
     },
 
     edit_stock_handle() {
-      const sfen = this.sfen_to_save()
+      const sfen_info = this.sfen_to_save()
 
-      if (sfen) {
-        if (this.answers.includes(sfen)) {
+      if (sfen_info) {
+        if (this.question.moves_answers_attributes.some(e => e.sfen_moves_pack === sfen_info.sfen_moves_pack)) {
           this.warning_notice("すでに登録済みです")
           if (this.development_p) {
             this.edit_answer_force_push()
@@ -557,9 +574,17 @@ export default {
     },
 
     kotae_delete_handle(index) {
-      this.answers = this.answers.filter((e, i) => i !== index)
-      this.$nextTick(() => this.answer_index = _.clamp(this.answer_index, 0, this.answers.length - 1))
+      const new_ary = this.question.moves_answers_attributes.filter((e, i) => i !== index)
+      this.$set(this.question, "moves_answers_attributes", new_ary)
+
+      this.$nextTick(() => this.answer_index = _.clamp(this.answer_index, 0, this.question.moves_answers_attributes.length - 1))
     },
+
+    full_sfen_build(moves_answer_attributes) {
+      return ["position", "sfen", this.question.init_sfen, "moves", moves_answer_attributes.sfen_moves_pack].join(" ")
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     edit_mode_handle() {
       this.edit_setup()
@@ -568,14 +593,29 @@ export default {
     play_mode_handle() {
       this.sp_run_mode = "play_mode"
       this.edit_tab_index = EditTabInfo.fetch("play_mode").code
+
+      // この方法でも取得できる
+      // if (this.$refs.edit_sp) {
+      //   this.$set(this.question, "init_sfen", this.$refs.edit_sp.mediator.sfen_serializer.to_s)
+      // }
+
+      this.$nextTick(() => {
+        if (this.question.init_sfen == null) {
+          const init_sfen = this.$refs.edit_sp.init_sfen.replace(/position sfen /, "")
+          this.debug_alert(`初期配置取得 ${init_sfen}`)
+          this.$set(this.question, "init_sfen", init_sfen)
+        }
+      })
     },
 
     form_mode_handle() {
       this.edit_tab_index = EditTabInfo.fetch("form_mode").code
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     answers_init() {
-      this.answers = []
+      this.question.moves_answers_attributes = []
       this.answer_index = 0
     },
 
@@ -584,11 +624,17 @@ export default {
     },
 
     save_handle() {
-      const params = new URLSearchParams()
-      params.set("sp_title", this.sp_title)
-      params.set("sp_desc", this.sp_desc)
-      params.set("init_sfen", this.init_sfen)
-      params.set("answers", this.answers)
+      // const moves_answers_attributes = this.answers.map(e => {
+      //   return { sfen_moves_pack: e.sfen_moves_pack }
+      // })
+
+      const params = {}
+      // params.question = Object.assign({}, this.question, { moves_answers_attributes: moves_answers_attributes })
+      params.question = this.question
+
+      // params.set("question.description", this.question.description)
+      // params.set("init_sfen", this.init_sfen)
+      // params.set("answers", this.answers)
 
       this.http_command("PUT", this.info.put_path, params, e => {
     //     this.change_counter = 0

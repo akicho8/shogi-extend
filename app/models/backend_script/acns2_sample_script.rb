@@ -115,7 +115,32 @@ module BackendScript
     end
 
     def put_action
-      {:sp_title, :sp_desc, :init_sfen, :answers}
+      # Parameters: {"sp_title"=>"", "sp_desc"=>"", "init_sfen"=>"null", "answers"=>"", "id"=>"acns2-sample"}
+
+      # {:sp_title, :sp_desc, :init_sfen, :answers}
+
+      # >> |-----------------------+--------------------------------------------|
+      # >> |                    id | 1                                          |
+      # >> |               user_id | 14                                         |
+      # >> |             init_sfen | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 |
+      # >> |        time_limit_sec |                                            |
+      # >> |                 title |                                            |
+      # >> |           description |                                            |
+      # >> |      hint_description |                                            |
+      # >> |           source_desc |                                            |
+      # >> | other_twitter_account |                                            |
+      # >> |            created_at | 2020-04-19 21:07:35 +0900                  |
+      # >> |            updated_at | 2020-04-19 21:07:35 +0900                  |
+      # >> |               o_count | 0                                          |
+      # >> |               x_count | 0                                          |
+      # >> |-----------------------+--------------------------------------------|
+
+      question = h.current_user.acns2_questions.create! do |e|
+        e.assign_attributes(params[:question])
+        # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
+        e.moves_answers.build(sfen_moves_pack: "G*5b")
+        e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+      end
 
     end
 

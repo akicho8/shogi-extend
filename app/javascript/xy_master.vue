@@ -504,7 +504,7 @@ export default {
 
     // 名前を確定してからサーバーに保存する
     record_post() {
-      this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
+      this.http_command("POST", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
         this.entry_name_unique = false // 「プレイヤー別順位」の解除
         this.data_update(data)         // ランキングに反映
 
@@ -557,7 +557,7 @@ export default {
     },
 
     command_send(command, args = {}) {
-      this.http_command("post", this.$root.$options.xhr_post_path, { xy_record: { command: command, ...args } })
+      this.http_command("POST", this.$root.$options.xhr_post_path, { xy_record: { command: command, ...args } })
     },
 
     timer_stop() {

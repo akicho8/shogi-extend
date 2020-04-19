@@ -14,6 +14,10 @@ tp question
 tp question.moves_answers
 tp question.endpos_answers
 
+
+
+
+
 # Acns2::Room.destroy_all
 
 # user1 = Colosseum::User.create!
