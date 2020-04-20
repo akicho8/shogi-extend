@@ -19,7 +19,7 @@
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
         .buttons.is-centered
-          b-button.has-text-weight-bold(@click="post_handle") 投稿
+          b-button.has-text-weight-bold(@click="goto_edit_mode_handle") 投稿
 
   template(v-if="mode === 'matching_start'")
     .columns.is-paddingless
@@ -169,7 +169,7 @@
             :size="'default'"
             :sound_effect="true"
             :volume="0.2"
-            @update:play_mode_long_sfen="edit_play_mode_long_sfen_set"
+            @update:edit_mode_current_sfen="edit_mode_current_sfen"
             ref="edit_sp"
             )
 
@@ -277,7 +277,7 @@ export default {
       edit_tab_index: null,
       sp_sfen_body: null,
       question: null,
-      answers: null,
+      // answers: null,
       answer_index: null,
     }
   },
@@ -293,8 +293,7 @@ export default {
       this.mode = "result_show"
     }
     if (this.info.debug_scene === "edit") {
-      this.mode = "edit"
-      this.edit_setup()
+      this.goto_edit_mode_handle()
     }
 
     if (this.mode === "lobby") {
@@ -504,35 +503,38 @@ export default {
       }
     },
 
-    post_handle() {
+    goto_edit_mode_handle() {
       this.sound_play("click")
       this.mode = "edit"
+      this.edit_init_once()
       this.edit_setup()
     },
 
     edit_setup() {
       this.sp_run_mode = "edit_mode"
       this.edit_tab_index = EditTabInfo.fetch("edit_mode").code
-      this.sp_sfen_body = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
-
-      this.question = {
-        time_limit_sec: dayjs("2000-01-01T00:03:00+09:00").toDate(),
-        moves_answers_attributes: [],
-      }
-
-      this.answers_init()
     },
 
-    edit_play_mode_long_sfen_set(long_sfen) {
-      this.debug_alert(long_sfen)
+    edit_mode_current_sfen(sfen) {
+      if (this.sp_run_mode === "edit_mode") {
+        sfen = sfen.replace(/position sfen /, "")
+        this.debug_alert(`初期配置取得 ${sfen}`)
+        this.$set(this.question, "init_sfen", sfen)
+
+        // 合わせて答えも削除する
+        if (this.question.moves_answers_attributes.length >= 1) {
+          this.notice("配置を変更したので解答を削除しました")
+          this.moves_answers_clear()
+        }
+      }
     },
 
     sfen_to_save() {
       const sp = this.$refs.edit_sp
 
-      console.log(sp.init_sfen)
-      console.log(sp.moves)
-      console.log(sp.turn_offset)
+      // console.log(sp.init_sfen)
+      // console.log(sp.moves)
+      // console.log(sp.turn_offset)
 
       // if (sp.init_sfen) {
         // this.question.init_sfen = sp.init_sfen // ここで設定するのはおかしい
@@ -546,7 +548,9 @@ export default {
         //   // parts.push(sfen_moves_pack)
         // }
         // full_sfen: parts.join(" "),
-      return { sfen_moves_pack: _.take(sp.moves, sp.turn_offset).join(" ") }
+
+      return { sfen_moves_pack: sp.moves_take_turn_offset.join(" ") }
+      // return { sfen_moves_pack: _.take(sp.moves, sp.turn_offset).join(" ") }
       // }
     },
 
@@ -599,13 +603,13 @@ export default {
       //   this.$set(this.question, "init_sfen", this.$refs.edit_sp.mediator.sfen_serializer.to_s)
       // }
 
-      this.$nextTick(() => {
-        if (this.question.init_sfen == null) {
-          const init_sfen = this.$refs.edit_sp.init_sfen.replace(/position sfen /, "")
-          this.debug_alert(`初期配置取得 ${init_sfen}`)
-          this.$set(this.question, "init_sfen", init_sfen)
-        }
-      })
+      // this.$nextTick(() => {
+      //   if (this.question.init_sfen == null) {
+      //     const init_sfen = this.$refs.edit_sp.init_sfen.replace(/position sfen /, "")
+      //     this.debug_alert(`初期配置取得 ${init_sfen}`)
+      //     this.$set(this.question, "init_sfen", init_sfen)
+      //   }
+      // })
     },
 
     form_mode_handle() {
@@ -614,8 +618,21 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    answers_init() {
-      this.question.moves_answers_attributes = []
+    edit_init_once() {
+      this.sp_sfen_body = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+
+      this.question = {
+        time_limit_sec: dayjs("2000-01-01T00:03:00+09:00").toDate(),
+        moves_answers_attributes: [],
+      }
+
+      // this.question.moves_answers_attributes = []
+      this.answer_index = 0
+    },
+
+    // 答えだけを削除
+    moves_answers_clear() {
+      this.$set(this.question, "moves_answers_attributes", [])
       this.answer_index = 0
     },
 
