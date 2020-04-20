@@ -159,7 +159,7 @@
         template(v-if="edit_tab_info.sp_show")
           shogi_player(
             :run_mode="sp_run_mode"
-            :kifu_body="sp_sfen_body"
+            :kifu_body="provisional_sfen"
             :start_turn="-1"
             :debug_mode="false"
             :key_event_capture="false"
@@ -212,9 +212,9 @@
 
             b-field(label="制限時間" label-position="on-border")
               //- :default-seconds="0" :default-minutes="0"
-              b-timepicker(v-model="question.time_limit_sec" icon="clock" :enable-seconds="true")
-              //- b-numberinput(v-model="question.time_limit_sec" :min="0")
-              //- b-numberinput(v-model="question.time_limit_sec" :min="0")
+              b-timepicker(v-model="question.time_limit_clock" icon="clock" :enable-seconds="true")
+              //- b-numberinput(v-model="question.time_limit_clock" :min="0")
+              //- b-numberinput(v-model="question.time_limit_clock" :min="0")
 
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="save_handle" type="is-primary")
@@ -275,7 +275,7 @@ export default {
       // editモード
       sp_run_mode: null,
       edit_tab_index: null,
-      sp_sfen_body: null,
+      provisional_sfen: null,
       question: null,
       // answers: null,
       answer_index: null,
@@ -619,11 +619,13 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_init_once() {
-      this.sp_sfen_body = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      this.provisional_sfen = "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1"
 
       this.question = {
-        time_limit_sec: dayjs("2000-01-01T00:03:00+09:00").toDate(),
+        init_sfen: this.provisional_sfen,
         moves_answers_attributes: [],
+        time_limit_clock: dayjs("2000-01-01T00:03:00+09:00").toDate(),
       }
 
       // this.question.moves_answers_attributes = []
@@ -654,21 +656,8 @@ export default {
       // params.set("answers", this.answers)
 
       this.http_command("PUT", this.info.put_path, params, e => {
-    //     this.change_counter = 0
-    //
-    //     this.bs_error = null
-    //     this.all_kifs = null
-    //
-    //     if (e.redirect_to) {
-    //       if (true) {
-    //         // リダイレクトしたあとブラウザバックで戻ると前の入力が残っている状態になる
-    //         // このとき内部の変数 input_text は空！なので、KENTOを押すと空の棋譜を作って飛んでします
-    //         // それを防ぐためにリダイレクト前に消している
-    //         this.input_text = ""
-    //       }
-    //       this.self_window_open(e.redirect_to)
-    //     }
-    //
+        console.log(e)
+        this.question = e.question
     //     if (e.bs_error) {
     //       this.bs_error = e.bs_error
     //       this.talk(this.bs_error.message, {rate: 1.0})

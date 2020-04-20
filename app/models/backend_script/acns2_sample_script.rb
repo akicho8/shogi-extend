@@ -51,6 +51,44 @@ module BackendScript
     end
 
     def script_body
+      params = {
+        "question" => {
+          "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
+          "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
+          "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
+        },
+      }.deep_symbolize_keys
+
+      question = params[:question]
+      record = h.current_user.acns2_questions.find_or_initialize_by(id: question[:id])
+      record.assign_attributes(question.slice(:init_sfen, :title, :description, :hint_description, :source_desc, :other_twitter_account))
+
+      a = Time.zone.parse(question[:time_limit_clock])
+      b = Time.zone.parse("2000-01-01")
+      record.time_limit_sec = a - b
+      record.save!
+
+      # 削除
+      record.moves_answer_ids = question[:moves_answers_attributes].collect { |e| e[:id] }
+
+      # 追加 or 更新
+      question[:moves_answers_attributes].each do |e|
+        moves_answer = record.moves_answers.find_or_initialize_by(id: e[:id])
+        moves_answer.sfen_moves_pack = e[:sfen_moves_pack]
+        moves_answer.save!
+      end
+
+      # question = h.current_user.acns2_questions.create! do |e|
+      #   e.assign_attributes(params[:question])
+      #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
+      #   e.moves_answers.build(sfen_moves_pack: "G*5b")
+      #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+      # end
+
+      hash = record.attributes
+      hash = hash.merge(moves_answers_attributes: record.moves_answers)
+      return hash.as_json
+
       # Acns2.setup
 
       if params[:login_required]
@@ -135,13 +173,40 @@ module BackendScript
       # >> |               x_count | 0                                          |
       # >> |-----------------------+--------------------------------------------|
 
-      question = h.current_user.acns2_questions.create! do |e|
-        e.assign_attributes(params[:question])
-        # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-        e.moves_answers.build(sfen_moves_pack: "G*5b")
-        e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
-      end
+      # question = h.current_user.acns2_questions.create! do |e|
+      #   e.assign_attributes(params[:question])
+      #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
+      #   e.moves_answers.build(sfen_moves_pack: "G*5b")
+      #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+      # end
 
+      # params[:question]
+
+      # {"question"=>{"init_sfen"=>"4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
+      #     "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
+      #     "time_limit_sec"=>"1999-12-31T15:03:00.000Z"},
+      #   "id"=>"acns2-sample",
+      #   "script"=>{"question"=>{"init_sfen"=>"4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
+      #       "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
+      #       "time_limit_sec"=>"1999-12-31T15:03:00.000Z"}}}
+
+      question = params[:question]
+      if id = question[:id]
+        record = h.current_user.acns2_questions.find(id)
+      end
+      record ||= h.current_user.acns2_questions.build
+      record.assign_attributes(question.slice())
+
+      # question = h.current_user.acns2_questions.create! do |e|
+      #   e.assign_attributes(params[:question])
+      #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
+      #   e.moves_answers.build(sfen_moves_pack: "G*5b")
+      #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+      # end
+
+      hash = question.attributes
+      hash = hash.merge(moves_answers_attributes: question.moves_answers)
+      render json: hash
     end
 
     def current_room_id
