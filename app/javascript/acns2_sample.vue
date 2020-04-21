@@ -127,6 +127,11 @@
   template(v-if="mode === 'edit'")
     .columns.is-centered
       .column.is-half
+
+        b-table(:data="questions" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed v-if="questions")
+          template(slot-scope="props")
+            b-table-column(field="id" label="ID" sortable) {{props.row.id}}
+
         //- b-field.switch_grouped_container(grouped position="is-centered")
         //-   .control
         //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
@@ -284,7 +289,10 @@ export default {
       $lobby: null,         // --> app/channels/acns2/lobby_channel.rb
       $room: null,          // --> app/channels/acns2/room_channel.rb
 
-      // editモード
+      // editモード index
+      questions: null,
+
+      // editモード edit
       sp_run_mode: null,
       edit_tab_index: null,
       provisional_sfen: null,
@@ -606,6 +614,15 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_init_once() {
+      this.http_get_command(this.info.put_path, { index_fetch: true }, e => {
+        if (e.error_message) {
+          this.warning_notice(e.error_message)
+        }
+        if (e.questions) {
+          this.questions = e.questions
+        }
+      })
+
       this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b k2r2b4g4s4n4l18p 1"
 
       if (this.development_p) {
@@ -616,7 +633,7 @@ export default {
       this.question = {
         init_sfen: this.provisional_sfen,
         moves_answers_attributes: [],
-        time_limit_sec: 3,
+        time_limit_sec: 3 * 60,
         difficulty_level: 1,
       }
       this.time_limit_clock_set()
@@ -767,6 +784,18 @@ export default {
         return "is-primary"
       }
     },
+
+    // candidate_columns() {
+    //   return [
+    //     { field: "順位",       label: "順位",       sortable: true, numeric: true, },
+    //     { field: "候補手",     label: "候補手",                                    },
+    //     { field: "読み筋",     label: "読み筋",                                    },
+    //     { field: "▲形勢",     label: "▲形勢",     sortable: true, numeric: true, },
+    //     { field: "評価局面数", label: "評価局面数", sortable: true, numeric: true, },
+    //     { field: "処理時間",   label: "処理時間",   sortable: true, numeric: true, },
+    //   ]
+    // },
+
   },
 }
 </script>

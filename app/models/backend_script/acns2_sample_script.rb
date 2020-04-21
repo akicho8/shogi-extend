@@ -51,6 +51,11 @@ module BackendScript
     end
 
     def script_body
+      if params[:index_fetch]
+        questions = h.current_user.acns2_questions.as_json(include: [:user, :moves_answers])
+        return { questions: questions }
+      end
+
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
