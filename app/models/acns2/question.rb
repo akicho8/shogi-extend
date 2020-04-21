@@ -23,16 +23,20 @@ module Acns2
         public_send("#{key}=", public_send(key).presence)
       end
 
+      # self.difficulty_level ||= 0
+
       self.o_count ||= 0
       self.x_count ||= 0
     end
 
     with_options presence: true do
       validates :init_sfen
+      # validates :difficulty_level
     end
 
     with_options allow_blank: true do
       validates :init_sfen, uniqueness: { case_sensitive: true }
+      # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     end
 
     # jsから来たパラメーターでまとめて更新する
@@ -42,7 +46,7 @@ module Acns2
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-      #     "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
+      #     "moves_answers_attributes"=>[{"moves_str"=>"4c5b"}],
       #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
       #   },
       # }.deep_symbolize_keys
@@ -51,38 +55,46 @@ module Acns2
 
       # record = h.current_user.acns2_questions.find_or_initialize_by(id: question[:id])
 
-      record = self
-      record.assign_attributes(question.slice(:init_sfen, :title, :description, :hint_description, :source_desc, :other_twitter_account))
+      assign_attributes(question.slice(*[
+            :init_sfen,
+            :title,
+            :description,
+            :hint_description,
+            :source_desc,
+            :other_twitter_account,
+            :difficulty_level,
+            :time_limit_sec,
+          ]))
 
       if Rails.env.development?
-        if record.new_record?
-          parts = record.init_sfen.split
+        if new_record?
+          parts = init_sfen.split
           parts.pop
           parts.push(self.class.count.next)
-          record.init_sfen = parts.join(" ")
-          p ["#{__FILE__}:#{__LINE__}", __method__, record.init_sfen]
+          self.init_sfen = parts.join(" ")
+          p ["#{__FILE__}:#{__LINE__}", __method__, init_sfen]
         end
       end
 
-      a = Time.zone.parse(question[:time_limit_clock])
-      b = Time.zone.parse("2000-01-01")
-      record.time_limit_sec = a - b
-      record.save!
+      # a = Time.zone.parse(question[:time_limit_clock])
+      # b = Time.zone.parse("2000-01-01")
+      # self.time_limit_sec = a - b
+      save!
 
       # 削除
-      record.moves_answer_ids = question[:moves_answers_attributes].collect { |e| e[:id] }
+      self.moves_answer_ids = question[:moves_answers_attributes].collect { |e| e[:id] }
 
       # 追加 or 更新
       question[:moves_answers_attributes].each do |e|
-        moves_answer = record.moves_answers.find_or_initialize_by(id: e[:id])
-        moves_answer.sfen_moves_pack = e[:sfen_moves_pack]
+        moves_answer = moves_answers.find_or_initialize_by(id: e[:id])
+        moves_answer.moves_str = e[:moves_str]
         moves_answer.save!
       end
 
       # question = h.current_user.acns2_questions.create! do |e|
       #   e.assign_attributes(params[:question])
       #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-      #   e.moves_answers.build(sfen_moves_pack: "G*5b")
+      #   e.moves_answers.build(moves_str: "G*5b")
       #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
       # end
     end

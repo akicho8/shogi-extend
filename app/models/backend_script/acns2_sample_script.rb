@@ -54,7 +54,7 @@ module BackendScript
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-      #     "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
+      #     "moves_answers_attributes"=>[{"moves_str"=>"4c5b"}],
       #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
       #   },
       # }.deep_symbolize_keys
@@ -66,7 +66,7 @@ module BackendScript
       # question = h.current_user.acns2_questions.create! do |e|
       #   e.assign_attributes(params[:question])
       #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-      #   e.moves_answers.build(sfen_moves_pack: "G*5b")
+      #   e.moves_answers.build(moves_str: "G*5b")
       #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
       # end
 
@@ -137,14 +137,20 @@ module BackendScript
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-      #     "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
+      #     "moves_answers_attributes"=>[{"moves_str"=>"4c5b"}],
       #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
       #   },
       # }.deep_symbolize_keys
 
       question = h.current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
-      question.together_with_params_came_from_js_update(params)
-      render json: question.create_the_parameters_to_be_passed_to_the_js
+      begin
+        question.together_with_params_came_from_js_update(params)
+      rescue => error
+        Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, error])
+        c.render json: { error_message: error.message }
+        return
+      end
+      c.render json: { question: question.create_the_parameters_to_be_passed_to_the_js.as_json }
     end
 
     def current_room_id

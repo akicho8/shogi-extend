@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
   create_table "acns2_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", comment: "問題"
     t.integer "limit_turn", null: false, comment: "N手"
-    t.string "sfen_moves_pack", null: false, comment: "連続した指し手"
+    t.string "moves_str", null: false, comment: "連続した指し手"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["limit_turn"], name: "index_acns2_moves_answers_on_limit_turn"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.bigint "user_id", comment: "作成者"
     t.string "init_sfen", null: false, comment: "問題"
     t.integer "time_limit_sec", comment: "制限時間(秒)"
+    t.integer "difficulty_level", comment: "難易度"
     t.string "title", comment: "タイトル"
     t.string "description", limit: 512, comment: "説明"
     t.string "hint_description", comment: "ヒント"
@@ -110,6 +111,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "o_count", null: false, comment: "正解数"
     t.integer "x_count", null: false, comment: "不正解数"
+    t.index ["difficulty_level"], name: "index_acns2_questions_on_difficulty_level"
     t.index ["init_sfen"], name: "index_acns2_questions_on_init_sfen", unique: true
     t.index ["o_count"], name: "index_acns2_questions_on_o_count"
     t.index ["time_limit_sec"], name: "index_acns2_questions_on_time_limit_sec"

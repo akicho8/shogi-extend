@@ -54,7 +54,7 @@
           :run_mode="'play_mode'"
           :kifu_body="current_quest_base_sfen"
           :summary_show="false"
-          :setting_button_show="false"
+          :setting_button_show="development_p"
           :size="'default'"
           :sound_effect="true"
           :volume="0.2"
@@ -139,20 +139,20 @@
         //-   p.control
         //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 配置
         //-   p.control
-        //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 解答
+        //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 正解
         //-   p.control
         //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
         //-   b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
 
         //- b-field(position="is-centered")
         //-   b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
-        //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 解答
+        //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 正解
 
         b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
           b-tab-item(label="配置")
           b-tab-item
             template(slot="header")
-              span 解答
+              span 正解
               b-tag(rounded) {{question.moves_answers_attributes.length}}
           b-tab-item(label="情報")
 
@@ -180,9 +180,10 @@
             :key_event_capture="false"
             :slider_show="true"
             :controller_show="true"
+            :setting_button_show="development_p"
             :theme="'simple'"
             :size="'default'"
-            :sound_effect="true"
+            :sound_effect="edit_tab_info.key === 'play_mode'"
             :volume="0.2"
             ref="play_sp"
             )
@@ -190,9 +191,9 @@
           .buttons.is-centered.konotejunsiikai
             b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
 
-          b-tabs.kotaenonarabi(v-model="answer_index" position="is-centered" expanded :animated="false" v-if="question.moves_answers_attributes.length >= 1")
+          b-tabs.answer_tabs(v-model="answer_tab_index" position="is-centered" expanded :animated="true" v-if="question.moves_answers_attributes.length >= 1")
             template(v-for="(e, i) in question.moves_answers_attributes")
-              b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.sfen_moves_pack}`")
+              b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
                 shogi_player(
                   :run_mode="'view_mode'"
                   :kifu_body="full_sfen_build(e)"
@@ -201,37 +202,41 @@
                   :key_event_capture="false"
                   :slider_show="true"
                   :controller_show="true"
+                  :setting_button_show="development_p"
                   :theme="'simple'"
                   :size="'default'"
                   :sound_effect="true"
                   :volume="0.2"
                   )
-                .buttons.is-centered
-                  b-button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)")
+                b-button.delete_button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)" size="is-small")
 
         template(v-if="edit_tab_info.key === 'form_mode'")
           .input_forms
             b-field(label="タイトル" label-position="on-border")
-              b-input(v-model="question.title" size="is-small")
+              b-input(v-model="question.title")
 
             b-field(label="説明" label-position="on-border")
               b-input(v-model="question.description" size="is-small" type="textarea" rows="2")
 
             b-field(label="ヒント" label-position="on-border")
-              b-input(v-model="question.hint_description" size="is-small")
+              b-input(v-model="question.hint_description")
 
             b-field(label="出典" label-position="on-border")
-              b-input(v-model="question.source_desc" size="is-small")
+              b-input(v-model="question.source_desc")
 
             b-field(label="制限時間" label-position="on-border")
               //- :default-seconds="0" :default-minutes="0"
-              b-timepicker(v-model="question.time_limit_clock" icon="clock" :enable-seconds="true")
-              //- b-numberinput(v-model="question.time_limit_clock" :min="0")
-              //- b-numberinput(v-model="question.time_limit_clock" :min="0")
+              b-timepicker(v-model="time_limit_clock" icon="clock" :enable-seconds="true")
+              //- b-numberinput(v-model="time_limit_clock" :min="0")
+              //- b-numberinput(v-model="time_limit_clock" :min="0")
 
-        .buttons.is-centered
-          b-button.has-text-weight-bold(@click="save_handle" type="is-primary")
-            | 保存
+            label.is-size-7.has-text-weight-bold 難易度
+            b-rate(v-model="question.difficulty_level" spaced :max="start_level_max" :show-score="false")
+
+        hr
+        .save_container
+          .buttons.is-centered
+            b-button.has-text-weight-bold(@click="save_handle" type="is-primary") {{crete_or_upate_name}}
 
   debug_print
 
@@ -243,13 +248,14 @@ const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
 import MemoryRecord from 'js-memory-record'
+
 import dayjs from "dayjs"
 
 class EditTabInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "edit_mode", name: "配置", sp_show: true,  },
-      { key: "play_mode", name: "解答", sp_show: true,  },
+      { key: "play_mode", name: "正解", sp_show: true,  },
       { key: "form_mode", name: "情報", sp_show: false, },
     ]
   }
@@ -272,8 +278,8 @@ export default {
       matching_list: null,       // 対戦待ちの人のIDを列挙している
       online_user_ids: null,       // オンライン人数
       room_user_ids: null,       // オンライン人数
-      quest_index: null,        // 解答中の問題インデックス
-      freeze_mode: null,        // 解答直後に間を開けているとき true になっている
+      quest_index: null,        // 正解中の問題インデックス
+      freeze_mode: null,        // 正解直後に間を開けているとき true になっている
       progress_info: null,      // 各 membership_id はどこまで進んでいるかわかる {"1" => 2, "3" => 4}
 
       // チャット用
@@ -290,8 +296,8 @@ export default {
       edit_tab_index: null,
       provisional_sfen: null,
       question: null,
-      // answers: null,
-      answer_index: null,
+      time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
+      answer_tab_index: null,   // 表示している正解タブの位置
     }
   },
 
@@ -535,72 +541,45 @@ export default {
           this.debug_alert(`初期配置取得 ${sfen}`)
           this.$set(this.question, "init_sfen", sfen)
 
-          // 合わせて答えも削除する
+          // 合わせて正解も削除する
           if (this.question.moves_answers_attributes.length >= 1) {
-            this.notice("配置を変更したので解答を削除しました")
+            this.ok_notice("配置を変更したので正解を削除しました")
             this.moves_answers_clear()
           }
         // }
       }
     },
 
-    sfen_to_save() {
-      const sp = this.$refs.play_sp
-
-      // console.log(sp.init_sfen)
-      // console.log(sp.moves)
-      // console.log(sp.turn_offset)
-
-      // if (sp.init_sfen) {
-        // this.question.init_sfen = sp.init_sfen // ここで設定するのはおかしい
-
-        // const parts = []
-        // let sfen_moves_pack = ""
-        // parts.push(sp.init_sfen)
-        // if (sp.turn_offset >= 1) {
-        //   sfen_moves_pack = _.take(sp.moves, sp.turn_offset).join(" ")
-        //   // parts.push(" moves ")
-        //   // parts.push(sfen_moves_pack)
-        // }
-        // full_sfen: parts.join(" "),
-
-      return { sfen_moves_pack: sp.moves_take_turn_offset.join(" ") }
-      // return { sfen_moves_pack: _.take(sp.moves, sp.turn_offset).join(" ") }
-      // }
-    },
-
-    edit_answer_force_push() {
-      const sfen_info = this.sfen_to_save()
-      if (sfen_info) {
-        this.question.moves_answers_attributes.push(sfen_info)
-        this.$nextTick(() => this.answer_index = this.question.moves_answers_attributes.length - 1)
-      }
+    current_moves_str() {
+      return this.$refs.play_sp.moves_take_turn_offset.join(" ")
     },
 
     edit_stock_handle() {
-      const sfen_info = this.sfen_to_save()
+      const moves_str = this.current_moves_str()
 
-      if (sfen_info) {
-        if (this.question.moves_answers_attributes.some(e => e.sfen_moves_pack === sfen_info.sfen_moves_pack)) {
-          this.warning_notice("すでに登録済みです")
-          if (this.development_p) {
-            this.edit_answer_force_push()
-          }
-        } else {
-          this.edit_answer_force_push()
-        }
+      if (moves_str === "") {
+        this.warning_notice("1手以上動かしてください")
+        return
       }
+      if (this.question.moves_answers_attributes.some(e => e.moves_str === moves_str)) {
+        this.warning_notice("すでに同じ正解があります")
+        return
+      }
+
+      this.question.moves_answers_attributes.push({moves_str: moves_str})
+      this.$nextTick(() => this.answer_tab_index = this.question.moves_answers_attributes.length - 1)
+      this.ok_notice(`${this.question.moves_answers_attributes.length}つ目の正解を追加しました`)
     },
 
     kotae_delete_handle(index) {
       const new_ary = this.question.moves_answers_attributes.filter((e, i) => i !== index)
       this.$set(this.question, "moves_answers_attributes", new_ary)
-
-      this.$nextTick(() => this.answer_index = _.clamp(this.answer_index, 0, this.question.moves_answers_attributes.length - 1))
+      this.$nextTick(() => this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.question.moves_answers_attributes.length - 1))
+      this.ok_notice("削除しました")
     },
 
     full_sfen_build(moves_answer_attributes) {
-      return ["position", "sfen", this.question.init_sfen, "moves", moves_answer_attributes.sfen_moves_pack].join(" ")
+      return ["position", "sfen", this.question.init_sfen, "moves", moves_answer_attributes.moves_str].join(" ")
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -634,23 +613,34 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_init_once() {
-      this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
-      this.provisional_sfen = "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1"
+      this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b k2r2b4g4s4n4l18p 1"
+
+      if (this.development_p) {
+        this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+        this.provisional_sfen = "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1"
+      }
 
       this.question = {
         init_sfen: this.provisional_sfen,
         moves_answers_attributes: [],
-        time_limit_clock: dayjs("2000-01-01T00:03:00+09:00").toDate(),
+        time_limit_sec: 3,
+        difficulty_level: 1,
       }
+      this.time_limit_clock_set()
 
       // this.question.moves_answers_attributes = []
-      this.answer_index = 0
+      this.answer_tab_index = 0
     },
 
-    // 答えだけを削除
+    // clock = advance(seconds: sec)
+    time_limit_clock_set() {
+      this.time_limit_clock = this.base_clock.add(this.question.time_limit_sec, "second").toDate()
+    },
+
+    // 正解だけを削除
     moves_answers_clear() {
       this.$set(this.question, "moves_answers_attributes", [])
-      this.answer_index = 0
+      this.answer_tab_index = 0
     },
 
     tab_change_handle() {
@@ -658,63 +648,65 @@ export default {
     },
 
     save_handle() {
+      if (this.question.moves_answers_attributes.length === 0) {
+        this.warning_notice("正解を作ってください")
+        return
+      }
+
       // const moves_answers_attributes = this.answers.map(e => {
-      //   return { sfen_moves_pack: e.sfen_moves_pack }
+      //   return { moves_str: e.moves_str }
       // })
 
-      const params = {}
-      // params.question = Object.assign({}, this.question, { moves_answers_attributes: moves_answers_attributes })
-      params.question = this.question
+      // https://day.js.org/docs/en/durations/diffing
+      const time_limit_sec = dayjs(this.time_limit_clock).diff(this.base_clock) / 1000
+
+      const params = {question: { ...this.question, time_limit_sec: time_limit_sec }}
+
+      // .add(this.question.time_limit_sec, "second").toDate()
 
       // params.set("question.description", this.question.description)
       // params.set("init_sfen", this.init_sfen)
       // params.set("answers", this.answers)
 
+      const before_crete_or_upate_name = this.crete_or_upate_name
       this.http_command("PUT", this.info.put_path, params, e => {
-        console.log(e)
-        this.question = e.question
-    //     if (e.bs_error) {
-    //       this.bs_error = e.bs_error
-    //       this.talk(this.bs_error.message, {rate: 1.0})
-    //
-    //       if (this.development_p) {
-    //         this.$buefy.toast.open({message: e.bs_error.message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
-    //       }
-    //
-    //       if (this.development_p && false) {
-    //         this.$buefy.dialog.alert({
-    //           title: "ERROR",
-    //           message: `<div>${e.bs_error.message}</div><div class="error_message_pre_with_margin is-size-7">${e.bs_error.board}</div>`,
-    //           canCancel: ["outside", "escape"],
-    //           type: "is-danger",
-    //           hasIcon: true,
-    //           icon: "times-circle",
-    //           iconPack: "fa",
-    //           trapFocus: true,
-    //         })
-    //       }
-    //     }
-    //
-    //     if (e.all_kifs) {
-    //       this.all_kifs = e.all_kifs
-    //     }
-    //
-    //     if (e.record) {
-    //       this.record = e.record
-    //       callback()
-    //     }
+        if (e.error_message) {
+          this.warning_notice(e.error_message)
+        }
+        if (e.question) {
+          this.question = e.question
+          // alert(this.time_limit_clock)
+          // dayjs("2000-01-01T00:03:00+09:00").toDate()
+          // this.time_limit_clock = dayjs(this.time_limit_clock).toDate()
+          // console.log(this.time_limit_clock)
+          this.time_limit_clock_set()
+          this.ok_notice(`${before_crete_or_upate_name}しました`)
+        }
       })
-
     },
 
-    notice(message) {
-      this.$buefy.toast.open({message: message, position: "is-bottom"})
-      this.talk(message)
+    warning_dialog(message) {
+      this.$buefy.dialog.alert({
+        title: "ERROR",
+        message: message,
+        canCancel: ["outside", "escape"],
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        trapFocus: true,
+      })
+    },
+
+    ok_notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-success", queue: false})
+      this.talk(message, {rate: 1.5})
     },
 
     warning_notice(message) {
-      this.$buefy.toast.open({message: message, position: "is-top", type: "is-danger"})
-      this.talk(message)
+      this.sound_play("x")
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-warning", queue: false})
+      this.talk(message, {rate: 1.5})
     },
   },
 
@@ -759,6 +751,22 @@ export default {
 
     edit_tab_info() {
       return EditTabInfo.fetch(this.edit_tab_index)
+    },
+
+    crete_or_upate_name() {
+      if (this.question.id) {
+        return "更新"
+      } else {
+        return "作成"
+      }
+    },
+
+    start_level_max() {
+      return 5
+    },
+
+    base_clock() {
+      return dayjs("2000-01-01T00:00:00+09:00")
     },
   },
 }
@@ -814,7 +822,8 @@ export default {
       justify-content: center
       align-items: center
 
-  // 編集
+  //////////////////////////////////////////////////////////////////////////////// 編集
+
   // .switch_grouped_container
   //   margin-top: 0.5rem
   .main_tabs
@@ -825,14 +834,25 @@ export default {
 
   // この手順を正解にする
   .konotejunsiikai
-    margin-top: 0.8rem
+    margin-top: 0.3rem
 
-  // 答えのタブ
-  .kotaenonarabi
+  // 正解のタブ
+  .answer_tabs
     margin-top: 0.8rem
+    .tab-content
+      padding: 0.8rem 0
+      position: relative
+      .delete_button
+        position: absolute
+        top: 0.5rem
+        right: 0.5rem
 
   // タイトルと説明
   .input_forms
     margin-top: 0.8rem
 
+  ////////////////////////////////////////////////////////////////////////////////
+  .save_container
+
+  //////////////////////////////////////////////////////////////////////////////// 共通
 </style>

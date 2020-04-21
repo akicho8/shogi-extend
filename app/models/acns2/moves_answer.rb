@@ -3,13 +3,13 @@ module Acns2
     belongs_to :question
 
     before_validation do
-      if changes_to_save[:sfen_moves_pack] && v = sfen_moves_pack.presence
+      if changes_to_save[:moves_str] && v = moves_str.presence
         self.limit_turn = v.split.size
       end
     end
 
     with_options presence: true do
-      validates :sfen_moves_pack
+      validates :moves_str
       validates :limit_turn
     end
   end

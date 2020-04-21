@@ -43,6 +43,7 @@ class CreateAcns2 < ActiveRecord::Migration[6.0]
       t.belongs_to :user,                                                           comment: "作成者"
       t.string :init_sfen,                    null: false, index: { unique: true }, comment: "問題"
       t.integer :time_limit_sec,              null: true,  index: true,             comment: "制限時間(秒)"
+      t.integer :difficulty_level,            null: true,  index: true,             comment: "難易度"
       t.string :title,                        null: true,  index: false,            comment: "タイトル"
       t.string :description,      limit: 512, null: true,  index: false,            comment: "説明"
       t.string :hint_description,             null: true,  index: false,            comment: "ヒント"
@@ -58,7 +59,7 @@ class CreateAcns2 < ActiveRecord::Migration[6.0]
     create_table :acns2_moves_answers do |t|
       t.belongs_to :question,                                 comment: "問題"
       t.integer :limit_turn,       null: false, index: true,  comment: "N手"
-      t.string :sfen_moves_pack,   null: false, index: false, comment: "連続した指し手"
+      t.string :moves_str,   null: false, index: false, comment: "連続した指し手"
       t.timestamps
     end
 

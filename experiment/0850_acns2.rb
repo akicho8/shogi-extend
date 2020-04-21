@@ -7,7 +7,7 @@ user = Colosseum::User.create!
 
 question = user.acns2_questions.create! do |e|
   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-  e.moves_answers.build(sfen_moves_pack: "G*5b")
+  e.moves_answers.build(moves_str: "G*5b")
   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
 end
 
@@ -49,5 +49,5 @@ tp hash.as_json
 # >> |               updated_at | 2020-04-20T23:13:37.697+09:00                                                                                                                                             |
 # >> |                  o_count | 0                                                                                                                                                                         |
 # >> |                  x_count | 0                                                                                                                                                                         |
-# >> | moves_answers_attributes | [{"id"=>16, "question_id"=>14, "limit_turn"=>1, "sfen_moves_pack"=>"G*5b", "created_at"=>"2020-04-20T23:13:37.701+09:00", "updated_at"=>"2020-04-20T23:13:37.701+09:00"}] |
+# >> | moves_answers_attributes | [{"id"=>16, "question_id"=>14, "limit_turn"=>1, "moves_str"=>"G*5b", "created_at"=>"2020-04-20T23:13:37.701+09:00", "updated_at"=>"2020-04-20T23:13:37.701+09:00"}] |
 # >> |--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
