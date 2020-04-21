@@ -150,93 +150,86 @@
 
         b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
           b-tab-item(label="配置")
+            shogi_player(
+              :run_mode="'edit_mode'"
+              :kifu_body="provisional_sfen"
+              :start_turn="-1"
+              :key_event_capture="false"
+              :slider_show="true"
+              :controller_show="true"
+              :theme="'simple'"
+              :size="'default'"
+              :sound_effect="false"
+              :volume="0.2"
+              @update:edit_mode_current_sfen="edit_mode_current_sfen"
+              )
           b-tab-item
             template(slot="header")
               span 正解
               b-tag(rounded) {{question.moves_answers_attributes.length}}
+            shogi_player(
+              :run_mode="'play_mode'"
+              :kifu_body="`position sfen ${question.init_sfen}`"
+              :start_turn="0"
+              :key_event_capture="false"
+              :slider_show="true"
+              :controller_show="true"
+              :setting_button_show="development_p"
+              :theme="'simple'"
+              :size="'default'"
+              :sound_effect="edit_tab_info.key === 'play_mode'"
+              :volume="0.2"
+              ref="play_sp"
+              )
+
+            .buttons.is-centered.konotejunsiikai
+              b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
+
+            b-tabs.answer_tabs(v-model="answer_tab_index" position="is-centered" expanded :animated="true" v-if="question.moves_answers_attributes.length >= 1")
+              template(v-for="(e, i) in question.moves_answers_attributes")
+                b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
+                  shogi_player(
+                    :run_mode="'view_mode'"
+                    :kifu_body="full_sfen_build(e)"
+                    :start_turn="-1"
+                    :debug_mode="false"
+                    :key_event_capture="false"
+                    :slider_show="true"
+                    :controller_show="true"
+                    :setting_button_show="development_p"
+                    :theme="'simple'"
+                    :size="'default'"
+                    :sound_effect="true"
+                    :volume="0.2"
+                    )
+                  b-button.delete_button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)" size="is-small")
           b-tab-item(label="情報")
+            .input_forms
+              b-field(label="タイトル" label-position="on-border")
+                b-input(v-model="question.title")
 
-        // v-if だと作り直すため最初に edit_mode_current_sfen が作動してしまう
-        div(v-show="edit_tab_info.key === 'edit_mode'")
-          shogi_player(
-            :run_mode="'edit_mode'"
-            :kifu_body="provisional_sfen"
-            :start_turn="-1"
-            :key_event_capture="false"
-            :slider_show="true"
-            :controller_show="true"
-            :theme="'simple'"
-            :size="'default'"
-            :sound_effect="false"
-            :volume="0.2"
-            @update:edit_mode_current_sfen="edit_mode_current_sfen"
-            )
+              b-field(label="説明" label-position="on-border")
+                b-input(v-model="question.description" size="is-small" type="textarea" rows="2")
 
-        div(v-show="edit_tab_info.key === 'play_mode'")
-          shogi_player(
-            :run_mode="'play_mode'"
-            :kifu_body="`position sfen ${question.init_sfen}`"
-            :start_turn="0"
-            :key_event_capture="false"
-            :slider_show="true"
-            :controller_show="true"
-            :setting_button_show="development_p"
-            :theme="'simple'"
-            :size="'default'"
-            :sound_effect="edit_tab_info.key === 'play_mode'"
-            :volume="0.2"
-            ref="play_sp"
-            )
+              b-field(label="ヒント" label-position="on-border")
+                b-input(v-model="question.hint_description")
 
-          .buttons.is-centered.konotejunsiikai
-            b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
+              b-field(label="出典" label-position="on-border")
+                b-input(v-model="question.source_desc")
 
-          b-tabs.answer_tabs(v-model="answer_tab_index" position="is-centered" expanded :animated="true" v-if="question.moves_answers_attributes.length >= 1")
-            template(v-for="(e, i) in question.moves_answers_attributes")
-              b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
-                shogi_player(
-                  :run_mode="'view_mode'"
-                  :kifu_body="full_sfen_build(e)"
-                  :start_turn="-1"
-                  :debug_mode="false"
-                  :key_event_capture="false"
-                  :slider_show="true"
-                  :controller_show="true"
-                  :setting_button_show="development_p"
-                  :theme="'simple'"
-                  :size="'default'"
-                  :sound_effect="true"
-                  :volume="0.2"
-                  )
-                b-button.delete_button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)" size="is-small")
+              b-field(label="制限時間" label-position="on-border")
+                //- :default-seconds="0" :default-minutes="0"
+                b-timepicker(v-model="time_limit_clock" icon="clock" :enable-seconds="true")
+                //- b-numberinput(v-model="time_limit_clock" :min="0")
+                //- b-numberinput(v-model="time_limit_clock" :min="0")
 
-        template(v-if="edit_tab_info.key === 'form_mode'")
-          .input_forms
-            b-field(label="タイトル" label-position="on-border")
-              b-input(v-model="question.title")
-
-            b-field(label="説明" label-position="on-border")
-              b-input(v-model="question.description" size="is-small" type="textarea" rows="2")
-
-            b-field(label="ヒント" label-position="on-border")
-              b-input(v-model="question.hint_description")
-
-            b-field(label="出典" label-position="on-border")
-              b-input(v-model="question.source_desc")
-
-            b-field(label="制限時間" label-position="on-border")
-              //- :default-seconds="0" :default-minutes="0"
-              b-timepicker(v-model="time_limit_clock" icon="clock" :enable-seconds="true")
-              //- b-numberinput(v-model="time_limit_clock" :min="0")
-              //- b-numberinput(v-model="time_limit_clock" :min="0")
-
-            label.is-size-7.has-text-weight-bold 難易度
-            b-rate(v-model="question.difficulty_level" spaced :max="start_level_max" :show-score="false")
+              label.is-size-7.has-text-weight-bold 難易度
+              b-rate(v-model="question.difficulty_level" spaced :max="start_level_max" :show-score="false")
 
         hr
         .save_container
           .buttons.is-centered
-            b-button.has-text-weight-bold(@click="save_handle" type="is-primary") {{crete_or_upate_name}}
+            b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
 
   debug_print
 
@@ -543,7 +536,7 @@ export default {
 
           // 合わせて正解も削除する
           if (this.question.moves_answers_attributes.length >= 1) {
-            this.ok_notice("配置を変更したので正解を削除しました")
+            this.ok_notice("元の配置を変更したので正解を削除しました")
             this.moves_answers_clear()
           }
         // }
@@ -767,6 +760,12 @@ export default {
 
     base_clock() {
       return dayjs("2000-01-01T00:00:00+09:00")
+    },
+
+    save_button_type() {
+      if (this.question.moves_answers_attributes.length >= 1) {
+        return "is-primary"
+      }
     },
   },
 }
