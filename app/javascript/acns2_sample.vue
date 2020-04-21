@@ -156,12 +156,27 @@
               b-tag(rounded) {{question.moves_answers_attributes.length}}
           b-tab-item(label="情報")
 
-        template(v-if="edit_tab_info.sp_show")
+        // v-if だと作り直すため最初に edit_mode_current_sfen が作動してしまう
+        div(v-show="edit_tab_info.key === 'edit_mode'")
           shogi_player(
-            :run_mode="sp_run_mode"
+            :run_mode="'edit_mode'"
             :kifu_body="provisional_sfen"
             :start_turn="-1"
-            :debug_mode="false"
+            :key_event_capture="false"
+            :slider_show="true"
+            :controller_show="true"
+            :theme="'simple'"
+            :size="'default'"
+            :sound_effect="false"
+            :volume="0.2"
+            @update:edit_mode_current_sfen="edit_mode_current_sfen"
+            )
+
+        div(v-show="edit_tab_info.key === 'play_mode'")
+          shogi_player(
+            :run_mode="'play_mode'"
+            :kifu_body="`position sfen ${question.init_sfen}`"
+            :start_turn="0"
             :key_event_capture="false"
             :slider_show="true"
             :controller_show="true"
@@ -169,11 +184,9 @@
             :size="'default'"
             :sound_effect="true"
             :volume="0.2"
-            @update:edit_mode_current_sfen="edit_mode_current_sfen"
-            ref="edit_sp"
+            ref="play_sp"
             )
 
-        template(v-if="edit_tab_info.key === 'play_mode'")
           .buttons.is-centered.konotejunsiikai
             b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
 
@@ -518,19 +531,21 @@ export default {
     edit_mode_current_sfen(sfen) {
       if (this.sp_run_mode === "edit_mode") {
         sfen = sfen.replace(/position sfen /, "")
-        this.debug_alert(`初期配置取得 ${sfen}`)
-        this.$set(this.question, "init_sfen", sfen)
+        // if (this.question.init_sfen !== sfen) {
+          this.debug_alert(`初期配置取得 ${sfen}`)
+          this.$set(this.question, "init_sfen", sfen)
 
-        // 合わせて答えも削除する
-        if (this.question.moves_answers_attributes.length >= 1) {
-          this.notice("配置を変更したので解答を削除しました")
-          this.moves_answers_clear()
-        }
+          // 合わせて答えも削除する
+          if (this.question.moves_answers_attributes.length >= 1) {
+            this.notice("配置を変更したので解答を削除しました")
+            this.moves_answers_clear()
+          }
+        // }
       }
     },
 
     sfen_to_save() {
-      const sp = this.$refs.edit_sp
+      const sp = this.$refs.play_sp
 
       // console.log(sp.init_sfen)
       // console.log(sp.moves)
@@ -599,13 +614,13 @@ export default {
       this.edit_tab_index = EditTabInfo.fetch("play_mode").code
 
       // この方法でも取得できる
-      // if (this.$refs.edit_sp) {
-      //   this.$set(this.question, "init_sfen", this.$refs.edit_sp.mediator.sfen_serializer.to_s)
+      // if (this.$refs.play_sp) {
+      //   this.$set(this.question, "init_sfen", this.$refs.play_sp.mediator.sfen_serializer.to_s)
       // }
 
       // this.$nextTick(() => {
       //   if (this.question.init_sfen == null) {
-      //     const init_sfen = this.$refs.edit_sp.init_sfen.replace(/position sfen /, "")
+      //     const init_sfen = this.$refs.play_sp.init_sfen.replace(/position sfen /, "")
       //     this.debug_alert(`初期配置取得 ${init_sfen}`)
       //     this.$set(this.question, "init_sfen", init_sfen)
       //   }
