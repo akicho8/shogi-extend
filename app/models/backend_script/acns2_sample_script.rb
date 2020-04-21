@@ -51,32 +51,17 @@ module BackendScript
     end
 
     def script_body
-      params = {
-        "question" => {
-          "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-          "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
-          "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
-        },
-      }.deep_symbolize_keys
-
-      question = params[:question]
-      record = h.current_user.acns2_questions.find_or_initialize_by(id: question[:id])
-      record.assign_attributes(question.slice(:init_sfen, :title, :description, :hint_description, :source_desc, :other_twitter_account))
-
-      a = Time.zone.parse(question[:time_limit_clock])
-      b = Time.zone.parse("2000-01-01")
-      record.time_limit_sec = a - b
-      record.save!
-
-      # 削除
-      record.moves_answer_ids = question[:moves_answers_attributes].collect { |e| e[:id] }
-
-      # 追加 or 更新
-      question[:moves_answers_attributes].each do |e|
-        moves_answer = record.moves_answers.find_or_initialize_by(id: e[:id])
-        moves_answer.sfen_moves_pack = e[:sfen_moves_pack]
-        moves_answer.save!
-      end
+      # params = {
+      #   "question" => {
+      #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
+      #     "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
+      #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
+      #   },
+      # }.deep_symbolize_keys
+      #
+      # question = h.current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
+      # question.together_with_params_came_from_js_update(params)
+      # return question.create_the_parameters_to_be_passed_to_the_js
 
       # question = h.current_user.acns2_questions.create! do |e|
       #   e.assign_attributes(params[:question])
@@ -84,10 +69,6 @@ module BackendScript
       #   e.moves_answers.build(sfen_moves_pack: "G*5b")
       #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
       # end
-
-      hash = record.attributes
-      hash = hash.merge(moves_answers_attributes: record.moves_answers)
-      return hash.as_json
 
       # Acns2.setup
 
@@ -153,60 +134,17 @@ module BackendScript
     end
 
     def put_action
-      # Parameters: {"sp_title"=>"", "sp_desc"=>"", "init_sfen"=>"null", "answers"=>"", "id"=>"acns2-sample"}
-
-      # {:sp_title, :sp_desc, :init_sfen, :answers}
-
-      # >> |-----------------------+--------------------------------------------|
-      # >> |                    id | 1                                          |
-      # >> |               user_id | 14                                         |
-      # >> |             init_sfen | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 |
-      # >> |        time_limit_sec |                                            |
-      # >> |                 title |                                            |
-      # >> |           description |                                            |
-      # >> |      hint_description |                                            |
-      # >> |           source_desc |                                            |
-      # >> | other_twitter_account |                                            |
-      # >> |            created_at | 2020-04-19 21:07:35 +0900                  |
-      # >> |            updated_at | 2020-04-19 21:07:35 +0900                  |
-      # >> |               o_count | 0                                          |
-      # >> |               x_count | 0                                          |
-      # >> |-----------------------+--------------------------------------------|
-
-      # question = h.current_user.acns2_questions.create! do |e|
-      #   e.assign_attributes(params[:question])
-      #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-      #   e.moves_answers.build(sfen_moves_pack: "G*5b")
-      #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
-      # end
-
-      # params[:question]
-
-      # {"question"=>{"init_sfen"=>"4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
+      # params = {
+      #   "question" => {
+      #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
       #     "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
-      #     "time_limit_sec"=>"1999-12-31T15:03:00.000Z"},
-      #   "id"=>"acns2-sample",
-      #   "script"=>{"question"=>{"init_sfen"=>"4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
-      #       "moves_answers_attributes"=>[{"sfen_moves_pack"=>"4c5b"}],
-      #       "time_limit_sec"=>"1999-12-31T15:03:00.000Z"}}}
+      #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
+      #   },
+      # }.deep_symbolize_keys
 
-      question = params[:question]
-      if id = question[:id]
-        record = h.current_user.acns2_questions.find(id)
-      end
-      record ||= h.current_user.acns2_questions.build
-      record.assign_attributes(question.slice())
-
-      # question = h.current_user.acns2_questions.create! do |e|
-      #   e.assign_attributes(params[:question])
-      #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-      #   e.moves_answers.build(sfen_moves_pack: "G*5b")
-      #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
-      # end
-
-      hash = question.attributes
-      hash = hash.merge(moves_answers_attributes: question.moves_answers)
-      render json: hash
+      question = h.current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
+      question.together_with_params_came_from_js_update(params)
+      render json: question.create_the_parameters_to_be_passed_to_the_js
     end
 
     def current_room_id
