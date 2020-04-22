@@ -3,7 +3,7 @@
   .columns
     .column
       b-dropdown.relay_menu(position="is-bottom-left")
-        b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
+        b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
         b-dropdown-item(@click="piyo_shogi_open_handle") ぴよ将棋
         b-dropdown-item(@click="kento_open_handle") KENTO
         b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
@@ -127,7 +127,7 @@ export default {
 
       const params = new URLSearchParams()
       params.set("body", this.current_body)
-      params.set("edit_mode", "relay2")
+      params.set("edit_mode", "relay_board")
 
       this.http_command("POST", this.$route.path, params, e => {
         this.change_counter = 0

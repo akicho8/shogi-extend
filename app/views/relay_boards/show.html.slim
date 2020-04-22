@@ -1,10 +1,10 @@
 - @page_title ||= "リレー将棋用の盤"
 
-- twitter_card_registry(twitter_card_options)
+- twitter_card_registry(controller.twitter_card_options)
 
 - content_for :head do
   javascript:
     document.addEventListener('DOMContentLoaded', () => { new Vue().$mount("#app") })
 
 #app
-  relay_board(:info="#{relay_board_options.to_json}")
+  relay_board(:info="#{controller.current_vue_args.to_json}")

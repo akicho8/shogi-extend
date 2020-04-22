@@ -53,10 +53,10 @@ class FreeBattlesController < ApplicationController
 
   def create
     if request.format.json?
-      if current_edit_mode === :relay2
-        render json: { record: js_record_for(FreeBattle.same_body_fetch(params)) }
-        return
-      end
+      # if current_edit_mode === :relay_board
+      #   render json: { record: js_record_for(FreeBattle.same_body_fetch(params)) }
+      #   return
+      # end
 
       if current_edit_mode === :adapter
         if params[:input_text]

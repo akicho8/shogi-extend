@@ -39,6 +39,7 @@ require "open-uri"
 class FreeBattle < ApplicationRecord
   include BattleModelMod
   include StrangeKifuBodyParserMod
+  include RelayBoardMod
 
   class << self
     def setup(options = {})
@@ -122,10 +123,13 @@ class FreeBattle < ApplicationRecord
 
     def old_record_destroy(params = {})
       params = {
-        expires_in: 4.weeks,
+        expires_in: 8.weeks,
       }.merge(params)
 
-      all.where(use_key: "adapter").where(arel_table[:accessed_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
+      s = all
+      s = s.where(arel_table[:use_key].eq_any(["adapter", "relay_board"]))
+      s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].ago))
+      s.find_in_batches(batch_size: 100) do |g|
         begin
           g.each(&:destroy)
         rescue ActiveRecord::Deadlocked => error
@@ -310,16 +314,6 @@ class FreeBattle < ApplicationRecord
           label: location.name,
           data: time_chart_xy_list(location),
         }
-      end
-    end
-  end
-
-  concerning :RelayMethods do
-    class_methods do
-      def same_body_fetch(params)
-        body = params[:body] || "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
-        sfen_hash = Digest::MD5.hexdigest(body)
-        find_by(sfen_hash: sfen_hash, use_key: :relay2) || create!(kifu_body: body, use_key: :relay2)
       end
     end
   end
