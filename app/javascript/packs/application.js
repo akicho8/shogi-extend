@@ -125,6 +125,7 @@ import three_stage_league_player_chart from "three_stage_league_player_chart.vue
 import custom_chart from "custom_chart.vue"
 import stopwatch from "stopwatch.vue"
 import simple_board from "simple_board.vue"
+import relay_board from "relay_board.vue"
 import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
 import sp_show from "sp_show.vue"
@@ -168,6 +169,7 @@ Vue.mixin({
     pulldown_menu,
     stopwatch,
     simple_board,
+    relay_board,
     xy_master,
     cpu_battle,
     sp_show,
