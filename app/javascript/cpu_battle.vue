@@ -46,7 +46,7 @@
           :flip.sync="flip"
           :setting_button_show="development_p"
           :summary_show="development_p || RAILS_ENV === 'test'"
-          @update:play_mode_advanced_full_moves_sfen="play_mode_long_sfen_set"
+          @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           ref="sp_vm"
         )
 
@@ -352,7 +352,7 @@ export default {
 
     // 1手実行
     one_hand_exec() {
-      this.play_mode_long_sfen_set(this.$refs.sp_vm.play_mode_full_moves_sfen)
+      this.play_mode_advanced_full_moves_sfen_set(this.$refs.sp_vm.play_mode_full_moves_sfen)
     },
 
     // 待った
@@ -415,7 +415,7 @@ export default {
       this.post_apply({candidate_sfen: this.current_sfen})
     },
 
-    play_mode_long_sfen_set(long_sfen) {
+    play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.mode === "standby") {
         return
       }

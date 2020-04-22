@@ -240,7 +240,7 @@ module Colosseum::Battle::BattleMethods
   end
 
   # 人間が指した直後のトリガー
-  def play_mode_long_sfen_set(data)
+  def play_mode_advanced_full_moves_sfen_set(data)
     catch :exit do
       brain_get(data["kifu_body"]).tap do |o|
         o.validate_checkmate_ignore
