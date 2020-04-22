@@ -53,17 +53,24 @@ class FreeBattlesController < ApplicationController
 
   def create
     if request.format.json?
-      if params[:input_text]
-        # なんでも棋譜変換
-        if current_edit_mode === :adapter
+      if current_edit_mode === :relay2
+        render json: { record: js_record_for(FreeBattle.same_body_fetch(params)) }
+        return
+      end
+
+      if current_edit_mode === :adapter
+        if params[:input_text]
+          # なんでも棋譜変換
           adapter_process
           if performed?
             return
           end
         end
+      end
 
-        # プレビュー用
-        if current_edit_mode === :basic
+      # 通常のプレビュー用
+      if current_edit_mode === :basic
+        if params[:input_text]
           render json: { output_kifs: output_kifs, turn_max: turn_max }
           return
         end

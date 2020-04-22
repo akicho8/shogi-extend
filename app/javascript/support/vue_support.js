@@ -100,8 +100,28 @@ export default {
     },
 
     piyo_shogi_full_url(record, turn, flip) {
-      const url = this.as_full_url(record.show_path) + ".kif"
-      return `piyoshogi://?num=${turn}&url=${url}` // TODO: flip つけたい
+      const url = this.as_full_url(record.show_path)
+
+      // ".kif" を足す方法は悪手。パスが "/xxx" で終わっているとは限らない
+      const url2 = new URL(url)
+
+      if (false) {
+        // ぴよ将棋はコンテンツを見ているのではなく .kif という拡張子を見ているのでこの方法は使えない
+        // xxx?a=1&format=kif
+        url2.searchParams.set("format", "kif")
+      } else {
+        // xxx.kif 形式
+        url2.pathname = url2.pathname + ".kif"
+      }
+
+      const url3 = url2.toString()
+      console.log(url3)
+
+      const url4 = `piyoshogi://?num=${turn}&url=${url3}` // TODO: flip つけたい
+
+      console.log(url4)
+
+      return url4
     },
 
     kento_full_url(record, turn, flip) {
