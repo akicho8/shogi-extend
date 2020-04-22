@@ -58,6 +58,10 @@ class ApplicationController < ActionController::Base
 
     private
 
+    def as_b(v)
+      v.to_s == "true" || v.to_s == "1"
+    end
+
     def h
       @h ||= view_context
     end
