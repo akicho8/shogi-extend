@@ -11,7 +11,7 @@ shogi_player(
   :size="'default'"
   :sound_effect="true"
   :volume=AppConfig[:volume]
-  @update:play_mode_long_sfen="play_mode_long_sfen_set"
+  @update:play_mode_advanced_full_moves_sfen="play_mode_long_sfen_set"
   ref="main_sp"
   )
   = render partial: "sfen_link"
