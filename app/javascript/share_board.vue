@@ -7,10 +7,12 @@
         b-dropdown-item(@click="piyo_shogi_open_handle") ぴよ将棋
         b-dropdown-item(@click="kento_open_handle") KENTO
         b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
+        b-dropdown-item(separator)
+        b-dropdown-item(@click="source_read_handle") 棋譜読み込み
 
       .title_container.has-text-centered
         .title.is-4.is-marginless(@click="title_edit")
-          span.is_clickable {{title}}
+          span.is_clickable {{current_title}}
         .turn_offset.has-text-weight-bold {{turn_offset}}手目
 
       .sp_container
@@ -26,7 +28,7 @@
           :controller_show="true"
           :human_side_key="'both'"
           :theme="'real'"
-          :flip="initial_flip"
+          :flip="current_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           @update:turn_offset="turn_offset_set"
         )
@@ -79,7 +81,8 @@ export default {
       bs_error: null,     // BioshogiError の情報 (Hash)
       current_body: null, // 渡している棋譜
       turn_offset: null,  // 現在の手数
-      title: null,        // 現在のタイトル
+      current_title: null,        // 現在のタイトル
+      current_flip: null,
 
       // その他
       change_counter: 1, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
@@ -87,18 +90,17 @@ export default {
   },
 
   created() {
-    this.record       = this.info.record
-    this.current_body = this.info.record.sfen_body
-    this.turn_offset  = this.info.record.initial_turn
-    this.title        = this.$route.query.title || "指し継ぎリレー将棋"
-
-    this.url_replace()
+    this.record        = this.info.record
+    this.current_body  = this.info.record.sfen_body
+    this.turn_offset   = this.info.record.initial_turn
+    this.current_title = this.$route.query.title || "指し継ぎリレー将棋"
+    this.current_flip  = this.initial_flip
   },
 
   watch: {
-    current_body() { this.url_replace() },
-    turn_offset()  { this.url_replace() },
-    title()        { this.url_replace() },
+    current_body()  { this.url_replace() },
+    turn_offset()   { this.url_replace() },
+    current_title() { this.url_replace() },
   },
 
   methods: {
@@ -160,11 +162,12 @@ export default {
 
         if (e.bs_error) {
           this.bs_error = e.bs_error
-          this.talk(this.bs_error.message, {rate: 1.5})
+          const message = `${e.bs_error.message}。手を戻して指し直してください`
 
+          this.talk(message, {rate: 1.5})
           this.$buefy.dialog.alert({
             title: "ERROR",
-            message: e.bs_error.message,
+            message: message,
             canCancel: ["outside", "escape"],
             type: "is-danger",
             hasIcon: true,
@@ -189,7 +192,7 @@ export default {
       const url = new URL(location)
       url.searchParams.set("body", this.current_body)
       url.searchParams.set("turn", this.turn_offset)
-      url.searchParams.set("title", this.title)
+      url.searchParams.set("title", this.current_title)
       if (format) {
         url.searchParams.set("format", format)
       }
@@ -201,8 +204,58 @@ export default {
         message: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
-        inputAttrs: { type: "text", value: this.title, required: false },
-        onConfirm: value => this.title = value || "指し継ぎリレー将棋",
+        inputAttrs: { type: "text", value: this.current_title, required: false },
+        onConfirm: value => this.current_title = value || "指し継ぎリレー将棋",
+      })
+    },
+
+    source_read_handle() {
+      // this.$on("foo", e => alert(`on:${e}`))
+
+      const body_input_modal = this.$buefy.modal.open({
+        parent: this,
+        hasModalCard: true,
+        component: {
+          template: `
+            <div class="modal-card is-size-7 share_board">
+              <header class="modal-card-head">
+                <p class="modal-card-title">棋譜</p>
+              </header>
+              <section class="modal-card-body">
+                <b-input type="textarea" v-model="any_source" />
+              </section>
+              <footer class="modal-card-foot">
+                <b-button @click="post_handle" type="is-primary">反映</b-button>
+              </footer>
+            </div>
+          `,
+          data() {
+            return {
+              any_source: "",
+            }
+          },
+          methods: {
+            post_handle() {
+              this.$emit("update:any_source", this.any_source)
+            },
+          },
+        },
+        events: {
+          "update:any_source": any_source => {
+            this.http_get_command("/api/general/any_source_to_sfen", {any_source: any_source}, e => {
+              if (e.bs_error) {
+                this.general_warning_notice(e.bs_error.message)
+              }
+              if (e.sfen) {
+                this.general_ok_notice("反映しました")
+                this.current_body = e.sfen
+                this.turn_offset = e.turn_max
+                this.current_flip = false
+                body_input_modal.close()
+              }
+            })
+          },
+        },
       })
     },
   },
@@ -230,7 +283,7 @@ export default {
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_full_url(this.record, this.turn_offset, false)
+        return this.piyo_shogi_full_url(this.basic_url, this.turn_offset, false)
       }
     },
 

@@ -114,6 +114,17 @@ export default {
         component: sp_show,
       })
     },
+
+    general_ok_notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary"})
+      this.talk(message, {rate: 1.5})
+    },
+
+    general_warning_notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger"})
+      this.talk(message, {rate: 1.5})
+    },
+
   },
 
   computed: {

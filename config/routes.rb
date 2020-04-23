@@ -145,6 +145,14 @@ Rails.application.routes.draw do
 
   resources :scripts, :path => "script", :only => [:show, :update]
 
+  ################################################################################ api
+
+  namespace :api, format: "json" do
+    resource :general, only: [:show] do
+      get "any_source_to_sfen"
+    end
+  end
+
   ################################################################################ admin
 
   namespace :admin do

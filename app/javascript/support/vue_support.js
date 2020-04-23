@@ -99,8 +99,8 @@ export default {
       }
     },
 
-    piyo_shogi_full_url(record, turn, flip) {
-      const url = this.as_full_url(record.show_path)
+    piyo_shogi_full_url(path, turn, flip) {
+      const url = this.as_full_url(path)
 
       // ".kif" を足す方法は悪手。パスが "/xxx" で終わっているとは限らない
       const url2 = new URL(url)
@@ -132,8 +132,9 @@ export default {
     },
 
     as_full_url(path) {
-      if (path) {
-        this.assert_path(path)
+      if (path.match(/^http/)) {
+        return path
+      } else {
         return window.location.origin + path
       }
     },
