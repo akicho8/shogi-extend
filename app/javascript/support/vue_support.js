@@ -71,12 +71,16 @@ export default {
     },
 
     // モバイルでないときだけ elem にフォーカスする
-    desktop_only_focus(elem) {
-      if (this.desktop_p) {
-        if (elem) {
-          elem.focus()
+    // なぜか $nextTick ではフォーカスされない場合があるため setTimeout に変更
+    desktop_focus_to(elem) {
+      // this.$nextTick(() => {
+      setTimeout(() => {
+        if (this.desktop_p) {
+          if (elem) {
+            elem.focus()
+          }
         }
-      }
+      }, 0)
     },
 
     url_build(attributes) {

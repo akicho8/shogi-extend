@@ -215,6 +215,7 @@ export default {
       const body_input_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
+        animation: "",
         component: {
           template: `
             <div class="modal-card is-size-7 share_board">
@@ -222,10 +223,10 @@ export default {
                 <p class="modal-card-title">棋譜</p>
               </header>
               <section class="modal-card-body">
-                <b-input type="textarea" v-model="any_source" />
+                <b-input type="textarea" v-model="any_source" ref="any_source" />
               </section>
               <footer class="modal-card-foot">
-                <b-button @click="post_handle" type="is-primary">反映</b-button>
+                <b-button @click="submit_handle" type="is-primary">反映</b-button>
               </footer>
             </div>
           `,
@@ -234,8 +235,11 @@ export default {
               any_source: "",
             }
           },
+          mounted() {
+            this.desktop_focus_to(this.$refs.any_source.$refs.textarea)
+          },
           methods: {
-            post_handle() {
+            submit_handle() {
               this.$emit("update:any_source", this.any_source)
             },
           },
