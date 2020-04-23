@@ -2,14 +2,19 @@
 #
 # entry
 #   app/controllers/relay_boards_controller.rb
-# model
-#   app/models/relay_board_mod.rb
+#
 # vue
 #   app/javascript/relay_board.vue
+#
+# model
+#   app/models/relay_board_mod.rb
+#
 # view
 #   app/views/relay_boards/show.html.slim
+#
 # test
 #   spec/controllers/relay_boards_controller_spec.rb
+#
 # url
 #   http://localhost:3000/relay-board
 #
@@ -19,6 +24,11 @@ class RelayBoardsController < ApplicationController
 
   def show
     current_record.update_columns(accessed_at: Time.current)
+
+    if request.format.json?
+      create
+      return
+    end
 
     # http://localhost:3000/relay-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
     if request.format.png?
@@ -48,9 +58,9 @@ class RelayBoardsController < ApplicationController
 
   def twitter_card_options
     {
-      title: "リレー将棋 #{current_record.turn_max}手目",
+      title: "#{current_title} #{current_record.turn_max}手目".squish,
       image: current_image_path,
-      description: "",
+      description: params[:description] || "",
     }
   end
 
@@ -62,8 +72,9 @@ class RelayBoardsController < ApplicationController
 
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max], methods: [:kento_app_path])
-    attrs[:show_path] = url_for([:relay_board, body: current_record.sfen_body, only_path: true])
+    # attrs[:show_path] = url_for([:relay_board, body: current_record.sfen_body, only_path: true])
     attrs[:kif_format_body] = current_record.to_cached_kifu(:kif)
+    attrs[:force_turn] = (params[:turn] || current_record.turn_max).to_i
     attrs
   end
 
@@ -73,5 +84,9 @@ class RelayBoardsController < ApplicationController
 
   def current_image_path
     url_for([:relay_board, body: current_record.sfen_body, only_path: false, format: "png"])
+  end
+
+  def current_title
+    params[:title].presence || "リレー将棋"
   end
 end
