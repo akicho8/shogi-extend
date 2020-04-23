@@ -35,8 +35,6 @@
 
       .tweet_button_container
         .buttons.is-centered
-          b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" type="is-info" rounded :disabled="bs_error") ツイート
-
       //- template(v-if="!bs_error")
       //-   .other_buttons_container
       //-     hr
@@ -304,6 +302,10 @@ export default {
     // 反転した状態で開始するか？ (後手の手番のときに反転する)
     initial_flip() {
       return ((this.info.record.initial_turn + this.info.record.preset_info.handicap_shift) % 2) === 1
+    },
+
+    advanced_p() {
+      return this.turn_offset > this.info.record.initial_turn
     },
   },
 }
