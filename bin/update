@@ -17,10 +17,13 @@ chdir APP_ROOT do
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
+  system! "ncu /chart/ -u"
   system! "ncu /buefy/ -u"
   system! "ncu /bulma/ -u"
+  system! "ncu /pug/ -u"
+  system! "ncu /shogi-player/ -u"
   system! "ncu /js-memory-record/ -u"
-  system! "ncu /vuex/ -u"
+  system! "bundle update bioshogi"
 
   # Install JavaScript dependencies if using Yarn
   system('bin/yarn')
