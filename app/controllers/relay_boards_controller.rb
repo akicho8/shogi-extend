@@ -32,10 +32,8 @@ class RelayBoardsController < ApplicationController
 
     # http://localhost:3000/relay-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
     if request.format.png?
-      turn = current_record.turn_max
-      png = current_record.to_dynamic_png(params.merge(turn: turn))
-      turn = current_record.adjust_turn(turn)
-      send_data png, type: Mime[:png], disposition: current_disposition, filename: "#{current_record.to_param}-#{turn}.png"
+      png = current_record.to_dynamic_png(params.merge(turn: initial_turn, flip: current_flip))
+      send_data png, type: Mime[:png], disposition: current_disposition, filename: "#{current_record.to_param}-#{initial_turn}.png"
       return
     end
 
@@ -58,7 +56,7 @@ class RelayBoardsController < ApplicationController
 
   def twitter_card_options
     {
-      title: "#{current_title} #{current_record.turn_max}手目".squish,
+      title: "#{current_title} #{initial_turn}手目".squish,
       image: current_image_path,
       description: params[:description] || "",
     }
@@ -74,7 +72,8 @@ class RelayBoardsController < ApplicationController
     attrs = current_record.as_json(only: [:sfen_body, :turn_max], methods: [:kento_app_path])
     # attrs[:show_path] = url_for([:relay_board, body: current_record.sfen_body, only_path: true])
     attrs[:kif_format_body] = current_record.to_cached_kifu(:kif)
-    attrs[:force_turn] = (params[:turn] || current_record.turn_max).to_i
+    attrs[:initial_turn] = initial_turn
+    attrs[:preset_info] = { name: current_record.preset_info.name, handicap_shift: current_record.preset_info.handicap ? 1 : 0 }
     attrs
   end
 
@@ -88,5 +87,14 @@ class RelayBoardsController < ApplicationController
 
   def current_title
     params[:title].presence || "リレー将棋"
+  end
+
+  def initial_turn
+    v = (params[:turn].presence || current_record.turn_max).to_i
+    current_record.adjust_turn(v)
+  end
+
+  def current_flip
+    (initial_turn + (current_record.preset_info.handicap ? 1 : 0)).even?
   end
 end

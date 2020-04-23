@@ -28,6 +28,7 @@
           :human_side_key="'both'"
           :theme="'real'"
           :vlayout="false"
+          :flip="initial_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           @update:turn_offset="turn_offset_set"
         )
@@ -61,7 +62,8 @@
             b Twitter Card 画像
           p
             img(:src="png_url" width="256")
-        div {{current_body}}
+        div initial_flip={{initial_flip}}
+        div current_body={{current_body}}
         pre {{JSON.stringify(record, null, 4)}}
 </template>
 
@@ -75,11 +77,11 @@ export default {
   },
   data() {
     return {
-      record: null, // js 側だけで足りると思っていたけどやっぱり必要だった。整合性チェックと kento_app_path のためにある
-      bs_error: null,    // BioshogiError の情報 (Hash)
-      current_body: null,       // 渡している棋譜
-      turn_offset: null,
-      title: null,
+      record: null,       // js 側だけで足りると思っていたけどやっぱり必要だった。整合性チェックと kento_app_path のためにある
+      bs_error: null,     // BioshogiError の情報 (Hash)
+      current_body: null, // 渡している棋譜
+      turn_offset: null,  // 現在の手数
+      title: null,        // 現在のタイトル
 
       // その他
       change_counter: 1, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
@@ -89,7 +91,7 @@ export default {
   created() {
     this.record       = this.info.record
     this.current_body = this.info.record.sfen_body
-    this.turn_offset  = this.info.record.force_turn
+    this.turn_offset  = this.info.record.initial_turn
     this.title        = this.$route.query.title || "リレー将棋"
 
     this.url_replace()
@@ -201,6 +203,7 @@ export default {
       })
     },
   },
+
   computed: {
     field_message() {
       if (this.change_counter === 0) {
@@ -230,14 +233,17 @@ export default {
 
     kento_app_with_params_url() {
       if (this.record) {
-        return this.kento_full_url(this.record, this.turn_offset, false)
+        return this.kento_full_url(this.record, this.turn_offset, false) // FIXME: kentoのURLはjs側で作る
       }
     },
 
     tweet_body() {
-      if (this.record) {
-        return this.basic_url
-      }
+      return this.basic_url
+    },
+
+    // 反転した状態で開始するか？ (後手の手番のときに反転する)
+    initial_flip() {
+      return ((this.info.record.initial_turn + this.info.record.preset_info.handicap_shift) % 2) === 1
     },
   },
 }
