@@ -35,19 +35,7 @@
 
       .tweet_button_container
         .buttons.is-centered
-      //- template(v-if="!bs_error")
-      //-   .other_buttons_container
-      //-     hr
-      //-     .buttons.are-small.is-centered
-      //-       b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'" :disabled="record" v-if="development_p") 検証
-      //-
-      //-       piyo_shogi_button(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-      //-
-      //-       // remote fetch が終わる前に href="" に対して遷移しようとするため .prevent が必要
-      //-       // なぜ href で URL を入れるのか？ → 長押しで別タブで飛びたいため
-      //-       kento_button(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-      //-
-      //-       kif_copy_button(@click="kifu_copy_handle")
+          b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" :disabled="bs_error")
 
   .columns(v-if="development_p")
     .column
@@ -263,14 +251,6 @@ export default {
   },
 
   computed: {
-    field_message() {
-      if (this.change_counter === 0) {
-        if (this.bs_error) {
-          return _.compact([this.bs_error.message, this.bs_error.message_prefix]).join(" ")
-        }
-      }
-    },
-
     basic_url() {
       return this.url_build()
     },
