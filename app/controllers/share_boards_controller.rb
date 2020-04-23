@@ -1,4 +1,4 @@
-# リレー将棋盤
+# 指し継ぎリレー将棋盤
 #
 # entry
 #   app/controllers/share_boards_controller.rb
@@ -62,6 +62,10 @@ class ShareBoardsController < ApplicationController
     }
   end
 
+  def current_title
+    params[:title].presence || "指し継ぎリレー将棋"
+  end
+
   private
 
   def behavior_after_rescue(message)
@@ -83,10 +87,6 @@ class ShareBoardsController < ApplicationController
 
   def current_image_path
     url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png"])
-  end
-
-  def current_title
-    params[:title].presence || "リレー将棋"
   end
 
   def initial_turn

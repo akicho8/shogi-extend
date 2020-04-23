@@ -9,13 +9,12 @@
         b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
 
       .title_container.has-text-centered
-        .title.is-4(@click="title_edit")
+        .title.is-4.is-marginless(@click="title_edit")
           span.is_clickable {{title}}
-        .subtitle.turn_offset.is-5 {{turn_offset}}手目
+        .turn_offset.has-text-weight-bold {{turn_offset}}手目
 
       .sp_container
         shogi_player(
-          ref="main_sp"
           :run_mode="'play_mode'"
           :start_turn="turn_offset"
           :kifu_body="current_body"
@@ -27,7 +26,6 @@
           :controller_show="true"
           :human_side_key="'both'"
           :theme="'real'"
-          :vlayout="false"
           :flip="initial_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           @update:turn_offset="turn_offset_set"
@@ -92,15 +90,20 @@ export default {
     this.record       = this.info.record
     this.current_body = this.info.record.sfen_body
     this.turn_offset  = this.info.record.initial_turn
-    this.title        = this.$route.query.title || "リレー将棋"
+    this.title        = this.$route.query.title || "指し継ぎリレー将棋"
 
     this.url_replace()
+  },
+
+  watch: {
+    current_body() { this.url_replace() },
+    turn_offset()  { this.url_replace() },
+    title()        { this.url_replace() },
   },
 
   methods: {
     turn_offset_set(v) {
       this.turn_offset = v
-      this.url_replace()
     },
 
     play_mode_advanced_full_moves_sfen_set(v) {
@@ -199,7 +202,7 @@ export default {
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: "text", value: this.title, required: false },
-        onConfirm: value => this.title = value || "リレー将棋",
+        onConfirm: value => this.title = value || "指し継ぎリレー将棋",
       })
     },
   },
@@ -255,8 +258,8 @@ export default {
   ////////////////////////////////////////////////////////////////////////////////
   .title_container
     .title
-      .turn_offset
-        margin-left: 0.1rem
+    .turn_offset
+      margin-top: 0.65rem
 
   ////////////////////////////////////////////////////////////////////////////////
   position: relative
