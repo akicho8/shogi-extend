@@ -1,5 +1,5 @@
 <template lang="pug">
-.relay_board
+.share_board
   .columns
     .column
       b-dropdown.dropdown_menu(position="is-bottom-left")
@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  name: "relay_board",
+  name: "share_board",
   mixins: [
   ],
   props: {
@@ -148,7 +148,7 @@ export default {
     record_create(callback) {
       const params = new URLSearchParams()
       params.set("body", this.current_body)
-      params.set("edit_mode", "relay_board")
+      params.set("edit_mode", "share_board")
 
       this.http_command("POST", this.$route.path, params, e => {
         this.change_counter = 0
@@ -251,7 +251,7 @@ export default {
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
-.relay_board
+.share_board
   ////////////////////////////////////////////////////////////////////////////////
   .title_container
     .title

@@ -26,7 +26,7 @@ nav.navbar.is-primary.is_screen_only
         span.navbar-link
           | もっと見る
         .navbar-dropdown.is-boxed
-          = link_to(icon_tag(:apps, margin_right: 1) + "リレー将棋盤", :relay_board, class: ["navbar-item", ("is-active" if params[:controller] == "relay_boards")])
+          = link_to(icon_tag(:apps, margin_right: 1) + "リレー将棋盤", :share_board, class: ["navbar-item", ("is-active" if params[:controller] == "share_boards")])
           = link_to(icon_tag("clipboard-text-outline", margin_right: 1) + "野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
           = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 1) + "野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] != "adapter")])
           = link_to(icon_tag(:apps, margin_right: 1) + "ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])

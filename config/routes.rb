@@ -79,7 +79,7 @@ Rails.application.routes.draw do
 
   resource :stopwatch, only: [:show, :create]
   resource :simple_board, path: "board", only: [:show, :create]
-  resource :relay_board, path: "relay-board", only: [:show, :create]
+  resource :share_board, path: "share-board", only: [:show, :create]
 
   resources :xy_records, path: "xy", only: [:index, :create, :update]
 

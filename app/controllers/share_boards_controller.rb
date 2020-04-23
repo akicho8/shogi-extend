@@ -1,24 +1,24 @@
 # リレー将棋盤
 #
 # entry
-#   app/controllers/relay_boards_controller.rb
+#   app/controllers/share_boards_controller.rb
 #
 # vue
-#   app/javascript/relay_board.vue
+#   app/javascript/share_board.vue
 #
 # model
-#   app/models/relay_board_mod.rb
+#   app/models/share_board_mod.rb
 #
 # view
-#   app/views/relay_boards/show.html.slim
+#   app/views/share_boards/show.html.slim
 #
 # test
-#   spec/controllers/relay_boards_controller_spec.rb
+#   spec/controllers/share_boards_controller_spec.rb
 #
 # url
-#   http://localhost:3000/relay-board
+#   http://localhost:3000/share-board
 #
-class RelayBoardsController < ApplicationController
+class ShareBoardsController < ApplicationController
   include EncodeMod
   include ShogiErrorRescueMod
 
@@ -30,14 +30,14 @@ class RelayBoardsController < ApplicationController
       return
     end
 
-    # http://localhost:3000/relay-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
+    # http://localhost:3000/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
     if request.format.png?
       png = current_record.to_dynamic_png(params.merge(turn: initial_turn, flip: current_flip))
       send_data png, type: Mime[:png], disposition: current_disposition, filename: "#{current_record.to_param}-#{initial_turn}.png"
       return
     end
 
-    # http://localhost:3000/relay-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
+    # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
     if request.format.kif?
       text_body = current_record.to_cached_kifu(:kif)
       headers["Content-Type"] = current_type
@@ -70,7 +70,7 @@ class RelayBoardsController < ApplicationController
 
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max], methods: [:kento_app_path])
-    # attrs[:show_path] = url_for([:relay_board, body: current_record.sfen_body, only_path: true])
+    # attrs[:show_path] = url_for([:share_board, body: current_record.sfen_body, only_path: true])
     attrs[:kif_format_body] = current_record.to_cached_kifu(:kif)
     attrs[:initial_turn] = initial_turn
     attrs[:preset_info] = { name: current_record.preset_info.name, handicap_shift: current_record.preset_info.handicap ? 1 : 0 }
@@ -82,7 +82,7 @@ class RelayBoardsController < ApplicationController
   end
 
   def current_image_path
-    url_for([:relay_board, body: current_record.sfen_body, only_path: false, format: "png"])
+    url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png"])
   end
 
   def current_title

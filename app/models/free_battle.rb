@@ -39,7 +39,7 @@ require "open-uri"
 class FreeBattle < ApplicationRecord
   include BattleModelMod
   include StrangeKifuBodyParserMod
-  include RelayBoardMod
+  include ShareBoardMod
 
   class << self
     def setup(options = {})
@@ -127,7 +127,7 @@ class FreeBattle < ApplicationRecord
       }.merge(params)
 
       s = all
-      s = s.where(arel_table[:use_key].eq_any(["adapter", "relay_board"]))
+      s = s.where(arel_table[:use_key].eq_any(["adapter", "share_board"]))
       s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].ago))
       s.find_in_batches(batch_size: 100) do |g|
         begin
