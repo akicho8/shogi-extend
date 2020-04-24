@@ -2,22 +2,28 @@
 .share_board
   .columns
     .column
-      b-dropdown.dropdown_menu(position="is-bottom-left")
+      b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
         b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
-        b-dropdown-item(@click="piyo_shogi_open_handle") ぴよ将棋
-        b-dropdown-item(@click="kento_open_handle") KENTO
-        b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
-        b-dropdown-item(separator)
+        template(v-if="run_mode === 'play_mode'")
+          b-dropdown-item(@click="piyo_shogi_open_handle") ぴよ将棋
+          b-dropdown-item(@click="kento_open_handle") KENTO
+          b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
+          b-dropdown-item(separator)
+        b-dropdown-item(@click="mode_toggle_handle")
+          template(v-if="run_mode === 'play_mode'")
+            | 盤面編集
+          template(v-else)
+            | 盤面編集(終了)
         b-dropdown-item(@click="source_read_handle") 棋譜読み込み
 
-      .title_container.has-text-centered
+      .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
         .title.is-4.is-marginless(@click="title_edit")
           span.is_clickable {{current_title}}
-        .turn_offset.has-text-weight-bold {{turn_offset}}手目
+        .turn_offset.has-text-weight-bold \#{{turn_offset}}
 
       .sp_container
         shogi_player(
-          :run_mode="'play_mode'"
+          :run_mode="run_mode"
           :start_turn="turn_offset"
           :kifu_body="current_body"
           :summary_show="false"
@@ -28,14 +34,16 @@
           :controller_show="true"
           :human_side_key="'both'"
           :theme="'real'"
-          :flip="current_flip"
+          :flip.sync="current_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+          @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
           @update:turn_offset="turn_offset_set"
         )
 
       .tweet_button_container
         .buttons.is-centered
-          b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" :disabled="bs_error")
+          b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" :disabled="bs_error" v-if="run_mode === 'play_mode'")
+          a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
   .columns(v-if="development_p")
     .column
@@ -63,12 +71,14 @@ export default {
   },
   data() {
     return {
-      record: null,       // js 側だけで足りると思っていたけどやっぱり必要だった。整合性チェックと kento_app_path のためにある
-      bs_error: null,     // BioshogiError の情報 (Hash)
-      current_body: null, // 渡している棋譜
-      turn_offset: null,  // 現在の手数
-      current_title: null,        // 現在のタイトル
-      current_flip: null,
+      record: null,         // js 側だけで足りると思っていたけどやっぱり必要だった。整合性チェックと kento_app_path のためにある
+      bs_error: null,       // BioshogiError の情報 (Hash)
+      current_body: null,   // 渡している棋譜
+      turn_offset: null,    // 現在の手数
+      current_title: null,  // 現在のタイトル
+      current_flip: null,   // 反転用
+      run_mode: null,       // 操作モードと盤面編集モードの切り替え用
+      edit_mode_body: null, // 盤面編集モードの局面
 
       // その他
       change_counter: 1, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
@@ -76,6 +86,7 @@ export default {
   },
 
   created() {
+    this.run_mode      = "play_mode"
     this.record        = this.info.record
     this.current_body  = this.info.record.sfen_body
     this.turn_offset   = this.info.record.initial_turn
@@ -103,6 +114,11 @@ export default {
       this.url_replace()
     },
 
+    edit_mode_snapshot_sfen_set(v) {
+      // あとで current_body に設定するために取っておく
+      this.edit_mode_body = v
+    },
+
     piyo_shogi_open_handle() {
       this.record_fetch(() => this.self_window_open(this.piyo_shogi_app_with_params_url))
     },
@@ -121,6 +137,23 @@ export default {
 
     validate_handle() {
       this.record_fetch(() => {})
+    },
+
+    mode_toggle_handle() {
+      if (this.run_mode === "play_mode") {
+        this.run_mode = "edit_mode"
+        this.current_flip = false // ▲視点にしておく(お好み)
+      } else {
+        this.run_mode = "play_mode"
+
+        // 盤面編集から操作モードに戻した瞬間に盤面編集モードでの局面を反映しURLを更新する
+        // 盤面編集モードでの変化をそのまま current_body に反映しない理由は駒箱の駒が消えるため
+        // 消えるのはsfenに駒箱の情報が含まれないから
+        if (this.development_p && !this.edit_mode_body) {
+          alert("edit_mode_body が入っていません")
+        }
+        this.current_body = this.edit_mode_body
+      }
     },
 
     // private
@@ -302,7 +335,7 @@ export default {
 
   ////////////////////////////////////////////////////////////////////////////////
   position: relative
-  .dropdown_menu
+  .dropdown_menu, .delete
     position: absolute
     top: 0rem
     right: 0rem
