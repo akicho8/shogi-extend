@@ -80,6 +80,7 @@ export default {
             canCancel: ["escape", "outside"],
             trapFocus: true,
             // scroll: "keep",
+            // destroyOnHide: false,
             component: user_info_show,
           })
         }
