@@ -95,6 +95,9 @@ class ShareBoardsController < ApplicationController
   end
 
   def current_flip
+    if v = params[:flip].presence
+      return boolean_cast(v)
+    end
     (initial_turn + (current_record.preset_info.handicap ? 1 : 0)).even?
   end
 end
