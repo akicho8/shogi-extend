@@ -37,13 +37,14 @@ class ShareBoardsController < ApplicationController
       return
     end
 
-    # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
-    if request.format.kif?
-      text_body = current_record.to_cached_kifu(:kif)
-      headers["Content-Type"] = current_type
-      render plain: text_body
-      return
-    end
+    # 棋譜の内容は最初に渡している
+    # # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
+    # if request.format.kif?
+    #   text_body = current_record.to_cached_kifu(:kif)
+    #   headers["Content-Type"] = current_type
+    #   render plain: text_body
+    #   return
+    # end
   end
 
   def create
