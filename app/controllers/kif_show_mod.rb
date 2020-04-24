@@ -30,7 +30,7 @@ module KifShowMod
       text_body = text_body.tosjis
     end
 
-    # if as_b(params[:plain])
+    # if boolean_cast(params[:plain])
     #   render plain: text_body
     #   return
     # end
