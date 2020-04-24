@@ -265,13 +265,13 @@ export default {
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_full_url(this.basic_url, this.turn_offset, false)
+        return this.piyo_shogi_full_url(this.basic_url, this.turn_offset, this.current_flip)
       }
     },
 
     kento_app_with_params_url() {
       if (this.record) {
-        return this.kento_full_url(this.record, this.turn_offset, false) // FIXME: kentoのURLはjs側で作る
+        return this.kento_full_url(this.record, this.turn_offset, this.current_flip) // FIXME: kentoのURLはjs側で作る
       }
     },
 

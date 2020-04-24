@@ -121,7 +121,7 @@ export default {
       const url3 = url2.toString()
       console.log(url3)
 
-      const url4 = `piyoshogi://?num=${turn}&url=${url3}` // TODO: flip つけたい
+      const url4 = `piyoshogi://?num=${turn}&flip=${flip}&url=${url3}`
 
       console.log(url4)
 
@@ -131,6 +131,7 @@ export default {
     kento_full_url(record, turn, flip) {
       const full = "https://www.kento-shogi.com" + record.kento_app_path
       const url = new URL(full)
+      url.searchParams.set("flip", flip)
       url.hash = turn
       return url.toString()
     },
