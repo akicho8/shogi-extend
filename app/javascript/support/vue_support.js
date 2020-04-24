@@ -103,6 +103,19 @@ export default {
       }
     },
 
+    tweet_share_open(params) {
+      const url = new URL("https://twitter.com/share")
+      _.each(params, (v, k) => url.searchParams.set(k, v))
+
+      const width = 575
+      const height = 400
+      const left = (window.screen.width - width) / 2
+      const top = (window.screen.height - height) / 2
+      const opts = `status=1,width=${width},height=${height},top=${top},left=${left}`
+
+      window.open(url.toString(), "", opts)
+    },
+
     piyo_shogi_full_url(path, turn, flip) {
       const url = this.as_full_url(path)
 

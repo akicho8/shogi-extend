@@ -131,7 +131,7 @@ export default {
     },
 
     tweet_handle() {
-      this.record_fetch(() => this.self_window_open(this.tweet_intent_url(this.tweet_body)))
+      this.record_fetch(() => this.tweet_share_open({url: this.basic_url}))
     },
 
     validate_handle() {
