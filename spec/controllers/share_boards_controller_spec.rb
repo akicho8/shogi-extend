@@ -6,14 +6,39 @@ RSpec.describe ShareBoardsController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
-  it "先手が指して共有した状態" do
-    get :show, params: { body: "position startpos moves 7g7f", turn: 1, title: "(title)" }
-    expect(response).to have_http_status(:ok)
+  describe "基本" do
+    def test(format)
+      get :show, params: { body: "position startpos moves 5i5e", turn:1, title: "(title)", format: format }
+      expect(response).to have_http_status(:ok)
+    end
+    it do
+      test("html")
+      test("png")
+    end
   end
 
-  it "そのときの画像" do
-    get :show, params: { body: "position startpos moves 7g7f", turn: 1, title: "(title)", format: "png" }
-    assert { response.media_type == "image/png" }
+  describe "基本自由なので「初手55玉」の棋譜でもエラーにしない" do
+    def test(format)
+      get :show, params: { body: "position startpos moves 5i5e", format: format }
+      expect(response).to have_http_status(:ok)
+    end
+    it do
+      test("html")
+      test("png")
+    end
+  end
+
+  describe "とはいえ「初手55歩」は歩を持ってないためエラー" do
+    def test(format)
+      get :show, params: { body: "position startpos moves P*5e", format: format }
+    end
+    it do
+      test("html")
+      expect(response).to have_http_status(:redirect)
+
+      test("png")
+      expect(response).to have_http_status(422)
+    end
   end
 
   it "IDではなく棋譜がキーになっている" do
@@ -21,7 +46,8 @@ RSpec.describe ShareBoardsController, type: :controller do
     assert { FreeBattle.count == 1 }
   end
 
-  it "ツイートボタンを押したときに一応保存できるか確認している" do
+  # これはもともと最終手が合法手か確認するための機能だったが基本自由なので意味がなくなった
+  it "ツイートボタンを押したときに最新の棋譜を取得している" do
     post :create, params: { body: "position startpos" }
     value = JSON.parse(response.body, symbolize_names: true)
     assert { value[:record] }

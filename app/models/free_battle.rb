@@ -176,10 +176,8 @@ class FreeBattle < ApplicationRecord
       end
     end
 
-    if changes_to_save[:kifu_body]
-      if kifu_body
-        url_in_kifu_body
-      end
+    if changes_to_save[:kifu_body] && kifu_body
+      url_in_kifu_body
     end
   end
 
@@ -292,6 +290,15 @@ class FreeBattle < ApplicationRecord
     else
       {}
     end
+  end
+
+  # 野良棋譜の場合、手合割は解析しないとわからない
+  # ウォーズはあらかじめわかっているのでこの処理はいれない
+  def preset_key_set(info)
+    self.preset_key = info.preset_info.key
+  end
+
+  def parser_exec_after(info)
   end
 
   concerning :UseInfoMethods do

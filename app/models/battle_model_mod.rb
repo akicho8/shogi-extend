@@ -91,6 +91,8 @@ module BattleModelMod
     self.sfen_body = info.mediator.to_sfen
     self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
 
+    preset_key_set(info)
+
     if AppConfig[:swars_tag_search_function]
       self.meta_info = { header: info.header.to_h }
 
@@ -120,6 +122,9 @@ module BattleModelMod
 
     parser_exec_after(info)
     @parser_executed = true
+  end
+
+  def preset_key_set(info)
   end
 
   def parser_exec_after(info)
