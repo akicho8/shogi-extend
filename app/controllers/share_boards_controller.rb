@@ -18,6 +18,10 @@
 # url
 #   http://localhost:3000/share-board
 #
+# ・指したら record を nil に設定している
+# ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる
+# ・そこで kif_format_body を入れているので、指したあとの棋譜コピーは常に最新になっている
+#
 class ShareBoardsController < ApplicationController
   include EncodeMod
   include ShogiErrorRescueMod
@@ -76,7 +80,7 @@ class ShareBoardsController < ApplicationController
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max], methods: [:kento_app_path])
     # attrs[:show_path] = url_for([:share_board, body: current_record.sfen_body, only_path: true])
-    attrs[:kif_format_body] = current_record.to_cached_kifu(:kif)
+    attrs[:kif_format_body] = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
     attrs[:initial_turn] = initial_turn
     attrs[:preset_info] = { name: current_record.preset_info.name, handicap_shift: current_record.preset_info.handicap ? 1 : 0 }
     attrs

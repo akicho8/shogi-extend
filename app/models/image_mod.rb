@@ -35,7 +35,7 @@ module ImageMod
     options_hash = Digest::MD5.hexdigest(options.to_s)
     cache_key = [to_param, "png", sfen_hash, turn, options_hash].join(":") # id:png:board:turn:options
     Rails.cache.fetch(cache_key, expires_in: 1.week) do
-      parser = Bioshogi::Parser.parse(sfen_body, bioshogi_parser_options.merge(turn_limit: turn))
+      parser = Bioshogi::Parser.parse(sfen_body, bioshogi_fast_parse_options_for_image.merge(turn_limit: turn))
       parser.to_png(options)
     end
   end
@@ -66,7 +66,7 @@ module ImageMod
   end
 
   # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
-  def bioshogi_parser_options
+  def bioshogi_fast_parse_options_for_image
     {
       # :skill_monitor_enable           => false,
       # :skill_monitor_technique_enable => false,

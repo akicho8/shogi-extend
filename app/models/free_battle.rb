@@ -282,6 +282,18 @@ class FreeBattle < ApplicationRecord
     s = s.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
   end
 
+  def fast_parser_options
+    if use_info.key == :share_board
+      # めちゃくちゃな操作でもエラーにしない
+      {
+        :candidate_skip => true,
+        :validate_skip  => true,
+      }
+    else
+      {}
+    end
+  end
+
   concerning :UseInfoMethods do
     included do
       before_validation do
