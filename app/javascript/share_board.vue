@@ -19,7 +19,7 @@
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
         .title.is-4.is-marginless(@click="title_edit")
           span.is_clickable {{current_title}}
-        .turn_offset.has-text-weight-bold \#{{turn_offset}}
+        .turn_offset.has-text-weight-bold {{turn_offset}}手目
 
       .sp_container
         shogi_player(
@@ -115,8 +115,7 @@ export default {
     },
 
     edit_mode_snapshot_sfen_set(v) {
-      // あとで current_body に設定するために取っておく
-      this.edit_mode_body = v
+      this.edit_mode_body = v // あとで current_body に設定するために取っておく
     },
 
     piyo_shogi_open_handle() {
@@ -154,6 +153,7 @@ export default {
         }
         this.current_body = this.edit_mode_body
       }
+      this.sound_play("click")
     },
 
     // private
@@ -317,6 +317,7 @@ export default {
       return ((this.info.record.initial_turn + this.info.record.preset_info.handicap_shift) % 2) === 1
     },
 
+    // 最初に表示した手数より進めたか？
     advanced_p() {
       return this.turn_offset > this.info.record.initial_turn
     },
