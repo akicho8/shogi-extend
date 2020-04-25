@@ -44,7 +44,7 @@ class ShareBoardsController < ApplicationController
     # ぴよ将棋用にkifを返す
     # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
     if request.format.kif?
-      text_body = current_record.to_cached_kifu(:kif)
+      text_body = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
       headers["Content-Type"] = current_type
       render plain: text_body
       return
