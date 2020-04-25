@@ -155,8 +155,9 @@ export default {
     record_fetch(callback) {
       if (this.record) {
         callback()
+      } else {
+        this.record_create(callback)
       }
-      this.record_create(callback)
     },
 
     // これは汎用のAPIを叩こうかと思ったけど今後の拡張を考えるとこのままでいい気がする
