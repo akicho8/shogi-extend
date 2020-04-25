@@ -9,6 +9,14 @@ dayjs.locale('ja')
 
 export default {
   methods: {
+    defval(v, default_value) {
+      if (v == null) {
+        return default_value
+      } else {
+        return v
+      }
+    },
+
     rand(n) {
       return Math.floor(Math.random() * n)
     },
