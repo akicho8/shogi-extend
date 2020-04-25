@@ -245,7 +245,7 @@ export default {
     },
 
     dynamic_url_for(format = null) {
-      const url = new URL(location)
+      const url = new URL(location.origin + location.pathname)
       url.searchParams.set("body", this.current_body)
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
