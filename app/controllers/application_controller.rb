@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     def h
       @h ||= view_context
     end
-    delegate :tag, :link_to, :fa_icon_tag, :icon_tag, :auto_link, to: :h
+    delegate :tag, :link_to, :icon_tag, :auto_link, to: :h
   end
 
   concerning :CurrentUserMethods do
