@@ -115,7 +115,7 @@ export default {
     },
 
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.self_window_open(this.piyo_shogi_app_with_params_url))
+      this.self_window_open(this.piyo_shogi_app_with_params_url)
     },
 
     kento_open_handle() {
