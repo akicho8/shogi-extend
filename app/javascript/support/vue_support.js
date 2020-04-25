@@ -7,6 +7,8 @@ import dayjs from "dayjs"
 import "dayjs/locale/ja.js"
 dayjs.locale('ja')
 
+import SfenParser from "shogi-player/src/sfen_parser.js"
+
 export default {
   methods: {
     defval(v, default_value) {
@@ -152,6 +154,16 @@ export default {
     kento_full_url(record, turn, flip) {
       const full = "https://www.kento-shogi.com" + record.kento_app_path
       const url = new URL(full)
+      url.searchParams.set("flip", flip)
+      url.hash = turn
+      return url.toString()
+    },
+
+    kento_full_url2(sfen, turn, flip) {
+      const info = SfenParser.parse(sfen)
+      const url = new URL("https://www.kento-shogi.com/")
+      url.searchParams.set("initpos", info.init_sfen_strip)
+      url.searchParams.set("moves", info.attributes.moves.replace(/\s+/, "."))
       url.searchParams.set("flip", flip)
       url.hash = turn
       return url.toString()
