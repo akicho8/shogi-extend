@@ -23,7 +23,7 @@ export default {
         start:  { file: mp3_start,  volume: 0.2, },
         lose:   { file: mp3_lose,   volume: 0.5, },
         win:    { file: mp3_win,    volume: 0.5, },
-        click:  { file: mp3_click,  volume: 0.5, },
+        click:  { file: mp3_click,  volume: 0.2, },
         shine:  { file: mp3_shine,  volume: 0.1, },
         stupid: { file: mp3_stupid, volume: 0.5, }, // 使いにくい
       },
