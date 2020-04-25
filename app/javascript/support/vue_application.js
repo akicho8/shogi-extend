@@ -6,10 +6,6 @@ import sp_show from "../sp_show.vue"
 
 export default {
   methods: {
-    simple_clipboard_copy(str) {
-      this.clipboard_copy({text: str})
-    },
-
     // ログイン強制
     login_required() {
       if (!js_global.current_user) {
