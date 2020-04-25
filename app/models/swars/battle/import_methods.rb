@@ -194,7 +194,7 @@ module Swars
 
           new_keys = keys - where(key: keys).pluck(:key)
           new_keys.each do |key|
-            single_battle_import(params.merge(key: key, validate_enable: false))
+            single_battle_import(params.merge(key: key, skip_if_exist: false))
             sleep_on(params)
           end
         end
@@ -202,10 +202,11 @@ module Swars
         def single_battle_import(params = {})
           params = {
             verbose: Rails.env.development?,
+            skip_if_exist: true,
           }.merge(params)
 
-          # 登録済みなのでスキップ
-          if params[:validate_enable]
+          # 登録済みなら戻る
+          if params[:skip_if_exist]
             if Battle.where(key: params[:key]).exists?
               return
             end
