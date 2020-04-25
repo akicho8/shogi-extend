@@ -8,12 +8,12 @@ nav.navbar.is-primary.is_screen_only
   #main_navar.navbar-menu
     .navbar-start
       / ここでの is-active に意味はない
-      = link_to(icon_tag(:magnify, margin_right: 1) + "ウォーズ検索", [:swars, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
-      - if true
-        = link_to(icon_tag("tools", margin_right: 1) + "なんでも棋譜変換", :adapter, class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] == "adapter")])
-      = link_to(icon_tag(:robot, margin_right: 1) + "CPU対戦".html_safe, :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
-      = link_to(icon_tag(:apps, margin_right: 1) + "符号の鬼", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
-      = link_to(icon_tag(:clock, margin_right: 1) + "詰将棋RTA", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
+      = link_to(icon_tag(:magnify) + "ウォーズ検索", [:swars, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
+      = link_to(icon_tag(:tools) + "棋譜変換", :adapter, class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] == "adapter")])
+      = link_to(icon_tag(:robot) + "CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
+      = link_to(icon_tag(:apps) + "符号の鬼", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
+      = link_to(icon_tag(:apps) + "リレー将棋", :share_board, class: ["navbar-item", ("is-active" if params[:controller] == "share_boards")])
+      = link_to(icon_tag(:clock) + "詰将棋RTA", :stopwatch, class: ["navbar-item", ("is-active" if params[:controller] == "stopwatches")])
 
       - if Rails.env.development? || Rails.env.staging? || true
         .navbar-item.has-dropdown.is-hoverable
@@ -26,15 +26,15 @@ nav.navbar.is-primary.is_screen_only
         span.navbar-link
           | もっと見る
         .navbar-dropdown.is-boxed
-          = link_to(icon_tag("clipboard-text-outline", margin_right: 1) + "野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
-          = link_to(icon_tag("clipboard-arrow-up-outline", margin_right: 1) + "野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] != "adapter")])
-          = link_to(icon_tag(:apps, margin_right: 1) + "ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
-          = link_to(icon_tag(:account, margin_right: 1) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]
+          = link_to(icon_tag("clipboard-text-outline") + "野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
+          = link_to(icon_tag("clipboard-arrow-up-outline") + "野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] != "adapter")])
+          = link_to(icon_tag(:apps) + "ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
+          = link_to(icon_tag(:account) + "プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]
           - if Rails.env.development? || Rails.env.test?
-            = link_to(icon_tag(:pencil, margin_right: 1) + "局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
-            = link_to(icon_tag(:book, margin_right: 1) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
+            = link_to(icon_tag(:pencil) + "局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
+            = link_to(icon_tag(:book) + "戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
           - if AppConfig[:colosseum_battle_enable]
-            = link_to(icon_tag(:play, margin_right: 1) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
+            = link_to(icon_tag(:play) + "ネット対戦", [:colosseum, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("colosseum/battles"))])
           hr.navbar-divider.is-hidden-tablet
           = link_to("プライバシーポリシー", [:about, id: "privacy_policy"],    class: ["navbar-item", "is-hidden-tablet", ("is-active" if params[:controller] == "about" && params[:id] == "privacy_policy")])
           = link_to("利用規約",     [:about, id: "terms"],             class: ["navbar-item", "is-hidden-tablet", ("is-active" if params[:controller] == "about" && params[:id] == "terms")])

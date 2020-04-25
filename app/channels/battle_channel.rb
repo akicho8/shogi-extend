@@ -37,8 +37,8 @@ class BattleChannel < ApplicationCable::Channel
   ################################################################################
 
   # 人間が指した直後のトリガー
-  def play_mode_long_sfen_set(data)
-    battle.play_mode_long_sfen_set(data)
+  def play_mode_advanced_full_moves_sfen_set(data)
+    battle.play_mode_advanced_full_moves_sfen_set(data)
   end
 
   def chat_say(data)
@@ -93,7 +93,7 @@ class BattleChannel < ApplicationCable::Channel
 
   def battle
     # メモ化してはいけない
-    # メモ化すると play_mode_long_sfen_set のときに clock_counts_update のなかで battle.clock_counts が片方の情報しか持ってない状態になり、相手の情報が毎回が元に戻ってしまう
+    # メモ化すると play_mode_advanced_full_moves_sfen_set のときに clock_counts_update のなかで battle.clock_counts が片方の情報しか持ってない状態になり、相手の情報が毎回が元に戻ってしまう
     Colosseum::Battle.find(params[:battle_id])
   end
 end

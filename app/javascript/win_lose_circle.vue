@@ -7,7 +7,9 @@
         .title {{info.judge_counts["win"]}}
     .level-item.has-text-centered.doughnut.is-narrow
       div.chart_container
-        canvas(ref="main_canvas" :width="size === 'is-small' ? 68 : 92")
+        //- view-source:https://www.chartjs.org/samples/latest/charts/doughnut.html
+        .canvas_holder(:style="{width: (size === 'is-small' ? 68 : 92) + 'px'}")
+          canvas(ref="main_canvas")
         .win_rate_container
           .win_rate_label.has-text-grey-light.has-text-weight-bold(v-if="total >= 1")
             | 勝率

@@ -29,7 +29,7 @@
         :theme="'simple'"
         :size="'medium'"
         :sound_effect="true"
-        :volume="0.2"
+        :volume="0.5"
         :setting_button_show="false"
         :flip.sync="new_flip"
         :player_info="player_info"
@@ -249,11 +249,11 @@ export default {
     },
 
     piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_full_url(this.record, this.turn_offset, this.new_flip)
+      return this.piyo_shogi_full_url(this.record.show_path, this.turn_offset, this.new_flip)
     },
 
     kento_app_with_params_url() {
-      return this.kento_full_url(this.record, this.turn_offset, this.new_flip)
+      return this.kento_full_url(this.record.sfen_body, this.turn_offset, this.new_flip)
     },
 
     tweet_url() {

@@ -7,6 +7,12 @@ export default {
         .catch(error => this.http_command_error(error, loading))
     },
 
+    silent_http_command(method, url, data, callback = null) {
+      this.$http({method: method, url: url, data: data})
+        .then(r      => this.http_command_success(r, null, callback))
+        .catch(error => this.http_command_error(error, null))
+    },
+
     http_get_command(url, params, callback = null) {
       const loading = this.$buefy.loading.open()
       this.$http.get(url, {params: params})

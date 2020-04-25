@@ -2,6 +2,7 @@ module BattleControllerSharedMethods
   extend ActiveSupport::Concern
 
   include ShogiErrorRescueMod
+  include EncodeMod
   include KifShowMod
   include PngShowMod
   include KentoJsonMod
@@ -92,10 +93,6 @@ module BattleControllerSharedMethods
 
     def behavior_after_rescue(message)
       redirect_to :root, danger: message
-    end
-
-    def as_b(v)
-      v.to_s == "true" || v.to_s == "1"
     end
   end
 
@@ -331,7 +328,6 @@ module BattleControllerSharedMethods
           :player_info,
           :title,
           :description,
-          :kento_app_path,
         ],
         ).tap do |a|
 

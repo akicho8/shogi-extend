@@ -144,4 +144,13 @@ EOT
       assert { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
     end
   end
+
+  describe "駒落ち判定" do
+    let :record do
+      FreeBattle.create!(kifu_body: "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
+    end
+    it do
+      assert { record.preset_info.key == :"角落ち" }
+    end
+  end
 end

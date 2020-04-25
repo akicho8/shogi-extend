@@ -16,7 +16,7 @@
       :theme="'simple'"
       :size="'default'"
       :sound_effect="true"
-      :volume="0.2"
+      :volume="0.5"
       :setting_button_show="false"
       :flip="(record.hit_turn % 2) === 0"
     )

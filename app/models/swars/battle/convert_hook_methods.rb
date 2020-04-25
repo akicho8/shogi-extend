@@ -78,10 +78,10 @@ module Swars
         s.join("\n") + "\n"
       end
 
-      def fast_parsed_options
+      def fast_parser_options
         {
-          validate_skip: true,
-          candidate_skip: true,
+          validate_enable: false,
+          candidate_enable: false,
         }
       end
 

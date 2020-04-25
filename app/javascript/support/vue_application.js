@@ -80,6 +80,7 @@ export default {
             canCancel: ["escape", "outside"],
             trapFocus: true,
             // scroll: "keep",
+            // destroyOnHide: false,
             component: user_info_show,
           })
         }
@@ -112,6 +113,29 @@ export default {
         canCancel: ["escape", "outside"],
         trapFocus: true,
         component: sp_show,
+      })
+    },
+
+    general_ok_notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary"})
+      this.talk(message, {rate: 1.5})
+    },
+
+    general_warning_notice(message) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger"})
+      this.talk(message, {rate: 1.5})
+    },
+
+    error_message_dialog(message) {
+      this.$buefy.dialog.alert({
+        title: "ERROR",
+        message: message,
+        canCancel: ["outside", "escape"],
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        trapFocus: true,
       })
     },
   },

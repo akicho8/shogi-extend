@@ -1,0 +1,10 @@
+- @page_title ||= controller.current_title
+
+- twitter_card_registry(controller.twitter_card_options)
+
+- content_for :head do
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new Vue().$mount("#app") })
+
+#app
+  share_board(:info="#{controller.current_vue_args.to_json}")

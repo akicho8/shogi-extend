@@ -16,12 +16,19 @@ module ShogiErrorRescueMod
     rescue_from "Bioshogi::BioshogiError" do |error|
       if Rails.env.development?
         Rails.logger.info(error)
+        Rails.logger.info(error.backtrace.join("\n"))
         sleep(0.5)
       end
 
-      if request.format.json?
+      case
+      when request.format.json?
         # なんでも棋譜変換の場合は頻繁にエラーになるためエラー通知しない
         render json: as_shogi_error_attrs(error)
+      when request.format.png?
+        ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
+
+        # https://developer.mozilla.org/ja/docs/Web/HTTP/Status/422
+        send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422
       else
         # 野良棋譜投稿の場合は滅多に使われないので通知する
         #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
@@ -67,9 +74,10 @@ module ShogiErrorRescueMod
       s += h.tag.div(field.join.html_safe, :class => "error_message_pre_with_margin").html_safe
     end
     if Rails.env.development?
-      if v = e.backtrace
-        s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre_with_margin").html_safe
-      end
+      # ActionDispatch::Cookies::CookieOverflow になるので入れてはいけない
+      # if v = e.backtrace
+      #   s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre_with_margin").html_safe
+      # end
     end
     s
   end

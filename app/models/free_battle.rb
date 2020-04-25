@@ -39,6 +39,7 @@ require "open-uri"
 class FreeBattle < ApplicationRecord
   include BattleModelMod
   include StrangeKifuBodyParserMod
+  include ShareBoardMod
 
   class << self
     def setup(options = {})
@@ -122,10 +123,13 @@ class FreeBattle < ApplicationRecord
 
     def old_record_destroy(params = {})
       params = {
-        expires_in: 4.weeks,
+        expires_in: 8.weeks,
       }.merge(params)
 
-      all.where(use_key: "adapter").where(arel_table[:accessed_at].lteq(params[:expires_in].ago)).find_in_batches(batch_size: 100) do |g|
+      s = all
+      s = s.where(arel_table[:use_key].eq_any(["adapter", "share_board"]))
+      s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].ago))
+      s.find_in_batches(batch_size: 100) do |g|
         begin
           g.each(&:destroy)
         rescue ActiveRecord::Deadlocked => error
@@ -172,10 +176,8 @@ class FreeBattle < ApplicationRecord
       end
     end
 
-    if changes_to_save[:kifu_body]
-      if kifu_body
-        url_in_kifu_body
-      end
+    if changes_to_save[:kifu_body] && kifu_body
+      url_in_kifu_body
     end
   end
 
@@ -276,6 +278,27 @@ class FreeBattle < ApplicationRecord
 
     s = s.toutf8
     s = s.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
+  end
+
+  def fast_parser_options
+    if use_info.key == :share_board
+      # めちゃくちゃな操作でもエラーにしない
+      {
+        :candidate_enable => false,
+        :validate_enable  => false,
+      }
+    else
+      {}
+    end
+  end
+
+  # 野良棋譜の場合、手合割は解析しないとわからない
+  # ウォーズはあらかじめわかっているのでこの処理はいれない
+  def preset_key_set(info)
+    self.preset_key = info.preset_info.key
+  end
+
+  def parser_exec_after(info)
   end
 
   concerning :UseInfoMethods do

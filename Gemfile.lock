@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 572e16109f11d5797b0a97fb6fd130a3adb65738
+  revision: 40503e44bdea6097b264e7fa1e93a4fb5b88dd85
   specs:
     bioshogi (0.0.1)
       actionview
@@ -228,7 +228,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.4.0)
+    loofah (2.5.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)

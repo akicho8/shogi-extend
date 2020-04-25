@@ -96,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
         this.perform("fool_god", data)
       },
 
-      play_mode_long_sfen_set(data) {
-        this.perform("play_mode_long_sfen_set", data)
+      play_mode_advanced_full_moves_sfen_set(data) {
+        this.perform("play_mode_advanced_full_moves_sfen_set", data)
       },
 
       countdown_flag_on(location_key) {
@@ -275,9 +275,9 @@ window.ColosseumBattleShow = Vue.extend({
     },
 
     // 操作の結果を受け取る
-    play_mode_long_sfen_set(v) {
+    play_mode_advanced_full_moves_sfen_set(v) {
       if (this.xstate_key === "st_battle_now") {
-        App.battle.play_mode_long_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key, current_index: this.current_index})
+        App.battle.play_mode_advanced_full_moves_sfen_set({kifu_body: v, clock_counter: this.clock_counter, current_location_key: this.current_location.key, current_index: this.current_index})
       }
     },
 

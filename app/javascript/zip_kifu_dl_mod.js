@@ -29,7 +29,7 @@ export default {
       }
 
       const url = `${this.$options.xhr_index_path}.zip?${this.url_build(params)}`
-      this.self_window_open(url)
+      this.url_open(url)
     },
   },
 

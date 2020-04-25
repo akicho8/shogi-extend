@@ -24,7 +24,7 @@ window.Adapter = Vue.extend({
 
   mounted() {
     // デスクトップのときだけ棋譜のテキストエリアにフォーカス
-    this.desktop_only_focus(this.$refs.input_text)
+    this.desktop_focus_to(this.$refs.input_text)
 
     // ?body=xxx の値を反映する
     this.input_text = this.$options.record_attributes.kifu_body || ""
@@ -64,13 +64,13 @@ window.Adapter = Vue.extend({
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_full_url(this.record, this.record.display_turn, this.record.flip)
+        return this.piyo_shogi_full_url(this.record.show_path, this.record.display_turn, this.record.flip)
       }
     },
 
     kento_app_with_params_url() {
       if (this.record) {
-        return this.kento_full_url(this.record, this.record.display_turn, this.record.flip)
+        return this.kento_full_url(this.record.sfen_body, this.record.display_turn, this.record.flip)
       }
     },
 
@@ -110,11 +110,11 @@ window.Adapter = Vue.extend({
 
   methods: {
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.self_window_open(this.piyo_shogi_app_with_params_url))
+      this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url))
     },
 
     kento_open_handle() {
-      this.record_fetch(() => this.other_window_open(this.kento_app_with_params_url))
+      this.record_fetch(() => this.url_open(this.kento_app_with_params_url))
     },
 
     kifu_copy_handle(kifu_type) {
@@ -122,7 +122,7 @@ window.Adapter = Vue.extend({
     },
 
     tweet_handle() {
-      this.record_fetch(() => this.self_window_open(this.tweet_intent_url(this.tweet_body)))
+      this.record_fetch(() => this.url_open(this.tweet_intent_url(this.tweet_body)))
     },
 
     validate_handle() {
@@ -136,27 +136,27 @@ window.Adapter = Vue.extend({
 
     // 「棋譜印刷」
     kifu_paper_handle() {
-      this.record_fetch(() => this.other_window_open(`${this.record.show_path}?formal_sheet=true`))
+      this.record_fetch(() => this.url_open(`${this.record.show_path}?formal_sheet=true`))
     },
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
-      this.record_fetch(() => this.self_window_open(this.kifu_dl_url(kifu_type)))
+      this.record_fetch(() => this.url_open(this.kifu_dl_url(kifu_type)))
     },
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.record_fetch(() => this.other_window_open(this.kifu_show_url(kifu_type)))
+      this.record_fetch(() => this.url_open(this.kifu_show_url(kifu_type)))
     },
 
     // 画像 表示
     png_show_handle() {
-      this.record_fetch(() => this.other_window_open(this.png_show_url()))
+      this.record_fetch(() => this.url_open(this.png_show_url()))
     },
 
     // 画像 DL
     png_dl_handle() {
-      this.record_fetch(() => this.self_window_open(this.png_dl_url()))
+      this.record_fetch(() => this.url_open(this.png_dl_url()))
     },
 
     // 「盤面」
@@ -230,7 +230,7 @@ window.Adapter = Vue.extend({
             // それを防ぐためにリダイレクト前に消している
             this.input_text = ""
           }
-          this.self_window_open(e.redirect_to)
+          this.url_open(e.redirect_to)
         }
 
         if (e.bs_error) {
