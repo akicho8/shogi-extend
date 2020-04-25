@@ -72,14 +72,14 @@ export default {
   },
   data() {
     return {
-      record: null,         // js 側だけで足りると思っていたけどやっぱり必要だった。整合性チェックと kento_app_path のためにある
-      bs_error: null,       // BioshogiError の情報 (Hash)
-      current_body: null,   // 渡している棋譜
-      turn_offset: null,    // 現在の手数
-      current_title: null,  // 現在のタイトル
-      current_flip: null,   // 反転用
-      run_mode: null,       // 操作モードと盤面編集モードの切り替え用
-      edit_mode_body: null, // 盤面編集モードの局面
+      record: this.info.record,                   // js 側だけで足りると思っていたけどやっぱり必要だった。整合性チェックと kento_app_path のためにある
+      bs_error: null,                             // BioshogiError の情報 (Hash)
+      current_body: this.info.record.sfen_body,   // 渡している棋譜
+      turn_offset: this.info.record.initial_turn, // 現在の手数
+      current_title: this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
+      current_flip: this.initial_flip, // 反転用
+      run_mode: "play_mode",           // 操作モードと盤面編集モードの切り替え用
+      edit_mode_body: null,            // 盤面編集モードの局面
 
       // その他
       change_counter: 1, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
@@ -87,12 +87,7 @@ export default {
   },
 
   created() {
-    this.run_mode      = "play_mode"
-    this.record        = this.info.record
-    this.current_body  = this.info.record.sfen_body
-    this.turn_offset   = this.info.record.initial_turn
-    this.current_title = this.$route.query.title || "指し継ぎリレー将棋"
-    this.current_flip  = this.initial_flip
+    this.url_replace()
   },
 
   watch: {
@@ -225,7 +220,7 @@ export default {
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: "text", value: this.current_title, required: false },
-        onConfirm: value => this.current_title = value || "指し継ぎリレー将棋",
+        onConfirm: value => this.current_title = value,
       })
     },
 
