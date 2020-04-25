@@ -258,10 +258,9 @@ export default {
       //- const url = new URL(location)
       // alert(JSON.stringify(location, null, 4))
       // alert(JSON.stringify(url, null, 4))
-
-      url.searchParams.set("body", this.current_body)
-      url.searchParams.set("turn", this.turn_offset)
-      url.searchParams.set("title", this.current_title)
+      url.searchParams.set("body", encodeURIComponent(this.current_body))
+      url.searchParams.set("turn", encodeURIComponent(this.turn_offset))
+      url.searchParams.set("title", encodeURIComponent(this.current_title))
       if (format) {
         url.searchParams.set("format", format)
       }
