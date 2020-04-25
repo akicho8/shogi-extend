@@ -159,7 +159,7 @@ export default {
         alert("sfenが空")
       }
       const info = SfenParser.parse(sfen)
-      const url = new URL("https://www.kento-shogi.com/")
+      const url = new URL("https://www.kento-shogi.com")
       url.searchParams.set("initpos", info.init_sfen_strip)
       if (info.attributes.moves) {
         url.searchParams.set("moves", info.attributes.moves.replace(/\s+/, "."))
