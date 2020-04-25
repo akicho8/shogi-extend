@@ -133,6 +133,7 @@ export default {
     // 操作←→編集 切り替え
     mode_toggle_handle() {
       if (this.run_mode === "play_mode") {
+        this.$gtag.event("open", {event_category: "リレー将棋(編集)"})
         this.run_mode = "edit_mode"
         this.current_flip = false // ▲視点にしておく(お好み)
       } else {
