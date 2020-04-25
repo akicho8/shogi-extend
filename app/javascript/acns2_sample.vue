@@ -57,12 +57,12 @@
           :setting_button_show="development_p"
           :size="'default'"
           :sound_effect="true"
-          :volume="0.2"
+          :volume="0.5"
           :controller_show="true"
           :human_side_key="'both'"
           :theme="'simple'"
           :vlayout="false"
-          @update:play_mode_long_sfen="play_mode_long_sfen_set"
+          @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
         )
 
     //- .box.is-shadowless.messages_box(ref="messages_box")
@@ -165,8 +165,8 @@
               :theme="'simple'"
               :size="'default'"
               :sound_effect="false"
-              :volume="0.2"
-              @update:edit_mode_current_sfen="edit_mode_current_sfen"
+              :volume="0.5"
+              @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
               )
           b-tab-item
             template(slot="header")
@@ -183,7 +183,7 @@
               :theme="'simple'"
               :size="'default'"
               :sound_effect="edit_tab_info.key === 'play_mode'"
-              :volume="0.2"
+              :volume="0.5"
               ref="play_sp"
               )
 
@@ -205,7 +205,7 @@
                     :theme="'simple'"
                     :size="'default'"
                     :sound_effect="true"
-                    :volume="0.2"
+                    :volume="0.5"
                     )
                   b-button.delete_button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)" size="is-small")
           b-tab-item(label="情報")
@@ -467,7 +467,7 @@ export default {
       this.lobby_setup()
     },
 
-    play_mode_long_sfen_set(long_sfen) {
+    play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.freeze_mode) {
         return
       }
@@ -535,7 +535,7 @@ export default {
       this.edit_tab_index = EditTabInfo.fetch("edit_mode").code
     },
 
-    edit_mode_current_sfen(sfen) {
+    edit_mode_snapshot_sfen(sfen) {
       if (this.sp_run_mode === "edit_mode") {
         sfen = sfen.replace(/position sfen /, "")
         // if (this.question.init_sfen !== sfen) {
