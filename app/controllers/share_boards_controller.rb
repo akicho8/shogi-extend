@@ -22,6 +22,13 @@
 # ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる
 # ・そこで kif_format_body を入れているので、指したあとの棋譜コピーは常に最新になっている
 #
+# iPhoneのSafariのみの問題
+#  ・1手動かしてURLを更新する
+#  ・アドレスバーからコピーしてslackに貼る
+#  ・このとき見た目は share-board?body=position だけど
+#  ・リンクは         share-board?body%3Dposition になっている
+#  ・ので不正なアドレスと認識される。Chrome では問題なし
+#
 class ShareBoardsController < ApplicationController
   include EncodeMod
   include ShogiErrorRescueMod
