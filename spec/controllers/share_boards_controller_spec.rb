@@ -6,18 +6,19 @@ RSpec.describe ShareBoardsController, type: :controller do
     expect(response).to have_http_status(:ok)
   end
 
-  describe "基本" do
+  describe "基本「58玉」" do
     def test(format)
-      get :show, params: { body: "position startpos moves 5i5e", turn:1, title: "(title)", format: format }
+      get :show, params: { body: "position startpos moves 5i5h", turn:1, title: "(title)", format: format }
       expect(response).to have_http_status(:ok)
     end
-    it do
+    it "foo" do
       test("html")
       test("png")
+      test("kif")
     end
   end
 
-  describe "基本自由なので「初手55玉」の棋譜でもエラーにしない" do
+  describe "基本自由なので「55玉」の棋譜でもエラーにしない" do
     def test(format)
       get :show, params: { body: "position startpos moves 5i5e", format: format }
       expect(response).to have_http_status(:ok)
@@ -25,6 +26,7 @@ RSpec.describe ShareBoardsController, type: :controller do
     it do
       test("html")
       test("png")
+      test("kif")
     end
   end
 
