@@ -15,6 +15,7 @@
           template(v-else)
             | 盤面編集(終了)
         b-dropdown-item(@click="source_read_handle") 棋譜読み込み
+        b-dropdown-item(@click="title_edit") タイトル編集
 
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
         .title.is-4.is-marginless(@click="title_edit")
