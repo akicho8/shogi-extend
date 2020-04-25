@@ -1,6 +1,6 @@
 AppConfig.deep_merge!({
     :app_name                                =>  "SHOGI-EXTEND",
-    :volume                                  =>  0.2,
+    :volume                                  =>  0.5,
     :admin_email                             =>  "alice@localhost",
 
     :free_battles_import                     =>  false, # 野良棋譜のセットアップ時に保持している対局を取り込むか？

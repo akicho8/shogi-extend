@@ -79,6 +79,7 @@ Rails.application.routes.draw do
 
   resource :stopwatch, only: [:show, :create]
   resource :simple_board, path: "board", only: [:show, :create]
+  resource :share_board, path: "share-board", only: [:show, :create]
 
   resources :xy_records, path: "xy", only: [:index, :create, :update]
 
@@ -143,6 +144,14 @@ Rails.application.routes.draw do
   ################################################################################ scripts
 
   resources :scripts, :path => "script", :only => [:show, :update]
+
+  ################################################################################ api
+
+  namespace :api, format: "json" do
+    resource :general, only: [:show] do
+      get "any_source_to_sfen"
+    end
+  end
 
   ################################################################################ admin
 

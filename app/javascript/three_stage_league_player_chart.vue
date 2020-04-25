@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     bar_click_handle(generation) {
-      this.self_window_open(`/script/three-stage-league?generation=${generation}`)
+      this.url_open(`/script/three-stage-league?generation=${generation}`)
     },
   },
 }

@@ -12,7 +12,7 @@ export default {
         // b-autocomplete を入れたので不要。デスクトップであってもクリックしたタイミングで候補を出す方が便利
         // ↓
         // デスクトップのときのみフォーカスする。モバイルでは手動でフォーカスしたときにはじめて入力ツールが登場するので自動的にフォーカスしない方がいい
-        // this.desktop_only_focus(this.$refs.query_field)
+        // this.desktop_focus_to(this.$refs.query_field)
       }
     }
 

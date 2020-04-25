@@ -84,7 +84,7 @@ export default {
     delayed_kifu_convert_by: _.debounce(function() { this.kifu_convert_by(this.input_text) }, 1000 * TEXT_INPUT_UPDATE_DELAY),
 
     // 操作入力
-    play_mode_long_sfen_set(str) {
+    play_mode_advanced_full_moves_sfen_set(str) {
       this.kifu_convert_by(str)
     },
 

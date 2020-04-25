@@ -34,7 +34,7 @@ export default {
     //   if (v) {
     //   } else {
     //     if (this.$options.close_back_path) {
-    //       this.self_window_open(this.$options.close_back_path)
+    //       this.url_open(this.$options.close_back_path)
     //     }
     //   }
     // },

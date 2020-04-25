@@ -58,10 +58,14 @@ class ApplicationController < ActionController::Base
 
     private
 
+    def boolean_cast(v)
+      v.to_s == "true" || v.to_s == "1"
+    end
+
     def h
       @h ||= view_context
     end
-    delegate :tag, :link_to, :fa_icon_tag, :icon_tag, :auto_link, to: :h
+    delegate :tag, :link_to, :icon_tag, :auto_link, to: :h
   end
 
   concerning :CurrentUserMethods do

@@ -7,8 +7,18 @@ import dayjs from "dayjs"
 import "dayjs/locale/ja.js"
 dayjs.locale('ja')
 
+import SfenParser from "shogi-player/src/sfen_parser.js"
+
 export default {
   methods: {
+    defval(v, default_value) {
+      if (v == null) {
+        return default_value
+      } else {
+        return v
+      }
+    },
+
     rand(n) {
       return Math.floor(Math.random() * n)
     },
@@ -53,30 +63,39 @@ export default {
       return dayjs(time).format(format)
     },
 
-    // 他のウィンドウで開く
-    other_window_open(url) {
-      // this.process_now()
-      if (window.open(url, "_self")) {
-        // Google Chrome では動く
-      } else {
-        // iOS Safari ではこちら
-        this.self_window_open(url)
-      }
-    },
+    // // 他のウィンドウで開く
+    // url_open(url) {
+    //   // this.process_now()
+    //   if (window.open(url, "_self")) {
+    //     // Google Chrome では動く
+    //   } else {
+    //     // iOS Safari ではこちら
+    //     this.url_open(url)
+    //   }
+    // },
 
     // 他のウィンドウで開く
-    self_window_open(url) {
+    url_open(url) {
       // this.process_now()
       location.href = url
     },
 
     // モバイルでないときだけ elem にフォーカスする
-    desktop_only_focus(elem) {
+    // なぜか $nextTick ではフォーカスされない場合があるため setTimeout に変更
+    desktop_focus_to(elem) {
       if (this.desktop_p) {
+        this.focus_to(elem)
+      }
+    },
+
+    // $nextTick ではフォーカスされない場合があるため setTimeout にしている
+    // それでも 2msec だと効かない場合もあるため 0.1 秒待つようにしている
+    focus_to(elem) {
+      setTimeout(() => {
         if (elem) {
           elem.focus()
         }
-      }
+      }, 1000 * 0.1)
     },
 
     url_build(attributes) {
@@ -95,25 +114,73 @@ export default {
 
     tweet_intent_url(text) {
       if (text) {
-        return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+        const url = new URL("https://twitter.com/intent/tweet")
+        url.searchParams.set("text", text)
+        return url.toString()
       }
     },
 
-    piyo_shogi_full_url(record, turn, flip) {
-      const url = this.as_full_url(record.show_path) + ".kif"
-      return `piyoshogi://?num=${turn}&url=${url}` // TODO: flip つけたい
+    tweet_share_open(params) {
+      const url = new URL("https://twitter.com/intent/tweet")
+      // const url = new URL("https://twitter.com/share")
+      _.each(params, (v, k) => url.searchParams.set(k, v))
+      this.popup_open(url.toString())
     },
 
-    kento_full_url(record, turn, flip) {
-      const full = "https://www.kento-shogi.com" + record.kento_app_path
-      const url = new URL(full)
+    popup_open(url) {
+      const width = 575
+      const height = 256
+      const left = (window.screen.width - width) / 2
+      const top = (window.screen.height - height) / 2
+      const opts = `status=no,top=${top},left=${left},width=${width},height=${height}`
+      window.open(url, "_blank", opts)
+    },
+
+    piyo_shogi_full_url(path, turn, flip) {
+      const url = this.as_full_url(path)
+
+      // ".kif" を足す方法は悪手。パスが "/xxx" で終わっているとは限らない
+      const url2 = new URL(url)
+
+      if (false) {
+        // ぴよ将棋はコンテンツを見ているのではなく .kif という拡張子を見ているのでこの方法は使えない
+        // xxx?a=1&format=kif
+        url2.searchParams.set("format", "kif")
+      } else {
+        // xxx.kif 形式
+        url2.pathname = url2.pathname + ".kif"
+      }
+
+      const url3 = url2.toString()
+      console.log(url3)
+
+      // エスケープすると動かない
+      const url4 = `piyoshogi://?num=${turn}&flip=${flip}&url=${url3}`
+
+      console.log(url4)
+
+      return url4
+    },
+
+    kento_full_url(sfen, turn, flip) {
+      if (!sfen) {
+        alert("sfenが空")
+      }
+      const info = SfenParser.parse(sfen)
+      const url = new URL("https://www.kento-shogi.com")
+      url.searchParams.set("initpos", info.init_sfen_strip)
+      if (info.attributes.moves) {
+        url.searchParams.set("moves", info.attributes.moves.replace(/\s+/, "."))
+      }
+      url.searchParams.set("flip", flip)
       url.hash = turn
       return url.toString()
     },
 
     as_full_url(path) {
-      if (path) {
-        this.assert_path(path)
+      if (path.match(/^http/)) {
+        return path
+      } else {
         return window.location.origin + path
       }
     },

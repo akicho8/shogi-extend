@@ -137,6 +137,7 @@ import acns1_sample from "acns1_sample.vue"
 import acns2_sample from "acns2_sample.vue"
 import stopwatch from "stopwatch.vue"
 import simple_board from "simple_board.vue"
+import share_board from "share_board.vue"
 import xy_master from "xy_master.vue"
 import cpu_battle from "cpu_battle.vue"
 import sp_show from "sp_show.vue"
@@ -182,6 +183,7 @@ Vue.mixin({
     pulldown_menu,
     stopwatch,
     simple_board,
+    share_board,
     xy_master,
     cpu_battle,
     sp_show,
