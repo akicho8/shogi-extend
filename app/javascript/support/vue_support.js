@@ -63,19 +63,19 @@ export default {
       return dayjs(time).format(format)
     },
 
-    // 他のウィンドウで開く
-    other_window_open(url) {
-      // this.process_now()
-      if (window.open(url, "_self")) {
-        // Google Chrome では動く
-      } else {
-        // iOS Safari ではこちら
-        this.self_window_open(url)
-      }
-    },
+    // // 他のウィンドウで開く
+    // url_open(url) {
+    //   // this.process_now()
+    //   if (window.open(url, "_self")) {
+    //     // Google Chrome では動く
+    //   } else {
+    //     // iOS Safari ではこちら
+    //     this.url_open(url)
+    //   }
+    // },
 
     // 他のウィンドウで開く
-    self_window_open(url) {
+    url_open(url) {
       // this.process_now()
       location.href = url
     },

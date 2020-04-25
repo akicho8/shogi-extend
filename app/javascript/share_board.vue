@@ -115,11 +115,11 @@ export default {
     },
 
     piyo_shogi_open_handle() {
-      this.self_window_open(this.piyo_shogi_app_with_params_url)
+      this.url_open(this.piyo_shogi_app_with_params_url)
     },
 
     kento_open_handle() {
-      this.other_window_open(this.kento_app_with_params_url)
+      this.url_open(this.kento_app_with_params_url)
     },
 
     // 棋譜コピーはJS側だけではできないので(recordが空なら)fetchする
