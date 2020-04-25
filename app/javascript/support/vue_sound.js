@@ -15,33 +15,22 @@ import { Howl, Howler } from 'howler'
 window.HowlObjects = {}
 
 const SoundPresets = {
-  o:        { file: mp3_o,        volume: null, },
-  x:        { file: mp3_x,        volume: null, },
-  start:    { file: mp3_start,    volume: null, },
-  lose:     { file: mp3_lose,     volume: 0.5,  },
-  win:      { file: mp3_win,      volume: 0.5,  },
-  click:    { file: mp3_click,    volume: 0.5,  },
-  shine:    { file: mp3_shine,    volume: 0.1,  },
-  stupid:   { file: mp3_stupid,   volume: 0.5,  }, // 使いにくい
-  deden:    { file: mp3_deden,    volume: 0.5,  },
-  pipopipo: { file: mp3_pipopipo, volume: 0.5,  },
+  o:        { file: mp3_o,        volume: 0.2, },
+  x:        { file: mp3_x,        volume: 0.2, },
+  start:    { file: mp3_start,    volume: 0.2, },
+  lose:     { file: mp3_lose,     volume: 0.5, },
+  win:      { file: mp3_win,      volume: 0.5, },
+  click:    { file: mp3_click,    volume: 0.2, },
+  shine:    { file: mp3_shine,    volume: 0.1, },
+  stupid:   { file: mp3_stupid,   volume: 0.5, }, // 使いにくい
+  deden:    { file: mp3_deden,    volume: 0.5, },
+  pipopipo: { file: mp3_pipopipo, volume: 0.5, },
 }
 
 export default {
   data() {
     return {
       sound_silent_p: false,
-
-      sound_presets: {
-        o:      { file: mp3_o,      volume: 0.2, },
-        x:      { file: mp3_x,      volume: 0.2, },
-        start:  { file: mp3_start,  volume: 0.2, },
-        lose:   { file: mp3_lose,   volume: 0.5, },
-        win:    { file: mp3_win,    volume: 0.5, },
-        click:  { file: mp3_click,  volume: 0.2, },
-        shine:  { file: mp3_shine,  volume: 0.1, },
-        stupid: { file: mp3_stupid, volume: 0.5, }, // 使いにくい
-      },
     }
   },
 

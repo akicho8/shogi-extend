@@ -126,115 +126,126 @@
 
   template(v-if="mode === 'edit'")
     .columns.is-centered
-      .column.is-half
+      .column
+        .buttons
+          b-button(@click="jump_to_index_handle") 問題一覧
+          b-button(@click="jump_to_new_handle") 新規作成
 
-        b-table(:data="questions" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed v-if="questions")
-          template(slot-scope="props")
-            b-table-column(field="id" label="ID" sortable) {{props.row.id}}
+        template(v-if="!question")
+          //- :columns="candidate_columns"
+          b-table(:data="questions" :mobile-cards="false" :hoverable="true" narrowed v-if="questions")
+            template(slot-scope="props")
+              b-table-column(field="id" label="ID" sortable) {{props.row.id}}
+              b-table-column(field="title" label="タイトル" sortable) {{props.row.title || '？'}}
+              b-table-column(field="difficulty_level" label="難易度" sortable) {{props.row.difficulty_level}}
+              b-table-column(label="操作")
+                b-button(@click="question_edit_of(props.row)")
 
-        //- b-field.switch_grouped_container(grouped position="is-centered")
-        //-   .control
-        //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
+        template(v-if="question")
+          //- b-field.switch_grouped_container(grouped position="is-centered")
+          //-   .control
+          //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
 
-        //- template(v-for="(e, i) in question.moves_answers_attributes")
-        //-   b-tag
-        //-     | {{i + 1}}
+          //- template(v-for="(e, i) in question.moves_answers")
+          //-   b-tag
+          //-     | {{i + 1}}
 
-        //- b-field(position="is-centered" grouped)
-        //-   p.control
-        //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 配置
-        //-   p.control
-        //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 正解
-        //-   p.control
-        //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
-        //-   b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
+          //- b-field(position="is-centered" grouped)
+          //-   p.control
+          //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 配置
+          //-   p.control
+          //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 正解
+          //-   p.control
+          //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
+          //-   b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
 
-        //- b-field(position="is-centered")
-        //-   b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
-        //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 正解
+          //- b-field(position="is-centered")
+          //-   b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
+          //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 正解
 
-        b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
-          b-tab-item(label="配置")
-            shogi_player(
-              :run_mode="'edit_mode'"
-              :kifu_body="provisional_sfen"
-              :start_turn="-1"
-              :key_event_capture="false"
-              :slider_show="true"
-              :controller_show="true"
-              :theme="'simple'"
-              :size="'default'"
-              :sound_effect="false"
-              :volume="0.5"
-              @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
-              )
-          b-tab-item
-            template(slot="header")
-              span 正解
-              b-tag(rounded) {{question.moves_answers_attributes.length}}
-            shogi_player(
-              :run_mode="'play_mode'"
-              :kifu_body="`position sfen ${question.init_sfen}`"
-              :start_turn="0"
-              :key_event_capture="false"
-              :slider_show="true"
-              :controller_show="true"
-              :setting_button_show="development_p"
-              :theme="'simple'"
-              :size="'default'"
-              :sound_effect="edit_tab_info.key === 'play_mode'"
-              :volume="0.5"
-              ref="play_sp"
-              )
+          b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
+            b-tab-item(label="配置")
+              shogi_player(
+                :run_mode="'edit_mode'"
+                :kifu_body="provisional_sfen"
+                :start_turn="-1"
+                :key_event_capture="false"
+                :slider_show="true"
+                :controller_show="true"
+                :theme="'simple'"
+                :size="'default'"
+                :sound_effect="false"
+                :volume="0.5"
+                @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
+                )
+            b-tab-item
+              template(slot="header")
+                span 正解
+                b-tag(rounded) {{question.moves_answers.length}}
+              shogi_player(
+                :run_mode="'play_mode'"
+                :kifu_body="`position sfen ${question.init_sfen}`"
+                :start_turn="0"
+                :key_event_capture="false"
+                :slider_show="true"
+                :controller_show="true"
+                :setting_button_show="development_p"
+                :theme="'simple'"
+                :size="'default'"
+                :sound_effect="edit_tab_info.key === 'play_mode'"
+                :volume="0.5"
+                ref="play_sp"
+                )
 
-            .buttons.is-centered.konotejunsiikai
-              b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
+              .buttons.is-centered.konotejunsiikai
+                b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
 
-            b-tabs.answer_tabs(v-model="answer_tab_index" position="is-centered" expanded :animated="true" v-if="question.moves_answers_attributes.length >= 1")
-              template(v-for="(e, i) in question.moves_answers_attributes")
-                b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
-                  shogi_player(
-                    :run_mode="'view_mode'"
-                    :kifu_body="full_sfen_build(e)"
-                    :start_turn="-1"
-                    :debug_mode="false"
-                    :key_event_capture="false"
-                    :slider_show="true"
-                    :controller_show="true"
-                    :setting_button_show="development_p"
-                    :theme="'simple'"
-                    :size="'default'"
-                    :sound_effect="true"
-                    :volume="0.5"
-                    )
-                  b-button.delete_button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)" size="is-small")
-          b-tab-item(label="情報")
-            .input_forms
-              b-field(label="タイトル" label-position="on-border")
-                b-input(v-model="question.title")
+              b-tabs.answer_tabs(v-model="answer_tab_index" position="is-centered" expanded :animated="true" v-if="question.moves_answers.length >= 1")
+                template(v-for="(e, i) in question.moves_answers")
+                  b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
+                    shogi_player(
+                      :run_mode="'view_mode'"
+                      :kifu_body="full_sfen_build(e)"
+                      :start_turn="-1"
+                      :debug_mode="false"
+                      :key_event_capture="false"
+                      :slider_show="true"
+                      :controller_show="true"
+                      :setting_button_show="development_p"
+                      :theme="'simple'"
+                      :size="'default'"
+                      :sound_effect="true"
+                      :volume="0.5"
+                      )
+                    b-button.delete_button(type="is-danger" icon-left="trash-can-outline" @click="kotae_delete_handle(i)" size="is-small")
+            b-tab-item(label="情報")
+              .input_forms
+                b-field(label="タイトル" label-position="on-border")
+                  b-input(v-model="question.title")
 
-              b-field(label="説明" label-position="on-border")
-                b-input(v-model="question.description" size="is-small" type="textarea" rows="2")
+                b-field(label="説明" label-position="on-border")
+                  b-input(v-model="question.description" size="is-small" type="textarea" rows="2")
 
-              b-field(label="ヒント" label-position="on-border")
-                b-input(v-model="question.hint_description")
+                b-field(label="ヒント" label-position="on-border")
+                  b-input(v-model="question.hint_description")
 
-              b-field(label="出典" label-position="on-border")
-                b-input(v-model="question.source_desc")
+                b-field(label="出典" label-position="on-border")
+                  b-input(v-model="question.source_desc")
 
-              b-field(label="制限時間" label-position="on-border")
-                //- :default-seconds="0" :default-minutes="0"
-                b-timepicker(v-model="time_limit_clock" icon="clock" :enable-seconds="true")
-                //- b-numberinput(v-model="time_limit_clock" :min="0")
-                //- b-numberinput(v-model="time_limit_clock" :min="0")
+                b-field(label="制限時間" label-position="on-border")
+                  //- :default-seconds="0" :default-minutes="0"
+                  b-timepicker(v-model="time_limit_clock" icon="clock" :enable-seconds="true")
+                  //- b-numberinput(v-model="time_limit_clock" :min="0")
+                  //- b-numberinput(v-model="time_limit_clock" :min="0")
 
-              label.is-size-7.has-text-weight-bold 難易度
-              b-rate(v-model="question.difficulty_level" spaced :max="start_level_max" :show-score="false")
+                label.is-size-7.has-text-weight-bold 難易度
+                b-rate(v-model="question.difficulty_level" spaced :max="start_level_max" :show-score="false")
 
-        hr
-        .save_container
-          .buttons.is-centered
-            b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
+          hr
+          .save_container
+            .buttons.is-centered
+              b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
+              b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
 
   debug_print
 
@@ -543,7 +554,7 @@ export default {
           this.$set(this.question, "init_sfen", sfen)
 
           // 合わせて正解も削除する
-          if (this.question.moves_answers_attributes.length >= 1) {
+          if (this.question.moves_answers.length >= 1) {
             this.ok_notice("元の配置を変更したので正解を削除しました")
             this.moves_answers_clear()
           }
@@ -562,20 +573,20 @@ export default {
         this.warning_notice("1手以上動かしてください")
         return
       }
-      if (this.question.moves_answers_attributes.some(e => e.moves_str === moves_str)) {
+      if (this.question.moves_answers.some(e => e.moves_str === moves_str)) {
         this.warning_notice("すでに同じ正解があります")
         return
       }
 
-      this.question.moves_answers_attributes.push({moves_str: moves_str})
-      this.$nextTick(() => this.answer_tab_index = this.question.moves_answers_attributes.length - 1)
-      this.ok_notice(`${this.question.moves_answers_attributes.length}つ目の正解を追加しました`)
+      this.question.moves_answers.push({moves_str: moves_str})
+      this.$nextTick(() => this.answer_tab_index = this.question.moves_answers.length - 1)
+      this.ok_notice(`${this.question.moves_answers.length}つ目の正解を追加しました`)
     },
 
     kotae_delete_handle(index) {
-      const new_ary = this.question.moves_answers_attributes.filter((e, i) => i !== index)
-      this.$set(this.question, "moves_answers_attributes", new_ary)
-      this.$nextTick(() => this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.question.moves_answers_attributes.length - 1))
+      const new_ary = this.question.moves_answers.filter((e, i) => i !== index)
+      this.$set(this.question, "moves_answers", new_ary)
+      this.$nextTick(() => this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.question.moves_answers.length - 1))
       this.ok_notice("削除しました")
     },
 
@@ -614,32 +625,7 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_init_once() {
-      this.http_get_command(this.info.put_path, { index_fetch: true }, e => {
-        if (e.error_message) {
-          this.warning_notice(e.error_message)
-        }
-        if (e.questions) {
-          this.questions = e.questions
-        }
-      })
-
-      this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b k2r2b4g4s4n4l18p 1"
-
-      if (this.development_p) {
-        this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
-        this.provisional_sfen = "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1"
-      }
-
-      this.question = {
-        init_sfen: this.provisional_sfen,
-        moves_answers_attributes: [],
-        time_limit_sec: 3 * 60,
-        difficulty_level: 1,
-      }
-      this.time_limit_clock_set()
-
-      // this.question.moves_answers_attributes = []
-      this.answer_tab_index = 0
+      this.jump_to_index_handle()
     },
 
     // clock = advance(seconds: sec)
@@ -649,7 +635,7 @@ export default {
 
     // 正解だけを削除
     moves_answers_clear() {
-      this.$set(this.question, "moves_answers_attributes", [])
+      this.$set(this.question, "moves_answers", [])
       this.answer_tab_index = 0
     },
 
@@ -658,12 +644,12 @@ export default {
     },
 
     save_handle() {
-      if (this.question.moves_answers_attributes.length === 0) {
+      if (this.question.moves_answers.length === 0) {
         this.warning_notice("正解を作ってください")
         return
       }
 
-      // const moves_answers_attributes = this.answers.map(e => {
+      // const moves_answers = this.answers.map(e => {
       //   return { moves_str: e.moves_str }
       // })
 
@@ -717,6 +703,47 @@ export default {
       this.sound_play("x")
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-warning", queue: false})
       this.talk(message, {rate: 1.5})
+    },
+
+    question_edit_of(row) {
+      this.question = row
+    },
+
+    jump_to_index_handle() {
+      this.question = null
+
+      this.http_get_command(this.info.put_path, { index_fetch: true }, e => {
+        if (e.error_message) {
+          this.warning_notice(e.error_message)
+        }
+        if (e.questions) {
+          this.questions = e.questions
+        }
+      })
+    },
+
+    jump_to_new_handle() {
+      this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b k2r2b4g4s4n4l18p 1"
+
+      if (this.development_p) {
+        this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+        this.provisional_sfen = "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1"
+      }
+
+      this.question = {
+        init_sfen: this.provisional_sfen,
+        moves_answers: [],
+        time_limit_sec: 3 * 60,
+        difficulty_level: 1,
+      }
+      this.time_limit_clock_set()
+
+      // this.question.moves_answers = []
+      this.answer_tab_index = 0
+    },
+
+    back_to_index_handle() {
+      this.jump_to_index_handle()
     },
   },
 
@@ -780,7 +807,7 @@ export default {
     },
 
     save_button_type() {
-      if (this.question.moves_answers_attributes.length >= 1) {
+      if (this.question.moves_answers.length >= 1) {
         return "is-primary"
       }
     },

@@ -7,10 +7,10 @@ module Acns2
       has_many :endpos_answers # 最後の局面を正解とする答え集
     end
 
-    with_options allow_destroy: true do
-      accepts_nested_attributes_for :moves_answers
-      accepts_nested_attributes_for :endpos_answers
-    end
+    # with_options allow_destroy: true do
+    #   accepts_nested_attributes_for :moves_answers
+    #   accepts_nested_attributes_for :endpos_answers
+    # end
 
     before_validation do
       [
@@ -22,6 +22,8 @@ module Acns2
       ].each do |key|
         public_send("#{key}=", public_send(key).presence)
       end
+
+      # self.title ||= "#{self.class.count.next}番目の問題"
 
       # self.difficulty_level ||= 0
 
@@ -46,7 +48,7 @@ module Acns2
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-      #     "moves_answers_attributes"=>[{"moves_str"=>"4c5b"}],
+      #     "moves_answers"=>[{"moves_str"=>"4c5b"}],
       #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
       #   },
       # }.deep_symbolize_keys
@@ -82,10 +84,10 @@ module Acns2
       save!
 
       # 削除
-      self.moves_answer_ids = question[:moves_answers_attributes].collect { |e| e[:id] }
+      self.moves_answer_ids = question[:moves_answers].collect { |e| e[:id] }
 
       # 追加 or 更新
-      question[:moves_answers_attributes].each do |e|
+      question[:moves_answers].each do |e|
         moves_answer = moves_answers.find_or_initialize_by(id: e[:id])
         moves_answer.moves_str = e[:moves_str]
         moves_answer.save!
@@ -102,7 +104,7 @@ module Acns2
     # jsに渡すパラメータを作る
     def create_the_parameters_to_be_passed_to_the_js
       hash = attributes
-      hash = hash.merge(moves_answers_attributes: moves_answers)
+      hash = hash.merge(moves_answers: moves_answers)
       hash
     end
   end

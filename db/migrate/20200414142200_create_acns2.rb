@@ -64,9 +64,9 @@ class CreateAcns2 < ActiveRecord::Migration[6.0]
     end
 
     create_table :acns2_endpos_answers do |t|
-      t.belongs_to :question,                             comment: "問題"
-      t.integer :limit_turn,  null: false, index: true,   comment: "N手"
-      t.string :sfen_endpos, null: false, index: false,  comment: "最後の局面"
+      t.belongs_to :question,                           comment: "問題"
+      t.integer :limit_turn,  null: false, index: true, comment: "N手"
+      t.string :sfen_endpos, null: false, index: false, comment: "最後の局面"
       t.timestamps
     end
   end
