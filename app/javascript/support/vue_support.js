@@ -109,7 +109,9 @@ export default {
 
     tweet_intent_url(text) {
       if (text) {
-        return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+        const url = new URL("https://twitter.com/intent/tweet")
+        url.searchParams.set("text", text)
+        return url.toString()
       }
     },
 
