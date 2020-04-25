@@ -83,14 +83,19 @@ export default {
     // モバイルでないときだけ elem にフォーカスする
     // なぜか $nextTick ではフォーカスされない場合があるため setTimeout に変更
     desktop_focus_to(elem) {
-      // this.$nextTick(() => {
+      if (this.desktop_p) {
+        this.focus_to(elem)
+      }
+    },
+
+    // $nextTick ではフォーカスされない場合があるため setTimeout にしている
+    // それでも 2msec だと効かない場合もあるため 0.1 秒待つようにしている
+    focus_to(elem) {
       setTimeout(() => {
-        if (this.desktop_p) {
-          if (elem) {
-            elem.focus()
-          }
+        if (elem) {
+          elem.focus()
         }
-      }, 0)
+      }, 1000 * 0.1)
     },
 
     url_build(attributes) {

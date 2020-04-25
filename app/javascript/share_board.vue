@@ -204,7 +204,7 @@ export default {
         animation: "",
         component: {
           template: `
-            <div class="modal-card is-size-7 share_board">
+            <div class="modal-card">
               <header class="modal-card-head">
                 <p class="modal-card-title">棋譜</p>
               </header>
@@ -212,7 +212,7 @@ export default {
                 <b-input type="textarea" v-model="any_source" ref="any_source" />
               </section>
               <footer class="modal-card-foot">
-                <b-button @click="submit_handle" type="is-primary">反映</b-button>
+                <b-button @click="submit_handle" type="is-primary">読み込む</b-button>
               </footer>
             </div>
           `,
@@ -237,7 +237,7 @@ export default {
                 this.general_warning_notice(e.bs_error.message)
               }
               if (e.sfen) {
-                this.general_ok_notice("反映しました")
+                this.general_ok_notice("正常に読み込みました")
                 this.current_body = e.sfen
                 this.turn_offset = e.turn_max
                 this.current_flip = false
