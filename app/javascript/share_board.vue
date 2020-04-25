@@ -83,8 +83,8 @@ export default {
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       bs_error: null,           // BioshogiError の情報 (Hash)
-      run_mode: "play_mode",    // 操作モードと盤面編集モードの切り替え用
-      edit_mode_body: null,     // 盤面編集モードの局面
+      run_mode: "play_mode",    // 操作モードと局面編集モードの切り替え用
+      edit_mode_body: null,     // 局面編集モードの局面
     }
   },
 
