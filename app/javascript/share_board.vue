@@ -122,6 +122,7 @@ export default {
       this.other_window_open(this.kento_app_with_params_url)
     },
 
+    // 棋譜コピーはJS側だけではできないので(recordが空なら)fetchする
     kifu_copy_handle() {
       this.record_fetch(() => this.simple_clipboard_copy(this.record.kif_format_body))
     },
