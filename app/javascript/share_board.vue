@@ -128,7 +128,7 @@ export default {
     },
 
     tweet_handle() {
-      this.record_fetch(() => this.tweet_share_open({url: this.basic_url}))
+      this.tweet_share_open({url: this.basic_url})
     },
 
     validate_handle() {
