@@ -2,13 +2,6 @@
 .share_board
   .columns
     .column
-      b-button(@click="test(1)") 1
-      b-button(@click="test(2)") 2
-      pre.pre-wrap(:key="xxx1")
-        | ({{xxx1}})
-      pre.pre-wrap(:key="xxx2")
-        | ({{xxx2}})
-
       b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
         b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
         template(v-if="run_mode === 'play_mode'")
@@ -80,8 +73,6 @@ export default {
   },
   data() {
     return {
-      xxx1: null,
-      xxx2: null,
       // watch して url に反映するもの
       current_body:  this.info.record.sfen_body,                         // 渡している棋譜
       current_title: this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
@@ -255,37 +246,13 @@ export default {
 
     dynamic_url_for(format = null) {
       const url = new URL(location)
-      // alert(JSON.stringify(location, null, 4))
-      // alert(JSON.stringify(url, null, 4))
-
       url.searchParams.set("body", this.current_body)
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
       if (format) {
         url.searchParams.set("format", format)
       }
-
-      // alert(JSON.stringify(url, null, 4))
       return url.toString()
-    },
-
-    test(v) {
-      if (v === 1) {
-        const url = new URL(location)
-        url.searchParams.set("body", this.current_body)
-        url.searchParams.set("turn", this.turn_offset)
-        url.searchParams.set("title", this.current_title)
-        this.xxx1 = JSON.stringify(url.toString(), null, 4)
-        this.$forceUpdate()
-      }
-      if (v === 2) {
-        const url = new URL(window.location.origin + this.$route.path)
-        url.searchParams.set("body", this.current_body)
-        url.searchParams.set("turn", this.turn_offset)
-        url.searchParams.set("title", this.current_title)
-        this.xxx2 = JSON.stringify(url.toString(), null, 4)
-        this.$forceUpdate()
-      }
     },
   },
 
