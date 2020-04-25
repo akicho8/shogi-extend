@@ -165,7 +165,9 @@ export default {
       const info = SfenParser.parse(sfen)
       const url = new URL("https://www.kento-shogi.com/")
       url.searchParams.set("initpos", info.init_sfen_strip)
-      url.searchParams.set("moves", info.attributes.moves.replace(/\s+/, "."))
+      if (info.attributes.moves) {
+        url.searchParams.set("moves", info.attributes.moves.replace(/\s+/, "."))
+      }
       url.searchParams.set("flip", flip)
       url.hash = turn
       return url.toString()
