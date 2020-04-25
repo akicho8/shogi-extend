@@ -246,12 +246,17 @@ export default {
 
     dynamic_url_for(format = null) {
       const url = new URL(location)
+      alert(JSON.stringify(location, null, 4))
+      alert(JSON.stringify(url, null, 4))
+
       url.searchParams.set("body", this.current_body)
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
       if (format) {
         url.searchParams.set("format", format)
       }
+
+      alert(JSON.stringify(url, null, 4))
       return url.toString()
     },
   },
