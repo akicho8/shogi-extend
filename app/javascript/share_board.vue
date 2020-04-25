@@ -79,7 +79,7 @@ export default {
       turn_offset:   this.info.record.initial_turn,                      // 現在の手数
 
       // urlには反映しない
-      current_flip: this.initial_flip,  // 反転用
+      current_flip: null,       // 反転用
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       bs_error: null,           // BioshogiError の情報 (Hash)
@@ -89,6 +89,8 @@ export default {
   },
 
   created() {
+    this.current_flip = this.initial_flip
+
     // どれかが変更されたらURLを更新
     this.$watch(() => [this.current_body, this.turn_offset, this.current_title], () => this.url_replace())
   },
