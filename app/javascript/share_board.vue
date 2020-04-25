@@ -158,11 +158,10 @@ export default {
       this.record_create(callback)
     },
 
-    // ここをAPIを叩くのに変更する
+    // これは汎用のAPIを叩こうかと思ったけど今後の拡張を考えるとこのままでいい気がする
     record_create(callback) {
       const params = new URLSearchParams()
       params.set("body", this.current_body)
-      params.set("edit_mode", "share_board")
 
       this.http_command("POST", this.$route.path, params, e => {
         this.bs_error = null
