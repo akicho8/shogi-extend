@@ -1,4 +1,4 @@
-# 指し継ぎリレー将棋盤
+# リレー将棋
 #
 # entry
 #   app/controllers/share_boards_controller.rb
@@ -68,7 +68,7 @@ class ShareBoardsController < ApplicationController
   end
 
   def current_title
-    params[:title].presence || "指し継ぎリレー将棋"
+    params[:title].presence
   end
 
   private

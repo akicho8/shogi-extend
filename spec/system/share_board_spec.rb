@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "指し継ぎリレー将棋", type: :system do
+RSpec.describe "リレー将棋", type: :system do
   it "最初" do
     visit "/share-board"
     expect(page).to have_content "0手目"
