@@ -126,6 +126,18 @@ export default {
       this.talk(message, {rate: 1.5})
     },
 
+    error_message_dialog(message) {
+      this.$buefy.dialog.alert({
+        title: "ERROR",
+        message: message,
+        canCancel: ["outside", "escape"],
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        trapFocus: true,
+      })
+    },
   },
 
   computed: {

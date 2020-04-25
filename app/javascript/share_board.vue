@@ -73,37 +73,34 @@ export default {
   },
   data() {
     return {
-      record: this.info.record,                   // js 側だけで足りると思っていたけどやっぱり必要だった。整合性チェックと kento_app_path のためにある
-      bs_error: null,                             // BioshogiError の情報 (Hash)
-      current_body: this.info.record.sfen_body,   // 渡している棋譜
-      turn_offset: this.info.record.initial_turn, // 現在の手数
+      // watch して url に反映するもの
+      current_body:  this.info.record.sfen_body,                         // 渡している棋譜
       current_title: this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
-      current_flip: this.initial_flip, // 反転用
-      run_mode: "play_mode",           // 操作モードと盤面編集モードの切り替え用
-      edit_mode_body: null,            // 盤面編集モードの局面
+      turn_offset:   this.info.record.initial_turn,                      // 現在の手数
 
-      // その他
-      change_counter: 1, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
+      // urlには反映しない
+      current_flip: this.initial_flip,  // 反転用
+
+      record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
+      bs_error: null,           // BioshogiError の情報 (Hash)
+      run_mode: "play_mode",    // 操作モードと盤面編集モードの切り替え用
+      edit_mode_body: null,     // 盤面編集モードの局面
     }
   },
 
   created() {
-    this.url_replace()
-  },
-
-  watch: {
-    current_body()  { this.url_replace() },
-    turn_offset()   { this.url_replace() },
-    current_title() { this.url_replace() },
+    // どれかが変更されたらURLを更新
+    this.$watch(() => [this.current_body, this.turn_offset, this.current_title], () => this.url_replace())
   },
 
   methods: {
+    // 現在の手数を受けとる(URLに反映する)
     turn_offset_set(v) {
       this.turn_offset = v
     },
 
+    // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
-      this.change_counter += 1
       this.record = null
       this.bs_error = null
 
@@ -111,8 +108,10 @@ export default {
       this.url_replace()
     },
 
+    // 編集モード時の局面(常に更新するが、URLにはすぐには反映しない)
+    // あとで current_body に設定するために取っておく
     edit_mode_snapshot_sfen_set(v) {
-      this.edit_mode_body = v // あとで current_body に設定するために取っておく
+      this.edit_mode_body = v
     },
 
     // 棋譜コピーはJS側だけではできないので(recordが空なら)fetchする
@@ -120,14 +119,12 @@ export default {
       this.record_fetch(() => this.simple_clipboard_copy(this.record.kif_format_body))
     },
 
+    // ツイートする
     tweet_handle() {
-      this.tweet_share_open({url: this.basic_url})
+      this.tweet_share_open({url: this.current_url})
     },
 
-    validate_handle() {
-      this.record_fetch(() => {})
-    },
-
+    // 操作←→編集 切り替え
     mode_toggle_handle() {
       if (this.run_mode === "play_mode") {
         this.run_mode = "edit_mode"
@@ -149,24 +146,19 @@ export default {
     // private
 
     record_fetch(callback) {
-      if (this.change_counter === 0) {
-        if (this.record) {
-          callback()
-        }
+      if (this.record) {
+        callback()
       }
-      if (this.change_counter >= 1) {
-        this.record_create(callback)
-      }
+      this.record_create(callback)
     },
 
+    // ここをAPIを叩くのに変更する
     record_create(callback) {
       const params = new URLSearchParams()
       params.set("body", this.current_body)
       params.set("edit_mode", "share_board")
 
       this.http_command("POST", this.$route.path, params, e => {
-        this.change_counter = 0
-
         this.bs_error = null
 
         if (e.bs_error) {
@@ -174,16 +166,7 @@ export default {
           const message = `${e.bs_error.message}。手を戻して指し直してください`
 
           this.talk(message, {rate: 1.5})
-          this.$buefy.dialog.alert({
-            title: "ERROR",
-            message: message,
-            canCancel: ["outside", "escape"],
-            type: "is-danger",
-            hasIcon: true,
-            icon: "times-circle",
-            iconPack: "fa",
-            trapFocus: true,
-          })
+          this.error_message_dialog(message)
         }
 
         if (e.record) {
@@ -194,20 +177,10 @@ export default {
     },
 
     url_replace() {
-      window.history.replaceState("", null, this.basic_url)
+      window.history.replaceState("", null, this.current_url)
     },
 
-    url_build(format = null) {
-      const url = new URL(location)
-      url.searchParams.set("body", this.current_body)
-      url.searchParams.set("turn", this.turn_offset)
-      url.searchParams.set("title", this.current_title)
-      if (format) {
-        url.searchParams.set("format", format)
-      }
-      return url.toString()
-    },
-
+    // タイトル編集
     title_edit() {
       this.$buefy.dialog.prompt({
         message: "タイトル",
@@ -218,9 +191,8 @@ export default {
       })
     },
 
+    // 棋譜読み込みタップ時の処理
     source_read_handle() {
-      // this.$on("foo", e => alert(`on:${e}`))
-
       const body_input_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
@@ -271,34 +243,26 @@ export default {
         },
       })
     },
+
+    dynamic_url_for(format = null) {
+      const url = new URL(location)
+      url.searchParams.set("body", this.current_body)
+      url.searchParams.set("turn", this.turn_offset)
+      url.searchParams.set("title", this.current_title)
+      if (format) {
+        url.searchParams.set("format", format)
+      }
+      return url.toString()
+    },
   },
 
   computed: {
-    basic_url() {
-      return this.url_build()
-    },
+    current_url() { return this.dynamic_url_for()       },
+    json_url()    { return this.dynamic_url_for("json") },
+    png_url()     { return this.dynamic_url_for("png")  },
 
-    json_url() {
-      return this.url_build("json")
-    },
-
-    png_url() {
-      return this.url_build("png")
-    },
-
-    piyo_shogi_app_with_params_url() {
-      if (this.record) {
-        return this.piyo_shogi_full_url(this.basic_url, this.turn_offset, this.current_flip)
-      }
-    },
-
-    kento_app_with_params_url() {
-      return this.kento_full_url2(this.current_body, this.turn_offset, this.current_flip)
-    },
-
-    tweet_body() {
-      return this.basic_url
-    },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.current_flip) },
+    kento_app_with_params_url()      { return this.kento_full_url2(this.current_body, this.turn_offset, this.current_flip)  },
 
     // 反転した状態で開始するか？ (後手の手番のときに反転する)
     initial_flip() {
@@ -306,9 +270,7 @@ export default {
     },
 
     // 最初に表示した手数より進めたか？
-    advanced_p() {
-      return this.turn_offset > this.info.record.initial_turn
-    },
+    advanced_p() { return this.turn_offset > this.info.record.initial_turn },
   },
 }
 </script>
