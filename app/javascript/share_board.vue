@@ -262,7 +262,7 @@ export default {
     png_url()     { return this.dynamic_url_for("png")  },
 
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.current_flip) },
-    kento_app_with_params_url()      { return this.kento_full_url2(this.current_body, this.turn_offset, this.current_flip)  },
+    kento_app_with_params_url()      { return this.kento_full_url(this.current_body, this.turn_offset, this.current_flip)  },
 
     // 反転した状態で開始するか？ (後手の手番のときに反転する)
     initial_flip() {

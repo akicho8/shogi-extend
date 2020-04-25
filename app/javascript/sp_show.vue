@@ -253,7 +253,7 @@ export default {
     },
 
     kento_app_with_params_url() {
-      return this.kento_full_url(this.record, this.turn_offset, this.new_flip)
+      return this.kento_full_url(this.record.sfen_body, this.turn_offset, this.new_flip)
     },
 
     tweet_url() {

@@ -146,6 +146,7 @@ export default {
       const url3 = url2.toString()
       console.log(url3)
 
+      // エスケープすると動かない
       const url4 = `piyoshogi://?num=${turn}&flip=${flip}&url=${url3}`
 
       console.log(url4)
@@ -153,15 +154,10 @@ export default {
       return url4
     },
 
-    kento_full_url(record, turn, flip) {
-      const full = "https://www.kento-shogi.com" + record.kento_app_path
-      const url = new URL(full)
-      url.searchParams.set("flip", flip)
-      url.hash = turn
-      return url.toString()
-    },
-
-    kento_full_url2(sfen, turn, flip) {
+    kento_full_url(sfen, turn, flip) {
+      if (!sfen) {
+        alert("sfenが空")
+      }
       const info = SfenParser.parse(sfen)
       const url = new URL("https://www.kento-shogi.com/")
       url.searchParams.set("initpos", info.init_sfen_strip)

@@ -70,7 +70,7 @@ window.Adapter = Vue.extend({
 
     kento_app_with_params_url() {
       if (this.record) {
-        return this.kento_full_url(this.record, this.record.display_turn, this.record.flip)
+        return this.kento_full_url(this.record.sfen_body, this.record.display_turn, this.record.flip)
       }
     },
 
