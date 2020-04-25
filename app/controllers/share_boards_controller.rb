@@ -61,7 +61,7 @@ class ShareBoardsController < ApplicationController
 
   def twitter_card_options
     {
-      title: "#{current_title} #{initial_turn}手目".squish,
+      title: [current_title, "#{initial_turn}手目"].compact.join(" "),
       image: current_image_path,
       description: params[:description] || "",
     }
