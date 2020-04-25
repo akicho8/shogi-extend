@@ -284,7 +284,7 @@ class FreeBattle < ApplicationRecord
     if use_info.key == :share_board
       # めちゃくちゃな操作でもエラーにしない
       {
-        :candidate_skip => true,
+        :candidate_enable => false,
         :validate_enable  => false,
       }
     else
