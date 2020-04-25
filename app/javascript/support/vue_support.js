@@ -116,16 +116,19 @@ export default {
     },
 
     tweet_share_open(params) {
-      const url = new URL("https://twitter.com/share")
+      const url = new URL("https://twitter.com/intent/tweet")
+      // const url = new URL("https://twitter.com/share")
       _.each(params, (v, k) => url.searchParams.set(k, v))
+      this.popup_open(url.toString())
+    },
 
+    popup_open(url) {
       const width = 575
-      const height = 400
+      const height = 256
       const left = (window.screen.width - width) / 2
       const top = (window.screen.height - height) / 2
-      const opts = `status=no,centerscreen,width=${width},height=${height}`
-
-      window.open(url.toString(), "_blank", opts)
+      const opts = `status=no,top=${top},left=${left},width=${width},height=${height}`
+      window.open(url, "_blank", opts)
     },
 
     piyo_shogi_full_url(path, turn, flip) {
