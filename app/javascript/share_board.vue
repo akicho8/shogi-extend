@@ -12,9 +12,9 @@
           b-dropdown-item(separator)
         b-dropdown-item(@click="mode_toggle_handle")
           template(v-if="run_mode === 'play_mode'")
-            | 盤面編集
+            | 局面編集
           template(v-else)
-            | 盤面編集(終了)
+            | 局面編集(終了)
         b-dropdown-item(@click="source_read_handle") 棋譜読み込み
         b-dropdown-item(@click="title_edit") タイトル編集
 
@@ -138,8 +138,8 @@ export default {
       } else {
         this.run_mode = "play_mode"
 
-        // 盤面編集から操作モードに戻した瞬間に盤面編集モードでの局面を反映しURLを更新する
-        // 盤面編集モードでの変化をそのまま current_body に反映しない理由は駒箱の駒が消えるため
+        // 局面編集から操作モードに戻した瞬間に局面編集モードでの局面を反映しURLを更新する
+        // 局面編集モードでの変化をそのまま current_body に反映しない理由は駒箱の駒が消えるため
         // 消えるのはsfenに駒箱の情報が含まれないから
         if (this.development_p && !this.edit_mode_body) {
           alert("edit_mode_body が入っていません")
