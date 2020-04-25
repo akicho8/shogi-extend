@@ -29,7 +29,7 @@
         :theme="'simple'"
         :size="'medium'"
         :sound_effect="true"
-        :volume="0.2"
+        :volume="0.5"
         :setting_button_show="false"
         :flip.sync="new_flip"
         :player_info="player_info"
