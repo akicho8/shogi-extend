@@ -119,9 +119,9 @@ export default {
       const height = 400
       const left = (window.screen.width - width) / 2
       const top = (window.screen.height - height) / 2
-      const opts = `status=1,width=${width},height=${height},top=${top},left=${left}`
+      const opts = `status=no,centerscreen,width=${width},height=${height}`
 
-      window.open(url.toString(), "", opts)
+      window.open(url.toString(), "_blank", opts)
     },
 
     piyo_shogi_full_url(path, turn, flip) {
