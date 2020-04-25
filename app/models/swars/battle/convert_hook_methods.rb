@@ -80,7 +80,7 @@ module Swars
 
       def fast_parser_options
         {
-          validate_skip: true,
+          validate_enable: false,
           candidate_skip: true,
         }
       end

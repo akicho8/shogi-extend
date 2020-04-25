@@ -285,7 +285,7 @@ class FreeBattle < ApplicationRecord
       # めちゃくちゃな操作でもエラーにしない
       {
         :candidate_skip => true,
-        :validate_skip  => true,
+        :validate_enable  => false,
       }
     else
       {}

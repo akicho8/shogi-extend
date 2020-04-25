@@ -70,9 +70,9 @@ module ImageMod
     {
       # :skill_monitor_enable           => false,
       # :skill_monitor_technique_enable => false,
-      :typical_error_case => :embed, # validate_skip しているのでこのオプションは使わない？
+      :typical_error_case => :embed, # validate_enable しているのでこのオプションは使わない？
       :candidate_skip     => true,
-      :validate_skip      => true,
+      :validate_enable      => false,
       :mediator_class     => Bioshogi::MediatorFast,
     }
   end
