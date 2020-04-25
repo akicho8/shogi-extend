@@ -19,8 +19,8 @@
         b-dropdown-item(@click="title_edit") タイトル編集
 
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
-        .title.is-4.is-marginless(@click="title_edit")
-          span.is_clickable {{current_title}}
+        .title.is-4.is-marginless
+          span.is_clickable(@click="title_edit") {{current_title}}
         .turn_offset.has-text-weight-bold {{turn_offset}}手目
 
       .sp_container
