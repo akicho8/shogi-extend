@@ -78,8 +78,7 @@ class ShareBoardsController < ApplicationController
   end
 
   def current_json
-    attrs = current_record.as_json(only: [:sfen_body, :turn_max], methods: [:kento_app_path])
-    # attrs[:show_path] = url_for([:share_board, body: current_record.sfen_body, only_path: true])
+    attrs = current_record.as_json(only: [:sfen_body, :turn_max])
     attrs[:kif_format_body] = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
     attrs[:initial_turn] = initial_turn
     attrs[:preset_info] = { name: current_record.preset_info.name, handicap_shift: current_record.preset_info.handicap ? 1 : 0 }

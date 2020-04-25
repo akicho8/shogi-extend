@@ -328,7 +328,6 @@ module BattleControllerSharedMethods
           :player_info,
           :title,
           :description,
-          :kento_app_path,
         ],
         ).tap do |a|
 
