@@ -82,6 +82,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       expect(page).to have_content "1-1"
       doc_image
     end
+
+    it "KENTOに正しく棋譜が渡せている" do
+      visit "/w?query=devuser1"
+      find("a.kento_button").click
+      expect(page).to have_content "KENTO"
+      expect(page).to have_content "#34"
+      doc_image
+    end
   end
 
   describe "show" do
