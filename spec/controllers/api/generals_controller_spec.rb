@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Api::GeneralsController, type: :controller do
   describe "any_source_to_sfen" do
     before do
-      get :any_source_to_sfen, params: { any_source: "68銀" }
+      post :any_source_to_sfen, params: { any_source: "68銀" }
     end
     let(:value) do
       JSON.parse(response.body, symbolize_names: true)

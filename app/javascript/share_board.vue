@@ -234,7 +234,7 @@ export default {
         },
         events: {
           "update:any_source": any_source => {
-            this.http_get_command("/api/general/any_source_to_sfen", {any_source: any_source}, e => {
+            this.http_command("POST", "/api/general/any_source_to_sfen", {any_source: any_source}, e => {
               if (e.bs_error) {
                 this.general_warning_notice(e.bs_error.message)
               }

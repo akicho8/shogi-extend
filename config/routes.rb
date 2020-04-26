@@ -149,7 +149,7 @@ Rails.application.routes.draw do
 
   namespace :api, format: "json" do
     resource :general, only: [:show] do
-      get "any_source_to_sfen"
+      post "any_source_to_sfen"
     end
   end
 
