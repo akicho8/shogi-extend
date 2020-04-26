@@ -127,7 +127,7 @@ export default {
 
     // ツイートする
     tweet_handle() {
-      this.tweet_share_open({url: this.current_url, text: this.hash_tag})
+      this.tweet_share_open({url: this.current_url, hashtags: this.current_title})
     },
 
     // 操作←→編集 切り替え
@@ -278,12 +278,6 @@ export default {
 
     // 最初に表示した手数より進めたか？
     advanced_p() { return this.turn_offset > this.info.record.initial_turn },
-
-    hash_tag() {
-      if (this.current_title) {
-        return "#" + this.current_title
-      }
-    },
   },
 }
 </script>
