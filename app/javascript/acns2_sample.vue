@@ -262,6 +262,21 @@
                 label.is-size-7.has-text-weight-bold 難易度
                 b-rate(v-model="question.difficulty_level" spaced :max="start_level_max" :show-score="false")
 
+            b-tab-item(label="試験")
+              shogi_player(
+                :run_mode="'play_mode'"
+                :kifu_body="`position sfen ${question.init_sfen}`"
+                :start_turn="0"
+                :key_event_capture="false"
+                :slider_show="true"
+                :controller_show="true"
+                :theme="'simple'"
+                :size="'default'"
+                :sound_effect="true"
+                :volume="0.5"
+                @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
+                )
+
           hr
           .save_container
             .buttons.is-centered
@@ -340,6 +355,8 @@ export default {
       sort_column:        this.info.sort_column,
       sort_order:         this.info.sort_order,
       sort_order_default: this.info.sort_order_default,
+
+      $exam_run_count: null,
     }
   },
 
@@ -656,6 +673,10 @@ export default {
       this.edit_tab_index = EditTabInfo.fetch("form_mode").code
     },
 
+    exam_mode_handle() {
+      this.$exam_run_count = 0
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_init_once() {
@@ -815,6 +836,19 @@ export default {
           this.sort_order_default = e.sort_order_default
         }
       })
+    },
+
+    play_mode_advanced_moves_set(moves) {
+      if (this.question.moves_answers.length === 0) {
+        if (this.$exam_run_count === 0) {
+          this.warning_notice("正解を作ってからやってください")
+        }
+      }
+      if (this.question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
+        this.sound_play("o")
+        this.ok_notice("正解")
+      }
+      this.$exam_run_count += 1
     },
   },
 
