@@ -1,6 +1,6 @@
 module Acns2
   class EndposAnswer < ApplicationRecord
-    belongs_to :question
+    belongs_to :question, counter_cache: true
 
     before_validation do
       if changes_to_save[:sfen_endpos] && v = sfen_endpos.presence

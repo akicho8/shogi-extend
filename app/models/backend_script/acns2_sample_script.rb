@@ -163,8 +163,7 @@ module BackendScript
       question = current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
       begin
         question.together_with_params_came_from_js_update(params)
-      rescue => error
-        Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, error])
+      rescue ActiveRecord::RecordInvalid => error
         c.render json: { error_message: error.message }
         return
       end

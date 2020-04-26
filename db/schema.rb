@@ -109,10 +109,14 @@ ActiveRecord::Schema.define(version: 2020_04_14_142200) do
     t.string "other_twitter_account", comment: "自分以外が作者の場合"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "moves_answers_count", default: 0, null: false, comment: "A解答数"
+    t.integer "endpos_answers_count", default: 0, null: false, comment: "B解答数"
     t.integer "o_count", null: false, comment: "正解数"
     t.integer "x_count", null: false, comment: "不正解数"
     t.index ["difficulty_level"], name: "index_acns2_questions_on_difficulty_level"
-    t.index ["init_sfen"], name: "index_acns2_questions_on_init_sfen", unique: true
+    t.index ["endpos_answers_count"], name: "index_acns2_questions_on_endpos_answers_count"
+    t.index ["init_sfen"], name: "index_acns2_questions_on_init_sfen"
+    t.index ["moves_answers_count"], name: "index_acns2_questions_on_moves_answers_count"
     t.index ["o_count"], name: "index_acns2_questions_on_o_count"
     t.index ["time_limit_sec"], name: "index_acns2_questions_on_time_limit_sec"
     t.index ["user_id"], name: "index_acns2_questions_on_user_id"

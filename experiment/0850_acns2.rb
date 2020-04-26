@@ -3,6 +3,36 @@ require File.expand_path('../../config/environment', __FILE__)
 
 Acns2::Question.destroy_all
 
+user = Colosseum::User.sysop
+params = {
+  "question" => {
+    "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
+    "moves_answers"=>[{"moves_str"=>"4c5b"}],
+    "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
+  },
+}.deep_symbolize_keys
+
+question = user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
+question.together_with_params_came_from_js_update(params)
+question
+question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
+
+
+
+
+
+
+
+
+
+#   question = user.acns2_questions.create! do |e|
+#     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/P8 b G2r2b2g4s4n4l#{i+1}p 1"
+#     e.moves_answers.build(moves_str: "G*5b")
+#     e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+#     e.updated_at = Time.current - 1.days + i.hours
+#   end
+
+
 # user = Colosseum::User.create!
 # question = user.acns2_questions.create! do |e|
 #   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
@@ -10,16 +40,16 @@ Acns2::Question.destroy_all
 #   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
 # end
 
-user = Colosseum::User.sysop
-50.times do |i|
-  question = user.acns2_questions.create! do |e|
-    e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p #{i}"
-    e.moves_answers.build(moves_str: "G*5b")
-    e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
-    e.updated_at = Time.current + i.hours
-  end
-end
-Acns2::Question.count           # => 50
+# user = Colosseum::User.sysop
+# 11.times do |i|
+#   question = user.acns2_questions.create! do |e|
+#     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/P8 b G2r2b2g4s4n4l#{i+1}p 1"
+#     e.moves_answers.build(moves_str: "G*5b")
+#     e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+#     e.updated_at = Time.current - 1.days + i.hours
+#   end
+# end
+# Acns2::Question.count           # => 11
 
 
 

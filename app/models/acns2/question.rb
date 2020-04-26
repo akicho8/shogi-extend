@@ -36,10 +36,10 @@ module Acns2
       # validates :difficulty_level
     end
 
-    with_options allow_blank: true do
-      validates :init_sfen, uniqueness: { case_sensitive: true }
-      # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-    end
+    # with_options allow_blank: true do
+    #   validates :init_sfen # , uniqueness: { case_sensitive: true }
+    #   # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+    # end
 
     # jsから来たパラメーターでまとめて更新する
     def together_with_params_came_from_js_update(params)
@@ -57,40 +57,43 @@ module Acns2
 
       # record = h.current_user.acns2_questions.find_or_initialize_by(id: question[:id])
 
-      assign_attributes(question.slice(*[
-            :init_sfen,
-            :title,
-            :description,
-            :hint_description,
-            :source_desc,
-            :other_twitter_account,
-            :difficulty_level,
-            :time_limit_sec,
-          ]))
+      ActiveRecord::Base.transaction do
+        assign_attributes(question.slice(*[
+              :init_sfen,
+              :title,
+              :description,
+              :hint_description,
+              :source_desc,
+              :other_twitter_account,
+              :difficulty_level,
+              :time_limit_sec,
+            ]))
 
-      if Rails.env.development?
-        if new_record?
-          parts = init_sfen.split
-          parts.pop
-          parts.push(self.class.count.next)
-          self.init_sfen = parts.join(" ")
-          p ["#{__FILE__}:#{__LINE__}", __method__, init_sfen]
+        # if Rails.env.development?
+        #   if new_record?
+        #     parts = init_sfen.split
+        #     parts.pop
+        #     parts.push(self.class.count.next)
+        #     self.init_sfen = parts.join(" ")
+        #     p ["#{__FILE__}:#{__LINE__}", __method__, init_sfen]
+        #   end
+        # end
+
+        # a = Time.zone.parse(question[:time_limit_clock])
+        # b = Time.zone.parse("2000-01-01")
+        # self.time_limit_sec = a - b
+
+        save!
+
+        # 削除
+        self.moves_answer_ids = question[:moves_answers].collect { |e| e[:id] }
+
+        # 追加 or 更新
+        question[:moves_answers].each do |e|
+          moves_answer = moves_answers.find_or_initialize_by(id: e[:id])
+          moves_answer.moves_str = e[:moves_str]
+          moves_answer.save!
         end
-      end
-
-      # a = Time.zone.parse(question[:time_limit_clock])
-      # b = Time.zone.parse("2000-01-01")
-      # self.time_limit_sec = a - b
-      save!
-
-      # 削除
-      self.moves_answer_ids = question[:moves_answers].collect { |e| e[:id] }
-
-      # 追加 or 更新
-      question[:moves_answers].each do |e|
-        moves_answer = moves_answers.find_or_initialize_by(id: e[:id])
-        moves_answer.moves_str = e[:moves_str]
-        moves_answer.save!
       end
 
       # question = h.current_user.acns2_questions.create! do |e|

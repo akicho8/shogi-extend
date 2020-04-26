@@ -157,9 +157,10 @@
               b-table-column(field="id" label="ID" sortable) {{props.row.id}}
               b-table-column(field="title" label="タイトル" sortable) {{props.row.title || '？'}}
               b-table-column(field="difficulty_level" label="難易度" sortable) {{props.row.difficulty_level}}
+              b-table-column(field="moves_answers_count" label="解答数" sortable) {{props.row.moves_answers.length}}
               b-table-column(field="updated_at" label="更新日時" sortable) {{row_time_format(props.row.updated_at)}}
               b-table-column(label="操作")
-                b-button(@click="question_edit_of(props.row)")
+                a(@click="question_edit_of(props.row)") 編集
 
         template(v-if="question")
           //- b-field.switch_grouped_container(grouped position="is-centered")
@@ -187,7 +188,7 @@
             b-tab-item(label="配置")
               shogi_player(
                 :run_mode="'edit_mode'"
-                :kifu_body="provisional_sfen"
+                :kifu_body="`position sfen ${question.init_sfen}`"
                 :start_turn="-1"
                 :key_event_capture="false"
                 :slider_show="true"
@@ -265,7 +266,7 @@
           .save_container
             .buttons.is-centered
               b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
-              b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
+              //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
 
   debug_print
 
@@ -283,9 +284,10 @@ import dayjs from "dayjs"
 class EditTabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "edit_mode", name: "配置", sp_show: true,  },
-      { key: "play_mode", name: "正解", sp_show: true,  },
-      { key: "form_mode", name: "情報", sp_show: false, },
+      { key: "edit_mode", name: "配置", },
+      { key: "play_mode", name: "正解", },
+      { key: "form_mode", name: "情報", },
+      { key: "exam_mode", name: "試験", },
     ]
   }
 
@@ -326,7 +328,7 @@ export default {
       // editモード edit
       sp_run_mode: null,
       edit_tab_index: null,
-      provisional_sfen: null,
+      // provisional_sfen: null,
       question: null,
       time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
       answer_tab_index: null,   // 表示している正解タブの位置
@@ -577,7 +579,11 @@ export default {
     edit_mode_snapshot_sfen(sfen) {
       if (this.sp_run_mode === "edit_mode") {
         sfen = sfen.replace(/position sfen /, "")
-        // if (this.question.init_sfen !== sfen) {
+
+        // console.log(this.question.init_sfen)
+        // console.log(sfen)
+
+        if (this.question.init_sfen !== sfen) {
           this.debug_alert(`初期配置取得 ${sfen}`)
           this.$set(this.question, "init_sfen", sfen)
 
@@ -586,7 +592,7 @@ export default {
             this.ok_notice("元の配置を変更したので正解を削除しました")
             this.moves_answers_clear()
           }
-        // }
+        }
       }
     },
 
@@ -698,7 +704,9 @@ export default {
           this.warning_notice(e.error_message)
         }
         if (e.question) {
+          // 別に更新する必要はないけどサーバー側から他の情報が追加されているかもしれない
           this.question = e.question
+
           // alert(this.time_limit_clock)
           // dayjs("2000-01-01T00:03:00+09:00").toDate()
           // this.time_limit_clock = dayjs(this.time_limit_clock).toDate()
@@ -733,33 +741,40 @@ export default {
       this.talk(message, {rate: 1.5})
     },
 
-    question_edit_of(row) {
-      this.question = row
-    },
-
-    jump_to_index_handle() {
+    jump_to_index_handle(event) {
+      if (event) {
+        this.sound_play("click")
+      }
       this.question = null
       this.async_records_load()
     },
 
     jump_to_new_handle() {
-      this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b k2r2b4g4s4n4l18p 1"
 
-      if (this.development_p) {
-        this.provisional_sfen = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
-        this.provisional_sfen = "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1"
-      }
+      // this.provisional_sfen = "4k4/9/9/9/9/9/9/9/9 b k2r2b4g4s4n4l18p 1"
+      // if (this.development_p) {
+      //   this.provisional_sfen = "4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      //   this.provisional_sfen = "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1"
+      // }
 
-      this.question = {
-        init_sfen: this.provisional_sfen,
+      const question = {
+        init_sfen: "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
         moves_answers: [],
         time_limit_sec: 3 * 60,
         difficulty_level: 1,
       }
-      this.time_limit_clock_set()
 
-      // this.question.moves_answers = []
+      this.question_edit_of(question)
+    },
+
+    question_edit_of(row) {
+      this.sound_play("click")
+
+      this.question = row
+
+      this.time_limit_clock_set()
       this.answer_tab_index = 0
+      this.edit_tab_index = 0
     },
 
     back_to_index_handle() {
