@@ -139,6 +139,7 @@
             mobile-cards
             hoverable
             narrowed
+
             paginated
             backend-pagination
             pagination-simple
@@ -146,11 +147,17 @@
             :total="total"
             :per-page="per"
             @page-change="page_change_handle"
+
+            backend-sorting
+            :default-sort-direction="sort_order_default"
+            :default-sort="[sort_column, sort_order]"
+            @sort="sort_handle"
           )
             template(slot-scope="props")
               b-table-column(field="id" label="ID" sortable) {{props.row.id}}
               b-table-column(field="title" label="タイトル" sortable) {{props.row.title || '？'}}
               b-table-column(field="difficulty_level" label="難易度" sortable) {{props.row.difficulty_level}}
+              b-table-column(field="updated_at" label="更新日時" sortable) {{row_time_format(props.row.updated_at)}}
               b-table-column(label="操作")
                 b-button(@click="question_edit_of(props.row)")
 
@@ -325,11 +332,12 @@ export default {
       answer_tab_index: null,   // 表示している正解タブの位置
 
       // pagination 5点セット
-      total:       this.info.total,
-      page:        this.info.page,
-      per:         this.info.per,
-      sort_column: this.info.sort_column,
-      sort_order:  this.info.sort_order,
+      total:              this.info.total,
+      page:               this.info.page,
+      per:                this.info.per,
+      sort_column:        this.info.sort_column,
+      sort_order:         this.info.sort_order,
+      sort_order_default: this.info.sort_order_default,
     }
   },
 
@@ -763,20 +771,33 @@ export default {
       this.async_records_load()
     },
 
+    sort_handle(column, order) {
+      this.sort_column = column
+      this.sort_order = order
+      this.async_records_load()
+    },
+
     async_records_load() {
       this.http_get_command(this.info.put_path, {
         index_fetch: true,
-        page: this.page,
-        per: this.per,
+        page:               this.page,
+        per:                this.per,
+        sort_column:        this.sort_column,
+        sort_order:         this.sort_order,
+        sort_order_default: this.sort_order_default,
       }, e => {
         if (e.error_message) {
           this.warning_notice(e.error_message)
         }
         if (e.questions) {
-          this.questions = e.questions
-          this.total     = e.total
-          this.page      = e.page
-          this.per       = e.per
+          this.questions   = e.questions
+
+          this.total              = e.total
+          this.page               = e.page
+          this.per                = e.per
+          this.sort_column        = e.sort_column
+          this.sort_order         = e.sort_order
+          this.sort_order_default = e.sort_order_default
         }
       })
     },

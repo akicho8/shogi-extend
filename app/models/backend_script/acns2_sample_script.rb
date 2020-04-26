@@ -34,6 +34,7 @@
 module BackendScript
   class Acns2SampleScript < ::BackendScript::Base
     include AtomicScript::AddJsonLinkMod
+    include SortMod
 
     self.script_name = "詰将棋ファイター"
     self.page_title = ""
@@ -54,19 +55,18 @@ module BackendScript
       ]
     end
 
+    # http://localhost:3000/admin/script/acns2-sample.json?index_fetch=true
     def script_body
       if params[:index_fetch]
         params[:per] ||= PER_DEFAULT
         
         s = current_user.acns2_questions
-        s = page_per(s)         # support_mod.rb
-        return {
-          :questions => s.as_json(include: [:user, :moves_answers]),  # FIXME:必要なのだけにする
-          
-          :total => s.total_count,
-          :page  => s.current_page,
-          :per   => current_per,
-        }
+        s = page_scope(s)       # page_mod.rb
+        s = sort_scope(s)       # sort_mod.rb
+        
+        retv = {**page_info(s), **sort_info}
+        retv[:questions] = s.as_json(include: [:user, :moves_answers])  # FIXME:必要なのだけにする]
+        return retv
       end
 
       # params = {
@@ -181,6 +181,10 @@ module BackendScript
       end
     end
 
+    def sort_column_default
+      :updated_at
+    end
+    
     def current_debug_scene
       if v = params[:debug_scene].presence
         v.to_sym

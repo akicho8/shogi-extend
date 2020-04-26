@@ -11,11 +11,12 @@ Acns2::Question.destroy_all
 # end
 
 user = Colosseum::User.sysop
-50.times do |e|
+50.times do |i|
   question = user.acns2_questions.create! do |e|
-    e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p #{e}"
+    e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p #{i}"
     e.moves_answers.build(moves_str: "G*5b")
     e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+    e.updated_at = Time.current + i.hours
   end
 end
 Acns2::Question.count           # => 50

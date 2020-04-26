@@ -338,7 +338,7 @@ module Swars
       end
     end
 
-    def default_sort_column
+    def sort_column_default
       "battled_at"
     end
 
