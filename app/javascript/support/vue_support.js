@@ -123,7 +123,11 @@ export default {
     tweet_share_open(params) {
       const url = new URL("https://twitter.com/intent/tweet")
       // const url = new URL("https://twitter.com/share")
-      _.each(params, (v, k) => url.searchParams.set(k, v))
+      _.each(params, (v, k) => {
+        if (v) {
+          url.searchParams.set(k, v)
+        }
+      })
       this.popup_open(url.toString())
     },
 
