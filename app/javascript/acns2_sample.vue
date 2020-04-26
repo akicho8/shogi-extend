@@ -133,7 +133,20 @@
 
         template(v-if="!question")
           //- :columns="candidate_columns"
-          b-table(:data="questions" :mobile-cards="false" :hoverable="true" narrowed v-if="questions")
+          b-table(
+            v-if="questions"
+            :data="questions"
+            mobile-cards
+            hoverable
+            narrowed
+            paginated
+            backend-pagination
+            pagination-simple
+            :current-page="page"
+            :total="total"
+            :per-page="per"
+            @page-change="page_change_handle"
+          )
             template(slot-scope="props")
               b-table-column(field="id" label="ID" sortable) {{props.row.id}}
               b-table-column(field="title" label="タイトル" sortable) {{props.row.title || '？'}}
@@ -310,6 +323,13 @@ export default {
       question: null,
       time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
       answer_tab_index: null,   // 表示している正解タブの位置
+
+      // pagination 5点セット
+      total:       this.info.total,
+      page:        this.info.page,
+      per:         this.info.per,
+      sort_column: this.info.sort_column,
+      sort_order:  this.info.sort_order,
     }
   },
 
@@ -711,15 +731,7 @@ export default {
 
     jump_to_index_handle() {
       this.question = null
-
-      this.http_get_command(this.info.put_path, { index_fetch: true }, e => {
-        if (e.error_message) {
-          this.warning_notice(e.error_message)
-        }
-        if (e.questions) {
-          this.questions = e.questions
-        }
-      })
+      this.async_records_load()
     },
 
     jump_to_new_handle() {
@@ -744,6 +756,29 @@ export default {
 
     back_to_index_handle() {
       this.jump_to_index_handle()
+    },
+
+    page_change_handle(page) {
+      this.page = page
+      this.async_records_load()
+    },
+
+    async_records_load() {
+      this.http_get_command(this.info.put_path, {
+        index_fetch: true,
+        page: this.page,
+        per: this.per,
+      }, e => {
+        if (e.error_message) {
+          this.warning_notice(e.error_message)
+        }
+        if (e.questions) {
+          this.questions = e.questions
+          this.total     = e.total
+          this.page      = e.page
+          this.per       = e.per
+        }
+      })
     },
   },
 

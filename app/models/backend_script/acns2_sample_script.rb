@@ -38,6 +38,10 @@ module BackendScript
     self.script_name = "詰将棋ファイター"
     self.page_title = ""
 
+    delegate :current_user, to: :h
+    
+    PER_DEFAULT = 10
+    
     def form_parts
       [
         {
@@ -52,8 +56,17 @@ module BackendScript
 
     def script_body
       if params[:index_fetch]
-        questions = h.current_user.acns2_questions.as_json(include: [:user, :moves_answers])
-        return { questions: questions }
+        params[:per] ||= PER_DEFAULT
+        
+        s = current_user.acns2_questions
+        s = page_per(s)         # support_mod.rb
+        return {
+          :questions => s.as_json(include: [:user, :moves_answers]),  # FIXME:必要なのだけにする
+          
+          :total => s.total_count,
+          :page  => s.current_page,
+          :per   => current_per,
+        }
       end
 
       # params = {
@@ -64,11 +77,11 @@ module BackendScript
       #   },
       # }.deep_symbolize_keys
       #
-      # question = h.current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
+      # question = current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
       # question.together_with_params_came_from_js_update(params)
       # return question.create_the_parameters_to_be_passed_to_the_js
 
-      # question = h.current_user.acns2_questions.create! do |e|
+      # question = current_user.acns2_questions.create! do |e|
       #   e.assign_attributes(params[:question])
       #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
       #   e.moves_answers.build(moves_str: "G*5b")
@@ -78,7 +91,7 @@ module BackendScript
       # Acns2.setup
 
       if params[:login_required]
-        unless h.current_user
+        unless current_user
           h.session[:return_to] = h.url_for(script_link_path)
           c.redirect_to :new_xuser_session
           return
@@ -119,8 +132,8 @@ module BackendScript
       info[:mode] ||= "lobby"
       info[:put_path] = h.url_for(script_link_path)
 
-      if h.current_user
-        info[:current_user] = h.current_user.as_json(only: [:id, :name], methods: [:avatar_path])
+      if current_user
+        info[:current_user] = current_user.as_json(only: [:id, :name], methods: [:avatar_path])
       end
 
       # info[:room] = current_room
@@ -147,7 +160,7 @@ module BackendScript
       #   },
       # }.deep_symbolize_keys
 
-      question = h.current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
+      question = current_user.acns2_questions.find_or_initialize_by(id: params[:question][:id])
       begin
         question.together_with_params_came_from_js_update(params)
       rescue => error
@@ -182,7 +195,7 @@ module BackendScript
 
         user = Colosseum::User.create!
         room = Acns2::Room.create! do |e|
-          e.memberships.build(user: h.current_user)
+          e.memberships.build(user: current_user)
           e.memberships.build(user: user)
         end
 
@@ -192,7 +205,7 @@ module BackendScript
       if current_debug_scene == :result_show
         c.sysop_login_unless_logout
 
-        user1 = h.current_user
+        user1 = current_user
         user2 = Colosseum::User.create!
         room = Acns2::Room.create!(final_key: :disconnect) do |e|
           e.memberships.build(user: user1, judge_key: :win,  quest_index: 1)
