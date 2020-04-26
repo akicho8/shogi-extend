@@ -128,8 +128,8 @@
     .columns.is-centered
       .column
         .buttons
-          b-button(@click="jump_to_index_handle") 問題一覧
-          b-button(@click="jump_to_new_handle") 新規作成
+          b-button.has-text-weight-bold(@click="jump_to_index_handle") 問題一覧
+          b-button.has-text-weight-bold(@click="jump_to_new_handle") 新規作成
 
         template(v-if="!question")
           //- :columns="candidate_columns"
@@ -215,11 +215,12 @@
                 :size="'default'"
                 :sound_effect="edit_tab_info.key === 'play_mode'"
                 :volume="0.5"
+                @update:turn_offset="turn_offset_set"
                 ref="play_sp"
                 )
 
               .buttons.is-centered.konotejunsiikai
-                b-button(@click="edit_stock_handle" type="is-primary") この手順を正解とする
+                b-button(@click="edit_stock_handle" :type="{'is-primary': answer_turn_offset >= 1}") この手順を正解とする
 
               b-tabs.answer_tabs(v-model="answer_tab_index" position="is-centered" expanded :animated="true" v-if="question.moves_answers.length >= 1")
                 template(v-for="(e, i) in question.moves_answers")
@@ -356,7 +357,8 @@ export default {
       sort_order:         this.info.sort_order,
       sort_order_default: this.info.sort_order_default,
 
-      $exam_run_count: null,
+      answer_turn_offset: null, // 正解モードでの手数
+      $exam_run_count: null,    // 試験モードで手を動かした数
     }
   },
 
@@ -792,10 +794,11 @@ export default {
       this.sound_play("click")
 
       this.question = row
-
       this.time_limit_clock_set()
-      this.answer_tab_index = 0
-      this.edit_tab_index = 0
+
+      this.edit_tab_index = 0   // 配置モード
+      this.answer_tab_index = 0 // 解答リストの一番左指す
+      this.answer_turn_offset = 0
     },
 
     back_to_index_handle() {
@@ -849,6 +852,10 @@ export default {
         this.ok_notice("正解")
       }
       this.$exam_run_count += 1
+    },
+
+    turn_offset_set(v) {
+      this.answer_turn_offset = v
     },
   },
 
@@ -989,6 +996,7 @@ export default {
   .main_tabs
     .tab-content
       padding: 0
+      padding-top: 0.75rem
     .tag
       margin-left: 0.5rem
 
