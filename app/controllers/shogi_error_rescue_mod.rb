@@ -25,7 +25,7 @@ module ShogiErrorRescueMod
       case
       when request.format.json?
         # なんでも棋譜変換の場合は頻繁にエラーになるため ExceptionNotifier しない
-        render json: as_bs_error(error), status: 400
+        render json: as_bs_error(error) # status: 500 としたいが production で json を HTML で上書きされてしまう
       when request.format.png?
         ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
 

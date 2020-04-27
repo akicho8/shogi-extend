@@ -32,9 +32,22 @@ export default {
       if (loading) {
         loading.close()
       }
+
+      // TODO: これは不要かもしれない。どこからも使ってなかったら消すこと
       if (response.data.message) {
         this.$buefy.toast.open({message: response.data.message})
       }
+
+      // 本当はここでは呼びたくない
+      // Rails側で render json: as_bs_error(error), status: 500 のようにしても
+      // json は無視して 500 用のHTMLを error.response.data に格納してしまう
+      // なので catch の方では bs_error がとれない
+      // だからしかたなくこちらでひっかけている
+      // メリットは then の方で bs_error がとれること
+      if (response.data.bs_error) {
+        this.bs_error_message_dialog(response.data.bs_error)
+      }
+
       if (callback) {
         callback(response.data)
       }
@@ -60,10 +73,8 @@ export default {
         console.log(r.headers) // {access-control-allow-methods: ..., ...}
 
         const d = r.data
-        if (d.bs_error) {
+        if (d.bs_error) {       // development 環境だけで入っている
           this.bs_error_message_dialog(d.bs_error)
-        } else if (d.message) {
-          this.bs_error_message_dialog(d.message)
         } else {
           this.error_message_dialog(`${r.statusText} (${r.status})`) // "Internal server error (500)"
         }
