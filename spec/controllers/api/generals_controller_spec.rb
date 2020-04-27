@@ -1,15 +1,15 @@
 require "rails_helper"
 
 RSpec.describe Api::GeneralsController, type: :controller do
-  describe "any_source_to_sfen" do
-    before do
-      post :any_source_to_sfen, params: { any_source: "68銀" }
-    end
-    let(:value) do
-      JSON.parse(response.body, symbolize_names: true)
+  describe "any_source_to" do
+    def test(method)
+      send(method, :any_source_to, params: { any_source: "68銀", to_format: "sfen" })
+      value = JSON.parse(response.body, symbolize_names: true)
+      assert { value == { body: "position startpos moves 7i6h", turn_max: 1} }
     end
     it do
-      assert { value == {sfen: "position startpos moves 7i6h", turn_max: 1} }
+      test(:get)
+      test(:post)
     end
   end
 end

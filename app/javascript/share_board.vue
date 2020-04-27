@@ -234,13 +234,13 @@ export default {
         },
         events: {
           "update:any_source": any_source => {
-            this.http_command("POST", "/api/general/any_source_to_sfen", {any_source: any_source}, e => {
+            this.http_command("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
               if (e.bs_error) {
                 this.general_warning_notice(e.bs_error.message)
               }
-              if (e.sfen) {
+              if (e.body) {
                 this.general_ok_notice("正常に読み込みました")
-                this.current_body = e.sfen
+                this.current_body = e.body
                 this.turn_offset = e.turn_max
                 this.current_flip = false
                 body_input_modal.close()
