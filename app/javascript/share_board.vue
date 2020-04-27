@@ -266,7 +266,7 @@ export default {
 
     hash_tag() {
       if (this.current_title) {
-        return "#" + this.current_title
+        return "#" + this.current_title.replace(/\s+/g, "_")
       }
     },
   },
