@@ -77,6 +77,14 @@ export default {
     board_mode_p() {
       return this.input_tab_name === "操作入力"
     },
+
+    kifu_clone_and_new_tab_open_url() {
+      if (this.output_kifs) {
+        const url = new URL(this.as_full_url(this.$options.new_path))
+        url.searchParams.set("free_battle[kifu_body]", this.output_kifs.sfen.value)
+        return url.toString()
+      }
+    },
   },
 
   methods: {
@@ -151,16 +159,6 @@ export default {
     kifu_copy_to_clipboard(e) {
       if (this.output_kifs) {
         this.clipboard_copy({text: this.output_kifs[e.key].value})
-      }
-    },
-
-    kifu_clone_and_new_tab_oepn_handle() {
-      if (this.output_kifs) {
-        // FIXME: URL() をつかう
-        const sfen = encodeURIComponent(this.output_kifs.sfen.value) // + をエスケープしないと空白になってしまうため
-        const key = encodeURIComponent("free_battle[kifu_body]")
-        const url = `${this.$options.new_path}?${key}=${sfen}`
-        window.open(url, "_blank")
       }
     },
   },
