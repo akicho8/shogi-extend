@@ -6,6 +6,10 @@ b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left
     b-icon(icon="twitter" size="is-small" type="is-info")
     | ツイート {{turn_mark}}
 
+  b-dropdown-item(:href="share_board_url")
+    b-icon(icon="apps" size="is-small")
+    | 共有将棋盤で開く {{turn_mark}}
+
   b-dropdown-item(v-if="development_p && new_permalink_url" :href="new_permalink_url")
     b-icon(icon="link-variant" size="is-small")
     | パーマリンク {{turn_mark}}
@@ -157,6 +161,14 @@ export default {
       }
 
       return v
+    },
+
+    share_board_url() {
+      const url = new URL(this.as_full_url("/share-board"))
+      url.searchParams.set("body", this.record.sfen_body)
+      url.searchParams.set("title", this.record.description)
+      url.searchParams.set("turn", this.turn_offset)
+      return url.toString()
     },
   },
 }
