@@ -44,7 +44,7 @@
 
       .tweet_button_container
         .buttons.is-centered
-          b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" :disabled="bs_error" v-if="run_mode === 'play_mode'")
+          b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
           a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
   .columns(v-if="development_p")
@@ -82,7 +82,6 @@ export default {
       current_flip: null,       // 反転用
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      bs_error: null,           // BioshogiError の情報 (Hash)
       run_mode: "play_mode",    // 操作モードと局面編集モードの切り替え用
       edit_mode_body: null,     // 局面編集モードの局面
     }
@@ -108,7 +107,6 @@ export default {
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
       this.record = null
-      this.bs_error = null
 
       this.current_body = v
       this.url_replace()
@@ -166,16 +164,6 @@ export default {
       params.set("body", this.current_body)
 
       this.http_command("POST", this.$route.path, params, e => {
-        this.bs_error = null
-
-        if (e.bs_error) {
-          this.bs_error = e.bs_error
-          const message = `${e.bs_error.message}。手を戻して指し直してください`
-
-          this.talk(message, {rate: 1.5})
-          this.error_message_dialog(message)
-        }
-
         if (e.record) {
           this.record = e.record
           callback()
@@ -235,9 +223,6 @@ export default {
         events: {
           "update:any_source": any_source => {
             this.http_command("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
-              if (e.bs_error) {
-                this.general_warning_notice(e.bs_error.message)
-              }
               if (e.body) {
                 this.general_ok_notice("正常に読み込みました")
                 this.current_body = e.body

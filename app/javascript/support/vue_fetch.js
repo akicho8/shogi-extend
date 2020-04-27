@@ -44,8 +44,38 @@ export default {
       if (loading) {
         loading.close()
       }
-      console.table([error.response])
-      this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
+
+      console.log(error)
+      console.log(error.response)
+      console.log(error.message)
+
+      const r = error.response
+
+      // https://github.com/axios/axios#handling-errors
+      if (r) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(r.data)    // {bs_error: ...} ← 自分が設定した render json: {} が入っている
+        console.log(r.status)  // 500
+        console.log(r.headers) // {access-control-allow-methods: ..., ...}
+
+        const d = r.data
+        if (d.bs_error) {
+          this.bs_error_message_dialog(d.bs_error)
+        } else if (d.message) {
+          this.bs_error_message_dialog(d.message)
+        } else {
+          this.error_message_dialog(`${r.statusText} (${r.status})`) // "Internal server error (500)"
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        this.error_message_dialog(JSON.stringify(error.request))
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        this.error_message_dialog(error.message) // エラーコードしかわからない
+      }
     },
   },
 }
