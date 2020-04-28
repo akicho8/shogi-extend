@@ -93,7 +93,7 @@ class ShareBoardsController < ApplicationController
 
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
-    attrs.merge(initial_turn: initial_turn, flip: current_flip)
+    attrs.merge(initial_turn: initial_turn, flip: !current_flip)
   end
 
   def current_record
@@ -114,16 +114,17 @@ class ShareBoardsController < ApplicationController
       return boolean_cast(v)
     end
 
-    # 単純に開始と手数の合計が奇数であれば反転する
-    # |--------+----------+------------+-------------+---------------------|
-    # | 手合   | 開始手番 | 手数(turn) | odd? = flip |                     |
-    # |--------+----------+------------+-------------+---------------------|
-    # | 平手   | ▲(0)    |          0 |             |                     |
-    # | 平手   | ▲(0)    |          1 | true        | 2手目は△なので反転 |
-    # | 駒落ち | △(1)    |          0 | true        | 初手は△なので反転  |
-    # | 駒落ち | △(1)    |          1 |             |                     |
-    # |--------+----------+------------+-------------+---------------------|
-    (current_record.sfen_info.location.code + initial_turn).odd?
+    # |--------+----------+------------+-------+--------------------------------------+------------------|
+    # | 手合   | 開始手番 | 手数(turn) | even? | 画像                                 | 次に指す人は反転 |
+    # |--------+----------+------------+-------+--------------------------------------+------------------|
+    # | 平手   | ▲(0)    |          0 | true  | △が指したと見なして反転             |                  |
+    # | 平手   | ▲(0)    |          1 |       | ▲が指したことわかるように反転しない | true             |
+    # | 平手   | ▲(0)    |          2 | true  | △が指したので反転する               |                  |
+    # | 駒落ち | △(1)    |          0 |       |                                      | true             |
+    # | 駒落ち | △(1)    |          1 | true  |                                      |                  |
+    # | 駒落ち | △(1)    |          2 |       |                                      | true             |
+    # |--------+----------+------------+-------+--------------------------------------+------------------|
+    (current_record.sfen_info.location.code + initial_turn).even?
 
     # この方法は詰将棋が駒落ちと判断されて初手が△から始まってしまう
     # (initial_turn + (current_record.preset_info.handicap ? 1 : 0)).even?
