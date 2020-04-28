@@ -47,11 +47,4 @@ RSpec.describe ShareBoardsController, type: :controller do
     2.times { get :show, params: { body: "position startpos moves 7g7f" } }
     assert { FreeBattle.count == 1 }
   end
-
-  # これはもともと最終手が合法手か確認するための機能だったが基本自由なので意味がなくなった
-  it "ツイートボタンを押したときに最新の棋譜を取得している" do
-    post :create, params: { body: "position startpos" }
-    value = JSON.parse(response.body, symbolize_names: true)
-    assert { value[:record] }
-  end
 end
