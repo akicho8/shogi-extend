@@ -9,6 +9,9 @@
 # model
 #   app/models/share_board_mod.rb
 #
+# experiment
+#   experiment/0850_share_board.rb
+#
 # view
 #   app/views/share_boards/show.html.slim
 #
