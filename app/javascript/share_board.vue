@@ -113,8 +113,6 @@ export default {
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
-      this.record = null
-
       this.play_mode_body = v
       this.url_replace()
     },
@@ -129,9 +127,18 @@ export default {
       }
     },
 
-    // 棋譜コピーはJS側だけではできないので(recordが空なら)fetchする
+    // 棋譜コピー
     kifu_copy_handle() {
-      this.record_fetch(() => this.simple_clipboard_copy(this.record.kif_format_body))
+      this.http_command("POST", "/api/general/any_source_to", {
+        any_source: this.current_body,
+        to_format: "kif",
+        candidate_enable: false,
+        validate_enable: false,
+      }, e => {
+        if (e.body) {
+          this.simple_clipboard_copy(e.body)
+        }
+      })
     },
 
     // ツイートする
@@ -163,26 +170,25 @@ export default {
 
     // private
 
-    record_fetch(callback) {
-      if (this.record) {
-        callback()
-      } else {
-        this.record_create(callback)
-      }
-    },
-
-    // これは汎用のAPIを叩こうかと思ったけど今後の拡張を考えるとこのままでいい気がする
-    record_create(callback) {
-      const params = new URLSearchParams()
-      params.set("body", this.play_mode_body)
-
-      this.http_command("POST", this.$route.path, params, e => {
-        if (e.record) {
-          this.record = e.record
-          callback()
-        }
-      })
-    },
+    // record_fetch(callback) {
+    //   if (this.record) {
+    //     callback()
+    //   } else {
+    //     this.record_create(callback)
+    //   }
+    // },
+    //
+    // record_create(callback) {
+    //   const params = new URLSearchParams()
+    //   params.set("body", this.play_mode_body)
+    //
+    //   this.http_command("POST", this.$route.path, params, e => {
+    //     if (e.record) {
+    //       this.record = e.record
+    //       callback()
+    //     }
+    //   })
+    // },
 
     url_replace() {
       window.history.replaceState("", null, this.current_url)
@@ -251,7 +257,7 @@ export default {
 
     dynamic_url_for(format = null) {
       const url = new URL(location)
-      url.searchParams.set("body", this.edit_mode_body || this.play_mode_body) // 編集モードでもURLを更新するため
+      url.searchParams.set("body", this.current_body) // 編集モードでもURLを更新するため
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
 
@@ -283,6 +289,8 @@ export default {
     advanced_p() { return this.turn_offset > this.info.record.initial_turn },
 
     debug_mode() { return this.$route.query.debug_mode === "true" },
+
+    current_body() { return this.edit_mode_body || this.play_mode_body },
 
     hash_tag() {
       if (this.current_title) {

@@ -18,9 +18,9 @@
 # url
 #   http://localhost:3000/share-board
 #
-# ・指したら record を nil に設定している
-# ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる
-# ・そこで kif_format_body を入れているので、指したあとの棋譜コピーは常に最新になっている
+# ・指したら record を nil に設定している→やめ
+# ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる→やめ
+# ・そこで kif_format_body を入れているので、指したあとの棋譜コピーは常に最新になっている→やめ
 #
 # iPhoneのSafariのみの問題
 #  ・1手動かしてURLを更新する
@@ -50,6 +50,8 @@ class ShareBoardsController < ApplicationController
 
     # ぴよ将棋用にkifを返す
     # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
+    #
+    # TODO: ぴよ将棋に url=http://.../foo.kif?body=position... のように渡せればこの部分は汎用化できる
     if request.format.kif?
       text_body = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
       headers["Content-Type"] = current_type
@@ -59,12 +61,12 @@ class ShareBoardsController < ApplicationController
   end
 
   # 「棋譜コピー」用
-  def create
-    render json: { record: current_json }
-  end
+  # def create
+  #   render json: { record: current_json }
+  # end
 
-  # share_board(:info="#{controller.current_vue_args.to_json}")
-  def current_vue_args
+  # share_board(:info="#{controller.info_params.to_json}")
+  def info_params
     { record: current_json }
   end
 
@@ -88,13 +90,7 @@ class ShareBoardsController < ApplicationController
 
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
-    attrs[:initial_turn] = initial_turn
-    attrs[:flip] = current_flip
-
-    # これは「棋譜コピー」が押されたときだけ返したいけど一覧じゃないからそんな気にせんでもええかもしれん
-    attrs[:kif_format_body] = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
-
-    attrs
+    attrs.merge(initial_turn: initial_turn, flip: current_flip)
   end
 
   def current_record
