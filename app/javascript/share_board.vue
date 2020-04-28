@@ -26,8 +26,9 @@
       .sp_container
         shogi_player(
           :run_mode="run_mode"
+          :debug_mode="debug_mode"
           :start_turn="turn_offset"
-          :kifu_body="current_body"
+          :kifu_body="play_mode_body"
           :summary_show="false"
           :slider_show="true"
           :setting_button_show="development_p"
@@ -58,11 +59,14 @@
             b Twitter Card 画像
           p
             img(:src="png_url" width="256")
-        div current_body={{current_body}}
+        div play_mode_body={{play_mode_body}}
+        div edit_mode_body={{edit_mode_body}}
         pre {{JSON.stringify(record, null, 4)}}
 </template>
 
 <script>
+const RUN_MODE_DEFAULT = "play_mode"
+
 export default {
   name: "share_board",
   mixins: [
@@ -73,7 +77,7 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      current_body:  this.info.record.sfen_body,                         // 渡している棋譜
+      play_mode_body:  this.info.record.sfen_body,                         // 渡している棋譜
       current_title: this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
       turn_offset:   this.info.record.initial_turn,                      // 現在の手数
 
@@ -81,7 +85,7 @@ export default {
       current_flip: this.info.record.flip,       // 反転用
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      run_mode: "play_mode",    // 操作モードと局面編集モードの切り替え用
+      run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_body: null,     // 局面編集モードの局面
     }
   },
@@ -89,8 +93,9 @@ export default {
   created() {
     // どれかが変更されたらURLを更新
     this.$watch(() => [
+      this.run_mode,
       this.edit_mode_body,      // 編集モード中でもURLを変更したいため
-      this.current_body,
+      this.play_mode_body,
       this.turn_offset,
       this.current_title,
     ], () => this.url_replace())
@@ -110,14 +115,14 @@ export default {
     play_mode_advanced_full_moves_sfen_set(v) {
       this.record = null
 
-      this.current_body = v
+      this.play_mode_body = v
       this.url_replace()
     },
 
     // 編集モード時の局面
     // ・常に更新するが、URLにはすぐには反映しない→やっぱり反映する
-    // ・あとで current_body に設定する
-    // ・すぐに反映しないのは駒箱が消えてしまうため
+    // ・あとで play_mode_body に設定する
+    // ・すぐに反映しないのは駒箱が消えてしまうから
     edit_mode_snapshot_sfen_set(v) {
       if (this.run_mode === "edit_mode") { // 操作モードでも呼ばれるから
         this.edit_mode_body = v
@@ -146,13 +151,12 @@ export default {
         this.run_mode = "play_mode"
 
         // 局面編集から操作モードに戻した瞬間に局面編集モードでの局面を反映しURLを更新する
-        // 局面編集モードでの変化をそのまま current_body に反映しない理由は駒箱の駒が消えるため
+        // 局面編集モードでの変化をそのまま play_mode_body に反映しない理由は駒箱の駒が消えるため
         // 消えるのはsfenに駒箱の情報が含まれないから
-        if (this.development_p && !this.edit_mode_body) {
-          alert("edit_mode_body が入っていません")
+        if (this.edit_mode_body) {
+          this.play_mode_body = this.edit_mode_body
+          this.edit_mode_body = null
         }
-        this.current_body = this.edit_mode_body
-        this.edit_mode_body = null
       }
       this.sound_play("click")
     },
@@ -170,7 +174,7 @@ export default {
     // これは汎用のAPIを叩こうかと思ったけど今後の拡張を考えるとこのままでいい気がする
     record_create(callback) {
       const params = new URLSearchParams()
-      params.set("body", this.current_body)
+      params.set("body", this.play_mode_body)
 
       this.http_command("POST", this.$route.path, params, e => {
         if (e.record) {
@@ -234,7 +238,7 @@ export default {
             this.http_command("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
               if (e.body) {
                 this.general_ok_notice("正常に読み込みました")
-                this.current_body = e.body
+                this.play_mode_body = e.body
                 this.turn_offset = e.turn_max
                 this.current_flip = false
                 body_input_modal.close()
@@ -247,12 +251,22 @@ export default {
 
     dynamic_url_for(format = null) {
       const url = new URL(location)
-      url.searchParams.set("body", this.edit_mode_body || this.current_body) // 編集モードでもURLを更新するため
+      url.searchParams.set("body", this.edit_mode_body || this.play_mode_body) // 編集モードでもURLを更新するため
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
+
       if (format) {
         url.searchParams.set("format", format)
       }
+
+      // 編集モードでの状態を維持したいのでURLに含めておく
+      // 操作モードのときは常にURLに入っているのはアレなので消す
+      if (this.run_mode === RUN_MODE_DEFAULT) {
+        url.searchParams.delete("run_mode")
+      } else {
+        url.searchParams.set("run_mode", this.run_mode)
+      }
+
       return url.toString()
     },
   },
@@ -263,10 +277,12 @@ export default {
     png_url()     { return this.dynamic_url_for("png")  },
 
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.current_flip) },
-    kento_app_with_params_url()      { return this.kento_full_url(this.current_body, this.turn_offset, this.current_flip)  },
+    kento_app_with_params_url()      { return this.kento_full_url(this.play_mode_body, this.turn_offset, this.current_flip)  },
 
     // 最初に表示した手数より進めたか？
     advanced_p() { return this.turn_offset > this.info.record.initial_turn },
+
+    debug_mode() { return this.$route.query.debug_mode === "true" },
 
     hash_tag() {
       if (this.current_title) {
