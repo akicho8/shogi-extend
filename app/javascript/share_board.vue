@@ -119,7 +119,9 @@ export default {
     // ・あとで current_body に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうため
     edit_mode_snapshot_sfen_set(v) {
-      this.edit_mode_body = v
+      if (this.run_mode === "edit_mode") { // 操作モードでも呼ばれるから
+        this.edit_mode_body = v
+      }
     },
 
     // 棋譜コピーはJS側だけではできないので(recordが空なら)fetchする
