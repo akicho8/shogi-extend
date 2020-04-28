@@ -88,7 +88,12 @@ export default {
 
   created() {
     // どれかが変更されたらURLを更新
-    this.$watch(() => [this.current_body, this.turn_offset, this.current_title], () => this.url_replace())
+    this.$watch(() => [
+      this.edit_mode_body,      // 編集モード中でもURLを変更したいため
+      this.current_body,
+      this.turn_offset,
+      this.current_title,
+    ], () => this.url_replace())
   },
 
   watch: {
@@ -109,8 +114,10 @@ export default {
       this.url_replace()
     },
 
-    // 編集モード時の局面(常に更新するが、URLにはすぐには反映しない)
-    // あとで current_body に設定するために取っておく
+    // 編集モード時の局面
+    // ・常に更新するが、URLにはすぐには反映しない→やっぱり反映する
+    // ・あとで current_body に設定する
+    // ・すぐに反映しないのは駒箱が消えてしまうため
     edit_mode_snapshot_sfen_set(v) {
       this.edit_mode_body = v
     },
@@ -141,6 +148,7 @@ export default {
           alert("edit_mode_body が入っていません")
         }
         this.current_body = this.edit_mode_body
+        this.edit_mode_body = null
       }
       this.sound_play("click")
     },
@@ -235,7 +243,7 @@ export default {
 
     dynamic_url_for(format = null) {
       const url = new URL(location)
-      url.searchParams.set("body", this.current_body)
+      url.searchParams.set("body", this.edit_mode_body || this.current_body) // 編集モードでもURLを更新するため
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
       if (format) {
