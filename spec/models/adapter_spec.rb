@@ -13,6 +13,14 @@ RSpec.describe "なんでも棋譜変換", type: :model do
     proc { FreeBattle.create!(kifu_body: "11玉").to_cached_kifu(:kif).include?("7 ７八金(69)") }.should raise_error(Bioshogi::PieceAlredyExist)
   end
 
+  it "戦法" do
+    assert { FreeBattle.create!(kifu_body: "トマホーク").to_cached_kifu(:kif).include?("トマホーク") }
+  end
+
+  it "駒落ち" do
+    assert { FreeBattle.create!(kifu_body: "角落ち").to_cached_kifu(:kif).include?("角落ち") }
+  end
+
   it "将棋ウォーズ" do
     assert { FreeBattle.create!(kifu_body: "https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1").kifu_body.include?("$EVENT") }
     assert { FreeBattle.create!(kifu_body: "https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1").kifu_body.include?("$EVENT")  }

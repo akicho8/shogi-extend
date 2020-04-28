@@ -179,6 +179,10 @@ class FreeBattle < ApplicationRecord
     if changes_to_save[:kifu_body] && kifu_body
       url_in_kifu_body
     end
+
+    if changes_to_save[:kifu_body] && kifu_body
+      self.kifu_body = FreeBattle.taking_into_account_tactic_and_preset_to_kifu_body(kifu_body)
+    end
   end
 
   before_save do
@@ -333,6 +337,21 @@ class FreeBattle < ApplicationRecord
           label: location.name,
           data: time_chart_xy_list(location),
         }
+      end
+    end
+  end
+
+  concerning :HelperMod do
+    class_methods do
+      def taking_into_account_tactic_and_preset_to_kifu_body(str)
+        case
+        when e = Bioshogi::TacticInfo.flat_lookup(str.strip)
+          e.sample_kif_file.read
+        when e = Bioshogi::PresetInfo.lookup(str.strip)
+          e.to_position_sfen
+        else
+          str
+        end
       end
     end
   end

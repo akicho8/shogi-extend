@@ -9,6 +9,9 @@
 # model
 #   app/models/share_board_mod.rb
 #
+# experiment
+#   experiment/0850_share_board.rb
+#
 # view
 #   app/views/share_boards/show.html.slim
 #
@@ -18,9 +21,9 @@
 # url
 #   http://localhost:3000/share-board
 #
-# ・指したら record を nil に設定している
-# ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる
-# ・そこで kif_format_body を入れているので、指したあとの棋譜コピーは常に最新になっている
+# ・指したら record を nil に設定している→やめ
+# ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる→やめ
+# ・そこで kif_format_body を入れているので、指したあとの棋譜コピーは常に最新になっている→やめ
 #
 # iPhoneのSafariのみの問題
 #  ・1手動かしてURLを更新する
@@ -50,6 +53,8 @@ class ShareBoardsController < ApplicationController
 
     # ぴよ将棋用にkifを返す
     # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
+    #
+    # TODO: ぴよ将棋に url=http://.../foo.kif?body=position... のように渡せればこの部分は汎用化できる
     if request.format.kif?
       text_body = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
       headers["Content-Type"] = current_type
@@ -58,11 +63,13 @@ class ShareBoardsController < ApplicationController
     end
   end
 
-  def create
-    render json: { record: current_json }
-  end
+  # 「棋譜コピー」用
+  # def create
+  #   render json: { record: current_json }
+  # end
 
-  def current_vue_args
+  # share_board(:info="#{controller.info_params.to_json}")
+  def info_params
     { record: current_json }
   end
 
@@ -86,10 +93,7 @@ class ShareBoardsController < ApplicationController
 
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
-    attrs[:kif_format_body] = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
-    attrs[:initial_turn] = initial_turn
-    attrs[:preset_info] = { name: current_record.preset_info.name, handicap_shift: current_record.preset_info.handicap_shift }
-    attrs
+    attrs.merge(initial_turn: initial_turn, flip: current_flip)
   end
 
   def current_record
@@ -109,6 +113,19 @@ class ShareBoardsController < ApplicationController
     if v = params[:flip].presence
       return boolean_cast(v)
     end
-    (initial_turn + (current_record.preset_info.handicap ? 1 : 0)).even?
+
+    # 単純に開始と手数の合計が奇数であれば反転する
+    # |--------+----------+------------+-------------+---------------------|
+    # | 手合   | 開始手番 | 手数(turn) | odd? = flip |                     |
+    # |--------+----------+------------+-------------+---------------------|
+    # | 平手   | ▲(0)    |          0 |             |                     |
+    # | 平手   | ▲(0)    |          1 | true        | 2手目は△なので反転 |
+    # | 駒落ち | △(1)    |          0 | true        | 初手は△なので反転  |
+    # | 駒落ち | △(1)    |          1 |             |                     |
+    # |--------+----------+------------+-------------+---------------------|
+    (current_record.sfen_info.location.code + initial_turn).odd?
+
+    # この方法は詰将棋が駒落ちと判断されて初手が△から始まってしまう
+    # (initial_turn + (current_record.preset_info.handicap ? 1 : 0)).even?
   end
 end
