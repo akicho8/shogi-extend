@@ -17,7 +17,6 @@ window.Adapter = Vue.extend({
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
-      _loading: null,    // ajax中なら $buefy.loading.open() のインスタンスが入ってる
     }
   },
 
