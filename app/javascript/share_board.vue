@@ -58,7 +58,6 @@
             b Twitter Card 画像
           p
             img(:src="png_url" width="256")
-        div initial_flip={{initial_flip}}
         div current_body={{current_body}}
         pre {{JSON.stringify(record, null, 4)}}
 </template>
@@ -79,7 +78,7 @@ export default {
       turn_offset:   this.info.record.initial_turn,                      // 現在の手数
 
       // urlには反映しない
-      current_flip: null,       // 反転用
+      current_flip: this.info.record.flip,       // 反転用
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: "play_mode",    // 操作モードと局面編集モードの切り替え用
@@ -88,8 +87,6 @@ export default {
   },
 
   created() {
-    this.current_flip = this.initial_flip
-
     // どれかが変更されたらURLを更新
     this.$watch(() => [this.current_body, this.turn_offset, this.current_title], () => this.url_replace())
   },
@@ -255,11 +252,6 @@ export default {
 
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.current_flip) },
     kento_app_with_params_url()      { return this.kento_full_url(this.current_body, this.turn_offset, this.current_flip)  },
-
-    // 反転した状態で開始するか？ (後手の手番のときに反転する)
-    initial_flip() {
-      return ((this.info.record.initial_turn + this.info.record.preset_info.handicap_shift) % 2) === 1
-    },
 
     // 最初に表示した手数より進めたか？
     advanced_p() { return this.turn_offset > this.info.record.initial_turn },

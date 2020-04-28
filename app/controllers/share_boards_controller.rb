@@ -89,6 +89,7 @@ class ShareBoardsController < ApplicationController
     attrs[:kif_format_body] = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
     attrs[:initial_turn] = initial_turn
     attrs[:preset_info] = { name: current_record.preset_info.name, handicap_shift: current_record.preset_info.handicap_shift }
+    attrs[:flip] = current_flip
     attrs
   end
 
@@ -109,6 +110,19 @@ class ShareBoardsController < ApplicationController
     if v = params[:flip].presence
       return boolean_cast(v)
     end
-    (initial_turn + (current_record.preset_info.handicap ? 1 : 0)).even?
+
+    # 単純に開始と手数の合計が奇数であれば反転する
+    # |--------+----------+------------+-------------+---------------------|
+    # | 手合   | 開始手番 | 手数(turn) | odd? = flip |                     |
+    # |--------+----------+------------+-------------+---------------------|
+    # | 平手   | ▲(0)    |          0 |             |                     |
+    # | 平手   | ▲(0)    |          1 | true        | 2手目は△なので反転 |
+    # | 駒落ち | △(1)    |          0 | true        | 初手は△なので反転  |
+    # | 駒落ち | △(1)    |          1 |             |                     |
+    # |--------+----------+------------+-------------+---------------------|
+    (current_record.sfen_info.location.code + initial_turn).odd?
+
+    # この方法は詰将棋が駒落ちと判断されて初手が△から始まってしまう
+    # (initial_turn + (current_record.preset_info.handicap ? 1 : 0)).even?
   end
 end
