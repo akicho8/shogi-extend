@@ -58,10 +58,12 @@ class ShareBoardsController < ApplicationController
     end
   end
 
+  # 「棋譜コピー」用
   def create
     render json: { record: current_json }
   end
 
+  # share_board(:info="#{controller.current_vue_args.to_json}")
   def current_vue_args
     { record: current_json }
   end
@@ -86,9 +88,12 @@ class ShareBoardsController < ApplicationController
 
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
-    attrs[:kif_format_body] = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
     attrs[:initial_turn] = initial_turn
     attrs[:flip] = current_flip
+
+    # これは「棋譜コピー」が押されたときだけ返したいけど一覧じゃないからそんな気にせんでもええかもしれん
+    attrs[:kif_format_body] = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
+
     attrs
   end
 
