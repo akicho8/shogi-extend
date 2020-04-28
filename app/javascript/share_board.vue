@@ -1,9 +1,93 @@
 <template lang="pug">
 .share_board
+  b-sidebar(type="is-light" :fullheight="true" :overlay="true" :right="true" :open.sync="open_p")
+    .foobar
+      b-menu
+        b-menu-list(label="Menu")
+          b-menu-item(:href="piyo_shogi_app_with_params_url" label="ぴよ将棋")
+          b-menu-item(:href="kento_app_with_params_url" label="KENTO")
+          b-menu-item(@click="kifu_copy_handle" label="棋譜コピー")
+        b-menu-list(label="Sub")
+          b-menu-item(@click="mode_toggle_handle")
+            template(slot="label" slot-scope="props")
+              template(v-if="run_mode === 'play_mode'")
+                | 局面編集
+              template(v-else)
+                | 局面編集(終了)
+          b-menu-item(@click="source_read_handle" label="棋譜読み込み")
+          b-menu-item(@click="title_edit" label="タイトル編集")
+          //- b-menu-item(@click="source_read_handle" label="Twitter Card 画像の向き" :active.sync="active_p")
+
+          //- b-menu-item
+          //-   template(slot="label")
+          //-     | Twitter Card 画像の向き
+          //-     b-dropdown.is-pulled-right(aria-role="list" position="is-bottom-left" v-model="doredore")
+          //-       b-icon(icon="dots-vertical" slot="trigger")
+          //-       b-dropdown-item(aria-role="listitem" value="self") 自分
+          //-       b-dropdown-item(aria-role="listitem" value="opponent") 相手
+          //-       b-dropdown-item(aria-role="listitem") Something else
+
+          b-menu-item
+            template(slot="label" slot-scope="props")
+              | Twitter Card 画像の向き
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+            b-menu-item(label="自分側(初期値)")
+            b-menu-item(label="相手側")
+            b-menu-item(label="☗側(詰将棋向け)")
+            b-menu-item(label="☖側")
+            //- b-menu-item(icon="cellphone-link")
+            //-   template(slot="label")
+            //-     | Devices
+            //-     b-dropdown.is-pulled-right(aria-role="list" position="is-bottom-left" v-model="doredore")
+            //-       b-icon(icon="dots-vertical" slot="trigger")
+            //-       b-dropdown-item(aria-role="listitem" value="self") 自分
+            //-       b-dropdown-item(aria-role="listitem" value="opponent") 相手
+            //-       b-dropdown-item(aria-role="listitem") Something else
+            //- b-menu-item(icon="cash-multiple" label="Payments" disabled)
+
+        //- b-menu-list(label="Menu")
+        //-   template(v-if="run_mode === 'play_mode'")
+        //-     b-menu-item(separator)
+        //-   b-menu-item(@click="mode_toggle_handle")
+        //-     template(v-if="run_mode === 'play_mode'")
+        //-       | 局面編集
+        //-     template(v-else)
+        //-       | 局面編集(終了)
+        //-   b-menu-item(@click="source_read_handle") 棋譜読み込み
+        //-   b-menu-item(@click="title_edit") タイトル編集
+        //-   b-menu-item(@click="source_read_handle") Twitter Card 画像の向き
+        //-
+        //-   b-menu-item(icon="information-outline" label="Info")
+        //-   b-menu-item(icon="settings")
+        //-     template(slot="label" slot-scope="props")
+        //-       |  Administrator
+        //-       b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+        //-     b-menu-item(icon="account" label="Users")
+        //-     b-menu-item(icon="cellphone-link")
+        //-       template(slot="label")
+        //-         |  Devices
+        //-         b-dropdown.is-pulled-right(aria-role="list" position="is-bottom-left")
+        //-           b-icon(icon="dots-vertical" slot="trigger")
+        //-           b-dropdown-item(aria-role="listitem") Action
+        //-           b-dropdown-item(aria-role="listitem") Another action
+        //-           b-dropdown-item(aria-role="listitem") Something else
+        //-     b-menu-item(icon="cash-multiple" label="Payments" disabled)
+        //-   b-menu-item(icon="account" label="My Account")
+        //-     b-menu-item(label="Account data")
+        //-     b-menu-item(label="Addresses")
+        //- b-menu-list
+        //-   b-menu-item(label="Expo" icon="link")
+        //- b-menu-list(label="Actions")
+        //-   b-menu-item(label="Logout")
+
   .columns
     .column
+      b-icon.has-text-grey-light.is_clickable(icon="dots-vertical" @click.native="open_p = true" v-if="development_p")
+
       b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
         b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
+        b-dropdown-item(@click="title_edit") タイトル編集
+        b-dropdown-item(separator)
         template(v-if="run_mode === 'play_mode'")
           b-dropdown-item(:href="piyo_shogi_app_with_params_url") ぴよ将棋
           b-dropdown-item(:href="kento_app_with_params_url") KENTO
@@ -16,7 +100,25 @@
           template(v-else)
             | 局面編集(終了)
         b-dropdown-item(@click="source_read_handle") 棋譜読み込み
-        b-dropdown-item(@click="title_edit") タイトル編集
+        b-dropdown-item(@click="image_view_point_setting_handle") Twitter画像の視点
+        //- b-dropdown-item
+        //-   b-dropdown(aria-role="list" position="is-bottom-left" v-model="doredore")
+        //-     span(slot="trigger")
+        //-       | Twitter画像の向き変更
+        //-     b-dropdown-item(aria-role="listitem" value="self") 自分側(初期値)
+        //-     b-dropdown-item(aria-role="listitem" value="opponent") 相手側
+        //-     b-dropdown-item(aria-role="listitem") 常に☗側(詰将棋向け)
+        //-     b-dropdown-item(aria-role="listitem") 常に☖側
+
+        //- b-dropdown-item
+        //-   .field
+        //-     b-radio(v-model="radio" native-value="warning" type="is-warning") Warning
+        //-   .field
+        //-     b-radio(v-model="radio" native-value="warning" type="is-warning") Warning
+        //-   .field
+        //-     b-radio(v-model="radio" native-value="warning" type="is-warning") Warning
+        //-   .field
+        //-     b-radio(v-model="radio" native-value="warning" type="is-warning") Warning
 
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
         .title.is-4.is-marginless
@@ -37,7 +139,7 @@
           :controller_show="true"
           :human_side_key="'both'"
           :theme="'real'"
-          :flip.sync="current_flip"
+          :flip.sync="board_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
           @update:turn_offset="turn_offset_set"
@@ -77,16 +179,21 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      play_mode_body:  this.info.record.sfen_body,                         // 渡している棋譜
-      current_title: this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
-      turn_offset:   this.info.record.initial_turn,                      // 現在の手数
+      play_mode_body:   this.info.record.sfen_body,                         // 渡している棋譜
+      current_title:    this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
+      turn_offset:      this.info.record.initial_turn,                      // 現在の手数
+      image_view_point: this.info.record.image_view_point,                  // Twitter画像の向き
 
       // urlには反映しない
-      current_flip: this.info.record.flip,       // 反転用
+      board_flip: this.info.record.board_flip,       // 反転用
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_body: null,     // 局面編集モードの局面
+
+      open_p: false,
+      active_p: false,
+      doredore: "self",
     }
   },
 
@@ -98,11 +205,13 @@ export default {
       this.play_mode_body,
       this.turn_offset,
       this.current_title,
+      this.image_view_point,
     ], () => this.url_replace())
   },
 
   watch: {
-    current_title() { this.sound_play("click") },
+    current_title()    { this.sound_play("click") },
+    image_view_point() { this.sound_play("click") },
   },
 
   methods: {
@@ -152,7 +261,7 @@ export default {
         this.$gtag.event("open", {event_category: "リレー将棋(編集)"})
         this.run_mode = "edit_mode"
         if (true) {
-          this.current_flip = false // ▲視点にしておく(お好み)
+          this.board_flip = false // ▲視点にしておく(お好み)
         }
       } else {
         this.run_mode = "play_mode"
@@ -207,7 +316,7 @@ export default {
 
     // 棋譜読み込みタップ時の処理
     source_read_handle() {
-      const body_input_modal = this.$buefy.modal.open({
+      const modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         animation: "",
@@ -246,11 +355,59 @@ export default {
                 this.general_ok_notice("正常に読み込みました")
                 this.play_mode_body = e.body
                 this.turn_offset = e.turn_max
-                this.current_flip = false
-                body_input_modal.close()
+                this.board_flip = false
+                modal_instance.close()
               }
             })
           },
+        },
+      })
+    },
+
+    // Twitter画像の視点変更
+    image_view_point_setting_handle() {
+      const modal_instance = this.$buefy.modal.open({
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        props: {
+          image_view_point: this.image_view_point,
+        },
+        component: {
+          template: `
+            <div class="modal-card image_view_point_setting">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Twitter画像の視点</p>
+              </header>
+              <section class="modal-card-body">
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="self">自分<span class="desc">リレー将棋向け</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="opponent">相手</b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="black">☗<span class="desc">詰将棋向け</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="white">☖</b-radio></div>
+              </section>
+              <footer class="modal-card-foot">
+                <b-button @click="submit_handle" type="is-primary">更新</b-button>
+              </footer>
+            </div>
+          `,
+          props: ["image_view_point"],
+          data() {
+            return {
+              new_image_view_point: this.image_view_point,
+            }
+          },
+          methods: {
+            submit_handle() {
+              this.$emit("update:image_view_point", this.new_image_view_point)
+            },
+          },
+        },
+        events: {
+          "update:image_view_point": v => {
+            this.image_view_point = v
+            modal_instance.close()
+          }
         },
       })
     },
@@ -260,6 +417,7 @@ export default {
       url.searchParams.set("body", this.current_body) // 編集モードでもURLを更新するため
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
+      url.searchParams.set("image_view_point", this.image_view_point)
 
       if (format) {
         url.searchParams.set("format", format)
@@ -282,8 +440,8 @@ export default {
     json_url()    { return this.dynamic_url_for("json") },
     png_url()     { return this.dynamic_url_for("png")  },
 
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.current_flip) },
-    kento_app_with_params_url()      { return this.kento_full_url(this.play_mode_body, this.turn_offset, this.current_flip)  },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.board_flip) },
+    kento_app_with_params_url()      { return this.kento_full_url(this.play_mode_body, this.turn_offset, this.board_flip)  },
 
     // 最初に表示した手数より進めたか？
     advanced_p() { return this.turn_offset > this.info.record.initial_turn },
@@ -303,6 +461,12 @@ export default {
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
+.image_view_point_setting
+  .desc
+    color: $grey
+    font-size: $size-7
+    margin-left: 0.5rem
+
 .share_board
   ////////////////////////////////////////////////////////////////////////////////
   .title_container
