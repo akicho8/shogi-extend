@@ -1,5 +1,9 @@
 <template lang="pug">
 .share_board
+  div(v-if="development_p")
+    div play_mode_body: {{play_mode_body}}
+    div edit_mode_body: {{edit_mode_body}}
+
   .columns
     .column
       b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
@@ -41,6 +45,7 @@
           :flip.sync="board_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
+          @update:mediator_snapshot_sfen="e => { development_p && $buefy.toast.open({message: `mediator_snapshot_sfen -> ${e}`, queue:false}) }"
           @update:turn_offset="turn_offset_set"
         )
 
@@ -60,8 +65,6 @@
             b Twitter Card 画像
           p
             img(:src="twitter_card_url" width="256")
-        div play_mode_body={{play_mode_body}}
-        div edit_mode_body={{edit_mode_body}}
         pre {{JSON.stringify(record, null, 4)}}
 </template>
 
