@@ -22,7 +22,7 @@ module Api
         :validate_enable,
       ].each do |key|
         if params.has_key?(key)
-          options[key] = boolean_cast(params[key])
+          options[key] = boolean_for(params[key])
         end
       end
 

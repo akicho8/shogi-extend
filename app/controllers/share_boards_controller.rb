@@ -37,13 +37,16 @@ class ShareBoardsController < ApplicationController
   include ShogiErrorRescueMod
 
   def show
+    # アクセスがあれば「上げて」消さないようにするため
     current_record.update_columns(accessed_at: Time.current)
 
+    # デバッグ用
     if request.format.json?
-      create
+      render json: info_params
       return
     end
 
+    # Twitter画像
     # http://localhost:3000/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
     if request.format.png?
       png = current_record.to_dynamic_png(params.merge(turn: initial_turn, flip: image_flip))
@@ -56,17 +59,12 @@ class ShareBoardsController < ApplicationController
     #
     # TODO: ぴよ将棋に url=http://.../foo.kif?body=position... のように渡せればこの部分は汎用化できる
     if request.format.kif?
-      text_body = current_record.fast_parsed_info.to_kif(compact: true, no_embed_if_time_blank: true)
+      text_body = current_record.fast_parsed_info.to_kif(no_embed_if_time_blank: true)
       headers["Content-Type"] = current_type
       render plain: text_body
       return
     end
   end
-
-  # 「棋譜コピー」用
-  # def create
-  #   render json: { record: current_json }
-  # end
 
   # share_board(:info="#{controller.info_params.to_json}")
   def info_params
@@ -75,9 +73,9 @@ class ShareBoardsController < ApplicationController
 
   def twitter_card_options
     {
-      title: [current_title, "#{initial_turn}手目"].compact.join(" "),
-      image: current_image_path,
-      description: params[:description] || "",
+      :title       => [current_title, "#{initial_turn}手目"].compact.join(" "),
+      :image       => current_image_path,
+      :description => params[:description] || "",
     }
   end
 
@@ -94,9 +92,9 @@ class ShareBoardsController < ApplicationController
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
     attrs.merge({
-        initial_turn: initial_turn,
-        board_flip: board_flip,
-        image_view_point: image_view_point,
+        :initial_turn     => initial_turn,
+        :board_flip       => board_flip,
+        :image_view_point => image_view_point,
       })
   end
 
@@ -115,14 +113,14 @@ class ShareBoardsController < ApplicationController
 
   def board_flip
     if v = params[:board_flip].presence
-      return boolean_cast(v)
+      return boolean_for(v)
     end
     number_of_turns_in_consideration_of_the_frame_dropping.odd?
   end
 
   def image_flip
     if v = params[:image_flip].presence
-      return boolean_cast(v)
+      return boolean_for(v)
     end
     image_view_point_info.image_flip[number_of_turns_in_consideration_of_the_frame_dropping]
   end
