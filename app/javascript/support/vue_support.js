@@ -98,7 +98,8 @@ export default {
       }, 1000 * 0.1)
     },
 
-    url_build(attributes) {
+    // FIXME: URL() を使う
+    legacy_url_build(attributes) {
       if (false) {
         return _.map(attributes, (v, k) => `${k}=${encodeURIComponent(v)}`).join("&")
       } else {

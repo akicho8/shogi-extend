@@ -272,7 +272,7 @@ export default {
         animation: "",
         props: {
           image_view_point: this.image_view_point,
-          url_build: this.url_build,
+          permalink_for: this.permalink_for,
         },
         component: {
           template: `
@@ -281,12 +281,12 @@ export default {
                 <p class="modal-card-title">Twitter画像の視点</p>
               </header>
               <section class="modal-card-body">
-                <div class="field"><b-radio v-model="new_image_view_point" native-value="self">自分<span class="desc">指し終わった人の視点 (リレー将棋向け・デフォルト)</span></b-radio></div>
-                <div class="field"><b-radio v-model="new_image_view_point" native-value="opponent">相手<span class="desc">次に指す人の視点</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="self">自分<span class="desc">1手指し継いだとき、その人の視点 (リレー将棋向け・初期値)</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="opponent">相手<span class="desc">1手指し継いだとき、次に指す人の視点 (リレー将棋 or 詰将棋向け)</span></b-radio></div>
                 <div class="field"><b-radio v-model="new_image_view_point" native-value="black">先手<span class="desc">常に☗ (詰将棋向け)</span></b-radio></div>
-                <div class="field"><b-radio v-model="new_image_view_point" native-value="white">後手<span class="desc">常に☖</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="white">後手<span class="desc">常に☖ (詰将棋を攻められ視点にしたいとき)</span></b-radio></div>
                 <div class="has-text-centered"><img :src="twitter_card_preview_url" /></div>
-                <div v-if="development_p" :key="twitter_card_preview_url">{{twitter_card_preview_url}}</div>
+                <div v-if="development_p" class="line_break_on" :key="twitter_card_preview_url">{{twitter_card_preview_url}}</div>
               </section>
               <footer class="modal-card-foot">
                 <b-button @click="$emit('close')">キャンセル</b-button>
@@ -294,7 +294,7 @@ export default {
               </footer>
             </div>
           `,
-          props: ["image_view_point", "url_build"],
+          props: ["image_view_point", "permalink_for"],
           data() {
             return {
               new_image_view_point: this.image_view_point,
@@ -307,7 +307,7 @@ export default {
           },
           computed: {
             twitter_card_preview_url() {
-              return this.url_build({format: "png", image_view_point: this.new_image_view_point, disposition: "attachment"})
+              return this.permalink_for({format: "png", image_view_point: this.new_image_view_point, disposition: "inline"})
             },
           },
         },
@@ -320,7 +320,7 @@ export default {
       })
     },
 
-    url_build(params = {}) {
+    permalink_for(params = {}) {
       const url = new URL(location)
       url.searchParams.set("body", this.current_body) // 編集モードでもURLを更新するため
       url.searchParams.set("turn", this.turn_offset)
@@ -343,10 +343,10 @@ export default {
 
   computed: {
     // URL
-    current_url()        { return this.url_build()                                                                        },
-    json_debug_url()     { return this.url_build({format: "json"})                                                        },
-    twitter_card_url()   { return this.url_build({format: "png"})                                                         },
-    snapshot_image_url() { return this.url_build({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
+    current_url()        { return this.permalink_for()                                                                        },
+    json_debug_url()     { return this.permalink_for({format: "json"})                                                        },
+    twitter_card_url()   { return this.permalink_for({format: "png"})                                                         },
+    snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.board_flip) },
@@ -377,11 +377,10 @@ export default {
   .desc
     color: $grey
     font-size: $size-7
-    margin-left: 0.3rem
+    margin-left: 0.4rem
   img
     border-radius: 1rem
     border: 1px solid $grey-lighter
-    // max-width: 50vmim
 
 .share_board
   ////////////////////////////////////////////////////////////////////////////////
