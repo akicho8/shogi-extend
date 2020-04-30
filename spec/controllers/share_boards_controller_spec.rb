@@ -54,7 +54,7 @@ RSpec.describe ShareBoardsController, type: :controller do
   end
 
   it "Twitterカード用の画像パス" do
-    get :show, params: { body: "68銀" }
-    assert { controller.current_image_path == "http://test.host/share-board.png?body=position+startpos+moves+7i6h&image_view_point=self&turn=1" }
+    get :show, params: { body: "68銀", image_flip: "true" }
+    assert { controller.current_image_path == "http://test.host/share-board.png?body=position+startpos+moves+7i6h&image_flip=true" }
   end
 end
