@@ -73,14 +73,18 @@ class ShareBoardsController < ApplicationController
 
   def twitter_card_options
     {
-      :title       => [current_title, "#{initial_turn}手目"].compact.join(" "),
+      :title       => current_page_title,
       :image       => current_image_path,
       :description => params[:description].presence || current_record.simple_versus_desc,
     }
   end
 
   def current_title
-    params[:title].presence
+    params[:title].presence || "リレー将棋"
+  end
+
+  def current_page_title
+    [current_title, "#{initial_turn}手目"].compact.join(" ")
   end
 
   def current_image_path
@@ -105,6 +109,7 @@ class ShareBoardsController < ApplicationController
         :initial_turn     => initial_turn,
         :board_flip       => board_flip,
         :image_view_point => image_view_point,
+        :title            => current_title,
       })
   end
 

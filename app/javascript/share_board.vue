@@ -82,10 +82,10 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      play_mode_body:   this.info.record.sfen_body,                         // 渡している棋譜
-      current_title:    this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
-      turn_offset:      this.info.record.initial_turn,                      // 現在の手数
-      image_view_point: this.info.record.image_view_point,                  // Twitter画像の向き
+      play_mode_body:   this.info.record.sfen_body,        // 渡している棋譜
+      current_title:    this.info.record.title,            // 現在のタイトル
+      turn_offset:      this.info.record.initial_turn,     // 現在の手数
+      image_view_point: this.info.record.image_view_point, // Twitter画像の向き
 
       // urlには反映しない
       board_flip: this.info.record.board_flip,       // 反転用
