@@ -20,7 +20,7 @@
             | 局面編集
           template(v-else)
             | 局面編集(終了)
-        b-dropdown-item(@click="source_read_handle") 棋譜の読み込み
+        b-dropdown-item(@click="any_source_read_handle") 棋譜の読み込み
         b-dropdown-item(@click="image_view_point_setting_handle") Twitter画像の視点
 
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
@@ -218,14 +218,14 @@ export default {
     },
 
     // 棋譜の読み込みタップ時の処理
-    source_read_handle() {
+    any_source_read_handle() {
       const modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         animation: "",
         component: {
           template: `
-            <div class="modal-card">
+            <div class="modal-card any_source_read_modal">
               <header class="modal-card-head">
                 <p class="modal-card-title">棋譜</p>
               </header>
@@ -294,7 +294,7 @@ export default {
               </section>
               <footer class="modal-card-foot">
                 <b-button @click="$emit('close')">キャンセル</b-button>
-                <b-button @click="submit_handle" type="is-primary">更新</b-button>
+                <b-button @click="submit_handle" class="submit_handle" type="is-primary" :disabled="!change_p">更新</b-button>
               </footer>
             </div>
           `,
@@ -312,6 +312,9 @@ export default {
           computed: {
             twitter_card_preview_url() {
               return this.permalink_for({format: "png", image_view_point: this.new_image_view_point, disposition: "inline"})
+            },
+            change_p() {
+              return this.new_image_view_point !== this.image_view_point
             },
           },
         },
@@ -386,7 +389,13 @@ export default {
     border-radius: 1rem
     border: 1px solid $grey-lighter
   .modal-card-foot
-    justify-content: space-between
+    justify-content: flex-end
+    .button
+      min-width: 8rem
+
+.any_source_read_modal
+  .modal-card-foot
+    justify-content: flex-end
 
 .share_board
   ////////////////////////////////////////////////////////////////////////////////
