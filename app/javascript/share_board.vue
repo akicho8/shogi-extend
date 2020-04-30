@@ -385,6 +385,8 @@ export default {
   img
     border-radius: 1rem
     border: 1px solid $grey-lighter
+  .modal-card-foot
+    justify-content: space-between
 
 .share_board
   ////////////////////////////////////////////////////////////////////////////////
