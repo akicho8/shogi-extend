@@ -136,11 +136,7 @@ class ShareBoardsController < ApplicationController
   end
 
   def image_view_point
-    (params[:image_view_point].presence || image_view_point_default).to_sym
-  end
-
-  def image_view_point_default
-    :self
+    ImageViewPointInfo.valid_key(params[:image_view_point], :self)
   end
 
   # 駒落ちを考慮した擬似ターン数

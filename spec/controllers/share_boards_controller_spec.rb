@@ -57,4 +57,9 @@ RSpec.describe ShareBoardsController, type: :controller do
     get :show, params: { body: "68銀", image_flip: "true" }
     assert { controller.current_image_path == "http://test.host/share-board.png?body=position+startpos+moves+7i6h&image_flip=true" }
   end
+
+  it "image_view_point の値がおかしいときにエラーにしない" do
+    get :show, params: { body: "68銀", image_view_point: "xxxx" }
+    expect(response).to have_http_status(:ok)
+  end
 end
