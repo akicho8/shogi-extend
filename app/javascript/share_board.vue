@@ -62,9 +62,10 @@
           b-button(tag="a" :href="twitter_card_url") Twitter画像
         .content
           p
-            b Twitter Card 画像
+            b Twitter画像
           p
             img(:src="twitter_card_url" width="256")
+          p {{twitter_card_url}}
         pre {{JSON.stringify(record, null, 4)}}
 </template>
 

@@ -83,6 +83,10 @@ class ShareBoardsController < ApplicationController
     params[:title].presence
   end
 
+  def current_image_path
+    url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_view_point: image_view_point])
+  end
+
   private
 
   def behavior_after_rescue(message)
@@ -100,10 +104,6 @@ class ShareBoardsController < ApplicationController
 
   def current_record
     @current_record ||= FreeBattle.same_body_fetch(params)
-  end
-
-  def current_image_path
-    url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png"])
   end
 
   def initial_turn
