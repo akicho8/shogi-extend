@@ -335,7 +335,7 @@ class FreeBattle < ApplicationRecord
           }
           if hash.values.any?(&:present?)
             hash.collect { |location_key, e|
-              [Bioshogi::Location.fetch(location_key).mark, (e.presence || ["その他"]).join(" ")].join
+              [Bioshogi::Location.fetch(location_key).hexagon_mark, (e.presence || ["その他"]).join(" ")].join
             }.join(" vs ")
           end
         end

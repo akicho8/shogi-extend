@@ -50,7 +50,7 @@ RSpec.describe ShareBoardsController, type: :controller do
 
   it "Twitterカードに戦法名が出る" do
     get :show, params: { body: "68銀" }
-    assert { controller.twitter_card_options[:description] == "▲嬉野流 vs △その他" }
+    assert { controller.twitter_card_options[:description] == "☗嬉野流 vs ☖その他" }
   end
 
   it "Twitterカード用の画像パス" do
