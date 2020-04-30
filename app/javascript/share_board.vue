@@ -227,7 +227,7 @@ export default {
           template: `
             <div class="modal-card any_source_read_modal">
               <header class="modal-card-head">
-                <p class="modal-card-title">棋譜</p>
+                <p class="modal-card-title">棋譜の読み込み</p>
               </header>
               <section class="modal-card-body">
                 <b-input type="textarea" v-model="any_source" ref="any_source" />
@@ -391,11 +391,14 @@ export default {
   .modal-card-foot
     justify-content: flex-end
     .button
+      font-weight: bold
       min-width: 8rem
 
 .any_source_read_modal
   .modal-card-foot
     justify-content: flex-end
+    .button
+      font-weight: bold
 
 .share_board
   ////////////////////////////////////////////////////////////////////////////////
