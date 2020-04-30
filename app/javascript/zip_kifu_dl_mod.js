@@ -28,7 +28,7 @@ export default {
         zip_kifu_key: this.zip_kifu_key,
       }
 
-      const url = `${this.$options.xhr_index_path}.zip?${this.url_build(params)}`
+      const url = `${this.$options.xhr_index_path}.zip?${this.legacy_url_build(params)}`
       this.url_open(url)
     },
   },

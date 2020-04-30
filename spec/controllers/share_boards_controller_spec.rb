@@ -47,4 +47,9 @@ RSpec.describe ShareBoardsController, type: :controller do
     2.times { get :show, params: { body: "position startpos moves 7g7f" } }
     assert { FreeBattle.count == 1 }
   end
+
+  it "Twitterカードに戦法名が出る" do
+    get :show, params: { body: "68銀" }
+    assert { controller.twitter_card_options[:description] == "▲嬉野流 vs △その他" }
+  end
 end

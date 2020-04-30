@@ -156,11 +156,11 @@ export default {
     },
 
     async_records_load_url() {
-      return `${this.$options.xhr_index_path}.json?${this.url_build(this.async_records_load_url_params)}`
+      return `${this.$options.xhr_index_path}.json?${this.legacy_url_build(this.async_records_load_url_params)}`
     },
 
     permalink_url() {
-      return `${this.$options.xhr_index_path}?${this.url_build(this.async_records_load_url_params)}`
+      return `${this.$options.xhr_index_path}?${this.legacy_url_build(this.async_records_load_url_params)}`
     },
 
     // id ですぐに引けるハッシュ

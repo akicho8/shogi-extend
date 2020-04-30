@@ -10,7 +10,7 @@ RSpec.describe "リレー将棋", type: :system do
   it "メニュー表示" do
     visit "/share-board"
     find(".share_board .dropdown_menu").click
-    expect(page).to have_content "棋譜読み込み"
+    expect(page).to have_content "棋譜の読み込み"
     doc_image
   end
 

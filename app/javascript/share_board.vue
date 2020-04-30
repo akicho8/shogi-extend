@@ -1,5 +1,9 @@
 <template lang="pug">
 .share_board
+  div(v-if="development_p")
+    div play_mode_body: {{play_mode_body}}
+    div edit_mode_body: {{edit_mode_body}}
+
   .columns
     .column
       b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
@@ -7,16 +11,17 @@
         template(v-if="run_mode === 'play_mode'")
           b-dropdown-item(:href="piyo_shogi_app_with_params_url") ぴよ将棋
           b-dropdown-item(:href="kento_app_with_params_url") KENTO
-
           b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
+          b-dropdown-item(:href="snapshot_image_url") 局面画像の取得
           b-dropdown-item(separator)
+          b-dropdown-item(@click="title_edit") タイトル編集
         b-dropdown-item(@click="mode_toggle_handle")
           template(v-if="run_mode === 'play_mode'")
             | 局面編集
           template(v-else)
             | 局面編集(終了)
-        b-dropdown-item(@click="source_read_handle") 棋譜読み込み
-        b-dropdown-item(@click="title_edit") タイトル編集
+        b-dropdown-item(@click="source_read_handle") 棋譜の読み込み
+        b-dropdown-item(@click="image_view_point_setting_handle") Twitter画像の視点
 
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
         .title.is-4.is-marginless
@@ -37,9 +42,10 @@
           :controller_show="true"
           :human_side_key="'both'"
           :theme="'real'"
-          :flip.sync="current_flip"
+          :flip.sync="board_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
+          @update:mediator_snapshot_sfen="e => { development_p && $buefy.toast.open({message: `mediator_snapshot_sfen -> ${e}`, queue:false}) }"
           @update:turn_offset="turn_offset_set"
         )
 
@@ -52,15 +58,13 @@
     .column
       .box
         .buttons
-          b-button(tag="a" :href="json_url") json
-          b-button(tag="a" :href="png_url") png
+          b-button(tag="a" :href="json_debug_url") JSON
+          b-button(tag="a" :href="twitter_card_url") Twitter画像
         .content
           p
             b Twitter Card 画像
           p
-            img(:src="png_url" width="256")
-        div play_mode_body={{play_mode_body}}
-        div edit_mode_body={{edit_mode_body}}
+            img(:src="twitter_card_url" width="256")
         pre {{JSON.stringify(record, null, 4)}}
 </template>
 
@@ -77,16 +81,21 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      play_mode_body:  this.info.record.sfen_body,                         // 渡している棋譜
-      current_title: this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
-      turn_offset:   this.info.record.initial_turn,                      // 現在の手数
+      play_mode_body:   this.info.record.sfen_body,                         // 渡している棋譜
+      current_title:    this.defval(this.$route.query.title, "リレー将棋"), // 現在のタイトル
+      turn_offset:      this.info.record.initial_turn,                      // 現在の手数
+      image_view_point: this.info.record.image_view_point,                  // Twitter画像の向き
 
       // urlには反映しない
-      current_flip: this.info.record.flip,       // 反転用
+      board_flip: this.info.record.board_flip,       // 反転用
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_body: null,     // 局面編集モードの局面
+
+      open_p: false,
+      active_p: false,
+      doredore: "self",
     }
   },
 
@@ -98,11 +107,13 @@ export default {
       this.play_mode_body,
       this.turn_offset,
       this.current_title,
+      this.image_view_point,
     ], () => this.url_replace())
   },
 
   watch: {
-    current_title() { this.sound_play("click") },
+    current_title()    { this.sound_play("click") },
+    image_view_point() { this.sound_play("click") },
   },
 
   methods: {
@@ -143,7 +154,7 @@ export default {
 
     // ツイートする
     tweet_handle() {
-      this.tweet_share_open({url: this.current_url, text: this.hash_tag})
+      this.tweet_share_open({url: this.current_url, text: this.tweet_hash_tag})
     },
 
     // 操作←→編集 切り替え
@@ -152,7 +163,7 @@ export default {
         this.$gtag.event("open", {event_category: "リレー将棋(編集)"})
         this.run_mode = "edit_mode"
         if (true) {
-          this.current_flip = false // ▲視点にしておく(お好み)
+          this.board_flip = false // ▲視点にしておく(お好み)
         }
       } else {
         this.run_mode = "play_mode"
@@ -205,9 +216,9 @@ export default {
       })
     },
 
-    // 棋譜読み込みタップ時の処理
+    // 棋譜の読み込みタップ時の処理
     source_read_handle() {
-      const body_input_modal = this.$buefy.modal.open({
+      const modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         animation: "",
@@ -246,8 +257,8 @@ export default {
                 this.general_ok_notice("正常に読み込みました")
                 this.play_mode_body = e.body
                 this.turn_offset = e.turn_max
-                this.current_flip = false
-                body_input_modal.close()
+                this.board_flip = false
+                modal_instance.close()
               }
             })
           },
@@ -255,15 +266,71 @@ export default {
       })
     },
 
-    dynamic_url_for(format = null) {
+    // Twitter画像の視点変更
+    image_view_point_setting_handle() {
+      const modal_instance = this.$buefy.modal.open({
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        props: {
+          image_view_point: this.image_view_point,
+          permalink_for: this.permalink_for,
+        },
+        component: {
+          template: `
+            <div class="modal-card image_view_point_setting">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Twitter画像の視点</p>
+              </header>
+              <section class="modal-card-body">
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="self">自分<span class="desc">1手指し継いだとき、その人の視点 (リレー将棋向け・初期値)</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="opponent">相手<span class="desc">1手指し継いだとき、次に指す人の視点 (リレー将棋 or 詰将棋向け)</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="black">先手<span class="desc">常に☗ (詰将棋向け)</span></b-radio></div>
+                <div class="field"><b-radio v-model="new_image_view_point" native-value="white">後手<span class="desc">常に☖ (詰将棋を攻められ視点にしたいとき)</span></b-radio></div>
+                <div class="has-text-centered"><img :src="twitter_card_preview_url" /></div>
+                <div v-if="development_p" class="line_break_on" :key="twitter_card_preview_url">{{twitter_card_preview_url}}</div>
+              </section>
+              <footer class="modal-card-foot">
+                <b-button @click="$emit('close')">キャンセル</b-button>
+                <b-button @click="submit_handle" type="is-primary">更新</b-button>
+              </footer>
+            </div>
+          `,
+          props: ["image_view_point", "permalink_for"],
+          data() {
+            return {
+              new_image_view_point: this.image_view_point,
+            }
+          },
+          methods: {
+            submit_handle() {
+              this.$emit("update:image_view_point", this.new_image_view_point)
+            },
+          },
+          computed: {
+            twitter_card_preview_url() {
+              return this.permalink_for({format: "png", image_view_point: this.new_image_view_point, disposition: "inline"})
+            },
+          },
+        },
+        events: {
+          "update:image_view_point": v => {
+            this.image_view_point = v
+            modal_instance.close()
+          }
+        },
+      })
+    },
+
+    permalink_for(params = {}) {
       const url = new URL(location)
       url.searchParams.set("body", this.current_body) // 編集モードでもURLを更新するため
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
+      url.searchParams.set("image_view_point", this.image_view_point)
 
-      if (format) {
-        url.searchParams.set("format", format)
-      }
+      _.each(params, (v, k) => url.searchParams.set(k, v))
 
       // 編集モードでの状態を維持したいのでURLに含めておく
       // 操作モードのときは常にURLに入っているのはアレなので消す
@@ -278,31 +345,46 @@ export default {
   },
 
   computed: {
-    current_url() { return this.dynamic_url_for()       },
-    json_url()    { return this.dynamic_url_for("json") },
-    png_url()     { return this.dynamic_url_for("png")  },
+    // URL
+    current_url()        { return this.permalink_for()                                                                        },
+    json_debug_url()     { return this.permalink_for({format: "json"})                                                        },
+    twitter_card_url()   { return this.permalink_for({format: "png"})                                                         },
+    snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
 
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.current_flip) },
-    kento_app_with_params_url()      { return this.kento_full_url(this.play_mode_body, this.turn_offset, this.current_flip)  },
+    // 外部アプリ
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.board_flip) },
+    kento_app_with_params_url()      { return this.kento_full_url(this.play_mode_body, this.turn_offset, this.board_flip)   },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     // 最初に表示した手数より進めたか？
     advanced_p() { return this.turn_offset > this.info.record.initial_turn },
 
-    debug_mode() { return this.$route.query.debug_mode === "true" },
-
+    // 常に画面上の盤面と一致している
     current_body() { return this.edit_mode_body || this.play_mode_body },
 
-    hash_tag() {
+    tweet_hash_tag() {
       if (this.current_title) {
         return "#" + this.current_title.replace(/\s+/g, "_")
       }
     },
+
+    debug_mode() { return this.$route.query.debug_mode === "true" },
   },
 }
 </script>
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
+.image_view_point_setting
+  .desc
+    color: $grey
+    font-size: $size-7
+    margin-left: 0.4rem
+  img
+    border-radius: 1rem
+    border: 1px solid $grey-lighter
+
 .share_board
   ////////////////////////////////////////////////////////////////////////////////
   .title_container

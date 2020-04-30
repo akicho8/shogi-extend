@@ -15,7 +15,7 @@ module EncodeMod
     value = params[:disposition]
 
     unless value
-      if key = [:inline, :attachment].find { |e| boolean_cast(params[e]) }
+      if key = [:inline, :attachment].find { |e| boolean_for(params[e]) }
         value ||= key
       end
     end
@@ -36,7 +36,7 @@ module EncodeMod
   end
 
   def filename_sjis?
-    request.user_agent.to_s.match?(/Windows/i) || boolean_cast(params[:shift_jis]) || boolean_cast(params[:sjis])
+    request.user_agent.to_s.match?(/Windows/i) || boolean_for(params[:shift_jis]) || boolean_for(params[:sjis])
   end
 
   def current_body_encode
