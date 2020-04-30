@@ -285,7 +285,7 @@ export default {
               </section>
               <footer class="modal-card-foot">
                 <b-button @click="$emit('close')">キャンセル</b-button>
-                <b-button @click="submit_handle" class="submit_handle" type="is-primary" :disabled="!change_p">更新</b-button>
+                <b-button @click="submit_handle" class="submit_handle" type="is-primary" :disabled="!change_p">保存</b-button>
               </footer>
             </div>
           `,
