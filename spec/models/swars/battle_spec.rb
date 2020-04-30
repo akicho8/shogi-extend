@@ -135,7 +135,6 @@ module Swars
         Battle.create!(csa_seq: [["+5756FU", 0], ["-5354FU", 0], ["+5958OU", 0], ["-5152OU", 0], ["+5857OU", 0], ["-5253OU", 0], ["+5746OU", 0], ["-5364OU", 0], ["+4645OU", 0], ["-6465OU", 0], ["+4544OU", 0], ["-6566OU", 0], ["+4453OU", 0], ["-6657OU", 0]])
       end
       it do
-        assert { record.note_tag_list                == ["入玉", "相入玉", "居飛車", "相居飛車"] }
         assert { record.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車"] }
         assert { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車"] }
       end
