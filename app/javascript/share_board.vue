@@ -141,16 +141,7 @@ export default {
 
     // 棋譜コピー
     kifu_copy_handle() {
-      this.http_command("POST", "/api/general/any_source_to", {
-        any_source: this.current_body,
-        to_format: "kif",
-        candidate_enable: false,
-        validate_enable: false,
-      }, e => {
-        if (e.body) {
-          this.simple_clipboard_copy(e.body)
-        }
-      })
+      this.general_kifu_copy(this.current_body, "kif")
     },
 
     // ツイートする

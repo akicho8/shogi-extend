@@ -8,7 +8,30 @@ export default {
   methods: {
     // いちばん簡単なインターフェイス
     simple_clipboard_copy(text) {
-      this.clipboard_copy({text: text})
+      return this.clipboard_copy({text: text})
+    },
+
+    // 棋譜を渡して指定フォーマットにしたものをコピーする
+    general_kifu_copy(any_source, to_format) {
+      const key = [any_source, to_format]
+
+      const body = this.kif_clipboard_copy_cache[key]
+      if (body) {
+        return this.simple_clipboard_copy(body)
+      }
+
+      this.http_command("POST", "/api/general/any_source_to", {
+        any_source: any_source,
+        to_format: to_format,
+        candidate_enable: false,
+        validate_enable: false,
+      }, e => {
+        if (e.body) {
+          if (!this.simple_clipboard_copy(e.body)) {
+            this.$set(this.kif_clipboard_copy_cache, key, e.body)
+          }
+        }
+      })
     },
 
     // 指定 URL の結果をクリップボードにコピー
