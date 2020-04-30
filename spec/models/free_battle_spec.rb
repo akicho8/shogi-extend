@@ -48,6 +48,14 @@ RSpec.describe FreeBattle, type: :model do
     FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
   end
 
+  it "simple_versus_desc" do
+    free_battle = FreeBattle.same_body_fetch(body: "")
+    assert { free_battle.simple_versus_desc == nil }
+
+    free_battle = FreeBattle.same_body_fetch(body: "68銀")
+    assert { free_battle.simple_versus_desc == "▲嬉野流 vs △その他" }
+  end
+
   describe "ファイルアップロードして変換" do
     let :uploaded_file do
       tempfile = Tempfile.open

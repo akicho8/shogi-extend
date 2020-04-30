@@ -303,6 +303,44 @@ class FreeBattle < ApplicationRecord
   end
 
   def parser_exec_after(info)
+    self.meta_info = info.mediator.players.inject({}) do |a, player|
+      a.merge(player.location.key => player.skill_set.to_h)
+    end
+
+    if use_info.key == :basic
+      self.defense_tag_list = ""
+      self.attack_tag_list = ""
+      self.technique_tag_list = ""
+      self.note_tag_list = ""
+      # self.other_tag_list = ""
+
+      defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+      attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    end
+  end
+
+  # free_battle = FreeBattle.same_body_fetch(body: "68銀")
+  # free_battle.simple_versus_desc # =>  "▲嬉野流 vs △その他"
+  def simple_versus_desc
+    if meta_info
+      if meta_info.kind_of?(Hash)
+        if meta_info.has_key?(:black)
+          hash = meta_info.inject({}) { |a, (location_key, hash)|
+            name = nil
+            name ||= hash[:attack].last
+            name ||= hash[:defense].last
+            a.merge(location_key => name)
+          }
+          if hash.values.any?
+            hash.collect { |location_key, e|
+              [Bioshogi::Location.fetch(location_key).mark, (e || "その他")].join
+            }.join(" vs ")
+          end
+        end
+      end
+    end
   end
 
   concerning :UseInfoMethods do
