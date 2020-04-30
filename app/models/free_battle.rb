@@ -328,14 +328,14 @@ class FreeBattle < ApplicationRecord
       if meta_info.kind_of?(Hash)
         if meta_info.has_key?(:black)
           hash = meta_info.inject({}) { |a, (location_key, hash)|
-            name = nil
-            name ||= hash[:attack].last
-            name ||= hash[:defense].last
+            name = []
+            name += hash[:attack]
+            name += hash[:defense]
             a.merge(location_key => name)
           }
-          if hash.values.any?
+          if hash.values.any?(&:present?)
             hash.collect { |location_key, e|
-              [Bioshogi::Location.fetch(location_key).mark, (e || "その他")].join
+              [Bioshogi::Location.fetch(location_key).mark, (e.presence || ["その他"]).join(" ")].join
             }.join(" vs ")
           end
         end

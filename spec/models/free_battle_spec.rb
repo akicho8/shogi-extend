@@ -54,6 +54,9 @@ RSpec.describe FreeBattle, type: :model do
 
     free_battle = FreeBattle.same_body_fetch(body: "68銀")
     assert { free_battle.simple_versus_desc == "▲嬉野流 vs △その他" }
+
+    free_battle = FreeBattle.same_body_fetch(body: "68銀 52玉 26歩 51玉 25歩 52玉 38銀 51玉 27銀")
+    assert { free_battle.simple_versus_desc == "▲嬉野流 原始棒銀 vs △その他" }
   end
 
   describe "ファイルアップロードして変換" do
