@@ -31,9 +31,9 @@ RSpec.describe do
     assert { test("http://shogi-extend.com", "まず https に飛ぶ")     == [301, "https://shogi-extend.com/"]         }
   end
 
-  it "旧サイトを丸ごと移動させてはいけない" do
-    assert { test("http://tk2-221-20341.vs.sakura.ne.jp") == [403]   }
-  end
+  # it "旧サイトを丸ごと移動させてはいけない" do
+  #   assert { test("http://tk2-221-20341.vs.sakura.ne.jp") == [403]   }
+  # end
 
   it "旧サイトからのリダイレクト" do
     assert { test("http://tk2-221-20341.vs.sakura.ne.jp/shogi/w?query=kinakom0chi", "新サイトへ") == [301, "https://www.shogi-extend.com/w?query=kinakom0chi"] }
@@ -41,8 +41,8 @@ RSpec.describe do
     assert { test("http://tk2-221-20341.vs.sakura.ne.jp/shogi", "新サイトへ")                     == [301, "https://www.shogi-extend.com/"]                    }
   end
 end
-# >> .....
+# >> ....
 # >> 
-# >> Finished in 0.96771 seconds (files took 4.2 seconds to load)
-# >> 5 examples, 0 failures
+# >> Finished in 0.70618 seconds (files took 0.75911 seconds to load)
+# >> 4 examples, 0 failures
 # >> 
