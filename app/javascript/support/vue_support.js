@@ -121,7 +121,6 @@ export default {
       }
     },
 
-    // Twitterアプリ内ブラウザからTwitterアプリに遷移しなくなるので別ウィンドウで開いてはいけない
     tweet_share_open(params) {
       const url = new URL("https://twitter.com/intent/tweet")
       // const url = new URL("https://twitter.com/share")
@@ -131,11 +130,10 @@ export default {
         }
       })
       this.url_open(url.toString())
+      // this.popup_open(url.toString())
     },
 
     popup_open(url) {
-      alert("使用禁止")
-
       const width = 575
       const height = 256
       const left = (window.screen.width - width) / 2
