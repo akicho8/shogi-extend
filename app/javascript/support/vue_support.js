@@ -129,7 +129,8 @@ export default {
           url.searchParams.set(k, v)
         }
       })
-      this.popup_open(url.toString())
+      this.url_open(url.toString())
+      // this.popup_open(url.toString())
     },
 
     popup_open(url) {
