@@ -1,17 +1,18 @@
 meta(charset="UTF-8")
 meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
-
 - if params[:formal_sheet]
   meta(name="viewport" content="width=device-width, initial-scale=0.75")
 - else
   meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+meta(name="rails_env" content="#{Rails.env}")
+= action_cable_meta_tag
 
 link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css")
 link(rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css")
 
 link(rel="apple-touch-icon" href=path_to_image(@apple_touch_icon || "apple-touch-icon.png"))
 
-meta(name="rails_env" content="#{Rails.env}")
 
 = javascript_pack_tag "legacy_browser_verify"
 
@@ -25,8 +26,6 @@ sass:
 = csrf_meta_tag
 title= html_title
 
-- if AppConfig[:colosseum_battle_enable]
-  = action_cable_meta_tag
 
 / FIXME: とる
 javascript:

@@ -59,4 +59,5 @@ set :open_urls, [
   "https://shogi-flow.xyz/",
 ]
 
+after "deploy:published", "puma:restart"
 after "deploy:published", "sidekiq:restart"
