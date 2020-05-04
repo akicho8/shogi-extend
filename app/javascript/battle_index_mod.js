@@ -159,6 +159,7 @@ export default {
       return this.legacy_url_build(this.$options.xhr_index_path, {...this.async_records_load_url_params, format: "json"})
     },
 
+    // BUG: 変更になってもリアクティブにならない
     permalink_url() {
       return this.legacy_url_build(this.$options.xhr_index_path, this.async_records_load_url_params)
     },
