@@ -98,12 +98,10 @@ export default {
       }, 1000 * 0.1)
     },
 
-    url_build(attributes) {
-      if (false) {
-        return _.map(attributes, (v, k) => `${k}=${encodeURIComponent(v)}`).join("&")
-      } else {
-        return qs.stringify(attributes)
-      }
+    legacy_url_build(url, params) {
+      const obj = new URL(this.as_full_url(url))
+      _.each(params, (v, k) => obj.searchParams.set(k, v))
+      return obj.toString()
     },
 
     // 通知
@@ -123,7 +121,11 @@ export default {
     tweet_share_open(params) {
       const url = new URL("https://twitter.com/intent/tweet")
       // const url = new URL("https://twitter.com/share")
-      _.each(params, (v, k) => url.searchParams.set(k, v))
+      _.each(params, (v, k) => {
+        if (v) {
+          url.searchParams.set(k, v)
+        }
+      })
       this.popup_open(url.toString())
     },
 

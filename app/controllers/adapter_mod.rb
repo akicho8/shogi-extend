@@ -7,24 +7,11 @@ module AdapterMod
       return
     end
 
-    current_record.assign_attributes(kifu_body: current_input_text)
-    if current_record.save
-      all_kifs = current_record.all_kifs # エラーにならないことを確認する目的もある
-      ok_notify
-      sleep(1) if Rails.env.development?
-      render json: { all_kifs: all_kifs, record: js_record_for(current_record) }
-      return
-    else
-      # ここに来ることはない……ことない
-      render json: { bs_error: {message: current_record.errors.full_messages.join(" ")} }
-      return
-    end
-
-  rescue Bioshogi::BioshogiError => error
-    sleep(0.5) if Rails.env.development?
-    ng_notify(error)
-    render json: as_shogi_error_attrs(error)
-    return
+    current_record.update!(kifu_body: current_input_text)
+    all_kifs = current_record.all_kifs # エラーにならないことを確認する目的もある
+    ok_notify
+    sleep(1) if Rails.env.development?
+    render json: { all_kifs: all_kifs, record: js_record_for(current_record) }
   end
 
   private
@@ -53,11 +40,5 @@ module AdapterMod
       channel = "#adapter_success"
     end
     slack_message(key: "変換#{current_record.turn_max}手", body: body, channel: channel)
-  end
-
-  def ng_notify(error)
-    return if current_input_text.blank?
-
-    slack_message(key: error.class.name, body: "#{error.message}\n----\n#{current_input_text}", channel: "#adapter_error")
   end
 end

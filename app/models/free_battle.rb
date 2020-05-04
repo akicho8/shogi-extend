@@ -179,6 +179,10 @@ class FreeBattle < ApplicationRecord
     if changes_to_save[:kifu_body] && kifu_body
       url_in_kifu_body
     end
+
+    if changes_to_save[:kifu_body] && kifu_body
+      self.kifu_body = FreeBattle.taking_into_account_tactic_and_preset_to_kifu_body(kifu_body)
+    end
   end
 
   before_save do
@@ -299,6 +303,44 @@ class FreeBattle < ApplicationRecord
   end
 
   def parser_exec_after(info)
+    self.meta_info = info.mediator.players.inject({}) do |a, player|
+      a.merge(player.location.key => player.skill_set.to_h)
+    end
+
+    if use_info.key == :basic
+      self.defense_tag_list = ""
+      self.attack_tag_list = ""
+      self.technique_tag_list = ""
+      self.note_tag_list = ""
+      # self.other_tag_list = ""
+
+      defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+      attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    end
+  end
+
+  # free_battle = FreeBattle.same_body_fetch(body: "68銀")
+  # free_battle.simple_versus_desc # =>  "▲嬉野流 vs △その他"
+  def simple_versus_desc
+    if meta_info
+      if meta_info.kind_of?(Hash)
+        if meta_info.has_key?(:black)
+          hash = meta_info.inject({}) { |a, (location_key, hash)|
+            name = []
+            name += hash[:attack]
+            name += hash[:defense]
+            a.merge(location_key => name)
+          }
+          if hash.values.any?(&:present?)
+            hash.collect { |location_key, e|
+              [Bioshogi::Location.fetch(location_key).hexagon_mark, (e.presence || ["その他"]).join(" ")].join
+            }.join(" vs ")
+          end
+        end
+      end
+    end
   end
 
   concerning :UseInfoMethods do
@@ -333,6 +375,21 @@ class FreeBattle < ApplicationRecord
           label: location.name,
           data: time_chart_xy_list(location),
         }
+      end
+    end
+  end
+
+  concerning :HelperMod do
+    class_methods do
+      def taking_into_account_tactic_and_preset_to_kifu_body(str)
+        case
+        when e = Bioshogi::TacticInfo.flat_lookup(str.strip)
+          e.sample_kif_file.read
+        when e = Bioshogi::PresetInfo.lookup(str.strip)
+          e.to_position_sfen
+        else
+          str
+        end
       end
     end
   end

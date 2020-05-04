@@ -156,11 +156,12 @@ export default {
     },
 
     async_records_load_url() {
-      return `${this.$options.xhr_index_path}.json?${this.url_build(this.async_records_load_url_params)}`
+      return this.legacy_url_build(this.$options.xhr_index_path, {...this.async_records_load_url_params, format: "json"})
     },
 
+    // BUG: 変更になってもリアクティブにならない
     permalink_url() {
-      return `${this.$options.xhr_index_path}?${this.url_build(this.async_records_load_url_params)}`
+      return this.legacy_url_build(this.$options.xhr_index_path, this.async_records_load_url_params)
     },
 
     // id ですぐに引けるハッシュ

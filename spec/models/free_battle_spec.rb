@@ -48,6 +48,17 @@ RSpec.describe FreeBattle, type: :model do
     FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
   end
 
+  it "simple_versus_desc" do
+    free_battle = FreeBattle.same_body_fetch(body: "")
+    assert { free_battle.simple_versus_desc == nil }
+
+    free_battle = FreeBattle.same_body_fetch(body: "68銀")
+    assert { free_battle.simple_versus_desc == "☗嬉野流 vs ☖その他" }
+
+    free_battle = FreeBattle.same_body_fetch(body: "68銀 52玉 26歩 51玉 25歩 52玉 38銀 51玉 27銀")
+    assert { free_battle.simple_versus_desc == "☗嬉野流 原始棒銀 vs ☖その他" }
+  end
+
   describe "ファイルアップロードして変換" do
     let :uploaded_file do
       tempfile = Tempfile.open
@@ -77,7 +88,7 @@ RSpec.describe FreeBattle, type: :model do
         record.to_twitter_card_params
       end
       it do
-        assert { value[:title]       == "(tournament_name)"                                          }
+        assert { value[:title]       == "5手目"                                                      }
         assert { value[:url]         == nil                                                          }
         assert { value[:image]       == "http://localhost:3000/x/free_battle1.png?flip=false&turn=5" }
         assert { value[:description] == nil                                                          }

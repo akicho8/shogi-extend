@@ -1614,7 +1614,7 @@ browserslist@^4.11.1:
     node-releases "^1.1.53"
     pkg-up "^2.0.0"
 
-buefy@^0.8.16, buefy@^0.8.17:
+buefy@^0.8.17:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.8.17.tgz#3669ec0a5d2ad33c8109f9b8b9290979f1202cc9"
   integrity sha512-lLAnLjc8dQpGnLML+4tKpP2yUi/WAQ38ukR5qAMq7Cc9J0sbwy1kXAHarEPlOZkQFzx6c3VmHgL7/qGsupszrQ==
@@ -7212,10 +7212,10 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shogi-player@^0.0.184:
-  version "0.0.184"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.184.tgz#ad13029e4946f6fbf3bb8594bb6da7c0d26bc08b"
-  integrity sha512-hc0ER271YKLFjAVRiqq1+jcDDvYhCJ6SEuSGBKIc687W0iMI31wL3UjhFvZPAtbwFXp9gd921yM6afJpdqZVTA==
+shogi-player@^0.0.188:
+  version "0.0.188"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.188.tgz#f52c09be06ab943464e4e3963b1e7bcfc0d2d884"
+  integrity sha512-q7ST+63QB2OGHRd8yc5eRDskP4mr6jyOV4vjPCHiyngI5i0K9zMJX79yw/1Py4RVXXJ+OFT+ep2z7uWyZXreyA==
   dependencies:
     autolinker "^3.14.1"
     autoprefixer "^9.7.6"
@@ -7232,7 +7232,7 @@ shogi-player@^0.0.184:
     babel-preset-es2015 "^6.24.1"
     babel-preset-stage-2 "^6.22.0"
     babel-register "^6.22.0"
-    buefy "^0.8.16"
+    buefy "^0.8.17"
     bulma "^0.8.2"
     css-browser-selector "^0.6.5"
     js-memory-record "^0.0.14"
@@ -7242,7 +7242,7 @@ shogi-player@^0.0.184:
     sass-loader "^6.0.6"
     vue "^2.5.17"
     vue-router "^3.0.1"
-    vuex "^3.2.0"
+    vuex "^3.3.0"
     xregexp "^4.3.0"
 
 signal-exit@^3.0.0:
@@ -8207,6 +8207,11 @@ vue@^2.5.16, vue@^2.5.17:
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
 
 vuex@^3.2.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.3.0.tgz#665b4630ea1347317139fcc5cb495aab3ec5e513"
+  integrity sha512-1MfcBt+YFd20DPwKe0ThhYm1UEXZya4gVKUvCy7AtS11YAOUR+9a6u4fsv1Rr6ePZCDNxW/M1zuIaswp6nNv8Q==
+
+vuex@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.3.0.tgz#665b4630ea1347317139fcc5cb495aab3ec5e513"
   integrity sha512-1MfcBt+YFd20DPwKe0ThhYm1UEXZya4gVKUvCy7AtS11YAOUR+9a6u4fsv1Rr6ePZCDNxW/M1zuIaswp6nNv8Q==

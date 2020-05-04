@@ -14,11 +14,9 @@ window.Adapter = Vue.extend({
       // データ
       all_kifs: null, // 変換した棋譜
       record: null,      // FreeBattle のインスタンスの属性たち + いろいろんな情報
-      bs_error: null,    // BioshogiError の情報 (Hash)
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
-      _loading: null,    // ajax中なら $buefy.loading.open() のインスタンスが入ってる
     }
   },
 
@@ -34,32 +32,10 @@ window.Adapter = Vue.extend({
     input_text() {
       this.change_counter += 1
       this.record = null
-      this.bs_error = null
     },
   },
 
   computed: {
-    //////////////////////////////////////////////////////////////////////////////// view
-
-    field_type() {
-      if (this.change_counter === 0) {
-        if (this.bs_error) {
-          return "is-danger"
-        }
-        if (this.record) {
-          return "is-success"
-        }
-      }
-    },
-
-    field_message() {
-      if (this.change_counter === 0) {
-        if (this.bs_error) {
-          return _.compact([this.bs_error.message, this.bs_error.message_prefix]).join(" ")
-        }
-      }
-    },
-
     //////////////////////////////////////////////////////////////////////////////// piyoshogi
 
     piyo_shogi_app_with_params_url() {
@@ -220,7 +196,6 @@ window.Adapter = Vue.extend({
       this.http_command("POST", this.$options.post_path, params, e => {
         this.change_counter = 0
 
-        this.bs_error = null
         this.all_kifs = null
 
         if (e.redirect_to) {
@@ -231,28 +206,6 @@ window.Adapter = Vue.extend({
             this.input_text = ""
           }
           this.url_open(e.redirect_to)
-        }
-
-        if (e.bs_error) {
-          this.bs_error = e.bs_error
-          this.talk(this.bs_error.message, {rate: 1.0})
-
-          if (this.development_p) {
-            this.$buefy.toast.open({message: e.bs_error.message, position: "is-bottom", type: "is-danger", duration: 1000 * 5})
-          }
-
-          if (this.development_p && false) {
-            this.$buefy.dialog.alert({
-              title: "ERROR",
-              message: `<div>${e.bs_error.message}</div><div class="error_message_pre_with_margin is-size-7">${e.bs_error.board}</div>`,
-              canCancel: ["outside", "escape"],
-              type: "is-danger",
-              hasIcon: true,
-              icon: "times-circle",
-              iconPack: "fa",
-              trapFocus: true,
-            })
-          }
         }
 
         if (e.all_kifs) {

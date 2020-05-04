@@ -15,15 +15,17 @@ module ShogiErrorRescueMod
 
     rescue_from "Bioshogi::BioshogiError" do |error|
       if Rails.env.development?
-        Rails.logger.info(error)
+        Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, error])
         Rails.logger.info(error.backtrace.join("\n"))
         sleep(0.5)
       end
 
+      slack_message(key: error.class.name, body: [error.message, params].join("\n"), channel: "#adapter_error")
+
       case
       when request.format.json?
-        # なんでも棋譜変換の場合は頻繁にエラーになるためエラー通知しない
-        render json: as_shogi_error_attrs(error)
+        # なんでも棋譜変換の場合は頻繁にエラーになるため ExceptionNotifier しない
+        render json: as_bs_error(error) # status: 500 としたいが production で json を HTML で上書きされてしまう
       when request.format.png?
         ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
 
@@ -41,7 +43,7 @@ module ShogiErrorRescueMod
 
   private
 
-  def as_shogi_error_attrs(error)
+  def as_bs_error(error)
     {
       bs_error: {
         message_prefix: message_prefix_build(error),
@@ -60,10 +62,7 @@ module ShogiErrorRescueMod
     if e.respond_to?(:input)
       s << "#{e.input.input.values.join}"
     end
-    s = s.join.squish
-    if s.present?
-      "(#{s})"
-    end
+    s.join(" ").squish.presence
   end
 
   def error_html_build(e)

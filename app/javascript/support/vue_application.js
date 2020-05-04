@@ -134,6 +134,15 @@ export default {
         trapFocus: true,
       })
     },
+
+    bs_error_message_dialog(bs_error) {
+      const message = `
+          <div>${bs_error.message_prefix}</div>
+          <div>${bs_error.message}</div>
+          <div class="error_message_pre">${bs_error.board}</div>
+        `
+      this.error_message_dialog(message)
+    },
   },
 
   computed: {

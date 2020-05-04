@@ -48,10 +48,18 @@ RSpec.describe ShareBoardsController, type: :controller do
     assert { FreeBattle.count == 1 }
   end
 
-  # これはもともと最終手が合法手か確認するための機能だったが基本自由なので意味がなくなった
-  it "ツイートボタンを押したときに最新の棋譜を取得している" do
-    post :create, params: { body: "position startpos" }
-    value = JSON.parse(response.body, symbolize_names: true)
-    assert { value[:record] }
+  it "Twitterカードに戦法名が出る" do
+    get :show, params: { body: "68銀" }
+    assert { controller.twitter_card_options[:description] == "☗嬉野流 vs ☖その他" }
+  end
+
+  it "Twitterカード用の画像パス" do
+    get :show, params: { body: "68銀", image_flip: "true" }
+    assert { controller.current_image_path == "http://test.host/share-board.png?body=position+startpos+moves+7i6h&image_flip=true" }
+  end
+
+  it "image_view_point の値がおかしいときにエラーにしない" do
+    get :show, params: { body: "68銀", image_view_point: "xxxx" }
+    expect(response).to have_http_status(:ok)
   end
 end

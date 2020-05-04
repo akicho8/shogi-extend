@@ -93,20 +93,20 @@ module BattleModelMod
 
     preset_key_set(info)
 
-    if AppConfig[:swars_tag_search_function]
-      self.meta_info = { header: info.header.to_h }
-
-      self.defense_tag_list = ""
-      self.attack_tag_list = ""
-      self.technique_tag_list = ""
-      self.note_tag_list = ""
-      self.other_tag_list = ""
-
-      defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-      attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-    end
+    # if AppConfig[:swars_tag_search_function]
+    #   self.meta_info = { header: info.header.to_h }
+    #
+    #   self.defense_tag_list = ""
+    #   self.attack_tag_list = ""
+    #   self.technique_tag_list = ""
+    #   self.note_tag_list = ""
+    #   self.other_tag_list = ""
+    #
+    #   defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+    #   attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    #   technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    #   note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    # end
 
     unless battled_at
       if v = info.header["開始日時"].presence

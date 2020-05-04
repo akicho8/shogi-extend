@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
 
     private
 
-    def boolean_cast(v)
+    def boolean_for(v)
       v.to_s == "true" || v.to_s == "1"
     end
 
