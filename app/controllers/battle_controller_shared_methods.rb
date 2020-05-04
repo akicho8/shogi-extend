@@ -55,7 +55,7 @@ module BattleControllerSharedMethods
         :table_columns_hash              => table_columns_hash,
         :table_column_storage_prefix_key => controller_path,
         :zip_kifu_info                   => ZipKifuInfo.as_json,
-      }.merge(page_info(s), sort_info)
+      }.merge(page_info(current_records), sort_info)
     end
 
     private

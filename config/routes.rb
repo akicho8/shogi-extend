@@ -178,4 +178,16 @@ Rails.application.routes.draw do
       mount Fastentry::Engine, at: "rails-cache"
     end
   end
+
+  ################################################################################ sidekiq
+
+  # require 'sidekiq/monitor/stats' # <mounted-path>/monitor-stats
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/admin/sidekiq' # authenticate :user {} で認証チェックする例がネットにあるが、それは devise のメソッド
+
+  if false
+    # Sidekiq::Web.tabs.replace({"管理画面" => "/admin"}.merge(Sidekiq::Web.tabs))
+    # Sidekiq::Web.tabs["管理画面に戻る"] = "/admin"
+    Sidekiq::Web.tabs["管理画面に戻る"] = "http://localhost:3000/admin"
+  end
 end

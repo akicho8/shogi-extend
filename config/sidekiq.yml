@@ -1,0 +1,25 @@
+---
+# このファイルはバックグランド側しか読まない
+
+# スレッド数
+:concurrency: 1
+
+:verbose: true
+:pidfile: tmp/pids/sidekiq.pid
+:logfile: log/sidekiq_development.log
+
+staging:
+  :concurrency: 1
+  :logfile: log/sidekiq_staging.log
+
+production:
+  :concurrency: 1
+  :logfile: log/sidekiq_production.log
+
+:queues:
+  - most_high
+  - high
+  - default
+  - low
+  - batch
+  - most_low

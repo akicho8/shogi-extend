@@ -83,4 +83,16 @@ Rails.application.configure do
 
   # https://qiita.com/taiteam/items/a37c60fc15c1aa5bb606
   config.hosts << "ikeda-mac3.local"
+
+  # ################################################################################ ActionCable
+  # ActionCable.server.config.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
+  # config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
+  # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
+  # config.action_cable.url = "wss://shogi-flow.xyz:28081"
+  config.action_cable.mount_path = "/x-cable"
+
+  # ################################################################################ ActiveJob
+  config.active_job.queue_adapter     = :sidekiq
+  # config.active_job.queue_name_prefix = nil
 end

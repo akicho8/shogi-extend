@@ -192,3 +192,6 @@ gem "holiday_jp"
 # Redis用の管理画面
 gem "fastentry"
 
+# ActiveJob
+gem 'sidekiq'
+gem 'redis-namespace'

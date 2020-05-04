@@ -1,11 +1,21 @@
 load "#{__dir__}/production.rb"
 
 Rails.application.configure do
-  config.action_cable.url = "wss://staging.shogi-extend.com:28081"
-  Rails.application.routes.default_url_options.update(protocol: "https", host: "staging.shogi-extend.com")
+  Rails.application.routes.default_url_options.update(protocol: "https", host: "shogi-flow.xyz")
 
   # ################################################################################ cache_store
   config.cache_store = :redis_cache_store, { db: 8 }
+
+  # ################################################################################ ActionCable
+  # ActionCable.server.config.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
+  # config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
+  # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
+  # config.action_cable.url = "wss://shogi-flow.xyz:28081"
+  config.action_cable.mount_path = "/x-cable"
+
+  # ################################################################################ active_job
+  config.active_job.queue_adapter = :sidekiq
 
   # for AppConfig
   config.to_prepare do
