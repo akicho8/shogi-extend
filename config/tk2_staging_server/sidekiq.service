@@ -17,7 +17,7 @@
 # Use `journalctl -u sidekiq -rn 100` to view the last 100 lines of log output.
 #
 [Unit]
-Description=sidekiq
+Description=sidekiq staging
 # start us only once the network and logging subsystems are available,
 # consider adding redis-server.service if Redis is local and systemd-managed.
 After=syslog.target network.target
@@ -78,3 +78,12 @@ SyslogIdentifier=sidekiq
 
 [Install]
 WantedBy=multi-user.target
+# ~> -:47: unknown regexp options - www
+# ~> -:49: unknown regexp options - bah
+# ~> -:49: syntax error, unexpected tSTRING_BEG, expecting do or '{' or '('
+# ~> ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/b...
+# ~>                         ^
+# ~> -:57: unknown regexp option - b
+# ~> -:57: syntax error, unexpected unary-, expecting do or '{' or '('
+# ~> ExecReload=/usr/bin/kill -TSTP $MAINPID
+# ~>                          ^
