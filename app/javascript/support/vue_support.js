@@ -98,10 +98,13 @@ export default {
       }, 1000 * 0.1)
     },
 
-    legacy_url_build(url, params) {
-      const obj = new URL(this.as_full_url(url))
-      _.each(params, (v, k) => obj.searchParams.set(k, v))
-      return obj.toString()
+    // FIXME: URL() を使う
+    legacy_url_build(attributes) {
+      if (false) {
+        return _.map(attributes, (v, k) => `${k}=${encodeURIComponent(v)}`).join("&")
+      } else {
+        return qs.stringify(attributes)
+      }
     },
 
     // 通知
