@@ -79,8 +79,6 @@ group :development, :test do
   gem "capistrano-maintenance", require: false
   gem "slackistrano"            # for cap production slack:deploy:test
 
-  gem "artii"
-
   gem "rspec-rails"
   gem "rails-controller-testing" # controller で assigns を使うため
   # gem "test-unit"      # 入れなくても rspec-rails が minitest などを入れているせいで assert は使える (が、そのせいで test-unit 経由で power_assert が使えない)

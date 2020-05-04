@@ -86,7 +86,6 @@ GEM
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     annotate_models (1.0.1)
-    artii (2.1.2)
     awesome_print (1.8.0)
     aws-eventstream (1.0.3)
     aws-partitions (1.286.0)
@@ -486,7 +485,6 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_list
   annotate_models
-  artii
   aws-sdk-polly
   bcrypt
   bioshogi!

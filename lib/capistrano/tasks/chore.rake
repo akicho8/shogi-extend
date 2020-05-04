@@ -102,9 +102,9 @@ end
 
 desc "間違わないようにバナー表示"
 before "deploy:starting", :starting_banner do
-  label = "#{fetch(:application)} #{fetch(:branch)} to #{fetch(:stage)}".gsub(/[_\W]+/, " ")
-  puts Artii::Base.new(font: "slant").output(label)
-  system "say -v Victoria '#{label}'"
+  message = "#{fetch(:application)} #{fetch(:branch)} to #{fetch(:stage)}"
+  tp message
+  system "say -v Victoria '#{message}'"
 end
 
 desc "サーバー起動確認"
@@ -133,12 +133,10 @@ end
 
 desc "デプロイ失敗"
 task "deploy:failed" do
-  system "say 'デプロイに失敗しました'"
+  system "say '失敗'"
 end
 
 desc "デプロイ成功"
 after "deploy:finished", :finished_banner do # finished にすると動かない
-  label = "#{fetch(:branch)} to #{fetch(:stage)} deploy finished".gsub(/[_\W]+/, " ")
-  puts Artii::Base.new(font: "slant").output(label)
-  system "say -v Victoria '#{label}'"
+  system "say 'デプロイ成功'"
 end
