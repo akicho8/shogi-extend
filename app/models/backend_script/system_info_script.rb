@@ -11,9 +11,9 @@ module BackendScript
         { name: "sidekiq",         func: proc { active_check("sidekiq") }},
         { name: "puma",            func: proc { active_check("puma")    }},
         { name: "nginx",           func: proc { active_check("nginx")   }},
-        { name: "ps sidekiq",      func: proc { ps_aux("sidekiq")       }},
-        { name: "ps puma",         func: proc { ps_aux("puma")          }},
-        { name: "ps nginx",        func: proc { ps_aux("nginx")         }},
+        { name: "sidekiq (ps)",    func: proc { ps_aux("sidekiq")       }},
+        { name: "puma (ps)",       func: proc { ps_aux("puma")          }},
+        { name: "nginx (ps)",      func: proc { ps_aux("nginx")         }},
         { name: "Rails Cache",     func: proc { rails_cache                               }},
         { name: "ARテーブル数",    func: proc { ApplicationRecord.connection.tables.size }},
         { name: "SMTP設定",        func: proc { ActionMailer::Base.smtp_settings          }},
@@ -53,11 +53,11 @@ module BackendScript
     end
 
     def active_check(command)
-      `sudo systemctl status #{command} | grep Active`.strip
+      `sudo systemctl status #{command} | grep Active | head -1`.strip
     end
 
     def ps_aux(command)
-      `ps auxwww | grep #{command} | grep -v grep`.strip
+      `ps auxwww | grep #{command} | head -1`.strip
     end
 
     def boot_time

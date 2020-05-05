@@ -1,3 +1,27 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Membership (acns2_memberships as Acns2::Membership)
+#
+# |--------------+--------------+-------------+-------------+-----------------------+-------|
+# | name         | desc         | type        | opts        | refs                  | index |
+# |--------------+--------------+-------------+-------------+-----------------------+-------|
+# | id           | ID           | integer(8)  | NOT NULL PK |                       |       |
+# | room_id      | Room         | integer(8)  |             |                       | A! B  |
+# | user_id      | User         | integer(8)  |             | => Colosseum::User#id | A! C  |
+# | judge_key    | Judge key    | string(255) |             |                       | D     |
+# | rensho_count | Rensho count | integer(4)  | NOT NULL    |                       | E     |
+# | renpai_count | Renpai count | integer(4)  | NOT NULL    |                       | F     |
+# | quest_index  | Quest index  | integer(4)  |             |                       |       |
+# | position     | 順序         | integer(4)  |             |                       | G     |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |                       |       |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |                       |       |
+# |--------------+--------------+-------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :acns2_memberships
+#--------------------------------------------------------------------------------
+
 module Acns2
   class Membership < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"

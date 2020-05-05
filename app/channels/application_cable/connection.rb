@@ -6,23 +6,27 @@ module ApplicationCable
       self.current_user = find_verified_user
       if current_user
         logger.add_tags current_user.name
+        Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "ログインしている"])
+      else
+        Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "ログインしていない"])
       end
     end
 
     def disconnect
       # Any cleanup work needed when the cable connection is cut.
+      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__])
     end
 
     private
 
     def find_verified_user
-      if cookies.encrypted[:user_id]
-        user = Colosseum::User.find_by(id: cookies.encrypted[:user_id])
+      if user_id = cookies[:user_id]
+        user = Colosseum::User.find_by(id: user_id)
         #
         # ここで reject するとログインしていない人が観戦できなくる
-        # unless user
-        #   reject_unauthorized_connection
-        # end
+        unless user
+          reject_unauthorized_connection
+        end
         #
         user
       end

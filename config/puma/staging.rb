@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "scp staging.rb s:/var/www/shogi_web_staging/current/config/puma; ssh s '(cd /var/www/shogi_web_staging/current && bin/rails restart)' && ssh s 'sudo nginx -t && sudo systemctl restart nginx'" -*-
+# -*- coding: utf-8; compile-command: "scp staging.rb s:/var/www/shogi_web_staging/current/config/puma; ssh s 'sudo systemctl restart puma'" -*-
 
 pp({
     "whoami"    => `whoami`.strip,

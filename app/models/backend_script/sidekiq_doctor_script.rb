@@ -11,14 +11,20 @@ module BackendScript
           :label   => "コード",
           :key     => :code,
           :type    => :string,
-          :default => default_code,
+          :default => current_code,
         },
       ]
     end
 
     def script_body
-      SidekiqDoctorJob.perform_later(code: params[:code])
-      AlertLog.order(created_at: :desc).take(10)
+      if submitted?
+        SidekiqDoctorJob.perform_later(code: current_code)
+        AlertLog.order(created_at: :desc).take(10)
+      end
+    end
+
+    def current_code
+      params[:code].presence || default_code
     end
 
     def default_code

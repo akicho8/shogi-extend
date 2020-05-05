@@ -2,6 +2,8 @@ module Acns1
   class MessageBroadcastJob < ApplicationJob
     queue_as :default
 
+    discard_on ActiveJob::DeserializationError
+
     def perform(message)
       ActionCable.server.broadcast("acns1/room_channel/#{message.room_id}", message: render_message(message))
     end

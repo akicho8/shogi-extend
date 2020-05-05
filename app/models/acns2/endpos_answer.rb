@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Endpos answer (acns2_endpos_answers as Acns2::EndposAnswer)
+#
+# |-------------+-------------+-------------+-------------+------+-------|
+# | name        | desc        | type        | opts        | refs | index |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | question_id | Question    | integer(8)  |             |      | A     |
+# | limit_turn  | Limit turn  | integer(4)  | NOT NULL    |      | B     |
+# | sfen_endpos | Sfen endpos | string(255) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
+
 module Acns2
   class EndposAnswer < ApplicationRecord
     belongs_to :question, counter_cache: true

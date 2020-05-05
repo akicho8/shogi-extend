@@ -1,3 +1,28 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Profile (acns2_profiles as Acns2::Profile)
+#
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+# | name             | desc             | type       | opts        | refs                  | index |
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+# | id               | ID               | integer(8) | NOT NULL PK |                       |       |
+# | user_id          | User             | integer(8) |             | => Colosseum::User#id | A     |
+# | rating           | Rating           | integer(4) | NOT NULL    |                       | B     |
+# | rating_last_diff | Rating last diff | integer(4) | NOT NULL    |                       | C     |
+# | rating_max       | Rating max       | integer(4) | NOT NULL    |                       | D     |
+# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |                       | E     |
+# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |                       | F     |
+# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |                       | G     |
+# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |                       | H     |
+# | created_at       | 作成日時         | datetime   | NOT NULL    |                       |       |
+# | updated_at       | 更新日時         | datetime   | NOT NULL    |                       |       |
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :acns2_memberships
+#--------------------------------------------------------------------------------
+
 module Acns2
   class Profile < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User"

@@ -39,7 +39,7 @@ Vue.use(VueGtag, {
   config: {
     id: 'UA-109851345-1',
     params: {
-      // send_page_view: false,
+      // send_page_view: process.env.NODE_ENV !== "production",
 
       // https://developers.google.com/analytics/devguides/collection/gtagjs/cookies-user-id?hl=ja
       // > サーバーがローカル環境（例: localhost）で実行されていることが検出されると、cookie_domain は自動的に 'none' に設定されます

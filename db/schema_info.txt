@@ -84,6 +84,37 @@
 
 # == Schema Information ==
 #
+# Room (acns1_rooms as Acns1::Room)
+#
+# |------------+----------+------------+-------------+------+-------|
+# | name       | desc     | type       | opts        | refs | index |
+# |------------+----------+------------+-------------+------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |      |       |
+# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
+# |------------+----------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Message (acns1_messages as Acns1::Message)
+#
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | name       | desc     | type        | opts        | refs                  | index |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
+# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
+# | room_id    | Room     | integer(8)  |             |                       | B     |
+# | body       | 内容     | text(65535) |             |                       |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :acns2_memberships
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
 # 対局 (colosseum_battles as Colosseum::Battle)
 #
 # |-------------------+----------------------------------------------+-------------+---------------------+------+-------|
@@ -289,23 +320,19 @@
 #
 # Xy record (xy_records as XyRecord)
 #
-# |-------------------+----------------+-------------+-------------+-----------------------------+-------|
-# | name              | desc           | type        | opts        | refs                        | index |
-# |-------------------+----------------+-------------+-------------+-----------------------------+-------|
-# | id                | ID             | integer(8)  | NOT NULL PK |                             |       |
-# | colosseum_user_id | Colosseum user | integer(8)  |             | :user => Colosseum::User#id | A     |
-# | entry_name        | Entry name     | string(255) | NOT NULL    |                             | B     |
-# | summary           | Summary        | string(255) |             |                             |       |
-# | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |                             | C     |
-# | x_count           | X count        | integer(4)  | NOT NULL    |                             |       |
-# | spent_sec         | Spent sec      | float(24)   | NOT NULL    |                             |       |
-# | created_at        | 作成日時       | datetime    | NOT NULL    |                             |       |
-# | updated_at        | 更新日時       | datetime    | NOT NULL    |                             |       |
-# |-------------------+----------------+-------------+-------------+-----------------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
-#--------------------------------------------------------------------------------
+# |-------------------+----------------+-------------+-------------+------+-------|
+# | name              | desc           | type        | opts        | refs | index |
+# |-------------------+----------------+-------------+-------------+------+-------|
+# | id                | ID             | integer(8)  | NOT NULL PK |      |       |
+# | colosseum_user_id | Colosseum user | integer(8)  |             |      | A     |
+# | entry_name        | Entry name     | string(255) | NOT NULL    |      | B     |
+# | summary           | Summary        | string(255) |             |      |       |
+# | xy_rule_key       | Xy rule key    | string(255) | NOT NULL    |      | C     |
+# | x_count           | X count        | integer(4)  | NOT NULL    |      |       |
+# | spent_sec         | Spent sec      | float(24)   | NOT NULL    |      |       |
+# | created_at        | 作成日時       | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時       | datetime    | NOT NULL    |      |       |
+# |-------------------+----------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -361,21 +388,157 @@
 
 # == Schema Information ==
 #
-# Cpu battle record (cpu_battle_records as CpuBattleRecord)
+# Membership (acns2_memberships as Acns2::Membership)
 #
-# |-------------------+----------------+-------------+-------------+-----------------------------+-------|
-# | name              | desc           | type        | opts        | refs                        | index |
-# |-------------------+----------------+-------------+-------------+-----------------------------+-------|
-# | id                | ID             | integer(8)  | NOT NULL PK |                             |       |
-# | colosseum_user_id | Colosseum user | integer(8)  |             | :user => Colosseum::User#id | A     |
-# | judge_key         | Judge key      | string(255) | NOT NULL    |                             | B     |
-# | created_at        | 作成日時       | datetime    | NOT NULL    |                             |       |
-# | updated_at        | 更新日時       | datetime    | NOT NULL    |                             |       |
-# |-------------------+----------------+-------------+-------------+-----------------------------+-------|
+# |--------------+--------------+-------------+-------------+-----------------------+-------|
+# | name         | desc         | type        | opts        | refs                  | index |
+# |--------------+--------------+-------------+-------------+-----------------------+-------|
+# | id           | ID           | integer(8)  | NOT NULL PK |                       |       |
+# | room_id      | Room         | integer(8)  |             |                       | A! B  |
+# | user_id      | User         | integer(8)  |             | => Colosseum::User#id | A! C  |
+# | judge_key    | Judge key    | string(255) |             |                       | D     |
+# | rensho_count | Rensho count | integer(4)  | NOT NULL    |                       | E     |
+# | renpai_count | Renpai count | integer(4)  | NOT NULL    |                       | F     |
+# | quest_index  | Quest index  | integer(4)  |             |                       |       |
+# | position     | 順序         | integer(4)  |             |                       | G     |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |                       |       |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |                       |       |
+# |--------------+--------------+-------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
+# Colosseum::User.has_many :acns2_memberships
 #--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Room (acns2_rooms as Acns2::Room)
+#
+# |------------+-----------+-------------+-------------+------+-------|
+# | name       | desc      | type        | opts        | refs | index |
+# |------------+-----------+-------------+-------------+------+-------|
+# | id         | ID        | integer(8)  | NOT NULL PK |      |       |
+# | begin_at   | Begin at  | datetime    | NOT NULL    |      | A     |
+# | end_at     | End at    | datetime    |             |      | B     |
+# | final_key  | Final key | string(255) |             |      | C     |
+# | created_at | 作成日時  | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時  | datetime    | NOT NULL    |      |       |
+# |------------+-----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Moves answer (acns2_moves_answers as Acns2::MovesAnswer)
+#
+# |-------------+------------+-------------+-------------+------+-------|
+# | name        | desc       | type        | opts        | refs | index |
+# |-------------+------------+-------------+-------------+------+-------|
+# | id          | ID         | integer(8)  | NOT NULL PK |      |       |
+# | question_id | Question   | integer(8)  |             |      | A     |
+# | limit_turn  | Limit turn | integer(4)  | NOT NULL    |      | B     |
+# | moves_str   | Moves str  | string(255) | NOT NULL    |      |       |
+# | created_at  | 作成日時   | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時   | datetime    | NOT NULL    |      |       |
+# |-------------+------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Endpos answer (acns2_endpos_answers as Acns2::EndposAnswer)
+#
+# |-------------+-------------+-------------+-------------+------+-------|
+# | name        | desc        | type        | opts        | refs | index |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | question_id | Question    | integer(8)  |             |      | A     |
+# | limit_turn  | Limit turn  | integer(4)  | NOT NULL    |      | B     |
+# | sfen_endpos | Sfen endpos | string(255) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Message (acns2_messages as Acns2::Message)
+#
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | name       | desc     | type        | opts        | refs                  | index |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
+# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
+# | room_id    | Room     | integer(8)  |             |                       | B     |
+# | body       | 内容     | string(512) |             |                       |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :acns2_memberships
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Question (acns2_questions as Acns2::Question)
+#
+# |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
+# | name                  | desc                  | type        | opts                | refs                  | index |
+# |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
+# | id                    | ID                    | integer(8)  | NOT NULL PK         |                       |       |
+# | user_id               | User                  | integer(8)  |                     | => Colosseum::User#id | A     |
+# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | B     |
+# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | C     |
+# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | D     |
+# | title                 | タイトル              | string(255) |                     |                       |       |
+# | description           | 説明                  | string(512) |                     |                       |       |
+# | hint_description      | Hint description      | string(255) |                     |                       |       |
+# | source_desc           | Source desc           | string(255) |                     |                       |       |
+# | other_twitter_account | Other twitter account | string(255) |                     |                       |       |
+# | created_at            | 作成日時              | datetime    | NOT NULL            |                       |       |
+# | updated_at            | 更新日時              | datetime    | NOT NULL            |                       |       |
+# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | E     |
+# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | F     |
+# | o_count               | O count               | integer(4)  | NOT NULL            |                       | G     |
+# | x_count               | X count               | integer(4)  | NOT NULL            |                       | H     |
+# |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :acns2_memberships
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Profile (acns2_profiles as Acns2::Profile)
+#
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+# | name             | desc             | type       | opts        | refs                  | index |
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+# | id               | ID               | integer(8) | NOT NULL PK |                       |       |
+# | user_id          | User             | integer(8) |             | => Colosseum::User#id | A     |
+# | rating           | Rating           | integer(4) | NOT NULL    |                       | B     |
+# | rating_last_diff | Rating last diff | integer(4) | NOT NULL    |                       | C     |
+# | rating_max       | Rating max       | integer(4) | NOT NULL    |                       | D     |
+# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |                       | E     |
+# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |                       | F     |
+# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |                       | G     |
+# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |                       | H     |
+# | created_at       | 作成日時         | datetime   | NOT NULL    |                       |       |
+# | updated_at       | 更新日時         | datetime   | NOT NULL    |                       |       |
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :acns2_memberships
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Cpu battle record (cpu_battle_records as CpuBattleRecord)
+#
+# |-------------------+----------------+-------------+-------------+------+-------|
+# | name              | desc           | type        | opts        | refs | index |
+# |-------------------+----------------+-------------+-------------+------+-------|
+# | id                | ID             | integer(8)  | NOT NULL PK |      |       |
+# | colosseum_user_id | Colosseum user | integer(8)  |             |      | A     |
+# | judge_key         | Judge key      | string(255) | NOT NULL    |      | B     |
+# | created_at        | 作成日時       | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時       | datetime    | NOT NULL    |      |       |
+# |-------------------+----------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -394,36 +557,32 @@
 #
 # 棋譜投稿 (free_battles as FreeBattle)
 #
-# |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
-# | name              | desc               | type           | opts        | refs                              | index |
-# |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
-# | id                | ID                 | integer(8)     | NOT NULL PK |                                   |       |
-# | key               | ユニークなハッシュ | string(255)    | NOT NULL    |                                   | A!    |
-# | kifu_url          | 棋譜URL            | string(255)    |             |                                   |       |
-# | kifu_body         | 棋譜               | text(16777215) | NOT NULL    |                                   |       |
-# | turn_max          | 手数               | integer(4)     | NOT NULL    |                                   | F     |
-# | meta_info         | 棋譜ヘッダー       | text(65535)    | NOT NULL    |                                   |       |
-# | battled_at        | Battled at         | datetime       | NOT NULL    |                                   | E     |
-# | outbreak_turn     | Outbreak turn      | integer(4)     |             |                                   | B     |
-# | use_key           | Use key            | string(255)    | NOT NULL    |                                   | C     |
-# | accessed_at       | Accessed at        | datetime       | NOT NULL    |                                   |       |
-# | created_at        | 作成日時           | datetime       | NOT NULL    |                                   |       |
-# | updated_at        | 更新日時           | datetime       | NOT NULL    |                                   |       |
-# | colosseum_user_id | 所有者ID           | integer(8)     |             | :owner_user => Colosseum::User#id | D     |
-# | title             | タイトル           | string(255)    |             |                                   |       |
-# | description       | 説明               | text(65535)    | NOT NULL    |                                   |       |
-# | start_turn        | 開始局面           | integer(4)     |             |                                   | G     |
-# | critical_turn     | 開戦               | integer(4)     |             |                                   | H     |
-# | saturn_key        | 公開範囲           | string(255)    | NOT NULL    |                                   | I     |
-# | sfen_body         | SFEN形式棋譜       | string(8192)   | NOT NULL    |                                   |       |
-# | image_turn        | OGP画像の局面      | integer(4)     |             |                                   |       |
-# | preset_key        | Preset key         | string(255)    | NOT NULL    |                                   |       |
-# | sfen_hash         | Sfen hash          | string(255)    | NOT NULL    |                                   |       |
-# |-------------------+--------------------+----------------+-------------+-----------------------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :free_battles, foreign_key: :colosseum_user_id
-#--------------------------------------------------------------------------------
+# |-------------------+--------------------+----------------+-------------+------+-------|
+# | name              | desc               | type           | opts        | refs | index |
+# |-------------------+--------------------+----------------+-------------+------+-------|
+# | id                | ID                 | integer(8)     | NOT NULL PK |      |       |
+# | key               | ユニークなハッシュ | string(255)    | NOT NULL    |      | A!    |
+# | kifu_url          | 棋譜URL            | string(255)    |             |      |       |
+# | kifu_body         | 棋譜               | text(16777215) | NOT NULL    |      |       |
+# | turn_max          | 手数               | integer(4)     | NOT NULL    |      | F     |
+# | meta_info         | 棋譜ヘッダー       | text(65535)    | NOT NULL    |      |       |
+# | battled_at        | Battled at         | datetime       | NOT NULL    |      | E     |
+# | outbreak_turn     | Outbreak turn      | integer(4)     |             |      | B     |
+# | use_key           | Use key            | string(255)    | NOT NULL    |      | C     |
+# | accessed_at       | Accessed at        | datetime       | NOT NULL    |      |       |
+# | created_at        | 作成日時           | datetime       | NOT NULL    |      |       |
+# | updated_at        | 更新日時           | datetime       | NOT NULL    |      |       |
+# | colosseum_user_id | 所有者ID           | integer(8)     |             |      | D     |
+# | title             | タイトル           | string(255)    |             |      |       |
+# | description       | 説明               | text(65535)    | NOT NULL    |      |       |
+# | start_turn        | 開始局面           | integer(4)     |             |      | G     |
+# | critical_turn     | 開戦               | integer(4)     |             |      | H     |
+# | saturn_key        | 公開範囲           | string(255)    | NOT NULL    |      | I     |
+# | sfen_body         | SFEN形式棋譜       | string(8192)   | NOT NULL    |      |       |
+# | image_turn        | OGP画像の局面      | integer(4)     |             |      |       |
+# | preset_key        | Preset key         | string(255)    | NOT NULL    |      |       |
+# | sfen_hash         | Sfen hash          | string(255)    | NOT NULL    |      |       |
+# |-------------------+--------------------+----------------+-------------+------+-------|
 
 # == Schema Information ==
 #

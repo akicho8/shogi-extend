@@ -7,12 +7,13 @@ meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
 
 meta(name="rails_env" content="#{Rails.env}")
 = action_cable_meta_tag
+= favicon_link_tag
+= csrf_meta_tag
 
 link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css")
 link(rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css")
 
 link(rel="apple-touch-icon" href=path_to_image(@apple_touch_icon || "apple-touch-icon.png"))
-
 
 = javascript_pack_tag "legacy_browser_verify"
 
@@ -22,10 +23,7 @@ sass:
     /* important 指定しないと効かないのが謎 */
     display: none !important
 
-= favicon_link_tag
-= csrf_meta_tag
 title= html_title
-
 
 / FIXME: とる
 javascript:
