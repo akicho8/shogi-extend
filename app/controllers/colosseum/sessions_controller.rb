@@ -7,7 +7,7 @@ module Colosseum
       else
         user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       end
-      current_user_set_id(user)
+      current_user_set(user)
       sign_in_and_redirect user
     end
 

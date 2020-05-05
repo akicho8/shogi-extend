@@ -10,7 +10,7 @@ RSpec::Rails::ControllerExampleGroup.module_eval do
     def user_login(attributes = {})
       create(:colosseum_user, attributes).tap do |user|
         user_logout
-        controller.current_user_set_id(user.id)
+        controller.current_user_set(user)
       end
     end
 

@@ -20,6 +20,7 @@ module ApplicationCable
     private
 
     def find_verified_user
+      # current_user_set で cookies に入れているので取れる
       if user_id = cookies[:user_id]
         user = Colosseum::User.find_by(id: user_id)
         #

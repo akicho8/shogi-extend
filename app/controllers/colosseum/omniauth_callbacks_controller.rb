@@ -67,7 +67,7 @@ module Colosseum
       end
 
       # アカウントを作成または復元したのでログイン状態にする
-      current_user_set_id(user.id)
+      current_user_set(user)
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
       if Rails.env.production? || Rails.env.staging?
       else
