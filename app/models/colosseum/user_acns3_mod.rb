@@ -8,9 +8,13 @@ module Colosseum
 
       has_many :acns3_questions, class_name: "Acns3::Question", :dependent => :destroy
 
+      has_many :acns3_messages, class_name: "Acns3::Message", :dependent => :destroy
+
       after_create do
         acns3_profile || create_acns3_profile!
       end
+
+      delegate :rating, to: :acns3_profile
     end
   end
 end

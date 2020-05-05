@@ -3,10 +3,13 @@ ENV['RAILS_ENV'] ||= 'test'
 require "spec_helper"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
+# require "action_cable/testing/rspec"
+# require 'sidekiq/testing/inline'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # app/models/acns2.rb などを明示的に読み込む (Ruby 2.7 ではこのあたりの対策がされているとの噂)
 Acns2
+Acns3
 Swars
 Colosseum
 

@@ -87,7 +87,7 @@ group :development, :test do
   gem "factory_bot_rails"
   # gem "webmock" # rack-proxy と干渉するため外す
 
-  gem "rails-erd"
+  gem "test-prof"               # for let_it_be
 end
 
 group :development do

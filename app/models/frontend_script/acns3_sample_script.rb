@@ -7,10 +7,10 @@
 #   app/javascript/acns3_sample.vue
 #
 # db
-#   db/migrate/20200414142200_create_acns3.rb
+#   db/migrate/20200505135600_create_acns3.rb
 #
 # test
-#   experiment/0850_acns3.rb
+#   experiment/0860_acns3.rb
 #
 # model
 #   app/models/acns3/membership.rb

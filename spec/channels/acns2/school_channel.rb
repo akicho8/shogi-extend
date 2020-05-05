@@ -1,13 +1,7 @@
-module Acns3
+module Acns2
   class SchoolChannel < BaseChannel
-    delegate :online_user_ids, to: "self.class"
-
-    def self.online_user_ids
-      redis.smembers(:online_user_ids)
-    end
-
     def subscribed
-      stream_from "acns3/school_channel"
+      stream_from "acns2/school_channel"
 
       if current_user
         redis.sadd(:online_user_ids, current_user.id)
@@ -27,7 +21,11 @@ module Acns3
     private
 
     def all_broadcast
-      ActionCable.server.broadcast("acns3/school_channel", online_user_ids: online_user_ids, room_user_ids: room_user_ids)
+      ActionCable.server.broadcast("acns2/school_channel", online_user_ids: online_user_ids, room_user_ids: room_user_ids)
+    end
+
+    def online_user_ids
+      redis.smembers(:online_user_ids)
     end
   end
 end

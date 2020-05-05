@@ -46,6 +46,11 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
+  ################################################################################
+
+  # https://qiita.com/upinetree/items/41a2a8fe9e1dd7c291ab
+  config.active_job.queue_adapter = :inline
+
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({

@@ -1,9 +1,8 @@
-module Acns3
+module Acns2
   class RoomChannel < BaseChannel
     def subscribed
-      raise ArgumentError, params.inspect unless params["room_id"]
-
-      stream_from "acns3/room_channel/#{params["room_id"]}"
+      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_user&.name, params])
+      stream_from "acns2/room_channel/#{params["room_id"]}"
 
       if current_user
         redis.sadd(:room_user_ids, current_user.id)
@@ -43,21 +42,21 @@ module Acns3
 
     # TODO: js 側から直接 received に送れないのか？
     def progress_info_share(data)
-      data = data.to_options
-
-      info = { membership_id: data[:membership_id], quest_index: data[:quest_index] }
+      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data])
+      info = {membership_id: data["membership_id"], quest_index: data["quest_index"]}
 
       # 一応保存しておく(あとで取るかもしれない)
-      current_room.memberships.find(data[:membership_id]).update!(quest_index: data[:quest_index])
+      current_room.memberships.find(data["membership_id"]).update!(quest_index: data["quest_index"])
 
-      # こちらがメイン
-      ActionCable.server.broadcast("acns3/room_channel/#{params["room_id"]}", {progress_info_share: info})
+      ActionCable.server.broadcast("acns2/room_channel/#{params["room_id"]}", {progress_info_share: info})
     end
 
-    # <-- app/javascript/acns3_sample.vue
+    # <-- app/javascript/acns2_sample.vue
     def katimasitayo(data)
       katimashita(:win, :all_clear)
     end
+
+    private
 
     def katimashita(judge_key, final_key)
       room = current_room
@@ -82,10 +81,10 @@ module Acns3
           mm = [m2, m1]
         end
 
-        ab = mm.collect { |e| e.user.acns3_profile.rating }
+        ab = mm.collect { |e| e.user.acns2_profile.rating }
         ab = EloRating.rating_update2(*ab)
         ab = ab.collect(&:round)
-        mm.each.with_index { |m, i| m.user.acns3_profile.update!(rating: ab[i]) }
+        mm.each.with_index { |m, i| m.user.acns2_profile.update!(rating: ab[i]) }
 
         mm.each(&:save!)
         room.update!(final_key: final_key)
@@ -96,9 +95,9 @@ module Acns3
       memberships_user_ids_remove(room)
 
       # 終了時
-      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {acns3_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
-      ActionCable.server.broadcast("acns3/room_channel/#{params["room_id"]}", {switch_to: "result_show", room: room_json})
-      # --> app/javascript/acns3_sample.vue
+      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {acns2_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      ActionCable.server.broadcast("acns2/room_channel/#{params["room_id"]}", {switch_to: "result_show", room: room_json})
+      # --> app/javascript/acns2_sample.vue
     end
 
     def current_room
@@ -106,7 +105,7 @@ module Acns3
     end
 
     def room_user_ids_broadcast
-      ActionCable.server.broadcast("acns3/school_channel", room_user_ids: room_user_ids)
+      ActionCable.server.broadcast("acns2/school_channel", room_user_ids: room_user_ids)
     end
 
     def memberships_user_ids_remove(room)
@@ -114,10 +113,6 @@ module Acns3
         redis.srem(:room_user_ids, m.user.id)
       end
       room_user_ids_broadcast
-    end
-
-    def room_users
-      room_user_ids.collect { |e| Colosseum::User.find(e) }
     end
   end
 end

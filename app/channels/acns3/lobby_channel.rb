@@ -1,49 +1,91 @@
 module Acns3
   class LobbyChannel < BaseChannel
+    MATCHING_RATE_THRESHOLD_DEFAULT = 50
+
+    delegate :matching_list, to: "self.class"
+
+    def self.matching_list
+      redis.smembers(:matching_list).collect(&:to_i)
+    end
+
+    ################################################################################
+
     def subscribed
       stream_from "acns3/lobby_channel"
       common_broadcast
     end
 
     def unsubscribed
-      if current_user
-        redis.srem(:matching_list, current_user.id)
-      end
-      common_broadcast
+      matching_list_remove(current_user)
     end
 
     def matching_start(data)
-      case
-      when redis.sismember(:matching_list, current_user.id)
-      when redis.scard(:matching_list) == 0
-        redis.sadd(:matching_list, current_user.id)
-      else
-        if id = redis.spop(:matching_list) # shuffle.pop 相当
-          op_user = Colosseum::User.find(id)
-          Room.create! do |e|
-            e.memberships.build(user: op_user)
-            e.memberships.build(user: current_user)
-          end
-          # --> app/jobs/acns3/lobby_broadcast_job.rb
+      data = data.to_options
+      matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
+
+      Rails.logger.debug(ordered_infos_debug.to_t)
+
+      if ordered_info = ordered_infos.first
+        gap, opponent = ordered_info
+        if gap < matching_rate_threshold
+          room_create(opponent, current_user)
+          return
         end
       end
 
-      common_broadcast
+      matching_list_add(current_user)
     end
 
     def matching_cancel(data)
-      redis.srem(:matching_list, current_user.id)
+      matching_list_remove(current_user)
+    end
+
+    ################################################################################
+
+    def ordered_infos_debug
+      ordered_infos.collect { |gap, e| { gap: gap, id: e.id, name: e.name } }
+    end
+
+    def ordered_infos
+      matching_users_without_self.collect { |e| [(e.rating - current_user.rating).abs, e] }.sort
+    end
+
+    def matching_users_without_self
+      matching_users.reject { |e| e == current_user }
+    end
+
+    def matching_users
+      matching_list.collect { |e| Colosseum::User.find(e) }
+    end
+
+    def matching_list_add(user)
+      redis.sadd(:matching_list, user.id)
       common_broadcast
     end
 
-    private
+    def matching_member?(user)
+      redis.sismember(:matching_list, user.id)
+    end
 
-    def matching_list
-      redis.smembers(:matching_list)
+    def matching_list_remove(*users)
+      users.each do |user|
+        redis.srem(:matching_list, user.id)
+      end
+      common_broadcast
     end
 
     def common_broadcast
       ActionCable.server.broadcast("acns3/lobby_channel", matching_list: matching_list)
+    end
+
+    def room_create(a, b)
+      matching_list_remove(a, b)
+
+      # app/models/acns3/room.rb
+      Room.create! do |e|
+        e.memberships.build(user: a)
+        e.memberships.build(user: b)
+      end
     end
   end
 end

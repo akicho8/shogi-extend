@@ -9,7 +9,7 @@
 |      |  4 | 詰将棋ファイター(旧)   | production | redis_db_for_acns2                  |
 |      |  5 | 詰将棋ファイター(新)   | production | redis_db_for_acns3                  |
 |      |  6 | sidekiq                | production | redis_db_for_sidekiq                |
-|      |  7 |                        |            |                                     |
+|      |  7 | ActionCable            | production | cable.yml                           |
 |      |  8 |                        |            |                                     |
 |      |  9 |                        |            |                                     |
 |      | 10 |                        |            |                                     |
@@ -33,6 +33,6 @@
 |      | 11 | 詰将棋ファイター(旧)   | staging    | redis_db_for_acns2                  |
 |      | 12 | 詰将棋ファイター(新)   | staging    | redis_db_for_acns3                  |
 |      | 13 | sidekiq                | staging    | redis_db_for_sidekiq                |
-|      | 13 |                        |            |                                     |
-|      | 14 |                        |            |                                     |
+|      | 14 | ActionCable            | staging    | cable.yml                           |
+|      | 15 |                        |            |                                     |
 |------+----+------------------------+------------+-------------------------------------|
