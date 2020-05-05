@@ -1,12 +1,17 @@
 development:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/7" } %>
   channel_prefix: shogi_web_development
-
-test:
-  adapter: test
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/7" } %>
   channel_prefix: shogi_web_production
+
+staging:
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/14" } %>
+  channel_prefix: shogi_web_staging
+
+test:
+  adapter: test
