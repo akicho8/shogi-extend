@@ -44,6 +44,7 @@ module Colosseum
 
   class User < ApplicationRecord
     include UserAcns2Mod
+    include UserAcns3Mod
 
     concerning :BasicMethods do
       included do

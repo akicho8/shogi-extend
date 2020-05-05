@@ -21,7 +21,7 @@ Rails.application.configure do
     if false
       config.cache_store = :memory_store
     else
-      config.cache_store = :redis_cache_store, { db: 1 }
+      config.cache_store = :redis_cache_store, { db: 1 } # Redis.new
     end
 
     config.public_file_server.headers = {

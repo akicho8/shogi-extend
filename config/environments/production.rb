@@ -124,7 +124,7 @@ Rails.application.configure do
   Rails.application.routes.default_url_options.update(protocol: "https", host: "www.shogi-extend.com")
 
   # ################################################################################ cache_store
-  config.cache_store = :redis_cache_store, { db: 1 }
+  config.cache_store = :redis_cache_store, { db: 1 } # Redis.new
 
   # for AppConfig
   config.to_prepare do

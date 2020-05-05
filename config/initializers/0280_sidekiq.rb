@@ -26,8 +26,12 @@
 #
 # require 'sidekiq-status'
 
+redis_db_for_sidekiq = AppConfig[:redis_db_for_sidekiq]
+
+tp({redis_db_for_sidekiq: redis_db_for_sidekiq})
+
 redis_options = {
-  :url       => 'redis://localhost:6379/0',
+  :url       => "redis://localhost:6379/#{redis_db_for_sidekiq}",
   :namespace => "shogi_web_#{Rails.env}_sidekiq",
 }
 

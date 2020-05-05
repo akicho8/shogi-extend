@@ -92,6 +92,10 @@ Rails.application.routes.draw do
   resource :cpu_battles, path: "cpu/battles", only: [:show, :create]
   get "cpu/battles", to: "cpu_battles#show"
 
+  ################################################################################ 詰将棋ファイター
+
+  match "tf", to: "scripts#show", defaults: { id: "acns3_sample" }, via: [:get, :update]
+
   ################################################################################ 外部リンク
 
   direct :official_swars_battle do |battle, options = {}|
