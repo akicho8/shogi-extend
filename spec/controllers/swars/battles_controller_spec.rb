@@ -38,6 +38,14 @@ RSpec.describe Swars::BattlesController, type: :controller do
     Swars::Battle.first
   end
 
+  describe "詳細検索" do
+    it "vs:tag" do
+      user1, user2 = record.memberships.collect { |e| e.user.key }
+      get :index, params: {query: "#{user1} vs:#{user2}"}
+      assert { controller.current_scope.count == 1 }
+    end
+  end
+
   describe "index" do
     it "index" do
       get :index
