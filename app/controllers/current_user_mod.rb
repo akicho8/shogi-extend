@@ -36,43 +36,27 @@ module CurrentUserMod
   end
 
   let :current_user do
-    # # unless bot_agent?       # ブロックの中なので guard return してはいけない
-    # user_id = nil
-    # # if Rails.env.development? || Rails.env.test?
-    # #   user_id ||= params[:__user_id__]
-    # # end
-    # user_id ||=
-
-    user = nil
-    id = session[:user_id]
+    id = nil
+    id ||= session[:user_id]
     id ||= cookies[:user_id]
+
     if id
+      user = nil
       user ||= Colosseum::User.find_by(id: id)
+      user ||= current_xuser
+
+      # if Rails.env.test?
+      #   if params[:__create_user_name__]
+      #     user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
+      #     user.lobby_in_handle
+      #     cookies[:user_id] = {value: user.id, expires: 1.years.from_now}
+      #   end
+      # end
+
+      # if user
+      #   cookies[:user_id] = {value: user.id, expires: 1.years.from_now}
+      # end
     end
-    user ||= current_xuser
-
-    if Rails.env.test?
-      if params[:__create_user_name__]
-        user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
-        user.lobby_in_handle
-        cookies[:user_id] = {value: user.id, expires: 1.years.from_now}
-      end
-    end
-
-    # if user
-    #   cookies[:user_id] = {value: user.id, expires: 1.years.from_now}
-    # end
-
-    user
-    # end
-  end
-
-  def current_user_clear
-    if instance_variable_defined?(:@current_user)
-      remove_instance_variable(:@current_user)
-    end
-    session.delete(:user_id)
-    cookies.delete(:user_id)
   end
 
   def current_user_set(user)
@@ -80,22 +64,31 @@ module CurrentUserMod
       raise ArgumentError, user.inspect
     end
 
-    if user.respond_to?(:id)
-      id = user.id
-    else
-      id = user
+    if user.kind_of?(Integer)
+      user = Colosseum::User.find_by(id: user)
     end
 
-    unless id.kind_of?(Integer)
+    unless user.kind_of?(Colosseum::User)
       raise ArgumentError, user.inspect
     end
 
-    if instance_variable_defined?(:@current_user)
-      remove_instance_variable(:@current_user)
+    session[:user_id] = user.id
+    cookies[:user_id] = { value: user.id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
+    sign_in(user, event: :authentication)
+
+    current_user_memoize_variable_clear
+  end
+
+  def current_user_clear
+    if current_user
+      current_user.lobby_out_handle
     end
 
-    session[:user_id] = id
-    cookies[:user_id] = { value: id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
+    session.delete(:user_id)
+    cookies.delete(:user_id)
+    sign_out(:xuser)
+
+    current_user_memoize_variable_clear
   end
 
   def sysop_login_unless_logout
@@ -104,11 +97,11 @@ module CurrentUserMod
     end
   end
 
-  def current_user_logout
-    if current_user
-      current_user.lobby_out_handle
+  private
+
+  def current_user_memoize_variable_clear
+    if instance_variable_defined?(:@current_user)
+      remove_instance_variable(:@current_user)
     end
-    current_user_clear
-    sign_out(:xuser)
   end
 end

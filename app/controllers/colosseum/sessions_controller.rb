@@ -2,7 +2,7 @@ module Colosseum
   class SessionsController < ApplicationController
     def create
       user = User.create!
-      flash[:notice] = "名無しのアカウントを作成してログインしました。あなたは「#{user.name}」です"
+      flash[:info] = "「#{user.name}」としてログインしました"
       if Rails.env.production? || Rails.env.staging?
       else
         user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
@@ -13,7 +13,7 @@ module Colosseum
 
     def destroy
       if current_user
-        current_user_logout
+        current_user_clear
         notice = "ログアウトしました。"
       else
         notice = "すでにログアウトしています。"

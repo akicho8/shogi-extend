@@ -68,12 +68,16 @@ module Colosseum
 
       # アカウントを作成または復元したのでログイン状態にする
       current_user_set(user)
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
+      flash[:info] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
       if Rails.env.production? || Rails.env.staging?
       else
         user.lobby_chat_say("ログインしました", :msg_class => "has-text-info")
       end
+      # if false
       sign_in_and_redirect user, event: :authentication
+      # else
+      #   redirect_to after_sign_in_path_for(user)
+      # end
     end
 
     # 失敗したときの遷移先 (Google+ API を有効にしなかったらこっちにくる)
