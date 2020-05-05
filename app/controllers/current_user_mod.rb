@@ -38,7 +38,7 @@ module CurrentUserMod
   let :current_user do
     id = nil
     id ||= session[:user_id]
-    id ||= cookies[:user_id]
+    id ||= cookies.signed[:user_id]
 
     if id
       user = nil
@@ -49,12 +49,12 @@ module CurrentUserMod
       #   if params[:__create_user_name__]
       #     user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
       #     user.lobby_in_handle
-      #     cookies[:user_id] = {value: user.id, expires: 1.years.from_now}
+      #     cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
       #   end
       # end
 
       # if user
-      #   cookies[:user_id] = {value: user.id, expires: 1.years.from_now}
+      #   cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
       # end
     end
   end
@@ -73,7 +73,7 @@ module CurrentUserMod
     end
 
     session[:user_id] = user.id
-    cookies[:user_id] = { value: user.id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
+    cookies.signed[:user_id] = { value: user.id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
     sign_in(user, event: :authentication)
 
     current_user_memoize_variable_clear
