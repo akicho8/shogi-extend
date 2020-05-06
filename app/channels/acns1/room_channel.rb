@@ -1,11 +1,9 @@
 class Acns1::RoomChannel < ApplicationCable::Channel
   def subscribed
-    p ["#{__FILE__}:#{__LINE__}", __method__, params]
     stream_from "acns1/room_channel/#{params['room_id']}"
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
   end
 
   def speak(data)

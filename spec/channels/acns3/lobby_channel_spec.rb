@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Acns3::LobbyChannel, type: :channel do
-  let_it_be(:user) { Colosseum::User.create! }
+  let(:user) { Colosseum::User.create! }
 
   before do
     Acns3::SchoolChannel.redis.flushdb
@@ -73,8 +73,8 @@ RSpec.describe Acns3::LobbyChannel, type: :channel do
   describe "#matching_start" do
     # これは消してもいいかもしれない
     context "同レートのマッチング" do
-      let_it_be(:user_a) { Colosseum::User.create! }
-      let_it_be(:user_b) { Colosseum::User.create! }
+      let(:user_a) { Colosseum::User.create! }
+      let(:user_b) { Colosseum::User.create! }
 
       it "マッチング" do
         # user_a が対戦待ち
@@ -114,9 +114,9 @@ RSpec.describe Acns3::LobbyChannel, type: :channel do
         assert { start(user_a) == [user_a]         }
       end
 
-      let_it_be(:user_a) { user_of(1500) }
-      let_it_be(:user_b) { user_of(1549) }
-      let_it_be(:user_c) { user_of(1550) }
+      let(:user_a) { user_of(1500) }
+      let(:user_b) { user_of(1549) }
+      let(:user_c) { user_of(1550) }
 
       it "BはAとの差が50未満なのでいきなりマッチングする" do
         assert { start(user_b) == [] }

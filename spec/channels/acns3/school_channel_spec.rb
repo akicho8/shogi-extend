@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Acns3::SchoolChannel, type: :channel do
-  let_it_be(:user) { Colosseum::User.create! }
+  let(:user) { Colosseum::User.create! }
 
   before do
     Acns3::SchoolChannel.redis.flushdb
@@ -9,31 +9,32 @@ RSpec.describe Acns3::SchoolChannel, type: :channel do
     stub_connection current_user: user
   end
 
-  describe "接続失敗" do
-    it do
-      stub_connection current_user: nil
-      subscribe
-      p subscription.confirmed?
-      p subscription.rejected?
-    end
-  end
+  # describe "接続失敗" do
+  #   it do
+  #     stub_connection current_user: nil
+  #     subscribe
+  #     p subscription.confirmed?
+  #     p subscription.rejected?
+  #   end
+  # end
 
   describe "#subscribe" do
-    before do
+    subject do
       subscribe
+      subscription
     end
 
     it "正常接続" do
-      assert { subscription.confirmed? }
+      assert { subject.confirmed? }
     end
 
     it "オンラインリストに追加" do
-      assert { subject.online_user_ids == [user.id.to_s] }
+      assert { subject.online_users == [user] }
     end
 
     it "オンラインリスト通知" do
       expect { subject }.to have_broadcasted_to("acns3/school_channel").with({
-          online_user_ids: [user.id.to_s],
+          online_user_ids: [user.id],
           room_user_ids: [],
         })
     end
@@ -45,9 +46,9 @@ RSpec.describe Acns3::SchoolChannel, type: :channel do
     end
 
     it "オンラインリストから除外" do
-      assert { subscription.online_user_ids == [user.id.to_s] }
+      assert { subscription.online_users == [user] }
       unsubscribe
-      assert { subscription.online_user_ids == [] }
+      assert { subscription.online_users == [] }
     end
 
     it "オフラインリスト通知" do

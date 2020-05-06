@@ -1,10 +1,18 @@
 module Acns3
   class SchoolChannel < BaseChannel
-    delegate :online_user_ids, to: "self.class"
+    delegate :online_user_ids, :online_users, to: "self.class"
 
-    def self.online_user_ids
-      redis.smembers(:online_user_ids)
+    class << self
+      def online_user_ids
+        redis.smembers(:online_user_ids).collect(&:to_i)
+      end
+
+      def online_users
+        online_user_ids.collect { |e| Colosseum::User.find(e) }
+      end
     end
+
+    ################################################################################
 
     def subscribed
       stream_from "acns3/school_channel"

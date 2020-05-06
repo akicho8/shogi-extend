@@ -53,6 +53,9 @@ module BackendScript
     end
 
     def active_check(command)
+      if Rails.env.test?
+        return
+      end
       `sudo systemctl status #{command} | grep Active | head -1`.strip
     end
 

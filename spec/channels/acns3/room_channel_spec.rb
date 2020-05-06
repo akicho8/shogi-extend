@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Acns3::RoomChannel, type: :channel do
-  let_it_be(:user1) { Colosseum::User.create! }
-  let_it_be(:user2) { Colosseum::User.create! }
+  let(:user1) { Colosseum::User.create! }
+  let(:user2) { Colosseum::User.create! }
 
   before do
     Acns3::SchoolChannel.redis.flushdb
@@ -10,7 +10,7 @@ RSpec.describe Acns3::RoomChannel, type: :channel do
     stub_connection current_user: user1
   end
 
-  let_it_be(:current_room) do
+  let(:current_room) do
     Acns3::Room.create! do |e|
       e.memberships.build(user: user1)
       e.memberships.build(user: user2)
