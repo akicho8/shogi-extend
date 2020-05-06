@@ -36,6 +36,10 @@ if @environment == "production"
   every("0 3 * * 6") do
     command "sudo certbot renew"
   end
+
+  # every("31 9 * * *") do
+  #   command "sudo certbot renew --force-renew"
+  # end
 end
 
 # every("30 6 * * *")   { runner "Swars::Battle.import(:expert_import, sleep: 5)"                                                                  }
