@@ -94,10 +94,6 @@ export default {
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_body: null,     // 局面編集モードの局面
-
-      open_p: false,
-      active_p: false,
-      doredore: "self",
     }
   },
 
