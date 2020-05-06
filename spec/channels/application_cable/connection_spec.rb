@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ApplicationCable::Connection, type: :channel do
-  let(:user) { Colosseum::User.create! }
+  let_it_be(:user) { Colosseum::User.create! }
 
   it "接続成功" do
     cookies.signed[:user_id] = user.id

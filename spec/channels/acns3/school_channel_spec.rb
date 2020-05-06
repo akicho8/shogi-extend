@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Acns3::SchoolChannel, type: :channel do
-  let(:user) { Colosseum::User.create! }
+  let_it_be(:user) { Colosseum::User.create! }
 
   before do
     Acns3::SchoolChannel.redis.flushdb
