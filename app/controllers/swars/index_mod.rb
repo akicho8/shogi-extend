@@ -88,14 +88,12 @@ module Swars
       v
     end
 
-    private
-
     def js_index_options
       super.merge({
-          current_swars_user_key: current_swars_user_key,
-          required_query_for_search: AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
-          remember_swars_user_keys: remember_swars_user_keys,
-          import_enable_p: import_enable?,
+          :current_swars_user_key    => current_swars_user_key,
+          :required_query_for_search => AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
+          :remember_swars_user_keys  => remember_swars_user_keys,
+          :import_enable_p           => import_enable?,
         })
     end
 
@@ -269,28 +267,42 @@ module Swars
         end
 
         if current_swars_user
-          case
-          when t = query_info.lookup_one(:"date") # 日付
+          filtered = false
+          if t = query_info.lookup_one(:"date") # 日付
             t = t.to_time.midnight
 
             m = sampled_memberships(current_swars_user.memberships)
             s = s.where(id: m.pluck(:battle_id))
 
             s = s.where(battled_at: t...t.tomorrow)
-          when v = query_info.lookup_one(:"tag") # 戦法
+            filtered = true
+          end
+          if v = query_info.lookup_one(:"tag") # 戦法
             m = sampled_memberships(current_swars_user.memberships)
             m = m.tagged_with(v)
             s = s.where(id: m.pluck(:battle_id))
-          when v = query_info.lookup_one(:"vs-tag") # 対抗
+            filtered = true
+          end
+          if v = query_info.lookup_one(:"vs-tag") # 対抗
             m = sampled_memberships(current_swars_user.op_memberships)
             m = m.tagged_with(v)
             s = s.where(id: m.pluck(:battle_id))
-          when v = query_info.lookup_one(:"vs-grade") # 段級
+            filtered = true
+          end
+          if v = query_info.lookup_one(:"vs-grade") # 段級
             grade = Grade.find_by!(key: v)
             m = sampled_memberships(current_swars_user.op_memberships)
             m = m.where(grade: grade)
             s = s.where(id: m.pluck(:battle_id))
-          else
+            filtered = true
+          end
+          if v = query_info.lookup_one(:"vs") # 相手
+            user = Swars::User.find_by(user_key: v)
+            m = current_swars_user.op_memberships.where(user: user)
+            s = s.where(id: m.pluck(:battle_id))
+            filtered = true
+          end
+          unless filtered
             s = s.joins(:memberships).merge(Membership.where(user_id: current_swars_user.id))
           end
         end
@@ -301,8 +313,11 @@ module Swars
 
     def sampled_memberships(m)
       m = m.joins(:battle)
+
+      # FIXME: プレイヤー情報と条件を合わせるためハードコーディングされている
       m = m.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
       m = m.merge(Swars::Battle.latest_order)  # 直近のものから取得
+
       if v = query_info.lookup_one(:"sample")
         m = m.limit(v)          # N件抽出
       else

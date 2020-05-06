@@ -13,6 +13,7 @@
           b-dropdown-item(:href="kento_app_with_params_url") KENTO
           b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
           b-dropdown-item(:href="snapshot_image_url") 局面画像の取得
+          b-dropdown-item(@click="reset_handle") 盤面リセット
           b-dropdown-item(separator)
           b-dropdown-item(@click="title_edit") タイトル編集
         b-dropdown-item(@click="mode_toggle_handle")
@@ -93,10 +94,6 @@ export default {
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_body: null,     // 局面編集モードの局面
-
-      open_p: false,
-      active_p: false,
-      doredore: "self",
     }
   },
 
@@ -126,7 +123,6 @@ export default {
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
       this.play_mode_body = v
-      this.url_replace()
     },
 
     // 編集モード時の局面
@@ -336,6 +332,12 @@ export default {
       }
 
       return url.toString()
+    },
+
+    // 盤面のみ最初の状態に戻す
+    reset_handle() {
+      this.play_mode_body = this.info.record.sfen_body        // 渡している棋譜
+      this.turn_offset    = this.info.record.initial_turn     // 現在の手数
     },
   },
 
