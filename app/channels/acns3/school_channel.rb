@@ -11,17 +11,15 @@ module Acns3
 
       if current_user
         redis.sadd(:online_user_ids, current_user.id)
+        all_broadcast
       end
-
-      all_broadcast
     end
 
     def unsubscribed
       if current_user
         redis.srem(:online_user_ids, current_user.id)
+        all_broadcast
       end
-
-      all_broadcast
     end
 
     private

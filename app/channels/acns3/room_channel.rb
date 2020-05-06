@@ -8,13 +8,12 @@ module Acns3
       if current_user
         redis.sadd(:room_user_ids, current_user.id)
         room_user_ids_broadcast
+      else
+        reject
       end
     end
 
     def unsubscribed
-      # Any cleanup needed when channel is unsubscribed
-      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, current_user&.name])
-
       if current_user
         redis.srem(:room_user_ids, current_user.id)
         room_user_ids_broadcast
@@ -24,9 +23,9 @@ module Acns3
     end
 
     def speak(data)
-      message = Message.create!(body: data["message"], user: current_user, room_id: params["room_id"])
+      data = data.to_options
 
-      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, data])
+      message = Message.create!(body: data[:message], user: current_user, room_id: params["room_id"])
 
       # if message = room.messages.where(user: current_user).order(created_at: :desc).first
       if md = message.body.to_s.match(/\/(?<command_line>.*)/)

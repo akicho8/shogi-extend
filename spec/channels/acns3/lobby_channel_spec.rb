@@ -1,25 +1,21 @@
 require "rails_helper"
 
-# https://techracho.bpsinc.jp/hachi8833/2018_05_16/55546
 RSpec.describe Acns3::LobbyChannel, type: :channel do
   let_it_be(:user) { Colosseum::User.create! }
 
   before do
     Acns3::SchoolChannel.redis.flushdb
 
-    # 渡された引数で app/channels/application_cable/connection.rb を初期化する
     stub_connection current_user: user
   end
 
   describe "#subscribe" do
-    subject do
+    before do
       subscribe
-      subscription
     end
 
     it "subscribedが通った(?)" do
-      expect(subject).to be_confirmed
-      # expect(subject).to have_stream_for(project)
+      assert { subscription.confirmed? }
     end
   end
 
@@ -42,7 +38,6 @@ RSpec.describe Acns3::LobbyChannel, type: :channel do
 
   describe "#unsubscribe" do
     before do
-      # unsbscribeを呼ぶ前に最初にsubscribeしなければならない
       subscribe
       subscription.matching_start({})
     end
@@ -60,7 +55,6 @@ RSpec.describe Acns3::LobbyChannel, type: :channel do
 
   describe "#matching_cancel" do
     before do
-      # unsbscribeを呼ぶ前に最初にsubscribeしなければならない
       subscribe
       subscription.matching_start({})
     end
@@ -77,6 +71,7 @@ RSpec.describe Acns3::LobbyChannel, type: :channel do
   end
 
   describe "#matching_start" do
+    # これは消してもいいかもしれない
     context "同レートのマッチング" do
       let_it_be(:user_a) { Colosseum::User.create! }
       let_it_be(:user_b) { Colosseum::User.create! }

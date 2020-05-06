@@ -10,12 +10,12 @@ RSpec.describe Acns3::RoomChannel, type: :channel do
     stub_connection current_user: user1
   end
 
-  let_it_be(:current_room) {
+  let_it_be(:current_room) do
     Acns3::Room.create! do |e|
       e.memberships.build(user: user1)
       e.memberships.build(user: user2)
     end
-  }
+  end
 
   def membership1
     current_room.memberships.find { |e| e.user == user1 }
@@ -26,22 +26,10 @@ RSpec.describe Acns3::RoomChannel, type: :channel do
   end
 
   describe "#subscribe" do
-    subject do
-      subscribe(room_id: current_room.id)
-      subscription
-    end
-
-    it "#subscribed" do
-      expect(subject).to be_confirmed
-      # expect(subject).to have_stream_for(project)
-    end
-
-    it "入室" do
-      assert { subject.room_users == [user1] }
-    end
-
-    it "人数通知" do
-      expect { subject }.to have_broadcasted_to("acns3/school_channel").with(room_user_ids: [user1.id])
+    it "接続" do
+      expect { subscribe(room_id: current_room.id) }.to have_broadcasted_to("acns3/school_channel").with(room_user_ids: [user1.id])
+      assert { subscription.confirmed? }
+      assert { subscription.room_users == [user1] }
     end
   end
 
@@ -58,11 +46,11 @@ RSpec.describe Acns3::RoomChannel, type: :channel do
 
     it "人数通知" do
       expect { unsubscribe }.to have_broadcasted_to("acns3/school_channel").twice
-      # expect { unsubscribe }.to have_broadcasted_to("acns3/school_channel").with(room_user_ids: [])
     end
 
     it "切断したので負け" do
-      # katimashita(:lose, :disconnect)
+      unsubscribe
+      assert { membership1.judge_key == "lose" }
     end
   end
 
@@ -72,7 +60,7 @@ RSpec.describe Acns3::RoomChannel, type: :channel do
     end
 
     it do
-      subscription.speak("message" => "(message)")
+      subscription.speak(message: "(message)")
       assert { user1.acns3_messages.count == 1 }
     end
   end
@@ -86,7 +74,7 @@ RSpec.describe Acns3::RoomChannel, type: :channel do
       data = { membership_id: membership1.id, quest_index: 1 }
       expect {
         subscription.progress_info_share(data)
-      }.to have_broadcasted_to("acns3/room_channel/#{current_room.id}").with("progress_info_share" => {"membership_id" => membership1.id, "quest_index" => 1})
+      }.to have_broadcasted_to("acns3/room_channel/#{current_room.id}").with(progress_info_share: data)
 
       current_room.reload
       assert { membership1.quest_index == 1 }
