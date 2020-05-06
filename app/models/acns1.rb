@@ -6,7 +6,10 @@ module Acns1
   def self.setup(options = {})
     if Acns1::Room.count.zero?
       3.times do |i|
-        tp Acns1::Room.create!
+        Acns1::Room.create!
+      end
+      if Rails.env.development?
+        tp Acns1::Room
       end
     end
   end

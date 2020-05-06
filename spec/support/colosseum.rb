@@ -15,7 +15,7 @@ RSpec::Rails::ControllerExampleGroup.module_eval do
     end
 
     def user_logout
-      controller.current_user_logout
+      controller.current_user_clear
     end
   end
 end
