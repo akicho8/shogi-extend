@@ -532,39 +532,4 @@ export default {
       flex-direction: column
       justify-content: center
       align-items: center
-
-  //////////////////////////////////////////////////////////////////////////////// 編集
-
-  // .switch_grouped_container
-  //   margin-top: 0.5rem
-  .main_tabs
-    .tab-content
-      padding: 0
-      padding-top: 0.75rem
-    .tag
-      margin-left: 0.5rem
-
-  // この手順を正解にする
-  .konotejunsiikai
-    margin-top: 0.3rem
-
-  // 正解のタブ
-  .answer_tabs
-    margin-top: 0.8rem
-    .tab-content
-      padding: 0.8rem 0
-      position: relative
-      .delete_button
-        position: absolute
-        top: 0.5rem
-        right: 0.5rem
-
-  // タイトルと説明
-  .input_forms
-    margin-top: 0.8rem
-
-  ////////////////////////////////////////////////////////////////////////////////
-  .save_container
-
-  //////////////////////////////////////////////////////////////////////////////// 共通
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-centered
+.acns3_sample_editor.columns.is-centered
   .column
     .buttons.is-centered
       b-button.has-text-weight-bold(@click="jump_to_index_handle") 問題一覧
@@ -127,7 +127,7 @@
               b-input(v-model="question.hint_description")
 
             b-field(label="出典" label-position="on-border")
-              b-input(v-model="question.source_desc")
+              b-input(v-model="question.source_desc" placeholder="金田秀信作(詰パラ2007.12.1)")
 
             b-field(label="制限時間" label-position="on-border")
               //- :default-seconds="0" :default-minutes="0"
@@ -515,54 +515,7 @@ export default {
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
-.acns3_sample
-  .main_info
-    justify-content: space-between
-
-  // lobby_mode
-
-  // 対戦相手を待機中...
-  .wait_notification
-    padding: 4rem 0
-
-  .chat_container
-    .messages_box
-      padding: 0.5rem
-      height: 10em
-      overflow-y: scroll
-    .input_field
-      margin-top: 0.5rem
-      .play_icon
-        min-width: 3rem
-
-  // ユーザー情報
-  .user_container
-    flex-direction: column
-    justify-content: flex-end
-    align-items: center
-
-    // アイコンの上の勝敗メッセージ
-    .icon_up_message
-
-    // アイコン
-    figure
-      margin-top: 0.5rem
-
-    // ユーザー名
-    .user_name
-      margin-top: 0.5rem
-      font-size: $size-7
-
-    .user_rating_diff
-      margin-left: 0.25rem
-
-  // リザルト
-  .result_container
-    .vs_mark
-      flex-direction: column
-      justify-content: center
-      align-items: center
-
+.acns3_sample_editor
   //////////////////////////////////////////////////////////////////////////////// 編集
 
   // .switch_grouped_container
