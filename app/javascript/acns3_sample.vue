@@ -22,15 +22,7 @@
           b-button.has-text-weight-bold(@click="goto_edit_mode_handle") 投稿
 
   template(v-if="mode === 'matching_start'")
-    .columns.is-paddingless
-      .column
-        .has-text-centered.has-text-weight-bold
-          p 対戦相手を待機中
-          p {{interval_timer_count}}
-          p ±{{matching_rate_threshold}}
-        b-progress(type="is-primary")
-        .buttons.is-centered
-          button.delete.is-large(@click="cancel_handle")
+    acns3_sample_matching_start(:info="info")
 
   template(v-if="mode === 'ready_go'")
     .columns.is-centered.is-mobile
@@ -140,17 +132,17 @@ const WAIT_SECOND = 1.5
 import consumer from "channels/consumer"
 
 import acns3_sample_support from './acns3_sample_support.js'
-import acns3_sample_maching_interval from './acns3_sample_maching_interval.js'
+import acns3_sample_matching_start from './acns3_sample_matching_start.vue'
 import acns3_sample_editor from './acns3_sample_editor.vue'
 
 export default {
   name: "acns3_sample",
   mixins: [
-    acns3_sample_maching_interval,
     acns3_sample_support,
   ],
   components: {
     acns3_sample_editor,
+    acns3_sample_matching_start,
   },
   props: {
     info: { required: true },
@@ -274,6 +266,7 @@ export default {
 
           // マッチング待ち
           if (data.matching_list) {
+            console.log(data.matching_list)
             this.matching_list = data.matching_list
           }
 
@@ -297,14 +290,9 @@ export default {
 
       this.sound_play("click")
       this.mode = "matching_start"
-
-      this.matching_init()
-      // this.$lobby.perform("matching_start")
     },
 
     cancel_handle() {
-      this.interval_timer_clear()
-
       this.sound_play("click")
       this.mode = "lobby"
       this.$lobby.perform("matching_cancel")
