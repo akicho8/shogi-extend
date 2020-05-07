@@ -140,13 +140,13 @@ const WAIT_SECOND = 1.5
 import consumer from "channels/consumer"
 
 import acns3_sample_support from './acns3_sample_support.js'
-import acns3_sample_maching from './acns3_sample_maching.js'
+import acns3_sample_maching_interval from './acns3_sample_maching_interval.js'
 import acns3_sample_editor from './acns3_sample_editor.vue'
 
 export default {
   name: "acns3_sample",
   mixins: [
-    acns3_sample_maching,
+    acns3_sample_maching_interval,
     acns3_sample_support,
   ],
   components: {
