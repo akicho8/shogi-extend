@@ -21,6 +21,7 @@ module Acns3
 
     def matching_start(data)
       data = data.to_options
+
       matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
 
       Rails.logger.debug(ordered_infos_debug.to_t)

@@ -4,7 +4,7 @@
     .column
       .main_info.is-flex
         p
-          | 購読数: {{ac_subscriptions_count()}}
+          | 購読数: {{ac_subscriptions_count}}
         p(v-if="online_user_ids != null")
           | オンライン: {{online_user_ids.length}}人
         p(v-if="room_user_ids != null")
@@ -25,7 +25,9 @@
     .columns.is-paddingless
       .column
         .has-text-centered.has-text-weight-bold
-          | 対戦相手を待機中
+          p 対戦相手を待機中
+          p {{interval_timer_count}}
+          p ±{{matching_rate_threshold}}
         b-progress(type="is-primary")
         .buttons.is-centered
           button.delete.is-large(@click="cancel_handle")
@@ -313,8 +315,13 @@ class EditTabInfo extends MemoryRecord {
   }
 }
 
+import acns3_sample_maching from './acns3_sample_maching.js'
+
 export default {
   name: "acns3_sample",
+  mixins: [
+    acns3_sample_maching,
+  ],
   props: {
     info: { required: true },
   },
@@ -389,6 +396,8 @@ export default {
   },
 
   methods: {
+    ////////////////////////////////////////////////////////////////////////////////
+
     speak() {
       this.$room.perform("speak", {message: this.message})
     },
@@ -415,7 +424,7 @@ export default {
           if (data.room_user_ids) {
             this.room_user_ids = data.room_user_ids
           }
-          this.$forceUpdate()
+          this.ac_info_update()
         },
       })
     },
@@ -443,6 +452,7 @@ export default {
             const membership = data.room.memberships.find(e => e.user.id === this.current_user.id)
             if (membership) {
               this.lobby_unsubscribe()
+              this.interval_timer_clear()
 
               this.room = data.room
               this.room_setup()
@@ -457,10 +467,14 @@ export default {
 
       this.sound_play("click")
       this.mode = "matching_start"
-      this.$lobby.perform("matching_start")
+
+      this.matching_init()
+      // this.$lobby.perform("matching_start")
     },
 
     cancel_handle() {
+      this.interval_timer_clear()
+
       this.sound_play("click")
       this.mode = "lobby"
       this.$lobby.perform("matching_cancel")
@@ -564,9 +578,9 @@ export default {
 
     login_required2() {
       if (!this.current_user) {
-        this.self_window_open(this.login_path)
+        this.url_open(this.login_path)
         return true
-        // this.self_window_open("/xusers/sign_in")
+        // this.url_open("/xusers/sign_in")
       }
     },
 
@@ -574,7 +588,7 @@ export default {
       if (this.$lobby) {
         this.$lobby.unsubscribe()
         this.$lobby = null
-        this.$forceUpdate()
+        this.ac_info_update()
       }
     },
 
@@ -582,7 +596,7 @@ export default {
       if (this.$room) {
         this.$room.unsubscribe()
         this.$room = null
-        this.$forceUpdate()
+        this.ac_info_update()
       }
     },
 

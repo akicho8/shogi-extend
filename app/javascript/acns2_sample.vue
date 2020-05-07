@@ -4,7 +4,7 @@
     .column
       .main_info.is-flex
         p
-          | 購読数: {{ac_subscriptions_count()}}
+          | 購読数: {{ac_subscriptions_count_get()}}
         p(v-if="online_user_ids != null")
           | オンライン: {{online_user_ids.length}}人
         p(v-if="room_user_ids != null")
@@ -561,9 +561,9 @@ export default {
 
     login_required2() {
       if (!this.current_user) {
-        this.self_window_open(this.login_path)
+        this.url_open(this.login_path)
         return true
-        // this.self_window_open("/xusers/sign_in")
+        // this.url_open("/xusers/sign_in")
       }
     },
 
