@@ -7212,10 +7212,10 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shogi-player@^0.0.188:
-  version "0.0.188"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.188.tgz#f52c09be06ab943464e4e3963b1e7bcfc0d2d884"
-  integrity sha512-q7ST+63QB2OGHRd8yc5eRDskP4mr6jyOV4vjPCHiyngI5i0K9zMJX79yw/1Py4RVXXJ+OFT+ep2z7uWyZXreyA==
+shogi-player@^0.0.189:
+  version "0.0.189"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.189.tgz#eee4b55e8ed9a7bc168bef791b66155f635417b9"
+  integrity sha512-JcivcwAg5UbwMEsNZqR9liwh6PoYeEV+bIBxC2DVYwz0XIxSz3AKBQfdY0L9DKAsGkeUQK8JgdUq/wqPzse2Gg==
   dependencies:
     autolinker "^3.14.1"
     autoprefixer "^9.7.6"
@@ -8206,12 +8206,7 @@ vue@^2.5.16, vue@^2.5.17:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
 
-vuex@^3.2.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.3.0.tgz#665b4630ea1347317139fcc5cb495aab3ec5e513"
-  integrity sha512-1MfcBt+YFd20DPwKe0ThhYm1UEXZya4gVKUvCy7AtS11YAOUR+9a6u4fsv1Rr6ePZCDNxW/M1zuIaswp6nNv8Q==
-
-vuex@^3.3.0:
+vuex@^3.2.0, vuex@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.3.0.tgz#665b4630ea1347317139fcc5cb495aab3ec5e513"
   integrity sha512-1MfcBt+YFd20DPwKe0ThhYm1UEXZya4gVKUvCy7AtS11YAOUR+9a6u4fsv1Rr6ePZCDNxW/M1zuIaswp6nNv8Q==

@@ -1,3 +1,5 @@
+import Vuex from 'vuex'
+
 export default {
   mixins: [
   ],
@@ -37,5 +39,11 @@ export default {
     },
   },
   computed: {
+    ...Vuex.mapGetters([
+      'current_app_var1',
+    ]),
+    // ...mapState([
+    //   'fooKey',
+    // ]),
   },
 }

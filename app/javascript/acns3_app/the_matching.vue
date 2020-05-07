@@ -1,5 +1,5 @@
 <template lang="pug">
-.acns3_sample_matching_start.columns.is-paddingless
+.the_matching.columns.is-paddingless
   .column
     .has-text-centered.has-text-weight-bold
       p 対戦相手を待機中
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import acns3_sample_support from './acns3_sample_support.js'
-import acns3_sample_matching_start_interval from './acns3_sample_matching_start_interval.js'
+import the_support from './the_support.js'
+import the_matching_interval from './the_matching_interval.js'
 
 export default {
-  name: "acns3_sample_matching_start",
+  name: "the_matching",
   mixins: [
-    acns3_sample_support,
-    acns3_sample_matching_start_interval,
+    the_support,
+    the_matching_interval,
   ],
   props: {
     info: { required: true },
@@ -49,6 +49,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-.acns3_sample_matching_start
+@import "../stylesheets/bulma_init.scss"
+.the_matching
 </style>

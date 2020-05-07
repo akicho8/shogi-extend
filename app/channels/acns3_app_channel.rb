@@ -1,9 +1,9 @@
-# app/javascript/acns3_sample.vue
-# app/channels/acns3_sample_channel.rb
-# app/models/backend_script/acns3_sample_script.rb
+# app/javascript/acns3_app.vue
+# app/channels/acns3_app_channel.rb
+# app/models/backend_script/acns3_app_script.rb
 class Acns3SampleChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "acns3_sample_channel"
+    stream_from "acns3_app_channel"
   end
 
   def unsubscribed
@@ -12,6 +12,6 @@ class Acns3SampleChannel < ApplicationCable::Channel
 
   # メッセージをブロードキャストするためのアクション
   def speak(data)
-    ActionCable.server.broadcast 'acns3_sample_channel', message: data['message']
+    ActionCable.server.broadcast 'acns3_app_channel', message: data['message']
   end
 end

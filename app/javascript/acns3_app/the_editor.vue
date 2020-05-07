@@ -1,5 +1,5 @@
 <template lang="pug">
-.acns3_sample_editor.columns.is-centered
+.the_editor.columns.is-centered
   .column
     .buttons.is-centered
       b-button.has-text-weight-bold(@click="jump_to_index_handle") 問題一覧
@@ -182,12 +182,12 @@ class EditTabInfo extends MemoryRecord {
   }
 }
 
-import acns3_sample_support from './acns3_sample_support.js'
+import the_support from './the_support.js'
 
 export default {
-  name: "acns3_sample_editor",
+  name: "the_editor",
   mixins: [
-    acns3_sample_support,
+    the_support,
   ],
   props: {
     info: { required: true },
@@ -514,8 +514,8 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-.acns3_sample_editor
+@import "../stylesheets/bulma_init.scss"
+.the_editor
   //////////////////////////////////////////////////////////////////////////////// 編集
 
   // .switch_grouped_container

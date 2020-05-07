@@ -1,28 +1,15 @@
 <template lang="pug">
-.acns3_sample(:class="mode")
-  .columns
-    .column
-      .main_info.is-flex
-        p
-          | 購読数: {{ac_subscriptions_count}}
-        p(v-if="online_user_ids != null")
-          | オンライン: {{online_user_ids.length}}人
-        p(v-if="room_user_ids != null")
-          | 対戦中: {{room_user_ids.length}}人
-        p(v-if="matching_list != null")
-          | 対戦待ち: {{matching_list.length}}人
+.acns3_app(:class="mode")
+  | a
+  | {{current_app_var1}}
+
+  the_header
 
   template(v-if="mode === 'lobby'")
-    .columns
-      .column
-        .title.is-3.has-text-centered 詰将棋ファイター
-        .buttons.is-centered
-          b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
-        .buttons.is-centered
-          b-button.has-text-weight-bold(@click="goto_edit_mode_handle") 投稿
+    the_lobby
 
   template(v-if="mode === 'matching_start'")
-    acns3_sample_matching_start(:info="info")
+    the_matching(:info="info")
 
   template(v-if="mode === 'ready_go'")
     .columns.is-centered.is-mobile
@@ -75,51 +62,9 @@
               b-icon.play_icon(icon="play")
 
   template(v-if="mode === 'result_show'")
-    .columns.is-mobile.result_container
-      .column
-        .has-text-centered.is-size-3.has-text-weight-bold
-          template(v-if="current_membership.judge_key === 'win'")
-            .has-text-danger
-              | YOU WIN !
-          template(v-if="current_membership.judge_key === 'lose'")
-            .has-text-success
-              | YOU LOSE !
-    .columns.is-mobile.result_container
-      template(v-for="(membership, i) in room.memberships")
-        .column.user_container.is-flex
-          template(v-if="membership.rensho_count >= 2")
-            .icon_up_message.has-text-weight-bold
-              | {{membership.rensho_count}}連勝中！
-          template(v-if="membership.judge_key === 'lose' && room.final_info.lose_side")
-            .icon_up_message.has-text-danger.has-text-weight-bold
-              | {{room.final_info.name}}
-          figure.image.is-64x64
-            img.is-rounded(:src="membership.user.avatar_path")
-          .user_name.has-text-weight-bold
-            | {{membership.user.name}}
-          .user_quest_index.has-text-weight-bold.is-size-4
-            | {{membership.quest_index}}
-          .user_rating.has-text-weight-bold
-            | {{membership.user.acns3_profile.rating}}
-            span.user_rating_diff
-              template(v-if="membership.user.acns3_profile.rating_last_diff >= 0")
-                span.has-text-primary
-                  | (+{{membership.user.acns3_profile.rating_last_diff}})
-              template(v-if="membership.user.acns3_profile.rating_last_diff < 0")
-                span.has-text-danger
-                  | ({{membership.user.acns3_profile.rating_last_diff}})
-        template(v-if="i === 0")
-          .column.is-1.vs_mark.is-flex.has-text-weight-bold.is-size-4
-            | vs
-
-    .columns.is-mobile
-      .column
-        .buttons.is-centered
-          b-button.has-text-weight-bold(@click="lobby_button_handle" type="is-primary")
-            | ロビーに戻る
-
+    the_result(:info="info")
   template(v-if="mode === 'edit'")
-    acns3_sample_editor(:info="info")
+    the_editor(:info="info")
 
   debug_print
 
@@ -131,18 +76,27 @@ const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
 
-import acns3_sample_support from './acns3_sample_support.js'
-import acns3_sample_matching_start from './acns3_sample_matching_start.vue'
-import acns3_sample_editor from './acns3_sample_editor.vue'
+import the_support from './the_support'
+import the_store from './the_store'
+
+import the_header from './the_header'
+import the_lobby from './the_lobby'
+import the_matching from './the_matching'
+import the_result from './the_result'
+import the_editor from './the_editor'
 
 export default {
-  name: "acns3_sample",
+  store: the_store,
+  name: "acns3_app",
   mixins: [
-    acns3_sample_support,
+    the_support,
   ],
   components: {
-    acns3_sample_editor,
-    acns3_sample_matching_start,
+    the_header,
+    the_lobby,
+    the_matching,
+    the_result,
+    the_editor,
   },
   props: {
     info: { required: true },
@@ -472,8 +426,8 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-.acns3_sample
+@import "../stylesheets/bulma_init.scss"
+.acns3_app
   .main_info
     justify-content: space-between
 

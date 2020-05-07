@@ -1,10 +1,10 @@
 # 詰将棋ファイター
 #
 # entry
-#   app/models/backend_script/acns3_sample_script.rb
+#   app/models/frontend_script/acns3_app_script.rb
 #
 # vue
-#   app/javascript/acns3_sample.vue
+#   app/javascript/acns3_app/index.vue
 #
 # db
 #   db/migrate/20200505135600_create_acns3.rb
@@ -32,7 +32,7 @@
 #   app/jobs/acns3/message_broadcast_job.rb
 #
 module FrontendScript
-  class Acns3SampleScript < ::FrontendScript::Base
+  class Acns3AppScript < ::FrontendScript::Base
     include AtomicScript::AddJsonLinkMod
     include SortMod
 
@@ -143,7 +143,7 @@ module FrontendScript
       end
       #
       out += h.javascript_tag(%(document.addEventListener('DOMContentLoaded', () => { new Vue({}).$mount("#app") })))
-      out += %(<div id="app"><acns3_sample :info='#{info.to_json}' /></div>)
+      out += %(<div id="app"><acns3_app :info='#{info.to_json}' /></div>)
       # out += h.tag.br
       # out += h.link_to("ロビー", params.merge(room_id: nil), :class => "button is-small")
       # end
