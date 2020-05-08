@@ -362,7 +362,7 @@ export default {
 
     tweet_hash_tag() {
       if (this.current_title) {
-        return "#" + this.current_title.replace(/\s+/g, "_")
+        return "#" + this.current_title
       }
     },
 
