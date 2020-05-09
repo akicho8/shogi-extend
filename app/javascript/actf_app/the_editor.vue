@@ -167,7 +167,7 @@ export default {
 
     edit_mode_snapshot_sfen(sfen) {
       if (this.sp_run_mode === "edit_mode") {
-        sfen = this.possition_sfen_remove(sfen)
+        sfen = this.position_sfen_remove(sfen)
 
         // console.log(this.question.init_sfen)
         // console.log(sfen)
@@ -413,7 +413,7 @@ export default {
     },
 
     mediator_snapshot_sfen_set(sfen) {
-      this.mediator_snapshot_sfen = this.possition_sfen_remove(sfen)
+      this.mediator_snapshot_sfen = this.position_sfen_remove(sfen)
     },
 
     editor_index_handle(event) {
@@ -422,10 +422,6 @@ export default {
       }
       this.question = null
       this.async_records_load()
-    },
-
-    possition_sfen_remove(sfen) {
-      return sfen.replace(/position sfen\s+/, "")
     },
   },
 

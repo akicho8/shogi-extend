@@ -45,7 +45,13 @@ module Actf
     end
 
     def simple_quest_infos
-      QuestInfo.collect { |e| { base_sfen: e[:base_sfen], seq_answers: e[:seq_answers] } }
+      # QuestInfo.collect { |e| {
+      #     init_sfen: e[:init_sfen],
+      #     moves_answers: e[:moves_answers]
+      #   }
+      # }
+
+      Question.limit(3).as_json(include: [:user, :moves_answers]) # FIXME: 必要なのだけに絞る
     end
 
     def final_info

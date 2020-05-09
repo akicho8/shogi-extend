@@ -245,7 +245,7 @@ export default {
         return
       }
 
-      if (this.current_quest_answers.includes(long_sfen)) {
+      if (this.current_quest_answers.includes(this.position_sfen_remove(long_sfen))) {
         this.sound_play("pipopipo")
         this.$room.perform("progress_info_share", {membership_id: this.current_membership.id, quest_index: this.quest_index + 1}) // --> app/channels/actf/room_channel.rb
 
@@ -325,16 +325,16 @@ export default {
         return this.room.simple_quest_infos.length
       }
     },
-    current_quest_base_sfen() {
+    current_quest_init_sfen() {
       const info = this.current_simple_quest_info
       if (info) {
-        return info.base_sfen
+        return info.init_sfen
       }
     },
     current_quest_answers() {
       const info = this.current_simple_quest_info
       if (info) {
-        return info.seq_answers.map(e => [info.base_sfen, "moves", e].join(" "))
+        return info.moves_answers.map(e => [info.init_sfen, "moves", e.moves_str].join(" "))
       }
     },
 

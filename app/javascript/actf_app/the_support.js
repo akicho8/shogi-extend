@@ -37,6 +37,10 @@ export default {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-warning", queue: false})
       this.talk(message, {rate: 1.5})
     },
+
+    position_sfen_remove(sfen) {
+      return sfen.replace(/position sfen\s+/, "")
+    },
   },
   computed: {
     ...Vuex.mapGetters([

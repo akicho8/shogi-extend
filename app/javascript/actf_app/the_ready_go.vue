@@ -15,15 +15,16 @@
       template(v-if="i === 0")
         .column.is-1.vs_mark.is-flex.has-text-weight-bold.is-size-4
           | vs
-  .columns(v-if="$parent.current_quest_base_sfen")
+  .columns(v-if="$parent.current_quest_init_sfen")
     .column
       .has-text-centered
+        | {{$parent.quest_index + 1}}問目
         | {{turn_offset}}手目
       shogi_player(
         :key="`quest_${$parent.quest_index}`"
         ref="main_sp"
         :run_mode="'play_mode'"
-        :kifu_body="$parent.current_quest_base_sfen"
+        :kifu_body="`position sfen ${$parent.current_quest_init_sfen}`"
         :summary_show="false"
         :setting_button_show="development_p"
         :size="'default'"
@@ -36,8 +37,25 @@
         @update:turn_offset="v => turn_offset = v"
         @update:play_mode_advanced_full_moves_sfen="$parent.play_mode_advanced_full_moves_sfen_set"
       )
-      .has-text-centered
-        
+      .has-text-centered.tags_container
+        //- p 難易度:{{quest.difficulty_level}}
+        b-taglist.is-centered
+          b-tag(v-if="quest.title") {{quest.title}}
+          b-tag(v-if="quest.source_desc") {{quest.source_desc}}
+          b-tag(v-if="!quest.source_desc") {{quest.user.name}}作
+          b-tag(v-if="quest.hint_description") {{quest.hint_description}}
+          b-tag(v-if="quest.difficulty_level && quest.difficulty_level >= 1")
+            template(v-for="i in quest.difficulty_level")
+              | ★
+
+        //- | 難易度:{{$parent.current_simple_quest_info.difficulty_level}}
+        //- e.time_limit_sec        = 60 * 3
+        //- e.difficulty_level      = 5
+        //- e.title                 = "(title)"
+        //- e.description           = "(description)"
+        //- e.hint_description      = "(hint_description)"
+        //- e.source_desc           = "(source_desc)"
+        //- e.other_twitter_account = "(other_twitter_account)"
 </template>
 
 <script>
@@ -53,6 +71,11 @@ export default {
       turn_offset: null,
     }
   },
+  computed: {
+    quest() {
+      return this.$parent.current_simple_quest_info
+    },
+  },
 }
 </script>
 
@@ -63,4 +86,6 @@ export default {
     flex-direction: column
     justify-content: center
     align-items: center
+  .tags_container
+    margin-top: 0.7rem
 </style>
