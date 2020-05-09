@@ -10,7 +10,7 @@ require 'test_prof/recipes/rspec/let_it_be'
 
 # app/models/acns2.rb などを明示的に読み込む (Ruby 2.7 ではこのあたりの対策がされているとの噂)
 Acns2
-Acns3
+Actf
 Swars
 Colosseum
 

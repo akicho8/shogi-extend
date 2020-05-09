@@ -1,0 +1,20 @@
+* 構造
+
+index (+ store)
+  + chat
+  + header
+  + lobby
+  + matching (include matching_interval)
+  + ready_go
+  + result
+  + editor (かなり疎結合)
+
+・support はすべてに mixin
+・editor だけは完全分離で他は分離できないので基本indexにすべてのメソッドがある
+・ライブラリではないので $paret をむしろ積極的に使っていく
+
+* 重要
+
+・Vuex を使うな
+・どうしてもグローバル変数にしないといけなくなったときでも Vuex を使うな
+・死んでも Vuex を使うな

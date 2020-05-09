@@ -1,0 +1,42 @@
+<template lang="pug">
+.the_editor_form
+  b-field(label="タイトル" label-position="on-border")
+    b-input(v-model="$parent.$parent.$parent.question.title")
+
+  b-field(label="説明" label-position="on-border")
+    b-input(v-model="$parent.$parent.$parent.question.description" size="is-small" type="textarea" rows="2")
+
+  b-field(label="ヒント" label-position="on-border")
+    b-input(v-model="$parent.$parent.$parent.question.hint_description")
+
+  b-field(label="出典" label-position="on-border")
+    b-input(v-model="$parent.$parent.$parent.question.source_desc" placeholder="金田秀信作(詰パラ2007.12.1)")
+
+  b-field(label="制限時間" label-position="on-border")
+    //- :default-seconds="0" :default-minutes="0"
+    b-timepicker(v-model="$parent.$parent.$parent.time_limit_clock" icon="clock" :enable-seconds="true")
+    //- b-numberinput(v-model="time_limit_clock" :min="0")
+    //- b-numberinput(v-model="time_limit_clock" :min="0")
+
+  label.is-size-7.has-text-weight-bold 難易度
+  b-rate(v-model="$parent.$parent.$parent.question.difficulty_level" spaced :max="$parent.$parent.$parent.start_level_max" :show-score="false")
+</template>
+
+<script>
+import the_support from './the_support'
+
+export default {
+  name: "the_editor_form",
+  mixins: [
+    the_support,
+  ],
+  created() {
+  },
+}
+</script>
+
+<style lang="sass">
+@import "../stylesheets/bulma_init.scss"
+.the_editor_form
+  margin-top: 0.8rem
+</style>

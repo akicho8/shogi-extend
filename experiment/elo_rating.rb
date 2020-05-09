@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
-# app/models/acns3/elo_rating.rb
-# spec/models/acns3/elo_rating_spec.rb
+# app/models/actf/elo_rating.rb
+# spec/models/actf/elo_rating_spec.rb
 require File.expand_path('../../config/environment', __FILE__)
 
 def test(n, a, b)
-  x, y = Acns3::EloRating.public_send("rating_update#{n}", a, b)
+  x, y = Actf::EloRating.public_send("rating_update#{n}", a, b)
   [x - a, y - b].collect { |e| e.round(2) }
 rescue => error
   error.message

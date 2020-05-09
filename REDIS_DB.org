@@ -7,7 +7,7 @@
 |      |  2 | 符号の鬼のランキング用 | production | redis_db_for_xy_rule_info           |
 |      |  3 | 対戦のランキング用     | production | redis_db_for_colosseum_ranking_info |
 |      |  4 | 詰将棋ファイター(旧)   | production | redis_db_for_acns2                  |
-|      |  5 | 詰将棋ファイター(新)   | production | redis_db_for_acns3                  |
+|      |  5 | 詰将棋ファイター(新)   | production | redis_db_for_actf                  |
 |      |  6 | sidekiq                | production | redis_db_for_sidekiq                |
 |      |  7 | ActionCable            | production | cable.yml                           |
 |      |  8 |                        |            |                                     |
@@ -31,7 +31,7 @@
 |      |  9 | 符号の鬼のランキング用 | staging    | redis_db_for_xy_rule_info           |
 |      | 10 | 対戦のランキング用     | staging    | redis_db_for_colosseum_ranking_info |
 |      | 11 | 詰将棋ファイター(旧)   | staging    | redis_db_for_acns2                  |
-|      | 12 | 詰将棋ファイター(新)   | staging    | redis_db_for_acns3                  |
+|      | 12 | 詰将棋ファイター(新)   | staging    | redis_db_for_actf                  |
 |      | 13 | sidekiq                | staging    | redis_db_for_sidekiq                |
 |      | 14 | ActionCable            | staging    | cable.yml                           |
 |      | 15 |                        |            |                                     |

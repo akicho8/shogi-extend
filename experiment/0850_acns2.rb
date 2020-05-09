@@ -20,7 +20,7 @@ question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
 #   question = user.acns2_questions.create! do |e|
 #     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/P8 b G2r2b2g4s4n4l#{i+1}p 1"
 #     e.moves_answers.build(moves_str: "G*5b")
-#     e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+#     e.endpos_answers.build(end_sfen: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
 #     e.updated_at = Time.current - 1.days + i.hours
 #   end
 
@@ -28,7 +28,7 @@ question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
 # question = user.acns2_questions.create! do |e|
 #   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
 #   e.moves_answers.build(moves_str: "G*5b")
-#   e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+#   e.endpos_answers.build(end_sfen: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
 # end
 
 # user = Colosseum::User.sysop
@@ -36,7 +36,7 @@ question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
 #   question = user.acns2_questions.create! do |e|
 #     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/P8 b G2r2b2g4s4n4l#{i+1}p 1"
 #     e.moves_answers.build(moves_str: "G*5b")
-#     e.endpos_answers.build(sfen_endpos: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
+#     e.endpos_answers.build(end_sfen: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
 #     e.updated_at = Time.current - 1.days + i.hours
 #   end
 # end

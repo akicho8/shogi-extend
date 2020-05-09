@@ -3,42 +3,57 @@
   .columns
     .column
       .box
-        table
+        table(v-if="$parent.$props")
           caption
             | props
-          tr(v-for="(value, key) in $parent.$props")
-            th(v-html="key")
-            td(v-html="value_format(value)")
+          template(v-for="(value, key) in $parent.$props")
+            debug_print_value(:dp_key="key" :value="value")
 
-        table
+        table(v-if="$parent.$data")
           caption
             | data
-          tr(v-for="(value, key) in $parent.$data")
-            th(v-html="key")
-            td(v-html="value_format(value)")
+          template(v-for="(value, key) in $parent.$data")
+            debug_print_value(:dp_key="key" :value="value")
 
-        table
+        table(v-if="$parent._computedWatchers")
           caption
             | computed
-          tr(v-for="(e, key) in $parent._computedWatchers")
-            th(v-html="key")
-            td(v-html="value_format(e.value)")
+          template(v-for="(e, key) in $parent._computedWatchers")
+            debug_print_value(:dp_key="key" :value="e.value")
 
-        template(v-if="'$store' in this")
-          table
-            caption
-              | $store
-            tr(v-for="(value, key) in $store.state")
-              th(v-html="key")
-              td(v-html="value_format(value)")
+        table(v-if="'$store' in this && $store.state")
+          caption
+            | $store
+          template(v-for="(value, key) in $store.state")
+            debug_print_value(:dp_key="key" :value="value")
 </template>
 
 <script>
+import debug_print_value from "./debug_print_value"
+
 export default {
   name: "debug_print",
   props: {
+    grep: { required: false },
+  },
+  components: {
+    debug_print_value,
+  },
+  created() {
   },
   methods: {
+    show_p(key) {
+      if (this.grep) {
+        return this.grep.test(key)
+      }
+      return true
+    },
+    key_format(key) {
+      if (/^[$_]/.test(key)) {
+        return `<span class='non_reactive_key'>${key}</span>`
+      }
+      return key
+    },
     value_format(v) {
       if (v === undefined) {
         return "<span class='undefined_value'>undefined</span>"
@@ -72,6 +87,8 @@ export default {
     th
       background: hsl(0, 0%, 95%)
       text-align: right
+      .non_reactive_key
+        color: hsl(0, 0%, 60%)
     td
       white-space: pre
       background: white

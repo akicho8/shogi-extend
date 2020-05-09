@@ -135,7 +135,7 @@ import three_stage_league_player_chart from "three_stage_league_player_chart.vue
 import custom_chart from "custom_chart.vue"
 import acns1_sample from "acns1_sample.vue"
 import acns2_sample from "acns2_sample.vue"
-import acns3_app from "acns3_app"
+import actf_app from "actf_app"
 import stopwatch from "stopwatch.vue"
 import simple_board from "simple_board.vue"
 import share_board from "share_board.vue"
@@ -195,7 +195,7 @@ Vue.mixin({
     custom_chart,
     acns1_sample,
     acns2_sample,
-    acns3_app,
+    actf_app,
 
     // for buefy modal
     tactic_show,
