@@ -51,7 +51,13 @@ module Actf
       #   }
       # }
 
-      Question.limit(3).as_json(include: [:user, :moves_answers]) # FIXME: 必要なのだけに絞る
+      if Rails.env.development?
+        n = 2
+      else
+        n = 5
+      end
+      ids = Question.where(display_key: :public).ids.sample(n)
+      Question.where(id: ids).order(:difficulty_level).as_json(include: [:user, :moves_answers]) # FIXME: 必要なのだけに絞る
     end
 
     def final_info

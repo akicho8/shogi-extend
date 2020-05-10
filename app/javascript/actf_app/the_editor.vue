@@ -1,11 +1,11 @@
 <template lang="pug">
 .the_editor
+  a.delete.is-large(@click="$parent.lobby_button_handle")
   .columns.is-centered
     .column
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="$parent.lobby_button_handle" icon-left="arrow-left-bold")
-        b-button.has-text-weight-bold(@click="editor_index_handle") 問題一覧
-        b-button.has-text-weight-bold(@click="editor_new_handle") 新規作成
+        b-button.has-text-weight-bold(@click="editor_index_handle" :type="{'is-primary': !question}") 問題一覧
+        b-button.has-text-weight-bold(@click="editor_new_handle" :type="{'is-primary': (question && question_new_record_p)}") 新規作成
 
       template(v-if="!question")
         the_editor_index
@@ -36,7 +36,7 @@
           b-tab-item(label="配置")
             shogi_player(
               :run_mode="'edit_mode'"
-              :kifu_body="`position sfen ${question.init_sfen}`"
+              :kifu_body="position_sfen_add(question.fixed_init_sfen)"
               :start_turn="-1"
               :key_event_capture="false"
               :slider_show="true"
@@ -152,19 +152,15 @@ export default {
   },
 
   created() {
-    this.edit_init_once()
-    this.edit_setup()
+    this.main_nav_set(false)
+    this.editor_index_handle()
+    // this.exam_mode_handle()
   },
 
   watch: {
   },
 
   methods: {
-    edit_setup() {
-      this.sp_run_mode = "edit_mode"
-      this.edit_tab_index = EditTabInfo.fetch("edit_mode").code
-    },
-
     edit_mode_snapshot_sfen(sfen) {
       if (this.sp_run_mode === "edit_mode") {
         sfen = this.position_sfen_remove(sfen)
@@ -225,7 +221,8 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_mode_handle() {
-      this.edit_setup()
+      this.sp_run_mode = "edit_mode"
+      this.edit_tab_index = EditTabInfo.fetch("edit_mode").code
     },
 
     play_mode_handle() {
@@ -251,14 +248,11 @@ export default {
     },
 
     exam_mode_handle() {
+      this.edit_tab_index = EditTabInfo.fetch("exam_mode").code
       this.$exam_run_count = 0
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    edit_init_once() {
-      this.editor_index_handle()
-    },
 
     // clock = advance(seconds: sec)
     time_limit_clock_set() {
@@ -344,14 +338,22 @@ export default {
 
     question_edit_of(row) {
       this.sound_play("click")
-
       this.question = row
+
+      // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
+      this.$set(this.question, "fixed_init_sfen", this.question.init_sfen)
+
       this.time_limit_clock_set()
 
-      this.edit_tab_index = 0   // 配置モード
       this.answer_tab_index = 0 // 解答リストの一番左指す
       this.answer_turn_offset = 0
       this.valid_count = 0
+
+      if (this.question_new_record_p) {
+        this.edit_mode_handle()
+      } else {
+        this.exam_mode_handle()
+      }
     },
 
     back_to_index_handle() {
@@ -453,7 +455,9 @@ export default {
     },
 
     question_new_record_p() {
-      return this.question.id == null
+      if (this.question) {
+        return this.question.id == null
+      }
     },
 
     // candidate_columns() {
@@ -474,6 +478,13 @@ export default {
 @import "../stylesheets/bulma_init.scss"
 .the_editor
   //////////////////////////////////////////////////////////////////////////////// 編集
+
+  position: relative
+  .delete
+    position: absolute
+    top: 0rem
+    right: 0rem
+    z-index: 1
 
   // .switch_grouped_container
   //   margin-top: 0.5rem

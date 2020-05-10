@@ -1,8 +1,5 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  template(v-if="development_p")
-    p {{current_gvar1}}
-
   the_header
   the_lobby(:info="info" v-if="mode === 'lobby'")
   the_matching(:info="info" v-if="mode === 'matching'")
@@ -246,8 +243,13 @@ export default {
       }
 
       if (this.current_quest_answers.includes(this.position_sfen_remove(long_sfen))) {
+        // 正解
         this.sound_play("pipopipo")
-        this.$room.perform("progress_info_share", {membership_id: this.current_membership.id, quest_index: this.quest_index + 1}) // --> app/channels/actf/room_channel.rb
+        this.$room.perform("progress_info_share", {
+          membership_id: this.current_membership.id,
+          quest_index: this.quest_index + 1,
+          quest_id: this.current_quest_id, // 問題ID
+        }) // --> app/channels/actf/room_channel.rb
 
         this.freeze_mode = true
         setTimeout(() => {
@@ -335,6 +337,12 @@ export default {
       const info = this.current_simple_quest_info
       if (info) {
         return info.moves_answers.map(e => [info.init_sfen, "moves", e.moves_str].join(" "))
+      }
+    },
+    current_quest_id() {
+      const info = this.current_simple_quest_info
+      if (info) {
+        return info.id
       }
     },
 

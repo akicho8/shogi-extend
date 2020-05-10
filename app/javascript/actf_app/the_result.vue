@@ -62,6 +62,7 @@ export default {
   },
 
   created() {
+    this.main_nav_set(false)
   },
 
   watch: {

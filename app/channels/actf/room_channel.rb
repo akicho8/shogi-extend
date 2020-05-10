@@ -49,6 +49,11 @@ module Actf
       # 一応保存しておく(あとで取るかもしれない)
       current_room.memberships.find(data[:membership_id]).update!(quest_index: data[:quest_index])
 
+      # 問題の解答数を上げる
+      if id = data[:quest_id]
+        Question.find(id).increment!(:o_count)
+      end
+
       # こちらがメイン
       ActionCable.server.broadcast("actf/room_channel/#{params["room_id"]}", {progress_info_share: info})
     end

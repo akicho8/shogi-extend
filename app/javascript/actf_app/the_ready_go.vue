@@ -71,6 +71,9 @@ export default {
       turn_offset: null,
     }
   },
+  created() {
+    this.main_nav_set(false)
+  },
   computed: {
     quest() {
       return this.$parent.current_simple_quest_info

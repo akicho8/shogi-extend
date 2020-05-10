@@ -23,10 +23,11 @@ b-table.the_editor_index(
     b-table-column(field="id" label="ID" sortable) {{props.row.id}}
     b-table-column(field="title" label="タイトル" sortable) {{props.row.title || '？'}}
     b-table-column(field="difficulty_level" label="難易度" sortable) {{props.row.difficulty_level}}
-    b-table-column(field="moves_answers_count" label="解答数" sortable) {{props.row.moves_answers.length}}
+    //- b-table-column(field="moves_answers_count" label="解答数" sortable) {{props.row.moves_answers.length}}
     b-table-column(field="updated_at" label="更新日時" sortable) {{row_time_format(props.row.updated_at)}}
+    b-table-column(field="o_count" label="解答数" sortable) {{props.row.o_count}}
     b-table-column(label="")
-      a(@click="$parent.question_edit_of(props.row)") 編集
+      a(@click="$parent.question_edit_of(props.row)") 検証
 
   template(slot="empty")
     section.section.is-unselectable

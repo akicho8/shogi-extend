@@ -1,5 +1,7 @@
 import Vuex from 'vuex'
 
+const POSITION_SFEN_PREFIX = "position sfen "
+
 export default {
   mixins: [
   ],
@@ -39,7 +41,22 @@ export default {
     },
 
     position_sfen_remove(sfen) {
-      return sfen.replace(/position sfen\s+/, "")
+      return sfen.replace(POSITION_SFEN_PREFIX, "")
+    },
+
+    position_sfen_add(sfen) {
+      return POSITION_SFEN_PREFIX + sfen
+    },
+
+    main_nav_set(display_p) {
+      const el = document.querySelector("#main_nav")
+      if (el) {
+        if (display_p) {
+          el.classList.remove("is-hidden")
+        } else {
+          el.classList.add("is-hidden")
+        }
+      }
     },
   },
   computed: {

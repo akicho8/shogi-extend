@@ -11,6 +11,7 @@
 # | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | B     |
 # | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | C     |
 # | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | D     |
+# | display_key           | Display key           | string(255) |                     |                       | E     |
 # | title                 | タイトル              | string(255) |                     |                       |       |
 # | description           | 説明                  | string(512) |                     |                       |       |
 # | hint_description      | Hint description      | string(255) |                     |                       |       |
@@ -18,10 +19,10 @@
 # | other_twitter_account | Other twitter account | string(255) |                     |                       |       |
 # | created_at            | 作成日時              | datetime    | NOT NULL            |                       |       |
 # | updated_at            | 更新日時              | datetime    | NOT NULL            |                       |       |
-# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | E     |
-# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | F     |
-# | o_count               | O count               | integer(4)  | NOT NULL            |                       | G     |
-# | x_count               | X count               | integer(4)  | NOT NULL            |                       | H     |
+# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | F     |
+# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | G     |
+# | o_count               | O count               | integer(4)  | NOT NULL            |                       | H     |
+# | x_count               | X count               | integer(4)  | NOT NULL            |                       | I     |
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

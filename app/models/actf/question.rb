@@ -11,6 +11,7 @@
 # | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | B     |
 # | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | C     |
 # | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | D     |
+# | display_key           | Display key           | string(255) |                     |                       | E     |
 # | title                 | タイトル              | string(255) |                     |                       |       |
 # | description           | 説明                  | string(512) |                     |                       |       |
 # | hint_description      | Hint description      | string(255) |                     |                       |       |
@@ -18,10 +19,10 @@
 # | other_twitter_account | Other twitter account | string(255) |                     |                       |       |
 # | created_at            | 作成日時              | datetime    | NOT NULL            |                       |       |
 # | updated_at            | 更新日時              | datetime    | NOT NULL            |                       |       |
-# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | E     |
-# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | F     |
-# | o_count               | O count               | integer(4)  | NOT NULL            |                       | G     |
-# | x_count               | X count               | integer(4)  | NOT NULL            |                       | H     |
+# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | F     |
+# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | G     |
+# | o_count               | O count               | integer(4)  | NOT NULL            |                       | H     |
+# | x_count               | X count               | integer(4)  | NOT NULL            |                       | I     |
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -59,6 +60,8 @@ module Actf
 
       self.o_count ||= 0
       self.x_count ||= 0
+
+      self.display_key ||= :public
     end
 
     with_options presence: true do
@@ -66,10 +69,11 @@ module Actf
       # validates :difficulty_level
     end
 
-    # with_options allow_blank: true do
-    #   validates :init_sfen # , uniqueness: { case_sensitive: true }
-    #   # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-    # end
+    with_options allow_blank: true do
+      # validates :init_sfen # , uniqueness: { case_sensitive: true }
+      # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      validates :display_key, inclusion: DisplayInfo.keys.collect(&:to_s)
+    end
 
     # jsから来たパラメーターでまとめて更新する
     def together_with_params_came_from_js_update(params)

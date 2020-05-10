@@ -32,6 +32,7 @@ export default {
   created() {
     this.matching_init()
     // this.$lobby.perform("matching_start")
+    this.main_nav_set(false)
   },
 
   beforeDestroy() {

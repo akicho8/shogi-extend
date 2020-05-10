@@ -20,6 +20,14 @@
 
   label.is-size-7.has-text-weight-bold 難易度
   b-rate(v-model="$parent.$parent.$parent.question.difficulty_level" spaced :max="$parent.$parent.$parent.start_level_max" :show-score="false")
+
+  b-field
+    b-radio-button(v-model="$parent.$parent.$parent.question.display_key" native-value="public")
+      b-icon(icon="check")
+      span 公開
+    b-radio-button(v-model="$parent.$parent.$parent.question.display_key" native-value="private" type="is-danger")
+      b-icon(icon="lock")
+      span 非公開
 </template>
 
 <script>

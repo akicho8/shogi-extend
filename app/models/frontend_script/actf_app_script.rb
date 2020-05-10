@@ -44,15 +44,17 @@ module FrontendScript
     PER_DEFAULT = 10
 
     def form_parts
-      [
-        {
-          :label   => "画面",
-          :key     => :debug_scene,
-          :elems   => { "ロビー" => nil, "対戦" => :ready_go, "結果" => :result_show, "編集"  => :edit, },
-          :type    => :select,
-          :default => current_debug_scene,
-        },
-      ]
+      if Rails.env.development?
+        [
+          {
+            :label   => "画面",
+            :key     => :debug_scene,
+            :elems   => { "ロビー" => nil, "対戦" => :ready_go, "結果" => :result_show, "編集"  => :edit, },
+            :type    => :select,
+            :default => current_debug_scene,
+          },
+        ]
+      end
     end
 
     # http://localhost:3000/admin/script/actf-sample.json?index_fetch=true
