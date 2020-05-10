@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_editor_form
+.the_builder_form
   b-field(label="タイトル" label-position="on-border")
     b-input(v-model="$parent.$parent.$parent.question.title")
 
@@ -34,7 +34,7 @@
 import the_support from './the_support'
 
 export default {
-  name: "the_editor_form",
+  name: "the_builder_form",
   mixins: [
     the_support,
   ],
@@ -45,6 +45,6 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.the_editor_form
+.the_builder_form
   margin-top: 0.8rem
 </style>

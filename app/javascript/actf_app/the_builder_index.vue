@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table.the_editor_index(
+b-table.the_builder_index(
   v-if="$parent.questions"
   :data="$parent.questions"
   mobile-cards
@@ -42,7 +42,7 @@ b-table.the_editor_index(
 import the_support from './the_support'
 
 export default {
-  name: "the_editor_index",
+  name: "the_builder_index",
   mixins: [
     the_support,
   ],
@@ -51,5 +51,5 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.the_editor_index
+.the_builder_index
 </style>

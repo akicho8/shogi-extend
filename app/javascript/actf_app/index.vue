@@ -7,7 +7,7 @@
   the_room_chat(:info="info" v-if="mode === 'room'")
   the_result(:info="info" v-if="mode === 'result'")
   the_room_chat(:info="info" v-if="mode === 'result'")
-  the_editor(:info="info" v-if="mode === 'edit'")
+  the_builder(:info="info" v-if="mode === 'edit'")
   debug_print(:grep="/./")
 </template>
 
@@ -25,7 +25,7 @@ import the_matching  from './the_matching'
 import the_room      from './the_room'
 import the_room_chat from './the_room_chat'
 import the_result    from './the_result'
-import the_editor    from './the_editor'
+import the_builder    from './the_builder'
 
 export default {
   store: the_store,
@@ -40,7 +40,7 @@ export default {
     the_room,
     the_room_chat,
     the_result,
-    the_editor,
+    the_builder,
   },
   props: {
     info: { required: true },

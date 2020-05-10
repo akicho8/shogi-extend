@@ -15,7 +15,7 @@
 import the_support from './the_support'
 
 export default {
-  name: "the_editor",
+  name: "the_builder",
   mixins: [
     the_support,
   ],

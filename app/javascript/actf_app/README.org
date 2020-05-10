@@ -7,10 +7,10 @@ index (+ store)
   + matching (include matching_interval)
   + room
   + result
-  + editor (かなり疎結合)
+  + builder (かなり疎結合)
 
 ・support はすべてに mixin
-・editor だけは完全分離で他は分離できないので基本indexにすべてのメソッドがある
+・builder だけは完全分離で他は分離できないので基本indexにすべてのメソッドがある
 ・ライブラリではないので $paret をむしろ積極的に使っていく
 
 * 重要

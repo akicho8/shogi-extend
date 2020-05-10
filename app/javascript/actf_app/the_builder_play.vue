@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_editor_play
+.the_builder_play
   shogi_player(
     :run_mode="'play_mode'"
     :kifu_body="`position sfen ${$parent.$parent.$parent.question.init_sfen}`"
@@ -46,7 +46,7 @@
 import the_support from './the_support'
 
 export default {
-  name: "the_editor_play",
+  name: "the_builder_play",
   mixins: [
     the_support,
   ],
@@ -57,5 +57,5 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.the_editor_play
+.the_builder_play
 </style>

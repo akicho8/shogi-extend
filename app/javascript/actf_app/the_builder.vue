@@ -1,14 +1,14 @@
 <template lang="pug">
-.the_editor
+.the_builder
   a.delete.is-large(@click="$parent.lobby_button_handle")
   .columns.is-centered
     .column
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="editor_index_handle" :type="{'is-primary': !question}") 問題一覧
-        b-button.has-text-weight-bold(@click="editor_new_handle" :type="{'is-primary': (question && question_new_record_p)}") 新規作成
+        b-button.has-text-weight-bold(@click="builder_index_handle" :type="{'is-primary': !question}") 問題一覧
+        b-button.has-text-weight-bold(@click="builder_new_handle" :type="{'is-primary': (question && question_new_record_p)}") 新規作成
 
       template(v-if="!question")
-        the_editor_index
+        the_builder_index
 
       template(v-if="question")
         //- b-field.switch_grouped_container(grouped position="is-centered")
@@ -51,10 +51,10 @@
             template(slot="header")
               span 正解
               b-tag(rounded) {{question.moves_answers.length}}
-            the_editor_play(ref="the_editor_play")
+            the_builder_play(ref="the_builder_play")
 
           b-tab-item(label="情報")
-            the_editor_form
+            the_builder_form
 
           b-tab-item
             template(slot="header")
@@ -107,19 +107,19 @@ class EditTabInfo extends MemoryRecord {
 }
 
 import the_support from './the_support'
-import the_editor_index from "./the_editor_index"
-import the_editor_play from "./the_editor_play"
-import the_editor_form from "./the_editor_form"
+import the_builder_index from "./the_builder_index"
+import the_builder_play from "./the_builder_play"
+import the_builder_form from "./the_builder_form"
 
 export default {
-  name: "the_editor",
+  name: "the_builder",
   mixins: [
     the_support,
   ],
   components: {
-    the_editor_index,
-    the_editor_play,
-    the_editor_form,
+    the_builder_index,
+    the_builder_play,
+    the_builder_form,
   },
   props: {
     info: { required: true },
@@ -153,7 +153,7 @@ export default {
 
   created() {
     this.main_nav_set(false)
-    this.editor_index_handle()
+    this.builder_index_handle()
     // this.exam_mode_handle()
   },
 
@@ -185,7 +185,7 @@ export default {
     },
 
     current_moves_str() {
-      return this.$refs.the_editor_play.$refs.play_sp.moves_take_turn_offset.join(" ")
+      return this.$refs.the_builder_play.$refs.play_sp.moves_take_turn_offset.join(" ")
     },
 
     edit_stock_handle() {
@@ -317,7 +317,7 @@ export default {
     },
 
     // 「新規作成」ボタン
-    editor_new_handle() {
+    builder_new_handle() {
       this.question_edit_of(this.question_default())
     },
 
@@ -357,7 +357,7 @@ export default {
     },
 
     back_to_index_handle() {
-      this.editor_index_handle()
+      this.builder_index_handle()
     },
 
     page_change_handle(page) {
@@ -418,7 +418,7 @@ export default {
       this.mediator_snapshot_sfen = this.position_sfen_remove(sfen)
     },
 
-    editor_index_handle(event) {
+    builder_index_handle(event) {
       if (event) {
         this.sound_play("click")
       }
@@ -476,7 +476,7 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.the_editor
+.the_builder
   //////////////////////////////////////////////////////////////////////////////// 編集
 
   position: relative
