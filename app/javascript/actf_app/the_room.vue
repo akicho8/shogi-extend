@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_ready_go
+.the_room
   .columns.is-centered.is-mobile
     template(v-for="(membership, i) in $parent.room.memberships")
       .column.user_container.is-flex
@@ -62,7 +62,7 @@
 import the_support from './the_support'
 
 export default {
-  name: "the_ready_go",
+  name: "the_room",
   mixins: [
     the_support,
   ],
@@ -84,7 +84,7 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.the_ready_go
+.the_room
   .vs_mark
     flex-direction: column
     justify-content: center

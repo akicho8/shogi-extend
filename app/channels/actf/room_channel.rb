@@ -101,7 +101,7 @@ module Actf
 
       # 終了時
       room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actf_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
-      ActionCable.server.broadcast("actf/room_channel/#{params["room_id"]}", {switch_to: "result_show", room: room_json})
+      ActionCable.server.broadcast("actf/room_channel/#{params["room_id"]}", {switch_to: "result", room: room_json})
       # --> app/javascript/actf_app.vue
     end
 

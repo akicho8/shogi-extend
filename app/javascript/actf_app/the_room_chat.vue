@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_chat.columns
+.the_room_chat.columns
   .column
     .messages_box.has-background-light(ref="messages_box")
       template(v-for="message in $parent.messages")
@@ -15,7 +15,7 @@
 import the_support from './the_support'
 
 export default {
-  name: "the_ready_go",
+  name: "the_room",
   mixins: [
     the_support,
   ],
@@ -51,7 +51,7 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.the_chat
+.the_room_chat
   .messages_box
     padding: 0.5rem
     height: 5em

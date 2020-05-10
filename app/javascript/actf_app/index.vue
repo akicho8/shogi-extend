@@ -3,10 +3,10 @@
   the_header
   the_lobby(:info="info" v-if="mode === 'lobby'")
   the_matching(:info="info" v-if="mode === 'matching'")
-  the_ready_go(:info="info" v-if="mode === 'ready_go'")
-  the_chat(:info="info" v-if="mode === 'ready_go'")
-  the_result(:info="info" v-if="mode === 'result_show'")
-  the_chat(:info="info" v-if="mode === 'result_show'")
+  the_room(:info="info" v-if="mode === 'room'")
+  the_room_chat(:info="info" v-if="mode === 'room'")
+  the_result(:info="info" v-if="mode === 'result'")
+  the_room_chat(:info="info" v-if="mode === 'result'")
   the_editor(:info="info" v-if="mode === 'edit'")
   debug_print(:grep="/./")
 </template>
@@ -19,13 +19,13 @@ import consumer from "channels/consumer"
 import the_support from './the_support'
 import the_store   from './the_store'
 
-import the_header   from './the_header'
-import the_lobby    from './the_lobby'
-import the_matching from './the_matching'
-import the_ready_go from './the_ready_go'
-import the_chat     from './the_chat'
-import the_result   from './the_result'
-import the_editor   from './the_editor'
+import the_header    from './the_header'
+import the_lobby     from './the_lobby'
+import the_matching  from './the_matching'
+import the_room      from './the_room'
+import the_room_chat from './the_room_chat'
+import the_result    from './the_result'
+import the_editor    from './the_editor'
 
 export default {
   store: the_store,
@@ -37,8 +37,8 @@ export default {
     the_header,
     the_lobby,
     the_matching,
-    the_ready_go,
-    the_chat,
+    the_room,
+    the_room_chat,
     the_result,
     the_editor,
   },
@@ -71,12 +71,12 @@ export default {
   created() {
     this.school_setup()
 
-    if (this.info.debug_scene === "ready_go") {
-      this.mode = "ready_go"
+    if (this.info.debug_scene === "room") {
+      this.mode = "room"
       this.room_setup()
     }
-    if (this.info.debug_scene === "result_show") {
-      this.mode = "result_show"
+    if (this.info.debug_scene === "result") {
+      this.mode = "result"
     }
     if (this.info.debug_scene === "edit") {
       this.goto_edit_mode_handle()
@@ -169,7 +169,7 @@ export default {
     },
 
     room_setup() {
-      this.mode = "ready_go"
+      this.mode = "room"
 
       this.messages = []
       this.message = ""
@@ -213,8 +213,8 @@ export default {
           }
 
           // 終了
-          if (data.switch_to === "result_show") {
-            this.mode = "result_show"
+          if (data.switch_to === "result") {
+            this.mode = "result"
             this.room = data.room
             if (this.current_membership) {
               if (this.current_membership.judge_key === "win") {

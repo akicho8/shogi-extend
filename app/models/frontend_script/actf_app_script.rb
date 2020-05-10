@@ -49,7 +49,7 @@ module FrontendScript
           {
             :label   => "画面",
             :key     => :debug_scene,
-            :elems   => { "ロビー" => nil, "対戦" => :ready_go, "結果" => :result_show, "編集"  => :edit, },
+            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :edit, },
             :type    => :select,
             :default => current_debug_scene,
           },
@@ -212,7 +212,7 @@ module FrontendScript
     def debug_scene_set(info)
       info[:debug_scene] = current_debug_scene
 
-      if current_debug_scene == :ready_go
+      if current_debug_scene == :room
         c.sysop_login_unless_logout
 
         user = Colosseum::User.create!
@@ -224,7 +224,7 @@ module FrontendScript
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:simple_quest_infos, :final_info])
       end
 
-      if current_debug_scene == :result_show
+      if current_debug_scene == :result
         c.sysop_login_unless_logout
 
         user1 = current_user

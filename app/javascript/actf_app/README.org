@@ -1,11 +1,11 @@
 * 構造
 
 index (+ store)
-  + chat
+  + room_chat
   + header
   + lobby
   + matching (include matching_interval)
-  + ready_go
+  + room
   + result
   + editor (かなり疎結合)
 
