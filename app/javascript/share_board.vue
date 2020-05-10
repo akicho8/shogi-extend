@@ -5,7 +5,7 @@
     div edit_mode_body: {{edit_mode_body}}
 
   .columns
-    .column
+    .column.sp_mobile_padding
       b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
         b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
         template(v-if="run_mode === 'play_mode'")
@@ -373,6 +373,7 @@ export default {
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
+
 .image_view_point_setting
   .desc
     color: $grey
@@ -396,6 +397,7 @@ export default {
 .share_board
   ////////////////////////////////////////////////////////////////////////////////
   .title_container
+    padding-top: 0.65rem
     .title
     .turn_offset
       margin-top: 0.65rem

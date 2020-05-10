@@ -1,7 +1,7 @@
 <template lang="pug">
 .cpu_battle
   .columns
-    .column
+    .column.sp_mobile_padding
       template(v-if="mode === 'playing' || mode === 'standby'")
         nav.level.is-mobile
           .level-item
@@ -527,7 +527,6 @@ export default {
 
 <style lang="sass">
 @import "./stylesheets/bulma_init.scss"
-
 .cpu_battle
   .table_format_area
     line-height: 100%
