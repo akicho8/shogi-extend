@@ -1,13 +1,13 @@
 <template lang="pug">
-.the_room_chat.columns
+.the_lobby_message.columns
   .column
     .messages_box.has-background-light(ref="messages_box")
-      template(v-for="message in $parent.messages")
+      template(v-for="message in $parent.lobby_messages")
         div {{message.user.name}}: {{message.body}}
     b-field.input_field
-      b-input(v-model="$parent.message" expanded @keypress.native.enter="$parent.speak_handle")
+      b-input(v-model="$parent.lobby_message" expanded @keypress.native.enter="$parent.lobby_speak_handle")
       p.control
-        button.button.is-primary(@click="$parent.speak_handle")
+        button.button.is-primary(@click="$parent.lobby_speak_handle")
           b-icon.play_icon(icon="play")
 </template>
 
@@ -15,7 +15,7 @@
 import the_support from './the_support'
 
 export default {
-  name: "the_room",
+  name: "the_lobby",
   mixins: [
     the_support,
   ],
@@ -30,7 +30,7 @@ export default {
   },
 
   watch: {
-    "$parent.messages": {
+    "$parent.lobby_messages": {
       handler() {
         this.scroll_to_bottom()
       },
@@ -51,10 +51,10 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-.the_room_chat
+.the_lobby_message
   .messages_box
     padding: 0.5rem
-    height: 5em
+    height: 20em
     overflow-y: scroll
   .input_field
     margin-top: 0.5rem

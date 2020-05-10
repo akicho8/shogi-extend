@@ -336,6 +336,25 @@
 
 # == Schema Information ==
 #
+# Room message (actf_room_messages as Actf::RoomMessage)
+#
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | name       | desc     | type        | opts        | refs                  | index |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
+# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
+# | room_id    | Room     | integer(8)  |             |                       | B     |
+# | body       | 内容     | string(512) |             |                       |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :actf_memberships
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
 # Membership (actf_memberships as Actf::Membership)
 #
 # |--------------+--------------+-------------+-------------+-----------------------+-------|
@@ -390,6 +409,24 @@
 
 # == Schema Information ==
 #
+# Lobby message (actf_lobby_messages as Actf::LobbyMessage)
+#
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | name       | desc     | type        | opts        | refs                  | index |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
+# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
+# | body       | 内容     | string(512) |             |                       |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_many :actf_memberships
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
 # Endpos answer (actf_endpos_answers as Actf::EndposAnswer)
 #
 # |-------------+------------+-------------+-------------+------+-------|
@@ -402,25 +439,6 @@
 # | created_at  | 作成日時   | datetime    | NOT NULL    |      |       |
 # | updated_at  | 更新日時   | datetime    | NOT NULL    |      |       |
 # |-------------+------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Message (actf_messages as Actf::Message)
-#
-# |------------+----------+-------------+-------------+-----------------------+-------|
-# | name       | desc     | type        | opts        | refs                  | index |
-# |------------+----------+-------------+-------------+-----------------------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
-# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
-# | room_id    | Room     | integer(8)  |             |                       | B     |
-# | body       | 内容     | string(512) |             |                       |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
-# |------------+----------+-------------+-------------+-----------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :actf_memberships
-#--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #

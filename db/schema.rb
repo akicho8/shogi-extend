@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["question_id"], name: "index_actf_endpos_answers_on_question_id"
   end
 
+  create_table "actf_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "対戦者"
+    t.string "body", limit: 512, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_actf_lobby_messages_on_user_id"
+  end
+
   create_table "actf_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "room_id", comment: "対戦部屋"
     t.bigint "user_id", comment: "対戦者"
@@ -54,16 +62,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["room_id", "user_id"], name: "index_actf_memberships_on_room_id_and_user_id", unique: true
     t.index ["room_id"], name: "index_actf_memberships_on_room_id"
     t.index ["user_id"], name: "index_actf_memberships_on_user_id"
-  end
-
-  create_table "actf_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "対戦者"
-    t.bigint "room_id", comment: "対戦部屋"
-    t.string "body", limit: 512, comment: "発言"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_actf_messages_on_room_id"
-    t.index ["user_id"], name: "index_actf_messages_on_user_id"
   end
 
   create_table "actf_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -124,6 +122,16 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["time_limit_sec"], name: "index_actf_questions_on_time_limit_sec"
     t.index ["user_id"], name: "index_actf_questions_on_user_id"
     t.index ["x_count"], name: "index_actf_questions_on_x_count"
+  end
+
+  create_table "actf_room_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "対戦者"
+    t.bigint "room_id", comment: "対戦部屋"
+    t.string "body", limit: 512, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_actf_room_messages_on_room_id"
+    t.index ["user_id"], name: "index_actf_room_messages_on_user_id"
   end
 
   create_table "actf_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

@@ -8,7 +8,8 @@ module Colosseum
 
       has_many :actf_questions, class_name: "Actf::Question", :dependent => :destroy
 
-      has_many :actf_messages, class_name: "Actf::Message", :dependent => :destroy
+      has_many :actf_room_messages, class_name: "Actf::RoomMessage", :dependent => :destroy
+      has_many :actf_lobby_messages, class_name: "Actf::LobbyMessage", :dependent => :destroy
 
       after_create do
         actf_profile || create_actf_profile!

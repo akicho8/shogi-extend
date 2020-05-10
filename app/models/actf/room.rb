@@ -22,11 +22,11 @@
 #   e.memberships.build(user: user2, judge_key: "lose")
 # end
 #
-# room.messages.create!(user: user1, body: "a") # => #<Actf::Message id: 1, user_id: 31, room_id: 18, body: "a", created_at: "2020-05-05 07:18:46", updated_at: "2020-05-05 07:18:46">
+# room.room_messages.create!(user: user1, body: "a") # => #<Actf::RoomMessage id: 1, user_id: 31, room_id: 18, body: "a", created_at: "2020-05-05 07:18:46", updated_at: "2020-05-05 07:18:46">
 #
 module Actf
   class Room < ApplicationRecord
-    has_many :messages, dependent: :destroy
+    has_many :messages, class_name: "RoomMessage", dependent: :destroy
     has_many :memberships, dependent: :destroy
 
     before_validation do
@@ -41,7 +41,7 @@ module Actf
     end
 
     after_create_commit do
-      Actf::LobbyBroadcastJob.perform_later(self)
+      Actf::RoomBroadcastJob.perform_later(self)
     end
 
     def simple_quest_infos

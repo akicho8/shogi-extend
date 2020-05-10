@@ -1,5 +1,5 @@
 module Actf
-  class LobbyBroadcastJob < ApplicationJob
+  class RoomBroadcastJob < ApplicationJob
     queue_as :default
 
     def perform(room)

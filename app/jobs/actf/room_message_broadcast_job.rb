@@ -1,5 +1,5 @@
 module Actf
-  class MessageBroadcastJob < ApplicationJob
+  class RoomMessageBroadcastJob < ApplicationJob
     queue_as :default
 
     def perform(message)

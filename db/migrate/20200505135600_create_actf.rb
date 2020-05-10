@@ -32,9 +32,15 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    create_table :actf_messages do |t|
+    create_table :actf_room_messages do |t|
       t.belongs_to :user,         comment: "対戦者"
       t.belongs_to :room,         comment: "対戦部屋"
+      t.string :body, limit: 512, comment: "発言"
+      t.timestamps
+    end
+
+    create_table :actf_lobby_messages do |t|
+      t.belongs_to :user,         comment: "対戦者"
       t.string :body, limit: 512, comment: "発言"
       t.timestamps
     end

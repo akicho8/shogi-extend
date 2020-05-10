@@ -1,6 +1,7 @@
 module Actf
   class LobbyChannel < BaseChannel
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
+    MESSSAGE_LIMIT = 64
 
     delegate :matching_list, to: "self.class"
 
@@ -13,10 +14,22 @@ module Actf
     def subscribed
       stream_from "actf/lobby_channel"
       common_broadcast
+
+      if current_user
+        stream_for current_user
+        messages = LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
+        messages = messages.as_json(only: [:body], include: {user: {only: [:id, :name], methods: [:avatar_path]}})
+        LobbyChannel.broadcast_to(current_user, messages: messages)
+      end
     end
 
     def unsubscribed
       matching_list_remove(current_user)
+    end
+
+    def speak(data)
+      data = data.to_options
+      current_user.actf_lobby_messages.create!(body: data[:message])
     end
 
     def matching_start(data)

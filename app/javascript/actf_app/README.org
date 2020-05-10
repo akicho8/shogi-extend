@@ -1,7 +1,7 @@
 * 構造
 
 index (+ store)
-  + room_chat
+  + room_message
   + header
   + lobby
   + matching (include matching_interval)

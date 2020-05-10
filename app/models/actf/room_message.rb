@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Message (actf_messages as Actf::Message)
+# Room message (actf_room_messages as Actf::RoomMessage)
 #
 # |------------+----------+-------------+-------------+-----------------------+-------|
 # | name       | desc     | type        | opts        | refs                  | index |
@@ -19,7 +19,7 @@
 #--------------------------------------------------------------------------------
 
 module Actf
-  class Message < ApplicationRecord
+  class RoomMessage < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
     belongs_to :room
 
@@ -28,7 +28,7 @@ module Actf
     end
 
     after_create_commit do
-      Actf::MessageBroadcastJob.perform_later(self)
+      Actf::RoomMessageBroadcastJob.perform_later(self)
     end
   end
 end

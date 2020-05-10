@@ -2,11 +2,12 @@
 .actf_app(:class="mode")
   the_header
   the_lobby(:info="info" v-if="mode === 'lobby'")
+  the_lobby_message(:info="info" v-if="mode === 'lobby'")
   the_matching(:info="info" v-if="mode === 'matching'")
   the_room(:info="info" v-if="mode === 'room'")
-  the_room_chat(:info="info" v-if="mode === 'room'")
+  the_room_message(:info="info" v-if="mode === 'room'")
   the_result(:info="info" v-if="mode === 'result'")
-  the_room_chat(:info="info" v-if="mode === 'result'")
+  the_room_message(:info="info" v-if="mode === 'result'")
   the_builder(:info="info" v-if="mode === 'edit'")
   debug_print(:grep="/./")
 </template>
@@ -19,12 +20,13 @@ import consumer from "channels/consumer"
 import the_support from './the_support'
 import the_store   from './the_store'
 
-import the_header    from './the_header'
-import the_lobby     from './the_lobby'
-import the_matching  from './the_matching'
-import the_room      from './the_room'
-import the_room_chat from './the_room_chat'
-import the_result    from './the_result'
+import the_header     from './the_header'
+import the_lobby      from './the_lobby'
+import the_lobby_message from './the_lobby_message'
+import the_matching   from './the_matching'
+import the_room       from './the_room'
+import the_room_message  from './the_room_message'
+import the_result     from './the_result'
 import the_builder    from './the_builder'
 
 export default {
@@ -36,9 +38,10 @@ export default {
   components: {
     the_header,
     the_lobby,
+    the_lobby_message,
     the_matching,
     the_room,
-    the_room_chat,
+    the_room_message,
     the_result,
     the_builder,
   },
@@ -58,8 +61,12 @@ export default {
       progress_info:   null, // 各 membership_id はどこまで進んでいるかわかる {"1" => 2, "3" => 4}
 
       // チャット用
-      messages: null, // メッセージ(複数)
-      message:  null, // 入力中のメッセージ
+      room_messages: null, // メッセージ(複数)
+      room_message:  null, // 入力中のメッセージ
+
+      // チャット用
+      lobby_messages: null, // メッセージ(複数)
+      lobby_message:  null, // 入力中のメッセージ
 
       // private
       $school: null, // --> app/channels/actf/school_channel.rb
@@ -75,9 +82,11 @@ export default {
       this.mode = "room"
       this.room_setup()
     }
+
     if (this.info.debug_scene === "result") {
       this.mode = "result"
     }
+
     if (this.info.debug_scene === "edit") {
       this.goto_edit_mode_handle()
     }
@@ -93,13 +102,27 @@ export default {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    speak_handle() {
-      this.speak(this.message)
+    lobby_speak_handle() {
+      this.lobby_speak(this.lobby_message)
+      this.lobby_message = ""
     },
 
-    speak(message) {
+    lobby_speak(message) {
+      this.$lobby.perform("speak", {message: message})
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    room_speak_handle() {
+      this.room_speak(this.room_message)
+      this.room_message = ""
+    },
+
+    room_speak(message) {
       this.$room.perform("speak", {message: message})
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     school_setup() {
       this.$school = consumer.subscriptions.create({channel: "Actf::SchoolChannel"}, {
@@ -122,6 +145,9 @@ export default {
     },
 
     lobby_setup() {
+      this.lobby_messages = []
+      this.lobby_message = ""
+
       this.debug_alert("lobby_setup")
       this.__assert(this.$lobby == null)
       this.$lobby = consumer.subscriptions.create({channel: "Actf::LobbyChannel"}, {
@@ -133,6 +159,22 @@ export default {
         },
         received: (data) => {
           this.debug_alert("lobby 受信")
+
+          console.log(data)
+
+          // チャット
+          if (data.messages) {
+            this.lobby_messages = data.messages
+          }
+
+          if (data.message) {
+            const message = data.message
+
+            this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
+            this.talk(message.body, {rate: 1.5})
+
+            this.lobby_messages.push(message)
+          }
 
           // マッチング待ち
           if (data.matching_list) {
@@ -171,8 +213,8 @@ export default {
     room_setup() {
       this.mode = "room"
 
-      this.messages = []
-      this.message = ""
+      this.room_messages = []
+      this.room_message = ""
 
       this.freeze_mode = false
       this.progress_info = {}
@@ -199,8 +241,7 @@ export default {
             this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
             this.talk(message.body, {rate: 1.5})
 
-            this.messages.push(message)
-            this.message = ""
+            this.room_messages.push(message)
           }
 
           // 状況を反映する (なるべく小さなデータで共有する)
@@ -228,6 +269,7 @@ export default {
         },
       })
     },
+
     lobby_button_handle() {
       this.sound_play("click")
 

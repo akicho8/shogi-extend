@@ -24,11 +24,13 @@ module Actf
 
     def speak(data)
       data = data.to_options
+      message = current_user.actf_messages.create!(body: data[:message], room: current_room)
+      execution_interrupt_hidden_command(message.body)
+    end
 
-      message = Message.create!(body: data[:message], user: current_user, room_id: params["room_id"])
-
+    def execution_interrupt_hidden_command(str)
       # if message = room.messages.where(user: current_user).order(created_at: :desc).first
-      if md = message.body.to_s.match(/\/(?<command_line>.*)/)
+      if md = str.to_s.match(/\/(?<command_line>.*)/)
         args = md["command_line"].split
         command = args.shift
         if command == "win"
