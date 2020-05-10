@@ -205,6 +205,7 @@ module FrontendScript
         time_limit_sec: 3 * 60,
         difficulty_level: 1,
         title: "(title)",
+        display_key: "public",
       }
     end
 
