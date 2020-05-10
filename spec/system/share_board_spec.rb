@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "リレー将棋", type: :system do
   it "最初" do
     visit "/share-board"
-    expect(page).to have_content "0手目"
+    expect(page).to have_content "リレー将棋"
     doc_image
   end
 

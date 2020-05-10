@@ -873,7 +873,10 @@ $board_color: hsl(0, 0%, 60%)
       .font_size_base
         // モバイルのときに画面幅に合わせて盤面を大きくする
         +mobile
-          font-size: 6.0vmin
+          font-size: 6.0vmin        // このサイズでぎりぎり升目が正方形を保ったまま最大幅になる
+          // table
+          //   width: inherit      // 升目が正方形になるように戻す
+
       .current_place
         border: 0.1em solid darken($orange, 0)
       .piece_back

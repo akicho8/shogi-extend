@@ -84,7 +84,7 @@ class ShareBoardsController < ApplicationController
   end
 
   def current_page_title
-    [current_title, "#{initial_turn}手目"].compact.join(" ")
+    [current_title, turn_full_message].compact.join(" ")
   end
 
   def current_image_path
@@ -98,6 +98,12 @@ class ShareBoardsController < ApplicationController
   end
 
   private
+
+  def turn_full_message
+    if initial_turn.nonzero?
+      "#{initial_turn}手目"
+    end
+  end
 
   def behavior_after_rescue(message)
     redirect_to controller_name.singularize.to_sym, danger: message
