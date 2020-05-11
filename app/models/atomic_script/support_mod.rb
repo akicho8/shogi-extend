@@ -1,11 +1,11 @@
 module AtomicScript
   concern :SupportMod do
     def bold(str)
-      h.tag.b(str)
+      h.tag(:class => "has-text-weight-bold") { str }
     end
 
     def small(str)
-      h.tag.small(str)
+      h.tag(:class => "is-size-7") { str }
     end
 
     def current_page
