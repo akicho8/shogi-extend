@@ -61,3 +61,4 @@ export default {
     .play_icon
       min-width: 3rem
 </style>
+

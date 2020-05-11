@@ -38,7 +38,7 @@ module FrontendScript
 
       rows.collect do |e|
         row = {}
-        row["名前"]   = h.tag.small(e[:name])
+        row["名前"]   = small(e[:name])
         row["出現率"] = "%.3f %%" % (e[:ratio] * 100.0)
         if Rails.env.development? || params[:vervose]
           row["偏差値"] = "%.3f" % e[:deviation_score]

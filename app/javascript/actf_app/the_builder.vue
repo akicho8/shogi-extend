@@ -49,8 +49,9 @@
               )
           b-tab-item
             template(slot="header")
-              span 正解
-              b-tag(rounded) {{question.moves_answers.length}}
+              span
+                | 正解
+                b-tag(rounded) {{question.moves_answers.length}}
             the_builder_play(ref="the_builder_play")
 
           b-tab-item(label="情報")
@@ -58,8 +59,9 @@
 
           b-tab-item
             template(slot="header")
-              span 検証
-              b-tag(rounded) {{valid_count}}
+              span
+                | 検証
+                b-tag(rounded) {{valid_count}}
 
             shogi_player(
               :run_mode="'play_mode'"
@@ -373,7 +375,7 @@ export default {
 
     async_records_load() {
       this.http_get_command(this.info.put_path, {
-        index_fetch: true,
+        questions_fetch: true,
         page:               this.page,
         per:                this.per,
         sort_column:        this.sort_column,

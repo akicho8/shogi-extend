@@ -3,6 +3,7 @@ import Vuex from "vuex"
 export default () => new Vuex.Store({
   state: {
     gvar1: "(gvar1)",
+    app: null,
   },
 
   // 便利参照メソッドを書く

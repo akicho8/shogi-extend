@@ -23,7 +23,7 @@
 
         table(v-if="'$store' in this && $store.state")
           caption
-            | $store
+            | store
           template(v-for="(value, key) in $store.state")
             debug_print_value(:dp_key="key" :value="value")
 </template>
@@ -58,7 +58,14 @@ export default {
       if (v === undefined) {
         return "<span class='undefined_value'>undefined</span>"
       }
-      return JSON.stringify(v, null, 4)
+      if (v === null) {
+        return "<span class='null_value'>null</span>"
+      }
+      try {
+        return JSON.stringify(v, null, 4)
+      } catch (_) {
+        return "<span class='circular_value'>circular</span>"
+      }
     },
   },
 }
@@ -93,5 +100,9 @@ export default {
       white-space: pre
       background: white
       .undefined_value
-        color: hsl(0, 0%, 70%)
+        color: hsl(0, 0%, 80%)
+      .null_value
+        color: hsl(0, 0%, 60%)
+      .circular_value
+        color: hsl(0, 50%, 50%)
 </style>

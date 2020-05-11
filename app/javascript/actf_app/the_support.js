@@ -60,6 +60,9 @@ export default {
     },
   },
   computed: {
+    ...Vuex.mapState([
+      'app',
+    ]),
     ...Vuex.mapGetters([
       'current_gvar1',
     ]),

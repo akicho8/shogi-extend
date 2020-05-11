@@ -41,7 +41,8 @@ module FrontendScript
 
     delegate :current_user, to: :h
 
-    PER_DEFAULT = 10
+    QUESTIONS_FETCH_PER = 10
+    RANKING_FETCH_MAX = 50
 
     def form_parts
       if Rails.env.development?
@@ -49,7 +50,7 @@ module FrontendScript
           {
             :label   => "画面",
             :key     => :debug_scene,
-            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :edit, },
+            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :edit, "ランキング" => :ranking, },
             :type    => :select,
             :default => current_debug_scene,
           },
@@ -57,10 +58,10 @@ module FrontendScript
       end
     end
 
-    # http://localhost:3000/admin/script/actf-sample.json?index_fetch=true
+    # http://localhost:3000/admin/script/actf-sample.json?questions_fetch=true
     def script_body
-      if params[:index_fetch]
-        params[:per] ||= PER_DEFAULT
+      if params[:questions_fetch]
+        params[:per] ||= QUESTIONS_FETCH_PER
 
         s = current_user.actf_questions
         s = page_scope(s)       # page_mod.rb
@@ -68,6 +69,18 @@ module FrontendScript
 
         retv = {**page_info(s), **sort_info}
         retv[:questions] = s.as_json(include: [:user, :moves_answers])  # FIXME:必要なのだけにする]
+        return retv
+      end
+
+      if params[:ranking_fetch]
+        s = Colosseum::User.all
+        s = s.joins(:actf_profile).order(Actf::Profile.arel_table[params[:ranking_key]].desc).order(:created_at)
+        s = s.limit(RANKING_FETCH_MAX)
+
+        retv = {}
+        # retv = {**page_info(s), **sort_info}
+        retv[:ranking_key] = params[:ranking_key]
+        retv[:rank_records] = s.shuffle.as_json(only: [:id, :name], methods: [:avatar_path, :rating, :rensho_count, :rensho_max])
         return retv
       end
 
@@ -238,6 +251,10 @@ module FrontendScript
       end
 
       if current_debug_scene == :edit
+        c.sysop_login_unless_logout
+      end
+
+      if current_debug_scene == :ranking
         c.sysop_login_unless_logout
       end
     end

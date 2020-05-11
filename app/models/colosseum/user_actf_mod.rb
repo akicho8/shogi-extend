@@ -15,7 +15,7 @@ module Colosseum
         actf_profile || create_actf_profile!
       end
 
-      delegate :rating, to: :actf_profile
+      delegate :rating, :rensho_count, :rensho_max, to: :actf_profile
     end
   end
 end

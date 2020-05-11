@@ -1,6 +1,7 @@
 <template lang="pug">
 .actf_app(:class="mode")
   the_header
+  the_footer
   the_lobby(:info="info" v-if="mode === 'lobby'")
   the_lobby_message(:info="info" v-if="mode === 'lobby'")
   the_matching(:info="info" v-if="mode === 'matching'")
@@ -9,6 +10,7 @@
   the_result(:info="info" v-if="mode === 'result'")
   the_room_message(:info="info" v-if="mode === 'result'")
   the_builder(:info="info" v-if="mode === 'edit'")
+  the_ranking(v-if="mode === 'ranking'")
   debug_print(:grep="/./")
 </template>
 
@@ -21,6 +23,7 @@ import the_support from './the_support'
 import the_store   from './the_store'
 
 import the_header     from './the_header'
+import the_footer     from './the_footer'
 import the_lobby      from './the_lobby'
 import the_lobby_message from './the_lobby_message'
 import the_matching   from './the_matching'
@@ -28,6 +31,7 @@ import the_room       from './the_room'
 import the_room_message  from './the_room_message'
 import the_result     from './the_result'
 import the_builder    from './the_builder'
+import the_ranking    from './the_ranking'
 
 export default {
   store: the_store,
@@ -37,6 +41,7 @@ export default {
   ],
   components: {
     the_header,
+    the_footer,
     the_lobby,
     the_lobby_message,
     the_matching,
@@ -44,6 +49,7 @@ export default {
     the_room_message,
     the_result,
     the_builder,
+    the_ranking,
   },
   props: {
     info: { required: true },
@@ -76,6 +82,8 @@ export default {
   },
 
   created() {
+    this.main_nav_set(false)
+
     this.school_setup()
 
     if (this.info.debug_scene === "room") {
@@ -91,9 +99,17 @@ export default {
       this.goto_edit_mode_handle()
     }
 
+    if (this.info.debug_scene === "ranking") {
+      this.mode = "ranking"
+    }
+
     if (this.mode === "lobby") {
       this.lobby_setup()
     }
+  },
+
+  beforeCreate() {
+    this.$store.state.app = this
   },
 
   watch: {
@@ -348,6 +364,9 @@ export default {
       this.mode = "edit"
     },
 
+    ranking_handle() {
+      this.mode = "ranking"
+    },
   },
 
   computed: {
