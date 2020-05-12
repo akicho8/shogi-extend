@@ -25,11 +25,11 @@ module AtomicScript
         },
       ]
     end
+  end
 
-    concern :FormPartPerAppend do
-      def form_parts
-        super + form_part_per
-      end
+  concern :FormPartPerAppend do
+    def form_parts
+      super + form_part_per
     end
   end
 end

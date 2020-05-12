@@ -9,11 +9,12 @@
       b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
         b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
         template(v-if="run_mode === 'play_mode'")
+          b-dropdown-item(@click="reset_handle") 盤面リセット
+          b-dropdown-item(separator)
           b-dropdown-item(:href="piyo_shogi_app_with_params_url") ぴよ将棋
           b-dropdown-item(:href="kento_app_with_params_url") KENTO
           b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
           b-dropdown-item(:href="snapshot_image_url") 局面画像の取得
-          b-dropdown-item(@click="reset_handle") 盤面リセット
           b-dropdown-item(separator)
           b-dropdown-item(@click="title_edit") タイトル編集
         b-dropdown-item(@click="mode_toggle_handle")
