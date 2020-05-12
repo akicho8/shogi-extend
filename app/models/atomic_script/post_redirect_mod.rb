@@ -30,7 +30,7 @@ module AtomicScript
       params.except(:controller, :action, :_method, :authenticity_token, :_submit, :id)
     end
 
-    def form_render?
+    def form_enable?
       true
     end
 
