@@ -1,7 +1,16 @@
 module AtomicScript
   concern :FormMod do
+    included do
+      class_attribute :form_position
+      self.form_position = :top
+    end
+
     def render_in_view
-      to_form_html + super
+      if form_position == :top
+        to_form_html + super
+      else
+        super + to_form_html
+      end
     end
 
     def to_form_html
