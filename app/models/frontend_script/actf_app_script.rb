@@ -165,6 +165,8 @@ module FrontendScript
       # out += h.link_to("ロビー", params.merge(room_id: nil), :class => "button is-small")
       # end
 
+      c.layout_type = :raw
+
       out
     end
 

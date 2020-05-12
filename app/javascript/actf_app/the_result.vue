@@ -45,11 +45,11 @@
 </template>
 
 <script>
-import the_support from "./the_support.js"
+import support from "./support.js"
 
 export default {
   mixins: [
-    the_support,
+    support,
   ],
   components: {
   },
@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_result
   .result_container
     .vs_mark

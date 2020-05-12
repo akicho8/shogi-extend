@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import the_support from "./the_support.js"
+import support from "./support.js"
 
 export default {
   name: "the_builder_form",
   mixins: [
-    the_support,
+    support,
   ],
   created() {
   },
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_builder_form
   margin-top: 0.8rem
 </style>

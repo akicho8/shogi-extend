@@ -108,7 +108,7 @@ class EditTabInfo extends MemoryRecord {
   }
 }
 
-import the_support from "./the_support.js"
+import support from "./support.js"
 import the_builder_index from "./the_builder_index"
 import the_builder_play from "./the_builder_play"
 import the_builder_form from "./the_builder_form"
@@ -116,7 +116,7 @@ import the_builder_form from "./the_builder_form"
 export default {
   name: "the_builder",
   mixins: [
-    the_support,
+    support,
   ],
   components: {
     the_builder_index,
@@ -477,7 +477,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_builder
   //////////////////////////////////////////////////////////////////////////////// 編集
 

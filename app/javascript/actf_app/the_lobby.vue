@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import the_support from "./the_support.js"
+import support from "./support.js"
 
 export default {
   name: "the_builder",
   mixins: [
-    the_support,
+    support,
   ],
   props: {
     info: { required: true },
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_lobby
   position: relative
   .dropdown_menu, .delete

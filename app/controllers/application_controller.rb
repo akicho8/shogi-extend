@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   include LightSessionMethods
   include CurrentUserMod
 
+  attr_accessor :layout_type
+
   before_action do
     ActiveStorage::Current.host = request.base_url
   end

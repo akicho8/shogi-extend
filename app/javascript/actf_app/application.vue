@@ -19,8 +19,8 @@ const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
 
-import the_support from "./the_support.js"
-import the_store   from "./the_store.js"
+import support from "./support.js"
+import the_store   from "./store.js"
 
 import the_header        from "./the_header.vue"
 import the_footer        from "./the_footer.vue"
@@ -37,7 +37,7 @@ export default {
   store: the_store,
   name: "actf_app",
   mixins: [
-    the_support,
+    support,
   ],
   components: {
     the_header,
@@ -419,7 +419,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .actf_app
   // ユーザー情報
   .user_container

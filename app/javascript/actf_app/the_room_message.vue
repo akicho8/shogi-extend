@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import the_support from "./the_support.js"
+import support from "./support.js"
 
 export default {
   name: "the_room",
   mixins: [
-    the_support,
+    support,
   ],
   props: {
   },
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_room_message
   .messages_box
     padding: 0.5rem

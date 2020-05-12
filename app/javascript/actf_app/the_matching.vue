@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import the_support from "./the_support.js"
+import support from "./support.js"
 import the_matching_interval from './the_matching_interval.js'
 
 export default {
   name: "the_matching",
   mixins: [
-    the_support,
+    support,
     the_matching_interval,
   ],
   props: {
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_matching
   .wait_notification
     padding: 1rem 0

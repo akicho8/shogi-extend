@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import the_support from "./the_support.js"
+import support from "./support.js"
 
 export default {
   name: "the_header",
   mixins: [
-    the_support,
+    support,
   ],
   props: {
   },
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_header
   .main_info
     justify-content: space-between

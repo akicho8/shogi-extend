@@ -39,17 +39,17 @@ b-table.the_builder_index(
 </template>
 
 <script>
-import the_support from "./the_support.js"
+import support from "./support.js"
 
 export default {
   name: "the_builder_index",
   mixins: [
-    the_support,
+    support,
   ],
 }
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_builder_index
 </style>

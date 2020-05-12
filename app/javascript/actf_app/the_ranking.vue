@@ -1,24 +1,26 @@
 <template lang="pug">
 .the_ranking
-  .columns.is-centered
-    .column
-        b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
-          template(v-for="tab_info in TabInfo.values")
-            b-tab-item(:label="tab_info.name")
-              template(v-for="(row, i) in rank_records_hash[tab_info.key]")
-                .row.is-flex(:class="{active: row.id === app.current_user.id}")
-                  .rank_block
-                    .rank.is-size-5.has-text-weight-bold.has-text-right.has-text-primary
-                      | {{i + 1}}
-                  figure.image.is-48x48
-                    img.is-rounded(:src="row.avatar_path")
-                  .name_with_rating
-                    .name.has-text-weight-bold
-                      | {{row.name}}
-                    .rating
-                      | {{row[tab_info.key]}}
-                      span.unit(v-if="tab_info.unit")
-                        | {{tab_info.unit}}
+  .primary_header
+  .secondary_header
+    b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
+      template(v-for="tab_info in TabInfo.values")
+        b-tab-item.is-size-2(:label="tab_info.name")
+  .columns.is-centered.is-marginless
+    .column.is-paddingless
+      template(v-for="(row, i) in rank_records_hash[current_tab_info.key]")
+        .row.is-flex(:class="{active: row.id === app.current_user.id}")
+          .rank_block
+            .rank.is-size-5.has-text-weight-bold.has-text-right.has-text-primary
+              | {{i + 1}}
+          figure.image.is-48x48
+            img.is-rounded(:src="row.avatar_path")
+          .name_with_rating
+            .name.has-text-weight-bold
+              | {{row.name}}
+            .rating
+              | {{row[current_tab_info.key]}}
+              span.unit(v-if="current_tab_info.unit")
+                | {{current_tab_info.unit}}
 </template>
 
 <script>
@@ -38,12 +40,12 @@ class TabInfo extends MemoryRecord {
   }
 }
 
-import the_support from "./the_support.js"
+import support from "./support.js"
 
 export default {
   name: "the_ranking",
   mixins: [
-    the_support,
+    support,
   ],
   components: {
   },
@@ -116,16 +118,20 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../stylesheets/bulma_init.scss"
+@import "support.sass"
 .the_ranking
-  // position: relative
-  // .delete
-  //   position: absolute
-  //   top: 0rem
-  //   right: 0rem
-  //   z-index: 1
+  padding-top: $actf_primary_header_height * 2
+  .primary_header
+    @extend %fixed_header
+    background-color: $primary
+  .secondary_header
+    @extend %fixed_header
+    top: $actf_primary_header_height
+    background: change_color($white, $alpha: 0.96)
 
   .main_tabs
+    a
+      padding-top: 1rem
     .tab-content
       padding: 0
       padding-top: 0
