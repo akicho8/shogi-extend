@@ -277,6 +277,12 @@ module Swars
             s = s.where(battled_at: t...t.tomorrow)
             filtered = true
           end
+          if v = query_info.lookup_one(:"judge") # 勝ち負け
+            m = sampled_memberships(current_swars_user.memberships)
+            m = m.where(judge_key: v)
+            s = s.where(id: m.pluck(:battle_id))
+            filtered = true
+          end
           if v = query_info.lookup_one(:"tag") # 戦法
             m = sampled_memberships(current_swars_user.memberships)
             m = m.tagged_with(v)

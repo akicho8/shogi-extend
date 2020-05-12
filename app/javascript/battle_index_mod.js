@@ -121,6 +121,10 @@ export default {
     kento_app_with_params_url(record) {
       return this.kento_full_url(record.sfen_body, this.trick_start_turn_for(record), record.flip)
     },
+
+    row_class(row, index) {
+      return []
+    },
   },
 
   mounted() {
