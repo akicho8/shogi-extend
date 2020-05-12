@@ -38,6 +38,7 @@ module FrontendScript
 
     self.script_name = "詰将棋ファイター"
     self.page_title = ""
+    self.form_position = :bottom
 
     delegate :current_user, to: :h
 
