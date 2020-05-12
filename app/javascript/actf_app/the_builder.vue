@@ -108,7 +108,7 @@ class EditTabInfo extends MemoryRecord {
   }
 }
 
-import the_support from './the_support'
+import the_support from "./the_support.js"
 import the_builder_index from "./the_builder_index"
 import the_builder_play from "./the_builder_play"
 import the_builder_form from "./the_builder_form"

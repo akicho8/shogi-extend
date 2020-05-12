@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import the_support from './the_support'
+import the_support from "./the_support.js"
 
 export default {
   name: "the_footer",

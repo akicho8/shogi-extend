@@ -1,6 +1,6 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  the_header
+  the_header(v-if="mode === 'lobby'")
   the_footer
   the_lobby(:info="info" v-if="mode === 'lobby'")
   the_lobby_message(:info="info" v-if="mode === 'lobby'")
@@ -19,19 +19,19 @@ const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
 
-import the_support from './the_support'
-import the_store   from './the_store'
+import the_support from "./the_support.js"
+import the_store   from "./the_store.js"
 
-import the_header     from './the_header'
-import the_footer     from './the_footer'
-import the_lobby      from './the_lobby'
-import the_lobby_message from './the_lobby_message'
-import the_matching   from './the_matching'
-import the_room       from './the_room'
-import the_room_message  from './the_room_message'
-import the_result     from './the_result'
-import the_builder    from './the_builder'
-import the_ranking    from './the_ranking'
+import the_header        from "./the_header.vue"
+import the_footer        from "./the_footer.vue"
+import the_lobby         from "./the_lobby.vue"
+import the_lobby_message from "./the_lobby_message.vue"
+import the_matching      from "./the_matching.vue"
+import the_room          from "./the_room.vue"
+import the_room_message  from "./the_room_message.vue"
+import the_result        from "./the_result.vue"
+import the_builder       from "./the_builder.vue"
+import the_ranking       from "./the_ranking.vue"
 
 export default {
   store: the_store,

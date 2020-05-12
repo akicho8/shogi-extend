@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import the_support from './the_support'
+import the_support from "./the_support.js"
 import the_matching_interval from './the_matching_interval.js'
 
 export default {
