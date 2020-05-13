@@ -49,6 +49,8 @@ export default {
     },
 
     main_nav_set(display_p) {
+      return
+
       const el = document.querySelector("#main_nav")
       if (el) {
         if (display_p) {

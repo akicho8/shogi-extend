@@ -51,3 +51,18 @@ RSpec.describe "なんでも棋譜変換", type: :model do
     assert { body.include?("まで115手で上手の勝ち") }
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ........*.
+# >> 
+# >> Pending: (Failures listed here are expected and do not affect your suite's status)
+# >> 
+# >>   1) なんでも棋譜変換 shogidojo KIF URL
+# >>      # 棋譜がなくなった
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:44:in `block (2 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 6.73 seconds (files took 4.37 seconds to load)
+# >> 10 examples, 0 failures, 1 pending
+# >> 

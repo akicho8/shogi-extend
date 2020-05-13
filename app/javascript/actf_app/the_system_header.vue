@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_header.columns
+.the_system_header.columns
   .column
     .is-flex.main_info
       p(v-if="development_p")
@@ -16,7 +16,7 @@
 import support from "./support.js"
 
 export default {
-  name: "the_header",
+  name: "the_system_header",
   mixins: [
     support,
   ],
@@ -37,7 +37,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_header
+.the_system_header
   .main_info
     justify-content: space-between
     font-size: $size-7

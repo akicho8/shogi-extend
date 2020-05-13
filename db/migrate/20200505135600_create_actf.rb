@@ -32,6 +32,21 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    create_table :actf_histories do |t|
+      t.belongs_to :user,       comment: "自分"
+      t.belongs_to :room,       comment: "部屋"
+      t.belongs_to :membership, comment: "対戦"
+      t.belongs_to :question,   comment: "出題"
+      t.belongs_to :ans_result, comment: "解答"
+      t.timestamps
+    end
+
+    # static
+    create_table :actf_ans_results do |t|
+      t.string :key
+      t.timestamps
+    end
+
     create_table :actf_room_messages do |t|
       t.belongs_to :user,         comment: "対戦者"
       t.belongs_to :room,         comment: "対戦部屋"
@@ -75,6 +90,7 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    # 未使用
     create_table :actf_endpos_answers do |t|
       t.belongs_to :question,                            comment: "問題"
       t.integer :limit_turn,  null: false, index: true,  comment: "N手"

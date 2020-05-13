@@ -27,6 +27,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "actf_ans_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "actf_endpos_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", comment: "問題"
     t.integer "limit_turn", null: false, comment: "N手"
@@ -35,6 +41,21 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["limit_turn"], name: "index_actf_endpos_answers_on_limit_turn"
     t.index ["question_id"], name: "index_actf_endpos_answers_on_question_id"
+  end
+
+  create_table "actf_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "membership_id", comment: "対戦"
+    t.bigint "question_id", comment: "出題"
+    t.bigint "ans_result_id", comment: "解答"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "room_id", comment: "部屋"
+    t.bigint "user_id", comment: "自分"
+    t.index ["ans_result_id"], name: "index_actf_histories_on_ans_result_id"
+    t.index ["membership_id"], name: "index_actf_histories_on_membership_id"
+    t.index ["question_id"], name: "index_actf_histories_on_question_id"
+    t.index ["room_id"], name: "index_actf_histories_on_room_id"
+    t.index ["user_id"], name: "index_actf_histories_on_user_id"
   end
 
   create_table "actf_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

@@ -24,8 +24,11 @@ module Actf
 
     def speak(data)
       data = data.to_options
-      message = current_user.actf_messages.create!(body: data[:message], room: current_room)
-      execution_interrupt_hidden_command(message.body)
+      if data[:message].start_with?("/")
+        execution_interrupt_hidden_command(data[:message])
+      else
+        current_user.actf_messages.create!(body: data[:message], room: current_room)
+      end
     end
 
     def execution_interrupt_hidden_command(str)
@@ -42,11 +45,21 @@ module Actf
       end
     end
 
-    # TODO: js 側から直接 received に送れないのか？
-    def progress_info_share(data)
+    def start_hook(data)
       data = data.to_options
 
-      info = { membership_id: data[:membership_id], quest_index: data[:quest_index] }
+      question = Question.find(data[:question_id])
+      membership = current_room.memberships.find(data[:membership_id])
+      current_user.actf_histories.create!(membership: membership, question: question, ans_result: Actf::AnsResult.fetch(:mistake))
+    end
+
+    def correct_hook(data)
+      data = data.to_options
+
+      info = {
+        membership_id: data[:membership_id], # 誰が
+        quest_index: data[:quest_index],     # どこまで進めたか
+      }
 
       # 一応保存しておく(あとで取るかもしれない)
       current_room.memberships.find(data[:membership_id]).update!(quest_index: data[:quest_index])
@@ -57,7 +70,7 @@ module Actf
       end
 
       # こちらがメイン
-      ActionCable.server.broadcast("actf/room_channel/#{params["room_id"]}", {progress_info_share: info})
+      ActionCable.server.broadcast("actf/room_channel/#{params["room_id"]}", {correct_hook: info})
     end
 
     # <-- app/javascript/actf_app.vue

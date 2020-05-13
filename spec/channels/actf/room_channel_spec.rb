@@ -65,7 +65,7 @@ RSpec.describe Actf::RoomChannel, type: :channel do
     end
   end
 
-  describe "#progress_info_share" do
+  describe "#correct_hook" do
     before do
       subscribe(room_id: current_room.id)
     end
@@ -73,8 +73,8 @@ RSpec.describe Actf::RoomChannel, type: :channel do
     it do
       data = { membership_id: membership1.id, quest_index: 1 }
       expect {
-        subscription.progress_info_share(data)
-      }.to have_broadcasted_to("actf/room_channel/#{current_room.id}").with(progress_info_share: data)
+        subscription.correct_hook(data)
+      }.to have_broadcasted_to("actf/room_channel/#{current_room.id}").with(correct_hook: data)
 
       current_room.reload
       assert { membership1.quest_index == 1 }

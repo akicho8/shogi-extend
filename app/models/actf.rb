@@ -1,17 +1,23 @@
 module Actf
-  def self.table_name_prefix
+  extend self
+
+  def table_name_prefix
     name.underscore.gsub("/", "_") + "_"
   end
 
-  def self.setup(options = {})
+  def setup(options = {})
     Colosseum::User.find_each do |e|
       e.actf_profile || e.create_actf_profile!
     end
 
-    # if Actf::Room.count.zero?
-    #   3.times do |i|
-    #     tp Actf::Room.create!
-    #   end
-    # end
+    AnsResult.setup(options)
+
+    if Rails.env.development?
+    end
+  end
+
+  def destroy_all
+    Actf::Question.destroy_all
+    Actf::Room.destroy_all
   end
 end

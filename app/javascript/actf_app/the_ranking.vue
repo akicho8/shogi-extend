@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_ranking
+.the_ranking.main_content
   .primary_header
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
@@ -59,6 +59,7 @@ export default {
   },
 
   created() {
+    this.sound_play("click")
     this.mode_select("rating")
     this.tab_change_handle()
   },
@@ -120,14 +121,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_ranking
-  padding-top: $actf_primary_header_height * 2
-  .primary_header
-    @extend %fixed_header
-    background-color: $primary
-  .secondary_header
-    @extend %fixed_header
-    top: $actf_primary_header_height
-    background: change_color($white, $alpha: 0.96)
+  @extend %padding_top2
 
   .main_tabs
     a
@@ -141,7 +135,7 @@ export default {
     padding-bottom: 0.7rem
 
     &.active
-      background-color: $white-ter
+      background-color: change_color($warning, $lightness: 97%)
 
     &:not(:first-child)
       border-top: 1px solid $grey-lighter

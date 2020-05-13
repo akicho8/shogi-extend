@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_builder
-  a.delete.is-large(@click="$parent.lobby_button_handle")
+  //- a.delete.is-large(@click="$parent.lobby_button_handle")
   .columns.is-centered
     .column
       .buttons.is-centered
@@ -154,6 +154,7 @@ export default {
   },
 
   created() {
+    this.sound_play("click")
     this.main_nav_set(false)
     this.builder_index_handle()
     // this.exam_mode_handle()
@@ -481,12 +482,12 @@ export default {
 .the_builder
   //////////////////////////////////////////////////////////////////////////////// 編集
 
-  position: relative
-  .delete
-    position: absolute
-    top: 0rem
-    right: 0rem
-    z-index: 1
+  // position: relative
+  // .delete
+  //   position: absolute
+  //   top: 0rem
+  //   right: 0rem
+  //   z-index: 1
 
   // .switch_grouped_container
   //   margin-top: 0.5rem

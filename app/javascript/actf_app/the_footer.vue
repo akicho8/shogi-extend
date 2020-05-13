@@ -1,7 +1,12 @@
 <template lang="pug">
 .the_footer
-  b-button(icon-left="crown" @click="app.ranking_handle")
-  b-button(icon-left="menu" @click="app.ranking_handle")
+  b-button(icon-left="home" @click="app.lobby_button_handle" :type="{'is-primary': app.mode === 'lobby'}")
+  b-button(icon-left="crown" @click="app.ranking_handle" :type="{'is-primary': app.mode === 'ranking'}")
+  b-button(icon-left="wrench" @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}")
+
+  b-dropdown(position="is-top-left")
+    b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
+    b-dropdown-item(href="/") TOP
 </template>
 
 <script>

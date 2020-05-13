@@ -1,6 +1,6 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  the_header(v-if="mode === 'lobby'")
+  the_system_header(v-if="mode === 'lobby'")
   the_footer
   the_lobby(:info="info" v-if="mode === 'lobby'")
   the_lobby_message(:info="info" v-if="mode === 'lobby'")
@@ -9,7 +9,7 @@
   the_room_message(:info="info" v-if="mode === 'room'")
   the_result(:info="info" v-if="mode === 'result'")
   the_room_message(:info="info" v-if="mode === 'result'")
-  the_builder(:info="info" v-if="mode === 'edit'")
+  the_builder(:info="info" v-if="mode === 'builder'")
   the_ranking(v-if="mode === 'ranking'")
   debug_print(:grep="/./")
 </template>
@@ -22,7 +22,7 @@ import consumer from "channels/consumer"
 import support from "./support.js"
 import the_store   from "./store.js"
 
-import the_header        from "./the_header.vue"
+import the_system_header        from "./the_system_header.vue"
 import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_lobby_message from "./the_lobby_message.vue"
@@ -40,7 +40,7 @@ export default {
     support,
   ],
   components: {
-    the_header,
+    the_system_header,
     the_footer,
     the_lobby,
     the_lobby_message,
@@ -95,8 +95,8 @@ export default {
       this.mode = "result"
     }
 
-    if (this.info.debug_scene === "edit") {
-      this.goto_edit_mode_handle()
+    if (this.info.debug_scene === "builder") {
+      this.builder_handle()
     }
 
     if (this.info.debug_scene === "ranking") {
@@ -202,9 +202,8 @@ export default {
           if (data.room) {
             const membership = data.room.memberships.find(e => e.user.id === this.current_user.id)
             if (membership) {
-              this.lobby_unsubscribe()
+              // this.lobby_unsubscribe()
               //- this.interval_timer_clear()
-
               this.room = data.room
               this.room_setup()
             }
@@ -242,6 +241,11 @@ export default {
       this.$room = consumer.subscriptions.create({ channel: "Actf::RoomChannel", room_id: this.room.id }, {
         connected: () => {
           this.debug_alert("room 接続")
+
+          this.$room.perform("start_hook", {
+            membership_id: this.current_membership.id,
+            question_id: this.current_quest_id,
+          }) // --> app/channels/actf/room_channel.rb
         },
         disconnected: () => {
           alert("room disconnected")
@@ -261,8 +265,8 @@ export default {
           }
 
           // 状況を反映する (なるべく小さなデータで共有する)
-          if (data.progress_info_share) {
-            const e = data.progress_info_share
+          if (data.correct_hook) {
+            const e = data.correct_hook
             this.$set(this.progress_info, e.membership_id, e.quest_index)
             if (e.membership_id !== this.current_membership.id) {
               this.sound_play("pipopipo")
@@ -273,26 +277,21 @@ export default {
           if (data.switch_to === "result") {
             this.mode = "result"
             this.room = data.room
-            if (this.current_membership) {
-              if (this.current_membership.judge_key === "win") {
-                this.sound_play("win")
-              }
-              if (this.current_membership.judge_key === "lose") {
-                this.sound_play("lose")
-              }
-            }
           }
         },
       })
     },
 
     lobby_button_handle() {
-      this.sound_play("click")
+      if (this.mode === "lobby") {
+      } else {
+        this.sound_play("click")
 
-      this.room_unsubscribe()
+        this.room_unsubscribe()
 
-      this.mode = "lobby"
-      this.lobby_setup()
+        this.mode = "lobby"
+        this.lobby_setup()
+      }
     },
 
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
@@ -303,7 +302,7 @@ export default {
       if (this.current_quest_answers.includes(this.position_sfen_remove(long_sfen))) {
         // 正解
         this.sound_play("pipopipo")
-        this.$room.perform("progress_info_share", {
+        this.$room.perform("correct_hook", {
           membership_id: this.current_membership.id,
           quest_index: this.quest_index + 1,
           quest_id: this.current_quest_id, // 問題ID
@@ -356,16 +355,18 @@ export default {
       }
     },
 
-    goto_edit_mode_handle() {
-      this.sound_play("click")
-
-      this.lobby_unsubscribe()
-
-      this.mode = "edit"
+    builder_handle() {
+      if (this.mode === "builder") {
+      } else {
+        this.mode = "builder"
+      }
     },
 
     ranking_handle() {
-      this.mode = "ranking"
+      if (this.mode === "ranking") {
+      } else {
+        this.mode = "ranking"
+      }
     },
   },
 

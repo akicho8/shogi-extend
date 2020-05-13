@@ -1,14 +1,23 @@
 <template lang="pug">
-.the_lobby.columns
-  .column
-    .title.is-3.has-text-centered 詰将棋ファイター
-    .buttons.is-centered
-      b-button.has-text-weight-bold(@click="$parent.start_handle" type="is-primary") START
+.the_lobby.main_content
+  .primary_header
+    .user_info_block.is-flex
+      .image
+        img.is-rounded(:src="app.current_user.avatar_path")
+      .name_with_rating
+        .name.has-text-weight-bold.is-size-6
+          | {{app.current_user.name}}
+        .rating.has-text-weight-bold.is-size-7
+          | {{app.current_user.rating}}
 
-    b-dropdown.dropdown_menu(position="is-bottom-left")
-      b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
-      b-dropdown-item(@click="$parent.goto_edit_mode_handle") 問題投稿
-      //- b-dropdown-item(separator)
+  .title.is-3.has-text-centered 詰将棋ファイター
+  .buttons.is-centered
+    b-button.has-text-weight-bold(@click="$parent.start_handle" type="is-primary") START
+
+  //- b-dropdown.dropdown_menu(position="is-bottom-left")
+  //-   b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
+  //-   b-dropdown-item(@click="$parent.builder_handle") 問題投稿
+  //-   //- b-dropdown-item(separator)
 </template>
 
 <script>
@@ -31,6 +40,10 @@ export default {
     this.main_nav_set(false)
   },
 
+  beforeDestroy() {
+    this.app.lobby_unsubscribe()
+  },
+
   watch: {
   },
 
@@ -42,10 +55,31 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_lobby
-  position: relative
-  .dropdown_menu, .delete
-    position: absolute
-    top: 0rem
-    right: 0rem
-    z-index: 1
+  @extend %padding_top1
+
+  .primary_header
+    .user_info_block
+      // border: 1px solid blue
+
+      justify-content: flex-start
+      align-items: center
+      color: $white
+
+      .image
+        margin-left: 0.5rem
+        img
+          width: 40px
+          height: 40px
+
+      .name_with_rating
+        margin-left: 0.5rem
+        .name
+        .rating
+
+  // position: relative
+  // .dropdown_menu, .delete
+  //   position: absolute
+  //   top: 0rem
+  //   right: 0rem
+  //   z-index: 1
 </style>

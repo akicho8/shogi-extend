@@ -33,6 +33,8 @@ module Actf
   class Question < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User" # 作者
 
+    has_many :histories, dependent: :destroy # 出題履歴
+
     with_options dependent: :destroy do
       has_many :moves_answers  # 手順一致を正解とする答え集
       has_many :endpos_answers # 最後の局面を正解とする答え集

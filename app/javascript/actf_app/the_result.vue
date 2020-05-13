@@ -62,7 +62,9 @@ export default {
   },
 
   created() {
-    this.main_nav_set(false)
+    if (this.app.current_membership) {
+      this.sound_play(this.app.current_membership.judge_key)
+    }
   },
 
   watch: {

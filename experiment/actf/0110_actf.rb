@@ -92,5 +92,5 @@ exit
 # def initialize(connection, identifier, params = {})
 # Actf::RoomChannel.new(nil, nil, a: 1) # =>
 
-question = Actf::Question.first
-tp question.as_json(include: [:user, :moves_answers])
+# question = Actf::Question.first
+# tp question.as_json(include: [:user, :moves_answers])

@@ -51,7 +51,7 @@ module FrontendScript
           {
             :label   => "画面",
             :key     => :debug_scene,
-            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :edit, "ランキング" => :ranking, },
+            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, },
             :type    => :select,
             :default => current_debug_scene,
           },
@@ -150,7 +150,7 @@ module FrontendScript
       info[:question_default] = question_default
 
       if current_user
-        info[:current_user] = current_user.as_json(only: [:id, :name], methods: [:avatar_path])
+        info[:current_user] = current_user.as_json(only: [:id, :name], methods: [:avatar_path, :rating])
       end
 
       # info[:room] = current_room

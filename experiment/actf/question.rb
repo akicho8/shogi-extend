@@ -1,5 +1,4 @@
-#!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
+require "./setup"
 
 Actf::Question.destroy_all
 
