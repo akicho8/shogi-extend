@@ -1,4 +1,4 @@
-.is_battle_table
+.b-table.is_battle_table
   // .tags は is-inline-flex なので margin は padding 相当
   .tags
     // タグのセパレーター
@@ -24,5 +24,9 @@
       font-size: 1rem
 
   // 勝った行は黄色にする
-  tr.is-win
-    background-color: change_color($warning, $lightness: 97.6%)
+  .table
+    // border-collapse: collapse
+    tr.is-win
+      background-color: change_color($warning, $lightness: 98.5%)
+      // background-color: change_color($warning, $lightness: 97.6%)
+      // border-left: 1px solid change_color($warning, $lightness: 50.6%)
