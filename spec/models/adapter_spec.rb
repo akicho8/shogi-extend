@@ -40,6 +40,7 @@ RSpec.describe "なんでも棋譜変換", type: :model do
   end
 
   it "shogidojo KIF URL" do
+    pending "棋譜がなくなった"
     assert { FreeBattle.create!(kifu_body: "https://www.shogidojo.net/kifu/show_kifu.php?id=1553443&dd=9745aca1e1c0b7e05617e1f033ee4418&dojo=tokyo").to_cached_kifu(:kif).include?("まで116手で後手の勝ち")  }
   end
 

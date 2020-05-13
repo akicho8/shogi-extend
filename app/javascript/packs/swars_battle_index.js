@@ -30,9 +30,7 @@ window.SwarsBattleIndex = Vue.extend({
 
   computed: {
     permalink_url() {
-      const params = new URLSearchParams()
-      params.set("query", this.query)
-      return `/w?${params}`
+      return this.query_url_build(this.query)
     },
 
     // 最初に一覧を表示するか？
@@ -64,6 +62,18 @@ window.SwarsBattleIndex = Vue.extend({
       this.process_now()
 
       this.submited = true
+    },
+
+    query_url_build(query) {
+      const params = new URLSearchParams()
+      params.set("query", query)
+      return `/w?${params}`
+    },
+
+    row_class(row, index) {
+      if (row.judge) {
+        return `is-${row.judge.key}` // is- で始めないと mobile-cards になったとき消される
+      }
     },
   },
 })

@@ -42,6 +42,10 @@ module Swars
 
       flip, memberships = e.left_right_memberships(current_swars_user)
 
+      if current_swars_user
+        a[:judge] = { key: memberships.first.last.judge_key }
+      end
+
       a[:flip] = flip
       a[:modal_on_index_path] = e.modal_on_index_path(flip: flip)
 
@@ -61,6 +65,7 @@ module Swars
           medal_params: e.medal_params,
           grade_info: { name: e.grade.name, priority: e.grade.priority },
           location: { hexagon_mark: e.location.hexagon_mark },
+          judge: { key: e.judge_key },
         }
         [:attack, :defense].each do |key|
           attrs["#{key}_tag_list"] = e.tag_names_for(key)

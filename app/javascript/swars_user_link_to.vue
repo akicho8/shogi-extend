@@ -1,5 +1,5 @@
 <template lang="pug">
-  a(@click="user_info_show_handle")
+  a.swars_user_link_to(@click="user_info_show_handle" :class="css_class")
     | {{membership.user.key}} {{membership.grade_info.name}}
 
   //- b-dropdown.swars_user_link_to
@@ -62,12 +62,19 @@ export default {
       this.user_info_show_modal(this.membership.user.key)
     },
   },
+  computed: {
+    css_class() {
+      if (this.membership.judge) {
+        return `is-${this.membership.judge.key}`
+      }
+    },
+  },
 }
 </script>
 
 <style lang="sass">
 @import "stylesheets/bulma_init.scss"
 .swars_user_link_to
-  .icon
-    margin-right: 0.5rem
+  &.is-win
+    font-weight: bold
 </style>

@@ -83,7 +83,16 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
+    it "一応KENTOに飛べる" do
+      visit "/w?query=devuser1"
+      find("a.kento_button").click
+      expect(page).to have_content "KENTO" # "☗ KENTO\nLOGIN\n歩\nLOADING...\nKENTO にログイン\nログインすることにより、利用規約・プライバシーポリシーを読み、これに同意するものとします。\nGoogle でログイン\nTwitter でログイン\nまたは\nメールアドレスにログインリンクを送信".
+      doc_image
+    end
+
     it "KENTOに正しく棋譜が渡せている" do
+      # pending "2020-05-13ログイン必須になったため動作しない"
+
       visit "/w?query=devuser1"
       find("a.kento_button").click
       expect(page).to have_content "KENTO"

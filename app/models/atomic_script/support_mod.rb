@@ -4,10 +4,6 @@ module AtomicScript
       h.tag.span(:class => "has-text-weight-bold") { str }
     end
 
-    def small(str)
-      h.tag.span(:class => "is-size-7") { str }
-    end
-
     def current_page
       params[:page].presence.to_i
     end
