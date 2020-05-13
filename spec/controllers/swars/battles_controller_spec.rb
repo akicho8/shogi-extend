@@ -44,6 +44,11 @@ RSpec.describe Swars::BattlesController, type: :controller do
       get :index, params: {query: "#{user1} vs:#{user2}"}
       assert { controller.current_scope.count == 1 }
     end
+
+    it "judge:tag" do
+      get :index, params: {query: "devuser1 judge:win"}
+      assert { controller.current_scope.count == 1 }
+    end
   end
 
   describe "index" do

@@ -1,8 +1,17 @@
-template(v-if="fetched_count >= 1 && records.length >= 1")
+template(v-if="fetched_count >= 1 && $options.current_swars_user_key")
   .columns
     .column.search_bottom_controllers
       .is-flex
-        b-field
+        template(v-if="$options.current_swars_user_key")
+          b-dropdown.search_index_dropdown_menu(position="is-bottom-right")
+            b-button(slot="trigger" size="is-small" icon-left="menu") フィルタ
+            b-dropdown-item(@click="query_search(`${$options.current_swars_user_key} judge:win`)") 勝ち
+            b-dropdown-item(@click="query_search(`${$options.current_swars_user_key} judge:lose`)") 負け
+            template(v-if="$options.current_swars_user_key !== this.query")
+              b-dropdown-item(separator)
+              b-dropdown-item(@click="query_search($options.current_swars_user_key)") 解除
+
+        b-field.board_show_type_field
           b-radio-button(v-model="board_show_type" size="is-small" native-value="none") リスト
           b-radio-button(v-model="board_show_type" size="is-small" native-value="outbreak_turn") 仕掛け
           b-radio-button(v-model="board_show_type" size="is-small" native-value="last") 終局図

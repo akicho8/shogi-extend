@@ -5,11 +5,7 @@ module AtomicScript
     end
 
     def bold(str)
-      h.tag(:class => "has-text-weight-bold") { str }
-    end
-
-    def small(str)
-      h.tag(:class => "is-size-7") { str }
+      h.tag.span(:class => "has-text-weight-bold") { str }
     end
 
     def form_part_per
