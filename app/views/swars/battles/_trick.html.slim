@@ -3,10 +3,10 @@ template(v-if="fetched_count >= 1 && $options.current_swars_user_key")
     .column.search_bottom_controllers
       .is-flex
         template(v-if="$options.current_swars_user_key")
-          b-dropdown.search_index_dropdown_menu(position="is-bottom-left")
+          b-dropdown.search_index_dropdown_menu(position="is-bottom-right")
             b-button(slot="trigger" size="is-small" icon-left="menu") フィルタ
-            b-dropdown-item(@click="query_search(`${$options.current_swars_user_key} judge:lose`)") 負け
             b-dropdown-item(@click="query_search(`${$options.current_swars_user_key} judge:win`)") 勝ち
+            b-dropdown-item(@click="query_search(`${$options.current_swars_user_key} judge:lose`)") 負け
             template(v-if="$options.current_swars_user_key !== this.query")
               b-dropdown-item(separator)
               b-dropdown-item(@click="query_search($options.current_swars_user_key)") 解除
