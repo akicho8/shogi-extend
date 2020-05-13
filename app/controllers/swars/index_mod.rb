@@ -34,7 +34,7 @@ module Swars
           if params[:try_fetch] == "true"
             import_process2(flash)
           end
-          if Rails.env.production? || Rails.env.staging? || Rails.env.test?
+          if Rails.env.test?
             slack_message(key: "新プ情報", body: current_swars_user.key)
           end
           render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
