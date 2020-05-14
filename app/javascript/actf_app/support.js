@@ -60,6 +60,10 @@ export default {
         }
       }
     },
+
+    delay(seconds, block) {
+      setTimeout(block, 1000 * seconds)
+    },
   },
   computed: {
     ...Vuex.mapState([

@@ -24,16 +24,20 @@ $actf_primary_header_height: 48px
   justify-content: space-between
   align-items: center
 
-  
 %padding_top1
   padding-top: $actf_primary_header_height * 1
 %padding_top2
   padding-top: $actf_primary_header_height * 2
-  
+
 .main_content
   .primary_header
     @extend %fixed_header
     background-color: $primary
+    color: $white
+
+    display: flex
+    justify-content: center
+    align-items: center
 
   .secondary_header
     @extend %fixed_header

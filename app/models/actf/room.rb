@@ -57,7 +57,7 @@ module Actf
         n = 5
       end
       ids = Question.where(display_key: :public).ids.sample(n)
-      Question.where(id: ids).order(:difficulty_level).as_json(include: [:user, :moves_answers]) # FIXME: 必要なのだけに絞る
+      Question.where(id: ids).order(:difficulty_level).as_json(only: [:id, :init_sfen, :time_limit_sec, :difficulty_level, :title, :description, :hint_description, :source_desc, :other_twitter_account], include: {:user => { only: [:id, :name, :key], methods: [:avatar_path] }, :moves_answers => {only: [:limit_turn, :moves_str, :end_sfen]}})
     end
 
     def final_info

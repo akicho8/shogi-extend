@@ -46,35 +46,35 @@ module Actf
     end
 
     def start_hook(data)
-      data = data.to_options
-
-      question = Question.find(data[:question_id])
-      membership = current_room.memberships.find(data[:membership_id])
-      current_user.actf_histories.create!(membership: membership, question: question, ans_result: Actf::AnsResult.fetch(:mistake))
+      history_update(data, :mistake)
     end
 
     def correct_hook(data)
       data = data.to_options
 
+      history_update(data, :correct)
+
       info = {
         membership_id: data[:membership_id], # 誰が
-        quest_index: data[:quest_index],     # どこまで進めたか
+        question_index: data[:question_index],     # どこまで進めたか
       }
 
       # 一応保存しておく(あとで取るかもしれない)
-      current_room.memberships.find(data[:membership_id]).update!(quest_index: data[:quest_index])
+      current_room.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
 
       # 問題の解答数を上げる
-      if id = data[:quest_id]
-        Question.find(id).increment!(:o_count)
-      end
+      Question.find(data[:question_id]).increment!(:o_count)
 
       # こちらがメイン
       ActionCable.server.broadcast("actf/room_channel/#{params["room_id"]}", {correct_hook: info})
     end
 
+    def next_hook(data)
+      history_update(data, :mistake)
+    end
+
     # <-- app/javascript/actf_app.vue
-    def katimasitayo(data)
+    def goal_hook(data)
       katimashita(:win, :all_clear)
     end
 
@@ -115,7 +115,7 @@ module Actf
       memberships_user_ids_remove(room)
 
       # 終了時
-      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actf_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actf_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("actf/room_channel/#{params["room_id"]}", {switch_to: "result", room: room_json})
       # --> app/javascript/actf_app.vue
     end
@@ -137,6 +137,14 @@ module Actf
 
     def room_users
       room_user_ids.collect { |e| Colosseum::User.find(e) }
+    end
+
+    def history_update(data, ans_result)
+      data = data.to_options
+      question = Question.find(data[:question_id])
+      membership = current_room.memberships.find(data[:membership_id])
+      history = current_user.actf_histories.find_or_initialize_by(membership: membership, question: question)
+      history.update!(ans_result: Actf::AnsResult.fetch(ans_result))
     end
   end
 end

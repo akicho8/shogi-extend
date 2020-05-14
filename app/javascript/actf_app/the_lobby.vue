@@ -37,11 +37,9 @@ export default {
   },
 
   created() {
-    this.main_nav_set(false)
   },
 
   beforeDestroy() {
-    this.app.lobby_unsubscribe()
   },
 
   watch: {
@@ -75,6 +73,11 @@ export default {
         margin-left: 0.5rem
         .name
         .rating
+
+  .title
+    margin-top: 4rem
+  .buttons
+    margin-top: 2rem
 
   // position: relative
   // .dropdown_menu, .delete

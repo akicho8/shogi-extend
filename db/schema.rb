@@ -44,13 +44,13 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actf_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "自分"
+    t.bigint "room_id", comment: "部屋"
     t.bigint "membership_id", comment: "対戦"
     t.bigint "question_id", comment: "出題"
     t.bigint "ans_result_id", comment: "解答"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "room_id", comment: "部屋"
-    t.bigint "user_id", comment: "自分"
     t.index ["ans_result_id"], name: "index_actf_histories_on_ans_result_id"
     t.index ["membership_id"], name: "index_actf_histories_on_membership_id"
     t.index ["question_id"], name: "index_actf_histories_on_question_id"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.string "judge_key", comment: "勝敗"
     t.integer "rensho_count", null: false, comment: "連勝数"
     t.integer "renpai_count", null: false, comment: "連敗数"
-    t.integer "quest_index", comment: "解答中の問題"
+    t.integer "question_index", comment: "解答中の問題"
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

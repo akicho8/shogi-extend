@@ -11,6 +11,7 @@
   the_room_message(:info="info" v-if="mode === 'result'")
   the_builder(:info="info" v-if="mode === 'builder'")
   the_ranking(v-if="mode === 'ranking'")
+  the_history(v-if="mode === 'history'")
   debug_print(:grep="/./")
 </template>
 
@@ -32,6 +33,7 @@ import the_room_message  from "./the_room_message.vue"
 import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
+import the_history       from "./the_history.vue"
 
 export default {
   store: the_store,
@@ -50,6 +52,7 @@ export default {
     the_result,
     the_builder,
     the_ranking,
+    the_history,
   },
   props: {
     info: { required: true },
@@ -62,7 +65,7 @@ export default {
       matching_list:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
       room_user_ids:   null, // オンライン人数
-      quest_index:     null, // 正解中の問題インデックス
+      question_index:     null, // 正解中の問題インデックス
       freeze_mode:     null, // 正解直後に間を開けているとき true になっている
       progress_info:   null, // 各 membership_id はどこまで進んでいるかわかる {"1" => 2, "3" => 4}
 
@@ -75,32 +78,32 @@ export default {
       lobby_message:  null, // 入力中のメッセージ
 
       // private
-      $school: null, // --> app/channels/actf/school_channel.rb
-      $lobby:  null, // --> app/channels/actf/lobby_channel.rb
-      $room:   null, // --> app/channels/actf/room_channel.rb
+      // $school: null, // --> app/channels/actf/school_channel.rb
+      // $lobby:  null, // --> app/channels/actf/lobby_channel.rb
+      // $room:   null, // --> app/channels/actf/room_channel.rb
     }
   },
 
   created() {
-    this.main_nav_set(false)
-
     this.school_setup()
 
-    if (this.info.debug_scene === "room") {
-      this.mode = "room"
-      this.room_setup()
-    }
-
-    if (this.info.debug_scene === "result") {
-      this.mode = "result"
-    }
-
-    if (this.info.debug_scene === "builder") {
-      this.builder_handle()
-    }
-
-    if (this.info.debug_scene === "ranking") {
-      this.mode = "ranking"
+    if (this.info.debug_scene) {
+      if (this.info.debug_scene === "room") {
+        this.mode = "room"
+        this.room_setup()
+      }
+      if (this.info.debug_scene === "result") {
+        this.mode = "result"
+      }
+      if (this.info.debug_scene === "builder") {
+        this.builder_handle()
+      }
+      if (this.info.debug_scene === "ranking") {
+        this.ranking_handle()
+      }
+      if (this.info.debug_scene === "history") {
+        this.history_handle()
+      }
     }
 
     if (this.mode === "lobby") {
@@ -144,9 +147,11 @@ export default {
       this.$school = consumer.subscriptions.create({channel: "Actf::SchoolChannel"}, {
         connected: () => {
           this.debug_alert("school 接続")
+          this.ac_info_update()
         },
         disconnected: () => {
           this.debug_alert("school 切断")
+          this.ac_info_update()
         },
         received: (data) => {
           if (data.online_user_ids) {
@@ -155,7 +160,6 @@ export default {
           if (data.room_user_ids) {
             this.room_user_ids = data.room_user_ids
           }
-          this.ac_info_update()
         },
       })
     },
@@ -169,9 +173,11 @@ export default {
       this.$lobby = consumer.subscriptions.create({channel: "Actf::LobbyChannel"}, {
         connected: () => {
           this.debug_alert("lobby 接続")
+          this.ac_info_update()
         },
         disconnected: () => {
           this.debug_alert("lobby 切断")
+          this.ac_info_update()
         },
         received: (data) => {
           this.debug_alert("lobby 受信")
@@ -202,7 +208,7 @@ export default {
           if (data.room) {
             const membership = data.room.memberships.find(e => e.user.id === this.current_user.id)
             if (membership) {
-              // this.lobby_unsubscribe()
+              this.lobby_close()
               //- this.interval_timer_clear()
               this.room = data.room
               this.room_setup()
@@ -234,22 +240,25 @@ export default {
       this.freeze_mode = false
       this.progress_info = {}
 
-      this.quest_index = 0
+      this.question_index = 0
       this.sound_play("deden")
 
       this.__assert(this.$room == null)
       this.$room = consumer.subscriptions.create({ channel: "Actf::RoomChannel", room_id: this.room.id }, {
         connected: () => {
           this.debug_alert("room 接続")
+          this.ac_info_update()
 
           this.$room.perform("start_hook", {
             membership_id: this.current_membership.id,
-            question_id: this.current_quest_id,
+            question_id: this.current_question_id,
+            question_index: this.question_index,
           }) // --> app/channels/actf/room_channel.rb
         },
         disconnected: () => {
           alert("room disconnected")
           this.debug_alert("room 切断")
+          this.ac_info_update()
         },
         received: (data) => {
           this.debug_alert("room 受信")
@@ -267,7 +276,7 @@ export default {
           // 状況を反映する (なるべく小さなデータで共有する)
           if (data.correct_hook) {
             const e = data.correct_hook
-            this.$set(this.progress_info, e.membership_id, e.quest_index)
+            this.$set(this.progress_info, e.membership_id, e.question_index)
             if (e.membership_id !== this.current_membership.id) {
               this.sound_play("pipopipo")
             }
@@ -282,7 +291,7 @@ export default {
       })
     },
 
-    lobby_button_handle() {
+    lobby_handle() {
       if (this.mode === "lobby") {
       } else {
         this.sound_play("click")
@@ -304,24 +313,37 @@ export default {
         this.sound_play("pipopipo")
         this.$room.perform("correct_hook", {
           membership_id: this.current_membership.id,
-          quest_index: this.quest_index + 1,
-          quest_id: this.current_quest_id, // 問題ID
+          question_id: this.current_question_id, // 問題ID
+          question_index: this.question_index + 1,
         }) // --> app/channels/actf/room_channel.rb
 
-        this.freeze_mode = true
-        setTimeout(() => {
-          this.quest_index += 1
-          if (this.quest_index >= this.current_simple_quest_info_size) {
-            this.$room.perform("katimasitayo") // --> app/channels/actf/room_channel.rb
-          } else {
+        // 最後の問題を正解した
+        if (this.question_index >= this.current_simple_quest_info_size - 1) {
+          this.freeze_mode = true
+          this.delay(WAIT_SECOND, () => {
+            this.$room.perform("goal_hook") // --> app/channels/actf/room_channel.rb
+          })
+        }
+
+        // 問題を正解した(次の問題がある)
+        if (this.question_index < this.current_simple_quest_info_size - 1) {
+          this.freeze_mode = true
+          this.delay(WAIT_SECOND, () => {
+            this.question_index += 1
             this.sound_play("deden")
             this.freeze_mode = false
-          }
-        }, 1000 * WAIT_SECOND)
 
+            this.$room.perform("next_hook", {
+              membership_id: this.current_membership.id,
+              question_id: this.current_question_id,
+              question_index: this.question_index,
+            }) // --> app/channels/actf/room_channel.rb
+
+          })
+        }
       }
       // if (long_sfen === "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 moves G*5b") {
-      //   this.$room.perform("katimasitayo") // --> app/channels/actf/room_channel.rb
+      //   this.$room.perform("goal_hook") // --> app/channels/actf/room_channel.rb
       // }
     },
 
@@ -339,7 +361,7 @@ export default {
       }
     },
 
-    lobby_unsubscribe() {
+    lobby_close() {
       if (this.$lobby) {
         this.$lobby.unsubscribe()
         this.$lobby = null
@@ -368,6 +390,13 @@ export default {
         this.mode = "ranking"
       }
     },
+
+    history_handle() {
+      if (this.mode === "history") {
+      } else {
+        this.mode = "history"
+      }
+    },
   },
 
   computed: {
@@ -381,7 +410,7 @@ export default {
     },
     current_simple_quest_info() {
       if (this.room) {
-        return this.room.simple_quest_infos[this.quest_index]
+        return this.room.simple_quest_infos[this.question_index]
       }
     },
     current_simple_quest_info_size() {
@@ -401,7 +430,7 @@ export default {
         return info.moves_answers.map(e => [info.init_sfen, "moves", e.moves_str].join(" "))
       }
     },
-    current_quest_id() {
+    current_question_id() {
       const info = this.current_simple_quest_info
       if (info) {
         return info.id

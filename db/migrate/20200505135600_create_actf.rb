@@ -13,7 +13,7 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.string :judge_key,     null: true,  index: true, comment: "勝敗"
       t.integer :rensho_count, null: false, index: true, comment: "連勝数"
       t.integer :renpai_count, null: false, index: true, comment: "連敗数"
-      t.integer :quest_index,                            comment: "解答中の問題"
+      t.integer :question_index,                            comment: "解答中の問題"
       t.integer :position,                  index: true, comment: "順序"
       t.timestamps
 

@@ -12,7 +12,7 @@
 # | judge_key    | Judge key    | string(255) |             |                       | D     |
 # | rensho_count | Rensho count | integer(4)  | NOT NULL    |                       | E     |
 # | renpai_count | Renpai count | integer(4)  | NOT NULL    |                       | F     |
-# | quest_index  | Quest index  | integer(4)  |             |                       |       |
+# | question_index  | Quest index  | integer(4)  |             |                       |       |
 # | position     | 順序         | integer(4)  |             |                       | G     |
 # | created_at   | 作成日時     | datetime    | NOT NULL    |                       |       |
 # | updated_at   | 更新日時     | datetime    | NOT NULL    |                       |       |
@@ -52,7 +52,7 @@ module Actf
         self.renpai_count = l
 
         # 一問も答えてないとき nil になるため
-        self.quest_index ||= 0
+        self.question_index ||= 0
       end
     end
 

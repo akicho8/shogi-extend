@@ -18,7 +18,7 @@ module Actf
       if current_user
         stream_for current_user
         messages = LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
-        messages = messages.as_json(only: [:body], include: {user: {only: [:id, :name], methods: [:avatar_path]}})
+        messages = messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
         LobbyChannel.broadcast_to(current_user, messages: messages)
       end
     end

@@ -36,7 +36,7 @@ export default {
     },
 
     matching_start_perform() {
-      this.$parent.$lobby.perform("matching_start", {matching_rate_threshold: this.matching_rate_threshold})
+      this.app.$lobby.perform("matching_start", {matching_rate_threshold: this.matching_rate_threshold})
     },
   },
 

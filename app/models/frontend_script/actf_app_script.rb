@@ -44,6 +44,7 @@ module FrontendScript
 
     QUESTIONS_FETCH_PER = 10
     RANKING_FETCH_MAX = 50
+    HISTORY_FETCH_MAX = 50
 
     def form_parts
       if Rails.env.development?
@@ -51,7 +52,7 @@ module FrontendScript
           {
             :label   => "画面",
             :key     => :debug_scene,
-            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, },
+            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, "履歴" => :history, },
             :type    => :select,
             :default => current_debug_scene,
           },
@@ -82,6 +83,13 @@ module FrontendScript
         # retv = {**page_info(s), **sort_info}
         retv[:ranking_key] = params[:ranking_key]
         retv[:rank_records] = s.shuffle.as_json(only: [:id, :name], methods: [:avatar_path, :rating, :rensho_count, :rensho_max])
+        return retv
+      end
+
+      if params[:history_fetch]
+        s = current_user.actf_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
+        retv = {}
+        retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}})
         return retv
       end
 
@@ -150,7 +158,7 @@ module FrontendScript
       info[:question_default] = question_default
 
       if current_user
-        info[:current_user] = current_user.as_json(only: [:id, :name], methods: [:avatar_path, :rating])
+        info[:current_user] = current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating])
       end
 
       # info[:room] = current_room
@@ -237,7 +245,7 @@ module FrontendScript
           e.memberships.build(user: user)
         end
 
-        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:simple_quest_infos, :final_info])
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:simple_quest_infos, :final_info])
       end
 
       if current_debug_scene == :result
@@ -246,11 +254,11 @@ module FrontendScript
         user1 = current_user
         user2 = Colosseum::User.create!
         room = Actf::Room.create!(final_key: :disconnect) do |e|
-          e.memberships.build(user: user1, judge_key: :win,  quest_index: 1)
-          e.memberships.build(user: user2, judge_key: :lose, quest_index: 2)
+          e.memberships.build(user: user1, judge_key: :win,  question_index: 1)
+          e.memberships.build(user: user2, judge_key: :lose, question_index: 2)
         end
 
-        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :quest_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actf_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actf_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
       end
 
       if current_debug_scene == :edit
@@ -258,6 +266,10 @@ module FrontendScript
       end
 
       if current_debug_scene == :ranking
+        c.sysop_login_unless_logout
+      end
+
+      if current_debug_scene == :history
         c.sysop_login_unless_logout
       end
     end

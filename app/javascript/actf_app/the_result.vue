@@ -23,7 +23,7 @@
         .user_name.has-text-weight-bold
           | {{membership.user.name}}
         .user_quest_index.has-text-weight-bold.is-size-4
-          | {{membership.quest_index}}
+          | {{membership.question_index}}
         .user_rating.has-text-weight-bold
           | {{membership.user.actf_profile.rating}}
           span.user_rating_diff
@@ -40,7 +40,7 @@
   .columns.is-mobile
     .column
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="$parent.lobby_button_handle" type="is-primary")
+        b-button.has-text-weight-bold(@click="$parent.lobby_handle" type="is-primary")
           | ロビーに戻る
 </template>
 

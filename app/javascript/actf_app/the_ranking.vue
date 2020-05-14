@@ -59,6 +59,8 @@ export default {
   },
 
   created() {
+    this.app.lobby_close()
+
     this.sound_play("click")
     this.mode_select("rating")
     this.tab_change_handle()

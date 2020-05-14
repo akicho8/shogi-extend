@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_builder
-  //- a.delete.is-large(@click="$parent.lobby_button_handle")
+  //- a.delete.is-large(@click="$parent.lobby_handle")
   .columns.is-centered
     .column
       .buttons.is-centered
@@ -154,8 +154,9 @@ export default {
   },
 
   created() {
+    this.app.lobby_close()
+
     this.sound_play("click")
-    this.main_nav_set(false)
     this.builder_index_handle()
     // this.exam_mode_handle()
   },

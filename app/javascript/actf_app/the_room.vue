@@ -18,10 +18,10 @@
   .columns(v-if="$parent.current_quest_init_sfen")
     .column
       .has-text-centered
-        | {{$parent.quest_index + 1}}問目
+        | {{$parent.question_index + 1}}問目
         | {{turn_offset}}手目
       shogi_player(
-        :key="`quest_${$parent.quest_index}`"
+        :key="`quest_${$parent.question_index}`"
         ref="main_sp"
         :run_mode="'play_mode'"
         :kifu_body="`position sfen ${$parent.current_quest_init_sfen}`"
@@ -72,7 +72,7 @@ export default {
     }
   },
   created() {
-    this.main_nav_set(false)
+    this.app.lobby_close()
   },
   computed: {
     quest() {

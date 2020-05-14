@@ -1,14 +1,13 @@
 <template lang="pug">
-.the_lobby_message.columns
-  .column
-    .messages_box.has-background-light(ref="messages_box")
-      template(v-for="message in $parent.lobby_messages")
-        div {{message.user.name}}: {{message.body}}
-    b-field.input_field
-      b-input(v-model="$parent.lobby_message" expanded @keypress.native.enter="$parent.lobby_speak_handle")
-      p.control
-        button.button.is-primary(@click="$parent.lobby_speak_handle")
-          b-icon.play_icon(icon="play")
+.the_lobby_message
+  .messages_box.has-background-light(ref="messages_box")
+    template(v-for="message in $parent.lobby_messages")
+      div {{message.user.name}}: {{message.body}}
+  b-field.input_field
+    b-input(v-model="$parent.lobby_message" expanded @keypress.native.enter="$parent.lobby_speak_handle")
+    p.control
+      button.button.is-primary(@click="$parent.lobby_speak_handle")
+        b-icon.play_icon(icon="play")
 </template>
 
 <script>
@@ -52,6 +51,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_lobby_message
+  margin-top: 2rem
+  padding: 0 0.5rem
   .messages_box
     padding: 0.5rem
     height: 20em

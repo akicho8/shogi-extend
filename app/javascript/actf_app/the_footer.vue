@@ -1,7 +1,8 @@
 <template lang="pug">
 .the_footer
-  b-button(icon-left="home" @click="app.lobby_button_handle" :type="{'is-primary': app.mode === 'lobby'}")
+  b-button(icon-left="home" @click="app.lobby_handle" :type="{'is-primary': app.mode === 'lobby'}")
   b-button(icon-left="crown" @click="app.ranking_handle" :type="{'is-primary': app.mode === 'ranking'}")
+  b-button(icon-left="menu" @click="app.history_handle" :type="{'is-primary': app.mode === 'history'}")
   b-button(icon-left="wrench" @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}")
 
   b-dropdown(position="is-top-left")

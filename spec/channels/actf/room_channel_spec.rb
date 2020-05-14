@@ -71,35 +71,35 @@ RSpec.describe Actf::RoomChannel, type: :channel do
     end
 
     it do
-      data = { membership_id: membership1.id, quest_index: 1 }
+      data = { membership_id: membership1.id, question_index: 1 }
       expect {
         subscription.correct_hook(data)
       }.to have_broadcasted_to("actf/room_channel/#{current_room.id}").with(correct_hook: data)
 
       current_room.reload
-      assert { membership1.quest_index == 1 }
+      assert { membership1.question_index == 1 }
     end
   end
 
-  describe "#katimasitayo" do
+  describe "#goal_hook" do
     before do
       subscribe(room_id: current_room.id)
     end
 
     it "結果画面へ" do
       expect {
-        subscription.katimasitayo({})
+        subscription.goal_hook({})
       }.to have_broadcasted_to("actf/room_channel/#{current_room.id}")
     end
 
     it "対戦中人数を減らして通知" do
       expect {
-        subscription.katimasitayo({})
+        subscription.goal_hook({})
       }.to have_broadcasted_to("actf/school_channel")
     end
 
     it "結果" do
-      subscription.katimasitayo({})
+      subscription.goal_hook({})
       current_room.reload
 
       assert { current_room.end_at    }

@@ -10,7 +10,7 @@ module Actf
 
     def render_message(message)
       # ApplicationController.renderer.render(partial: 'actf/messages/message', locals: { message: message })
-      message.as_json(only: [:body], include: {user: {only: [:id, :name], methods: [:avatar_path]}})
+      message.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
     end
   end
 end
