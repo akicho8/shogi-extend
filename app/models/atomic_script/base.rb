@@ -18,6 +18,7 @@
 module AtomicScript
   class Base
     include Core
+    include ColumnsColumMod
     include FormMod
     include PageTitleMod
     include SupportMod

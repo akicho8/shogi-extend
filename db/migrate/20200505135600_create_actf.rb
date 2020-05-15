@@ -41,6 +41,31 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    create_table :actf_favorites do |t|
+      t.belongs_to :user,     comment: "自分"
+      t.belongs_to :question, comment: "出題"
+      t.integer :score,       comment: "スコア"
+      t.timestamps
+    end
+
+    create_table :actf_good_marks do |t|
+      t.belongs_to :user,     comment: "自分"
+      t.belongs_to :question, comment: "出題"
+      t.timestamps
+    end
+
+    create_table :actf_bad_marks do |t|
+      t.belongs_to :user,     comment: "自分"
+      t.belongs_to :question, comment: "出題"
+      t.timestamps
+    end
+
+    create_table :actf_clips do |t|
+      t.belongs_to :user,     comment: "自分"
+      t.belongs_to :question, comment: "出題"
+      t.timestamps
+    end
+
     # static
     create_table :actf_ans_results do |t|
       t.string :key
@@ -79,6 +104,15 @@ class CreateActf < ActiveRecord::Migration[6.0]
       # 別テーブルにするか？
       t.integer :o_count,        null: false, index: true,  comment: "正解数"
       t.integer :x_count,        null: false, index: true,  comment: "不正解数"
+
+      t.integer :bad_count,  null: false, comment: "高評価数"
+      t.integer :good_count, null: false, comment: "低評価数"
+
+      # counter_cache
+      t.integer :favorites_count,  default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
+      t.integer :bad_marks_count,  default: 0, null: false, comment: "高評価数"
+      t.integer :good_marks_count, default: 0, null: false, comment: "低評価数"
+      t.integer :clips_count,      default: 0, null: false, comment: "保存された数"
     end
 
     # MovesAnswer

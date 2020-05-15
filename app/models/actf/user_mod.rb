@@ -23,6 +23,12 @@ module Actf
       after_create do
         actf_profile || create_actf_profile!
       end
+
+      # Good/Bad
+      has_many :actf_favorites, class_name: "Actf::Favorite", dependent: :destroy
+      has_many :actf_good_marks, class_name: "Actf::GoodMark", dependent: :destroy
+      has_many :actf_bad_marks, class_name: "Actf::BadMark", dependent: :destroy
+      has_many :actf_clips, class_name: "Actf::Clip", dependent: :destroy
     end
   end
 end

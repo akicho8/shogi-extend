@@ -14,11 +14,22 @@ module ImageMod
       params = params.to_unsafe_h
     end
 
+    if params[:image_preset] === "small"
+      params.update({
+          width: 320,
+          height: 256,
+          piece_pull_down_rate:  { black: 0.06, white: 0      },
+          piece_pull_right_rate: { black: 0.06, white: -0.045 },
+        })
+    end
+
     params                                                        # => {"width" => "",   "height" => "1234" }
     params = params.to_options                                    # => {:width  => "",   :height  => "1234" }
     hash = params.transform_values { |e| str_to_native_value(e) } # => {:width  => "",   :height  => 1234   }
     hash = hash.reject { |k, v| v.blank? }                        # => {                 :height  => 1234   }
     options = image_default_options.merge(hash)                   # => {:width  => 1200, :height  => 1234   }
+
+    options = options.deep_symbolize_keys # params[:piece_pull_right_rate][:black] でアクセスできるようにするため
 
     # 最大値を超えないように補正
     image_default_options.each do |key, val|

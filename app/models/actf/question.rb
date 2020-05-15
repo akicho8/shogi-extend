@@ -38,6 +38,10 @@ module Actf
     with_options dependent: :destroy do
       has_many :moves_answers  # 手順一致を正解とする答え集
       has_many :endpos_answers # 最後の局面を正解とする答え集
+
+      has_many :clips           # クリップ
+      has_many :favorites      # Good
+      # has_many :bad_marks       # Bad
     end
 
     # with_options allow_destroy: true do
@@ -62,6 +66,9 @@ module Actf
 
       self.o_count ||= 0
       self.x_count ||= 0
+
+      self.bad_count ||= 0
+      self.good_count ||= 0
 
       self.display_key ||= :public
     end

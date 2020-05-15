@@ -39,6 +39,7 @@ module FrontendScript
     self.script_name = "詰将棋ファイター"
     self.page_title = ""
     self.form_position = :bottom
+    self.column_wrapper_enable = false
 
     delegate :current_user, to: :h
 
@@ -89,7 +90,7 @@ module FrontendScript
       if params[:history_fetch]
         s = current_user.actf_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
         retv = {}
-        retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}})
+        retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}}, methods: [:good_mark_on])
         return retv
       end
 
@@ -179,6 +180,38 @@ module FrontendScript
     end
 
     def put_action
+      if params[:favorite_update]
+        if true
+          question = Actf::Question.find(params[:question_id])
+          s = current_user.actf_good_marks.where(question: question)
+          if s.exists?
+            s.destroy_all
+            good_mark_on = false
+            diff = -1
+          else
+            s.create!
+            good_mark_on = true
+            diff = 1
+          end
+          # question.reload
+          c.render json: { x_resp: { good_mark_on: good_mark_on, diff: diff } }
+          return
+        else
+          # question = Actf::Question.find(params[:question_id])
+          # if favorite = user.actf_favorites.find_by(question: question)
+          #   if favorite.score == 1
+          #     favorite.destroy_all
+          #   end
+          # end
+          # favorite.update!(score: -1)
+          # favorite.destroy!
+        end
+
+        # retv = {}
+        # retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}})
+        # return retv
+      end
+
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",

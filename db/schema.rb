@@ -33,6 +33,24 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "actf_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "自分"
+    t.bigint "question_id", comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_actf_bad_marks_on_question_id"
+    t.index ["user_id"], name: "index_actf_bad_marks_on_user_id"
+  end
+
+  create_table "actf_clips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "自分"
+    t.bigint "question_id", comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_actf_clips_on_question_id"
+    t.index ["user_id"], name: "index_actf_clips_on_user_id"
+  end
+
   create_table "actf_endpos_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", comment: "問題"
     t.integer "limit_turn", null: false, comment: "N手"
@@ -41,6 +59,25 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["limit_turn"], name: "index_actf_endpos_answers_on_limit_turn"
     t.index ["question_id"], name: "index_actf_endpos_answers_on_question_id"
+  end
+
+  create_table "actf_favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "自分"
+    t.bigint "question_id", comment: "出題"
+    t.integer "score", comment: "スコア"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_actf_favorites_on_question_id"
+    t.index ["user_id"], name: "index_actf_favorites_on_user_id"
+  end
+
+  create_table "actf_good_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "自分"
+    t.bigint "question_id", comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_actf_good_marks_on_question_id"
+    t.index ["user_id"], name: "index_actf_good_marks_on_user_id"
   end
 
   create_table "actf_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -134,6 +171,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "endpos_answers_count", default: 0, null: false, comment: "B解答数"
     t.integer "o_count", null: false, comment: "正解数"
     t.integer "x_count", null: false, comment: "不正解数"
+    t.integer "bad_count", null: false, comment: "高評価数"
+    t.integer "good_count", null: false, comment: "低評価数"
+    t.integer "favorites_count", default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
+    t.integer "bad_marks_count", default: 0, null: false, comment: "高評価数"
+    t.integer "good_marks_count", default: 0, null: false, comment: "低評価数"
+    t.integer "clips_count", default: 0, null: false, comment: "保存された数"
     t.index ["difficulty_level"], name: "index_actf_questions_on_difficulty_level"
     t.index ["display_key"], name: "index_actf_questions_on_display_key"
     t.index ["endpos_answers_count"], name: "index_actf_questions_on_endpos_answers_count"
