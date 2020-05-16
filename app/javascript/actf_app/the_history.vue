@@ -1,38 +1,18 @@
 <template lang="pug">
 .the_history.main_content
   .primary_header
-    .has-text-weight-bold 問題履歴
+    .has-text-weight-bold {{current_tab_info.top_nav_name}}
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")
-        b-tab-item.is-size-2(:label="tab_info.name")
-  template(v-for="(row, i) in history_records")
-    .row.is-flex
-      .left_block.is-flex
-        .ans_result
-          template(v-if="row.ans_result.key === 'correct'")
-            b-icon(icon="checkbox-blank-circle-outline" type="is-danger")
-          template(v-if="row.ans_result.key === 'mistake'")
-            b-icon(icon="close")
-        img.board(:src="board_image_url(row)")
-        figure.image.is-32x32
-          img.is-rounded(:src="row.question.user.avatar_path")
-        .question_block.is-flex
-          .uegawa
-            .has-text-weight-bold
-              | {{row.question.user.name}}作
-            .question_title(v-if="row.question.title")
-              | {{row.question.title}}
-            .question_description(v-if="row.question.description")
-              | {{row.question.description}}
-            .question_source_desc(v-if="row.question.source_desc")
-              | {{row.question.source_desc}}
-          .bottom_block.is-flex
-            the_history_vote(:row="row")
-            .clip_block(@click="clip_handle(row, !row.clip_p)" :class="{'has-text-gold': row.clip_p}")
-              b-icon(:icon="row.clip_p ? 'star' : 'star-outline'")
-              span.icon_counter
-                | {{row.question.clips_count}}
+        b-tab-item.is-size-2(:label="tab_info.tab_name")
+
+  template(v-if="current_tab_info.key === 'history_index'")
+    the_history_row(v-for="row in history_records" :row="row")
+
+  template(v-if="current_tab_info.key === 'clip_index'")
+    the_history_row(v-for="row in clip_records" :row="row")
+
   debug_print
 </template>
 
@@ -42,8 +22,8 @@ import MemoryRecord from 'js-memory-record'
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "history",  name: "履歴",       },
-      { key: "favorite", name: "お気に入り", },
+      { key: "history_index", tab_name: "履歴",       top_nav_name: "問題履歴"        },
+      { key: "clip_index",    tab_name: "お気に入り", top_nav_name: "お気に入り問題", },
     ]
   }
 
@@ -53,15 +33,19 @@ class TabInfo extends MemoryRecord {
 }
 
 import support from "./support.js"
-import the_history_vote from "./the_history_vote.vue"
+import the_history_row from "./the_history_row.vue"
+import the_history_basic from "./the_history_basic.js"
+import the_history_clip from "./the_history_clip.js"
 
 export default {
   name: "the_history",
   mixins: [
     support,
+    the_history_basic,
+    the_history_clip,
   ],
   components: {
-    the_history_vote,
+    the_history_row,
   },
   props: {
   },
@@ -76,7 +60,7 @@ export default {
     this.app.lobby_close()
 
     this.sound_play("click")
-    this.mode_select("history")
+    this.mode_select("history_index")
     this.tab_change_handle()
   },
 
@@ -84,50 +68,19 @@ export default {
   },
 
   methods: {
-    ////////////////////////////////////////////////////////////////////////////////
-
-    history_handle() {
-      this.mode_select("history")
-
-      if (this.history_records) {
-      } else {
-        this.http_get_command(this.app.info.put_path, { history_fetch: true }, e => {
-          if (e.history_records) {
-            this.history_records = e.history_records
-          }
-        })
-      }
-    },
-
-    favorite_handle() {
-      this.mode_select("favorite")
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
     mode_select(tab_key) {
       this.tab_index = TabInfo.fetch(tab_key).code
     },
 
     tab_change_handle() {
+      this.sound_play("click")
       this[this.current_tab_info.handle_method_name]()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    board_image_url(row) {
-      // return "/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&image_view_point=black&image_preset=small"
-      const params = {
-        format: "png",
-        body: `position sfen ${row.question.init_sfen}`,
-        image_view_point: "black",
-      }
-      const url = new URL(this.as_full_url("/share-board"))
-      _.each(params, (v, k) => url.searchParams.set(k, v))
-      return url.toString()
-    },
-
     vote_handle(history, vote_key, vote_value) {
+      this.sound_play("click")
       if (vote_key === "good") {
         if (vote_value) {
           this.talk("よき", {rate: 1.5})
@@ -149,6 +102,7 @@ export default {
     },
 
     clip_handle(history, clip_p) {
+      this.sound_play("click")
       if (clip_p) {
         this.talk("お気に入り", {rate: 1.5})
       }
@@ -182,38 +136,4 @@ export default {
     .tab-content
       padding: 0
       padding-top: 0
-
-  .row
-    padding-top: 0.5rem
-    padding-bottom: 0.5rem
-
-    &.active
-      background-color: change_color($warning, $lightness: 97%)
-
-    &:not(:first-child)
-      border-top: 1px solid $grey-lighter
-
-    justify-content: space-between
-    align-items: flex-start
-
-    .ans_result
-      margin-top: 0.5rem
-      margin-left: 1.0rem
-    .board
-      height: 128px
-      width: 172px
-      object-fit: cover
-      object-position: 50% 50%
-    .image
-      margin-top: 0.25rem
-    .question_block
-      margin-left: 0.5rem
-      flex-direction: column
-      justify-content: space-between
-      align-items: flex-start
-      .question_title
-      .bottom_block
-        .clip_block
-          margin-left: 2.4rem
-          @extend %icon_with_counter
 </style>

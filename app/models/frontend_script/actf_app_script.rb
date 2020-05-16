@@ -46,6 +46,7 @@ module FrontendScript
     QUESTIONS_FETCH_PER = 10
     RANKING_FETCH_MAX = 50
     HISTORY_FETCH_MAX = 50
+    CLIP_FETCH_MAX = 50
 
     def form_parts
       if Rails.env.development?
@@ -87,10 +88,17 @@ module FrontendScript
         return retv
       end
 
-      if params[:history_fetch]
+      if params[:history_records_fetch]
         s = current_user.actf_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
         retv = {}
         retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}}, methods: [:good_p, :bad_p, :clip_p])
+        return retv
+      end
+
+      if params[:clip_records_fetch]
+        s = current_user.actf_clips.order(created_at: :desc).limit(CLIP_FETCH_MAX)
+        retv = {}
+        retv[:clip_records] = s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p])
         return retv
       end
 
