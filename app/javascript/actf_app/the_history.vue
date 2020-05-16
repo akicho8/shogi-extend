@@ -76,41 +76,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    vote_handle(history, vote_key, vote_value) {
-      this.sound_play("click")
-      if (vote_key === "good") {
-        if (vote_value) {
-          this.talk("よき", {rate: 1.5})
-        }
-      } else {
-        if (vote_value) {
-          this.talk("だめ", {rate: 1.5})
-        }
-      }
-      this.silent_http_command("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
-        if (e.retval) {
-          this.$set(history, "good_p", e.retval.good_p)
-          this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.retval.good_diff)
-
-          this.$set(history, "bad_p", e.retval.bad_p)
-          this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.retval.bad_diff)
-        }
-      })
-    },
-
-    clip_handle(history, clip_p) {
-      this.sound_play("click")
-      if (clip_p) {
-        this.talk("お気に入り", {rate: 1.5})
-      }
-      this.silent_http_command("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
-        if (e.retval) {
-          this.$set(history, "clip_p", e.retval.clip_p)
-          this.$set(history.question, "clips_count", history.question.clips_count + e.retval.diff)
-        }
-      })
-    },
-
   },
 
   computed: {

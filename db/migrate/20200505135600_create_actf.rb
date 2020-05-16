@@ -109,6 +109,7 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.integer :good_count, null: false, comment: "低評価数"
 
       # counter_cache
+      t.integer :histories_count,  default: 0, null: false, comment: "履歴数"
       t.integer :favorites_count,  default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
       t.integer :bad_marks_count,  default: 0, null: false, comment: "高評価数"
       t.integer :good_marks_count, default: 0, null: false, comment: "低評価数"

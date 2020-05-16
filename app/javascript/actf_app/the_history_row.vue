@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_history_row.is-flex(@click="app.overlay_question_set(row.question.id)")
+.the_history_row.is-flex(@click="app.overlay_info_set(row.question.id)")
   .left_block.is-flex
     .ans_result(v-if="row.ans_result")
       template(v-if="row.ans_result.key === 'correct'")
@@ -22,16 +22,13 @@
           | {{row.question.description}}
       .bottom_block.is-flex
         the_history_row_vote(:row="row")
-        .clip_block.is-unselectable(@click="$parent.clip_handle(row, !row.clip_p)" :class="{'has-text-gold': row.clip_p}")
-          b-icon(:icon="row.clip_p ? 'star' : 'star-outline'")
-          span.icon_counter
-            | {{row.question.clips_count}}
 </template>
 
 <script>
 import MemoryRecord from 'js-memory-record'
 
 import support from "./support.js"
+
 import the_history_row_vote from "./the_history_row_vote.vue"
 
 export default {
@@ -93,7 +90,4 @@ export default {
     align-items: flex-start
     .question_title
     .bottom_block
-      .clip_block
-        margin-left: 2.4rem
-        @extend %icon_with_counter
 </style>

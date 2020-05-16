@@ -1,13 +1,13 @@
 <template lang="pug">
-.the_overlay_question.main_content
+.the_overlay_info.main_content
   .primary_header
     b-icon.back_link_icon.is_clickable(icon="arrow-left" @click.native="app.board_close")
     .center_title_block.has-text-weight-bold.has-text-centered
-      | {{app.overlay_question.title}}
+      | {{app.overlay_info.question.title}}
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       b-tab-item(label="初期配置")
-      template(v-for="(e, i) in app.overlay_question.moves_answers")
+      template(v-for="(e, i) in app.overlay_info.question.moves_answers")
         b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
 
   .sp_container
@@ -25,16 +25,23 @@
       :volume="0.5"
       @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
       )
+
+  .vote_container.is-flex
+    the_history_row_vote(:row="app.overlay_info")
 </template>
 
 <script>
 import support from "./support.js"
+import the_history_row_vote from "./the_history_row_vote.vue"
 
 export default {
-  name: "the_overlay_question",
+  name: "the_overlay_info",
   mixins: [
     support,
   ],
+  components: {
+    the_history_row_vote,
+  },
   data() {
     return {
       tab_index: 0,
@@ -42,22 +49,23 @@ export default {
   },
   methods: {
     tab_change_handle() {
+      // this.sound_play("click")
     },
 
     play_mode_advanced_moves_set(moves) {
-      if (this.app.overlay_question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
+      if (this.app.overlay_info.question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
         this.sound_play("o")
         this.ok_notice("正解")
       }
     },
 
     answer_sfen_for(index) {
-      return [this.init_sfen, "moves", this.app.overlay_question.moves_answers[index].moves_str].join(" ")
+      return [this.init_sfen, "moves", this.app.overlay_info.question.moves_answers[index].moves_str].join(" ")
     },
   },
   computed: {
     init_sfen() {
-      return ["position", "sfen", this.app.overlay_question.init_sfen].join(" ")
+      return ["position", "sfen", this.app.overlay_info.question.init_sfen].join(" ")
     },
     selected_sfen() {
       if (this.tab_index === 0) {
@@ -72,7 +80,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_overlay_question.main_content
+.the_overlay_info.main_content
   @extend %padding_top2
   .primary_header
     justify-content: space-between
@@ -98,6 +106,18 @@ export default {
       .tab-content
         padding: 0
         padding-top: 0
+
   .sp_container
-    margin-top: 1rem
+    margin-top: 1.5rem
+
+  .vote_container
+    margin-top: 1.5rem
+    justify-content: center
+
+    .the_history_row_vote
+      .icon_with_counter
+        &.bad
+          margin-left: 2rem
+        &.clip
+          margin-left: 5rem
 </style>

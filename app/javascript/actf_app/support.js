@@ -3,18 +3,6 @@ import Vuex from 'vuex'
 const POSITION_SFEN_PREFIX = "position sfen "
 
 export default {
-  mixins: [
-  ],
-  components: {
-  },
-  data() {
-    return {
-    }
-  },
-  created() {
-  },
-  watch: {
-  },
   methods: {
     warning_dialog(room_message) {
       this.$buefy.dialog.alert({

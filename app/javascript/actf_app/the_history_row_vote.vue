@@ -1,13 +1,17 @@
 <template lang="pug">
 .the_history_row_vote.is-flex.is-unselectable
-  .vote_block.good(@click="$parent.$parent.vote_handle(row, 'good', !row.good_p)" :class="{'has-text-primary': row.good_p}")
+  .icon_with_counter.good(@click="app.vote_handle(row, 'good', !row.good_p)" :class="{'has-text-primary': row.good_p}")
     b-icon(:icon="row.good_p ? 'thumb-up' : 'thumb-up-outline'")
     span.icon_counter
       | {{row.question.good_marks_count}}
-  .vote_block.bad(@click="$parent.$parent.vote_handle(row, 'bad', !row.bad_p)" :class="{'has-text-primary': row.bad_p}")
+  .icon_with_counter.bad(@click="app.vote_handle(row, 'bad', !row.bad_p)" :class="{'has-text-primary': row.bad_p}")
     b-icon(:icon="row.bad_p ? 'thumb-down' : 'thumb-down-outline'")
     span.icon_counter
       | {{row.question.bad_marks_count}}
+  .icon_with_counter.clip(@click="app.clip_handle(row, !row.clip_p)" :class="{'has-text-gold': row.clip_p}")
+    b-icon(:icon="row.clip_p ? 'star' : 'star-outline'")
+    span.icon_counter
+      | {{row.question.clips_count}}
 </template>
 
 <script>
@@ -27,8 +31,12 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_history_row_vote
-  .vote_block
-    &.bad
-      margin-left: 1.24rem
+  .icon_with_counter
     @extend %icon_with_counter
+    &.good
+      margin-left: 0.0rem
+    &.bad
+      margin-left: 1.2rem
+    &.clip
+      margin-left: 2.4rem
 </style>

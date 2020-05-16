@@ -1,8 +1,8 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  the_overlay_question(v-if="overlay_question")
+  the_overlay_info(v-if="overlay_info")
 
-  .switching_pages(v-show="!overlay_question")
+  .switching_pages(v-show="!overlay_info")
     the_footer
     the_system_header(v-if="mode === 'lobby'")
     the_lobby(:info="info" v-if="mode === 'lobby'")
@@ -15,7 +15,8 @@
     the_builder(:info="info" v-if="mode === 'builder'")
     the_ranking(v-if="mode === 'ranking'")
     the_history(v-if="mode === 'history'")
-    debug_print(:grep="/./")
+
+  debug_print(:grep="/./")
 </template>
 
 <script>
@@ -26,9 +27,9 @@ import consumer from "channels/consumer"
 import support   from "./support.js"
 import the_store from "./store.js"
 
-import the_overlay_question_mod from "./the_overlay_question_mod.js"
+import the_overlay_info_mod from "./the_overlay_info_mod.js"
 
-import the_overlay_question from "./the_overlay_question.vue"
+import the_overlay_info from "./the_overlay_info.vue"
 import the_system_header    from "./the_system_header.vue"
 import the_footer           from "./the_footer.vue"
 import the_lobby            from "./the_lobby.vue"
@@ -46,10 +47,10 @@ export default {
   name: "actf_app",
   mixins: [
     support,
-    the_overlay_question_mod,
+    the_overlay_info_mod,
   ],
   components: {
-    the_overlay_question,
+    the_overlay_info,
     the_system_header,
     the_footer,
     the_lobby,
@@ -112,8 +113,8 @@ export default {
       if (this.info.debug_scene === "history") {
         this.history_handle()
       }
-      if (this.info.debug_scene === "overlay_question") {
-        this.overlay_question_set(this.info.question_id)
+      if (this.info.debug_scene === "overlay_info") {
+        this.overlay_info_set(this.info.question_id)
       }
     }
 
@@ -409,6 +410,41 @@ export default {
       }
     },
 
+    vote_handle(history, vote_key, vote_value) {
+      this.sound_play("click")
+      if (vote_key === "good") {
+        if (vote_value) {
+          this.talk("よき", {rate: 1.5})
+        }
+      } else {
+        if (vote_value) {
+          this.talk("だめ", {rate: 1.5})
+        }
+      }
+      debugger
+      this.silent_http_command("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
+        if (e.retval) {
+          this.$set(history, "good_p", e.retval.good_p)
+          this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.retval.good_diff)
+
+          this.$set(history, "bad_p", e.retval.bad_p)
+          this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.retval.bad_diff)
+        }
+      })
+    },
+
+    clip_handle(history, clip_p) {
+      this.sound_play("click")
+      if (clip_p) {
+        this.talk("お気に入り", {rate: 1.5})
+      }
+      this.silent_http_command("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
+        if (e.retval) {
+          this.$set(history, "clip_p", e.retval.clip_p)
+          this.$set(history.question, "clips_count", history.question.clips_count + e.retval.diff)
+        }
+      })
+    },
   },
 
   computed: {

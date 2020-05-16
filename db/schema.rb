@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "x_count", null: false, comment: "不正解数"
     t.integer "bad_count", null: false, comment: "高評価数"
     t.integer "good_count", null: false, comment: "低評価数"
+    t.integer "histories_count", default: 0, null: false, comment: "履歴数"
     t.integer "favorites_count", default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
     t.integer "bad_marks_count", default: 0, null: false, comment: "高評価数"
     t.integer "good_marks_count", default: 0, null: false, comment: "低評価数"
