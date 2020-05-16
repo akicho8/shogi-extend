@@ -102,6 +102,14 @@ module FrontendScript
         return retv
       end
 
+      # 詳細
+      if params[:question_single_fetch]
+        question = Actf::Question.find(params[:question_id])
+        attributes = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}})
+        attributes.update(current_user.good_bad_clip_flags_for(question)) # TODO: question に混ぜないほうがいい？
+        return { question: attributes }
+      end
+
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",

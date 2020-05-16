@@ -7,15 +7,15 @@ module Actf
       end
 
       def good_p
-        user.actf_good_marks.where(question: question).exists?
+        user.good_p(question)
       end
 
       def bad_p
-        user.actf_bad_marks.where(question: question).exists?
+        user.bad_p(question)
       end
 
       def clip_p
-        user.actf_clips.where(question: question).exists?
+        user.clip_p(question)
       end
     end
   end

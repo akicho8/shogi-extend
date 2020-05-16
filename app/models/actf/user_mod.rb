@@ -30,5 +30,11 @@ module Actf
       # Good/Bad
       has_many :actf_favorites, class_name: "Actf::Favorite", dependent: :destroy
     end
+
+    def good_bad_clip_flags_for(question)
+      [:good_p, :bad_p, :clip_p].inject({}) do |a, e|
+        a.merge(e => public_send(e, question))
+      end
+    end
   end
 end

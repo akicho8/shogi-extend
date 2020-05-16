@@ -4,6 +4,10 @@ module Actf::UserMod
       has_many :actf_clips, class_name: "Actf::Clip", dependent: :destroy
     end
 
+    def clip_p(question)
+      actf_clips.where(question: question).exists?
+    end
+
     # from app/javascript/actf_app/the_history.vue
     # clip_handle(question_id: question.id, clip_p: clip_p)
     def clip_handle(params)

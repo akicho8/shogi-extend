@@ -8,6 +8,14 @@ module Actf
         end
       end
 
+      def good_p(question)
+        actf_good_marks.where(question: question).exists?
+      end
+
+      def bad_p(question)
+        actf_bad_marks.where(question: question).exists?
+      end
+
       def vote_handle(params)
         question = Question.find(params[:question_id])
         vote_info = VoteInfo.fetch(params[:vote_key])
