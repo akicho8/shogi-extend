@@ -29,6 +29,10 @@
               | {{row.question.source_desc}}
           .bottom_block.is-flex
             the_history_vote(:row="row")
+            .clip_block(@click="clip_handle(row, !row.clip_p)" :class="{'has-text-danger': row.clip_p}")
+              b-icon(:icon="row.clip_p ? 'heart' : 'heart-outline'")
+              span.icon_counter
+                | {{row.question.clips_count}}
   debug_print
 </template>
 
@@ -133,13 +137,25 @@ export default {
           this.talk("だめ", {rate: 1.5})
         }
       }
-      this.silent_http_command("PUT", this.app.info.put_path, { question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
-        if (e.vote_result) {
-          this.$set(history, "good_mark_on", e.vote_result.good_mark_on)
-          this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.vote_result.good_diff)
+      this.silent_http_command("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
+        if (e.retval) {
+          this.$set(history, "good_p", e.retval.good_p)
+          this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.retval.good_diff)
 
-          this.$set(history, "bad_mark_on", e.vote_result.bad_mark_on)
-          this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.vote_result.bad_diff)
+          this.$set(history, "bad_p", e.retval.bad_p)
+          this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.retval.bad_diff)
+        }
+      })
+    },
+
+    clip_handle(history, clip_p) {
+      if (clip_p) {
+        this.talk("お気に入り", {rate: 1.5})
+      }
+      this.silent_http_command("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
+        if (e.retval) {
+          this.$set(history, "clip_p", e.retval.clip_p)
+          this.$set(history.question, "clips_count", history.question.clips_count + e.retval.diff)
         }
       })
     },
@@ -197,12 +213,7 @@ export default {
       align-items: flex-start
       .question_title
       .bottom_block
-        .thumb_box
-          &.bad
-            margin-left: 1rem
-          cursor: pointer
-          color: $grey-light
-          .marks_count
-            margin-left: 0.5rem
-            vertical-align: top
+        .clip_block
+          margin-left: 2.0rem
+          @extend %icon_with_counter
 </style>

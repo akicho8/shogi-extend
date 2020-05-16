@@ -17,8 +17,16 @@ module Actf
       self.ans_result ||= AnsResult.fetch(:mistake)
     end
 
-    def good_mark_on
-      user.actf_favorites.where(question: question).exists?
+    def good_p
+      user.actf_good_marks.where(question: question).exists?
+    end
+
+    def bad_p
+      user.actf_bad_marks.where(question: question).exists?
+    end
+
+    def clip_p
+      user.actf_clips.where(question: question).exists?
     end
   end
 end

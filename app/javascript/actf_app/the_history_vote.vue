@@ -1,12 +1,12 @@
 <template lang="pug">
 .the_history_vote.is-flex.is-unselectable
-  .thumb_box.good(@click="$parent.vote_handle(row, 'good', !row.good_mark_on)" :class="{'has-text-primary': row.good_mark_on}")
-    b-icon(:icon="row.good_mark_on ? 'thumb-up' : 'thumb-up-outline'")
-    span.marks_count
+  .vote_block.good(@click="$parent.vote_handle(row, 'good', !row.good_p)" :class="{'has-text-primary': row.good_p}")
+    b-icon(:icon="row.good_p ? 'thumb-up' : 'thumb-up-outline'")
+    span.icon_counter
       | {{row.question.good_marks_count}}
-  .thumb_box.bad(@click="$parent.vote_handle(row, 'bad', !row.bad_mark_on)" :class="{'has-text-primary': row.bad_mark_on}")
-    b-icon(:icon="row.bad_mark_on ? 'thumb-down' : 'thumb-down-outline'")
-    span.marks_count
+  .vote_block.bad(@click="$parent.vote_handle(row, 'bad', !row.bad_p)" :class="{'has-text-primary': row.bad_p}")
+    b-icon(:icon="row.bad_p ? 'thumb-down' : 'thumb-down-outline'")
+    span.icon_counter
       | {{row.question.bad_marks_count}}
 </template>
 
@@ -27,12 +27,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_history_vote
-  .thumb_box
+  .vote_block
     &.bad
       margin-left: 1rem
-    cursor: pointer
-    color: $grey-light
-    .marks_count
-      margin-left: 0.5rem
-      vertical-align: top
+    @extend %icon_with_counter
 </style>

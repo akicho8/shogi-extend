@@ -1,5 +1,5 @@
 module Actf
   class BadMark < ApplicationRecord
-    include GoodBadMod
+    include VoteMod
   end
 end

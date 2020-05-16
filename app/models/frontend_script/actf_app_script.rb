@@ -90,7 +90,7 @@ module FrontendScript
       if params[:history_fetch]
         s = current_user.actf_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
         retv = {}
-        retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}}, methods: [:good_mark_on])
+        retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}}, methods: [:good_p, :bad_p, :clip_p])
         return retv
       end
 
@@ -180,8 +180,13 @@ module FrontendScript
     end
 
     def put_action
-      if params[:vote_key]
-        c.render json: { vote_result: current_user.vote_handle(params) }
+      if params[:vote_handle]
+        c.render json: { retval: current_user.vote_handle(params) }
+        return
+      end
+
+      if params[:clip_handle]
+        c.render json: { retval: current_user.clip_handle(params) }
         return
       end
 
@@ -190,15 +195,15 @@ module FrontendScript
       #   s = current_user.actf_good_marks.where(question: question)
       #   if s.exists?
       #     s.destroy_all
-      #     good_mark_on = false
+      #     good_p = false
       #     diff = -1
       #   else
       #     s.create!
-      #     good_mark_on = true
+      #     good_p = true
       #     diff = 1
       #   end
       #   # question.reload
-      #   c.render json: { vote_result: { good_mark_on: good_mark_on, diff: diff } }
+      #   c.render json: { retval: { good_p: good_p, diff: diff } }
       #   return
       #
       #   # question = Actf::Question.find(params[:question_id])
@@ -220,14 +225,14 @@ module FrontendScript
       #   s = current_user.actf_bad_marks.where(question: question)
       #   if s.exists?
       #     s.destroy_all
-      #     bad_mark_on = false
+      #     bad_p = false
       #     diff = -1
       #   else
       #     s.create!
-      #     bad_mark_on = true
+      #     bad_p = true
       #     diff = 1
       #   end
-      #   c.render json: { vote_result: { bad_mark_on: bad_mark_on, diff: diff } }
+      #   c.render json: { retval: { bad_p: bad_p, diff: diff } }
       #   return
       # end
 
