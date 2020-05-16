@@ -180,37 +180,56 @@ module FrontendScript
     end
 
     def put_action
-      if params[:favorite_update]
-        if true
-          question = Actf::Question.find(params[:question_id])
-          s = current_user.actf_good_marks.where(question: question)
-          if s.exists?
-            s.destroy_all
-            good_mark_on = false
-            diff = -1
-          else
-            s.create!
-            good_mark_on = true
-            diff = 1
-          end
-          # question.reload
-          c.render json: { x_resp: { good_mark_on: good_mark_on, diff: diff } }
-          return
-        else
-          # question = Actf::Question.find(params[:question_id])
-          # if favorite = user.actf_favorites.find_by(question: question)
-          #   if favorite.score == 1
-          #     favorite.destroy_all
-          #   end
-          # end
-          # favorite.update!(score: -1)
-          # favorite.destroy!
-        end
-
-        # retv = {}
-        # retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}})
-        # return retv
+      if params[:vote_key]
+        c.render json: { vote_result: current_user.vote_handle(params) }
+        return
       end
+
+      # if params[:vote_key] == "good"
+      #   question = Actf::Question.find(params[:question_id])
+      #   s = current_user.actf_good_marks.where(question: question)
+      #   if s.exists?
+      #     s.destroy_all
+      #     good_mark_on = false
+      #     diff = -1
+      #   else
+      #     s.create!
+      #     good_mark_on = true
+      #     diff = 1
+      #   end
+      #   # question.reload
+      #   c.render json: { vote_result: { good_mark_on: good_mark_on, diff: diff } }
+      #   return
+      #
+      #   # question = Actf::Question.find(params[:question_id])
+      #   # if favorite = user.actf_favorites.find_by(question: question)
+      #   #   if favorite.score == 1
+      #   #     favorite.destroy_all
+      #   #   end
+      #   # end
+      #   # favorite.update!(score: -1)
+      #   # favorite.destroy!
+      #
+      #   # retv = {}
+      #   # retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}})
+      #   # return retv
+      # end
+      #
+      # if params[:vote_key] == "bad"
+      #   question = Actf::Question.find(params[:question_id])
+      #   s = current_user.actf_bad_marks.where(question: question)
+      #   if s.exists?
+      #     s.destroy_all
+      #     bad_mark_on = false
+      #     diff = -1
+      #   else
+      #     s.create!
+      #     bad_mark_on = true
+      #     diff = 1
+      #   end
+      #   c.render json: { vote_result: { bad_mark_on: bad_mark_on, diff: diff } }
+      #   return
+      # end
 
       # params = {
       #   "question" => {

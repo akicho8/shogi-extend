@@ -28,11 +28,7 @@
             .question_source_desc(v-if="row.question.source_desc")
               | {{row.question.source_desc}}
           .bottom_block.is-flex
-            //- b-icon(icon="heart-outline" @click="heart_handle")
-            .thumb_box(@click="good_mark_handle(row)" :class="{'has-text-primary': row.good_mark_on}")
-              b-icon(icon="thumb-up")
-              span.marks_count
-                | {{row.question.good_marks_count}}
+            the_history_vote(:row="row")
   debug_print
 </template>
 
@@ -53,6 +49,7 @@ class TabInfo extends MemoryRecord {
 }
 
 import support from "./support.js"
+import the_history_vote from "./the_history_vote.vue"
 
 export default {
   name: "the_history",
@@ -60,6 +57,7 @@ export default {
     support,
   ],
   components: {
+    the_history_vote,
   },
   props: {
   },
@@ -125,11 +123,23 @@ export default {
       return url.toString()
     },
 
-    good_mark_handle(history) {
-      this.silent_http_command("PUT", this.app.info.put_path, { favorite_update: true, question_id: history.question.id }, e => {
-        if (e.x_resp) {
-          this.$set(history, "good_mark_on", e.x_resp.good_mark_on)
-          this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.x_resp.diff)
+    vote_handle(history, vote_key, vote_value) {
+      if (vote_key === "good") {
+        if (vote_value) {
+          this.talk("よき", {rate: 1.5})
+        }
+      } else {
+        if (vote_value) {
+          this.talk("だめ", {rate: 1.5})
+        }
+      }
+      this.silent_http_command("PUT", this.app.info.put_path, { question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
+        if (e.vote_result) {
+          this.$set(history, "good_mark_on", e.vote_result.good_mark_on)
+          this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.vote_result.good_diff)
+
+          this.$set(history, "bad_mark_on", e.vote_result.bad_mark_on)
+          this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.vote_result.bad_diff)
         }
       })
     },
@@ -188,7 +198,11 @@ export default {
       .question_title
       .bottom_block
         .thumb_box
+          &.bad
+            margin-left: 1rem
+          cursor: pointer
+          color: $grey-light
           .marks_count
-            margin-left: 0.25rem
+            margin-left: 0.5rem
             vertical-align: top
 </style>
