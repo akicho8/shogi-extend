@@ -1,10 +1,9 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  the_footer
-
   the_overlay_question(v-if="overlay_question")
 
   .switching_pages(v-show="!overlay_question")
+    the_footer
     the_system_header(v-if="mode === 'lobby'")
     the_lobby(:info="info" v-if="mode === 'lobby'")
     the_lobby_message(:info="info" v-if="mode === 'lobby'")
@@ -16,8 +15,7 @@
     the_builder(:info="info" v-if="mode === 'builder'")
     the_ranking(v-if="mode === 'ranking'")
     the_history(v-if="mode === 'history'")
-
-  debug_print(:grep="/./")
+    debug_print(:grep="/./")
 </template>
 
 <script>
@@ -113,6 +111,9 @@ export default {
       }
       if (this.info.debug_scene === "history") {
         this.history_handle()
+      }
+      if (this.info.debug_scene === "overlay_question") {
+        this.overlay_question_set(this.info.question_id)
       }
     }
 

@@ -1,39 +1,17 @@
 <template lang="pug">
 .the_history.main_content
-  //- template(v-if="overlay_question")
-  //-   .show_layout
-  //-     .primary_header
-  //-       b-icon.back_link_icon.is_clickable(icon="arrow-left" @click.native="board_close")
-  //-       .center_title_block.has-text-weight-bold.has-text-centered
-  //-         | {{overlay_question.title}}
-  //-     shogi_player(
-  //-       :run_mode="'play_mode'"
-  //-       :kifu_body="`position sfen ${overlay_question.init_sfen}`"
-  //-       :start_turn="0"
-  //-       :key_event_capture="false"
-  //-       :slider_show="true"
-  //-       :controller_show="true"
-  //-       :theme="'simple'"
-  //-       :size="'default'"
-  //-       :sound_effect="true"
-  //-       :volume="0.5"
-  //-       @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
-  //-       )
-  //- template(v-else)
-  .index_layout
-    .primary_header
-      .has-text-weight-bold {{current_tab_info.top_nav_name}}
-    .secondary_header
-      b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
-        template(v-for="tab_info in TabInfo.values")
-          b-tab-item.is-size-2(:label="tab_info.tab_name")
+  .primary_header
+    .has-text-weight-bold {{current_tab_info.top_nav_name}}
+  .secondary_header
+    b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
+      template(v-for="tab_info in TabInfo.values")
+        b-tab-item.is-size-2(:label="tab_info.tab_name")
 
-    template(v-if="current_tab_info.key === 'history_index'")
-      the_history_row(v-for="row in history_records" :row="row")
+  template(v-if="current_tab_info.key === 'history_index'")
+    the_history_row(v-for="row in history_records" :row="row")
 
-    template(v-if="current_tab_info.key === 'clip_index'")
-      the_history_row(v-for="row in clip_records" :row="row")
-  debug_print
+  template(v-if="current_tab_info.key === 'clip_index'")
+    the_history_row(v-for="row in clip_records" :row="row")
 </template>
 
 <script>
@@ -148,12 +126,12 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_history
-  .index_layout
-    @extend %padding_top2
-    .main_tabs
-      a
-        padding-top: 1rem
-      .tab-content
-        padding: 0
-        padding-top: 0
+  @extend %padding_top2
+  .main_tabs
+    a
+      height: $actf_primary_header_height
+      padding: 0
+    .tab-content
+      padding: 0
+      padding-top: 0
 </style>

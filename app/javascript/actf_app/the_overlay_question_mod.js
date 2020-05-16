@@ -6,7 +6,7 @@ export default {
   },
 
   methods: {
-    current_question_set(question_id) {
+    overlay_question_set(question_id) {
       this.sound_play("click")
       this.http_get_command(this.app.info.put_path, { question_single_fetch: true, question_id: question_id }, e => {
         if (e.question) {

@@ -54,7 +54,7 @@ module FrontendScript
           {
             :label   => "画面",
             :key     => :debug_scene,
-            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, "履歴" => :history, },
+            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, "履歴" => :history, "詳細" => :overlay_question,},
             :type    => :select,
             :default => current_debug_scene,
           },
@@ -344,6 +344,27 @@ module FrontendScript
 
       if current_debug_scene == :history
         c.sysop_login_unless_logout
+      end
+
+      if current_debug_scene == :overlay_question
+        c.sysop_login_unless_logout
+
+        Actf::Question.destroy_all
+        user = Colosseum::User.sysop
+        question = user.actf_questions.create! do |e|
+          e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1"
+          e.moves_answers.build(moves_str: "G*4b")
+          e.moves_answers.build(moves_str: "G*5b")
+          e.moves_answers.build(moves_str: "G*6b")
+          e.time_limit_sec        = 60 * 3
+          e.difficulty_level      = 5
+          e.title                 = "(title)"
+          e.description           = "(description)"
+          e.hint_description      = "(hint_description)"
+          e.source_desc           = "(source_desc)"
+          e.other_twitter_account = "(other_twitter_account)"
+        end
+        info[:question_id] = question.id
       end
     end
   end
