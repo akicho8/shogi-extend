@@ -1,38 +1,38 @@
 <template lang="pug">
 .the_history.main_content
-  template(v-if="current_question")
-    .show_layout
-      .primary_header
-        b-icon.back_link_icon.is_clickable(icon="arrow-left" @click.native="board_close")
-        .center_title_block.has-text-weight-bold.has-text-centered
-          | {{current_question.title}}
-      shogi_player(
-        :run_mode="'play_mode'"
-        :kifu_body="`position sfen ${current_question.init_sfen}`"
-        :start_turn="0"
-        :key_event_capture="false"
-        :slider_show="true"
-        :controller_show="true"
-        :theme="'simple'"
-        :size="'default'"
-        :sound_effect="true"
-        :volume="0.5"
-        @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
-        )
-  template(v-else)
-    .index_layout
-      .primary_header
-        .has-text-weight-bold {{current_tab_info.top_nav_name}}
-      .secondary_header
-        b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
-          template(v-for="tab_info in TabInfo.values")
-            b-tab-item.is-size-2(:label="tab_info.tab_name")
+  //- template(v-if="overlay_question")
+  //-   .show_layout
+  //-     .primary_header
+  //-       b-icon.back_link_icon.is_clickable(icon="arrow-left" @click.native="board_close")
+  //-       .center_title_block.has-text-weight-bold.has-text-centered
+  //-         | {{overlay_question.title}}
+  //-     shogi_player(
+  //-       :run_mode="'play_mode'"
+  //-       :kifu_body="`position sfen ${overlay_question.init_sfen}`"
+  //-       :start_turn="0"
+  //-       :key_event_capture="false"
+  //-       :slider_show="true"
+  //-       :controller_show="true"
+  //-       :theme="'simple'"
+  //-       :size="'default'"
+  //-       :sound_effect="true"
+  //-       :volume="0.5"
+  //-       @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
+  //-       )
+  //- template(v-else)
+  .index_layout
+    .primary_header
+      .has-text-weight-bold {{current_tab_info.top_nav_name}}
+    .secondary_header
+      b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
+        template(v-for="tab_info in TabInfo.values")
+          b-tab-item.is-size-2(:label="tab_info.tab_name")
 
-      template(v-if="current_tab_info.key === 'history_index'")
-        the_history_row(v-for="row in history_records" :row="row")
+    template(v-if="current_tab_info.key === 'history_index'")
+      the_history_row(v-for="row in history_records" :row="row")
 
-      template(v-if="current_tab_info.key === 'clip_index'")
-        the_history_row(v-for="row in clip_records" :row="row")
+    template(v-if="current_tab_info.key === 'clip_index'")
+      the_history_row(v-for="row in clip_records" :row="row")
   debug_print
 </template>
 
@@ -72,7 +72,6 @@ export default {
   data() {
     return {
       tab_index: null,
-      current_question: null,
     }
   },
 
@@ -134,26 +133,6 @@ export default {
       })
     },
 
-    current_question_set(question_id) {
-      this.sound_play("click")
-      this.http_get_command(this.app.info.put_path, { question_single_fetch: true, question_id: question_id }, e => {
-        if (e.question) {
-          this.current_question = e.question
-        }
-      })
-    },
-
-    board_close() {
-      this.sound_play("click")
-      this.current_question = null
-    },
-
-    play_mode_advanced_moves_set(moves) {
-      if (this.current_question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
-        this.sound_play("o")
-        this.ok_notice("正解")
-      }
-    },
   },
 
   computed: {
@@ -177,21 +156,4 @@ export default {
       .tab-content
         padding: 0
         padding-top: 0
-  .show_layout
-    @extend %padding_top1
-    .primary_header
-      justify-content: space-between
-
-      // 余計なタグで囲まずアイコン自体の高さを100%にすることでタッチ可能エリアを最大にする
-      .back_link_icon
-        height: 100%
-        padding: 0 1.6rem
-        z-index: 1
-
-      // topを指定しなければ現在のY座標を保持する
-      .center_title_block
-        position: fixed
-        left: 0%
-        right: 0%
-        margin: auto
 </style>

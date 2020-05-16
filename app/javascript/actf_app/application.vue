@@ -1,17 +1,22 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  the_system_header(v-if="mode === 'lobby'")
   the_footer
-  the_lobby(:info="info" v-if="mode === 'lobby'")
-  the_lobby_message(:info="info" v-if="mode === 'lobby'")
-  the_matching(:info="info" v-if="mode === 'matching'")
-  the_room(:info="info" v-if="mode === 'room'")
-  the_room_message(:info="info" v-if="mode === 'room'")
-  the_result(:info="info" v-if="mode === 'result'")
-  the_room_message(:info="info" v-if="mode === 'result'")
-  the_builder(:info="info" v-if="mode === 'builder'")
-  the_ranking(v-if="mode === 'ranking'")
-  the_history(v-if="mode === 'history'")
+
+  the_overlay_question(v-if="overlay_question")
+
+  .switching_pages(v-show="!overlay_question")
+    the_system_header(v-if="mode === 'lobby'")
+    the_lobby(:info="info" v-if="mode === 'lobby'")
+    the_lobby_message(:info="info" v-if="mode === 'lobby'")
+    the_matching(:info="info" v-if="mode === 'matching'")
+    the_room(:info="info" v-if="mode === 'room'")
+    the_room_message(:info="info" v-if="mode === 'room'")
+    the_result(:info="info" v-if="mode === 'result'")
+    the_room_message(:info="info" v-if="mode === 'result'")
+    the_builder(:info="info" v-if="mode === 'builder'")
+    the_ranking(v-if="mode === 'ranking'")
+    the_history(v-if="mode === 'history'")
+
   debug_print(:grep="/./")
 </template>
 
@@ -20,28 +25,33 @@ const WAIT_SECOND = 1.5
 
 import consumer from "channels/consumer"
 
-import support from "./support.js"
-import the_store   from "./store.js"
+import support   from "./support.js"
+import the_store from "./store.js"
 
-import the_system_header        from "./the_system_header.vue"
-import the_footer        from "./the_footer.vue"
-import the_lobby         from "./the_lobby.vue"
-import the_lobby_message from "./the_lobby_message.vue"
-import the_matching      from "./the_matching.vue"
-import the_room          from "./the_room.vue"
-import the_room_message  from "./the_room_message.vue"
-import the_result        from "./the_result.vue"
-import the_builder       from "./the_builder.vue"
-import the_ranking       from "./the_ranking.vue"
-import the_history       from "./the_history.vue"
+import the_overlay_question_mod from "./the_overlay_question_mod.js"
+
+import the_overlay_question from "./the_overlay_question.vue"
+import the_system_header    from "./the_system_header.vue"
+import the_footer           from "./the_footer.vue"
+import the_lobby            from "./the_lobby.vue"
+import the_lobby_message    from "./the_lobby_message.vue"
+import the_matching         from "./the_matching.vue"
+import the_room             from "./the_room.vue"
+import the_room_message     from "./the_room_message.vue"
+import the_result           from "./the_result.vue"
+import the_builder          from "./the_builder.vue"
+import the_ranking          from "./the_ranking.vue"
+import the_history          from "./the_history.vue"
 
 export default {
   store: the_store,
   name: "actf_app",
   mixins: [
     support,
+    the_overlay_question_mod,
   ],
   components: {
+    the_overlay_question,
     the_system_header,
     the_footer,
     the_lobby,
@@ -397,6 +407,7 @@ export default {
         this.mode = "history"
       }
     },
+
   },
 
   computed: {
