@@ -29,6 +29,6 @@ export default {
 .the_history_vote
   .vote_block
     &.bad
-      margin-left: 1rem
+      margin-left: 1.24rem
     @extend %icon_with_counter
 </style>

@@ -29,8 +29,8 @@
               | {{row.question.source_desc}}
           .bottom_block.is-flex
             the_history_vote(:row="row")
-            .clip_block(@click="clip_handle(row, !row.clip_p)" :class="{'has-text-danger': row.clip_p}")
-              b-icon(:icon="row.clip_p ? 'heart' : 'heart-outline'")
+            .clip_block(@click="clip_handle(row, !row.clip_p)" :class="{'has-text-gold': row.clip_p}")
+              b-icon(:icon="row.clip_p ? 'star' : 'star-outline'")
               span.icon_counter
                 | {{row.question.clips_count}}
   debug_print
@@ -184,8 +184,8 @@ export default {
       padding-top: 0
 
   .row
-    padding-top: 0.3rem
-    padding-bottom: 0.3rem
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
 
     &.active
       background-color: change_color($warning, $lightness: 97%)
@@ -214,6 +214,6 @@ export default {
       .question_title
       .bottom_block
         .clip_block
-          margin-left: 2.0rem
+          margin-left: 2.4rem
           @extend %icon_with_counter
 </style>
