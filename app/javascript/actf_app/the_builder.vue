@@ -20,6 +20,7 @@
           :key_event_capture="false"
           :slider_show="true"
           :controller_show="true"
+          :setting_button_show="false"
           :theme="'simple'"
           :size="'default'"
           :sound_effect="false"

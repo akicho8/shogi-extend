@@ -26,7 +26,7 @@
         :run_mode="'play_mode'"
         :kifu_body="`position sfen ${$parent.current_quest_init_sfen}`"
         :summary_show="false"
-        :setting_button_show="development_p"
+        :setting_button_show="false"
         :size="'default'"
         :sound_effect="true"
         :volume="0.5"
