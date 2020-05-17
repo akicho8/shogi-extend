@@ -22,6 +22,7 @@ class CreateActf < ActiveRecord::Migration[6.0]
 
     create_table :actf_profiles do |t|
       t.belongs_to :user,                                    comment: "対戦者"
+      t.belongs_to :season,                                  comment: "期"
       t.integer :rating,           null: false, index: true, comment: "レーティング"
       t.integer :rating_last_diff, null: false, index: true, comment: "直近レーティング変化"
       t.integer :rating_max,       null: false, index: true, comment: "レーティング(最大)"
@@ -29,6 +30,14 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.integer :renpai_count,     null: false, index: true, comment: "連敗数"
       t.integer :rensho_max,       null: false, index: true, comment: "連勝数(最大)"
       t.integer :renpai_max,       null: false, index: true, comment: "連敗数(最大)"
+      t.integer :rebirth_count,    null: false, index: true, comment: "世代"
+      t.integer :generation,       null: false, index: true, comment: "世代"
+      t.timestamps
+    end
+
+    create_table :actf_seasons do |t|
+      t.string :name,        null: false, index: true, comment: "レーティング"
+      t.integer :generation, null: false, index: true, comment: "世代"
       t.timestamps
     end
 

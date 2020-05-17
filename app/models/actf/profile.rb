@@ -27,6 +27,9 @@ module Actf
   class Profile < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User"
 
+    scope :newest_order, -> { order(generation: :desc) }
+    scope :oldest_order, -> { order(generation: :asc)  }
+
     before_validation do
       self.rating ||= EloRating.rating_default
       self.rating_max ||= EloRating.rating_default
@@ -55,6 +58,12 @@ module Actf
       if renpai_max < renpai_count
         self.renpai_max = renpai_count
       end
+    end
+
+    before_validation do
+      self.season ||= Season.latest
+      self.generation ||= season.generation
+      self.rebirth_count ||= user.actf_profiles.count.next
     end
   end
 end

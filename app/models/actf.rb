@@ -12,6 +12,8 @@ module Actf
 
     AnsResult.setup(options)
 
+    Season.setup(options)
+
     if Rails.env.development?
     end
   end

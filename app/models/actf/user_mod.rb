@@ -21,7 +21,8 @@ module Actf
       end
 
       # プロフィール
-      has_one :actf_profile, class_name: "Actf::Profile", dependent: :destroy
+      has_one :actf_profile, -> { newest_order }, class_name: "Actf::Profile", dependent: :destroy
+      has_many :actf_profiles, class_name: "Actf::Profile", dependent: :destroy
       delegate :rating, :rensho_count, :rensho_max, to: :actf_profile
       after_create do
         actf_profile || create_actf_profile!
