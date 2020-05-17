@@ -473,6 +473,8 @@ export default {
       padding-top: 0.75rem
     .tag
       margin-left: 0.5rem
+      vertical-align: 20%       // 小さくしたぶんだけ上に上げる
+      font-size: 0.6rem         // 小さくしないと下の線がずれる
 
   // この手順を正解にする
   .konotejunsiikai
