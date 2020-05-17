@@ -3,11 +3,11 @@
   .primary_header
     b-icon.back_link_icon.is_clickable(icon="arrow-left" @click.native="app.board_close")
     .center_title_block.has-text-weight-bold.has-text-centered
-      | {{app.overlay_info.question.title}}
+      | {{app.overlay_record.question.title}}
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       b-tab-item(label="初期配置")
-      template(v-for="(e, i) in app.overlay_info.question.moves_answers")
+      template(v-for="(e, i) in app.overlay_record.question.moves_answers")
         b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
 
   .sp_container
@@ -27,7 +27,7 @@
       )
 
   .vote_container.is-flex
-    the_history_row_vote(:row="app.overlay_info")
+    the_history_row_vote(:row="app.overlay_record")
 </template>
 
 <script>
@@ -53,19 +53,19 @@ export default {
     },
 
     play_mode_advanced_moves_set(moves) {
-      if (this.app.overlay_info.question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
+      if (this.app.overlay_record.question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
         this.sound_play("o")
         this.ok_notice("正解")
       }
     },
 
     answer_sfen_for(index) {
-      return [this.init_sfen, "moves", this.app.overlay_info.question.moves_answers[index].moves_str].join(" ")
+      return [this.init_sfen, "moves", this.app.overlay_record.question.moves_answers[index].moves_str].join(" ")
     },
   },
   computed: {
     init_sfen() {
-      return ["position", "sfen", this.app.overlay_info.question.init_sfen].join(" ")
+      return ["position", "sfen", this.app.overlay_record.question.init_sfen].join(" ")
     },
     selected_sfen() {
       if (this.tab_index === 0) {

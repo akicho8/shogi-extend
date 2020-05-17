@@ -54,7 +54,7 @@ module FrontendScript
           {
             :label   => "画面",
             :key     => :debug_scene,
-            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, "履歴" => :history, "詳細" => :overlay_info,},
+            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, "履歴" => :history, "詳細" => :overlay_record,},
             :type    => :select,
             :default => current_debug_scene,
           },
@@ -108,7 +108,7 @@ module FrontendScript
         retv = {}
         retv[:question] = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}})
         retv.update(current_user.good_bad_clip_flags_for(question))
-        return { overlay_info: retv }
+        return { overlay_record: retv }
       end
 
       # params = {
@@ -347,7 +347,7 @@ module FrontendScript
         c.sysop_login_unless_logout
       end
 
-      if current_debug_scene == :overlay_info
+      if current_debug_scene == :overlay_record
         c.sysop_login_unless_logout
 
         # Actf::Question.destroy_all

@@ -1,8 +1,8 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  the_question_show(v-if="overlay_info")
+  the_question_show(v-if="overlay_record")
 
-  .switching_pages(v-show="!overlay_info")
+  .switching_pages(v-show="!overlay_record")
     the_footer
     the_system_header(v-if="mode === 'lobby'")
     the_lobby(:info="info" v-if="mode === 'lobby'")
@@ -113,8 +113,8 @@ export default {
       if (this.info.debug_scene === "history") {
         this.history_handle()
       }
-      if (this.info.debug_scene === "overlay_info") {
-        this.overlay_info_set(this.info.question_id)
+      if (this.info.debug_scene === "overlay_record") {
+        this.overlay_record_set(this.info.question_id)
       }
     }
 

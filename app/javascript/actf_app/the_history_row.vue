@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_history_row.is-flex(@click="app.overlay_info_set(row.question.id)")
+.the_history_row.is-flex(@click="app.overlay_record_set(row.question.id)")
   .left_block.is-flex
     .ans_result(v-if="row.ans_result")
       template(v-if="row.ans_result.key === 'correct'")

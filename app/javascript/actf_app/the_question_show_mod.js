@@ -1,23 +1,23 @@
 export default {
   data() {
     return {
-      overlay_info: null,
+      overlay_record: null,
     }
   },
 
   methods: {
-    overlay_info_set(question_id) {
+    overlay_record_set(question_id) {
       this.sound_play("click")
       this.http_get_command(this.app.info.put_path, { question_single_fetch: true, question_id: question_id }, e => {
-        if (e.overlay_info) {
-          this.overlay_info = e.overlay_info
+        if (e.overlay_record) {
+          this.overlay_record = e.overlay_record
         }
       })
     },
 
     board_close() {
       this.sound_play("click")
-      this.overlay_info = null
+      this.overlay_record = null
     },
   },
 }
