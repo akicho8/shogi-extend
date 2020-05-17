@@ -10,7 +10,8 @@
     :data="$parent.questions"
     :mobile-cards="false"
     hoverable
-    narrowed
+    :narrowed="false"
+    @click="row => app.overlay_record_set(row.id)"
 
     paginated
     backend-pagination
@@ -26,21 +27,28 @@
     @sort="$parent.sort_handle"
   )
     template(slot-scope="props")
+      //- b-table-column(label="")
+      //-   a(@click="app.overlay_record_set(props.row.id)")
+      //-     b-icon(icon="eye-outline" size="is-small")
+
       b-table-column(field="id"               :label="ColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
-      b-table-column(field="title"            :label="ColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")            {{props.row.title || '？'}}
+      b-table-column(field="title"            :label="ColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
+        a {{props.row.title || '？'}}
       b-table-column(field="difficulty_level" :label="ColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
       b-table-column(field="o_count"          :label="ColumnInfo.fetch('o_count').short_name"          sortable numeric :visible="visible_hash.o_count")          {{props.row.o_count}}
       b-table-column(field="x_count"          :label="ColumnInfo.fetch('x_count').short_name"          sortable numeric :visible="visible_hash.x_count")          {{props.row.x_count}}
       b-table-column(field="histories_count"  :label="ColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
-      b-table-column(field="bad_marks_count"  :label="ColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
       b-table-column(field="good_marks_count" :label="ColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
+      b-table-column(field="bad_marks_count"  :label="ColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
       b-table-column(field="clips_count"      :label="ColumnInfo.fetch('clips_count').short_name"      sortable numeric :visible="visible_hash.clips_count")      {{props.row.clips_count}}
       b-table-column(field="updated_at"       :label="ColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
       b-table-column(label="操作")
-        .buttons.are-small
-          a.button.is-small(@click="$parent.question_edit_of(props.row)") 編集
-          a.button.is-small(@click="app.overlay_record_set(props.row.id)") 表示
+        a(@click.stop="$parent.question_edit_of(props.row)")
+          b-icon(icon="pencil-outline" size="is-small")
+        //- .buttons.are-small
+        //-   a.button.is-small(@click="$parent.question_edit_of(props.row)") 編集
+        //-   a.button.is-small(@click="app.overlay_record_set(props.row.id)") 表示
 
     template(slot="empty")
       section.section.is-unselectable
@@ -60,16 +68,16 @@ import MemoryRecord from 'js-memory-record'
 class ColumnInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "id",               name: "ID",       short_name: "ID",   visible: true },
-      { key: "title",            name: "タイトル", short_name: "題名", visible: true },
-      { key: "difficulty_level", name: "難易度",   short_name: "難",   visible: true },
-      { key: "updated_at",       name: "更新日時", short_name: "更新", visible: true },
-      { key: "o_count",          name: "正解数",   short_name: "正解", visible: true },
-      { key: "x_count",          name: "誤答数",   short_name: "誤答", visible: true },
-      { key: "histories_count",  name: "履歴",     short_name: "履歴", visible: true },
-      { key: "bad_marks_count",  name: "低評価",   short_name: "低評", visible: true },
-      { key: "good_marks_count", name: "高評価",   short_name: "高評", visible: true },
-      { key: "clips_count",      name: "保存数",   short_name: "保存", visible: true },
+      { key: "id",               name: "ID",         short_name: "ID",       visible: true },
+      { key: "title",            name: "タイトル",   short_name: "タイトル", visible: true },
+      { key: "difficulty_level", name: "難易度",     short_name: "難",       visible: true },
+      { key: "o_count",          name: "正解数",     short_name: "正解",     visible: true },
+      { key: "x_count",          name: "誤答数",     short_name: "誤答",     visible: true },
+      { key: "histories_count",  name: "履歴",       short_name: "履歴",     visible: true },
+      { key: "good_marks_count", name: "高評価",     short_name: "高評",     visible: true },
+      { key: "bad_marks_count",  name: "低評価",     short_name: "低評",     visible: true },
+      { key: "clips_count",      name: "お気に入り", short_name: "お気",     visible: true },
+      { key: "updated_at",       name: "更新日時",   short_name: "更新",     visible: true },
     ]
   }
 }
