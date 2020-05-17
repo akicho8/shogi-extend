@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_overlay_info.main_content
+.the_question_show.main_content
   .primary_header
     b-icon.back_link_icon.is_clickable(icon="arrow-left" @click.native="app.board_close")
     .center_title_block.has-text-weight-bold.has-text-centered
@@ -35,7 +35,7 @@ import support from "./support.js"
 import the_history_row_vote from "./the_history_row_vote.vue"
 
 export default {
-  name: "the_overlay_info",
+  name: "the_question_show",
   mixins: [
     support,
   ],
@@ -80,7 +80,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_overlay_info.main_content
+.the_question_show.main_content
   @extend %padding_top2
   .primary_header
     justify-content: space-between

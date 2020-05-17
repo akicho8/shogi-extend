@@ -1,6 +1,6 @@
 <template lang="pug">
 .actf_app(:class="mode")
-  the_overlay_info(v-if="overlay_info")
+  the_question_show(v-if="overlay_info")
 
   .switching_pages(v-show="!overlay_info")
     the_footer
@@ -27,9 +27,9 @@ import consumer from "channels/consumer"
 import support   from "./support.js"
 import the_store from "./store.js"
 
-import the_overlay_info_mod from "./the_overlay_info_mod.js"
+import the_question_show_mod from "./the_question_show_mod.js"
 
-import the_overlay_info from "./the_overlay_info.vue"
+import the_question_show from "./the_question_show.vue"
 import the_system_header    from "./the_system_header.vue"
 import the_footer           from "./the_footer.vue"
 import the_lobby            from "./the_lobby.vue"
@@ -47,10 +47,10 @@ export default {
   name: "actf_app",
   mixins: [
     support,
-    the_overlay_info_mod,
+    the_question_show_mod,
   ],
   components: {
-    the_overlay_info,
+    the_question_show,
     the_system_header,
     the_footer,
     the_lobby,

@@ -1,9 +1,9 @@
 <template lang="pug">
-.the_footer
-  b-button(icon-left="home" @click="app.lobby_handle" :type="{'is-primary': app.mode === 'lobby'}")
-  b-button(icon-left="crown" @click="app.ranking_handle" :type="{'is-primary': app.mode === 'ranking'}")
-  b-button(icon-left="menu" @click="app.history_handle" :type="{'is-primary': app.mode === 'history'}")
-  b-button(icon-left="wrench" @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}")
+.the_footer.is-flex
+  b-button(icon-left="home-outline"   @click="app.lobby_handle"   :type="{'is-primary': app.mode === 'lobby'}"   )
+  b-button(icon-left="crown-outline"  @click="app.ranking_handle" :type="{'is-primary': app.mode === 'ranking'}" )
+  b-button(icon-left="note-outline"   @click="app.history_handle" :type="{'is-primary': app.mode === 'history'}" )
+  b-button(icon-left="wrench-outline" @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}" )
 
   b-dropdown(position="is-top-left")
     b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
@@ -40,7 +40,6 @@ export default {
 
   padding: 0 16px
 
-  display: flex
   justify-content: space-between
   align-items: center
 </style>
