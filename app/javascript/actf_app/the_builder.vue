@@ -8,14 +8,14 @@
 
   template(v-if="question")
     .primary_header
-      .header_center_title 新規作成
+      .header_center_title {{question_new_record_p ? '新規' : '編集'}}
       b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
 
     b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
       b-tab-item(label="配置")
         shogi_player(
           :run_mode="'edit_mode'"
-          :kifu_body="position_sfen_add(question.fixed_init_sfen)"
+          :kifu_body="position_sfen_add(fixed_init_sfen)"
           :start_turn="-1"
           :key_event_capture="false"
           :slider_show="true"
@@ -110,6 +110,7 @@ export default {
       sp_run_mode: null,
       edit_tab_index: null,
       question: null,
+      fixed_init_sfen: null,
       time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
       answer_tab_index: null,   // 表示している正解タブの位置
 
@@ -282,13 +283,8 @@ export default {
           this.warning_notice(e.error_message)
         }
         if (e.question) {
-          // 別に更新する必要はないけどサーバー側から他の情報が追加されているかもしれない
           this.question = e.question
-
-          // alert(this.time_limit_clock)
-          // dayjs("2000-01-01T00:03:00+09:00").toDate()
-          // this.time_limit_clock = dayjs(this.time_limit_clock).toDate()
-          // console.log(this.time_limit_clock)
+          
           this.time_limit_clock_set()
           this.ok_notice(`${before_crete_or_upate_name}しました`)
         }
@@ -320,7 +316,8 @@ export default {
       this.question = row
 
       // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
-      this.$set(this.question, "fixed_init_sfen", this.question.init_sfen)
+      this.fixed_init_sfen = this.question.init_sfen
+      // this.$set(this.question, "fixed_init_sfen", this.question.init_sfen)
 
       this.time_limit_clock_set()
 
@@ -359,9 +356,9 @@ export default {
         sort_order:         this.sort_order,
         sort_order_default: this.sort_order_default,
       }, e => {
-        if (e.error_message) {
-          this.warning_notice(e.error_message)
-        }
+        // if (e.error_message) {
+        //   this.warning_notice(e.error_message)
+        // }
         if (e.questions) {
           this.questions   = e.questions
 
@@ -434,9 +431,8 @@ export default {
     },
 
     question_new_record_p() {
-      if (this.question) {
-        return this.question.id == null
-      }
+      this.__assert(this.question, "this.question != null")
+      return this.question.id == null
     },
 
     // candidate_columns() {

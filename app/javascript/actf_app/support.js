@@ -29,10 +29,12 @@ export default {
     },
 
     position_sfen_remove(sfen) {
+      this.__assert(sfen != null, "sfen != null")
       return sfen.replace(POSITION_SFEN_PREFIX, "")
     },
 
     position_sfen_add(sfen) {
+      this.__assert(sfen != null, "sfen != null")
       return POSITION_SFEN_PREFIX + sfen
     },
 
