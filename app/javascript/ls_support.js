@@ -60,9 +60,14 @@ export default {
       this.$_ls_set_vars(this.lst_load(this.ls_key))
     },
 
-    $_ls_set_vars(v) {
-      this.$_ls_data_keys.forEach(e => {
-        this[e] = (v[e] != null) ? v[e] : this.ls_data[e]
+    $_ls_set_vars(hash) {
+      this.$_ls_data_keys.forEach(key => {
+        const val = hash[key]
+        if (val != null) {
+          this[key] = val
+        } else {
+          this[key] = this.ls_data[key] // 初期値設定
+        }
       })
     },
 
