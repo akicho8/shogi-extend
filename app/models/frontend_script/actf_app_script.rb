@@ -76,16 +76,45 @@ module FrontendScript
         return retv
       end
 
+      # http://localhost:3000/script/actf-app.json?ranking_fetch=true&ranking_key=rating
       if params[:ranking_fetch]
-        s = Colosseum::User.all
-        s = s.joins(:actf_profile).order(Actf::Profile.arel_table[params[:ranking_key]].desc).order(:created_at)
-        s = s.limit(RANKING_FETCH_MAX)
+        ranking_key = params[:ranking_key]
+
+        base_scope = Colosseum::User.all
+        base_scope = base_scope.joins(:actf_profile).order(Actf::Profile.arel_table[ranking_key].desc).order(:created_at)
+
+        users = base_scope.limit(RANKING_FETCH_MAX)
+
+        if Rails.env.development?
+          users = users.shuffle.take(5)
+        end
+
+        # :rating, :rensho_count, :rensho_max を全部渡す必要ない → 渡して表示したほうがいい？？
+        user_as_json_params = { only: [:id, :name], methods: [:avatar_path, ranking_key] }
 
         retv = {}
-        # retv = {**page_info(s), **sort_info}
-        retv[:ranking_key] = params[:ranking_key]
-        retv[:rank_records] = s.shuffle.as_json(only: [:id, :name], methods: [:avatar_path, :rating, :rensho_count, :rensho_max])
-        return retv
+        retv[:ranking_key] = ranking_key
+        retv[:user_rank_in] = users.any? { |e| e == current_user }
+
+        if true
+          # SELECT COUNT(*)+1 as rank FROM users WHERE score > #{score}
+          score = current_user.actf_profile.public_send(ranking_key)
+          s = Colosseum::User.all
+          s = s.joins(:actf_profile).where(Actf::Profile.arel_table[ranking_key].gt(score))
+          retv[:user_rank_record] = {
+            rank: s.count + 1,
+            user: current_user.as_json(user_as_json_params),
+          }
+        end
+
+        retv[:rank_records] = users.collect.with_index(1) { |user, rank|
+          {
+            rank: rank,
+            user: user.as_json(user_as_json_params),
+          }
+        }
+
+        return { rank_data: retv }
       end
 
       if params[:history_records_fetch]

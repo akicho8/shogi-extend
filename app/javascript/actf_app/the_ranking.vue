@@ -6,22 +6,13 @@
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")
         b-tab-item.is-size-2(:label="tab_info.name")
-  .columns.is-centered.is-marginless
-    .column.is-paddingless
-      template(v-for="(row, i) in rank_records_hash[current_tab_info.key]")
-        .row.is-flex(:class="{active: row.id === app.current_user.id}")
-          .rank_block
-            .rank.is-size-5.has-text-weight-bold.has-text-right.has-text-primary
-              | {{i + 1}}
-          figure.image.is-48x48
-            img.is-rounded(:src="row.avatar_path")
-          .name_with_rating
-            .name.has-text-weight-bold
-              | {{row.name}}
-            .rating
-              | {{row[current_tab_info.key]}}
-              span.unit(v-if="current_tab_info.unit")
-                | {{current_tab_info.unit}}
+
+  template(v-if="rank_data")
+    template(v-for="row in rank_data.rank_records")
+      the_ranking_row(:row="row")
+
+    template(v-if="!rank_data.user_rank_in")
+      the_ranking_row(:row="rank_data.user_rank_record")
 </template>
 
 <script>
@@ -42,6 +33,7 @@ class TabInfo extends MemoryRecord {
 }
 
 import support from "./support.js"
+import the_ranking_row from "./the_ranking_row.vue"
 
 export default {
   name: "the_ranking",
@@ -49,13 +41,14 @@ export default {
     support,
   ],
   components: {
+    the_ranking_row,
   },
   props: {
   },
   data() {
     return {
       tab_index: null,
-      rank_records_hash: {},
+      rank_data: null,
     }
   },
 
@@ -99,14 +92,15 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     fetch_handle() {
-      if (this.rank_records_hash[this.current_tab_info.key]) {
-      } else {
-        this.http_get_command(this.app.info.put_path, { ranking_fetch: true, ranking_key: this.current_tab_info.key }, e => {
-          if (e.rank_records) {
-            this.$set(this.rank_records_hash, e.ranking_key, e.rank_records)
-          }
-        })
-      }
+      // if (this.rank_records_hash[this.current_tab_info.key]) {
+      // } else {
+      this.http_get_command(this.app.info.put_path, { ranking_fetch: true, ranking_key: this.current_tab_info.key }, e => {
+        if (e.rank_data) {
+          // this.$set(this.rank_records_hash, e.ranking_key, e.rank_records)
+          this.rank_data = e.rank_data
+        }
+      })
+      // }
     },
   },
 
@@ -116,7 +110,11 @@ export default {
     current_tab_info() {
       return TabInfo.fetch(this.tab_index)
     },
-
+    // current_rank_records() {
+    //   return this.rank_records_hash[this.current_tab_info.key]
+    // },
+    // current_user_ranking_record() {
+    // },
   },
 }
 </script>
