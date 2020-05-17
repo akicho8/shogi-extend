@@ -54,6 +54,11 @@ export default {
     delay(seconds, block) {
       setTimeout(block, 1000 * seconds)
     },
+
+    // { xxx: true, yyy: false } 形式に変換
+    as_visible_hash(v) {
+      return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
+    },
   },
   computed: {
     ...Vuex.mapState([
