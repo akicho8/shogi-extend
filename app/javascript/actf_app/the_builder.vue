@@ -1,91 +1,88 @@
 <template lang="pug">
 .the_builder
-  //- a.delete.is-large(@click="$parent.lobby_handle")
-  .columns.is-centered
-    .column
+  template(v-if="!question")
+    .primary_header
+      .header_center_title.has-text-weight-bold 問題一覧
+      b-icon.header_link_icon.rjust(icon="plus" @click.native="builder_new_handle")
+    the_builder_index
+
+  template(v-if="question")
+    .primary_header
+      .header_center_title.has-text-weight-bold 新規作成
+
+    //- b-button.has-text-weight-bold(@click="builder_new_handle" :type="{'is-primary': (question && question_new_record_p)}") 新規作成
+
+    //- b-field.switch_grouped_container(grouped position="is-centered")
+    //-   .control
+    //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
+
+    //- template(v-for="(e, i) in question.moves_answers")
+    //-   b-tag
+    //-     | {{i + 1}}
+
+    //- b-field(position="is-centered" grouped)
+    //-   p.control
+    //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 配置
+    //-   p.control
+    //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 正解
+    //-   p.control
+    //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
+    //-   b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
+
+    //- b-field(position="is-centered")
+    //-   b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
+    //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 正解
+
+    b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
+      b-tab-item(label="配置")
+        shogi_player(
+          :run_mode="'edit_mode'"
+          :kifu_body="position_sfen_add(question.fixed_init_sfen)"
+          :start_turn="-1"
+          :key_event_capture="false"
+          :slider_show="true"
+          :controller_show="true"
+          :theme="'simple'"
+          :size="'default'"
+          :sound_effect="false"
+          :volume="0.5"
+          @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
+          )
+      b-tab-item
+        template(slot="header")
+          span
+            | 正解
+            b-tag(rounded) {{question.moves_answers.length}}
+        the_builder_play(ref="the_builder_play")
+
+      b-tab-item(label="情報")
+        the_builder_form
+
+      b-tab-item
+        template(slot="header")
+          span
+            | 検証
+            b-tag(rounded) {{valid_count}}
+
+        shogi_player(
+          :run_mode="'play_mode'"
+          :kifu_body="`position sfen ${question.init_sfen}`"
+          :start_turn="0"
+          :key_event_capture="false"
+          :slider_show="true"
+          :controller_show="true"
+          :theme="'simple'"
+          :size="'default'"
+          :sound_effect="true"
+          :volume="0.5"
+          @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
+          )
+
+    hr
+    .save_container
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="builder_index_handle" :type="{'is-primary': !question}") 問題一覧
-        b-button.has-text-weight-bold(@click="builder_new_handle" :type="{'is-primary': (question && question_new_record_p)}") 新規作成
-
-      template(v-if="!question")
-        the_builder_index
-
-      template(v-if="question")
-        //- b-field.switch_grouped_container(grouped position="is-centered")
-        //-   .control
-        //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
-
-        //- template(v-for="(e, i) in question.moves_answers")
-        //-   b-tag
-        //-     | {{i + 1}}
-
-        //- b-field(position="is-centered" grouped)
-        //-   p.control
-        //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 配置
-        //-   p.control
-        //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 正解
-        //-   p.control
-        //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
-        //-   b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
-
-        //- b-field(position="is-centered")
-        //-   b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
-        //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 正解
-
-        b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
-          b-tab-item(label="配置")
-            shogi_player(
-              :run_mode="'edit_mode'"
-              :kifu_body="position_sfen_add(question.fixed_init_sfen)"
-              :start_turn="-1"
-              :key_event_capture="false"
-              :slider_show="true"
-              :controller_show="true"
-              :theme="'simple'"
-              :size="'default'"
-              :sound_effect="false"
-              :volume="0.5"
-              @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
-              )
-          b-tab-item
-            template(slot="header")
-              span
-                | 正解
-                b-tag(rounded) {{question.moves_answers.length}}
-            the_builder_play(ref="the_builder_play")
-
-          b-tab-item(label="情報")
-            the_builder_form
-
-          b-tab-item
-            template(slot="header")
-              span
-                | 検証
-                b-tag(rounded) {{valid_count}}
-
-            shogi_player(
-              :run_mode="'play_mode'"
-              :kifu_body="`position sfen ${question.init_sfen}`"
-              :start_turn="0"
-              :key_event_capture="false"
-              :slider_show="true"
-              :controller_show="true"
-              :theme="'simple'"
-              :size="'default'"
-              :sound_effect="true"
-              :volume="0.5"
-              @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
-              )
-
-        hr
-        .save_container
-          .buttons.is-centered
-            b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
-            //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
-
-  .columns(v-if="development_p")
-    .column
-      debug_print
+        b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
+        //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
 </template>
 
 <script>
@@ -481,6 +478,10 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_builder
+  @extend %padding_top_for_primary_header
+  .primary_header
+    justify-content: space-between
+
   //////////////////////////////////////////////////////////////////////////////// 編集
 
   // position: relative

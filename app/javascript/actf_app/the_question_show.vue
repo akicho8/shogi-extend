@@ -1,9 +1,9 @@
 <template lang="pug">
-.the_question_show.main_content
+.the_question_show
   .primary_header
-    b-icon.back_link_icon.is_clickable(icon="arrow-left" @click.native="app.board_close")
-    .center_title_block.has-text-weight-bold.has-text-centered
+    .header_center_title.has-text-weight-bold
       | {{app.overlay_record.question.title}}
+    b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="app.board_close")
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       b-tab-item(label="初期配置")
@@ -80,23 +80,10 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_question_show.main_content
-  @extend %padding_top2
+.the_question_show
+  @extend %padding_top_for_secondary_header
   .primary_header
     justify-content: space-between
-
-    // 余計なタグで囲まずアイコン自体の高さを100%にすることでタッチ可能エリアを最大にする
-    .back_link_icon
-      height: 100%
-      padding: 0 1.6rem
-      z-index: 1
-
-    // topを指定しなければ現在のY座標を保持する
-    .center_title_block
-      position: fixed
-      left: 0%
-      right: 0%
-      margin: auto
 
   .secondary_header
     .main_tabs
@@ -105,7 +92,6 @@ export default {
         padding: 0
       .tab-content
         padding: 0
-        padding-top: 0
 
   .sp_container
     margin-top: 1.5rem

@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_lobby.main_content
+.the_lobby
   .primary_header
     .user_info_block.is-flex
       .image
@@ -53,7 +53,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_lobby
-  @extend %padding_top1
+  @extend %padding_top_for_primary_header
 
   .primary_header
     .user_info_block

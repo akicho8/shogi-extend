@@ -1,7 +1,7 @@
 <template lang="pug">
-.the_history.main_content
+.the_history
   .primary_header
-    .has-text-weight-bold {{current_tab_info.top_nav_name}}
+    .header_center_title.has-text-weight-bold {{current_tab_info.top_nav_name}}
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")
@@ -91,12 +91,11 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_history
-  @extend %padding_top2
+  @extend %padding_top_for_secondary_header
   .main_tabs
     a
       height: $actf_primary_header_height
       padding: 0
     .tab-content
       padding: 0
-      padding-top: 0
 </style>

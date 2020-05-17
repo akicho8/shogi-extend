@@ -1,6 +1,7 @@
 <template lang="pug">
-.the_ranking.main_content
+.the_ranking
   .primary_header
+    .header_center_title.has-text-weight-bold ランキング
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")
@@ -123,14 +124,15 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_ranking
-  @extend %padding_top2
+  @extend %padding_top_for_secondary_header
 
+  // 共通化する
   .main_tabs
     a
-      padding-top: 1rem
+      height: $actf_primary_header_height
+      padding: 0
     .tab-content
       padding: 0
-      padding-top: 0
 
   .row
     padding-top: 1rem
