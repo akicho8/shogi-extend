@@ -84,9 +84,9 @@ class EditTabInfo extends MemoryRecord {
 }
 
 import support from "./support.js"
-import the_builder_index from "./the_builder_index"
-import the_builder_play from "./the_builder_play"
-import the_builder_form from "./the_builder_form"
+import the_builder_index from "./the_builder_index.vue"
+import the_builder_play from "./the_builder_play.vue"
+import the_builder_form from "./the_builder_form.vue"
 
 export default {
   name: "the_builder",
