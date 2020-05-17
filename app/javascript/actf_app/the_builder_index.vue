@@ -2,7 +2,7 @@
 .the_builder_index
   b-field.visible_toggle_checkboxes(grouped group-multiline)
     .control(v-for="e in ColumnInfo.values")
-      b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="e => sound_play('click')")
+      b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
         | {{e.name}}
 
   b-table.index_table(
@@ -68,16 +68,16 @@ import MemoryRecord from 'js-memory-record'
 class ColumnInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "id",               name: "ID",         short_name: "ID",       visible: true },
-      { key: "title",            name: "タイトル",   short_name: "タイトル", visible: true },
-      { key: "difficulty_level", name: "難易度",     short_name: "難",       visible: true },
-      { key: "o_count",          name: "正解数",     short_name: "正解",     visible: true },
-      { key: "x_count",          name: "誤答数",     short_name: "誤答",     visible: true },
-      { key: "histories_count",  name: "履歴",       short_name: "履歴",     visible: true },
-      { key: "good_marks_count", name: "高評価",     short_name: "高評",     visible: true },
-      { key: "bad_marks_count",  name: "低評価",     short_name: "低評",     visible: true },
-      { key: "clips_count",      name: "お気に入り", short_name: "お気",     visible: true },
-      { key: "updated_at",       name: "更新日時",   short_name: "更新",     visible: true },
+      { key: "id",               name: "ID",         short_name: "ID",       visible: true,  },
+      { key: "title",            name: "タイトル",   short_name: "タイトル", visible: true,  },
+      { key: "difficulty_level", name: "難易度",     short_name: "難",       visible: false, },
+      { key: "o_count",          name: "正解数",     short_name: "正解",     visible: false, },
+      { key: "x_count",          name: "誤答数",     short_name: "誤答",     visible: false, },
+      { key: "histories_count",  name: "履歴",       short_name: "履歴",     visible: false, },
+      { key: "good_marks_count", name: "高評価",     short_name: "高評",     visible: true,  },
+      { key: "bad_marks_count",  name: "低評価",     short_name: "低評",     visible: true,  },
+      { key: "clips_count",      name: "お気に入り", short_name: "お気",     visible: false, },
+      { key: "updated_at",       name: "更新日時",   short_name: "更新",     visible: true,  },
     ]
   }
 }
@@ -95,14 +95,17 @@ export default {
   },
 
   mounted() {
+    // localStorage をクリア
     // this.$_ls_reset()
   },
 
   methods: {
-    // { xxx: true, yyy: false } 形式に変換
-    as_visible_hash(v) {
-      return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
-    },
+    cb_input_handle(column, bool) {
+      this.sound_play('click')
+      if (bool) {
+        this.talk(column.name, {rate: 1.5})
+      }
+    }
   },
 
   computed: {
