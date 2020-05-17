@@ -2,7 +2,7 @@
 .the_builder_play
   shogi_player(
     :run_mode="'play_mode'"
-    :kifu_body="`position sfen ${$parent.$parent.$parent.question.init_sfen}`"
+    :kifu_body="position_sfen_add($parent.$parent.$parent.question.init_sfen)"
     :start_turn="0"
     :key_event_capture="false"
     :slider_show="true"
