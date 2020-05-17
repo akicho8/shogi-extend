@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_ranking
   .primary_header
-    .header_center_title.has-text-weight-bold ランキング
+    .header_center_title ランキング
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")

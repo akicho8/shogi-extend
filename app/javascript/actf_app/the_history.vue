@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_history
   .primary_header
-    .header_center_title.has-text-weight-bold {{current_tab_info.top_nav_name}}
+    .header_center_title {{current_tab_info.top_nav_name}}
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")

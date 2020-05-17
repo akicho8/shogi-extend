@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_question_show
   .primary_header
-    .header_center_title.has-text-weight-bold
+    .header_center_title
       | {{app.overlay_record.question.title}}
     b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="app.board_close")
   .secondary_header

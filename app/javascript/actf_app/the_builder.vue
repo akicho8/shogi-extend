@@ -2,36 +2,14 @@
 .the_builder
   template(v-if="!question")
     .primary_header
-      .header_center_title.has-text-weight-bold 問題一覧
+      .header_center_title 問題一覧
       b-icon.header_link_icon.rjust(icon="plus" @click.native="builder_new_handle")
     the_builder_index
 
   template(v-if="question")
     .primary_header
-      .header_center_title.has-text-weight-bold 新規作成
-
-    //- b-button.has-text-weight-bold(@click="builder_new_handle" :type="{'is-primary': (question && question_new_record_p)}") 新規作成
-
-    //- b-field.switch_grouped_container(grouped position="is-centered")
-    //-   .control
-    //-     b-switch(v-model="sp_run_mode" true-value="edit_mode" false-value="play_mode") 編集
-
-    //- template(v-for="(e, i) in question.moves_answers")
-    //-   b-tag
-    //-     | {{i + 1}}
-
-    //- b-field(position="is-centered" grouped)
-    //-   p.control
-    //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 配置
-    //-   p.control
-    //-     b-button(@click="play_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 正解
-    //-   p.control
-    //-     b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
-    //-   b-button(@click="edit_mode_handle" type="{'is-primary': sp_run_mode === 'edit_mode'") 情報
-
-    //- b-field(position="is-centered")
-    //-   b-radio-button(v-model="sp_run_mode" native-value="edit_mode" @click.native="edit_mode_handle") 配置
-    //-   b-radio-button(v-model="sp_run_mode" native-value="play_mode" @click.native="play_mode_handle") 正解
+      .header_center_title 新規作成
+      b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
 
     b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
       b-tab-item(label="配置")
