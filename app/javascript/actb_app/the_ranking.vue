@@ -7,12 +7,12 @@
       template(v-for="tab_info in TabInfo.values")
         b-tab-item.is-size-2(:label="tab_info.name")
 
-  template(v-if="rank_data")
+  .the_ranking_rows(v-if="rank_data")
     template(v-for="row in rank_data.rank_records")
       the_ranking_row(:row="row")
 
-    template(v-if="!rank_data.user_rank_in")
-      the_ranking_row(:row="rank_data.user_rank_record")
+    template(v-if="!rank_data.user_rank_in || true")
+      the_ranking_row.current_user_rank_record(:row="rank_data.current_user_rank_record")
 </template>
 
 <script>
@@ -132,30 +132,6 @@ export default {
     .tab-content
       padding: 0
 
-  .row
-    padding-top: 1rem
-    padding-bottom: 0.7rem
-
-    &.active
-      background-color: change_color($warning, $lightness: 97%)
-
-    &:not(:first-child)
-      border-top: 1px solid $grey-lighter
-
-    justify-content: flex-start
-    align-items: center
-
-    .rank_block
-      min-width: 3rem
-    .image
-      margin-left: 1rem
-      img
-        height: 48px
-
-    .name_with_rating
-      margin-left: 1rem
-      .name
-      .rating
-        .unit
-          margin-left: 0.2rem
+  .current_user_rank_record
+    margin-top: 0               // ランキング外のrowの上の隙間
 </style>
