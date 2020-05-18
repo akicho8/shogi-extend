@@ -102,10 +102,10 @@ module Actb
           mm = [m2, m1]
         end
 
-        ab = mm.collect { |e| e.user.actb_profile.rating }
+        ab = mm.collect { |e| e.user.actb_newest_profile.rating }
         ab = EloRating.rating_update2(*ab)
         ab = ab.collect(&:round)
-        mm.each.with_index { |m, i| m.user.actb_profile.update!(rating: ab[i]) }
+        mm.each.with_index { |m, i| m.user.actb_newest_profile.update!(rating: ab[i]) }
 
         mm.each(&:save!)
         room.update!(final_key: final_key)
@@ -116,7 +116,7 @@ module Actb
       memberships_user_ids_remove(room)
 
       # 終了時
-      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("actb/room_channel/#{params["room_id"]}", {switch_to: "result", room: room_json})
       # --> app/javascript/actb_app.vue
     end

@@ -94,7 +94,12 @@ export default {
     fetch_handle() {
       // if (this.rank_records_hash[this.current_tab_info.key]) {
       // } else {
-      this.http_get_command(this.app.info.put_path, { ranking_fetch: true, ranking_key: this.current_tab_info.key }, e => {
+      const params = { ranking_fetch: true, ranking_key: this.current_tab_info.key }
+      if (this.development_p) {
+        params.take = 5
+        params.shuffle = true
+      }
+      this.http_get_command(this.app.info.put_path, params, e => {
         if (e.rank_data) {
           // this.$set(this.rank_records_hash, e.ranking_key, e.rank_records)
           this.rank_data = e.rank_data

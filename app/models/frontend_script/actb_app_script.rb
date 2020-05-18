@@ -44,7 +44,6 @@ module FrontendScript
     delegate :current_user, to: :h
 
     QUESTIONS_FETCH_PER = 10
-    RANKING_FETCH_MAX = 50
     HISTORY_FETCH_MAX = 50
     CLIP_FETCH_MAX = 50
 
@@ -78,43 +77,7 @@ module FrontendScript
 
       # http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rating
       if params[:ranking_fetch]
-        ranking_key = params[:ranking_key]
-
-        base_scope = Colosseum::User.all
-        base_scope = base_scope.joins(:actb_profile).order(Actb::Profile.arel_table[ranking_key].desc).order(:created_at)
-
-        users = base_scope.limit(RANKING_FETCH_MAX)
-
-        if Rails.env.development?
-          users = users.shuffle.take(5)
-        end
-
-        # :rating, :rensho_count, :rensho_max を全部渡す必要ない → 渡して表示したほうがいい？？
-        user_as_json_params = { only: [:id, :name], methods: [:avatar_path, ranking_key] }
-
-        retv = {}
-        retv[:ranking_key] = ranking_key
-        retv[:user_rank_in] = users.any? { |e| e == current_user }
-
-        if true
-          # SELECT COUNT(*)+1 as rank FROM users WHERE score > #{score}
-          score = current_user.actb_profile.public_send(ranking_key)
-          s = Colosseum::User.all
-          s = s.joins(:actb_profile).where(Actb::Profile.arel_table[ranking_key].gt(score))
-          retv[:user_rank_record] = {
-            rank: s.count + 1,
-            user: current_user.as_json(user_as_json_params),
-          }
-        end
-
-        retv[:rank_records] = users.collect.with_index(1) { |user, rank|
-          {
-            rank: rank,
-            user: user.as_json(user_as_json_params),
-          }
-        }
-
-        return { rank_data: retv }
+        return { rank_data: Actb::RankingCop.new(params.merge(current_user: current_user)) }
       end
 
       if params[:history_records_fetch]
@@ -361,7 +324,7 @@ module FrontendScript
           e.memberships.build(user: user2, judge_key: :lose, question_index: 2)
         end
 
-        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:simple_quest_infos, :final_info])
       end
 
       if current_debug_scene == :edit

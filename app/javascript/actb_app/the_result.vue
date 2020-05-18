@@ -25,14 +25,14 @@
         .user_quest_index.has-text-weight-bold.is-size-4
           | {{membership.question_index}}
         .user_rating.has-text-weight-bold
-          | {{membership.user.actb_profile.rating}}
+          | {{membership.user.actb_newest_profile.rating}}
           span.user_rating_diff
-            template(v-if="membership.user.actb_profile.rating_last_diff >= 0")
+            template(v-if="membership.user.actb_newest_profile.rating_last_diff >= 0")
               span.has-text-primary
-                | (+{{membership.user.actb_profile.rating_last_diff}})
-            template(v-if="membership.user.actb_profile.rating_last_diff < 0")
+                | (+{{membership.user.actb_newest_profile.rating_last_diff}})
+            template(v-if="membership.user.actb_newest_profile.rating_last_diff < 0")
               span.has-text-danger
-                | ({{membership.user.actb_profile.rating_last_diff}})
+                | ({{membership.user.actb_newest_profile.rating_last_diff}})
       template(v-if="i === 0")
         .column.is-1.vs_mark.is-flex.has-text-weight-bold.is-size-4
           | vs

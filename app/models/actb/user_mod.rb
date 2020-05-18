@@ -33,17 +33,21 @@ module Actb
     concerning :ProfileMod do
       included do
         # プロフィール
-        has_one :actb_profile, -> { newest_order }, class_name: "Actb::Profile", dependent: :destroy
-        has_many :actb_profiles, -> { newest_order }, class_name: "Actb::Profile", dependent: :destroy
-        delegate :rating, :rensho_count, :rensho_max, to: :actb_profile
-        after_create do
-          actb_profile || actb_profiles.create!
+        with_options(class_name: "Actb::Profile", dependent: :destroy) do
+          has_one :actb_profile, -> { newest_order }
+          has_many :actb_profiles
         end
+
+        after_create do
+          actb_newest_profile
+        end
+
+        delegate :rating, :rensho_count, :rensho_max, to: :actb_newest_profile
       end
 
       # 必ず存在する最新シーズンのプロフィール
       def actb_newest_profile
-        actb_profiles.where(season: Season.newest).take || actb_profiles.create!
+        actb_profiles.find_or_create_by!(season: Season.newest)
       end
     end
   end
