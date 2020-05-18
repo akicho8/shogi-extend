@@ -1,13 +1,12 @@
 <template lang="pug">
 .the_ranking
   .primary_header
-    .header_center_title ランキング
+    .header_center_title ランキング {{current_title}}
 
     b-dropdown(position="is-bottom-left")
-      b-icon.header_link_icon.rjust(slot="trigger" icon="dots-vertical" @click.native="")
-      b-dropdown-item(@click="") シーズン1
-      b-dropdown-item(@click="") シーズン2
-      b-dropdown-item(@click="") シーズン3
+      b-icon.header_link_icon.rjust(slot="trigger" icon="dots-vertical" @click.native="dots_vertical_click_handle")
+      template(v-for="season in seasons")
+        b-dropdown-item(@click="switch_to(season)") {{season.name}}
 
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
@@ -18,7 +17,7 @@
     template(v-for="row in rank_data.rank_records")
       the_ranking_row(:row="row")
 
-    template(v-if="!rank_data.user_rank_in || true")
+    template(v-if="!rank_data.user_rank_in && rank_data.current_user_rank_record")
       the_ranking_row.current_user_rank_record(:row="rank_data.current_user_rank_record")
 </template>
 
@@ -56,13 +55,16 @@ export default {
     return {
       tab_index: null,
       rank_data: null,
+      seasons: null,
+      season_id: null,
     }
   },
 
   created() {
     this.app.lobby_close()
 
-    this.sound_play("click")
+    this.seasons_fetch()
+
     this.mode_select("rating")
     this.tab_change_handle()
   },
@@ -92,6 +94,7 @@ export default {
     },
 
     tab_change_handle() {
+      this.sound_play("click")
       this[this.current_tab_info.handle_method_name]()
       this.fetch_handle()
     },
@@ -101,18 +104,37 @@ export default {
     fetch_handle() {
       // if (this.rank_records_hash[this.current_tab_info.key]) {
       // } else {
-      const params = { ranking_fetch: true, ranking_key: this.current_tab_info.key }
+      const params = { ranking_fetch: true, ranking_key: this.current_tab_info.key, season_id: this.season_id }
       if (this.development_p) {
         params.take = 5
         params.shuffle = true
       }
       this.http_get_command(this.app.info.put_path, params, e => {
         if (e.rank_data) {
-          // this.$set(this.rank_records_hash, e.ranking_key, e.rank_records)
           this.rank_data = e.rank_data
         }
       })
+    },
+
+    dots_vertical_click_handle() {
+      this.sound_play('click')
+      // if (!this.seasons) {
+      //   this.seasons_fetch()
       // }
+    },
+
+    seasons_fetch() {
+      this.http_get_command(this.app.info.put_path, { seasons_fetch: true }, e => {
+        if (e.seasons) {
+          this.seasons = e.seasons
+        }
+      })
+    },
+
+    switch_to(season) {
+      this.season_id = season.id
+      debugger
+      this.fetch_handle()
     },
   },
 
@@ -122,6 +144,23 @@ export default {
     current_tab_info() {
       return TabInfo.fetch(this.tab_index)
     },
+
+    current_season() {
+      if (this.seasons) {
+        if (this.season_id) {
+          return this.seasons.find(e => e.id === this.season_id)
+        } else {
+          return this.seasons[0]
+        }
+      }
+    },
+
+    current_title() {
+      if (this.current_season) {
+        return this.current_season.name
+      }
+    },
+
     // current_rank_records() {
     //   return this.rank_records_hash[this.current_tab_info.key]
     // },

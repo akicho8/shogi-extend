@@ -4,6 +4,8 @@
 # 連勝数       http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rensho_count
 # 最大連勝数   http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rensho_max
 #
+# season_id もある場合がある
+#
 module Actb
   class RankingCop
     RANKING_FETCH_MAX = 50
@@ -24,7 +26,11 @@ module Actb
       retv = {}
       retv[:ranking_key] = ranking_key
       retv[:user_rank_in] = top_users.any? { |e| e == current_user }
-      retv[:current_user_rank_record] = { rank: user_rank, user: current_user.as_json(user_as_json_params) }
+      if user_actb_profile
+        retv[:current_user_rank_record] = { rank: user_rank, user: current_user.as_json(user_as_json_params) }
+      else
+        # そのシーズンにはプレイしていなかった場合
+      end
       retv[:rank_records] = top_users.collect.with_index(1) { |user, rank|
         { rank: rank, user: user.as_json(user_as_json_params) }
       }
@@ -59,11 +65,17 @@ module Actb
     def base_scope
       s = Colosseum::User.all
       s = s.joins(:actb_profile)
-      s = s.where(Actb::Profile.arel_table[:season_id].eq(Actb::Season.newest.id))
+      s = s.where(Actb::Profile.arel_table[:season_id].eq(current_season.id))
     end
 
     def user_score
-      current_user.actb_newest_profile.public_send(ranking_key)
+      if v = user_actb_profile
+        v.public_send(ranking_key)
+      end
+    end
+
+    def user_actb_profile
+      @user_actb_profile ||= current_user.actb_profiles.where(season: current_season).take
     end
 
     def current_user
@@ -76,6 +88,14 @@ module Actb
 
     def record_max
       (params[:max].presence || RANKING_FETCH_MAX).to_i
+    end
+
+    def current_season
+      if v = params[:season_id].presence
+        Actb::Season.find(v)
+      else
+        Actb::Season.newest
+      end
     end
   end
 end

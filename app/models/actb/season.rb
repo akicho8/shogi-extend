@@ -15,6 +15,9 @@
 
 module Actb
   class Season < ApplicationRecord
+    attribute :begin_at
+    attribute :end_at
+
     has_many :profiles, class_name: "Actb::Profile", dependent: :destroy
 
     scope :newest_order, -> { order(generation: :desc) }
@@ -35,6 +38,8 @@ module Actb
     before_validation do
       self.generation ||= Season.count.next
       self.name = "シーズン#{generation}"
+      self.begin_at ||= Time.current.beginning_of_month
+      self.end_at   ||= Time.current.beginning_of_month.next_month(3)
     end
   end
 end

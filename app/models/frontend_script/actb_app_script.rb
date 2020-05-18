@@ -80,6 +80,11 @@ module FrontendScript
         return { rank_data: Actb::RankingCop.new(params.merge(current_user: current_user)) }
       end
 
+      # http://localhost:3000/script/actb-app.json?seasons_fetch=true
+      if params[:seasons_fetch]
+        return { seasons: Actb::Season.newest_order.as_json(only: [:id, :generation, :name, :begin_at, :end_at]) }
+      end
+
       if params[:history_records_fetch]
         s = current_user.actb_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
         retv = {}
