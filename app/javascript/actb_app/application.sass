@@ -1,0 +1,28 @@
+.actb_app
+  .primary_header
+    @extend %fixed_header
+    z-index: 2                  // b-pulldown を発動したとき .secondary_header の上に来るようにするため
+    
+    background-color: $primary
+    color: $white
+
+    // 余計なタグで囲まずアイコン自体の高さを100%にすることでタッチ可能エリアを最大にする
+    .header_link_icon
+      cursor: pointer
+      position: absolute
+      &.rjust
+        right: 0%
+      &.ljust
+        left: 0%
+      height: 100%
+      padding: 0 1.6rem
+
+    .header_center_title
+      margin: auto
+      font-weight: bold
+
+  .secondary_header
+    @extend %fixed_header
+    z-index: 1
+    top: $actb_primary_header_height
+    background: change_color($white, $alpha: 0.96)

@@ -7,8 +7,6 @@ $actb_primary_header_height: 48px
 ////////////////////////////////////////////////////////////////////////////////
 
 %fixed_header
-  z-index: 1
-
   position: fixed
   left: 0
   top: 0
@@ -28,32 +26,6 @@ $actb_primary_header_height: 48px
   padding-top: $actb_primary_header_height * 1
 %padding_top_for_secondary_header
   padding-top: $actb_primary_header_height * 2
-
-.primary_header
-  @extend %fixed_header
-  background-color: $primary
-  color: $white
-
-  // 余計なタグで囲まずアイコン自体の高さを100%にすることでタッチ可能エリアを最大にする
-  .header_link_icon
-    cursor: pointer
-    position: absolute
-    &.rjust
-      right: 0%
-    &.ljust
-      left: 0%
-    height: 100%
-    padding: 0 1.6rem
-    z-index: 1
-  
-  .header_center_title
-    margin: auto
-    font-weight: bold
-    
-.secondary_header
-  @extend %fixed_header
-  top: $actb_primary_header_height
-  background: change_color($white, $alpha: 0.96)
 
 %icon_with_counter
   cursor: pointer

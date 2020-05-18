@@ -499,6 +499,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
+@import "application.sass"
 .actb_app
   // ユーザー情報
   .user_container

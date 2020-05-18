@@ -2,6 +2,13 @@
 .the_ranking
   .primary_header
     .header_center_title ランキング
+
+    b-dropdown(position="is-bottom-left")
+      b-icon.header_link_icon.rjust(slot="trigger" icon="dots-vertical" @click.native="")
+      b-dropdown-item(@click="") シーズン1
+      b-dropdown-item(@click="") シーズン2
+      b-dropdown-item(@click="") シーズン3
+
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")

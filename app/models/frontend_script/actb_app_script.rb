@@ -302,6 +302,10 @@ module FrontendScript
     def debug_scene_set(info)
       info[:debug_scene] = current_debug_scene
 
+      if current_debug_scene == :lobby
+        c.sysop_login_unless_logout
+      end
+
       if current_debug_scene == :room
         c.sysop_login_unless_logout
 
