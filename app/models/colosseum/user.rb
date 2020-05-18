@@ -43,7 +43,7 @@ module Colosseum
   CpuBrainInfo
 
   class User < ApplicationRecord
-    include ::Actf::UserMod
+    include ::Actb::UserMod
 
     concerning :BasicMethods do
       included do

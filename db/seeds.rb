@@ -1,7 +1,7 @@
 ENV["SLACK_AGENT_DISABLE"] = "1"
 
 [
-  Actf,
+  Actb,
   FreeBattle,
   Swars::Grade,
   Swars::Battle,

@@ -9,7 +9,7 @@ require 'test_prof/recipes/rspec/let_it_be'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # app/models/acns2.rb などを明示的に読み込む (Ruby 2.7 ではこのあたりの対策がされているとの噂)
-Actf
+Actb
 Swars
 Colosseum
 

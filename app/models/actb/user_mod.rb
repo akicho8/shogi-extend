@@ -1,0 +1,41 @@
+module Actb
+  concern :UserMod do
+    included do
+      include UserMod::ClipMod
+      include UserMod::VoteMod
+
+      # 対局
+      has_many :actb_rooms, class_name: "Actb::Room", through: :memberships                           # 対局(複数)
+      has_many :actb_memberships, class_name: "Actb::Membership", dependent: :restrict_with_exception # 対局時の情報(複数)
+
+      # このユーザーが作成した問題(複数)
+      has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy
+
+      # このユーザーに出題した問題(複数)
+      has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
+
+      # チャット関連
+      with_options(dependent: :destroy) do |o|
+        has_many :actb_room_messages, class_name: "Actb::RoomMessage"
+        has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
+      end
+
+      # プロフィール
+      has_one :actb_profile, -> { newest_order }, class_name: "Actb::Profile", dependent: :destroy
+      has_many :actb_profiles, class_name: "Actb::Profile", dependent: :destroy
+      delegate :rating, :rensho_count, :rensho_max, to: :actb_profile
+      after_create do
+        actb_profile || create_actb_profile!
+      end
+
+      # Good/Bad
+      has_many :actb_favorites, class_name: "Actb::Favorite", dependent: :destroy
+    end
+
+    def good_bad_clip_flags_for(question)
+      [:good_p, :bad_p, :clip_p].inject({}) do |a, e|
+        a.merge(e => public_send(e, question))
+      end
+    end
+  end
+end

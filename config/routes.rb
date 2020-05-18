@@ -94,7 +94,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 詰将棋ファイター
 
-  match "tf", to: "scripts#show", defaults: { id: "actf_app" }, via: [:get, :update]
+  match "tf", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
 
   ################################################################################ 外部リンク
 
