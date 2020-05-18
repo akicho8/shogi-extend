@@ -20,14 +20,6 @@ module Actb
         has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
       end
 
-      # プロフィール
-      has_one :actb_profile, -> { newest_order }, class_name: "Actb::Profile", dependent: :destroy
-      has_many :actb_profiles, class_name: "Actb::Profile", dependent: :destroy
-      delegate :rating, :rensho_count, :rensho_max, to: :actb_profile
-      after_create do
-        actb_profile || create_actb_profile!
-      end
-
       # Good/Bad
       has_many :actb_favorites, class_name: "Actb::Favorite", dependent: :destroy
     end
@@ -35,6 +27,23 @@ module Actb
     def good_bad_clip_flags_for(question)
       [:good_p, :bad_p, :clip_p].inject({}) do |a, e|
         a.merge(e => public_send(e, question))
+      end
+    end
+
+    concerning :ProfileMod do
+      included do
+        # プロフィール
+        has_one :actb_profile, -> { newest_order }, class_name: "Actb::Profile", dependent: :destroy
+        has_many :actb_profiles, -> { newest_order }, class_name: "Actb::Profile", dependent: :destroy
+        delegate :rating, :rensho_count, :rensho_max, to: :actb_profile
+        after_create do
+          actb_profile || actb_profiles.create!
+        end
+      end
+
+      # 必ず存在する最新シーズンのプロフィール
+      def actb_newest_profile
+        actb_profiles.where(season: Season.newest).take || actb_profiles.create!
       end
     end
   end

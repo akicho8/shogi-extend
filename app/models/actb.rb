@@ -16,6 +16,7 @@ module Actb
   def destroy_all
     models.each do |e|
       e.destroy_all
+      # e.delete_all
     end
   end
 

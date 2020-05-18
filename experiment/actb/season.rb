@@ -1,0 +1,26 @@
+require "./setup"
+
+Colosseum::User.delete_all
+
+Actb.destroy_all
+Actb.setup
+
+user = Colosseum::User.sysop
+Actb::Season.newest.generation             # => 1
+user.actb_newest_profile.season.generation # => 1
+Actb::Season.create!.generation            # => 2
+user.actb_newest_profile.season.generation # => 2
+
+tp Actb.info
+# >> |-----------------+-------+--------|
+# >> | model           | count | 最終ID |
+# >> |-----------------+-------+--------|
+# >> | Colosseum::User |     1 |     35 |
+# >> | Actb::Question  |     0 |        |
+# >> | Actb::Room      |     0 |        |
+# >> | Actb::Season    |     2 |     29 |
+# >> | Actb::Profile   |     2 |     43 |
+# >> | Actb::GoodMark  |     0 |        |
+# >> | Actb::BadMark   |     0 |        |
+# >> | Actb::ClipMark  |     0 |        |
+# >> |-----------------+-------+--------|

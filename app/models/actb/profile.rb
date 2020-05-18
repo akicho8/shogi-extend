@@ -69,5 +69,14 @@ module Actb
       self.generation ||= season.generation
       self.create_count ||= user.actb_profiles.count.next
     end
+
+    with_options presence: true do
+      validates :user_id
+      validates :season_id
+    end
+
+    with_options allow_blank: true do
+      validates :user_id, uniqueness: { scope: :season_id }
+    end
   end
 end
