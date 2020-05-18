@@ -1,6 +1,6 @@
 module Actf
   class History < ApplicationRecord
-    include Clip::ShareWithHistoryMethods
+    include ClipMark::ShareWithHistoryMethods
 
     belongs_to :ans_result
 

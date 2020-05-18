@@ -1,11 +1,11 @@
 module Actf::UserMod
   concern :ClipMod do
     included do
-      has_many :actf_clips, class_name: "Actf::Clip", dependent: :destroy
+      has_many :actf_clip_marks, class_name: "Actf::ClipMark", dependent: :destroy
     end
 
     def clip_p(question)
-      actf_clips.where(question: question).exists?
+      actf_clip_marks.where(question: question).exists?
     end
 
     # from app/javascript/actf_app/the_history.vue
@@ -18,7 +18,7 @@ module Actf::UserMod
     private
 
     def clip_set(question, enable)
-      s = actf_clips.where(question: question)
+      s = actf_clip_marks.where(question: question)
       if enable
         if s.exists?
           diff = 0

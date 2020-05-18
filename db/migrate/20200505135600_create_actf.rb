@@ -30,14 +30,16 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.integer :renpai_count,     null: false, index: true, comment: "連敗数"
       t.integer :rensho_max,       null: false, index: true, comment: "連勝数(最大)"
       t.integer :renpai_max,       null: false, index: true, comment: "連敗数(最大)"
-      t.integer :rebirth_count,    null: false, index: true, comment: "世代"
-      t.integer :generation,       null: false, index: true, comment: "世代"
+      t.integer :create_count,     null: false, index: true, comment: "users.actf_profile.create_count は users.actf_profiles.count と一致"
+      t.integer :generation,       null: false, index: true, comment: "世代(seasons.generationと一致)"
       t.timestamps
+
+      t.index [:user_id, :season_id], unique: true
     end
 
     create_table :actf_seasons do |t|
-      t.string :name,        null: false, index: true, comment: "レーティング"
-      t.integer :generation, null: false, index: true, comment: "世代"
+      t.string :name,        null: false, index: false, comment: "レーティング"
+      t.integer :generation, null: false, index: true,  comment: "世代"
       t.timestamps
     end
 
@@ -50,6 +52,7 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    # 未使用
     create_table :actf_favorites do |t|
       t.belongs_to :user,     comment: "自分"
       t.belongs_to :question, comment: "出題"
@@ -61,23 +64,26 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.belongs_to :user,     comment: "自分"
       t.belongs_to :question, comment: "出題"
       t.timestamps
+      t.index [:user_id, :question_id], unique: true
     end
 
     create_table :actf_bad_marks do |t|
       t.belongs_to :user,     comment: "自分"
       t.belongs_to :question, comment: "出題"
       t.timestamps
+      t.index [:user_id, :question_id], unique: true
     end
 
-    create_table :actf_clips do |t|
+    create_table :actf_clip_marks do |t|
       t.belongs_to :user,     comment: "自分"
       t.belongs_to :question, comment: "出題"
       t.timestamps
+      t.index [:user_id, :question_id], unique: true
     end
 
     # static
     create_table :actf_ans_results do |t|
-      t.string :key
+      t.string :key, null: false, index: true, comment: "正解・不正解"
       t.timestamps
     end
 
@@ -122,7 +128,7 @@ class CreateActf < ActiveRecord::Migration[6.0]
       t.integer :favorites_count,  default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
       t.integer :bad_marks_count,  default: 0, null: false, comment: "高評価数"
       t.integer :good_marks_count, default: 0, null: false, comment: "低評価数"
-      t.integer :clips_count,      default: 0, null: false, comment: "保存された数"
+      t.integer :clip_marks_count,      default: 0, null: false, comment: "保存された数"
     end
 
     # MovesAnswer
@@ -143,3 +149,4 @@ class CreateActf < ActiveRecord::Migration[6.0]
     end
   end
 end
+# ~> -:1:in `<main>': uninitialized constant ActiveRecord (NameError)

@@ -40,7 +40,7 @@
       b-table-column(field="histories_count"  :label="ColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
       b-table-column(field="good_marks_count" :label="ColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
       b-table-column(field="bad_marks_count"  :label="ColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
-      b-table-column(field="clips_count"      :label="ColumnInfo.fetch('clips_count').short_name"      sortable numeric :visible="visible_hash.clips_count")      {{props.row.clips_count}}
+      b-table-column(field="clip_marks_count"      :label="ColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
       b-table-column(field="updated_at"       :label="ColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
       b-table-column(label="操作")
@@ -76,7 +76,7 @@ class ColumnInfo extends MemoryRecord {
       { key: "histories_count",  name: "履歴",       short_name: "履歴",     visible: false, },
       { key: "good_marks_count", name: "高評価",     short_name: "高評",     visible: true,  },
       { key: "bad_marks_count",  name: "低評価",     short_name: "低評",     visible: true,  },
-      { key: "clips_count",      name: "お気に入り", short_name: "お気",     visible: false, },
+      { key: "clip_marks_count",      name: "お気に入り", short_name: "お気",     visible: false, },
       { key: "updated_at",       name: "更新日時",   short_name: "更新",     visible: true,  },
     ]
   }

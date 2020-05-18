@@ -6,20 +6,22 @@ module Actf
   end
 
   def setup(options = {})
-    Colosseum::User.find_each do |e|
-      e.actf_profile || e.create_actf_profile!
-    end
+    Seed.run(options)
+  end
 
-    AnsResult.setup(options)
-
-    Season.setup(options)
-
-    if Rails.env.development?
-    end
+  def models
+    [Question, Room, Season, Profile, GoodMark, BadMark, ClipMark]
   end
 
   def destroy_all
-    Actf::Question.destroy_all
-    Actf::Room.destroy_all
+    models.each do |e|
+      e.destroy_all
+    end
+  end
+
+  def info
+    [Colosseum::User, *models].collect { |e|
+      { model: e, count: e.count, "最終ID" => e.order(:id).last&.id }
+    }
   end
 end

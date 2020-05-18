@@ -1,9 +1,8 @@
 module Actf
-  class Clip < ApplicationRecord
+  class ClipMark < ApplicationRecord
     concerning :ShareWithHistoryMethods do
       included do
-        belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
-        belongs_to :question, counter_cache: true
+        include VoteMod
       end
 
       def good_p

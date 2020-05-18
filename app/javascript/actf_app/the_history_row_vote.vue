@@ -11,7 +11,7 @@
   .icon_with_counter.clip(@click.stop="app.clip_handle(row, !row.clip_p)" :class="{'has-text-gold': row.clip_p}")
     b-icon(:icon="row.clip_p ? 'star' : 'star-outline'")
     span.icon_counter
-      | {{row.question.clips_count}}
+      | {{row.question.clip_marks_count}}
 </template>
 
 <script>

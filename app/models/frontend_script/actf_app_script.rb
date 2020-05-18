@@ -125,7 +125,7 @@ module FrontendScript
       end
 
       if params[:clip_records_fetch]
-        s = current_user.actf_clips.order(created_at: :desc).limit(CLIP_FETCH_MAX)
+        s = current_user.actf_clip_marks.order(created_at: :desc).limit(CLIP_FETCH_MAX)
         retv = {}
         retv[:clip_records] = s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p])
         return retv

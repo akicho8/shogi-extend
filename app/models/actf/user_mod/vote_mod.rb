@@ -63,7 +63,7 @@ module Actf
         else
           s.create!
           enable = true
-          diff = 1
+          diff = +1
         end
         { "#{vote.key}_p": enable, "#{vote.key}_diff": diff }
       end

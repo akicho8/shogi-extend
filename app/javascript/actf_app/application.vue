@@ -441,7 +441,7 @@ export default {
       this.silent_http_command("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
         if (e.retval) {
           this.$set(history, "clip_p", e.retval.clip_p)
-          this.$set(history.question, "clips_count", history.question.clips_count + e.retval.diff)
+          this.$set(history.question, "clip_marks_count", history.question.clip_marks_count + e.retval.diff)
         }
       })
     },

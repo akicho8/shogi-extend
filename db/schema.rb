@@ -28,9 +28,10 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actf_ans_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "key"
+    t.string "key", null: false, comment: "正解・不正解"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_actf_ans_results_on_key"
   end
 
   create_table "actf_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -39,16 +40,18 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actf_bad_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_actf_bad_marks_on_user_id_and_question_id", unique: true
     t.index ["user_id"], name: "index_actf_bad_marks_on_user_id"
   end
 
-  create_table "actf_clips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "actf_clip_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "自分"
     t.bigint "question_id", comment: "出題"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_actf_clips_on_question_id"
-    t.index ["user_id"], name: "index_actf_clips_on_user_id"
+    t.index ["question_id"], name: "index_actf_clip_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_actf_clip_marks_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_actf_clip_marks_on_user_id"
   end
 
   create_table "actf_endpos_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -77,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actf_good_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_actf_good_marks_on_user_id_and_question_id", unique: true
     t.index ["user_id"], name: "index_actf_good_marks_on_user_id"
   end
 
@@ -135,6 +139,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actf_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "対戦者"
+    t.bigint "season_id", comment: "期"
     t.integer "rating", null: false, comment: "レーティング"
     t.integer "rating_last_diff", null: false, comment: "直近レーティング変化"
     t.integer "rating_max", null: false, comment: "レーティング(最大)"
@@ -142,8 +147,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "renpai_count", null: false, comment: "連敗数"
     t.integer "rensho_max", null: false, comment: "連勝数(最大)"
     t.integer "renpai_max", null: false, comment: "連敗数(最大)"
+    t.integer "create_count", null: false, comment: "users.actf_profile.create_count は users.actf_profiles.count と一致"
+    t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["create_count"], name: "index_actf_profiles_on_create_count"
+    t.index ["generation"], name: "index_actf_profiles_on_generation"
     t.index ["rating"], name: "index_actf_profiles_on_rating"
     t.index ["rating_last_diff"], name: "index_actf_profiles_on_rating_last_diff"
     t.index ["rating_max"], name: "index_actf_profiles_on_rating_max"
@@ -151,6 +160,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["renpai_max"], name: "index_actf_profiles_on_renpai_max"
     t.index ["rensho_count"], name: "index_actf_profiles_on_rensho_count"
     t.index ["rensho_max"], name: "index_actf_profiles_on_rensho_max"
+    t.index ["season_id"], name: "index_actf_profiles_on_season_id"
+    t.index ["user_id", "season_id"], name: "index_actf_profiles_on_user_id_and_season_id", unique: true
     t.index ["user_id"], name: "index_actf_profiles_on_user_id"
   end
 
@@ -177,7 +188,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "favorites_count", default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
     t.integer "bad_marks_count", default: 0, null: false, comment: "高評価数"
     t.integer "good_marks_count", default: 0, null: false, comment: "低評価数"
-    t.integer "clips_count", default: 0, null: false, comment: "保存された数"
+    t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.index ["difficulty_level"], name: "index_actf_questions_on_difficulty_level"
     t.index ["display_key"], name: "index_actf_questions_on_display_key"
     t.index ["endpos_answers_count"], name: "index_actf_questions_on_endpos_answers_count"
@@ -208,6 +219,14 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["begin_at"], name: "index_actf_rooms_on_begin_at"
     t.index ["end_at"], name: "index_actf_rooms_on_end_at"
     t.index ["final_key"], name: "index_actf_rooms_on_final_key"
+  end
+
+  create_table "actf_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", null: false, comment: "レーティング"
+    t.integer "generation", null: false, comment: "世代"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["generation"], name: "index_actf_seasons_on_generation"
   end
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

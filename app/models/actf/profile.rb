@@ -26,6 +26,7 @@
 module Actf
   class Profile < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User"
+    belongs_to :season
 
     scope :newest_order, -> { order(generation: :desc) }
     scope :oldest_order, -> { order(generation: :asc)  }
@@ -61,9 +62,9 @@ module Actf
     end
 
     before_validation do
-      self.season ||= Season.latest
+      self.season ||= Season.newest
       self.generation ||= season.generation
-      self.rebirth_count ||= user.actf_profiles.count.next
+      self.create_count ||= user.actf_profiles.count.next
     end
   end
 end

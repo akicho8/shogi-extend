@@ -1,6 +1,7 @@
 ENV["SLACK_AGENT_DISABLE"] = "1"
 
 [
+  Actf,
   FreeBattle,
   Swars::Grade,
   Swars::Battle,
@@ -12,7 +13,6 @@ ENV["SLACK_AGENT_DISABLE"] = "1"
   XyRecord,
   Tsl,
   Acns1,
-  Actf,
 ].each do |e|
   e.setup
 end
