@@ -14,7 +14,7 @@
 # |------------+----------+-------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_many :actb_clip_marks
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -26,7 +26,7 @@ module Actb
     end
 
     after_create_commit do
-      LobbyMessageBroadcastJob.perform_later(self)
+      Actb::LobbyMessageBroadcastJob.perform_later(self)
     end
   end
 end

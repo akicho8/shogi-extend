@@ -5,23 +5,23 @@ module Actb
       include UserMod::VoteMod
 
       # 対局
-      has_many :actb_rooms, class_name: "Room", through: :memberships                           # 対局(複数)
-      has_many :actb_memberships, class_name: "Membership", dependent: :restrict_with_exception # 対局時の情報(複数)
+      has_many :actb_rooms, class_name: "Actb::Room", through: :memberships                           # 対局(複数)
+      has_many :actb_memberships, class_name: "Actb::Membership", dependent: :restrict_with_exception # 対局時の情報(複数)
 
       # このユーザーが作成した問題(複数)
-      has_many :actb_questions, class_name: "Question", dependent: :destroy
+      has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy
 
       # このユーザーに出題した問題(複数)
-      has_many :actb_histories, class_name: "History", dependent: :destroy
+      has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
 
       # チャット関連
       with_options(dependent: :destroy) do |o|
-        has_many :actb_room_messages, class_name: "RoomMessage"
-        has_many :actb_lobby_messages, class_name: "LobbyMessage"
+        has_many :actb_room_messages, class_name: "Actb::RoomMessage"
+        has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
       end
 
       # Good/Bad
-      has_many :actb_favorites, class_name: "Favorite", dependent: :destroy
+      has_many :actb_favorites, class_name: "Actb::Favorite", dependent: :destroy
     end
 
     def good_bad_clip_flags_for(question)
@@ -33,7 +33,7 @@ module Actb
     concerning :ProfileMod do
       included do
         # プロフィール
-        with_options(class_name: "Profile", dependent: :destroy) do
+        with_options(class_name: "Actb::Profile", dependent: :destroy) do
           has_one :actb_profile, -> { newest_order }
           has_many :actb_profiles
         end
