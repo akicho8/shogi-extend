@@ -105,7 +105,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
     create_table :actb_questions do |t|
       t.belongs_to :user,                                                comment: "作成者"
       t.belongs_to :folder,                                              comment: "フォルダ"
-      t.belongs_to :kind,                                                comment: "種類"
+      t.belongs_to :lineage,                                                comment: "種類"
 
       t.string :init_sfen,                    null: false, index: true,  comment: "問題"
       t.integer :time_limit_sec,              null: true,  index: true,  comment: "制限時間(秒)"
@@ -152,6 +152,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    # フォルダ
     create_table :actb_folders do |t|
       t.belongs_to :user
       t.string :type, null: false
@@ -160,7 +161,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.index [:type, :user_id], unique: true
     end
 
-    create_table :actb_kinds do |t|
+    # 種類
+    create_table :actb_lineages do |t|
       t.string :key, null: false
       t.timestamps
     end

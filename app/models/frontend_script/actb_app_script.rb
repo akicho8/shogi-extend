@@ -242,7 +242,7 @@ module FrontendScript
     end
 
     def question_as_json_params
-      { include: [:user, :moves_answers, :kind], only: Actb::Question.index_and_form_json_columns, methods: [:folder_key] }
+      { include: [:user, :moves_answers, :lineage], only: Actb::Question.index_and_form_json_columns, methods: [:folder_key] }
     end
 
     def current_room_id
@@ -277,7 +277,7 @@ module FrontendScript
         time_limit_sec: 3 * 60,
         difficulty_level: 1,
         title: "(title)",
-        kind: { key: "詰将棋" },
+        lineage: { key: "詰将棋" },
         folder_key: "active",
       }
     end

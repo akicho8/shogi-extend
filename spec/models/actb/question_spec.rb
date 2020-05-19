@@ -8,11 +8,11 @@
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 # | id                    | ID                    | integer(8)  | NOT NULL PK         |                       |       |
 # | user_id               | User                  | integer(8)  |                     | => Colosseum::User#id | A     |
-# | folder_id             | Folder                | integer(8)  |                     | => Actb::Folder#id    | B     |
-# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | C     |
-# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | D     |
-# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | E     |
-# | display_key           | Display key           | string(255) |                     |                       | F     |
+# | folder_id             | Folder                | integer(8)  |                     |                       | B     |
+# | lineage_id            | Lineage               | integer(8)  |                     |                       | C     |
+# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | D     |
+# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | E     |
+# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | F     |
 # | title                 | タイトル              | string(255) |                     |                       |       |
 # | description           | 説明                  | string(512) |                     |                       |       |
 # | hint_description      | Hint description      | string(255) |                     |                       |       |
@@ -34,7 +34,6 @@
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Actb::Folder.has_many :questions
 # Colosseum::User.has_one :actb_profile
 #--------------------------------------------------------------------------------
 
@@ -42,6 +41,10 @@ require 'rails_helper'
 
 module Actb
   RSpec.describe Question, type: :model do
+    before(:context) do
+      Actb.setup
+    end
+
     let :user do
       Colosseum::User.create!
     end

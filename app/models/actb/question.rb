@@ -8,11 +8,11 @@
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 # | id                    | ID                    | integer(8)  | NOT NULL PK         |                       |       |
 # | user_id               | User                  | integer(8)  |                     | => Colosseum::User#id | A     |
-# | folder_id             | Folder                | integer(8)  |                     | => Actb::Folder#id    | B     |
-# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | C     |
-# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | D     |
-# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | E     |
-# | display_key           | Display key           | string(255) |                     |                       | F     |
+# | folder_id             | Folder                | integer(8)  |                     |                       | B     |
+# | lineage_id            | Lineage               | integer(8)  |                     |                       | C     |
+# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | D     |
+# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | E     |
+# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | F     |
 # | title                 | タイトル              | string(255) |                     |                       |       |
 # | description           | 説明                  | string(512) |                     |                       |       |
 # | hint_description      | Hint description      | string(255) |                     |                       |       |
@@ -34,7 +34,6 @@
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Actb::Folder.has_many :questions
 # Colosseum::User.has_one :actb_profile
 #--------------------------------------------------------------------------------
 
@@ -68,7 +67,7 @@ module Actb
 
     belongs_to :user, class_name: "Colosseum::User" # 作者
     belongs_to :folder # , class_name: "Actb::Folder"
-    belongs_to :kind # , class_name: "Actb::Kind"
+    belongs_to :lineage # , class_name: "Actb::Lineage"
 
     has_many :histories, dependent: :destroy # 出題履歴
 
@@ -114,7 +113,7 @@ module Actb
       self.bad_count ||= 0
       self.good_count ||= 0
 
-      self.kind ||= Kind.fetch("詰将棋")
+      self.lineage ||= Lineage.fetch("詰将棋")
       self.folder_key ||= :active
     end
 
@@ -158,7 +157,9 @@ module Actb
               :folder_key,
             ]))
 
-        self.kind = Kind.fetch(question[:kind][:key])
+        if question[:lineage]
+          self.lineage = Lineage.fetch(question[:lineage][:key])
+        end
 
         # if Rails.env.development?
         #   if new_record?

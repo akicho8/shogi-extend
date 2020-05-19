@@ -1,12 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Actb::RoomChannel, type: :channel do
+  before(:context) do
+    Actb.setup
+  end
+
   let_it_be(:user1) { Colosseum::User.create! }
   let_it_be(:user2) { Colosseum::User.create! }
 
   before do
-    Actb.setup
-
     Actb::SchoolChannel.redis.flushdb
 
     stub_connection current_user: user1
