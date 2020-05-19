@@ -53,7 +53,17 @@ module FrontendScript
           {
             :label   => "画面",
             :key     => :debug_scene,
-            :elems   => { "ロビー" => nil, "対戦" => :room, "結果" => :result, "編集"  => :builder, "ランキング" => :ranking, "履歴" => :history, "詳細" => :overlay_record,},
+            :elems   => {
+              "ロビー"         => nil,
+              "対戦"           => :room,
+              "結果"           => :result,
+              "問題作成"       => :builder,
+              "問題作成(情報)" => :builder_form,
+              "ランキング"     => :ranking,
+              "履歴"           => :history,
+              "詳細"           => :overlay_record,
+            },
+
             :type    => :select,
             :default => current_debug_scene,
           },
@@ -61,8 +71,12 @@ module FrontendScript
       end
     end
 
-    # http://localhost:3000/admin/script/actb-sample.json?questions_fetch=true
     def script_body
+      if Rails.env.development?
+        c.sysop_login_unless_logout
+      end
+
+      # http://localhost:3000/script/actb-app.json?questions_fetch=true
       if params[:questions_fetch]
         params[:per] ||= QUESTIONS_FETCH_PER
 
@@ -71,7 +85,8 @@ module FrontendScript
         s = sort_scope(s)       # sort_mod.rb
 
         retv = {**page_info(s), **sort_info}
-        retv[:questions] = s.as_json(include: [:user, :moves_answers])  # FIXME:必要なのだけにする]
+        retv[:questions] = s.as_json(include: [:user, :moves_answers], only: Actb::Question.index_and_form_json_columns, methods: [:display_key2])
+
         return retv
       end
 
@@ -204,68 +219,30 @@ module FrontendScript
         return
       end
 
-      # if params[:vote_key] == "good"
-      #   question = Actb::Question.find(params[:question_id])
-      #   s = current_user.actb_good_marks.where(question: question)
-      #   if s.exists?
-      #     s.destroy_all
-      #     good_p = false
-      #     diff = -1
-      #   else
-      #     s.create!
-      #     good_p = true
-      #     diff = 1
-      #   end
-      #   # question.reload
-      #   c.render json: { retval: { good_p: good_p, diff: diff } }
-      #   return
-      #
-      #   # question = Actb::Question.find(params[:question_id])
-      #   # if favorite = user.actb_favorites.find_by(question: question)
-      #   #   if favorite.score == 1
-      #   #     favorite.destroy_all
-      #   #   end
-      #   # end
-      #   # favorite.update!(score: -1)
-      #   # favorite.destroy!
-      #
-      #   # retv = {}
-      #   # retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}})
-      #   # return retv
-      # end
-      #
-      # if params[:vote_key] == "bad"
-      #   question = Actb::Question.find(params[:question_id])
-      #   s = current_user.actb_bad_marks.where(question: question)
-      #   if s.exists?
-      #     s.destroy_all
-      #     bad_p = false
-      #     diff = -1
-      #   else
-      #     s.create!
-      #     bad_p = true
-      #     diff = 1
-      #   end
-      #   c.render json: { retval: { bad_p: bad_p, diff: diff } }
-      #   return
-      # end
+      if params[:save_handle]
+        # params = {
+        #   "question" => {
+        #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
+        #     "moves_answers"=>[{"moves_str"=>"4c5b"}],
+        #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
+        #   },
+        # }.deep_symbolize_keys
 
-      # params = {
-      #   "question" => {
-      #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-      #     "moves_answers"=>[{"moves_str"=>"4c5b"}],
-      #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
-      #   },
-      # }.deep_symbolize_keys
-
-      question = current_user.actb_questions.find_or_initialize_by(id: params[:question][:id])
-      begin
-        question.together_with_params_came_from_js_update(params)
-      rescue ActiveRecord::RecordInvalid => error
-        c.render json: { error_message: error.message }
+        question = current_user.actb_questions.find_or_initialize_by(id: params[:question][:id])
+        begin
+          question.together_with_params_came_from_js_update(params)
+        rescue ActiveRecord::RecordInvalid => error
+          c.render json: { form_error_message: error.message }
+          return
+        end
+        c.render json: { question: question.as_json(question_as_json_params) }
         return
       end
-      c.render json: { question: question.create_the_parameters_to_be_passed_to_the_js.as_json }
+
+    end
+
+    def question_as_json_params
+      { include: [:user, :moves_answers], only: Actb::Question.index_and_form_json_columns, methods: [:display_key2] }
     end
 
     def current_room_id
@@ -300,7 +277,7 @@ module FrontendScript
         time_limit_sec: 3 * 60,
         difficulty_level: 1,
         title: "(title)",
-        display_key: "public",
+        display_key2: "active",
       }
     end
 

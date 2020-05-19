@@ -40,12 +40,29 @@ Colosseum::User.setup
 end
 Actb::Question.count           # => 3
 
+# 最初の問題だけゴミ箱へ
+question = Actb::Question.first!
+# question.update!(folder: question.user.actb_trash_box) の方法はださい
+question.user.actb_trash_box.questions << question
+question.folder # => #<Actb::TrashBox id: 825, user_id: 275, type: "Actb::TrashBox", created_at: "2020-05-19 10:10:16", updated_at: "2020-05-19 10:10:16">
+
+question = Actb::Question.second!
+question.display_key2           # => "active"
+question.display_key2 = :draft
+question.save!                 # => 
+question.folder                # => 
+tp question.as_json
+exit
+
 # 部屋を立てる
 room = Actb::Room.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
 membership = room.memberships.first
+
+# 出題
+room.best_questions             # => 
 
 # すべての問題に解答する
 Actb::Question.all.each.with_index do |question, i|
@@ -58,32 +75,9 @@ user1.actb_good_marks.create!(question: Actb::Question.first!)
 user1.actb_bad_marks.create!(question: Actb::Question.second!)
 user1.actb_clip_marks.create!(question: Actb::Question.third!)
 
-# ゴミ箱へ
-question = Actb::Question.first!
-# question.update!(folder: question.user.actb_trash_box) の方法はださい
-question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 435, user_id: 145, type: "Actb::TrashBox", created_at: "2020-05-19 07:30:18", updated_at: "2020-05-19 07:30:18">
-
 tp Actb::Question
 
 tp Actb.info
-# >> |----+---------+-----------+-------------------------------------------+----------------+------------------+-------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
-# >> | id | user_id | folder_id | init_sfen                                 | time_limit_sec | difficulty_level | display_key | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | bad_marks_count | good_marks_count | clip_marks_count |
-# >> |----+---------+-----------+-------------------------------------------+----------------+------------------+-------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
-# >> | 22 |     145 |       435 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | public      | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-19 16:30:20 +0900 | 2020-05-19 16:30:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                1 |                0 |
-# >> | 23 |     145 |       433 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | public      | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-19 16:30:20 +0900 | 2020-05-18 17:30:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               1 |                0 |                0 |
-# >> | 24 |     145 |       433 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | public      | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-19 16:30:20 +0900 | 2020-05-18 18:30:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                0 |                1 |
-# >> |----+---------+-----------+-------------------------------------------+----------------+------------------+-------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
-# >> |-----------------+-------+--------|
-# >> | model           | count | 最終ID |
-# >> |-----------------+-------+--------|
-# >> | Colosseum::User |    13 |    157 |
-# >> | Actb::Question  |     3 |     24 |
-# >> | Actb::Room      |     1 |      8 |
-# >> | Actb::Season    |    11 |    126 |
-# >> | Actb::Profile   |    13 |    159 |
-# >> | Actb::GoodMark  |     1 |      8 |
-# >> | Actb::BadMark   |     1 |      8 |
-# >> | Actb::ClipMark  |     1 |      6 |
-# >> | Actb::Folder    |    39 |    471 |
-# >> |-----------------+-------+--------|
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activemodel-6.0.2.2/lib/active_model/attribute_methods.rb:431:in `method_missing': undefined local variable or method `question' for #<Actb::Question:0x00007ff5dc8f8958> (NameError)
+# ~> 	from /Users/ikeda/src/shogi_web/app/models/actb/question.rb:180:in `display_key2='
+# ~> 	from -:51:in `<main>'

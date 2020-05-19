@@ -104,7 +104,7 @@ export default {
       if (this.info.debug_scene === "result") {
         this.mode = "result"
       }
-      if (this.info.debug_scene === "builder") {
+      if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
         this.builder_handle()
       }
       if (this.info.debug_scene === "ranking") {
@@ -422,7 +422,6 @@ export default {
           this.talk("だめ", {rate: 1.5})
         }
       }
-      debugger
       this.silent_http_command("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
         if (e.retval) {
           this.$set(history, "good_p", e.retval.good_p)

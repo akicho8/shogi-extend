@@ -38,6 +38,32 @@
 
 module Actb
   class Question < ApplicationRecord
+    def self.index_and_form_json_columns
+      [
+        :id,
+        :init_sfen,
+        :time_limit_sec,
+        :difficulty_level,
+        :display_key,
+        :title,
+        :description,
+        :hint_description,
+        :source_desc,
+        :other_twitter_account,
+        :moves_answers_count,
+        :endpos_answers_count,
+        :o_count,
+        :x_count,
+        :bad_count,
+        :good_count,
+        :histories_count,
+        :favorites_count,
+        :bad_marks_count,
+        :good_marks_count,
+        :clip_marks_count,
+      ]
+    end
+
     belongs_to :user, class_name: "Colosseum::User" # 作者
     belongs_to :folder, class_name: "Actb::Folder"
 
@@ -87,7 +113,7 @@ module Actb
 
       self.display_key ||= :public
 
-      self.folder ||= user.actb_active_box
+      self.display_key2 ||= :active
     end
 
     with_options presence: true do
@@ -127,6 +153,7 @@ module Actb
               :other_twitter_account,
               :difficulty_level,
               :time_limit_sec,
+              :display_key2,
             ]))
 
         # if Rails.env.development?
@@ -166,10 +193,22 @@ module Actb
     end
 
     # jsに渡すパラメータを作る
-    def create_the_parameters_to_be_passed_to_the_js
-      hash = attributes
-      hash = hash.merge(moves_answers: moves_answers)
-      hash
+    # def create_the_parameters_to_be_passed_to_the_js
+    #   as_json
+    # 
+    #   hash = attributes
+    #   hash = hash.merge(moves_answers: moves_answers)
+    #   hash
+    # end
+
+    def display_key2
+      if folder
+        self.folder.class.name.demodulize.underscore.remove("_box")
+      end
+    end
+
+    def display_key2=(key)
+      self.folder = user.public_send("actb_#{key}_box")
     end
   end
 end

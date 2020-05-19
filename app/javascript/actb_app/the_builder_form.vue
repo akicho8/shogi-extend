@@ -22,12 +22,15 @@
   b-rate(v-model="$parent.$parent.$parent.question.difficulty_level" spaced :max="$parent.$parent.$parent.start_level_max" :show-score="false")
 
   b-field
-    b-radio-button(v-model="$parent.$parent.$parent.question.display_key" native-value="public")
+    b-radio-button(v-model="$parent.$parent.$parent.question.display_key2" native-value="active")
       b-icon(icon="check")
       span 公開
-    b-radio-button(v-model="$parent.$parent.$parent.question.display_key" native-value="private" type="is-danger")
-      b-icon(icon="lock")
-      span 非公開
+    b-radio-button(v-model="$parent.$parent.$parent.question.display_key2" native-value="draft" type="is-warning")
+      b-icon(icon="lock-outline")
+      span 下書き
+    b-radio-button(v-model="$parent.$parent.$parent.question.display_key2" native-value="trash" type="is-danger")
+      b-icon(icon="trash-can-outline")
+      span ゴミ箱
 </template>
 
 <script>

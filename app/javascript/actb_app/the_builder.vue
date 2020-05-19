@@ -134,6 +134,12 @@ export default {
     this.app.lobby_close()
 
     this.sound_play("click")
+
+    if (this.app.info.debug_scene === "builder_form") {
+      this.builder_new_handle()
+      return
+    }
+
     this.builder_index_handle()
     // this.exam_mode_handle()
   },
@@ -270,7 +276,10 @@ export default {
       // https://day.js.org/docs/en/durations/diffing
       const time_limit_sec = dayjs(this.time_limit_clock).diff(this.base_clock) / 1000
 
-      const params = {question: { ...this.question, time_limit_sec: time_limit_sec }}
+      const params = {
+        save_handle: true,
+        question: { ...this.question, time_limit_sec: time_limit_sec },
+      }
 
       // .add(this.question.time_limit_sec, "second").toDate()
 
@@ -280,12 +289,12 @@ export default {
 
       const before_crete_or_upate_name = this.crete_or_upate_name
       this.http_command("PUT", this.info.put_path, params, e => {
-        if (e.error_message) {
-          this.warning_notice(e.error_message)
+        if (e.form_error_message) {
+          this.warning_notice(e.form_error_message)
         }
         if (e.question) {
           this.question = e.question
-          
+
           this.time_limit_clock_set()
           this.ok_notice(`${before_crete_or_upate_name}しました`)
         }
@@ -325,6 +334,11 @@ export default {
       this.answer_tab_index = 0 // 解答リストの一番左指す
       this.answer_turn_offset = 0
       this.valid_count = 0
+
+      if (this.info.debug_scene === "builder_form") {
+        this.form_mode_handle()
+        return
+      }
 
       if (this.question_new_record_p) {
         this.edit_mode_handle()
