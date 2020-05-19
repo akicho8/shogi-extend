@@ -224,8 +224,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   create_table "actb_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "レーティング"
     t.integer "generation", null: false, comment: "世代"
+    t.datetime "begin_at", null: false, comment: "期間開始日時"
+    t.datetime "end_at", null: false, comment: "期間終了日時"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["begin_at"], name: "index_actb_seasons_on_begin_at"
+    t.index ["end_at"], name: "index_actb_seasons_on_end_at"
     t.index ["generation"], name: "index_actb_seasons_on_generation"
   end
 

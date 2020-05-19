@@ -40,6 +40,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
     create_table :actb_seasons do |t|
       t.string :name,        null: false, index: false, comment: "レーティング"
       t.integer :generation, null: false, index: true,  comment: "世代"
+      t.datetime :begin_at, null: false, index: true, comment: "期間開始日時"
+      t.datetime :end_at,   null: false, index: true, comment: "期間終了日時"
       t.timestamps
     end
 
