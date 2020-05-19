@@ -48,7 +48,7 @@
             template(v-for="i in quest.difficulty_level")
               | ★
 
-        //- | 難易度:{{$parent.current_simple_quest_info.difficulty_level}}
+        //- | 難易度:{{$parent.current_best_question.difficulty_level}}
         //- e.time_limit_sec        = 60 * 3
         //- e.difficulty_level      = 5
         //- e.title                 = "(title)"
@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     quest() {
-      return this.$parent.current_simple_quest_info
+      return this.$parent.current_best_question
     },
   },
 }

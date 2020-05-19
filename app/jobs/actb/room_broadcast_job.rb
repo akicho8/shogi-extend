@@ -3,7 +3,7 @@ module Actb
     queue_as :default
 
     def perform(room)
-      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:simple_quest_infos])
+      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions])
       ActionCable.server.broadcast("actb/lobby_channel", room: room_json)
     end
 

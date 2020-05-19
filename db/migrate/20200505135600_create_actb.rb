@@ -104,6 +104,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
 
     create_table :actb_questions do |t|
       t.belongs_to :user,                                                comment: "作成者"
+      t.belongs_to :folder,                                              comment: "フォルダ"
+
       t.string :init_sfen,                    null: false, index: true,  comment: "問題"
       t.integer :time_limit_sec,              null: true,  index: true,  comment: "制限時間(秒)"
       t.integer :difficulty_level,            null: true,  index: true,  comment: "難易度"
@@ -149,6 +151,13 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.string :end_sfen,  null: false, index: false, comment: "最後の局面"
       t.timestamps
     end
+
+    create_table :actb_folders do |t|
+      t.belongs_to :user
+      t.string :type, null: false
+      t.timestamps
+
+      t.index [:type, :user_id], unique: true
+    end
   end
 end
-# ~> -:1:in `<main>': uninitialized constant ActiveRecord (NameError)

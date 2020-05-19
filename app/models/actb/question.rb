@@ -39,6 +39,7 @@
 module Actb
   class Question < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User" # 作者
+    belongs_to :folder, class_name: "Actb::Folder"
 
     has_many :histories, dependent: :destroy # 出題履歴
 
@@ -85,6 +86,8 @@ module Actb
       self.good_count ||= 0
 
       self.display_key ||= :public
+
+      self.folder ||= user.actb_active_box
     end
 
     with_options presence: true do

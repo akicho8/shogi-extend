@@ -44,7 +44,8 @@ module Actb
       Actb::RoomBroadcastJob.perform_later(self)
     end
 
-    def simple_quest_infos
+    # 出題
+    def best_questions
       # QuestInfo.collect { |e| {
       #     init_sfen: e[:init_sfen],
       #     moves_answers: e[:moves_answers]

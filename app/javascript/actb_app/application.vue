@@ -330,7 +330,7 @@ export default {
         }) // --> app/channels/actb/room_channel.rb
 
         // 最後の問題を正解した
-        if (this.question_index >= this.current_simple_quest_info_size - 1) {
+        if (this.question_index >= this.current_best_question_size - 1) {
           this.freeze_mode = true
           this.delay(WAIT_SECOND, () => {
             this.$room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
@@ -338,7 +338,7 @@ export default {
         }
 
         // 問題を正解した(次の問題がある)
-        if (this.question_index < this.current_simple_quest_info_size - 1) {
+        if (this.question_index < this.current_best_question_size - 1) {
           this.freeze_mode = true
           this.delay(WAIT_SECOND, () => {
             this.question_index += 1
@@ -349,7 +349,7 @@ export default {
               membership_id: this.current_membership.id,
               question_id: this.current_question_id,
               question_index: this.question_index,
-              current_simple_quest_info_size: this.current_simple_quest_info_size,
+              current_best_question_size: this.current_best_question_size,
             }) // --> app/channels/actb/room_channel.rb
 
           })
@@ -457,30 +457,30 @@ export default {
         return this.room.memberships.find(e => e.user.id === this.current_user.id)
       }
     },
-    current_simple_quest_info() {
+    current_best_question() {
       if (this.room) {
-        return this.room.simple_quest_infos[this.question_index]
+        return this.room.best_questions[this.question_index]
       }
     },
-    current_simple_quest_info_size() {
+    current_best_question_size() {
       if (this.room) {
-        return this.room.simple_quest_infos.length
+        return this.room.best_questions.length
       }
     },
     current_quest_init_sfen() {
-      const info = this.current_simple_quest_info
+      const info = this.current_best_question
       if (info) {
         return info.init_sfen
       }
     },
     current_quest_answers() {
-      const info = this.current_simple_quest_info
+      const info = this.current_best_question
       if (info) {
         return info.moves_answers.map(e => [info.init_sfen, "moves", e.moves_str].join(" "))
       }
     },
     current_question_id() {
-      const info = this.current_simple_quest_info
+      const info = this.current_best_question
       if (info) {
         return info.id
       }

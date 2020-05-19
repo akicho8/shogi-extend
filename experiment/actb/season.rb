@@ -15,12 +15,13 @@ tp Actb.info
 # >> |-----------------+-------+--------|
 # >> | model           | count | 最終ID |
 # >> |-----------------+-------+--------|
-# >> | Colosseum::User |     1 |     35 |
+# >> | Colosseum::User |     1 |     14 |
 # >> | Actb::Question  |     0 |        |
 # >> | Actb::Room      |     0 |        |
-# >> | Actb::Season    |     2 |     29 |
-# >> | Actb::Profile   |     2 |     43 |
+# >> | Actb::Season    |     2 |      5 |
+# >> | Actb::Profile   |     2 |     16 |
 # >> | Actb::GoodMark  |     0 |        |
 # >> | Actb::BadMark   |     0 |        |
 # >> | Actb::ClipMark  |     0 |        |
+# >> | Actb::Folder    |     3 |     42 |
 # >> |-----------------+-------+--------|

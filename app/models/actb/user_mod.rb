@@ -3,6 +3,7 @@ module Actb
     included do
       include UserMod::ClipMod
       include UserMod::VoteMod
+      include UserMod::FolderMod
 
       # 対局
       has_many :actb_rooms, class_name: "Actb::Room", through: :memberships                           # 対局(複数)

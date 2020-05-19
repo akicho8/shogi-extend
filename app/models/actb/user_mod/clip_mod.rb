@@ -2,7 +2,7 @@ module Actb
   module UserMod
     concern :ClipMod do
       included do
-        has_many :actb_clip_marks, class_name: "ClipMark", dependent: :destroy
+        has_many :actb_clip_marks, class_name: "Actb::ClipMark", dependent: :destroy
       end
 
       def clip_p(question)

@@ -74,6 +74,15 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["user_id"], name: "index_actb_favorites_on_user_id"
   end
 
+  create_table "actb_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["type", "user_id"], name: "index_actb_folders_on_type_and_user_id", unique: true
+    t.index ["user_id"], name: "index_actb_folders_on_user_id"
+  end
+
   create_table "actb_good_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "自分"
     t.bigint "question_id", comment: "出題"
@@ -167,6 +176,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "作成者"
+    t.bigint "folder_id", comment: "フォルダ"
     t.string "init_sfen", null: false, comment: "問題"
     t.integer "time_limit_sec", comment: "制限時間(秒)"
     t.integer "difficulty_level", comment: "難易度"
@@ -192,6 +202,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
     t.index ["display_key"], name: "index_actb_questions_on_display_key"
     t.index ["endpos_answers_count"], name: "index_actb_questions_on_endpos_answers_count"
+    t.index ["folder_id"], name: "index_actb_questions_on_folder_id"
     t.index ["init_sfen"], name: "index_actb_questions_on_init_sfen"
     t.index ["moves_answers_count"], name: "index_actb_questions_on_moves_answers_count"
     t.index ["o_count"], name: "index_actb_questions_on_o_count"
