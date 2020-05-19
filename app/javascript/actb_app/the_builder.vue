@@ -190,14 +190,17 @@ export default {
 
       this.question.moves_answers.push({moves_str: moves_str, end_sfen: this.mediator_snapshot_sfen})
       this.$nextTick(() => this.answer_tab_index = this.question.moves_answers.length - 1)
+
       this.sound_play("click")
       this.ok_notice(`${this.question.moves_answers.length}つ目の正解を追加しました`)
     },
 
-    kotae_delete_handle(index) {
+    moves_answer_delete_handle(index) {
       const new_ary = this.question.moves_answers.filter((e, i) => i !== index)
       this.$set(this.question, "moves_answers", new_ary)
       this.$nextTick(() => this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.question.moves_answers.length - 1))
+
+      this.sound_play("click")
       this.ok_notice("削除しました")
     },
 
@@ -494,21 +497,6 @@ export default {
       margin-left: 0.5rem
       vertical-align: 20%       // 小さくしたぶんだけ上に上げる
       font-size: 0.6rem         // 小さくしないと下の線がずれる
-
-  // この手順を正解にする
-  .konotejunsiikai
-    margin-top: 0.3rem
-
-  // 正解のタブ
-  .answer_tabs
-    margin-top: 0.8rem
-    .tab-content
-      padding: 0.8rem 0
-      position: relative
-      .delete_button
-        position: absolute
-        top: 0.5rem
-        right: 0.5rem
 
   ////////////////////////////////////////////////////////////////////////////////
   .save_container

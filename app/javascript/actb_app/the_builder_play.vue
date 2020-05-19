@@ -39,7 +39,8 @@
           :sound_effect="true"
           :volume="0.5"
           )
-        b-button.delete_button(type="is-danger" icon-left="trash-can-outline" @click="$parent.$parent.$parent.kotae_delete_handle(i)" size="is-small")
+        .delete_button.is_clickable(@click="$parent.$parent.$parent.moves_answer_delete_handle(i)")
+          b-icon(type="is-danger" icon="trash-can-outline")
 </template>
 
 <script>
@@ -58,4 +59,18 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_builder_play
+  // この手順を正解にする
+  .konotejunsiikai
+    margin-top: 0.3rem
+
+  // 正解のタブ
+  .answer_tabs
+    margin-top: 0.8rem
+    .tab-content
+      padding: 0.8rem 0
+      position: relative
+      .delete_button
+        position: absolute
+        top: 0.5rem
+        right: 0.5rem
 </style>
