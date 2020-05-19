@@ -16,7 +16,7 @@ module Actb
   class AnsResult < ApplicationRecord
     class << self
       def setup(options = {})
-        ::Actb::AnsResultInfo.each do |e|
+        ::AnsResultInfo.each do |e|
           find_or_create_by!(key: e.key)
         end
       end

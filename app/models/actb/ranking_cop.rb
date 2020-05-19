@@ -40,7 +40,7 @@ module Actb
     def top_users
       @top_users ||= -> {
         s = base_scope
-        s = s.order(Actb::Profile.arel_table[ranking_key].desc).order(:created_at)
+        s = s.order(Profile.arel_table[ranking_key].desc).order(:created_at)
         s = s.limit(record_max)
         if params[:shuffle] == "true"
           s = s.shuffle
@@ -55,7 +55,7 @@ module Actb
     # 自分より上に何人いるかで自分の順位がわかる
     # SELECT COUNT(*)+1 as rank FROM users WHERE score > 自分のスコア
     def user_rank
-      base_scope.where(Actb::Profile.arel_table[ranking_key].gt(user_score)).count.next
+      base_scope.where(Profile.arel_table[ranking_key].gt(user_score)).count.next
     end
 
     def ranking_key
@@ -65,7 +65,7 @@ module Actb
     def base_scope
       s = Colosseum::User.all
       s = s.joins(:actb_profile)
-      s = s.where(Actb::Profile.arel_table[:season_id].eq(current_season.id))
+      s = s.where(Profile.arel_table[:season_id].eq(current_season.id))
     end
 
     def user_score
@@ -92,9 +92,9 @@ module Actb
 
     def current_season
       if v = params[:season_id].presence
-        Actb::Season.find(v)
+        Season.find(v)
       else
-        Actb::Season.newest
+        Season.newest
       end
     end
   end

@@ -9,13 +9,15 @@
 # | id         | ID         | integer(8)  | NOT NULL PK |      |       |
 # | name       | Name       | string(255) | NOT NULL    |      |       |
 # | generation | Generation | integer(4)  | NOT NULL    |      | A     |
+# | begin_at   | Begin at   | datetime    | NOT NULL    |      | B     |
+# | end_at     | End at     | datetime    | NOT NULL    |      | C     |
 # | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
 # |------------+------------+-------------+-------------+------+-------|
 
 module Actb
   class Season < ApplicationRecord
-    has_many :profiles, class_name: "Actb::Profile", dependent: :destroy
+    has_many :profiles, class_name: "Profile", dependent: :destroy
 
     scope :newest_order, -> { order(generation: :desc) }
     scope :oldest_order, -> { order(generation: :asc)  }
