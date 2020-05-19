@@ -4,7 +4,7 @@ module Actb
       included do
         cattr_accessor(:folder_keys) { [:active, :draft, :trash] }
 
-        has_many :folders, dependent: :destroy
+        has_many :folders, class_name: "Actb::Folder", dependent: :destroy
 
         folder_keys.each do |key|
           has_one :"actb_#{key}_box", class_name: "::" + "actb/#{key}_box".classify, dependent: :destroy

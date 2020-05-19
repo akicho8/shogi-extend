@@ -8,10 +8,11 @@
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 # | id                    | ID                    | integer(8)  | NOT NULL PK         |                       |       |
 # | user_id               | User                  | integer(8)  |                     | => Colosseum::User#id | A     |
-# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | B     |
-# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | C     |
-# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | D     |
-# | display_key           | Display key           | string(255) |                     |                       | E     |
+# | folder_id             | Folder                | integer(8)  |                     | => Actb::Folder#id    | B     |
+# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | C     |
+# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | D     |
+# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | E     |
+# | display_key           | Display key           | string(255) |                     |                       | F     |
 # | title                 | タイトル              | string(255) |                     |                       |       |
 # | description           | 説明                  | string(512) |                     |                       |       |
 # | hint_description      | Hint description      | string(255) |                     |                       |       |
@@ -19,10 +20,10 @@
 # | other_twitter_account | Other twitter account | string(255) |                     |                       |       |
 # | created_at            | 作成日時              | datetime    | NOT NULL            |                       |       |
 # | updated_at            | 更新日時              | datetime    | NOT NULL            |                       |       |
-# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | F     |
-# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | G     |
-# | o_count               | O count               | integer(4)  | NOT NULL            |                       | H     |
-# | x_count               | X count               | integer(4)  | NOT NULL            |                       | I     |
+# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | G     |
+# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | H     |
+# | o_count               | O count               | integer(4)  | NOT NULL            |                       | I     |
+# | x_count               | X count               | integer(4)  | NOT NULL            |                       | J     |
 # | bad_count             | Bad count             | integer(4)  | NOT NULL            |                       |       |
 # | good_count            | Good count            | integer(4)  | NOT NULL            |                       |       |
 # | histories_count       | Histories count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
@@ -33,7 +34,8 @@
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :actb_clip_marks
+# Actb::Folder.has_many :questions
+# Colosseum::User.has_one :actb_profile
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -44,7 +46,7 @@ module Actb
         :init_sfen,
         :time_limit_sec,
         :difficulty_level,
-        :display_key,
+        # :display_key,
         :title,
         :description,
         :hint_description,
@@ -111,9 +113,9 @@ module Actb
       self.bad_count ||= 0
       self.good_count ||= 0
 
-      self.display_key ||= :public
+      # self.display_key ||= :public
 
-      self.display_key2 ||= :active
+      self.folder_key ||= :active
     end
 
     with_options presence: true do
@@ -124,7 +126,7 @@ module Actb
     with_options allow_blank: true do
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-      validates :display_key, inclusion: DisplayInfo.keys.collect(&:to_s)
+      # validates :display_key, inclusion: DisplayInfo.keys.collect(&:to_s)
     end
 
     # jsから来たパラメーターでまとめて更新する
@@ -153,7 +155,7 @@ module Actb
               :other_twitter_account,
               :difficulty_level,
               :time_limit_sec,
-              :display_key2,
+              :folder_key,
             ]))
 
         # if Rails.env.development?
@@ -201,13 +203,13 @@ module Actb
     #   hash
     # end
 
-    def display_key2
+    def folder_key
       if folder
         self.folder.class.name.demodulize.underscore.remove("_box")
       end
     end
 
-    def display_key2=(key)
+    def folder_key=(key)
       self.folder = user.public_send("actb_#{key}_box")
     end
   end

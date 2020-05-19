@@ -47,8 +47,8 @@ question.user.actb_trash_box.questions << question
 question.folder # => #<Actb::TrashBox id: 825, user_id: 275, type: "Actb::TrashBox", created_at: "2020-05-19 10:10:16", updated_at: "2020-05-19 10:10:16">
 
 question = Actb::Question.second!
-question.display_key2           # => "active"
-question.display_key2 = :draft
+question.folder_key           # => "active"
+question.folder_key = :draft
 question.save!                 # => 
 question.folder                # => 
 tp question.as_json
@@ -79,5 +79,5 @@ tp Actb::Question
 
 tp Actb.info
 # ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activemodel-6.0.2.2/lib/active_model/attribute_methods.rb:431:in `method_missing': undefined local variable or method `question' for #<Actb::Question:0x00007ff5dc8f8958> (NameError)
-# ~> 	from /Users/ikeda/src/shogi_web/app/models/actb/question.rb:180:in `display_key2='
+# ~> 	from /Users/ikeda/src/shogi_web/app/models/actb/question.rb:180:in `folder_key='
 # ~> 	from -:51:in `<main>'

@@ -51,7 +51,7 @@ module Colosseum
       user.destroy!
     end
 
-    context "対戦リクエスト" do
+    xcontext "対戦リクエスト" do
       it "自分vs自分" do
         @user1 = create_user(:team_p4vs4, "平手", "平手")
         battle = @user1.battle_with(@user1)

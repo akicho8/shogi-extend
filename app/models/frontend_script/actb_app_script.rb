@@ -85,7 +85,7 @@ module FrontendScript
         s = sort_scope(s)       # sort_mod.rb
 
         retv = {**page_info(s), **sort_info}
-        retv[:questions] = s.as_json(include: [:user, :moves_answers], only: Actb::Question.index_and_form_json_columns, methods: [:display_key2])
+        retv[:questions] = s.as_json(include: [:user, :moves_answers], only: Actb::Question.index_and_form_json_columns, methods: [:folder_key])
 
         return retv
       end
@@ -242,7 +242,7 @@ module FrontendScript
     end
 
     def question_as_json_params
-      { include: [:user, :moves_answers], only: Actb::Question.index_and_form_json_columns, methods: [:display_key2] }
+      { include: [:user, :moves_answers], only: Actb::Question.index_and_form_json_columns, methods: [:folder_key] }
     end
 
     def current_room_id
@@ -277,7 +277,7 @@ module FrontendScript
         time_limit_sec: 3 * 60,
         difficulty_level: 1,
         title: "(title)",
-        display_key2: "active",
+        folder_key: "active",
       }
     end
 
