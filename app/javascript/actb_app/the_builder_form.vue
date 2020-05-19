@@ -21,6 +21,15 @@
   label.is-size-7.has-text-weight-bold 難易度
   b-rate(v-model="$parent.$parent.$parent.question.difficulty_level" spaced :max="$parent.$parent.$parent.start_level_max" :show-score="false")
 
+  label.is-size-7.has-text-weight-bold 種類
+  b-field
+    b-radio-button(v-model="$parent.$parent.$parent.question.kind.key" native-value="詰将棋") 詰将棋
+    b-radio-button(v-model="$parent.$parent.$parent.question.kind.key" native-value="手筋") 手筋
+    b-radio-button(v-model="$parent.$parent.$parent.question.kind.key" native-value="必死") 必死
+    b-radio-button(v-model="$parent.$parent.$parent.question.kind.key" native-value="定跡") 定跡
+    b-radio-button(v-model="$parent.$parent.$parent.question.kind.key" native-value="秘密") 秘密
+
+  label.is-size-7.has-text-weight-bold フォルダ
   b-field
     b-radio-button(v-model="$parent.$parent.$parent.question.folder_key" native-value="active")
       b-icon(icon="check")

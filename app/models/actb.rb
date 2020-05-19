@@ -6,11 +6,11 @@ module Actb
   end
 
   def setup(options = {})
-    Seed.run(options)
+    eval Pathname("#{__dir__}/actb/seeds.rb").read, binding
   end
 
   def models
-    [Question, Room, Season, Profile, GoodMark, BadMark, ClipMark, Folder]
+    [Question, Room, Season, Profile, GoodMark, BadMark, ClipMark, Folder, Kind]
   end
 
   def destroy_all

@@ -105,11 +105,11 @@ class CreateActb < ActiveRecord::Migration[6.0]
     create_table :actb_questions do |t|
       t.belongs_to :user,                                                comment: "作成者"
       t.belongs_to :folder,                                              comment: "フォルダ"
+      t.belongs_to :kind,                                                comment: "種類"
 
       t.string :init_sfen,                    null: false, index: true,  comment: "問題"
       t.integer :time_limit_sec,              null: true,  index: true,  comment: "制限時間(秒)"
       t.integer :difficulty_level,            null: true,  index: true,  comment: "難易度"
-      # t.string :display_key,                  null: true,  index: true,  comment: "表示設定"
       t.string :title,                        null: true,  index: false, comment: "タイトル"
       t.string :description,      limit: 512, null: true,  index: false, comment: "説明"
       t.string :hint_description,             null: true,  index: false, comment: "ヒント"
@@ -158,6 +158,11 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
 
       t.index [:type, :user_id], unique: true
+    end
+
+    create_table :actb_kinds do |t|
+      t.string :key, null: false
+      t.timestamps
     end
   end
 end

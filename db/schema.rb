@@ -108,6 +108,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["user_id"], name: "index_actb_histories_on_user_id"
   end
 
+  create_table "actb_kinds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "actb_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "対戦者"
     t.string "body", limit: 512, comment: "発言"
@@ -177,10 +183,10 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   create_table "actb_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "作成者"
     t.bigint "folder_id", comment: "フォルダ"
+    t.bigint "kind_id", comment: "種類"
     t.string "init_sfen", null: false, comment: "問題"
     t.integer "time_limit_sec", comment: "制限時間(秒)"
     t.integer "difficulty_level", comment: "難易度"
-    t.string "display_key", comment: "表示設定"
     t.string "title", comment: "タイトル"
     t.string "description", limit: 512, comment: "説明"
     t.string "hint_description", comment: "ヒント"
@@ -200,10 +206,10 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "good_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
-    t.index ["display_key"], name: "index_actb_questions_on_display_key"
     t.index ["endpos_answers_count"], name: "index_actb_questions_on_endpos_answers_count"
     t.index ["folder_id"], name: "index_actb_questions_on_folder_id"
     t.index ["init_sfen"], name: "index_actb_questions_on_init_sfen"
+    t.index ["kind_id"], name: "index_actb_questions_on_kind_id"
     t.index ["moves_answers_count"], name: "index_actb_questions_on_moves_answers_count"
     t.index ["o_count"], name: "index_actb_questions_on_o_count"
     t.index ["time_limit_sec"], name: "index_actb_questions_on_time_limit_sec"

@@ -264,8 +264,11 @@ export default {
 
       if (this.question_new_record_p) {
         if (this.valid_count === 0) {
-          this.warning_notice("1回ぐらい検証してください")
-          return
+          if (this.development_p) {
+          } else {
+            this.warning_notice("1回ぐらい検証してください")
+            return
+          }
         }
       }
 
@@ -280,6 +283,7 @@ export default {
         save_handle: true,
         question: { ...this.question, time_limit_sec: time_limit_sec },
       }
+      debugger
 
       // .add(this.question.time_limit_sec, "second").toDate()
 

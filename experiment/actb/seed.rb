@@ -5,6 +5,8 @@ Colosseum::User.delete_all
 Actb.destroy_all
 Actb.setup
 
+Actb::Kind.all.collect(&:key)                 # => ["詰将棋", "手筋"]
+
 10.times do
   Actb::Season.create!
 end
@@ -40,19 +42,23 @@ Colosseum::User.setup
 end
 Actb::Question.count           # => 3
 
+question = Actb::Question.first!
+question.kind.key               # => "詰将棋"
+
 # 最初の問題だけゴミ箱へ
 question = Actb::Question.first!
 # question.update!(folder: question.user.actb_trash_box) の方法はださい
 question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 825, user_id: 275, type: "Actb::TrashBox", created_at: "2020-05-19 10:10:16", updated_at: "2020-05-19 10:10:16">
+question.folder # => #<Actb::TrashBox id: 195, user_id: 65, type: "Actb::TrashBox", created_at: "2020-05-19 13:12:37", updated_at: "2020-05-19 13:12:37">
 
+# 2番目の問題は下書きへ
 question = Actb::Question.second!
 question.folder_key           # => "active"
 question.folder_key = :draft
-question.save!                 # => 
-question.folder                # => 
-tp question.as_json
-exit
+question.save!                 # => true
+question.folder.type           # => "Actb::DraftBox"
+# tp question.as_json
+# exit
 
 # 部屋を立てる
 room = Actb::Room.create! do |e|
@@ -62,7 +68,7 @@ end
 membership = room.memberships.first
 
 # 出題
-room.best_questions             # => 
+room.best_questions             # => [{"id"=>15, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>65, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"limit_turn"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"limit_turn"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"limit_turn"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
 
 # すべての問題に解答する
 Actb::Question.all.each.with_index do |question, i|
@@ -78,6 +84,24 @@ user1.actb_clip_marks.create!(question: Actb::Question.third!)
 tp Actb::Question
 
 tp Actb.info
-# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activemodel-6.0.2.2/lib/active_model/attribute_methods.rb:431:in `method_missing': undefined local variable or method `question' for #<Actb::Question:0x00007ff5dc8f8958> (NameError)
-# ~> 	from /Users/ikeda/src/shogi_web/app/models/actb/question.rb:180:in `folder_key='
-# ~> 	from -:51:in `<main>'
+# >> |----+---------+-----------+---------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
+# >> | id | user_id | folder_id | kind_id | init_sfen                                 | time_limit_sec | difficulty_level | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | bad_marks_count | good_marks_count | clip_marks_count |
+# >> |----+---------+-----------+---------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
+# >> | 13 |      65 |       195 |      15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-19 22:12:39 +0900 | 2020-05-19 22:12:39 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                1 |                0 |
+# >> | 14 |      65 |       194 |      15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-19 22:12:39 +0900 | 2020-05-19 22:12:39 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               1 |                0 |                0 |
+# >> | 15 |      65 |       193 |      15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-19 22:12:39 +0900 | 2020-05-19 00:12:39 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                0 |                1 |
+# >> |----+---------+-----------+---------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
+# >> |-----------------+-------+--------|
+# >> | model           | count | 最終ID |
+# >> |-----------------+-------+--------|
+# >> | Colosseum::User |    13 |     77 |
+# >> | Actb::Question  |     3 |     15 |
+# >> | Actb::Room      |     1 |      3 |
+# >> | Actb::Season    |    11 |     58 |
+# >> | Actb::Profile   |    13 |     77 |
+# >> | Actb::GoodMark  |     1 |      3 |
+# >> | Actb::BadMark   |     1 |      3 |
+# >> | Actb::ClipMark  |     1 |      3 |
+# >> | Actb::Folder    |    39 |    231 |
+# >> | Actb::Kind      |     2 |     16 |
+# >> |-----------------+-------+--------|

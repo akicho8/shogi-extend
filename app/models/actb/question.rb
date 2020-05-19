@@ -67,7 +67,8 @@ module Actb
     end
 
     belongs_to :user, class_name: "Colosseum::User" # 作者
-    belongs_to :folder, class_name: "Actb::Folder"
+    belongs_to :folder # , class_name: "Actb::Folder"
+    belongs_to :kind # , class_name: "Actb::Kind"
 
     has_many :histories, dependent: :destroy # 出題履歴
 
@@ -113,8 +114,7 @@ module Actb
       self.bad_count ||= 0
       self.good_count ||= 0
 
-      # self.display_key ||= :public
-
+      self.kind ||= Kind.fetch("詰将棋")
       self.folder_key ||= :active
     end
 
@@ -158,6 +158,8 @@ module Actb
               :folder_key,
             ]))
 
+        self.kind = Kind.fetch(question[:kind][:key])
+
         # if Rails.env.development?
         #   if new_record?
         #     parts = init_sfen.split
@@ -197,7 +199,7 @@ module Actb
     # jsに渡すパラメータを作る
     # def create_the_parameters_to_be_passed_to_the_js
     #   as_json
-    # 
+    #
     #   hash = attributes
     #   hash = hash.merge(moves_answers: moves_answers)
     #   hash
