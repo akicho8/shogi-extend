@@ -25,8 +25,8 @@ module Actb
 
     class << self
       def setup(options = {})
-        unless Season.exists?
-          Season.create!
+        unless exists?
+          create!
         end
       end
 
@@ -36,10 +36,20 @@ module Actb
     end
 
     before_validation do
-      self.generation ||= Season.count.next
+      self.generation ||= next_generation
       self.name = "シーズン#{generation}"
       self.begin_at ||= Time.current.beginning_of_month
       self.end_at   ||= Time.current.beginning_of_month.next_month(3)
+    end
+
+    private
+
+    def next_generation
+      if record = self.class.newest_order.first
+        record.generation.next
+      else
+        Season.count.next
+      end
     end
   end
 end
