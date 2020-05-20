@@ -485,19 +485,6 @@ export default {
   // .switch_grouped_container
   //   margin-top: 0.5rem
 
-  .main_tabs
-    a
-      height: $actb_primary_header_height
-      padding: 0
-    .tab-content
-      padding: 0
-
-  .main_tabs
-    .tag
-      margin-left: 0.5rem
-      vertical-align: 20%       // 小さくしたぶんだけ上に上げる
-      font-size: 0.6rem         // 小さくしないと下の線がずれる
-
   ////////////////////////////////////////////////////////////////////////////////
   .save_container
 

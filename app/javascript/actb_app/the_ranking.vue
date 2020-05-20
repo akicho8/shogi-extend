@@ -175,14 +175,6 @@ export default {
 .the_ranking
   @extend %padding_top_for_secondary_header
 
-  // 共通化する
-  .main_tabs
-    a
-      height: $actb_primary_header_height
-      padding: 0
-    .tab-content
-      padding: 0
-
   .current_user_rank_record
     margin-top: 0               // ランキング外のrowの上の隙間
 </style>

@@ -28,3 +28,15 @@
     z-index: 1
     top: $actb_primary_header_height
     background: change_color($white, $alpha: 0.96)
+
+    // 共通化する
+    .main_tabs
+      a
+        height: $actb_primary_header_height
+        padding: 0
+      .tab-content
+        padding: 0
+      .tag
+        margin-left: 0.5rem
+        vertical-align: 20%       // 小さくしたぶんだけ上に上げる
+        font-size: 0.6rem         // 小さくしないと下の線がずれる

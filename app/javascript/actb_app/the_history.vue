@@ -92,10 +92,4 @@ export default {
 @import "support.sass"
 .the_history
   @extend %padding_top_for_secondary_header
-  .main_tabs
-    a
-      height: $actb_primary_header_height
-      padding: 0
-    .tab-content
-      padding: 0
 </style>

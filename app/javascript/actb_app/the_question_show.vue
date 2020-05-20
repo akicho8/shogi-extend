@@ -85,14 +85,6 @@ export default {
   .primary_header
     justify-content: space-between
 
-  .secondary_header
-    .main_tabs
-      a
-        height: $actb_primary_header_height
-        padding: 0
-      .tab-content
-        padding: 0
-
   .sp_container
     margin-top: 1.5rem
 
