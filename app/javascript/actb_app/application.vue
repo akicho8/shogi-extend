@@ -20,8 +20,6 @@
 </template>
 
 <script>
-const WAIT_SECOND = 1.5
-
 import consumer from "channels/consumer"
 
 import support   from "./support.js"
@@ -42,12 +40,17 @@ import the_builder          from "./the_builder.vue"
 import the_ranking          from "./the_ranking.vue"
 import the_history          from "./the_history.vue"
 
+import { application_room } from "./application_room.js"
+
 export default {
   store: the_store,
   name: "actb_app",
   mixins: [
     support,
+
     the_question_show_mod,
+
+    application_room,
   ],
   components: {
     the_question_show,
@@ -74,9 +77,6 @@ export default {
       matching_list:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
       room_user_ids:   null, // オンライン人数
-      question_index:     null, // 正解中の問題インデックス
-      freeze_mode:     null, // 正解直後に間を開けているとき true になっている
-      progress_info:   null, // 各 membership_id はどこまで進んでいるかわかる {"1" => 2, "3" => 4}
 
       // チャット用
       room_messages: null, // メッセージ(複数)
@@ -87,9 +87,9 @@ export default {
       lobby_message:  null, // 入力中のメッセージ
 
       // private
-      // $school: null, // --> app/channels/actb/school_channel.rb
-      // $lobby:  null, // --> app/channels/actb/lobby_channel.rb
-      // $room:   null, // --> app/channels/actb/room_channel.rb
+      // $ac_school: null, // --> app/channels/actb/school_channel.rb
+      // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
+      // $ac_room:   null, // --> app/channels/actb/room_channel.rb
     }
   },
 
@@ -139,7 +139,7 @@ export default {
     },
 
     lobby_speak(message) {
-      this.$lobby.perform("speak", {message: message})
+      this.$ac_lobby.perform("speak", {message: message})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -150,13 +150,13 @@ export default {
     },
 
     room_speak(message) {
-      this.$room.perform("speak", {message: message})
+      this.$ac_room.perform("speak", {message: message})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
     school_setup() {
-      this.$school = consumer.subscriptions.create({channel: "Actb::SchoolChannel"}, {
+      this.$ac_school = consumer.subscriptions.create({channel: "Actb::SchoolChannel"}, {
         connected: () => {
           this.debug_alert("school 接続")
           this.ac_info_update()
@@ -181,8 +181,8 @@ export default {
       this.lobby_message = ""
 
       this.debug_alert("lobby_setup")
-      this.__assert(this.$lobby == null)
-      this.$lobby = consumer.subscriptions.create({channel: "Actb::LobbyChannel"}, {
+      this.__assert(this.$ac_lobby == null)
+      this.$ac_lobby = consumer.subscriptions.create({channel: "Actb::LobbyChannel"}, {
         connected: () => {
           this.debug_alert("lobby 接続")
           this.ac_info_update()
@@ -240,67 +240,7 @@ export default {
     cancel_handle() {
       this.sound_play("click")
       this.mode = "lobby"
-      this.$lobby.perform("matching_cancel")
-    },
-
-    room_setup() {
-      this.mode = "room"
-
-      this.room_messages = []
-      this.room_message = ""
-
-      this.freeze_mode = false
-      this.progress_info = {}
-
-      this.question_index = 0
-      this.sound_play("deden")
-
-      this.__assert(this.$room == null)
-      this.$room = consumer.subscriptions.create({ channel: "Actb::RoomChannel", room_id: this.room.id }, {
-        connected: () => {
-          this.debug_alert("room 接続")
-          this.ac_info_update()
-
-          this.$room.perform("start_hook", {
-            membership_id: this.current_membership.id,
-            question_id: this.current_question_id,
-            question_index: this.question_index,
-          }) // --> app/channels/actb/room_channel.rb
-        },
-        disconnected: () => {
-          alert("room disconnected")
-          this.debug_alert("room 切断")
-          this.ac_info_update()
-        },
-        received: (data) => {
-          this.debug_alert("room 受信")
-
-          // チャット
-          if (data.message) {
-            const message = data.message
-
-            this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
-            this.talk(message.body, {rate: 1.5})
-
-            this.room_messages.push(message)
-          }
-
-          // 状況を反映する (なるべく小さなデータで共有する)
-          if (data.correct_hook) {
-            const e = data.correct_hook
-            this.$set(this.progress_info, e.membership_id, e.question_index)
-            if (e.membership_id !== this.current_membership.id) {
-              this.sound_play("pipopipo")
-            }
-          }
-
-          // 終了
-          if (data.switch_to === "result") {
-            this.mode = "result"
-            this.room = data.room
-          }
-        },
-      })
+      this.$ac_lobby.perform("matching_cancel")
     },
 
     lobby_handle() {
@@ -315,57 +255,6 @@ export default {
       }
     },
 
-    play_mode_advanced_full_moves_sfen_set(long_sfen) {
-      if (this.freeze_mode) {
-        return
-      }
-
-      if (this.current_quest_answers.includes(this.position_sfen_remove(long_sfen))) {
-        // 正解
-        this.sound_play("pipopipo")
-        this.$room.perform("correct_hook", {
-          membership_id: this.current_membership.id,
-          question_id: this.current_question_id, // 問題ID
-          question_index: this.question_index + 1,
-        }) // --> app/channels/actb/room_channel.rb
-
-        // 最後の問題を正解した
-        if (this.question_index >= this.current_best_question_size - 1) {
-          this.freeze_mode = true
-          this.delay(WAIT_SECOND, () => {
-            this.$room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
-          })
-        }
-
-        // 問題を正解した(次の問題がある)
-        if (this.question_index < this.current_best_question_size - 1) {
-          this.freeze_mode = true
-          this.delay(WAIT_SECOND, () => {
-            this.question_index += 1
-            this.sound_play("deden")
-            this.freeze_mode = false
-
-            this.$room.perform("next_hook", {
-              membership_id: this.current_membership.id,
-              question_id: this.current_question_id,
-              question_index: this.question_index,
-              current_best_question_size: this.current_best_question_size,
-            }) // --> app/channels/actb/room_channel.rb
-
-          })
-        }
-      }
-      // if (long_sfen === "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 moves G*5b") {
-      //   this.$room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
-      // }
-    },
-
-    quest_index_for(membership) {
-      if (this.progress_info) {
-        return this.progress_info[membership.id] || 0
-      }
-    },
-
     login_required2() {
       if (!this.current_user) {
         this.url_open(this.login_path)
@@ -375,17 +264,9 @@ export default {
     },
 
     lobby_close() {
-      if (this.$lobby) {
-        this.$lobby.unsubscribe()
-        this.$lobby = null
-        this.ac_info_update()
-      }
-    },
-
-    room_unsubscribe() {
-      if (this.$room) {
-        this.$room.unsubscribe()
-        this.$room = null
+      if (this.$ac_lobby) {
+        this.$ac_lobby.unsubscribe()
+        this.$ac_lobby = null
         this.ac_info_update()
       }
     },
@@ -450,39 +331,6 @@ export default {
   computed: {
     current_user() {
       return this.info.current_user
-    },
-    current_membership() {
-      if (this.room) {
-        return this.room.memberships.find(e => e.user.id === this.current_user.id)
-      }
-    },
-    current_best_question() {
-      if (this.room) {
-        return this.room.best_questions[this.question_index]
-      }
-    },
-    current_best_question_size() {
-      if (this.room) {
-        return this.room.best_questions.length
-      }
-    },
-    current_quest_init_sfen() {
-      const info = this.current_best_question
-      if (info) {
-        return info.init_sfen
-      }
-    },
-    current_quest_answers() {
-      const info = this.current_best_question
-      if (info) {
-        return info.moves_answers.map(e => [info.init_sfen, "moves", e.moves_str].join(" "))
-      }
-    },
-    current_question_id() {
-      const info = this.current_best_question
-      if (info) {
-        return info.id
-      }
     },
 
     // いったんスクリプトに飛ばしているのは sessions[:return_to] を設定するため

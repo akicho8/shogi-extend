@@ -16,8 +16,8 @@ export default {
     matching_init() {
       this.interval_timer_clear()
       this.interval_timer_count = -1
-      this.processing_while_waiting()
-      this.interval_timer_id = setInterval(this.processing_while_waiting, 1000)
+      this.interval_timer_processing()
+      this.interval_timer_id = setInterval(this.interval_timer_processing, 1000)
     },
 
     interval_timer_clear() {
@@ -27,7 +27,7 @@ export default {
       }
     },
 
-    processing_while_waiting() {
+    interval_timer_processing() {
       if (this.trigger_p) {
         console.log(this.matching_rate_threshold)
         this.matching_start_perform()
@@ -36,7 +36,7 @@ export default {
     },
 
     matching_start_perform() {
-      this.app.$lobby.perform("matching_start", {matching_rate_threshold: this.matching_rate_threshold})
+      this.app.$ac_lobby.perform("matching_start", {matching_rate_threshold: this.matching_rate_threshold})
     },
   },
 

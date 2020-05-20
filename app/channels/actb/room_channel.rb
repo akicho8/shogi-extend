@@ -52,19 +52,24 @@ module Actb
     def correct_hook(data)
       data = data.to_options
 
-      history_update(data, :correct)
+      history_update(data, data[:ans_result_key])
 
       info = {
         membership_id:  data[:membership_id],  # 誰が
         question_index: data[:question_index], # どこまで進めたか
         question_id:    data[:question_id],    # これいらんけど、そのまま渡しとく
+        ans_result_key: data[:ans_result_key],
       }
 
       # 一応保存しておく(あとで取るかもしれない)
       current_room.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
 
       # 問題の解答数を上げる
-      Question.find(data[:question_id]).increment!(:o_count)
+      if data[:ans_result_key] == "correct"
+        Question.find(data[:question_id]).increment!(:o_count)
+      else
+        Question.find(data[:question_id]).increment!(:x_count)
+      end
 
       # こちらがメイン
       ActionCable.server.broadcast("actb/room_channel/#{params["room_id"]}", {correct_hook: info})
