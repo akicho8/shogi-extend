@@ -3,7 +3,8 @@
     @extend %fixed_header
     // b-pulldown を発動したとき .secondary_header の上に来るようにするため 2 にする
     // しかし b-field が 5 なので 6 にする
-    z-index: 6
+    // しかし b-field が 5 だと secondary_header より上になるため secondary_header を 6 にすると相対的にこちらは 7 になる
+    z-index: 7
     
     background-color: $primary
     color: $white
@@ -25,7 +26,7 @@
 
   .secondary_header
     @extend %fixed_header
-    z-index: 1
+    z-index: 6
     top: $actb_primary_header_height
     background: change_color($white, $alpha: 0.96)
 

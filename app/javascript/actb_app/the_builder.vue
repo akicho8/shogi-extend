@@ -30,7 +30,6 @@
         :run_mode="'edit_mode'"
         :kifu_body="position_sfen_add(fixed_init_sfen)"
         :start_turn="-1"
-        :key_event_capture="false"
         :slider_show="true"
         :controller_show="true"
         :setting_button_show="false"
@@ -50,9 +49,8 @@
     template(v-if="current_tab_info.key === 'exam_mode'")
       shogi_player(
         :run_mode="'play_mode'"
-        :kifu_body="`position sfen ${question.init_sfen}`"
+        :kifu_body="position_sfen_add(question.init_sfen)"
         :start_turn="0"
-        :key_event_capture="false"
         :slider_show="true"
         :controller_show="true"
         :theme="'simple'"
@@ -62,10 +60,9 @@
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 
-    hr
     .save_container
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
+        b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type" expanded) {{create_or_upate_name}}
         //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
   debug_print
 </template>
@@ -298,7 +295,7 @@ export default {
       // params.set("init_sfen", this.init_sfen)
       // params.set("answers", this.answers)
 
-      const before_crete_or_upate_name = this.crete_or_upate_name
+      const before_create_or_upate_name = this.create_or_upate_name
       this.http_command("PUT", this.info.put_path, params, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
@@ -307,7 +304,7 @@ export default {
           this.question = e.question
 
           this.time_limit_clock_set()
-          this.ok_notice(`${before_crete_or_upate_name}しました`)
+          this.ok_notice(`${before_create_or_upate_name}しました`)
         }
       })
     },
@@ -421,16 +418,16 @@ export default {
       return TabInfo.fetch(this.tab_index)
     },
 
-    crete_or_upate_name() {
+    create_or_upate_name() {
       if (this.question.id) {
         return "更新"
       } else {
-        return "作成"
+        return "保存"
       }
     },
 
     start_level_max() {
-      return 5
+      return 10
     },
 
     base_clock() {
@@ -487,6 +484,9 @@ export default {
 
   ////////////////////////////////////////////////////////////////////////////////
   .save_container
+    margin-top: 1.5rem
+    .button
+      margin: 0 0.8rem
 
   //////////////////////////////////////////////////////////////////////////////// 共通
 </style>
