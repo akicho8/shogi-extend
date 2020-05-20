@@ -10,58 +10,64 @@
     .primary_header
       .header_center_title {{question_new_record_p ? '新規' : '編集'}}
       b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
+    .secondary_header
+      b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
+        b-tab-item(label="配置")
+        b-tab-item
+          template(slot="header")
+            span
+              | 正解
+              b-tag(rounded) {{question.moves_answers.length}}
+        b-tab-item(label="情報")
+        b-tab-item
+          template(slot="header")
+            span
+              | 検証
+              b-tag(rounded) {{valid_count}}
 
-    b-tabs.main_tabs(v-model="edit_tab_index" expanded @change="tab_change_handle")
-      b-tab-item(label="配置")
-        shogi_player(
-          :run_mode="'edit_mode'"
-          :kifu_body="position_sfen_add(fixed_init_sfen)"
-          :start_turn="-1"
-          :key_event_capture="false"
-          :slider_show="true"
-          :controller_show="true"
-          :setting_button_show="false"
-          :theme="'simple'"
-          :size="'default'"
-          :sound_effect="false"
-          :volume="0.5"
-          @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
-          )
-      b-tab-item
-        template(slot="header")
-          span
-            | 正解
-            b-tag(rounded) {{question.moves_answers.length}}
-        the_builder_play(ref="the_builder_play")
+    template(v-if="current_tab_info.key === 'edit_mode'")
+      shogi_player(
+        :run_mode="'edit_mode'"
+        :kifu_body="position_sfen_add(fixed_init_sfen)"
+        :start_turn="-1"
+        :key_event_capture="false"
+        :slider_show="true"
+        :controller_show="true"
+        :setting_button_show="false"
+        :theme="'simple'"
+        :size="'default'"
+        :sound_effect="false"
+        :volume="0.5"
+        @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
+        )
 
-      b-tab-item(label="情報")
-        the_builder_form
+    template(v-if="current_tab_info.key === 'play_mode'")
+      the_builder_play(ref="the_builder_play")
 
-      b-tab-item
-        template(slot="header")
-          span
-            | 検証
-            b-tag(rounded) {{valid_count}}
+    template(v-if="current_tab_info.key === 'form_mode'")
+      the_builder_form
 
-        shogi_player(
-          :run_mode="'play_mode'"
-          :kifu_body="`position sfen ${question.init_sfen}`"
-          :start_turn="0"
-          :key_event_capture="false"
-          :slider_show="true"
-          :controller_show="true"
-          :theme="'simple'"
-          :size="'default'"
-          :sound_effect="true"
-          :volume="0.5"
-          @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
-          )
+    template(v-if="current_tab_info.key === 'exam_mode'")
+      shogi_player(
+        :run_mode="'play_mode'"
+        :kifu_body="`position sfen ${question.init_sfen}`"
+        :start_turn="0"
+        :key_event_capture="false"
+        :slider_show="true"
+        :controller_show="true"
+        :theme="'simple'"
+        :size="'default'"
+        :sound_effect="true"
+        :volume="0.5"
+        @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
+        )
 
     hr
     .save_container
       .buttons.is-centered
         b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{crete_or_upate_name}}
         //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
+  debug_print
 </template>
 
 <script>
@@ -69,7 +75,7 @@ import consumer from "channels/consumer"
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
-class EditTabInfo extends MemoryRecord {
+class TabInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "edit_mode", name: "配置", },
@@ -109,7 +115,7 @@ export default {
 
       // editモード edit
       sp_run_mode: null,
-      edit_tab_index: null,
+      tab_index: null,
       question: null,
       fixed_init_sfen: null,
       time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
@@ -135,6 +141,9 @@ export default {
 
     this.sound_play("click")
 
+    this.mode_select("edit_mode")
+    this.tab_change_handle()
+
     if (this.app.info.debug_scene === "builder_form") {
       this.builder_new_handle()
       return
@@ -142,12 +151,45 @@ export default {
 
     this.builder_index_handle()
     // this.exam_mode_handle()
+
   },
 
   watch: {
   },
 
   methods: {
+    mode_select(tab_key) {
+      this.tab_index = TabInfo.fetch(tab_key).code
+    },
+
+    tab_change_handle() {
+      this.sound_play("click")
+      this[this.current_tab_info.handle_method_name]()
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    edit_mode_handle() {
+      this.mode_select("edit_mode")
+      this.sp_run_mode = "edit_mode"
+    },
+
+    play_mode_handle() {
+      this.mode_select("play_mode")
+      this.sp_run_mode = "play_mode"
+    },
+
+    form_mode_handle() {
+      this.mode_select("form_mode")
+    },
+
+    exam_mode_handle() {
+      this.mode_select("exam_mode")
+      this.$exam_run_count = 0
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     edit_mode_snapshot_sfen(sfen) {
       if (this.sp_run_mode === "edit_mode") {
         sfen = this.position_sfen_remove(sfen)
@@ -210,40 +252,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    edit_mode_handle() {
-      this.sp_run_mode = "edit_mode"
-      this.edit_tab_index = EditTabInfo.fetch("edit_mode").code
-    },
-
-    play_mode_handle() {
-      this.sp_run_mode = "play_mode"
-      this.edit_tab_index = EditTabInfo.fetch("play_mode").code
-
-      // この方法でも取得できる
-      // if (this.$refs.play_sp) {
-      //   this.$set(this.question, "init_sfen", this.$refs.play_sp.mediator.sfen_serializer.to_s)
-      // }
-
-      // this.$nextTick(() => {
-      //   if (this.question.init_sfen == null) {
-      //     const init_sfen = this.$refs.play_sp.init_sfen.replace(/position sfen /, "")
-      //     this.debug_alert(`初期配置取得 ${init_sfen}`)
-      //     this.$set(this.question, "init_sfen", init_sfen)
-      //   }
-      // })
-    },
-
-    form_mode_handle() {
-      this.edit_tab_index = EditTabInfo.fetch("form_mode").code
-    },
-
-    exam_mode_handle() {
-      this.edit_tab_index = EditTabInfo.fetch("exam_mode").code
-      this.$exam_run_count = 0
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
     // clock = advance(seconds: sec)
     time_limit_clock_set() {
       this.time_limit_clock = this.base_clock.add(this.question.time_limit_sec, "second").toDate()
@@ -253,10 +261,6 @@ export default {
     moves_answers_clear() {
       this.$set(this.question, "moves_answers", [])
       this.answer_tab_index = 0
-    },
-
-    tab_change_handle() {
-      this[this.edit_tab_info.handle_method_name]()
     },
 
     save_handle() {
@@ -310,22 +314,7 @@ export default {
 
     // 「新規作成」ボタン
     builder_new_handle() {
-      this.question_edit_of(this.question_default())
-    },
-
-    // 問題の初期値
-    question_default() {
-      return this.info.question_default
-      // const question = {
-      //   // init_sfen: "4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
-      //   // init_sfen: "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
-      //   init_sfen: "7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
-      //   moves_answers: [],
-      //   time_limit_sec: 3 * 60,
-      //   difficulty_level: 1,
-      //   title: "",
-      // }
-      // return question
+      this.question_edit_of(this.question_default)
     },
 
     question_edit_of(row) {
@@ -426,8 +415,10 @@ export default {
   },
 
   computed: {
-    edit_tab_info() {
-      return EditTabInfo.fetch(this.edit_tab_index)
+    TabInfo() { return TabInfo },
+
+    current_tab_info() {
+      return TabInfo.fetch(this.tab_index)
     },
 
     crete_or_upate_name() {
@@ -457,16 +448,20 @@ export default {
       return this.question.id == null
     },
 
-    // candidate_columns() {
-    //   return [
-    //     { field: "順位",       label: "順位",       sortable: true, numeric: true, },
-    //     { field: "候補手",     label: "候補手",                                    },
-    //     { field: "読み筋",     label: "読み筋",                                    },
-    //     { field: "▲形勢",     label: "▲形勢",     sortable: true, numeric: true, },
-    //     { field: "評価局面数", label: "評価局面数", sortable: true, numeric: true, },
-    //     { field: "処理時間",   label: "処理時間",   sortable: true, numeric: true, },
-    //   ]
-    // },
+    // 問題の初期値
+    question_default() {
+      return this.info.question_default
+      // const question = {
+      //   // init_sfen: "4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
+      //   // init_sfen: "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
+      //   init_sfen: "7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
+      //   moves_answers: [],
+      //   time_limit_sec: 3 * 60,
+      //   difficulty_level: 1,
+      //   title: "",
+      // }
+      // return question
+    },
   },
 }
 </script>
@@ -474,7 +469,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_builder
-  @extend %padding_top_for_primary_header
+  @extend %padding_top_for_secondary_header
   .primary_header
     justify-content: space-between
 
@@ -489,10 +484,15 @@ export default {
 
   // .switch_grouped_container
   //   margin-top: 0.5rem
+
   .main_tabs
+    a
+      height: $actb_primary_header_height
+      padding: 0
     .tab-content
       padding: 0
-      padding-top: 0.75rem
+
+  .main_tabs
     .tag
       margin-left: 0.5rem
       vertical-align: 20%       // 小さくしたぶんだけ上に上げる

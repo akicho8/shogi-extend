@@ -1,43 +1,43 @@
 <template lang="pug">
 .the_builder_form
   b-field(label="タイトル" label-position="on-border")
-    b-input(v-model="$parent.$parent.$parent.question.title")
+    b-input(v-model="$parent.question.title")
 
   b-field(label="説明" label-position="on-border")
-    b-input(v-model="$parent.$parent.$parent.question.description" size="is-small" type="textarea" rows="2")
+    b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="2")
 
   b-field(label="ヒント" label-position="on-border")
-    b-input(v-model="$parent.$parent.$parent.question.hint_description")
+    b-input(v-model="$parent.question.hint_description")
 
   b-field(label="出典" label-position="on-border")
-    b-input(v-model="$parent.$parent.$parent.question.source_desc" placeholder="金田秀信作(詰パラ2007.12.1)")
+    b-input(v-model="$parent.question.source_desc" placeholder="金田秀信作(詰パラ2007.12.1)")
 
   b-field(label="制限時間" label-position="on-border")
     //- :default-seconds="0" :default-minutes="0"
-    b-timepicker(v-model="$parent.$parent.$parent.time_limit_clock" icon="clock" :enable-seconds="true")
+    b-timepicker(v-model="$parent.time_limit_clock" icon="clock" :enable-seconds="true")
     //- b-numberinput(v-model="time_limit_clock" :min="0")
     //- b-numberinput(v-model="time_limit_clock" :min="0")
 
   label.is-size-7.has-text-weight-bold 難易度
-  b-rate(v-model="$parent.$parent.$parent.question.difficulty_level" spaced :max="$parent.$parent.$parent.start_level_max" :show-score="false")
+  b-rate(v-model="$parent.question.difficulty_level" spaced :max="$parent.start_level_max" :show-score="false")
 
   label.is-size-7.has-text-weight-bold 種類
   b-field
-    b-radio-button(v-model="$parent.$parent.$parent.question.lineage.key" native-value="詰将棋") 詰将棋
-    b-radio-button(v-model="$parent.$parent.$parent.question.lineage.key" native-value="手筋") 手筋
-    b-radio-button(v-model="$parent.$parent.$parent.question.lineage.key" native-value="必死") 必死
-    b-radio-button(v-model="$parent.$parent.$parent.question.lineage.key" native-value="定跡") 定跡
-    b-radio-button(v-model="$parent.$parent.$parent.question.lineage.key" native-value="秘密" type="is-danger") 秘密
+    b-radio-button(v-model="$parent.question.lineage.key" native-value="詰将棋") 詰将棋
+    b-radio-button(v-model="$parent.question.lineage.key" native-value="手筋") 手筋
+    b-radio-button(v-model="$parent.question.lineage.key" native-value="必死") 必死
+    b-radio-button(v-model="$parent.question.lineage.key" native-value="定跡") 定跡
+    b-radio-button(v-model="$parent.question.lineage.key" native-value="秘密" type="is-danger") 秘密
 
   label.is-size-7.has-text-weight-bold フォルダ
   b-field
-    b-radio-button(v-model="$parent.$parent.$parent.question.folder_key" native-value="active")
+    b-radio-button(v-model="$parent.question.folder_key" native-value="active")
       b-icon(icon="check")
       span 公開
-    b-radio-button(v-model="$parent.$parent.$parent.question.folder_key" native-value="draft" type="is-warning")
+    b-radio-button(v-model="$parent.question.folder_key" native-value="draft" type="is-warning")
       b-icon(icon="lock-outline")
       span 下書き
-    b-radio-button(v-model="$parent.$parent.$parent.question.folder_key" native-value="trash" type="is-danger")
+    b-radio-button(v-model="$parent.question.folder_key" native-value="trash" type="is-danger")
       b-icon(icon="trash-can-outline")
       span ゴミ箱
 </template>
