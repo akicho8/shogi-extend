@@ -1,31 +1,36 @@
 <template lang="pug">
 .debug_print
-  .columns
-    .column
-      .box
-        table(v-if="$parent.$props")
-          caption
-            | props
-          template(v-for="(value, key) in $parent.$props")
-            debug_print_value(:dp_key="key" :value="value")
+  template(v-if="vars")
+    table
+      template(v-for="var_name in vars")
+        tr
+          th(v-html="var_name")
+          td(v-html="parent_eval(var_name)")
 
-        table(v-if="$parent.$data")
-          caption
-            | data
-          template(v-for="(value, key) in $parent.$data")
-            debug_print_value(:dp_key="key" :value="value")
+  template(v-else)
+    table(v-if="$parent.$props")
+      caption
+        | props
+      template(v-for="(value, key) in $parent.$props")
+        debug_print_value(:dp_key="key" :value="value")
 
-        table(v-if="$parent._computedWatchers")
-          caption
-            | computed
-          template(v-for="(e, key) in $parent._computedWatchers")
-            debug_print_value(:dp_key="key" :value="e.value")
+    table(v-if="$parent.$data")
+      caption
+        | data
+      template(v-for="(value, key) in $parent.$data")
+        debug_print_value(:dp_key="key" :value="value")
 
-        table(v-if="'$store' in this && $store.state")
-          caption
-            | store
-          template(v-for="(value, key) in $store.state")
-            debug_print_value(:dp_key="key" :value="value")
+    table(v-if="$parent._computedWatchers")
+      caption
+        | computed
+      template(v-for="(e, key) in $parent._computedWatchers")
+        debug_print_value(:dp_key="key" :value="e.value")
+
+    table(v-if="'$store' in this && $store.state")
+      caption
+        | store
+      template(v-for="(value, key) in $store.state")
+        debug_print_value(:dp_key="key" :value="value")
 </template>
 
 <script>
@@ -34,7 +39,9 @@ import debug_print_value from "./debug_print_value"
 export default {
   name: "debug_print",
   props: {
-    grep: { required: false },
+    grep:    { required: false },
+    vars:    { required: false },
+    oneline: { default: false  },
   },
   components: {
     debug_print_value,
@@ -62,10 +69,18 @@ export default {
         return "<span class='null_value'>null</span>"
       }
       try {
-        return JSON.stringify(v, null, 4)
+        if (this.oneline) {
+          return JSON.stringify(v)
+        } else {
+          return JSON.stringify(v, null, 4)
+        }
       } catch (_) {
         return "<span class='circular_value'>circular</span>"
       }
+    },
+    parent_eval(var_name) {
+      const v = eval(`this.$parent.${var_name}`)
+      return this.value_format(v)
     },
   },
 }
@@ -73,11 +88,11 @@ export default {
 
 <style lang="sass">
 .debug_print
-  .box
-    border: 1px solid hsl(0, 0%, 80%)
-    overflow-x: scroll
+  font-size: 0.75rem
 
   table
+    overflow-x: scroll
+
     &:not(:first-child)
       margin-top: 0.75rem
 
