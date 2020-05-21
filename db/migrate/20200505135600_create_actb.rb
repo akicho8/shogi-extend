@@ -4,6 +4,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.datetime :begin_at, null: false, index: true, comment: "対戦開始日時"
       t.datetime :end_at,   null: true,  index: true, comment: "対戦終了日時"
       t.string :final_key,  null: true,  index: true, comment: "結果"
+      t.string :game_key,   null: true,  index: true, comment: "ゲームの種類"
       t.timestamps
     end
 

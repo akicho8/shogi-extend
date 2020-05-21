@@ -54,14 +54,15 @@ module FrontendScript
             :label   => "画面",
             :key     => :debug_scene,
             :elems   => {
-              "ロビー"         => nil,
-              "対戦"           => :room,
-              "結果"           => :result,
-              "問題作成"       => :builder,
-              "問題作成(情報)" => :builder_form,
-              "ランキング"     => :ranking,
-              "履歴"           => :history,
-              "詳細"           => :overlay_record,
+              "ロビー"             => nil,
+              "対戦(マラソン)"     => :room_game_key1,
+              "対戦(シングルトン)" => :room_game_key2,
+              "結果"               => :result,
+              "問題作成"           => :builder,
+              "問題作成(情報)"     => :builder_form,
+              "ランキング"         => :ranking,
+              "履歴"               => :history,
+              "詳細"               => :overlay_record,
             },
 
             :type    => :select,
@@ -289,16 +290,22 @@ module FrontendScript
         c.sysop_login_unless_logout
       end
 
-      if current_debug_scene == :room
+      if current_debug_scene == :room_game_key1 || current_debug_scene == :room_game_key2
         c.sysop_login_unless_logout
 
         user = Colosseum::User.create!
         room = Actb::Room.create! do |e|
           e.memberships.build(user: current_user)
           e.memberships.build(user: user)
+          if current_debug_scene == :room_game_key1
+            e.game_key = :game_key1
+          end
+          if current_debug_scene == :room_game_key2
+            e.game_key = :game_key2
+          end
         end
 
-        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
+        info[:room] = room.as_json(only: [:id, :game_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
       end
 
       if current_debug_scene == :result
@@ -311,7 +318,7 @@ module FrontendScript
           e.memberships.build(user: user2, judge_key: :lose, question_index: 2)
         end
 
-        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions, :final_info])
+        info[:room] = room.as_json(only: [:id, :game_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions, :final_info])
       end
 
       if current_debug_scene == :edit

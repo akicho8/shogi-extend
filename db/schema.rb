@@ -231,11 +231,13 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
     t.string "final_key", comment: "結果"
+    t.string "game_key", comment: "ゲームの種類"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["begin_at"], name: "index_actb_rooms_on_begin_at"
     t.index ["end_at"], name: "index_actb_rooms_on_end_at"
     t.index ["final_key"], name: "index_actb_rooms_on_final_key"
+    t.index ["game_key"], name: "index_actb_rooms_on_game_key"
   end
 
   create_table "actb_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

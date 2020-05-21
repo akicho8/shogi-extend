@@ -72,6 +72,8 @@ export default {
   data() {
     return {
       mode: "lobby",
+      sub_mode: "opening",
+      game_key: null,
       room: this.info.room,
 
       matching_list:   null, // 対戦待ちの人のIDを列挙している
@@ -97,7 +99,13 @@ export default {
     this.school_setup()
 
     if (this.info.debug_scene) {
-      if (this.info.debug_scene === "room") {
+      if (this.info.debug_scene === "room_game_key1") {
+        this.game_key = "game_key1"
+        this.mode = "room"
+        this.room_setup()
+      }
+      if (this.info.debug_scene === "room_game_key2") {
+        this.game_key = "game_key2"
         this.mode = "room"
         this.room_setup()
       }
@@ -231,9 +239,16 @@ export default {
     },
 
     start_handle() {
+      this.sound_play("click")
       if (this.login_required2()) { return }
 
+      this.sub_mode = "battle_select"
+      // this.mode = "matching"
+    },
+
+    start_handle2(game_key) {
       this.sound_play("click")
+      this.game_key = game_key
       this.mode = "matching"
     },
 

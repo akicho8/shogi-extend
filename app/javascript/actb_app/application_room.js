@@ -8,7 +8,6 @@ import consumer from "channels/consumer"
 export const application_room = {
   data() {
     return {
-      sub_mode:        null, // 正解直後に間を開けているとき true になっている
       question_index:  null, // 正解中の問題インデックス
 
       // 各 membership_id はどこまで進んでいるかわかる

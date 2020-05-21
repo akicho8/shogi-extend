@@ -5,7 +5,7 @@ Colosseum::User.delete_all
 Actb.destroy_all
 Actb.setup
 
-Actb::Lineage.all.collect(&:key)                 # => ["詰将棋", "手筋", "必死", "定跡", "秘密"]
+Actb::Lineage.all.collect(&:key)                 # => ["詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]
 
 10.times do
   Actb::Season.create!
@@ -49,7 +49,7 @@ question.lineage.key               # => "詰将棋"
 question = Actb::Question.first!
 # question.update!(folder: question.user.actb_trash_box) の方法はださい
 question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 78, user_id: 26, type: "Actb::TrashBox", created_at: "2020-05-20 04:54:00", updated_at: "2020-05-20 04:54:00">
+question.folder # => #<Actb::TrashBox id: 78, user_id: 26, type: "Actb::TrashBox", created_at: "2020-05-21 10:55:19", updated_at: "2020-05-21 10:55:19">
 
 # 2番目の問題は下書きへ
 question = Actb::Question.second!
@@ -87,9 +87,9 @@ tp Actb.info
 # >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
 # >> | id | user_id | folder_id | lineage_id | init_sfen                                 | time_limit_sec | difficulty_level | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | bad_marks_count | good_marks_count | clip_marks_count |
 # >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
-# >> |  4 |      26 |        78 |         16 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-20 13:54:02 +0900 | 2020-05-20 13:54:02 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                1 |                0 |
-# >> |  5 |      26 |        77 |         16 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-20 13:54:02 +0900 | 2020-05-20 13:54:02 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               1 |                0 |                0 |
-# >> |  6 |      26 |        76 |         16 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-20 13:54:02 +0900 | 2020-05-19 15:54:02 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                0 |                1 |
+# >> |  4 |      26 |        78 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-21 19:55:21 +0900 | 2020-05-21 19:55:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                1 |                0 |
+# >> |  5 |      26 |        77 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-21 19:55:21 +0900 | 2020-05-21 19:55:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               1 |                0 |                0 |
+# >> |  6 |      26 |        76 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-21 19:55:21 +0900 | 2020-05-20 21:55:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                0 |                1 |
 # >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
 # >> |-----------------+-------+--------|
 # >> | model           | count | 最終ID |
@@ -97,11 +97,11 @@ tp Actb.info
 # >> | Colosseum::User |    13 |     38 |
 # >> | Actb::Question  |     3 |      6 |
 # >> | Actb::Room      |     1 |      1 |
-# >> | Actb::Season    |    11 |     24 |
+# >> | Actb::Season    |    11 |     23 |
 # >> | Actb::Profile   |    13 |     38 |
 # >> | Actb::GoodMark  |     1 |      1 |
 # >> | Actb::BadMark   |     1 |      1 |
 # >> | Actb::ClipMark  |     1 |      1 |
 # >> | Actb::Folder    |    39 |    114 |
-# >> | Actb::Lineage   |     5 |     20 |
+# >> | Actb::Lineage   |     7 |     21 |
 # >> |-----------------+-------+--------|

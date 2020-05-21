@@ -8,7 +8,7 @@
       p ±{{matching_rate_threshold}}
     b-progress(type="is-primary")
     .buttons.is-centered
-      button.delete.is-large(@click="cancel_handle")
+      button.delete.is-large(@click="app.cancel_handle")
 </template>
 
 <script>
@@ -24,32 +24,11 @@ export default {
   props: {
     info: { required: true },
   },
-  data() {
-    return {
-    }
-  },
-
   created() {
     this.matching_init()
-    // this.$ac_lobby.perform("matching_start")
-    this.main_nav_set(false)
   },
-
   beforeDestroy() {
     this.interval_timer_clear()
-  },
-
-  watch: {
-  },
-
-  methods: {
-    cancel_handle() {
-      this.interval_timer_clear()
-      this.$parent.cancel_handle()
-    },
-  },
-
-  computed: {
   },
 }
 </script>

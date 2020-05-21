@@ -121,7 +121,7 @@ module Actb
       memberships_user_ids_remove(room)
 
       # 終了時
-      room_json = room.as_json(only: [:id], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      room_json = room.as_json(only: [:id, :game_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("actb/room_channel/#{params["room_id"]}", {switch_to: "result", room: room_json})
       # --> app/javascript/actb_app.vue
     end

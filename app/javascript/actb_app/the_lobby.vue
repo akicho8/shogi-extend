@@ -10,14 +10,18 @@
         .rating.has-text-weight-bold.is-size-7
           | {{app.current_user.rating}}
 
-  .title.is-3.has-text-centered 詰将棋ファイター
-  .buttons.is-centered
-    b-button.has-text-weight-bold(@click="$parent.start_handle" type="is-primary") START
+  .opening(v-if="app.sub_mode === 'opening'")
+    .title.is-3.has-text-centered 詰将棋ファイター
+    .buttons.is-centered
+      b-button.has-text-weight-bold(@click="$parent.start_handle" type="is-primary") START
 
-  //- b-dropdown.dropdown_menu(position="is-bottom-left")
-  //-   b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
-  //-   b-dropdown-item(@click="$parent.builder_handle") 問題投稿
-  //-   //- b-dropdown-item(separator)
+  .battle_select(v-if="app.sub_mode === 'battle_select'")
+    .title.is-3.has-text-centered モード
+    .mode_buttons.buttons.is-centered
+      b-button.has-text-weight-bold(@click="$parent.start_handle2('game_key1')" type="is-primary") マラソン
+      b-button.has-text-weight-bold(@click="$parent.start_handle2('game_key2')" type="is-primary") シングルトン
+    .back_button.has-text-centered
+      button.delete.is-large.back_button(@click="cancel_handle")
 </template>
 
 <script>
@@ -46,6 +50,10 @@ export default {
   },
 
   methods: {
+    cancel_handle() {
+      this.sound_play("click")
+      this.app.sub_mode = "opening"
+    },
   },
 }
 </script>
@@ -74,10 +82,21 @@ export default {
         .name
         .rating
 
-  .title
-    margin-top: 4rem
-  .buttons
-    margin-top: 2rem
+  .opening
+    .title
+      margin-top: 4rem
+    .buttons
+      margin-top: 2rem
+
+  .battle_select
+    .title
+      margin-top: 4rem
+    .mode_buttons
+      margin-top: 2rem
+      flex-direction: column
+      
+    .back_button
+      margin-top: 1.5rem
 
   // position: relative
   // .dropdown_menu, .delete
