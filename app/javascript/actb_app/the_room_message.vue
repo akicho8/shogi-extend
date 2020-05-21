@@ -15,7 +15,7 @@
 import support from "./support.js"
 
 export default {
-  name: "the_room",
+  name: "the_room_message",
   mixins: [
     support,
   ],

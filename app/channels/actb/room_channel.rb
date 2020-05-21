@@ -1,9 +1,9 @@
 module Actb
   class RoomChannel < BaseChannel
     def subscribed
-      raise ArgumentError, params.inspect unless params["room_id"]
+      raise ArgumentError, params.inspect unless room_id
 
-      stream_from "actb/room_channel/#{params["room_id"]}"
+      stream_from "actb/room_channel/#{room_id}"
 
       if current_user
         redis.sadd(:room_user_ids, current_user.id)
@@ -49,6 +49,28 @@ module Actb
       history_update(data, :mistake)
     end
 
+    def kotaeru_handle(data)
+      data = data.to_options
+      # membership_id: this.current_membership.id,
+      # question_id: this.current_question_id,
+
+      # this.silent_http_command("PUT", this.app.info.put_path, { kotaeru_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
+      # { kotaeru_handle: true, room_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
+
+      key = [:early_press, current_room, data[:question_id]].join("/")
+      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
+      early_press_counter = redis.incr(key)
+      redis.expire(key, 60)
+      if early_press_counter === 1
+        kotaeru_kenri_aruyo = {
+          membership_id: data[:membership_id],
+          question_id: data[:question_id],
+          early_press_counter: early_press_counter,
+        }
+        ActionCable.server.broadcast("actb/room_channel/#{room_id}", { kotaeru_kenri_aruyo: kotaeru_kenri_aruyo })
+      end
+    end
+
     def correct_hook(data)
       data = data.to_options
 
@@ -72,7 +94,7 @@ module Actb
       end
 
       # こちらがメイン
-      ActionCable.server.broadcast("actb/room_channel/#{params["room_id"]}", {correct_hook: info})
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", {correct_hook: info})
     end
 
     def next_hook(data)
@@ -122,12 +144,16 @@ module Actb
 
       # 終了時
       room_json = room.as_json(only: [:id, :game_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
-      ActionCable.server.broadcast("actb/room_channel/#{params["room_id"]}", {switch_to: "result", room: room_json})
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", {switch_to: "result", room: room_json})
       # --> app/javascript/actb_app.vue
     end
 
+    def room_id
+      params["room_id"]
+    end
+
     def current_room
-      Room.find(params["room_id"])
+      Room.find(room_id)
     end
 
     def room_user_ids_broadcast

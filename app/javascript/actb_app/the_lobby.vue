@@ -94,7 +94,7 @@ export default {
     .mode_buttons
       margin-top: 2rem
       flex-direction: column
-      
+
     .back_button
       margin-top: 1.5rem
 

@@ -210,6 +210,19 @@ module FrontendScript
     end
 
     def put_action
+      # if params[:kotaeru_handle]
+      #   # this.silent_http_command("PUT", this.app.info.put_path, { kotaeru_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
+      #   # { kotaeru_handle: true, room_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
+      # 
+      #   redis = Redis.new(db: AppConfig[:redis_db_for_actb])
+      #   key = [:early_press, params[:room_id], params[:question_id]].join("/")
+      #   Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
+      #   early_press_counter = redis.incr(key)
+      #   client.expire(key, 60)
+      #   c.render json: { retval: { } }
+      #   return
+      # end
+
       if params[:vote_handle]
         c.render json: { retval: current_user.vote_handle(params) }
         return

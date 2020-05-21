@@ -1,13 +1,23 @@
 const READYGO_WAIT_DELAY = 2.5
-const DEDEN_MODE_DELAY  = 0.8
+const DEDEN_MODE_DELAY   = 0.8
 const CORRECT_MODE_DELAY = 1
 const MISTAKE_MODE_DELAY = 1
 
 import consumer from "channels/consumer"
+import dayjs from "dayjs"
 
 export const application_room = {
   data() {
     return {
+      g_mode: null,
+
+      q_turn_offset: null,
+      q1_interval_id: null,
+      q1_interval_count: null,
+
+      q2_interval_id: null,
+      q2_interval_count: null,
+
       question_index:  null, // 正解中の問題インデックス
 
       // 各 membership_id はどこまで進んでいるかわかる
@@ -93,6 +103,22 @@ export const application_room = {
             this.mode = "result"
             this.room = data.room
           }
+
+          // 答える権利がある
+          if (data.kotaeru_kenri_aruyo) {
+            const kotaeru_kenri_aruyo = data.kotaeru_kenri_aruyo
+
+            if (this.current_membership.id === kotaeru_kenri_aruyo.membership_id) {
+              this.g_mode = "g_mode2"
+              this.q2_interval_start()
+            } else {
+              this.g_mode = "g_mode3"
+            }
+            // question_id: data[:question_id],
+            // early_press_counter: early_press_counter,
+            // kotaeru_kenri_aruyo
+          }
+
         },
       })
     },
@@ -102,12 +128,13 @@ export const application_room = {
       this.sub_mode = "deden_mode"
 
       this.delay(DEDEN_MODE_DELAY, () => {
-        this.solve_mode_trigger()
+        this.operation_mode_trigger()
       })
     },
 
-    solve_mode_trigger() {
-      this.sub_mode = "solve_mode"
+    operation_mode_trigger() {
+      this.sub_mode = "operation_mode"
+      this.g_mode = "g_mode1"
     },
 
     next_trigger() {
@@ -124,7 +151,10 @@ export const application_room = {
     },
 
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
-      if (this.sub_mode === "solve_mode") {
+      if (this.sub_mode === "operation_mode") {
+        if (this.g_mode === "g_mode2") {
+          this.q2_interval_restart()
+        }
         if (this.current_quest_answers.includes(this.position_sfen_remove(long_sfen))) {
           this.kotae_sentaku("correct")
         }
@@ -180,23 +210,105 @@ export const application_room = {
         this.sound_play("bubuu")
       }
     },
+
+    kotaeru_handle() {
+      this.sound_play("click")
+
+      this.$ac_room.perform("kotaeru_handle", {
+        membership_id: this.current_membership.id,
+        question_id: this.current_question_id,
+        // question_index: this.question_index,
+        // current_best_question_size: this.current_best_question_size,
+      }) // --> app/channels/actb/room_channel.rb
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    q1_interval_start() {
+      this.q1_interval_clear()
+      this.q1_interval_count = 0
+      this.q1_interval_id = setInterval(this.q1_interval_processing, 1000)
+    },
+
+    q1_interval_clear() {
+      if (this.q1_interval_id) {
+        clearInterval(this.q1_interval_id)
+        this.q1_interval_id = null
+      }
+    },
+
+    q1_interval_processing() {
+      if (this.room.game_key === "game_key1") {
+        if (this.sub_mode === "operation_mode") {
+          this.q1_interval_count += 1
+          if (this.q1_rest_seconds === 0) {
+            this.kotae_sentaku('mistake')
+          }
+        }
+      }
+      if (this.room.game_key === "game_key2") {
+        if (this.sub_mode === "operation_mode") {
+          if (this.g_mode === "g_mode1") {
+            this.q1_interval_count += 1
+            if (this.q1_rest_seconds === 0) {
+              this.kotae_sentaku('mistake')
+            }
+          }
+        }
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    q2_interval_start() {
+      this.q2_interval_stop()
+      this.q2_interval_count = 0
+      this.q2_interval_id = setInterval(this.q2_interval_processing, 1000)
+    },
+
+    q2_interval_stop() {
+      if (this.q2_interval_id) {
+        clearInterval(this.q2_interval_id)
+        this.q2_interval_id = null
+      }
+    },
+
+    q2_interval_restart() {
+      this.q2_interval_stop()
+      this.q2_interval_start()
+    },
+
+    q2_interval_processing() {
+      if (this.sub_mode === "operation_mode") {
+        this.q2_interval_count += 1
+        if (this.q2_rest_seconds === 0) {
+          this.akirameru_handle()
+        }
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    akirameru_handle() {
+      this.g_mode = "g_mode1"
+      this.sound_play("bubuu")
+      this.q2_interval_stop()
+    },
   },
 
   computed: {
     current_membership() {
-      if (this.room) {
-        return this.room.memberships.find(e => e.user.id === this.current_user.id)
-      }
+      // if (this.room) {
+      return this.room.memberships.find(e => e.user.id === this.current_user.id)
+      // }
     },
     current_best_question() {
-      if (this.room) {
-        return this.room.best_questions[this.question_index]
-      }
+      // if (this.room) {
+      return this.room.best_questions[this.question_index]
+      // }
     },
     current_best_question_size() {
-      if (this.room) {
-        return this.room.best_questions.length
-      }
+      // if (this.room) {
+      return this.room.best_questions.length
+      // }
     },
     current_quest_init_sfen() {
       const info = this.current_best_question
@@ -215,6 +327,48 @@ export const application_room = {
       if (info) {
         return info.id
       }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    q_record() {
+      return this.current_best_question
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    q1_time_str() {
+      return dayjs().startOf("year").set("seconds", this.q1_rest_seconds).format("mm:ss")
+    },
+    q1_rest_seconds() {
+      let v = this.q1_time_limit_sec - this.q1_interval_count
+      if (v < 0) {
+        v = 0
+      }
+      return v
+    },
+    q1_time_limit_sec() {
+      // if (this.development_p) {
+      //   return 3
+      // }
+      return this.q_record.time_limit_sec
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    q2_rest_seconds() {
+      let v = this.q2_time_limit_sec - this.q2_interval_count
+      if (v < 0) {
+        v = 0
+      }
+      return v
+    },
+    q2_time_limit_sec() {
+      // if (this.development_p) {
+      //   return 3
+      // }
+      // return this.q_record.time_limit_sec
+      return 3
     },
   },
 }

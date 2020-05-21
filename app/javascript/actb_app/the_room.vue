@@ -1,9 +1,9 @@
 <template lang="pug">
 .the_room
-  debug_print(:vars="['app.sub_mode', 'app.progress_info', 'app.question_index']" oneline)
+  debug_print(:vars="['app.sub_mode', 'app.progress_info', 'app.question_index', 'app.g_mode']" oneline)
 
   .vs_info.is-flex
-    template(v-for="(membership, i) in $parent.room.memberships")
+    template(v-for="(membership, i) in app.room.memberships")
       .user_block.user_container.is-flex
         template(v-if="membership.rensho_count >= 2")
           .rensho_count
@@ -27,15 +27,16 @@
         .vs_block.is-1.is-flex.has-text-weight-bold.is-size-4
           | vs
 
-  template(v-if="$parent.sub_mode === 'deden_mode'")
+  template(v-if="app.sub_mode === 'deden_mode'")
     .deden_mode_container.has-text-centered
-      | {{$parent.question_index + 1}}問目
+      | {{app.question_index + 1}}問目
 
-  //- template(v-if="$parent.current_quest_init_sfen")
-  template(v-if="$parent.sub_mode === 'solve_mode' || $parent.sub_mode === 'correct_mode'")
-    the_room_question
+  //- template(v-if="app.current_quest_init_sfen")
+  template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
+    the_room_question1(v-if="app.room.game_key === 'game_key1'")
+    the_room_question2(v-if="app.room.game_key === 'game_key2'")
 
-  template(v-if="$parent.sub_mode === 'mistake_mode'")
+  template(v-if="app.sub_mode === 'mistake_mode'")
     .mistake_mode_container.has-text-centered
       | 時間切れ
 
@@ -43,14 +44,15 @@
     .columns
       .column
         .buttons.is-centered
-          b-button(@click="$parent.kotae_sentaku('correct')") 正解
-          b-button(@click="$parent.kotae_sentaku('mistake')") 時間切れ
+          b-button(@click="app.kotae_sentaku('correct')") 正解
+          b-button(@click="app.kotae_sentaku('mistake')") 時間切れ
 </template>
 
 <script>
 import support from "./support.js"
 import dayjs from "dayjs"
-import the_room_question from "./the_room_question.vue"
+import the_room_question1 from "./the_room_question1.vue"
+import the_room_question2 from "./the_room_question2.vue"
 
 export default {
   name: "the_room",
@@ -58,7 +60,8 @@ export default {
     support,
   ],
   components: {
-    the_room_question,
+    the_room_question1,
+    the_room_question2,
   },
   created() {
     this.app.lobby_close()
