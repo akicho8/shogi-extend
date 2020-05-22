@@ -1,8 +1,3 @@
-const READYGO_WAIT_DELAY = 2.5
-const DEDEN_MODE_DELAY   = 0.8
-const CORRECT_MODE_DELAY = 1
-const MISTAKE_MODE_DELAY = 1
-
 import consumer from "channels/consumer"
 import dayjs from "dayjs"
 
@@ -10,6 +5,7 @@ export const application_room = {
   data() {
     return {
       g_mode: null,
+      osenai_p: null,
 
       q_turn_offset: null,
       q1_interval_id: null,
@@ -25,7 +21,7 @@ export const application_room = {
       //   3 => ["correct", "mistake"],
       //   4 => ["correct", "correct"],
       // }
-      progress_info:   null,
+      members_hash: null,
     }
   },
 
@@ -45,7 +41,12 @@ export const application_room = {
       this.room_message = ""
 
       this.sub_mode = "standby"
-      this.progress_info = {}
+
+      this.members_hash = {}
+      this.room.memberships.forEach(e => {
+        this.members_hash[e.id] = { progress_list: [], x_score: 0 }
+      })
+
       this.question_index = 0
 
       this.__assert(this.$ac_room == null)
@@ -62,7 +63,7 @@ export const application_room = {
 
           this.ok_notice("対戦開始")
           this.sub_mode = "readygo_wait"
-          this.delay(READYGO_WAIT_DELAY, () => {
+          this.delay(this.config.readygo_wait_delay, () => {
             this.deden_mode_trigger()
           })
         },
@@ -73,61 +74,25 @@ export const application_room = {
         },
         received: (data) => {
           this.debug_alert("room 受信")
-
-          // チャット
-          if (data.message) {
-            const message = data.message
-
-            this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
-            this.talk(message.body, {rate: 1.5})
-
-            this.room_messages.push(message)
+          if (data.bc_action) {
+            this[data.bc_action](data.bc_params)
           }
-
-          // 状況を反映する (なるべく小さなデータで共有する)
-          if (data.correct_hook) {
-            const e = data.correct_hook
-
-            if (!this.progress_info[e.membership_id]) {
-              this.$set(this.progress_info, e.membership_id, [])
-            }
-            this.progress_info[e.membership_id].push(e.ans_result_key)
-
-            if (e.membership_id !== this.current_membership.id) {
-              this.ox_sound_play(e.ans_result_key)
-            }
-          }
-
-          // 終了
-          if (data.switch_to === "result") {
-            this.mode = "result"
-            this.room = data.room
-          }
-
-          // 答える権利がある
-          if (data.kotaeru_kenri_aruyo) {
-            const kotaeru_kenri_aruyo = data.kotaeru_kenri_aruyo
-
-            if (this.current_membership.id === kotaeru_kenri_aruyo.membership_id) {
-              this.g_mode = "g_mode2"
-              this.q2_interval_start()
-            } else {
-              this.g_mode = "g_mode3"
-            }
-            // question_id: data[:question_id],
-            // early_press_counter: early_press_counter,
-            // kotaeru_kenri_aruyo
-          }
-
         },
       })
+    },
+
+    room_message_broadcasted(params) {
+      const message = params.message
+      this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
+      this.talk(message.body, {rate: 1.5})
+      this.room_messages.push(message)
     },
 
     deden_mode_trigger() {
       this.sound_play("deden")
       this.sub_mode = "deden_mode"
 
-      this.delay(DEDEN_MODE_DELAY, () => {
+      this.delay(this.config.deden_mode_delay, () => {
         this.operation_mode_trigger()
       })
     },
@@ -135,26 +100,24 @@ export const application_room = {
     operation_mode_trigger() {
       this.sub_mode = "operation_mode"
       this.g_mode = "g_mode1"
-    },
-
-    next_trigger() {
-      this.question_index += 1
-
-      this.$ac_room.perform("next_hook", {
-        membership_id: this.current_membership.id,
-        question_id: this.current_question_id,
-        question_index: this.question_index,
-        current_best_question_size: this.current_best_question_size,
-      }) // --> app/channels/actb/room_channel.rb
-
-      this.deden_mode_trigger()
+      this.osenai_p = false
     },
 
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.sub_mode === "operation_mode") {
-        if (this.g_mode === "g_mode2") {
-          this.q2_interval_restart()
+
+        if (this.room.game_key === "game_key2") {
+          // 安全のため残り0秒になってから操作しても無効とする
+          if (this.q2_rest_seconds === 0) {
+            return
+          }
+
+          // 駒を1つでも動かしたら3秒に復帰する
+          if (this.g_mode === "g_mode2") {
+            this.q2_interval_restart()
+          }
         }
+
         if (this.current_quest_answers.includes(this.position_sfen_remove(long_sfen))) {
           this.kotae_sentaku("correct")
         }
@@ -164,44 +127,187 @@ export const application_room = {
       }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     // 正解または不正解
     kotae_sentaku(ans_result_key) {
-      this.ox_sound_play(ans_result_key)
+      // this.ox_sound_play(ans_result_key)
 
-      this.$ac_room.perform("correct_hook", {
+      // if (ans_result_key === "correct") {
+      //   this.score_add(1)
+      // } else {
+      //   this.score_add(-1)
+      // }
+
+      this.$ac_room.perform("kotae_sentaku", {
         membership_id: this.current_membership.id,
         question_id: this.current_question_id, // 問題ID
         question_index: this.question_index + 1,
         ans_result_key: ans_result_key,
       }) // --> app/channels/actb/room_channel.rb
+    },
+    // 状況を反映する (なるべく小さなデータで共有する)
+    kotae_sentaku_broadcasted(params) {
+      this.members_hash[params.membership_id].progress_list.push(params.ans_result_key)
 
-      // 次の問題がある場合
-      if (this.question_index < this.current_best_question_size - 1) {
-        if (ans_result_key === "correct") {
-          this.sub_mode = "correct_mode"
-          this.delay(CORRECT_MODE_DELAY, () => {
-            this.next_trigger()
-          })
+      if (this.room.game_key === "game_key2") {
+        if (params.ans_result_key === "correct") {
+          this.score_add(params.membership_id, 1)
         } else {
-          this.sub_mode = "mistake_mode"
-          this.delay(MISTAKE_MODE_DELAY, () => {
-            this.next_trigger()
-          })
+          this.score_add(params.membership_id, -1)
         }
-      } else {
-        if (ans_result_key === "correct") {
-          this.sub_mode = "correct_mode"
-          this.delay(CORRECT_MODE_DELAY, () => {
-            this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
-          })
-        } else {
-          this.sub_mode = "mistake_mode"
-          this.delay(MISTAKE_MODE_DELAY, () => {
-            this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
-          })
+      }
+
+      // if (params.membership_id !== this.current_membership.id) {
+      this.ox_sound_play(params.ans_result_key)
+      // }
+
+      if (this.room.game_key === "game_key1") {
+        if (params.membership_id === this.current_membership.id) {
+          // 次の問題がある場合
+          if (this.question_index < this.current_best_question_size - 1) {
+            if (params.ans_result_key === "correct") {
+              this.sub_mode = "correct_mode"
+              this.delay(this.config.correct_mode_delay, () => {
+                this.next_trigger()
+              })
+            } else {
+              this.sub_mode = "mistake_mode"
+              this.delay(this.config.mistake_mode_delay, () => {
+                this.next_trigger()
+              })
+            }
+          } else {
+            if (params.ans_result_key === "correct") {
+              this.sub_mode = "correct_mode"
+              this.delay(this.config.correct_mode_delay, () => {
+                this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
+              })
+            } else {
+              this.sub_mode = "mistake_mode"
+              this.delay(this.config.mistake_mode_delay, () => {
+                this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
+              })
+            }
+          }
+        }
+      }
+      
+      if (this.room.game_key === "game_key2") {
+        if (this.primary_membership_p) {
+          // 次の問題がある場合
+          if (this.question_index < this.current_best_question_size - 1) {
+            if (params.ans_result_key === "correct") {
+              this.sub_mode = "correct_mode"
+              this.delay(this.config.correct_mode_delay, () => {
+                this.next_trigger()
+              })
+            } else {
+              this.sub_mode = "mistake_mode"
+              this.delay(this.config.mistake_mode_delay, () => {
+                this.next_trigger()
+              })
+            }
+          } else {
+            if (params.ans_result_key === "correct") {
+              this.sub_mode = "correct_mode"
+              this.delay(this.config.correct_mode_delay, () => {
+                this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
+              })
+            } else {
+              this.sub_mode = "mistake_mode"
+              this.delay(this.config.mistake_mode_delay, () => {
+                this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
+              })
+            }
+          }
         }
       }
     },
+
+    next_trigger() {
+      this.$ac_room.perform("next_trigger", { // 戻値なし
+        membership_id: this.current_membership.id,
+        question_id: this.room.best_questions[this.question_index + 1],
+        question_index: this.question_index + 1,
+        current_best_question_size: this.current_best_question_size,
+      }) // --> app/channels/actb/room_channel.rb
+
+      this.deden_mode_trigger()
+    },
+    next_trigger_broadcasted(params) {
+      if (this.room.game_key === "game_key1") {
+        if (params.membership_id === this.current_membership.id) {
+          this.question_index = params.question_index
+        }
+      }
+      if (this.room.game_key === "game_key2") {
+        this.question_index = params.question_index
+      }
+    },
+
+    // 終了
+    katimashita_broadcasted(params) {
+      this.mode = "result"
+      this.room = params.room
+    },
+
+    // 早押しボタンを押した(解答権はまだない)
+    g2_hayaosi_handle() {
+      this.sound_play("click")
+
+      this.$ac_room.perform("g2_hayaosi_handle", {
+        membership_id: this.current_membership.id,
+        question_id: this.current_question_id,
+        // question_index: this.question_index,
+        // current_best_question_size: this.current_best_question_size,
+      }) // --> app/channels/actb/room_channel.rb
+    },
+    g2_hayaosi_handle_broadcasted(params) {
+      if (params.membership_id === this.current_membership.id) {
+        // 先に解答ボタンを押せた本人
+        this.g_mode = "g_mode2"
+        this.q2_interval_start()
+      } else {
+        // 解答ボタンを押さなかった相手
+        if (this.osenai_p) {
+          this.osenai_p = false // 元々誤答していたら解答権利復活させる
+        }
+        this.g_mode = "g_mode3"
+      }
+    },
+
+    // 早押しボタンを押して解答中に時間切れ
+    g2_jikangire_handle() {
+      this.$ac_room.perform("g2_jikangire_handle", {
+        membership_id: this.current_membership.id,
+        question_id: this.current_question_id,
+      }) // --> app/channels/actb/room_channel.rb
+    },
+    // 時間切れ
+    g2_jikangire_handle_broadcasted(params) {
+      if (params.membership_id === this.current_membership.id) {
+        this.score_add(this.current_membership.id, -1)
+        this.osenai_p = true
+      } else {
+        this.osenai_p = false
+      }
+      this.g_mode = "g_mode1"
+      this.sound_play("bubuu")
+      this.q2_interval_stop()
+    },
+
+    // private
+    score_add(membership_id, diff) {
+      const member = this.members_hash[membership_id]
+      let v = member.x_score + diff
+      if (v < 0) {
+        v = 0
+      }
+      this.$set(member, "x_score", v)
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     ox_sound_play(ans_result_key) {
       if (ans_result_key === "correct") {
@@ -209,17 +315,6 @@ export const application_room = {
       } else {
         this.sound_play("bubuu")
       }
-    },
-
-    kotaeru_handle() {
-      this.sound_play("click")
-
-      this.$ac_room.perform("kotaeru_handle", {
-        membership_id: this.current_membership.id,
-        question_id: this.current_question_id,
-        // question_index: this.question_index,
-        // current_best_question_size: this.current_best_question_size,
-      }) // --> app/channels/actb/room_channel.rb
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -280,35 +375,28 @@ export const application_room = {
       if (this.sub_mode === "operation_mode") {
         this.q2_interval_count += 1
         if (this.q2_rest_seconds === 0) {
-          this.akirameru_handle()
+          this.g2_jikangire_handle()
         }
       }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    akirameru_handle() {
-      this.g_mode = "g_mode1"
-      this.sound_play("bubuu")
-      this.q2_interval_stop()
-    },
   },
 
   computed: {
+    primary_membership_p() {
+      return this.room.memberships[0].id === this.current_membership.id
+    },
+
     current_membership() {
-      // if (this.room) {
       return this.room.memberships.find(e => e.user.id === this.current_user.id)
-      // }
     },
     current_best_question() {
-      // if (this.room) {
       return this.room.best_questions[this.question_index]
-      // }
     },
     current_best_question_size() {
-      // if (this.room) {
       return this.room.best_questions.length
-      // }
     },
     current_quest_init_sfen() {
       const info = this.current_best_question
@@ -357,18 +445,11 @@ export const application_room = {
     ////////////////////////////////////////////////////////////////////////////////
 
     q2_rest_seconds() {
-      let v = this.q2_time_limit_sec - this.q2_interval_count
+      let v = this.config.q2_time_limit_sec - this.q2_interval_count
       if (v < 0) {
         v = 0
       }
       return v
-    },
-    q2_time_limit_sec() {
-      // if (this.development_p) {
-      //   return 3
-      // }
-      // return this.q_record.time_limit_sec
-      return 3
     },
   },
 }

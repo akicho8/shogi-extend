@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_room
-  debug_print(:vars="['app.sub_mode', 'app.progress_info', 'app.question_index', 'app.g_mode']" oneline)
+  debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.g_mode', 'app.osenai_p']" oneline)
 
   .vs_info.is-flex
     template(v-for="(membership, i) in app.room.memberships")
@@ -12,16 +12,30 @@
           img.is-rounded(:src="membership.user.avatar_path")
         .user_name.has-text-weight-bold
           | {{membership.user.name}}
-        .user_quest_index2
-          | {{progress_list(membership).length}} / {{app.room.best_questions.length}}
-        .user_quest_index
-          template(v-if="progress_list2(membership).length === 0")
-            | &nbsp;
-          template(v-for="ans_result_key in progress_list2(membership)")
-            template(v-if="ans_result_key === 'correct'")
-              b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
-            template(v-if="ans_result_key === 'mistake'")
-              b-icon(icon="close" size="is-small" type="is-success")
+
+        template(v-if="app.room.game_key === 'game_key1'")
+          .user_quest_index2
+            | {{progress_list(membership).length}} / {{app.room.best_questions.length}}
+          .user_quest_index
+            template(v-if="progress_list2(membership).length === 0")
+              | &nbsp;
+            template(v-for="ans_result_key in progress_list2(membership)")
+              template(v-if="ans_result_key === 'correct'")
+                b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
+              template(v-if="ans_result_key === 'mistake'")
+                b-icon(icon="close" size="is-small" type="is-success")
+
+        template(v-if="app.room.game_key === 'game_key2'")
+          .user_quest_index2
+            | {{x_score(membership)}}
+          .user_quest_index
+            template(v-if="progress_list2(membership).length === 0")
+              | &nbsp;
+            template(v-for="ans_result_key in progress_list2(membership)")
+              template(v-if="ans_result_key === 'correct'")
+                b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
+              template(v-if="ans_result_key === 'mistake'")
+                b-icon(icon="close" size="is-small" type="is-success")
 
       template(v-if="i === 0")
         .vs_block.is-1.is-flex.has-text-weight-bold.is-size-4
@@ -43,9 +57,11 @@
   template(v-if="development_p")
     .columns
       .column
-        .buttons.is-centered
+        .buttons.are-small.is-centered
           b-button(@click="app.kotae_sentaku('correct')") 正解
           b-button(@click="app.kotae_sentaku('mistake')") 時間切れ
+          b-button(@click="app.g2_hayaosi_handle()") シングルトンで解答
+          b-button(@click="app.g2_jikangire_handle()") シングルトンで誤答
 </template>
 
 <script>
@@ -68,10 +84,13 @@ export default {
   },
   methods: {
     progress_list(membership) {
-      return this.app.progress_info[membership.id] || []
+      return this.app.members_hash[membership.id].progress_list
     },
     progress_list2(membership) {
-      return _.takeRight(this.progress_list(membership), 8)
+      return _.takeRight(this.progress_list(membership), this.app.config.progress_list_take_display_count)
+    },
+    x_score(membership) {
+      return this.app.members_hash[membership.id].x_score
     },
   },
 }

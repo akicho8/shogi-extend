@@ -49,34 +49,47 @@ module Actb
       history_update(data, :mistake)
     end
 
-    def kotaeru_handle(data)
+    def g2_hayaosi_handle(data)
       data = data.to_options
       # membership_id: this.current_membership.id,
       # question_id: this.current_question_id,
 
-      # this.silent_http_command("PUT", this.app.info.put_path, { kotaeru_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
-      # { kotaeru_handle: true, room_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
+      # this.silent_http_command("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
+      # { g2_hayaosi_handle: true, room_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
 
       key = [:early_press, current_room, data[:question_id]].join("/")
       Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
       early_press_counter = redis.incr(key)
       redis.expire(key, 60)
       if early_press_counter === 1
-        kotaeru_kenri_aruyo = {
+        g2_hayaosi_handle_broadcasted = {
           membership_id: data[:membership_id],
           question_id: data[:question_id],
           early_press_counter: early_press_counter,
         }
-        ActionCable.server.broadcast("actb/room_channel/#{room_id}", { kotaeru_kenri_aruyo: kotaeru_kenri_aruyo })
+        ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :g2_hayaosi_handle_broadcasted, bc_params: g2_hayaosi_handle_broadcasted })
       end
     end
+    
+    def g2_jikangire_handle(data)
+      data = data.to_options
 
-    def correct_hook(data)
+      key = [:early_press, current_room, data[:question_id]].join("/")
+      redis.del(key)
+      
+      g2_jikangire_handle_broadcasted = {
+        membership_id: data[:membership_id],
+        question_id: data[:question_id],
+      }
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :g2_jikangire_handle_broadcasted, bc_params: g2_jikangire_handle_broadcasted })
+    end
+
+    def kotae_sentaku(data)
       data = data.to_options
 
       history_update(data, data[:ans_result_key])
 
-      info = {
+      bc_params = {
         membership_id:  data[:membership_id],  # 誰が
         question_index: data[:question_index], # どこまで進めたか
         question_id:    data[:question_id],    # これいらんけど、そのまま渡しとく
@@ -94,11 +107,20 @@ module Actb
       end
 
       # こちらがメイン
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", {correct_hook: info})
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :kotae_sentaku_broadcasted, bc_params: bc_params })
     end
 
-    def next_hook(data)
+    # 次に進む
+    def next_trigger(data)
       history_update(data, :mistake)
+      
+      data = data.to_options
+      bc_params = {
+        membership_id:  data[:membership_id],
+        question_index: data[:question_index],
+        question_id:    data[:question_id],
+      }
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :next_trigger_broadcasted, bc_params: bc_params })
     end
 
     # <-- app/javascript/actb_app.vue
@@ -144,8 +166,8 @@ module Actb
 
       # 終了時
       room_json = room.as_json(only: [:id, :game_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", {switch_to: "result", room: room_json})
-      # --> app/javascript/actb_app.vue
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: "katimashita_broadcasted", bc_params: { room: room_json }})
+      # --> app/javascript/actb/application.vue
     end
 
     def room_id

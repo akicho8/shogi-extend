@@ -41,12 +41,14 @@ import the_ranking          from "./the_ranking.vue"
 import the_history          from "./the_history.vue"
 
 import { application_room } from "./application_room.js"
+import { config           } from "./config.js"
 
 export default {
   store: the_store,
   name: "actb_app",
   mixins: [
     support,
+    config,
 
     the_question_show_mod,
 

@@ -3,7 +3,7 @@ module Actb
     queue_as :default
 
     def perform(message)
-      ActionCable.server.broadcast("actb/room_channel/#{message.room_id}", message: render_message(message))
+      ActionCable.server.broadcast("actb/room_channel/#{message.room_id}", { bc_action: :room_message_broadcasted, bc_params: {message: render_message(message)}})
     end
 
     private

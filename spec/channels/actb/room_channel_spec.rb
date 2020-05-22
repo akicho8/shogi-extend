@@ -73,7 +73,7 @@ RSpec.describe Actb::RoomChannel, type: :channel do
     end
   end
 
-  describe "#correct_hook" do
+  describe "#kotae_sentaku" do
     before do
       subscribe(room_id: current_room.id)
     end
@@ -81,8 +81,8 @@ RSpec.describe Actb::RoomChannel, type: :channel do
     it do
       data = { membership_id: membership1.id, question_index: 1, question_id: question.id }
       expect {
-        subscription.correct_hook(data)
-      }.to have_broadcasted_to("actb/room_channel/#{current_room.id}").with(correct_hook: data)
+        subscription.kotae_sentaku(data)
+      }.to have_broadcasted_to("actb/room_channel/#{current_room.id}").with(kotae_sentaku: data)
 
       current_room.reload
       assert { membership1.question_index == 1 }

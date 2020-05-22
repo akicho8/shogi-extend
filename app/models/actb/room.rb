@@ -72,7 +72,7 @@ module Actb
       list = Question.where(id: ids).order(:difficulty_level)
 
       if Rails.env.development?
-        # list = list.to_a * 30
+        list = list.to_a * 30
       end
 
       list.as_json(only: [:id, :init_sfen, :time_limit_sec, :difficulty_level, :title, :description, :hint_description, :source_desc, :other_twitter_account], include: {:user => { only: [:id, :name, :key], methods: [:avatar_path] }, :moves_answers => {only: [:limit_turn, :moves_str, :end_sfen]}})

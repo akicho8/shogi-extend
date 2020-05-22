@@ -17,9 +17,11 @@
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
-      b-button(@click="app.kotaeru_handle" type="is-primary") 解答する
+      b-button(@click="app.g2_hayaosi_handle" type="is-primary" :disabled="app.config.ikkai_misuttara_mou_osenai && app.osenai_p") 解答する
+
   template(v-if="app.g_mode === 'g_mode2'")
-    | 操作中
+    .has-text-centered
+      | 操作中
     .has-text-centered
       .status1
         | {{app.q2_rest_seconds}}
@@ -34,16 +36,19 @@
       :size="'default'"
       :sound_effect="true"
       :volume="0.5"
-      :controller_show="false"
       :human_side_key="'both'"
+      :controller_show="false"
       :theme="'simple'"
       @update:turn_offset="v => app.q_turn_offset = v"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
-    b-button(@click="app.akirameru_handle") 諦める
+    //- :human_side_key="app.q2_rest_seconds === 0 ? 'none' : 'both'"
+    .has-text-centered
+      b-button(@click="app.g2_jikangire_handle") 諦める
 
   template(v-if="app.g_mode === 'g_mode3'")
-    | 相手が操作中です
+    .has-text-centered
+      | 相手が操作中です
 
   .has-text-centered.tags_container
     //- p 難易度:{{app.q_record.difficulty_level}}
