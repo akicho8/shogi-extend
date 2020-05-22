@@ -13,5 +13,7 @@ module Actb
     deden_mode_delay: 0.8,
     correct_mode_delay: 1,
     mistake_mode_delay: 1,
+
+    room_messages_display_lines: 20,
   }
 end

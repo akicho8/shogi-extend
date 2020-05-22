@@ -1,6 +1,4 @@
 const MATCHING_INTERVAL_SECOND = 2
-const MATCHING_RATE_THRESHOLD_DEFAULT = 50
-const MATCHING_RATE_THRESHOLD_PLUS = 25
 
 export default {
   data() {
@@ -36,7 +34,8 @@ export default {
     },
 
     matching_start_perform() {
-      this.app.$ac_lobby.perform("matching_start", {matching_rate_threshold: this.matching_rate_threshold})
+      this.app.lobby_message("*matching_start")
+      this.app.$ac_lobby.perform("matching_start", {matching_rate_threshold: this.matching_rate_threshold, game_key: this.app.game_key})
     },
   },
 

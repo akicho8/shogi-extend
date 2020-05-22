@@ -52,20 +52,7 @@ export const application_room = {
       this.__assert(this.$ac_room == null)
       this.$ac_room = consumer.subscriptions.create({ channel: "Actb::RoomChannel", room_id: this.room.id }, {
         connected: () => {
-          this.debug_alert("room 接続")
-          this.ac_info_update()
-
-          this.$ac_room.perform("start_hook", {
-            membership_id: this.current_membership.id,
-            question_id: this.current_question_id,
-            question_index: this.question_index,
-          }) // --> app/channels/actb/room_channel.rb
-
-          this.ok_notice("対戦開始")
-          this.sub_mode = "readygo_wait"
-          this.delay(this.config.readygo_wait_delay, () => {
-            this.deden_mode_trigger()
-          })
+          this.start_hook()
         },
         disconnected: () => {
           alert("room disconnected")
@@ -81,11 +68,44 @@ export const application_room = {
       })
     },
 
-    room_message_broadcasted(params) {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    room_speak_handle() {
+      this.room_speak(this.room_message)
+      this.room_message = ""
+    },
+
+    room_speak(message) {
+      this.$ac_room.perform("speak", {message: message})
+    },
+
+    room_speak_broadcasted(params) {
       const message = params.message
+      if (!/^\*/.test(message.body)) {
+        this.talk(message.body, {rate: 1.5})
+      }
       this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
-      this.talk(message.body, {rate: 1.5})
       this.room_messages.push(message)
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    start_hook() {
+      this.debug_alert("room 接続")
+      this.ac_info_update()
+
+      this.room_speak("*start_hook")
+      this.$ac_room.perform("start_hook", {
+        membership_id: this.current_membership.id,
+        question_id: this.current_question_id,
+        question_index: this.question_index,
+      }) // --> app/channels/actb/room_channel.rb
+
+      this.ok_notice("対戦開始")
+      this.sub_mode = "readygo_wait"
+      this.delay(this.config.readygo_wait_delay, () => {
+        this.deden_mode_trigger()
+      })
     },
 
     deden_mode_trigger() {
@@ -139,6 +159,7 @@ export const application_room = {
       //   this.score_add(-1)
       // }
 
+      this.room_speak(`*kotae_sentaku("${ans_result_key}")`)
       this.$ac_room.perform("kotae_sentaku", {
         membership_id: this.current_membership.id,
         question_id: this.current_question_id, // 問題ID
@@ -192,40 +213,46 @@ export const application_room = {
           }
         }
       }
-      
+
       if (this.room.game_key === "game_key2") {
-        if (this.primary_membership_p) {
-          // 次の問題がある場合
-          if (this.question_index < this.current_best_question_size - 1) {
-            if (params.ans_result_key === "correct") {
-              this.sub_mode = "correct_mode"
-              this.delay(this.config.correct_mode_delay, () => {
+        if (this.question_index < this.current_best_question_size - 1) {
+          if (params.ans_result_key === "correct") {
+            this.sub_mode = "correct_mode"
+            this.delay(this.config.correct_mode_delay, () => {
+              if (this.primary_membership_p) {
                 this.next_trigger()
-              })
-            } else {
-              this.sub_mode = "mistake_mode"
-              this.delay(this.config.mistake_mode_delay, () => {
-                this.next_trigger()
-              })
-            }
+              }
+            })
           } else {
-            if (params.ans_result_key === "correct") {
-              this.sub_mode = "correct_mode"
-              this.delay(this.config.correct_mode_delay, () => {
+            this.sub_mode = "mistake_mode"
+            this.delay(this.config.mistake_mode_delay, () => {
+              if (this.primary_membership_p) {
+                this.next_trigger()
+              }
+            })
+          }
+        } else {
+          if (params.ans_result_key === "correct") {
+            this.sub_mode = "correct_mode"
+            this.delay(this.config.correct_mode_delay, () => {
+              if (this.primary_membership_p) {
                 this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
-              })
-            } else {
-              this.sub_mode = "mistake_mode"
-              this.delay(this.config.mistake_mode_delay, () => {
+              }
+            })
+          } else {
+            this.sub_mode = "mistake_mode"
+            this.delay(this.config.mistake_mode_delay, () => {
+              if (this.primary_membership_p) {
                 this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
-              })
-            }
+              }
+            })
           }
         }
       }
     },
 
     next_trigger() {
+      this.room_speak("*next_trigger")
       this.$ac_room.perform("next_trigger", { // 戻値なし
         membership_id: this.current_membership.id,
         question_id: this.room.best_questions[this.question_index + 1],
@@ -236,6 +263,7 @@ export const application_room = {
       this.deden_mode_trigger()
     },
     next_trigger_broadcasted(params) {
+      this.room_speak("*next_trigger_broadcasted")
       if (this.room.game_key === "game_key1") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index
@@ -256,6 +284,7 @@ export const application_room = {
     g2_hayaosi_handle() {
       this.sound_play("click")
 
+      this.room_speak("*g2_hayaosi_handle")
       this.$ac_room.perform("g2_hayaosi_handle", {
         membership_id: this.current_membership.id,
         question_id: this.current_question_id,
@@ -264,6 +293,7 @@ export const application_room = {
       }) // --> app/channels/actb/room_channel.rb
     },
     g2_hayaosi_handle_broadcasted(params) {
+      this.room_speak("*g2_hayaosi_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押せた本人
         this.g_mode = "g_mode2"
@@ -279,6 +309,7 @@ export const application_room = {
 
     // 早押しボタンを押して解答中に時間切れ
     g2_jikangire_handle() {
+      this.room_speak("*g2_jikangire_handle")
       this.$ac_room.perform("g2_jikangire_handle", {
         membership_id: this.current_membership.id,
         question_id: this.current_question_id,
@@ -286,6 +317,7 @@ export const application_room = {
     },
     // 時間切れ
     g2_jikangire_handle_broadcasted(params) {
+      this.room_speak("*g2_jikangire_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         this.score_add(this.current_membership.id, -1)
         this.osenai_p = true

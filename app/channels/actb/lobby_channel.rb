@@ -32,6 +32,7 @@ module Actb
       current_user.actb_lobby_messages.create!(body: data[:message])
     end
 
+    # from app/javascript/actb_app/the_matching_interval.js
     def matching_start(data)
       data = data.to_options
 

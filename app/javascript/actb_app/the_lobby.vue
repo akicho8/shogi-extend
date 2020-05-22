@@ -13,13 +13,13 @@
   .opening(v-if="app.sub_mode === 'opening'")
     .title.is-3.has-text-centered 詰将棋ファイター
     .buttons.is-centered
-      b-button.has-text-weight-bold(@click="$parent.start_handle" type="is-primary") START
+      b-button.has-text-weight-bold(@click="app.start_handle" type="is-primary") START
 
   .battle_select(v-if="app.sub_mode === 'battle_select'")
     .title.is-3.has-text-centered モード
     .mode_buttons.buttons.is-centered
-      b-button.has-text-weight-bold(@click="$parent.start_handle2('game_key1')" type="is-primary") マラソン
-      b-button.has-text-weight-bold(@click="$parent.start_handle2('game_key2')" type="is-primary") シングルトン
+      b-button.has-text-weight-bold(@click="app.start_handle2('game_key1')" type="is-primary") マラソン
+      b-button.has-text-weight-bold(@click="app.start_handle2('game_key2')" type="is-primary") シングルトン
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="cancel_handle")
 </template>

@@ -154,17 +154,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    room_speak_handle() {
-      this.room_speak(this.room_message)
-      this.room_message = ""
-    },
-
-    room_speak(message) {
-      this.$ac_room.perform("speak", {message: message})
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
     school_setup() {
       this.$ac_school = consumer.subscriptions.create({channel: "Actb::SchoolChannel"}, {
         connected: () => {

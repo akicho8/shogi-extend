@@ -1,13 +1,13 @@
 <template lang="pug">
 .the_room_message.columns
   .column
-    .messages_box.has-background-light(ref="messages_box")
-      template(v-for="message in $parent.room_messages")
+    .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_display_lines}rem`}")
+      template(v-for="message in app.room_messages")
         div {{message.user.name}}: {{message.body}}
     b-field.input_field
-      b-input(v-model="$parent.room_message" expanded @keypress.native.enter="$parent.room_speak_handle")
+      b-input(v-model="app.room_message" expanded @keypress.native.enter="app.room_speak_handle")
       p.control
-        button.button.is-primary(@click="$parent.room_speak_handle")
+        button.button.is-primary(@click="app.room_speak_handle")
           b-icon.play_icon(icon="play")
 </template>
 
@@ -30,7 +30,7 @@ export default {
   },
 
   watch: {
-    "$parent.room_messages": {
+    "app.room_messages": {
       handler() {
         this.scroll_to_bottom()
       },
@@ -54,7 +54,6 @@ export default {
 .the_room_message
   .messages_box
     padding: 0.5rem
-    height: 5em
     overflow-y: scroll
   .input_field
     margin-top: 0.5rem
