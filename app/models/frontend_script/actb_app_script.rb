@@ -46,6 +46,7 @@ module FrontendScript
     QUESTIONS_FETCH_PER = 10
     HISTORY_FETCH_MAX = 50
     CLIP_FETCH_MAX = 50
+    MESSSAGE_LIMIT = 64
 
     def form_parts
       if Rails.env.development?
@@ -75,6 +76,10 @@ module FrontendScript
     def script_body
       if Rails.env.development?
         c.sysop_login_unless_logout
+      end
+
+      if v = params[:remote_action]
+        return public_send(v)
       end
 
       # http://localhost:3000/script/actb-app.json?questions_fetch=true
@@ -208,6 +213,13 @@ module FrontendScript
       c.layout_type = :raw
 
       out
+    end
+
+    # http://localhost:3000/script/actb-app.json?remote_action=lobby_messages_fetch
+    def lobby_messages_fetch
+      lobby_messages = Actb::LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
+      lobby_messages = lobby_messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
+      { lobby_messages: lobby_messages }
     end
 
     def put_action

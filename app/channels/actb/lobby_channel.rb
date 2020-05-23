@@ -1,7 +1,6 @@
 module Actb
   class LobbyChannel < BaseChannel
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
-    MESSSAGE_LIMIT = 64
 
     delegate :matching_list, to: "self.class"
 
@@ -20,14 +19,6 @@ module Actb
     def subscribed
       stream_from "actb/lobby_channel"
       common_broadcast
-
-      # 接続した「本人だけ」にチャットメッセージたちを送ってチャットをある程度復元する
-      if current_user
-        stream_for current_user # stream_from と同時には使えない
-        messages = LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
-        messages = messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
-        LobbyChannel.broadcast_to(current_user, bc_action: :lobby_messages_broadcasted, bc_params: messages)
-      end
     end
 
     def unsubscribed

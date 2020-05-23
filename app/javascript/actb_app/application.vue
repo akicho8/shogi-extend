@@ -145,10 +145,10 @@ export default {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    // lobbyに接続した瞬間に送られてくる
-    lobby_messages_broadcasted(params) {
-      this.lobby_messages = params.messages
-    },
+    // // lobbyに接続した瞬間に送られてくる
+    // lobby_messages_broadcasted(params) {
+    //   this.lobby_messages = params.messages
+    // },
 
     lobby_speak_handle() {
       this.lobby_speak(this.lobby_message)
@@ -198,6 +198,10 @@ export default {
     lobby_setup() {
       this.lobby_messages = []
       this.lobby_message = ""
+
+      this.http_get_command(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
+        this.lobby_messages = e.lobby_messages
+      })
 
       this.debug_alert("lobby_setup")
       this.__assert(this.$ac_lobby == null)
