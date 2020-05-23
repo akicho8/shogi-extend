@@ -1,4 +1,4 @@
-# 詰将棋ファイター
+# 将棋トレーニングバトル
 #
 # entry
 #   app/models/frontend_script/actb_app_script.rb
@@ -36,7 +36,7 @@ module FrontendScript
     include AtomicScript::AddJsonLinkMod
     include SortMod
 
-    self.script_name = "詰将棋ファイター"
+    self.script_name = "将棋トレーニングバトル"
     self.page_title = ""
     self.form_position = :bottom
     self.column_wrapper_enable = false

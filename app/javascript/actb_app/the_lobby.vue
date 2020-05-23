@@ -11,7 +11,7 @@
           | {{app.current_user.rating}}
 
   .opening(v-if="app.sub_mode === 'opening'")
-    .title.is-3.has-text-centered 詰将棋ファイター
+    .title.is-3.has-text-centered 将棋トレーニングバトル
     .buttons.is-centered
       b-button.has-text-weight-bold(@click="app.rule_key_select_handle" type="is-primary") START
 
