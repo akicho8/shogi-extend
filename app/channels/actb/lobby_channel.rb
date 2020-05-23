@@ -2,16 +2,14 @@ module Actb
   class LobbyChannel < BaseChannel
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
 
-    delegate :matching_list, to: "self.class"
+    delegate :matching_list_hash, to: "self.class"
 
-    def self.matching_list
-      GameInfo.inject({}) {|a, e|
-        a.merge(e.key => matching_list_of(e))
-      }
-    end
-
-    def self.matching_list_of(game_info)
-      redis.smembers(e.redis_key).collect(&:to_i)
+    class << self
+      def matching_list_hash
+        GameInfo.inject({}) do |a, e|
+          a.merge(e.key => redis.smembers(e.redis_key).collect(&:to_i))
+        end
+      end
     end
 
     ################################################################################
@@ -28,11 +26,28 @@ module Actb
     def speak(data)
       data = data.to_options
       current_user.actb_lobby_messages.create!(body: data[:message])
+      execution_interrupt_hidden_command(data[:message])
+    end
+
+    def execution_interrupt_hidden_command(str)
+      if md = str.to_s.squish.match(/^\/(?<command_line>.*)/)
+        args = md["command_line"].split
+        command = args.shift
+        if command == "ping"
+          current_user.actb_lobby_messages.create!(body: "pong")
+        end
+        if command == "game_key"
+          lobby_speak(current_user.game_key)
+          lobby_speak(current_user.reload.game_key)
+        end
+      end
     end
 
     # from app/javascript/actb_app/the_matching_interval.js
     def matching_search(data)
       data = data.to_options
+
+      current_user.reload # current_user.xsetting.game_key を更新する
 
       matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
 
@@ -68,27 +83,31 @@ module Actb
     end
 
     def matching_users
-      matching_list.collect { |e| Colosseum::User.find(e) }
+      redis.smembers(redis_key).collect { |e| Colosseum::User.find(e) }
+    end
+
+    def matching_list
+      redis.smembers(redis_key).collect(&:to_i)
     end
 
     def matching_list_add(user)
-      redis.sadd(:matching_list, user.id)
+      redis.sadd(redis_key, user.id)
       common_broadcast
     end
 
     def matching_member?(user)
-      redis.sismember(:matching_list, user.id)
+      redis.sismember(redis_key, user.id)
     end
 
     def matching_list_remove(*users)
       users.each do |user|
-        redis.srem(:matching_list, user.id)
+        redis.srem(redis_key, user.id)
       end
       common_broadcast
     end
 
     def common_broadcast
-      ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, params: {matching_list: matching_list})
+      ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: {matching_list_hash: matching_list_hash})
     end
 
     def room_create(a, b)
@@ -98,7 +117,16 @@ module Actb
       Room.create! do |e|
         e.memberships.build(user: a)
         e.memberships.build(user: b)
+        e.game_key = current_user.game_info.key
       end
+    end
+
+    def redis_key
+      current_user.game_info.redis_key
+    end
+
+    def lobby_speak(message)
+      current_user.actb_lobby_messages.create!(body: message)
     end
   end
 end

@@ -64,7 +64,7 @@ module Actb
           create_actb_xsetting!
         end
 
-        delegate :game_key, to: :actb_xsetting
+        delegate :game_key, :game_info, to: :actb_xsetting
       end
 
       def create_actb_xsetting_if_blank

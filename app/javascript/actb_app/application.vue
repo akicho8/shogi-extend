@@ -4,7 +4,7 @@
 
   .switching_pages(v-show="!overlay_record")
     the_footer
-    the_system_header(v-if="mode === 'lobby'")
+    the_system_header(v-if="mode === 'lobby' || mode === 'matching'")
     the_lobby(:info="info" v-if="mode === 'lobby'")
     the_lobby_message(:info="info" v-if="mode === 'lobby'")
     the_matching(:info="info" v-if="mode === 'matching'")
@@ -80,7 +80,7 @@ export default {
       game_key: null,
       room: this.info.room,
 
-      matching_list:   null, // 対戦待ちの人のIDを列挙している
+      matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
       room_user_ids:   null, // オンライン人数
 

@@ -32,7 +32,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     end
 
     it "対戦待ちリストを送信する" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list: [])
+      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list_hash: [])
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     end
 
     it "オフライン通知を送信する" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list: [])
+      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list_hash: [])
     end
   end
 
@@ -66,7 +66,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     end
 
     it "オフライン通知を送信する" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list: [])
+      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list_hash: [])
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
 
         # (少くとも)2回ブロードキャスト
         expect { subscription.matching_search({}) }.to have_broadcasted_to("actb/lobby_channel").twice
-        # 1. matching_list を伝える(←これはなくてもよくね？)
+        # 1. matching_list_hash を伝える(←これはなくてもよくね？)
         # 2. 作成した room を伝える
 
         assert { Actb::Room.count == 1 }

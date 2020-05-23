@@ -4,9 +4,8 @@
     | 購読:{{app.ac_subscription_names}}
   p(v-if="app.online_user_ids != null")
     | オンライン:{{app.online_user_ids.length}}人
-  p(v-if="app.matching_list != null")
-    | 対戦待ち:{{app.matching_list.game_key1.length}}人
-    | 対戦待ち:{{app.matching_list.game_key2.length}}人
+  p(v-if="app.matching_list_hash")
+    | 対戦待ち:{{app.matching_list_hash.game_key1.length}},{{app.matching_list_hash.game_key2.length}}人
   p(v-if="app.room_user_ids != null")
     | 対戦中:{{app.room_user_ids.length}}人
 </template>

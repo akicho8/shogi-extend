@@ -1,4 +1,4 @@
-const MATCHING_INTERVAL_SECOND = 2
+const MATCHING_INTERVAL_SECOND = 5
 
 export const application_matching = {
   data() {
@@ -13,7 +13,7 @@ export const application_matching = {
 
     matching_init() {
       this.matching_interval_timer_clear()
-      this.matching_interval_timer_count = -1
+      this.matching_interval_timer_count = 0
       this.matching_interval_timer_processing()
       this.matching_interval_timer_id = setInterval(this.matching_interval_timer_processing, 1000)
     },
@@ -27,7 +27,6 @@ export const application_matching = {
 
     matching_interval_timer_processing() {
       if (this.matching_trigger_p) {
-        console.log(this.matching_rate_threshold)
         this.matching_search()
       }
       this.matching_interval_timer_count += 1
@@ -35,11 +34,11 @@ export const application_matching = {
 
     matching_search() {
       this.lobby_speak("*matching_search")
-      this.$ac_lobby.perform("matching_search", {matching_rate_threshold: this.matching_rate_threshold, game_key: this.game_key})
+      this.$ac_lobby.perform("matching_search", {matching_rate_threshold: this.matching_rate_threshold})
     },
     // マッチング不成立だったりでしょっちゅう呼ばれる
     matching_list_broadcasted(params) {
-      this.matching_list = params.matching_list
+      this.matching_list_hash = params.matching_list_hash
     },
     // マッチング成立
     // ロビーにいる全員に送られて自分が含まれていたら部屋に移動する
