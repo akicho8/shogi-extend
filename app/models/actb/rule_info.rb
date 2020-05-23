@@ -1,9 +1,9 @@
 module Actb
-  class GameInfo
+  class RuleInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :game_key1, name: "マラソン",     },
-      { key: :game_key2, name: "シングルトン", },
+      { key: :rule_key1, name: "マラソン",     },
+      { key: :rule_key2, name: "シングルトン", },
     ]
 
     def redis_key

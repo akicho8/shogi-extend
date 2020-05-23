@@ -56,19 +56,19 @@ module Actb
       end
     end
 
-    concerning :XsettingMod do
+    concerning :SettingMod do
       included do
-        has_one :actb_xsetting, class_name: "Actb::Xsetting", dependent: :destroy
+        has_one :actb_setting, class_name: "Actb::Setting", dependent: :destroy
 
         after_create do
-          create_actb_xsetting!
+          create_actb_setting!
         end
 
-        delegate :game_key, :game_info, to: :actb_xsetting
+        delegate :rule_key, :rule_info, to: :actb_setting
       end
 
-      def create_actb_xsetting_if_blank
-        actb_xsetting || create_actb_xsetting!
+      def create_actb_setting_if_blank
+        actb_setting || create_actb_setting!
       end
     end
   end

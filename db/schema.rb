@@ -110,8 +110,10 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_lineages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
+    t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_actb_lineages_on_position"
   end
 
   create_table "actb_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -231,13 +233,13 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
     t.string "final_key", comment: "結果"
-    t.string "game_key", comment: "ゲームの種類"
+    t.string "rule_key", comment: "ゲームの種類"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["begin_at"], name: "index_actb_rooms_on_begin_at"
     t.index ["end_at"], name: "index_actb_rooms_on_end_at"
     t.index ["final_key"], name: "index_actb_rooms_on_final_key"
-    t.index ["game_key"], name: "index_actb_rooms_on_game_key"
+    t.index ["rule_key"], name: "index_actb_rooms_on_rule_key"
   end
 
   create_table "actb_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -252,13 +254,13 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["generation"], name: "index_actb_seasons_on_generation"
   end
 
-  create_table "actb_xsettings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "actb_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "自分"
-    t.string "game_key", null: false, comment: "最後に選択したルール"
+    t.string "rule_key", null: false, comment: "最後に選択したルール"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_key"], name: "index_actb_xsettings_on_game_key"
-    t.index ["user_id"], name: "index_actb_xsettings_on_user_id"
+    t.index ["rule_key"], name: "index_actb_settings_on_rule_key"
+    t.index ["user_id"], name: "index_actb_settings_on_user_id"
   end
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

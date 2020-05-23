@@ -4,7 +4,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.datetime :begin_at, null: false, index: true, comment: "対戦開始日時"
       t.datetime :end_at,   null: true,  index: true, comment: "対戦終了日時"
       t.string :final_key,  null: true,  index: true, comment: "結果"
-      t.string :game_key,   null: true,  index: true, comment: "ゲームの種類"
+      t.string :rule_key,   null: true,  index: true, comment: "ゲームの種類"
       t.timestamps
     end
 
@@ -21,9 +21,9 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.index [:room_id, :user_id], unique: true
     end
 
-    create_table :actb_xsettings do |t|
+    create_table :actb_settings do |t|
       t.belongs_to :user,                                     comment: "自分"
-      t.string :game_key,           null: false, index: true, comment: "最後に選択したルール"
+      t.string :rule_key,           null: false, index: true, comment: "最後に選択したルール"
       t.timestamps
     end
 
@@ -171,6 +171,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
     # 種類
     create_table :actb_lineages do |t|
       t.string :key, null: false
+      t.integer :position, null: false, index: true
       t.timestamps
     end
   end

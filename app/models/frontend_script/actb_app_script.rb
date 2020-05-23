@@ -56,8 +56,8 @@ module FrontendScript
             :key     => :debug_scene,
             :elems   => {
               "ロビー"             => nil,
-              "対戦(マラソン)"     => :room_game_key1,
-              "対戦(シングルトン)" => :room_game_key2,
+              "対戦(マラソン)"     => :room_rule_key1,
+              "対戦(シングルトン)" => :room_rule_key2,
               "結果"               => :result,
               "問題作成"           => :builder,
               "問題作成(情報)"     => :builder_form,
@@ -222,9 +222,9 @@ module FrontendScript
       { lobby_messages: lobby_messages }
     end
 
-    # http://localhost:3000/script/actb-app.json?remote_action=game_key_set_handle
-    def game_key_set_handle
-      current_user.actb_xsetting.update!(game_key: params[:game_key])
+    # http://localhost:3000/script/actb-app.json?remote_action=rule_key_set_handle
+    def rule_key_set_handle
+      current_user.actb_setting.update!(rule_key: params[:rule_key])
       true
     end
 
@@ -322,22 +322,22 @@ module FrontendScript
         c.sysop_login_unless_logout
       end
 
-      if current_debug_scene == :room_game_key1 || current_debug_scene == :room_game_key2
+      if current_debug_scene == :room_rule_key1 || current_debug_scene == :room_rule_key2
         c.sysop_login_unless_logout
 
         user = Colosseum::User.create!
         room = Actb::Room.create! do |e|
           e.memberships.build(user: current_user)
           e.memberships.build(user: user)
-          if current_debug_scene == :room_game_key1
-            e.game_key = :game_key1
+          if current_debug_scene == :room_rule_key1
+            e.rule_key = :rule_key1
           end
-          if current_debug_scene == :room_game_key2
-            e.game_key = :game_key2
+          if current_debug_scene == :room_rule_key2
+            e.rule_key = :rule_key2
           end
         end
 
-        info[:room] = room.as_json(only: [:id, :game_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
+        info[:room] = room.as_json(only: [:id, :rule_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
       end
 
       if current_debug_scene == :result
@@ -350,7 +350,7 @@ module FrontendScript
           e.memberships.build(user: user2, judge_key: :lose, question_index: 2)
         end
 
-        info[:room] = room.as_json(only: [:id, :game_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions, :final_info])
+        info[:room] = room.as_json(only: [:id, :rule_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions, :final_info])
       end
 
       if current_debug_scene == :edit

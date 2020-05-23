@@ -26,6 +26,9 @@ module Actb
       end
     end
 
+    acts_as_list top_of_list: 0
+    default_scope { order(:position) }
+
     has_many :questions, dependent: :destroy
 
     with_options presence: true do

@@ -35,12 +35,12 @@ module Actb
         self.end_at ||= Time.current
       end
 
-      self.game_key ||= :game_key1
+      self.rule_key ||= :rule_key1
     end
 
     with_options presence: true do
       validates :begin_at
-      validates :game_key
+      validates :rule_key
     end
 
     after_create_commit do

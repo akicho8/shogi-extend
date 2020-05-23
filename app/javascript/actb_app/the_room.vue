@@ -13,7 +13,7 @@
         .user_name.has-text-weight-bold
           | {{membership.user.name}}
 
-        template(v-if="app.room.game_key === 'game_key1'")
+        template(v-if="app.room.rule_key === 'rule_key1'")
           .user_quest_index2
             | {{progress_list(membership).length}} / {{app.room.best_questions.length}}
           .user_quest_index
@@ -25,7 +25,7 @@
               template(v-if="ans_result_key === 'mistake'")
                 b-icon(icon="close" size="is-small" type="is-success")
 
-        template(v-if="app.room.game_key === 'game_key2'")
+        template(v-if="app.room.rule_key === 'rule_key2'")
           .user_quest_index2
             | {{x_score(membership)}}
           .user_quest_index
@@ -47,8 +47,8 @@
 
   //- template(v-if="app.current_quest_init_sfen")
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    the_room_question1(v-if="app.room.game_key === 'game_key1'")
-    the_room_question2(v-if="app.room.game_key === 'game_key2'")
+    the_room_question1(v-if="app.room.rule_key === 'rule_key1'")
+    the_room_question2(v-if="app.room.rule_key === 'rule_key2'")
 
   template(v-if="app.sub_mode === 'mistake_mode'")
     .mistake_mode_container.has-text-centered

@@ -77,7 +77,7 @@ export default {
     return {
       mode: "lobby",
       sub_mode: "opening",
-      game_key: null,
+      rule_key: null,
       room: this.info.room,
 
       matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
@@ -103,13 +103,13 @@ export default {
     this.school_setup()
 
     if (this.info.debug_scene) {
-      if (this.info.debug_scene === "room_game_key1") {
-        this.game_key = "game_key1"
+      if (this.info.debug_scene === "room_rule_key1") {
+        this.rule_key = "rule_key1"
         this.mode = "room"
         this.room_setup()
       }
-      if (this.info.debug_scene === "room_game_key2") {
-        this.game_key = "game_key2"
+      if (this.info.debug_scene === "room_rule_key2") {
+        this.rule_key = "rule_key2"
         this.mode = "room"
         this.room_setup()
       }
@@ -225,20 +225,20 @@ export default {
       })
     },
 
-    game_key_select_handle() {
+    rule_key_select_handle() {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
-      this.sub_mode = "game_key_select"
+      this.sub_mode = "rule_key_select"
     },
 
-    game_key_set_handle(game_key) {
+    rule_key_set_handle(rule_key) {
       this.sound_play("click")
 
-      this.game_key = game_key  // これセットする意味ないか？
-      this.lobby_speak(`*game_key_set_handle("${game_key}")`)
-      this.http_get_command(this.app.info.put_path, { remote_action: "game_key_set_handle", game_key: game_key }, e => {
-        this.lobby_speak(`*game_key_set_handle -> ${e}`)
+      this.rule_key = rule_key  // これセットする意味ないか？
+      this.lobby_speak(`*rule_key_set_handle("${rule_key}")`)
+      this.http_get_command(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
+        this.lobby_speak(`*rule_key_set_handle -> ${e}`)
         this.mode = "matching"
       })
     },

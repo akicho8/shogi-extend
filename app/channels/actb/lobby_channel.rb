@@ -6,7 +6,7 @@ module Actb
 
     class << self
       def matching_list_hash
-        GameInfo.inject({}) do |a, e|
+        RuleInfo.inject({}) do |a, e|
           a.merge(e.key => redis.smembers(e.redis_key).collect(&:to_i))
         end
       end
@@ -36,9 +36,9 @@ module Actb
         if command == "ping"
           current_user.actb_lobby_messages.create!(body: "pong")
         end
-        if command == "game_key"
-          lobby_speak(current_user.game_key)
-          lobby_speak(current_user.reload.game_key)
+        if command == "rule_key"
+          lobby_speak(current_user.rule_key)
+          lobby_speak(current_user.reload.rule_key)
         end
       end
     end
@@ -47,7 +47,7 @@ module Actb
     def matching_search(data)
       data = data.to_options
 
-      current_user.reload # current_user.xsetting.game_key を更新する
+      current_user.reload # current_user.setting.rule_key を更新する
 
       matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
 
@@ -117,12 +117,12 @@ module Actb
       Room.create! do |e|
         e.memberships.build(user: a)
         e.memberships.build(user: b)
-        e.game_key = current_user.game_info.key
+        e.rule_key = current_user.rule_info.key
       end
     end
 
     def redis_key
-      current_user.game_info.redis_key
+      current_user.rule_info.redis_key
     end
 
     def lobby_speak(message)

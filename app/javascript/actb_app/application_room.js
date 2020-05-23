@@ -122,7 +122,7 @@ export const application_room = {
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.sub_mode === "operation_mode") {
 
-        if (this.room.game_key === "game_key2") {
+        if (this.room.rule_key === "rule_key2") {
           // 安全のため残り0秒になってから操作しても無効とする
           if (this.q2_rest_seconds === 0) {
             return
@@ -167,7 +167,7 @@ export const application_room = {
     kotae_sentaku_broadcasted(params) {
       this.members_hash[params.membership_id].progress_list.push(params.ans_result_key)
 
-      if (this.room.game_key === "game_key2") {
+      if (this.room.rule_key === "rule_key2") {
         if (params.ans_result_key === "correct") {
           this.score_add(params.membership_id, 1)
         } else {
@@ -179,7 +179,7 @@ export const application_room = {
       this.ox_sound_play(params.ans_result_key)
       // }
 
-      if (this.room.game_key === "game_key1") {
+      if (this.room.rule_key === "rule_key1") {
         if (params.membership_id === this.current_membership.id) {
           // 次の問題がある場合
           if (this.question_index < this.current_best_question_size - 1) {
@@ -210,7 +210,7 @@ export const application_room = {
         }
       }
 
-      if (this.room.game_key === "game_key2") {
+      if (this.room.rule_key === "rule_key2") {
         if (this.question_index < this.current_best_question_size - 1) {
           if (params.ans_result_key === "correct") {
             this.sub_mode = "correct_mode"
@@ -260,12 +260,12 @@ export const application_room = {
     },
     next_trigger_broadcasted(params) {
       this.room_speak("*next_trigger_broadcasted")
-      if (this.room.game_key === "game_key1") {
+      if (this.room.rule_key === "rule_key1") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index
         }
       }
-      if (this.room.game_key === "game_key2") {
+      if (this.room.rule_key === "rule_key2") {
         this.question_index = params.question_index
       }
     },
@@ -360,7 +360,7 @@ export const application_room = {
     },
 
     q1_interval_processing() {
-      if (this.room.game_key === "game_key1") {
+      if (this.room.rule_key === "rule_key1") {
         if (this.sub_mode === "operation_mode") {
           this.q1_interval_count += 1
           if (this.q1_rest_seconds === 0) {
@@ -368,7 +368,7 @@ export const application_room = {
           }
         }
       }
-      if (this.room.game_key === "game_key2") {
+      if (this.room.rule_key === "rule_key2") {
         if (this.sub_mode === "operation_mode") {
           if (this.g_mode === "g_mode1") {
             this.q1_interval_count += 1
