@@ -80,12 +80,8 @@ export const application_room = {
     },
 
     room_speak_broadcasted(params) {
-      const message = params.message
-      if (!/^\*/.test(message.body)) {
-        this.talk(message.body, {rate: 1.5})
-      }
-      this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
-      this.room_messages.push(message)
+      this.lobby_speak_broadcasted_shared_process(params)
+      this.room_messages.push(params.message)
     },
 
     ////////////////////////////////////////////////////////////////////////////////

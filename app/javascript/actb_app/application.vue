@@ -41,6 +41,7 @@ import the_ranking          from "./the_ranking.vue"
 import the_history          from "./the_history.vue"
 
 import { application_room } from "./application_room.js"
+import { application_matching } from "./application_matching.js"
 import { config           } from "./config.js"
 
 export default {
@@ -53,6 +54,7 @@ export default {
     the_question_show_mod,
 
     application_room,
+    application_matching,
   ],
   components: {
     the_question_show,
@@ -143,6 +145,11 @@ export default {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
+    // lobbyに接続した瞬間に送られてくる
+    lobby_messages_broadcasted(params) {
+      this.lobby_messages = params.messages
+    },
+
     lobby_speak_handle() {
       this.lobby_speak(this.lobby_message)
       this.lobby_message = ""
@@ -150,6 +157,19 @@ export default {
 
     lobby_speak(message) {
       this.$ac_lobby.perform("speak", {message: message})
+    },
+    lobby_speak_broadcasted(params) {
+      this.lobby_speak_broadcasted_shared_process(params)
+      this.lobby_messages.push(params.message)
+    },
+
+    // room_speak_broadcasted と共有
+    lobby_speak_broadcasted_shared_process(params) {
+      const message = params.message
+      if (!/^\*/.test(message.body)) {
+        this.talk(message.body, {rate: 1.5})
+      }
+      this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -191,55 +211,27 @@ export default {
           this.ac_info_update()
         },
         received: (data) => {
-          this.debug_alert("lobby 受信")
-
-          console.log(data)
-
-          // チャット
-          if (data.messages) {
-            this.lobby_messages = data.messages
-          }
-
-          if (data.message) {
-            const message = data.message
-
-            this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
-            this.talk(message.body, {rate: 1.5})
-
-            this.lobby_messages.push(message)
-          }
-
-          // マッチング待ち
-          if (data.matching_list) {
-            console.log(data.matching_list)
-            this.matching_list = data.matching_list
-          }
-
-          // マッチング成立
-          if (data.room) {
-            const membership = data.room.memberships.find(e => e.user.id === this.current_user.id)
-            if (membership) {
-              this.lobby_close()
-              //- this.interval_timer_clear()
-              this.room = data.room
-              this.room_setup()
-            }
+          if (data.bc_action) {
+            this[data.bc_action](data.bc_params)
           }
         },
       })
     },
 
-    start_handle() {
+    game_key_select_handle() {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
-      this.sub_mode = "battle_select"
-      // this.mode = "matching"
+      this.sub_mode = "game_key_select"
     },
 
-    start_handle2(game_key) {
+    game_key_set_handle(game_key) {
       this.sound_play("click")
-      this.game_key = game_key
+      this.game_key = game_key  // これセットする意味ないか？
+      this.$ac_lobby.perform("game_key_set_handle", { game_key: game_key })
+    },
+    game_key_set_handle_broadcasted(params) {
+      debugger
       this.mode = "matching"
     },
 

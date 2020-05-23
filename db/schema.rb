@@ -252,6 +252,15 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["generation"], name: "index_actb_seasons_on_generation"
   end
 
+  create_table "actb_xsettings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "自分"
+    t.string "game_key", null: false, comment: "最後に選択したルール"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_key"], name: "index_actb_xsettings_on_game_key"
+    t.index ["user_id"], name: "index_actb_xsettings_on_user_id"
+  end
+
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false

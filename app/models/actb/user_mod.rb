@@ -40,15 +40,35 @@ module Actb
         end
 
         after_create do
-          actb_newest_profile
+          create_actb_profile_if_blank
         end
 
         delegate :rating, :rensho_count, :rensho_max, to: :actb_newest_profile
       end
 
+      def create_actb_profile_if_blank
+        actb_newest_profile
+      end
+
       # 必ず存在する最新シーズンのプロフィール
       def actb_newest_profile
         actb_profiles.find_or_create_by!(season: Season.newest)
+      end
+    end
+
+    concerning :XsettingMod do
+      included do
+        has_one :actb_xsetting, class_name: "Actb::Xsetting", dependent: :destroy
+
+        after_create do
+          create_actb_xsetting!
+        end
+
+        delegate :game_key, to: :actb_xsetting
+      end
+
+      def create_actb_xsetting_if_blank
+        actb_xsetting || create_actb_xsetting!
       end
     end
   end

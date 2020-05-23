@@ -6,7 +6,13 @@ module Actb
     delegate :matching_list, to: "self.class"
 
     def self.matching_list
-      redis.smembers(:matching_list).collect(&:to_i)
+      GameInfo.inject({}) {|a, e|
+        a.merge(e.key => matching_list_of(e))
+      }
+    end
+
+    def self.matching_list_of(game_info)
+      redis.smembers(e.redis_key).collect(&:to_i)
     end
 
     ################################################################################
@@ -15,11 +21,12 @@ module Actb
       stream_from "actb/lobby_channel"
       common_broadcast
 
+      # 接続した「本人だけ」にチャットメッセージたちを送ってチャットをある程度復元する
       if current_user
-        stream_for current_user
+        stream_for current_user # stream_from と同時には使えない
         messages = LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
         messages = messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
-        LobbyChannel.broadcast_to(current_user, messages: messages)
+        LobbyChannel.broadcast_to(current_user, bc_action: :lobby_messages_broadcasted, bc_params: messages)
       end
     end
 
@@ -32,8 +39,14 @@ module Actb
       current_user.actb_lobby_messages.create!(body: data[:message])
     end
 
+    def game_key_set_handle(data)
+      data = data.to_options
+      current_user.actb_xsetting.update!(game_key: data[:game_key])
+      LobbyChannel.broadcast_to(current_user, bc_action: :game_key_set_handle_broadcasted)
+    end
+
     # from app/javascript/actb_app/the_matching_interval.js
-    def matching_start(data)
+    def matching_search(data)
       data = data.to_options
 
       matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
@@ -90,7 +103,7 @@ module Actb
     end
 
     def common_broadcast
-      ActionCable.server.broadcast("actb/lobby_channel", matching_list: matching_list)
+      ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, params: {matching_list: matching_list})
     end
 
     def room_create(a, b)

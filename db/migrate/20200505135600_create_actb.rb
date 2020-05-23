@@ -21,6 +21,12 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.index [:room_id, :user_id], unique: true
     end
 
+    create_table :actb_xsettings do |t|
+      t.belongs_to :user,                                     comment: "自分"
+      t.string :game_key,           null: false, index: true, comment: "最後に選択したルール"
+      t.timestamps
+    end
+
     create_table :actb_profiles do |t|
       t.belongs_to :user,                                    comment: "対戦者"
       t.belongs_to :season,                                  comment: "期"

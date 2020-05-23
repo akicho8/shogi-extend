@@ -22,7 +22,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
   describe "#unsubscribe" do
     before do
       subscribe
-      subscription.matching_start({})
+      subscription.matching_search({})
     end
 
     it "対戦待ちリストから削除する" do
@@ -39,7 +39,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
   describe "#unsubscribe" do
     before do
       subscribe
-      subscription.matching_start({})
+      subscription.matching_search({})
     end
 
     it "現在のユーザーをオンラインリストから削除する" do
@@ -56,7 +56,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
   describe "#matching_cancel" do
     before do
       subscribe
-      subscription.matching_start({})
+      subscription.matching_search({})
     end
 
     it "現在のユーザーをオンラインリストから削除する" do
@@ -70,7 +70,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     end
   end
 
-  describe "#matching_start" do
+  describe "#matching_search" do
     # これは消してもいいかもしれない
     context "同レートのマッチング" do
       let_it_be(:user_a) { Colosseum::User.create! }
@@ -80,7 +80,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
         # user_a が対戦待ち
         stub_connection current_user: user_a
         subscribe
-        subscription.matching_start({})
+        subscription.matching_search({})
         assert { subscription.matching_users == [user_a] }
 
         # user_b が入ってきて対戦成立
@@ -88,7 +88,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
         subscribe
 
         # (少くとも)2回ブロードキャスト
-        expect { subscription.matching_start({}) }.to have_broadcasted_to("actb/lobby_channel").twice
+        expect { subscription.matching_search({}) }.to have_broadcasted_to("actb/lobby_channel").twice
         # 1. matching_list を伝える(←これはなくてもよくね？)
         # 2. 作成した room を伝える
 
@@ -106,7 +106,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
       def start(user, matching_rate_threshold = nil)
         stub_connection current_user: user
         subscribe
-        subscription.matching_start(matching_rate_threshold: matching_rate_threshold)
+        subscription.matching_search(matching_rate_threshold: matching_rate_threshold)
         subscription.matching_users
       end
 
