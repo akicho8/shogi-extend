@@ -30,12 +30,6 @@ module Actb
       current_user.actb_lobby_messages.create!(body: data[:message])
     end
 
-    def game_key_set_handle(data)
-      data = data.to_options
-      current_user.actb_xsetting.update!(game_key: data[:game_key])
-      LobbyChannel.broadcast_to(current_user, bc_action: :game_key_set_handle_broadcasted)
-    end
-
     # from app/javascript/actb_app/the_matching_interval.js
     def matching_search(data)
       data = data.to_options

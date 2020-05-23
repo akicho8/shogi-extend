@@ -222,6 +222,12 @@ module FrontendScript
       { lobby_messages: lobby_messages }
     end
 
+    # http://localhost:3000/script/actb-app.json?remote_action=game_key_set_handle
+    def game_key_set_handle
+      current_user.actb_xsetting.update!(game_key: params[:game_key])
+      true
+    end
+
     def put_action
       # if params[:g2_hayaosi_handle]
       #   # this.silent_http_command("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {

@@ -196,12 +196,7 @@ export default {
     },
 
     lobby_setup() {
-      this.lobby_messages = []
-      this.lobby_message = ""
-
-      this.http_get_command(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
-        this.lobby_messages = e.lobby_messages
-      })
+      this.lobby_messages_setup()
 
       this.debug_alert("lobby_setup")
       this.__assert(this.$ac_lobby == null)
@@ -222,6 +217,14 @@ export default {
       })
     },
 
+    lobby_messages_setup() {
+      this.lobby_messages = []
+      this.lobby_message = ""
+      this.http_get_command(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
+        this.lobby_messages = e.lobby_messages
+      })
+    },
+
     game_key_select_handle() {
       this.sound_play("click")
       if (this.login_required2()) { return }
@@ -231,12 +234,13 @@ export default {
 
     game_key_set_handle(game_key) {
       this.sound_play("click")
+
       this.game_key = game_key  // これセットする意味ないか？
-      this.$ac_lobby.perform("game_key_set_handle", { game_key: game_key })
-    },
-    game_key_set_handle_broadcasted(params) {
-      debugger
-      this.mode = "matching"
+      this.lobby_speak(`*game_key_set_handle("${game_key}")`)
+      this.http_get_command(this.app.info.put_path, { remote_action: "game_key_set_handle", game_key: game_key }, e => {
+        this.lobby_speak(`*game_key_set_handle -> ${e}`)
+        this.mode = "matching"
+      })
     },
 
     cancel_handle() {
