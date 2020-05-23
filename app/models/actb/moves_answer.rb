@@ -8,7 +8,7 @@
 # |-------------+------------+-------------+-------------+------+-------|
 # | id          | ID         | integer(8)  | NOT NULL PK |      |       |
 # | question_id | Question   | integer(8)  |             |      | A     |
-# | limit_turn  | Limit turn | integer(4)  | NOT NULL    |      | B     |
+# | moves_count  | Limit turn | integer(4)  | NOT NULL    |      | B     |
 # | moves_str   | Moves str  | string(255) | NOT NULL    |      |       |
 # | end_sfen    | End sfen   | string(255) |             |      |       |
 # | created_at  | 作成日時   | datetime    | NOT NULL    |      |       |
@@ -21,13 +21,13 @@ module Actb
 
     before_validation do
       if changes_to_save[:moves_str] && v = moves_str.presence
-        self.limit_turn = v.split.size
+        self.moves_count = v.split.size
       end
     end
 
     with_options presence: true do
       validates :moves_str, uniqueness: { scope: :question_id, case_sensitive: true } # JS側でチェックしているので普通は発生しない
-      validates :limit_turn
+      validates :moves_count
       # validates :end_sfen
     end
 

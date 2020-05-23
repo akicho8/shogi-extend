@@ -39,7 +39,7 @@
       :human_side_key="'both'"
       :controller_show="false"
       :theme="'simple'"
-      @update:turn_offset="v => app.q_turn_offset = v"
+      @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
     //- :human_side_key="app.q2_rest_seconds === 0 ? 'none' : 'both'"

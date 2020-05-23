@@ -126,6 +126,15 @@ export const application_room = {
       this.share_sfen = null
     },
 
+    q_turn_offset_set(turn) {
+      this.q_turn_offset = turn
+
+      const max = this.c_quest.moves_count_max + this.config.asobi_count
+      if (turn >= max) {
+        this.g2_jikangire_handle()
+      }
+    },
+
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.sub_mode === "operation_mode") {
 

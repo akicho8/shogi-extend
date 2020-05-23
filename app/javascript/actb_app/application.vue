@@ -40,10 +40,10 @@ import the_builder          from "./the_builder.vue"
 import the_ranking          from "./the_ranking.vue"
 import the_history          from "./the_history.vue"
 
-import { application_room } from "./application_room.js"
+import { application_room     } from "./application_room.js"
 import { application_matching } from "./application_matching.js"
-import { config           } from "./config.js"
-import { RuleInfo         } from "./rule_info.js"
+import { config               } from "./config.js"
+import { RuleInfo             } from "./rule_info.js"
 
 export default {
   store: the_store,

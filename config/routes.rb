@@ -94,7 +94,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋トレーニングバトル
 
-  match "tf", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
+  match "tb", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
 
   ################################################################################ 外部リンク
 

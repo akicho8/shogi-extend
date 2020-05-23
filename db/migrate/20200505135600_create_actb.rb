@@ -145,7 +145,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
     # MovesAnswer
     create_table :actb_moves_answers do |t|
       t.belongs_to :question,                           comment: "問題"
-      t.integer :limit_turn, null: false, index: true,  comment: "N手"
+      t.integer :moves_count, null: false, index: true,  comment: "N手"
       t.string :moves_str,   null: false, index: false, comment: "連続した指し手"
       t.string :end_sfen,    null: true,  index: false, comment: "最後の局面"
       t.timestamps
@@ -154,7 +154,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
     # 未使用
     create_table :actb_endpos_answers do |t|
       t.belongs_to :question,                            comment: "問題"
-      t.integer :limit_turn,  null: false, index: true,  comment: "N手"
+      t.integer :moves_count,  null: false, index: true,  comment: "N手"
       t.string :end_sfen,  null: false, index: false, comment: "最後の局面"
       t.timestamps
     end

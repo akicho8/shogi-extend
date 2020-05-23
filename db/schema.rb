@@ -56,11 +56,11 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_endpos_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", comment: "問題"
-    t.integer "limit_turn", null: false, comment: "N手"
+    t.integer "moves_count", null: false, comment: "N手"
     t.string "end_sfen", null: false, comment: "最後の局面"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["limit_turn"], name: "index_actb_endpos_answers_on_limit_turn"
+    t.index ["moves_count"], name: "index_actb_endpos_answers_on_moves_count"
     t.index ["question_id"], name: "index_actb_endpos_answers_on_question_id"
   end
 
@@ -145,12 +145,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", comment: "問題"
-    t.integer "limit_turn", null: false, comment: "N手"
+    t.integer "moves_count", null: false, comment: "N手"
     t.string "moves_str", null: false, comment: "連続した指し手"
     t.string "end_sfen", comment: "最後の局面"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["limit_turn"], name: "index_actb_moves_answers_on_limit_turn"
+    t.index ["moves_count"], name: "index_actb_moves_answers_on_moves_count"
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
   end
 
