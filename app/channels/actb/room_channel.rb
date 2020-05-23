@@ -70,13 +70,13 @@ module Actb
         ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :g2_hayaosi_handle_broadcasted, bc_params: g2_hayaosi_handle_broadcasted })
       end
     end
-    
+
     def g2_jikangire_handle(data)
       data = data.to_options
 
       key = [:early_press, current_room, data[:question_id]].join("/")
       redis.del(key)
-      
+
       g2_jikangire_handle_broadcasted = {
         membership_id: data[:membership_id],
         question_id: data[:question_id],
@@ -113,7 +113,7 @@ module Actb
     # 次に進む
     def next_trigger(data)
       history_update(data, :mistake)
-      
+
       data = data.to_options
       bc_params = {
         membership_id:  data[:membership_id],
@@ -121,6 +121,15 @@ module Actb
         question_id:    data[:question_id],
       }
       ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :next_trigger_broadcasted, bc_params: bc_params })
+    end
+
+    # 盤面を共有する
+    def kyouyuu(data)
+      data = data.to_options
+      bc_params = {
+        share_sfen: data[:share_sfen],
+      }
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :kyouyuu_broadcasted, bc_params: bc_params })
     end
 
     # <-- app/javascript/actb_app.vue

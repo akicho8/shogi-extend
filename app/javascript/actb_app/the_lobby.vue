@@ -17,9 +17,11 @@
 
   .rule_key_select(v-if="app.sub_mode === 'rule_key_select'")
     .title.is-3.has-text-centered モード
-    .mode_buttons.buttons.is-centered
-      b-button.has-text-weight-bold(@click="app.rule_key_set_handle('rule_key1')" type="is-primary") マラソン
-      b-button.has-text-weight-bold(@click="app.rule_key_set_handle('rule_key2')" type="is-primary") シングルトン
+    .buttons.is-centered.mode_buttons
+      template(v-for="row in app.$RuleInfo.values")
+        b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row.key)" type="is-primary")
+          | {{row.name}}
+          | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="cancel_handle")
 </template>
@@ -94,6 +96,8 @@ export default {
     .mode_buttons
       margin-top: 2rem
       flex-direction: column
+      .button
+        min-width: 12rem
 
     .back_button
       margin-top: 1.5rem

@@ -56,8 +56,8 @@ module FrontendScript
             :key     => :debug_scene,
             :elems   => {
               "ロビー"             => nil,
-              "対戦(マラソン)"     => :room_rule_key1,
-              "対戦(シングルトン)" => :room_rule_key2,
+              "対戦(マラソン)"     => :room_marathon_rule,
+              "対戦(シングルトン)" => :room_singleton_rule,
               "結果"               => :result,
               "問題作成"           => :builder,
               "問題作成(情報)"     => :builder_form,
@@ -215,6 +215,13 @@ module FrontendScript
       out
     end
 
+    # http://localhost:3000/script/actb-app.json?remote_action=resource_fetch
+    def resource_fetch
+      {
+        RuleInfo: Actb::RuleInfo.as_json(only: [:key, :name]),
+      }
+    end
+
     # http://localhost:3000/script/actb-app.json?remote_action=lobby_messages_fetch
     def lobby_messages_fetch
       lobby_messages = Actb::LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
@@ -322,18 +329,18 @@ module FrontendScript
         c.sysop_login_unless_logout
       end
 
-      if current_debug_scene == :room_rule_key1 || current_debug_scene == :room_rule_key2
+      if current_debug_scene == :room_marathon_rule || current_debug_scene == :room_singleton_rule
         c.sysop_login_unless_logout
 
         user = Colosseum::User.create!
         room = Actb::Room.create! do |e|
           e.memberships.build(user: current_user)
           e.memberships.build(user: user)
-          if current_debug_scene == :room_rule_key1
-            e.rule_key = :rule_key1
+          if current_debug_scene == :room_marathon_rule
+            e.rule_key = :marathon_rule
           end
-          if current_debug_scene == :room_rule_key2
-            e.rule_key = :rule_key2
+          if current_debug_scene == :room_singleton_rule
+            e.rule_key = :singleton_rule
           end
         end
 

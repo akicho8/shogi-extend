@@ -9,7 +9,7 @@
     :key="`quest_${app.question_index}`"
     ref="main_sp"
     :run_mode="'play_mode'"
-    :kifu_body="position_sfen_add(app.current_quest_init_sfen)"
+    :kifu_body="position_sfen_add(app.c_quest.full_init_sfen)"
     :summary_show="false"
     :setting_button_show="false"
     :size="'default'"
@@ -24,14 +24,14 @@
   )
 
   .has-text-centered.tags_container
-    //- p 難易度:{{app.q_record.difficulty_level}}
+    //- p 難易度:{{app.c_quest.difficulty_level}}
     b-taglist.is-centered
-      b-tag(v-if="app.q_record.title") {{app.q_record.title}}
-      b-tag(v-if="app.q_record.source_desc") {{app.q_record.source_desc}}
-      b-tag(v-if="!app.q_record.source_desc") {{app.q_record.user.name}}作
-      b-tag(v-if="app.q_record.hint_description") {{app.q_record.hint_description}}
-      b-tag(v-if="app.q_record.difficulty_level && app.q_record.difficulty_level >= 1")
-        template(v-for="i in app.q_record.difficulty_level")
+      b-tag(v-if="app.c_quest.title") {{app.c_quest.title}}
+      b-tag(v-if="app.c_quest.source_desc") {{app.c_quest.source_desc}}
+      b-tag(v-if="!app.c_quest.source_desc") {{app.c_quest.user.name}}作
+      b-tag(v-if="app.c_quest.hint_description") {{app.c_quest.hint_description}}
+      b-tag(v-if="app.c_quest.difficulty_level && app.c_quest.difficulty_level >= 1")
+        template(v-for="i in app.c_quest.difficulty_level")
           | ★
 </template>
 

@@ -3,7 +3,7 @@ module Actb
     belongs_to :user, class_name: "Colosseum::User"
 
     before_validation do
-      self.rule_key ||= RuleInfo.fetch(:rule_key1).key
+      self.rule_key ||= RuleInfo.fetch(:marathon_rule).key
     end
 
     with_options presence: true do

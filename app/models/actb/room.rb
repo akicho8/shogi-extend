@@ -35,7 +35,7 @@ module Actb
         self.end_at ||= Time.current
       end
 
-      self.rule_key ||= :rule_key1
+      self.rule_key ||= :marathon_rule
     end
 
     with_options presence: true do
@@ -49,32 +49,12 @@ module Actb
 
     # 出題
     def best_questions
-      # QuestInfo.collect { |e| {
-      #     init_sfen: e[:init_sfen],
-      #     moves_answers: e[:moves_answers]
-      #   }
-      # }
-
-      if Rails.env.development?
-        n = 2
-      else
-        n = 5
-      end
-
       s = Question.all
       s = s.joins(:folder).where(Folder.arel_table[:type].eq("Actb::ActiveBox"))
+      s = s.order("rand()")
+      s = s.limit(Config[:best_questions_limit])
 
-      ids = s.ids               # FIXME: random で取り出す
-      ids = ids.sample(n)
-
-      # ids = Question.where(display_key: :public).ids.sample(n)
-
-      list = Question.where(id: ids).order(:difficulty_level)
-
-      if Rails.env.development?
-        list = list.to_a * 30
-      end
-
+      list = Question.where(id: s.ids).order(:difficulty_level)
       list.as_json(only: [:id, :init_sfen, :time_limit_sec, :difficulty_level, :title, :description, :hint_description, :source_desc, :other_twitter_account], include: {:user => { only: [:id, :name, :key], methods: [:avatar_path] }, :moves_answers => {only: [:limit_turn, :moves_str, :end_sfen]}})
     end
 

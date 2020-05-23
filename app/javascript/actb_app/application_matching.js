@@ -47,8 +47,7 @@ export const application_matching = {
       if (membership) {
         this.lobby_close()
         //- this.matching_interval_timer_clear()
-        this.room = params.room
-        this.room_setup()
+        this.room_setup(params.room)
       }
     },
   },

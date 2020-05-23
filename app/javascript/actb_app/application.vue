@@ -43,6 +43,7 @@ import the_history          from "./the_history.vue"
 import { application_room } from "./application_room.js"
 import { application_matching } from "./application_matching.js"
 import { config           } from "./config.js"
+import { RuleInfo         } from "./rule_info.js"
 
 export default {
   store: the_store,
@@ -77,8 +78,8 @@ export default {
     return {
       mode: "lobby",
       sub_mode: "opening",
-      rule_key: null,
-      room: this.info.room,
+      rule_key: null,           // 未使用
+      room: null,
 
       matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
@@ -99,50 +100,52 @@ export default {
     }
   },
 
-  created() {
-    this.school_setup()
-
-    if (this.info.debug_scene) {
-      if (this.info.debug_scene === "room_rule_key1") {
-        this.rule_key = "rule_key1"
-        this.mode = "room"
-        this.room_setup()
-      }
-      if (this.info.debug_scene === "room_rule_key2") {
-        this.rule_key = "rule_key2"
-        this.mode = "room"
-        this.room_setup()
-      }
-      if (this.info.debug_scene === "result") {
-        this.mode = "result"
-      }
-      if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
-        this.builder_handle()
-      }
-      if (this.info.debug_scene === "ranking") {
-        this.ranking_handle()
-      }
-      if (this.info.debug_scene === "history") {
-        this.history_handle()
-      }
-      if (this.info.debug_scene === "overlay_record") {
-        this.overlay_record_set(this.info.question_id)
-      }
-    }
-
-    if (this.mode === "lobby") {
-      this.lobby_setup()
-    }
-  },
-
   beforeCreate() {
     this.$store.state.app = this
   },
 
-  watch: {
+  created() {
+    this.http_get_command(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
+      this.$RuleInfo = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.app_setup()
+    })
   },
 
   methods: {
+    app_setup() {
+      this.school_setup()
+
+      if (this.info.debug_scene) {
+        if (this.info.debug_scene === "room_marathon_rule") {
+          // this.rule_key = "marathon_rule"
+          this.room_setup(this.info.room)
+        }
+        if (this.info.debug_scene === "room_singleton_rule") {
+          // this.rule_key = "singleton_rule"
+          this.room_setup(this.info.room)
+        }
+        if (this.info.debug_scene === "result") {
+          this.mode = "result"
+        }
+        if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
+          this.builder_handle()
+        }
+        if (this.info.debug_scene === "ranking") {
+          this.ranking_handle()
+        }
+        if (this.info.debug_scene === "history") {
+          this.history_handle()
+        }
+        if (this.info.debug_scene === "overlay_record") {
+          this.overlay_record_set(this.info.question_id)
+        }
+      }
+
+      if (this.mode === "lobby") {
+        this.lobby_setup()
+      }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // // lobbyに接続した瞬間に送られてくる
@@ -166,10 +169,11 @@ export default {
     // room_speak_broadcasted と共有
     lobby_speak_broadcasted_shared_process(params) {
       const message = params.message
-      if (!/^\*/.test(message.body)) {
+      if (/^\*/.test(message.body)) {
+      } else {
         this.talk(message.body, {rate: 1.5})
+        this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
       }
-      this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -235,7 +239,7 @@ export default {
     rule_key_set_handle(rule_key) {
       this.sound_play("click")
 
-      this.rule_key = rule_key  // これセットする意味ないか？
+      // this.rule_key = rule_key  // これセットする意味ないか？
       this.lobby_speak(`*rule_key_set_handle("${rule_key}")`)
       this.http_get_command(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
         this.lobby_speak(`*rule_key_set_handle -> ${e}`)

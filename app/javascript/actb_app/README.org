@@ -21,13 +21,21 @@ index (+ store)
 
 * rule_key
 |-----------+--------------|
-| rule_key1 | マラソン     |
-| rule_key2 | シングルトン |
+| marathon_rule | マラソン     |
+| singleton_rule | シングルトン |
 |-----------+--------------|
 
-* g_mode (rule_key2 専用)
+* sub_mode
+|----------------+------------------------|
+| standby        | 最初                   |
+| readygo_wait   | 開始前の待ち時間       |
+| deden_mode     | 問題番号表示           |
+| operation_mode | ユーザー考え中・操作中 |
+|----------------+------------------------|
+
+* sub_mode が operation_mode のときの x_mode (singleton_rule 専用)
 |---------+--------------|
-| g_mode1 | 見ている     |
-| g_mode2 | 操作中       |
-| g_mode3 | 相手が操作中 |
+| x1_idol | 見ている     |
+| x2_play | 操作中       |
+| x3_see  | 相手が操作中 |
 |---------+--------------|

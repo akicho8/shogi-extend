@@ -11,6 +11,8 @@ import mp3_pipopipo from "soundeffect_lab/pipopipo.mp3"
 import mp3_win      from "soundeffect_lab/kansei.mp3"
 import mp3_bubuu    from "soundeffect_lab/bubuu.mp3"
 
+import wav_pishi from "../../../node_modules/shogi-player/src/assets/piece_sound.wav"
+
 import { Howl, Howler } from 'howler'
 
 window.HowlObjects = {}
@@ -27,6 +29,7 @@ const SoundPresets = {
   deden:    { file: mp3_deden,    volume: 0.2, },
   pipopipo: { file: mp3_pipopipo, volume: 0.5, },
   bubuu:    { file: mp3_bubuu,    volume: 0.5, },
+  pishi:    { file: wav_pishi,    volume: 0.5, },
 }
 
 export default {

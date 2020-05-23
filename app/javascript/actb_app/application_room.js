@@ -1,11 +1,15 @@
+import { Question } from "./question.js"
+import { Room } from "./room.js"
+
 import consumer from "channels/consumer"
 import dayjs from "dayjs"
 
 export const application_room = {
   data() {
     return {
-      g_mode: null,
+      x_mode: null,
       osenai_p: null,
+      share_sfen: null,         // 自分の操作を相手に伝えるためのあれ
 
       q_turn_offset: null,
       q1_interval_id: null,
@@ -34,7 +38,9 @@ export const application_room = {
       }
     },
 
-    room_setup() {
+    room_setup(room) {
+      this.room = new Room(room)
+
       this.mode = "room"
 
       this.room_messages = []
@@ -93,7 +99,7 @@ export const application_room = {
       this.room_speak("*start_hook")
       this.$ac_room.perform("start_hook", {
         membership_id: this.current_membership.id,
-        question_id: this.current_question_id,
+        question_id: this.c_quest.id,
         question_index: this.question_index,
       }) // --> app/channels/actb/room_channel.rb
 
@@ -115,31 +121,52 @@ export const application_room = {
 
     operation_mode_trigger() {
       this.sub_mode = "operation_mode"
-      this.g_mode = "g_mode1"
+      this.x_mode = "x1_idol"
       this.osenai_p = false
+      this.share_sfen = null
     },
 
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.sub_mode === "operation_mode") {
 
-        if (this.room.rule_key === "rule_key2") {
+        if (this.room.rule_key === "singleton_rule") {
           // 安全のため残り0秒になってから操作しても無効とする
           if (this.q2_rest_seconds === 0) {
             return
           }
 
           // 駒を1つでも動かしたら3秒に復帰する
-          if (this.g_mode === "g_mode2") {
+          if (this.x_mode === "x2_play") {
             this.q2_interval_restart()
           }
+
+          this.kyouyuu(long_sfen)
         }
 
-        if (this.current_quest_answers.includes(this.position_sfen_remove(long_sfen))) {
+        if (this.c_quest.answer_p(long_sfen)) {
           this.kotae_sentaku("correct")
         }
         // if (long_sfen === "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 moves G*5b") {
         //   this.$ac_room.perform("goal_hook") // --> app/channels/actb/room_channel.rb
         // }
+      }
+    },
+
+    kyouyuu(share_sfen) {
+      this.room_speak(`*kyouyuu("${share_sfen}")`)
+      this.$ac_room.perform("kyouyuu", { // 戻値なし
+        membership_id: this.current_membership.id,
+        share_sfen: share_sfen,
+      }) // --> app/channels/actb/room_channel.rb
+    },
+    kyouyuu_broadcasted(params) {
+      this.room_speak("*kyouyuu_broadcasted")
+      if (params.membership_id === this.current_membership.id) {
+        // 自分は操作中なので何も変化させない
+      } else {
+        // 自分の操作を相手の盤面で動かす
+        this.share_sfen = params.share_sfen
+        this.sound_play("pishi") // shogi-player で音が鳴らないのでここで鳴らす
       }
     },
 
@@ -158,16 +185,17 @@ export const application_room = {
       this.room_speak(`*kotae_sentaku("${ans_result_key}")`)
       this.$ac_room.perform("kotae_sentaku", {
         membership_id: this.current_membership.id,
-        question_id: this.current_question_id, // 問題ID
+        question_id: this.c_quest.id, // 問題ID
         question_index: this.question_index + 1,
         ans_result_key: ans_result_key,
       }) // --> app/channels/actb/room_channel.rb
     },
-    // 状況を反映する (なるべく小さなデータで共有する)
+    // 状況を反映する
     kotae_sentaku_broadcasted(params) {
+      // ○×の反映
       this.members_hash[params.membership_id].progress_list.push(params.ans_result_key)
 
-      if (this.room.rule_key === "rule_key2") {
+      if (this.room.rule_key === "singleton_rule") {
         if (params.ans_result_key === "correct") {
           this.score_add(params.membership_id, 1)
         } else {
@@ -179,10 +207,10 @@ export const application_room = {
       this.ox_sound_play(params.ans_result_key)
       // }
 
-      if (this.room.rule_key === "rule_key1") {
+      if (this.room.rule_key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           // 次の問題がある場合
-          if (this.question_index < this.current_best_question_size - 1) {
+          if (this.question_index < this.room.questions_count - 1) {
             if (params.ans_result_key === "correct") {
               this.sub_mode = "correct_mode"
               this.delay(this.config.correct_mode_delay, () => {
@@ -210,8 +238,8 @@ export const application_room = {
         }
       }
 
-      if (this.room.rule_key === "rule_key2") {
-        if (this.question_index < this.current_best_question_size - 1) {
+      if (this.room.rule_key === "singleton_rule") {
+        if (this.question_index < this.room.questions_count - 1) {
           if (params.ans_result_key === "correct") {
             this.sub_mode = "correct_mode"
             this.delay(this.config.correct_mode_delay, () => {
@@ -251,22 +279,20 @@ export const application_room = {
       this.room_speak("*next_trigger")
       this.$ac_room.perform("next_trigger", { // 戻値なし
         membership_id: this.current_membership.id,
-        question_id: this.room.best_questions[this.question_index + 1],
-        question_index: this.question_index + 1,
-        current_best_question_size: this.current_best_question_size,
+        question_index: this.question_index + 1, // 次に進めたい(希望)
       }) // --> app/channels/actb/room_channel.rb
 
       this.deden_mode_trigger()
     },
     next_trigger_broadcasted(params) {
       this.room_speak("*next_trigger_broadcasted")
-      if (this.room.rule_key === "rule_key1") {
+      if (this.room.rule_key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
-          this.question_index = params.question_index
+          this.question_index = params.question_index // 自分だったら次に進める
         }
       }
-      if (this.room.rule_key === "rule_key2") {
-        this.question_index = params.question_index
+      if (this.room.rule_key === "singleton_rule") {
+        this.question_index = params.question_index // 相手もそろって次に進める
       }
     },
 
@@ -283,23 +309,23 @@ export const application_room = {
       this.room_speak("*g2_hayaosi_handle")
       this.$ac_room.perform("g2_hayaosi_handle", {
         membership_id: this.current_membership.id,
-        question_id: this.current_question_id,
+        question_id: this.c_quest.id,
         // question_index: this.question_index,
-        // current_best_question_size: this.current_best_question_size,
       }) // --> app/channels/actb/room_channel.rb
     },
     g2_hayaosi_handle_broadcasted(params) {
       this.room_speak("*g2_hayaosi_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押せた本人
-        this.g_mode = "g_mode2"
+        this.x_mode = "x2_play"
         this.q2_interval_start()
       } else {
         // 解答ボタンを押さなかった相手
         if (this.osenai_p) {
           this.osenai_p = false // 元々誤答していたら解答権利復活させる
         }
-        this.g_mode = "g_mode3"
+        this.x_mode = "x3_see"
+        this.share_sfen = this.c_quest.full_init_sfen // 初期状態にしておく
       }
     },
 
@@ -308,7 +334,7 @@ export const application_room = {
       this.room_speak("*g2_jikangire_handle")
       this.$ac_room.perform("g2_jikangire_handle", {
         membership_id: this.current_membership.id,
-        question_id: this.current_question_id,
+        question_id: this.c_quest.id,
       }) // --> app/channels/actb/room_channel.rb
     },
     // 時間切れ
@@ -320,7 +346,7 @@ export const application_room = {
       } else {
         this.osenai_p = false
       }
-      this.g_mode = "g_mode1"
+      this.x_mode = "x1_idol"
       this.sound_play("bubuu")
       this.q2_interval_stop()
     },
@@ -360,7 +386,7 @@ export const application_room = {
     },
 
     q1_interval_processing() {
-      if (this.room.rule_key === "rule_key1") {
+      if (this.room.rule_key === "marathon_rule") {
         if (this.sub_mode === "operation_mode") {
           this.q1_interval_count += 1
           if (this.q1_rest_seconds === 0) {
@@ -368,9 +394,9 @@ export const application_room = {
           }
         }
       }
-      if (this.room.rule_key === "rule_key2") {
+      if (this.room.rule_key === "singleton_rule") {
         if (this.sub_mode === "operation_mode") {
-          if (this.g_mode === "g_mode1") {
+          if (this.x_mode === "x1_idol") {
             this.q1_interval_count += 1
             if (this.q1_rest_seconds === 0) {
               this.kotae_sentaku('mistake')
@@ -416,39 +442,13 @@ export const application_room = {
     primary_membership_p() {
       return this.room.memberships[0].id === this.current_membership.id
     },
-
     current_membership() {
       return this.room.memberships.find(e => e.user.id === this.current_user.id)
     },
-    current_best_question() {
-      return this.room.best_questions[this.question_index]
-    },
-    current_best_question_size() {
-      return this.room.best_questions.length
-    },
-    current_quest_init_sfen() {
-      const info = this.current_best_question
-      if (info) {
-        return info.init_sfen
-      }
-    },
-    current_quest_answers() {
-      const info = this.current_best_question
-      if (info) {
-        return info.moves_answers.map(e => [info.init_sfen, "moves", e.moves_str].join(" "))
-      }
-    },
-    current_question_id() {
-      const info = this.current_best_question
-      if (info) {
-        return info.id
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    q_record() {
-      return this.current_best_question
+    c_quest() {
+      const v = this.room.best_questions[this.question_index]
+      this.__assert(v, "this.room.best_questions[this.question_index]")
+      return v
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -467,7 +467,7 @@ export const application_room = {
       // if (this.development_p) {
       //   return 3
       // }
-      return this.q_record.time_limit_sec
+      return this.c_quest.time_limit_sec
     },
 
     ////////////////////////////////////////////////////////////////////////////////
