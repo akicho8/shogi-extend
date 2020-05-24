@@ -56,7 +56,7 @@ module Actb
       if ordered_info = ordered_infos.first
         gap, opponent = ordered_info
         if gap < matching_rate_threshold
-          battle_create(opponent, current_user)
+          room_create(opponent, current_user)
           return
         end
       end
@@ -110,11 +110,11 @@ module Actb
       ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: {matching_list_hash: matching_list_hash})
     end
 
-    def battle_create(a, b)
+    def room_create(a, b)
       matching_list_remove(a, b)
 
-      # app/models/actb/battle.rb
-      Battle.create! do |e|
+      # app/models/actb/room.rb
+      Room.create! do |e|
         e.memberships.build(user: a)
         e.memberships.build(user: b)
         e.rule_key = current_user.rule_info.key

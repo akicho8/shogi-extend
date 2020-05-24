@@ -27,7 +27,7 @@ module Actb
       if data[:message].start_with?("/")
         execution_interrupt_hidden_command(data[:message])
       else
-        current_user.actb_battle_messages.create!(body: data[:message], battle: current_battle)
+        current_user.actb_room_messages.create!(body: data[:message], battle: current_battle)
       end
     end
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Battle message (actb_battle_messages as Actb::BattleMessage)
+# Battle message (actb_room_messages as Actb::RoomMessage)
 #
 # |------------+----------+-------------+-------------+-----------------------+-------|
 # | name       | desc     | type        | opts        | refs                  | index |
@@ -21,7 +21,7 @@
 require 'rails_helper'
 
 module Actb
-  RSpec.describe BattleMessage, type: :model do
+  RSpec.describe RoomMessage, type: :model do
     let :user1 do
       Colosseum::User.create!
     end

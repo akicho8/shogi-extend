@@ -4,14 +4,14 @@
 
   .switching_pages(v-show="!overlay_record")
     the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
-    the_system_header(v-if="mode === 'lobby' || mode === 'matching' || mode === 'result'")
+    the_system_header(v-if="mode === 'lobby' || mode === 'matching' || mode === 'result' || mode === 'battle'")
     the_lobby(v-if="mode === 'lobby'")
     the_lobby_message(v-if="mode === 'lobby'")
     the_matching(v-if="mode === 'matching'")
     the_battle(v-if="mode === 'battle'")
-    the_battle_message(v-if="mode === 'battle'")
+    the_room_message(v-if="mode === 'battle'")
     the_result(v-if="mode === 'result'")
-    the_battle_message(v-if="mode === 'result'")
+    the_room_message(v-if="mode === 'result'")
     the_builder(v-if="mode === 'builder'")
     the_ranking(v-if="mode === 'ranking'")
     the_history(v-if="mode === 'history'")
@@ -34,12 +34,13 @@ import the_lobby         from "./the_lobby.vue"
 import the_lobby_message from "./the_lobby_message.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle          from "./the_battle.vue"
-import the_battle_message  from "./the_battle_message.vue"
+import the_room_message  from "./the_room_message.vue"
 import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history.vue"
 
+import { application_room     } from "./application_room.js"
 import { application_battle     } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
 import { config               } from "./config.js"
@@ -54,6 +55,7 @@ export default {
 
     the_question_show_mod,
 
+    application_room,
     application_battle,
     application_matching,
   ],
@@ -65,7 +67,7 @@ export default {
     the_lobby_message,
     the_matching,
     the_battle,
-    the_battle_message,
+    the_room_message,
     the_result,
     the_builder,
     the_ranking,
@@ -79,15 +81,12 @@ export default {
       mode: "lobby",
       sub_mode: "opening",
       rule_key: null,           // 未使用
+      room: null,
       battle: null,
 
       matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
       battle_user_ids:   null, // オンライン人数
-
-      // チャット用
-      battle_messages: null, // メッセージ(複数)
-      battle_message:  null, // 入力中のメッセージ
 
       // チャット用
       lobby_messages: null, // メッセージ(複数)
@@ -117,9 +116,7 @@ export default {
 
       if (this.info.debug_scene) {
         if (this.info.debug_scene === "battle_marathon_rule") {
-          // this.rule_key = "marathon_rule"
-          this.battle_setup_without_ac_battle_once()
-          this.battle_setup(this.info.battle)
+          this.room_setup(this.info.room)
         }
         if (this.info.debug_scene === "battle_singleton_rule") {
           // this.rule_key = "singleton_rule"
@@ -170,7 +167,7 @@ export default {
       this.lobby_messages.push(params.message)
     },
 
-    // battle_speak_broadcasted と共有
+    // room_speak_broadcasted と共有
     lobby_speak_broadcasted_shared_process(params) {
       const message = params.message
       if (/^\*/.test(message.body)) {

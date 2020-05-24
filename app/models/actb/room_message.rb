@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Battle message (actb_battle_messages as Actb::BattleMessage)
+# Battle message (actb_room_messages as Actb::RoomMessage)
 #
 # |------------+----------+-------------+-------------+-----------------------+-------|
 # | name       | desc     | type        | opts        | refs                  | index |
@@ -19,16 +19,16 @@
 #--------------------------------------------------------------------------------
 
 module Actb
-  class BattleMessage < ApplicationRecord
+  class RoomMessage < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
-    belongs_to :battle
+    belongs_to :room
 
     with_options presence: true do
       validates :body
     end
 
     after_create_commit do
-      Actb::BattleMessageBroadcastJob.perform_later(self)
+      Actb::RoomMessageBroadcastJob.perform_later(self)
     end
   end
 end

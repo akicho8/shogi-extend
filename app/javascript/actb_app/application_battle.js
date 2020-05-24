@@ -41,9 +41,25 @@ export const application_battle = {
     },
 
     battle_setup(battle) {
-      this.battle_setup_without_ac_battle(battle)
+      this.battle_unsubscribe()
+
+      this.battle = new Battle(battle)
+
+      this.mode = "battle"
+
+      this.saisen_counts = {}
+
+      this.sub_mode = "standby"
+
+      this.members_hash = {}
+      this.battle.memberships.forEach(e => {
+        this.members_hash[e.id] = { progress_list: [], x_score: 0 }
+      })
+
+      this.question_index = 0
 
       this.__assert__(this.$ac_battle == null)
+
       this.$ac_battle = consumer.subscriptions.create({ channel: "Actb::BattleChannel", battle_id: this.battle.id }, {
         connected: () => {
           this.ac_info_update()
@@ -63,60 +79,23 @@ export const application_battle = {
         },
       })
     },
-    battle_setup_without_ac_battle(battle) {
-      this.battle = new Battle(battle)
-
-      this.mode = "battle"
-
-      this.saisen_counts = {}
-
-      this.sub_mode = "standby"
-
-      this.members_hash = {}
-      this.battle.memberships.forEach(e => {
-        this.members_hash[e.id] = { progress_list: [], x_score: 0 }
-      })
-
-      this.question_index = 0
-    },
-    battle_setup_without_ac_battle_once() {
-      this.session_count = 0
-      this.battle_messages = []
-      this.battle_message = ""
-    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    battle_speak_handle() {
-      this.battle_speak(this.battle_message)
-      this.battle_message = ""
-    },
-
-    battle_speak(message) {
-      this.$ac_battle.perform("speak", {message: message})
-    },
-
-    battle_speak_broadcasted(params) {
-      this.lobby_speak_broadcasted_shared_process(params)
-      this.battle_messages.push(params.message)
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // 2戦目
-    saisen_battle_broadcasted(params) {
-      // this.lobby_close()
-      //- this.matching_interval_timer_clear()
-      // 初回
-      // if (this.session_count == null) {
-      // this.battle_setup_without_ac_battle_once()
-      // this.battle_setup(params.battle)
-      // } else {
-      //   // 再戦で来たとき
-      this.battle_unsubscribe()
-      this.battle_setup(params.battle)
-      // }
-    },
+    // // 2戦目
+    // saisen_battle_broadcasted(params) {
+    //   // this.lobby_close()
+    //   //- this.matching_interval_timer_clear()
+    //   // 初回
+    //   // if (this.session_count == null) {
+    //   // this.battle_setup_without_ac_battle_once()
+    //   // this.battle_setup(params.battle)
+    //   // } else {
+    //   //   // 再戦で来たとき
+    //   this.battle_unsubscribe()
+    //   this.battle_setup(params.battle)
+    //   // }
+    // },
 
     start_hook() {
       if (this.info.debug_scene === "result") {
@@ -128,7 +107,7 @@ export const application_battle = {
 
       this.debug_alert("battle 接続")
 
-      this.battle_speak("*start_hook")
+      this.room_speak("*start_hook")
       this.$ac_battle.perform("start_hook", {
         membership_id: this.current_membership.id,
         question_id: this.c_quest.id,
@@ -194,14 +173,14 @@ export const application_battle = {
     },
 
     kyouyuu(share_sfen) {
-      this.battle_speak(`*kyouyuu("${share_sfen}")`)
+      this.room_speak(`*kyouyuu("${share_sfen}")`)
       this.$ac_battle.perform("kyouyuu", { // 戻値なし
         membership_id: this.current_membership.id,
         share_sfen: share_sfen,
       }) // --> app/channels/actb/battle_channel.rb
     },
     kyouyuu_broadcasted(params) {
-      this.battle_speak("*kyouyuu_broadcasted")
+      this.room_speak("*kyouyuu_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         // 自分は操作中なので何も変化させない
       } else {
@@ -223,7 +202,7 @@ export const application_battle = {
       //   this.score_add(-1)
       // }
 
-      this.battle_speak(`*kotae_sentaku("${ans_result_key}")`)
+      this.room_speak(`*kotae_sentaku("${ans_result_key}")`)
       this.$ac_battle.perform("kotae_sentaku", {
         membership_id: this.current_membership.id,
         question_id: this.c_quest.id, // 問題ID
@@ -317,7 +296,7 @@ export const application_battle = {
     },
 
     next_trigger() {
-      this.battle_speak("*next_trigger")
+      this.room_speak("*next_trigger")
       this.$ac_battle.perform("next_trigger", { // 戻値なし
         membership_id: this.current_membership.id,
         question_index: this.question_index + 1, // 次に進めたい(希望)
@@ -326,7 +305,7 @@ export const application_battle = {
       this.deden_mode_trigger()
     },
     next_trigger_broadcasted(params) {
-      this.battle_speak("*next_trigger_broadcasted")
+      this.room_speak("*next_trigger_broadcasted")
       if (this.battle.rule_key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index // 自分だったら次に進める
@@ -341,7 +320,7 @@ export const application_battle = {
     g2_hayaosi_handle() {
       this.sound_play("click")
 
-      this.battle_speak("*g2_hayaosi_handle")
+      this.room_speak("*g2_hayaosi_handle")
       this.$ac_battle.perform("g2_hayaosi_handle", {
         membership_id: this.current_membership.id,
         question_id: this.c_quest.id,
@@ -349,7 +328,7 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     g2_hayaosi_handle_broadcasted(params) {
-      this.battle_speak("*g2_hayaosi_handle_broadcasted")
+      this.room_speak("*g2_hayaosi_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押せた本人
         this.x_mode = "x2_play"
@@ -368,7 +347,7 @@ export const application_battle = {
 
     // 早押しボタンを押して解答中に時間切れ
     g2_jikangire_handle() {
-      this.battle_speak("*g2_jikangire_handle")
+      this.room_speak("*g2_jikangire_handle")
       this.$ac_battle.perform("g2_jikangire_handle", {
         membership_id: this.current_membership.id,
         question_id: this.c_quest.id,
@@ -376,7 +355,7 @@ export const application_battle = {
     },
     // 時間切れ
     g2_jikangire_handle_broadcasted(params) {
-      this.battle_speak("*g2_jikangire_handle_broadcasted")
+      this.room_speak("*g2_jikangire_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         this.score_add(this.current_membership.id, -1)
         this.osenai_p = true
@@ -411,7 +390,7 @@ export const application_battle = {
       this.$ac_battle.perform("saisen_handle", {membership_id: this.current_membership.id})
     },
     saisen_handle_broadcasted(params) {
-      this.battle_speak("*saisen_handle_broadcasted")
+      this.room_speak("*saisen_handle_broadcasted")
       this.saisen_counts = params.saisen_counts
 
       this.talk("再戦希望", {rate: 1.5})

@@ -1,6 +1,28 @@
 class CreateActb < ActiveRecord::Migration[6.0]
   def change
+    create_table :actb_rooms do |t|
+      t.datetime :begin_at, null: false, index: true, comment: "対戦開始日時"
+      t.datetime :end_at,   null: true,  index: true, comment: "対戦終了日時"
+      t.string :final_key,  null: true,  index: true, comment: "結果"
+      t.string :rule_key,   null: true,  index: true, comment: "ゲームの種類"
+      t.integer :rensen_index, null: false, index: true, comment: "連戦数"
+      t.timestamps
+    end
+
+    create_table :actb_room_memberships do |t|
+      t.belongs_to :room,                                comment: "対戦部屋"
+      t.belongs_to :user,                                comment: "対戦者"
+      # t.string :judge_key,     null: true,  index: true, comment: "勝敗"
+      # t.integer :rensho_count, null: false, index: true, comment: "連勝数"
+      # t.integer :renpai_count, null: false, index: true, comment: "連敗数"
+      # t.integer :question_index,                            comment: "解答中の問題"
+      t.integer :position,                  index: true, comment: "順序"
+      t.timestamps
+      t.index [:room_id, :user_id], unique: true
+    end
+
     create_table :actb_battles do |t|
+      t.belongs_to :room,                             comment: "部屋"
       t.belongs_to :parent, null: true,               comment: "親"
       t.datetime :begin_at, null: false, index: true, comment: "対戦開始日時"
       t.datetime :end_at,   null: true,  index: true, comment: "対戦終了日時"
@@ -56,7 +78,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
 
     create_table :actb_histories do |t|
       t.belongs_to :user,       comment: "自分"
-      t.belongs_to :battle,       comment: "部屋"
+      t.belongs_to :battle,     comment: "部屋"
       t.belongs_to :membership, comment: "対戦"
       t.belongs_to :question,   comment: "出題"
       t.belongs_to :ans_result, comment: "解答"
@@ -98,9 +120,9 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    create_table :actb_battle_messages do |t|
+    create_table :actb_room_messages do |t|
       t.belongs_to :user,         comment: "対戦者"
-      t.belongs_to :battle,         comment: "対戦部屋"
+      t.belongs_to :room,         comment: "対戦部屋"
       t.string :body, limit: 512, comment: "発言"
       t.timestamps
     end
@@ -178,3 +200,4 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
   end
 end
+# ~> -:1:in `<main>': uninitialized constant ActiveRecord (NameError)

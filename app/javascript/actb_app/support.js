@@ -4,10 +4,10 @@ const POSITION_SFEN_PREFIX = "position sfen "
 
 export const support = {
   methods: {
-    warning_dialog(battle_message) {
+    warning_dialog(room_message) {
       this.$buefy.dialog.alert({
         title: "ERROR",
-        battle_message: battle_message,
+        room_message: room_message,
         canCancel: ["outside", "escape"],
         type: "is-danger",
         hasIcon: true,
@@ -17,15 +17,15 @@ export const support = {
       })
     },
 
-    ok_notice(battle_message) {
-      this.$buefy.toast.open({message: battle_message, position: "is-bottom", type: "is-success", queue: false})
-      this.talk(battle_message, {rate: 1.5})
+    ok_notice(room_message) {
+      this.$buefy.toast.open({message: room_message, position: "is-bottom", type: "is-success", queue: false})
+      this.talk(room_message, {rate: 1.5})
     },
 
-    warning_notice(battle_message) {
+    warning_notice(room_message) {
       this.sound_play("x")
-      this.$buefy.toast.open({message: battle_message, position: "is-bottom", type: "is-warning", queue: false})
-      this.talk(battle_message, {rate: 1.5})
+      this.$buefy.toast.open({message: room_message, position: "is-bottom", type: "is-warning", queue: false})
+      this.talk(room_message, {rate: 1.5})
     },
 
     position_sfen_remove(sfen) {

@@ -341,7 +341,13 @@ module FrontendScript
         c.sysop_login_unless_logout
 
         user = Colosseum::User.create!
-        battle = Actb::Battle.create! do |e|
+
+        room = Actb::Room.create! do |e|
+          e.memberships.build(user: current_user)
+          e.memberships.build(user: user)
+        end
+
+        battle = room.battles.create! do |e|
           e.memberships.build(user: current_user)
           e.memberships.build(user: user)
           if current_debug_scene == :battle_marathon_rule
@@ -352,6 +358,7 @@ module FrontendScript
           end
         end
 
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
         info[:battle] = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
       end
 

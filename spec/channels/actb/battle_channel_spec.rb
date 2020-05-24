@@ -69,7 +69,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
     it do
       subscription.speak(message: "(message)")
-      assert { user1.actb_battle_messages.count == 1 }
+      assert { user1.actb_room_messages.count == 1 }
     end
   end
 
