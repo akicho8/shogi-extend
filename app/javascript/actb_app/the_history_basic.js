@@ -1,4 +1,4 @@
-export default {
+export const the_history_basic = {
   data() {
     return {
       history_records: null,

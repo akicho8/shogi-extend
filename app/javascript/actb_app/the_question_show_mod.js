@@ -1,4 +1,4 @@
-export default {
+export const the_question_show_mod = {
   data() {
     return {
       overlay_record: null,

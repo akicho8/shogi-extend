@@ -3,18 +3,18 @@
   the_question_show(v-if="overlay_record")
 
   .switching_pages(v-show="!overlay_record")
-    the_footer        (v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
-    the_system_header (v-if="mode === 'lobby' || mode === 'matching'")
-    the_lobby         (v-if="mode === 'lobby'")
-    the_lobby_message (v-if="mode === 'lobby'")
-    the_matching      (v-if="mode === 'matching'")
-    the_room          (v-if="mode === 'room'")
-    the_room_message  (v-if="mode === 'room'")
-    the_result        (v-if="mode === 'result'")
-    the_room_message  (v-if="mode === 'result'")
-    the_builder       (v-if="mode === 'builder'")
-    the_ranking       (v-if="mode === 'ranking'")
-    the_history       (v-if="mode === 'history'")
+    the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
+    the_system_header(v-if="mode === 'lobby' || mode === 'matching'")
+    the_lobby(v-if="mode === 'lobby'")
+    the_lobby_message(v-if="mode === 'lobby'")
+    the_matching(v-if="mode === 'matching'")
+    the_room(v-if="mode === 'room'")
+    the_room_message(v-if="mode === 'room'")
+    the_result(v-if="mode === 'result'")
+    the_room_message(v-if="mode === 'result'")
+    the_builder(v-if="mode === 'builder'")
+    the_ranking(v-if="mode === 'ranking'")
+    the_history(v-if="mode === 'history'")
 
   debug_print(:grep="/./")
 </template>
@@ -22,10 +22,10 @@
 <script>
 import consumer from "channels/consumer"
 
-import { support }   from "./support.js"
-import the_store from "./store.js"
+import { support } from "./support.js"
+import { store   } from "./store.js"
 
-import the_question_show_mod from "./the_question_show_mod.js"
+import { the_question_show_mod } from "./the_question_show_mod.js"
 
 import the_question_show from "./the_question_show.vue"
 import the_system_header from "./the_system_header.vue"
@@ -46,7 +46,7 @@ import { config               } from "./config.js"
 import { RuleInfo             } from "./rule_info.js"
 
 export default {
-  store: the_store,
+  store: store,
   name: "actb_app",
   mixins: [
     support,

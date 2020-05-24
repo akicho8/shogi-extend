@@ -1,4 +1,4 @@
-export default {
+export const the_history_clip = {
   data() {
     return {
       clip_records: null,
