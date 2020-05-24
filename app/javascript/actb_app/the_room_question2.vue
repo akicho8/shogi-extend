@@ -17,16 +17,15 @@
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
-      b-button(@click="app.g2_hayaosi_handle" type="is-primary" :disabled="app.config.ikkai_misuttara_mou_osenai && app.osenai_p") 解答する
+      b-button(@click="app.g2_hayaosi_handle" type="is-primary" :disabled="app.config.ikkai_misuttara_mou_osenai && app.osenai_p")
+        | 解答する
 
   template(v-if="app.x_mode === 'x2_play'")
-    .has-text-centered
-      | 操作中
-    .has-text-centered
-      .status1
-        | {{app.q2_rest_seconds}}
-      .status2
+    .q2_rest_seconds.has-text-centered
+      span.status2
         | {{app.q_turn_offset}}手目
+      span.status1
+        | (残り{{app.q2_rest_seconds}}秒)
     shogi_player(
       :key="`quest_${app.question_index}`"
       :run_mode="'play_mode'"
@@ -42,16 +41,16 @@
       @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
-    //- :human_side_key="app.q2_rest_seconds === 0 ? 'none' : 'both'"
-    .has-text-centered
+    .akirameru_button.has-text-centered
       b-button(@click="app.g2_jikangire_handle") 諦める
 
   template(v-if="app.x_mode === 'x3_see'")
     .has-text-centered
-      | 相手が操作中です
-      .status1
+      p
+        | 相手が操作中です
+      span.status1
         | {{app.q2_rest_seconds}}
-      .status2
+      span.status2
         | {{app.q_turn_offset}}手目
     shogi_player(
       :run_mode="'play_mode'"
@@ -104,5 +103,7 @@ export default {
   .tags_container
     margin-top: 0.7rem
   .kaitousuru_button
-    margin-top: 0rem
+    margin-top: 0.7rem
+  .akirameru_button
+    margin-top: 0.7rem
 </style>

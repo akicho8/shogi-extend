@@ -3,21 +3,21 @@
   .columns.is-mobile.result_container
     .column
       .has-text-centered.is-size-3.has-text-weight-bold
-        template(v-if="$parent.current_membership.judge_key === 'win'")
+        template(v-if="app.current_membership.judge_key === 'win'")
           .has-text-danger
             | YOU WIN !
-        template(v-if="$parent.current_membership.judge_key === 'lose'")
+        template(v-if="app.current_membership.judge_key === 'lose'")
           .has-text-success
             | YOU LOSE !
   .columns.is-mobile.result_container
-    template(v-for="(membership, i) in $parent.room.memberships")
+    template(v-for="(membership, i) in app.room.memberships")
       .column.user_container.is-flex
         template(v-if="membership.rensho_count >= 2")
           .icon_up_message.has-text-weight-bold
             | {{membership.rensho_count}}連勝中！
-        template(v-if="membership.judge_key === 'lose' && $parent.room.final_info.lose_side")
+        template(v-if="membership.judge_key === 'lose' && app.room.final_info.lose_side")
           .icon_up_message.has-text-danger.has-text-weight-bold
-            | {{$parent.room.final_info.name}}
+            | {{app.room.final_info.name}}
         figure.image.is-64x64
           img.is-rounded(:src="membership.user.avatar_path")
         .user_name.has-text-weight-bold
@@ -40,7 +40,7 @@
   .columns.is-mobile
     .column
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="$parent.lobby_handle" type="is-primary")
+        b-button.has-text-weight-bold(@click="app.lobby_handle" type="is-primary")
           | ロビーに戻る
 </template>
 

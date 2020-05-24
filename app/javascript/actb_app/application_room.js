@@ -305,12 +305,6 @@ export const application_room = {
       }
     },
 
-    // 終了
-    katimashita_broadcasted(params) {
-      this.mode = "result"
-      this.room = params.room
-    },
-
     // 早押しボタンを押した(解答権はまだない)
     g2_hayaosi_handle() {
       this.sound_play("click")
@@ -328,6 +322,7 @@ export const application_room = {
         // 先に解答ボタンを押せた本人
         this.x_mode = "x2_play"
         this.q2_interval_start()
+        this.sound_play("poon")
       } else {
         // 解答ボタンを押さなかった相手
         if (this.osenai_p) {
@@ -335,6 +330,7 @@ export const application_room = {
         }
         this.x_mode = "x3_see"
         this.share_sfen = this.c_quest.full_init_sfen // 初期状態にしておく
+        this.sound_play("poon")
       }
     },
 
@@ -368,6 +364,12 @@ export const application_room = {
         v = 0
       }
       this.$set(member, "x_score", v)
+    },
+
+    // 結果画面へ
+    katimashita_broadcasted(params) {
+      this.mode = "result"
+      this.room = params.room
     },
 
     ////////////////////////////////////////////////////////////////////////////////

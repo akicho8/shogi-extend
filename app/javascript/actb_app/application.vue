@@ -200,6 +200,11 @@ export default {
     },
 
     lobby_setup() {
+      this.room_unsubscribe()
+
+      this.mode = "lobby"
+      this.sub_mode = "opening"
+
       this.lobby_messages_setup()
 
       this.debug_alert("lobby_setup")
@@ -258,9 +263,6 @@ export default {
       } else {
         this.sound_play("click")
 
-        this.room_unsubscribe()
-
-        this.mode = "lobby"
         this.lobby_setup()
       }
     },
