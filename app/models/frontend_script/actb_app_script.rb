@@ -14,7 +14,7 @@
 #
 # model
 #   app/models/actb/membership.rb
-#   app/models/actb/room.rb
+#   app/models/actb/battle.rb
 #   app/models/actb.rb
 #   app/models/colosseum/user_actb_mod.rb
 #
@@ -25,7 +25,7 @@
 #
 # channel
 #   app/channels/actb/lobby_channel.rb
-#   app/channels/actb/room_channel.rb
+#   app/channels/actb/battle_channel.rb
 #
 # job
 #   app/jobs/actb/lobby_broadcast_job.rb
@@ -56,8 +56,8 @@ module FrontendScript
             :key     => :debug_scene,
             :elems   => {
               "ロビー"             => nil,
-              "対戦(マラソン)"     => :room_marathon_rule,
-              "対戦(シングルトン)" => :room_singleton_rule,
+              "対戦(マラソン)"     => :battle_marathon_rule,
+              "対戦(シングルトン)" => :battle_singleton_rule,
               "結果"               => :result,
               "問題作成"           => :builder,
               "問題作成(情報)"     => :builder_form,
@@ -109,7 +109,7 @@ module FrontendScript
       if params[:history_records_fetch]
         s = current_user.actb_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
         retv = {}
-        retv[:history_records] = s.as_json(only: [:id], include: {:room => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}}, methods: [:good_p, :bad_p, :clip_p])
+        retv[:history_records] = s.as_json(only: [:id], include: {:battle => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}}, methods: [:good_p, :bad_p, :clip_p])
         return retv
       end
 
@@ -170,16 +170,16 @@ module FrontendScript
       if request.format.json?
       end
 
-      # if !current_room
-      #   out += Actb::Room.order(:id).collect { |room|
+      # if !current_battle
+      #   out += Actb::Battle.order(:id).collect { |battle|
       #     {
-      #       "チャットルーム" => h.link_to(room.id, params.merge(room_id: room.id)),
+      #       "チャットルーム" => h.link_to(battle.id, params.merge(battle_id: battle.id)),
       #     }
       #   }.to_html
       # end
 
-      if current_room
-        #   messages = current_room.messages.order(:id).last(10)
+      if current_battle
+        #   messages = current_battle.messages.order(:id).last(10)
         #   rendered_messages = messages.collect { |message|
         #     ApplicationController.renderer.render partial: 'actb/messages/message', locals: { message: message }
         #   }
@@ -198,7 +198,7 @@ module FrontendScript
         info[:current_user] = current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating])
       end
 
-      # info[:room] = current_room
+      # info[:battle] = current_battle
       # info[:messages] = rendered_messages
       if request.format.json?
         return info
@@ -207,7 +207,7 @@ module FrontendScript
       out += h.javascript_tag(%(document.addEventListener('DOMContentLoaded', () => { new Vue({}).$mount("#app") })))
       out += %(<div id="app"><actb_app :info='#{info.to_json}' /></div>)
       # out += h.tag.br
-      # out += h.link_to("ロビー", params.merge(room_id: nil), :class => "button is-small")
+      # out += h.link_to("ロビー", params.merge(battle_id: nil), :class => "button is-small")
       # end
 
       c.layout_type = :raw
@@ -245,11 +245,11 @@ module FrontendScript
 
     def put_action
       # if params[:g2_hayaosi_handle]
-      #   # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
-      #   # { g2_hayaosi_handle: true, room_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
+      #   # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, battle_id: this.app.battle.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
+      #   # { g2_hayaosi_handle: true, battle_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
       #
       #   redis = Redis.new(db: AppConfig[:redis_db_for_actb])
-      #   key = [:early_press, params[:room_id], params[:question_id]].join("/")
+      #   key = [:early_press, params[:battle_id], params[:question_id]].join("/")
       #   Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
       #   early_press_counter = redis.incr(key)
       #   client.expire(key, 60)
@@ -293,13 +293,13 @@ module FrontendScript
       { include: [:user, :moves_answers, :lineage], only: Actb::Question.index_and_form_json_columns, methods: [:folder_key] }
     end
 
-    def current_room_id
-      params[:room_id].presence
+    def current_battle_id
+      params[:battle_id].presence
     end
 
-    def current_room
-      if v = current_room_id
-        Actb::Room.find_by(id: v)
+    def current_battle
+      if v = current_battle_id
+        Actb::Battle.find_by(id: v)
       end
     end
 
@@ -337,22 +337,22 @@ module FrontendScript
         c.sysop_login_unless_logout
       end
 
-      if current_debug_scene == :room_marathon_rule || current_debug_scene == :room_singleton_rule
+      if current_debug_scene == :battle_marathon_rule || current_debug_scene == :battle_singleton_rule
         c.sysop_login_unless_logout
 
         user = Colosseum::User.create!
-        room = Actb::Room.create! do |e|
+        battle = Actb::Battle.create! do |e|
           e.memberships.build(user: current_user)
           e.memberships.build(user: user)
-          if current_debug_scene == :room_marathon_rule
+          if current_debug_scene == :battle_marathon_rule
             e.rule_key = :marathon_rule
           end
-          if current_debug_scene == :room_singleton_rule
+          if current_debug_scene == :battle_singleton_rule
             e.rule_key = :singleton_rule
           end
         end
 
-        info[:room] = room.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
+        info[:battle] = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
       end
 
       if current_debug_scene == :result
@@ -360,12 +360,12 @@ module FrontendScript
 
         user1 = current_user
         user2 = Colosseum::User.create!
-        room = Actb::Room.create!(final_key: :disconnect) do |e|
+        battle = Actb::Battle.create!(final_key: :disconnect) do |e|
           e.memberships.build(user: user1, judge_key: :win,  question_index: 1)
           e.memberships.build(user: user2, judge_key: :lose, question_index: 2)
         end
 
-        info[:room] = room.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions, :final_info])
+        info[:battle] = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions, :final_info])
       end
 
       if current_debug_scene == :edit

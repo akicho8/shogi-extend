@@ -10,14 +10,14 @@
           .has-text-success
             | YOU LOSE !
   .columns.is-mobile.result_container
-    template(v-for="(membership, i) in app.room.memberships")
+    template(v-for="(membership, i) in app.battle.memberships")
       .column.user_container.is-flex
         template(v-if="membership.rensho_count >= 2")
           .icon_up_message.has-text-weight-bold
             | {{membership.rensho_count}}連勝中！
-        template(v-if="membership.judge_key === 'lose' && app.room.final_info.lose_side")
+        template(v-if="membership.judge_key === 'lose' && app.battle.final_info.lose_side")
           .icon_up_message.has-text-danger.has-text-weight-bold
-            | {{app.room.final_info.name}}
+            | {{app.battle.final_info.name}}
         figure.image.is-64x64
           img.is-rounded(:src="membership.user.avatar_path")
         .user_name.has-text-weight-bold
@@ -50,7 +50,7 @@
         b-button.has-text-weight-bold(@click="app.lobby_handle")
           | やめる
 
-  debug_print(:vars="['app.saisen_counts', 'app.session_count', 'app.room.rensen_index']" v-if="development_p")
+  debug_print(:vars="['app.saisen_counts', 'app.session_count', 'app.battle.rensen_index']" v-if="development_p")
 </template>
 
 <script>

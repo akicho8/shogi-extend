@@ -61,20 +61,20 @@ question.folder.type           # => "Actb::DraftBox"
 # exit
 
 # 部屋を立てる
-room = Actb::Room.create! do |e|
+battle = Actb::Battle.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
-room.users.count                # => 2
-room.rensen_index               # => 0
+battle.users.count                # => 2
+battle.rensen_index               # => 0
 
-room2 = room.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Room id: 2, parent_id: 1, begin_at: "2020-05-24 13:17:42", end_at: nil, final_key: nil, rule_key: "marathon_rule", rensen_index: 1, created_at: "2020-05-24 13:17:42", updated_at: "2020-05-24 13:17:42">
-room2.rensen_index                            # => 1
+battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 2, parent_id: 1, begin_at: "2020-05-24 13:17:42", end_at: nil, final_key: nil, rule_key: "marathon_rule", rensen_index: 1, created_at: "2020-05-24 13:17:42", updated_at: "2020-05-24 13:17:42">
+battle2.rensen_index                            # => 1
 
-membership = room.memberships.first
+membership = battle.memberships.first
 
 # 出題
-room.best_questions             # => [{"id"=>3, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>13, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0006_fallback_avatar_icon-f07410f5866412fbc17e58a262b07e419a5d8724e300c69c85ea026433163513.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
+battle.best_questions             # => [{"id"=>3, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>13, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0006_fallback_avatar_icon-f07410f5866412fbc17e58a262b07e419a5d8724e300c69c85ea026433163513.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
 
 # すべての問題に解答する
 Actb::Question.all.each.with_index do |question, i|
@@ -102,7 +102,7 @@ tp Actb.info
 # >> |--------------------+-------+--------|
 # >> | Colosseum::User    |    13 |     25 |
 # >> | Actb::Question     |     3 |      3 |
-# >> | Actb::Room         |     2 |      2 |
+# >> | Actb::Battle         |     2 |      2 |
 # >> | Actb::Season       |    11 |     12 |
 # >> | Actb::Profile      |    13 |     25 |
 # >> | Actb::Setting      |    13 |     25 |
@@ -112,5 +112,5 @@ tp Actb.info
 # >> | Actb::Folder       |    39 |     75 |
 # >> | Actb::Lineage      |     7 |     14 |
 # >> | Actb::LobbyMessage |     0 |        |
-# >> | Actb::RoomMessage  |     0 |        |
+# >> | Actb::BattleMessage  |     0 |        |
 # >> |--------------------+-------+--------|

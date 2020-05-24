@@ -1,13 +1,13 @@
 <template lang="pug">
-.the_room_message.columns
+.the_battle_message.columns
   .column
-    .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_display_lines}rem`}")
-      template(v-for="message in app.room_messages")
+    .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.battle_messages_display_lines}rem`}")
+      template(v-for="message in app.battle_messages")
         div {{message.user.name}}: {{message.body}}
     b-field.input_field
-      b-input(v-model="app.room_message" expanded @keypress.native.enter="app.room_speak_handle")
+      b-input(v-model="app.battle_message" expanded @keypress.native.enter="app.battle_speak_handle")
       p.control
-        button.button.is-primary(@click="app.room_speak_handle")
+        button.button.is-primary(@click="app.battle_speak_handle")
           b-icon.play_icon(icon="play")
 </template>
 
@@ -15,12 +15,12 @@
 import { support } from "./support.js"
 
 export default {
-  name: "the_room_message",
+  name: "the_battle_message",
   mixins: [
     support,
   ],
   watch: {
-    "app.room_messages": {
+    "app.battle_messages": {
       handler() {
         this.scroll_to_bottom()
       },
@@ -40,7 +40,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_room_message
+.the_battle_message
   .messages_box
     padding: 0.5rem
     overflow-y: scroll

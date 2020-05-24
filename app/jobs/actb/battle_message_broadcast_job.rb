@@ -1,9 +1,9 @@
 module Actb
-  class RoomMessageBroadcastJob < ApplicationJob
+  class BattleMessageBroadcastJob < ApplicationJob
     queue_as :default
 
     def perform(message)
-      ActionCable.server.broadcast("actb/room_channel/#{message.room_id}", bc_action: :room_speak_broadcasted, bc_params: {message: render_message(message)})
+      ActionCable.server.broadcast("actb/battle_channel/#{message.battle_id}", bc_action: :battle_speak_broadcasted, bc_params: {message: render_message(message)})
     end
 
     private

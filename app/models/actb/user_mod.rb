@@ -6,7 +6,7 @@ module Actb
       include UserMod::FolderMod
 
       # 対局
-      has_many :actb_rooms, class_name: "Actb::Room", through: :memberships                           # 対局(複数)
+      has_many :actb_battles, class_name: "Actb::Battle", through: :memberships                           # 対局(複数)
       has_many :actb_memberships, class_name: "Actb::Membership", dependent: :restrict_with_exception # 対局時の情報(複数)
 
       # このユーザーが作成した問題(複数)
@@ -17,7 +17,7 @@ module Actb
 
       # チャット関連
       with_options(dependent: :destroy) do |o|
-        has_many :actb_room_messages, class_name: "Actb::RoomMessage"
+        has_many :actb_battle_messages, class_name: "Actb::BattleMessage"
         has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
       end
 

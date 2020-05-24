@@ -1,13 +1,13 @@
 module Actb
-  class RoomChannel < BaseChannel
+  class BattleChannel < BaseChannel
     def subscribed
-      raise ArgumentError, params.inspect unless room_id
+      raise ArgumentError, params.inspect unless battle_id
 
-      stream_from "actb/room_channel/#{room_id}"
+      stream_from "actb/battle_channel/#{battle_id}"
 
       if current_user
-        redis.sadd(:room_user_ids, current_user.id)
-        room_user_ids_broadcast
+        redis.sadd(:battle_user_ids, current_user.id)
+        battle_user_ids_broadcast
       else
         reject
       end
@@ -15,8 +15,8 @@ module Actb
 
     def unsubscribed
       if current_user
-        redis.srem(:room_user_ids, current_user.id)
-        room_user_ids_broadcast
+        redis.srem(:battle_user_ids, current_user.id)
+        battle_user_ids_broadcast
       end
 
       katimashita(:lose, :disconnect)
@@ -27,12 +27,12 @@ module Actb
       if data[:message].start_with?("/")
         execution_interrupt_hidden_command(data[:message])
       else
-        current_user.actb_room_messages.create!(body: data[:message], room: current_room)
+        current_user.actb_battle_messages.create!(body: data[:message], battle: current_battle)
       end
     end
 
     def execution_interrupt_hidden_command(str)
-      # if message = room.messages.where(user: current_user).order(created_at: :desc).first
+      # if message = battle.messages.where(user: current_user).order(created_at: :desc).first
       if md = str.to_s.match(/\/(?<command_line>.*)/)
         args = md["command_line"].split
         command = args.shift
@@ -54,10 +54,10 @@ module Actb
       # membership_id: this.current_membership.id,
       # question_id: this.current_question_id,
 
-      # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
-      # { g2_hayaosi_handle: true, room_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
+      # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, battle_id: this.app.battle.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
+      # { g2_hayaosi_handle: true, battle_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
 
-      key = [:early_press, current_room, data[:question_id]].join("/")
+      key = [:early_press, current_battle, data[:question_id]].join("/")
       Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
       early_press_counter = redis.incr(key)
       redis.expire(key, 60)
@@ -67,21 +67,21 @@ module Actb
           question_id: data[:question_id],
           early_press_counter: early_press_counter,
         }
-        ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :g2_hayaosi_handle_broadcasted, bc_params: g2_hayaosi_handle_broadcasted })
+        ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :g2_hayaosi_handle_broadcasted, bc_params: g2_hayaosi_handle_broadcasted })
       end
     end
 
     def g2_jikangire_handle(data)
       data = data.to_options
 
-      key = [:early_press, current_room, data[:question_id]].join("/")
+      key = [:early_press, current_battle, data[:question_id]].join("/")
       redis.del(key)
 
       g2_jikangire_handle_broadcasted = {
         membership_id: data[:membership_id],
         question_id: data[:question_id],
       }
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :g2_jikangire_handle_broadcasted, bc_params: g2_jikangire_handle_broadcasted })
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :g2_jikangire_handle_broadcasted, bc_params: g2_jikangire_handle_broadcasted })
     end
 
     def kotae_sentaku(data)
@@ -97,7 +97,7 @@ module Actb
       }
 
       # 一応保存しておく(あとで取るかもしれない)
-      current_room.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
+      current_battle.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
 
       # 問題の解答数を上げる
       if data[:ans_result_key] == "correct"
@@ -107,7 +107,7 @@ module Actb
       end
 
       # こちらがメイン
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :kotae_sentaku_broadcasted, bc_params: bc_params })
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :kotae_sentaku_broadcasted, bc_params: bc_params })
     end
 
     # 次に進む
@@ -120,7 +120,7 @@ module Actb
         question_index: data[:question_index],
         question_id:    data[:question_id],
       }
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :next_trigger_broadcasted, bc_params: bc_params })
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :next_trigger_broadcasted, bc_params: bc_params })
     end
 
     # 盤面を共有する
@@ -129,7 +129,7 @@ module Actb
       bc_params = {
         share_sfen: data[:share_sfen],
       }
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :kyouyuu_broadcasted, bc_params: bc_params })
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :kyouyuu_broadcasted, bc_params: bc_params })
     end
 
     # <-- app/javascript/actb_app/application.vue
@@ -138,9 +138,9 @@ module Actb
     end
 
     def katimashita(judge_key, final_key)
-      room = current_room
+      battle = current_battle
 
-      if room.final_key
+      if battle.final_key
         Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "すでに終了している"])
         return
       end
@@ -148,8 +148,8 @@ module Actb
       judge_info = JudgeInfo.fetch(judge_key)
 
       ActiveRecord::Base.transaction do
-        m1 = room.memberships.find_by!(user: current_user)
-        m2 = (room.memberships - [m1]).first
+        m1 = battle.memberships.find_by!(user: current_user)
+        m2 = (battle.memberships - [m1]).first
 
         m1.judge_key = judge_info.key
         m2.judge_key = judge_info.flip.key
@@ -166,16 +166,16 @@ module Actb
         mm.each.with_index { |m, i| m.user.actb_newest_profile.update!(rating: ab[i]) }
 
         mm.each(&:save!)
-        room.update!(final_key: final_key)
+        battle.update!(final_key: final_key)
       end
 
-      room.reload
+      battle.reload
 
-      memberships_user_ids_remove(room)
+      memberships_user_ids_remove(battle)
 
       # 終了時
-      room_json = room.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: "katimashita_broadcasted", bc_params: { room: room_json }})
+      battle_json = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: "katimashita_broadcasted", bc_params: { battle: battle_json }})
       # --> app/javascript/actb_app/application.vue
     end
 
@@ -186,7 +186,7 @@ module Actb
         membership_id: data[:membership_id],
       }
 
-      key = [:saisen_handle, current_room.id].join("/") # key = "saisen_handle/1"
+      key = [:saisen_handle, current_battle.id].join("/") # key = "saisen_handle/1"
       redis.hincrby(key, data[:membership_id], 1)       # counts[membership_id] += 1
       redis.expire(key, 1.days)                         # 指定秒数後に破棄
       counts = redis.hgetall(key)                       # => {"1" => "2"}
@@ -195,10 +195,10 @@ module Actb
       counts                                            # => {1 => 2}
 
       # キーが2つかつ、どちらかのカウンタが1回目のときだけ、とすれば連打されても何個も部屋は生成されなくなる
-      if counts.count == current_room.users.count
+      if counts.count == current_battle.users.count
         # {10 => 5, 11 => 1} なら発動して {10 => 5, 11 => 2} なら発動しない
         if counts.values.any? { |e| e == 1 }
-          current_room.onaji_heya_wo_atarasiku_tukuruyo
+          current_battle.onaji_heya_wo_atarasiku_tukuruyo
         end
         return
       end
@@ -210,36 +210,36 @@ module Actb
 
       # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, methods.grep(/broadcast/)])
 
-      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :saisen_handle_broadcasted, bc_params: bc_params })
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :saisen_handle_broadcasted, bc_params: bc_params })
     end
 
-    def room_id
-      params["room_id"]
+    def battle_id
+      params["battle_id"]
     end
 
-    def current_room
-      Room.find(room_id)
+    def current_battle
+      Battle.find(battle_id)
     end
 
-    def room_user_ids_broadcast
-      ActionCable.server.broadcast("actb/school_channel", room_user_ids: room_user_ids)
+    def battle_user_ids_broadcast
+      ActionCable.server.broadcast("actb/school_channel", battle_user_ids: battle_user_ids)
     end
 
-    def memberships_user_ids_remove(room)
-      room.memberships.each do |m|
-        redis.srem(:room_user_ids, m.user.id)
+    def memberships_user_ids_remove(battle)
+      battle.memberships.each do |m|
+        redis.srem(:battle_user_ids, m.user.id)
       end
-      room_user_ids_broadcast
+      battle_user_ids_broadcast
     end
 
-    def room_users
-      room_user_ids.collect { |e| Colosseum::User.find(e) }
+    def battle_users
+      battle_user_ids.collect { |e| Colosseum::User.find(e) }
     end
 
     def history_update(data, ans_result)
       data = data.to_options
       question = Question.find(data[:question_id])
-      membership = current_room.memberships.find(data[:membership_id])
+      membership = current_battle.memberships.find(data[:membership_id])
       history = current_user.actb_histories.find_or_initialize_by(membership: membership, question: question)
       history.update!(ans_result: Actb::AnsResult.fetch(ans_result))
     end

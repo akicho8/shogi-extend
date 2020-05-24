@@ -75,22 +75,22 @@ exit
 # hash = hash.merge(moves_answers: question.moves_answers)
 # tp hash.as_json
 
-# Actb::Room.destroy_all
+# Actb::Battle.destroy_all
 
 # user1 = Colosseum::User.create!
 # user2 = Colosseum::User.create!
 #
-# room = Actb::Room.create! do |e|
+# battle = Actb::Battle.create! do |e|
 #   e.memberships.build(user: user1, judge_key: "win")
 #   e.memberships.build(user: user2, judge_key: "lose")
 # end
 
-# room.messages.create!(user: user1, body: "a") # => #<Actb::Message id: 4, user_id: 19, room_id: 4, body: "a", created_at: "2020-05-05 14:45:49", updated_at: "2020-05-05 14:45:49">
+# battle.messages.create!(user: user1, body: "a") # => #<Actb::Message id: 4, user_id: 19, battle_id: 4, body: "a", created_at: "2020-05-05 14:45:49", updated_at: "2020-05-05 14:45:49">
 # tp user1.actb_profile.update!(rating: 1600)
 # tp user1.actb_profile
 
 # def initialize(connection, identifier, params = {})
-# Actb::RoomChannel.new(nil, nil, a: 1) # =>
+# Actb::BattleChannel.new(nil, nil, a: 1) # =>
 
 # question = Actb::Question.first
 # tp question.as_json(include: [:user, :moves_answers])

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Actb::RoomChannel, type: :channel do
+RSpec.describe Actb::BattleChannel, type: :channel do
   before(:context) do
     Actb.setup
   end
@@ -14,8 +14,8 @@ RSpec.describe Actb::RoomChannel, type: :channel do
     stub_connection current_user: user1
   end
 
-  let_it_be(:current_room) do
-    Actb::Room.create! do |e|
+  let_it_be(:current_battle) do
+    Actb::Battle.create! do |e|
       e.memberships.build(user: user1)
       e.memberships.build(user: user2)
     end
@@ -26,30 +26,30 @@ RSpec.describe Actb::RoomChannel, type: :channel do
   end
 
   def membership1
-    current_room.memberships.find { |e| e.user == user1 }
+    current_battle.memberships.find { |e| e.user == user1 }
   end
 
   def membership2
-    current_room.memberships.find { |e| e.user == user2 }
+    current_battle.memberships.find { |e| e.user == user2 }
   end
 
   describe "#subscribe" do
     it "接続" do
-      expect { subscribe(room_id: current_room.id) }.to have_broadcasted_to("actb/school_channel").with(room_user_ids: [user1.id])
+      expect { subscribe(battle_id: current_battle.id) }.to have_broadcasted_to("actb/school_channel").with(battle_user_ids: [user1.id])
       assert { subscription.confirmed? }
-      assert { subscription.room_users == [user1] }
+      assert { subscription.battle_users == [user1] }
     end
   end
 
   describe "#unsubscribe" do
     before do
-      subscribe(room_id: current_room.id)
+      subscribe(battle_id: current_battle.id)
     end
 
     it "退室" do
-      assert { subscription.room_users == [user1] }
+      assert { subscription.battle_users == [user1] }
       unsubscribe
-      assert { subscription.room_users == [] }
+      assert { subscription.battle_users == [] }
     end
 
     it "人数通知" do
@@ -64,40 +64,40 @@ RSpec.describe Actb::RoomChannel, type: :channel do
 
   describe "#speak" do
     before do
-      subscribe(room_id: current_room.id)
+      subscribe(battle_id: current_battle.id)
     end
 
     it do
       subscription.speak(message: "(message)")
-      assert { user1.actb_room_messages.count == 1 }
+      assert { user1.actb_battle_messages.count == 1 }
     end
   end
 
   describe "#kotae_sentaku" do
     before do
-      subscribe(room_id: current_room.id)
+      subscribe(battle_id: current_battle.id)
     end
 
     it do
       data = { membership_id: membership1.id, question_index: 1, question_id: question.id }
       expect {
         subscription.kotae_sentaku(data)
-      }.to have_broadcasted_to("actb/room_channel/#{current_room.id}").with(kotae_sentaku: data)
+      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(kotae_sentaku: data)
 
-      current_room.reload
+      current_battle.reload
       assert { membership1.question_index == 1 }
     end
   end
 
   describe "#goal_hook" do
     before do
-      subscribe(room_id: current_room.id)
+      subscribe(battle_id: current_battle.id)
     end
 
     it "結果画面へ" do
       expect {
         subscription.goal_hook({})
-      }.to have_broadcasted_to("actb/room_channel/#{current_room.id}")
+      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}")
     end
 
     it "対戦中人数を減らして通知" do
@@ -108,10 +108,10 @@ RSpec.describe Actb::RoomChannel, type: :channel do
 
     it "結果" do
       subscription.goal_hook({})
-      current_room.reload
+      current_battle.reload
 
-      assert { current_room.end_at    }
-      assert { current_room.final_key }
+      assert { current_battle.end_at    }
+      assert { current_battle.final_key }
 
       assert { membership1.judge_key == "win"  }
       assert { membership2.judge_key == "lose" }

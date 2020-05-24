@@ -1,8 +1,8 @@
 import { Question } from "./question.js"
 
-export class Room {
-  constructor(room) {
-    Object.assign(this, room)
+export class Battle {
+  constructor(battle) {
+    Object.assign(this, battle)
     this.best_questions = this.best_questions.map(e => new Question(e))
   }
 

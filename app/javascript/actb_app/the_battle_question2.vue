@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_room_question2
+.the_battle_question2
   .has-text-centered
     //- .status2
     //-   | {{app.q_turn_offset}}手目
@@ -83,7 +83,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "the_room_question2",
+  name: "the_battle_question2",
   mixins: [
     support,
   ],
@@ -99,7 +99,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_room_question2
+.the_battle_question2
   .tags_container
     margin-top: 0.7rem
   .kaitousuru_button

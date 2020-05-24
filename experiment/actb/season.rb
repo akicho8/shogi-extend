@@ -17,7 +17,7 @@ tp Actb.info
 # >> |-----------------+-------+--------|
 # >> | Colosseum::User |     1 |     14 |
 # >> | Actb::Question  |     0 |        |
-# >> | Actb::Room      |     0 |        |
+# >> | Actb::Battle      |     0 |        |
 # >> | Actb::Season    |     2 |      5 |
 # >> | Actb::Profile   |     2 |     16 |
 # >> | Actb::GoodMark  |     0 |        |

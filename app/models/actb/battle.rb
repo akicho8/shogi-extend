@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Room (actb_rooms as Actb::Room)
+# Battle (actb_battles as Actb::Battle)
 #
 # |------------+-----------+-------------+-------------+------+-------|
 # | name       | desc      | type        | opts        | refs | index |
@@ -18,19 +18,19 @@
 # user1 = Colosseum::User.create!
 # user2 = Colosseum::User.create!
 #
-# room = Actb::Room.create! do |e|
+# battle = Actb::Battle.create! do |e|
 #   e.memberships.build(user: user1, judge_key: "win")
 #   e.memberships.build(user: user2, judge_key: "lose")
 # end
 #
-# room.room_messages.create!(user: user1, body: "a") # => #<Actb::RoomMessage id: 1, user_id: 31, room_id: 18, body: "a", created_at: "2020-05-05 07:18:46", updated_at: "2020-05-05 07:18:46">
+# battle.battle_messages.create!(user: user1, body: "a") # => #<Actb::BattleMessage id: 1, user_id: 31, battle_id: 18, body: "a", created_at: "2020-05-05 07:18:46", updated_at: "2020-05-05 07:18:46">
 #
 module Actb
-  class Room < ApplicationRecord
-    has_many :messages, class_name: "RoomMessage", dependent: :destroy
+  class Battle < ApplicationRecord
+    has_many :messages, class_name: "BattleMessage", dependent: :destroy
     has_many :memberships, dependent: :destroy
     has_many :users, through: :memberships
-    belongs_to :parent, class_name: "Room", optional: true # 連戦したときの前の部屋
+    belongs_to :parent, class_name: "Battle", optional: true # 連戦したときの前の部屋
 
     before_validation do
       self.begin_at ||= Time.current
@@ -52,7 +52,7 @@ module Actb
     end
 
     after_create_commit do
-      Actb::RoomBroadcastJob.perform_later(self)
+      Actb::BattleBroadcastJob.perform_later(self)
     end
 
     # 出題

@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_room_question1
+.the_battle_question1
   .has-text-centered
     .status1
       | {{app.q1_time_str}}
@@ -39,7 +39,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "the_room_question1",
+  name: "the_battle_question1",
   mixins: [
     support,
   ],
@@ -54,7 +54,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_room_question1
+.the_battle_question1
   .tags_container
     margin-top: 0.7rem
   .kaitousuru_button

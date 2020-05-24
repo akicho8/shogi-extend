@@ -17,6 +17,6 @@ module Actb
     correct_mode_delay: 1,
     mistake_mode_delay: 1,
 
-    room_messages_display_lines: 20,
+    battle_messages_display_lines: 20,
   }
 end

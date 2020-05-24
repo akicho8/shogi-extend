@@ -8,10 +8,10 @@
     the_lobby(v-if="mode === 'lobby'")
     the_lobby_message(v-if="mode === 'lobby'")
     the_matching(v-if="mode === 'matching'")
-    the_room(v-if="mode === 'room'")
-    the_room_message(v-if="mode === 'room'")
+    the_battle(v-if="mode === 'battle'")
+    the_battle_message(v-if="mode === 'battle'")
     the_result(v-if="mode === 'result'")
-    the_room_message(v-if="mode === 'result'")
+    the_battle_message(v-if="mode === 'result'")
     the_builder(v-if="mode === 'builder'")
     the_ranking(v-if="mode === 'ranking'")
     the_history(v-if="mode === 'history'")
@@ -33,14 +33,14 @@ import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_lobby_message from "./the_lobby_message.vue"
 import the_matching      from "./the_matching.vue"
-import the_room          from "./the_room.vue"
-import the_room_message  from "./the_room_message.vue"
+import the_battle          from "./the_battle.vue"
+import the_battle_message  from "./the_battle_message.vue"
 import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history.vue"
 
-import { application_room     } from "./application_room.js"
+import { application_battle     } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
 import { config               } from "./config.js"
 import { RuleInfo             } from "./rule_info.js"
@@ -54,7 +54,7 @@ export default {
 
     the_question_show_mod,
 
-    application_room,
+    application_battle,
     application_matching,
   ],
   components: {
@@ -64,8 +64,8 @@ export default {
     the_lobby,
     the_lobby_message,
     the_matching,
-    the_room,
-    the_room_message,
+    the_battle,
+    the_battle_message,
     the_result,
     the_builder,
     the_ranking,
@@ -79,15 +79,15 @@ export default {
       mode: "lobby",
       sub_mode: "opening",
       rule_key: null,           // 未使用
-      room: null,
+      battle: null,
 
       matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
-      room_user_ids:   null, // オンライン人数
+      battle_user_ids:   null, // オンライン人数
 
       // チャット用
-      room_messages: null, // メッセージ(複数)
-      room_message:  null, // 入力中のメッセージ
+      battle_messages: null, // メッセージ(複数)
+      battle_message:  null, // 入力中のメッセージ
 
       // チャット用
       lobby_messages: null, // メッセージ(複数)
@@ -96,7 +96,7 @@ export default {
       // private
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
       // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
-      // $ac_room:   null, // --> app/channels/actb/room_channel.rb
+      // $ac_battle:   null, // --> app/channels/actb/battle_channel.rb
     }
   },
 
@@ -116,20 +116,20 @@ export default {
       this.school_setup()
 
       if (this.info.debug_scene) {
-        if (this.info.debug_scene === "room_marathon_rule") {
+        if (this.info.debug_scene === "battle_marathon_rule") {
           // this.rule_key = "marathon_rule"
-          this.room_setup_without_ac_room_once()
-          this.room_setup(this.info.room)
+          this.battle_setup_without_ac_battle_once()
+          this.battle_setup(this.info.battle)
         }
-        if (this.info.debug_scene === "room_singleton_rule") {
+        if (this.info.debug_scene === "battle_singleton_rule") {
           // this.rule_key = "singleton_rule"
-          this.room_setup_without_ac_room_once()
-          this.room_setup(this.info.room)
+          this.battle_setup_without_ac_battle_once()
+          this.battle_setup(this.info.battle)
         }
         if (this.info.debug_scene === "result") {
-          this.room_setup_without_ac_room_once()
-          this.room_setup(this.info.room)
-          // this.room_setup_without_ac_room(this.info.room)
+          this.battle_setup_without_ac_battle_once()
+          this.battle_setup(this.info.battle)
+          // this.battle_setup_without_ac_battle(this.info.battle)
         }
         if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
           this.builder_handle()
@@ -170,7 +170,7 @@ export default {
       this.lobby_messages.push(params.message)
     },
 
-    // room_speak_broadcasted と共有
+    // battle_speak_broadcasted と共有
     lobby_speak_broadcasted_shared_process(params) {
       const message = params.message
       if (/^\*/.test(message.body)) {
@@ -196,15 +196,15 @@ export default {
           if (data.online_user_ids) {
             this.online_user_ids = data.online_user_ids
           }
-          if (data.room_user_ids) {
-            this.room_user_ids = data.room_user_ids
+          if (data.battle_user_ids) {
+            this.battle_user_ids = data.battle_user_ids
           }
         },
       })
     },
 
     lobby_setup() {
-      this.room_unsubscribe()
+      this.battle_unsubscribe()
 
       this.mode = "lobby"
       this.sub_mode = "opening"

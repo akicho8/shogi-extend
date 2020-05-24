@@ -1,11 +1,11 @@
 * 構造
 
 index (+ store)
-  + room_message
+  + battle_message
   + header
   + lobby
   + matching (include matching_interval)
-  + room
+  + battle
   + result
   + builder (かなり疎結合)
 

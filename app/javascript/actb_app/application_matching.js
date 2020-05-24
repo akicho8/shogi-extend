@@ -42,19 +42,19 @@ export const application_matching = {
     },
     // マッチング成立
     // ロビーにいる全員に送られて自分が含まれていたら部屋に移動する
-    room_broadcasted(params) {
-      const membership = params.room.memberships.find(e => e.user.id === this.current_user.id)
+    battle_broadcasted(params) {
+      const membership = params.battle.memberships.find(e => e.user.id === this.current_user.id)
       if (membership) {
         this.lobby_close()
         //- this.matching_interval_timer_clear()
         // 初回
         // if (this.session_count == null) {
-        this.room_setup_without_ac_room_once()
-        this.room_setup(params.room)
+        this.battle_setup_without_ac_battle_once()
+        this.battle_setup(params.battle)
         // } else {
         //   // 再戦で来たとき
-        //   this.room_unsubscribe()
-        //   this.room_setup(params.room)
+        //   this.battle_unsubscribe()
+        //   this.battle_setup(params.battle)
         // }
       }
     },

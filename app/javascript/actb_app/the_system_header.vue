@@ -6,8 +6,8 @@
     | オンライン:{{app.online_user_ids.length}}人
   p(v-if="app.matching_list_hash")
     | 対戦待ち:{{app.matching_list_hash.marathon_rule.length}},{{app.matching_list_hash.singleton_rule.length}}人
-  p(v-if="app.room_user_ids != null")
-    | 対戦中:{{app.room_user_ids.length}}人
+  p(v-if="app.battle_user_ids != null")
+    | 対戦中:{{app.battle_user_ids.length}}人
 </template>
 
 <script>
