@@ -193,7 +193,7 @@ window.Adapter = Vue.extend({
       params.set("input_text", this.input_text)
       params.set("edit_mode", "adapter")
 
-      this.http_command("POST", this.$options.post_path, params, e => {
+      this.remote_fetch("POST", this.$options.post_path, params, e => {
         this.change_counter = 0
 
         this.all_kifs = null

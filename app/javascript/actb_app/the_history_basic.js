@@ -10,7 +10,7 @@ export const the_history_basic = {
 
       if (this.history_records && false) {
       } else {
-        this.http_get_command(this.app.info.put_path, { history_records_fetch: true }, e => {
+        this.remote_get(this.app.info.put_path, { history_records_fetch: true }, e => {
           if (e.history_records) {
             this.history_records = e.history_records
           }

@@ -39,21 +39,7 @@ export const application_room = {
     },
 
     room_setup(room) {
-      this.room = new Room(room)
-
-      this.mode = "room"
-
-      this.room_messages = []
-      this.room_message = ""
-
-      this.sub_mode = "standby"
-
-      this.members_hash = {}
-      this.room.memberships.forEach(e => {
-        this.members_hash[e.id] = { progress_list: [], x_score: 0 }
-      })
-
-      this.question_index = 0
+      this.room_setup_without_ac_room(room)
 
       this.__assert(this.$ac_room == null)
       this.$ac_room = consumer.subscriptions.create({ channel: "Actb::RoomChannel", room_id: this.room.id }, {
@@ -72,6 +58,23 @@ export const application_room = {
           }
         },
       })
+    },
+    room_setup_without_ac_room(room) {
+      this.room = new Room(room)
+
+      this.mode = "room"
+
+      this.room_messages = []
+      this.room_message = ""
+
+      this.sub_mode = "standby"
+
+      this.members_hash = {}
+      this.room.memberships.forEach(e => {
+        this.members_hash[e.id] = { progress_list: [], x_score: 0 }
+      })
+
+      this.question_index = 0
     },
 
     ////////////////////////////////////////////////////////////////////////////////

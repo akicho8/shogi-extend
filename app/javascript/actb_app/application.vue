@@ -105,7 +105,7 @@ export default {
   },
 
   created() {
-    this.http_get_command(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
+    this.remote_get(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
       this.$RuleInfo = RuleInfo.memory_record_reset(e.RuleInfo)
       this.app_setup()
     })
@@ -125,6 +125,7 @@ export default {
           this.room_setup(this.info.room)
         }
         if (this.info.debug_scene === "result") {
+          this.room_setup_without_ac_room(this.info.room)
           this.mode = "result"
         }
         if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
@@ -229,7 +230,7 @@ export default {
     lobby_messages_setup() {
       this.lobby_messages = []
       this.lobby_message = ""
-      this.http_get_command(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
+      this.remote_get(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
         this.lobby_messages = e.lobby_messages
       })
     },
@@ -246,10 +247,16 @@ export default {
 
       // this.rule_key = rule_key  // これセットする意味ないか？
       this.lobby_speak(`*rule_key_set_handle("${rule_key}")`)
-      this.http_get_command(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
+      this.remote_get(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
         this.lobby_speak(`*rule_key_set_handle -> ${e}`)
+
         this.mode = "matching"
+        this.app.matching_init()
       })
+    },
+
+    saisen_handle() {
+      
     },
 
     cancel_handle() {
@@ -315,7 +322,7 @@ export default {
           this.talk("だめ", {rate: 1.5})
         }
       }
-      this.silent_http_command("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
+      this.silent_remote_fetch("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
         if (e.retval) {
           this.$set(history, "good_p", e.retval.good_p)
           this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.retval.good_diff)
@@ -331,7 +338,7 @@ export default {
       if (clip_p) {
         this.talk("お気に入り", {rate: 1.5})
       }
-      this.silent_http_command("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
+      this.silent_remote_fetch("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
         if (e.retval) {
           this.$set(history, "clip_p", e.retval.clip_p)
           this.$set(history.question, "clip_marks_count", history.question.clip_marks_count + e.retval.diff)

@@ -22,7 +22,7 @@ export default {
 
       options = {talk_method: "howler", ...options}
 
-      this.silent_http_get_command(js_global.talk_path, {source_text: source_text}, data => {
+      this.silent_remote_get(js_global.talk_path, {source_text: source_text}, data => {
         // すぐに発声する場合
         if (options.talk_method === "direct_audio") {
           const audio = new Audio()
@@ -62,7 +62,7 @@ export default {
     },
 
     user_info_show_modal(user_key) {
-      this.http_get_command("/w.json", { query: user_key, format_type: "user", debug: this.$route.query.debug }, data => {
+      this.remote_get("/w.json", { query: user_key, format_type: "user", debug: this.$route.query.debug }, data => {
         if (_.isEmpty(data)) {
           this.debug_alert(`${user_key} は存在しません`)
         } else {
@@ -84,7 +84,7 @@ export default {
     },
 
     tactic_show_modal(tactic_key) {
-      this.http_get_command(`/tactics/${tactic_key}.json`, {}, data => {
+      this.remote_get(`/tactics/${tactic_key}.json`, {}, data => {
         // https://buefy.org/documentation/modal
         this.$buefy.modal.open({
           parent: this,

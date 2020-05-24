@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_result
-  .columns.is-mobile.result_container
+  .columns.is-mobile.win_lose_container
     .column
       .has-text-centered.is-size-3.has-text-weight-bold
         template(v-if="app.current_membership.judge_key === 'win'")
@@ -37,9 +37,11 @@
         .column.is-1.vs_mark.is-flex.has-text-weight-bold.is-size-4
           | vs
 
-  .columns.is-mobile
+  .columns.is-mobile.footer_container
     .column
       .buttons.is-centered
+        b-button.has-text-weight-bold(@click="app.saisen_handle" type="is-primary")
+          | 同じ相手と再戦
         b-button.has-text-weight-bold(@click="app.lobby_handle" type="is-primary")
           | ロビーに戻る
 </template>
@@ -57,9 +59,14 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_result
+  margin-top: 4.5rem
+  .win_lose_container
   .result_container
     .vs_mark
       flex-direction: column
       justify-content: center
       align-items: center
+  .footer_container
+    .buttons
+      flex-direction: column
 </style>

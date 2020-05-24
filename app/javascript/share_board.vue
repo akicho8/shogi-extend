@@ -182,7 +182,7 @@ export default {
     //   const params = new URLSearchParams()
     //   params.set("body", this.play_mode_body)
     //
-    //   this.http_command("POST", this.$route.path, params, e => {
+    //   this.remote_fetch("POST", this.$route.path, params, e => {
     //     if (e.record) {
     //       this.record = e.record
     //       callback()
@@ -241,7 +241,7 @@ export default {
         },
         events: {
           "update:any_source": any_source => {
-            this.http_command("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
+            this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
               if (e.body) {
                 this.general_ok_notice("正常に読み込みました")
                 this.play_mode_body = e.body

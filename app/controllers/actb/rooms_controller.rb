@@ -10,6 +10,7 @@
 # | begin_at   | Begin at  | datetime    | NOT NULL    |      | A     |
 # | end_at     | End at    | datetime    |             |      | B     |
 # | final_key  | Final key | string(255) |             |      | C     |
+# | rule_key   | Rule key  | string(255) |             |      | D     |
 # | created_at | 作成日時  | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時  | datetime    | NOT NULL    |      |       |
 # |------------+-----------+-------------+-------------+------+-------|

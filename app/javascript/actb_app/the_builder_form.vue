@@ -55,7 +55,7 @@ export default {
   },
   created() {
     // これはトップでまとめて行なった方がよいかもしれない
-    this.http_get_command(this.app.info.put_path, { remote_action: "builder_form_resource_fetch" }, e => {
+    this.remote_get(this.app.info.put_path, { remote_action: "builder_form_resource_fetch" }, e => {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
     })

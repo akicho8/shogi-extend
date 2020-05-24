@@ -245,7 +245,7 @@ module FrontendScript
 
     def put_action
       # if params[:g2_hayaosi_handle]
-      #   # this.silent_http_command("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
+      #   # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, room_id: this.app.room.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
       #   # { g2_hayaosi_handle: true, room_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
       #
       #   redis = Redis.new(db: AppConfig[:redis_db_for_actb])

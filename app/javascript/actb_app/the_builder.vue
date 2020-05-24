@@ -300,7 +300,7 @@ export default {
       // params.set("answers", this.answers)
 
       const before_create_or_upate_name = this.create_or_upate_name
-      this.http_command("PUT", this.app.info.put_path, params, e => {
+      this.remote_fetch("PUT", this.app.info.put_path, params, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
         }
@@ -360,7 +360,7 @@ export default {
     },
 
     async_records_load() {
-      this.http_get_command(this.app.info.put_path, {
+      this.remote_get(this.app.info.put_path, {
         questions_fetch: true,
         page:               this.page,
         per:                this.per,

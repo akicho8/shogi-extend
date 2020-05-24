@@ -19,9 +19,6 @@ export default {
   mixins: [
     support,
   ],
-  created() {
-    this.app.matching_init()
-  },
   beforeDestroy() {
     this.app.matching_interval_timer_clear()
   },
