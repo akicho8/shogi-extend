@@ -116,21 +116,28 @@ export default {
       answer_tab_index: null,   // 表示している正解タブの位置
 
       // pagination 5点セット
-      total:              this.app.info.total,
-      page:               this.app.info.page,
-      per:                this.app.info.per,
-      sort_column:        this.app.info.sort_column,
-      sort_order:         this.app.info.sort_order,
-      sort_order_default: this.app.info.sort_order_default,
+      total:              null,
+      page:               null,
+      per:                null,
+      sort_column:        null,
+      sort_order:         null,
+      sort_order_default: null,
 
       answer_turn_offset:     null, // 正解モードでの手数
       mediator_snapshot_sfen: null, // 正解モードでの局面
       $exam_run_count:        null, // 検証モードで手を動かした数
-      valid_count:           null, // 検証モードで正解した数
+      valid_count:            null, // 検証モードで正解した数
     }
   },
 
   created() {
+    this.total              = this.app.info.total
+    this.page               = this.app.info.page
+    this.per                = this.app.info.per
+    this.sort_column        = this.app.info.sort_column
+    this.sort_order         = this.app.info.sort_order
+    this.sort_order_default = this.app.info.sort_order_default
+
     this.app.lobby_close()
 
     this.sound_play("click")

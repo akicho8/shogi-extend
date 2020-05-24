@@ -222,6 +222,14 @@ module FrontendScript
       }
     end
 
+    # http://localhost:3000/script/actb-app.json?remote_action=builder_form_resource_fetch
+    def builder_form_resource_fetch
+      {
+        LineageInfo: Actb::LineageInfo.as_json(only: [:key, :name, :type]),
+        FolderInfo:  Actb::FolderInfo.as_json(only: [:key, :name, :icon, :type]),
+      }
+    end
+
     # http://localhost:3000/script/actb-app.json?remote_action=lobby_messages_fetch
     def lobby_messages_fetch
       lobby_messages = Actb::LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
