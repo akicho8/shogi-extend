@@ -10,6 +10,8 @@ export const application_room = {
       x_mode: null,
       osenai_p: null,
       share_sfen: null,         // 自分の操作を相手に伝えるためのあれ
+      saisen_counts: null,      // それぞれの再戦希望数
+      session_count: null,
 
       q_turn_offset: null,
       q1_interval_id: null,
@@ -41,15 +43,17 @@ export const application_room = {
     room_setup(room) {
       this.room_setup_without_ac_room(room)
 
-      this.__assert(this.$ac_room == null)
+      this.__assert__(this.$ac_room == null)
       this.$ac_room = consumer.subscriptions.create({ channel: "Actb::RoomChannel", room_id: this.room.id }, {
         connected: () => {
+          this.ac_info_update()
           this.start_hook()
         },
         disconnected: () => {
-          alert("room disconnected")
-          this.debug_alert("room 切断")
           this.ac_info_update()
+          this.debug_alert("room 切断")
+          // 切断してすぐ接続したときあとで新しく接続したあとで前の disconnected が呼ばれるかもしれない
+          // なので、ここで this.$ac_room = null はしてはいけない
         },
         received: (data) => {
           this.debug_alert("room 受信")
@@ -64,8 +68,7 @@ export const application_room = {
 
       this.mode = "room"
 
-      this.room_messages = []
-      this.room_message = ""
+      this.saisen_counts = {}
 
       this.sub_mode = "standby"
 
@@ -75,6 +78,11 @@ export const application_room = {
       })
 
       this.question_index = 0
+    },
+    room_setup_without_ac_room_once() {
+      this.session_count = 0
+      this.room_messages = []
+      this.room_message = ""
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -95,9 +103,30 @@ export const application_room = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 2戦目
+    saisen_room_broadcasted(params) {
+      // this.lobby_close()
+      //- this.matching_interval_timer_clear()
+      // 初回
+      // if (this.session_count == null) {
+      // this.room_setup_without_ac_room_once()
+      // this.room_setup(params.room)
+      // } else {
+      //   // 再戦で来たとき
+      this.room_unsubscribe()
+      this.room_setup(params.room)
+      // }
+    },
+
     start_hook() {
+      if (this.info.debug_scene === "result") {
+        this.mode = "result"
+        return
+      }
+
+      this.session_count += 1
+
       this.debug_alert("room 接続")
-      this.ac_info_update()
 
       this.room_speak("*start_hook")
       this.$ac_room.perform("start_hook", {
@@ -377,6 +406,22 @@ export const application_room = {
       this.sound_play(this.app.current_membership.judge_key)
     },
 
+    saisen_handle() {
+      this.sound_play("click")
+      this.$ac_room.perform("saisen_handle", {membership_id: this.current_membership.id})
+    },
+    saisen_handle_broadcasted(params) {
+      this.room_speak("*saisen_handle_broadcasted")
+      this.saisen_counts = params.saisen_counts
+
+      this.talk("再戦希望", {rate: 1.5})
+      this.$buefy.toast.open({message: "再戦希望", position: "is-top", queue: false})
+
+      if (params.membership_id === this.current_membership.id) {
+      } else {
+      }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     ox_sound_play(ans_result_key) {
@@ -459,11 +504,13 @@ export const application_room = {
       return this.room.memberships[0].id === this.current_membership.id
     },
     current_membership() {
-      return this.room.memberships.find(e => e.user.id === this.current_user.id)
+      const v = this.room.memberships.find(e => e.user.id === this.current_user.id)
+      this.__assert__(v, "current_membership is blank")
+      return v
     },
     c_quest() {
       const v = this.room.best_questions[this.question_index]
-      this.__assert(v, "this.room.best_questions[this.question_index]")
+      this.__assert__(v, "c_quest is blank")
       return v
     },
 

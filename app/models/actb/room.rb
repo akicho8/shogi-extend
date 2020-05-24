@@ -29,6 +29,8 @@ module Actb
   class Room < ApplicationRecord
     has_many :messages, class_name: "RoomMessage", dependent: :destroy
     has_many :memberships, dependent: :destroy
+    has_many :users, through: :memberships
+    belongs_to :parent, class_name: "Room", optional: true # 連戦したときの前の部屋
 
     before_validation do
       self.begin_at ||= Time.current
@@ -37,6 +39,11 @@ module Actb
       end
 
       self.rule_key ||= :marathon_rule
+
+      self.rensen_index ||= 0
+      if parent
+        self.rensen_index = parent.rensen_index + 1
+      end
     end
 
     with_options presence: true do
@@ -61,6 +68,14 @@ module Actb
 
     def final_info
       FinalInfo.fetch_if(final_key)
+    end
+
+    def onaji_heya_wo_atarasiku_tukuruyo
+      self.class.create!(rule_key: rule_key, parent: self) do |e|
+        users.each do |user|
+          e.memberships.build(user: user)
+        end
+      end
     end
   end
 end

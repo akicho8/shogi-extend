@@ -47,7 +47,15 @@ export const application_matching = {
       if (membership) {
         this.lobby_close()
         //- this.matching_interval_timer_clear()
+        // 初回
+        // if (this.session_count == null) {
+        this.room_setup_without_ac_room_once()
         this.room_setup(params.room)
+        // } else {
+        //   // 再戦で来たとき
+        //   this.room_unsubscribe()
+        //   this.room_setup(params.room)
+        // }
       }
     },
   },

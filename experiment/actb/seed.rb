@@ -49,7 +49,7 @@ question.lineage.key               # => "詰将棋"
 question = Actb::Question.first!
 # question.update!(folder: question.user.actb_trash_box) の方法はださい
 question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 39, user_id: 13, type: "Actb::TrashBox", created_at: "2020-05-23 15:33:18", updated_at: "2020-05-23 15:33:18">
+question.folder # => #<Actb::TrashBox id: 39, user_id: 13, type: "Actb::TrashBox", created_at: "2020-05-24 13:17:39", updated_at: "2020-05-24 13:17:39">
 
 # 2番目の問題は下書きへ
 question = Actb::Question.second!
@@ -65,6 +65,12 @@ room = Actb::Room.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
+room.users.count                # => 2
+room.rensen_index               # => 0
+
+room2 = room.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Room id: 2, parent_id: 1, begin_at: "2020-05-24 13:17:42", end_at: nil, final_key: nil, rule_key: "marathon_rule", rensen_index: 1, created_at: "2020-05-24 13:17:42", updated_at: "2020-05-24 13:17:42">
+room2.rensen_index                            # => 1
+
 membership = room.memberships.first
 
 # 出題
@@ -87,16 +93,16 @@ tp Actb.info
 # >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
 # >> | id | user_id | folder_id | lineage_id | init_sfen                                 | time_limit_sec | difficulty_level | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | bad_marks_count | good_marks_count | clip_marks_count |
 # >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
-# >> |  1 |      13 |        39 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-24 00:33:21 +0900 | 2020-05-24 00:33:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                1 |                0 |
-# >> |  2 |      13 |        38 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-24 00:33:21 +0900 | 2020-05-24 00:33:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               1 |                0 |                0 |
-# >> |  3 |      13 |        37 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-24 00:33:21 +0900 | 2020-05-23 02:33:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                0 |                1 |
+# >> |  1 |      13 |        39 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-24 22:17:41 +0900 | 2020-05-24 22:17:42 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                1 |                0 |
+# >> |  2 |      13 |        38 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-24 22:17:42 +0900 | 2020-05-24 22:17:42 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               1 |                0 |                0 |
+# >> |  3 |      13 |        37 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-24 22:17:42 +0900 | 2020-05-24 00:17:42 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                0 |                1 |
 # >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------|
 # >> |--------------------+-------+--------|
 # >> | model              | count | 最終ID |
 # >> |--------------------+-------+--------|
 # >> | Colosseum::User    |    13 |     25 |
 # >> | Actb::Question     |     3 |      3 |
-# >> | Actb::Room         |     1 |      1 |
+# >> | Actb::Room         |     2 |      2 |
 # >> | Actb::Season       |    11 |     12 |
 # >> | Actb::Profile      |    13 |     25 |
 # >> | Actb::Setting      |    13 |     25 |

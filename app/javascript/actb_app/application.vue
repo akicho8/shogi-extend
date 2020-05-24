@@ -4,7 +4,7 @@
 
   .switching_pages(v-show="!overlay_record")
     the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
-    the_system_header(v-if="mode === 'lobby' || mode === 'matching'")
+    the_system_header(v-if="mode === 'lobby' || mode === 'matching' || mode === 'result'")
     the_lobby(v-if="mode === 'lobby'")
     the_lobby_message(v-if="mode === 'lobby'")
     the_matching(v-if="mode === 'matching'")
@@ -118,15 +118,18 @@ export default {
       if (this.info.debug_scene) {
         if (this.info.debug_scene === "room_marathon_rule") {
           // this.rule_key = "marathon_rule"
+          this.room_setup_without_ac_room_once()
           this.room_setup(this.info.room)
         }
         if (this.info.debug_scene === "room_singleton_rule") {
           // this.rule_key = "singleton_rule"
+          this.room_setup_without_ac_room_once()
           this.room_setup(this.info.room)
         }
         if (this.info.debug_scene === "result") {
-          this.room_setup_without_ac_room(this.info.room)
-          this.mode = "result"
+          this.room_setup_without_ac_room_once()
+          this.room_setup(this.info.room)
+          // this.room_setup_without_ac_room(this.info.room)
         }
         if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
           this.builder_handle()
@@ -209,7 +212,7 @@ export default {
       this.lobby_messages_setup()
 
       this.debug_alert("lobby_setup")
-      this.__assert(this.$ac_lobby == null)
+      this.__assert__(this.$ac_lobby == null)
       this.$ac_lobby = consumer.subscriptions.create({channel: "Actb::LobbyChannel"}, {
         connected: () => {
           this.debug_alert("lobby 接続")
@@ -253,10 +256,6 @@ export default {
         this.mode = "matching"
         this.app.matching_init()
       })
-    },
-
-    saisen_handle() {
-      
     },
 
     cancel_handle() {

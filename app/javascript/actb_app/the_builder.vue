@@ -445,7 +445,7 @@ export default {
     },
 
     question_new_record_p() {
-      this.__assert(this.question, "this.question != null")
+      this.__assert__(this.question, "this.question != null")
       return this.question.id == null
     },
 

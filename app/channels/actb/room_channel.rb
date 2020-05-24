@@ -132,7 +132,7 @@ module Actb
       ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :kyouyuu_broadcasted, bc_params: bc_params })
     end
 
-    # <-- app/javascript/actb_app.vue
+    # <-- app/javascript/actb_app/application.vue
     def goal_hook(data)
       katimashita(:win, :all_clear)
     end
@@ -174,9 +174,43 @@ module Actb
       memberships_user_ids_remove(room)
 
       # 終了時
-      room_json = room.as_json(only: [:id, :rule_key], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      room_json = room.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: "katimashita_broadcasted", bc_params: { room: room_json }})
-      # --> app/javascript/actb/application.vue
+      # --> app/javascript/actb_app/application.vue
+    end
+
+    # 再戦
+    def saisen_handle(data)
+      data = data.to_options
+      bc_params = {
+        membership_id: data[:membership_id],
+      }
+
+      key = [:saisen_handle, current_room.id].join("/") # key = "saisen_handle/1"
+      redis.hincrby(key, data[:membership_id], 1)       # counts[membership_id] += 1
+      redis.expire(key, 1.days)                         # 指定秒数後に破棄
+      counts = redis.hgetall(key)                       # => {"1" => "2"}
+      counts = counts.transform_keys(&:to_i)
+      counts = counts.transform_values(&:to_i)
+      counts                                            # => {1 => 2}
+
+      # キーが2つかつ、どちらかのカウンタが1回目のときだけ、とすれば連打されても何個も部屋は生成されなくなる
+      if counts.count == current_room.users.count
+        # {10 => 5, 11 => 1} なら発動して {10 => 5, 11 => 2} なら発動しない
+        if counts.values.any? { |e| e == 1 }
+          current_room.onaji_heya_wo_atarasiku_tukuruyo
+        end
+        return
+      end
+
+      bc_params = {
+        membership_id: data[:membership_id],
+        saisen_counts: counts,
+      }
+
+      # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, methods.grep(/broadcast/)])
+
+      ActionCable.server.broadcast("actb/room_channel/#{room_id}", { bc_action: :saisen_handle_broadcasted, bc_params: bc_params })
     end
 
     def room_id
