@@ -3,7 +3,7 @@
   the_question_show(v-if="overlay_record")
 
   .switching_pages(v-show="!overlay_record")
-    the_footer
+    the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
     the_system_header(v-if="mode === 'lobby' || mode === 'matching'")
     the_lobby(:info="info" v-if="mode === 'lobby'")
     the_lobby_message(:info="info" v-if="mode === 'lobby'")
