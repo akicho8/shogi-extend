@@ -6,6 +6,7 @@ import mp3_click  from "oto_logic/Onmtp-Click02-1.mp3"
 import mp3_shine  from "air_labo/eye-shine1.mp3"
 import mp3_stupid from "air_labo/stupid4.mp3"
 
+import mp3_poon     from "niconicommons/nc141655.mp3"
 import mp3_deden    from "soundeffect_lab/deden.mp3"
 import mp3_pipopipo from "soundeffect_lab/pipopipo.mp3"
 import mp3_win      from "soundeffect_lab/kansei.mp3"
@@ -26,6 +27,7 @@ const SoundPresets = {
   click:    { file: mp3_click,    volume: 0.2, },
   shine:    { file: mp3_shine,    volume: 0.1, },
   stupid:   { file: mp3_stupid,   volume: 0.5, }, // 使いにくい
+  poon:     { file: mp3_poon,     volume: 0.5, },
   deden:    { file: mp3_deden,    volume: 0.2, },
   pipopipo: { file: mp3_pipopipo, volume: 0.5, },
   bubuu:    { file: mp3_bubuu,    volume: 0.5, },
