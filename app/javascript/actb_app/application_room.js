@@ -370,6 +370,8 @@ export const application_room = {
     katimashita_broadcasted(params) {
       this.mode = "result"
       this.room = params.room
+
+      this.sound_play(this.app.current_membership.judge_key)
     },
 
     ////////////////////////////////////////////////////////////////////////////////

@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 import dayjs from "dayjs"
 import the_room_question1 from "./the_room_question1.vue"
 import the_room_question2 from "./the_room_question2.vue"

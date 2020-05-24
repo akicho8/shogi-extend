@@ -38,7 +38,7 @@ class TabInfo extends MemoryRecord {
   }
 }
 
-import support from "./support.js"
+import { support } from "./support.js"
 import the_ranking_row from "./the_ranking_row.vue"
 
 export default {

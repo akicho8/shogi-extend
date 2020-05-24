@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 
 const POSITION_SFEN_PREFIX = "position sfen "
 
-export default {
+export const support = {
   methods: {
     warning_dialog(room_message) {
       this.$buefy.dialog.alert({

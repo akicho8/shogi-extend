@@ -30,7 +30,7 @@ class TabInfo extends MemoryRecord {
   }
 }
 
-import support from "./support.js"
+import { support } from "./support.js"
 import the_history_row from "./the_history_row.vue"
 import the_history_basic from "./the_history_basic.js"
 import the_history_clip from "./the_history_clip.js"

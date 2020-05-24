@@ -87,7 +87,7 @@ class TabInfo extends MemoryRecord {
   }
 }
 
-import support from "./support.js"
+import { support } from "./support.js"
 import the_builder_index from "./the_builder_index.vue"
 import the_builder_play from "./the_builder_play.vue"
 import the_builder_form from "./the_builder_form.vue"
@@ -101,9 +101,6 @@ export default {
     the_builder_index,
     the_builder_play,
     the_builder_form,
-  },
-  props: {
-    info: { required: true },
   },
   data() {
     return {
@@ -119,12 +116,12 @@ export default {
       answer_tab_index: null,   // 表示している正解タブの位置
 
       // pagination 5点セット
-      total:              this.info.total,
-      page:               this.info.page,
-      per:                this.info.per,
-      sort_column:        this.info.sort_column,
-      sort_order:         this.info.sort_order,
-      sort_order_default: this.info.sort_order_default,
+      total:              this.app.info.total,
+      page:               this.app.info.page,
+      per:                this.app.info.per,
+      sort_column:        this.app.info.sort_column,
+      sort_order:         this.app.info.sort_order,
+      sort_order_default: this.app.info.sort_order_default,
 
       answer_turn_offset:     null, // 正解モードでの手数
       mediator_snapshot_sfen: null, // 正解モードでの局面
@@ -296,7 +293,7 @@ export default {
       // params.set("answers", this.answers)
 
       const before_create_or_upate_name = this.create_or_upate_name
-      this.http_command("PUT", this.info.put_path, params, e => {
+      this.http_command("PUT", this.app.info.put_path, params, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
         }
@@ -328,7 +325,7 @@ export default {
       this.answer_turn_offset = 0
       this.valid_count = 0
 
-      if (this.info.debug_scene === "builder_form") {
+      if (this.app.info.debug_scene === "builder_form") {
         this.form_mode_handle()
         return
       }
@@ -356,7 +353,7 @@ export default {
     },
 
     async_records_load() {
-      this.http_get_command(this.info.put_path, {
+      this.http_get_command(this.app.info.put_path, {
         questions_fetch: true,
         page:               this.page,
         per:                this.per,
@@ -447,7 +444,7 @@ export default {
 
     // 問題の初期値
     question_default() {
-      return this.info.question_default
+      return this.app.info.question_default
       // const question = {
       //   // init_sfen: "4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
       //   // init_sfen: "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",

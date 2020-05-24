@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 import MemoryRecord from 'js-memory-record'
 

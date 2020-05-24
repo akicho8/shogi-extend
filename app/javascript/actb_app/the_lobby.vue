@@ -29,30 +29,13 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 export default {
   name: "the_builder",
   mixins: [
     support,
   ],
-  props: {
-    info: { required: true },
-  },
-  data() {
-    return {
-    }
-  },
-
-  created() {
-  },
-
-  beforeDestroy() {
-  },
-
-  watch: {
-  },
-
   methods: {
     cancel_handle() {
       this.sound_play("click")

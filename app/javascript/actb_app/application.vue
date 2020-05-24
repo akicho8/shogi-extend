@@ -3,18 +3,18 @@
   the_question_show(v-if="overlay_record")
 
   .switching_pages(v-show="!overlay_record")
-    the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
-    the_system_header(v-if="mode === 'lobby' || mode === 'matching'")
-    the_lobby(:info="info" v-if="mode === 'lobby'")
-    the_lobby_message(:info="info" v-if="mode === 'lobby'")
-    the_matching(:info="info" v-if="mode === 'matching'")
-    the_room(:info="info" v-if="mode === 'room'")
-    the_room_message(:info="info" v-if="mode === 'room'")
-    the_result(:info="info" v-if="mode === 'result'")
-    the_room_message(:info="info" v-if="mode === 'result'")
-    the_builder(:info="info" v-if="mode === 'builder'")
-    the_ranking(v-if="mode === 'ranking'")
-    the_history(v-if="mode === 'history'")
+    the_footer        (v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
+    the_system_header (v-if="mode === 'lobby' || mode === 'matching'")
+    the_lobby         (v-if="mode === 'lobby'")
+    the_lobby_message (v-if="mode === 'lobby'")
+    the_matching      (v-if="mode === 'matching'")
+    the_room          (v-if="mode === 'room'")
+    the_room_message  (v-if="mode === 'room'")
+    the_result        (v-if="mode === 'result'")
+    the_room_message  (v-if="mode === 'result'")
+    the_builder       (v-if="mode === 'builder'")
+    the_ranking       (v-if="mode === 'ranking'")
+    the_history       (v-if="mode === 'history'")
 
   debug_print(:grep="/./")
 </template>
@@ -22,23 +22,23 @@
 <script>
 import consumer from "channels/consumer"
 
-import support   from "./support.js"
+import { support }   from "./support.js"
 import the_store from "./store.js"
 
 import the_question_show_mod from "./the_question_show_mod.js"
 
 import the_question_show from "./the_question_show.vue"
-import the_system_header    from "./the_system_header.vue"
-import the_footer           from "./the_footer.vue"
-import the_lobby            from "./the_lobby.vue"
-import the_lobby_message    from "./the_lobby_message.vue"
-import the_matching         from "./the_matching.vue"
-import the_room             from "./the_room.vue"
-import the_room_message     from "./the_room_message.vue"
-import the_result           from "./the_result.vue"
-import the_builder          from "./the_builder.vue"
-import the_ranking          from "./the_ranking.vue"
-import the_history          from "./the_history.vue"
+import the_system_header from "./the_system_header.vue"
+import the_footer        from "./the_footer.vue"
+import the_lobby         from "./the_lobby.vue"
+import the_lobby_message from "./the_lobby_message.vue"
+import the_matching      from "./the_matching.vue"
+import the_room          from "./the_room.vue"
+import the_room_message  from "./the_room_message.vue"
+import the_result        from "./the_result.vue"
+import the_builder       from "./the_builder.vue"
+import the_ranking       from "./the_ranking.vue"
+import the_history       from "./the_history.vue"
 
 import { application_room     } from "./application_room.js"
 import { application_matching } from "./application_matching.js"

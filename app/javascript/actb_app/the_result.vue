@@ -45,33 +45,12 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 export default {
   mixins: [
     support,
   ],
-  components: {
-  },
-  props: {
-    info: { required: true },
-  },
-  data() {
-    return {
-    }
-  },
-
-  created() {
-    if (this.app.current_membership) {
-      this.sound_play(this.app.current_membership.judge_key)
-    }
-  },
-
-  watch: {
-  },
-
-  methods: {
-  },
 }
 </script>
 
