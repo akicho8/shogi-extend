@@ -29,7 +29,7 @@ module Actb
   class Battle < ApplicationRecord
     belongs_to :room # 部屋
     # has_many :messages, class_name: "RoomMessage", dependent: :destroy
-    has_many :memberships, dependent: :destroy
+    has_many :memberships, class_name: "BattleMembership", dependent: :destroy
     has_many :users, through: :memberships
     belongs_to :parent, class_name: "Battle", optional: true # 連戦したときの前の部屋
 

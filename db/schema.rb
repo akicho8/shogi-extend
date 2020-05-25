@@ -44,13 +44,32 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["user_id"], name: "index_actb_bad_marks_on_user_id"
   end
 
+  create_table "actb_battle_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "battle_id", comment: "対戦部屋"
+    t.bigint "user_id", comment: "対戦者"
+    t.string "judge_key", comment: "勝敗"
+    t.integer "rensho_count", null: false, comment: "連勝数"
+    t.integer "renpai_count", null: false, comment: "連敗数"
+    t.integer "question_index", comment: "解答中の問題"
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_id", "user_id"], name: "index_actb_battle_memberships_on_battle_id_and_user_id", unique: true
+    t.index ["battle_id"], name: "index_actb_battle_memberships_on_battle_id"
+    t.index ["judge_key"], name: "index_actb_battle_memberships_on_judge_key"
+    t.index ["position"], name: "index_actb_battle_memberships_on_position"
+    t.index ["renpai_count"], name: "index_actb_battle_memberships_on_renpai_count"
+    t.index ["rensho_count"], name: "index_actb_battle_memberships_on_rensho_count"
+    t.index ["user_id"], name: "index_actb_battle_memberships_on_user_id"
+  end
+
   create_table "actb_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "room_id", comment: "部屋"
     t.bigint "parent_id", comment: "親"
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
     t.string "final_key", comment: "結果"
-    t.string "rule_key", comment: "ゲームの種類"
+    t.string "rule_key", comment: "ルール"
     t.integer "rensen_index", null: false, comment: "連戦数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -141,25 +160,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_actb_lobby_messages_on_user_id"
-  end
-
-  create_table "actb_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "battle_id", comment: "対戦部屋"
-    t.bigint "user_id", comment: "対戦者"
-    t.string "judge_key", comment: "勝敗"
-    t.integer "rensho_count", null: false, comment: "連勝数"
-    t.integer "renpai_count", null: false, comment: "連敗数"
-    t.integer "question_index", comment: "解答中の問題"
-    t.integer "position", comment: "順序"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["battle_id", "user_id"], name: "index_actb_memberships_on_battle_id_and_user_id", unique: true
-    t.index ["battle_id"], name: "index_actb_memberships_on_battle_id"
-    t.index ["judge_key"], name: "index_actb_memberships_on_judge_key"
-    t.index ["position"], name: "index_actb_memberships_on_position"
-    t.index ["renpai_count"], name: "index_actb_memberships_on_renpai_count"
-    t.index ["rensho_count"], name: "index_actb_memberships_on_rensho_count"
-    t.index ["user_id"], name: "index_actb_memberships_on_user_id"
   end
 
   create_table "actb_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -261,17 +261,9 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.datetime "begin_at", null: false, comment: "対戦開始日時"
-    t.datetime "end_at", comment: "対戦終了日時"
-    t.string "final_key", comment: "結果"
-    t.string "rule_key", comment: "ゲームの種類"
-    t.integer "rensen_index", null: false, comment: "連戦数"
+    t.string "rule_key", comment: "ルール"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["begin_at"], name: "index_actb_rooms_on_begin_at"
-    t.index ["end_at"], name: "index_actb_rooms_on_end_at"
-    t.index ["final_key"], name: "index_actb_rooms_on_final_key"
-    t.index ["rensen_index"], name: "index_actb_rooms_on_rensen_index"
     t.index ["rule_key"], name: "index_actb_rooms_on_rule_key"
   end
 
