@@ -861,6 +861,12 @@ export default {
 
     summary() {
       let out = ""
+
+      if (this.book_title === TITLE_DEFAULT) {
+      } else {
+        out += this.book_title + "\n"
+      }
+
       if (this.quest_range) {
         out += this.quest_range + " "
       }
