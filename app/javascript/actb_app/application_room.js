@@ -48,6 +48,12 @@ export const application_room = {
       })
     },
 
+    // room_setup connected
+    // ↓
+    // app/channels/actb/room_channel.rb subscribed
+    // ↓
+    // app/jobs/actb/battle_broadcast_job.rb broadcast
+    // ↓
     battle_broadcasted(params) {
       this.battle_setup(params.battle)
     },
@@ -69,6 +75,5 @@ export const application_room = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
   },
 }

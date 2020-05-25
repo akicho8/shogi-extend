@@ -5,13 +5,12 @@ module Actb
 
       stream_from "actb/room_channel/#{room_id}"
 
-      # -> battle_broadcasted
       current_room.battles.create! do |e|
         e.rule_key = current_room.rule_key
         current_room.users.each do |user|
           e.memberships.build(user: user)
         end
-      end
+      end # --> app/jobs/actb/battle_broadcast_job.rb --> battle_broadcasted --> app/javascript/actb_app/application_room.js 
     end
 
     def unsubscribed

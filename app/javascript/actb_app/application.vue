@@ -202,6 +202,7 @@ export default {
 
     lobby_setup() {
       this.battle_unsubscribe()
+      this.room_unsubscribe()
 
       this.mode = "lobby"
       this.sub_mode = "opening"
