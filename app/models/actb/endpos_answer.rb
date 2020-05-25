@@ -3,16 +3,16 @@
 #
 # Endpos answer (actb_endpos_answers as Actb::EndposAnswer)
 #
-# |-------------+------------+-------------+-------------+------+-------|
-# | name        | desc       | type        | opts        | refs | index |
-# |-------------+------------+-------------+-------------+------+-------|
-# | id          | ID         | integer(8)  | NOT NULL PK |      |       |
-# | question_id | Question   | integer(8)  |             |      | A     |
-# | moves_count  | Limit turn | integer(4)  | NOT NULL    |      | B     |
-# | end_sfen    | End sfen   | string(255) | NOT NULL    |      |       |
-# | created_at  | 作成日時   | datetime    | NOT NULL    |      |       |
-# | updated_at  | 更新日時   | datetime    | NOT NULL    |      |       |
-# |-------------+------------+-------------+-------------+------+-------|
+# |-------------+-------------+-------------+-------------+------+-------|
+# | name        | desc        | type        | opts        | refs | index |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | question_id | Question    | integer(8)  |             |      | A     |
+# | moves_count | Moves count | integer(4)  | NOT NULL    |      | B     |
+# | end_sfen    | End sfen    | string(255) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
 
 module Actb
   class EndposAnswer < ApplicationRecord

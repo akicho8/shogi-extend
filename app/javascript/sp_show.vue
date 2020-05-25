@@ -132,7 +132,7 @@ export default {
     time_chart_p() {
       if (this.time_chart_p) {
         if (!this.time_chart_params) {
-          this.http_get_command(this.record.show_path, { time_chart_fetch: true }, data => {
+          this.remote_get(this.record.show_path, { time_chart_fetch: true }, data => {
             this.time_chart_params = data.time_chart_params
           })
         }

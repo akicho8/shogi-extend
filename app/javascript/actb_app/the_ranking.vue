@@ -38,7 +38,7 @@ class TabInfo extends MemoryRecord {
   }
 }
 
-import support from "./support.js"
+import { support } from "./support.js"
 import the_ranking_row from "./the_ranking_row.vue"
 
 export default {
@@ -109,7 +109,7 @@ export default {
         params.take = 5
         params.shuffle = true
       }
-      this.http_get_command(this.app.info.put_path, params, e => {
+      this.remote_get(this.app.info.put_path, params, e => {
         if (e.rank_data) {
           this.rank_data = e.rank_data
         }
@@ -124,7 +124,7 @@ export default {
     },
 
     seasons_fetch() {
-      this.http_get_command(this.app.info.put_path, { seasons_fetch: true }, e => {
+      this.remote_get(this.app.info.put_path, { seasons_fetch: true }, e => {
         if (e.seasons) {
           this.seasons = e.seasons
         }

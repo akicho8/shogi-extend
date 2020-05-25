@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 import the_history_row_vote from "./the_history_row_vote.vue"
 
 export default {

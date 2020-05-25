@@ -13,12 +13,12 @@ end
 
 user2 = Colosseum::User.create!
 
-room = Actb::Room.create! do |e|
+battle = Actb::Battle.create! do |e|
   e.memberships.build(user: user)
   e.memberships.build(user: user2)
 end
 
-membership = room.memberships.first
+membership = battle.memberships.first
 
 history = user.actb_histories.create!(membership: membership, question: question, ans_result: Actb::AnsResult.fetch(:correct))
 tp history

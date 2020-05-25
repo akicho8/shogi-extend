@@ -35,7 +35,7 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
     it "オンラインリスト通知" do
       expect { subject }.to have_broadcasted_to("actb/school_channel").with({
           online_user_ids: [user.id],
-          room_user_ids: [],
+          battle_user_ids: [],
         })
     end
   end
@@ -54,7 +54,7 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
     it "オフラインリスト通知" do
       expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").with({
           online_user_ids: [],
-          room_user_ids: [],
+          battle_user_ids: [],
         })
     end
   end

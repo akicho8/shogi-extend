@@ -33,7 +33,7 @@ module Actb
     private
 
     def all_broadcast
-      ActionCable.server.broadcast("actb/school_channel", online_user_ids: online_user_ids, room_user_ids: room_user_ids)
+      ActionCable.server.broadcast("actb/school_channel", online_user_ids: online_user_ids, battle_user_ids: battle_user_ids)
     end
   end
 end

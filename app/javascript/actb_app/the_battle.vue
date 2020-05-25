@@ -1,9 +1,9 @@
 <template lang="pug">
-.the_room
+.the_battle
   debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.x_mode', 'app.osenai_p']" oneline)
 
   .vs_info.is-flex
-    template(v-for="(membership, i) in app.room.memberships")
+    template(v-for="(membership, i) in app.battle.memberships")
       .user_block.user_container.is-flex
         template(v-if="membership.rensho_count >= 2")
           .rensho_count
@@ -13,9 +13,9 @@
         .user_name.has-text-weight-bold
           | {{membership.user.name}}
 
-        template(v-if="app.room.rule_key === 'marathon_rule'")
+        template(v-if="app.battle.rule_key === 'marathon_rule'")
           .user_quest_index2
-            | {{progress_list(membership).length}} / {{app.room.best_questions.length}}
+            | {{progress_list(membership).length}} / {{app.battle.best_questions.length}}
           .user_quest_index
             template(v-if="progress_list2(membership).length === 0")
               | &nbsp;
@@ -25,7 +25,7 @@
               template(v-if="ans_result_key === 'mistake'")
                 b-icon(icon="close" size="is-small" type="is-success")
 
-        template(v-if="app.room.rule_key === 'singleton_rule'")
+        template(v-if="app.battle.rule_key === 'singleton_rule'")
           .user_quest_index2
             | {{x_score(membership)}}
           .user_quest_index
@@ -46,8 +46,8 @@
       | {{app.question_index + 1}}問目
 
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    the_room_question1(v-if="app.room.rule_key === 'marathon_rule'")
-    the_room_question2(v-if="app.room.rule_key === 'singleton_rule'")
+    the_battle_question1(v-if="app.battle.rule_key === 'marathon_rule'")
+    the_battle_question2(v-if="app.battle.rule_key === 'singleton_rule'")
 
   template(v-if="app.sub_mode === 'mistake_mode'")
     .mistake_mode_container.has-text-centered
@@ -64,19 +64,19 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 import dayjs from "dayjs"
-import the_room_question1 from "./the_room_question1.vue"
-import the_room_question2 from "./the_room_question2.vue"
+import the_battle_question1 from "./the_battle_question1.vue"
+import the_battle_question2 from "./the_battle_question2.vue"
 
 export default {
-  name: "the_room",
+  name: "the_battle",
   mixins: [
     support,
   ],
   components: {
-    the_room_question1,
-    the_room_question2,
+    the_battle_question1,
+    the_battle_question2,
   },
   created() {
     this.app.lobby_close()
@@ -97,7 +97,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_room
+.the_battle
   .deden_mode_container
     font-size: 5rem
   .mistake_mode_container

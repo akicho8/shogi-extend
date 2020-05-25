@@ -101,7 +101,7 @@ export default {
       const params = new URLSearchParams()
       params.set("input_text", str)
 
-      this.silent_http_command("POST", this.$options.post_path, params, e => {
+      this.silent_remote_fetch("POST", this.$options.post_path, params, e => {
         if (e.output_kifs) {
           this.output_kifs = e.output_kifs
           this.turn_max_set(e)

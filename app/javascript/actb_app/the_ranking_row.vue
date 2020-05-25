@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 export default {
   name: "the_ranking_row",

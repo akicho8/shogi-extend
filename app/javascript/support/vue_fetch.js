@@ -1,35 +1,35 @@
 export default {
   methods: {
     // POST の場合 data はHashをそのまま渡せばよい
-    http_command(method, url, data, callback = null) {
+    remote_fetch(method, url, data, callback = null) {
       const loading = this.$buefy.loading.open()
       this.$http({method: method, url: url, data: data})
-        .then(r      => this.http_command_success(r, loading, callback))
-        .catch(error => this.http_command_error(error, loading))
+        .then(r      => this.remote_fetch_success(r, loading, callback))
+        .catch(error => this.remote_fetch_error(error, loading))
     },
 
-    silent_http_command(method, url, data, callback = null) {
+    silent_remote_fetch(method, url, data, callback = null) {
       this.$http({method: method, url: url, data: data})
-        .then(r      => this.http_command_success(r, null, callback))
-        .catch(error => this.http_command_error(error, null))
+        .then(r      => this.remote_fetch_success(r, null, callback))
+        .catch(error => this.remote_fetch_error(error, null))
     },
 
-    http_get_command(url, params, callback = null) {
+    remote_get(url, params, callback = null) {
       const loading = this.$buefy.loading.open()
       this.$http.get(url, {params: params})
-        .then(r      => this.http_command_success(r, loading, callback))
-        .catch(error => this.http_command_error(error, loading))
+        .then(r      => this.remote_fetch_success(r, loading, callback))
+        .catch(error => this.remote_fetch_error(error, loading))
     },
 
-    silent_http_get_command(url, params, callback = null) {
+    silent_remote_get(url, params, callback = null) {
       this.$http.get(url, {params: params})
-        .then(r      => this.http_command_success(r, null, callback))
-        .catch(error => this.http_command_error(error, null))
+        .then(r      => this.remote_fetch_success(r, null, callback))
+        .catch(error => this.remote_fetch_error(error, null))
     },
 
     // private
 
-    http_command_success(response, loading, callback) {
+    remote_fetch_success(response, loading, callback) {
       if (loading) {
         loading.close()
       }
@@ -54,7 +54,7 @@ export default {
       }
     },
 
-    http_command_error(error, loading) {
+    remote_fetch_error(error, loading) {
       if (loading) {
         loading.close()
       }

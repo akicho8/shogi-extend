@@ -135,7 +135,7 @@ export default {
     chart_show() {
       if (this.xy_chart_counter == 0) {
         this.xy_chart_counter += 1
-        this.http_get_command(this.$root.$options.xhr_post_path, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
+        this.remote_get(this.$root.$options.xhr_post_path, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
           this.chart_destroy()
           window.chart_instance = new Chart(this.$refs.chart_canvas, this.days_chart_js_options(data.chartjs_datasets))
           this.xy_chart_counter = 0

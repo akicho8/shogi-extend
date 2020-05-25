@@ -18,12 +18,12 @@
   b-field(label="難易度" custom-class="is-small")
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="$parent.start_level_max" :show-score="false")
 
-  b-field(label="種類" custom-class="is-small")
+  b-field(label="種類" custom-class="is-small" v-if="LineageInfo")
     b-field.is-marginless
       template(v-for="row in LineageInfo.values")
         b-radio-button(v-model="$parent.question.lineage.key" :native-value="row.key" :type="row.type") {{row.name}}
 
-  b-field(label="フォルダ" custom-class="is-small")
+  b-field(label="フォルダ" custom-class="is-small" v-if="FolderInfo")
     b-field.is-marginless
       template(v-for="row in FolderInfo.values")
         b-radio-button(v-model="$parent.question.folder_key" :native-value="row.key" :type="row.type")
@@ -32,32 +32,14 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 import MemoryRecord from 'js-memory-record'
 
 class LineageInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "詰将棋",     type: "is-primary", },
-      { key: "実戦詰め筋", type: "is-primary", },
-      { key: "手筋",       type: "is-primary", },
-      { key: "必死",       type: "is-primary", },
-      { key: "必死逃れ",   type: "is-primary", },
-      { key: "定跡",       type: "is-primary", },
-      { key: "秘密",       type: "is-danger",  },
-    ]
-  }
 }
 
 class FolderInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "active", name: "公開",   icon: "check",             type: "is-primary", },
-      { key: "draft",  name: "下書き", icon: "lock-outline",      type: "is-warning", },
-      { key: "trash",  name: "ゴミ箱", icon: "trash-can-outline", type: "is-danger",  },
-    ]
-  }
 }
 
 export default {
@@ -67,12 +49,17 @@ export default {
   ],
   data() {
     return {
+      LineageInfo: null,
+      FolderInfo: null,
     }
   },
-
   created() {
+    // これはトップでまとめて行なった方がよいかもしれない
+    this.remote_get(this.app.info.put_path, { remote_action: "builder_form_resource_fetch" }, e => {
+      this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
+      this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
+    })
   },
-
   watch: {
     "$parent.question.lineage.key": {
       handler(v) {
@@ -82,7 +69,7 @@ export default {
     },
     "$parent.question.folder_key": {
       handler(v) {
-        const folder_info = FolderInfo.fetch(v)
+        const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
         this.talk(folder_info.name, {rate: 1.5})
       },
@@ -96,11 +83,6 @@ export default {
         this.talk(v, {rate: 1.5})
       },
     },
-  },
-
-  computed: {
-    FolderInfo()  { return FolderInfo  },
-    LineageInfo() { return LineageInfo },
   },
 }
 </script>

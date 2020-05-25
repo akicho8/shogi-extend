@@ -85,7 +85,7 @@ export default {
     async_records_load() {
       this.loading = true
 
-      this.silent_http_get_command(this.async_records_load_url, {}, data => {
+      this.silent_remote_get(this.async_records_load_url, {}, data => {
         this.loading = false
         this.records = data
         this.fetched_count += 1

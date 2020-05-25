@@ -12,19 +12,13 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 export default {
   name: "the_matching",
   mixins: [
     support,
   ],
-  props: {
-    info: { required: true },
-  },
-  created() {
-    this.app.matching_init()
-  },
   beforeDestroy() {
     this.app.matching_interval_timer_clear()
   },

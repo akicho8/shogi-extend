@@ -12,23 +12,13 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 export default {
   name: "the_room_message",
   mixins: [
     support,
   ],
-  props: {
-  },
-  data() {
-    return {
-    }
-  },
-
-  created() {
-  },
-
   watch: {
     "app.room_messages": {
       handler() {
@@ -36,7 +26,6 @@ export default {
       },
     },
   },
-
   methods: {
     scroll_to_bottom() {
       if (this.$refs.messages_box) {

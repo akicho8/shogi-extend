@@ -7,7 +7,7 @@
 # | name           | desc           | type        | opts        | refs                  | index |
 # |----------------+----------------+-------------+-------------+-----------------------+-------|
 # | id             | ID             | integer(8)  | NOT NULL PK |                       |       |
-# | room_id        | Room           | integer(8)  |             |                       | A! B  |
+# | battle_id        | Battle           | integer(8)  |             |                       | A! B  |
 # | user_id        | User           | integer(8)  |             | => Colosseum::User#id | A! C  |
 # | judge_key      | Judge key      | string(255) |             |                       | D     |
 # | rensho_count   | Rensho count   | integer(4)  | NOT NULL    |                       | E     |
@@ -25,9 +25,9 @@
 module Actb
   class Membership < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
-    belongs_to :room
+    belongs_to :battle
 
-    acts_as_list top_of_list: 0, scope: :room
+    acts_as_list top_of_list: 0, scope: :battle
 
     before_validation do
       self.rensho_count ||= 0
@@ -58,7 +58,7 @@ module Actb
 
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-      validates :judge_key, uniqueness: { scope: :room_id, case_sensitive: true }
+      validates :judge_key, uniqueness: { scope: :battle_id, case_sensitive: true }
     end
 
     after_save do

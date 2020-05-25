@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Room (actb_rooms as Actb::Room)
+# Battle (actb_battles as Actb::Battle)
 #
 # |------------+-----------+-------------+-------------+------+-------|
 # | name       | desc      | type        | opts        | refs | index |
@@ -10,19 +10,20 @@
 # | begin_at   | Begin at  | datetime    | NOT NULL    |      | A     |
 # | end_at     | End at    | datetime    |             |      | B     |
 # | final_key  | Final key | string(255) |             |      | C     |
+# | rule_key   | Rule key  | string(255) |             |      | D     |
 # | created_at | 作成日時  | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時  | datetime    | NOT NULL    |      |       |
 # |------------+-----------+-------------+-------------+------+-------|
 
 module Actb
-  class RoomsController < ApplicationController
+  class BattlesController < ApplicationController
     def index
-      @rooms = Room.all.order(:id)
+      @battles = Battle.all.order(:id)
     end
 
     def show
-      @room = Room.find(params[:id])
-      @messages = @room.messages.order(:id).last(10)
+      @battle = Battle.find(params[:id])
+      @messages = @battle.messages.order(:id).last(10)
     end
   end
 end

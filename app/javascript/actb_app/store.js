@@ -1,6 +1,6 @@
 import Vuex from "vuex"
 
-export default () => new Vuex.Store({
+export const store = () => new Vuex.Store({
   state: {
     gvar1: "(gvar1)",
     app: null,

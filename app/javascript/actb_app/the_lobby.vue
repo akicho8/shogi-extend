@@ -10,6 +10,8 @@
         .rating.has-text-weight-bold.is-size-7
           | {{app.current_user.rating}}
 
+  debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.x_mode', 'app.osenai_p']" oneline)
+
   .opening(v-if="app.sub_mode === 'opening'")
     .title.is-3.has-text-centered 将棋トレーニングバトル
     .buttons.is-centered
@@ -27,30 +29,13 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 
 export default {
   name: "the_builder",
   mixins: [
     support,
   ],
-  props: {
-    info: { required: true },
-  },
-  data() {
-    return {
-    }
-  },
-
-  created() {
-  },
-
-  beforeDestroy() {
-  },
-
-  watch: {
-  },
-
   methods: {
     cancel_handle() {
       this.sound_play("click")

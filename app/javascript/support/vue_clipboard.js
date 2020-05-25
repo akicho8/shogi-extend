@@ -20,7 +20,7 @@ export default {
         return this.simple_clipboard_copy(body)
       }
 
-      this.http_command("POST", "/api/general/any_source_to", {
+      this.remote_fetch("POST", "/api/general/any_source_to", {
         any_source: any_source,
         to_format: to_format,
         candidate_enable: false,
@@ -44,7 +44,7 @@ export default {
       if (text) {
         this.clipboard_copy({text: text})
       } else {
-        this.http_get_command(url, {}, text => {
+        this.remote_get(url, {}, text => {
           this.$set(this.kif_clipboard_copy_cache, url, text)
           this.clipboard_copy({text: text})
         })

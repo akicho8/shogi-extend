@@ -4,15 +4,15 @@
 
   .switching_pages(v-show="!overlay_record")
     the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
-    the_system_header(v-if="mode === 'lobby' || mode === 'matching'")
-    the_lobby(:info="info" v-if="mode === 'lobby'")
-    the_lobby_message(:info="info" v-if="mode === 'lobby'")
-    the_matching(:info="info" v-if="mode === 'matching'")
-    the_room(:info="info" v-if="mode === 'room'")
-    the_room_message(:info="info" v-if="mode === 'room'")
-    the_result(:info="info" v-if="mode === 'result'")
-    the_room_message(:info="info" v-if="mode === 'result'")
-    the_builder(:info="info" v-if="mode === 'builder'")
+    the_system_header(v-if="mode === 'lobby' || mode === 'matching' || mode === 'result' || mode === 'battle'")
+    the_lobby(v-if="mode === 'lobby'")
+    the_lobby_message(v-if="mode === 'lobby'")
+    the_matching(v-if="mode === 'matching'")
+    the_battle(v-if="mode === 'battle'")
+    the_room_message(v-if="mode === 'battle'")
+    the_result(v-if="mode === 'result'")
+    the_room_message(v-if="mode === 'result'")
+    the_builder(v-if="mode === 'builder'")
     the_ranking(v-if="mode === 'ranking'")
     the_history(v-if="mode === 'history'")
 
@@ -22,31 +22,32 @@
 <script>
 import consumer from "channels/consumer"
 
-import support   from "./support.js"
-import the_store from "./store.js"
+import { support } from "./support.js"
+import { store   } from "./store.js"
 
-import the_question_show_mod from "./the_question_show_mod.js"
+import { the_question_show_mod } from "./the_question_show_mod.js"
 
 import the_question_show from "./the_question_show.vue"
-import the_system_header    from "./the_system_header.vue"
-import the_footer           from "./the_footer.vue"
-import the_lobby            from "./the_lobby.vue"
-import the_lobby_message    from "./the_lobby_message.vue"
-import the_matching         from "./the_matching.vue"
-import the_room             from "./the_room.vue"
-import the_room_message     from "./the_room_message.vue"
-import the_result           from "./the_result.vue"
-import the_builder          from "./the_builder.vue"
-import the_ranking          from "./the_ranking.vue"
-import the_history          from "./the_history.vue"
+import the_system_header from "./the_system_header.vue"
+import the_footer        from "./the_footer.vue"
+import the_lobby         from "./the_lobby.vue"
+import the_lobby_message from "./the_lobby_message.vue"
+import the_matching      from "./the_matching.vue"
+import the_battle          from "./the_battle.vue"
+import the_room_message  from "./the_room_message.vue"
+import the_result        from "./the_result.vue"
+import the_builder       from "./the_builder.vue"
+import the_ranking       from "./the_ranking.vue"
+import the_history       from "./the_history.vue"
 
 import { application_room     } from "./application_room.js"
+import { application_battle     } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
 import { config               } from "./config.js"
 import { RuleInfo             } from "./rule_info.js"
 
 export default {
-  store: the_store,
+  store: store,
   name: "actb_app",
   mixins: [
     support,
@@ -55,6 +56,7 @@ export default {
     the_question_show_mod,
 
     application_room,
+    application_battle,
     application_matching,
   ],
   components: {
@@ -64,7 +66,7 @@ export default {
     the_lobby,
     the_lobby_message,
     the_matching,
-    the_room,
+    the_battle,
     the_room_message,
     the_result,
     the_builder,
@@ -80,14 +82,11 @@ export default {
       sub_mode: "opening",
       rule_key: null,           // 未使用
       room: null,
+      battle: null,
 
       matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
-      room_user_ids:   null, // オンライン人数
-
-      // チャット用
-      room_messages: null, // メッセージ(複数)
-      room_message:  null, // 入力中のメッセージ
+      battle_user_ids:   null, // オンライン人数
 
       // チャット用
       lobby_messages: null, // メッセージ(複数)
@@ -96,7 +95,7 @@ export default {
       // private
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
       // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
-      // $ac_room:   null, // --> app/channels/actb/room_channel.rb
+      // $ac_battle:   null, // --> app/channels/actb/battle_channel.rb
     }
   },
 
@@ -105,7 +104,7 @@ export default {
   },
 
   created() {
-    this.http_get_command(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
+    this.remote_get(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
       this.$RuleInfo = RuleInfo.memory_record_reset(e.RuleInfo)
       this.app_setup()
     })
@@ -116,16 +115,18 @@ export default {
       this.school_setup()
 
       if (this.info.debug_scene) {
-        if (this.info.debug_scene === "room_marathon_rule") {
-          // this.rule_key = "marathon_rule"
+        if (this.info.debug_scene === "battle_marathon_rule") {
           this.room_setup(this.info.room)
         }
-        if (this.info.debug_scene === "room_singleton_rule") {
+        if (this.info.debug_scene === "battle_singleton_rule") {
           // this.rule_key = "singleton_rule"
-          this.room_setup(this.info.room)
+          this.battle_setup_without_ac_battle_once()
+          this.battle_setup(this.info.battle)
         }
         if (this.info.debug_scene === "result") {
-          this.mode = "result"
+          this.battle_setup_without_ac_battle_once()
+          this.battle_setup(this.info.battle)
+          // this.battle_setup_without_ac_battle(this.info.battle)
         }
         if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
           this.builder_handle()
@@ -192,18 +193,23 @@ export default {
           if (data.online_user_ids) {
             this.online_user_ids = data.online_user_ids
           }
-          if (data.room_user_ids) {
-            this.room_user_ids = data.room_user_ids
+          if (data.battle_user_ids) {
+            this.battle_user_ids = data.battle_user_ids
           }
         },
       })
     },
 
     lobby_setup() {
+      this.battle_unsubscribe()
+
+      this.mode = "lobby"
+      this.sub_mode = "opening"
+
       this.lobby_messages_setup()
 
       this.debug_alert("lobby_setup")
-      this.__assert(this.$ac_lobby == null)
+      this.__assert__(this.$ac_lobby == null)
       this.$ac_lobby = consumer.subscriptions.create({channel: "Actb::LobbyChannel"}, {
         connected: () => {
           this.debug_alert("lobby 接続")
@@ -224,7 +230,7 @@ export default {
     lobby_messages_setup() {
       this.lobby_messages = []
       this.lobby_message = ""
-      this.http_get_command(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
+      this.remote_get(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
         this.lobby_messages = e.lobby_messages
       })
     },
@@ -241,9 +247,11 @@ export default {
 
       // this.rule_key = rule_key  // これセットする意味ないか？
       this.lobby_speak(`*rule_key_set_handle("${rule_key}")`)
-      this.http_get_command(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
+      this.remote_get(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
         this.lobby_speak(`*rule_key_set_handle -> ${e}`)
+
         this.mode = "matching"
+        this.app.matching_init()
       })
     },
 
@@ -258,9 +266,6 @@ export default {
       } else {
         this.sound_play("click")
 
-        this.room_unsubscribe()
-
-        this.mode = "lobby"
         this.lobby_setup()
       }
     },
@@ -313,7 +318,7 @@ export default {
           this.talk("だめ", {rate: 1.5})
         }
       }
-      this.silent_http_command("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
+      this.silent_remote_fetch("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
         if (e.retval) {
           this.$set(history, "good_p", e.retval.good_p)
           this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.retval.good_diff)
@@ -329,7 +334,7 @@ export default {
       if (clip_p) {
         this.talk("お気に入り", {rate: 1.5})
       }
-      this.silent_http_command("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
+      this.silent_remote_fetch("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
         if (e.retval) {
           this.$set(history, "clip_p", e.retval.clip_p)
           this.$set(history.question, "clip_marks_count", history.question.clip_marks_count + e.retval.diff)

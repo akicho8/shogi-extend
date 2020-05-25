@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import support from "./support.js"
+import { support } from "./support.js"
 import ls_support from "ls_support.js"
 
 import MemoryRecord from 'js-memory-record'

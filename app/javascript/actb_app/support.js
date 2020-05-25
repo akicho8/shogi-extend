@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 
 const POSITION_SFEN_PREFIX = "position sfen "
 
-export default {
+export const support = {
   methods: {
     warning_dialog(room_message) {
       this.$buefy.dialog.alert({
@@ -29,12 +29,12 @@ export default {
     },
 
     position_sfen_remove(sfen) {
-      this.__assert(sfen != null, "sfen != null")
+      this.__assert__(sfen != null, "sfen != null")
       return sfen.replace(POSITION_SFEN_PREFIX, "")
     },
 
     position_sfen_add(sfen) {
-      this.__assert(sfen != null, "sfen != null")
+      this.__assert__(sfen != null, "sfen != null")
       return POSITION_SFEN_PREFIX + sfen
     },
 

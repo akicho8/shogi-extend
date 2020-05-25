@@ -285,7 +285,7 @@ export default {
     },
 
     update_handle(options = {}) {
-      this.http_get_command("/w.json", { query: this.new_info.user.key, format_type: "user", debug: this.$route.query.debug, ...options}, data => this.new_info = data)
+      this.remote_get("/w.json", { query: this.new_info.user.key, format_type: "user", debug: this.$route.query.debug, ...options}, data => this.new_info = data)
     },
 
     delete_click_handle() {

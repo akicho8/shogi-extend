@@ -40,14 +40,26 @@ export const application_matching = {
     matching_list_broadcasted(params) {
       this.matching_list_hash = params.matching_list_hash
     },
+
     // マッチング成立
     // ロビーにいる全員に送られて自分が含まれていたら部屋に移動する
+        // マッチング成立
+    // ロビーにいる全員に送られて自分が含まれていたら部屋に移動する
+    // battle_broadcasted
+
     room_broadcasted(params) {
       const membership = params.room.memberships.find(e => e.user.id === this.current_user.id)
       if (membership) {
-        this.lobby_close()
         //- this.matching_interval_timer_clear()
+        // 初回
+        // if (this.session_count == null) {
+        // this.room_setup_without_ac_room_once()
         this.room_setup(params.room)
+        // } else {
+        //   // 再戦で来たとき
+        //   this.room_unsubscribe()
+        //   this.room_setup(params.room)
+        // }
       }
     },
   },

@@ -90,9 +90,9 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
         # (少くとも)2回ブロードキャスト
         expect { subscription.matching_search({}) }.to have_broadcasted_to("actb/lobby_channel").twice
         # 1. matching_list_hash を伝える(←これはなくてもよくね？)
-        # 2. 作成した room を伝える
+        # 2. 作成した battle を伝える
 
-        assert { Actb::Room.count == 1 }
+        assert { Actb::Battle.count == 1 }
       end
     end
 
