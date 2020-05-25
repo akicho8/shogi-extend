@@ -528,7 +528,7 @@
 # | room_id       | Room       | integer(8) |             |                       | B     |
 # | membership_id | Membership | integer(8) |             |                       | C     |
 # | question_id   | Question   | integer(8) |             |                       | D     |
-# | ans_result_id | Ans result | integer(8) |             |                       | E     |
+# | ox_mark_id | Ans result | integer(8) |             |                       | E     |
 # | created_at    | 作成日時   | datetime   | NOT NULL    |                       |       |
 # | updated_at    | 更新日時   | datetime   | NOT NULL    |                       |       |
 # |---------------+------------+------------+-------------+-----------------------+-------|
@@ -572,7 +572,7 @@
 
 # == Schema Information ==
 #
-# Ans result (actb_ans_results as Actb::AnsResult)
+# Ans result (actb_ox_marks as Actb::OxMark)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |

@@ -10,8 +10,8 @@ module Actb
       has_many :actb_rooms, class_name: "Actb::Room", through: :actb_room_memberships                       # 対局(複数)
 
       # 対局
-      has_many :actb_memberships, class_name: "Actb::Membership", dependent: :restrict_with_exception # 対局時の情報(複数)
-      has_many :actb_battles, class_name: "Actb::Battle", through: :actb_memberships                       # 対局(複数)
+      has_many :actb_battle_memberships, class_name: "Actb::BattleMembership", dependent: :restrict_with_exception # 対局時の情報(複数)
+      has_many :actb_battles, class_name: "Actb::Battle", through: :actb_battle_memberships                       # 対局(複数)
 
       # このユーザーが作成した問題(複数)
       has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy

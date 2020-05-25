@@ -14,8 +14,6 @@ module Actb
     # 各タイミング
     readygo_wait_delay: 2.5,
     deden_mode_delay: 0.8,
-    correct_mode_delay: 1,
-    mistake_mode_delay: 1,
 
     room_messages_display_lines: 20,
   }

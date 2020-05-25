@@ -27,7 +27,8 @@
 #
 module Actb
   class Battle < ApplicationRecord
-    belongs_to :room # 部屋
+    belongs_to :room, counter_cache: true
+
     # has_many :messages, class_name: "RoomMessage", dependent: :destroy
     has_many :memberships, class_name: "BattleMembership", dependent: :destroy
     has_many :users, through: :memberships
@@ -35,6 +36,7 @@ module Actb
 
     before_validation do
       self.begin_at ||= Time.current
+
       if final_key
         self.end_at ||= Time.current
       end

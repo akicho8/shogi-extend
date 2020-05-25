@@ -55,7 +55,12 @@
         b-button.has-text-weight-bold(@click="app.yameru_handle")
           | やめる
 
-  debug_print(:vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index']" v-if="development_p")
+  .columns.is-mobile(v-if="development_p")
+    .column
+      .buttons.is-centered.are-small
+        b-button(@click="app.battle_continue_force_handle") 強制的に続行
+
+  debug_print(:vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index', 'app.score_debug_info', 'app.score_max']" v-if="development_p")
 </template>
 
 <script>

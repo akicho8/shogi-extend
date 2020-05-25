@@ -43,10 +43,12 @@ module Actb
     has_many :users, through: :memberships
 
     before_validation do
+      self.begin_at ||= Time.current
       self.rule_key ||= :marathon_rule
     end
 
     with_options presence: true do
+      validates :begin_at
       validates :rule_key
     end
 

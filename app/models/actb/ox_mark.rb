@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Ans result (actb_ans_results as Actb::AnsResult)
+# Ans result (actb_ox_marks as Actb::OxMark)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |
@@ -13,10 +13,10 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 
 module Actb
-  class AnsResult < ApplicationRecord
+  class OxMark < ApplicationRecord
     class << self
       def setup(options = {})
-        ::Actb::AnsResultInfo.each do |e|
+        ::Actb::OxMarkInfo.each do |e|
           find_or_create_by!(key: e.key)
         end
       end
@@ -27,7 +27,7 @@ module Actb
     end
 
     def static_info
-      AnsResultInfo.fetch(key)
+      OxMarkInfo.fetch(key)
     end
   end
 end

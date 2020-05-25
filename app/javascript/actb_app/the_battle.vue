@@ -15,14 +15,14 @@
 
         template(v-if="app.battle.rule_key === 'marathon_rule'")
           .user_quest_index2
-            | {{progress_list(membership).length}} / {{app.battle.best_questions.length}}
+            | {{ox_list(membership).length}} / {{app.battle.best_questions.length}}
           .user_quest_index
             template(v-if="progress_list2(membership).length === 0")
               | &nbsp;
-            template(v-for="ans_result_key in progress_list2(membership)")
-              template(v-if="ans_result_key === 'correct'")
+            template(v-for="ox_mark_key in progress_list2(membership)")
+              template(v-if="ox_mark_key === 'correct'")
                 b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
-              template(v-if="ans_result_key === 'mistake'")
+              template(v-if="ox_mark_key === 'mistake'")
                 b-icon(icon="close" size="is-small" type="is-success")
 
         template(v-if="app.battle.rule_key === 'singleton_rule'")
@@ -31,10 +31,10 @@
           .user_quest_index
             template(v-if="progress_list2(membership).length === 0")
               | &nbsp;
-            template(v-for="ans_result_key in progress_list2(membership)")
-              template(v-if="ans_result_key === 'correct'")
+            template(v-for="ox_mark_key in progress_list2(membership)")
+              template(v-if="ox_mark_key === 'correct'")
                 b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
-              template(v-if="ans_result_key === 'mistake'")
+              template(v-if="ox_mark_key === 'mistake'")
                 b-icon(icon="close" size="is-small" type="is-success")
 
       template(v-if="i === 0")
@@ -82,11 +82,11 @@ export default {
     this.app.lobby_close()
   },
   methods: {
-    progress_list(membership) {
-      return this.app.members_hash[membership.id].progress_list
+    ox_list(membership) {
+      return this.app.members_hash[membership.id].ox_list
     },
     progress_list2(membership) {
-      return _.takeRight(this.progress_list(membership), this.app.config.progress_list_take_display_count)
+      return _.takeRight(this.ox_list(membership), this.app.config.progress_list_take_display_count)
     },
     x_score(membership) {
       return this.app.members_hash[membership.id].x_score

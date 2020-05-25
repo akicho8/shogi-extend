@@ -1,10 +1,10 @@
 <template lang="pug">
 .the_history_row.is-flex(@click="app.overlay_record_set(row.question.id)")
   .left_block.is-flex
-    .ans_result(v-if="row.ans_result")
-      template(v-if="row.ans_result.key === 'correct'")
+    .ox_mark(v-if="row.ox_mark")
+      template(v-if="row.ox_mark.key === 'correct'")
         b-icon(icon="checkbox-blank-circle-outline" type="is-danger")
-      template(v-if="row.ans_result.key === 'mistake'")
+      template(v-if="row.ox_mark.key === 'mistake'")
         b-icon(icon="close")
     img.board(:src="board_image_url")
     figure.image.is-32x32
@@ -73,7 +73,7 @@ export default {
   justify-content: space-between
   align-items: flex-start
 
-  .ans_result
+  .ox_mark
     margin-top: 0.5rem
     margin-left: 1.0rem
   .board

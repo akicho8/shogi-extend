@@ -19,7 +19,7 @@ module Actb
         battle_user_ids_broadcast
       end
 
-      katimashita(:lose, :disconnect)
+      katimashita(current_user, :lose, :disconnect)
     end
 
     def speak(data)
@@ -37,10 +37,10 @@ module Actb
         args = md["command_line"].split
         command = args.shift
         if command == "win"
-          katimashita(:win)
+          katimashita(current_user, :win, :all_clear)
         end
         if command == "lose"
-          katimashita(:lose)
+          katimashita(current_user, :lose, :disconnect)
         end
       end
     end
@@ -87,20 +87,20 @@ module Actb
     def kotae_sentaku(data)
       data = data.to_options
 
-      history_update(data, data[:ans_result_key])
+      history_update(data, data[:ox_mark_key])
 
       bc_params = {
         membership_id:  data[:membership_id],  # 誰が
         question_index: data[:question_index], # どこまで進めたか
         question_id:    data[:question_id],    # これいらんけど、そのまま渡しとく
-        ans_result_key: data[:ans_result_key],
+        ox_mark_key: data[:ox_mark_key],
       }
 
       # 一応保存しておく(あとで取るかもしれない)
       current_battle.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
 
       # 問題の解答数を上げる
-      if data[:ans_result_key] == "correct"
+      if data[:ox_mark_key] == "correct"
         Question.find(data[:question_id]).increment!(:o_count)
       else
         Question.find(data[:question_id]).increment!(:x_count)
@@ -134,10 +134,10 @@ module Actb
 
     # <-- app/javascript/actb_app/application.vue
     def goal_hook(data)
-      katimashita(:win, :all_clear)
+      katimashita(current_user, :win, :all_clear)
     end
 
-    def katimashita(judge_key, final_key)
+    def katimashita(target_user, judge_key, final_key)
       battle = current_battle
 
       if battle.final_key
@@ -148,7 +148,7 @@ module Actb
       judge_info = JudgeInfo.fetch(judge_key)
 
       ActiveRecord::Base.transaction do
-        m1 = battle.memberships.find_by!(user: current_user)
+        m1 = battle.memberships.find_by!(user: target_user)
         m2 = (battle.memberships - [m1]).first
 
         m1.judge_key = judge_info.key
@@ -213,6 +213,28 @@ module Actb
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :battle_continue_handle_broadcasted, bc_params: bc_params })
     end
 
+    # 強制続行
+    def battle_continue_force_handle(data)
+      current_battle.onaji_heya_wo_atarasiku_tukuruyo
+    end
+
+    # data["members_hash"] = {
+    #   "15" => {"ox_list"=>["correct"], "x_score"=>1},
+    #   "16" => {"ox_list"=>[],          "x_score"=>0},
+    # }
+    def owattayo(data)
+      data = data.to_options
+      membership = current_battle.memberships.sort_by { |e|
+        [
+          -data[:members_hash][e.id.to_s]["x_score"],         # 1. スコア高い方
+          -data[:members_hash][e.id.to_s]["ox_list"].size,    # 2. たくさん答えた方
+          e.user.created_at,                                  # 3. 早く会員になった方
+          e.uesr.id,
+        ]
+      }.first
+      katimashita(membership.user, :win, :all_clear)
+    end
+
     def battle_id
       params["battle_id"]
     end
@@ -236,12 +258,12 @@ module Actb
       battle_user_ids.collect { |e| Colosseum::User.find(e) }
     end
 
-    def history_update(data, ans_result)
+    def history_update(data, ox_mark)
       data = data.to_options
       question = Question.find(data[:question_id])
       membership = current_battle.memberships.find(data[:membership_id])
       history = current_user.actb_histories.find_or_initialize_by(membership: membership, question: question)
-      history.update!(ans_result: Actb::AnsResult.fetch(ans_result))
+      history.update!(ox_mark: Actb::OxMark.fetch(ox_mark))
     end
   end
 end

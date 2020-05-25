@@ -232,6 +232,7 @@ export default {
     __assert__(value, message = null) {
       if (!value) {
         alert(message || "assert error")
+        debugger
       }
     }
   },

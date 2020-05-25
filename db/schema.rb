@@ -27,13 +27,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "actb_ans_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "key", null: false, comment: "正解・不正解"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["key"], name: "index_actb_ans_results_on_key"
-  end
-
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "自分"
     t.bigint "question_id", comment: "出題"
@@ -45,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_battle_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "battle_id", comment: "対戦部屋"
+    t.bigint "battle_id", comment: "対戦"
     t.bigint "user_id", comment: "対戦者"
     t.string "judge_key", comment: "勝敗"
     t.integer "rensho_count", null: false, comment: "連勝数"
@@ -69,7 +62,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
     t.string "final_key", comment: "結果"
-    t.string "rule_key", comment: "ルール"
+    t.string "rule_key", null: false, comment: "ルール"
     t.integer "rensen_index", null: false, comment: "連戦数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -133,16 +126,18 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "自分"
-    t.bigint "battle_id", comment: "部屋"
-    t.bigint "membership_id", comment: "対戦"
     t.bigint "question_id", comment: "出題"
-    t.bigint "ans_result_id", comment: "解答"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["ans_result_id"], name: "index_actb_histories_on_ans_result_id"
+    t.bigint "room_id", comment: "部屋"
+    t.bigint "battle_id", comment: "対戦"
+    t.bigint "membership_id", comment: "自分と相手"
+    t.bigint "ox_mark_id", comment: "解答"
     t.index ["battle_id"], name: "index_actb_histories_on_battle_id"
     t.index ["membership_id"], name: "index_actb_histories_on_membership_id"
+    t.index ["ox_mark_id"], name: "index_actb_histories_on_ox_mark_id"
     t.index ["question_id"], name: "index_actb_histories_on_question_id"
+    t.index ["room_id"], name: "index_actb_histories_on_room_id"
     t.index ["user_id"], name: "index_actb_histories_on_user_id"
   end
 
@@ -171,6 +166,13 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["moves_count"], name: "index_actb_moves_answers_on_moves_count"
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
+  end
+
+  create_table "actb_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false, comment: "正解・不正解"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_actb_ox_marks_on_key"
   end
 
   create_table "actb_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -261,9 +263,15 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "rule_key", comment: "ルール"
+    t.datetime "begin_at", null: false, comment: "対戦開始日時"
+    t.datetime "end_at", comment: "対戦終了日時"
+    t.string "rule_key", null: false, comment: "ルール"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "battles_count", default: 0, null: false, comment: "連戦数"
+    t.index ["battles_count"], name: "index_actb_rooms_on_battles_count"
+    t.index ["begin_at"], name: "index_actb_rooms_on_begin_at"
+    t.index ["end_at"], name: "index_actb_rooms_on_end_at"
     t.index ["rule_key"], name: "index_actb_rooms_on_rule_key"
   end
 

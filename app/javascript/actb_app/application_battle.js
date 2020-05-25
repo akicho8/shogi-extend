@@ -42,6 +42,7 @@ export const application_battle = {
       this.battle_unsubscribe()
 
       this.battle = new Battle(battle)
+      this.__assert__(this.battle.best_questions.length >= 1, "best_questions is empty")
 
       this.mode = "battle"
 
@@ -51,7 +52,7 @@ export const application_battle = {
 
       this.members_hash = {}
       this.battle.memberships.forEach(e => {
-        this.members_hash[e.id] = { progress_list: [], x_score: 0 }
+        this.members_hash[e.id] = { ox_list: [], x_score: 0 }
       })
 
       this.question_index = 0
@@ -175,33 +176,29 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 正解または不正解
-    kotae_sentaku(ans_result_key) {
-      this.room_speak(`*kotae_sentaku("${ans_result_key}")`)
+    kotae_sentaku(ox_mark_key) {
+      this.room_speak(`*kotae_sentaku("${ox_mark_key}")`)
       this.$ac_battle.perform("kotae_sentaku", {
         membership_id: this.current_membership.id,
         question_id: this.c_quest.id,
         question_index: this.question_index + 1, // 次の問題希望
-        ans_result_key: ans_result_key,
+        ox_mark_key: ox_mark_key,
       }) // --> app/channels/actb/battle_channel.rb
     },
     // 状況を反映する
     kotae_sentaku_broadcasted(params) {
-      // ○×の反映
-      this.members_hash[params.membership_id].progress_list.push(params.ans_result_key)
+      const ox_mark_info = this.$OxMarkInfo.fetch(params.ox_mark_key)
 
-      if (this.battle.rule_key === "singleton_rule") {
-        this.score_add(params.membership_id, this.$AnsResultInfo.fetch(params.ans_result_key).score)
-      }
-
-      // if (params.membership_id !== this.current_membership.id) {
-      this.ox_sound_play(params.ans_result_key)
-      // }
+      // ○×反映
+      this.members_hash[params.membership_id].ox_list.push(params.ox_mark_key)
+      // 効果音
+      this.sound_play(ox_mark_info.sound_key)
 
       if (this.battle.rule_key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           // 次の問題がある場合
-          if (this.question_index < this.battle.questions_count - 1) {
-            if (params.ans_result_key === "correct") {
+          if (this.tugino_mondai_ga_aru) {
+            if (params.ox_mark_key === "correct") {
               this.sub_mode = "correct_mode"
               this.delay(this.config.correct_mode_delay, () => {
                 this.next_trigger()
@@ -213,7 +210,7 @@ export const application_battle = {
               })
             }
           } else {
-            if (params.ans_result_key === "correct") {
+            if (params.ox_mark_key === "correct") {
               this.sub_mode = "correct_mode"
               this.delay(this.config.correct_mode_delay, () => {
                 this.$ac_battle.perform("goal_hook") // --> app/channels/actb/battle_channel.rb
@@ -229,41 +226,36 @@ export const application_battle = {
       }
 
       if (this.battle.rule_key === "singleton_rule") {
-        if (this.question_index < this.battle.questions_count - 1) {
-          if (params.ans_result_key === "correct") {
-            this.sub_mode = "correct_mode"
-            this.delay(this.config.correct_mode_delay, () => {
-              if (this.primary_membership_p) {
-                this.next_trigger()
-              }
-            })
-          } else {
-            this.sub_mode = "mistake_mode"
-            this.delay(this.config.mistake_mode_delay, () => {
-              if (this.primary_membership_p) {
-                this.next_trigger()
-              }
-            })
+        this.score_add(params.membership_id, ox_mark_info.score)
+        this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
+        this.delay(ox_mark_info.delay_second, () => {
+          if (this.primary_membership_p) {
+            // const membership = _.first(this.score_orderd_memberships)
+
+            if (this.score_max_natta_p || this.tugino_mondai_ga_nai) {
+              this.$ac_battle.perform("owattayo", {members_hash: this.members_hash}) // --> app/channels/actb/battle_channel.rb
+            } else {
+              this.next_trigger()
+            }
+
+            // if (this.tugino_mondai_ga_nai) {
+            //   this.$ac_battle.perform("mondai_owata") // --> app/channels/actb/battle_channel.rb
+            // } else {
+            //   score_orderd_memberships
+            //
+            //
+            // }
+
+            //   this.next_trigger()
+            // } else {
+            //   this.$ac_battle.perform("goal_hook") // --> app/channels/actb/battle_channel.rb
+            // }
           }
-        } else {
-          if (params.ans_result_key === "correct") {
-            this.sub_mode = "correct_mode"
-            this.delay(this.config.correct_mode_delay, () => {
-              if (this.primary_membership_p) {
-                this.$ac_battle.perform("goal_hook") // --> app/channels/actb/battle_channel.rb
-              }
-            })
-          } else {
-            this.sub_mode = "mistake_mode"
-            this.delay(this.config.mistake_mode_delay, () => {
-              if (this.primary_membership_p) {
-                this.$ac_battle.perform("goal_hook") // --> app/channels/actb/battle_channel.rb
-              }
-            })
-          }
-        }
+        })
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     next_trigger() {
       this.room_speak("*next_trigger")
@@ -368,6 +360,11 @@ export const application_battle = {
       }
     },
 
+    battle_continue_force_handle() {
+      this.sound_play("click")
+      this.$ac_battle.perform("battle_continue_force_handle")
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     result_setup(battle) {
@@ -379,16 +376,6 @@ export const application_battle = {
     yameru_handle() {
       this.room_speak("bye")
       this.lobby_handle()
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ox_sound_play(ans_result_key) {
-      if (ans_result_key === "correct") {
-        this.sound_play("pipopipo")
-      } else {
-        this.sound_play("bubuu")
-      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -459,6 +446,7 @@ export const application_battle = {
   },
 
   computed: {
+
     primary_membership_p() {
       return this.battle.memberships[0].id === this.current_membership.id
     },
@@ -500,6 +488,28 @@ export const application_battle = {
         v = 0
       }
       return v
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    tugino_mondai_ga_aru() {
+      return !this.tugino_mondai_ga_nai
+    },
+    tugino_mondai_ga_nai() {
+      return (this.question_index + 1) >= this.battle.questions_count
+    },
+
+    score_orderd_memberships() {
+      return _.sortBy(this.battle.memberships, e => -this.members_hash[e.id].x_score)
+    },
+    score_debug_info() {
+      return this.score_orderd_memberships.map(e => `${e.user.name}(${this.members_hash[e.id].x_score})`).join(", ")
+    },
+    score_max() {
+      return _.max(_.map(this.members_hash, (e, membership_id) => e.x_score))
+    },
+    score_max_natta_p() {
+      return this.score_max >= this.app.config.nanmonkotaetara_kati
     },
   },
 }

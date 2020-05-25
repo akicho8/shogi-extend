@@ -109,7 +109,7 @@ module FrontendScript
       if params[:history_records_fetch]
         s = current_user.actb_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
         retv = {}
-        retv[:history_records] = s.as_json(only: [:id], include: {:battle => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ans_result => {only: :key}}, methods: [:good_p, :bad_p, :clip_p])
+        retv[:history_records] = s.as_json(only: [:id], include: {:battle => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p])
         return retv
       end
 
@@ -219,7 +219,7 @@ module FrontendScript
     def resource_fetch
       {
         RuleInfo: Actb::RuleInfo.as_json(only: [:key, :name]),
-        AnsResultInfo: Actb::AnsResultInfo.as_json(only: [:key, :name, :score]),
+        OxMarkInfo: Actb::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
       }
     end
 

@@ -1,12 +1,11 @@
 class CreateActb < ActiveRecord::Migration[6.0]
   def change
     create_table :actb_rooms do |t|
-      # t.datetime :begin_at, null: false, index: true, comment: "対戦開始日時"
-      # t.datetime :end_at,   null: true,  index: true, comment: "対戦終了日時"
-      # t.string :final_key,  null: true,  index: true, comment: "結果"
-      t.string :rule_key,   null: true,  index: true, comment: "ルール"
-      # t.integer :rensen_index, null: false, index: true, comment: "連戦数"
+      t.datetime :begin_at,     null: false, index: true, comment: "対戦開始日時"
+      t.datetime :end_at,       null: true,  index: true, comment: "対戦終了日時"
+      t.string :rule_key,       null: false, index: true, comment: "ルール"
       t.timestamps
+      t.integer :battles_count, null: false, index: true, default: 0, comment: "連戦数"
     end
 
     create_table :actb_room_memberships do |t|
@@ -22,23 +21,23 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_battles do |t|
-      t.belongs_to :room,                             comment: "部屋"
-      t.belongs_to :parent, null: true,               comment: "親"
-      t.datetime :begin_at, null: false, index: true, comment: "対戦開始日時"
-      t.datetime :end_at,   null: true,  index: true, comment: "対戦終了日時"
-      t.string :final_key,  null: true,  index: true, comment: "結果"
-      t.string :rule_key,   null: true,  index: true, comment: "ルール"
-      t.integer :rensen_index, null: false, index: true, comment: "連戦数"
+      t.belongs_to :room,                                 comment: "部屋"
+      t.belongs_to :parent,    null: true,                comment: "親"
+      t.datetime :begin_at,    null: false,  index: true, comment: "対戦開始日時"
+      t.datetime :end_at,      null: true,   index: true, comment: "対戦終了日時"
+      t.string :final_key,     null: true,   index: true, comment: "結果"
+      t.string :rule_key,      null: false,  index: true, comment: "ルール"
+      t.integer :rensen_index, null: false,  index: true, comment: "連戦数"
       t.timestamps
     end
 
     create_table :actb_battle_memberships do |t|
-      t.belongs_to :battle,                                comment: "対戦部屋"
+      t.belongs_to :battle,                              comment: "対戦"
       t.belongs_to :user,                                comment: "対戦者"
       t.string :judge_key,     null: true,  index: true, comment: "勝敗"
       t.integer :rensho_count, null: false, index: true, comment: "連勝数"
       t.integer :renpai_count, null: false, index: true, comment: "連敗数"
-      t.integer :question_index,                            comment: "解答中の問題"
+      t.integer :question_index,                         comment: "解答中の問題"
       t.integer :position,                  index: true, comment: "順序"
       t.timestamps
 
@@ -71,18 +70,20 @@ class CreateActb < ActiveRecord::Migration[6.0]
     create_table :actb_seasons do |t|
       t.string :name,        null: false, index: false, comment: "レーティング"
       t.integer :generation, null: false, index: true,  comment: "世代"
-      t.datetime :begin_at, null: false, index: true, comment: "期間開始日時"
-      t.datetime :end_at,   null: false, index: true, comment: "期間終了日時"
+      t.datetime :begin_at,  null: false, index: true, comment: "期間開始日時"
+      t.datetime :end_at,    null: false, index: true, comment: "期間終了日時"
       t.timestamps
     end
 
     create_table :actb_histories do |t|
       t.belongs_to :user,       comment: "自分"
-      t.belongs_to :battle,     comment: "部屋"
-      t.belongs_to :membership, comment: "対戦"
       t.belongs_to :question,   comment: "出題"
-      t.belongs_to :ans_result, comment: "解答"
       t.timestamps
+      #  おまけ
+      t.belongs_to :room,       comment: "部屋"
+      t.belongs_to :battle,     comment: "対戦"
+      t.belongs_to :membership, comment: "自分と相手"
+      t.belongs_to :ox_mark,    comment: "解答"
     end
 
     # 未使用
@@ -115,7 +116,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     # static
-    create_table :actb_ans_results do |t|
+    create_table :actb_ox_marks do |t|
       t.string :key, null: false, index: true, comment: "正解・不正解"
       t.timestamps
     end

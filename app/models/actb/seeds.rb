@@ -1,4 +1,4 @@
-Actb::AnsResult.setup(options)
+Actb::OxMark.setup(options)
 Actb::Season.setup(options)
 Actb::Lineage.setup(options)
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Membership (actb_memberships as Actb::Membership)
+# Membership (actb_battle_memberships as Actb::Membership)
 #
 # |----------------+----------------+-------------+-------------+-----------------------+-------|
 # | name           | desc           | type        | opts        | refs                  | index |
@@ -66,7 +66,7 @@ module Actb
     end
 
     def maeno_record
-      s = user.actb_memberships
+      s = user.actb_battle_memberships
       if created_at
         s = s.where(self.class.arel_table[:created_at].lt(created_at))
       end

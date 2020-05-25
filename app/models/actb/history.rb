@@ -11,7 +11,7 @@
 # | battle_id       | Battle       | integer(8) |             |                       | B     |
 # | membership_id | Membership | integer(8) |             |                       | C     |
 # | question_id   | Question   | integer(8) |             |                       | D     |
-# | ans_result_id | Ans result | integer(8) |             |                       | E     |
+# | ox_mark_id | Ans result | integer(8) |             |                       | E     |
 # | created_at    | 作成日時   | datetime   | NOT NULL    |                       |       |
 # | updated_at    | 更新日時   | datetime   | NOT NULL    |                       |       |
 # |---------------+------------+------------+-------------+-----------------------+-------|
@@ -22,21 +22,22 @@
 
 module Actb
   class History < ApplicationRecord
-    include ClipMark::ShareWithHistoryMethods
+    include ClipMark::ShareWithHistoryMethods # belongs_to user and question
 
-    belongs_to :ans_result
+    belongs_to :ox_mark
 
-    # battle と membership ない方がいいか検討
-    # battle と membership はビューでまったく使ってない
+    # TODO: この3つはまったく使ってないので削除するか検討
+    belongs_to :room
     belongs_to :battle
-    belongs_to :membership
+    belongs_to :membership, class_name: "Actb::BattleMembership"
 
     before_validation do
       if membership
         self.battle ||= membership.battle
         self.user ||= membership.user
+        self.room ||= membership.battle.room
       end
-      self.ans_result ||= AnsResult.fetch(:mistake)
+      self.ox_mark ||= OxMark.fetch(:mistake)
     end
   end
 end
