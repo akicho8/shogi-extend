@@ -92,10 +92,11 @@ export default {
       lobby_messages: null, // メッセージ(複数)
       lobby_message:  null, // 入力中のメッセージ
 
-      // private
+      // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
       // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
-      // $ac_battle:   null, // --> app/channels/actb/battle_channel.rb
+      // $ac_room:   null, // --> app/channels/actb/room_channel.rb
+      // $ac_battle: null, // --> app/channels/actb/battle_channel.rb
     }
   },
 
@@ -115,18 +116,11 @@ export default {
       this.school_setup()
 
       if (this.info.debug_scene) {
-        if (this.info.debug_scene === "battle_marathon_rule") {
+        if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule") {
           this.room_setup(this.info.room)
         }
-        if (this.info.debug_scene === "battle_singleton_rule") {
-          // this.rule_key = "singleton_rule"
-          this.battle_setup_without_ac_battle_once()
-          this.battle_setup(this.info.battle)
-        }
         if (this.info.debug_scene === "result") {
-          this.battle_setup_without_ac_battle_once()
-          this.battle_setup(this.info.battle)
-          // this.battle_setup_without_ac_battle(this.info.battle)
+          this.room_setup(this.info.room)
         }
         if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
           this.builder_handle()
@@ -140,9 +134,7 @@ export default {
         if (this.info.debug_scene === "overlay_record") {
           this.overlay_record_set(this.info.question_id)
         }
-      }
-
-      if (this.mode === "lobby") {
+      } else {
         this.lobby_setup()
       }
     },

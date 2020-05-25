@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_battle
-  debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.x_mode', 'app.osenai_p']" oneline)
+  debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
 
   .vs_info.is-flex
     template(v-for="(membership, i) in app.battle.memberships")

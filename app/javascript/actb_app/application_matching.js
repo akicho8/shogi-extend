@@ -52,7 +52,7 @@ export const application_matching = {
       if (membership) {
         //- this.matching_interval_timer_clear()
         // 初回
-        // if (this.session_count == null) {
+        // if (this.battle_count == null) {
         // this.room_setup_without_ac_room_once()
         this.room_setup(params.room)
         // } else {

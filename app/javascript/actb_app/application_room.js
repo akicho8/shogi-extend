@@ -21,13 +21,13 @@ export const application_room = {
     },
 
     room_setup(room) {
-      this.room = new Room(room)
-
       this.lobby_close()
 
-      this.session_count = 0
-      this.room_messages = []
-      this.room_message = ""
+      this.room = new Room(room)
+
+      this.battle_count = 0
+
+      this.room_speak_init()
 
       this.__assert__(this.$ac_room == null)
       this.$ac_room = consumer.subscriptions.create({ channel: "Actb::RoomChannel", room_id: this.room.id }, {
@@ -40,10 +40,7 @@ export const application_room = {
           this.debug_alert("room 切断")
         },
         received: (data) => {
-          this.debug_alert("room 受信")
-          if (data.bc_action) {
-            this[data.bc_action](data.bc_params)
-          }
+          this[data.bc_action](data.bc_params)
         },
       })
     },
@@ -59,6 +56,11 @@ export const application_room = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
+
+    room_speak_init() {
+      this.room_messages = []
+      this.room_message = ""
+    },
 
     room_speak_handle() {
       this.room_speak(this.room_message)

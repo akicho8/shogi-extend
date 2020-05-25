@@ -17,7 +17,7 @@
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
-      b-button(@click="app.g2_hayaosi_handle" type="is-primary" :disabled="app.config.ikkai_misuttara_mou_osenai && app.osenai_p")
+      b-button(@click="app.g2_hayaosi_handle" type="is-primary" :disabled="app.config.ikkai_misuttara_mou_osenai && app.answer_button_disable_p")
         | 解答する
 
   template(v-if="app.x_mode === 'x2_play'")

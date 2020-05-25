@@ -27,6 +27,16 @@
 #
 module Actb
   class Room < ApplicationRecord
+    class << self
+      def create_with_users!(users, attributes = {})
+        create!(attributes) do |e|
+          users.each do |user|
+            e.memberships.build(user: user)
+          end
+        end
+      end
+    end
+
     has_many :battles, dependent: :destroy
     has_many :messages, class_name: "RoomMessage", dependent: :destroy
     has_many :memberships, class_name: "RoomMembership", dependent: :destroy
@@ -54,6 +64,14 @@ module Actb
 
     def final_info
       FinalInfo.fetch_if(final_key)
+    end
+
+    def battle_generate(attributes = {})
+      battles.create!({rule_key: rule_key}.merge(attributes)) do |e|
+        users.each do |user|
+          e.memberships.build(user: user)
+        end
+      end
     end
   end
 end

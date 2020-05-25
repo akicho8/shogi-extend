@@ -88,6 +88,7 @@ module Colosseum
           super
 
           sysop
+          bot
 
           CpuBrainInfo.each do |e|
             unless find_by(key: e.key)
@@ -159,12 +160,16 @@ module Colosseum
           find_by(key: "sysop") || create!(key: "sysop", name: "運営", email: "sysop@localhost", password: Rails.application.credentials.sysop_password)
         end
         def bot
-          find_by(key: "bot") || create!(key: "bot", name: "BOT", email: "bot@localhost", password: Rails.application.credentials.sysop_password)
+          find_by(key: "bot") || create!(key: "bot", name: "BOT", email: "bot@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
         end
       end
 
       def sysop?
         key == "sysop"
+      end
+
+      def bot?
+        key == "bot"
       end
     end
 

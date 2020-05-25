@@ -33,8 +33,8 @@
             template(v-if="membership.user.actb_newest_profile.rating_last_diff < 0")
               span.has-text-danger
                 | ({{membership.user.actb_newest_profile.rating_last_diff}})
-        .saisen_container.has-text-weight-bold
-          template(v-if="app.saisen_counts[membership.id]")
+        .battle_continue_container.has-text-weight-bold
+          template(v-if="app.battle_continue_tap_counts[membership.id]")
             | 再戦希望
           template(v-else)
             | &nbsp;
@@ -45,12 +45,12 @@
   .columns.is-mobile.footer_container
     .column
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="app.saisen_handle" :type="app.saisen_counts[app.current_membership.id] ? 'is-primary' : ''")
+        b-button.has-text-weight-bold(@click="app.battle_continue_handle" :type="app.battle_continue_tap_counts[app.current_membership.id] ? 'is-primary' : ''")
           | つづける
-        b-button.has-text-weight-bold(@click="app.lobby_handle")
+        b-button.has-text-weight-bold(@click="app.yameru_handle")
           | やめる
 
-  debug_print(:vars="['app.saisen_counts', 'app.session_count', 'app.battle.rensen_index']" v-if="development_p")
+  debug_print(:vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index']" v-if="development_p")
 </template>
 
 <script>
@@ -73,7 +73,7 @@ export default {
       flex-direction: column
       justify-content: center
       align-items: center
-    .saisen_container
+    .battle_continue_container
 
   .footer_container
     .buttons

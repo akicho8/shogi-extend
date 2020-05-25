@@ -180,13 +180,13 @@ module Actb
     end
 
     # 再戦
-    def saisen_handle(data)
+    def battle_continue_handle(data)
       data = data.to_options
       bc_params = {
         membership_id: data[:membership_id],
       }
 
-      key = [:saisen_handle, current_battle.id].join("/") # key = "saisen_handle/1"
+      key = [:battle_continue_handle, current_battle.id].join("/") # key = "battle_continue_handle/1"
       redis.hincrby(key, data[:membership_id], 1)       # counts[membership_id] += 1
       redis.expire(key, 1.days)                         # 指定秒数後に破棄
       counts = redis.hgetall(key)                       # => {"1" => "2"}
@@ -205,12 +205,12 @@ module Actb
 
       bc_params = {
         membership_id: data[:membership_id],
-        saisen_counts: counts,
+        battle_continue_tap_counts: counts,
       }
 
       # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, methods.grep(/broadcast/)])
 
-      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :saisen_handle_broadcasted, bc_params: bc_params })
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :battle_continue_handle_broadcasted, bc_params: bc_params })
     end
 
     def battle_id

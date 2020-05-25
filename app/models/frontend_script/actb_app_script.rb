@@ -340,23 +340,15 @@ module FrontendScript
       if current_debug_scene == :battle_marathon_rule || current_debug_scene == :battle_singleton_rule
         c.sysop_login_unless_logout
 
-        user = Colosseum::User.create!
-
-        room = Actb::Room.create! do |e|
-          e.memberships.build(user: current_user)
-          e.memberships.build(user: user)
+        if current_debug_scene == :battle_marathon_rule
+          rule_key = :marathon_rule
+        end
+        if current_debug_scene == :battle_singleton_rule
+          rule_key = :singleton_rule
         end
 
-        battle = room.battles.create! do |e|
-          e.memberships.build(user: current_user)
-          e.memberships.build(user: user)
-          if current_debug_scene == :battle_marathon_rule
-            e.rule_key = :marathon_rule
-          end
-          if current_debug_scene == :battle_singleton_rule
-            e.rule_key = :singleton_rule
-          end
-        end
+        room = Actb::Room.create_with_users!([current_user, Colosseum::User.bot], rule_key: rule_key)
+        battle = room.battle_generate
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
         info[:battle] = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
@@ -365,13 +357,13 @@ module FrontendScript
       if current_debug_scene == :result
         c.sysop_login_unless_logout
 
-        user1 = current_user
-        user2 = Colosseum::User.create!
-        battle = Actb::Battle.create!(final_key: :disconnect) do |e|
-          e.memberships.build(user: user1, judge_key: :win,  question_index: 1)
-          e.memberships.build(user: user2, judge_key: :lose, question_index: 2)
-        end
+        room = Actb::Room.create_with_users!([current_user, Colosseum::User.bot])
+        battle = room.battle_generate(final_key: :disconnect)
+        battle.memberships[0].update!(judge_key: :win,  question_index: 1)
+        battle.memberships[1].update!(judge_key: :lose, question_index: 2)
+        battle.reload
 
+        info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
         info[:battle] = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions, :final_info])
       end
 

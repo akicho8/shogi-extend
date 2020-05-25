@@ -7,11 +7,12 @@ import dayjs from "dayjs"
 export const application_battle = {
   data() {
     return {
-      x_mode: null,
-      osenai_p: null,
-      share_sfen: null,         // 自分の操作を相手に伝えるためのあれ
-      saisen_counts: null,      // それぞれの再戦希望数
-      session_count: null,
+      x_mode:                     null,  // バトル中の状態遷移
+      answer_button_disable_p:    null,  // true:誤答でおてつき中
+      battle_continue_tap_counts: null,  // それぞれの再戦希望数
+      battle_count:               null,  // 同じ相手との対戦回数
+      share_sfen:                 null,  // 自分の操作を相手に伝える棋譜
+      question_index:             null,  // 現在の問題インデックス
 
       q_turn_offset: null,
       q1_interval_id: null,
@@ -20,12 +21,9 @@ export const application_battle = {
       q2_interval_id: null,
       q2_interval_count: null,
 
-      question_index:  null, // 正解中の問題インデックス
-
       // 各 membership_id はどこまで進んでいるかわかる
       // {
       //   3 => ["correct", "mistake"],
-      //   4 => ["correct", "correct"],
       // }
       members_hash: null,
     }
@@ -47,7 +45,7 @@ export const application_battle = {
 
       this.mode = "battle"
 
-      this.saisen_counts = {}
+      this.battle_continue_tap_counts = {}
 
       this.sub_mode = "standby"
 
@@ -59,7 +57,6 @@ export const application_battle = {
       this.question_index = 0
 
       this.__assert__(this.$ac_battle == null)
-
       this.$ac_battle = consumer.subscriptions.create({ channel: "Actb::BattleChannel", battle_id: this.battle.id }, {
         connected: () => {
           this.ac_info_update()
@@ -82,28 +79,13 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // // 2戦目
-    // saisen_battle_broadcasted(params) {
-    //   // this.lobby_close()
-    //   //- this.matching_interval_timer_clear()
-    //   // 初回
-    //   // if (this.session_count == null) {
-    //   // this.battle_setup_without_ac_battle_once()
-    //   // this.battle_setup(params.battle)
-    //   // } else {
-    //   //   // 再戦で来たとき
-    //   this.battle_unsubscribe()
-    //   this.battle_setup(params.battle)
-    //   // }
-    // },
-
     start_hook() {
       if (this.info.debug_scene === "result") {
-        this.mode = "result"
+        this.result_setup(this.info.battle)
         return
       }
 
-      this.session_count += 1
+      this.battle_count += 1
 
       this.debug_alert("battle 接続")
 
@@ -133,7 +115,7 @@ export const application_battle = {
     operation_mode_trigger() {
       this.sub_mode = "operation_mode"
       this.x_mode = "x1_idol"
-      this.osenai_p = false
+      this.answer_button_disable_p = false
       this.share_sfen = null
     },
 
@@ -336,8 +318,8 @@ export const application_battle = {
         this.sound_play("poon")
       } else {
         // 解答ボタンを押さなかった相手
-        if (this.osenai_p) {
-          this.osenai_p = false // 元々誤答していたら解答権利復活させる
+        if (this.answer_button_disable_p) {
+          this.answer_button_disable_p = false // 元々誤答していたら解答権利復活させる
         }
         this.x_mode = "x3_see"
         this.share_sfen = this.c_quest.full_init_sfen // 初期状態にしておく
@@ -358,9 +340,9 @@ export const application_battle = {
       this.room_speak("*g2_jikangire_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         this.score_add(this.current_membership.id, -1)
-        this.osenai_p = true
+        this.answer_button_disable_p = true
       } else {
-        this.osenai_p = false
+        this.answer_button_disable_p = false
       }
       this.x_mode = "x1_idol"
       this.sound_play("bubuu")
@@ -379,19 +361,16 @@ export const application_battle = {
 
     // 結果画面へ
     katimashita_broadcasted(params) {
-      this.mode = "result"
-      this.battle = params.battle
-
-      this.sound_play(this.app.current_membership.judge_key)
+      this.result_setup(params.battle)
     },
 
-    saisen_handle() {
+    battle_continue_handle() {
       this.sound_play("click")
-      this.$ac_battle.perform("saisen_handle", {membership_id: this.current_membership.id})
+      this.$ac_battle.perform("battle_continue_handle", {membership_id: this.current_membership.id})
     },
-    saisen_handle_broadcasted(params) {
-      this.room_speak("*saisen_handle_broadcasted")
-      this.saisen_counts = params.saisen_counts
+    battle_continue_handle_broadcasted(params) {
+      this.room_speak("*battle_continue_handle_broadcasted")
+      this.battle_continue_tap_counts = params.battle_continue_tap_counts
 
       this.talk("再戦希望", {rate: 1.5})
       this.$buefy.toast.open({message: "再戦希望", position: "is-top", queue: false})
@@ -399,6 +378,19 @@ export const application_battle = {
       if (params.membership_id === this.current_membership.id) {
       } else {
       }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    result_setup(battle) {
+      this.battle = battle
+      this.mode = "result"
+      this.sound_play(this.app.current_membership.judge_key)
+    },
+
+    yameru_handle() {
+      this.room_speak("bye")
+      this.lobby_handle()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
