@@ -219,6 +219,7 @@ module FrontendScript
     def resource_fetch
       {
         RuleInfo: Actb::RuleInfo.as_json(only: [:key, :name]),
+        AnsResultInfo: Actb::AnsResultInfo.as_json(only: [:key, :name, :score]),
       }
     end
 

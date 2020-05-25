@@ -176,19 +176,11 @@ export const application_battle = {
 
     // 正解または不正解
     kotae_sentaku(ans_result_key) {
-      // this.ox_sound_play(ans_result_key)
-
-      // if (ans_result_key === "correct") {
-      //   this.score_add(1)
-      // } else {
-      //   this.score_add(-1)
-      // }
-
       this.room_speak(`*kotae_sentaku("${ans_result_key}")`)
       this.$ac_battle.perform("kotae_sentaku", {
         membership_id: this.current_membership.id,
-        question_id: this.c_quest.id, // 問題ID
-        question_index: this.question_index + 1,
+        question_id: this.c_quest.id,
+        question_index: this.question_index + 1, // 次の問題希望
         ans_result_key: ans_result_key,
       }) // --> app/channels/actb/battle_channel.rb
     },
@@ -198,11 +190,7 @@ export const application_battle = {
       this.members_hash[params.membership_id].progress_list.push(params.ans_result_key)
 
       if (this.battle.rule_key === "singleton_rule") {
-        if (params.ans_result_key === "correct") {
-          this.score_add(params.membership_id, 1)
-        } else {
-          this.score_add(params.membership_id, -1)
-        }
+        this.score_add(params.membership_id, this.$AnsResultInfo.fetch(params.ans_result_key).score)
       }
 
       // if (params.membership_id !== this.current_membership.id) {

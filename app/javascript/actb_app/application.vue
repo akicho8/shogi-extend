@@ -45,6 +45,7 @@ import { application_battle     } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
 import { config               } from "./config.js"
 import { RuleInfo             } from "./rule_info.js"
+import { AnsResultInfo        } from "./ans_result_info.js"
 
 export default {
   store: store,
@@ -106,7 +107,8 @@ export default {
 
   created() {
     this.remote_get(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
-      this.$RuleInfo = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.$RuleInfo      = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.$AnsResultInfo = AnsResultInfo.memory_record_reset(e.AnsResultInfo)
       this.app_setup()
     })
   },
