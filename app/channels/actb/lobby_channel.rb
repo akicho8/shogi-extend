@@ -54,7 +54,7 @@ module Actb
       if ordered_info = ordered_infos.first
         gap, opponent = ordered_info
         if gap < matching_rate_threshold
-          room_create(opponent, current_user)
+          room_create(opponent, current_user) # 元々いた人を左側に配置
           return
         end
       end

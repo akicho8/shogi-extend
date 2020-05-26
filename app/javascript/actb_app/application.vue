@@ -7,6 +7,7 @@
     the_system_header(v-if="mode === 'lobby' || mode === 'matching' || mode === 'result' || mode === 'battle'")
     the_lobby(v-if="mode === 'lobby'")
     the_lobby_message(v-if="mode === 'lobby'")
+    the_profile_edit(v-if="mode === 'profile_edit'")
     the_matching(v-if="mode === 'matching'")
     the_battle(v-if="mode === 'battle'")
     the_room_message(v-if="mode === 'battle'")
@@ -32,6 +33,7 @@ import the_system_header from "./the_system_header.vue"
 import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_lobby_message from "./the_lobby_message.vue"
+import the_profile_edit         from "./the_profile_edit.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle          from "./the_battle.vue"
 import the_room_message  from "./the_room_message.vue"
@@ -66,6 +68,7 @@ export default {
     the_footer,
     the_lobby,
     the_lobby_message,
+    the_profile_edit,
     the_matching,
     the_battle,
     the_room_message,
@@ -79,6 +82,8 @@ export default {
   },
   data() {
     return {
+      current_user: this.info.current_user,
+
       mode: "lobby",
       sub_mode: "opening",
       rule_key: null,           // 未使用
@@ -118,6 +123,9 @@ export default {
       this.school_setup()
 
       if (this.info.debug_scene) {
+        if (this.info.debug_scene === "profile_edit") {
+          this.profile_edit_setup()
+        }
         if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule") {
           this.room_setup(this.info.room)
         }
@@ -194,6 +202,11 @@ export default {
       })
     },
 
+    profile_edit_setup() {
+      this.lobby_close()
+      this.mode = "profile_edit"
+    },
+
     lobby_setup() {
       this.battle_unsubscribe()
       this.room_unsubscribe()
@@ -260,8 +273,15 @@ export default {
       if (this.mode === "lobby") {
       } else {
         this.sound_play("click")
-
         this.lobby_setup()
+      }
+    },
+
+    profile_edit_handle() {
+      if (this.mode === "profile_edit") {
+      } else {
+        this.sound_play("click")
+        this.profile_edit_setup()
       }
     },
 
@@ -339,9 +359,9 @@ export default {
   },
 
   computed: {
-    current_user() {
-      return this.info.current_user
-    },
+    // current_user() {
+    //   return this.info.current_user
+    // },
 
     // いったんスクリプトに飛ばしているのは sessions[:return_to] を設定するため
     login_path() {

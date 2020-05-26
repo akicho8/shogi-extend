@@ -56,6 +56,7 @@ module FrontendScript
             :key     => :debug_scene,
             :elems   => {
               "ロビー"             => nil,
+              "プロフィール編集"   => :profile_edit,
               "対戦(マラソン)"     => :battle_marathon_rule,
               "対戦(シングルトン)" => :battle_singleton_rule,
               "結果"               => :result,
