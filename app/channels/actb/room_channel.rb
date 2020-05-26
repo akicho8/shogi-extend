@@ -27,29 +27,6 @@ module Actb
       end
     end
 
-    def speak(data)
-      data = data.to_options
-      if data[:message].start_with?("/")
-        execution_interrupt_hidden_command(data[:message])
-      else
-        current_user.actb_room_messages.create!(body: data[:message], room: current_room)
-      end
-    end
-
-    def execution_interrupt_hidden_command(str)
-      # if message = room.messages.where(user: current_user).order(created_at: :desc).first
-      if md = str.to_s.match(/\/(?<command_line>.*)/)
-        args = md["command_line"].split
-        command = args.shift
-        # if command == "win"
-        #   katimashita(:win)
-        # end
-        # if command == "lose"
-        #   katimashita(:lose)
-        # end
-      end
-    end
-
     # for test
     def room_users
       room_user_ids.collect { |e| Colosseum::User.find(e) }

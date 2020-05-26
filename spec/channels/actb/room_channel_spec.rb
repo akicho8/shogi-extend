@@ -14,7 +14,7 @@ RSpec.describe Actb::RoomChannel, type: :channel do
   end
 
   let_it_be(:current_room) do
-    Actb::Room.create_with_users!([user1, user2])
+    Actb::Room.create_with_members!([user1, user2])
   end
 
   describe "#subscribe" do
@@ -22,6 +22,10 @@ RSpec.describe Actb::RoomChannel, type: :channel do
       expect { subscribe(room_id: current_room.id) }.to have_broadcasted_to("actb/school_channel").with(room_user_ids: [user1.id])
       assert { subscription.confirmed? }
       assert { subscription.room_users == [user1] }
+    end
+
+    it "部屋に入ると対局準備" do
+      expect { subscribe(room_id: current_room.id) }.to have_broadcasted_to("actb/room_channel/#{current_room.id}")
     end
   end
 
@@ -38,17 +42,6 @@ RSpec.describe Actb::RoomChannel, type: :channel do
 
     it "人数通知" do
       expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").exactly(1)
-    end
-  end
-
-  describe "#speak" do
-    before do
-      subscribe(room_id: current_room.id)
-    end
-
-    it do
-      subscription.speak(message: "(message)")
-      assert { user1.actb_room_messages.count == 1 }
     end
   end
 end

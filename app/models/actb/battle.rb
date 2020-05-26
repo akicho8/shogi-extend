@@ -84,7 +84,7 @@ module Actb
     end
 
     def katimashita(target_user, judge_key, final_key)
-      raise "すでに終了している" if final_key
+      raise "すでに終了している" if end_at
 
       judge_info = JudgeInfo.fetch(judge_key)
 

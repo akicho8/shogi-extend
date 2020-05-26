@@ -181,7 +181,7 @@ export const application_battle = {
       this.$ac_battle.perform("kotae_sentaku", {
         membership_id: this.current_membership.id,
         question_id: this.c_quest.id,
-        question_index: this.question_index + 1, // 次の問題希望
+        question_index: this.question_index,
         ox_mark_key: ox_mark_key,
       }) // --> app/channels/actb/battle_channel.rb
     },

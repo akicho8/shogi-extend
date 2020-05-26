@@ -28,7 +28,7 @@
 module Actb
   class Room < ApplicationRecord
     class << self
-      def create_with_users!(users, attributes = {})
+      def create_with_members!(users, attributes = {})
         create!(attributes) do |e|
           users.each do |user|
             e.memberships.build(user: user)
@@ -56,7 +56,7 @@ module Actb
       Actb::RoomBroadcastJob.perform_later(self)
     end
 
-    def battle_generate(attributes = {})
+    def battle_create_with_members!(attributes = {})
       battles.create!({rule_key: rule_key}.merge(attributes)) do |e|
         users.each do |user|
           e.memberships.build(user: user)

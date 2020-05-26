@@ -68,7 +68,8 @@ export const application_room = {
     },
 
     room_speak(message) {
-      this.$ac_room.perform("speak", {message: message})
+      // 受信をバトル側にしている理由は battle_id が自明だと都合が良いため
+      this.$ac_battle.perform("speak", {message: message}) // --> app/channels/actb/battle_channel.rb
     },
 
     room_speak_broadcasted(params) {

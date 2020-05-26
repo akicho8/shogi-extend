@@ -14,11 +14,12 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     stub_connection current_user: user1
   end
 
+  let_it_be(:current_room) do
+    Actb::Room.create_with_members!([user1, user2], rule_key: :marathon_rule)
+  end
+
   let_it_be(:current_battle) do
-    Actb::Battle.create! do |e|
-      e.memberships.build(user: user1)
-      e.memberships.build(user: user2)
-    end
+    current_room.battle_create_with_members!
   end
 
   let_it_be(:question) do
@@ -35,25 +36,14 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
   describe "#subscribe" do
     it "接続" do
-      expect { subscribe(battle_id: current_battle.id) }.to have_broadcasted_to("actb/school_channel").with(room_user_ids: [user1.id])
+      subscribe(battle_id: current_battle.id)
       assert { subscription.confirmed? }
-      assert { subscription.battle_users == [user1] }
     end
   end
 
   describe "#unsubscribe" do
     before do
       subscribe(battle_id: current_battle.id)
-    end
-
-    it "退室" do
-      assert { subscription.battle_users == [user1] }
-      unsubscribe
-      assert { subscription.battle_users == [] }
-    end
-
-    it "人数通知" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").exactly(2)
     end
 
     it "切断したので負け" do
@@ -79,13 +69,42 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     end
 
     it do
-      data = { membership_id: membership1.id, question_index: 1, question_id: question.id }
+      data = { membership_id: membership1.id, question_index: 0, question_id: question.id, ox_mark_key: "correct" }
       expect {
         subscription.kotae_sentaku(data)
-      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(kotae_sentaku: data)
+      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(bc_action: "kotae_sentaku_broadcasted", bc_params: data)
+    end
+  end
 
-      current_battle.reload
-      assert { membership1.question_index == 1 }
+  describe "#next_trigger" do
+    before do
+      subscribe(battle_id: current_battle.id)
+    end
+
+    it do
+      data = {
+        membership_id: membership1.id,
+        question_index: 1,
+        question_id: question.id,
+      }
+      expect {
+        subscription.next_trigger(data)
+      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(bc_action: "next_trigger_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "#kyouyuu" do
+    before do
+      subscribe(battle_id: current_battle.id)
+    end
+
+    it do
+      data = {
+        share_sfen: "position startpos",
+      }
+      expect {
+        subscription.kyouyuu(data)
+      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(bc_action: "kyouyuu_broadcasted", bc_params: data)
     end
   end
 
@@ -98,12 +117,6 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       expect {
         subscription.goal_hook({})
       }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}")
-    end
-
-    it "対戦中人数を減らして通知" do
-      expect {
-        subscription.goal_hook({})
-      }.to have_broadcasted_to("actb/school_channel")
     end
 
     it "結果" do

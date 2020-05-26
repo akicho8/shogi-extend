@@ -7,7 +7,9 @@ module Actb
     end
 
     def unsubscribed
-      katimashita(current_user, :lose, :disconnect)
+      if current_battle.end_at.blank?
+        katimashita(current_user, :lose, :disconnect)
+      end
     end
 
     def speak(data)
@@ -15,7 +17,7 @@ module Actb
       if data[:message].start_with?("/")
         execution_interrupt_hidden_command(data[:message])
       else
-        current_user.actb_room_messages.create!(body: data[:message], battle: current_battle)
+        current_user.actb_room_messages.create!(body: data[:message], room: current_battle.room)
       end
     end
 
@@ -81,11 +83,11 @@ module Actb
         membership_id:  data[:membership_id],  # 誰が
         question_index: data[:question_index], # どこまで進めたか
         question_id:    data[:question_id],    # これいらんけど、そのまま渡しとく
-        ox_mark_key: data[:ox_mark_key],
+        ox_mark_key:    data[:ox_mark_key],
       }
 
       # 一応保存しておく(あとで取るかもしれない)
-      current_battle.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
+      # current_battle.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
 
       # 問題の解答数を上げる
       if data[:ox_mark_key] == "correct"
@@ -135,7 +137,6 @@ module Actb
 
       battle.katimashita(target_user, judge_key, final_key)
       battle.reload
-      memberships_user_ids_remove(battle)
 
       battle_json = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: "katimashita_broadcasted", bc_params: { battle: battle_json }})
@@ -204,13 +205,6 @@ module Actb
 
     def current_battle
       Battle.find(battle_id)
-    end
-
-    def memberships_user_ids_remove(battle)
-      battle.memberships.each do |m|
-        redis.srem(:battle_user_ids, m.user.id)
-      end
-      battle_user_ids_broadcast
     end
 
     def history_update(data, ox_mark)

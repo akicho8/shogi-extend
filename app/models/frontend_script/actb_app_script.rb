@@ -348,8 +348,8 @@ module FrontendScript
           rule_key = :singleton_rule
         end
 
-        room = Actb::Room.create_with_users!([current_user, Colosseum::User.bot], rule_key: rule_key)
-        battle = room.battle_generate
+        room = Actb::Room.create_with_members!([current_user, Colosseum::User.bot], rule_key: rule_key)
+        battle = room.battle_create_with_members!
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
         info[:battle] = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions, :final_info])
@@ -358,8 +358,8 @@ module FrontendScript
       if current_debug_scene == :result
         c.sysop_login_unless_logout
 
-        room = Actb::Room.create_with_users!([current_user, Colosseum::User.bot])
-        battle = room.battle_generate(final_key: :disconnect)
+        room = Actb::Room.create_with_members!([current_user, Colosseum::User.bot])
+        battle = room.battle_create_with_members!(final_key: :disconnect)
         battle.memberships[0].update!(judge_key: :win,  question_index: 1)
         battle.memberships[1].update!(judge_key: :lose, question_index: 2)
         battle.reload
