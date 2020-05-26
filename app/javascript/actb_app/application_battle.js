@@ -230,26 +230,11 @@ export const application_battle = {
         this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
         this.delay(ox_mark_info.delay_second, () => {
           if (this.primary_membership_p) {
-            // const membership = _.first(this.score_orderd_memberships)
-
             if (this.score_max_natta_p || this.tugino_mondai_ga_nai) {
               this.$ac_battle.perform("owattayo", {members_hash: this.members_hash}) // --> app/channels/actb/battle_channel.rb
             } else {
               this.next_trigger()
             }
-
-            // if (this.tugino_mondai_ga_nai) {
-            //   this.$ac_battle.perform("mondai_owata") // --> app/channels/actb/battle_channel.rb
-            // } else {
-            //   score_orderd_memberships
-            //
-            //
-            // }
-
-            //   this.next_trigger()
-            // } else {
-            //   this.$ac_battle.perform("goal_hook") // --> app/channels/actb/battle_channel.rb
-            // }
           }
         })
       }
