@@ -133,4 +133,39 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       assert { user2.reload.rating == 1484 }
     end
   end
+
+  describe "#owattayo" do
+    before do
+      subscribe(battle_id: current_battle.id)
+    end
+
+    let(:data) {
+      {
+        "members_hash" => {
+          membership1.id.to_s => {"ox_list" => ["correct"], "x_score" => 1},
+          membership2.id.to_s => {"ox_list" => [],          "x_score" => 0},
+        }
+      }
+    }
+
+    it "結果画面へ" do
+      expect {
+        subscription.owattayo(data)
+      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}")
+    end
+
+    it "結果" do
+      subscription.owattayo(data)
+      current_battle.reload
+
+      assert { current_battle.end_at    }
+      assert { current_battle.final_key }
+
+      assert { membership1.judge_key == "win"  }
+      assert { membership2.judge_key == "lose" }
+
+      assert { user1.reload.rating == 1516 }
+      assert { user2.reload.rating == 1484 }
+    end
+  end
 end

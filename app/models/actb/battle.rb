@@ -30,24 +30,23 @@ module Actb
     belongs_to :room, counter_cache: true
 
     # has_many :messages, class_name: "RoomMessage", dependent: :destroy
-    has_many :memberships, class_name: "BattleMembership", dependent: :destroy
+    has_many :memberships, -> { order(:position) }, class_name: "BattleMembership", dependent: :destroy, inverse_of: :battle
     has_many :users, through: :memberships
     belongs_to :parent, class_name: "Battle", optional: true # 連戦したときの前の部屋
 
     before_validation do
-      self.begin_at ||= Time.current
+      if parent
+        self.room ||= parent.room
+        self.rensen_index ||= parent.rensen_index + 1
+      end
 
       if final_key
         self.end_at ||= Time.current
       end
 
+      self.begin_at ||= Time.current
       self.rule_key ||= :marathon_rule
-
       self.rensen_index ||= 0
-      if parent
-        self.room ||= parent.room
-        self.rensen_index = parent.rensen_index + 1
-      end
     end
 
     with_options presence: true do

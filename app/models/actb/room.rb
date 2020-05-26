@@ -39,7 +39,7 @@ module Actb
 
     has_many :battles, dependent: :destroy
     has_many :messages, class_name: "RoomMessage", dependent: :destroy
-    has_many :memberships, class_name: "RoomMembership", dependent: :destroy
+    has_many :memberships, -> { order(:position) }, class_name: "RoomMembership", dependent: :destroy, inverse_of: :room
     has_many :users, through: :memberships
 
     before_validation do

@@ -65,6 +65,10 @@ module Actb
       user.actb_profile.update!(rensho_count: rensho_count, renpai_count: renpai_count)
     end
 
+    def judge_info
+      JudgeInfo.fetch_if(judge_key)
+    end
+
     def maeno_record
       s = user.actb_battle_memberships
       if created_at

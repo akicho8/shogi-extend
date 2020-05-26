@@ -188,14 +188,16 @@ module Actb
     # }
     def owattayo(data)
       data = data.to_options
+
       membership = current_battle.memberships.sort_by { |e|
         [
           -data[:members_hash][e.id.to_s]["x_score"],         # 1. スコア高い方
           -data[:members_hash][e.id.to_s]["ox_list"].size,    # 2. たくさん答えた方
           e.user.created_at,                                  # 3. 早く会員になった方
-          e.uesr.id,
+          e.user.id,
         ]
       }.first
+
       katimashita(membership.user, :win, :all_clear)
     end
 
