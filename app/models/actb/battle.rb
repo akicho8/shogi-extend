@@ -82,5 +82,33 @@ module Actb
       end
       # --> app/jobs/actb/battle_broadcast_job.rb
     end
+
+    def katimashita(target_user, judge_key, final_key)
+      raise "すでに終了している" if final_key
+
+      judge_info = JudgeInfo.fetch(judge_key)
+
+      ActiveRecord::Base.transaction do
+        m1 = memberships.find_by!(user: target_user)
+        m2 = (memberships - [m1]).first
+
+        m1.judge_key = judge_info.key
+        m2.judge_key = judge_info.flip.key
+
+        if judge_info.key == :win
+          mm = [m1, m2]
+        else
+          mm = [m2, m1]
+        end
+
+        ab = mm.collect { |e| e.user.actb_newest_profile.rating }
+        ab = EloRating.rating_update2(*ab)
+        ab = ab.collect(&:round)
+        mm.each.with_index { |m, i| m.user.actb_newest_profile.update!(rating: ab[i]) }
+
+        mm.each(&:save!)
+        update!(final_key: final_key)
+      end
+    end
   end
 end

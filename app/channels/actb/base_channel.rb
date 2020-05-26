@@ -1,13 +1,19 @@
 module Actb
   class BaseChannel < ApplicationCable::Channel
-    delegate :redis, to: "self.class"
+    delegate :redis, :room_user_ids, :room_user_ids_broadcast, to: "self.class"
 
-    def self.redis
-      @redis ||= Redis.new(db: AppConfig[:redis_db_for_actb])
-    end
+    class << self
+      def redis
+        @redis ||= Redis.new(db: AppConfig[:redis_db_for_actb])
+      end
 
-    def battle_user_ids
-      redis.smembers(:battle_user_ids).collect(&:to_i)
+      def room_user_ids
+        redis.smembers(:room_user_ids).collect(&:to_i)
+      end
+
+      def room_user_ids_broadcast
+        ActionCable.server.broadcast("actb/school_channel", room_user_ids: room_user_ids)
+      end
     end
   end
 end

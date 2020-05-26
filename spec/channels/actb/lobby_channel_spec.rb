@@ -4,7 +4,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
   let_it_be(:user) { Colosseum::User.create! }
 
   before do
-    Actb::SchoolChannel.redis.flushdb
+    Actb::BaseChannel.redis.flushdb
 
     stub_connection current_user: user
   end
@@ -88,7 +88,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
         subscribe
 
         # (少くとも)2回ブロードキャスト
-        expect { subscription.matching_search({}) }.to have_broadcasted_to("actb/lobby_channel").twice
+        expect { subscription.matching_search({}) }.to have_broadcasted_to("actb/lobby_channel").exactly(2)
         # 1. matching_list_hash を伝える(←これはなくてもよくね？)
         # 2. 作成した battle を伝える
 

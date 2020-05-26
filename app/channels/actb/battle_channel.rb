@@ -4,21 +4,9 @@ module Actb
       raise ArgumentError, params.inspect unless battle_id
 
       stream_from "actb/battle_channel/#{battle_id}"
-
-      if current_user
-        redis.sadd(:battle_user_ids, current_user.id)
-        battle_user_ids_broadcast
-      else
-        reject
-      end
     end
 
     def unsubscribed
-      if current_user
-        redis.srem(:battle_user_ids, current_user.id)
-        battle_user_ids_broadcast
-      end
-
       katimashita(current_user, :lose, :disconnect)
     end
 
@@ -140,40 +128,15 @@ module Actb
     def katimashita(target_user, judge_key, final_key)
       battle = current_battle
 
-      if battle.final_key
+      if battle.end_at?
         Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, "すでに終了している"])
         return
       end
 
-      judge_info = JudgeInfo.fetch(judge_key)
-
-      ActiveRecord::Base.transaction do
-        m1 = battle.memberships.find_by!(user: target_user)
-        m2 = (battle.memberships - [m1]).first
-
-        m1.judge_key = judge_info.key
-        m2.judge_key = judge_info.flip.key
-
-        if m1.judge_key == "win"
-          mm = [m1, m2]
-        else
-          mm = [m2, m1]
-        end
-
-        ab = mm.collect { |e| e.user.actb_newest_profile.rating }
-        ab = EloRating.rating_update2(*ab)
-        ab = ab.collect(&:round)
-        mm.each.with_index { |m, i| m.user.actb_newest_profile.update!(rating: ab[i]) }
-
-        mm.each(&:save!)
-        battle.update!(final_key: final_key)
-      end
-
+      battle.katimashita(target_user, judge_key, final_key)
       battle.reload
-
       memberships_user_ids_remove(battle)
 
-      # 終了時
       battle_json = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: "katimashita_broadcasted", bc_params: { battle: battle_json }})
       # --> app/javascript/actb_app/application.vue
@@ -243,19 +206,11 @@ module Actb
       Battle.find(battle_id)
     end
 
-    def battle_user_ids_broadcast
-      ActionCable.server.broadcast("actb/school_channel", battle_user_ids: battle_user_ids)
-    end
-
     def memberships_user_ids_remove(battle)
       battle.memberships.each do |m|
         redis.srem(:battle_user_ids, m.user.id)
       end
       battle_user_ids_broadcast
-    end
-
-    def battle_users
-      battle_user_ids.collect { |e| Colosseum::User.find(e) }
     end
 
     def history_update(data, ox_mark)

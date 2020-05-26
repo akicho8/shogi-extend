@@ -87,7 +87,7 @@ export default {
 
       matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
-      battle_user_ids:   null, // オンライン人数
+      room_user_ids:   null, // オンライン人数
 
       // チャット用
       lobby_messages: null, // メッセージ(複数)
@@ -187,8 +187,8 @@ export default {
           if (data.online_user_ids) {
             this.online_user_ids = data.online_user_ids
           }
-          if (data.battle_user_ids) {
-            this.battle_user_ids = data.battle_user_ids
+          if (data.room_user_ids) {
+            this.room_user_ids = data.room_user_ids
           }
         },
       })

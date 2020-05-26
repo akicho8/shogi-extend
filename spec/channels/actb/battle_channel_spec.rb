@@ -9,7 +9,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
   let_it_be(:user2) { Colosseum::User.create! }
 
   before do
-    Actb::SchoolChannel.redis.flushdb
+    Actb::BaseChannel.redis.flushdb
 
     stub_connection current_user: user1
   end
@@ -35,7 +35,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
   describe "#subscribe" do
     it "接続" do
-      expect { subscribe(battle_id: current_battle.id) }.to have_broadcasted_to("actb/school_channel").with(battle_user_ids: [user1.id])
+      expect { subscribe(battle_id: current_battle.id) }.to have_broadcasted_to("actb/school_channel").with(room_user_ids: [user1.id])
       assert { subscription.confirmed? }
       assert { subscription.battle_users == [user1] }
     end
@@ -53,7 +53,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     end
 
     it "人数通知" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").twice
+      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").exactly(2)
     end
 
     it "切断したので負け" do
