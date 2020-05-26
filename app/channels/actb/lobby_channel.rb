@@ -51,8 +51,6 @@ module Actb
 
       matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
 
-      Rails.logger.debug(ordered_infos_debug.to_t)
-
       if ordered_info = ordered_infos.first
         gap, opponent = ordered_info
         if gap < matching_rate_threshold

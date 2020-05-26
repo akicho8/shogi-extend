@@ -32,7 +32,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     end
 
     it "対戦待ちリストを送信する" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list_hash: [])
+      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel")
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     end
 
     it "オフライン通知を送信する" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list_hash: [])
+      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel")
     end
   end
 
@@ -66,7 +66,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     end
 
     it "オフライン通知を送信する" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel").with(matching_list_hash: [])
+      expect { unsubscribe }.to have_broadcasted_to("actb/lobby_channel")
     end
   end
 
@@ -92,7 +92,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
         # 1. matching_list_hash を伝える(←これはなくてもよくね？)
         # 2. 作成した battle を伝える
 
-        assert { Actb::Battle.count == 1 }
+        assert { Actb::Room.count == 1 }
       end
     end
 
