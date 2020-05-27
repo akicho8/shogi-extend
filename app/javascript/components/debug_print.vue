@@ -88,11 +88,10 @@ export default {
 
 <style lang="sass">
 .debug_print
+  overflow-x: scroll
   font-size: 0.75rem
 
   table
-    overflow-x: scroll
-
     &:not(:first-child)
       margin-top: 0.75rem
 
