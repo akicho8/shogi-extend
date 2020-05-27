@@ -8,6 +8,7 @@
     the_lobby(v-if="mode === 'lobby'")
     the_lobby_message(v-if="mode === 'lobby'")
     the_profile_edit(v-if="mode === 'profile_edit'")
+    the_profile_edit2(v-if="mode === 'profile_edit2'")
     the_matching(v-if="mode === 'matching'")
     the_battle(v-if="mode === 'battle'")
     the_room_message(v-if="mode === 'battle'")
@@ -34,6 +35,7 @@ import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_lobby_message from "./the_lobby_message.vue"
 import the_profile_edit         from "./the_profile_edit.vue"
+import the_profile_edit2         from "./the_profile_edit2.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle          from "./the_battle.vue"
 import the_room_message  from "./the_room_message.vue"
@@ -69,6 +71,7 @@ export default {
     the_lobby,
     the_lobby_message,
     the_profile_edit,
+    the_profile_edit2,
     the_matching,
     the_battle,
     the_room_message,
@@ -98,6 +101,9 @@ export default {
       lobby_messages: null, // メッセージ(複数)
       lobby_message:  null, // 入力中のメッセージ
 
+      file_info: null,      // プロフィール画像アップロード
+      fab_src: null,
+
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
       // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
@@ -125,6 +131,9 @@ export default {
       if (this.info.debug_scene) {
         if (this.info.debug_scene === "profile_edit") {
           this.profile_edit_setup()
+        }
+        if (this.info.debug_scene === "profile_edit2") {
+          this.mode = "profile_edit2"
         }
         if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule") {
           this.room_setup(this.info.room)

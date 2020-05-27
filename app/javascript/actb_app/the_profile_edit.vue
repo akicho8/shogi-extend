@@ -12,12 +12,14 @@
           img.is-rounded(:src="img_src")
 
   .form_container
-    .user_name.has-text-centered.has-text-weight-bold(@click="name_edit")
+    .user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit")
       | {{new_name}}
 
   .button_container
     .buttons.is-centered
       b-button(@click="hozonsuruo" type="is-primary" :disabled="!updated_p") 保存
+
+  debug_print(:grep_v="/canvas/")
 </template>
 
 <script>
@@ -31,16 +33,17 @@ export default {
   data() {
     return {
       new_name: this.$parent.info.current_user.name, // まだ app は使えない
-      file_info: null,
-      file_src: null,
+      upload_org: null,
       updated_p: false,
     }
   },
-
-  watch: {
-    file_info() { this.updated_p = true },
-    new_name()  { this.updated_p = true },
+  created() {
+    this.$watch(() => [this.app.file_info, this.new_name], () => this.updated_p = true, {deep: false})
   },
+  // watch: {
+  //   file_info() { this.updated_p = true },
+  //   new_name()  { this.updated_p = true },
+  // },
 
   methods: {
     close_handle() {
@@ -49,12 +52,8 @@ export default {
     },
 
     uploaded_handle(v) {
-      this.file_info = v
-      // this.file_info = this.$refs["file_input"].files[0]
-      console.log(this.file_info)
-      const reader = new FileReader()
-      reader.addEventListener("load", () => { this.file_src = reader.result }, false)
-      reader.readAsDataURL(this.file_info)
+      this.app.file_info = v
+      this.app.mode = "profile_edit2"
     },
 
     name_edit() {
@@ -69,10 +68,11 @@ export default {
 
     hozonsuruo() {
     },
+
   },
   computed: {
     img_src() {
-      return this.file_src || this.app.current_user.avatar_path
+      return this.fab_src || this.app.current_user.avatar_path
     },
   },
 }
@@ -83,7 +83,13 @@ export default {
 .the_profile_edit
   @extend %padding_top_for_primary_header
   .primary_header
-    justify-content: space-between
+
+  .canvas_container
+    flex-direction: column
+    align-items: center
+    .button
+     margin-top: 1.5rem
+
   .image_container
     margin-top: 2rem
     justify-content: center

@@ -38,29 +38,36 @@ import debug_print_value from "./debug_print_value"
 
 export default {
   name: "debug_print",
+
   props: {
     grep:    { required: false },
+    grep_v:  { required: false },
     vars:    { required: false },
     oneline: { default: false  },
   },
+
   components: {
     debug_print_value,
   },
-  created() {
-  },
+
   methods: {
     show_p(key) {
       if (this.grep) {
         return this.grep.test(key)
       }
+      if (this.grep_v) {
+        return !this.grep_v.test(key)
+      }
       return true
     },
+
     key_format(key) {
       if (/^[$_]/.test(key)) {
         return `<span class='non_reactive_key'>${key}</span>`
       }
       return key
     },
+
     value_format(v) {
       if (v === undefined) {
         return "<span class='undefined_value'>undefined</span>"
@@ -68,19 +75,35 @@ export default {
       if (v === null) {
         return "<span class='null_value'>null</span>"
       }
+      if (typeof(v) === "string") {
+        if (/^data:/.test(v)) {
+          v = this.truncate(v, 80)
+        }
+      }
+      let sv = null
       try {
         if (this.oneline) {
-          return JSON.stringify(v)
+          sv = JSON.stringify(v)
         } else {
-          return JSON.stringify(v, null, 4)
+          sv = JSON.stringify(v, null, 4)
         }
       } catch (_) {
         return "<span class='circular_value'>circular</span>"
       }
+      return sv
     },
+
     parent_eval(var_name) {
       const v = eval(`this.$parent.${var_name}`)
       return this.value_format(v)
+    },
+
+    truncate(str, len) {
+      if (str.length <= len) {
+        return str
+      } else {
+        return str.substr(0, len) + "..."
+      }
     },
   },
 }

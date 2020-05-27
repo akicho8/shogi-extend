@@ -234,7 +234,12 @@ export default {
         alert(message || "assert error")
         debugger
       }
-    }
+    },
+
+    body_background_color_set(color) {
+      const elem = document.querySelector("body")
+      elem.style.backgroundColor = color
+    },
   },
 
   computed: {
