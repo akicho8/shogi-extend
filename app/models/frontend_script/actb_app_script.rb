@@ -57,7 +57,7 @@ module FrontendScript
             :elems   => {
               "ロビー"                       => nil,
               "プロフィール編集"             => :profile_edit,
-              "プロフィール画像アップロード" => :profile_edit2,
+              "プロフィール画像アップロード" => :image_crop,
               "対戦(マラソン)"               => :battle_marathon_rule,
               "対戦(シングルトン)"           => :battle_singleton_rule,
               "結果"                         => :result,
@@ -197,7 +197,7 @@ module FrontendScript
       info[:question_default] = question_default
 
       if current_user
-        info[:current_user] = current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating])
+        info[:current_user] = current_user_json
       end
 
       # info[:battle] = current_battle
@@ -247,6 +247,11 @@ module FrontendScript
     end
 
     def put_action
+      if v = params[:remote_action]
+        c.render json: public_send(v)
+        return
+      end
+
       # if params[:g2_hayaosi_handle]
       #   # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, battle_id: this.app.battle.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
       #   # { g2_hayaosi_handle: true, battle_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
@@ -292,6 +297,22 @@ module FrontendScript
 
     end
 
+    def profile_update
+      if v = params[:croped_image]
+        bin = data_base64_body_to_binary(v)
+        io = StringIO.new(bin)
+        current_user.avatar.attach(io: io, filename: "user_icon.png")
+      end
+
+      if v = params[:user_name]
+        current_user.update!(name: v)
+      end
+
+      {
+        current_user: current_user_json,
+      }
+    end
+
     def question_as_json_params
       { include: [:user, :moves_answers, :lineage], only: Actb::Question.index_and_form_json_columns, methods: [:folder_key] }
     end
@@ -331,6 +352,18 @@ module FrontendScript
         lineage: { key: "詰将棋" },
         folder_key: "active",
       }
+    end
+
+    def data_base64_body_to_binary(data_base64_body)
+      md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
+      unless md
+        raise "Data URL scheme 形式になっていません : #{data_base64_body.inspect}"
+      end
+      Base64.decode64(md["base64_bin"])
+    end
+
+    def current_user_json
+      current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating])
     end
 
     def debug_scene_set(info)

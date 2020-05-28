@@ -13,11 +13,12 @@
 
   .form_container
     .user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit")
-      | {{new_name}}
+      | {{app.new_name}}
 
   .button_container
     .buttons.is-centered
-      b-button(@click="hozonsuruo" type="is-primary" :disabled="!updated_p") 保存
+      b-button(@click="hozonsuruo" type="is-primary" :disabled="!app.updated_p") 保存
+      b-button(@click="hozonsuruo" type="is-primary") 保存
 
   debug_print(:grep_v="/canvas/")
 </template>
@@ -32,18 +33,24 @@ export default {
   ],
   data() {
     return {
-      new_name: this.$parent.info.current_user.name, // まだ app は使えない
-      upload_org: null,
-      updated_p: false,
     }
   },
   created() {
-    this.$watch(() => [this.app.file_info, this.new_name], () => this.updated_p = true, {deep: false})
+    if (!this.app.new_name) {
+      this.app.new_name = this.$parent.info.current_user.name
+    }
+
+    this.$watch(() => [this.app.file_info, this.app.new_name], () => this.app.updated_p = true, {deep: false})
   },
   // watch: {
-  //   file_info() { this.updated_p = true },
-  //   new_name()  { this.updated_p = true },
+  //   file_info() { this.app.updated_p = true },
+  //   app.new_name()  { this.app.updated_p = true },
   // },
+
+  beforeDestroy() {
+    this.app.croped_image = null
+    this.app.updated_p = false
+  },
 
   methods: {
     close_handle() {
@@ -53,7 +60,7 @@ export default {
 
     uploaded_handle(v) {
       this.app.file_info = v
-      this.app.mode = "profile_edit2"
+      this.app.mode = "image_crop"
     },
 
     name_edit() {
@@ -61,18 +68,22 @@ export default {
         message: "名前",
         confirmText: "更新",
         cancelText: "キャンセル",
-        inputAttrs: { type: 'text', value: this.new_name, required: true },
-        onConfirm: value => this.new_name = _.trim(value),
+        inputAttrs: { type: 'text', value: this.app.new_name, required: true },
+        onConfirm: value => this.app.new_name = _.trim(value),
       })
     },
 
     hozonsuruo() {
+      this.sound_play("click")
+      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", user_name: this.app.new_name, croped_image: this.app.croped_image }, e => {
+        this.app.current_user = e.current_user
+        this.ok_notice("保存しました")
+      })
     },
-
   },
   computed: {
     img_src() {
-      return this.fab_src || this.app.current_user.avatar_path
+      return this.app.croped_image || this.app.current_user.avatar_path
     },
   },
 }
