@@ -17,7 +17,7 @@
 
   .button_container
     .buttons.is-centered
-      b-button(@click="hozonsuruo" type="is-primary" :disabled="!$parent.changed_p") 保存
+      b-button(@click="save_handle" type="is-primary" :disabled="!$parent.changed_p") 保存
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
     user_icon_upload_handle(v) {
       this.sound_play('click')
       this.$parent.upload_file_info = v
-      this.$parent.p_mode = "image_crop"
+      this.$parent.p_mode = "the_profile_edit_image_crop"
     },
 
     name_edit_handle() {
@@ -47,11 +47,15 @@ export default {
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: this.$parent.new_name, required: true },
-        onConfirm: value => this.$parent.new_name = _.trim(value),
+        onCancel: value => this.sound_play("click"),
+        onConfirm: value => {
+          this.sound_play("click")
+          this.$parent.new_name = _.trim(value)
+        },
       })
     },
 
-    hozonsuruo() {
+    save_handle() {
       this.sound_play("click")
       this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", user_name: this.$parent.new_name, croped_image: this.$parent.croped_image }, e => {
         this.app.current_user = e.current_user
@@ -73,18 +77,19 @@ export default {
 @import "support.sass"
 .the_profile_edit_form
   @extend %padding_top_for_primary_header
-  .primary_header
 
   .image_container
-    margin-top: 2rem
+    margin-top: 4rem
     justify-content: center
     .image
       img
         width: 80px
         height: 80px
+
   .form_container
-    margin: 2.4rem 0.8rem
+    margin-top: 1rem
     justify-content: center
+
   .button_container
-    margin-top: 1.5rem
+    margin-top: 4rem
 </style>

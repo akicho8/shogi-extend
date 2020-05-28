@@ -126,8 +126,8 @@ export default {
         if (this.info.debug_scene === "profile_edit") {
           this.profile_edit_setup()
         }
-        if (this.info.debug_scene === "image_crop") {
-          this.mode = "image_crop"
+        if (this.info.debug_scene === "the_profile_edit_image_crop") {
+          this.mode = "the_profile_edit_image_crop"
         }
         if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule") {
           this.room_setup(this.info.room)

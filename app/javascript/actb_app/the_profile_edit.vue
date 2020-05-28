@@ -1,7 +1,6 @@
 <template lang="pug">
 .the_profile_edit
-  the_profile_edit_form(v-if="p_mode === 'xform'")
-  the_profile_edit_image_crop(v-if="p_mode === 'image_crop'")
+  component(:is="p_mode")
   debug_print(:grep_v="/canvas/")
 </template>
 
@@ -33,6 +32,7 @@ export default {
       new_name:         null,   // 変更した名前
     }
   },
+
   created() {
     this.var_reset()
   },
@@ -47,17 +47,16 @@ export default {
         this.unwatch_func()
       }
 
-      this.p_mode = "xform"
-      this.changed_p = false
+      this.p_mode       = "the_profile_edit_form"
+      this.changed_p    = false
       this.croped_image = null
-      this.new_name = this.app.info.current_user.name
+      this.new_name     = this.app.current_user.name
 
       this.unwatch_func = this.$watch(() => [
         this.croped_image,
         this.new_name,
       ], () => this.changed_p = true, {deep: false})
     },
-
   },
 }
 </script>

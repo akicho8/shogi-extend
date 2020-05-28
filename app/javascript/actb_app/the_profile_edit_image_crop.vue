@@ -55,7 +55,7 @@ export default {
   },
 
   created() {
-    if (this.app.info.debug_scene === "image_crop") {
+    if (this.app.info.debug_scene === "the_profile_edit_image_crop") {
       this.uploaded_src = "/foo.png"
     }
 
@@ -80,7 +80,7 @@ export default {
   methods: {
     cancel_handle() {
       this.sound_play("click")
-      this.$parent.p_mode = "xform"
+      this.$parent.p_mode = "the_profile_edit_form"
     },
 
     canvas_setup() {
@@ -146,7 +146,7 @@ export default {
       // が、どうせ戻るので意味ない
       this.fcanvas.renderAll()
 
-      this.$parent.p_mode = "xform"
+      this.$parent.p_mode = "the_profile_edit_form"
     },
 
     rorate_handle() {
