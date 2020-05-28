@@ -25,7 +25,7 @@
               template(v-if="ox_mark_key === 'mistake'")
                 b-icon(icon="close" size="is-small" type="is-success")
 
-        template(v-if="app.battle.rule_key === 'singleton_rule'")
+        template(v-if="app.battle.rule_key === 'singleton_rule' || app.battle.rule_key === 'hybrid_rule'")
           .user_quest_index2
             | {{x_score(membership)}}
           .user_quest_index
@@ -46,7 +46,7 @@
       | {{app.question_index + 1}}問目
 
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    the_battle_question1(v-if="app.battle.rule_key === 'marathon_rule'")
+    the_battle_question1(v-if="app.battle.rule_key === 'marathon_rule' || app.battle.rule_key === 'hybrid_rule'")
     the_battle_question2(v-if="app.battle.rule_key === 'singleton_rule'")
 
   template(v-if="app.sub_mode === 'mistake_mode'")

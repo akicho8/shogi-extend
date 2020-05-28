@@ -149,9 +149,6 @@ export const application_battle = {
         if (this.c_quest.answer_p(long_sfen)) {
           this.kotae_sentaku("correct")
         }
-        // if (long_sfen === "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 moves G*5b") {
-        //   this.$ac_battle.perform("goal_hook") // --> app/channels/actb/battle_channel.rb
-        // }
       }
     },
 
@@ -203,7 +200,7 @@ export const application_battle = {
         }
       }
 
-      if (this.battle.rule_key === "singleton_rule") {
+      if (this.battle.rule_key === "singleton_rule" || this.battle.rule_key === "hybrid_rule") {
         this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
         if (this.primary_membership_p) {
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
@@ -238,7 +235,7 @@ export const application_battle = {
           this.question_index = params.question_index // 自分だったら次に進める
         }
       }
-      if (this.battle.rule_key === "singleton_rule") {
+      if (this.battle.rule_key === "singleton_rule" || this.battle.rule_key === "hybrid_rule") {
         this.question_index = params.question_index // 相手もそろって次に進める
       }
     },
@@ -358,7 +355,7 @@ export const application_battle = {
     },
 
     q1_interval_processing() {
-      if (this.battle.rule_key === "marathon_rule") {
+      if (this.battle.rule_key === "marathon_rule" || this.battle.rule_key === "hybrid_rule") {
         if (this.sub_mode === "operation_mode") {
           this.q1_interval_count += 1
           if (this.q1_rest_seconds === 0) {

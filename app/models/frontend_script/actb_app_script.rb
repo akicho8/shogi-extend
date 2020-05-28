@@ -380,6 +380,9 @@ module FrontendScript
         if current_debug_scene == :battle_singleton_rule
           rule_key = :singleton_rule
         end
+        if current_debug_scene == :battle_hybrid_rule
+          rule_key = :hybrid_rule
+        end
 
         room = Actb::Room.create_with_members!([current_user, Colosseum::User.bot], rule_key: rule_key)
         battle = room.battle_create_with_members!

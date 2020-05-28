@@ -4,6 +4,7 @@ module Actb
     memory_record [
       { key: :marathon_rule,  name: "マラソン",     },
       { key: :singleton_rule, name: "シングルトン", },
+      { key: :hybrid_rule,    name: "ハイブリッド", },
     ]
 
     def redis_key
