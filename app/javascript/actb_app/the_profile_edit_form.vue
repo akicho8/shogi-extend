@@ -1,9 +1,9 @@
 <template lang="pug">
 .the_profile_edit_form
   .primary_header
-    .header_center_title
-      | プロフィール編集
-    b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="close_handle")
+    .header_link_icon.ljust(@click="cancel_handle") キャンセル
+    .header_link_icon.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !$parent.changed_p}") 保存
+    .header_center_title プロフィール編集
 
   .image_container.is-flex
     b-field
@@ -14,10 +14,6 @@
   .form_container
     .user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit_handle")
       | {{$parent.new_name}}
-
-  .button_container
-    .buttons.is-centered
-      b-button(@click="save_handle" type="is-primary" :disabled="!$parent.changed_p") 保存
 </template>
 
 <script>
@@ -29,7 +25,7 @@ export default {
     support,
   ],
   methods: {
-    close_handle() {
+    cancel_handle() {
       this.sound_play("click")
       this.app.lobby_setup()
     },
@@ -61,6 +57,10 @@ export default {
         this.app.current_user = e.current_user
         this.ok_notice("保存しました")
         this.$parent.var_reset()
+
+        if (this.app.config.save_and_return) {
+          this.app.lobby_setup()
+        }
       })
     },
   },
@@ -77,6 +77,8 @@ export default {
 @import "support.sass"
 .the_profile_edit_form
   @extend %padding_top_for_primary_header
+  .primary_header
+    justify-content: space-between
 
   .image_container
     margin-top: 4rem

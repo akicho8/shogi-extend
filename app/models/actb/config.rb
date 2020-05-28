@@ -20,5 +20,8 @@ module Actb
     deden_mode_delay: 0.8,
 
     room_messages_display_lines: 20,
+
+    # UI
+    save_and_return: true, # プロフィール編集画面で「保存」と同時に戻るか？
   }
 end
