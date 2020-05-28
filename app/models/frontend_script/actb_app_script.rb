@@ -57,7 +57,7 @@ module FrontendScript
             :elems   => {
               "ロビー"                       => nil,
               "プロフィール編集"             => :profile_edit,
-              "プロフィール画像アップロード" => :image_crop,
+              "プロフィール画像アップロード" => :profile_edit_image_crop,
               "対戦(マラソン)"               => :battle_marathon_rule,
               "対戦(シングルトン)"           => :battle_singleton_rule,
               "結果"                         => :result,
@@ -308,9 +308,7 @@ module FrontendScript
         current_user.update!(name: v)
       end
 
-      {
-        current_user: current_user_json,
-      }
+      { current_user: current_user_json }
     end
 
     def question_as_json_params

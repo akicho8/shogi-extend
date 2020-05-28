@@ -55,7 +55,7 @@ export default {
   },
 
   created() {
-    if (this.app.info.debug_scene === "the_profile_edit_image_crop") {
+    if (this.app.info.debug_scene === "profile_edit_image_crop") {
       this.uploaded_src = "/foo.png"
     }
 
@@ -123,7 +123,7 @@ export default {
       fabric.Image.fromURL(this.uploaded_src, e => {
         this.image_obj = e
         this.fcanvas.add(e)             // canvasに設置
-        e.scale(IMAGE_SIZE / e.width)   // 横幅を合わせる
+        e.scale(Math.max(IMAGE_SIZE / e.width, IMAGE_SIZE / e.height))   // 円の中に隙間ができない最小の倍率に調整
         e.center()                      // 中央配置
         e.set(CONTROLLER_PARAMS)
         this.fcanvas.setActiveObject(e) // タップした状態にする

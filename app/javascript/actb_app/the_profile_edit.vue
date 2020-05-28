@@ -7,8 +7,8 @@
 <script>
 import { support } from "./support.js"
 
-import the_profile_edit_image_crop from "./the_profile_edit_image_crop.vue"
 import the_profile_edit_form       from "./the_profile_edit_form.vue"
+import the_profile_edit_image_crop from "./the_profile_edit_image_crop.vue"
 
 export default {
   name: "the_profile_edit",
@@ -35,6 +35,10 @@ export default {
 
   created() {
     this.var_reset()
+
+    if (this.app.info.debug_scene === "profile_edit_image_crop") {
+      this.p_mode = "the_profile_edit_image_crop"
+    }
   },
 
   beforeDestroy() {
