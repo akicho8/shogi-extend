@@ -1,90 +1,63 @@
 <template lang="pug">
 .the_profile_edit
-  .primary_header
-    .header_center_title
-      | プロフィール編集
-    b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="close_handle")
-
-  .image_container.is-flex
-    b-field
-      b-upload(@input="uploaded_handle")
-        .image.is_clickable
-          img.is-rounded(:src="img_src")
-
-  .form_container
-    .user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit")
-      | {{app.new_name}}
-
-  .button_container
-    .buttons.is-centered
-      b-button(@click="hozonsuruo" type="is-primary" :disabled="!app.updated_p") 保存
-      b-button(@click="hozonsuruo" type="is-primary") 保存
-
+  the_profile_edit_form(v-if="p_mode === 'xform'")
+  the_profile_edit_image_crop(v-if="p_mode === 'image_crop'")
   debug_print(:grep_v="/canvas/")
 </template>
 
 <script>
 import { support } from "./support.js"
 
+import the_profile_edit_image_crop from "./the_profile_edit_image_crop.vue"
+import the_profile_edit_form       from "./the_profile_edit_form.vue"
+
 export default {
   name: "the_profile_edit",
   mixins: [
     support,
   ],
+  components: {
+    the_profile_edit_form,
+    the_profile_edit_image_crop,
+  },
   data() {
     return {
+      // meta
+      unwatch_func:     null,
+      changed_p:        null,   // フォームの内容を変更した？(trueで保存ボタンが有効になる)
+      p_mode:           null,   // コンポーネント切り替え用
+
+      // form
+      upload_file_info: null,   // inputタグでアップロードしたそのもの
+      croped_image:     null,   // 切り取った画像
+      new_name:         null,   // 変更した名前
     }
   },
   created() {
-    if (!this.app.new_name) {
-      this.app.new_name = this.$parent.info.current_user.name
-    }
-
-    this.$watch(() => [this.app.file_info, this.app.new_name], () => this.app.updated_p = true, {deep: false})
+    this.var_reset()
   },
-  // watch: {
-  //   file_info() { this.app.updated_p = true },
-  //   app.new_name()  { this.app.updated_p = true },
-  // },
 
   beforeDestroy() {
-    this.app.croped_image = null
-    this.app.updated_p = false
+    this.unwatch_func()
   },
 
   methods: {
-    close_handle() {
-      this.sound_play("click")
-      this.app.lobby_setup()
+    var_reset() {
+      if (this.unwatch_func) {
+        this.unwatch_func()
+      }
+
+      this.p_mode = "xform"
+      this.changed_p = false
+      this.croped_image = null
+      this.new_name = this.app.info.current_user.name
+
+      this.unwatch_func = this.$watch(() => [
+        this.croped_image,
+        this.new_name,
+      ], () => this.changed_p = true, {deep: false})
     },
 
-    uploaded_handle(v) {
-      this.app.file_info = v
-      this.app.mode = "image_crop"
-    },
-
-    name_edit() {
-      this.$buefy.dialog.prompt({
-        message: "名前",
-        confirmText: "更新",
-        cancelText: "キャンセル",
-        inputAttrs: { type: 'text', value: this.app.new_name, required: true },
-        onConfirm: value => this.app.new_name = _.trim(value),
-      })
-    },
-
-    hozonsuruo() {
-      this.sound_play("click")
-      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", user_name: this.app.new_name, croped_image: this.app.croped_image }, e => {
-        this.app.current_user = e.current_user
-        this.ok_notice("保存しました")
-      })
-    },
-  },
-  computed: {
-    img_src() {
-      return this.app.croped_image || this.app.current_user.avatar_path
-    },
   },
 }
 </script>
@@ -92,25 +65,4 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_profile_edit
-  @extend %padding_top_for_primary_header
-  .primary_header
-
-  .canvas_container
-    flex-direction: column
-    align-items: center
-    .button
-     margin-top: 1.5rem
-
-  .image_container
-    margin-top: 2rem
-    justify-content: center
-    .image
-      img
-        width: 80px
-        height: 80px
-  .form_container
-    margin: 2.4rem 0.8rem
-    justify-content: center
-  .button_container
-    margin-top: 1.5rem
 </style>

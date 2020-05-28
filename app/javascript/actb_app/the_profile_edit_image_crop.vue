@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_image_crop
+.the_profile_edit_image_crop
   .primary_header
     .header_lr_text_button(@click="cancel_handle") キャンセル
     .header_lr_text_button.has-text-weight-bold(@click="tekiyou_handle") 適用
@@ -41,7 +41,7 @@ import { support } from "./support.js"
 import { fabric } from "fabric"
 
 export default {
-  name: "the_image_crop",
+  name: "the_profile_edit_image_crop",
   mixins: [
     support,
   ],
@@ -70,7 +70,7 @@ export default {
   mounted() {
     this.canvas_setup()
 
-    if (this.app.file_info) {
+    if (this.$parent.upload_file_info) {
       this.input_file_to_canvas()
     } else if (this.uploaded_src) {
       this.image_url_to_canvas()
@@ -80,7 +80,7 @@ export default {
   methods: {
     cancel_handle() {
       this.sound_play("click")
-      this.app.mode = "profile_edit"
+      this.$parent.p_mode = "xform"
     },
 
     canvas_setup() {
@@ -115,7 +115,7 @@ export default {
         this.uploaded_src = reader.result
         this.image_url_to_canvas()
       }, false)
-      reader.readAsDataURL(this.app.file_info)
+      reader.readAsDataURL(this.$parent.upload_file_info)
     },
 
     image_url_to_canvas() {
@@ -131,10 +131,11 @@ export default {
     },
 
     tekiyou_handle() {
-      this.__assert__(this.fcanvas)
+      this.sound_play("click")
 
       // http://fabricjs.com/docs/fabric.Canvas.html#toDataURL
-      this.app.croped_image = this.fcanvas.toDataURL({
+      this.__assert__(this.fcanvas)
+      this.$parent.croped_image = this.fcanvas.toDataURL({
         top:    CANVAS_PADDING,
         left:   CANVAS_PADDING,
         width:  IMAGE_SIZE,
@@ -142,17 +143,17 @@ export default {
       })
 
       // toDataURL で after:render が呼ばれて半透明で描画した部分だけがさらに濃くなるため再描画で無かったことにする
+      // が、どうせ戻るので意味ない
       this.fcanvas.renderAll()
 
-      this.sound_play("click")
-      this.app.mode = "profile_edit"
+      this.$parent.p_mode = "xform"
     },
 
     rorate_handle() {
+      this.sound_play("click")
       // http://fabricjs.com/docs/fabric.Object.html#rotate
       this.image_obj.rotate(this.rorate_next())
       this.fcanvas.renderAll()
-      this.sound_play("click")
     },
 
     // 次の角度
@@ -180,7 +181,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_image_crop
+.the_profile_edit_image_crop
   @extend %padding_top_for_primary_header
   .primary_header
     background-color: $black-ter

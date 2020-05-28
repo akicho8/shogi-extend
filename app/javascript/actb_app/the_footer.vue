@@ -26,7 +26,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_footer
-  .footer_nav
+  &.footer_nav
     border-top: 1px solid $grey-lighter
-    background: change_color($white-ter, $alpha: 0.96)
+    background-color: change_color($white-ter, $alpha: 0.96)
 </style>
