@@ -347,7 +347,7 @@ export default {
     clip_handle(history, clip_p) {
       this.sound_play("click")
       if (clip_p) {
-        this.talk("お気に入り", {rate: 1.5})
+        this.talk("保存リストに追加しました", {rate: 1.5})
       }
       this.silent_remote_fetch("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
         if (e.retval) {

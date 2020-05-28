@@ -20,8 +20,8 @@ import MemoryRecord from 'js-memory-record'
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "history_index", tab_name: "履歴",       top_nav_name: "問題履歴"        },
-      { key: "clip_index",    tab_name: "お気に入り", top_nav_name: "お気に入り問題", },
+      { key: "history_index", tab_name: "履歴",       top_nav_name: "問題履歴"    },
+      { key: "clip_index",    tab_name: "保存リスト", top_nav_name: "保存リスト", },
     ]
   }
 
