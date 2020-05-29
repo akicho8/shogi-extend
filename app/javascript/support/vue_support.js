@@ -7,6 +7,9 @@ import dayjs from "dayjs"
 import "dayjs/locale/ja.js"
 dayjs.locale('ja')
 
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
+
 import SfenParser from "shogi-player/src/sfen_parser.js"
 
 export default {
@@ -208,6 +211,11 @@ export default {
       return date.format("YYYY-MM-DD")
     },
 
+    // 「N分前」形式
+    diff_time_format(t) {
+      return dayjs(t).fromNow()
+    },
+
     date_to_custom_format(t) {
       return dayjs(t).format(this.md_or_yyyymmdd_format(t))
     },
@@ -250,6 +258,18 @@ export default {
       if (elem) {
         this.$nextTick(() => elem.scrollTop = elem.scrollHeight)
       }
+    },
+
+    // scroll_to_bottom2(elem) {
+    //   if (this.$refs[elem]) {
+    //     this.$nextTick(() => {
+    //       this.$refs[elem].scrollTop = this.$refs[elem].scrollHeight
+    //     })
+    //   }
+    // },
+
+    simple_format(str) {
+      return str.replace(/\n/g, "<br>")
     },
   },
 

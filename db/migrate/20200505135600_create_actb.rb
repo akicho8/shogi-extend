@@ -124,20 +124,20 @@ class CreateActb < ActiveRecord::Migration[6.0]
     create_table :actb_room_messages do |t|
       t.belongs_to :user,         comment: "対戦者"
       t.belongs_to :room,         comment: "対戦部屋"
-      t.string :body, limit: 512, comment: "発言"
+      t.string :body, limit: 140, comment: "発言"
       t.timestamps
     end
 
     create_table :actb_lobby_messages do |t|
       t.belongs_to :user,         comment: "対戦者"
-      t.string :body, limit: 512, comment: "発言"
+      t.string :body, limit: 140, comment: "発言"
       t.timestamps
     end
 
     create_table :actb_question_messages do |t|
       t.belongs_to :user,         comment: "発言者"
       t.belongs_to :question,     comment: "問題"
-      t.string :body, limit: 512, comment: "発言"
+      t.string :body, limit: 140, comment: "発言"
       t.timestamps
     end
 
@@ -209,4 +209,3 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
   end
 end
-# ~> -:1:in `<main>': uninitialized constant ActiveRecord (NameError)

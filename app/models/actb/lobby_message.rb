@@ -19,11 +19,7 @@
 
 module Actb
   class LobbyMessage < ApplicationRecord
-    belongs_to :user, class_name: "Colosseum::User"
-
-    with_options presence: true do
-      validates :body
-    end
+    include MessageShared
 
     after_create_commit do
       Actb::LobbyMessageBroadcastJob.perform_later(self)

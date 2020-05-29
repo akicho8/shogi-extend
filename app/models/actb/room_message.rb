@@ -20,12 +20,9 @@
 
 module Actb
   class RoomMessage < ApplicationRecord
-    belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
-    belongs_to :room
+    include MessageShared
 
-    with_options presence: true do
-      validates :body
-    end
+    belongs_to :room
 
     after_create_commit do
       Actb::RoomMessageBroadcastJob.perform_later(self)

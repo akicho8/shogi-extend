@@ -1,10 +1,54 @@
 <template lang="pug">
-.the_question_message.columns
-  .column
+.the_question_message
+  .articles_container(ref="articles_container")
+    article.media(v-for="message in question.messages")
+      figure.media-left
+        p.image.is-64x64
+          img.is-rounded(:src="message.user.avatar_path")
+      .media-content
+        .content
+          p
+            strong {{message.user.name}}
+            br
+            span(v-html="simple_format(message.body)")
+            br
+            //- small
+            //-   a Like
+            //-   a Reply
+            //-   | · 3 hrs
+            span.diff_time_format
+              | {{diff_time_format(message.created_at)}}
+        nav.level.is-mobile(v-if="false")
+          .level-left
+            a.level-item
+              span.icon.is-small
+                i.fas.fa-reply
+            a.level-item
+              span.icon.is-small
+                i.fas.fa-retweet
+            a.level-item
+              span.icon.is-small
+                i.fas.fa-heart
+    article.media
+      figure.media-left
+        p.image.is-64x64
+          img.is-rounded(:src="app.current_user.avatar_path")
+      .media-content
+        .field
+          p.control
+            textarea.textarea(v-model.trim="message_body")
+        .field
+          p.control
+            button.button(@click="speak_handle" :class="{'is-primary': message_body.length >= 1}")
+              | 送信
+
+  ////////////////////////////////////////////////////////////////////////////////
+  template(v-if="false")
     .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.question_messages_display_lines}rem`}")
       .message_line(v-for="message in question.messages")
         | {{message.user.name}}: {{message.body}}
-        | (12:34)
+        span.diff_time_format
+          | ({{diff_time_format(message.created_at)}})
     b-field.input_field
       b-input(v-model="message_body" expanded @keypress.native.enter="speak_handle")
       p.control
@@ -32,13 +76,20 @@ export default {
     this.question_subscribe()
   },
 
+  mounted() {
+    // this.scroll_to_bottom("articles_container")
+    this.scroll_to_bottom(this.$refs.messages_box)
+  },
+
   beforeDestroy() {
     this.question_unsubscribe()
   },
 
   watch: {
     "app.overlay_record.question.messages": {
-      handler() { this.scroll_to_bottom(this.$refs.messages_box) },
+      handler() {
+        this.scroll_to_bottom(this.$refs.messages_box)
+      },
       immediate: true,
     },
   },
@@ -101,9 +152,24 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_question_message
+  .articles_container
+    // height: 100vh
+    // overflow-y: scroll
+    margin: 1.5rem 1rem 0rem
+    article
+      .diff_time_format
+        // margin-left: 0.25rem
+        font-size: $size-7
+        color: $grey
+
   .messages_box
+    margin-top: 1.8rem
     padding: 0.5rem
     overflow-y: scroll
+    .diff_time_format
+      font-size: $size-7
+      margin-left: 0.25rem
+      color: $grey-light
   .input_field
     margin-top: 0.5rem
     .play_icon

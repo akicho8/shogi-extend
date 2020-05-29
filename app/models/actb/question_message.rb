@@ -20,12 +20,9 @@
 
 module Actb
   class QuestionMessage < ApplicationRecord
-    belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
-    belongs_to :question, counter_cache: :messages_count
+    include MessageShared
 
-    with_options presence: true do
-      validates :body
-    end
+    belongs_to :question, counter_cache: :messages_count
 
     after_create_commit do
       Actb::QuestionMessageBroadcastJob.perform_later(self)
