@@ -96,7 +96,7 @@ export default {
 
       // チャット用
       lobby_messages: null, // メッセージ(複数)
-      lobby_message:  null, // 入力中のメッセージ
+      lobby_message_body:  null, // 入力中のメッセージ
 
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
@@ -157,12 +157,12 @@ export default {
     // },
 
     lobby_speak_handle() {
-      this.lobby_speak(this.lobby_message)
-      this.lobby_message = ""
+      this.lobby_speak(this.lobby_message_body)
+      this.lobby_message_body = ""
     },
 
-    lobby_speak(message) {
-      this.$ac_lobby.perform("speak", {message: message})
+    lobby_speak(message_body) {
+      this.$ac_lobby.perform("speak", {message_body: message_body})
     },
     lobby_speak_broadcasted(params) {
       this.lobby_speak_broadcasted_shared_process(params)
@@ -237,7 +237,7 @@ export default {
 
     lobby_messages_setup() {
       this.lobby_messages = []
-      this.lobby_message = ""
+      this.lobby_message_body = ""
       this.remote_get(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
         this.lobby_messages = e.lobby_messages
       })

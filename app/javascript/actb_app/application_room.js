@@ -7,7 +7,7 @@ export const application_room = {
     return {
       // チャット用
       room_messages: null, // メッセージ(複数)
-      room_message:  null, // 入力中のメッセージ
+      room_message_body:  null, // 入力中のメッセージ
     }
   },
 
@@ -59,17 +59,17 @@ export const application_room = {
 
     room_speak_init() {
       this.room_messages = []
-      this.room_message = ""
+      this.room_message_body = ""
     },
 
     room_speak_handle() {
-      this.room_speak(this.room_message)
-      this.room_message = ""
+      this.room_speak(this.room_message_body)
+      this.room_message_body = ""
     },
 
-    room_speak(message) {
+    room_speak(message_body) {
       // 受信をバトル側にしている理由は battle_id が自明だと都合が良いため
-      this.$ac_battle.perform("speak", {message: message}) // --> app/channels/actb/battle_channel.rb
+      this.$ac_battle.perform("speak", {message_body: message_body}) // --> app/channels/actb/battle_channel.rb
     },
 
     room_speak_broadcasted(params) {

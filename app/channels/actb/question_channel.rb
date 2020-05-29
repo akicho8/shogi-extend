@@ -14,10 +14,10 @@ module Actb
 
     def speak(data)
       data = data.to_options
-      if data[:message].start_with?("/")
-        execution_interrupt_hidden_command(data[:message])
+      if data[:message_body].start_with?("/")
+        execution_interrupt_hidden_command(data[:message_body])
       else
-        current_question.messages.create!(user: current_user, body: data[:message])
+        current_question.messages.create!(user: current_user, body: data[:message_body])
       end
     end
 

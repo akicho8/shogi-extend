@@ -25,8 +25,8 @@ module Actb
 
     def speak(data)
       data = data.to_options
-      current_user.actb_lobby_messages.create!(body: data[:message])
-      execution_interrupt_hidden_command(data[:message])
+      current_user.actb_lobby_messages.create!(body: data[:message_body])
+      execution_interrupt_hidden_command(data[:message_body])
     end
 
     def execution_interrupt_hidden_command(str)
@@ -123,8 +123,8 @@ module Actb
       current_user.rule_info.redis_key
     end
 
-    def lobby_speak(message)
-      current_user.actb_lobby_messages.create!(body: message)
+    def lobby_speak(message_body)
+      current_user.actb_lobby_messages.create!(body: message_body)
     end
   end
 end

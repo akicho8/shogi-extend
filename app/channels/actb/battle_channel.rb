@@ -14,15 +14,15 @@ module Actb
 
     def speak(data)
       data = data.to_options
-      if data[:message].start_with?("/")
-        execution_interrupt_hidden_command(data[:message])
+      if data[:message_body].start_with?("/")
+        execution_interrupt_hidden_command(data[:message_body])
       else
-        current_user.actb_room_messages.create!(body: data[:message], room: current_battle.room)
+        current_user.actb_room_messages.create!(body: data[:message_body], room: current_battle.room)
       end
     end
 
     def execution_interrupt_hidden_command(str)
-      # if message = battle.messages.where(user: current_user).order(created_at: :desc).first
+      # if message_body = battle.messages.where(user: current_user).order(created_at: :desc).first
       if md = str.to_s.match(/\/(?<command_line>.*)/)
         args = md["command_line"].split
         command = args.shift

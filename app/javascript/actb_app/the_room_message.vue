@@ -5,7 +5,7 @@
       template(v-for="message in app.room_messages")
         div {{message.user.name}}: {{message.body}}
     b-field.input_field
-      b-input(v-model="app.room_message" expanded @keypress.native.enter="app.room_speak_handle")
+      b-input(v-model="app.room_message_body" expanded @keypress.native.enter="app.room_speak_handle")
       p.control
         button.button.is-primary(@click="app.room_speak_handle")
           b-icon.play_icon(icon="play")

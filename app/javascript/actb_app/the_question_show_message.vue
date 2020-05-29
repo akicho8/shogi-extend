@@ -77,7 +77,6 @@ export default {
   },
 
   mounted() {
-    // this.scroll_to_bottom("articles_container")
     this.scroll_to_bottom(this.$refs.messages_box)
   },
 
@@ -87,9 +86,7 @@ export default {
 
   watch: {
     "app.overlay_record.question.messages": {
-      handler() {
-        this.scroll_to_bottom(this.$refs.messages_box)
-      },
+      handler() { this.scroll_to_bottom(this.$refs.messages_box) },
       immediate: true,
     },
   },
@@ -131,8 +128,8 @@ export default {
       this.message_body = ""
     },
 
-    speak(message) {
-      this.$ac_question.perform("speak", {message: message}) // --> app/channels/actb/question_channel.rb
+    speak(message_body) {
+      this.$ac_question.perform("speak", {message_body: message_body}) // --> app/channels/actb/question_channel.rb
     },
 
     speak_broadcasted(params) {
