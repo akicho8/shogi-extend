@@ -203,6 +203,16 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["user_id"], name: "index_actb_profiles_on_user_id"
   end
 
+  create_table "actb_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", comment: "発言者"
+    t.bigint "question_id", comment: "問題"
+    t.string "body", limit: 512, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_actb_question_messages_on_question_id"
+    t.index ["user_id"], name: "index_actb_question_messages_on_user_id"
+  end
+
   create_table "actb_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "作成者"
     t.bigint "folder_id", comment: "フォルダ"
@@ -228,6 +238,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "bad_marks_count", default: 0, null: false, comment: "高評価数"
     t.integer "good_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
+    t.integer "messages_count", default: 0, null: false, comment: "コメント数"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
     t.index ["endpos_answers_count"], name: "index_actb_questions_on_endpos_answers_count"
     t.index ["folder_id"], name: "index_actb_questions_on_folder_id"

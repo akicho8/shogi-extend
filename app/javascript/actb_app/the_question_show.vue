@@ -28,11 +28,14 @@
 
   .vote_container.is-flex
     the_history_row_vote(:row="app.overlay_record")
+
+  the_question_show_message
 </template>
 
 <script>
 import { support } from "./support.js"
 import the_history_row_vote from "./the_history_row_vote.vue"
+import the_question_show_message from "./the_question_show_message.vue"
 
 export default {
   name: "the_question_show",
@@ -41,6 +44,7 @@ export default {
   ],
   components: {
     the_history_row_vote,
+    the_question_show_message,
   },
   data() {
     return {
@@ -53,19 +57,19 @@ export default {
     },
 
     play_mode_advanced_moves_set(moves) {
-      if (this.app.overlay_record.question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
+      if (this.app.overlay_record.question.moves_answers.some(e => e.moves_str === moves.join(" "))) { // FIXME
         this.sound_play("o")
         this.ok_notice("正解")
       }
     },
 
     answer_sfen_for(index) {
-      return [this.init_sfen, "moves", this.app.overlay_record.question.moves_answers[index].moves_str].join(" ")
+      return [this.init_sfen, "moves", this.app.overlay_record.question.moves_answers[index].moves_str].join(" ") // FIXME
     },
   },
   computed: {
     init_sfen() {
-      return ["position", "sfen", this.app.overlay_record.question.init_sfen].join(" ")
+      return ["position", "sfen", this.app.overlay_record.question.init_sfen].join(" ") // FIXME
     },
     selected_sfen() {
       if (this.tab_index === 0) {

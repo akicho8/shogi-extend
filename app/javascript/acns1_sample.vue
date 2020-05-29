@@ -49,16 +49,13 @@ export default {
 
   watch: {
     messages() {
-      this.scroll_to_bottom()
+      this.scroll_to_bottom(this.$refs.messages_box)
     },
   },
 
   methods: {
     speak() {
       this.$channel.perform("speak", {message: this.message})
-    },
-    scroll_to_bottom() {
-      this.$refs.messages_box.scrollTop = this.$refs.messages_box.scrollHeight
     },
   },
 }

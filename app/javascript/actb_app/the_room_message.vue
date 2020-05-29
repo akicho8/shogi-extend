@@ -21,18 +21,8 @@ export default {
   ],
   watch: {
     "app.room_messages": {
-      handler() {
-        this.scroll_to_bottom()
-      },
-    },
-  },
-  methods: {
-    scroll_to_bottom() {
-      if (this.$refs.messages_box) {
-        this.$nextTick(() => {
-          this.$refs.messages_box.scrollTop = this.$refs.messages_box.scrollHeight
-        })
-      }
+      handler() { this.scroll_to_bottom(this.$refs.messages_box) },
+      immediate: true,
     },
   },
 }

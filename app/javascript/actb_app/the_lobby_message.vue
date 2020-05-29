@@ -1,8 +1,8 @@
 <template lang="pug">
 .the_lobby_message
   .messages_box.has-background-light(ref="messages_box")
-    template(v-for="message in app.lobby_messages")
-      div {{message.user.name}}: {{message.body}}
+    .message_line(v-for="message in app.lobby_messages")
+      | {{message.user.name}}: {{message.body}}
   b-field.input_field
     b-input(v-model="app.lobby_message" expanded @keypress.native.enter="app.lobby_speak_handle")
     p.control
@@ -21,17 +21,8 @@ export default {
   watch: {
     "app.lobby_messages": {
       handler() {
-        this.scroll_to_bottom()
+        this.scroll_to_bottom(this.$refs.messages_box)
       },
-    },
-  },
-  methods: {
-    scroll_to_bottom() {
-      if (this.$refs.messages_box) {
-        this.$nextTick(() => {
-          this.$refs.messages_box.scrollTop = this.$refs.messages_box.scrollHeight
-        })
-      }
     },
   },
 }

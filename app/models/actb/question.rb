@@ -70,6 +70,7 @@ module Actb
     belongs_to :lineage # , class_name: "Actb::Lineage"
 
     has_many :histories, dependent: :destroy # 出題履歴
+    has_many :messages, class_name: "Actb::QuestionMessage", dependent: :destroy # コメント
 
     with_options dependent: :destroy do
       has_many :moves_answers  # 手順一致を正解とする答え集

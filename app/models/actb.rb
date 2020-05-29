@@ -10,7 +10,7 @@ module Actb
   end
 
   def models
-    [Question, Room, RoomMembership, Battle, BattleMembership, Season, Profile, Setting, GoodMark, BadMark, ClipMark, Folder, Lineage, LobbyMessage, RoomMessage]
+    [Question, Room, RoomMembership, Battle, BattleMembership, Season, Profile, Setting, GoodMark, BadMark, ClipMark, Folder, Lineage, LobbyMessage, RoomMessage, QuestionMessage]
   end
 
   def destroy_all

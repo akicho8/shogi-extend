@@ -19,7 +19,9 @@ module Actb
     readygo_wait_delay: 2.5,
     deden_mode_delay: 0.8,
 
+    # チャット
     room_messages_display_lines: 20,
+    question_messages_display_lines: 5,
 
     # UI
     save_and_return: true, # プロフィール編集画面で「保存」と同時に戻るか？

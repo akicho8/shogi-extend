@@ -134,6 +134,13 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    create_table :actb_question_messages do |t|
+      t.belongs_to :user,         comment: "発言者"
+      t.belongs_to :question,     comment: "問題"
+      t.string :body, limit: 512, comment: "発言"
+      t.timestamps
+    end
+
     create_table :actb_questions do |t|
       t.belongs_to :user,                                                comment: "作成者"
       t.belongs_to :folder,                                              comment: "フォルダ"
@@ -164,7 +171,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :favorites_count,  default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
       t.integer :bad_marks_count,  default: 0, null: false, comment: "高評価数"
       t.integer :good_marks_count, default: 0, null: false, comment: "低評価数"
-      t.integer :clip_marks_count,      default: 0, null: false, comment: "保存された数"
+      t.integer :clip_marks_count, default: 0, null: false, comment: "保存された数"
+      t.integer :messages_count,   default: 0, null: false, comment: "コメント数"
     end
 
     # MovesAnswer

@@ -84,6 +84,7 @@ module FrontendScript
         return public_send(v)
       end
 
+      # FIXME
       # http://localhost:3000/script/actb-app.json?questions_fetch=true
       if params[:questions_fetch]
         params[:per] ||= QUESTIONS_FETCH_PER
@@ -98,16 +99,19 @@ module FrontendScript
         return retv
       end
 
+      # FIXME
       # http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rating
       if params[:ranking_fetch]
         return { rank_data: Actb::RankingCop.new(params.merge(current_user: current_user)) }
       end
 
+      # FIXME
       # http://localhost:3000/script/actb-app.json?seasons_fetch=true
       if params[:seasons_fetch]
         return { seasons: Actb::Season.newest_order.as_json(only: [:id, :generation, :name, :begin_at, :end_at]) }
       end
 
+      # FIXME
       if params[:history_records_fetch]
         s = current_user.actb_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
         retv = {}
@@ -115,6 +119,7 @@ module FrontendScript
         return retv
       end
 
+      # FIXME
       if params[:clip_records_fetch]
         s = current_user.actb_clip_marks.order(created_at: :desc).limit(CLIP_FETCH_MAX)
         retv = {}
@@ -123,10 +128,11 @@ module FrontendScript
       end
 
       # 詳細
+      # FIXME
       if params[:question_single_fetch]
         question = Actb::Question.find(params[:question_id])
         retv = {}
-        retv[:question] = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}})
+        retv[:question] = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}, :messages => {only: [:id, :body, :created_at], include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}})
         retv.update(current_user.good_bad_clip_flags_for(question))
         return { overlay_record: retv }
       end

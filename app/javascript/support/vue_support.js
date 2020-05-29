@@ -229,6 +229,8 @@ export default {
       return dayjs(t).format("ddd")
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     __assert__(value, message = null) {
       if (!value) {
         alert(message || "assert error")
@@ -236,9 +238,18 @@ export default {
       }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     body_background_color_set(color) {
       const elem = document.querySelector("body")
       elem.style.backgroundColor = color
+    },
+
+    // 一番下までスクロール
+    scroll_to_bottom(elem) {
+      if (elem) {
+        this.$nextTick(() => elem.scrollTop = elem.scrollHeight)
+      }
     },
   },
 

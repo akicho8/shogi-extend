@@ -23,6 +23,7 @@ module Actb
       with_options(dependent: :destroy) do |o|
         has_many :actb_room_messages, class_name: "Actb::RoomMessage"
         has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
+        has_many :actb_question_messages, class_name: "Actb::QuestionMessage"
       end
 
       # Good/Bad
