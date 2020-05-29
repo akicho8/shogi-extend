@@ -103,9 +103,6 @@ export default {
   },
 
   methods: {
-    delete_click_handle() {
-      this.$emit("close") // 昔は this.$parent.close() だった
-    },
   },
 
   computed: {

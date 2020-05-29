@@ -9,8 +9,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_room_memberships do |t|
-      t.belongs_to :room,                                comment: "対戦部屋"
-      t.belongs_to :user,                                comment: "対戦者"
+      t.belongs_to :room,  null: false,                               comment: "対戦部屋"
+      t.belongs_to :user,   null: false,                              comment: "対戦者"
       # t.string :judge_key,     null: true,  index: true, comment: "勝敗"
       # t.integer :rensho_count, null: false, index: true, comment: "連勝数"
       # t.integer :renpai_count, null: false, index: true, comment: "連敗数"
@@ -21,7 +21,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_battles do |t|
-      t.belongs_to :room,                                 comment: "部屋"
+      t.belongs_to :room,       null: false,                           comment: "部屋"
       t.belongs_to :parent,    null: true,                comment: "親"
       t.datetime :begin_at,    null: false,  index: true, comment: "対戦開始日時"
       t.datetime :end_at,      null: true,   index: true, comment: "対戦終了日時"
@@ -32,8 +32,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_battle_memberships do |t|
-      t.belongs_to :battle,                              comment: "対戦"
-      t.belongs_to :user,                                comment: "対戦者"
+      t.belongs_to :battle,     null: false,                          comment: "対戦"
+      t.belongs_to :user,       null: false,                          comment: "対戦者"
       t.string :judge_key,     null: true,  index: true, comment: "勝敗"
       t.integer :rensho_count, null: false, index: true, comment: "連勝数"
       t.integer :renpai_count, null: false, index: true, comment: "連敗数"
@@ -45,14 +45,18 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_settings do |t|
-      t.belongs_to :user,                                     comment: "自分"
+      t.belongs_to :user, null: false,                                    comment: "自分"
       t.string :rule_key,           null: false, index: true, comment: "最後に選択したルール"
       t.timestamps
     end
 
     create_table :actb_profiles do |t|
-      t.belongs_to :user,                                    comment: "対戦者"
-      t.belongs_to :season,                                  comment: "期"
+      t.belongs_to :user,          null: false,              comment: "対戦者"
+      t.belongs_to :season,        null: false,              comment: "期"
+      t.integer :battle_count,     null: false, index: true, comment: "対戦数"
+      t.integer :win_count,        null: false, index: true, comment: "勝ち数"
+      t.integer :lose_count,       null: false, index: true, comment: "負け数"
+      t.float   :win_rate,         null: false, index: true, comment: "勝率"
       t.integer :rating,           null: false, index: true, comment: "レーティング"
       t.integer :rating_last_diff, null: false, index: true, comment: "直近レーティング変化"
       t.integer :rating_max,       null: false, index: true, comment: "レーティング(最大)"
@@ -76,41 +80,41 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_histories do |t|
-      t.belongs_to :user,       comment: "自分"
-      t.belongs_to :question,   comment: "出題"
+      t.belongs_to :user,  null: false,      comment: "自分"
+      t.belongs_to :question,  null: false,  comment: "出題"
       t.timestamps
       #  おまけ
-      t.belongs_to :room,       comment: "部屋"
-      t.belongs_to :battle,     comment: "対戦"
-      t.belongs_to :membership, comment: "自分と相手"
-      t.belongs_to :ox_mark,    comment: "解答"
+      t.belongs_to :room,        null: false,comment: "部屋"
+      t.belongs_to :battle,      null: false,comment: "対戦"
+      t.belongs_to :membership,  null: false,comment: "自分と相手"
+      t.belongs_to :ox_mark,     null: false,comment: "解答"
     end
 
     # 未使用
     create_table :actb_favorites do |t|
-      t.belongs_to :user,     comment: "自分"
-      t.belongs_to :question, comment: "出題"
-      t.integer :score,       comment: "スコア"
+      t.belongs_to :user,      null: false,comment: "自分"
+      t.belongs_to :question,  null: false,comment: "出題"
+      t.integer :score,        null: false,comment: "スコア"
       t.timestamps
     end
 
     create_table :actb_good_marks do |t|
-      t.belongs_to :user,     comment: "自分"
-      t.belongs_to :question, comment: "出題"
+      t.belongs_to :user,      null: false,comment: "自分"
+      t.belongs_to :question,  null: false,comment: "出題"
       t.timestamps
       t.index [:user_id, :question_id], unique: true
     end
 
     create_table :actb_bad_marks do |t|
-      t.belongs_to :user,     comment: "自分"
-      t.belongs_to :question, comment: "出題"
+      t.belongs_to :user,      null: false,comment: "自分"
+      t.belongs_to :question,  null: false,comment: "出題"
       t.timestamps
       t.index [:user_id, :question_id], unique: true
     end
 
     create_table :actb_clip_marks do |t|
-      t.belongs_to :user,     comment: "自分"
-      t.belongs_to :question, comment: "出題"
+      t.belongs_to :user,      null: false,comment: "自分"
+      t.belongs_to :question,  null: false,comment: "出題"
       t.timestamps
       t.index [:user_id, :question_id], unique: true
     end
@@ -122,29 +126,29 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_room_messages do |t|
-      t.belongs_to :user,         comment: "対戦者"
-      t.belongs_to :room,         comment: "対戦部屋"
+      t.belongs_to :user,  null: false,        comment: "対戦者"
+      t.belongs_to :room,   null: false,       comment: "対戦部屋"
       t.string :body, limit: 140, comment: "発言"
       t.timestamps
     end
 
     create_table :actb_lobby_messages do |t|
-      t.belongs_to :user,         comment: "対戦者"
+      t.belongs_to :user,    null: false,      comment: "対戦者"
       t.string :body, limit: 140, comment: "発言"
       t.timestamps
     end
 
     create_table :actb_question_messages do |t|
-      t.belongs_to :user,         comment: "発言者"
-      t.belongs_to :question,     comment: "問題"
-      t.string :body, limit: 140, comment: "発言"
+      t.belongs_to :user,          null: false,comment: "発言者"
+      t.belongs_to :question,      null: false,comment: "問題"
+      t.string :body, limit: 140,  null: false,comment: "発言"
       t.timestamps
     end
 
     create_table :actb_questions do |t|
-      t.belongs_to :user,                                                comment: "作成者"
-      t.belongs_to :folder,                                              comment: "フォルダ"
-      t.belongs_to :lineage,                                                comment: "種類"
+      t.belongs_to :user,        null: false,                                         comment: "作成者"
+      t.belongs_to :folder,       null: false,                                        comment: "フォルダ"
+      t.belongs_to :lineage,       null: false,                                          comment: "種類"
 
       t.string :init_sfen,                    null: false, index: true,  comment: "問題"
       t.integer :time_limit_sec,              null: true,  index: true,  comment: "制限時間(秒)"
@@ -167,7 +171,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :good_count, null: false, comment: "低評価数"
 
       # counter_cache
-      t.integer :histories_count,  default: 0, null: false, comment: "履歴数"
+      t.integer :histories_count,  default: 0, null: false, comment: "履歴数(出題数とは異なる)"
       t.integer :favorites_count,  default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
       t.integer :bad_marks_count,  default: 0, null: false, comment: "高評価数"
       t.integer :good_marks_count, default: 0, null: false, comment: "低評価数"
@@ -177,7 +181,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
 
     # MovesAnswer
     create_table :actb_moves_answers do |t|
-      t.belongs_to :question,                           comment: "問題"
+      t.belongs_to :question,   null: false,                         comment: "問題"
       t.integer :moves_count, null: false, index: true,  comment: "N手"
       t.string :moves_str,   null: false, index: false, comment: "連続した指し手"
       t.string :end_sfen,    null: true,  index: false, comment: "最後の局面"
@@ -186,7 +190,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
 
     # 未使用
     create_table :actb_endpos_answers do |t|
-      t.belongs_to :question,                            comment: "問題"
+      t.belongs_to :question,    null: false,                         comment: "問題"
       t.integer :moves_count,  null: false, index: true,  comment: "N手"
       t.string :end_sfen,  null: false, index: false, comment: "最後の局面"
       t.timestamps
@@ -194,7 +198,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
 
     # フォルダ
     create_table :actb_folders do |t|
-      t.belongs_to :user
+      t.belongs_to :user,  null: false
       t.string :type, null: false
       t.timestamps
 

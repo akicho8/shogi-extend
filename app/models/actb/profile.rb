@@ -62,6 +62,19 @@ module Actb
       if renpai_max < renpai_count
         self.renpai_max = renpai_count
       end
+
+      self.battle_count ||= 0
+
+      self.win_count ||= 0
+      self.lose_count ||= 0
+      self.win_rate ||= 0
+
+      if changes_to_save[:win_count] || changes_to_save[:lose_count]
+        d = win_count + lose_count
+        if d.positive?
+          self.win_rate = win_count.fdiv(d)
+        end
+      end
     end
 
     before_validation do

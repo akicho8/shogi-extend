@@ -65,7 +65,8 @@ module FrontendScript
               "問題作成(情報)"               => :builder_form,
               "ランキング"                   => :ranking,
               "履歴"                         => :history,
-              "詳細"                         => :overlay_record,
+              "問題詳細"                     => :ov_question_info,
+              "ユーザー詳細"                 => :ov_user_info,
             },
 
             :type    => :select,
@@ -134,7 +135,14 @@ module FrontendScript
         retv = {}
         retv[:question] = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}, :messages => {only: [:id, :body, :created_at], include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}})
         retv.update(current_user.good_bad_clip_flags_for(question))
-        return { overlay_record: retv }
+        return { ov_question_info: retv }
+      end
+
+      # 詳細
+      # FIXME
+      if params[:user_single_fetch]
+        user = Colosseum::User.find(params[:user_id])
+        return { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :battle_count, :win_count, :lose_count, :win_rate] } }) }
       end
 
       # params = {
@@ -422,7 +430,7 @@ module FrontendScript
         c.sysop_login_unless_logout
       end
 
-      if current_debug_scene == :overlay_record
+      if current_debug_scene == :ov_question_info
         c.sysop_login_unless_logout
 
         # Actb::Question.destroy_all

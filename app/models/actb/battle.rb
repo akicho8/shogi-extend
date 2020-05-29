@@ -103,7 +103,12 @@ module Actb
         ab = mm.collect { |e| e.user.actb_newest_profile.rating }
         ab = EloRating.rating_update2(*ab)
         ab = ab.collect(&:round)
-        mm.each.with_index { |m, i| m.user.actb_newest_profile.update!(rating: ab[i]) }
+        mm.each.with_index do |m, i|
+          record = m.user.actb_newest_profile
+          record.rating = ab[i]
+          record.battle_count = (record.battle_count || 0) + 1
+          record.save!
+        end
 
         mm.each(&:save!)
         update!(final_key: final_key)

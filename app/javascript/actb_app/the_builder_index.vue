@@ -11,7 +11,7 @@
     :mobile-cards="false"
     hoverable
     :narrowed="false"
-    @click="row => app.overlay_record_set(row.id)"
+    @click="row => app.ov_question_info_set(row.id)"
 
     paginated
     backend-pagination
@@ -28,7 +28,7 @@
   )
     template(slot-scope="props")
       //- b-table-column(label="")
-      //-   a(@click="app.overlay_record_set(props.row.id)")
+      //-   a(@click="app.ov_question_info_set(props.row.id)")
       //-     b-icon(icon="eye-outline" size="is-small")
 
       b-table-column(field="id"               :label="ColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
@@ -48,7 +48,7 @@
           b-icon(icon="pencil-outline" size="is-small")
         //- .buttons.are-small
         //-   a.button.is-small(@click="$parent.question_edit_of(props.row)") 編集
-        //-   a.button.is-small(@click="app.overlay_record_set(props.row.id)") 表示
+        //-   a.button.is-small(@click="app.ov_question_info_set(props.row.id)") 表示
 
     template(slot="empty")
       section.section.is-unselectable

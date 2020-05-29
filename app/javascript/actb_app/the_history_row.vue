@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_history_row.is-flex(@click="app.overlay_record_set(row.question.id)")
+.the_history_row.is-flex(@click="app.ov_question_info_set(row.question.id)")
   .left_block.is-flex
     .ox_mark(v-if="row.ox_mark")
       template(v-if="row.ox_mark.key === 'correct'")

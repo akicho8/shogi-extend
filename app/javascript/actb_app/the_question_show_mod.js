@@ -1,23 +1,23 @@
 export const the_question_show_mod = {
   data() {
     return {
-      overlay_record: null,
+      ov_question_info: null,
     }
   },
 
   methods: {
-    overlay_record_set(question_id) {
+    ov_question_info_set(question_id) {
       this.sound_play("click")
       this.remote_get(this.app.info.put_path, { question_single_fetch: true, question_id: question_id }, e => {
-        if (e.overlay_record) {
-          this.overlay_record = e.overlay_record
+        if (e.ov_question_info) {
+          this.ov_question_info = e.ov_question_info
         }
       })
     },
 
-    board_close() {
+    ov_question_info_close() {
       this.sound_play("click")
-      this.overlay_record = null
+      this.ov_question_info = null
     },
   },
 }

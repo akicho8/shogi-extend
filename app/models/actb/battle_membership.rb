@@ -62,7 +62,13 @@ module Actb
     end
 
     after_save do
-      user.actb_profile.update!(rensho_count: rensho_count, renpai_count: renpai_count)
+      if saved_changes[:judge_key] && judge_key
+        record = user.actb_newest_profile
+        record.rensho_count = rensho_count # membershipの方に持つ必要ある？？？
+        record.renpai_count = renpai_count
+        record.public_send("#{judge_key}_count=", (record.public_send("#{judge_key}_count") || 0) + 1) # ← これだけ伝わればいいのでは？
+        record.save!
+      end
     end
 
     def judge_info

@@ -1,8 +1,9 @@
 <template lang="pug">
 .actb_app(:class="mode")
-  the_question_show(v-if="overlay_record")
+  the_question_show(v-if="ov_question_info")
+  the_user_show(v-if="ov_user_info")
 
-  .switching_pages(v-show="!overlay_record")
+  .switching_pages(v-show="!ov_question_info && !ov_user_info")
     the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
     the_system_header(v-if="mode === 'lobby' || mode === 'matching' || mode === 'result' || mode === 'battle'")
     the_lobby(v-if="mode === 'lobby'")
@@ -27,8 +28,10 @@ import { support } from "./support.js"
 import { store   } from "./store.js"
 
 import { the_question_show_mod } from "./the_question_show_mod.js"
+import { the_user_show_mod } from "./the_user_show_mod.js"
 
 import the_question_show from "./the_question_show.vue"
+import the_user_show from "./the_user_show.vue"
 import the_system_header from "./the_system_header.vue"
 import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
@@ -57,6 +60,7 @@ export default {
     config,
 
     the_question_show_mod,
+    the_user_show_mod,
 
     application_room,
     application_battle,
@@ -64,6 +68,7 @@ export default {
   ],
   components: {
     the_question_show,
+    the_user_show,
     the_system_header,
     the_footer,
     the_lobby,
@@ -141,8 +146,11 @@ export default {
         if (this.info.debug_scene === "history") {
           this.history_handle()
         }
-        if (this.info.debug_scene === "overlay_record") {
-          this.overlay_record_set(this.info.question_id)
+        if (this.info.debug_scene === "ov_question_info") {
+          this.ov_question_info_set(this.info.question_id)
+        }
+        if (this.info.debug_scene === "ov_user_info") {
+          this.ov_user_info_set(this.info.current_user.id)
         }
       } else {
         this.lobby_setup()
@@ -378,24 +386,4 @@ export default {
 @import "support.sass"
 @import "application.sass"
 .actb_app
-  // ユーザー情報
-  .user_container
-    flex-direction: column
-    justify-content: flex-end
-    align-items: center
-
-    // アイコンの上の勝敗メッセージ
-    .icon_up_message
-
-    // アイコン
-    figure
-      margin-top: 0.5rem
-
-    // ユーザー名
-    .user_name
-      margin-top: 0.5rem
-      font-size: $size-7
-
-    .user_rating_diff
-      margin-left: 0.25rem
 </style>

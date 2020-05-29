@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "自分"
-    t.bigint "question_id", comment: "出題"
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actb_bad_marks_on_question_id"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_battle_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "battle_id", comment: "対戦"
-    t.bigint "user_id", comment: "対戦者"
+    t.bigint "battle_id", null: false, comment: "対戦"
+    t.bigint "user_id", null: false, comment: "対戦者"
     t.string "judge_key", comment: "勝敗"
     t.integer "rensho_count", null: false, comment: "連勝数"
     t.integer "renpai_count", null: false, comment: "連敗数"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "room_id", comment: "部屋"
+    t.bigint "room_id", null: false, comment: "部屋"
     t.bigint "parent_id", comment: "親"
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_clip_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "自分"
-    t.bigint "question_id", comment: "出題"
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actb_clip_marks_on_question_id"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_endpos_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "question_id", comment: "問題"
+    t.bigint "question_id", null: false, comment: "問題"
     t.integer "moves_count", null: false, comment: "N手"
     t.string "end_sfen", null: false, comment: "最後の局面"
     t.datetime "created_at", precision: 6, null: false
@@ -96,9 +96,9 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "自分"
-    t.bigint "question_id", comment: "出題"
-    t.integer "score", comment: "スコア"
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.integer "score", null: false, comment: "スコア"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actb_favorites_on_question_id"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.string "type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -115,8 +115,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_good_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "自分"
-    t.bigint "question_id", comment: "出題"
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actb_good_marks_on_question_id"
@@ -125,14 +125,14 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "自分"
-    t.bigint "question_id", comment: "出題"
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "room_id", comment: "部屋"
-    t.bigint "battle_id", comment: "対戦"
-    t.bigint "membership_id", comment: "自分と相手"
-    t.bigint "ox_mark_id", comment: "解答"
+    t.bigint "room_id", null: false, comment: "部屋"
+    t.bigint "battle_id", null: false, comment: "対戦"
+    t.bigint "membership_id", null: false, comment: "自分と相手"
+    t.bigint "ox_mark_id", null: false, comment: "解答"
     t.index ["battle_id"], name: "index_actb_histories_on_battle_id"
     t.index ["membership_id"], name: "index_actb_histories_on_membership_id"
     t.index ["ox_mark_id"], name: "index_actb_histories_on_ox_mark_id"
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "対戦者"
+    t.bigint "user_id", null: false, comment: "対戦者"
     t.string "body", limit: 140, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "question_id", comment: "問題"
+    t.bigint "question_id", null: false, comment: "問題"
     t.integer "moves_count", null: false, comment: "N手"
     t.string "moves_str", null: false, comment: "連続した指し手"
     t.string "end_sfen", comment: "最後の局面"
@@ -176,8 +176,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "対戦者"
-    t.bigint "season_id", comment: "期"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "season_id", null: false, comment: "期"
+    t.integer "battle_count", null: false, comment: "対戦数"
+    t.integer "win_count", null: false, comment: "勝ち数"
+    t.integer "lose_count", null: false, comment: "負け数"
+    t.float "win_rate", null: false, comment: "勝率"
     t.integer "rating", null: false, comment: "レーティング"
     t.integer "rating_last_diff", null: false, comment: "直近レーティング変化"
     t.integer "rating_max", null: false, comment: "レーティング(最大)"
@@ -189,8 +193,10 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_count"], name: "index_actb_profiles_on_battle_count"
     t.index ["create_count"], name: "index_actb_profiles_on_create_count"
     t.index ["generation"], name: "index_actb_profiles_on_generation"
+    t.index ["lose_count"], name: "index_actb_profiles_on_lose_count"
     t.index ["rating"], name: "index_actb_profiles_on_rating"
     t.index ["rating_last_diff"], name: "index_actb_profiles_on_rating_last_diff"
     t.index ["rating_max"], name: "index_actb_profiles_on_rating_max"
@@ -201,12 +207,14 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["season_id"], name: "index_actb_profiles_on_season_id"
     t.index ["user_id", "season_id"], name: "index_actb_profiles_on_user_id_and_season_id", unique: true
     t.index ["user_id"], name: "index_actb_profiles_on_user_id"
+    t.index ["win_count"], name: "index_actb_profiles_on_win_count"
+    t.index ["win_rate"], name: "index_actb_profiles_on_win_rate"
   end
 
   create_table "actb_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "発言者"
-    t.bigint "question_id", comment: "問題"
-    t.string "body", limit: 140, comment: "発言"
+    t.bigint "user_id", null: false, comment: "発言者"
+    t.bigint "question_id", null: false, comment: "問題"
+    t.string "body", limit: 140, null: false, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actb_question_messages_on_question_id"
@@ -214,9 +222,9 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "作成者"
-    t.bigint "folder_id", comment: "フォルダ"
-    t.bigint "lineage_id", comment: "種類"
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.bigint "lineage_id", null: false, comment: "種類"
     t.string "init_sfen", null: false, comment: "問題"
     t.integer "time_limit_sec", comment: "制限時間(秒)"
     t.integer "difficulty_level", comment: "難易度"
@@ -252,8 +260,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_room_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "room_id", comment: "対戦部屋"
-    t.bigint "user_id", comment: "対戦者"
+    t.bigint "room_id", null: false, comment: "対戦部屋"
+    t.bigint "user_id", null: false, comment: "対戦者"
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -264,8 +272,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_room_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "対戦者"
-    t.bigint "room_id", comment: "対戦部屋"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "room_id", null: false, comment: "対戦部屋"
     t.string "body", limit: 140, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -299,7 +307,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   end
 
   create_table "actb_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", comment: "自分"
+    t.bigint "user_id", null: false, comment: "自分"
     t.string "rule_key", null: false, comment: "最後に選択したルール"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

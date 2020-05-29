@@ -4,7 +4,7 @@
     .user_info_block.is-flex
       .image.is_clickable(@click="app.profile_edit_handle")
         img.is-rounded(:src="app.current_user.avatar_path")
-      .name_with_rating
+      .name_with_rating.is_clickable(@click="app.ov_user_info_set(app.current_user.id)")
         .name.has-text-weight-bold.is-size-6
           | {{app.current_user.name}}
         .rating.has-text-weight-bold.is-size-7
