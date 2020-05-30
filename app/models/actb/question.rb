@@ -35,7 +35,7 @@
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_season_xrecord
+# Colosseum::User.has_one :actb_master_xrecord
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -116,7 +116,10 @@ module Actb
       self.good_count ||= 0
 
       self.lineage ||= Lineage.fetch("詰将棋")
-      self.folder_key ||= :active
+
+      if user
+        self.folder ||= user.actb_active_box
+      end
     end
 
     with_options presence: true do
@@ -215,7 +218,9 @@ module Actb
     end
 
     def folder_key=(key)
-      self.folder = user.public_send("actb_#{key}_box")
+      if user
+        self.folder = user.public_send("actb_#{key}_box")
+      end
     end
   end
 end

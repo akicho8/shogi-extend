@@ -15,34 +15,24 @@
 # |------------+----------+-------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_season_xrecord
+# Colosseum::User.has_one :actb_master_xrecord
 #--------------------------------------------------------------------------------
 
 require 'rails_helper'
 
 module Actb
   RSpec.describe RoomMessage, type: :model do
-    let :user1 do
-      Colosseum::User.create!
+    before do
+      Actb.setup
     end
 
-    let :user2 do
-      Colosseum::User.create!
-    end
+    let(:room) { Actb::Room.create! }
 
-    let :battle do
-      Actb::Battle.create! do |e|
-        e.memberships.build(user: user1, judge_key: "win")
-        e.memberships.build(user: user2, judge_key: "lose")
-      end
-    end
-
-    # https://github.com/palkan/action-cable-testing
     # /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-rails-4.0.0/lib/rspec/rails/matchers/action_cable.rb
     it do
       expect {
-        battle.messages.create!(user: user1, body: "a")
-      }.to have_broadcasted_to("actb/battle_channel/#{battle.id}") # .with(message: "<div>名無しの棋士1号: a</div>")
+        room.messages.create!(user: Colosseum::User.sysop, body: "(body)")
+      }.to have_broadcasted_to("actb/room_channel/#{room.id}")
     end
   end
 end

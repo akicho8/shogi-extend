@@ -15,7 +15,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
   end
 
   let_it_be(:current_room) do
-    Actb::Room.create_with_members!([user1, user2], rule_key: :marathon_rule)
+    Actb::Room.create_with_members!([user1, user2], rule: Actb::Rule.fetch(:marathon_rule))
   end
 
   let_it_be(:current_battle) do
@@ -48,7 +48,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
     it "切断したので負け" do
       unsubscribe
-      assert { membership1.judge_key == "lose" }
+      assert { membership1.judge.key == "lose" }
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     end
 
     it do
-      subscription.speak(message: "(message)")
+      subscription.speak(message_body: "(message)")
       assert { user1.actb_room_messages.count == 1 }
     end
   end
@@ -124,10 +124,10 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       current_battle.reload
 
       assert { current_battle.end_at    }
-      assert { current_battle.final_key }
+      assert { current_battle.final     }
 
-      assert { membership1.judge_key == "win"  }
-      assert { membership2.judge_key == "lose" }
+      assert { membership1.judge.key == "win"  }
+      assert { membership2.judge.key == "lose" }
 
       assert { user1.reload.rating == 1516 }
       assert { user2.reload.rating == 1484 }
@@ -158,11 +158,11 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       subscription.owattayo(data)
       current_battle.reload
 
-      assert { current_battle.end_at    }
-      assert { current_battle.final_key }
+      assert { current_battle.end_at  }
+      assert { current_battle.final   }
 
-      assert { membership1.judge_key == "win"  }
-      assert { membership2.judge_key == "lose" }
+      assert { membership1.judge.key == "win"  }
+      assert { membership2.judge.key == "lose" }
 
       assert { user1.reload.rating == 1516 }
       assert { user2.reload.rating == 1484 }

@@ -30,7 +30,7 @@ module Actb
     let_it_be(:user2) { Colosseum::User.create! }
 
     let_it_be(:room) do
-      Actb::Room.create_with_members!([user1, user2], rule_key: :marathon_rule)
+      Actb::Room.create_with_members!([user1, user2], rule: Rule.fetch(:marathon_rule))
     end
 
     let(:current_battle) do
@@ -38,20 +38,20 @@ module Actb
     end
 
     it "final_keyをセットしたタイミングで終了時刻も設定" do
-      current_battle.update!(final_key: :f_success)
+      current_battle.update!(final: Actb::Final.fetch(:f_success))
       assert { current_battle.end_at }
     end
 
     describe "#best_questions" do
       it do
-        assert { battle.best_questions }
+        assert { current_battle.best_questions }
       end
     end
 
     describe "#katimashita" do
       def test(judge_key)
         users = 2.times.collect { Colosseum::User.create! }
-        room = Actb::Room.create_with_members!(users, rule_key: :marathon_rule)
+        room = Actb::Room.create_with_members!(users, rule: Actb::Rule.fetch(:marathon_rule))
         battle = room.battle_create_with_members!
         battle.katimashita(battle.users[0], judge_key, :f_success)
         battle.reload.memberships.flat_map do |e|

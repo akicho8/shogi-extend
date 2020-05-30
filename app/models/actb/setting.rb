@@ -14,7 +14,7 @@
 # |------------+----------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_season_xrecord
+# Colosseum::User.has_one :actb_master_xrecord
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -24,10 +24,6 @@ module Actb
 
     before_validation do
       self.rule ||= Rule.fetch(:marathon_rule)
-    end
-
-    def rule_info
-      rule.pure_info
     end
   end
 end

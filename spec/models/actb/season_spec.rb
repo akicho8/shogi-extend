@@ -31,7 +31,7 @@ module Actb
     end
 
     it "このシーズンを持っている profiles" do
-      assert { Season.newest.profiles }
+      assert { Season.newest.xrecords }
     end
   end
 end

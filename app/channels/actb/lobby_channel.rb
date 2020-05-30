@@ -108,19 +108,19 @@ module Actb
       ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: {matching_list_hash: matching_list_hash})
     end
 
-    def room_create(a, b)
-      matching_list_remove(a, b)
+    def room_create(*users)
+      matching_list_remove(*users)
 
       # app/models/actb/room.rb
-      Room.create! do |e|
-        e.memberships.build(user: a)
-        e.memberships.build(user: b)
-        e.rule_key = current_user.rule_info.key
+      Room.create!(rule: current_user.actb_setting.rule) do |e|
+        users.each do |user|
+          e.memberships.build(user: user)
+        end
       end
     end
 
     def redis_key
-      current_user.rule_info.redis_key
+      current_user.actb_setting.rule.pure_info.redis_key
     end
 
     def lobby_speak(message_body)

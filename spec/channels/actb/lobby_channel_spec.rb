@@ -99,7 +99,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     context "レートを考慮したマッチング" do
       def user_of(rating)
         Colosseum::User.create!.tap do |e|
-          e.actb_profile.update!(rating: rating)
+          e.actb_master_xrecord.update!(rating: rating)
         end
       end
 
@@ -111,7 +111,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
       end
 
       before do
-        assert { start(user_a) == [user_a]         }
+        assert { start(user_a) == [user_a] }
       end
 
       let_it_be(:user_a) { user_of(1500) }

@@ -17,6 +17,7 @@ module Actb
       def setup(options = {})
         pure_class.each do |e|
           find_or_create_by!(key: e.key)
+          # unscoped.find_by(key: e.key) || unscoped.create!(key: e.key)
         end
       end
 

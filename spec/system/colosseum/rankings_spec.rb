@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe "ランキング", type: :system do
   it "基本" do
+    Actb.setup
+
     user = create(:colosseum_user)
 
     user = create(:colosseum_user)

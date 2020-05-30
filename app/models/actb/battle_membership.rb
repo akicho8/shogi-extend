@@ -17,7 +17,7 @@
 # |----------------+----------------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_season_xrecord
+# Colosseum::User.has_one :actb_master_xrecord
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -29,6 +29,10 @@ module Actb
     acts_as_list top_of_list: 0, scope: :battle
 
     before_validation do
+      if Rails.env.test?
+        self.user ||= Colosseum::User.create!
+      end
+
       self.judge ||= Judge.fetch(:pending)
 
       # self.rensho_count ||= 0
@@ -74,6 +78,14 @@ module Actb
     def judge_info
       judge.pure_info
     end
+
+    # def judge_key=(key)
+    #   self.judge = Judge.fetch(key)
+    # end
+    #
+    # def judge_key
+    #   self.judge.key
+    # end
 
     # def maeno_record
     #   s = user.actb_battle_memberships
