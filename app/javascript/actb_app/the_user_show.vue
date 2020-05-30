@@ -10,7 +10,7 @@
     .user_name.has-text-weight-bold
       | {{app.ov_user_info.name}}
     .rate_container
-      | S+ {{app.ov_user_info.actb_newest_profile.rating}}
+      | R{{app.ov_user_info.actb_newest_profile.rating}}
 
     win_lose_circle(:info="win_lose_circle_params")
 
