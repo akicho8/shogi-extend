@@ -4,6 +4,17 @@ if $0 == __FILE__
   require File.expand_path('../../../../config/environment', __FILE__)
 end
 
+# A Faraday::SSLError
+# SSL_connect returned=1 errno=0 state=error: certificate verify failed (certificate has expired)
+#
+# Faradayを使うとSSL関連のエラーが定期的にでる
+# 2020-05-30 には常時エラーになってしまった
+# なのでSSLチェックを無視する設定に変更してみる
+#
+# https://github.com/googleapis/google-api-ruby-client/issues/253#issue-94316624
+# https://komiyak.hatenablog.jp/entry/20130508/1367993536
+silence_warnings { OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE }
+
 module Swars
   module Agent
     class OfficialFormatChanged < StandardError
@@ -13,9 +24,10 @@ module Swars
     end
 
     class Base
+      AGENT_TYPE = :curl     # faraday or curl
+
       BASE_URL   = "https://shogiwars.heroz.jp"
       USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36"
-      AGENT_TYPE = :curl
 
       class << self
         def fetch(*args)
@@ -24,6 +36,7 @@ module Swars
 
         def agent
           @agent ||= Faraday.new(url: BASE_URL) do |conn|
+            raise if OpenSSL::SSL::VERIFY_PEER != OpenSSL::SSL::VERIFY_NONE
             if Rails.env.development? && false
               conn.response :logger
             end
@@ -33,6 +46,7 @@ module Swars
           end
         end
 
+        # 2020-05-30
         # --insecure をつけないと動作しない
         # https://qiita.com/shimpeiws/items/10e2b150c6ff41d69013
         def curl_command(url)
@@ -56,10 +70,10 @@ module Swars
 
         def html_fetch(url)
           case AGENT_TYPE
-          when :curl
-            `#{curl_command(url)}`
           when :faraday
             agent.get(url).body
+          when :curl
+            `#{curl_command(url)}`
           end
         end
       end
