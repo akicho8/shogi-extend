@@ -24,7 +24,7 @@ module Swars
     end
 
     class Base
-      AGENT_TYPE = :curl     # faraday or curl
+      AGENT_TYPE = :faraday     # faraday or curl
 
       BASE_URL   = "https://shogiwars.heroz.jp"
       USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36"
