@@ -30,10 +30,12 @@ module Actb
   class Profile < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User"
     belongs_to :season
+    belongs_to :judge
 
     scope :newest_order, -> { order(generation: :desc) }
     scope :oldest_order, -> { order(generation: :asc)  }
 
+    # レーティング
     before_validation do
       self.rating ||= EloRating.rating_default
       self.rating_max ||= EloRating.rating_default
@@ -44,36 +46,52 @@ module Actb
         if ov && nv
           self.rating_last_diff = nv - ov
         end
+        if rating_max < rating
+          self.rating_max = rating
+        end
       end
 
-      if rating_max < rating
-        self.rating_max = rating
-      end
+    end
+
+    # 勝敗関連
+    before_validation do
+      self.battle_count ||= 0
+
+      self.win_count  ||= 0
+      self.lose_count ||= 0
+
+      self.win_rate     ||= 0
 
       self.rensho_count ||= 0
       self.renpai_count ||= 0
-      self.rensho_max ||= 0
-      self.renpai_max ||= 0
+      self.rensho_max   ||= 0
+      self.renpai_max   ||= 0
 
-      if rensho_max < rensho_count
-        self.rensho_max = rensho_count
-      end
+      self.judge ||= Judge.fetch(:pending)
 
-      if renpai_max < renpai_count
-        self.renpai_max = renpai_count
-      end
+      if changes_to_save[:judge] && judge && judge.win_or_lose?
+        self.battle_count += 1
 
-      self.battle_count ||= 0
-
-      self.win_count ||= 0
-      self.lose_count ||= 0
-      self.win_rate ||= 0
-
-      if changes_to_save[:win_count] || changes_to_save[:lose_count]
-        d = win_count + lose_count
-        if d.positive?
-          self.win_rate = win_count.fdiv(d)
+        # 総勝敗
+        public_send("#{judge.key}_count=", public_send("#{judge_key}_count") + 1)
+        if changes_to_save[:win_count] || changes_to_save[:lose_count]
+          d = win_count + lose_count
+          if d.positive?
+            self.win_rate = win_count.fdiv(d)
+          end
         end
+
+        # 連勝敗
+        if judge.key == "win"
+          self.rensho_count += 1
+          self.renpai_count = 0
+        end
+        if judge.key == "lose"
+          self.rensho_count = 0
+          self.renpai_count += 0
+        end
+        self.rensho_max = [rensho_max, rensho_count].max
+        self.renpai_max = [renpai_max, renpai_count].max
       end
     end
 
@@ -86,6 +104,7 @@ module Actb
     with_options presence: true do
       validates :user_id
       validates :season_id
+      validates :judge_id
     end
 
     with_options allow_blank: true do

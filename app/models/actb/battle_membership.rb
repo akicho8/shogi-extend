@@ -26,25 +26,28 @@ module Actb
   class BattleMembership < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
     belongs_to :battle
+    belongs_to :judge
 
     acts_as_list top_of_list: 0, scope: :battle
 
     before_validation do
+      self.judge ||= Judge.fetch(:pending)
+
       self.rensho_count ||= 0
       self.renpai_count ||= 0
 
-      if changes_to_save[:judge_key] && judge_key
+      if changes_to_save[:judge] && judge && judge.win_or_lose?
         w = 0
         l = 0
         if record = maeno_record
           w = record.rensho_count
           l = record.renpai_count
         end
-        if judge_key == "win"
+        if judge.key == "win"
           w += 1
           l = 0
         end
-        if judge_key == "lose"
+        if judge.key == "lose"
           w = 0
           l += 1
         end
@@ -56,17 +59,22 @@ module Actb
       end
     end
 
+    with_options presence: true do
+      validates :user_id
+      validates :battle_id
+      validates :judge_id
+    end
+
     with_options allow_blank: true do
-      validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-      validates :judge_key, uniqueness: { scope: :battle_id, case_sensitive: true }
+      validates :user_id, uniqueness: { scope: :battle_id }
     end
 
     after_save do
-      if saved_changes[:judge_key] && judge_key
+      if saved_changes[:judge] && judge && judge.win_or_lose?
         record = user.actb_newest_profile
-        record.rensho_count = rensho_count # membershipの方に持つ必要ある？？？
-        record.renpai_count = renpai_count
-        record.public_send("#{judge_key}_count=", (record.public_send("#{judge_key}_count") || 0) + 1) # ← これだけ伝わればいいのでは？
+        # record.rensho_count = rensho_count # membershipの方に持つ必要ある？？？
+        # record.renpai_count = renpai_count
+        record.judge = judge
         record.save!
       end
     end
@@ -80,7 +88,7 @@ module Actb
       if created_at
         s = s.where(self.class.arel_table[:created_at].lt(created_at))
       end
-      s = s.where.not(judge_key: nil)
+      s = s.joins(:judge).merge(Judge.win_or_lose)
       s = s.order(:created_at)
       s.last
     end

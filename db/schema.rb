@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "rensho_count", null: false, comment: "連勝数"
     t.integer "renpai_count", null: false, comment: "連敗数"
     t.integer "question_index", comment: "解答中の問題"
-    t.integer "position", comment: "順序"
+    t.integer "position", null: false, comment: "順序"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["battle_id", "user_id"], name: "index_actb_battle_memberships_on_battle_id_and_user_id", unique: true
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "type", null: false
+    t.string "type", null: false, comment: "for STI"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["type", "user_id"], name: "index_actb_folders_on_type_and_user_id", unique: true
@@ -141,6 +141,14 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["user_id"], name: "index_actb_histories_on_user_id"
   end
 
+  create_table "actb_judges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_actb_judges_on_position"
+  end
+
   create_table "actb_lineages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
@@ -151,7 +159,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対戦者"
-    t.string "body", limit: 140, comment: "発言"
+    t.string "body", limit: 140, null: false, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_actb_lobby_messages_on_user_id"
@@ -241,7 +249,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "x_count", null: false, comment: "不正解数"
     t.integer "bad_count", null: false, comment: "高評価数"
     t.integer "good_count", null: false, comment: "低評価数"
-    t.integer "histories_count", default: 0, null: false, comment: "履歴数"
+    t.integer "histories_count", default: 0, null: false, comment: "履歴数(出題数とは異なる)"
     t.integer "favorites_count", default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
     t.integer "bad_marks_count", default: 0, null: false, comment: "高評価数"
     t.integer "good_marks_count", default: 0, null: false, comment: "低評価数"
@@ -262,7 +270,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   create_table "actb_room_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "room_id", null: false, comment: "対戦部屋"
     t.bigint "user_id", null: false, comment: "対戦者"
-    t.integer "position", comment: "順序"
+    t.integer "position", null: false, comment: "順序"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["position"], name: "index_actb_room_memberships_on_position"
@@ -274,7 +282,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   create_table "actb_room_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対戦者"
     t.bigint "room_id", null: false, comment: "対戦部屋"
-    t.string "body", limit: 140, comment: "発言"
+    t.string "body", limit: 140, null: false, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_actb_room_messages_on_room_id"

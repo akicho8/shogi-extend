@@ -15,33 +15,8 @@
 
 module Actb
   class Lineage < ApplicationRecord
-    class << self
-      def setup(options = {})
-        ::Actb::LineageInfo.each do |e|
-          find_or_create_by!(key: e.key)
-        end
-      end
-
-      def fetch(key)
-        find_by!(key: key)
-      end
-    end
-
-    acts_as_list top_of_list: 0
-    default_scope { order(:position) }
+    include StaticArModel
 
     has_many :questions, dependent: :destroy
-
-    with_options presence: true do
-      validates :key
-    end
-
-    with_options allow_blank: true do
-      validates :key, inclusion: LineageInfo.keys.collect(&:to_s)
-    end
-
-    def static_info
-      LineageInfo.fetch(key)
-    end
   end
 end
