@@ -26,7 +26,7 @@ module Actb
       retv = {}
       retv[:ranking_key] = ranking_key
       retv[:user_rank_in] = top_users.any? { |e| e == current_user }
-      if user_actb_profile
+      if user_actb_xrecord
         retv[:current_user_rank_record] = { rank: user_rank, user: current_user.as_json(user_as_json_params) }
       else
         # そのシーズンにはプレイしていなかった場合
@@ -40,7 +40,7 @@ module Actb
     def top_users
       @top_users ||= -> {
         s = base_scope
-        s = s.order(Actb::Profile.arel_table[ranking_key].desc).order(:created_at)
+        s = s.order(Actb::Xrecord.arel_table[ranking_key].desc).order(:created_at)
         s = s.limit(record_max)
         if params[:shuffle] == "true"
           s = s.shuffle
@@ -55,7 +55,7 @@ module Actb
     # 自分より上に何人いるかで自分の順位がわかる
     # SELECT COUNT(*)+1 as rank FROM users WHERE score > 自分のスコア
     def user_rank
-      base_scope.where(Actb::Profile.arel_table[ranking_key].gt(user_score)).count.next
+      base_scope.where(Actb::Xrecord.arel_table[ranking_key].gt(user_score)).count.next
     end
 
     def ranking_key
@@ -64,18 +64,18 @@ module Actb
 
     def base_scope
       s = Colosseum::User.all
-      s = s.joins(:actb_profile)
-      s = s.where(Actb::Profile.arel_table[:season_id].eq(current_season.id))
+      s = s.joins(:actb_xrecord)
+      s = s.where(Actb::Xrecord.arel_table[:season_id].eq(current_season.id))
     end
 
     def user_score
-      if v = user_actb_profile
+      if v = user_actb_xrecord
         v.public_send(ranking_key)
       end
     end
 
-    def user_actb_profile
-      @user_actb_profile ||= current_user.actb_profiles.where(season: current_season).take
+    def user_actb_xrecord
+      @user_actb_xrecord ||= current_user.actb_xrecords.where(season: current_season).take
     end
 
     def current_user

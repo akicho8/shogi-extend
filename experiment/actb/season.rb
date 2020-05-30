@@ -7,9 +7,9 @@ Actb.setup
 
 user = Colosseum::User.sysop
 Actb::Season.newest.generation             # => 1
-user.actb_newest_profile.season.generation # => 1
+user.actb_newest_xrecord.season.generation # => 1
 Actb::Season.create!.generation            # => 2
-user.actb_newest_profile.season.generation # => 2
+user.actb_newest_xrecord.season.generation # => 2
 
 tp Actb.info
 # >> |-----------------+-------+--------|

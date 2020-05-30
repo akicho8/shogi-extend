@@ -110,7 +110,7 @@
 # |------------+----------+-------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -468,38 +468,15 @@
 # | name       | desc     | type        | opts        | refs                  | index |
 # |------------+----------+-------------+-------------+-----------------------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
-# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
-# | room_id    | Room     | integer(8)  |             |                       | B     |
-# | body       | 内容     | string(512) |             |                       |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => Colosseum::User#id | A     |
+# | room_id    | Room     | integer(8)  | NOT NULL    |                       | B     |
+# | body       | 内容     | string(140) | NOT NULL    |                       |       |
 # | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
 # |------------+----------+-------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Membership (actb_memberships as Actb::Membership)
-#
-# |----------------+----------------+-------------+-------------+-----------------------+-------|
-# | name           | desc           | type        | opts        | refs                  | index |
-# |----------------+----------------+-------------+-------------+-----------------------+-------|
-# | id             | ID             | integer(8)  | NOT NULL PK |                       |       |
-# | room_id        | Room           | integer(8)  |             |                       | A! B  |
-# | user_id        | User           | integer(8)  |             | => Colosseum::User#id | A! C  |
-# | judge_key      | Judge key      | string(255) |             |                       | D     |
-# | rensho_count   | Rensho count   | integer(4)  | NOT NULL    |                       | E     |
-# | renpai_count   | Renpai count   | integer(4)  | NOT NULL    |                       | F     |
-# | question_index | Question index | integer(4)  |             |                       |       |
-# | position       | 順序           | integer(4)  |             |                       | G     |
-# | created_at     | 作成日時       | datetime    | NOT NULL    |                       |       |
-# | updated_at     | 更新日時       | datetime    | NOT NULL    |                       |       |
-# |----------------+----------------+-------------+-------------+-----------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -510,7 +487,7 @@
 # | name       | desc       | type        | opts        | refs               | index |
 # |------------+------------+-------------+-------------+--------------------+-------|
 # | id         | ID         | integer(8)  | NOT NULL PK |                    |       |
-# | user_id    | User       | integer(8)  |             |                    | A! B  |
+# | user_id    | User       | integer(8)  | NOT NULL    |                    | A! B  |
 # | type       | 所属モデル | string(255) | NOT NULL    | SpecificModel(STI) | A!    |
 # | created_at | 作成日時   | datetime    | NOT NULL    |                    |       |
 # | updated_at | 更新日時   | datetime    | NOT NULL    |                    |       |
@@ -518,23 +495,44 @@
 
 # == Schema Information ==
 #
+# Battle (actb_battles as Actb::Battle)
+#
+# |--------------+--------------+-------------+-------------+------+-------|
+# | name         | desc         | type        | opts        | refs | index |
+# |--------------+--------------+-------------+-------------+------+-------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
+# | room_id      | Room         | integer(8)  | NOT NULL    |      | A     |
+# | parent_id    | Parent       | integer(8)  |             |      | B     |
+# | begin_at     | Begin at     | datetime    | NOT NULL    |      | C     |
+# | end_at       | End at       | datetime    |             |      | D     |
+# | final_key    | Final key    | string(255) |             |      | E     |
+# | rule_key     | Rule key     | string(255) | NOT NULL    |      | F     |
+# | rensen_index | Rensen index | integer(4)  | NOT NULL    |      | G     |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
+# |--------------+--------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # History (actb_histories as Actb::History)
 #
-# |---------------+------------+------------+-------------+-----------------------+-------|
-# | name          | desc       | type       | opts        | refs                  | index |
-# |---------------+------------+------------+-------------+-----------------------+-------|
-# | id            | ID         | integer(8) | NOT NULL PK |                       |       |
-# | user_id       | User       | integer(8) |             | => Colosseum::User#id | A     |
-# | room_id       | Room       | integer(8) |             |                       | B     |
-# | membership_id | Membership | integer(8) |             |                       | C     |
-# | question_id   | Question   | integer(8) |             |                       | D     |
-# | ox_mark_id | Ans result | integer(8) |             |                       | E     |
-# | created_at    | 作成日時   | datetime   | NOT NULL    |                       |       |
-# | updated_at    | 更新日時   | datetime   | NOT NULL    |                       |       |
-# |---------------+------------+------------+-------------+-----------------------+-------|
+# |---------------+------------+------------+-------------+------------------------------+-------|
+# | name          | desc       | type       | opts        | refs                         | index |
+# |---------------+------------+------------+-------------+------------------------------+-------|
+# | id            | ID         | integer(8) | NOT NULL PK |                              |       |
+# | user_id       | User       | integer(8) | NOT NULL    | => Colosseum::User#id        | A     |
+# | question_id   | Question   | integer(8) | NOT NULL    |                              | B     |
+# | created_at    | 作成日時   | datetime   | NOT NULL    |                              |       |
+# | updated_at    | 更新日時   | datetime   | NOT NULL    |                              |       |
+# | room_id       | Room       | integer(8) | NOT NULL    |                              | C     |
+# | battle_id     | Battle     | integer(8) | NOT NULL    |                              | D     |
+# | membership_id | Membership | integer(8) | NOT NULL    | => Actb::BattleMembership#id | E     |
+# | ox_mark_id    | Ox mark    | integer(8) | NOT NULL    |                              | F     |
+# |---------------+------------+------------+-------------+------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
+# 【警告:リレーション欠如】Actb::BattleMembershipモデルで has_many :actb/histories されていません
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -545,34 +543,35 @@
 # | name        | desc     | type       | opts        | refs                  | index |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 # | id          | ID       | integer(8) | NOT NULL PK |                       |       |
-# | user_id     | User     | integer(8) |             | => Colosseum::User#id | A! B  |
-# | question_id | Question | integer(8) |             |                       | A! C  |
+# | user_id     | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A! B  |
+# | question_id | Question | integer(8) | NOT NULL    |                       | A! C  |
 # | created_at  | 作成日時 | datetime   | NOT NULL    |                       |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |                       |       |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
 # Room (actb_rooms as Actb::Room)
 #
-# |------------+-----------+-------------+-------------+------+-------|
-# | name       | desc      | type        | opts        | refs | index |
-# |------------+-----------+-------------+-------------+------+-------|
-# | id         | ID        | integer(8)  | NOT NULL PK |      |       |
-# | begin_at   | Begin at  | datetime    | NOT NULL    |      | A     |
-# | end_at     | End at    | datetime    |             |      | B     |
-# | final_key  | Final key | string(255) |             |      | C     |
-# | created_at | 作成日時  | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時  | datetime    | NOT NULL    |      |       |
-# |------------+-----------+-------------+-------------+------+-------|
+# |---------------+---------------+-------------+---------------------+------+-------|
+# | name          | desc          | type        | opts                | refs | index |
+# |---------------+---------------+-------------+---------------------+------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK         |      |       |
+# | begin_at      | Begin at      | datetime    | NOT NULL            |      | A     |
+# | end_at        | End at        | datetime    |                     |      | B     |
+# | rule_key      | Rule key      | string(255) | NOT NULL            |      | C     |
+# | created_at    | 作成日時      | datetime    | NOT NULL            |      |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL            |      |       |
+# | battles_count | Battles count | integer(4)  | DEFAULT(0) NOT NULL |      | D     |
+# |---------------+---------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
 #
-# Ans result (actb_ox_marks as Actb::OxMark)
+# Ox mark (actb_ox_marks as Actb::OxMark)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |
@@ -592,6 +591,7 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 # | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
 # | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
 # | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
 # |------------+--------------------+-------------+-------------+------+-------|
@@ -600,17 +600,17 @@
 #
 # Moves answer (actb_moves_answers as Actb::MovesAnswer)
 #
-# |-------------+------------+-------------+-------------+------+-------|
-# | name        | desc       | type        | opts        | refs | index |
-# |-------------+------------+-------------+-------------+------+-------|
-# | id          | ID         | integer(8)  | NOT NULL PK |      |       |
-# | question_id | Question   | integer(8)  |             |      | A     |
-# | moves_count  | Limit turn | integer(4)  | NOT NULL    |      | B     |
-# | moves_str   | Moves str  | string(255) | NOT NULL    |      |       |
-# | end_sfen    | End sfen   | string(255) |             |      |       |
-# | created_at  | 作成日時   | datetime    | NOT NULL    |      |       |
-# | updated_at  | 更新日時   | datetime    | NOT NULL    |      |       |
-# |-------------+------------+-------------+-------------+------+-------|
+# |-------------+-------------+-------------+-------------+------+-------|
+# | name        | desc        | type        | opts        | refs | index |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | question_id | Question    | integer(8)  | NOT NULL    |      | A     |
+# | moves_count | Moves count | integer(4)  | NOT NULL    |      | B     |
+# | moves_str   | Moves str   | string(255) | NOT NULL    |      |       |
+# | end_sfen    | End sfen    | string(255) |             |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -620,30 +620,44 @@
 # | name       | desc     | type        | opts        | refs                  | index |
 # |------------+----------+-------------+-------------+-----------------------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
-# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
-# | body       | 内容     | string(512) |             |                       |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => Colosseum::User#id | A     |
+# | body       | 内容     | string(140) | NOT NULL    |                       |       |
 # | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
 # |------------+----------+-------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
 # Endpos answer (actb_endpos_answers as Actb::EndposAnswer)
 #
-# |-------------+------------+-------------+-------------+------+-------|
-# | name        | desc       | type        | opts        | refs | index |
-# |-------------+------------+-------------+-------------+------+-------|
-# | id          | ID         | integer(8)  | NOT NULL PK |      |       |
-# | question_id | Question   | integer(8)  |             |      | A     |
-# | moves_count  | Limit turn | integer(4)  | NOT NULL    |      | B     |
-# | end_sfen    | End sfen   | string(255) | NOT NULL    |      |       |
-# | created_at  | 作成日時   | datetime    | NOT NULL    |      |       |
-# | updated_at  | 更新日時   | datetime    | NOT NULL    |      |       |
-# |-------------+------------+-------------+-------------+------+-------|
+# |-------------+-------------+-------------+-------------+------+-------|
+# | name        | desc        | type        | opts        | refs | index |
+# |-------------+-------------+-------------+-------------+------+-------|
+# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
+# | question_id | Question    | integer(8)  | NOT NULL    |      | A     |
+# | moves_count | Moves count | integer(4)  | NOT NULL    |      | B     |
+# | end_sfen    | End sfen    | string(255) | NOT NULL    |      |       |
+# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
+# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
+# |-------------+-------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Judge (actb_judges as Actb::Judge)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -653,15 +667,36 @@
 # | name        | desc     | type       | opts        | refs                  | index |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 # | id          | ID       | integer(8) | NOT NULL PK |                       |       |
-# | user_id     | User     | integer(8) |             | => Colosseum::User#id | A     |
-# | question_id | Question | integer(8) |             |                       | B     |
-# | score       | Score    | integer(4) |             |                       |       |
+# | user_id     | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A     |
+# | question_id | Question | integer(8) | NOT NULL    |                       | B     |
+# | score       | Score    | integer(4) | NOT NULL    |                       |       |
 # | created_at  | 作成日時 | datetime   | NOT NULL    |                       |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |                       |       |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Battle membership (actb_battle_memberships as Actb::BattleMembership)
+#
+# |----------------+----------------+------------+-------------+-----------------------+-------|
+# | name           | desc           | type       | opts        | refs                  | index |
+# |----------------+----------------+------------+-------------+-----------------------+-------|
+# | id             | ID             | integer(8) | NOT NULL PK |                       |       |
+# | battle_id      | Battle         | integer(8) | NOT NULL    |                       | A! B  |
+# | user_id        | User           | integer(8) | NOT NULL    | => Colosseum::User#id | A! C  |
+# | judge_id       | Judge          | integer(8) | NOT NULL    |                       | D     |
+# | question_index | Question index | integer(4) |             |                       |       |
+# | position       | 順序           | integer(4) | NOT NULL    |                       | E     |
+# | created_at     | 作成日時       | datetime   | NOT NULL    |                       |       |
+# | updated_at     | 更新日時       | datetime   | NOT NULL    |                       |       |
+# |----------------+----------------+------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -682,15 +717,47 @@
 
 # == Schema Information ==
 #
+# Xrecord (actb_xrecords as Actb::Xrecord)
+#
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+# | name             | desc             | type       | opts        | refs                  | index |
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+# | id               | ID               | integer(8) | NOT NULL PK |                       |       |
+# | user_id          | User             | integer(8) | NOT NULL    | => Colosseum::User#id | A! B  |
+# | season_id        | Season           | integer(8) | NOT NULL    |                       | A! C  |
+# | judge_id         | Judge            | integer(8) | NOT NULL    |                       | D     |
+# | battle_count     | Battle count     | integer(4) | NOT NULL    |                       | E     |
+# | win_count        | Win count        | integer(4) | NOT NULL    |                       | F     |
+# | lose_count       | Lose count       | integer(4) | NOT NULL    |                       | G     |
+# | win_rate         | Win rate         | float(24)  | NOT NULL    |                       | H     |
+# | rating           | Rating           | integer(4) | NOT NULL    |                       | I     |
+# | rating_last_diff | Rating last diff | integer(4) | NOT NULL    |                       | J     |
+# | rating_max       | Rating max       | integer(4) | NOT NULL    |                       | K     |
+# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |                       | L     |
+# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |                       | M     |
+# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |                       | N     |
+# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |                       | O     |
+# | create_count     | Create count     | integer(4) | NOT NULL    |                       | P     |
+# | generation       | Generation       | integer(4) | NOT NULL    |                       | Q     |
+# | created_at       | 作成日時         | datetime   | NOT NULL    |                       |       |
+# | updated_at       | 更新日時         | datetime   | NOT NULL    |                       |       |
+# |------------------+------------------+------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_one :actb_xrecord
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
 # Question (actb_questions as Actb::Question)
 #
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 # | name                  | desc                  | type        | opts                | refs                  | index |
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 # | id                    | ID                    | integer(8)  | NOT NULL PK         |                       |       |
-# | user_id               | User                  | integer(8)  |                     | => Colosseum::User#id | A     |
-# | folder_id             | Folder                | integer(8)  |                     |                       | B     |
-# | lineage_id            | Lineage               | integer(8)  |                     |                       | C     |
+# | user_id               | User                  | integer(8)  | NOT NULL            | => Colosseum::User#id | A     |
+# | folder_id             | Folder                | integer(8)  | NOT NULL            |                       | B     |
+# | lineage_id            | Lineage               | integer(8)  | NOT NULL            |                       | C     |
 # | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | D     |
 # | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | E     |
 # | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | F     |
@@ -712,10 +779,29 @@
 # | bad_marks_count       | Bad marks count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | good_marks_count      | Good marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | clip_marks_count      | Clip marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
+# | messages_count        | Messages count        | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Setting (actb_settings as Actb::Setting)
+#
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | name       | desc     | type        | opts        | refs                  | index |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => Colosseum::User#id | A     |
+# | rule_key   | Rule key | string(255) | NOT NULL    |                       | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
+# |------------+----------+-------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -726,41 +812,14 @@
 # | name        | desc     | type       | opts        | refs                  | index |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 # | id          | ID       | integer(8) | NOT NULL PK |                       |       |
-# | user_id     | User     | integer(8) |             | => Colosseum::User#id | A! B  |
-# | question_id | Question | integer(8) |             |                       | A! C  |
+# | user_id     | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A! B  |
+# | question_id | Question | integer(8) | NOT NULL    |                       | A! C  |
 # | created_at  | 作成日時 | datetime   | NOT NULL    |                       |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |                       |       |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Profile (actb_profiles as Actb::Profile)
-#
-# |------------------+------------------+------------+-------------+-----------------------+-------|
-# | name             | desc             | type       | opts        | refs                  | index |
-# |------------------+------------------+------------+-------------+-----------------------+-------|
-# | id               | ID               | integer(8) | NOT NULL PK |                       |       |
-# | user_id          | User             | integer(8) |             | => Colosseum::User#id | A! B  |
-# | season_id        | Season           | integer(8) |             |                       | A! C  |
-# | rating           | Rating           | integer(4) | NOT NULL    |                       | D     |
-# | rating_last_diff | Rating last diff | integer(4) | NOT NULL    |                       | E     |
-# | rating_max       | Rating max       | integer(4) | NOT NULL    |                       | F     |
-# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |                       | G     |
-# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |                       | H     |
-# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |                       | I     |
-# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |                       | J     |
-# | create_count     | Create count     | integer(4) | NOT NULL    |                       | K     |
-# | generation       | Generation       | integer(4) | NOT NULL    |                       | L     |
-# | created_at       | 作成日時         | datetime   | NOT NULL    |                       |       |
-# | updated_at       | 更新日時         | datetime   | NOT NULL    |                       |       |
-# |------------------+------------------+------------+-------------+-----------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -771,13 +830,51 @@
 # | name        | desc     | type       | opts        | refs                  | index |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 # | id          | ID       | integer(8) | NOT NULL PK |                       |       |
-# | user_id     | User     | integer(8) |             | => Colosseum::User#id | A! B  |
-# | question_id | Question | integer(8) |             |                       | A! C  |
+# | user_id     | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A! B  |
+# | question_id | Question | integer(8) | NOT NULL    |                       | A! C  |
 # | created_at  | 作成日時 | datetime   | NOT NULL    |                       |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |                       |       |
 # |-------------+----------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Room membership (actb_room_memberships as Actb::RoomMembership)
+#
+# |------------+----------+------------+-------------+-----------------------+-------|
+# | name       | desc     | type       | opts        | refs                  | index |
+# |------------+----------+------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |                       |       |
+# | room_id    | Room     | integer(8) | NOT NULL    |                       | A! B  |
+# | user_id    | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A! C  |
+# | position   | 順序     | integer(4) | NOT NULL    |                       | D     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |                       |       |
+# |------------+----------+------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_one :actb_xrecord
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Question message (actb_question_messages as Actb::QuestionMessage)
+#
+# |-------------+----------+-------------+-------------+-----------------------+-------|
+# | name        | desc     | type        | opts        | refs                  | index |
+# |-------------+----------+-------------+-------------+-----------------------+-------|
+# | id          | ID       | integer(8)  | NOT NULL PK |                       |       |
+# | user_id     | User     | integer(8)  | NOT NULL    | => Colosseum::User#id | A     |
+# | question_id | Question | integer(8)  | NOT NULL    |                       | B     |
+# | body        | 内容     | string(140) | NOT NULL    |                       |       |
+# | created_at  | 作成日時 | datetime    | NOT NULL    |                       |       |
+# | updated_at  | 更新日時 | datetime    | NOT NULL    |                       |       |
+# |-------------+----------+-------------+-------------+-----------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 

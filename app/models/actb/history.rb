@@ -3,21 +3,23 @@
 #
 # History (actb_histories as Actb::History)
 #
-# |---------------+------------+------------+-------------+-----------------------+-------|
-# | name          | desc       | type       | opts        | refs                  | index |
-# |---------------+------------+------------+-------------+-----------------------+-------|
-# | id            | ID         | integer(8) | NOT NULL PK |                       |       |
-# | user_id       | User       | integer(8) |             | => Colosseum::User#id | A     |
-# | battle_id       | Battle       | integer(8) |             |                       | B     |
-# | membership_id | Membership | integer(8) |             |                       | C     |
-# | question_id   | Question   | integer(8) |             |                       | D     |
-# | ox_mark_id | Ans result | integer(8) |             |                       | E     |
-# | created_at    | 作成日時   | datetime   | NOT NULL    |                       |       |
-# | updated_at    | 更新日時   | datetime   | NOT NULL    |                       |       |
-# |---------------+------------+------------+-------------+-----------------------+-------|
+# |---------------+------------+------------+-------------+------------------------------+-------|
+# | name          | desc       | type       | opts        | refs                         | index |
+# |---------------+------------+------------+-------------+------------------------------+-------|
+# | id            | ID         | integer(8) | NOT NULL PK |                              |       |
+# | user_id       | User       | integer(8) | NOT NULL    | => Colosseum::User#id        | A     |
+# | question_id   | Question   | integer(8) | NOT NULL    |                              | B     |
+# | created_at    | 作成日時   | datetime   | NOT NULL    |                              |       |
+# | updated_at    | 更新日時   | datetime   | NOT NULL    |                              |       |
+# | room_id       | Room       | integer(8) | NOT NULL    |                              | C     |
+# | battle_id     | Battle     | integer(8) | NOT NULL    |                              | D     |
+# | membership_id | Membership | integer(8) | NOT NULL    | => Actb::BattleMembership#id | E     |
+# | ox_mark_id    | Ox mark    | integer(8) | NOT NULL    |                              | F     |
+# |---------------+------------+------------+-------------+------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
+# 【警告:リレーション欠如】Actb::BattleMembershipモデルで has_many :actb/histories されていません
 #--------------------------------------------------------------------------------
 
 module Actb

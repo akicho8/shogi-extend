@@ -7,7 +7,7 @@
 # | name        | desc        | type        | opts        | refs | index |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | question_id | Question    | integer(8)  |             |      | A     |
+# | question_id | Question    | integer(8)  | NOT NULL    |      | A     |
 # | moves_count | Moves count | integer(4)  | NOT NULL    |      | B     |
 # | end_sfen    | End sfen    | string(255) | NOT NULL    |      |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |

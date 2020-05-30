@@ -7,9 +7,9 @@
 # | name                  | desc                  | type        | opts                | refs                  | index |
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 # | id                    | ID                    | integer(8)  | NOT NULL PK         |                       |       |
-# | user_id               | User                  | integer(8)  |                     | => Colosseum::User#id | A     |
-# | folder_id             | Folder                | integer(8)  |                     |                       | B     |
-# | lineage_id            | Lineage               | integer(8)  |                     |                       | C     |
+# | user_id               | User                  | integer(8)  | NOT NULL            | => Colosseum::User#id | A     |
+# | folder_id             | Folder                | integer(8)  | NOT NULL            |                       | B     |
+# | lineage_id            | Lineage               | integer(8)  | NOT NULL            |                       | C     |
 # | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | D     |
 # | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | E     |
 # | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | F     |
@@ -31,10 +31,11 @@
 # | bad_marks_count       | Bad marks count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | good_marks_count      | Good marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | clip_marks_count      | Clip marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
+# | messages_count        | Messages count        | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
+# Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
 
 module Actb

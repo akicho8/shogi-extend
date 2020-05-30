@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Battle message (actb_room_messages as Actb::RoomMessage)
+# Battle (actb_battles as Actb::Battle)
 #
-# |------------+----------+-------------+-------------+-----------------------+-------|
-# | name       | desc     | type        | opts        | refs                  | index |
-# |------------+----------+-------------+-------------+-----------------------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
-# | user_id    | User     | integer(8)  |             | => Colosseum::User#id | A     |
-# | battle_id    | Battle     | integer(8)  |             |                       | B     |
-# | body       | 内容     | string(512) |             |                       |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
-# |------------+----------+-------------+-------------+-----------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_profile
-#--------------------------------------------------------------------------------
+# |--------------+--------------+-------------+-------------+------+-------|
+# | name         | desc         | type        | opts        | refs | index |
+# |--------------+--------------+-------------+-------------+------+-------|
+# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
+# | room_id      | Room         | integer(8)  | NOT NULL    |      | A     |
+# | parent_id    | Parent       | integer(8)  |             |      | B     |
+# | begin_at     | Begin at     | datetime    | NOT NULL    |      | C     |
+# | end_at       | End at       | datetime    |             |      | D     |
+# | final_key    | Final key    | string(255) |             |      | E     |
+# | rule_key     | Rule key     | string(255) | NOT NULL    |      | F     |
+# | rensen_index | Rensen index | integer(4)  | NOT NULL    |      | G     |
+# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
+# |--------------+--------------+-------------+-------------+------+-------|
 
 require 'rails_helper'
 

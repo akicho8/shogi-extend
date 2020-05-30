@@ -36,28 +36,28 @@ module Actb
       end
     end
 
-    concerning :ProfileMod do
+    concerning :XrecordMod do
       included do
         # プロフィール
-        with_options(class_name: "Actb::Profile", dependent: :destroy) do
-          has_one :actb_profile, -> { newest_order }
-          has_many :actb_profiles
+        with_options(class_name: "Actb::Xrecord", dependent: :destroy) do
+          has_one :actb_xrecord, -> { newest_order }
+          has_many :actb_xrecords
         end
 
         after_create do
-          create_actb_profile_if_blank
+          create_actb_xrecord_if_blank
         end
 
-        delegate :rating, :rensho_count, :rensho_max, to: :actb_newest_profile
+        delegate :rating, :rensho_count, :rensho_max, to: :actb_newest_xrecord
       end
 
-      def create_actb_profile_if_blank
-        actb_newest_profile
+      def create_actb_xrecord_if_blank
+        actb_newest_xrecord
       end
 
       # 必ず存在する最新シーズンのプロフィール
-      def actb_newest_profile
-        actb_profiles.find_or_create_by!(season: Season.newest)
+      def actb_newest_xrecord
+        actb_xrecords.find_or_create_by!(season: Season.newest)
       end
     end
 

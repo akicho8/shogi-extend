@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Ans result (actb_ox_marks as Actb::OxMark)
+# Ox mark (actb_ox_marks as Actb::OxMark)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |

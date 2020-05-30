@@ -32,9 +32,9 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :battle,    null: false,              comment: "対戦"
       t.belongs_to :user,      null: false,              comment: "対戦者"
       t.belongs_to :judge,     null: false,              comment: "勝敗"
-      t.integer :rensho_count, null: false, index: true, comment: "連勝数"
-      t.integer :renpai_count, null: false, index: true, comment: "連敗数"
-      t.integer :question_index,                         comment: "解答中の問題"
+      # t.integer :rensho_count, null: false, index: true, comment: "連勝数"
+      # t.integer :renpai_count, null: false, index: true, comment: "連敗数"
+      t.integer :question_index,                         comment: "解答中の問題" # question_index ← 消す
       t.integer :position,     null: false, index: true, comment: "順序"
       t.timestamps
 
@@ -47,8 +47,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    # Actb::Profile
-    create_table :actb_profiles do |t|
+    # Actb::Xrecord
+    create_table :actb_xrecords do |t|
       t.belongs_to :user,          null: false,              comment: "対戦者"
       t.belongs_to :season,        null: false,              comment: "期"
       t.belongs_to :judge,         null: false,              comment: "直前の勝敗"
@@ -63,7 +63,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :renpai_count,     null: false, index: true, comment: "連敗数"
       t.integer :rensho_max,       null: false, index: true, comment: "連勝数(最大)"
       t.integer :renpai_max,       null: false, index: true, comment: "連敗数(最大)"
-      t.integer :create_count,     null: false, index: true, comment: "users.actb_profile.create_count は users.actb_profiles.count と一致"
+      t.integer :create_count,     null: false, index: true, comment: "users.actb_xrecord.create_count は users.actb_xrecords.count と一致"
       t.integer :generation,       null: false, index: true, comment: "世代(seasons.generationと一致)"
       t.timestamps
 

@@ -1,10 +1,16 @@
 module Actb
   concern :StaticArModel do
     included do
+      cattr_accessor(:pure_class) { "#{name}Info".constantize }
+
       acts_as_list top_of_list: 0
       default_scope { order(:position) }
 
-      cattr_accessor(:pure_class) { "#{name}Info".classify }
+      with_options presence: true do
+        validates :key
+      end
+
+      validates :key, allow_blank: true, inclusion: pure_class.keys.collect(&:to_s)
     end
 
     class_methods do
@@ -25,14 +31,6 @@ module Actb
       def [](key)
         lookup(key: key)
       end
-    end
-
-    with_options presence: true do
-      validates :key
-    end
-
-    with_options allow_blank: true do
-      validates :key, inclusion: pure_class.keys.collect(&:to_s)
     end
 
     def static_info

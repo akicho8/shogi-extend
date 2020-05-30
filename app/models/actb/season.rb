@@ -17,7 +17,7 @@
 
 module Actb
   class Season < ApplicationRecord
-    has_many :profiles, class_name: "Actb::Profile", dependent: :destroy
+    has_many :xrecords, class_name: "Actb::Xrecord", dependent: :destroy
 
     scope :newest_order, -> { order(generation: :desc) }
     scope :oldest_order, -> { order(generation: :asc)  }

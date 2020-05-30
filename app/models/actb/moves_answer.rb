@@ -7,7 +7,7 @@
 # | name        | desc        | type        | opts        | refs | index |
 # |-------------+-------------+-------------+-------------+------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | question_id | Question    | integer(8)  |             |      | A     |
+# | question_id | Question    | integer(8)  | NOT NULL    |      | A     |
 # | moves_count | Moves count | integer(4)  | NOT NULL    |      | B     |
 # | moves_str   | Moves str   | string(255) | NOT NULL    |      |       |
 # | end_sfen    | End sfen    | string(255) |             |      |       |

@@ -138,7 +138,7 @@ module Actb
       battle.katimashita(target_user, judge_key, final_key)
       battle.reload
 
-      battle_json = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_profile: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      battle_json = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: "katimashita_broadcasted", bc_params: { battle: battle_json }})
       # --> app/javascript/actb_app/application.vue
     end
