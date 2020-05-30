@@ -332,7 +332,7 @@ export const application_battle = {
     result_setup(battle) {
       this.battle = battle
       this.mode = "result"
-      this.sound_play(this.app.current_membership.judge_key)
+      this.sound_play(this.app.current_membership.judge.key)
     },
 
     yameru_handle() {

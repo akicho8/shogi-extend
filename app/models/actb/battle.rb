@@ -3,20 +3,20 @@
 #
 # Battle (actb_battles as Actb::Battle)
 #
-# |--------------+--------------+-------------+-------------+------+-------|
-# | name         | desc         | type        | opts        | refs | index |
-# |--------------+--------------+-------------+-------------+------+-------|
-# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
-# | room_id      | Room         | integer(8)  | NOT NULL    |      | A     |
-# | parent_id    | Parent       | integer(8)  |             |      | B     |
-# | begin_at     | Begin at     | datetime    | NOT NULL    |      | C     |
-# | end_at       | End at       | datetime    |             |      | D     |
-# | final_key    | Final key    | string(255) |             |      | E     |
-# | rule_key     | Rule key     | string(255) | NOT NULL    |      | F     |
-# | rensen_index | Rensen index | integer(4)  | NOT NULL    |      | G     |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
-# |--------------+--------------+-------------+-------------+------+-------|
+# |--------------+--------------+------------+-------------+------+-------|
+# | name         | desc         | type       | opts        | refs | index |
+# |--------------+--------------+------------+-------------+------+-------|
+# | id           | ID           | integer(8) | NOT NULL PK |      |       |
+# | room_id      | Room         | integer(8) | NOT NULL    |      | A     |
+# | parent_id    | Parent       | integer(8) |             |      | B     |
+# | rule_id      | Rule         | integer(8) | NOT NULL    |      | C     |
+# | final_id     | Final        | integer(8) | NOT NULL    |      | D     |
+# | begin_at     | Begin at     | datetime   | NOT NULL    |      | E     |
+# | end_at       | End at       | datetime   |             |      | F     |
+# | rensen_index | Rensen index | integer(4) | NOT NULL    |      | G     |
+# | created_at   | 作成日時     | datetime   | NOT NULL    |      |       |
+# | updated_at   | 更新日時     | datetime   | NOT NULL    |      |       |
+# |--------------+--------------+------------+-------------+------+-------|
 
 # user1 = Colosseum::User.create!
 # user2 = Colosseum::User.create!
@@ -31,6 +31,8 @@
 module Actb
   class Battle < ApplicationRecord
     belongs_to :room, counter_cache: true
+    belongs_to :final
+    belongs_to :rule
 
     # has_many :messages, class_name: "RoomMessage", dependent: :destroy
     has_many :memberships, -> { order(:position) }, class_name: "BattleMembership", dependent: :destroy, inverse_of: :battle
@@ -41,20 +43,21 @@ module Actb
       if parent
         self.room ||= parent.room
         self.rensen_index ||= parent.rensen_index + 1
+        self.rule ||= parent.rule
       end
 
-      if final_key
+      self.final ||= Final.fetch(:f_pending)
+      if changes_to_save[:final] && final && final.key != "f_pending"
         self.end_at ||= Time.current
       end
 
       self.begin_at ||= Time.current
-      self.rule_key ||= :marathon_rule
+      self.rule ||= Rule.fetch(:marathon_rule)
       self.rensen_index ||= 0
     end
 
     with_options presence: true do
       validates :begin_at
-      validates :rule_key
     end
 
     after_create_commit do
@@ -73,11 +76,11 @@ module Actb
     end
 
     def final_info
-      FinalInfo.fetch_if(final_key)
+      final.pure_info
     end
 
     def onaji_heya_wo_atarasiku_tukuruyo
-      self.class.create!(rule_key: rule_key, parent: self) do |e|
+      self.class.create!(parent: self) do |e|
         users.each do |user|
           e.memberships.build(user: user)
         end
@@ -88,33 +91,35 @@ module Actb
     def katimashita(target_user, judge_key, final_key)
       raise "すでに終了している" if end_at
 
-      judge_info = JudgeInfo.fetch(judge_key)
+      judge = Judge.fetch(judge_key)
+      final = Final.fetch(final_key)
 
       ActiveRecord::Base.transaction do
         m1 = memberships.find_by!(user: target_user)
         m2 = (memberships - [m1]).first
 
-        m1.judge_key = judge_info.key
-        m2.judge_key = judge_info.flip.key
+        m1.judge = judge
+        m2.judge = judge.flip
 
-        if judge_info.key == :win
+        if judge.key == "win"
           mm = [m1, m2]
         else
           mm = [m2, m1]
         end
 
-        ab = mm.collect { |e| e.user.actb_newest_xrecord.rating }
-        ab = EloRating.rating_update2(*ab)
-        ab = ab.collect(&:round)
+        ratings = mm.collect { |e| e.user.actb_newest_xrecord.rating }
+        ratings = EloRating.rating_update2(*ratings)
+        ratings = ratings.collect(&:round)
+
         mm.each.with_index do |m, i|
-          record = m.user.actb_newest_xrecord
-          record.rating = ab[i]
-          record.battle_count = (record.battle_count || 0) + 1
-          record.save!
+          m.user.actb_newest_xrecord.update!(rating: ratings[i], judge: m.judge)
         end
 
         mm.each(&:save!)
-        update!(final_key: final_key)
+
+        self.final = final
+
+        save!
       end
     end
   end

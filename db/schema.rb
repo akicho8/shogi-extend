@@ -55,20 +55,20 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   create_table "actb_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "room_id", null: false, comment: "部屋"
     t.bigint "parent_id", comment: "親"
+    t.bigint "rule_id", null: false, comment: "ルール"
+    t.bigint "final_id", null: false, comment: "結果"
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
-    t.string "final_key", comment: "結果"
-    t.string "rule_key", null: false, comment: "ルール"
     t.integer "rensen_index", null: false, comment: "連戦数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["begin_at"], name: "index_actb_battles_on_begin_at"
     t.index ["end_at"], name: "index_actb_battles_on_end_at"
-    t.index ["final_key"], name: "index_actb_battles_on_final_key"
+    t.index ["final_id"], name: "index_actb_battles_on_final_id"
     t.index ["parent_id"], name: "index_actb_battles_on_parent_id"
     t.index ["rensen_index"], name: "index_actb_battles_on_rensen_index"
     t.index ["room_id"], name: "index_actb_battles_on_room_id"
-    t.index ["rule_key"], name: "index_actb_battles_on_rule_key"
+    t.index ["rule_id"], name: "index_actb_battles_on_rule_id"
   end
 
   create_table "actb_clip_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -99,6 +99,14 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actb_favorites_on_question_id"
     t.index ["user_id"], name: "index_actb_favorites_on_user_id"
+  end
+
+  create_table "actb_finals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_actb_finals_on_position"
   end
 
   create_table "actb_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -174,9 +182,11 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false, comment: "正解・不正解"
+    t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["key"], name: "index_actb_ox_marks_on_key"
+    t.index ["position"], name: "index_actb_ox_marks_on_position"
   end
 
   create_table "actb_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -252,14 +262,22 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
   create_table "actb_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
-    t.string "rule_key", null: false, comment: "ルール"
+    t.bigint "rule_id", null: false, comment: "ルール"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "battles_count", default: 0, null: false, comment: "連戦数"
     t.index ["battles_count"], name: "index_actb_rooms_on_battles_count"
     t.index ["begin_at"], name: "index_actb_rooms_on_begin_at"
     t.index ["end_at"], name: "index_actb_rooms_on_end_at"
-    t.index ["rule_key"], name: "index_actb_rooms_on_rule_key"
+    t.index ["rule_id"], name: "index_actb_rooms_on_rule_id"
+  end
+
+  create_table "actb_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_actb_rules_on_position"
   end
 
   create_table "actb_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -276,10 +294,10 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
 
   create_table "actb_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
-    t.string "rule_key", null: false, comment: "最後に選択したルール"
+    t.bigint "rule_id", null: false, comment: "選択ルール"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["rule_key"], name: "index_actb_settings_on_rule_key"
+    t.index ["rule_id"], name: "index_actb_settings_on_rule_id"
     t.index ["user_id"], name: "index_actb_settings_on_user_id"
   end
 
@@ -287,6 +305,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.bigint "user_id", null: false, comment: "対戦者"
     t.bigint "season_id", null: false, comment: "期"
     t.bigint "judge_id", null: false, comment: "直前の勝敗"
+    t.bigint "final_id", null: false, comment: "直前の結果"
     t.integer "battle_count", null: false, comment: "対戦数"
     t.integer "win_count", null: false, comment: "勝ち数"
     t.integer "lose_count", null: false, comment: "負け数"
@@ -302,8 +321,12 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "disconnect_count", null: false, comment: "切断数"
+    t.datetime "disconnected_at", comment: "最終切断日時"
     t.index ["battle_count"], name: "index_actb_xrecords_on_battle_count"
     t.index ["create_count"], name: "index_actb_xrecords_on_create_count"
+    t.index ["disconnect_count"], name: "index_actb_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_actb_xrecords_on_final_id"
     t.index ["generation"], name: "index_actb_xrecords_on_generation"
     t.index ["judge_id"], name: "index_actb_xrecords_on_judge_id"
     t.index ["lose_count"], name: "index_actb_xrecords_on_lose_count"

@@ -1,9 +1,48 @@
 class CreateActb < ActiveRecord::Migration[6.0]
   def change
+    ################################################################################ 静的
+
+    # 問題の種類
+    create_table :actb_lineages do |t|
+      t.string :key, null: false
+      t.integer :position, null: false, index: true
+      t.timestamps
+    end
+
+    # static
+    create_table :actb_ox_marks do |t|
+      t.string :key, null: false, index: true, comment: "正解・不正解"
+      t.integer :position, null: false, index: true
+      t.timestamps
+    end
+
+    # 勝ち負け
+    create_table :actb_judges do |t|
+      t.string :key, null: false
+      t.integer :position, null: false, index: true
+      t.timestamps
+    end
+
+    # ルール
+    create_table :actb_rules do |t|
+      t.string :key, null: false
+      t.integer :position, null: false, index: true
+      t.timestamps
+    end
+
+    # 結果
+    create_table :actb_finals do |t|
+      t.string :key, null: false
+      t.integer :position, null: false, index: true
+      t.timestamps
+    end
+
+    ################################################################################
+
     create_table :actb_rooms do |t|
       t.datetime :begin_at,     null: false, index: true, comment: "対戦開始日時"
       t.datetime :end_at,       null: true,  index: true, comment: "対戦終了日時"
-      t.string :rule_key,       null: false, index: true, comment: "ルール"
+      t.belongs_to :rule,       null: false,              comment: "ルール"
       t.timestamps
       t.integer :battles_count, null: false, index: true, default: 0, comment: "連戦数"
     end
@@ -19,10 +58,10 @@ class CreateActb < ActiveRecord::Migration[6.0]
     create_table :actb_battles do |t|
       t.belongs_to :room,      null: false,               comment: "部屋"
       t.belongs_to :parent,    null: true,                comment: "親"
+      t.belongs_to :rule,      null: false,               comment: "ルール"
+      t.belongs_to :final,     null: false,               comment: "結果"
       t.datetime :begin_at,    null: false,  index: true, comment: "対戦開始日時"
       t.datetime :end_at,      null: true,   index: true, comment: "対戦終了日時"
-      t.string :final_key,     null: true,   index: true, comment: "結果"
-      t.string :rule_key,      null: false,  index: true, comment: "ルール"
       t.integer :rensen_index, null: false,  index: true, comment: "連戦数"
       t.timestamps
     end
@@ -32,8 +71,6 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :battle,    null: false,              comment: "対戦"
       t.belongs_to :user,      null: false,              comment: "対戦者"
       t.belongs_to :judge,     null: false,              comment: "勝敗"
-      # t.integer :rensho_count, null: false, index: true, comment: "連勝数"
-      # t.integer :renpai_count, null: false, index: true, comment: "連敗数"
       t.integer :question_index,                         comment: "解答中の問題" # question_index ← 消す
       t.integer :position,     null: false, index: true, comment: "順序"
       t.timestamps
@@ -42,8 +79,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_settings do |t|
-      t.belongs_to :user, null: false,              comment: "自分"
-      t.string :rule_key, null: false, index: true, comment: "最後に選択したルール"
+      t.belongs_to :user, null: false, comment: "自分"
+      t.belongs_to :rule, null: false, comment: "選択ルール"
       t.timestamps
     end
 
@@ -52,6 +89,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :user,          null: false,              comment: "対戦者"
       t.belongs_to :season,        null: false,              comment: "期"
       t.belongs_to :judge,         null: false,              comment: "直前の勝敗"
+      t.belongs_to :final,         null: false,              comment: "直前の結果"
       t.integer :battle_count,     null: false, index: true, comment: "対戦数"
       t.integer :win_count,        null: false, index: true, comment: "勝ち数"
       t.integer :lose_count,       null: false, index: true, comment: "負け数"
@@ -66,6 +104,9 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :create_count,     null: false, index: true, comment: "users.actb_xrecord.create_count は users.actb_xrecords.count と一致"
       t.integer :generation,       null: false, index: true, comment: "世代(seasons.generationと一致)"
       t.timestamps
+
+      t.integer  :disconnect_count, null: false, index: true, comment: "切断数"
+      t.datetime :disconnected_at,  null: true,               comment: "最終切断日時"
 
       t.index [:user_id, :season_id], unique: true
     end
@@ -88,6 +129,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :membership,  null: false,comment: "自分と相手"
       t.belongs_to :ox_mark,     null: false,comment: "解答"
     end
+
+    ################################################################################
 
     # 未使用
     create_table :actb_favorites do |t|
@@ -118,11 +161,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.index [:user_id, :question_id], unique: true
     end
 
-    # static
-    create_table :actb_ox_marks do |t|
-      t.string :key, null: false, index: true, comment: "正解・不正解"
-      t.timestamps
-    end
+    ################################################################################
 
     create_table :actb_room_messages do |t|
       t.belongs_to :user,         null: false, comment: "対戦者"
@@ -200,22 +239,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :user,  null: false
       t.string :type, null: false, comment: "for STI"
       t.timestamps
-
       t.index [:type, :user_id], unique: true
-    end
-
-    # 問題の種類
-    create_table :actb_lineages do |t|
-      t.string :key, null: false
-      t.integer :position, null: false, index: true
-      t.timestamps
-    end
-
-    # 勝ち負け
-    create_table :actb_judges do |t|
-      t.string :key, null: false
-      t.integer :position, null: false, index: true
-      t.timestamps
     end
   end
 end

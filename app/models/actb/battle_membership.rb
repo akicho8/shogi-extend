@@ -72,7 +72,7 @@ module Actb
     end
 
     def judge_info
-      judge.static_info
+      judge.pure_info
     end
 
     # def maeno_record

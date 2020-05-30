@@ -68,8 +68,6 @@ module Actb
         after_create do
           create_actb_setting!
         end
-
-        delegate :rule_key, :rule_info, to: :actb_setting
       end
 
       def create_actb_setting_if_blank

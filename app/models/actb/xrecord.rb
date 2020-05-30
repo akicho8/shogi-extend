@@ -35,7 +35,8 @@ module Actb
   class Xrecord < ApplicationRecord
     belongs_to :user, class_name: "Colosseum::User"
     belongs_to :season
-    belongs_to :judge
+    belongs_to :judge           # 直近バトルの勝敗
+    belongs_to :final           # 直近バトルの結末
 
     scope :newest_order, -> { order(generation: :desc) }
     scope :oldest_order, -> { order(generation: :asc)  }
@@ -73,7 +74,6 @@ module Actb
       self.renpai_max   ||= 0
 
       self.judge ||= Judge.fetch(:pending)
-
       if changes_to_save[:judge] && judge && judge.win_or_lose?
         self.battle_count += 1
 
@@ -97,6 +97,16 @@ module Actb
         end
         self.rensho_max = [rensho_max, rensho_count].max
         self.renpai_max = [renpai_max, renpai_count].max
+      end
+    end
+
+    # 結果関連
+    before_validation do
+      self.disconnect_count ||= 0
+      self.final ||= Final.fetch(:f_pending)
+      if changes_to_save[:final] && final && final.key == "f_disconnect"
+        self.disconnect_count += 1
+        self.disconnected_at = Time.current
       end
     end
 

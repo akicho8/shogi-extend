@@ -497,20 +497,20 @@
 #
 # Battle (actb_battles as Actb::Battle)
 #
-# |--------------+--------------+-------------+-------------+------+-------|
-# | name         | desc         | type        | opts        | refs | index |
-# |--------------+--------------+-------------+-------------+------+-------|
-# | id           | ID           | integer(8)  | NOT NULL PK |      |       |
-# | room_id      | Room         | integer(8)  | NOT NULL    |      | A     |
-# | parent_id    | Parent       | integer(8)  |             |      | B     |
-# | begin_at     | Begin at     | datetime    | NOT NULL    |      | C     |
-# | end_at       | End at       | datetime    |             |      | D     |
-# | final_key    | Final key    | string(255) |             |      | E     |
-# | rule_key     | Rule key     | string(255) | NOT NULL    |      | F     |
-# | rensen_index | Rensen index | integer(4)  | NOT NULL    |      | G     |
-# | created_at   | 作成日時     | datetime    | NOT NULL    |      |       |
-# | updated_at   | 更新日時     | datetime    | NOT NULL    |      |       |
-# |--------------+--------------+-------------+-------------+------+-------|
+# |--------------+--------------+------------+-------------+------+-------|
+# | name         | desc         | type       | opts        | refs | index |
+# |--------------+--------------+------------+-------------+------+-------|
+# | id           | ID           | integer(8) | NOT NULL PK |      |       |
+# | room_id      | Room         | integer(8) | NOT NULL    |      | A     |
+# | parent_id    | Parent       | integer(8) |             |      | B     |
+# | rule_id      | Rule         | integer(8) | NOT NULL    |      | C     |
+# | final_id     | Final        | integer(8) | NOT NULL    |      | D     |
+# | begin_at     | Begin at     | datetime   | NOT NULL    |      | E     |
+# | end_at       | End at       | datetime   |             |      | F     |
+# | rensen_index | Rensen index | integer(4) | NOT NULL    |      | G     |
+# | created_at   | 作成日時     | datetime   | NOT NULL    |      |       |
+# | updated_at   | 更新日時     | datetime   | NOT NULL    |      |       |
+# |--------------+--------------+------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -557,17 +557,17 @@
 #
 # Room (actb_rooms as Actb::Room)
 #
-# |---------------+---------------+-------------+---------------------+------+-------|
-# | name          | desc          | type        | opts                | refs | index |
-# |---------------+---------------+-------------+---------------------+------+-------|
-# | id            | ID            | integer(8)  | NOT NULL PK         |      |       |
-# | begin_at      | Begin at      | datetime    | NOT NULL            |      | A     |
-# | end_at        | End at        | datetime    |                     |      | B     |
-# | rule_key      | Rule key      | string(255) | NOT NULL            |      | C     |
-# | created_at    | 作成日時      | datetime    | NOT NULL            |      |       |
-# | updated_at    | 更新日時      | datetime    | NOT NULL            |      |       |
-# | battles_count | Battles count | integer(4)  | DEFAULT(0) NOT NULL |      | D     |
-# |---------------+---------------+-------------+---------------------+------+-------|
+# |---------------+---------------+------------+---------------------+------+-------|
+# | name          | desc          | type       | opts                | refs | index |
+# |---------------+---------------+------------+---------------------+------+-------|
+# | id            | ID            | integer(8) | NOT NULL PK         |      |       |
+# | begin_at      | Begin at      | datetime   | NOT NULL            |      | A     |
+# | end_at        | End at        | datetime   |                     |      | B     |
+# | rule_id       | Rule          | integer(8) | NOT NULL            |      | C     |
+# | created_at    | 作成日時      | datetime   | NOT NULL            |      |       |
+# | updated_at    | 更新日時      | datetime   | NOT NULL            |      |       |
+# | battles_count | Battles count | integer(4) | DEFAULT(0) NOT NULL |      | D     |
+# |---------------+---------------+------------+---------------------+------+-------|
 
 # == Schema Information ==
 #
@@ -578,6 +578,7 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 # | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
 # | key        | ユニークなハッシュ | string(255) | NOT NULL    |      | A     |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | B     |
 # | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
 # |------------+--------------------+-------------+-------------+------+-------|
@@ -717,6 +718,20 @@
 
 # == Schema Information ==
 #
+# Rule (actb_rules as Actb::Rule)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Xrecord (actb_xrecords as Actb::Xrecord)
 #
 # |------------------+------------------+------------+-------------+-----------------------+-------|
@@ -790,15 +805,15 @@
 #
 # Setting (actb_settings as Actb::Setting)
 #
-# |------------+----------+-------------+-------------+-----------------------+-------|
-# | name       | desc     | type        | opts        | refs                  | index |
-# |------------+----------+-------------+-------------+-----------------------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |                       |       |
-# | user_id    | User     | integer(8)  | NOT NULL    | => Colosseum::User#id | A     |
-# | rule_key   | Rule key | string(255) | NOT NULL    |                       | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |                       |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |                       |       |
-# |------------+----------+-------------+-------------+-----------------------+-------|
+# |------------+----------+------------+-------------+-----------------------+-------|
+# | name       | desc     | type       | opts        | refs                  | index |
+# |------------+----------+------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |                       |       |
+# | user_id    | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A     |
+# | rule_id    | Rule     | integer(8) | NOT NULL    |                       | B     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |                       |       |
+# |------------+----------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # Colosseum::User.has_one :actb_xrecord
@@ -877,4 +892,18 @@
 #- Remarks ----------------------------------------------------------------------
 # Colosseum::User.has_one :actb_xrecord
 #--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Final (actb_finals as Actb::Final)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
 

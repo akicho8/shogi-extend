@@ -3,10 +3,10 @@
   .columns.is-mobile.win_lose_container
     .column
       .has-text-centered.is-size-3.has-text-weight-bold
-        template(v-if="app.current_membership.judge_key === 'win'")
+        template(v-if="app.current_membership.judge.key === 'win'")
           .has-text-danger
             | YOU WIN !
-        template(v-if="app.current_membership.judge_key === 'lose'")
+        template(v-if="app.current_membership.judge.key === 'lose'")
           .has-text-success
             | YOU LOSE !
   .columns.is-mobile.result_container
@@ -20,9 +20,9 @@
           template(v-if="membership.user.actb_newest_xrecord.rensho_count === 0 && membership.user.actb_newest_xrecord.renpai_count === 0")
             | &nbsp;
 
-        template(v-if="membership.judge_key === 'lose' && app.battle.final_info.lose_side")
+        template(v-if="membership.judge.key === 'lose' && app.battle.final.lose_side")
           .icon_up_message.has-text-danger.has-text-weight-bold
-            | {{app.battle.final_info.name}}
+            | {{app.battle.final.name}}
         figure.image.is-64x64
           img.is-rounded(:src="membership.user.avatar_path")
         .user_name.has-text-weight-bold

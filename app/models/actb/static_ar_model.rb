@@ -33,7 +33,7 @@ module Actb
       end
     end
 
-    def static_info
+    def pure_info
       pure_class.fetch(key)
     end
   end

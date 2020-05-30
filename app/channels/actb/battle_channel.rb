@@ -8,7 +8,7 @@ module Actb
 
     def unsubscribed
       if current_battle.end_at.blank?
-        katimashita(current_user, :lose, :disconnect)
+        katimashita(current_user, :lose, :f_disconnect)
       end
     end
 
@@ -27,10 +27,10 @@ module Actb
         args = md["command_line"].split
         command = args.shift
         if command == "win"
-          katimashita(current_user, :win, :all_clear)
+          katimashita(current_user, :win, :f_success)
         end
         if command == "lose"
-          katimashita(current_user, :lose, :disconnect)
+          katimashita(current_user, :lose, :f_disconnect)
         end
       end
     end
@@ -124,7 +124,7 @@ module Actb
 
     # <-- app/javascript/actb_app/application.vue
     def goal_hook(data)
-      katimashita(current_user, :win, :all_clear)
+      katimashita(current_user, :win, :f_success)
     end
 
     def katimashita(target_user, judge_key, final_key)
@@ -138,7 +138,7 @@ module Actb
       battle.katimashita(target_user, judge_key, final_key)
       battle.reload
 
-      battle_json = battle.as_json(only: [:id, :rule_key, :rensen_index], include: { memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [:final_info])
+      battle_json = battle.as_json(only: [:id, :rensen_index], include: { final: { only: [:id, :key, :name], methods: [:lose_side] }, rule: { only: [:id, :key, :name] }, memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } } } }}, methods: [])
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: "katimashita_broadcasted", bc_params: { battle: battle_json }})
       # --> app/javascript/actb_app/application.vue
     end
@@ -198,7 +198,7 @@ module Actb
         ]
       }.first
 
-      katimashita(membership.user, :win, :all_clear)
+      katimashita(membership.user, :win, :f_success)
     end
 
     def battle_id
