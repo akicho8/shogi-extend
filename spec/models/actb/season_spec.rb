@@ -25,9 +25,9 @@ module Actb
 
     it "単に新しいレコードを作るだけでユーザーの新シーズンに切り替わる" do
       assert { Season.newest.generation                   == 1 }
-      assert { user.actb_newest_xrecord.season.generation == 1 }
+      assert { user.actb_current_xrecord.season.generation == 1 }
       assert { Season.create!.generation                  == 2 }
-      assert { user.actb_newest_xrecord.season.generation == 2 }
+      assert { user.actb_current_xrecord.season.generation == 2 }
     end
 
     it "このシーズンを持っている profiles" do

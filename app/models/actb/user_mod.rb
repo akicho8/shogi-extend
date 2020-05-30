@@ -36,28 +36,46 @@ module Actb
       end
     end
 
-    concerning :XrecordMod do
+    concerning :MasterXrecordMod do
+      included do
+        has_one :actb_master_xrecord, class_name: "Actb::MasterXrecord", dependent: :destroy
+
+        delegate :rating, :rensho_count, :rensho_max, to: :actb_master_xrecord
+
+        after_create do
+          create_actb_master_xrecord!
+        end
+      end
+
+      def create_actb_master_xrecord_if_blank
+        actb_master_xrecord || create_actb_master_xrecord!
+      end
+    end
+
+    concerning :SeasonXrecordMod do
       included do
         # プロフィール
-        with_options(class_name: "Actb::Xrecord", dependent: :destroy) do
-          has_one :actb_xrecord, -> { newest_order }
-          has_many :actb_xrecords
+        with_options(class_name: "Actb::SeasonXrecord", dependent: :destroy) do
+          has_one :actb_season_xrecord, -> { newest_order }
+          has_many :actb_season_xrecords
         end
 
         after_create do
-          create_actb_xrecord_if_blank
+          create_actb_season_xrecord_if_blank
         end
-
-        delegate :rating, :rensho_count, :rensho_max, to: :actb_newest_xrecord
       end
 
-      def create_actb_xrecord_if_blank
-        actb_newest_xrecord
+      def create_actb_season_xrecord_if_blank
+        actb_current_xrecord
+      end
+
+      def create_actb_master_xrecord_if_blank
+        actb_master_xrecord || create_actb_master_xrecord!
       end
 
       # 必ず存在する最新シーズンのプロフィール
-      def actb_newest_xrecord
-        actb_xrecords.find_or_create_by!(season: Season.newest)
+      def actb_current_xrecord
+        actb_season_xrecords.find_or_create_by!(season: Season.newest)
       end
     end
 

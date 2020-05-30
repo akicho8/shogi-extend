@@ -10,7 +10,7 @@
     .user_name.has-text-weight-bold
       | {{app.ov_user_info.name}}
     .rate_container
-      | R{{app.ov_user_info.actb_newest_xrecord.rating}}
+      | R{{app.ov_user_info.actb_current_xrecord.rating}}
 
     win_lose_circle(:info="win_lose_circle_params")
 
@@ -18,19 +18,19 @@
       .level-item.has-text-centered(v-if="false")
         div
           p.heading 対戦回数
-          p.title {{app.ov_user_info.actb_newest_xrecord.battle_count}}
+          p.title {{app.ov_user_info.actb_current_xrecord.battle_count}}
       .level-item.has-text-centered
         div
           p.heading 最多連勝数
-          p.title {{app.ov_user_info.actb_newest_xrecord.rensho_max}}
+          p.title {{app.ov_user_info.actb_current_xrecord.rensho_max}}
       .level-item.has-text-centered
         div
           p.heading 最多連敗数
-          p.title {{app.ov_user_info.actb_newest_xrecord.renpai_max}}
+          p.title {{app.ov_user_info.actb_current_xrecord.renpai_max}}
       .level-item.has-text-centered
         div
           p.heading 切断回数
-          p.title {{app.ov_user_info.actb_newest_xrecord.renpai_max}}
+          p.title {{app.ov_user_info.actb_current_xrecord.disconnect_count}}
 </template>
 
 <script>
@@ -45,8 +45,8 @@ export default {
     win_lose_circle_params() {
       return {
         judge_counts: {
-          win:  this.app.ov_user_info.actb_newest_xrecord.win_count,
-          lose: this.app.ov_user_info.actb_newest_xrecord.lose_count,
+          win:  this.app.ov_user_info.actb_current_xrecord.win_count,
+          lose: this.app.ov_user_info.actb_current_xrecord.lose_count,
         },
       }
     },

@@ -86,8 +86,8 @@ exit
 # end
 
 # battle.messages.create!(user: user1, body: "a") # => #<Actb::Message id: 4, user_id: 19, battle_id: 4, body: "a", created_at: "2020-05-05 14:45:49", updated_at: "2020-05-05 14:45:49">
-# tp user1.actb_xrecord.update!(rating: 1600)
-# tp user1.actb_xrecord
+# tp user1.actb_season_xrecord.update!(rating: 1600)
+# tp user1.actb_season_xrecord
 
 # def initialize(connection, identifier, params = {})
 # Actb::BattleChannel.new(nil, nil, a: 1) # =>

@@ -13,11 +13,11 @@
     template(v-for="(membership, i) in app.battle.memberships")
       .column.user_container.is-flex
         .icon_up_message.has-text-weight-bold
-          template(v-if="membership.user.actb_newest_xrecord.rensho_count >= 1")
-            | {{membership.user.actb_newest_xrecord.rensho_count}}連勝中！
-          template(v-if="membership.user.actb_newest_xrecord.rensho_count >= 1")
-            | {{membership.user.actb_newest_xrecord.renpai_count}}連敗中！
-          template(v-if="membership.user.actb_newest_xrecord.rensho_count === 0 && membership.user.actb_newest_xrecord.renpai_count === 0")
+          template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
+            | {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
+          template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
+            | {{membership.user.actb_current_xrecord.renpai_count}}連敗中！
+          template(v-if="membership.user.actb_current_xrecord.rensho_count === 0 && membership.user.actb_current_xrecord.renpai_count === 0")
             | &nbsp;
 
         template(v-if="membership.judge.key === 'lose' && app.battle.final.lose_side")
@@ -30,14 +30,14 @@
         .user_quest_index.has-text-weight-bold.is-size-4
           | {{membership.question_index}}
         .user_rating.has-text-weight-bold
-          | {{membership.user.actb_newest_xrecord.rating}}
+          | {{membership.user.actb_current_xrecord.rating}}
           span.user_rating_diff
-            template(v-if="membership.user.actb_newest_xrecord.rating_last_diff >= 0")
+            template(v-if="membership.user.actb_current_xrecord.rating_last_diff >= 0")
               span.has-text-primary
-                | (+{{membership.user.actb_newest_xrecord.rating_last_diff}})
-            template(v-if="membership.user.actb_newest_xrecord.rating_last_diff < 0")
+                | (+{{membership.user.actb_current_xrecord.rating_last_diff}})
+            template(v-if="membership.user.actb_current_xrecord.rating_last_diff < 0")
               span.has-text-danger
-                | ({{membership.user.actb_newest_xrecord.rating_last_diff}})
+                | ({{membership.user.actb_current_xrecord.rating_last_diff}})
         .battle_continue_container.has-text-weight-bold
           template(v-if="app.battle_continue_tap_counts[membership.id]")
             | 再戦希望

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Xrecord (actb_xrecords as Actb::Xrecord)
+# SeasonXrecord (actb_season_xrecords as Actb::SeasonXrecord)
 #
 # |------------------+------------------+------------+-------------+-----------------------+-------|
 # | name             | desc             | type       | opts        | refs                  | index |
@@ -28,92 +28,19 @@
 # |------------------+------------------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_xrecord
+# Colosseum::User.has_one :actb_season_xrecord
 #--------------------------------------------------------------------------------
 
 module Actb
-  class Xrecord < ApplicationRecord
-    belongs_to :user, class_name: "Colosseum::User"
+  class SeasonXrecord < ApplicationRecord
+    include XrecordShareMod
+
     belongs_to :season
-    belongs_to :judge           # 直近バトルの勝敗
-    belongs_to :final           # 直近バトルの結末
-
-    scope :newest_order, -> { order(generation: :desc) }
-    scope :oldest_order, -> { order(generation: :asc)  }
-
-    # レーティング
-    before_validation do
-      self.rating ||= EloRating.rating_default
-      self.rating_max ||= EloRating.rating_default
-      self.rating_last_diff ||= 0
-
-      if v = changes_to_save[:rating]
-        ov, nv = v
-        if ov && nv
-          self.rating_last_diff = nv - ov
-        end
-        if rating_max < rating
-          self.rating_max = rating
-        end
-      end
-
-    end
-
-    # 勝敗関連
-    before_validation do
-      self.battle_count ||= 0
-
-      self.win_count  ||= 0
-      self.lose_count ||= 0
-
-      self.win_rate     ||= 0
-
-      self.rensho_count ||= 0
-      self.renpai_count ||= 0
-      self.rensho_max   ||= 0
-      self.renpai_max   ||= 0
-
-      self.judge ||= Judge.fetch(:pending)
-      if changes_to_save[:judge] && judge && judge.win_or_lose?
-        self.battle_count += 1
-
-        # 総勝敗
-        public_send("#{judge.key}_count=", public_send("#{judge_key}_count") + 1)
-        if changes_to_save[:win_count] || changes_to_save[:lose_count]
-          d = win_count + lose_count
-          if d.positive?
-            self.win_rate = win_count.fdiv(d)
-          end
-        end
-
-        # 連勝敗
-        if judge.key == "win"
-          self.rensho_count += 1
-          self.renpai_count = 0
-        end
-        if judge.key == "lose"
-          self.rensho_count = 0
-          self.renpai_count += 0
-        end
-        self.rensho_max = [rensho_max, rensho_count].max
-        self.renpai_max = [renpai_max, renpai_count].max
-      end
-    end
-
-    # 結果関連
-    before_validation do
-      self.disconnect_count ||= 0
-      self.final ||= Final.fetch(:f_pending)
-      if changes_to_save[:final] && final && final.key == "f_disconnect"
-        self.disconnect_count += 1
-        self.disconnected_at = Time.current
-      end
-    end
 
     before_validation do
       self.season ||= Season.newest
       self.generation ||= season.generation
-      self.create_count ||= user.actb_xrecords.count.next
+      self.create_count ||= user.actb_season_xrecords.count.next
     end
 
     with_options allow_blank: true do

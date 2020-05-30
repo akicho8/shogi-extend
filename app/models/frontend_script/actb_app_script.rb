@@ -142,7 +142,7 @@ module FrontendScript
       # FIXME
       if params[:user_single_fetch]
         user = Colosseum::User.find(params[:user_id])
-        return { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path], include: {actb_newest_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :battle_count, :win_count, :lose_count, :win_rate] } }) }
+        return { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
       end
 
       # params = {
@@ -415,7 +415,7 @@ module FrontendScript
         battle.reload
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
-        info[:battle] = battle.as_json(only: [:id, :rensen_index], include: { final: { only: [:id, :key, :name], methods: [:lose_side] }, rule: { only: [:id, :key, :name] }, memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_newest_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max] } } }} }}, methods: [:best_questions])
+        info[:battle] = battle.as_json(only: [:id, :rensen_index], include: { final: { only: [:id, :key, :name], methods: [:lose_side] }, rule: { only: [:id, :key, :name] }, memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count] } } }} }}, methods: [:best_questions])
       end
 
       if current_debug_scene == :edit

@@ -169,6 +169,42 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["user_id"], name: "index_actb_lobby_messages_on_user_id"
   end
 
+  create_table "actb_master_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "judge_id", null: false, comment: "直前の勝敗"
+    t.bigint "final_id", null: false, comment: "直前の結果"
+    t.integer "battle_count", null: false, comment: "対戦数"
+    t.integer "win_count", null: false, comment: "勝ち数"
+    t.integer "lose_count", null: false, comment: "負け数"
+    t.float "win_rate", null: false, comment: "勝率"
+    t.integer "rating", null: false, comment: "レーティング"
+    t.integer "rating_last_diff", null: false, comment: "直近レーティング変化"
+    t.integer "rating_max", null: false, comment: "レーティング(最大)"
+    t.integer "rensho_count", null: false, comment: "連勝数"
+    t.integer "renpai_count", null: false, comment: "連敗数"
+    t.integer "rensho_max", null: false, comment: "連勝数(最大)"
+    t.integer "renpai_max", null: false, comment: "連敗数(最大)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "disconnect_count", null: false, comment: "切断数"
+    t.datetime "disconnected_at", comment: "最終切断日時"
+    t.index ["battle_count"], name: "index_actb_master_xrecords_on_battle_count"
+    t.index ["disconnect_count"], name: "index_actb_master_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_actb_master_xrecords_on_final_id"
+    t.index ["judge_id"], name: "index_actb_master_xrecords_on_judge_id"
+    t.index ["lose_count"], name: "index_actb_master_xrecords_on_lose_count"
+    t.index ["rating"], name: "index_actb_master_xrecords_on_rating"
+    t.index ["rating_last_diff"], name: "index_actb_master_xrecords_on_rating_last_diff"
+    t.index ["rating_max"], name: "index_actb_master_xrecords_on_rating_max"
+    t.index ["renpai_count"], name: "index_actb_master_xrecords_on_renpai_count"
+    t.index ["renpai_max"], name: "index_actb_master_xrecords_on_renpai_max"
+    t.index ["rensho_count"], name: "index_actb_master_xrecords_on_rensho_count"
+    t.index ["rensho_max"], name: "index_actb_master_xrecords_on_rensho_max"
+    t.index ["user_id"], name: "index_actb_master_xrecords_on_user_id", unique: true
+    t.index ["win_count"], name: "index_actb_master_xrecords_on_win_count"
+    t.index ["win_rate"], name: "index_actb_master_xrecords_on_win_rate"
+  end
+
   create_table "actb_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", null: false, comment: "問題"
     t.integer "moves_count", null: false, comment: "N手"
@@ -280,6 +316,49 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.index ["position"], name: "index_actb_rules_on_position"
   end
 
+  create_table "actb_season_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "season_id", null: false, comment: "期"
+    t.bigint "judge_id", null: false, comment: "直前の勝敗"
+    t.bigint "final_id", null: false, comment: "直前の結果"
+    t.integer "battle_count", null: false, comment: "対戦数"
+    t.integer "win_count", null: false, comment: "勝ち数"
+    t.integer "lose_count", null: false, comment: "負け数"
+    t.float "win_rate", null: false, comment: "勝率"
+    t.integer "rating", null: false, comment: "レーティング"
+    t.integer "rating_last_diff", null: false, comment: "直近レーティング変化"
+    t.integer "rating_max", null: false, comment: "レーティング(最大)"
+    t.integer "rensho_count", null: false, comment: "連勝数"
+    t.integer "renpai_count", null: false, comment: "連敗数"
+    t.integer "rensho_max", null: false, comment: "連勝数(最大)"
+    t.integer "renpai_max", null: false, comment: "連敗数(最大)"
+    t.integer "create_count", null: false, comment: "users.actb_season_xrecord.create_count は users.actb_season_xrecords.count と一致"
+    t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "disconnect_count", null: false, comment: "切断数"
+    t.datetime "disconnected_at", comment: "最終切断日時"
+    t.index ["battle_count"], name: "index_actb_season_xrecords_on_battle_count"
+    t.index ["create_count"], name: "index_actb_season_xrecords_on_create_count"
+    t.index ["disconnect_count"], name: "index_actb_season_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_actb_season_xrecords_on_final_id"
+    t.index ["generation"], name: "index_actb_season_xrecords_on_generation"
+    t.index ["judge_id"], name: "index_actb_season_xrecords_on_judge_id"
+    t.index ["lose_count"], name: "index_actb_season_xrecords_on_lose_count"
+    t.index ["rating"], name: "index_actb_season_xrecords_on_rating"
+    t.index ["rating_last_diff"], name: "index_actb_season_xrecords_on_rating_last_diff"
+    t.index ["rating_max"], name: "index_actb_season_xrecords_on_rating_max"
+    t.index ["renpai_count"], name: "index_actb_season_xrecords_on_renpai_count"
+    t.index ["renpai_max"], name: "index_actb_season_xrecords_on_renpai_max"
+    t.index ["rensho_count"], name: "index_actb_season_xrecords_on_rensho_count"
+    t.index ["rensho_max"], name: "index_actb_season_xrecords_on_rensho_max"
+    t.index ["season_id"], name: "index_actb_season_xrecords_on_season_id"
+    t.index ["user_id", "season_id"], name: "index_actb_season_xrecords_on_user_id_and_season_id", unique: true
+    t.index ["user_id"], name: "index_actb_season_xrecords_on_user_id"
+    t.index ["win_count"], name: "index_actb_season_xrecords_on_win_count"
+    t.index ["win_rate"], name: "index_actb_season_xrecords_on_win_rate"
+  end
+
   create_table "actb_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "レーティング"
     t.integer "generation", null: false, comment: "世代"
@@ -299,49 +378,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["rule_id"], name: "index_actb_settings_on_rule_id"
     t.index ["user_id"], name: "index_actb_settings_on_user_id"
-  end
-
-  create_table "actb_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "対戦者"
-    t.bigint "season_id", null: false, comment: "期"
-    t.bigint "judge_id", null: false, comment: "直前の勝敗"
-    t.bigint "final_id", null: false, comment: "直前の結果"
-    t.integer "battle_count", null: false, comment: "対戦数"
-    t.integer "win_count", null: false, comment: "勝ち数"
-    t.integer "lose_count", null: false, comment: "負け数"
-    t.float "win_rate", null: false, comment: "勝率"
-    t.integer "rating", null: false, comment: "レーティング"
-    t.integer "rating_last_diff", null: false, comment: "直近レーティング変化"
-    t.integer "rating_max", null: false, comment: "レーティング(最大)"
-    t.integer "rensho_count", null: false, comment: "連勝数"
-    t.integer "renpai_count", null: false, comment: "連敗数"
-    t.integer "rensho_max", null: false, comment: "連勝数(最大)"
-    t.integer "renpai_max", null: false, comment: "連敗数(最大)"
-    t.integer "create_count", null: false, comment: "users.actb_xrecord.create_count は users.actb_xrecords.count と一致"
-    t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "disconnect_count", null: false, comment: "切断数"
-    t.datetime "disconnected_at", comment: "最終切断日時"
-    t.index ["battle_count"], name: "index_actb_xrecords_on_battle_count"
-    t.index ["create_count"], name: "index_actb_xrecords_on_create_count"
-    t.index ["disconnect_count"], name: "index_actb_xrecords_on_disconnect_count"
-    t.index ["final_id"], name: "index_actb_xrecords_on_final_id"
-    t.index ["generation"], name: "index_actb_xrecords_on_generation"
-    t.index ["judge_id"], name: "index_actb_xrecords_on_judge_id"
-    t.index ["lose_count"], name: "index_actb_xrecords_on_lose_count"
-    t.index ["rating"], name: "index_actb_xrecords_on_rating"
-    t.index ["rating_last_diff"], name: "index_actb_xrecords_on_rating_last_diff"
-    t.index ["rating_max"], name: "index_actb_xrecords_on_rating_max"
-    t.index ["renpai_count"], name: "index_actb_xrecords_on_renpai_count"
-    t.index ["renpai_max"], name: "index_actb_xrecords_on_renpai_max"
-    t.index ["rensho_count"], name: "index_actb_xrecords_on_rensho_count"
-    t.index ["rensho_max"], name: "index_actb_xrecords_on_rensho_max"
-    t.index ["season_id"], name: "index_actb_xrecords_on_season_id"
-    t.index ["user_id", "season_id"], name: "index_actb_xrecords_on_user_id_and_season_id", unique: true
-    t.index ["user_id"], name: "index_actb_xrecords_on_user_id"
-    t.index ["win_count"], name: "index_actb_xrecords_on_win_count"
-    t.index ["win_rate"], name: "index_actb_xrecords_on_win_rate"
   end
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

@@ -17,7 +17,7 @@
 # |----------------+----------------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_xrecord
+# Colosseum::User.has_one :actb_season_xrecord
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -63,11 +63,11 @@ module Actb
 
     after_save do
       if saved_changes[:judge] && judge && judge.win_or_lose?
-        xrecord = user.actb_newest_xrecord
-        # xrecord.rensho_count = rensho_count # membershipの方に持つ必要ある？？？
-        # xrecord.renpai_count = renpai_count
-        xrecord.judge = judge
-        xrecord.save!
+        season_xrecord = user.actb_current_xrecord
+        # season_xrecord.rensho_count = rensho_count # membershipの方に持つ必要ある？？？
+        # season_xrecord.renpai_count = renpai_count
+        season_xrecord.judge = judge
+        season_xrecord.save!
       end
     end
 

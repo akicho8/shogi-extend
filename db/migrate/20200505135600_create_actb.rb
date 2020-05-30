@@ -84,8 +84,32 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    # Actb::Xrecord
-    create_table :actb_xrecords do |t|
+    # Actb::MasterXrecord
+    create_table :actb_master_xrecords do |t|
+      t.belongs_to :user,          null: false, index: { unique: true }, comment: "対戦者"
+      t.belongs_to :judge,         null: false,                          comment: "直前の勝敗"
+      t.belongs_to :final,         null: false,                          comment: "直前の結果"
+      t.integer :battle_count,     null: false, index: true,             comment: "対戦数"
+      t.integer :win_count,        null: false, index: true,             comment: "勝ち数"
+      t.integer :lose_count,       null: false, index: true,             comment: "負け数"
+      t.float   :win_rate,         null: false, index: true,             comment: "勝率"
+      t.integer :rating,           null: false, index: true,             comment: "レーティング"
+      t.integer :rating_last_diff, null: false, index: true,             comment: "直近レーティング変化"
+      t.integer :rating_max,       null: false, index: true,             comment: "レーティング(最大)"
+      t.integer :rensho_count,     null: false, index: true,             comment: "連勝数"
+      t.integer :renpai_count,     null: false, index: true,             comment: "連敗数"
+      t.integer :rensho_max,       null: false, index: true,             comment: "連勝数(最大)"
+      t.integer :renpai_max,       null: false, index: true,             comment: "連敗数(最大)"
+      t.timestamps
+
+      t.integer  :disconnect_count, null: false, index: true, comment: "切断数"
+      t.datetime :disconnected_at,  null: true,               comment: "最終切断日時"
+
+      # t.index [:user_id, :season_id], unique: true
+    end
+
+    # Actb::SeasonXrecord
+    create_table :actb_season_xrecords do |t|
       t.belongs_to :user,          null: false,              comment: "対戦者"
       t.belongs_to :season,        null: false,              comment: "期"
       t.belongs_to :judge,         null: false,              comment: "直前の勝敗"
@@ -101,7 +125,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :renpai_count,     null: false, index: true, comment: "連敗数"
       t.integer :rensho_max,       null: false, index: true, comment: "連勝数(最大)"
       t.integer :renpai_max,       null: false, index: true, comment: "連敗数(最大)"
-      t.integer :create_count,     null: false, index: true, comment: "users.actb_xrecord.create_count は users.actb_xrecords.count と一致"
+      t.integer :create_count,     null: false, index: true, comment: "users.actb_season_xrecord.create_count は users.actb_season_xrecords.count と一致"
       t.integer :generation,       null: false, index: true, comment: "世代(seasons.generationと一致)"
       t.timestamps
 

@@ -15,7 +15,7 @@ module Actb
       Room, RoomMembership, RoomMessage,
       Battle, BattleMembership,
       Season,
-      Xrecord,
+      SeasonXrecord,
       Setting,
       GoodMark, BadMark, ClipMark,
       Folder,

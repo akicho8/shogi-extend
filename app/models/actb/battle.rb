@@ -47,7 +47,7 @@ module Actb
       end
 
       self.final ||= Final.fetch(:f_pending)
-      if changes_to_save[:final] && final && final.key != "f_pending"
+      if changes_to_save[:final_id] && final && final.key != "f_pending"
         self.end_at ||= Time.current
       end
 
@@ -89,7 +89,9 @@ module Actb
     end
 
     def katimashita(target_user, judge_key, final_key)
-      raise "すでに終了している" if end_at
+      if end_at
+        raise "すでに終了している"
+      end
 
       judge = Judge.fetch(judge_key)
       final = Final.fetch(final_key)
@@ -107,12 +109,20 @@ module Actb
           mm = [m2, m1]
         end
 
-        ratings = mm.collect { |e| e.user.actb_newest_xrecord.rating }
-        ratings = EloRating.rating_update2(*ratings)
-        ratings = ratings.collect(&:round)
+        # 今シーズン用
+        c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
+        c_ratings = EloRating.rating_update2(*c_ratings)
+        c_ratings = c_ratings.collect(&:round)
 
+        # 永続的記録用
+        m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
+        m_ratings = EloRating.rating_update2(*m_ratings)
+        m_ratings = m_ratings.collect(&:round)
+
+        # Actb::SeasonXrecord
         mm.each.with_index do |m, i|
-          m.user.actb_newest_xrecord.update!(rating: ratings[i], judge: m.judge)
+          m.user.actb_current_xrecord.update!(rating: c_ratings[i], judge: m.judge, final: final)
+          m.user.actb_master_xrecord.update!(rating: m_ratings[i], judge: m.judge, final: final)
         end
 
         mm.each(&:save!)

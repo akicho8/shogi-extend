@@ -5,9 +5,9 @@
   .vs_info.is-flex
     template(v-for="(membership, i) in app.battle.memberships")
       .user_block.user_container.is-flex
-        template(v-if="membership.user.actb_newest_xrecord.rensho_count >= 2")
+        template(v-if="membership.user.actb_current_xrecord.rensho_count >= 2")
           .rensho_count
-            | {{membership.user.actb_newest_xrecord.rensho_count}}連勝中！
+            | {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
         figure.image.is-32x32
           img.is-rounded(:src="membership.user.avatar_path")
         .user_name.has-text-weight-bold
