@@ -13,6 +13,8 @@ module Swars
     end
 
     class Base
+      AGENT_TYPE = :faraday     # faraday or curl
+
       BASE_URL   = "https://shogiwars.heroz.jp"
       USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36"
 
@@ -23,6 +25,7 @@ module Swars
 
         def agent
           @agent ||= Faraday.new(url: BASE_URL) do |conn|
+            raise if OpenSSL::SSL::VERIFY_PEER != OpenSSL::SSL::VERIFY_NONE
             if Rails.env.development? && false
               conn.response :logger
             end
@@ -31,9 +34,40 @@ module Swars
             conn.headers[:cookie] = Rails.application.credentials.swars_agent_cookie
           end
         end
+
+        # 2020-05-30
+        # --insecure をつけないと動作しない
+        # https://qiita.com/shimpeiws/items/10e2b150c6ff41d69013
+        def curl_command(url)
+          [
+            "curl",
+            "-H 'authority: shogiwars.heroz.jp'",
+            "-H 'pragma: no-cache'",
+            "-H 'cache-control: no-cache'",
+            "-H 'upgrade-insecure-requests: 1'",
+            "-H 'user-agent: #{USER_AGENT}'",
+            "-H 'accept: text/html'",
+            "-H 'accept-encoding: gzip, deflate, br'",
+            "-H 'accept-language: ja'",
+            "-H 'cookie: #{Rails.application.credentials.swars_agent_cookie}'",
+            "--silent",
+            "--compressed",
+            "--insecure",
+            "'#{BASE_URL}#{url}'",
+          ].join(" ")
+        end
+
+        def html_fetch(url)
+          case AGENT_TYPE
+          when :faraday
+            agent.get(url).body
+          when :curl
+            `#{curl_command(url)}`
+          end
+        end
       end
 
-      delegate :agent, to: "self.class"
+      delegate :html_fetch, to: "self.class"
 
       attr_accessor :params
 
@@ -69,7 +103,7 @@ module Swars
         url = url_build
 
         if run_remote?
-          html = agent.get(url).body
+          html = html_fetch(url)
         else
           html = mock_html("index")
         end
@@ -117,7 +151,7 @@ module Swars
         end
 
         if run_remote?
-          html = agent.get(url).body
+          html = html_fetch(url)
         else
           html = mock_html("show")
         end
@@ -189,34 +223,33 @@ module Swars
 end
 
 if $0 == __FILE__
-  tp Swars::Agent::Index.fetch(run_remote: false, gtype: "",   user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Index.fetch(run_remote: false, gtype: "sb", user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Index.fetch(run_remote: false, gtype: "s1", user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Record.fetch(run_remote: false, key: "GRAN0215-kinakom0chi-20200411_195834")
+  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "",   user_key: "kinakom0chi", page_index: 0)
+  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "sb", user_key: "kinakom0chi", page_index: 0)
+  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "s1", user_key: "kinakom0chi", page_index: 0)
+  tp Swars::Agent::Record.fetch(run_remote: true, key: "GRAN0215-kinakom0chi-20200411_195834")
 end
+# >> |------------------------------------------|
+# >> | pc_gucchi-kinakom0chi-20200530_145751    |
+# >> | kinakom0chi-PAPAMOS-20200530_144401      |
+# >> | kinakom0chi-hosiii-20200530_144155       |
+# >> | kinakom0chi-guriguri9000-20200529_190134 |
+# >> | kinakom0chi-dokann-20200529_183638       |
+# >> | LucasMon-kinakom0chi-20200529_183215     |
+# >> | kakarot4649-kinakom0chi-20200528_202833  |
+# >> | kinakom0chi-Yakult1972-20200528_183022   |
+# >> | kinakom0chi-taka7280-20200528_182631     |
+# >> | 1602st-kinakom0chi-20200527_201838       |
+# >> |------------------------------------------|
 # >> |--------------------------------------|
-# >> | devuser1-Yamada_Taro-20200101_123401 |
-# >> | devuser2-Yamada_Taro-20200101_123402 |
-# >> | devuser3-Yamada_Taro-20200101_123403 |
+# >> | kinakom0chi-Onebingo-20200501_233039 |
 # >> |--------------------------------------|
-# >> |--------------------------------------|
-# >> | devuser1-Yamada_Taro-20200101_123401 |
-# >> | devuser2-Yamada_Taro-20200101_123402 |
-# >> | devuser3-Yamada_Taro-20200101_123403 |
-# >> |--------------------------------------|
-# >> |--------------------------------------|
-# >> | devuser1-Yamada_Taro-20200101_123401 |
-# >> | devuser2-Yamada_Taro-20200101_123402 |
-# >> | devuser3-Yamada_Taro-20200101_123403 |
-# >> |--------------------------------------|
-# >> ""
 # >> |-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |               key | GRAN0215-kinakom0chi-20200411_195834                                                                                                                                                                                                                                |
 # >> |        battled_at | 20200411_195834                                                                                                                                                                                                                                                     |
 # >> |          rule_key |                                                                                                                                                                                                                                                                     |
 # >> | preset_dirty_code | 0                                                                                                                                                                                                                                                                   |
-# >> |       __final_key | SENTE_WIN_TORYO                                                                                                                                                                                                                                                     |
-# >> |        user_infos | [{:user_key=>"GRAN0215", :grade_key=>"三段"}, {:user_key=>"kinakom0chi", :grade_key=>"四段"}]                                                                                                                                                                       |
-# >> |           csa_seq | [["+5756FU", 600], ["-8384FU", 599], ["+7776FU", 598], ["-8485FU", 598], ["+8877KA", 597], ["-6152KI", 597], ["+2858HI", 595], ["-7162GI", 588], ["+7968GI", 594], ["-5142OU", 588], ["+6857GI", 593], ["-4232OU", 586], ["+5948OU", 592], ["-1314FU", 579], ["+... |
+# >> |       __final_key | GOTE_WIN_TIMEOUT                                                                                                                                                                                                                                                    |
+# >> |        user_infos | [{:user_key=>"GRAN0215", :grade_key=>"2級"}, {:user_key=>"kinakom0chi", :grade_key=>"1級"}]                                                                                                                                                                         |
+# >> |           csa_seq | [["+7776FU", 599], ["-8384FU", 600], ["+7968GI", 595], ["-8485FU", 598], ["+6877GI", 593], ["-7172GI", 595], ["+6978KI", 591], ["-7283GI", 594], ["+8879KA", 590], ["-8384GI", 592], ["+9796FU", 589], ["-9394FU", 591], ["+7968KA", 588], ["-3334FU", 588], ["+... |
 # >> |   fetch_successed | true                                                                                                                                                                                                                                                                |
 # >> |-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
