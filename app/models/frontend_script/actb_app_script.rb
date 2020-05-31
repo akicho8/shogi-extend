@@ -257,7 +257,7 @@ module FrontendScript
 
     # http://localhost:3000/script/actb-app.json?remote_action=rule_key_set_handle
     def rule_key_set_handle
-      current_user.actb_setting.update!(rule_key: params[:rule_key])
+      current_user.actb_setting.update!(rule: Actb::Rule.fetch(params[:rule_key]))
       true
     end
 

@@ -21,7 +21,7 @@
     .title.is-3.has-text-centered モード
     .buttons.is-centered.mode_buttons
       template(v-for="row in app.$RuleInfo.values")
-        b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row.key)" type="is-primary")
+        b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row.key)" :type="{'is-primary': app.matching_list_hash[row.key].length >= 1}")
           | {{row.name}}
           | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
