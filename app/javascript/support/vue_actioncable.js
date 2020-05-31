@@ -22,5 +22,27 @@ export default {
     ac_info() {
       return consumer.subscriptions["subscriptions"].map(e => JSON.parse(e.identifier))
     },
+
+    ac_subscription_create(params, callbacks = {}) {
+      return consumer.subscriptions.create(params, {
+        connected: () => {
+          this.ac_info_update()
+          if (this.callbacks.connected) {
+            this.callbacks.connected()
+          }
+        },
+        disconnected: () => {
+          this.ac_info_update()
+          if (this.callbacks.disconnected) {
+            this.callbacks.disconnected()
+          }
+        },
+        received: (data) => {
+          if (data.bc_action) {
+            this[data.bc_action](data.bc_params)
+          }
+        },
+      })
+    },
   },
 }
