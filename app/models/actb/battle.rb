@@ -132,5 +132,65 @@ module Actb
         save!
       end
     end
+
+    # 開始時
+    def as_json_type1
+      as_json({
+          only: [:id, :rensen_index],
+          include: {
+            rule: { only: [:key, :name] },
+            final: { only: [:key], methods: [:name] },
+            room: {},
+            memberships: {
+              only: [:id, :question_index],
+              include: {
+                user: {
+                  only: [:id, :name],
+                  methods: [:avatar_path, :rating],
+                  include: {
+                    actb_current_xrecord: {
+                      only: [:rensho_count, :renpai_count],
+                    },
+                  },
+                },
+              },
+            },
+          },
+          methods: [:best_questions],
+        })
+    end
+
+    # 結果表示時
+    def as_json_type2
+      as_json({
+          only: [:id, :rensen_index],
+          include: {
+            final: {
+              only: [:key],
+              methods: [:name, :lose_side]
+            },
+            rule: {
+              only: [:id, :key, :name]
+            },
+            memberships: {
+              only: [:id, :rensho_count, :renpai_count, :question_index],
+              include: {
+                user: {
+                  only: [:id, :name],
+                  methods: [:avatar_path],
+                  include: {
+                    actb_current_xrecord: {
+                      only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count],
+                    },
+                  },
+                },
+                judge: {
+                  only: [:key, :name],
+                },
+              },
+            }
+          }
+        })
+    end
   end
 end

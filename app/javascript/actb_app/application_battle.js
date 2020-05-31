@@ -42,7 +42,6 @@ export const application_battle = {
       this.battle_unsubscribe()
 
       this.battle = new Battle(battle)
-      this.__assert__(this.battle.best_questions.length >= 1, "best_questions is empty")
 
       this.mode = "battle"
 
@@ -81,12 +80,14 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     start_hook() {
+      this.battle_count += 1
+
       if (this.info.debug_scene === "result") {
         this.result_setup(this.info.battle)
         return
       }
 
-      this.battle_count += 1
+      this.__assert__(this.battle.best_questions.length >= 1, "best_questions is empty")
 
       this.debug_alert("battle 接続")
 
@@ -132,7 +133,7 @@ export const application_battle = {
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.sub_mode === "operation_mode") {
 
-        if (this.battle.rule_key === "singleton_rule") {
+        if (this.battle.rule.key === "singleton_rule") {
           // 安全のため残り0秒になってから操作しても無効とする
           if (this.q2_rest_seconds === 0) {
             return
@@ -193,14 +194,14 @@ export const application_battle = {
       // 効果音
       this.sound_play(ox_mark_info.sound_key)
 
-      if (this.battle.rule_key === "marathon_rule") {
+      if (this.battle.rule.key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
         }
       }
 
-      if (this.battle.rule_key === "singleton_rule" || this.battle.rule_key === "hybrid_rule") {
+      if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
         this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
         if (this.primary_membership_p) {
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
@@ -230,12 +231,12 @@ export const application_battle = {
     },
     next_trigger_broadcasted(params) {
       this.room_speak("*next_trigger_broadcasted")
-      if (this.battle.rule_key === "marathon_rule") {
+      if (this.battle.rule.key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index // 自分だったら次に進める
         }
       }
-      if (this.battle.rule_key === "singleton_rule" || this.battle.rule_key === "hybrid_rule") {
+      if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
         this.question_index = params.question_index // 相手もそろって次に進める
       }
     },
@@ -330,7 +331,7 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     result_setup(battle) {
-      this.battle = battle
+      this.battle = new Battle(battle)
       this.mode = "result"
       this.sound_play(this.app.current_membership.judge.key)
     },
@@ -355,7 +356,7 @@ export const application_battle = {
     },
 
     q1_interval_processing() {
-      if (this.battle.rule_key === "marathon_rule" || this.battle.rule_key === "hybrid_rule") {
+      if (this.battle.rule.key === "marathon_rule" || this.battle.rule.key === "hybrid_rule") {
         if (this.sub_mode === "operation_mode") {
           this.q1_interval_count += 1
           if (this.q1_rest_seconds === 0) {
@@ -363,7 +364,7 @@ export const application_battle = {
           }
         }
       }
-      if (this.battle.rule_key === "singleton_rule") {
+      if (this.battle.rule.key === "singleton_rule") {
         if (this.sub_mode === "operation_mode") {
           if (this.x_mode === "x1_idol") {
             this.q1_interval_count += 1
@@ -460,7 +461,6 @@ export const application_battle = {
     tugino_mondai_ga_nai() {
       return (this.question_index + 1) >= this.battle.questions_count
     },
-
     score_orderd_memberships() {
       return _.sortBy(this.battle.memberships, e => -this.members_hash[e.id].x_score)
     },

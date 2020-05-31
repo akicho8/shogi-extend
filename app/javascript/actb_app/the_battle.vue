@@ -2,44 +2,10 @@
 .the_battle
   debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
 
-  .vs_info.is-flex
+  .vs_container.is-flex
     template(v-for="(membership, i) in app.battle.memberships")
-      .user_block.user_container.is-flex
-        template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
-          .rensho_count
-            | {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
-        figure.image.is-32x32
-          img.is-rounded(:src="membership.user.avatar_path")
-        .user_name.has-text-weight-bold
-          | {{membership.user.name}}
-
-        template(v-if="app.battle.rule.key === 'marathon_rule'")
-          .user_quest_index2
-            | {{ox_list(membership).length}} / {{app.battle.best_questions.length}}
-          .user_quest_index
-            template(v-if="progress_list2(membership).length === 0")
-              | &nbsp;
-            template(v-for="ox_mark_key in progress_list2(membership)")
-              template(v-if="ox_mark_key === 'correct'")
-                b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
-              template(v-if="ox_mark_key === 'mistake'")
-                b-icon(icon="close" size="is-small" type="is-success")
-
-        template(v-if="app.battle.rule.key === 'singleton_rule' || app.battle.rule.key === 'hybrid_rule'")
-          .user_quest_index2
-            | {{x_score(membership)}}
-          .user_quest_index
-            template(v-if="progress_list2(membership).length === 0")
-              | &nbsp;
-            template(v-for="ox_mark_key in progress_list2(membership)")
-              template(v-if="ox_mark_key === 'correct'")
-                b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
-              template(v-if="ox_mark_key === 'mistake'")
-                b-icon(icon="close" size="is-small" type="is-success")
-
-      template(v-if="i === 0")
-        .vs_block.is-1.is-flex.has-text-weight-bold.is-size-4
-          | vs
+      the_battle_membership(:membership="membership")
+      .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
 
   template(v-if="app.sub_mode === 'deden_mode'")
     .deden_mode_container.has-text-centered
@@ -66,6 +32,7 @@
 <script>
 import { support } from "./support.js"
 import dayjs from "dayjs"
+import the_battle_membership from "./the_battle_membership.vue"
 import the_battle_question1 from "./the_battle_question1.vue"
 import the_battle_question2 from "./the_battle_question2.vue"
 
@@ -75,6 +42,7 @@ export default {
     support,
   ],
   components: {
+    the_battle_membership,
     the_battle_question1,
     the_battle_question2,
   },
@@ -85,7 +53,7 @@ export default {
     ox_list(membership) {
       return this.app.members_hash[membership.id].ox_list
     },
-    progress_list2(membership) {
+    droped_ox_list(membership) {
       return _.takeRight(this.ox_list(membership), this.app.config.progress_list_take_display_count)
     },
     x_score(membership) {
@@ -98,21 +66,11 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_battle
+  .vs_container
+    justify-content: center
+    align-items: center
   .deden_mode_container
     font-size: 5rem
   .mistake_mode_container
     font-size: 5rem
-  .vs_info
-    border: 1px solid blue
-    justify-content: center
-    align-items: center
-    .user_block
-      border: 1px solid red
-      width: 100%
-      .user_quest_index
-    .vs_block
-      border: 1px solid green
-      flex-direction: column
-      justify-content: center
-      align-items: center
 </style>

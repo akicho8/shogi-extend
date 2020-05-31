@@ -57,6 +57,11 @@ export const application_room = {
         return
       }
 
+      if (this.info.debug_scene === "result") {
+        this.battle_setup(this.info.battle)
+        return
+      }
+
       this.battle_setup(params.battle)
     },
 

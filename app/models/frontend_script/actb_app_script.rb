@@ -407,7 +407,7 @@ module FrontendScript
         battle = room.battle_create_with_members!
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
-        info[:battle] = battle.as_json(only: [:id, :rensen_index], include: { rule: { only: [:key, :name] }, final: { only: [:key, :name], methods: [:lose_side] }, room: {}, memberships: { only: [:id, :judge_key, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path, :rating], include: {actb_current_xrecord: { only: [:rensho_count, :renpai_count] } } }} } }, methods: [:best_questions]) # JSON1
+        info[:battle] = battle.as_json_type1
       end
 
       if current_debug_scene == :result
@@ -420,7 +420,7 @@ module FrontendScript
         battle.reload
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
-        info[:battle] = battle.as_json(only: [:id, :rensen_index], include: { final: { only: [:id, :key, :name], methods: [:lose_side] }, rule: { only: [:id, :key, :name] }, memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count] } } }} }}, methods: [:best_questions])
+        info[:battle] = battle.as_json_type2
       end
 
       if current_debug_scene == :edit

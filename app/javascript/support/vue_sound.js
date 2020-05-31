@@ -30,8 +30,9 @@ const SoundPresets = {
   poon:     { file: mp3_poon,     volume: 0.5, },
   deden:    { file: mp3_deden,    volume: 0.2, },
   pipopipo: { file: mp3_pipopipo, volume: 0.5, },
-  bubuu:    { file: mp3_bubuu,    volume: 0.5, },
   pishi:    { file: wav_pishi,    volume: 0.5, },
+  correct:  { file: mp3_o,        volume: 0.2, },
+  mistake:  { file: mp3_bubuu,    volume: 0.2, },
 }
 
 export default {

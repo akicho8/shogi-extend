@@ -19,6 +19,6 @@ module Actb
 
     has_many :battles, dependent: :destroy
 
-    delegate :lose_side, to: :pure_info
+    delegate :lose_side, :name, to: :pure_info
   end
 end

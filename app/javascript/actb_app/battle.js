@@ -3,6 +3,10 @@ import { Question } from "./question.js"
 export class Battle {
   constructor(battle) {
     Object.assign(this, battle)
+
+    if (this.best_questions == null) {
+      this.best_questions = []
+    }
     this.best_questions = this.best_questions.map(e => new Question(e))
   }
 
