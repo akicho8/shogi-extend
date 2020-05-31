@@ -285,21 +285,10 @@ export default {
 
       // https://day.js.org/docs/en/durations/diffing
       const time_limit_sec = dayjs(this.time_limit_clock).diff(this.base_clock) / 1000
-
-      const params = {
-        save_handle: true,
-        question: { ...this.question, time_limit_sec: time_limit_sec },
-      }
-      debugger
-
-      // .add(this.question.time_limit_sec, "second").toDate()
-
-      // params.set("question.description", this.question.description)
-      // params.set("init_sfen", this.init_sfen)
-      // params.set("answers", this.answers)
+      const question_attributes = { ...this.question, time_limit_sec: time_limit_sec }
 
       const before_create_or_upate_name = this.create_or_upate_name
-      this.remote_fetch("PUT", this.app.info.put_path, params, e => {
+      this.remote_fetch("PUT", this.app.info.put_path, {remote_action: "save_handle", question: question_attributes}, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
         }

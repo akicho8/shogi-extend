@@ -8,6 +8,12 @@ module Actb
         end
       end
 
+      def good_bad_clip_flags_for(question)
+        [:good_p, :bad_p, :clip_p].inject({}) do |a, e|
+          a.merge(e => public_send(e, question))
+        end
+      end
+
       def good_p(question)
         actb_good_marks.where(question: question).exists?
       end
@@ -19,24 +25,32 @@ module Actb
       def vote_handle(params)
         question = Question.find(params[:question_id])
         vote_info = VoteInfo.fetch(params[:vote_key])
-        retv = {}
-        retv.update(vote_set(question, vote_info, params[:vote_value]))
-        retv.update(vote_set(question, vote_info.flip, false))
-        retv
+
+        if params[:enabled].nil?
+          enabled = !vote_scope(question, vote_info).exists? # 自動トグル
+        else
+          enabled = params[:enabled]
+        end
+
+        ActiveRecord::Base.transaction do
+          {}.tap do |e|
+            e.update(vote_set(question, vote_info, enabled))
+            e.update(vote_set(question, vote_info.flip, false))
+          end
+        end
       end
 
       private
 
-      def vote_set(question, vote, enable)
+      def vote_set(question, vote, enabled)
         s = vote_scope(question, vote)
-        if enable
+        if enabled
           if s.exists?
             diff = 0
           else
             s.create!
             diff = 1
           end
-          enable = true
         else
           if s.exists?
             s.destroy_all
@@ -44,9 +58,14 @@ module Actb
           else
             diff = 0
           end
-          enable = false
         end
-        { "#{vote.key}_p": enable, "#{vote.key}_diff": diff }
+        {
+          vote.key => {
+            enabled: enabled, # ボタンの新しい状態
+            diff: diff,       # 前回との評価数の差分
+            count: question.reload.public_send("#{vote.key}_marks_count"), # トータル評価数(ビュー側では未使用)
+          },
+        }
       end
 
       def vote_scope(question, vote)

@@ -77,9 +77,9 @@ module Actb
       has_many :moves_answers  # 手順一致を正解とする答え集
       has_many :endpos_answers # 最後の局面を正解とする答え集
 
-      has_many :clip_marks     # クリップ
-      has_many :favorites      # Good
-      # has_many :bad_marks       # Bad
+      has_many :good_marks
+      has_many :bad_marks
+      has_many :clip_marks
     end
 
     # with_options allow_destroy: true do

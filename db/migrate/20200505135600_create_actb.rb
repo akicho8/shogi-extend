@@ -235,8 +235,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       # counter_cache
       t.integer :histories_count,  default: 0, null: false, comment: "履歴数(出題数とは異なる)"
       t.integer :favorites_count,  default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
-      t.integer :bad_marks_count,  default: 0, null: false, comment: "高評価数"
-      t.integer :good_marks_count, default: 0, null: false, comment: "低評価数"
+      t.integer :good_marks_count, default: 0, null: false, comment: "高評価数"
+      t.integer :bad_marks_count,  default: 0, null: false, comment: "低評価数"
       t.integer :clip_marks_count, default: 0, null: false, comment: "保存された数"
       t.integer :messages_count,   default: 0, null: false, comment: "コメント数"
     end

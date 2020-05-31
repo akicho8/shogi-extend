@@ -10,24 +10,28 @@ module Actb
       end
 
       # from app/javascript/actb_app/the_history.vue
-      # clip_handle(question_id: question.id, clip_p: clip_p)
       def clip_handle(params)
         question = Question.find(params[:question_id])
-        clip_set(question, params[:clip_p])
+        if params[:enabled].nil?
+          enabled = !clip_p(question)
+        else
+          enabled = params[:enabled]
+        end
+        clip_set(question, enabled)
       end
 
       private
 
-      def clip_set(question, enable)
+      def clip_set(question, enabled)
         s = actb_clip_marks.where(question: question)
-        if enable
+        if enabled
           if s.exists?
             diff = 0
           else
             s.create!
             diff = 1
           end
-          enable = true
+          enabled = true
         else
           if s.exists?
             s.destroy_all
@@ -35,9 +39,13 @@ module Actb
           else
             diff = 0
           end
-          enable = false
+          enabled = false
         end
-        { clip_p: enable, diff: diff }
+        {
+          enabled: enabled,                        # 現在の状態
+          diff: diff,                              # 前回との差分
+          count: question.reload.clip_marks_count, # ビューでは未使用
+        }
       end
     end
   end

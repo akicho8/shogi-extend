@@ -2,7 +2,7 @@
 .the_profile_edit_form
   .primary_header
     .header_link_icon.ljust(@click="cancel_handle") キャンセル
-    .header_link_icon.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !$parent.changed_p}") 保存
+    .header_link_icon.rjust.has-text-weight-bold(@click="profile_update_handle" :class="{disabled: !$parent.changed_p}") 保存
     .header_center_title プロフィール編集
 
   .image_container.is-flex
@@ -51,7 +51,7 @@ export default {
       })
     },
 
-    save_handle() {
+    profile_update_handle() {
       this.sound_play("click")
       this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", user_name: this.$parent.new_name, croped_image: this.$parent.croped_image }, e => {
         this.app.current_user = e.current_user

@@ -37,12 +37,6 @@ module Actb
       has_many :actb_favorites, class_name: "Actb::Favorite", dependent: :destroy
     end
 
-    def good_bad_clip_flags_for(question)
-      [:good_p, :bad_p, :clip_p].inject({}) do |a, e|
-        a.merge(e => public_send(e, question))
-      end
-    end
-
     concerning :MasterXrecordMod do
       included do
         has_one :actb_master_xrecord, class_name: "Actb::MasterXrecord", dependent: :destroy

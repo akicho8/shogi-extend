@@ -302,38 +302,33 @@ export default {
       }
     },
 
-    vote_handle(history, vote_key, vote_value) {
+    vote_handle(history, vote_key, enabled) {
       this.sound_play("click")
-      if (vote_key === "good") {
-        if (vote_value) {
+      // enabled: enabled → その値に設定
+      // enabled: null       → トグルする
+      this.silent_remote_fetch("PUT", this.app.info.put_path, { remote_action: "vote_handle", question_id: history.question.id, vote_key: vote_key, enabled: null, }, e => {
+        if (e.good.diff >= 1) {
           this.talk("よき", {rate: 1.5})
         }
-      } else {
-        if (vote_value) {
+        this.$set(history, "good_p", e.good.enabled)
+        this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.good.diff)
+
+        if (e.bad.diff >= 1) {
           this.talk("だめ", {rate: 1.5})
         }
-      }
-      this.silent_remote_fetch("PUT", this.app.info.put_path, { vote_handle: true, question_id: history.question.id, vote_key: vote_key, vote_value: vote_value, }, e => {
-        if (e.retval) {
-          this.$set(history, "good_p", e.retval.good_p)
-          this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.retval.good_diff)
-
-          this.$set(history, "bad_p", e.retval.bad_p)
-          this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.retval.bad_diff)
-        }
+        this.$set(history, "bad_p", e.bad.enabled)
+        this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.bad.diff)
       })
     },
 
-    clip_handle(history, clip_p) {
+    clip_handle(history, enabled) {
       this.sound_play("click")
-      if (clip_p) {
-        this.talk("保存リストに追加しました", {rate: 1.5})
-      }
-      this.silent_remote_fetch("PUT", this.app.info.put_path, { clip_handle: true, question_id: history.question.id, clip_p: clip_p, }, e => {
-        if (e.retval) {
-          this.$set(history, "clip_p", e.retval.clip_p)
-          this.$set(history.question, "clip_marks_count", history.question.clip_marks_count + e.retval.diff)
+      this.silent_remote_fetch("PUT", this.app.info.put_path, { remote_action: "clip_handle", question_id: history.question.id, enabled: null, }, e => {
+        if (e.diff >= 1) {
+          this.talk("保存リストに追加しました", {rate: 1.5})
         }
+        this.$set(history, "clip_p", e.enabled)
+        this.$set(history.question, "clip_marks_count", history.question.clip_marks_count + e.diff)
       })
     },
   },

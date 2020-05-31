@@ -262,54 +262,26 @@ module FrontendScript
     end
 
     def put_action
-      if v = params[:remote_action]
-        c.render json: public_send(v)
+      c.render json: public_send(params[:remote_action])
+    end
+
+    def vote_handle
+      current_user.vote_handle(params)
+    end
+
+    def clip_handle
+      current_user.clip_handle(params)
+    end
+
+    def save_handle
+      question = current_user.actb_questions.find_or_initialize_by(id: params[:question][:id])
+      begin
+        question.together_with_params_came_from_js_update(params)
+      rescue ActiveRecord::RecordInvalid => error
+        c.render json: { form_error_message: error.message }
         return
       end
-
-      # if params[:g2_hayaosi_handle]
-      #   # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, battle_id: this.app.battle.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
-      #   # { g2_hayaosi_handle: true, battle_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
-      #
-      #   redis = Redis.new(db: AppConfig[:redis_db_for_actb])
-      #   key = [:early_press, params[:battle_id], params[:question_id]].join("/")
-      #   Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
-      #   early_press_counter = redis.incr(key)
-      #   client.expire(key, 60)
-      #   c.render json: { retval: { } }
-      #   return
-      # end
-
-      if params[:vote_handle]
-        c.render json: { retval: current_user.vote_handle(params) }
-        return
-      end
-
-      if params[:clip_handle]
-        c.render json: { retval: current_user.clip_handle(params) }
-        return
-      end
-
-      if params[:save_handle]
-        # params = {
-        #   "question" => {
-        #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-        #     "moves_answers"=>[{"moves_str"=>"4c5b"}],
-        #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
-        #   },
-        # }.deep_symbolize_keys
-
-        question = current_user.actb_questions.find_or_initialize_by(id: params[:question][:id])
-        begin
-          question.together_with_params_came_from_js_update(params)
-        rescue ActiveRecord::RecordInvalid => error
-          c.render json: { form_error_message: error.message }
-          return
-        end
-        c.render json: { question: question.as_json(question_as_json_params) }
-        return
-      end
-
+      { question: question.as_json(question_as_json_params) }
     end
 
     def profile_update
