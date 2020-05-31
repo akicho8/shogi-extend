@@ -19,21 +19,21 @@ module Actb
 
       if current_user
         redis.sadd(:online_user_ids, current_user.id)
-        all_broadcast
+        online_status
       end
     end
 
     def unsubscribed
       if current_user
         redis.srem(:online_user_ids, current_user.id)
-        all_broadcast
+        online_status
       end
     end
 
     private
 
-    def all_broadcast
-      ActionCable.server.broadcast("actb/school_channel", online_user_ids: online_user_ids, room_user_ids: room_user_ids)
+    def online_status
+      ActionCable.server.broadcast("actb/school_channel", bc_action: :online_status_broadcasted, bc_params: {online_user_ids: online_user_ids, room_user_ids: room_user_ids})
     end
   end
 end

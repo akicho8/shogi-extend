@@ -12,7 +12,7 @@ module Actb
       end
 
       def room_user_ids_broadcast
-        ActionCable.server.broadcast("actb/school_channel", room_user_ids: room_user_ids)
+        ActionCable.server.broadcast("actb/school_channel", bc_action: :online_status_broadcasted, bc_params: {room_user_ids: room_user_ids})
       end
     end
   end

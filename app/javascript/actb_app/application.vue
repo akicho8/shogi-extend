@@ -188,16 +188,16 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     school_setup() {
-      this.$ac_school = this.ac_subscription_create({channel: "Actb::SchoolChannel"}, {
-        received: (data) => {
-          if (data.online_user_ids) {
-            this.online_user_ids = data.online_user_ids
-          }
-          if (data.room_user_ids) {
-            this.room_user_ids = data.room_user_ids
-          }
-        },
-      })
+      this.__assert__(this.$ac_school == null)
+      this.$ac_school = this.ac_subscription_create({channel: "Actb::SchoolChannel"})
+    },
+    online_status_broadcasted(params) {
+      if (params.online_user_ids) {
+        this.online_user_ids = params.online_user_ids
+      }
+      if (params.room_user_ids) {
+        this.room_user_ids = params.room_user_ids
+      }
     },
 
     profile_edit_setup() {
