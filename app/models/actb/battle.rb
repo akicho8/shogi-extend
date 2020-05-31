@@ -72,7 +72,7 @@ module Actb
       s = s.limit(Config[:best_questions_limit])
 
       list = Question.where(id: s.ids).order(:difficulty_level)
-      list.as_json(only: [:id, :init_sfen, :time_limit_sec, :difficulty_level, :title, :description, :hint_description, :source_desc, :other_twitter_account], include: {:user => { only: [:id, :name, :key], methods: [:avatar_path] }, :moves_answers => {only: [:moves_count, :moves_str, :end_sfen]}})
+      list.collect(&:as_json_type3)
     end
 
     def final_info

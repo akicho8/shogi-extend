@@ -19,23 +19,21 @@ require 'rails_helper'
 
 module Actb
   RSpec.describe Season, type: :model do
-    before do
-      Actb.setup
-    end
+    include ActbSupportMethods
 
     it "単に新しいレコードを作るだけでユーザーの新シーズンに切り替わる" do
       assert { Season.newest.generation                   == 1 }
-      assert { sysop.actb_current_xrecord.season.generation == 1 }
+      assert { user1.actb_current_xrecord.season.generation == 1 }
       assert { Season.create!.generation                  == 2 }
-      assert { sysop.actb_current_xrecord.season.generation == 2 }
+      assert { user1.actb_current_xrecord.season.generation == 2 }
     end
 
     it "レーティングを引き継ぐ" do
-      assert { sysop.rating == 1500 }
-      sysop.actb_master_xrecord.update!(rating: 1501)
-      assert { sysop.rating  == 1501 }
+      assert { user1.rating == 1500 }
+      user1.actb_master_xrecord.update!(rating: 1501)
+      assert { user1.rating  == 1501 }
       Actb::Season.create!
-      assert { sysop.actb_current_xrecord.rating == 1501 }
+      assert { user1.actb_current_xrecord.rating == 1501 }
     end
 
     it "このシーズンを持っている profiles" do
@@ -43,3 +41,9 @@ module Actb
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ...
+# >> 
+# >> Finished in 0.62592 seconds (files took 2.16 seconds to load)
+# >> 3 examples, 0 failures
+# >> 

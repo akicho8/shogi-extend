@@ -124,7 +124,6 @@ module Actb
 
     with_options presence: true do
       validates :init_sfen
-      # validates :difficulty_level
     end
 
     with_options allow_blank: true do
@@ -137,17 +136,7 @@ module Actb
     def together_with_params_came_from_js_update(params)
       params = params.deep_symbolize_keys
 
-      # params = {
-      #   "question" => {
-      #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
-      #     "moves_answers"=>[{"moves_str"=>"4c5b"}],
-      #     "time_limit_clock"=>"1999-12-31T15:03:00.000Z",
-      #   },
-      # }.deep_symbolize_keys
-
       question = params[:question]
-
-      # record = h.current_user.actb_questions.find_or_initialize_by(id: question[:id])
 
       ActiveRecord::Base.transaction do
         assign_attributes(question.slice(*[
@@ -166,20 +155,6 @@ module Actb
           self.lineage = Lineage.fetch(question[:lineage][:key])
         end
 
-        # if Rails.env.development?
-        #   if new_record?
-        #     parts = init_sfen.split
-        #     parts.pop
-        #     parts.push(self.class.count.next)
-        #     self.init_sfen = parts.join(" ")
-        #     p ["#{__FILE__}:#{__LINE__}", __method__, init_sfen]
-        #   end
-        # end
-
-        # a = Time.zone.parse(question[:time_limit_clock])
-        # b = Time.zone.parse("2000-01-01")
-        # self.time_limit_sec = a - b
-
         save!
 
         # 削除
@@ -193,23 +168,7 @@ module Actb
           moves_answer.save!
         end
       end
-
-      # question = h.current_user.actb_questions.create! do |e|
-      #   e.assign_attributes(params[:question])
-      #   # e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-      #   e.moves_answers.build(moves_str: "G*5b")
-      #   e.endpos_answers.build(end_sfen: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
-      # end
     end
-
-    # jsに渡すパラメータを作る
-    # def create_the_parameters_to_be_passed_to_the_js
-    #   as_json
-    #
-    #   hash = attributes
-    #   hash = hash.merge(moves_answers: moves_answers)
-    #   hash
-    # end
 
     def folder_key
       if folder
@@ -221,6 +180,31 @@ module Actb
       if user
         self.folder = user.public_send("actb_#{key}_box")
       end
+    end
+
+    def as_json_type3
+      as_json({
+          only: [
+            :id,
+            :init_sfen,
+            :time_limit_sec,
+            :difficulty_level,
+            :title,
+            :description,
+            :hint_description,
+            :source_desc,
+            :other_twitter_account,
+          ],
+          include: {
+            user: {
+              only: [:id, :name, :key],
+              methods: [:avatar_path],
+            },
+            moves_answers: {
+              only: [:moves_count, :moves_str, :end_sfen],
+            },
+          },
+        })
     end
   end
 end

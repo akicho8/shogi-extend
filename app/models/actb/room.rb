@@ -23,8 +23,6 @@
 #   e.memberships.build(user: use)
 # end
 #
-# battle.room_messages.create!(user: user1, body: "a") # => #<Actb::RoomMessage id: 1, user_id: 31, battle_id: 18, body: "a", created_at: "2020-05-05 07:18:46", updated_at: "2020-05-05 07:18:46">
-#
 module Actb
   class Room < ApplicationRecord
     class << self

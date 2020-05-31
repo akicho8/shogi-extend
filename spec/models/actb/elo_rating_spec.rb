@@ -50,3 +50,9 @@ module Actb
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> .
+# >> 
+# >> Finished in 0.15065 seconds (files took 2.14 seconds to load)
+# >> 1 example, 0 failures
+# >> 

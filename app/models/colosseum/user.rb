@@ -162,6 +162,12 @@ module Colosseum
         def bot
           find_by(key: "bot") || create!(key: "bot", name: "BOT", email: "bot@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
         end
+        # def alice
+        #   find_by(key: "alice") || create!(key: "alice", name: "alice", email: "alice@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
+        # end
+        # def bob
+        #   find_by(key: "bob") || create!(key: "bob", name: "bob", email: "bob@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
+        # end
       end
 
       def sysop?

@@ -21,51 +21,20 @@
 require 'rails_helper'
 
 module Actb
-  RSpec.describe Battle, type: :model do
+  RSpec.describe History, type: :model do
     include ActbSupportMethods
 
-    it "final_keyをセットしたタイミングで終了時刻も設定" do
-      battle1.update!(final: Actb::Final.fetch(:f_success))
-      assert { battle1.end_at }
-    end
-
-    it "続きのバトル作成" do
-      new_battle = battle1.onaji_heya_wo_atarasiku_tukuruyo
-      assert { new_battle.kind_of?(Actb::Battle) }
-      assert { new_battle.rensen_index == 1 }
-    end
-
-    describe "出題" do
-      before do
-        question1
-      end
-
-      it do
-        assert { battle1.best_questions.size >= 1 }
-      end
-    end
-
-    describe "#katimashita" do
-      def test(judge_key)
-        users = 2.times.collect { Colosseum::User.create! }
-        room = Actb::Room.create_with_members!(users, rule: Actb::Rule.fetch(:marathon_rule))
-        battle = room.battle_create_with_members!
-        battle.katimashita(battle.users[0], judge_key, :f_success)
-        battle.reload.memberships.flat_map do |e|
-          [e.judge_info.key, e.user.rating]
-        end
-      end
-
-      it "勝ち負け" do
-        assert { test(:win)  == [:win,  1516, :lose, 1484] }
-        assert { test(:lose) == [:lose, 1484, :win,  1516] }
-      end
+    it "解答" do
+      membership = battle1.memberships.first
+      history = user1.actb_histories.create!(membership: membership, question: question1, ox_mark: Actb::OxMark.fetch(:correct))
+      assert { history }
+      # tp history
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ....
+# >> .
 # >> 
-# >> Finished in 1.51 seconds (files took 2.15 seconds to load)
-# >> 4 examples, 0 failures
+# >> Finished in 0.73492 seconds (files took 2.15 seconds to load)
+# >> 1 example, 0 failures
 # >> 

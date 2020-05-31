@@ -14,7 +14,14 @@ module Actb
       has_many :actb_battles, class_name: "Actb::Battle", through: :actb_battle_memberships                       # 対局(複数)
 
       # このユーザーが作成した問題(複数)
-      has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy
+      has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy do
+        def mock_type1
+          create! do |e|
+            e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Actb::Question.count.next}p 1"
+            e.moves_answers.build(moves_str: "G*5b")
+          end
+        end
+      end
 
       # このユーザーに出題した問題(複数)
       has_many :actb_histories, class_name: "Actb::History", dependent: :destroy

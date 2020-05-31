@@ -22,17 +22,19 @@ require 'rails_helper'
 
 module Actb
   RSpec.describe RoomMessage, type: :model do
-    before do
-      Actb.setup
-    end
-
-    let(:room) { Actb::Room.create! }
+    include ActbSupportMethods
 
     # /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-rails-4.0.0/lib/rspec/rails/matchers/action_cable.rb
     it do
       expect {
-        room.messages.create!(user: Colosseum::User.sysop, body: "(body)")
-      }.to have_broadcasted_to("actb/room_channel/#{room.id}")
+        room1.messages.create!(user: user1, body: "(body)")
+      }.to have_broadcasted_to("actb/room_channel/#{room1.id}")
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> .
+# >> 
+# >> Finished in 0.67599 seconds (files took 2.18 seconds to load)
+# >> 1 example, 0 failures
+# >> 

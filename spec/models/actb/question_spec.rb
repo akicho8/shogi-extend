@@ -42,24 +42,10 @@ require 'rails_helper'
 
 module Actb
   RSpec.describe Question, type: :model do
-    before(:context) do
-      Actb.setup
-    end
-
-    let :user do
-      Colosseum::User.create!
-    end
-
-    let :question do
-      user.actb_questions.create! do |e|
-        e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
-        e.moves_answers.build(moves_str: "G*5b")
-        e.endpos_answers.build(end_sfen: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
-      end
-    end
+    include ActbSupportMethods
 
     it do
-      assert { question.valid? }
+      assert { question1.valid? }
     end
 
     describe "子がエラーなら親を保存しない" do
@@ -74,14 +60,40 @@ module Actb
       end
 
       it do
-        question = user.actb_questions.build
+        question = user1.actb_questions.build
         question.together_with_params_came_from_js_update(params)
         assert { question.persisted? }
 
-        question = user.actb_questions.build
+        question = user1.actb_questions.build
         proc { question.together_with_params_came_from_js_update(params) }.should raise_error(ActiveRecord::RecordInvalid)
         assert { question.persisted? == false }
       end
     end
+
+    describe "属性" do
+      it do
+        assert { question1.lineage.name == "詰将棋" }
+      end
+    end
+
+    describe "フォルダ" do
+      it "初期値" do
+        assert { question1.folder_key == "active" }
+      end
+      it "移動方法1" do
+        user1.actb_trash_box.questions << question1
+        assert { question1.folder.class == Actb::TrashBox }
+      end
+      it "移動方法2(フォーム用)" do
+        question1.folder_key = :trash
+        assert { question1.folder_key == "trash" }
+      end
+    end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ......
+# >>
+# >> Finished in 0.77538 seconds (files took 2.19 seconds to load)
+# >> 6 examples, 0 failures
+# >>

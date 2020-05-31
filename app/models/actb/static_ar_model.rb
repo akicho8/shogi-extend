@@ -11,13 +11,16 @@ module Actb
       end
 
       validates :key, allow_blank: true, inclusion: pure_class.keys.collect(&:to_s)
+
+      unless method_defined?(:name)
+        delegate :name, to: :pure_info
+      end
     end
 
     class_methods do
       def setup(options = {})
         pure_class.each do |e|
           find_or_create_by!(key: e.key)
-          # unscoped.find_by(key: e.key) || unscoped.create!(key: e.key)
         end
       end
 
