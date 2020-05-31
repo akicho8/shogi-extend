@@ -41,7 +41,7 @@ require 'rails_helper'
 
 module Colosseum
   RSpec.describe User, type: :model do
-    before do
+    before(:context) do
       Actb.setup
     end
 
@@ -50,9 +50,11 @@ module Colosseum
     end
 
     context "リレーション" do
-      user = User.create!
-      assert { user.free_battles.to_a }
-      user.destroy!
+      it do
+        user = User.create!
+        assert { user.free_battles.to_a }
+        user.destroy!
+      end
     end
 
     xcontext "対戦リクエスト" do
@@ -234,3 +236,27 @@ module Colosseum
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ...****.......
+# >> 
+# >> Pending: (Failures listed here are expected and do not affect your suite's status)
+# >> 
+# >>   1) Colosseum::User 対戦リクエスト 自分vs自分
+# >>      # Temporarily skipped with xcontext
+# >>      # -:61
+# >> 
+# >>   2) Colosseum::User 対戦リクエスト 平手
+# >>      # Temporarily skipped with xcontext
+# >>      # -:73
+# >> 
+# >>   3) Colosseum::User 対戦リクエスト 駒落ち
+# >>      # Temporarily skipped with xcontext
+# >>      # -:84
+# >> 
+# >>   4) Colosseum::User 対戦リクエスト 両方駒落ち
+# >>      # Temporarily skipped with xcontext
+# >>      # -:96
+# >> 
+# >> Finished in 4.11 seconds (files took 2.23 seconds to load)
+# >> 14 examples, 0 failures, 4 pending
+# >> 

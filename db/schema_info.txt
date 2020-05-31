@@ -791,8 +791,8 @@
 # | good_count            | Good count            | integer(4)  | NOT NULL            |                       |       |
 # | histories_count       | Histories count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | favorites_count       | Favorites count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
-# | bad_marks_count       | Bad marks count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | good_marks_count      | Good marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
+# | bad_marks_count       | Bad marks count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | clip_marks_count      | Clip marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # | messages_count        | Messages count        | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
 # |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
