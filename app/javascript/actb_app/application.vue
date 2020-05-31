@@ -201,7 +201,7 @@ export default {
     },
 
     profile_edit_setup() {
-      this.lobby_close()
+      this.lobby_unsubscribe()
       this.mode = "profile_edit"
     },
 
@@ -277,12 +277,8 @@ export default {
       }
     },
 
-    lobby_close() {
-      if (this.$ac_lobby) {
-        this.$ac_lobby.unsubscribe()
-        this.$ac_lobby = null
-        this.ac_info_update()
-      }
+    lobby_unsubscribe() {
+      this.ac_unsubscribe("$ac_lobby")
     },
 
     builder_handle() {

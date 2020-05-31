@@ -28,26 +28,34 @@ export default {
         connected: () => {
           this.debug_alert("connected")
           this.ac_info_update()
-          if (this.callbacks.connected) {
-            this.callbacks.connected()
+          if (callbacks.connected) {
+            callbacks.connected()
           }
         },
         disconnected: () => {
           this.debug_alert("disconnected")
           this.ac_info_update()
-          if (this.callbacks.disconnected) {
-            this.callbacks.disconnected()
+          if (callbacks.disconnected) {
+            callbacks.disconnected()
           }
         },
         received: (data) => {
-          if (this.callbacks.received) {
-            this.callbacks.received(data)
+          if (callbacks.received) {
+            callbacks.received(data)
           }
           if (data.bc_action) {
             this[data.bc_action](data.bc_params)
           }
         },
       })
+    },
+
+    ac_unsubscribe(var_name) {
+      if (this[var_name]) {
+        this[var_name].unsubscribe()
+        this[var_name] = null
+        this.ac_info_update()
+      }
     },
   },
 }

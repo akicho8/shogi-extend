@@ -92,11 +92,7 @@ export default {
 
   methods: {
     question_unsubscribe() {
-      if (this.$ac_question) {
-        this.$ac_question.unsubscribe()
-        this.$ac_question = null
-        this.ac_info_update()
-      }
+      this.ac_unsubscribe("$ac_question")
     },
 
     question_subscribe() {

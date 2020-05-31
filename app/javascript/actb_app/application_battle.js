@@ -30,11 +30,7 @@ export const application_battle = {
 
   methods: {
     battle_unsubscribe() {
-      if (this.$ac_battle) {
-        this.$ac_battle.unsubscribe()
-        this.$ac_battle = null
-        this.ac_info_update()
-      }
+      this.ac_unsubscribe("$ac_battle")
     },
 
     battle_setup(battle) {

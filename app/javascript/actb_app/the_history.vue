@@ -54,7 +54,7 @@ export default {
   },
 
   created() {
-    this.app.lobby_close()
+    this.app.lobby_unsubscribe()
 
     this.sound_play("click")
     this.mode_select("history_index")

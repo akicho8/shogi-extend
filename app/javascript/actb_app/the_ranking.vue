@@ -61,7 +61,7 @@ export default {
   },
 
   created() {
-    this.app.lobby_close()
+    this.app.lobby_unsubscribe()
 
     this.seasons_fetch()
 

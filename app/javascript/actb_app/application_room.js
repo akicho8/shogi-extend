@@ -11,15 +11,11 @@ export const application_room = {
 
   methods: {
     room_unsubscribe() {
-      if (this.$ac_room) {
-        this.$ac_room.unsubscribe()
-        this.$ac_room = null
-        this.ac_info_update()
-      }
+      this.ac_unsubscribe("$ac_room")
     },
 
     room_setup(room) {
-      this.lobby_close()
+      this.lobby_unsubscribe()
 
       this.room = new Room(room)
 

@@ -137,7 +137,7 @@ export default {
     this.sort_order         = this.app.info.sort_order
     this.sort_order_default = this.app.info.sort_order_default
 
-    this.app.lobby_close()
+    this.app.lobby_unsubscribe()
 
     this.sound_play("click")
 

@@ -47,7 +47,7 @@ export default {
     the_battle_question2,
   },
   created() {
-    this.app.lobby_close()
+    this.app.lobby_unsubscribe()
   },
   methods: {
     ox_list(membership) {
