@@ -49,5 +49,9 @@ module Actb
     with_options allow_blank: true do
       validates :user_id, uniqueness: { scope: :season_id }
     end
+
+    def rating_default
+      user.rating
+    end
   end
 end

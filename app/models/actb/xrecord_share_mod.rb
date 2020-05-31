@@ -43,8 +43,8 @@ module Actb
 
       # レーティング
       before_validation do
-        self.rating ||= EloRating.rating_default
-        self.rating_max ||= EloRating.rating_default
+        self.rating ||= rating_default
+        self.rating_max ||= self.rating
         self.rating_last_diff ||= 0
 
         if v = changes_to_save[:rating]

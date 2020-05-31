@@ -34,5 +34,9 @@
 module Actb
   class MasterXrecord < ApplicationRecord
     include XrecordShareMod
+
+    def rating_default
+      EloRating.rating_default
+    end
   end
 end
