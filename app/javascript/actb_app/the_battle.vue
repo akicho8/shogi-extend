@@ -5,7 +5,7 @@
   .vs_info.is-flex
     template(v-for="(membership, i) in app.battle.memberships")
       .user_block.user_container.is-flex
-        template(v-if="membership.user.actb_current_xrecord.rensho_count >= 2")
+        template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
           .rensho_count
             | {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
         figure.image.is-32x32
@@ -13,7 +13,7 @@
         .user_name.has-text-weight-bold
           | {{membership.user.name}}
 
-        template(v-if="app.battle.rule_key === 'marathon_rule'")
+        template(v-if="app.battle.rule.key === 'marathon_rule'")
           .user_quest_index2
             | {{ox_list(membership).length}} / {{app.battle.best_questions.length}}
           .user_quest_index
@@ -25,7 +25,7 @@
               template(v-if="ox_mark_key === 'mistake'")
                 b-icon(icon="close" size="is-small" type="is-success")
 
-        template(v-if="app.battle.rule_key === 'singleton_rule' || app.battle.rule_key === 'hybrid_rule'")
+        template(v-if="app.battle.rule.key === 'singleton_rule' || app.battle.rule.key === 'hybrid_rule'")
           .user_quest_index2
             | {{x_score(membership)}}
           .user_quest_index
@@ -46,8 +46,8 @@
       | {{app.question_index + 1}}問目
 
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    the_battle_question1(v-if="app.battle.rule_key === 'marathon_rule' || app.battle.rule_key === 'hybrid_rule'")
-    the_battle_question2(v-if="app.battle.rule_key === 'singleton_rule'")
+    the_battle_question1(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
+    the_battle_question2(v-if="app.battle.rule.key === 'singleton_rule'")
 
   template(v-if="app.sub_mode === 'mistake_mode'")
     .mistake_mode_container.has-text-centered
@@ -103,12 +103,15 @@ export default {
   .mistake_mode_container
     font-size: 5rem
   .vs_info
+    border: 1px solid blue
     justify-content: center
     align-items: center
     .user_block
+      border: 1px solid red
       width: 100%
       .user_quest_index
     .vs_block
+      border: 1px solid green
       flex-direction: column
       justify-content: center
       align-items: center

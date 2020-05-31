@@ -52,6 +52,11 @@ export const application_room = {
     // app/jobs/actb/battle_broadcast_job.rb broadcast
     // ↓
     battle_broadcasted(params) {
+      if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule" || this.info.debug_scene === "battle_hybrid_rule") {
+        this.battle_setup(this.info.battle)
+        return
+      }
+
       this.battle_setup(params.battle)
     },
 

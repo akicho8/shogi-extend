@@ -131,7 +131,7 @@ export default {
         if (this.info.debug_scene === "profile_edit" || this.info.debug_scene === "profile_edit_image_crop") {
           this.profile_edit_setup()
         }
-        if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule") {
+        if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule" || this.info.debug_scene === "battle_hybrid_rule") {
           this.room_setup(this.info.room)
         }
         if (this.info.debug_scene === "result") {

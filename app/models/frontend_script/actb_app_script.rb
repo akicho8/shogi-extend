@@ -60,6 +60,7 @@ module FrontendScript
               "プロフィール画像アップロード" => :profile_edit_image_crop,
               "対戦(マラソン)"               => :battle_marathon_rule,
               "対戦(シングルトン)"           => :battle_singleton_rule,
+              "対戦(ハイブリッド)"           => :battle_hybrid_rule,
               "結果"                         => :result,
               "問題作成"                     => :builder,
               "問題作成(情報)"               => :builder_form,
@@ -378,6 +379,10 @@ module FrontendScript
       current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating])
     end
 
+    def users
+      [current_user, Colosseum::User.bot]
+    end
+
     def debug_scene_set(info)
       info[:debug_scene] = current_debug_scene
 
@@ -385,7 +390,7 @@ module FrontendScript
         c.sysop_login_unless_logout
       end
 
-      if current_debug_scene == :battle_marathon_rule || current_debug_scene == :battle_singleton_rule
+      if current_debug_scene == :battle_marathon_rule || current_debug_scene == :battle_singleton_rule || current_debug_scene == :battle_hybrid_rule
         c.sysop_login_unless_logout
 
         if current_debug_scene == :battle_marathon_rule
@@ -398,20 +403,20 @@ module FrontendScript
           rule_key = :hybrid_rule
         end
 
-        room = Actb::Room.create_with_members!([current_user, Colosseum::User.bot], rule_key: rule_key)
+        room = Actb::Room.create_with_members!(users, rule: Actb::Rule.fetch(rule_key))
         battle = room.battle_create_with_members!
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
-        info[:battle] = battle.as_json(only: [:id, :rensen_index], include: { final: { only: [:id, :key, :name], methods: [:lose_side] }, rule: { only: [:id, :key, :name] }, memberships: { only: [:id, :judge_key, :rensho_count, :renpai_count, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [:best_questions])
+        info[:battle] = battle.as_json(only: [:id, :rensen_index], include: { rule: { only: [:key, :name] }, final: { only: [:key, :name], methods: [:lose_side] }, room: {}, memberships: { only: [:id, :judge_key, :question_index], include: {user: { only: [:id, :name], methods: [:avatar_path, :rating], include: {actb_current_xrecord: { only: [:rensho_count, :renpai_count] } } }} } }, methods: [:best_questions]) # JSON1
       end
 
       if current_debug_scene == :result
         c.sysop_login_unless_logout
 
-        room = Actb::Room.create_with_members!([current_user, Colosseum::User.bot])
-        battle = room.battle_create_with_members!(final_key: :f_disconnect)
-        battle.memberships[0].update!(judge_key: :win,  question_index: 1)
-        battle.memberships[1].update!(judge_key: :lose, question_index: 2)
+        room = Actb::Room.create_with_members!(users)
+        battle = room.battle_create_with_members!(final: Actb::Final.fetch(:f_disconnect))
+        battle.memberships[0].update!(judge: Actb::Judge.fetch(:win),  question_index: 1)
+        battle.memberships[1].update!(judge: Actb::Judge.fetch(:lose), question_index: 2)
         battle.reload
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])
