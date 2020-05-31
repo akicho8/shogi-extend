@@ -26,18 +26,23 @@ export default {
     ac_subscription_create(params, callbacks = {}) {
       return consumer.subscriptions.create(params, {
         connected: () => {
+          this.debug_alert("connected")
           this.ac_info_update()
           if (this.callbacks.connected) {
             this.callbacks.connected()
           }
         },
         disconnected: () => {
+          this.debug_alert("disconnected")
           this.ac_info_update()
           if (this.callbacks.disconnected) {
             this.callbacks.disconnected()
           }
         },
         received: (data) => {
+          if (this.callbacks.received) {
+            this.callbacks.received(data)
+          }
           if (data.bc_action) {
             this[data.bc_action](data.bc_params)
           }

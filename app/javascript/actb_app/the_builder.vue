@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import consumer from "channels/consumer"
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 

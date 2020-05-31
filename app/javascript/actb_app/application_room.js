@@ -1,7 +1,5 @@
 import { Room } from "./room.js"
 
-import consumer from "channels/consumer"
-
 export const application_room = {
   data() {
     return {
@@ -30,19 +28,7 @@ export const application_room = {
       this.room_speak_init()
 
       this.__assert__(this.$ac_room == null)
-      this.$ac_room = consumer.subscriptions.create({ channel: "Actb::RoomChannel", room_id: this.room.id }, {
-        connected: () => {
-          this.ac_info_update()
-          this.debug_alert("room 接続")
-        },
-        disconnected: () => {
-          this.ac_info_update()
-          this.debug_alert("room 切断")
-        },
-        received: (data) => {
-          this[data.bc_action](data.bc_params)
-        },
-      })
+      this.$ac_room = this.ac_subscription_create({channel: "Actb::RoomChannel", room_id: this.room.id})
     },
 
     // room_setup connected

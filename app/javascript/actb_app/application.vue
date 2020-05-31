@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import consumer from "channels/consumer"
-
 import { support } from "./support.js"
 import { store   } from "./store.js"
 
@@ -190,15 +188,7 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     school_setup() {
-      this.$ac_school = consumer.subscriptions.create({channel: "Actb::SchoolChannel"}, {
-        connected: () => {
-          this.debug_alert("school 接続")
-          this.ac_info_update()
-        },
-        disconnected: () => {
-          this.debug_alert("school 切断")
-          this.ac_info_update()
-        },
+      this.$ac_school = this.ac_subscription_create({channel: "Actb::SchoolChannel"}, {
         received: (data) => {
           if (data.online_user_ids) {
             this.online_user_ids = data.online_user_ids
@@ -226,21 +216,7 @@ export default {
 
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null)
-      this.$ac_lobby = consumer.subscriptions.create({channel: "Actb::LobbyChannel"}, {
-        connected: () => {
-          this.debug_alert("lobby 接続")
-          this.ac_info_update()
-        },
-        disconnected: () => {
-          this.debug_alert("lobby 切断")
-          this.ac_info_update()
-        },
-        received: (data) => {
-          if (data.bc_action) {
-            this[data.bc_action](data.bc_params)
-          }
-        },
-      })
+      this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
     },
 
     lobby_messages_setup() {

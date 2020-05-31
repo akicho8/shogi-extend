@@ -1,7 +1,6 @@
 import { Question } from "./question.js"
 import { Battle } from "./battle.js"
 
-import consumer from "channels/consumer"
 import dayjs from "dayjs"
 
 export const application_battle = {
@@ -57,22 +56,9 @@ export const application_battle = {
       this.question_index = 0
 
       this.__assert__(this.$ac_battle == null)
-      this.$ac_battle = consumer.subscriptions.create({ channel: "Actb::BattleChannel", battle_id: this.battle.id }, {
+      this.$ac_battle = this.ac_subscription_create({channel: "Actb::BattleChannel", battle_id: this.battle.id}, {
         connected: () => {
-          this.ac_info_update()
           this.start_hook()
-        },
-        disconnected: () => {
-          this.ac_info_update()
-          this.debug_alert("battle 切断")
-          // 切断してすぐ接続したときあとで新しく接続したあとで前の disconnected が呼ばれるかもしれない
-          // なので、ここで this.$ac_battle = null はしてはいけない
-        },
-        received: (data) => {
-          this.debug_alert("battle 受信")
-          if (data.bc_action) {
-            this[data.bc_action](data.bc_params)
-          }
         },
       })
     },

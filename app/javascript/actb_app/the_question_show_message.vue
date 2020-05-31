@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import consumer from "channels/consumer"
 import { support } from "./support.js"
 
 export default {
@@ -102,19 +101,7 @@ export default {
 
     question_subscribe() {
       this.__assert__(this.$ac_question == null)
-      this.$ac_question = consumer.subscriptions.create({channel: "Actb::QuestionChannel", question_id: this.question.id}, {
-        connected: () => {
-          this.ac_info_update()
-          this.debug_alert("question 接続")
-        },
-        disconnected: () => {
-          this.ac_info_update()
-          this.debug_alert("question 切断")
-        },
-        received: (data) => {
-          this[data.bc_action](data.bc_params)
-        },
-      })
+      this.$ac_question = this.ac_subscription_create({channel: "Actb::QuestionChannel", question_id: this.question.id})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
