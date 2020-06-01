@@ -2,9 +2,18 @@ module Actb
   class LobbyChannel < BaseChannel
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
 
-    delegate :matching_list_hash, to: "self.class"
+    delegate :matching_list_hash, :common_broadcast, to: "self.class"
 
     class << self
+      def matching_list_add2(user)
+        redis.sadd(user.actb_setting.rule.pure_info.redis_key, user.id)
+        common_broadcast
+      end
+
+      def common_broadcast
+        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: {matching_list_hash: matching_list_hash})
+      end
+
       def matching_list_hash
         RuleInfo.inject({}) do |a, e|
           a.merge(e.key => redis.smembers(e.redis_key).collect(&:to_i))
@@ -25,7 +34,7 @@ module Actb
 
     def speak(data)
       data = data.to_options
-      current_user.actb_lobby_messages.create!(body: data[:message_body])
+      current_user.lobby_speak(data[:message_body])
       execution_interrupt_hidden_command(data[:message_body])
     end
 
@@ -34,11 +43,11 @@ module Actb
         args = md["command_line"].split
         command = args.shift
         if command == "ping"
-          current_user.actb_lobby_messages.create!(body: "pong")
+          current_user.lobby_speak("pong")
         end
         if command == "rule_key"
-          lobby_speak(current_user.rule_key)
-          lobby_speak(current_user.reload.rule_key)
+          current_user.lobby_speak(current_user.rule_key)
+          current_user.lobby_speak(current_user.reload.rule_key)
         end
       end
     end
@@ -68,6 +77,11 @@ module Actb
 
     ################################################################################
 
+    def matching_list_add(user)
+      redis.sadd(redis_key, user.id)
+      common_broadcast
+    end
+
     def ordered_infos_debug
       ordered_infos.collect { |gap, e| { gap: gap, id: e.id, name: e.name } }
     end
@@ -88,11 +102,6 @@ module Actb
       redis.smembers(redis_key).collect(&:to_i)
     end
 
-    def matching_list_add(user)
-      redis.sadd(redis_key, user.id)
-      common_broadcast
-    end
-
     def matching_member?(user)
       redis.sismember(redis_key, user.id)
     end
@@ -102,10 +111,6 @@ module Actb
         redis.srem(redis_key, user.id)
       end
       common_broadcast
-    end
-
-    def common_broadcast
-      ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: {matching_list_hash: matching_list_hash})
     end
 
     def room_create(*users)

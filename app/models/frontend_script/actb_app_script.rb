@@ -265,6 +265,15 @@ module FrontendScript
       c.render json: public_send(params[:remote_action])
     end
 
+    # 自分以外の誰かを自分と同じルールにして参加させる
+    def aitewo_join_saseru_handle
+      if user = Colosseum::User.where.not(id: params[:user_id]).first
+        user.actb_setting.update!(rule: current_user.actb_setting.rule)
+        Actb::LobbyChannel.matching_list_add2(user)
+      end
+      true
+    end
+
     def vote_handle
       current_user.vote_handle(params)
     end

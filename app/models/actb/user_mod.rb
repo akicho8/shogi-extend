@@ -26,15 +26,30 @@ module Actb
       # このユーザーに出題した問題(複数)
       has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
 
-      # チャット関連
-      with_options(dependent: :destroy) do |o|
-        has_many :actb_room_messages, class_name: "Actb::RoomMessage"
-        has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
-        has_many :actb_question_messages, class_name: "Actb::QuestionMessage"
-      end
-
       # Good/Bad
       has_many :actb_favorites, class_name: "Actb::Favorite", dependent: :destroy
+    end
+
+    concerning :MessageMethods do
+      included do
+        with_options(dependent: :destroy) do |o|
+          has_many :actb_room_messages, class_name: "Actb::RoomMessage"
+          has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
+          has_many :actb_question_messages, class_name: "Actb::QuestionMessage"
+        end
+      end
+
+      def lobby_speak(message_body, options = {})
+        actb_lobby_messages.create!({body: message_body}.merge(options))
+      end
+
+      def room_speak(room, message_body, options = {})
+        actb_room_messages.create!({body: message_body}.merge(options))
+      end
+
+      def question_speak(question, message_body, options = {})
+        actb_question_messages.create!({body: message_body}.merge(options))
+      end
     end
 
     concerning :MasterXrecordMod do

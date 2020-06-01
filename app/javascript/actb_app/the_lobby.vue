@@ -26,6 +26,10 @@
           | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="cancel_handle")
+
+  template(v-if="development_p")
+    .buttons.is-centered.are-small
+      b-button(@click="app.aitewo_join_saseru_handle") 相手を参加させる
 </template>
 
 <script>

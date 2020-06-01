@@ -227,6 +227,10 @@ export default {
       })
     },
 
+    aitewo_join_saseru_handle() {
+      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "aitewo_join_saseru_handle", user_id: this.current_user.id }, e => {})
+    },
+
     rule_key_select_handle() {
       this.sound_play("click")
       if (this.login_required2()) { return }

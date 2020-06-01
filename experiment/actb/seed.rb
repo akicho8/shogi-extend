@@ -53,7 +53,7 @@ question.lineage.key               # => "詰将棋"
 question = Actb::Question.first!
 # question.update!(folder: question.user.actb_trash_box) の方法はださい
 question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 171, user_id: 57, type: "Actb::TrashBox", created_at: "2020-05-31 14:10:34", updated_at: "2020-05-31 14:10:34">
+question.folder # => #<Actb::TrashBox id: 42, user_id: 14, type: "Actb::TrashBox", created_at: "2020-06-01 10:21:25", updated_at: "2020-06-01 10:21:25">
 
 # 2番目の問題は下書きへ
 question = Actb::Question.second!
@@ -77,18 +77,18 @@ battle = room.battles.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
-battle                          # => #<Actb::Battle id: 1535, room_id: 1041, parent_id: nil, rule_id: 1, final_id: 4, begin_at: "2020-05-31 14:10:37", end_at: nil, rensen_index: 0, created_at: "2020-05-31 14:10:37", updated_at: "2020-05-31 14:10:37">
+battle                          # => #<Actb::Battle id: 2, room_id: 2, parent_id: nil, rule_id: 1, final_id: 4, begin_at: "2020-06-01 10:21:27", end_at: nil, rensen_index: 0, created_at: "2020-06-01 10:21:27", updated_at: "2020-06-01 10:21:27">
 
 battle.users.count                # => 2
 battle.rensen_index               # => 0
 
-battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 1536, room_id: 1041, parent_id: 1535, rule_id: 1, final_id: 4, begin_at: "2020-05-31 14:10:37", end_at: nil, rensen_index: 1, created_at: "2020-05-31 14:10:37", updated_at: "2020-05-31 14:10:37">
+battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 3, room_id: 2, parent_id: 2, rule_id: 1, final_id: 4, begin_at: "2020-06-01 10:21:27", end_at: nil, rensen_index: 1, created_at: "2020-06-01 10:21:27", updated_at: "2020-06-01 10:21:27">
 battle2.rensen_index                            # => 1
 
 membership = battle.memberships.first
 
 # 出題
-battle.best_questions             # => [{"id"=>9, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>57, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
+battle.best_questions             # => [{"id"=>3, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>14, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0007_fallback_avatar_icon-a69a1f4bc0d532871c7fe2fd715c3f2fcdbb44f511f0dcfaab01ea087138338b.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
 
 # すべての問題に解答する
 Actb::Question.all.each.with_index do |question, i|
@@ -112,7 +112,7 @@ user1.actb_clip_marks.create!(question: Actb::Question.third!)
 # 問題に対してコメント
 5.times do
   question = Actb::Question.first!
-  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 11, user_id: 57, question_id: 7, body: "message", created_at: "2020-05-31 14:10:38", updated_at: "2020-05-31 14:10:38">, #<Actb::QuestionMessage id: 12, user_id: 57, question_id: 7, body: "message", created_at: "2020-05-31 14:10:38", updated_at: "2020-05-31 14:10:38">, #<Actb::QuestionMessage id: 13, user_id: 57, question_id: 7, body: "message", created_at: "2020-05-31 14:10:38", updated_at: "2020-05-31 14:10:38">, #<Actb::QuestionMessage id: 14, user_id: 57, question_id: 7, body: "message", created_at: "2020-05-31 14:10:38", updated_at: "2020-05-31 14:10:38">, #<Actb::QuestionMessage id: 15, user_id: 57, question_id: 7, body: "message", created_at: "2020-05-31 14:10:38", updated_at: "2020-05-31 14:10:38">
+  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 1, user_id: 14, question_id: 1, body: "message", created_at: "2020-06-01 10:21:28", updated_at: "2020-06-01 10:21:28">, #<Actb::QuestionMessage id: 2, user_id: 14, question_id: 1, body: "message", created_at: "2020-06-01 10:21:28", updated_at: "2020-06-01 10:21:28">, #<Actb::QuestionMessage id: 3, user_id: 14, question_id: 1, body: "message", created_at: "2020-06-01 10:21:28", updated_at: "2020-06-01 10:21:28">, #<Actb::QuestionMessage id: 4, user_id: 14, question_id: 1, body: "message", created_at: "2020-06-01 10:21:28", updated_at: "2020-06-01 10:21:28">, #<Actb::QuestionMessage id: 5, user_id: 14, question_id: 1, body: "message", created_at: "2020-06-01 10:21:28", updated_at: "2020-06-01 10:21:28">
   question.messages_count                    # => 1, 2, 3, 4, 5
 end
 
@@ -120,10 +120,10 @@ tp Actb::Question
 
 tp Actb.info
 # >> |------------------+---------------------------|
-# >> |               id | 71                        |
-# >> |          user_id | 57                        |
-# >> |        season_id | 62                        |
-# >> |         judge_id | 69                        |
+# >> |               id | 14                        |
+# >> |          user_id | 14                        |
+# >> |        season_id | 12                        |
+# >> |         judge_id | 5                         |
 # >> |         final_id | 2                         |
 # >> |     battle_count | 1                         |
 # >> |        win_count | 1                         |
@@ -138,15 +138,15 @@ tp Actb.info
 # >> |       renpai_max | 0                         |
 # >> |     create_count | 1                         |
 # >> |       generation | 11                        |
-# >> |       created_at | 2020-05-31 23:10:34 +0900 |
-# >> |       updated_at | 2020-05-31 23:10:38 +0900 |
+# >> |       created_at | 2020-06-01 19:21:25 +0900 |
+# >> |       updated_at | 2020-06-01 19:21:27 +0900 |
 # >> | disconnect_count | 1                         |
-# >> |  disconnected_at | 2020-05-31 23:10:38 +0900 |
+# >> |  disconnected_at | 2020-06-01 19:21:27 +0900 |
 # >> |------------------+---------------------------|
 # >> |------------------+---------------------------|
-# >> |               id | 57                        |
-# >> |          user_id | 57                        |
-# >> |         judge_id | 72                        |
+# >> |               id | 14                        |
+# >> |          user_id | 14                        |
+# >> |         judge_id | 8                         |
 # >> |         final_id | 4                         |
 # >> |     battle_count | 0                         |
 # >> |        win_count | 0                         |
@@ -159,37 +159,37 @@ tp Actb.info
 # >> |     renpai_count | 0                         |
 # >> |       rensho_max | 0                         |
 # >> |       renpai_max | 0                         |
-# >> |       created_at | 2020-05-31 23:10:34 +0900 |
-# >> |       updated_at | 2020-05-31 23:10:34 +0900 |
+# >> |       created_at | 2020-06-01 19:21:24 +0900 |
+# >> |       updated_at | 2020-06-01 19:21:24 +0900 |
 # >> | disconnect_count | 0                         |
 # >> |  disconnected_at |                           |
 # >> |------------------+---------------------------|
-# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------+----------------|
-# >> | id | user_id | folder_id | lineage_id | init_sfen                                 | time_limit_sec | difficulty_level | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | bad_marks_count | good_marks_count | clip_marks_count | messages_count |
-# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------+----------------|
-# >> |  7 |      57 |       171 |        120 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-31 23:10:37 +0900 | 2020-05-31 23:10:37 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                1 |                0 |              5 |
-# >> |  8 |      57 |       170 |        120 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-31 23:10:37 +0900 | 2020-05-31 23:10:37 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               1 |                0 |                0 |              0 |
-# >> |  9 |      57 |       169 |        120 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-05-31 23:10:37 +0900 | 2020-05-31 01:10:37 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |               0 |                0 |                1 |              0 |
-# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+-----------------+------------------+------------------+----------------|
+# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> | id | user_id | folder_id | lineage_id | init_sfen                                 | time_limit_sec | difficulty_level | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | good_marks_count | bad_marks_count | clip_marks_count | messages_count |
+# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> |  1 |      14 |        42 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-01 19:21:27 +0900 | 2020-06-01 19:21:27 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                1 |               0 |                0 |              5 |
+# >> |  2 |      14 |        41 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-01 19:21:27 +0900 | 2020-06-01 19:21:27 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               1 |                0 |              0 |
+# >> |  3 |      14 |        40 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-01 19:21:27 +0900 | 2020-05-31 21:21:27 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                1 |              0 |
+# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
 # >> |------------------------+-------+--------|
 # >> | model                  | count | 最終ID |
 # >> |------------------------+-------+--------|
-# >> | Colosseum::User        |    14 |     70 |
-# >> | Actb::Question         |     3 |      9 |
-# >> | Actb::QuestionMessage  |     5 |     15 |
-# >> | Actb::Room             |     1 |   1041 |
-# >> | Actb::RoomMembership   |     2 |   2082 |
+# >> | Colosseum::User        |    14 |     27 |
+# >> | Actb::Question         |     3 |      3 |
+# >> | Actb::QuestionMessage  |     5 |      5 |
+# >> | Actb::Room             |     1 |      2 |
+# >> | Actb::RoomMembership   |     2 |      4 |
 # >> | Actb::RoomMessage      |     0 |        |
-# >> | Actb::Battle           |     2 |   1536 |
-# >> | Actb::BattleMembership |     4 |   3072 |
-# >> | Actb::Season           |    11 |     62 |
-# >> | Actb::SeasonXrecord    |    14 |     84 |
-# >> | Actb::Setting          |    14 |     70 |
-# >> | Actb::GoodMark         |     1 |      3 |
-# >> | Actb::BadMark          |     1 |      3 |
-# >> | Actb::ClipMark         |     1 |      3 |
-# >> | Actb::Folder           |    42 |    210 |
-# >> | Actb::Lineage          |     7 |    126 |
-# >> | Actb::Judge            |     4 |     72 |
+# >> | Actb::Battle           |     2 |      3 |
+# >> | Actb::BattleMembership |     4 |      6 |
+# >> | Actb::Season           |    11 |     12 |
+# >> | Actb::SeasonXrecord    |    14 |     27 |
+# >> | Actb::Setting          |    14 |     27 |
+# >> | Actb::GoodMark         |     1 |      1 |
+# >> | Actb::BadMark          |     1 |      1 |
+# >> | Actb::ClipMark         |     1 |      1 |
+# >> | Actb::Folder           |    42 |     81 |
+# >> | Actb::Lineage          |     7 |     14 |
+# >> | Actb::Judge            |     4 |      8 |
 # >> | Actb::LobbyMessage     |     0 |        |
 # >> |------------------------+-------+--------|
