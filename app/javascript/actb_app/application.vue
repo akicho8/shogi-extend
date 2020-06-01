@@ -47,8 +47,8 @@ import { application_room     } from "./application_room.js"
 import { application_battle     } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
 import { config               } from "./config.js"
-import { RuleInfo             } from "./rule_info.js"
-import { OxMarkInfo        } from "./ox_mark_info.js"
+import { RuleInfo             } from "./models/rule_info.js"
+import { OxMarkInfo        } from "./models/ox_mark_info.js"
 
 export default {
   store: store,

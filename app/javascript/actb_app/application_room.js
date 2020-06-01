@@ -1,4 +1,4 @@
-import { Room } from "./room.js"
+import { Room } from "./models/room.js"
 
 export const application_room = {
   data() {

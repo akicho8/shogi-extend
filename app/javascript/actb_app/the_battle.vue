@@ -49,17 +49,6 @@ export default {
   created() {
     this.app.lobby_unsubscribe()
   },
-  methods: {
-    ox_list(membership) {
-      return this.app.members_hash[membership.id].ox_list
-    },
-    droped_ox_list(membership) {
-      return _.takeRight(this.ox_list(membership), this.app.config.progress_list_take_display_count)
-    },
-    x_score(membership) {
-      return this.app.members_hash[membership.id].x_score
-    },
-  },
 }
 </script>
 

@@ -2,6 +2,7 @@ export class Question {
   constructor(question) {
     Object.assign(this, question)
   }
+
   // sfenは正解か？
   answer_p(sfen) {
     return this.answer_sfen_list.includes(sfen)

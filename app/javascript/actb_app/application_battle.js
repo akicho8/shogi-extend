@@ -1,5 +1,5 @@
-import { Question } from "./question.js"
-import { Battle } from "./battle.js"
+import { Question } from "./models/question.js"
+import { Battle } from "./models/battle.js"
 
 import dayjs from "dayjs"
 
