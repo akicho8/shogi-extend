@@ -44,10 +44,12 @@ export const application_battle = {
 
       this.sub_mode = "standby"
 
-      this.members_hash = {}
-      this.battle.memberships.forEach(e => {
-        this.members_hash[e.id] = { ox_list: [], x_score: 0 }
-      })
+      this.members_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: {
+        ox_list: [],
+        x_score: 0,
+        latest_ox: null,
+        delay_id: null,
+      }}), {})
 
       this.question_index = 0
 
@@ -167,20 +169,28 @@ export const application_battle = {
     },
     // 状況を反映する
     kotae_sentaku_broadcasted(params) {
-      const ox_mark_info = this.$OxMarkInfo.fetch(params.ox_mark_key)
+      const ox_mark_info = this.$OxMarkInfo.fetch(params.ox_mark_key) // 正解・不正解
+      const cm = this.members_hash[params.membership_id]          // 対応する membership の情報
 
       // ○×反映
-      this.members_hash[params.membership_id].ox_list.push(params.ox_mark_key)
+      cm.ox_list.push(params.ox_mark_key)
       this.score_add(params.membership_id, ox_mark_info.score)
 
       // 効果音
       this.sound_play(ox_mark_info.sound_key)
 
       if (this.battle.rule.key === "marathon_rule") {
-        if (params.membership_id === this.current_membership.id) {
-          this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
-          this.delay_and_owattayo_or_next_trigger(ox_mark_info)
-        }
+        this.delay_stop(cm.delay_id) // 前のが動いている場合があるので止める
+        cm.latest_ox = ox_mark_info.key
+        cm.delay_id = this.delay(ox_mark_info.delay_second, () => {
+          cm.delay_id = null
+          cm.latest_ox = null
+        })
+
+        // if (params.membership_id === this.current_membership.id) {
+        //   this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
+        //   this.delay_and_owattayo_or_next_trigger(ox_mark_info)
+        // }
       }
 
       if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {

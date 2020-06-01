@@ -1,7 +1,7 @@
 module Actb
   Config = {
     # マッチング
-    math_pow_ruijou_base: 5,     # gap < 2**(○+カウンター) ならマッチングする
+    math_pow_ruijou_base: 50,    # gap < 2**(○+カウンター) ならマッチングする
     matching_interval_second: 3, # カウンターをインクリメントする間隔(秒)
 
     best_questions_limit: 10, # 問題数

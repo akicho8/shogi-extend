@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_battle_membership.is-flex
-  .mdi.mdi-checkbox-blank-circle-outline.maru_batu.maru(v-if="app.sub_mode === 'correct_mode'")
-  .mdi.mdi-close.maru_batu.batu(v-if="app.sub_mode === 'mistake_mode'")
+  .mdi.mdi-checkbox-blank-circle-outline.maru_batu.maru(v-if="latest_ox === 'correct'")
+  .mdi.mdi-close.maru_batu.batu(v-if="latest_ox === 'mistake'")
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
@@ -63,6 +63,9 @@ export default {
     },
     x_score() {
       return this.app.members_hash[this.membership.id].x_score
+    },
+    latest_ox() {
+      return this.app.members_hash[this.membership.id].latest_ox
     },
   },
 }

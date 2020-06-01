@@ -3,7 +3,7 @@ import consumer from "channels/consumer"
 export default {
   data() {
     return {
-      ac_subscriptions_count: 0,
+      ac_subgscriptions_count: 0,
       ac_subscription_names: [],
     }
   },

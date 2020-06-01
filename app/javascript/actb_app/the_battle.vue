@@ -4,7 +4,7 @@
 
   .vs_container.is-flex
     template(v-for="(membership, i) in app.battle.memberships")
-      the_battle_membership(:membership="membership")
+      the_battle_membership(:membership="membership" :key="membership.id")
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
 
   template(v-if="app.sub_mode === 'deden_mode'")
