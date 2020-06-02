@@ -15,8 +15,8 @@ export const application_battle = {
       question_index:             null,  // 現在の問題インデックス
 
       q_turn_offset: null,
-      q1_interval_id: null,
-      q1_interval_count: null,
+      main_interval_id: null,
+      main_interval_count: null,
 
       q2_interval_id: null,
       q2_interval_count: null,
@@ -25,7 +25,7 @@ export const application_battle = {
       // {
       //   3 => ["correct", "mistake"],
       // }
-      members_hash: null,
+      member_infos_hash: null,
     }
   },
 
@@ -45,7 +45,7 @@ export const application_battle = {
 
       this.sub_mode = "standby"
 
-      this.members_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo()}), {})
+      this.member_infos_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo()}), {})
 
       this.question_index = 0
 
@@ -166,25 +166,26 @@ export const application_battle = {
     // 状況を反映する
     kotae_sentaku_broadcasted(params) {
       const ox_mark_info = this.OxMarkInfo.fetch(params.ox_mark_key) // 正解・不正解
-      const cm = this.members_hash[params.membership_id]          // 対応する membership の情報
+      const mi = this.member_infos_hash[params.membership_id]          // 対応する membership の情報
 
       // ○×反映
-      cm.ox_list.push(params.ox_mark_key)
+      mi.ox_list.push(params.ox_mark_key)
       this.score_add(params.membership_id, ox_mark_info.score)
 
       // 効果音
       this.sound_play(ox_mark_info.sound_key)
 
       if (this.battle.rule.key === "marathon_rule") {
-        this.delay_stop(cm.delay_id) // 前のが動いている場合があるので止める
-        cm.latest_ox = ox_mark_info.key
-        cm.delay_id = this.delay(ox_mark_info.delay_second, () => {
-          cm.delay_id = null
-          cm.latest_ox = null
+        this.delay_stop(mi.delay_id) // 前のが動いている場合があるので止める
+        mi.latest_ox = ox_mark_info.key
+        mi.delay_id = this.delay(ox_mark_info.delay_second, () => {
+          mi.delay_id = null
+          mi.latest_ox = null
         })
 
+        // correct_mode or mistake_mode
         if (params.membership_id === this.current_membership.id) {
-          this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
+          this.sub_mode = `${ox_mark_info.key}_mode`
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
         }
       }
@@ -198,8 +199,8 @@ export const application_battle = {
     },
     delay_and_owattayo_or_next_trigger(ox_mark_info) {
       this.delay(ox_mark_info.delay_second, () => {
-        if (this.score_max_natta_p || this.tugino_mondai_ga_nai) {
-          this.$ac_battle.perform("owattayo", {members_hash: this.members_hash}) // --> app/channels/actb/battle_channel.rb
+        if (this.battle_end_p || this.next_question_empty_p) {
+          this.$ac_battle.perform("owattayo", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
         } else {
           this.next_trigger()
         }
@@ -282,12 +283,12 @@ export const application_battle = {
 
     // private
     score_add(membership_id, diff) {
-      const member = this.members_hash[membership_id]
-      let v = member.x_score + diff
+      const mi = this.member_infos_hash[membership_id]
+      let v = mi.b_score + diff
       if (v < 0) {
         v = 0
       }
-      this.$set(member, "x_score", v)
+      mi.b_score = v
     },
 
     // 結果画面へ
@@ -330,34 +331,34 @@ export const application_battle = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    q1_interval_start() {
-      this.q1_interval_clear()
-      this.q1_interval_count = 0
-      this.q1_interval_id = setInterval(this.q1_interval_processing, 1000)
+    main_interval_start() {
+      this.main_interval_clear()
+      this.main_interval_count = 0
+      this.main_interval_id = setInterval(this.main_interval_processing, 1000)
     },
 
-    q1_interval_clear() {
-      if (this.q1_interval_id) {
-        clearInterval(this.q1_interval_id)
-        this.q1_interval_id = null
+    main_interval_clear() {
+      if (this.main_interval_id) {
+        clearInterval(this.main_interval_id)
+        this.main_interval_id = null
       }
     },
 
-    q1_interval_processing() {
+    main_interval_processing() {
       if (this.battle.rule.key === "marathon_rule" || this.battle.rule.key === "hybrid_rule") {
         if (this.sub_mode === "operation_mode") {
-          this.q1_interval_count += 1
+          this.main_interval_count += 1
           if (this.q1_rest_seconds === 0) {
-            this.kotae_sentaku('mistake')
+            this.kotae_sentaku('timeout')
           }
         }
       }
       if (this.battle.rule.key === "singleton_rule") {
         if (this.sub_mode === "operation_mode") {
           if (this.x_mode === "x1_idol") {
-            this.q1_interval_count += 1
+            this.main_interval_count += 1
             if (this.q1_rest_seconds === 0) {
-              this.kotae_sentaku('mistake')
+              this.kotae_sentaku('timeout')
             }
           }
         }
@@ -418,7 +419,7 @@ export const application_battle = {
       return dayjs().startOf("year").set("seconds", this.q1_rest_seconds).format("mm:ss")
     },
     q1_rest_seconds() {
-      let v = this.q1_time_limit_sec - this.q1_interval_count
+      let v = this.q1_time_limit_sec - this.main_interval_count
       if (v < 0) {
         v = 0
       }
@@ -443,23 +444,25 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    tugino_mondai_ga_aru() {
-      return !this.tugino_mondai_ga_nai
+    next_question_exist_p() {
+      return !this.next_question_empty_p
     },
-    tugino_mondai_ga_nai() {
+    next_question_empty_p() {
       return (this.question_index + 1) >= this.battle.questions_count
     },
     score_orderd_memberships() {
-      return _.sortBy(this.battle.memberships, e => -this.members_hash[e.id].x_score)
+      return _.sortBy(this.battle.memberships, e => -this.member_infos_hash[e.id].b_score)
     },
     score_debug_info() {
-      return this.score_orderd_memberships.map(e => `${e.user.name}(${this.members_hash[e.id].x_score})`).join(", ")
+      return this.score_orderd_memberships.map(e => `${e.user.name}(${this.member_infos_hash[e.id].b_score})`).join(", ")
     },
-    score_max() {
-      return _.max(_.map(this.members_hash, (e, membership_id) => e.x_score))
+    b_score_max() {
+      return _.max(_.map(this.member_infos_hash, (e, membership_id) => e.b_score))
     },
-    score_max_natta_p() {
-      return this.score_max >= this.app.config.nanmonkotaetara_kati
+
+    // バトル終了条件
+    battle_end_p() {
+      return this.b_score_max >= this.app.config.b_score_max_for_win
     },
   },
 }

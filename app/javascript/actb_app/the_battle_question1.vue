@@ -44,10 +44,10 @@ export default {
     support,
   ],
   created() {
-    this.app.q1_interval_start()
+    this.app.main_interval_start()
   },
   beforeDestroy() {
-    this.app.q1_interval_clear()
+    this.app.main_interval_clear()
   },
 }
 </script>

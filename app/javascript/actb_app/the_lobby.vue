@@ -10,7 +10,7 @@
         .rating.has-text-weight-bold.is-size-7
           | {{app.current_user.rating}}
 
-  debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
+  debug_print(:vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
 
   .opening(v-if="app.sub_mode === 'opening'")
     .title.is-3.has-text-centered 将棋トレーニングバトル

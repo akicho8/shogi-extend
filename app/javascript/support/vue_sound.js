@@ -32,7 +32,8 @@ const SoundPresets = {
   pipopipo: { file: mp3_pipopipo, volume: 0.5, },
   pishi:    { file: wav_pishi,    volume: 0.5, },
   correct:  { file: mp3_o,        volume: 0.2, },
-  mistake:  { file: mp3_bubuu,    volume: 0.2, },
+  mistake:  { file: mp3_x,        volume: 0.2, },
+  timeout:  { file: mp3_bubuu,    volume: 0.2, },
 }
 
 export default {

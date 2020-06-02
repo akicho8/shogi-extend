@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_battle
-  debug_print(:vars="['app.sub_mode', 'app.members_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p', 'app.battle.best_questions.length']" oneline)
+  debug_print(:vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p', 'app.battle.best_questions.length']" oneline)
 
   .vs_container.is-flex
     template(v-for="(membership, i) in app.battle.memberships")
@@ -23,8 +23,9 @@
     .columns
       .column
         .buttons.are-small.is-centered
-          b-button(@click="app.kotae_sentaku('correct')") 正解
-          b-button(@click="app.kotae_sentaku('mistake')") 時間切れ
+          b-button(@click="app.kotae_sentaku('correct')" icon-left="checkbox-blank-circle-outline")
+          b-button(@click="app.kotae_sentaku('mistake')" icon-left="close")
+          b-button(@click="app.kotae_sentaku('timeout')" icon-left="timer-sand-empty")
           b-button(@click="app.g2_hayaosi_handle()") シングルトンで解答
           b-button(@click="app.g2_jikangire_handle()") シングルトンで誤答
 </template>

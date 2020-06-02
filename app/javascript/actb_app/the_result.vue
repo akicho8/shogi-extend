@@ -7,6 +7,9 @@
     template(v-if="app.current_membership.judge.key === 'lose'")
       .has-text-success
         | YOU LOSE !
+    template(v-if="app.current_membership.judge.key === 'draw'")
+      .has-text-info
+        | DRAW !
   .final_container.has-text-centered.is-size-7(v-if="app.battle.final.key === 'f_disconnect'")
     | {{app.battle.final.name}}
 
@@ -25,7 +28,7 @@
       .buttons.is-centered.are-small
         b-button(@click="app.battle_continue_force_handle") 強制的に続行
 
-  debug_print(:vars="['app.members_hash']" v-if="development_p")
+  debug_print(:vars="['app.member_infos_hash']" v-if="development_p")
   debug_print(:vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index', 'app.score_debug_info']" v-if="development_p")
 </template>
 

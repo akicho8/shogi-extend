@@ -16,7 +16,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .user_quest_index.has-text-weight-bold.is-size-4
-    | {{mi.o_count}} / {{app.config.nanmonkotaetara_kati}}
+    | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
 
   //////////////////////////////////////////////////////////////////////////////// 
   .user_rating.has-text-weight-bold
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     mi() {
-      return this.app.members_hash[this.membership.id]
+      return this.app.member_infos_hash[this.membership.id]
     },
   },
 }

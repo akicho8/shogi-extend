@@ -97,37 +97,55 @@ module Actb
       final = Final.fetch(final_key)
 
       ActiveRecord::Base.transaction do
-        m1 = memberships.find_by!(user: target_user)
-        m2 = (memberships - [m1]).first
+        self.final = final
 
-        m1.judge = judge
-        m2.judge = judge.flip
+        if target_user
+          m1 = memberships.find_by!(user: target_user)
+          m2 = (memberships - [m1]).first
 
-        if judge.key == "win"
-          mm = [m1, m2]
+          m1.judge = judge
+          m2.judge = judge.flip
+
+          if judge.key == "win"
+            mm = [m1, m2]
+          else
+            mm = [m2, m1]
+          end
+
+          # 今シーズン用
+          c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
+          c_ratings = EloRating.rating_update2(*c_ratings)
+          c_ratings = c_ratings.collect(&:round)
+
+          # 永続的記録用
+          m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
+          m_ratings = EloRating.rating_update2(*m_ratings)
+          m_ratings = m_ratings.collect(&:round)
         else
-          mm = [m2, m1]
+          mm = memberships
+          mm.each do |m|
+            m.judge = judge
+          end
+          c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
+          m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
         end
-
-        # 今シーズン用
-        c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
-        c_ratings = EloRating.rating_update2(*c_ratings)
-        c_ratings = c_ratings.collect(&:round)
-
-        # 永続的記録用
-        m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
-        m_ratings = EloRating.rating_update2(*m_ratings)
-        m_ratings = m_ratings.collect(&:round)
 
         # Actb::SeasonXrecord
         mm.each.with_index do |m, i|
-          m.user.actb_current_xrecord.update!(rating: c_ratings[i], judge: m.judge, final: final)
-          m.user.actb_master_xrecord.update!(rating: m_ratings[i], judge: m.judge, final: final)
+          m.user.actb_current_xrecord.rating_set(c_ratings[i])
+          m.user.actb_current_xrecord.judge_set(judge)
+          m.user.actb_current_xrecord.final_set(final)
+          m.user.actb_current_xrecord.save!
+
+          m.user.actb_master_xrecord.rating_set(m_ratings[i])
+          m.user.actb_master_xrecord.judge_set(judge)
+          m.user.actb_master_xrecord.final_set(final)
+          m.user.actb_master_xrecord.save!
         end
 
+        # m.user.actb_current_xrecord.update!(rating: c_ratings[i], judge: m.judge, final: final)
+        # m.user.actb_master_xrecord.update!(rating: m_ratings[i], judge: m.judge, final: final)
         mm.each(&:save!)
-
-        self.final = final
 
         save!
       end

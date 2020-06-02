@@ -1,7 +1,7 @@
 export class MemberInfo {
   constructor() {
     this.ox_list = []
-    this.x_score = 0
+    this.b_score = 0
     this.latest_ox = null
     this.delay_id = null
   }
@@ -14,8 +14,8 @@ export class MemberInfo {
     return _.takeRight(this.ox_list, n)
   }
 
-  // get x_score() {
-  //   return this.x_score
+  // get b_score() {
+  //   return this.b_score
   // }
 
   // get latest_ox() {

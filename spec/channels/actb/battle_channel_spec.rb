@@ -141,9 +141,9 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
     let(:data) {
       {
-        "members_hash" => {
-          membership1.id.to_s => {"ox_list" => ["correct"], "x_score" => 1},
-          membership2.id.to_s => {"ox_list" => [],          "x_score" => 0},
+        "member_infos_hash" => {
+          membership1.id.to_s => {"ox_list" => ["correct"], "b_score" => 1},
+          membership2.id.to_s => {"ox_list" => [],          "b_score" => 0},
         }
       }
     }

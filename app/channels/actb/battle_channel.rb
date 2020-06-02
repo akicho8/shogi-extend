@@ -181,18 +181,24 @@ module Actb
       current_battle.onaji_heya_wo_atarasiku_tukuruyo
     end
 
-    # data["members_hash"] = {
-    #   "15" => {"ox_list"=>["correct"], "x_score"=>1},
-    #   "16" => {"ox_list"=>[],          "x_score"=>0},
+    # data["member_infos_hash"] = {
+    #   "15" => {"ox_list"=>["correct"], "b_score"=>1},
+    #   "16" => {"ox_list"=>[],          "b_score"=>0},
     # }
     def owattayo(data)
       data = data.to_options
 
+      b_scores = current_battle.memberships.collect { |e| data[:member_infos_hash][e.id.to_s]["b_score"] }
+      if b_scores.max < Actb::Config[:b_score_max_for_win]
+        katimashita(nil, :draw, :f_draw)
+        return
+      end
+
       membership = current_battle.memberships.sort_by { |e|
         [
-          -data[:members_hash][e.id.to_s]["x_score"],         # 1. スコア高い方
-          -data[:members_hash][e.id.to_s]["ox_list"].size,    # 2. たくさん答えた方
-          e.user.created_at,                                  # 3. 早く会員になった方
+          -data[:member_infos_hash][e.id.to_s]["b_score"],      # 1. スコア高い方
+          # -data[:member_infos_hash][e.id.to_s]["ox_list"].size, # 2. たくさん答えた方
+          e.user.created_at,                                    # 3. 早く会員になった方
           e.user.id,
         ]
       }.first
