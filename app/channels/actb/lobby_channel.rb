@@ -5,8 +5,17 @@ module Actb
     delegate :matching_list_hash, :common_broadcast, to: "self.class"
 
     class << self
-      def matching_list_add2(user)
-        redis.sadd(user.actb_setting.rule.pure_info.redis_key, user.id)
+      def matching_list_add(*user)
+        user.each do |user|
+          redis.sadd(user.actb_setting.rule.redis_key, user.id)
+        end
+        common_broadcast
+      end
+
+      def matching_list_rem(*user)
+        user.each do |user|
+          redis.srem(user.actb_setting.rule.redis_key, user.id)
+        end
         common_broadcast
       end
 
@@ -29,7 +38,7 @@ module Actb
     end
 
     def unsubscribed
-      matching_list_remove(current_user)
+      self.class.matching_list_rem(current_user)
     end
 
     def speak(data)
@@ -68,19 +77,14 @@ module Actb
         end
       end
 
-      matching_list_add(current_user)
+      self.class.matching_list_add(current_user)
     end
 
     def matching_cancel(data)
-      matching_list_remove(current_user)
+      self.class.matching_list_rem(current_user)
     end
 
     ################################################################################
-
-    def matching_list_add(user)
-      redis.sadd(redis_key, user.id)
-      common_broadcast
-    end
 
     def ordered_infos_debug
       ordered_infos.collect { |gap, e| { gap: gap, id: e.id, name: e.name } }
@@ -95,37 +99,30 @@ module Actb
     end
 
     def matching_users
-      redis.smembers(redis_key).collect { |e| Colosseum::User.find(e) }
+      rule.matching_users
     end
 
-    def matching_list
-      redis.smembers(redis_key).collect(&:to_i)
+    def matching_ids
+      rule.matching_ids
     end
 
     def matching_member?(user)
-      redis.sismember(redis_key, user.id)
-    end
-
-    def matching_list_remove(*users)
-      users.each do |user|
-        redis.srem(redis_key, user.id)
-      end
-      common_broadcast
+      redis.matching_member?(user)
     end
 
     def room_create(*users)
-      matching_list_remove(*users)
+      self.class.matching_list_rem(*users)
 
       # app/models/actb/room.rb
-      Room.create!(rule: current_user.actb_setting.rule) do |e|
+      Room.create!(rule: rule) do |e|
         users.each do |user|
           e.memberships.build(user: user)
         end
       end
     end
 
-    def redis_key
-      current_user.actb_setting.rule.pure_info.redis_key
+    def rule
+      current_user.actb_setting.rule
     end
 
     def lobby_speak(message_body)

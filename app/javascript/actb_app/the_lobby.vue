@@ -20,16 +20,18 @@
   .rule_key_select(v-if="app.sub_mode === 'rule_key_select'")
     .title.is-3.has-text-centered モード
     .buttons.is-centered.mode_buttons
-      template(v-for="row in app.$RuleInfo.values")
+      template(v-for="row in app.RuleInfo.values")
         b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row.key)" :type="{'is-primary': app.matching_list_hash[row.key].length >= 1}")
           | {{row.name}}
           | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="cancel_handle")
 
-  template(v-if="development_p")
+  .box.is_debug(v-if="development_p")
     .buttons.is-centered.are-small
-      b-button(@click="app.aitewo_join_saseru_handle") 相手を参加させる
+      template(v-for="row in app.RuleInfo.values")
+        b-button(@click="app.debug_matching_add_handle(row.key)") 自分以外を参加({{row.name}})
+      b-button(@click="app.matching_delete_all_handle") 解散
 </template>
 
 <script>

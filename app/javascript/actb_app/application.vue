@@ -87,7 +87,7 @@ export default {
     return {
       current_user: this.info.current_user,
 
-      mode: "lobby",
+      mode: null,
       sub_mode: "opening",
       rule_key: null,           // 未使用
       room: null,
@@ -100,6 +100,9 @@ export default {
       // チャット用
       lobby_messages: null, // メッセージ(複数)
       lobby_message_body:  null, // 入力中のメッセージ
+
+      RuleInfo: null,
+      OxMarkInfo: null,
 
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
@@ -115,8 +118,8 @@ export default {
 
   created() {
     this.remote_get(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
-      this.$RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
-      this.$OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
+      this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
       this.app_setup()
     })
   },
@@ -227,8 +230,12 @@ export default {
       })
     },
 
-    aitewo_join_saseru_handle() {
-      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "aitewo_join_saseru_handle", user_id: this.current_user.id }, e => {})
+    debug_matching_add_handle(rule_key) {
+      this.remote_fetch("PUT", this.app.info.put_path, {remote_action: "debug_matching_add_handle", exclude_user_id: this.current_user.id, rule_key: rule_key}, e => {})
+    },
+
+    matching_delete_all_handle() {
+      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "matching_delete_all_handle", exclude_user_id: this.current_user.id }, e => {})
     },
 
     rule_key_select_handle() {

@@ -16,7 +16,7 @@ module Actb
     asobi_count: 4,                   # 3手詰なら○手足した手数まで操作できる
 
     # 各タイミング
-    readygo_wait_delay: 2.5,
+    readygo_wait_delay: 2.2,
     deden_mode_delay: 0.8,
 
     # チャット

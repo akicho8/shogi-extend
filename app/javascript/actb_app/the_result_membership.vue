@@ -16,7 +16,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .user_quest_index.has-text-weight-bold.is-size-4
-    | {{membership.question_index}}
+    | {{mi.o_count}} / {{app.config.nanmonkotaetara_kati}}
 
   //////////////////////////////////////////////////////////////////////////////// 
   .user_rating.has-text-weight-bold
@@ -42,6 +42,11 @@ export default {
   ],
   props: {
     membership: { type: Object, required: true, },
+  },
+  computed: {
+    mi() {
+      return this.app.members_hash[this.membership.id]
+    },
   },
 }
 </script>

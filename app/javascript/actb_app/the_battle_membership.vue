@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_battle_membership.is-flex
-  .mdi.mdi-checkbox-blank-circle-outline.maru_batu.maru(v-if="latest_ox === 'correct'")
-  .mdi.mdi-close.maru_batu.batu(v-if="latest_ox === 'mistake'")
+  .mdi.mdi-checkbox-blank-circle-outline.maru_batu.maru(v-if="mi.latest_ox === 'correct'")
+  .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'mistake'")
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
@@ -20,7 +20,7 @@
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
   template(v-if="app.battle.rule.key === 'marathon_rule'")
     .question_progress
-      | {{ox_list.length}} / {{app.battle.best_questions.length}}
+      | {{mi.o_count}} / {{app.config.nanmonkotaetara_kati}}
     .question_progress_detail
       template(v-if="droped_ox_list.length === 0")
         | &nbsp;
@@ -32,7 +32,7 @@
 
   template(v-if="app.battle.rule.key === 'singleton_rule' || app.battle.rule.key === 'hybrid_rule'")
     .question_progress
-      | {{x_score}}
+      | {{mi.x_score}}
     .question_progress_detail
       template(v-if="droped_ox_list.length === 0")
         | &nbsp;
@@ -55,17 +55,11 @@ export default {
     membership: { type: Object, required: true, },
   },
   computed: {
-    ox_list() {
-      return this.app.members_hash[this.membership.id].ox_list
+    mi() {
+      return this.app.members_hash[this.membership.id]
     },
     droped_ox_list() {
-      return _.takeRight(this.ox_list, this.app.config.progress_list_take_display_count)
-    },
-    x_score() {
-      return this.app.members_hash[this.membership.id].x_score
-    },
-    latest_ox() {
-      return this.app.members_hash[this.membership.id].latest_ox
+      return this.mi.droped_ox_list(this.app.config.progress_list_take_display_count)
     },
   },
 }

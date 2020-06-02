@@ -1,5 +1,6 @@
 import { Question } from "./models/question.js"
 import { Battle } from "./models/battle.js"
+import { MemberInfo } from "./models/member_info.js"
 
 import dayjs from "dayjs"
 
@@ -44,12 +45,7 @@ export const application_battle = {
 
       this.sub_mode = "standby"
 
-      this.members_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: {
-        ox_list: [],
-        x_score: 0,
-        latest_ox: null,
-        delay_id: null,
-      }}), {})
+      this.members_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo()}), {})
 
       this.question_index = 0
 
@@ -169,7 +165,7 @@ export const application_battle = {
     },
     // 状況を反映する
     kotae_sentaku_broadcasted(params) {
-      const ox_mark_info = this.$OxMarkInfo.fetch(params.ox_mark_key) // 正解・不正解
+      const ox_mark_info = this.OxMarkInfo.fetch(params.ox_mark_key) // 正解・不正解
       const cm = this.members_hash[params.membership_id]          // 対応する membership の情報
 
       // ○×反映
@@ -187,10 +183,10 @@ export const application_battle = {
           cm.latest_ox = null
         })
 
-        // if (params.membership_id === this.current_membership.id) {
-        //   this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
-        //   this.delay_and_owattayo_or_next_trigger(ox_mark_info)
-        // }
+        if (params.membership_id === this.current_membership.id) {
+          this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
+          this.delay_and_owattayo_or_next_trigger(ox_mark_info)
+        }
       }
 
       if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {

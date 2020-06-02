@@ -15,12 +15,42 @@
 
 module Actb
   class Rule < ApplicationRecord
+    class << self
+      def matching_delete_all
+        all.each(&:matching_delete_all)
+      end
+    end
+
     include StaticArModel
+
+    delegate :redis_key, to: :pure_info
 
     with_options(dependent: :destroy) do
       has_many :settings
       has_many :rooms
       has_many :battles
+    end
+
+    def matching_users
+      redis.smembers(redis_key).collect { |e| Colosseum::User.find(e) }
+    end
+
+    def matching_ids
+      redis.smembers(redis_key).collect(&:to_i)
+    end
+
+    def matching_member?(user)
+      redis.sismember(redis_key, user.id)
+    end
+
+    def matching_delete_all
+      Actb::LobbyChannel.matching_list_rem(*matching_users)
+    end
+
+    private
+
+    def redis
+      Actb::BaseChannel.redis
     end
   end
 end
