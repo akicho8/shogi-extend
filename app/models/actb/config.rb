@@ -11,7 +11,8 @@ module Actb
 
     # シングルトンモード
     ikkai_misuttara_mou_osenai: true, # 誤答すると相手が誤答するまで解答ボタンを押せない？
-    q2_time_limit_sec: 300,           # 1手は○秒以内に操作しないとタイムアウトになる
+    q2_time_limit_sec: 3,             # 1手は○秒以内に操作しないとタイムアウトになる
+    mondai_time_limit: 5,             # 解く時間 nil 以外ならそれに設定
     b_score_max_for_win: 5,           # スコア5に足っしたら勝ち
     asobi_count: 4,                   # 3手詰なら○手足した手数まで操作できる
 

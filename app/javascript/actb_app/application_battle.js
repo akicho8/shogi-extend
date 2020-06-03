@@ -96,7 +96,7 @@ export const application_battle = {
 
     operation_mode_trigger() {
       this.sub_mode = "operation_mode"
-      this.x_mode = "x1_idol"
+      this.x_mode = "x1_thinking"
       this.answer_button_disable_p = false
       this.share_sfen = null
     },
@@ -106,7 +106,7 @@ export const application_battle = {
 
       const max = this.c_quest.moves_count_max + this.config.asobi_count
       if (turn >= max) {
-        this.g2_jikangire_handle()
+        this.x2_play_timeout_handle()
       }
     },
 
@@ -154,10 +154,11 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 正解または不正解
-    kotae_sentaku(ox_mark_key) {
+    kotae_sentaku(ox_mark_key, flip = false) {
+      this.__assert__(ox_mark_key === "correct" || ox_mark_key === "timeout")
       this.room_speak(`*kotae_sentaku("${ox_mark_key}")`)
       this.$ac_battle.perform("kotae_sentaku", {
-        membership_id: this.current_membership.id,
+        membership_id: flip ? this.opponent_membership.id : this.current_membership.id,
         question_id: this.c_quest.id,
         question_index: this.question_index,
         ox_mark_key: ox_mark_key,
@@ -168,14 +169,14 @@ export const application_battle = {
       const ox_mark_info = this.OxMarkInfo.fetch(params.ox_mark_key) // 正解・不正解
       const mi = this.member_infos_hash[params.membership_id]          // 対応する membership の情報
 
-      // ○×反映
-      mi.ox_list.push(params.ox_mark_key)
-      this.score_add(params.membership_id, ox_mark_info.score)
-
       // 効果音
       this.sound_play(ox_mark_info.sound_key)
 
       if (this.battle.rule.key === "marathon_rule") {
+        // ○×反映
+        mi.ox_list.push(params.ox_mark_key)
+        this.score_add(params.membership_id, ox_mark_info.score)
+
         this.delay_stop(mi.delay_id) // 前のが動いている場合があるので止める
         mi.latest_ox = ox_mark_info.key
         mi.delay_id = this.delay(ox_mark_info.delay_second, () => {
@@ -190,12 +191,36 @@ export const application_battle = {
         }
       }
 
-      if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
+      // 正解時         → 正解したユーザーが送信者
+      // タイムアウト時 → プレイマリーユーザーが送信者
+      if (this.battle.rule.key === "singleton_rule") {
         this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
+
+        if (ox_mark_info.key === "correct") {
+          // 正解時は正解したユーザーが送信者なので正解者には○
+          this.score_add(params.membership_id, ox_mark_info.score)
+          mi.ox_list.push("correct")
+        }
+
+        if (ox_mark_info.key === "timeout") {
+          // タイムアウトのときは両者に時間切れ
+          _.each(this.member_infos_hash, (v, k) => v.ox_list.push("timeout"))
+        }
+
         if (this.primary_membership_p) {
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
         }
       }
+
+      // if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
+      //   // 正解時         → 正解したユーザーが送信者
+      //   // タイムアウト時 → プレイマリーユーザーが送信者
+      //   this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
+      //   if (this.primary_membership_p) {
+      //     this.delay_and_owattayo_or_next_trigger(ox_mark_info)
+      //   }
+      // }
+
     },
     delay_and_owattayo_or_next_trigger(ox_mark_info) {
       this.delay(ox_mark_info.delay_second, () => {
@@ -209,40 +234,42 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // singleton_rule では primary_membership_p だけが呼ぶ
     next_trigger() {
       this.room_speak("*next_trigger")
-      this.$ac_battle.perform("next_trigger", { // 戻値なし
+      this.$ac_battle.perform("next_trigger", {
         membership_id: this.current_membership.id,
         question_index: this.question_index + 1, // 次に進めたい(希望)
+        question_id: this.next_question.id,
       }) // --> app/channels/actb/battle_channel.rb
-
-      this.deden_mode_trigger()
     },
     next_trigger_broadcasted(params) {
       this.room_speak("*next_trigger_broadcasted")
       if (this.battle.rule.key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index // 自分だったら次に進める
+          this.deden_mode_trigger()
         }
       }
       if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
         this.question_index = params.question_index // 相手もそろって次に進める
+        this.deden_mode_trigger()
       }
     },
 
     // 早押しボタンを押した(解答権はまだない)
-    g2_hayaosi_handle() {
+    wakatta_handle(flip = false) {
       this.sound_play("click")
 
-      this.room_speak("*g2_hayaosi_handle")
-      this.$ac_battle.perform("g2_hayaosi_handle", {
-        membership_id: this.current_membership.id,
+      this.room_speak("*wakatta_handle")
+      this.$ac_battle.perform("wakatta_handle", {
+        membership_id: flip ? this.opponent_membership.id : this.current_membership.id,
         question_id: this.c_quest.id,
         // question_index: this.question_index,
       }) // --> app/channels/actb/battle_channel.rb
     },
-    g2_hayaosi_handle_broadcasted(params) {
-      this.room_speak("*g2_hayaosi_handle_broadcasted")
+    wakatta_handle_broadcasted(params) {
+      this.room_speak("*wakatta_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押せた本人
         this.x_mode = "x2_play"
@@ -260,24 +287,26 @@ export const application_battle = {
     },
 
     // 早押しボタンを押して解答中に時間切れ
-    g2_jikangire_handle() {
-      this.room_speak("*g2_jikangire_handle")
-      this.$ac_battle.perform("g2_jikangire_handle", {
-        membership_id: this.current_membership.id,
+    x2_play_timeout_handle(flip = false) {
+      this.room_speak("*x2_play_timeout_handle")
+      this.$ac_battle.perform("x2_play_timeout_handle", {
+        membership_id: flip ? this.opponent_membership.id : this.current_membership.id,
         question_id: this.c_quest.id,
       }) // --> app/channels/actb/battle_channel.rb
     },
-    // 時間切れ
-    g2_jikangire_handle_broadcasted(params) {
-      this.room_speak("*g2_jikangire_handle_broadcasted")
+    // singleton_rule での操作中の時間切れは不正解相当
+    x2_play_timeout_handle_broadcasted(params) {
+      this.room_speak("*x2_play_timeout_handle_broadcasted")
+
+      this.member_infos_hash[params.membership_id].ox_list.push("mistake")
+      this.score_add(params.membership_id, -1)
       if (params.membership_id === this.current_membership.id) {
-        this.score_add(this.current_membership.id, -1)
         this.answer_button_disable_p = true
       } else {
         this.answer_button_disable_p = false
       }
-      this.x_mode = "x1_idol"
-      this.sound_play("bubuu")
+      this.sound_play("mistake")
+      this.x_mode = "x1_thinking"
       this.q2_interval_stop()
     },
 
@@ -355,10 +384,13 @@ export const application_battle = {
       }
       if (this.battle.rule.key === "singleton_rule") {
         if (this.sub_mode === "operation_mode") {
-          if (this.x_mode === "x1_idol") {
+          if (this.x_mode === "x1_thinking") {
             this.main_interval_count += 1
             if (this.q1_rest_seconds === 0) {
-              this.kotae_sentaku('timeout')
+              if (this.primary_membership_p) {
+                // リーダーだけがトリガーする
+                this.kotae_sentaku('timeout')
+              }
             }
           }
         }
@@ -388,7 +420,7 @@ export const application_battle = {
       if (this.sub_mode === "operation_mode") {
         this.q2_interval_count += 1
         if (this.q2_rest_seconds === 0) {
-          this.g2_jikangire_handle()
+          this.x2_play_timeout_handle()
         }
       }
     },
@@ -398,18 +430,28 @@ export const application_battle = {
   },
 
   computed: {
-
     primary_membership_p() {
-      return this.battle.memberships[0].id === this.current_membership.id
+      // return this.battle.memberships[0].id === this.current_membership.id
+      return _.last(this.battle.memberships).id === this.current_membership.id // 後に参加した方をリーダーにする
     },
     current_membership() {
       const v = this.battle.memberships.find(e => e.user.id === this.current_user.id)
       this.__assert__(v, "current_membership is blank")
       return v
     },
+    opponent_membership() {
+      const v = this.battle.memberships.find(e => e.user.id !== this.current_user.id)
+      this.__assert__(v, "opponent_membership is blank")
+      return v
+    },
     c_quest() {
       const v = this.battle.best_questions[this.question_index]
       this.__assert__(v, "c_quest is blank")
+      return v
+    },
+    next_question() {
+      const v = this.battle.best_questions[this.question_index + 1]
+      this.__assert__(v, "next_question is blank")
       return v
     },
 
@@ -426,6 +468,11 @@ export const application_battle = {
       return v
     },
     q1_time_limit_sec() {
+      const v = this.app.config.mondai_time_limit
+      if (v != null) {
+        return v
+      }
+
       // if (this.development_p) {
       //   return 3
       // }

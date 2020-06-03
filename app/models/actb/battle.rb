@@ -40,10 +40,12 @@ module Actb
     belongs_to :parent, class_name: "Battle", optional: true # 連戦したときの前の部屋
 
     before_validation do
+      if room
+        self.rule ||= room.rule
+      end
+
       if parent
-        self.room ||= parent.room
-        self.rensen_index ||= parent.rensen_index + 1
-        self.rule ||= parent.rule
+        self.rensen_index ||= parent.rensen_index + 1 # FIXME: これいらない？
       end
 
       self.final ||= Final.fetch(:f_pending)
@@ -80,12 +82,7 @@ module Actb
     end
 
     def onaji_heya_wo_atarasiku_tukuruyo
-      self.class.create!(parent: self) do |e|
-        users.each do |user|
-          e.memberships.build(user: user)
-        end
-      end
-      # --> app/jobs/actb/battle_broadcast_job.rb
+      room.battle_create_with_members!(parent: self) # --> app/jobs/actb/battle_broadcast_job.rb
     end
 
     def katimashita(target_user, judge_key, final_key)

@@ -26,7 +26,7 @@ Colosseum::User.setup
 # end
 
 # 問題作成
-3.times do |i|
+10.times do |i|
   question = user1.actb_questions.create! do |e|
     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{i+1}p 1"
     e.moves_answers.build(moves_str: "G*4b")
@@ -44,7 +44,7 @@ Colosseum::User.setup
     e.other_twitter_account = "(other_twitter_account)"
   end
 end
-Actb::Question.count           # => 3
+Actb::Question.count           # => 10
 
 question = Actb::Question.first!
 question.lineage.key               # => "詰将棋"
@@ -53,7 +53,7 @@ question.lineage.key               # => "詰将棋"
 question = Actb::Question.first!
 # question.update!(folder: question.user.actb_trash_box) の方法はださい
 question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 84, user_id: 28, type: "Actb::TrashBox", created_at: "2020-06-02 14:37:40", updated_at: "2020-06-02 14:37:40">
+question.folder # => #<Actb::TrashBox id: 126, user_id: 42, type: "Actb::TrashBox", created_at: "2020-06-03 12:53:11", updated_at: "2020-06-03 12:53:11">
 
 # 2番目の問題は下書きへ
 question = Actb::Question.second!
@@ -77,18 +77,18 @@ battle = room.battles.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
-battle                          # => #<Actb::Battle id: 7, room_id: 6, parent_id: nil, rule_id: 1, final_id: 5, begin_at: "2020-06-02 14:37:43", end_at: nil, rensen_index: 0, created_at: "2020-06-02 14:37:43", updated_at: "2020-06-02 14:37:43">
+battle                          # => #<Actb::Battle id: 44, room_id: 33, parent_id: nil, rule_id: 1, final_id: 5, begin_at: "2020-06-03 12:53:14", end_at: nil, rensen_index: 0, created_at: "2020-06-03 12:53:14", updated_at: "2020-06-03 12:53:14">
 
 battle.users.count                # => 2
 battle.rensen_index               # => 0
 
-battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 8, room_id: 6, parent_id: 7, rule_id: 1, final_id: 5, begin_at: "2020-06-02 14:37:43", end_at: nil, rensen_index: 1, created_at: "2020-06-02 14:37:43", updated_at: "2020-06-02 14:37:43">
+battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 45, room_id: 33, parent_id: 44, rule_id: 1, final_id: 5, begin_at: "2020-06-03 12:53:14", end_at: nil, rensen_index: 1, created_at: "2020-06-03 12:53:14", updated_at: "2020-06-03 12:53:14">
 battle2.rensen_index                            # => 1
 
 membership = battle.memberships.first
 
 # 出題
-battle.best_questions             # => [{"id"=>6, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>28, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0002_fallback_avatar_icon-d651d5f44e2c6e9c8a3e51c6c3ec712598ff69423b512145e4e98a3a3793199d.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
+battle.best_questions             # => [{"id"=>9, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>10, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>11, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>12, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>13, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>14, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>15, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>16, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_description"=>"(hint_description)", "source_desc"=>"(source_desc)", "other_twitter_account"=>"(other_twitter_account)", "user"=>{"id"=>42, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
 
 # すべての問題に解答する
 Actb::Question.all.each.with_index do |question, i|
@@ -112,7 +112,7 @@ user1.actb_clip_marks.create!(question: Actb::Question.third!)
 # 問題に対してコメント
 5.times do
   question = Actb::Question.first!
-  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 6, user_id: 28, question_id: 4, body: "message", created_at: "2020-06-02 14:37:43", updated_at: "2020-06-02 14:37:43">, #<Actb::QuestionMessage id: 7, user_id: 28, question_id: 4, body: "message", created_at: "2020-06-02 14:37:43", updated_at: "2020-06-02 14:37:43">, #<Actb::QuestionMessage id: 8, user_id: 28, question_id: 4, body: "message", created_at: "2020-06-02 14:37:43", updated_at: "2020-06-02 14:37:43">, #<Actb::QuestionMessage id: 9, user_id: 28, question_id: 4, body: "message", created_at: "2020-06-02 14:37:43", updated_at: "2020-06-02 14:37:43">, #<Actb::QuestionMessage id: 10, user_id: 28, question_id: 4, body: "message", created_at: "2020-06-02 14:37:43", updated_at: "2020-06-02 14:37:43">
+  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 11, user_id: 42, question_id: 7, body: "message", created_at: "2020-06-03 12:53:14", updated_at: "2020-06-03 12:53:14">, #<Actb::QuestionMessage id: 12, user_id: 42, question_id: 7, body: "message", created_at: "2020-06-03 12:53:14", updated_at: "2020-06-03 12:53:14">, #<Actb::QuestionMessage id: 13, user_id: 42, question_id: 7, body: "message", created_at: "2020-06-03 12:53:14", updated_at: "2020-06-03 12:53:14">, #<Actb::QuestionMessage id: 14, user_id: 42, question_id: 7, body: "message", created_at: "2020-06-03 12:53:14", updated_at: "2020-06-03 12:53:14">, #<Actb::QuestionMessage id: 15, user_id: 42, question_id: 7, body: "message", created_at: "2020-06-03 12:53:14", updated_at: "2020-06-03 12:53:14">
   question.messages_count                    # => 1, 2, 3, 4, 5
 end
 
@@ -120,10 +120,10 @@ tp Actb::Question
 
 tp Actb.info
 # >> |------------------+---------------------------|
-# >> |               id | 28                        |
-# >> |          user_id | 28                        |
-# >> |        season_id | 23                        |
-# >> |         judge_id | 12                        |
+# >> |               id | 42                        |
+# >> |          user_id | 42                        |
+# >> |        season_id | 34                        |
+# >> |         judge_id | 16                        |
 # >> |         final_id | 2                         |
 # >> |     battle_count | 0                         |
 # >> |        win_count | 0                         |
@@ -138,15 +138,15 @@ tp Actb.info
 # >> |       renpai_max | 0                         |
 # >> |     create_count | 1                         |
 # >> |       generation | 11                        |
-# >> |       created_at | 2020-06-02 23:37:40 +0900 |
-# >> |       updated_at | 2020-06-02 23:37:43 +0900 |
+# >> |       created_at | 2020-06-03 21:53:11 +0900 |
+# >> |       updated_at | 2020-06-03 21:53:14 +0900 |
 # >> | disconnect_count | 0                         |
 # >> |  disconnected_at |                           |
 # >> |------------------+---------------------------|
 # >> |------------------+---------------------------|
-# >> |               id | 28                        |
-# >> |          user_id | 28                        |
-# >> |         judge_id | 12                        |
+# >> |               id | 42                        |
+# >> |          user_id | 42                        |
+# >> |         judge_id | 16                        |
 # >> |         final_id | 5                         |
 # >> |     battle_count | 0                         |
 # >> |        win_count | 0                         |
@@ -159,37 +159,44 @@ tp Actb.info
 # >> |     renpai_count | 0                         |
 # >> |       rensho_max | 0                         |
 # >> |       renpai_max | 0                         |
-# >> |       created_at | 2020-06-02 23:37:40 +0900 |
-# >> |       updated_at | 2020-06-02 23:37:40 +0900 |
+# >> |       created_at | 2020-06-03 21:53:11 +0900 |
+# >> |       updated_at | 2020-06-03 21:53:11 +0900 |
 # >> | disconnect_count | 0                         |
 # >> |  disconnected_at |                           |
 # >> |------------------+---------------------------|
-# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
-# >> | id | user_id | folder_id | lineage_id | init_sfen                                 | time_limit_sec | difficulty_level | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | good_marks_count | bad_marks_count | clip_marks_count | messages_count |
-# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
-# >> |  4 |      28 |        84 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-02 23:37:42 +0900 | 2020-06-02 23:37:42 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                1 |               0 |                0 |              5 |
-# >> |  5 |      28 |        83 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-02 23:37:42 +0900 | 2020-06-02 23:37:42 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               1 |                0 |              0 |
-# >> |  6 |      28 |        82 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-02 23:37:42 +0900 | 2020-06-02 01:37:42 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                1 |              0 |
-# >> |----+---------+-----------+------------+-------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> |----+---------+-----------+------------+--------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> | id | user_id | folder_id | lineage_id | init_sfen                                  | time_limit_sec | difficulty_level | title   | description   | hint_description   | source_desc   | other_twitter_account   | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | good_marks_count | bad_marks_count | clip_marks_count | messages_count |
+# >> |----+---------+-----------+------------+--------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> |  7 |      42 |       126 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-03 21:53:14 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                1 |               0 |                0 |              5 |
+# >> |  8 |      42 |       125 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-03 21:53:14 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               1 |                0 |              0 |
+# >> |  9 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-02 23:53:13 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                1 |              0 |
+# >> | 10 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-03 00:53:13 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> | 11 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-03 01:53:13 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> | 12 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-03 02:53:13 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> | 13 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-03 03:53:13 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> | 14 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:13 +0900 | 2020-06-03 04:53:13 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> | 15 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1  |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:14 +0900 | 2020-06-03 05:53:14 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> | 16 |      42 |       124 |         22 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1 |            180 |                5 | (title) | (description) | (hint_description) | (source_desc) | (other_twitter_account) | 2020-06-03 21:53:14 +0900 | 2020-06-03 06:53:14 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> |----+---------+-----------+------------+--------------------------------------------+----------------+------------------+---------+---------------+--------------------+---------------+-------------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
 # >> |------------------------+-------+--------|
 # >> | model                  | count | 最終ID |
 # >> |------------------------+-------+--------|
-# >> | Colosseum::User        |    14 |     41 |
-# >> | Actb::Question         |     3 |      6 |
-# >> | Actb::QuestionMessage  |     5 |     10 |
-# >> | Actb::Room             |     1 |      6 |
-# >> | Actb::RoomMembership   |     2 |     12 |
+# >> | Colosseum::User        |    14 |     55 |
+# >> | Actb::Question         |    10 |     16 |
+# >> | Actb::QuestionMessage  |     5 |     15 |
+# >> | Actb::Room             |     1 |     33 |
+# >> | Actb::RoomMembership   |     2 |     66 |
 # >> | Actb::RoomMessage      |     0 |        |
-# >> | Actb::Battle           |     2 |      8 |
-# >> | Actb::BattleMembership |     4 |     16 |
-# >> | Actb::Season           |    11 |     23 |
-# >> | Actb::SeasonXrecord    |    14 |     41 |
-# >> | Actb::Setting          |    14 |     41 |
-# >> | Actb::GoodMark         |     1 |      2 |
-# >> | Actb::BadMark          |     1 |      2 |
-# >> | Actb::ClipMark         |     1 |      2 |
-# >> | Actb::Folder           |    42 |    123 |
-# >> | Actb::Lineage          |     7 |     21 |
-# >> | Actb::Judge            |     4 |     12 |
+# >> | Actb::Battle           |     2 |     45 |
+# >> | Actb::BattleMembership |     4 |     90 |
+# >> | Actb::Season           |    11 |     34 |
+# >> | Actb::SeasonXrecord    |    14 |     55 |
+# >> | Actb::Setting          |    14 |     55 |
+# >> | Actb::GoodMark         |     1 |      3 |
+# >> | Actb::BadMark          |     1 |      3 |
+# >> | Actb::ClipMark         |     1 |      3 |
+# >> | Actb::Folder           |    42 |    165 |
+# >> | Actb::Lineage          |     7 |     28 |
+# >> | Actb::Judge            |     4 |     16 |
 # >> | Actb::LobbyMessage     |     0 |        |
 # >> |------------------------+-------+--------|

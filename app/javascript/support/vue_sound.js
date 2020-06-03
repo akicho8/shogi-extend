@@ -27,8 +27,8 @@ const SoundPresets = {
   click:    { file: mp3_click,    volume: 0.2, },
   shine:    { file: mp3_shine,    volume: 0.1, },
   stupid:   { file: mp3_stupid,   volume: 0.5, }, // 使いにくい
-  poon:     { file: mp3_poon,     volume: 0.5, },
-  deden:    { file: mp3_deden,    volume: 0.2, },
+  poon:     { file: mp3_poon,     volume: 0.1, },
+  deden:    { file: mp3_deden,    volume: 0.1, },
   pipopipo: { file: mp3_pipopipo, volume: 0.5, },
   pishi:    { file: wav_pishi,    volume: 0.5, },
   correct:  { file: mp3_o,        volume: 0.2, },

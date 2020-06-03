@@ -39,45 +39,74 @@ module Actb
       history_update(data, :mistake)
     end
 
-    def g2_hayaosi_handle(data)
+    def wakatta_handle(data)
       data = data.to_options
       # membership_id: this.current_membership.id,
       # question_id: this.current_question_id,
 
-      # this.silent_remote_fetch("PUT", this.app.info.put_path, { g2_hayaosi_handle: true, battle_id: this.app.battle.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
-      # { g2_hayaosi_handle: true, battle_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
+      # this.silent_remote_fetch("PUT", this.app.info.put_path, { wakatta_handle: true, battle_id: this.app.battle.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
+      # { wakatta_handle: true, battle_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
 
       key = [:early_press, current_battle, data[:question_id]].join("/")
       Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
       early_press_counter = redis.incr(key)
       redis.expire(key, 60)
       if early_press_counter === 1
-        g2_hayaosi_handle_broadcasted = {
+        wakatta_handle_broadcasted = {
           membership_id: data[:membership_id],
           question_id: data[:question_id],
           early_press_counter: early_press_counter,
         }
-        ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :g2_hayaosi_handle_broadcasted, bc_params: g2_hayaosi_handle_broadcasted })
+        broadcast(:wakatta_handle_broadcasted, wakatta_handle_broadcasted)
       end
     end
 
-    def g2_jikangire_handle(data)
+    def x2_play_timeout_handle(data)
       data = data.to_options
 
       key = [:early_press, current_battle, data[:question_id]].join("/")
       redis.del(key)
 
-      g2_jikangire_handle_broadcasted = {
+      x2_play_timeout_handle_broadcasted = {
         membership_id: data[:membership_id],
         question_id: data[:question_id],
       }
-      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :g2_jikangire_handle_broadcasted, bc_params: g2_jikangire_handle_broadcasted })
+      broadcast(:x2_play_timeout_handle_broadcasted, x2_play_timeout_handle_broadcasted)
     end
 
     def kotae_sentaku(data)
       data = data.to_options
+      ox_mark = Actb::OxMark.fetch(data[:ox_mark_key])
+      question = Question.find(data[:question_id])
+      membership1 = current_battle.memberships.find(data[:membership_id]) # 当事者
+      membership2 = (current_battle.memberships - [membership1]).first    # 対戦相手
 
-      history_update(data, data[:ox_mark_key])
+      # 基本個人プレイで同期してない
+      if current_battle.rule.key == "marathon_rule"
+        raise ArgumentError, data.inspect if ox_mark.key == "mistake"
+        raise ArgumentError, data.inspect unless membership1.user == current_user
+        current_user.actb_histories.find_or_initialize_by(membership: membership1, question: question).update!(ox_mark: ox_mark)
+        question.increment!(ox_mark.pure_info.question_counter_column)
+      end
+
+      # 正解時         → 正解したユーザーが送信者
+      # タイムアウト時 → プレイマリーユーザーが送信者
+      if current_battle.rule.key == "singleton_rule"
+        raise ArgumentError, data.inspect if ox_mark.key == "mistake"
+        if ox_mark.key == "correct"
+          membership1.user.actb_histories.find_or_initialize_by(membership: membership1, question: question).update!(ox_mark: ox_mark)
+          membership2.user.actb_histories.find_or_initialize_by(membership: membership2, question: question).update!(ox_mark: Actb::OxMark.fetch(:mistake))
+          # ↓こうすると正解確立が50%に補正されてしまうので設定しない
+          # question.increment!(:o_count)
+          # question.increment!(:x_count)
+        end
+        if ox_mark.key == "timeout"
+          current_battle.memberships.each do |membership|
+            membership.user.actb_histories.find_or_initialize_by(membership: membership, question: question).update!(ox_mark: ox_mark)
+            question.increment!(:x_count)
+          end
+        end
+      end
 
       bc_params = {
         membership_id:  data[:membership_id],  # 誰が
@@ -89,28 +118,39 @@ module Actb
       # 一応保存しておく(あとで取るかもしれない)
       # current_battle.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
 
-      # 問題の解答数を上げる
-      if data[:ox_mark_key] == "correct"
-        Question.find(data[:question_id]).increment!(:o_count)
-      else
-        Question.find(data[:question_id]).increment!(:x_count)
-      end
+      # # 問題の解答数を上げる
+      # if data[:ox_mark_key] == "correct"
+      #   Question.find(data[:question_id]).increment!(:o_count)
+      # else
+      #   Question.find(data[:question_id]).increment!(:x_count)
+      # end
 
-      # こちらがメイン
-      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :kotae_sentaku_broadcasted, bc_params: bc_params })
+      broadcast(:kotae_sentaku_broadcasted, bc_params)
     end
 
     # 次に進む
     def next_trigger(data)
-      history_update(data, :mistake)
-
       data = data.to_options
+
+      # 本人が送信しているので本人だけの履歴を作成
+      if current_battle.rule.key == "marathon_rule"
+        history_update(data, :mistake)
+      end
+
+      # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
+      if current_battle.rule.key == "singleton_rule"
+        question = Question.find(data[:question_id])
+        current_battle.memberships.each do |membership|
+          membership.user.actb_histories.find_or_initialize_by(membership: membership, question: question).update!(ox_mark: OxMark.fetch(:mistake))
+        end
+      end
+
       bc_params = {
         membership_id:  data[:membership_id],
         question_index: data[:question_index],
         question_id:    data[:question_id],
       }
-      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :next_trigger_broadcasted, bc_params: bc_params })
+      broadcast(:next_trigger_broadcasted, bc_params)
     end
 
     # 盤面を共有する
@@ -119,7 +159,7 @@ module Actb
       bc_params = {
         share_sfen: data[:share_sfen],
       }
-      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :kyouyuu_broadcasted, bc_params: bc_params })
+      broadcast(:kyouyuu_broadcasted, bc_params)
     end
 
     # <-- app/javascript/actb_app/application.vue
@@ -138,7 +178,7 @@ module Actb
       battle.katimashita(target_user, judge_key, final_key)
       battle.reload
 
-      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: "katimashita_broadcasted", bc_params: { battle: battle.as_json_type2 }})
+      broadcast(:katimashita_broadcasted, battle: battle.as_json_type2)
       # --> app/javascript/actb_app/application.vue
     end
 
@@ -173,7 +213,7 @@ module Actb
 
       # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, methods.grep(/broadcast/)])
 
-      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", { bc_action: :battle_continue_handle_broadcasted, bc_params: bc_params })
+      broadcast(:battle_continue_handle_broadcasted, bc_params)
     end
 
     # 強制続行
@@ -220,6 +260,11 @@ module Actb
       membership = current_battle.memberships.find(data[:membership_id])
       history = current_user.actb_histories.find_or_initialize_by(membership: membership, question: question)
       history.update!(ox_mark: Actb::OxMark.fetch(ox_mark))
+    end
+
+    def broadcast(bc_action, bc_params)
+      raise ArgumentError, bc_params.inspect unless bc_params.values.all?
+      ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", {bc_action: bc_action, bc_params: bc_params})
     end
   end
 end

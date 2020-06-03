@@ -9,7 +9,9 @@ export const application_matching = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    matching_init() {
+    matching_setup() {
+      this.mode = "matching"
+
       this.matching_interval_timer_clear()
       this.matching_interval_timer_count = 0
       this.matching_interval_timer_processing()

@@ -18,31 +18,18 @@
     | {{membership.user.name}}
 
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
-  template(v-if="app.battle.rule.key === 'marathon_rule'")
-    .question_progress
-      | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
-    .question_progress_detail
-      template(v-if="droped_ox_list.length === 0")
-        | &nbsp;
-      template(v-for="ox_mark_key in droped_ox_list")
-        template(v-if="ox_mark_key === 'correct'")
-          b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
-        template(v-if="ox_mark_key === 'mistake'")
-          b-icon(icon="close" size="is-small" type="is-success")
-        template(v-if="ox_mark_key === 'timeout'")
-          b-icon(icon="timer-sand-empty" size="is-small")
-
-  template(v-if="app.battle.rule.key === 'singleton_rule' || app.battle.rule.key === 'hybrid_rule'")
-    .question_progress
-      | {{mi.b_score}}
-    .question_progress_detail
-      template(v-if="droped_ox_list.length === 0")
-        | &nbsp;
-      template(v-for="ox_mark_key in droped_ox_list")
-        template(v-if="ox_mark_key === 'correct'")
-          b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
-        template(v-if="ox_mark_key === 'mistake'")
-          b-icon(icon="close" size="is-small" type="is-success")
+  .question_progress
+    | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
+  .question_progress_detail
+    template(v-if="droped_ox_list.length === 0")
+      | &nbsp;
+    template(v-for="ox_mark_key in droped_ox_list")
+      template(v-if="ox_mark_key === 'correct'")
+        b-icon(icon="checkbox-blank-circle-outline" type="is-danger" size="is-small")
+      template(v-if="ox_mark_key === 'mistake'")
+        b-icon(icon="close" size="is-small" type="is-success")
+      template(v-if="ox_mark_key === 'timeout'")
+        b-icon(icon="timer-sand-empty" size="is-small")
 </template>
 
 <script>
