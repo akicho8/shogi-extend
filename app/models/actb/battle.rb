@@ -154,7 +154,7 @@ module Actb
             final: { only: [:key], methods: [:name] },
             room: {},
             memberships: {
-              only: [:id, :question_index],
+              only: [:id],
               include: {
                 user: {
                   only: [:id, :name],
@@ -185,7 +185,7 @@ module Actb
               only: [:id, :key, :name]
             },
             memberships: {
-              only: [:id, :rensho_count, :renpai_count, :question_index],
+              only: [:id, :rensho_count, :renpai_count],
               include: {
                 user: {
                   only: [:id, :name],

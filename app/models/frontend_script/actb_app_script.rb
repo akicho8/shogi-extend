@@ -408,8 +408,8 @@ module FrontendScript
 
         room = Actb::Room.create_with_members!(users)
         battle = room.battle_create_with_members!(final: Actb::Final.fetch(:f_disconnect))
-        battle.memberships[0].update!(judge: Actb::Judge.fetch(:win),  question_index: 1)
-        battle.memberships[1].update!(judge: Actb::Judge.fetch(:lose), question_index: 2)
+        battle.memberships[0].update!(judge: Actb::Judge.fetch(:win))
+        battle.memberships[1].update!(judge: Actb::Judge.fetch(:lose))
         battle.reload
 
         info[:room] = room.as_json(only: [:id], include: { memberships: { only: [:id], include: {user: { only: [:id, :name], methods: [:avatar_path] }} } }, methods: [])

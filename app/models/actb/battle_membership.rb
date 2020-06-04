@@ -3,21 +3,20 @@
 #
 # Battle membership (actb_battle_memberships as Actb::BattleMembership)
 #
-# |----------------+----------------+------------+-------------+-----------------------+-------|
-# | name           | desc           | type       | opts        | refs                  | index |
-# |----------------+----------------+------------+-------------+-----------------------+-------|
-# | id             | ID             | integer(8) | NOT NULL PK |                       |       |
-# | battle_id      | Battle         | integer(8) | NOT NULL    |                       | A! B  |
-# | user_id        | User           | integer(8) | NOT NULL    | => Colosseum::User#id | A! C  |
-# | judge_id       | Judge          | integer(8) | NOT NULL    |                       | D     |
-# | question_index | Question index | integer(4) |             |                       |       |
-# | position       | 順序           | integer(4) | NOT NULL    |                       | E     |
-# | created_at     | 作成日時       | datetime   | NOT NULL    |                       |       |
-# | updated_at     | 更新日時       | datetime   | NOT NULL    |                       |       |
-# |----------------+----------------+------------+-------------+-----------------------+-------|
+# |------------+----------+------------+-------------+-----------------------+-------|
+# | name       | desc     | type       | opts        | refs                  | index |
+# |------------+----------+------------+-------------+-----------------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |                       |       |
+# | battle_id  | Battle   | integer(8) | NOT NULL    |                       | A! B  |
+# | user_id    | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A! C  |
+# | judge_id   | Judge    | integer(8) | NOT NULL    |                       | D     |
+# | position   | 順序     | integer(4) | NOT NULL    |                       | E     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |                       |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |                       |       |
+# |------------+----------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_master_xrecord
+# Colosseum::User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -56,9 +55,6 @@ module Actb
       #   self.rensho_count = w
       #   self.renpai_count = l
       # end
-
-      # 一問も答えてないとき nil になるため
-      self.question_index ||= 0
     end
 
     with_options allow_blank: true do

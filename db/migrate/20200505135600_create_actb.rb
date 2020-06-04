@@ -71,7 +71,6 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :battle,    null: false,              comment: "対戦"
       t.belongs_to :user,      null: false,              comment: "対戦者"
       t.belongs_to :judge,     null: false,              comment: "勝敗"
-      t.integer :question_index,                         comment: "解答中の問題" # question_index ← 消す
       t.integer :position,     null: false, index: true, comment: "順序"
       t.timestamps
 

@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.bigint "battle_id", null: false, comment: "対戦"
     t.bigint "user_id", null: false, comment: "対戦者"
     t.bigint "judge_id", null: false, comment: "勝敗"
-    t.integer "question_index", comment: "解答中の問題"
     t.integer "position", null: false, comment: "順序"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

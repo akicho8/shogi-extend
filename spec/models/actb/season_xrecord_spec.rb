@@ -31,7 +31,7 @@
 # |------------------+------------------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_master_xrecord
+# Colosseum::User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
 require 'rails_helper'
@@ -41,16 +41,17 @@ module Actb
     include ActbSupportMethods
 
     it "切断記録" do
-      user1.actb_current_xrecord.update!(final: Actb::Final.fetch(:f_disconnect))
-      assert { user1.actb_current_xrecord.disconnect_count == 1 }
-      assert { user1.actb_current_xrecord.disconnected_at }
-      # tp user1.actb_current_xrecord
+      record = user1.actb_current_xrecord
+      record.final_set(Actb::Final.fetch(:f_disconnect))
+      assert { record.disconnect_count == 1 }
+      assert { record.disconnected_at }
+      # tp record
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 0.58492 seconds (files took 2.15 seconds to load)
+# >> Finished in 0.80865 seconds (files took 2.16 seconds to load)
 # >> 1 example, 0 failures
 # >> 
