@@ -21,6 +21,10 @@
           p.title {{app.ov_user_info.actb_current_xrecord.battle_count}}
       .level-item.has-text-centered
         div
+          p.heading 連勝数
+          p.title {{app.ov_user_info.actb_current_xrecord.rensho_count}}
+      .level-item.has-text-centered
+        div
           p.heading 最多連勝数
           p.title {{app.ov_user_info.actb_current_xrecord.rensho_max}}
       .level-item.has-text-centered
