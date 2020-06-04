@@ -26,22 +26,21 @@
           | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="cancel_handle")
-
-  .box.is_debug(v-if="development_p")
-    .buttons.is-centered.are-small
-      template(v-for="row in app.RuleInfo.values")
-        b-button(@click="app.debug_matching_add_handle(row.key)") 自分以外を参加({{row.name}})
-      b-button(@click="app.matching_delete_all_handle") 解散
+  the_lobby_debug
 </template>
 
 <script>
 import { support } from "./support.js"
+import the_lobby_debug from "./the_lobby_debug.vue"
 
 export default {
   name: "the_builder",
   mixins: [
     support,
   ],
+  components: {
+    the_lobby_debug,
+  },
   methods: {
     cancel_handle() {
       this.sound_play("click")
