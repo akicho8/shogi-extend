@@ -1,12 +1,8 @@
 <template lang="pug">
 .the_builder
-  template(v-if="!question")
-    .primary_header
-      .header_center_title 問題一覧
-      b-icon.header_link_icon.rjust(icon="plus" @click.native="builder_new_handle")
-    the_builder_index
+  the_builder_index(v-if="!question")
 
-  template(v-if="question")
+  .the_builder_new_and_edit(v-if="question")
     .primary_header
       .header_center_title {{question_new_record_p ? '新規' : '編集'}}
       b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
@@ -107,10 +103,10 @@ export default {
       questions: null,
 
       // editモード edit
-      sp_run_mode: null,
-      tab_index: null,
-      question: null,
-      fixed_init_sfen: null,
+      sp_run_mode:      null,
+      tab_index:        null,
+      question:         null,
+      fixed_init_sfen:  null,
       time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
       answer_tab_index: null,   // 表示している正解タブの位置
 
@@ -124,7 +120,7 @@ export default {
 
       answer_turn_offset:     null, // 正解モードでの手数
       mediator_snapshot_sfen: null, // 正解モードでの局面
-      $exam_run_count:        null, // 検証モードで手を動かした数
+      exam_run_count:        null, // 検証モードで手を動かした数
       valid_count:            null, // 検証モードで正解した数
     }
   },
@@ -185,7 +181,7 @@ export default {
 
     exam_mode_handle() {
       this.mode_select("exam_mode")
-      this.$exam_run_count = 0
+      this.exam_run_count = 0
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -374,7 +370,7 @@ export default {
 
     play_mode_advanced_moves_set(moves) {
       if (this.question.moves_answers.length === 0) {
-        if (this.$exam_run_count === 0) {
+        if (this.exam_run_count === 0) {
           this.warning_notice("正解を作ってからやってください")
         }
       }
@@ -383,7 +379,7 @@ export default {
         this.ok_notice("正解")
         this.valid_count += 1
       }
-      this.$exam_run_count += 1
+      this.exam_run_count += 1
     },
 
     turn_offset_set(v) {
@@ -458,9 +454,10 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_builder
-  @extend %padding_top_for_secondary_header
-  .primary_header
-    justify-content: space-between
+  .the_builder_new_and_edit
+    @extend %padding_top_for_secondary_header
+    .primary_header
+      justify-content: space-between
 
   //////////////////////////////////////////////////////////////////////////////// 編集
 

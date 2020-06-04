@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_question_message
+.the_question_show_message
   .articles_container(ref="articles_container")
     article.media(v-for="message in question.messages")
       figure.media-left
@@ -45,7 +45,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   template(v-if="false")
     .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.question_messages_display_lines}rem`}")
-      .message_line(v-for="message in question.messages")
+      .message_line(v-for="message in $parent.question.messages")
         | {{message.user.name}}: {{message.body}}
         span.diff_time_format
           | ({{diff_time_format(message.created_at)}})
@@ -60,7 +60,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "the_question_message",
+  name: "the_question_show_message",
   mixins: [
     support,
   ],
@@ -84,7 +84,7 @@ export default {
   },
 
   watch: {
-    "app.overlay_record.question.messages": {
+    "app.ov_question_info.question.messages": {
       handler() { this.scroll_to_bottom(this.$refs.messages_box) },
       immediate: true,
     },
@@ -117,13 +117,13 @@ export default {
 
     speak_broadcasted(params) {
       this.app.lobby_speak_broadcasted_shared_process(params)
-      this.app.overlay_record.question.messages.push(params.message)
+      this.app.ov_question_info.question.messages.push(params.message)
     },
   },
 
   computed: {
     question() {
-      return this.app.overlay_record.question
+      return this.app.ov_question_info.question
     },
   },
 }
@@ -131,7 +131,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_question_message
+.the_question_show_message
   .articles_container
     // height: 100vh
     // overflow-y: scroll

@@ -1,5 +1,9 @@
 <template lang="pug">
 .the_builder_index
+  .primary_header
+    .header_center_title 問題一覧
+    b-icon.header_link_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
+
   b-field.visible_toggle_checkboxes(grouped group-multiline)
     .control(v-for="e in ColumnInfo.values")
       b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
@@ -125,6 +129,10 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_builder_index
+  @extend %padding_top_for_primary_header
+  .primary_header
+    justify-content: space-between
+
   .visible_toggle_checkboxes
     margin-top: 1.5rem
     justify-content: center
