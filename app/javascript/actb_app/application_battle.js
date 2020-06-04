@@ -30,6 +30,23 @@ export const application_battle = {
   },
 
   methods: {
+    ac_battle_perform(action, params = {}) {
+      let membership = null
+      if (params.ms_flip) {
+        membership = this.opponent_membership
+      } else {
+        membership = this.current_membership
+      }
+
+      params = Object.assign({}, {
+        membership_id: membership.id,
+      }, params)
+
+      this.room_speak(`*[${membership.user.name}][${action}] ` + JSON.stringify(params))
+
+      this.$ac_battle.perform(action, params) // --> app/channels/actb/battle_channel.rb
+    },
+
     battle_unsubscribe() {
       this.ac_unsubscribe("$ac_battle")
     },
@@ -54,6 +71,9 @@ export const application_battle = {
         connected: () => {
           this.start_hook()
         },
+        received: (data) => {
+          this.room_speak(`* --> [${data.bc_action}] ` + JSON.stringify(data.bc_params))
+        },
       })
     },
 
@@ -71,9 +91,7 @@ export const application_battle = {
 
       this.debug_alert("battle 接続")
 
-      this.room_speak("*start_hook")
-      this.$ac_battle.perform("start_hook", {
-        membership_id: this.current_membership.id,
+      this.ac_battle_perform("start_hook", {
         question_id: this.c_quest.id,
         question_index: this.question_index,
       }) // --> app/channels/actb/battle_channel.rb
@@ -134,9 +152,7 @@ export const application_battle = {
     },
 
     kyouyuu(share_sfen) {
-      this.room_speak(`*kyouyuu("${share_sfen}")`)
-      this.$ac_battle.perform("kyouyuu", { // 戻値なし
-        membership_id: this.current_membership.id,
+      this.ac_battle_perform("kyouyuu", { // 戻値なし
         share_sfen: share_sfen,
       }) // --> app/channels/actb/battle_channel.rb
     },
@@ -154,11 +170,10 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 正解または不正解
-    kotae_sentaku(ox_mark_key, flip = false) {
+    kotae_sentaku(ox_mark_key, ms_flip = false) {
       this.__assert__(ox_mark_key === "correct" || ox_mark_key === "timeout")
-      this.room_speak(`*kotae_sentaku("${ox_mark_key}")`)
-      this.$ac_battle.perform("kotae_sentaku", {
-        membership_id: flip ? this.opponent_membership.id : this.current_membership.id,
+      this.ac_battle_perform("kotae_sentaku", {
+        ms_flip: ms_flip,
         question_id: this.c_quest.id,
         question_index: this.question_index,
         ox_mark_key: ox_mark_key,
@@ -225,7 +240,7 @@ export const application_battle = {
     delay_and_owattayo_or_next_trigger(ox_mark_info) {
       this.delay(ox_mark_info.delay_second, () => {
         if (this.battle_end_p || this.next_question_empty_p) {
-          this.$ac_battle.perform("owattayo", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
+          this.ac_battle_perform("owattayo", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
         } else {
           this.next_trigger()
         }
@@ -236,9 +251,7 @@ export const application_battle = {
 
     // singleton_rule では primary_membership_p だけが呼ぶ
     next_trigger() {
-      this.room_speak("*next_trigger")
-      this.$ac_battle.perform("next_trigger", {
-        membership_id: this.current_membership.id,
+      this.ac_battle_perform("next_trigger", {
         question_index: this.question_index + 1, // 次に進めたい(希望)
         question_id: this.next_question.id,
       }) // --> app/channels/actb/battle_channel.rb
@@ -258,12 +271,11 @@ export const application_battle = {
     },
 
     // 早押しボタンを押した(解答権はまだない)
-    wakatta_handle(flip = false) {
+    wakatta_handle(ms_flip = false) {
       this.sound_play("click")
 
-      this.room_speak("*wakatta_handle")
-      this.$ac_battle.perform("wakatta_handle", {
-        membership_id: flip ? this.opponent_membership.id : this.current_membership.id,
+      this.ac_battle_perform("wakatta_handle", {
+        ms_flip: ms_flip,
         question_id: this.c_quest.id,
         // question_index: this.question_index,
       }) // --> app/channels/actb/battle_channel.rb
@@ -287,10 +299,9 @@ export const application_battle = {
     },
 
     // 早押しボタンを押して解答中に時間切れ
-    x2_play_timeout_handle(flip = false) {
-      this.room_speak("*x2_play_timeout_handle")
-      this.$ac_battle.perform("x2_play_timeout_handle", {
-        membership_id: flip ? this.opponent_membership.id : this.current_membership.id,
+    x2_play_timeout_handle(ms_flip = false) {
+      this.ac_battle_perform("x2_play_timeout_handle", {
+        ms_flip: ms_flip,
         question_id: this.c_quest.id,
       }) // --> app/channels/actb/battle_channel.rb
     },
@@ -327,7 +338,7 @@ export const application_battle = {
 
     battle_continue_handle() {
       this.sound_play("click")
-      this.$ac_battle.perform("battle_continue_handle", {membership_id: this.current_membership.id})
+      this.ac_battle_perform("battle_continue_handle", {membership_id: this.current_membership.id})
     },
     battle_continue_handle_broadcasted(params) {
       this.room_speak("*battle_continue_handle_broadcasted")
@@ -343,7 +354,7 @@ export const application_battle = {
 
     battle_continue_force_handle() {
       this.sound_play("click")
-      this.$ac_battle.perform("battle_continue_force_handle")
+      this.ac_battle_perform("battle_continue_force_handle")
     },
 
     ////////////////////////////////////////////////////////////////////////////////

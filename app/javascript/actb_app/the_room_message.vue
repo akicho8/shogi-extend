@@ -3,7 +3,10 @@
   .column
     .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_display_lines}rem`}")
       template(v-for="message in app.room_messages")
-        div {{message.user.name}}: {{message.body}}
+        div
+          span(v-text="message.user.name")
+          | :
+          span(v-html="message.body")
     b-field.input_field
       b-input(v-model="app.room_message_body" expanded @keypress.native.enter="app.room_speak_handle")
       p.control

@@ -23,9 +23,9 @@
     .columns
       .column
         .buttons.are-small.is-centered
-          b-button(@click="app.kotae_sentaku('correct')" icon-left="checkbox-blank-circle-outline")
+          b-button(@click="app.kotae_sentaku('correct')") 正解(自分)
           //- b-button(@click="app.kotae_sentaku('mistake')" icon-left="close")
-          b-button(@click="app.kotae_sentaku('timeout')" icon-left="timer-sand-empty")
+          b-button(@click="app.kotae_sentaku('timeout')") タイムアウト(自分)
         .buttons.are-small.is-centered
           b-button(@click="app.wakatta_handle()") わかった(自分)
           b-button(@click="app.kotae_sentaku('correct')") 正解(自分)
