@@ -58,7 +58,7 @@ export default {
         this.ok_notice("保存しました")
         this.$parent.var_reset()
 
-        if (this.app.config.save_and_return) {
+        if (this.app.config.profile_save_and_return) {
           this.app.lobby_setup()
         }
       })

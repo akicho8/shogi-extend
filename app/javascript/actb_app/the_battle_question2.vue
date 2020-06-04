@@ -17,7 +17,7 @@
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
-      b-button.has-text-weight-bold(@click="app.wakatta_handle" type="is-primary" size="is-large" :disabled="app.config.ikkai_misuttara_mou_osenai && app.answer_button_disable_p") わかった
+      b-button.has-text-weight-bold(@click="app.wakatta_handle" type="is-primary" size="is-large" :disabled="app.config.otetsuki_enabled && app.answer_button_disable_p") わかった
 
   template(v-if="app.x_mode === 'x2_play'")
     .q2_rest_seconds.has-text-centered

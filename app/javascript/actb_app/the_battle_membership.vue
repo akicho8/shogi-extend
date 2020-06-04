@@ -48,7 +48,7 @@ export default {
       return this.app.member_infos_hash[this.membership.id]
     },
     droped_ox_list() {
-      return this.mi.droped_ox_list(this.app.config.progress_list_take_display_count)
+      return this.mi.droped_ox_list(this.app.config.ox_status_line_take_n)
     },
   },
 }

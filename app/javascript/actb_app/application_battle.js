@@ -107,7 +107,7 @@ export const application_battle = {
 
       this.ok_notice("対戦開始")
       this.sub_mode = "readygo_wait"
-      this.delay(this.config.readygo_wait_delay, () => {
+      this.delay(this.config.readygo_mode_delay, () => {
         this.deden_mode_trigger()
       })
     },
@@ -131,7 +131,7 @@ export const application_battle = {
     q_turn_offset_set(turn) {
       this.q_turn_offset = turn
 
-      const max = this.c_quest.moves_count_max + this.config.asobi_count
+      const max = this.c_quest.moves_count_max + this.config.turn_limit_lazy_count
       if (turn >= max) {
         this.x2_play_timeout_handle()
       }
@@ -220,7 +220,7 @@ export const application_battle = {
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
         this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
-        if (this.primary_membership_p) {
+        if (this.leader_p) {
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
         }
       }
@@ -262,7 +262,7 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // singleton_rule では primary_membership_p だけが呼ぶ
+    // singleton_rule では leader_p だけが呼ぶ
     next_trigger() {
       this.ac_battle_perform("next_trigger", {
         question_index: this.question_index + 1, // 次に進めたい(希望)
@@ -409,7 +409,7 @@ export const application_battle = {
         if (this.sub_mode === "operation_mode") {
           this.main_interval_count += 1
           if (this.q1_rest_seconds === 0) {
-            if (this.primary_membership_p) {
+            if (this.leader_p) {
               this.kotae_sentaku('timeout')
             }
           }
@@ -420,7 +420,7 @@ export const application_battle = {
           if (this.x_mode === "x1_thinking") {
             this.main_interval_count += 1
             if (this.q1_rest_seconds === 0) {
-              if (this.primary_membership_p) {
+              if (this.leader_p) {
                 // リーダーだけがトリガーする
                 this.kotae_sentaku('timeout')
               }
@@ -463,9 +463,8 @@ export const application_battle = {
   },
 
   computed: {
-    primary_membership_p() {
-      // return this.battle.memberships[0].id === this.current_membership.id
-      return _.last(this.battle.memberships).id === this.current_membership.id // 後に参加した方をリーダーにする
+    leader_p() {
+      return this.battle.memberships[this.app.config.leader_index].id === this.current_membership.id
     },
     current_membership() {
       const v = this.battle.memberships.find(e => e.user.id === this.current_user.id)
@@ -501,7 +500,7 @@ export const application_battle = {
       return v
     },
     q1_time_limit_sec() {
-      const v = this.app.config.mondai_time_limit
+      const v = this.app.config.thinking_time_sec
       if (v != null) {
         return v
       }

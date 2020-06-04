@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_lobby_message
-  .messages_box.has-background-light(ref="messages_box")
+  .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.lobby_messages_display_lines}rem`}")
     .message_line(v-for="message in app.lobby_messages")
       | {{message.user.name}}: {{message.body}}
   b-field.input_field
@@ -35,7 +35,6 @@ export default {
   padding: 0 0.5rem
   .messages_box
     padding: 0.5rem
-    height: 20em
     overflow-y: scroll
   .input_field
     margin-top: 0.5rem
