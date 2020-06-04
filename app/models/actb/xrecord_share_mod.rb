@@ -107,8 +107,9 @@ module Actb
         end
         if judge.key == "lose"
           self.rensho_count = 0
-          self.renpai_count += 0
+          self.renpai_count += 1
         end
+
         self.rensho_max = [rensho_max, rensho_count].max
         self.renpai_max = [renpai_max, renpai_count].max
       end

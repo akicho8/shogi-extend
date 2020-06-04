@@ -142,7 +142,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     let(:data) {
       {
         "member_infos_hash" => {
-          membership1.id.to_s => {"ox_list" => ["correct"], "b_score" => 1},
+          membership1.id.to_s => {"ox_list" => ["correct"], "b_score" => Actb::Config[:b_score_max_for_win]},
           membership2.id.to_s => {"ox_list" => [],          "b_score" => 0},
         }
       }
@@ -166,6 +166,20 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
       assert { user1.reload.rating == 1516 }
       assert { user2.reload.rating == 1484 }
+
+      assert { user1.actb_current_xrecord.rating == 1516 }
+      assert { user2.actb_current_xrecord.rating == 1484 }
+
+      assert { user1.actb_current_xrecord.rensho_count == 1 }
+      assert { user1.actb_current_xrecord.renpai_count == 0 }
+      assert { user2.actb_current_xrecord.rensho_count == 0 }
+      assert { user2.actb_current_xrecord.renpai_count == 1 }
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ..........
+# >> 
+# >> Finished in 1.33 seconds (files took 2.18 seconds to load)
+# >> 10 examples, 0 failures
+# >> 

@@ -64,8 +64,10 @@ module Actb
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ....
+# >> ...["/Users/ikeda/src/shogi_web/app/models/actb/battle.rb:112", :katimashita]
+# >> ["/Users/ikeda/src/shogi_web/app/models/actb/battle.rb:112", :katimashita]
+# >> .
 # >> 
-# >> Finished in 1.51 seconds (files took 2.15 seconds to load)
+# >> Finished in 1.59 seconds (files took 2.23 seconds to load)
 # >> 4 examples, 0 failures
 # >> 

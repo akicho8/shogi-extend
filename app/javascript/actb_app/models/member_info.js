@@ -1,5 +1,6 @@
 export class MemberInfo {
-  constructor() {
+  constructor(membership_id) {
+    this.membership_id = membership_id
     this.ox_list = []
     this.b_score = 0
     this.latest_ox = null

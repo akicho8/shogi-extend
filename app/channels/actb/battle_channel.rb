@@ -246,6 +246,12 @@ module Actb
       katimashita(membership.user, :win, :f_success)
     end
 
+    def disconnect_count_handle(data)
+      data = data.to_options
+      membership = current_battle.memberships.find(data[:membership_id])
+      katimashita(membership.user, :lose, :f_disconnect)
+    end
+
     def battle_id
       params["battle_id"]
     end
@@ -268,3 +274,5 @@ module Actb
     end
   end
 end
+# ~> -:2:in `<module:Actb>': uninitialized constant Actb::BaseChannel (NameError)
+# ~>    from -:1:in `<main>'

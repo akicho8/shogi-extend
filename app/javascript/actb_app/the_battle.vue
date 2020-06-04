@@ -34,7 +34,11 @@
           b-button(@click="app.wakatta_handle(true)") わかった(相手)
           b-button(@click="app.kotae_sentaku('correct', true)") 正解(相手)
           b-button(@click="app.x2_play_timeout_handle(true)") 駒操作中タイムアウト(相手)
+        .buttons.are-small.is-centered
+          b-button(@click="app.battle_unsubscribe") 切断(自分)
+          b-button(@click="app.disconnect_count_handle(true)") 切断(相手)
 </template>
+
 
 <script>
 import { support } from "./support.js"

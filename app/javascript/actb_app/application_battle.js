@@ -4,7 +4,16 @@ import { MemberInfo } from "./models/member_info.js"
 
 import dayjs from "dayjs"
 
+import { application_battle_marathon_rule     } from "./application_battle_marathon_rule.js"
+import { application_battle_singleton_rule     } from "./application_battle_singleton_rule.js"
+import { application_battle_hybrid_rule     } from "./application_battle_hybrid_rule.js"
+
 export const application_battle = {
+  mixins: [
+    application_battle_marathon_rule,
+    application_battle_singleton_rule,
+    application_battle_hybrid_rule,
+  ],
   data() {
     return {
       x_mode:                     null,  // バトル中の状態遷移
@@ -62,7 +71,7 @@ export const application_battle = {
 
       this.sub_mode = "standby"
 
-      this.member_infos_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo()}), {})
+      this.member_infos_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo(e.id)}), {})
 
       this.question_index = 0
 
@@ -157,7 +166,6 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     kyouyuu_broadcasted(params) {
-      this.room_speak("*kyouyuu_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         // 自分は操作中なので何も変化させない
       } else {
@@ -188,16 +196,13 @@ export const application_battle = {
       this.sound_play(ox_mark_info.sound_key)
 
       if (this.battle.rule.key === "marathon_rule") {
-        // ○×反映
-        mi.ox_list.push(params.ox_mark_key)
-        this.score_add(params.membership_id, ox_mark_info.score)
+        this.seikai_user_niha_maru(mi, ox_mark_info) // 正解時は正解したユーザーが送信者なので正解者には○
 
-        this.delay_stop(mi.delay_id) // 前のが動いている場合があるので止める
-        mi.latest_ox = ox_mark_info.key
-        mi.delay_id = this.delay(ox_mark_info.delay_second, () => {
-          mi.delay_id = null
-          mi.latest_ox = null
-        })
+        if (ox_mark_info.key === "timeout") {
+          mi.ox_list.push("timeout")
+        }
+
+        this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
         // correct_mode or mistake_mode
         if (params.membership_id === this.current_membership.id) {
@@ -208,35 +213,43 @@ export const application_battle = {
 
       // 正解時         → 正解したユーザーが送信者
       // タイムアウト時 → プレイマリーユーザーが送信者
-      if (this.battle.rule.key === "singleton_rule") {
+      if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
         this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
 
-        if (ox_mark_info.key === "correct") {
-          // 正解時は正解したユーザーが送信者なので正解者には○
-          this.score_add(params.membership_id, ox_mark_info.score)
-          mi.ox_list.push("correct")
-        }
-
-        if (ox_mark_info.key === "timeout") {
-          // タイムアウトのときは両者に時間切れ
-          _.each(this.member_infos_hash, (v, k) => v.ox_list.push("timeout"))
-        }
+        this.seikai_user_niha_maru(mi, ox_mark_info)  // 正解時は正解したユーザーが送信者なので正解者には○
+        this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
+        this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
         if (this.primary_membership_p) {
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
         }
       }
-
-      // if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
-      //   // 正解時         → 正解したユーザーが送信者
-      //   // タイムアウト時 → プレイマリーユーザーが送信者
-      //   this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
-      //   if (this.primary_membership_p) {
-      //     this.delay_and_owattayo_or_next_trigger(ox_mark_info)
-      //   }
-      // }
-
     },
+
+    // タイムアウトのときは両者に時間切れ
+    ryousya_jikangire(ox_mark_info) {
+      if (ox_mark_info.key === "timeout") {
+        _.each(this.member_infos_hash, (v, k) => v.ox_list.push("timeout"))
+      }
+    },
+
+    // 正解時は正解したユーザーが送信者なので正解者には○
+    seikai_user_niha_maru(mi, ox_mark_info) {
+      if (ox_mark_info.key === "correct") {
+        this.score_add(mi.membership_id, ox_mark_info.score)
+        mi.ox_list.push("correct")
+      }
+    },
+
+    itteijikan_maru_hyouji(mi, ox_mark_info) {
+      this.delay_stop(mi.delay_id) // 前のが動いている場合があるので止める
+      mi.latest_ox = ox_mark_info.key
+      mi.delay_id = this.delay(ox_mark_info.delay_second, () => {
+        mi.delay_id = null
+        mi.latest_ox = null
+      })
+    },
+
     delay_and_owattayo_or_next_trigger(ox_mark_info) {
       this.delay(ox_mark_info.delay_second, () => {
         if (this.battle_end_p || this.next_question_empty_p) {
@@ -257,7 +270,6 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     next_trigger_broadcasted(params) {
-      this.room_speak("*next_trigger_broadcasted")
       if (this.battle.rule.key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index // 自分だったら次に進める
@@ -281,7 +293,6 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     wakatta_handle_broadcasted(params) {
-      this.room_speak("*wakatta_handle_broadcasted")
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押せた本人
         this.x_mode = "x2_play"
@@ -307,8 +318,6 @@ export const application_battle = {
     },
     // singleton_rule での操作中の時間切れは不正解相当
     x2_play_timeout_handle_broadcasted(params) {
-      this.room_speak("*x2_play_timeout_handle_broadcasted")
-
       this.member_infos_hash[params.membership_id].ox_list.push("mistake")
       this.score_add(params.membership_id, -1)
       if (params.membership_id === this.current_membership.id) {
@@ -341,7 +350,6 @@ export const application_battle = {
       this.ac_battle_perform("battle_continue_handle", {membership_id: this.current_membership.id})
     },
     battle_continue_handle_broadcasted(params) {
-      this.room_speak("*battle_continue_handle_broadcasted")
       this.battle_continue_tap_counts = params.battle_continue_tap_counts
 
       this.talk("再戦希望", {rate: 1.5})
@@ -355,6 +363,10 @@ export const application_battle = {
     battle_continue_force_handle() {
       this.sound_play("click")
       this.ac_battle_perform("battle_continue_force_handle")
+    },
+
+    disconnect_count_handle(ms_flip = false) {
+      this.ac_battle_perform("disconnect_count_handle", {ms_flip: ms_flip})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -385,11 +397,21 @@ export const application_battle = {
     },
 
     main_interval_processing() {
-      if (this.battle.rule.key === "marathon_rule" || this.battle.rule.key === "hybrid_rule") {
+      if (this.battle.rule.key === "marathon_rule") {
         if (this.sub_mode === "operation_mode") {
           this.main_interval_count += 1
           if (this.q1_rest_seconds === 0) {
             this.kotae_sentaku('timeout')
+          }
+        }
+      }
+      if (this.battle.rule.key === "hybrid_rule") {
+        if (this.sub_mode === "operation_mode") {
+          this.main_interval_count += 1
+          if (this.q1_rest_seconds === 0) {
+            if (this.primary_membership_p) {
+              this.kotae_sentaku('timeout')
+            }
           }
         }
       }

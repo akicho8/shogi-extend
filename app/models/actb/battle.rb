@@ -92,6 +92,7 @@ module Actb
 
       judge = Judge.fetch(judge_key)
       final = Final.fetch(final_key)
+      judges = [judge, judge.flip]
 
       ActiveRecord::Base.transaction do
         self.final = final
@@ -100,13 +101,10 @@ module Actb
           m1 = memberships.find_by!(user: target_user)
           m2 = (memberships - [m1]).first
 
-          m1.judge = judge
-          m2.judge = judge.flip
-
-          if judge.key == "win"
-            mm = [m1, m2]
-          else
-            mm = [m2, m1]
+          mm = [m1, m2]
+          if judge.key != "win"
+            mm = mm.reverse
+            judges = judges.reverse
           end
 
           # 今シーズン用
@@ -120,28 +118,27 @@ module Actb
           m_ratings = m_ratings.collect(&:round)
         else
           mm = memberships
-          mm.each do |m|
-            m.judge = judge
-          end
           c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
           m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
         end
 
         # Actb::SeasonXrecord
         mm.each.with_index do |m, i|
-          m.user.actb_current_xrecord.rating_set(c_ratings[i])
-          m.user.actb_current_xrecord.judge_set(judge)
-          m.user.actb_current_xrecord.final_set(final)
-          m.user.actb_current_xrecord.save!
-
-          m.user.actb_master_xrecord.rating_set(m_ratings[i])
-          m.user.actb_master_xrecord.judge_set(judge)
-          m.user.actb_master_xrecord.final_set(final)
-          m.user.actb_master_xrecord.save!
+          m.judge = judges[i]
+          m.user.actb_current_xrecord.tap do |e|
+            e.rating_set(c_ratings[i])
+            e.judge_set(judges[i])
+            e.final_set(final)
+            e.save!
+          end
+          m.user.actb_master_xrecord.tap do |e|
+            e.rating_set(m_ratings[i])
+            e.judge_set(judges[i])
+            e.final_set(final)
+            e.save!
+          end
         end
 
-        # m.user.actb_current_xrecord.update!(rating: c_ratings[i], judge: m.judge, final: final)
-        # m.user.actb_master_xrecord.update!(rating: m_ratings[i], judge: m.judge, final: final)
         mm.each(&:save!)
 
         save!
@@ -209,3 +206,5 @@ module Actb
     end
   end
 end
+# ~> -:32:in `<module:Actb>': uninitialized constant Actb::ApplicationRecord (NameError)
+# ~>    from -:31:in `<main>'
