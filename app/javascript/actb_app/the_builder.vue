@@ -58,7 +58,7 @@
 
     .save_container
       .buttons.is-centered
-        b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type" expanded) {{create_or_upate_name}}
+        b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{create_or_upate_name}}
         //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
   debug_print
 </template>
