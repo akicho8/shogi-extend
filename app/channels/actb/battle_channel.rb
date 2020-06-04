@@ -78,33 +78,31 @@ module Actb
       data = data.to_options
       ox_mark = Actb::OxMark.fetch(data[:ox_mark_key])
       question = Question.find(data[:question_id])
-      membership1 = current_battle.memberships.find(data[:membership_id]) # 当事者
-      membership2 = (current_battle.memberships - [membership1]).first    # 対戦相手
+      my_membership = current_battle.memberships.find(data[:membership_id]) # 当事者
+      op_membership = (current_battle.memberships - [my_membership]).first    # 対戦相手
 
       # 基本個人プレイで同期してない
       if current_battle.rule.key == "marathon_rule"
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
-        raise ArgumentError, data.inspect unless membership1.user == current_user
-        current_user.actb_histories.find_or_initialize_by(membership: membership1, question: question).update!(ox_mark: ox_mark)
+        raise ArgumentError, data.inspect unless my_membership.user == current_user
+        current_user.actb_histories.find_or_initialize_by(membership: my_membership, question: question).update!(ox_mark: ox_mark)
         question.increment!(ox_mark.pure_info.question_counter_column)
       end
 
       # 正解時         → 正解したユーザーが送信者
       # タイムアウト時 → プレイマリーユーザーが送信者
-      if current_battle.rule.key == "singleton_rule"
+      if current_battle.rule.key == "singleton_rule" || current_battle.rule.key == "hybrid_rule"
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         if ox_mark.key == "correct"
-          membership1.user.actb_histories.find_or_initialize_by(membership: membership1, question: question).update!(ox_mark: ox_mark)
-          membership2.user.actb_histories.find_or_initialize_by(membership: membership2, question: question).update!(ox_mark: Actb::OxMark.fetch(:mistake))
-          # ↓こうすると正解確立が50%に補正されてしまうので設定しない
-          # question.increment!(:o_count)
-          # question.increment!(:x_count)
+          my_membership.user.actb_histories.find_or_initialize_by(membership: my_membership, question: question).update!(ox_mark: ox_mark)
+          op_membership.user.actb_histories.find_or_initialize_by(membership: op_membership, question: question).update!(ox_mark: Actb::OxMark.fetch(:mistake))
+          question.increment!(:o_count) # 片方が正解なら1回分の正解として、もう片方の不正解はカウントしない
         end
         if ox_mark.key == "timeout"
           current_battle.memberships.each do |membership|
             membership.user.actb_histories.find_or_initialize_by(membership: membership, question: question).update!(ox_mark: ox_mark)
-            question.increment!(:x_count)
           end
+          question.increment!(:x_count) # 2人分時間切れしたとき1回分の不正解とする
         end
       end
 
