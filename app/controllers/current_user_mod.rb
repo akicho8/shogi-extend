@@ -10,7 +10,7 @@ module CurrentUserMod
 
   def js_global
     @js_global ||= {
-      :current_user => current_user && ams_sr(current_user, serializer: Colosseum::BasicUserSerializer),
+      :current_user => current_user && current_user.as_json(only: [:id, :name], methods: [:show_path, :avatar_path]),
       :talk_path    => talk_path,
     }
   end

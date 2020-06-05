@@ -94,22 +94,6 @@ window.tab_is_active_p = () => {
   return !(document.hidden || document.visibilityState === "hidden")
 }
 
-//////////////////////////////////////////////////////////////////////////////// どこからでも使いたい
-
-import LifetimeInfo from "lifetime_info"
-import TeamInfo from "team_info"
-import LastActionInfo from "last_action_info"
-import CustomPresetInfo from "custom_preset_info"
-import HiraKomaInfo from "hira_koma_info"
-import RobotAcceptInfo from "robot_accept_info"
-
-Vue.prototype.LifetimeInfo = LifetimeInfo
-Vue.prototype.TeamInfo = TeamInfo
-Vue.prototype.LastActionInfo = LastActionInfo
-Vue.prototype.CustomPresetInfo = CustomPresetInfo
-Vue.prototype.HiraKomaInfo = HiraKomaInfo
-Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
-
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
 import vue_application from "support/vue_application.js"
@@ -121,8 +105,6 @@ import vue_sound from "support/vue_sound.js"
 import vue_actioncable from "support/vue_actioncable.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-import message_link_to from "message_link_to.vue"
-import global_message_link from "global_message_link.vue"
 import swars_user_link_to from "swars_user_link_to.vue"
 import pulldown_menu from "pulldown_menu.vue"
 import buefy_table_wrapper from "buefy_table_wrapper.vue"
@@ -172,8 +154,6 @@ Vue.mixin({
   // よくない命名規則だけどこっちの方が開発しやすい
   components: {
     shogi_player,
-    message_link_to,
-    global_message_link,
     swars_user_link_to,
     pulldown_menu,
     stopwatch,
@@ -210,6 +190,5 @@ Vue.mixin({
 window.GVI = new Vue()           // ActionCable 側から Vue のグローバルなメソッドを呼ぶため
 
 import "audio_queue.js"
-import "light_session_app.js"
 
 window.App = {}

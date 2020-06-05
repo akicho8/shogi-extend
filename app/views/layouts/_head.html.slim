@@ -37,14 +37,6 @@ javascript:
 = stylesheet_pack_tag "application", media: "all"
 = javascript_pack_tag "application"
 
-/ これはとる
-= javascript_pack_tag("system_notification")
-
-- if AppConfig[:colosseum_battle_enable]
-  / ActionCable
-  - if current_user
-    = javascript_pack_tag("single_notification")
-
 - unless content_for?(:twitter_card_registry)
   - twitter_card_registry(description: "将棋に関連するプログラムの実験的なサイトです。将棋ウォーズ棋譜検索・棋譜変換・CPU対戦・符号を覚える練習などができます", image: "swars_battles_index.png")
 = yield(:twitter_card_registry)

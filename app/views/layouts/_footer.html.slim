@@ -32,11 +32,3 @@
             = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/")
             = " and "
             = link_to("Rails #{Rails.version}", "https://rubyonrails.org/")
-
-          #system_notification_app
-            - if Rails.env.development? || Rails.env.test? || params[:debug_mode] == "1"
-              .is-size-7
-                details(open=Rails.env.development?)
-                  summary.has-text-grey-lighter
-                    | DEBUG
-                  | ActionCable: {{latest_system_logs}}

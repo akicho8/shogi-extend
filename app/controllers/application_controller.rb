@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include LightSessionMethods
   include CurrentUserMod
 
   attr_accessor :layout_type
