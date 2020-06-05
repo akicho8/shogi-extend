@@ -85,7 +85,7 @@ module Actb
       if current_battle.rule.key == "marathon_rule"
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         raise ArgumentError, data.inspect unless my_membership.user == current_user
-        current_user.actb_histories.find_or_initialize_by(membership: my_membership, question: question).update!(ox_mark: ox_mark)
+        current_user.actb_histories.find_or_initialize_by(question: question, membership: my_membership).update!(ox_mark: ox_mark)
         question.increment!(ox_mark.pure_info.question_counter_column)
       end
 
@@ -100,7 +100,7 @@ module Actb
         end
         if ox_mark.key == "timeout"
           current_battle.memberships.each do |membership|
-            membership.user.actb_histories.find_or_initialize_by(membership: membership, question: question).update!(ox_mark: ox_mark)
+            membership.user.actb_histories.find_or_initialize_by(question: question, membership: membership).update!(ox_mark: ox_mark)
           end
           question.increment!(:x_count) # 2人分時間切れしたとき1回分の不正解とする
         end
@@ -139,7 +139,7 @@ module Actb
       if current_battle.rule.key == "singleton_rule"
         question = Question.find(data[:question_id])
         current_battle.memberships.each do |membership|
-          membership.user.actb_histories.find_or_initialize_by(membership: membership, question: question).update!(ox_mark: OxMark.fetch(:mistake))
+          membership.user.actb_histories.find_or_initialize_by(question: question, membership: membership).update!(ox_mark: OxMark.fetch(:mistake))
         end
       end
 
@@ -262,7 +262,7 @@ module Actb
       data = data.to_options
       question = Question.find(data[:question_id])
       membership = current_battle.memberships.find(data[:membership_id])
-      history = current_user.actb_histories.find_or_initialize_by(membership: membership, question: question)
+      history = current_user.actb_histories.find_or_initialize_by(question: question, membership: membership)
       history.update!(ox_mark: Actb::OxMark.fetch(ox_mark))
     end
 

@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.bigint "battle_id", null: false, comment: "対戦"
     t.bigint "membership_id", null: false, comment: "自分と相手"
     t.bigint "ox_mark_id", null: false, comment: "解答"
+    t.integer "rating", null: false, comment: "レーティング"
     t.index ["battle_id"], name: "index_actb_histories_on_battle_id"
     t.index ["membership_id"], name: "index_actb_histories_on_membership_id"
     t.index ["ox_mark_id"], name: "index_actb_histories_on_ox_mark_id"

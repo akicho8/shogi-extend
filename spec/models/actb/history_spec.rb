@@ -30,15 +30,28 @@ module Actb
 
     it "解答" do
       membership = battle1.memberships.first
-      history = user1.actb_histories.create!(membership: membership, question: question1, ox_mark: Actb::OxMark.fetch(:correct))
+      history = user1.actb_histories.create!(question: question1, membership: membership, ox_mark: Actb::OxMark.fetch(:correct))
       assert { history }
-      # tp history
+      assert { history.rating }
+      tp history
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
+# >> |---------------+---------------------------|
+# >> |            id | 3                         |
+# >> |       user_id | 5                         |
+# >> |   question_id | 3                         |
+# >> |    created_at | 2000-01-01 00:00:00 +0900 |
+# >> |    updated_at | 2000-01-01 00:00:00 +0900 |
+# >> |       room_id | 3                         |
+# >> |     battle_id | 3                         |
+# >> | membership_id | 5                         |
+# >> |    ox_mark_id | 1                         |
+# >> |        rating | 1500                      |
+# >> |---------------+---------------------------|
 # >> .
 # >> 
-# >> Finished in 0.73492 seconds (files took 2.15 seconds to load)
+# >> Finished in 0.69716 seconds (files took 2.25 seconds to load)
 # >> 1 example, 0 failures
 # >> 

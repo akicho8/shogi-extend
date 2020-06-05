@@ -146,11 +146,13 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :user,     null: false, comment: "自分"
       t.belongs_to :question, null: false, comment: "出題"
       t.timestamps
+
       #  おまけ
-      t.belongs_to :room,        null: false,comment: "部屋"
-      t.belongs_to :battle,      null: false,comment: "対戦"
-      t.belongs_to :membership,  null: false,comment: "自分と相手"
-      t.belongs_to :ox_mark,     null: false,comment: "解答"
+      t.belongs_to :room,        null: false,               comment: "部屋"
+      t.belongs_to :battle,      null: false,               comment: "対戦"
+      t.belongs_to :membership,  null: false,               comment: "自分と相手"
+      t.belongs_to :ox_mark,     null: false,               comment: "解答"
+      t.integer :rating,         null: false, index: false, comment: "レーティング"
     end
 
     ################################################################################

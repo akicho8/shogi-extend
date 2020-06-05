@@ -95,12 +95,6 @@ module Colosseum
               create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, joined_at: Time.current, cpu_brain_key: e.key)
             end
           end
-
-          if Rails.env.development?
-            2.times.collect do
-              create!(rule_attributes: {team_key: "team_p2vs2"})
-            end
-          end
         end
       end
 
