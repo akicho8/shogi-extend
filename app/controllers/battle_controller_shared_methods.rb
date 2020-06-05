@@ -129,18 +129,18 @@ module BattleControllerSharedMethods
         s = s.where(saturn_key: :public)
       when :ss_my_public
         s = s.where(saturn_key: :public)
-        s = s.where(owner_user: current_user)
+        s = s.where(user: current_user)
         unless current_user
           s = s.none
         end
       when :ss_my_private
         s = s.where(saturn_key: :private)
-        s = s.where(owner_user: current_user)
+        s = s.where(user: current_user)
         unless current_user
           s = s.none
         end
       when :ss_my_all
-        s = s.where(owner_user: current_user)
+        s = s.where(user: current_user)
         unless current_user
           s = s.none
         end

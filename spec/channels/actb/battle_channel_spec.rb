@@ -5,8 +5,8 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     Actb.setup
   end
 
-  let_it_be(:user1) { Colosseum::User.create! }
-  let_it_be(:user2) { Colosseum::User.create! }
+  let_it_be(:user1) { User.create! }
+  let_it_be(:user2) { User.create! }
 
   before do
     Actb::BaseChannel.redis.flushdb

@@ -18,8 +18,8 @@
 # | updated_at   | 更新日時     | datetime   | NOT NULL    |      |       |
 # |--------------+--------------+------------+-------------+------+-------|
 
-# user1 = Colosseum::User.create!
-# user2 = Colosseum::User.create!
+# user1 = User.create!
+# user2 = User.create!
 #
 # battle = Actb::Battle.create! do |e|
 #   e.memberships.build(user: user1, judge_key: "win")

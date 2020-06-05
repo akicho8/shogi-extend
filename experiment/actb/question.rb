@@ -2,7 +2,7 @@ require "./setup"
 
 Actb::Question.destroy_all
 
-user = Colosseum::User.sysop
+user = User.sysop
 
 params = {
   question: {

@@ -3,39 +3,39 @@
 #
 # Question (actb_questions as Actb::Question)
 #
-# |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
-# | name                  | desc                  | type        | opts                | refs                  | index |
-# |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
-# | id                    | ID                    | integer(8)  | NOT NULL PK         |                       |       |
-# | user_id               | User                  | integer(8)  | NOT NULL            | => Colosseum::User#id | A     |
-# | folder_id             | Folder                | integer(8)  | NOT NULL            |                       | B     |
-# | lineage_id            | Lineage               | integer(8)  | NOT NULL            |                       | C     |
-# | init_sfen             | Init sfen             | string(255) | NOT NULL            |                       | D     |
-# | time_limit_sec        | Time limit sec        | integer(4)  |                     |                       | E     |
-# | difficulty_level      | Difficulty level      | integer(4)  |                     |                       | F     |
-# | title                 | タイトル              | string(255) |                     |                       |       |
-# | description           | 説明                  | string(512) |                     |                       |       |
-# | hint_description      | Hint description      | string(255) |                     |                       |       |
-# | source_desc           | Source desc           | string(255) |                     |                       |       |
-# | other_twitter_account | Other twitter account | string(255) |                     |                       |       |
-# | created_at            | 作成日時              | datetime    | NOT NULL            |                       |       |
-# | updated_at            | 更新日時              | datetime    | NOT NULL            |                       |       |
-# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |                       | G     |
-# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |                       | H     |
-# | o_count               | O count               | integer(4)  | NOT NULL            |                       | I     |
-# | x_count               | X count               | integer(4)  | NOT NULL            |                       | J     |
-# | bad_count             | Bad count             | integer(4)  | NOT NULL            |                       |       |
-# | good_count            | Good count            | integer(4)  | NOT NULL            |                       |       |
-# | histories_count       | Histories count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
-# | favorites_count       | Favorites count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
-# | good_marks_count      | Good marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
-# | bad_marks_count       | Bad marks count       | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
-# | clip_marks_count      | Clip marks count      | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
-# | messages_count        | Messages count        | integer(4)  | DEFAULT(0) NOT NULL |                       |       |
-# |-----------------------+-----------------------+-------------+---------------------+-----------------------+-------|
+# |-----------------------+-----------------------+-------------+---------------------+--------------+-------|
+# | name                  | desc                  | type        | opts                | refs         | index |
+# |-----------------------+-----------------------+-------------+---------------------+--------------+-------|
+# | id                    | ID                    | integer(8)  | NOT NULL PK         |              |       |
+# | user_id               | User                  | integer(8)  | NOT NULL            | => ::User#id | A     |
+# | folder_id             | Folder                | integer(8)  | NOT NULL            |              | B     |
+# | lineage_id            | Lineage               | integer(8)  | NOT NULL            |              | C     |
+# | init_sfen             | Init sfen             | string(255) | NOT NULL            |              | D     |
+# | time_limit_sec        | Time limit sec        | integer(4)  |                     |              | E     |
+# | difficulty_level      | Difficulty level      | integer(4)  |                     |              | F     |
+# | title                 | タイトル              | string(255) |                     |              |       |
+# | description           | 説明                  | string(512) |                     |              |       |
+# | hint_description      | Hint description      | string(255) |                     |              |       |
+# | source_desc           | Source desc           | string(255) |                     |              |       |
+# | other_twitter_account | Other twitter account | string(255) |                     |              |       |
+# | created_at            | 作成日時              | datetime    | NOT NULL            |              |       |
+# | updated_at            | 更新日時              | datetime    | NOT NULL            |              |       |
+# | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |              | G     |
+# | endpos_answers_count  | Endpos answers count  | integer(4)  | DEFAULT(0) NOT NULL |              | H     |
+# | o_count               | O count               | integer(4)  | NOT NULL            |              | I     |
+# | x_count               | X count               | integer(4)  | NOT NULL            |              | J     |
+# | bad_count             | Bad count             | integer(4)  | NOT NULL            |              |       |
+# | good_count            | Good count            | integer(4)  | NOT NULL            |              |       |
+# | histories_count       | Histories count       | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | favorites_count       | Favorites count       | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | good_marks_count      | Good marks count      | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | bad_marks_count       | Bad marks count       | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | clip_marks_count      | Clip marks count      | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | messages_count        | Messages count        | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# |-----------------------+-----------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :actb_room_messages
+# User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
 module Actb
@@ -66,7 +66,7 @@ module Actb
       ]
     end
 
-    belongs_to :user, class_name: "Colosseum::User" # 作者
+    belongs_to :user, class_name: "::User" # 作者
     belongs_to :folder # , class_name: "Actb::Folder"
     belongs_to :lineage # , class_name: "Actb::Lineage"
 

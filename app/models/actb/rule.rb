@@ -32,7 +32,7 @@ module Actb
     end
 
     def matching_users
-      redis.smembers(redis_key).collect { |e| Colosseum::User.find(e) }
+      redis.smembers(redis_key).collect { |e| User.find(e) }
     end
 
     def matching_ids

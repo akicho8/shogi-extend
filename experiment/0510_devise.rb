@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-tp Colosseum::User.all.find_all { |e| e.valid_password?("password") }.collect { |e| {name: e.name, auth_infos_count: e.auth_infos.count, password: e.valid_password?("password")} }
+tp User.all.find_all { |e| e.valid_password?("password") }.collect { |e| {name: e.name, auth_infos_count: e.auth_infos.count, password: e.valid_password?("password")} }
 
-tp Colosseum::User.all.find_all { |e| e.valid_password?("password") }.collect { |e| e.name }
-Colosseum::User.all.each do |user|
+tp User.all.find_all { |e| e.valid_password?("password") }.collect { |e| e.name }
+User.all.each do |user|
   if user.valid_password?("password")
     user.password = Devise.friendly_token(32)
     user.save!
   end
 end
-tp Colosseum::User.all.collect { |e| {name: e.name, password: e.valid_password?("password")} }
+tp User.all.collect { |e| {name: e.name, password: e.valid_password?("password")} }
 
 # >> |-----------------------+----------|
 # >> | name                  | password |

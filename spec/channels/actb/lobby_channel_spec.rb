@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Actb::LobbyChannel, type: :channel do
-  let_it_be(:user) { Colosseum::User.create! }
+  let_it_be(:user) { User.create! }
 
   before do
     Actb::BaseChannel.redis.flushdb
@@ -73,8 +73,8 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
   describe "#matching_search" do
     # これは消してもいいかもしれない
     context "同レートのマッチング" do
-      let_it_be(:user_a) { Colosseum::User.create! }
-      let_it_be(:user_b) { Colosseum::User.create! }
+      let_it_be(:user_a) { User.create! }
+      let_it_be(:user_b) { User.create! }
 
       it "マッチング" do
         # user_a が対戦待ち
@@ -98,7 +98,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
 
     context "レートを考慮したマッチング" do
       def user_of(rating)
-        Colosseum::User.create!.tap do |e|
+        User.create!.tap do |e|
           e.actb_master_xrecord.update!(rating: rating)
         end
       end

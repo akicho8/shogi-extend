@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # 参考: https://github.com/andrelugomes/hello-ruby-on-rails/blob/dbbbc848d391eee6cf0448f1af695fd9df73cf4e/rails-4-devise-linkedin/spec/controllers/omniauth_callbacks_controller_spec.rb
-RSpec.describe Colosseum::OmniauthCallbacksController, type: :controller do
+RSpec.describe OmniauthCallbacksController, type: :controller do
   describe "twitter: login" do
     before do
       request.env["devise.mapping"] = Devise.mappings[:xuser]
@@ -14,7 +14,7 @@ RSpec.describe Colosseum::OmniauthCallbacksController, type: :controller do
       get :twitter
     end
 
-    let(:record) { Colosseum::User.first }
+    let(:record) { User.first }
 
     it "名前がある" do
       assert { record.name == "(name)" }

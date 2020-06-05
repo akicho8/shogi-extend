@@ -15,8 +15,8 @@
 # | battles_count | Battles count | integer(4) | DEFAULT(0) NOT NULL |      | D     |
 # |---------------+---------------+------------+---------------------+------+-------|
 
-# user1 = Colosseum::User.create!
-# user2 = Colosseum::User.create!
+# user1 = User.create!
+# user2 = User.create!
 #
 # battle = Actb::Room.create! do |e|
 #   e.memberships.build(user: use)

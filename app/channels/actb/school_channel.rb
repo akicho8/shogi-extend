@@ -8,7 +8,7 @@ module Actb
       end
 
       def online_users
-        online_user_ids.collect { |e| Colosseum::User.find(e) }
+        online_user_ids.collect { |e| User.find(e) }
       end
     end
 

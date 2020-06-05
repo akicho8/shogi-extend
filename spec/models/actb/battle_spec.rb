@@ -47,7 +47,7 @@ module Actb
 
     describe "#katimashita" do
       def test(judge_key)
-        users = 2.times.collect { Colosseum::User.create! }
+        users = 2.times.collect { User.create! }
         room = Actb::Room.create_with_members!(users, rule: Actb::Rule.fetch(:marathon_rule))
         battle = room.battle_create_with_members!
         battle.katimashita(battle.users[0], judge_key, :f_success)

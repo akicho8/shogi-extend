@@ -11,10 +11,9 @@ require 'test_prof/recipes/rspec/let_it_be'
 # app/models/acns2.rb などを明示的に読み込む (Ruby 2.7 ではこのあたりの対策がされているとの噂)
 Actb
 Swars
-Colosseum
 
 if true
-  # 1. Colosseum::UsersController の spec で次のようになっているとき user_login 内で controller を参照する
+  # 1. UsersController の spec で次のようになっているとき user_login 内で controller を参照する
   # 2. このタイミングで app/controllers/swars/battles_controller.rb の親クラスの参照がおかしなる
   # 3. "< ApplicationController" で ::Swars::ApplicationController ではなく ::ApplicationController を読まれる
   # 4. 結果、::Swars::ApplicationController の before_action が発動しない
@@ -23,7 +22,7 @@ if true
   # 7. 対応策として明示的に参照して先にロードする
   ::Swars::ApplicationController
   # 8. これにはまると原因を調べるのに半日かかるため念のため他のもロードしておく
-  ::Colosseum::ApplicationController
+  ::ApplicationController
   # 9. 新しい Ruby だと参照の順序がかわるらしいのでそれに期待。あとで調べて直ってたらこれは消す
 end
 

@@ -21,13 +21,13 @@ RSpec.describe "対戦", type: :system, slow_spec: true do
 
   # できればクリックしたい
   it "プロフィール表示" do
-    @alice = create(:colosseum_user)
+    @alice = create(:user)
     visit "/colosseum/users/#{@alice.id}"
     doc_image
   end
 
   it "プロフィール設定" do
-    @alice = create(:colosseum_user)
+    @alice = create(:user)
     visit "/colosseum/users/#{@alice.id}/edit"
     doc_image
   end

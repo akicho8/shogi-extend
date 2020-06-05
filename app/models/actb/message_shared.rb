@@ -1,7 +1,7 @@
 module Actb
   concern :MessageShared do
     included do
-      belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
+      belongs_to :user, class_name: "::User"
 
       before_validation do
         if changes_to_save[:body] && body.present?

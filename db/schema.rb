@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_05_133900) do
+ActiveRecord::Schema.define(version: 2020_06_05_202100) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
@@ -407,13 +407,13 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.datetime "created_at", null: false
   end
 
-  create_table "colosseum_auth_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "auth_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "provider", null: false
     t.string "uid", null: false
     t.text "meta_info"
-    t.index ["provider", "uid"], name: "index_colosseum_auth_infos_on_provider_and_uid", unique: true
-    t.index ["user_id"], name: "index_colosseum_auth_infos_on_user_id"
+    t.index ["provider", "uid"], name: "index_auth_infos_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_auth_infos_on_user_id"
   end
 
   create_table "colosseum_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -483,15 +483,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.index ["user_id"], name: "index_colosseum_memberships_on_user_id"
   end
 
-  create_table "colosseum_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "begin_greeting_message", null: false, comment: "対局開始時のあいさつ"
-    t.string "end_greeting_message", null: false, comment: "対局終了時のあいさつ"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_colosseum_profiles_on_user_id", unique: true
-  end
-
   create_table "colosseum_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
@@ -509,43 +500,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.index ["user_id"], name: "index_colosseum_rules_on_user_id", unique: true
   end
 
-  create_table "colosseum_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "key", null: false, comment: "キー"
-    t.string "name", null: false, comment: "名前"
-    t.datetime "online_at", comment: "オンラインになった日時"
-    t.datetime "fighting_at", comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
-    t.datetime "matching_at", comment: "マッチング中(開始日時)"
-    t.string "cpu_brain_key", comment: "CPUだったときの挙動"
-    t.string "user_agent", null: false, comment: "ブラウザ情報"
-    t.string "race_key", null: false, comment: "種族"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "email", null: false
-    t.string "encrypted_password", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
-    t.integer "failed_attempts", default: 0, null: false
-    t.string "unlock_token"
-    t.datetime "locked_at"
-    t.datetime "joined_at", comment: "ロビーに入った時間"
-    t.index ["confirmation_token"], name: "index_colosseum_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_colosseum_users_on_email", unique: true
-    t.index ["key"], name: "index_colosseum_users_on_key", unique: true
-    t.index ["race_key"], name: "index_colosseum_users_on_race_key"
-    t.index ["reset_password_token"], name: "index_colosseum_users_on_reset_password_token", unique: true
-    t.index ["unlock_token"], name: "index_colosseum_users_on_unlock_token", unique: true
-  end
-
   create_table "colosseum_watch_ships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "ユーザー"
@@ -556,12 +510,12 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
   end
 
   create_table "cpu_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "colosseum_user_id", comment: "ログインしているならそのユーザー"
+    t.bigint "user_id"
     t.string "judge_key", null: false, comment: "結果"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["colosseum_user_id"], name: "index_cpu_battle_records_on_colosseum_user_id"
     t.index ["judge_key"], name: "index_cpu_battle_records_on_judge_key"
+    t.index ["user_id"], name: "index_cpu_battle_records_on_user_id"
   end
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -576,7 +530,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "colosseum_user_id"
+    t.bigint "user_id"
     t.string "title"
     t.text "description", null: false
     t.integer "start_turn"
@@ -587,7 +541,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.string "preset_key", null: false
     t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
-    t.index ["colosseum_user_id"], name: "index_free_battles_on_colosseum_user_id"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_free_battles_on_outbreak_turn"
@@ -595,6 +548,16 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.index ["start_turn"], name: "index_free_battles_on_start_turn"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
     t.index ["use_key"], name: "index_free_battles_on_use_key"
+    t.index ["user_id"], name: "index_free_battles_on_user_id"
+  end
+
+  create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "begin_greeting_message", null: false, comment: "対局開始時のあいさつ"
+    t.string "end_greeting_message", null: false, comment: "対局終了時のあいさつ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
   create_table "swars_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -748,8 +711,45 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.index ["name"], name: "index_tsl_users_on_name", unique: true
   end
 
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false, comment: "キー"
+    t.string "name", null: false, comment: "名前"
+    t.datetime "online_at", comment: "オンラインになった日時"
+    t.datetime "fighting_at", comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
+    t.datetime "matching_at", comment: "マッチング中(開始日時)"
+    t.string "cpu_brain_key", comment: "CPUだったときの挙動"
+    t.string "user_agent", null: false, comment: "ブラウザ情報"
+    t.string "race_key", null: false, comment: "種族"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", null: false
+    t.string "encrypted_password", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "joined_at", comment: "ロビーに入った時間"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["key"], name: "index_users_on_key", unique: true
+    t.index ["race_key"], name: "index_users_on_race_key"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
   create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "colosseum_user_id"
+    t.bigint "user_id"
     t.string "entry_name", null: false
     t.string "summary"
     t.string "xy_rule_key", null: false
@@ -757,8 +757,8 @@ ActiveRecord::Schema.define(version: 2020_06_05_133900) do
     t.float "spent_sec", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["colosseum_user_id"], name: "index_xy_records_on_colosseum_user_id"
     t.index ["entry_name"], name: "index_xy_records_on_entry_name"
+    t.index ["user_id"], name: "index_xy_records_on_user_id"
     t.index ["xy_rule_key"], name: "index_xy_records_on_xy_rule_key"
   end
 

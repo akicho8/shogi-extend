@@ -1,17 +1,17 @@
 require "./setup"
 
-# tp Colosseum::User.sysop.actb_questions
+# tp User.sysop.actb_questions
 
 # Actb.destroy_all
 # 
-user = Colosseum::User.sysop
+user = User.sysop
 
 question = user.actb_questions.create! do |e|
   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1"
   e.moves_answers.build(moves_str: "G*5b")
 end
 
-user2 = Colosseum::User.create!
+user2 = User.create!
 
 battle = Actb::Battle.create! do |e|
   e.memberships.build(user: user)

@@ -7,7 +7,7 @@
 # | name             | desc             | type       | opts        | refs                  | index |
 # |------------------+------------------+------------+-------------+-----------------------+-------|
 # | id               | ID               | integer(8) | NOT NULL PK |                       |       |
-# | user_id          | User             | integer(8) | NOT NULL    | => Colosseum::User#id | A! B  |
+# | user_id          | User             | integer(8) | NOT NULL    | => User#id | A! B  |
 # | season_id        | Season           | integer(8) | NOT NULL    |                       | A! C  |
 # | judge_id         | Judge            | integer(8) | NOT NULL    |                       | D     |
 # | battle_count     | Battle count     | integer(4) | NOT NULL    |                       | E     |
@@ -28,13 +28,13 @@
 # |------------------+------------------+------------+-------------+-----------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_one :actb_season_xrecord
+# User.has_one :actb_season_xrecord
 #--------------------------------------------------------------------------------
 
 module Actb
   concern :XrecordShareMod do
     included do
-      belongs_to :user, class_name: "Colosseum::User"
+      belongs_to :user, class_name: "::User"
       belongs_to :judge           # 直近バトルの勝敗
       belongs_to :final           # 直近バトルの結末
 

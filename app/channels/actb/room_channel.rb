@@ -25,7 +25,7 @@ module Actb
 
     # for test
     def room_users
-      room_user_ids.collect { |e| Colosseum::User.find(e) }
+      room_user_ids.collect { |e| User.find(e) }
     end
 
     private

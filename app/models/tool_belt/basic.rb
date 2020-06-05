@@ -12,15 +12,12 @@ module ToolBelt
 
       out << h.tag.div(:class => "buttons") do
         [
-          link_to_eval("ユーザーセットアップ")                                { "Colosseum::User.setup"                                                   },
-          link_to_eval("ユーザー全削除")                                      { "Colosseum::User.destroy_all"                                             },
-          link_to_eval("ユーザー追加")                                        { "Colosseum::User.create!"                                                 },
+          link_to_eval("ユーザーセットアップ")                                { "User.setup"                                                   },
+          link_to_eval("ユーザー全削除")                                      { "User.destroy_all"                                             },
+          link_to_eval("ユーザー追加")                                        { "User.create!"                                                 },
           link_to_eval("1 + 2")                                               { "1 + 2"                                                                   },
           link_to_eval("1 / 0", redirect_to: :root)                           { "1 / 0"                                                                   },
-          link_to_eval("find(0)", redirect_to: :root)                         { "Colosseum::User.find(0)"                                                 },
-          link_to_eval("部屋作成")                                            { "Colosseum::Battle.create!"                                               },
-          link_to_eval("部屋削除")                                            { "Colosseum::Battle.last&.destroy!"                                        },
-          link_to_eval("部屋全削除")                                          { "Colosseum::Battle.destroy_all"                                           },
+          link_to_eval("find(0)", redirect_to: :root)                         { "User.find(0)"                                                 },
           link_to_eval("flash確認", redirect_to: h.root_path(debug: "true"))  { ""                                                                        },
           link_to_eval("Swars::Battle.destroy_all")                           { "Swars::Battle.destroy_all"                                               },
           link_to_eval("itoshinTV 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'itoshinTV', run_remote: true)"      },
@@ -42,17 +39,17 @@ module ToolBelt
         ].compact.join.html_safe
       end
 
-      list = Colosseum::User.all.limit(25).collect do |e|
+      list = User.all.limit(25).collect do |e|
         {}.tap do |row|
           row[:id] = h.link_to(e.id, e)
           row[:name] = h.link_to(e.name, e)
           row["操作"] = [
             link_to_eval("login")    { "current_user_set(#{e.id})"                                                    },
-            link_to_eval("削除")     { "Colosseum::User.find(#{e.id}).destroy!"                                          },
-            link_to_eval("online")   { "Colosseum::User.find(#{e.id}).update!(joined_at: Time.current)" if !e.joined_at  },
-            link_to_eval("offline")  { "Colosseum::User.find(#{e.id}).update!(joined_at: nil)" if e.joined_at            },
+            link_to_eval("削除")     { "User.find(#{e.id}).destroy!"                                          },
+            link_to_eval("online")   { "User.find(#{e.id}).update!(joined_at: Time.current)" if !e.joined_at  },
+            link_to_eval("offline")  { "User.find(#{e.id}).update!(joined_at: nil)" if e.joined_at            },
             link_to_eval("logout")   { "current_user_clear" if e == h.current_user                                      },
-            link_to_eval("名前変更") { "Colosseum::User.find(#{e.id}).update!(name: SecureRandom.hex)"                   },
+            link_to_eval("名前変更") { "User.find(#{e.id}).update!(name: SecureRandom.hex)"                   },
           ].compact.join(" ").html_safe
         end
       end

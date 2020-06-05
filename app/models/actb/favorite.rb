@@ -3,24 +3,24 @@
 #
 # Favorite (actb_favorites as Actb::Favorite)
 #
-# |-------------+----------+------------+-------------+-----------------------+-------|
-# | name        | desc     | type       | opts        | refs                  | index |
-# |-------------+----------+------------+-------------+-----------------------+-------|
-# | id          | ID       | integer(8) | NOT NULL PK |                       |       |
-# | user_id     | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A     |
-# | question_id | Question | integer(8) | NOT NULL    |                       | B     |
-# | score       | Score    | integer(4) | NOT NULL    |                       |       |
-# | created_at  | 作成日時 | datetime   | NOT NULL    |                       |       |
-# | updated_at  | 更新日時 | datetime   | NOT NULL    |                       |       |
-# |-------------+----------+------------+-------------+-----------------------+-------|
+# |-------------+----------+------------+-------------+--------------+-------|
+# | name        | desc     | type       | opts        | refs         | index |
+# |-------------+----------+------------+-------------+--------------+-------|
+# | id          | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id     | User     | integer(8) | NOT NULL    | => ::User#id | A     |
+# | question_id | Question | integer(8) | NOT NULL    |              | B     |
+# | score       | Score    | integer(4) | NOT NULL    |              |       |
+# | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
+# |-------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :actb_room_messages
+# User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
 module Actb
   class Favorite < ApplicationRecord
-    belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
+    belongs_to :user, class_name: "::User"
     belongs_to :question, counter_cache: true
 
     before_validation do

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe UserMailer, type: :mailer do
   describe "user_created" do
     before do
-      @user = Colosseum::User.create!
+      @user = User.create!
       @mail = UserMailer.user_created(@user)
     end
 

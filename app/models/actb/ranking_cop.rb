@@ -63,7 +63,7 @@ module Actb
     end
 
     def base_scope
-      s = Colosseum::User.all
+      s = User.all
       s = s.joins(:actb_season_xrecord)
       s = s.where(Actb::SeasonXrecord.arel_table[:season_id].eq(current_season.id))
     end

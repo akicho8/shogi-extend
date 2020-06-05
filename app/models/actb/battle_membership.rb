@@ -3,25 +3,25 @@
 #
 # Battle membership (actb_battle_memberships as Actb::BattleMembership)
 #
-# |------------+----------+------------+-------------+-----------------------+-------|
-# | name       | desc     | type       | opts        | refs                  | index |
-# |------------+----------+------------+-------------+-----------------------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |                       |       |
-# | battle_id  | Battle   | integer(8) | NOT NULL    |                       | A! B  |
-# | user_id    | User     | integer(8) | NOT NULL    | => Colosseum::User#id | A! C  |
-# | judge_id   | Judge    | integer(8) | NOT NULL    |                       | D     |
-# | position   | 順序     | integer(4) | NOT NULL    |                       | E     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |                       |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |                       |       |
-# |------------+----------+------------+-------------+-----------------------+-------|
+# |------------+----------+------------+-------------+--------------+-------|
+# | name       | desc     | type       | opts        | refs         | index |
+# |------------+----------+------------+-------------+--------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |              |       |
+# | battle_id  | Battle   | integer(8) | NOT NULL    |              | A! B  |
+# | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
+# | judge_id   | Judge    | integer(8) | NOT NULL    |              | D     |
+# | position   | 順序     | integer(4) | NOT NULL    |              | E     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
+# |------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# Colosseum::User.has_many :actb_room_messages
+# User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
 module Actb
   class BattleMembership < ApplicationRecord
-    belongs_to :user, class_name: "Colosseum::User" # , foreign_key: "colosseum_user_id"
+    belongs_to :user, class_name: "::User"
     belongs_to :battle, inverse_of: :memberships
     belongs_to :judge
 
@@ -29,7 +29,7 @@ module Actb
 
     before_validation do
       if Rails.env.test?
-        self.user ||= Colosseum::User.create!
+        self.user ||= User.create!
       end
 
       self.judge ||= Judge.fetch(:pending)

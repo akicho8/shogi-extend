@@ -1,6 +1,6 @@
 require "./setup"
 
-Colosseum::User.delete_all
+User.delete_all
 
 Actb.destroy_all
 Actb.setup
@@ -17,12 +17,12 @@ Actb::Season.count              # => 11
 
 # tp Actb.info
 
-user1 = Colosseum::User.sysop
-user2 = Colosseum::User.find_or_create_by!(key: "alice")
+user1 = User.sysop
+user2 = User.find_or_create_by!(key: "alice")
 
-Colosseum::User.setup
+User.setup
 # 8.times do |e|
-#   Colosseum::User.create!
+#   User.create!
 # end
 
 # 問題作成
@@ -181,7 +181,7 @@ tp Actb.info
 # >> |------------------------+-------+--------|
 # >> | model                  | count | 最終ID |
 # >> |------------------------+-------+--------|
-# >> | Colosseum::User        |    14 |     55 |
+# >> | User        |    14 |     55 |
 # >> | Actb::Question         |    10 |     16 |
 # >> | Actb::QuestionMessage  |     5 |     15 |
 # >> | Actb::Room             |     1 |     33 |

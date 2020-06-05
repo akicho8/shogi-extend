@@ -142,7 +142,7 @@ module FrontendScript
       # 詳細
       # FIXME
       if params[:user_single_fetch]
-        user = Colosseum::User.find(params[:user_id])
+        user = User.find(params[:user_id])
         return { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
       end
 
@@ -267,7 +267,7 @@ module FrontendScript
 
     # 自分以外の誰かを指定ルールに参加させる
     def debug_matching_add_handle
-      if user = Colosseum::User.where.not(id: params[:exclude_user_id]).first
+      if user = User.where.not(id: params[:exclude_user_id]).first
         Actb::LobbyChannel.matching_list_rem(user)
         if rule_key = params[:rule_key]
           rule = Actb::Rule.fetch(rule_key)
@@ -373,7 +373,7 @@ module FrontendScript
     end
 
     def users
-      [current_user, Colosseum::User.bot]
+      [current_user, User.bot]
     end
 
     def debug_scene_set(info)
@@ -432,7 +432,7 @@ module FrontendScript
         c.sysop_login_unless_logout
 
         # Actb::Question.destroy_all
-        # user = Colosseum::User.sysop
+        # user = User.sysop
         # question = user.actb_questions.create! do |e|
         #   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1"
         #   e.moves_answers.build(moves_str: "G*4b")

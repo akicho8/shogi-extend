@@ -32,7 +32,7 @@ module Actb
   end
 
   def info
-    [Colosseum::User, *models].collect { |e|
+    [User, *models].collect { |e|
       { model: e, count: e.count, "最終ID" => e.order(:id).last&.id }
     }
   end

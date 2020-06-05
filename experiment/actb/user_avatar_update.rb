@@ -1,9 +1,9 @@
 require "./setup"
 
 file = {io: StringIO.open(Pathname("../../spec/rails.png").read), filename: "foo.png"}
-user = Colosseum::User.sysop
+user = User.sysop
 user.avatar.attach(file)
-user.avatar                                                                        # => #<ActiveStorage::Attached::One:0x00007fa54b9bd6b8 @name="avatar", @record=#<Colosseum::User id: 14, key: "sysop", name: "運営", online_at: nil, fighting_at: nil, matching_at: nil, cpu_brain_key: nil, user_agent: "", race_key: "human", created_at: "2020-05-25 14:20:35", updated_at: "2020-05-28 05:44:05", email: "sysop@localhost", joined_at: "2020-05-25 14:20:35">>
+user.avatar                                                                        # => #<ActiveStorage::Attached::One:0x00007fa54b9bd6b8 @name="avatar", @record=#<User id: 14, key: "sysop", name: "運営", online_at: nil, fighting_at: nil, matching_at: nil, cpu_brain_key: nil, user_agent: "", race_key: "human", created_at: "2020-05-25 14:20:35", updated_at: "2020-05-28 05:44:05", email: "sysop@localhost", joined_at: "2020-05-25 14:20:35">>
 user.avatar.attached?                                                              # => true
 
 tp ActiveStorage::Attachment
@@ -12,7 +12,7 @@ tp ActiveStorage::Blob
 # >> |----+--------+-----------------+-----------+---------+---------------------------|
 # >> | id | name   | record_type     | record_id | blob_id | created_at                |
 # >> |----+--------+-----------------+-----------+---------+---------------------------|
-# >> | 11 | avatar | Colosseum::User |        14 |      11 | 2020-05-28 14:44:05 +0900 |
+# >> | 11 | avatar | User |        14 |      11 | 2020-05-28 14:44:05 +0900 |
 # >> |----+--------+-----------------+-----------+---------+---------------------------|
 # >> |----+------------------------------+----------+--------------+-------------------------------------------------------------------+-----------+--------------------------+---------------------------|
 # >> | id | key                          | filename | content_type | metadata                                                          | byte_size | checksum                 | created_at                |

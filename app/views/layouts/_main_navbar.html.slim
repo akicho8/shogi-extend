@@ -57,7 +57,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
       = render partial: "rails_env_links"
 
       / - unless current_user
-      /   = link_to("アカウント作成", [:new, :colosseum, :session], class: "navbar-item")
+      /   = link_to("アカウント作成", [:new, :session], class: "navbar-item")
       /
       / - if current_user
       /   .navbar-item
@@ -76,7 +76,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
       /           = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
       /       b-dropdown-item(:separator="true")
       /       b-dropdown-item(:has-link="true" :paddingless="true")
-      /         = link_to("ログアウト", [:colosseum, :session], method: :delete)
+      /         = link_to("ログアウト", [:session], method: :delete)
 
       - if current_user
         .navbar-item.has-dropdown.is-hoverable
@@ -89,7 +89,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
             = link_to("プロフィール", [current_user], class: "navbar-item")
             = link_to("設定", [:edit, current_user], class: "navbar-item")
             .navbar-divider
-            = link_to("ログアウト", [:colosseum, :session], method: :delete, class: "navbar-item")
+            = link_to("ログアウト", [:session], method: :delete, class: "navbar-item")
             / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
         / こっちを使うと縦幅が大きくなってしまう
@@ -105,7 +105,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
         /       = link_to("設定", [:edit, current_user])
         /     b-dropdown-item(:separator="true")
         /     b-dropdown-item(:has-link="true" :paddingless="true")
-        /       = link_to("ログアウト", [:colosseum, :session], method: :delete)
+        /       = link_to("ログアウト", [:session], method: :delete)
         /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
       - if !current_user

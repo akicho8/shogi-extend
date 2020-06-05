@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 Actb::Question.destroy_all
 
-user = Colosseum::User.sysop
+user = User.sysop
 3.times do |i|
   question = user.actb_questions.create! do |e|
     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{i+1}p 1"
@@ -22,7 +22,7 @@ end
 Actb::Question.count           # => 3
 exit
 
-# user = Colosseum::User.sysop
+# user = User.sysop
 # params = {
 #   "question" => {
 #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
@@ -46,14 +46,14 @@ exit
 #     e.updated_at = Time.current - 1.days + i.hours
 #   end
 
-# user = Colosseum::User.create!
+# user = User.create!
 # question = user.actb_questions.create! do |e|
 #   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
 #   e.moves_answers.build(moves_str: "G*5b")
 #   e.endpos_answers.build(end_sfen: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
 # end
 
-# user = Colosseum::User.sysop
+# user = User.sysop
 # 11.times do |i|
 #   question = user.actb_questions.create! do |e|
 #     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/P8 b G2r2b2g4s4n4l#{i+1}p 1"
@@ -77,8 +77,8 @@ exit
 
 # Actb::Battle.destroy_all
 
-# user1 = Colosseum::User.create!
-# user2 = Colosseum::User.create!
+# user1 = User.create!
+# user2 = User.create!
 #
 # battle = Actb::Battle.create! do |e|
 #   e.memberships.build(user: user1, judge_key: "win")

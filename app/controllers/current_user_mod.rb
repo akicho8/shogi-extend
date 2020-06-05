@@ -26,9 +26,9 @@ module CurrentUserMod
   def current_user_is_owner_of?(record)
     if current_user
       if record
-        if record.respond_to?(:owner_user)
-          if record.owner_user
-            record.owner_user == current_user
+        if record.respond_to?(:user)
+          if record.user
+            record.user == current_user
           end
         end
       end
@@ -42,12 +42,12 @@ module CurrentUserMod
 
     if id
       user = nil
-      user ||= Colosseum::User.find_by(id: id)
+      user ||= User.find_by(id: id)
       user ||= current_xuser
 
       # if Rails.env.test?
       #   if params[:__create_user_name__]
-      #     user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
+      #     user ||= User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
       #     user.lobby_in_handle
       #     cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
       #   end
@@ -60,15 +60,15 @@ module CurrentUserMod
   end
 
   def current_user_set(user)
-    unless user.kind_of?(Integer) || user.kind_of?(Colosseum::User)
+    unless user.kind_of?(Integer) || user.kind_of?(User)
       raise ArgumentError, user.inspect
     end
 
     if user.kind_of?(Integer)
-      user = Colosseum::User.find_by(id: user)
+      user = User.find_by(id: user)
     end
 
-    unless user.kind_of?(Colosseum::User)
+    unless user.kind_of?(User)
       raise ArgumentError, user.inspect
     end
 
@@ -93,7 +93,7 @@ module CurrentUserMod
 
   def sysop_login_unless_logout
     unless current_user
-      current_user_set(Colosseum::User.sysop)
+      current_user_set(User.sysop)
     end
   end
 

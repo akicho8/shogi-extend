@@ -5,7 +5,7 @@ ENV["SLACK_AGENT_DISABLE"] = "1"
   FreeBattle,
   Swars::Grade,
   Swars::Battle,
-  Colosseum::User,
+  User,
   XyRuleInfo,
   XyRecord,
   Tsl,

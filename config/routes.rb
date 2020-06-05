@@ -7,20 +7,20 @@ Rails.application.routes.draw do
   get "talk", to: "talk#show", as: :talk
 
   devise_for :xusers, {
-    class_name: "Colosseum::User",
+    class_name: "::User",
     controllers: {
-      omniauth_callbacks: "colosseum/omniauth_callbacks",
+      omniauth_callbacks: "omniauth_callbacks",
       # sessions: "users/sessions",
     },
   }
 
   ################################################################################ 対戦
 
-  namespace :colosseum do
-    resources :battles
-    resources :users
-    resources :rankings, only: :index
-  end
+  resources :users
+  # namespace :colosseum do
+  #   resources :battles
+  #   resources :rankings, only: :index
+  # end
 
   # root "colosseum/battles#index"
   root "swars/battles#index"
@@ -31,9 +31,9 @@ Rails.application.routes.draw do
 
   ################################################################################ ログアウト
 
-  namespace :colosseum, path: "" do
-    resource :session, only: [:create, :destroy]
-  end
+  # namespace :colosseum, path: "" do
+  resource :session, only: [:create, :destroy]
+  # end
 
   ################################################################################ 将棋ウォーズ棋譜検索
 

@@ -1,7 +1,7 @@
 require "./setup"
 
-tp Colosseum::User.sysop
-Colosseum::User.sysop.avatar.attached? # => true
+tp User.sysop
+User.sysop.avatar.attached? # => true
 # >> |------------------------+--------------------------------------------------------------|
 # >> |                     id | 14                                                           |
 # >> |                    key | sysop                                                        |

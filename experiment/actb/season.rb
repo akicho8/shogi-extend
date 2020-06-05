@@ -1,11 +1,11 @@
 require "./setup"
 
-Colosseum::User.delete_all
+User.delete_all
 
 Actb.destroy_all
 Actb.setup
 
-user = Colosseum::User.sysop
+user = User.sysop
 user.rating            # => 1500
 user.actb_master_xrecord.update!(rating: 1501) 
 user.rating            # => 1501
@@ -16,7 +16,7 @@ tp Actb.info
 # >> |------------------------+-------+--------|
 # >> | model                  | count | 最終ID |
 # >> |------------------------+-------+--------|
-# >> | Colosseum::User        |     1 |     55 |
+# >> | User        |     1 |     55 |
 # >> | Actb::Question         |     0 |        |
 # >> | Actb::QuestionMessage  |     0 |        |
 # >> | Actb::Room             |     0 |        |

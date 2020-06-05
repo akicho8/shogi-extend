@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Actb::SchoolChannel, type: :channel do
-  let_it_be(:user) { Colosseum::User.create! }
+  let_it_be(:user) { User.create! }
 
   before do
     Actb::BaseChannel.redis.flushdb
