@@ -44,12 +44,5 @@ class CreateFreeBattles < ActiveRecord::Migration[5.1]
       t.datetime :accessed_at, null: false, comment: "最終参照日時"
       t.timestamps null: false
     end
-
-    create_table :converted_infos, force: true do |t|
-      t.belongs_to :convertable, polymorphic: true, null: false, comment: "親"
-      t.text :text_body, null: false, comment: "棋譜内容"
-      t.string :text_format, null: false, index: true, comment: "棋譜形式"
-      t.timestamps null: false
-    end
   end
 end

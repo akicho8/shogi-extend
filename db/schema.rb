@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_135600) do
+ActiveRecord::Schema.define(version: 2020_06_05_133900) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
@@ -553,17 +553,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_135600) do
     t.datetime "updated_at", null: false
     t.index ["battle_id"], name: "index_colosseum_watch_ships_on_battle_id"
     t.index ["user_id"], name: "index_colosseum_watch_ships_on_user_id"
-  end
-
-  create_table "converted_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "convertable_type", null: false
-    t.bigint "convertable_id", null: false, comment: "親"
-    t.text "text_body", null: false, comment: "棋譜内容"
-    t.string "text_format", null: false, comment: "棋譜形式"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["convertable_type", "convertable_id"], name: "index_converted_infos_on_convertable_type_and_convertable_id"
-    t.index ["text_format"], name: "index_converted_infos_on_text_format"
   end
 
   create_table "cpu_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
