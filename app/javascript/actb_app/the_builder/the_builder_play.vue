@@ -59,6 +59,8 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .the_builder_play
+  margin-top: 1.5rem
+
   // この手順を正解にする
   .konotejunsiikai
     margin-top: 0.3rem

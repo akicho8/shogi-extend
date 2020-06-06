@@ -37,18 +37,7 @@
       the_builder_form
 
     template(v-if="current_tab_info.key === 'exam_mode'")
-      shogi_player(
-        :run_mode="'play_mode'"
-        :kifu_body="position_sfen_add(question.init_sfen)"
-        :start_turn="0"
-        :slider_show="true"
-        :controller_show="true"
-        :theme="'simple'"
-        :size="'default'"
-        :sound_effect="true"
-        :volume="0.5"
-        @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
-        )
+      the_builder_kensho
 
     //- .save_container
     //-   .buttons.is-centered
@@ -81,6 +70,7 @@ import the_builder_index from "./the_builder_index.vue"
 import the_builder_haiti from "./the_builder_haiti.vue"
 import the_builder_play from "./the_builder_play.vue"
 import the_builder_form from "./the_builder_form.vue"
+import the_builder_kensho from "./the_builder_kensho.vue"
 
 export default {
   name: "the_builder",
@@ -92,6 +82,7 @@ export default {
     the_builder_haiti,
     the_builder_play,
     the_builder_form,
+    the_builder_kensho,
   },
   data() {
     return {
