@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_battle_sakusha.has-text-centered
+.the_battle_author.has-text-centered
   .question_title.has-text-weight-bold.is-size-5
     | {{app.c_quest.title}}
   .question_user.is-size-7.has-text-weight-bold
@@ -11,7 +11,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_battle_sakusha",
+  name: "the_battle_author",
   mixins: [
     support,
   ],
@@ -20,7 +20,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_battle_sakusha
+.the_battle_author
   .question_title
   .question_user
     position: relative

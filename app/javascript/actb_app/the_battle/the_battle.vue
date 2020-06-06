@@ -12,7 +12,7 @@
       | {{app.question_index + 1}}問目
 
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    the_battle_sakusha
+    the_battle_author
     the_battle_question1(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
     the_battle_question2(v-if="app.battle.rule.key === 'singleton_rule'")
 
@@ -47,7 +47,7 @@ import dayjs from "dayjs"
 import the_battle_membership from "./the_battle_membership.vue"
 import the_battle_question1 from "./the_battle_question1.vue"
 import the_battle_question2 from "./the_battle_question2.vue"
-import the_battle_sakusha from "./the_battle_sakusha.vue"
+import the_battle_author from "./the_battle_author.vue"
 
 export default {
   name: "the_battle",
@@ -58,7 +58,7 @@ export default {
     the_battle_membership,
     the_battle_question1,
     the_battle_question2,
-    the_battle_sakusha,
+    the_battle_author,
   },
   created() {
     this.app.lobby_unsubscribe()
