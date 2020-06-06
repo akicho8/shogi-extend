@@ -87,66 +87,6 @@ module FrontendScript
         return public_send(v)
       end
 
-      # FIXME
-      # http://localhost:3000/script/actb-app.json?questions_fetch=true
-      if params[:questions_fetch]
-        params[:per] ||= QUESTIONS_FETCH_PER
-
-        s = current_user.actb_questions
-        s = page_scope(s)       # page_mod.rb
-        s = sort_scope(s)       # sort_mod.rb
-
-        retv = {**page_info(s), **sort_info}
-        retv[:questions] = s.as_json(question_as_json_params)
-
-        return retv
-      end
-
-      # FIXME
-      # http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rating
-      if params[:ranking_fetch]
-        return { rank_data: Actb::RankingCop.new(params.merge(current_user: current_user)) }
-      end
-
-      # FIXME
-      # http://localhost:3000/script/actb-app.json?seasons_fetch=true
-      if params[:seasons_fetch]
-        return { seasons: Actb::Season.newest_order.as_json(only: [:id, :generation, :name, :begin_at, :end_at]) }
-      end
-
-      # FIXME
-      if params[:history_records_fetch]
-        s = current_user.actb_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
-        retv = {}
-        retv[:history_records] = s.as_json(only: [:id], include: {:battle => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p])
-        return retv
-      end
-
-      # FIXME
-      if params[:clip_records_fetch]
-        s = current_user.actb_clip_marks.order(created_at: :desc).limit(CLIP_FETCH_MAX)
-        retv = {}
-        retv[:clip_records] = s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p])
-        return retv
-      end
-
-      # 詳細
-      # FIXME
-      if params[:question_single_fetch]
-        question = Actb::Question.find(params[:question_id])
-        retv = {}
-        retv[:question] = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}, :messages => {only: [:id, :body, :created_at], include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}})
-        retv.update(current_user.good_bad_clip_flags_for(question))
-        return { ov_question_info: retv }
-      end
-
-      # 詳細
-      # FIXME
-      if params[:user_single_fetch]
-        user = User.find(params[:user_id])
-        return { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :introduction], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
-      end
-
       # params = {
       #   "question" => {
       #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p #{rand(1000000)}",
@@ -231,6 +171,56 @@ module FrontendScript
       c.layout_type = :raw
 
       out
+    end
+
+    # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch
+    def questions_fetch
+      params[:per] ||= QUESTIONS_FETCH_PER
+
+      s = current_user.actb_questions
+      s = page_scope(s)       # page_mod.rb
+      s = sort_scope(s)       # sort_mod.rb
+
+      retv = {**page_info(s), **sort_info}
+      retv[:questions] = s.as_json(question_as_json_params)
+      retv
+    end
+
+    # http://localhost:3000/script/actb-app.json?remote_action=ranking_fetch&ranking_key=rating
+    def ranking_fetch
+      { rank_data: Actb::RankingCop.new(params.merge(current_user: current_user)) }
+    end
+
+    # http://localhost:3000/script/actb-app.json?remote_action=seasons_fetch
+    def seasons_fetch
+      { seasons: Actb::Season.newest_order.as_json(only: [:id, :generation, :name, :begin_at, :end_at]) }
+    end
+
+    # http://localhost:3000/script/actb-app.json?remote_action=history_records_fetch
+    def history_records_fetch
+      s = current_user.actb_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
+      { history_records: s.as_json(only: [:id], include: {:battle => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p]) }
+    end
+
+    # http://localhost:3000/script/actb-app.json?remote_action=clip_records_fetch
+    def clip_records_fetch
+      s = current_user.actb_clip_marks.order(created_at: :desc).limit(CLIP_FETCH_MAX)
+      { clip_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p]) }
+    end
+
+    # http://localhost:3000/script/actb-app.json?remote_action=question_single_fetch
+    def question_single_fetch
+      question = Actb::Question.find(params[:question_id])
+      retv = {}
+      retv[:question] = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}, :messages => {only: [:id, :body, :created_at], include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}})
+      retv.update(current_user.good_bad_clip_flags_for(question))
+      { ov_question_info: retv }
+    end
+
+    # 詳細
+    def user_single_fetch
+      user = User.find(params[:user_id])
+      { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :introduction], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
     end
 
     # http://localhost:3000/script/actb-app.json?remote_action=resource_fetch

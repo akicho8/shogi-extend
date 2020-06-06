@@ -104,7 +104,7 @@ export default {
     fetch_handle() {
       // if (this.rank_records_hash[this.current_tab_info.key]) {
       // } else {
-      const params = { ranking_fetch: true, ranking_key: this.current_tab_info.key, season_id: this.season_id }
+      const params = { remote_action: "ranking_fetch", ranking_key: this.current_tab_info.key, season_id: this.season_id }
       if (this.development_p) {
         params.take = 5
         params.shuffle = true
@@ -124,7 +124,7 @@ export default {
     },
 
     seasons_fetch() {
-      this.remote_get(this.app.info.put_path, { seasons_fetch: true }, e => {
+      this.remote_get(this.app.info.put_path, { remote_action: "seasons_fetch" }, e => {
         if (e.seasons) {
           this.seasons = e.seasons
         }

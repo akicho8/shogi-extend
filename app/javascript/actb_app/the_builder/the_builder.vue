@@ -329,7 +329,7 @@ export default {
 
     async_records_load() {
       this.remote_get(this.app.info.put_path, {
-        questions_fetch: true,
+        remote_action: "questions_fetch",
         page:               this.page,
         per:                this.per,
         sort_column:        this.sort_column,
