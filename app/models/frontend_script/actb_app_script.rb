@@ -344,6 +344,7 @@ module FrontendScript
       end
     end
 
+    # リアクティブになるように空でもカラムは作っておくこと
     def question_default
       {
         # // init_sfen: "4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",

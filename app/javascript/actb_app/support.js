@@ -35,7 +35,10 @@ export const support = {
 
     position_sfen_add(sfen) {
       this.__assert__(sfen != null, "sfen != null")
-      return POSITION_SFEN_PREFIX + sfen
+      if (!sfen.includes(POSITION_SFEN_PREFIX)) {
+        sfen = POSITION_SFEN_PREFIX + sfen
+      }
+      return sfen
     },
 
     main_nav_set(display_p) {

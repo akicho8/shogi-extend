@@ -179,25 +179,23 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_mode_snapshot_sfen(sfen) {
-      if (this.sp_run_mode === "edit_mode") {
-        sfen = this.position_sfen_remove(sfen)
+      sfen = this.position_sfen_remove(sfen)
 
-        // console.log(this.question.init_sfen)
-        // console.log(sfen)
+      // console.log(this.question.init_sfen)
+      // console.log(sfen)
 
-        if (this.question.init_sfen !== sfen) {
-          this.debug_alert(`初期配置取得 ${sfen}`)
-          this.$set(this.question, "init_sfen", sfen)
+      if (this.question.init_sfen !== sfen) {
+        this.debug_alert(`初期配置取得 ${sfen}`)
+        this.question.init_sfen = sfen
 
-          // 合わせて正解も削除する
-          if (this.question.moves_answers.length >= 1) {
-            this.ok_notice("元の配置を変更したので正解を削除しました")
-            this.moves_answers_clear()
-          }
-
-          // 検証してない状態にする
-          this.valid_count = 0
+        // 合わせて正解も削除する
+        if (this.question.moves_answers.length >= 1) {
+          this.ok_notice("元の配置を変更したので正解を削除しました")
+          this.moves_answers_clear()
         }
+
+        // 検証してない状態にする
+        this.valid_count = 0
       }
     },
 
@@ -300,7 +298,7 @@ export default {
       this.question = row
 
       // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
-      this.fixed_init_sfen = this.question.init_sfen
+      this.fixed_init_sfen = this.position_sfen_add(this.question.init_sfen)
       // this.$set(this.question, "fixed_init_sfen", this.question.init_sfen)
 
       this.time_limit_clock_set()

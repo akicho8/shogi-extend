@@ -2,7 +2,7 @@
 .the_builder_haiti
   shogi_player(
     :run_mode="'edit_mode'"
-    :kifu_body="position_sfen_add($parent.fixed_init_sfen)"
+    :kifu_body="$parent.fixed_init_sfen"
     :start_turn="-1"
     :slider_show="true"
     :controller_show="true"
@@ -13,7 +13,7 @@
     :volume="0.5"
     @update:edit_mode_snapshot_sfen="$parent.edit_mode_snapshot_sfen"
     )
-  .buttons.is-centered
+  .buttons.is-centered.footer_buttons
     b-button(@click="any_source_read_handle") 棋譜の読み込み
 </template>
 
@@ -48,19 +48,18 @@ export default {
             this.sound_play("click")
             this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
               if (e.body) {
+                modal_instance.close()
 
                 const sfen_parser = SfenParser.parse(e.body)
                 if (sfen_parser.moves.length === 0) { // BOD
                   // moves がないということは BOD とみなして即反映
                   this.general_ok_notice("BODを反映しました")
-                  this.$parent.fixed_init_sfen = this.init_sfen_strip
+                  this.$parent.fixed_init_sfen = e.body
                 } else {
                   // moves があるので局面を確定してもらう
-                  this.yomikonda_sfen = this.init_sfen_strip
+                  this.yomikonda_sfen = e.body
                   this.kyokumen_kimeru_handle()
                 }
-
-                modal_instance.close()
               }
             })
           },
@@ -80,7 +79,8 @@ export default {
           "update:kyokumen_kimeta_sfen": kyokumen_kimeta_sfen => {
             this.sound_play("click")
             this.general_ok_notice("反映しました")
-            this.$parent.fixed_init_sfen = this.position_sfen_remove(kyokumen_kimeta_sfen)
+            this.$parent.fixed_init_sfen = kyokumen_kimeta_sfen
+            this.$parent.edit_mode_snapshot_sfen(this.$parent.fixed_init_sfen) // 正解を削除するトリガーを明示的に実行
             modal_instance.close()
           },
         },
@@ -93,4 +93,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .the_builder_haiti
+  margin-top: 1.25rem
+  .footer_buttons
+    margin-top: 0.8rem
 </style>

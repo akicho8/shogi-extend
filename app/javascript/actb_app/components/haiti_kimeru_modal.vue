@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.haiti_kimeru_modal
+.modal-card.haiti_kimeru_modal(style="width: auto")
   header.modal-card-head
     p.modal-card-title 局面を確定させてください
   section.modal-card-body
@@ -51,6 +51,11 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .haiti_kimeru_modal
+  .modal-card-body
+    +mobile
+      padding: 0
+      padding-top: 1.5rem
+      padding-bottom: 1rem
   .modal-card-foot
     justify-content: flex-end
     .button
