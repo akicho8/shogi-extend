@@ -4,19 +4,23 @@
 
   .the_builder_new_and_edit(v-if="question")
     .primary_header
+      b-icon.header_item.ljust(icon="arrow-left" @click.native="builder_index_handle")
       .header_center_title {{question_new_record_p ? '新規' : '編集'}}
-      b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
-      .header_link_icon.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}") {{create_or_upate_name}}
+      .header_item.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}")
+        | {{create_or_upate_name}}
 
     .secondary_header
       b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
         b-tab-item(label="配置")
+
         b-tab-item
           template(slot="header")
             span
               | 正解
               b-tag(rounded) {{question.moves_answers.length}}
+
         b-tab-item(label="情報")
+
         b-tab-item
           template(slot="header")
             span
@@ -24,19 +28,7 @@
               b-tag(rounded) {{valid_count}}
 
     template(v-if="current_tab_info.key === 'haiti_mode'")
-      shogi_player(
-        :run_mode="'edit_mode'"
-        :kifu_body="position_sfen_add(fixed_init_sfen)"
-        :start_turn="-1"
-        :slider_show="true"
-        :controller_show="true"
-        :setting_button_show="false"
-        :theme="'simple'"
-        :size="'default'"
-        :sound_effect="false"
-        :volume="0.5"
-        @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
-        )
+      the_builder_haiti
 
     template(v-if="current_tab_info.key === 'seikai_mode'")
       the_builder_play(ref="the_builder_play")
@@ -86,6 +78,7 @@ class TabInfo extends MemoryRecord {
 
 import { support } from "../support.js"
 import the_builder_index from "./the_builder_index.vue"
+import the_builder_haiti from "./the_builder_haiti.vue"
 import the_builder_play from "./the_builder_play.vue"
 import the_builder_form from "./the_builder_form.vue"
 
@@ -96,22 +89,14 @@ export default {
   ],
   components: {
     the_builder_index,
+    the_builder_haiti,
     the_builder_play,
     the_builder_form,
   },
   data() {
     return {
-      // editモード index
-      questions: null,
-
-      // editモード edit
-      sp_run_mode:      null,
-      tab_index:        null,
-      question:         null,
-      fixed_init_sfen:  null,
-      time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
-      answer_tab_index: null,   // 表示している正解タブの位置
-
+      //////////////////////////////////////////////////////////////////////////////// 一覧
+      questions: null,          // 一覧で表示する配列
       // pagination 5点セット
       total:              null,
       page:               null,
@@ -120,10 +105,20 @@ export default {
       sort_order:         null,
       sort_order_default: null,
 
+      //////////////////////////////////////////////////////////////////////////////// 新規・編集
+      tab_index:        null,
+      question:         null,
+      fixed_init_sfen:  null,   // 配置モードでの棋譜
+      time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
+      answer_tab_index: null,   // 表示している正解タブの位置
+
+      //////////////////////////////////////////////////////////////////////////////// 正解モード
       answer_turn_offset:     null, // 正解モードでの手数
       mediator_snapshot_sfen: null, // 正解モードでの局面
-      exam_run_count:        null, // 検証モードで手を動かした数
-      valid_count:            null, // 検証モードで正解した数
+
+      //////////////////////////////////////////////////////////////////////////////// 検証モード
+      exam_run_count: null, // 検証モードで手を動かした数
+      valid_count:    null, // 検証モードで正解した数
     }
   },
 
@@ -152,9 +147,6 @@ export default {
 
   },
 
-  watch: {
-  },
-
   methods: {
     mode_select(tab_key) {
       this.tab_index = TabInfo.fetch(tab_key).code
@@ -169,12 +161,10 @@ export default {
 
     haiti_mode_handle() {
       this.mode_select("haiti_mode")
-      this.sp_run_mode = "edit_mode"
     },
 
     seikai_mode_handle() {
       this.mode_select("seikai_mode")
-      this.sp_run_mode = "play_mode"
     },
 
     form_mode_handle() {
@@ -215,6 +205,7 @@ export default {
       return this.$refs.the_builder_play.$refs.play_sp.moves_take_turn_offset.join(" ")
     },
 
+    // 「この手順を正解とする」
     edit_stock_handle() {
       const moves_str = this.current_moves_str()
 
