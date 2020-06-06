@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 export default {
   name: "the_battle_membership",
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_battle_membership
   // 縦配置
   flex-direction: column

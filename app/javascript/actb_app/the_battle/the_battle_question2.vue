@@ -5,7 +5,7 @@
     //-   | {{app.q_turn_offset}}手目
 
   template(v-if="app.x_mode === 'x1_thinking'")
-    .status1.has-text-centered
+    .status_line2.has-text-centered.has-text-weight-bold
       | {{app.q1_time_str}}
     shogi_player(
       :run_mode="'play_mode'"
@@ -17,14 +17,13 @@
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
-      b-button.has-text-weight-bold(@click="app.wakatta_handle" type="is-primary" size="is-large" :disabled="app.config.otetsuki_enabled && app.answer_button_disable_p") わかった
+      b-button.has-text-weight-bold(@click="app.wakatta_handle" type="is-primary" :disabled="app.config.otetsuki_enabled && app.answer_button_disable_p") わかった
 
   template(v-if="app.x_mode === 'x2_play'")
-    .q2_rest_seconds.has-text-centered
-      span.status2
-        | {{app.q_turn_offset}}手目
-      span.status1
-        | (残り{{app.q2_rest_seconds}}秒)
+    .status_line2.has-text-centered.has-text-weight-bold
+      | {{app.q2_rest_seconds}}
+      template(v-if="development_p")
+        | ({{app.q_turn_offset}})
     shogi_player(
       :key="`quest_${app.question_index}`"
       :run_mode="'play_mode'"
@@ -40,17 +39,12 @@
       @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
-    .akirameru_button.has-text-centered
+    .akirameru_button.has-text-centered(v-if="development_p")
       b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle" size="is-large") 諦める
 
   template(v-if="app.x_mode === 'x3_see'")
-    .has-text-centered
-      p
-        | 相手が操作中です
-      span.status1
-        | {{app.q2_rest_seconds}}
-      span.status2
-        | {{app.q_turn_offset}}手目
+    .status_line2.has-text-centered.has-text-weight-bold
+      | 相手が操作中 ({{app.q_turn_offset}}手目)
     shogi_player(
       :run_mode="'play_mode'"
       :kifu_body="app.share_sfen"
@@ -66,7 +60,7 @@
       @update:turn_offset="v => app.q_turn_offset = v"
     )
 
-  .has-text-centered.tags_container
+  .has-text-centered.tags_container(v-if="development_p")
     //- p 難易度:{{app.c_quest.difficulty_level}}
     b-taglist.is-centered
       b-tag(v-if="app.c_quest.title") {{app.c_quest.title}}
@@ -79,7 +73,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 export default {
   name: "the_battle_question2",
@@ -97,7 +91,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_battle_question2
   .tags_container
     margin-top: 0.7rem

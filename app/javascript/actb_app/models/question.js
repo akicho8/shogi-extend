@@ -18,6 +18,10 @@ export class Question {
     return Math.max(...this.moves_answers.map(e => e.moves_count))
   }
 
+  get display_author() {
+    return this.source_desc || this.user.name
+  }
+
   // private
 
   // 解答のSFENの配列を返す

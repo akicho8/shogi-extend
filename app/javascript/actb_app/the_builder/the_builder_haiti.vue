@@ -53,7 +53,7 @@ export default {
                 const sfen_parser = SfenParser.parse(e.body)
                 if (sfen_parser.moves.length === 0) { // BOD
                   // moves がないということは BOD とみなして即反映
-                  this.general_ok_notice("BODを反映しました")
+                  this.general_ok_notice("反映しました")
                   this.$parent.fixed_init_sfen = e.body
                 } else {
                   // moves があるので局面を確定してもらう

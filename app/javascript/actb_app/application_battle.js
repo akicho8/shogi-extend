@@ -490,7 +490,7 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     q1_time_str() {
-      return dayjs().startOf("year").set("seconds", this.q1_rest_seconds).format("mm:ss")
+      return dayjs().startOf("year").set("seconds", this.q1_rest_seconds).format("m:ss")
     },
     q1_rest_seconds() {
       let v = this.q1_time_limit_sec - this.main_interval_count
