@@ -38,7 +38,7 @@
         @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen"
         )
 
-    template(v-if="current_tab_info.key === 'play_mode'")
+    template(v-if="current_tab_info.key === 'seikai_mode'")
       the_builder_play(ref="the_builder_play")
 
     template(v-if="current_tab_info.key === 'form_mode'")
@@ -73,7 +73,7 @@ class TabInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "haiti_mode", name: "配置", },
-      { key: "play_mode",  name: "正解", },
+      { key: "seikai_mode",  name: "正解", },
       { key: "form_mode",  name: "情報", },
       { key: "exam_mode",  name: "検証", },
     ]
@@ -172,8 +172,8 @@ export default {
       this.sp_run_mode = "edit_mode"
     },
 
-    play_mode_handle() {
-      this.mode_select("play_mode")
+    seikai_mode_handle() {
+      this.mode_select("seikai_mode")
       this.sp_run_mode = "play_mode"
     },
 
