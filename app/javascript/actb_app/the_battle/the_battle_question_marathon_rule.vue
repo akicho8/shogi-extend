@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_battle_question1
+.the_battle_question_marathon_rule
   .status_line2.has-text-centered.has-text-weight-bold
     | {{app.q1_time_str}}
     template(v-if="development_p")
@@ -38,7 +38,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_battle_question1",
+  name: "the_battle_question_marathon_rule",
   mixins: [
     support,
   ],
@@ -53,7 +53,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_battle_question1
+.the_battle_question_marathon_rule
   .tags_container
     margin-top: 0.7rem
   .kaitousuru_button
