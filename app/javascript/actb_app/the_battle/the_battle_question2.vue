@@ -64,9 +64,9 @@
     //- p 難易度:{{app.c_quest.difficulty_level}}
     b-taglist.is-centered
       b-tag(v-if="app.c_quest.title") {{app.c_quest.title}}
-      b-tag(v-if="app.c_quest.source_desc") {{app.c_quest.source_desc}}
-      b-tag(v-if="!app.c_quest.source_desc") {{app.c_quest.user.name}}作
-      b-tag(v-if="app.c_quest.hint_description") {{app.c_quest.hint_description}}
+      b-tag(v-if="app.c_quest.other_author") {{app.c_quest.other_author}}
+      b-tag(v-if="!app.c_quest.other_author") {{app.c_quest.user.name}}作
+      b-tag(v-if="app.c_quest.hint_desc") {{app.c_quest.hint_desc}}
       b-tag(v-if="app.c_quest.difficulty_level && app.c_quest.difficulty_level >= 1")
         template(v-for="i in app.c_quest.difficulty_level")
           | ★

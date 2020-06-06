@@ -15,9 +15,9 @@
 # | difficulty_level      | Difficulty level      | integer(4)  |                     |              | F     |
 # | title                 | タイトル              | string(255) |                     |              |       |
 # | description           | 説明                  | string(512) |                     |              |       |
-# | hint_description      | Hint description      | string(255) |                     |              |       |
-# | source_desc           | Source desc           | string(255) |                     |              |       |
-# | other_twitter_account | Other twitter account | string(255) |                     |              |       |
+# | hint_desc      | Hint description      | string(255) |                     |              |       |
+# | other_author           | Source desc           | string(255) |                     |              |       |
+# | other_author_link | Other twitter account | string(255) |                     |              |       |
 # | created_at            | 作成日時              | datetime    | NOT NULL            |              |       |
 # | updated_at            | 更新日時              | datetime    | NOT NULL            |              |       |
 # | moves_answers_count   | Moves answers count   | integer(4)  | DEFAULT(0) NOT NULL |              | G     |
@@ -49,9 +49,9 @@ module Actb
         # :display_key,
         :title,
         :description,
-        :hint_description,
-        :source_desc,
-        :other_twitter_account,
+        :hint_desc,
+        :other_author,
+        :other_author_link,
         :moves_answers_count,
         :endpos_answers_count,
         :o_count,
@@ -98,9 +98,9 @@ module Actb
       [
         :title,
         :description,
-        :hint_description,
-        :source_desc,
-        :other_twitter_account,
+        :hint_desc,
+        :other_author,
+        :other_author_link,
       ].each do |key|
         public_send("#{key}=", public_send(key).presence)
       end
@@ -143,9 +143,9 @@ module Actb
               :init_sfen,
               :title,
               :description,
-              :hint_description,
-              :source_desc,
-              :other_twitter_account,
+              :hint_desc,
+              :other_author,
+              :other_author_link,
               :difficulty_level,
               :time_limit_sec,
               :folder_key,
@@ -202,9 +202,9 @@ module Actb
             :difficulty_level,
             :title,
             :description,
-            :hint_description,
-            :source_desc,
-            :other_twitter_account,
+            :hint_desc,
+            :other_author,
+            :other_author_link,
           ],
           include: {
             user: {

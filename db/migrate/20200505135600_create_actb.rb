@@ -218,9 +218,9 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :difficulty_level,       null: true,  index: true,  comment: "難易度"
       t.string :title,                   null: true,  index: false, comment: "タイトル"
       t.string :description, limit: 512, null: true,  index: false, comment: "説明"
-      t.string :hint_description,        null: true,  index: false, comment: "ヒント"
-      t.string :source_desc,             null: true,  index: false, comment: "出典"
-      t.string :other_twitter_account,   null: true,  index: false, comment: "自分以外が作者の場合"
+      t.string :hint_desc,        null: true,  index: false, comment: "ヒント"
+      t.string :other_author,             null: true,  index: false, comment: "作者"
+      t.string :other_author_link,   null: true,  index: false, comment:  "作者へのリンク"
       t.timestamps
 
       t.integer :moves_answers_count,  null: false, index: true, default: 0, comment: "A解答数"

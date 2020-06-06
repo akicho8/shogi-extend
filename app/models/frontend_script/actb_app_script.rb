@@ -444,9 +444,9 @@ module FrontendScript
         #   e.difficulty_level      = 5
         #   e.title                 = "(title)"
         #   e.description           = "(description)"
-        #   e.hint_description      = "(hint_description)"
-        #   e.source_desc           = "(source_desc)"
-        #   e.other_twitter_account = "(other_twitter_account)"
+        #   e.hint_desc      = "(hint_desc)"
+        #   e.other_author           = "(other_author)"
+        #   e.other_author_link = "(other_author_link)"
         # end
 
         info[:question_id] = Actb::Question.first&.id

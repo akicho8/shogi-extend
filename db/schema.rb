@@ -244,9 +244,9 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.integer "difficulty_level", comment: "難易度"
     t.string "title", comment: "タイトル"
     t.string "description", limit: 512, comment: "説明"
-    t.string "hint_description", comment: "ヒント"
-    t.string "source_desc", comment: "出典"
-    t.string "other_twitter_account", comment: "自分以外が作者の場合"
+    t.string "hint_desc", comment: "ヒント"
+    t.string "other_author", comment: "出典"
+    t.string "other_author_link", comment: "自分以外が作者の場合"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "moves_answers_count", default: 0, null: false, comment: "A解答数"

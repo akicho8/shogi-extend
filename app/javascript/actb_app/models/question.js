@@ -19,7 +19,7 @@ export class Question {
   }
 
   get display_author() {
-    return this.source_desc || this.user.name
+    return this.other_author || this.user.name
   }
 
   // private

@@ -7,10 +7,10 @@
     b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
 
   b-field(label="ヒント" label-position="on-border")
-    b-input(v-model="$parent.question.hint_description")
+    b-input(v-model="$parent.question.hint_desc")
 
   b-field(label="出典" label-position="on-border" message="他者作品の場合に記入する")
-    b-input(v-model="$parent.question.source_desc" placeholder="初代大橋宗桂作(詰パラ2020.4.1)")
+    b-input(v-model="$parent.question.other_author" placeholder="初代大橋宗桂作(詰パラ2020.4.1)")
 
   b-field(label="制限時間" label-position="on-border")
     b-timepicker(v-model="$parent.time_limit_clock" icon="clock" :enable-seconds="true")
