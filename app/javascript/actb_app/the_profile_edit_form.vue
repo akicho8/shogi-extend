@@ -14,6 +14,9 @@
   .form_container
     .user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit_handle")
       | {{$parent.new_name}}
+
+    b-field(label="自己紹介" label-position="on-border")
+      b-input.new_introduction(type="textarea" v-model="$parent.new_introduction" rows="4")
 </template>
 
 <script>
@@ -53,8 +56,17 @@ export default {
 
     profile_update_handle() {
       this.sound_play("click")
-      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", user_name: this.$parent.new_name, croped_image: this.$parent.croped_image }, e => {
+
+      const params = {
+        user_name:         this.$parent.new_name,
+        user_introduction: this.$parent.new_introduction,
+        croped_image:      this.$parent.croped_image,
+      }
+
+      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", ...params }, e => {
+
         this.app.current_user = e.current_user
+
         this.ok_notice("保存しました")
         this.$parent.var_reset()
 
@@ -91,7 +103,10 @@ export default {
   .form_container
     margin-top: 1rem
     justify-content: center
+    .field
+      margin: 1.5rem 0.5rem
 
   .button_container
     margin-top: 4rem
+
 </style>

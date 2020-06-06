@@ -35,8 +35,7 @@
           :race_key              => "種族",
         },
         "colosseum/profile": {
-          :begin_greeting_message => "対局開始時のあいさつ",
-          :end_greeting_message   => "対局終了時のあいさつ",
+          :begin_greeting_message => "自己紹介",
         },
 
         "colosseum/battle": {

@@ -144,7 +144,7 @@ module FrontendScript
       # FIXME
       if params[:user_single_fetch]
         user = User.find(params[:user_id])
-        return { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
+        return { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :introduction], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
       end
 
       # params = {
@@ -317,6 +317,10 @@ module FrontendScript
         current_user.update!(name: v)
       end
 
+      if v = params[:user_introduction]
+        current_user.profile.update!(introduction: v)
+      end
+
       { current_user: current_user_json }
     end
 
@@ -371,7 +375,7 @@ module FrontendScript
     end
 
     def current_user_json
-      current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating])
+      current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating, :introduction])
     end
 
     def users

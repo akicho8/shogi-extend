@@ -245,8 +245,8 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.string "title", comment: "タイトル"
     t.string "description", limit: 512, comment: "説明"
     t.string "hint_desc", comment: "ヒント"
-    t.string "other_author", comment: "出典"
-    t.string "other_author_link", comment: "自分以外が作者の場合"
+    t.string "other_author", comment: "作者"
+    t.string "other_author_link", comment: "作者へのリンク"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "moves_answers_count", default: 0, null: false, comment: "A解答数"
@@ -553,10 +553,9 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
 
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "begin_greeting_message", null: false, comment: "対局開始時のあいさつ"
-    t.string "end_greeting_message", null: false, comment: "対局終了時のあいさつ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "introduction", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 

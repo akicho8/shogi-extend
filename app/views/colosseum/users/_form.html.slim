@@ -10,13 +10,9 @@
 - if AppConfig[:colosseum_battle_enable]
   = form.fields_for(:profile) do |form|
     .field
-      = form.label(:begin_greeting_message, class: "label")
+      = form.label(:introduction, class: "label")
       .control
-        = form.text_field(:begin_greeting_message, class: "input", rows: [form.object.begin_greeting_message.to_s.lines.count, 1].max)
-    .field
-      = form.label(:end_greeting_message, class: "label")
-      .control
-        = form.text_field(:end_greeting_message, class: "input", rows: [form.object.end_greeting_message.to_s.lines.count, 1].max)
+        = form.text_field(:introduction, class: "input", rows: [form.object.introduction.to_s.lines.count, 1].max)
 
 .field
   = form.label(:avatar, class: "label")
