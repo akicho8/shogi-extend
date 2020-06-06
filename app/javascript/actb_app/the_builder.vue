@@ -23,7 +23,7 @@
               | 検証
               b-tag(rounded) {{valid_count}}
 
-    template(v-if="current_tab_info.key === 'edit_mode'")
+    template(v-if="current_tab_info.key === 'haiti_mode'")
       shogi_player(
         :run_mode="'edit_mode'"
         :kifu_body="position_sfen_add(fixed_init_sfen)"
@@ -72,10 +72,10 @@ import dayjs from "dayjs"
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "edit_mode", name: "配置", },
-      { key: "play_mode", name: "正解", },
-      { key: "form_mode", name: "情報", },
-      { key: "exam_mode", name: "検証", },
+      { key: "haiti_mode", name: "配置", },
+      { key: "play_mode",  name: "正解", },
+      { key: "form_mode",  name: "情報", },
+      { key: "exam_mode",  name: "検証", },
     ]
   }
 
@@ -139,7 +139,7 @@ export default {
 
     this.sound_play("click")
 
-    this.mode_select("edit_mode")
+    this.mode_select("haiti_mode")
     this.tab_change_handle()
 
     if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
@@ -167,8 +167,8 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    edit_mode_handle() {
-      this.mode_select("edit_mode")
+    haiti_mode_handle() {
+      this.mode_select("haiti_mode")
       this.sp_run_mode = "edit_mode"
     },
 
@@ -319,7 +319,7 @@ export default {
       this.valid_count = 0
 
       if (this.app.info.debug_scene === "builder_haiti") {
-        this.edit_mode_handle()
+        this.haiti_mode_handle()
         return
       }
       if (this.app.info.debug_scene === "builder_form") {
@@ -328,7 +328,7 @@ export default {
       }
 
       if (this.question_new_record_p) {
-        this.edit_mode_handle()
+        this.haiti_mode_handle()
       } else {
         this.exam_mode_handle()
       }
