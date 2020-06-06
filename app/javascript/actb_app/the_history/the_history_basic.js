@@ -1,3 +1,5 @@
+import { Question} from "../models/question.js"
+
 export const the_history_basic = {
   data() {
     return {
@@ -12,7 +14,7 @@ export const the_history_basic = {
       } else {
         this.remote_get(this.app.info.put_path, { history_records_fetch: true }, e => {
           if (e.history_records) {
-            this.history_records = e.history_records
+            this.history_records = e.history_records.map(e => Object.assign({}, e, {question: new Question(e.question)}))
           }
         })
       }

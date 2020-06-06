@@ -1,3 +1,5 @@
+import { Question} from "../models/question.js"
+
 export const the_history_clip = {
   data() {
     return {
@@ -13,7 +15,7 @@ export const the_history_clip = {
       } else {
         this.remote_get(this.app.info.put_path, { clip_records_fetch: true }, e => {
           if (e.clip_records) {
-            this.clip_records = e.clip_records
+            this.clip_records = e.clip_records.map(e => Object.assign({}, e, {question: new Question(e.question)}))
           }
         })
       }

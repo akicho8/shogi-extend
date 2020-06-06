@@ -5,18 +5,18 @@
       template(v-if="row.ox_mark.key === 'correct'")
         b-icon(icon="checkbox-blank-circle-outline" type="is-danger")
       template(v-if="row.ox_mark.key === 'mistake'")
-        b-icon(icon="close")
+        b-icon(icon="close" type="is-success")
+      template(v-if="row.ox_mark.key === 'timeout'")
+        b-icon(icon="timer-sand-empty")
     img.board(:src="board_image_url")
     figure.image.is-32x32
       img.is-rounded(:src="row.question.user.avatar_path")
     .question_block.is-flex
       .uegawa
-        .has-text-weight-bold
-          template(v-if="row.question.source_desc")
-            | {{row.question.source_desc}}
-          template(v-else)
-            | {{row.question.user.name}}作
-        .question_title(v-if="row.question.title")
+        .question_user.is-size-6.has-text-grey
+          | {{row.question.display_author}}
+          span.question_user_unit.has-text-grey 作
+        .question_title.has-text-weight-bold(v-if="row.question.title")
           | {{row.question.title}}
         .question_description(v-if="row.question.description")
           | {{row.question.description}}
@@ -90,4 +90,8 @@ export default {
     align-items: flex-start
     .question_title
     .bottom_block
+
+    .question_user_unit
+      margin-left: 0.1rem
+      font-size: 0.75rem
 </style>

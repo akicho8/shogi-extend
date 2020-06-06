@@ -34,7 +34,7 @@
 
 <script>
 import { support } from "./support.js"
-import the_history_row_vote from "./the_history_row_vote.vue"
+import the_history_row_vote from "./the_history/the_history_row_vote.vue"
 import the_question_show_message from "./the_question_show_message.vue"
 
 export default {

@@ -5,7 +5,7 @@
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")
-        b-tab-item.is-size-2(:label="tab_info.tab_name")
+        b-tab-item(:label="tab_info.tab_name")
 
   template(v-if="current_tab_info.key === 'history_index'")
     the_history_row(v-for="row in history_records" :row="row")
@@ -44,8 +44,6 @@ export default {
   ],
   components: {
     the_history_row,
-  },
-  props: {
   },
   data() {
     return {
