@@ -462,24 +462,4 @@ export default {
     @extend %padding_top_for_secondary_header
     .primary_header
       justify-content: space-between
-
-  //////////////////////////////////////////////////////////////////////////////// 編集
-
-  // position: relative
-  // .delete
-  //   position: absolute
-  //   top: 0rem
-  //   right: 0rem
-  //   z-index: 1
-
-  // .switch_grouped_container
-  //   margin-top: 0.5rem
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // .save_container
-  //   margin-top: 1.5rem
-  //   .button
-  //     margin: 0 0.8rem
-
-  //////////////////////////////////////////////////////////////////////////////// 共通
 </style>
