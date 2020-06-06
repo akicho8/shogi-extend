@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 export default {
   name: "the_builder_play",
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_builder_play
   // この手順を正解にする
   .konotejunsiikai

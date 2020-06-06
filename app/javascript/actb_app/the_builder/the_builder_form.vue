@@ -32,15 +32,9 @@
 </template>
 
 <script>
-import { support } from "./support.js"
-
-import MemoryRecord from 'js-memory-record'
-
-class LineageInfo extends MemoryRecord {
-}
-
-class FolderInfo extends MemoryRecord {
-}
+import { support } from "../support.js"
+import { LineageInfo } from '../models/lineage_info.js'
+import { FolderInfo }  from '../models/folder_info.js'
 
 export default {
   name: "the_builder_form",
@@ -88,7 +82,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_builder_form
   margin: 2.4rem 0.8rem
   .field:not(:first-child)

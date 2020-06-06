@@ -39,7 +39,7 @@ import the_matching      from "./the_matching.vue"
 import the_battle          from "./the_battle.vue"
 import the_room_message  from "./the_room_message.vue"
 import the_result        from "./the_result.vue"
-import the_builder       from "./the_builder.vue"
+import the_builder       from "./the_builder/the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history.vue"
 

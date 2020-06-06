@@ -84,7 +84,7 @@ class TabInfo extends MemoryRecord {
   }
 }
 
-import { support } from "./support.js"
+import { support } from "../support.js"
 import the_builder_index from "./the_builder_index.vue"
 import the_builder_play from "./the_builder_play.vue"
 import the_builder_form from "./the_builder_form.vue"
@@ -456,7 +456,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_builder
   .the_builder_new_and_edit
     @extend %padding_top_for_secondary_header
