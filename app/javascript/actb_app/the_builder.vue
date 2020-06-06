@@ -6,6 +6,8 @@
     .primary_header
       .header_center_title {{question_new_record_p ? '新規' : '編集'}}
       b-icon.header_link_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
+      .header_link_icon.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}") {{create_or_upate_name}}
+
     .secondary_header
       b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
         b-tab-item(label="配置")
@@ -56,10 +58,10 @@
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 
-    .save_container
-      .buttons.is-centered
-        b-button.has-text-weight-bold(@click="save_handle" :type="save_button_type") {{create_or_upate_name}}
-        //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
+    //- .save_container
+    //-   .buttons.is-centered
+    //-     b-button.has-text-weight-bold(@click="save_handle" :type="save_button_enabled") {{create_or_upate_name}}
+    //-     //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
   debug_print
 </template>
 
@@ -422,10 +424,8 @@ export default {
       return dayjs("2000-01-01T00:00:00+09:00")
     },
 
-    save_button_type() {
-      if (this.question.moves_answers.length >= 1) {
-        return "is-primary"
-      }
+    save_button_enabled() {
+      return this.question.moves_answers.length >= 1
     },
 
     question_new_record_p() {
@@ -472,10 +472,10 @@ export default {
   //   margin-top: 0.5rem
 
   ////////////////////////////////////////////////////////////////////////////////
-  .save_container
-    margin-top: 1.5rem
-    .button
-      margin: 0 0.8rem
+  // .save_container
+  //   margin-top: 1.5rem
+  //   .button
+  //     margin: 0 0.8rem
 
   //////////////////////////////////////////////////////////////////////////////// 共通
 </style>
