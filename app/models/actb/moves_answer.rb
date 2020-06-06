@@ -36,7 +36,7 @@ module Actb
         if changes_to_save[:moves_str] && moves_str
           # 親の init_sfen + 自分の moves_str で重複がないことを確認する
           # TODO: self.class.joins(:question).where(Question.arel_table[:init_sfen].eq(init_sfen)) とした方がいいかも
-          s = Question.where(init_sfen: question.init_sfen)
+          s = Question.where(init_sfen: question.read_attribute(:init_sfen))
           if persisted?
             s = s.where.not(id: question.id_in_database)
           end

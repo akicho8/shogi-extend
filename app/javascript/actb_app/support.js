@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 
-const POSITION_SFEN_PREFIX = "position sfen "
+// const POSITION_SFEN_PREFIX = "position sfen "
 
 export const support = {
   methods: {
@@ -28,18 +28,18 @@ export const support = {
       this.talk(message_body, {rate: 1.5})
     },
 
-    position_sfen_remove(sfen) {
-      this.__assert__(sfen != null, "sfen != null")
-      return sfen.replace(POSITION_SFEN_PREFIX, "")
-    },
-
-    position_sfen_add(sfen) {
-      this.__assert__(sfen != null, "sfen != null")
-      if (!sfen.includes(POSITION_SFEN_PREFIX)) {
-        sfen = POSITION_SFEN_PREFIX + sfen
-      }
-      return sfen
-    },
+    // position_sfen_remove(sfen) {
+    //   this.__assert__(sfen != null, "sfen != null")
+    //   return sfen.replace(POSITION_SFEN_PREFIX, "")
+    // },
+    //
+    // position_sfen_add(sfen) {
+    //   this.__assert__(sfen != null, "sfen != null")
+    //   if (!sfen.includes(POSITION_SFEN_PREFIX)) {
+    //     sfen = POSITION_SFEN_PREFIX + sfen
+    //   }
+    //   return sfen
+    // },
 
     main_nav_set(display_p) {
       return

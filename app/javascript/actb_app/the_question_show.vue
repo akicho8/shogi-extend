@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     init_sfen() {
-      return ["position", "sfen", this.app.ov_question_info.question.init_sfen].join(" ") // FIXME
+      return [this.app.ov_question_info.question.init_sfen].join(" ") // FIXME
     },
     selected_sfen() {
       if (this.tab_index === 0) {

@@ -10,7 +10,7 @@ export class Question {
 
   // 盤面の初期状態
   get full_init_sfen() {
-    return ["position", "sfen", this.init_sfen].join(" ")
+    return this.init_sfen
   }
 
   // すべての解答の中から最大手数を得る
@@ -22,6 +22,6 @@ export class Question {
 
   // 解答のSFENの配列を返す
   get answer_sfen_list() {
-    return this.moves_answers.map(e => ["position", "sfen", this.init_sfen, "moves", e.moves_str].join(" "))
+    return this.moves_answers.map(e => [this.init_sfen, "moves", e.moves_str].join(" "))
   }
 }

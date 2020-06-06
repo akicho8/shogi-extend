@@ -2,7 +2,7 @@
 .the_builder_kensho
   shogi_player(
     :run_mode="'play_mode'"
-    :kifu_body="position_sfen_add($parent.question.init_sfen)"
+    :kifu_body="$parent.question.init_sfen"
     :start_turn="0"
     :slider_show="true"
     :controller_show="true"

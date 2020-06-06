@@ -170,8 +170,6 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     edit_mode_snapshot_sfen(sfen) {
-      sfen = this.position_sfen_remove(sfen)
-
       // console.log(this.question.init_sfen)
       // console.log(sfen)
 
@@ -225,7 +223,7 @@ export default {
     },
 
     full_sfen_build(moves_answer_attributes) {
-      return ["position", "sfen", this.question.init_sfen, "moves", moves_answer_attributes.moves_str].join(" ")
+      return [this.question.init_sfen, "moves", moves_answer_attributes.moves_str].join(" ")
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -289,7 +287,7 @@ export default {
       this.question = row
 
       // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
-      this.fixed_init_sfen = this.position_sfen_add(this.question.init_sfen)
+      this.fixed_init_sfen = this.question.init_sfen
       // this.$set(this.question, "fixed_init_sfen", this.question.init_sfen)
 
       this.time_limit_clock_set()
@@ -373,7 +371,7 @@ export default {
     },
 
     mediator_snapshot_sfen_set(sfen) {
-      this.mediator_snapshot_sfen = this.position_sfen_remove(sfen)
+      this.mediator_snapshot_sfen = sfen
     },
 
     builder_index_handle(event) {

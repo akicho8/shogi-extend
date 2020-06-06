@@ -9,7 +9,7 @@
     :key="`quest_${app.question_index}`"
     ref="main_sp"
     :run_mode="'play_mode'"
-    :kifu_body="position_sfen_add(app.c_quest.full_init_sfen)"
+    :kifu_body="app.c_quest.full_init_sfen"
     :summary_show="false"
     :setting_button_show="false"
     :size="'default'"

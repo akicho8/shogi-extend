@@ -89,7 +89,7 @@ module Actb
 
     before_validation do
       if Rails.env.test?
-        self.init_sfen ||= "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Question.count.next}p 1"
+        self.init_sfen ||= "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Question.count.next}p 1"
         if moves_answers.empty?
           moves_answers.build(moves_str: "G*5b")
         end
@@ -167,6 +167,7 @@ module Actb
           moves_answer.end_sfen = e[:end_sfen]
           moves_answer.save!
         end
+
       end
     end
 
@@ -179,6 +180,16 @@ module Actb
     def folder_key=(key)
       if user
         self.folder = user.public_send("actb_#{key}_box")
+      end
+    end
+
+    def init_sfen=(sfen)
+      write_attribute(:init_sfen, sfen.to_s.remove(/position sfen /).presence)
+    end
+
+    def init_sfen
+      if sfen = read_attribute(:init_sfen)
+        "position sfen #{sfen}"
       end
     end
 
