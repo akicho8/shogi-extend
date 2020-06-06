@@ -142,7 +142,7 @@ export default {
     this.mode_select("edit_mode")
     this.tab_change_handle()
 
-    if (this.app.info.debug_scene === "builder_form") {
+    if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
       this.builder_new_handle()
       return
     }
@@ -318,6 +318,10 @@ export default {
       this.answer_turn_offset = 0
       this.valid_count = 0
 
+      if (this.app.info.debug_scene === "builder_haiti") {
+        this.edit_mode_handle()
+        return
+      }
       if (this.app.info.debug_scene === "builder_form") {
         this.form_mode_handle()
         return

@@ -138,7 +138,7 @@ export default {
         if (this.info.debug_scene === "result") {
           this.room_setup(this.info.room)
         }
-        if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_form") {
+        if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_haiti" || this.info.debug_scene === "builder_form") {
           this.builder_handle()
         }
         if (this.info.debug_scene === "ranking") {
