@@ -27,7 +27,7 @@
 <script>
 import MemoryRecord from 'js-memory-record'
 
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 import the_history_row_vote from "./the_history_row_vote.vue"
 
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_history_row
   padding-top: 0.5rem
   padding-bottom: 0.5rem

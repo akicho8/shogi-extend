@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 export default {
   name: "the_history_row_vote",
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_history_row_vote
   .icon_with_counter
     @extend %icon_with_counter

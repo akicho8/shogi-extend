@@ -41,7 +41,7 @@ import the_room_message  from "./the_room_message.vue"
 import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder/the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
-import the_history       from "./the_history.vue"
+import the_history       from "./the_history/the_history.vue"
 
 import { application_room     } from "./application_room.js"
 import { application_battle     } from "./application_battle.js"
