@@ -20,8 +20,12 @@ module Actb
         validates :body
       end
 
-      if table_exists?
-        validates :body, length: { maximum: columns_hash["body"].limit }
+      begin
+        if table_exists?
+          validates :body, length: { maximum: columns_hash["body"].limit }
+        end
+      rescue Mysql2::Error => error
+        p ["#{__FILE__}:#{__LINE__}", __method__, error]
       end
 
       # begin
