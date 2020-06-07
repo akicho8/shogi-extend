@@ -20,7 +20,9 @@ module Actb
         validates :body
       end
 
-      validates :body, length: { maximum: columns_hash["body"].limit }
+      if table_exists?
+        validates :body, length: { maximum: columns_hash["body"].limit }
+      end
     end
   end
 end
