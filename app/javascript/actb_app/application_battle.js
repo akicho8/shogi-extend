@@ -304,7 +304,7 @@ export const application_battle = {
           this.answer_button_disable_p = false // 元々誤答していたら解答権利復活させる
         }
         this.x_mode = "x3_see"
-        this.share_sfen = this.c_quest.full_init_sfen // 初期状態にしておく
+        this.share_sfen = this.c_quest.init_sfen // 初期状態にしておく
         this.sound_play("poon")
       }
     },

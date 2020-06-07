@@ -9,7 +9,7 @@
       | {{app.q1_time_str}}
     shogi_player(
       :run_mode="'play_mode'"
-      :kifu_body="app.c_quest.full_init_sfen"
+      :kifu_body="app.c_quest.init_sfen"
       :summary_show="false"
       :setting_button_show="false"
       :size="'default'"
@@ -27,7 +27,7 @@
     shogi_player(
       :key="`quest_${app.question_index}`"
       :run_mode="'play_mode'"
-      :kifu_body="app.c_quest.full_init_sfen"
+      :kifu_body="app.c_quest.init_sfen"
       :summary_show="false"
       :setting_button_show="false"
       :size="'default'"

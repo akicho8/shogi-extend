@@ -8,11 +8,6 @@ export class Question {
     return this.answer_sfen_list.includes(sfen)
   }
 
-  // 盤面の初期状態
-  get full_init_sfen() {
-    return this.init_sfen
-  }
-
   // すべての解答の中から最大手数を得る
   get moves_count_max() {
     return Math.max(...this.moves_answers.map(e => e.moves_count))

@@ -49,14 +49,15 @@
 <script>
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
+import { Question } from "../models/question.js"
 
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "haiti_mode", name: "配置", },
-      { key: "seikai_mode",  name: "正解", },
-      { key: "form_mode",  name: "情報", },
-      { key: "exam_mode",  name: "検証", },
+      { key: "haiti_mode",  name: "配置", },
+      { key: "seikai_mode", name: "正解", },
+      { key: "form_mode",   name: "情報", },
+      { key: "exam_mode",   name: "検証", },
     ]
   }
 
@@ -336,19 +337,14 @@ export default {
         sort_order:         this.sort_order,
         sort_order_default: this.sort_order_default,
       }, e => {
-        // if (e.error_message) {
-        //   this.warning_notice(e.error_message)
-        // }
-        if (e.questions) {
-          this.questions   = e.questions
+        this.questions = e.questions.map(e => new Question(e))
 
-          this.total              = e.total
-          this.page               = e.page
-          this.per                = e.per
-          this.sort_column        = e.sort_column
-          this.sort_order         = e.sort_order
-          this.sort_order_default = e.sort_order_default
-        }
+        this.total              = e.total
+        this.page               = e.page
+        this.per                = e.per
+        this.sort_column        = e.sort_column
+        this.sort_order         = e.sort_order
+        this.sort_order_default = e.sort_order_default
       })
     },
 
