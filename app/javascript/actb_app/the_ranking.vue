@@ -14,8 +14,7 @@
         b-tab-item.is-size-2(:label="tab_info.name")
 
   .the_ranking_rows(v-if="rank_data")
-    template(v-for="row in rank_data.rank_records")
-      the_ranking_row(:row="row")
+    the_ranking_row(v-for="row in rank_data.rank_records" :row="row")
 
     template(v-if="!rank_data.user_rank_in && rank_data.current_user_rank_record")
       the_ranking_row.current_user_rank_record(:row="rank_data.current_user_rank_record")
@@ -104,18 +103,20 @@ export default {
     fetch_handle() {
       // if (this.rank_records_hash[this.current_tab_info.key]) {
       // } else {
-      const params = { remote_action: "ranking_fetch", ranking_key: this.current_tab_info.key, season_id: this.season_id }
+      const params = {
+        ranking_key: this.current_tab_info.key,
+        season_id:   this.season_id,
+      }
       if (this.development_p) {
         params.take = 5
         params.shuffle = true
       }
-      this.remote_get(this.app.info.put_path, params, e => {
-        if (e.rank_data) {
-          this.rank_data = e.rank_data
-        }
+      this.remote_get(this.app.info.put_path, {remote_action: "ranking_fetch", ...params}, e => {
+        this.rank_data = e.rank_data
       })
     },
 
+    // 音を出すためだけのフック
     dots_vertical_click_handle() {
       this.sound_play('click')
       // if (!this.seasons) {

@@ -9,7 +9,7 @@
       template(v-if="row.ox_mark.key === 'timeout'")
         b-icon(icon="timer-sand-empty")
     img.board(:src="board_image_url")
-    figure.image.is-32x32
+    figure.image.is-32x32(@click="app.ov_user_info_set(row.question.user.id)")
       img.is-rounded(:src="row.question.user.avatar_path")
     .question_block.is-flex
       .uegawa
