@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def create
     user = User.create!
-    flash[:info] = "「#{user.name}」としてログインしました"
+    flash[:toast_info] = "「#{user.name}」としてログインしました"
     current_user_set(user)
     sign_in_and_redirect user
   end

@@ -113,7 +113,7 @@ module FrontendScript
 
       if params[:login_required]
         unless current_user
-          h.session[:return_to] = h.url_for(script_link_path)
+          h.session[:return_to] = h.url_for(:tb)
           c.redirect_to :new_xuser_session
           return
         end
