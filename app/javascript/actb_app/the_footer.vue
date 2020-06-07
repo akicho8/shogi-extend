@@ -2,8 +2,10 @@
 .the_footer.footer_nav.is-flex
   b-button(icon-left="home-outline"   @click="app.lobby_handle"   :type="{'is-primary': app.mode === 'lobby'}"   )
   b-button(icon-left="crown-outline"  @click="app.ranking_handle" :type="{'is-primary': app.mode === 'ranking'}" )
-  b-button(icon-left="note-outline"   @click="app.history_handle" :type="{'is-primary': app.mode === 'history'}" )
-  b-button(icon-left="wrench-outline" @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}" )
+
+  template(v-if="app.current_user")
+    b-button(icon-left="note-outline"   @click="app.history_handle" :type="{'is-primary': app.mode === 'history'}" )
+    b-button(icon-left="wrench-outline" @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}" )
 
   b-dropdown(position="is-top-left")
     b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
@@ -18,8 +20,6 @@ export default {
   mixins: [
     support,
   ],
-  mounted() {
-  },
 }
 </script>
 

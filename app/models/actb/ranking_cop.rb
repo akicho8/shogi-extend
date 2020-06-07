@@ -25,11 +25,13 @@ module Actb
     def to_h
       retv = {}
       retv[:ranking_key] = ranking_key
-      retv[:user_rank_in] = top_users.any? { |e| e == current_user }
-      if user_actb_season_xrecord
-        retv[:current_user_rank_record] = { rank: user_rank, user: current_user.as_json(user_as_json_params) }
-      else
-        # そのシーズンにはプレイしていなかった場合
+      if current_user
+        retv[:user_rank_in] = top_users.any? { |e| e == current_user }
+        if user_actb_season_xrecord
+          retv[:current_user_rank_record] = { rank: user_rank, user: current_user.as_json(user_as_json_params) }
+        else
+          # そのシーズンにはプレイしていなかった場合
+        end
       end
       retv[:rank_records] = top_users.collect.with_index(1) { |user, rank|
         { rank: rank, user: user.as_json(user_as_json_params) }
