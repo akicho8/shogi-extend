@@ -24,7 +24,7 @@ module Actb
         if table_exists?
           validates :body, length: { maximum: columns_hash["body"].limit }
         end
-      rescue Mysql2::Error => error
+      rescue ActiveRecord::StatementInvalid => error
         p ["#{__FILE__}:#{__LINE__}", __method__, error]
       end
 
