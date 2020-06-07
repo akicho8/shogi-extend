@@ -39,9 +39,10 @@ User.setup
     e.difficulty_level      = 5
     e.title                 = "(title)"
     e.description           = "(description)"
-    e.hint_desc      = "(hint_desc)"
-    e.other_author           = "(other_author)"
-    e.other_author_link = "(other_author_link)"
+    e.hint_desc             = "(hint_desc)"
+    if i.odd?
+      e.other_author        = "(other_author)"
+    end
   end
 end
 Actb::Question.count           # => 10

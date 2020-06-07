@@ -236,6 +236,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
   end
 
   create_table "actb_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
     t.bigint "lineage_id", null: false, comment: "種類"
@@ -246,7 +247,9 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.string "description", limit: 512, comment: "説明"
     t.string "hint_desc", comment: "ヒント"
     t.string "other_author", comment: "作者"
-    t.string "other_author_link", comment: "作者へのリンク"
+    t.string "source_media_name", comment: "出典メディア"
+    t.string "source_media_url", comment: "出典URL"
+    t.date "source_published_on", comment: "出典年月日"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "moves_answers_count", default: 0, null: false, comment: "A解答数"
@@ -265,6 +268,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["endpos_answers_count"], name: "index_actb_questions_on_endpos_answers_count"
     t.index ["folder_id"], name: "index_actb_questions_on_folder_id"
     t.index ["init_sfen"], name: "index_actb_questions_on_init_sfen"
+    t.index ["key"], name: "index_actb_questions_on_key"
     t.index ["lineage_id"], name: "index_actb_questions_on_lineage_id"
     t.index ["moves_answers_count"], name: "index_actb_questions_on_moves_answers_count"
     t.index ["o_count"], name: "index_actb_questions_on_o_count"

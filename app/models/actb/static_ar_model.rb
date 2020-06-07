@@ -28,6 +28,12 @@ module Actb
         find_by!(key: key)
       end
 
+      def fetch_if(key)
+        if key
+          fetch(key)
+        end
+      end
+
       def lookup(key)
         find_by(key: key)
       end

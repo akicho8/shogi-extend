@@ -50,8 +50,12 @@ module Actb
         :title,
         :description,
         :hint_desc,
+
         :other_author,
-        :other_author_link,
+        :source_media_name,
+        :source_media_url,
+        :source_published_on,
+
         :moves_answers_count,
         :endpos_answers_count,
         :o_count,
@@ -100,7 +104,9 @@ module Actb
         :description,
         :hint_desc,
         :other_author,
-        :other_author_link,
+        :source_media_name,
+        :source_media_url,
+        :source_published_on,
       ].each do |key|
         public_send("#{key}=", public_send(key).presence)
       end
@@ -120,6 +126,8 @@ module Actb
       if user
         self.folder ||= user.actb_active_box
       end
+
+      self.key ||= SecureRandom.hex
     end
 
     with_options presence: true do
@@ -144,8 +152,12 @@ module Actb
               :title,
               :description,
               :hint_desc,
+
               :other_author,
-              :other_author_link,
+              :source_media_name,
+              :source_media_url,
+              :source_published_on,
+
               :difficulty_level,
               :time_limit_sec,
               :folder_key,
@@ -193,6 +205,16 @@ module Actb
       end
     end
 
+    def lineage_key
+      if lineage
+        lineage.key
+      end
+    end
+
+    def lineage_key=(key)
+      self.lineage = Lineage.fetch_if(key)
+    end
+
     def as_json_type3
       as_json({
           only: [
@@ -216,6 +238,86 @@ module Actb
             },
           },
         })
+    end
+
+    concerning :ImportExportMethdos do
+      included do
+      end
+
+      class_methods do
+        def export_all
+          json = all.as_json({
+              only: [
+                :key,
+                :init_sfen,
+                :time_limit_sec,
+                :difficulty_level,
+                :title,
+                :description,
+                :hint_desc,
+                :other_author,
+                :source_media_name,
+                :source_media_url,
+                :source_published_on,
+              ],
+              methods: [
+                :lineage_key,
+              ],
+              include: {
+                :moves_answers => {
+                  only: [
+                    :moves_str,
+                  ],
+                },
+              },
+            })
+
+          body = json.to_yaml
+
+          file = Rails.root.join("app/models/actb/#{name.demodulize.underscore.pluralize}.yml")
+          FileUtils.mkdir_p(file.expand_path.dirname)
+          file.write(body)
+          puts "write: #{file}"
+        end
+
+        def import_all(user)
+          persistent_records.each do |e|
+            record = user.actb_questions.find_or_initialize_by(key: e[:key])
+            record.update!(e.slice(*[
+                  :lineage_key,
+                  :init_sfen,
+                  :time_limit_sec,
+                  :difficulty_level,
+                  :title,
+                  :description,
+                  :hint_desc,
+                  :other_author,
+                  :source_media_name,
+                  :source_media_url,
+                  :source_published_on,
+                ]))
+            record.moves_answers.clear
+            e[:moves_answers].each do |e|
+              record.moves_answers.create!(moves_str: e)
+            end
+          end
+        end
+
+        private
+
+        def persistent_file
+          Rails.root.join("app/models/actb/#{name.demodulize.underscore.pluralize}.yml")
+        end
+
+        def persistent_records
+          body = []
+          if persistent_file.exist?
+            body = YAML.load(persistent_file.read)
+            puts "load: #{persistent_file}"
+          end
+          body.collect(&:deep_symbolize_keys)
+        end
+      end
     end
   end
 end

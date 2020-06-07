@@ -1,0 +1,17 @@
+---
+- key: e218d5f1d62d0d39fdf55e248adc0d78
+  init_sfen: position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1
+  time_limit_sec: 180
+  difficulty_level: 5
+  title: "(title)"
+  description: "(description)"
+  hint_desc: "(hint_desc)"
+  other_author: "(other_author)"
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: G*4b
+  - moves_str: G*5b
+  - moves_str: G*6b

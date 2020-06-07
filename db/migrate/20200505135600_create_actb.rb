@@ -209,6 +209,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     create_table :actb_questions do |t|
+      t.string :key, null: false, index: true
+
       t.belongs_to :user,    null: false, comment: "作成者"
       t.belongs_to :folder,  null: false, comment: "フォルダ"
       t.belongs_to :lineage, null: false, comment: "種類"
@@ -223,7 +225,6 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.string :source_media_name,        null: true,  index: false, comment: "出典メディア"
       t.string :source_media_url,         null: true,  index: false, comment: "出典URL"
       t.date :source_published_on,        null: true,  index: false, comment: "出典年月日"
-      t.string :other_author_link,   null: true,  index: false, comment:  "作者へのリンク"
       t.timestamps
 
       t.integer :moves_answers_count,  null: false, index: true, default: 0, comment: "A解答数"
