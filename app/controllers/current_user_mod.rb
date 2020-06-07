@@ -44,18 +44,6 @@ module CurrentUserMod
       user = nil
       user ||= User.find_by(id: id)
       user ||= current_xuser
-
-      # if Rails.env.test?
-      #   if params[:__create_user_name__]
-      #     user ||= User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
-      #     user.lobby_in_handle
-      #     cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
-      #   end
-      # end
-
-      # if user
-      #   cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
-      # end
     end
   end
 
@@ -80,10 +68,6 @@ module CurrentUserMod
   end
 
   def current_user_clear
-    if current_user
-      current_user.lobby_out_handle
-    end
-
     session.delete(:user_id)
     cookies.delete(:user_id)
     sign_out(:xuser)

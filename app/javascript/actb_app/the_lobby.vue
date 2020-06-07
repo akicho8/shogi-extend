@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_lobby
   .primary_header
-    .user_info_block.is-flex
+    .user_info_block.is-flex(v-if="app.current_user")
       .image.is_clickable(@click="app.profile_edit_handle")
         img.is-rounded(:src="app.current_user.avatar_path")
       .name_with_rating.is_clickable(@click="app.ov_user_info_set(app.current_user.id)")

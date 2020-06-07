@@ -19,7 +19,7 @@ import the_lobby_debug from "./the_lobby_debug.vue"
 export default {
   name: "the_matching",
   components: {
-    the_lobby_debug
+  the_lobby_debug
   },
   mixins: [
     support,

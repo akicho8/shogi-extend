@@ -7,23 +7,26 @@
 # | name                 | desc                 | type        | opts                | refs         | index |
 # |----------------------+----------------------+-------------+---------------------+--------------+-------|
 # | id                   | ID                   | integer(8)  | NOT NULL PK         |              |       |
-# | user_id              | User                 | integer(8)  | NOT NULL            | => ::User#id | A     |
-# | folder_id            | Folder               | integer(8)  | NOT NULL            |              | B     |
-# | lineage_id           | Lineage              | integer(8)  | NOT NULL            |              | C     |
-# | init_sfen            | Init sfen            | string(255) | NOT NULL            |              | D     |
-# | time_limit_sec       | Time limit sec       | integer(4)  |                     |              | E     |
-# | difficulty_level     | Difficulty level     | integer(4)  |                     |              | F     |
+# | key                  | ユニークなハッシュ   | string(255) | NOT NULL            |              | A     |
+# | user_id              | User                 | integer(8)  | NOT NULL            | => ::User#id | B     |
+# | folder_id            | Folder               | integer(8)  | NOT NULL            |              | C     |
+# | lineage_id           | Lineage              | integer(8)  | NOT NULL            |              | D     |
+# | init_sfen            | Init sfen            | string(255) | NOT NULL            |              | E     |
+# | time_limit_sec       | Time limit sec       | integer(4)  |                     |              | F     |
+# | difficulty_level     | Difficulty level     | integer(4)  |                     |              | G     |
 # | title                | タイトル             | string(255) |                     |              |       |
 # | description          | 説明                 | string(512) |                     |              |       |
 # | hint_desc            | Hint desc            | string(255) |                     |              |       |
 # | other_author         | Other author         | string(255) |                     |              |       |
-# | other_author_link    | Other author link    | string(255) |                     |              |       |
+# | source_media_name    | Source media name    | string(255) |                     |              |       |
+# | source_media_url     | Source media url     | string(255) |                     |              |       |
+# | source_published_on  | Source published on  | date        |                     |              |       |
 # | created_at           | 作成日時             | datetime    | NOT NULL            |              |       |
 # | updated_at           | 更新日時             | datetime    | NOT NULL            |              |       |
-# | moves_answers_count  | Moves answers count  | integer(4)  | DEFAULT(0) NOT NULL |              | G     |
-# | endpos_answers_count | Endpos answers count | integer(4)  | DEFAULT(0) NOT NULL |              | H     |
-# | o_count              | O count              | integer(4)  | NOT NULL            |              | I     |
-# | x_count              | X count              | integer(4)  | NOT NULL            |              | J     |
+# | moves_answers_count  | Moves answers count  | integer(4)  | DEFAULT(0) NOT NULL |              | H     |
+# | endpos_answers_count | Endpos answers count | integer(4)  | DEFAULT(0) NOT NULL |              | I     |
+# | o_count              | O count              | integer(4)  | NOT NULL            |              | J     |
+# | x_count              | X count              | integer(4)  | NOT NULL            |              | K     |
 # | bad_count            | Bad count            | integer(4)  | NOT NULL            |              |       |
 # | good_count           | Good count           | integer(4)  | NOT NULL            |              |       |
 # | histories_count      | Histories count      | integer(4)  | DEFAULT(0) NOT NULL |              |       |

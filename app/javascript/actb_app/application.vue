@@ -353,6 +353,11 @@ export default {
       return url.toString()
     },
 
+    debug_mode_p() {
+      if (this.current_user) {
+        return this.current_user.key === "sysop"
+      }
+    },
   },
 }
 </script>

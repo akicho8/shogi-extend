@@ -69,6 +69,7 @@ module FrontendScript
               "履歴"                         => :history,
               "問題詳細"                     => :ov_question_info,
               "ユーザー詳細"                 => :ov_user_info,
+              "ログインしていない状態"       => :no_login_lobby,
             },
 
             :type    => :select,
@@ -79,9 +80,11 @@ module FrontendScript
     end
 
     def script_body
-      if Rails.env.development?
-        c.sysop_login_unless_logout
-      end
+      # if current_debug_scene != :no_login_lobby
+      #   if Rails.env.development?
+      #     c.sysop_login_unless_logout
+      #   end
+      # end
 
       if v = params[:remote_action]
         return public_send(v)
@@ -152,8 +155,10 @@ module FrontendScript
       info[:put_path] = h.url_for(script_link_path)
       info[:question_default] = question_default
 
-      if current_user
-        info[:current_user] = current_user_json
+      if current_debug_scene != :no_login_lobby
+        if current_user
+          info[:current_user] = current_user_json
+        end
       end
 
       # info[:battle] = current_battle
@@ -241,7 +246,7 @@ module FrontendScript
 
     # http://localhost:3000/script/actb-app.json?remote_action=lobby_messages_fetch
     def lobby_messages_fetch
-      lobby_messages = Actb::LobbyMessage.order(:created_at).last(MESSSAGE_LIMIT)
+      lobby_messages = Actb::LobbyMessage.order(:created_at).includes(:user).last(MESSSAGE_LIMIT)
       lobby_messages = lobby_messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
       { lobby_messages: lobby_messages }
     end
