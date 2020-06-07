@@ -1,6 +1,8 @@
 module FrontendScript
   class Base < AtomicScript::Base
-    include AtomicScript::AddJsonLinkMod
+    if Rails.env.development?
+      include AtomicScript::AddJsonLinkMod
+    end
 
     # include Rails.application.routes.url_helpers
 

@@ -33,10 +33,6 @@
 #
 module FrontendScript
   class ActbAppScript < ::FrontendScript::Base
-    if Rails.env.development?
-      include AtomicScript::AddJsonLinkMod
-    end
-
     include SortMod
 
     self.script_name = "将棋トレーニングバトル"
