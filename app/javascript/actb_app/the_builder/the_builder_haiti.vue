@@ -13,8 +13,9 @@
     :volume="0.5"
     @update:edit_mode_snapshot_sfen="$parent.edit_mode_snapshot_sfen"
     )
-  .buttons.is-centered.footer_buttons
+  .buttons.is-centered.are-small.footer_buttons
     b-button(@click="any_source_read_handle") 棋譜の読み込み
+    b-button(@click="kifu_copy_handle") 棋譜コピー
 </template>
 
 <script>
@@ -47,25 +48,24 @@ export default {
           "update:any_source": any_source => {
             this.sound_play("click")
             this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
-              if (e.body) {
-                modal_instance.close()
+              modal_instance.close()
 
-                const sfen_parser = SfenParser.parse(e.body)
-                if (sfen_parser.moves.length === 0) { // BOD
-                  // moves がないということは BOD とみなして即反映
-                  this.general_ok_notice("反映しました")
-                  this.$parent.fixed_init_sfen = e.body
-                } else {
-                  // moves があるので局面を確定してもらう
-                  this.yomikonda_sfen = e.body
-                  this.kyokumen_kimeru_handle()
-                }
+              const sfen_parser = SfenParser.parse(e.body)
+              if (sfen_parser.moves.length === 0) { // BOD
+                // moves がないということは BOD とみなして即反映
+                this.general_ok_notice("反映しました")
+                this.$parent.fixed_init_sfen = e.body
+              } else {
+                // moves があるので局面を確定してもらう
+                this.yomikonda_sfen = e.body
+                this.kyokumen_kimeru_handle()
               }
             })
           },
         },
       })
     },
+
     // 棋譜の読み込みタップ時の処理
     kyokumen_kimeru_handle() {
       this.general_ok_notice("局面を確定させてください")
@@ -85,6 +85,12 @@ export default {
           },
         },
       })
+    },
+
+    // 棋譜コピー
+    kifu_copy_handle() {
+      this.sound_play("click")
+      this.general_kifu_copy(this.$parent.question.init_sfen, {to_format: "kif"})
     },
   },
 }

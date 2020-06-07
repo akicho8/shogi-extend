@@ -138,7 +138,7 @@ export default {
 
     // 棋譜コピー
     kifu_copy_handle() {
-      this.general_kifu_copy(this.current_body, "kif")
+      this.general_kifu_copy(this.current_body, {to_format: "kif"})
     },
 
     // ツイートする

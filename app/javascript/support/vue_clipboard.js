@@ -12,7 +12,9 @@ export default {
     },
 
     // 棋譜を渡して指定フォーマットにしたものをコピーする
-    general_kifu_copy(any_source, to_format) {
+    // general_kifu_copy(sfen, {to_format: "kif"})
+    general_kifu_copy(any_source, options = {}) {
+      const to_format = options.to_format || "kif"
       const key = [any_source, to_format]
 
       const body = this.kif_clipboard_copy_cache[key]
