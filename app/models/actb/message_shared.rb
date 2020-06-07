@@ -23,6 +23,11 @@ module Actb
       if table_exists?
         validates :body, length: { maximum: columns_hash["body"].limit }
       end
+
+      # begin
+      #   validates :body, length: { maximum: columns_hash["body"].limit }
+      # rescue Mysql2::Error
+      # end
     end
   end
 end
