@@ -353,6 +353,12 @@ module FrontendScript
         title: "(title)",
         lineage: { key: "詰将棋" },
         folder_key: "active",
+
+        # 他者が作者
+        other_author: nil,
+        source_media_name: nil,
+        source_media_url: nil,
+        source_published_on: nil,
       }
     end
 

@@ -1,16 +1,28 @@
 <template lang="pug">
 .the_builder_form
+  b-collapse(:open="tashaga_sakusha_p")
+    button.button(slot="trigger") 他者が作者の場合
+    .box
+      b-field(label="作者" label-position="on-border")
+        b-input(v-model="$parent.question.other_author" placeholder="初代大橋宗桂")
+
+      b-field(label="出典メディア" label-position="on-border")
+        b-input(v-model="$parent.question.source_media_name" placeholder="詰パラ")
+
+      b-field(label="出典年月日" label-position="on-border")
+        b-datepicker(v-model="$parent.question.source_published_on")
+
+      b-field(label="出典URL" label-position="on-border")
+        b-input(v-model="$parent.question.source_media_url" type="url")
+
   b-field(label="タイトル" label-position="on-border")
     b-input(v-model="$parent.question.title")
 
-  b-field(label="説明" label-position="on-border")
+  b-field(label="解説" label-position="on-border")
     b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
 
   b-field(label="ヒント" label-position="on-border")
     b-input(v-model="$parent.question.hint_desc")
-
-  b-field(label="出典" label-position="on-border" message="他者作品の場合に記入する")
-    b-input(v-model="$parent.question.other_author" placeholder="初代大橋宗桂作(詰パラ2020.4.1)")
 
   b-field(label="制限時間" label-position="on-border")
     b-timepicker(v-model="$parent.time_limit_clock" icon="clock" :enable-seconds="true")
@@ -78,17 +90,22 @@ export default {
       },
     },
   },
+  computed: {
+    tashaga_sakusha_p() {
+      return this.$parent.question.other_author || this.$parent.question.source_media_name || this.$parent.question.source_media_url
+    },
+  },
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
 .the_builder_form
-  margin: 2.4rem 0.8rem
+  margin: 2.4rem 1.0rem
   .field:not(:first-child)
     margin-top: 2rem
   .help
-    font-size: 0.7rem
+    font-size: $size-7
   .b-radio
     font-size: $size-7
 </style>
