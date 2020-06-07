@@ -23,13 +23,13 @@
       b-button.has-text-weight-bold(@click="app.battle_continue_handle" :type="app.battle_continue_tap_counts[app.current_membership.id] ? 'is-primary' : ''") つづける
       b-button.has-text-weight-bold(@click="app.yameru_handle") やめる
 
-  .columns.is-mobile(v-if="development_p")
+  .columns.is-mobile(v-if="app.debug_mode_p")
     .column
       .buttons.is-centered.are-small
         b-button(@click="app.battle_continue_force_handle") 強制的に続行
 
-  debug_print(:vars="['app.member_infos_hash']" v-if="development_p")
-  debug_print(:vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index', 'app.score_debug_info']" v-if="development_p")
+  debug_print(v-if="app.debug_mode_p" :vars="['app.member_infos_hash']")
+  debug_print(v-if="app.debug_mode_p" :vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index', 'app.score_debug_info']")
 </template>
 
 <script>

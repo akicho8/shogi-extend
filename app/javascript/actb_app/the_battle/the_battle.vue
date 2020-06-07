@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_battle
-  debug_print(:vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p', 'app.battle.best_questions.length']" oneline)
+  debug_print(v-if="app.debug_mode_p" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p', 'app.battle.best_questions.length']" oneline)
 
   .vs_container.is-flex
     template(v-for="(membership, i) in app.battle.memberships")
@@ -20,7 +20,7 @@
     .mistake_mode_container.has-text-centered
       | 時間切れ
 
-  template(v-if="development_p")
+  template(v-if="app.debug_mode_p")
     .columns
       .column
         .buttons.is-centered.are-small

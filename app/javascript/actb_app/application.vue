@@ -18,7 +18,7 @@
     the_ranking(v-if="mode === 'ranking'")
     the_history(v-if="mode === 'history'")
 
-  debug_print(:grep="/./")
+  debug_print(v-if="app.debug_mode_p" :grep="/./")
 </template>
 
 <script>

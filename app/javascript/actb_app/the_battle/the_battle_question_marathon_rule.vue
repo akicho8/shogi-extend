@@ -2,7 +2,7 @@
 .the_battle_question_marathon_rule
   .status_line2.has-text-centered.has-text-weight-bold
     | {{app.q1_time_str}}
-    template(v-if="development_p")
+    template(v-if="app.debug_mode_p")
       | ({{app.q_turn_offset}})
   shogi_player(
     :key="`quest_${app.question_index}`"
@@ -22,7 +22,7 @@
     @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
   )
 
-  .has-text-centered.tags_container(v-if="development_p")
+  .has-text-centered.tags_container(v-if="app.debug_mode_p")
     //- p 難易度:{{app.c_quest.difficulty_level}}
     b-taglist.is-centered
       b-tag(v-if="app.c_quest.title") {{app.c_quest.title}}

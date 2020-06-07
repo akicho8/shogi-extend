@@ -43,7 +43,7 @@
     //-   .buttons.is-centered
     //-     b-button.has-text-weight-bold(@click="save_handle" :type="save_button_enabled") {{create_or_upate_name}}
     //-     //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
-  debug_print()
+  debug_print(v-if="app.debug_mode_p" )
 </template>
 
 <script>
@@ -248,11 +248,8 @@ export default {
 
       if (this.question_new_record_p) {
         if (this.valid_count === 0) {
-          if (this.development_p) {
-          } else {
-            this.warning_notice("1回ぐらい検証してください")
-            return
-          }
+          this.warning_notice("1回ぐらい検証してください")
+          return
         }
       }
 
