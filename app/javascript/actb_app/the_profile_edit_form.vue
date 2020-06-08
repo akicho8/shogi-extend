@@ -16,7 +16,7 @@
       | {{$parent.new_name}}
 
     b-field(label="自己紹介" label-position="on-border")
-      b-input.new_description(type="textarea" v-model="$parent.new_description" rows="4")
+      b-input.new_description(type="textarea" v-model="$parent.new_description" rows="6" size="is-small")
 </template>
 
 <script>
