@@ -29,9 +29,10 @@ export default {
 @import "support.sass"
 .the_system_header
   position: fixed
-  top: 48px
+  top: $actb_primary_header_height
+  left: 0
   right: 0
-  justify-content: space-between
+  justify-content: center
   p
     font-size: $size-7
     margin-left: 0.5rem
