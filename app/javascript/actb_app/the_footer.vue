@@ -9,7 +9,7 @@
 
   b-dropdown(position="is-top-left")
     b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
-    b-dropdown-item(href="/") TOP
+    b-dropdown-item(href="/" @click="sound_play('click')") TOP
 </template>
 
 <script>
