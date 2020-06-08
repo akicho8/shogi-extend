@@ -300,6 +300,7 @@ module FrontendScript
       { question: question.as_json(question_as_json_params) }
     end
 
+    # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app
     def profile_update
       if v = params[:croped_image]
         bin = data_base64_body_to_binary(v)

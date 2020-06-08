@@ -37,6 +37,11 @@ module CurrentUserMod
 
   let :current_user do
     id = nil
+
+    if Rails.env.development? || Rails.env.test?
+      id ||= params[:_user_id]
+    end
+
     id ||= session[:user_id]
     id ||= cookies.signed[:user_id]
 
