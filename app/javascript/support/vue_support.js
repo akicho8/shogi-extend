@@ -248,8 +248,9 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    body_background_color_set(color) {
-      const elem = document.querySelector("body")
+    // body ではなく html を対象にしないと隙間が見えてしまう
+    html_background_color_set(color) {
+      const elem = document.querySelector("html")
       elem.style.backgroundColor = color
     },
 

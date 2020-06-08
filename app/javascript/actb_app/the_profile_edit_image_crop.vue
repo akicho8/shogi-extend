@@ -59,12 +59,12 @@ export default {
       this.uploaded_src = "/foo.png"
     }
 
-    this.body_background_color_set("black")
+    this.html_background_color_set("black")
   },
 
   beforeDestroy() {
     this.fabric_free()
-    this.body_background_color_set("")
+    this.html_background_color_set("")
   },
 
   mounted() {
