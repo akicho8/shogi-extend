@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_builder_form
   b-collapse(:open="tashaga_sakusha_p")
-    button.button(slot="trigger") 他者が作者の場合
+    button.button(slot="trigger" @click="sound_play('click')") 他者が作者の場合
     .box
       b-field(label="作者" label-position="on-border")
         b-input(v-model="$parent.question.other_author" placeholder="初代大橋宗桂")
