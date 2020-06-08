@@ -1,5 +1,7 @@
 module Actb
   Config = {
+    :main_navbar_enable              => true,
+
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 1.5, # ○**カウンター
     :matching_pow_base               => 50,  # gap < 2**(○+カウンター) ならマッチングする
@@ -31,9 +33,15 @@ module Actb
 
   if Rails.env.staging? || Rails.env.production?
     Config.update({
-        :matching_pow_base            => 6,   # gap < 2**(○+カウンター) ならマッチングする
-        :matching_interval_second     => 4,   # カウンターをインクリメントする間隔(秒)
-        :thinking_time_sec            => nil, # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
+        :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
+        :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)
+        :thinking_time_sec            => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
+      })
+  end
+
+  if Rails.env.production?
+    Config.update({
+        :main_navbar_enable           => false, # リンクを表示する？
       })
   end
 end
