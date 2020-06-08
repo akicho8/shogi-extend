@@ -7,7 +7,7 @@
     the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
     the_system_header(v-if="mode === 'lobby' && sub_mode === 'opening'")
     the_lobby(v-if="mode === 'lobby'")
-    the_lobby_message(v-if="mode === 'lobby'")
+    the_lobby_message(v-if="mode === 'lobby' && app.sub_mode === 'opening'")
     the_profile_edit(v-if="mode === 'profile_edit'")
     the_matching(v-if="mode === 'matching'")
     the_battle(v-if="mode === 'battle'")
