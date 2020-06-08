@@ -16,7 +16,7 @@
       | {{$parent.new_name}}
 
     b-field(label="自己紹介" label-position="on-border")
-      b-input.new_introduction(type="textarea" v-model="$parent.new_introduction" rows="4")
+      b-input.new_description(type="textarea" v-model="$parent.new_description" rows="4")
 </template>
 
 <script>
@@ -59,7 +59,7 @@ export default {
 
       const params = {
         user_name:         this.$parent.new_name,
-        user_introduction: this.$parent.new_introduction,
+        user_description: this.$parent.new_description,
         croped_image:      this.$parent.croped_image,
       }
 

@@ -44,8 +44,8 @@ class AuthInfo < ApplicationRecord
   # 初めてTwitter経由ログインしたとき自己紹介が空だったらコピーする
   after_create do
     if meta_info && description = meta_info.dig("info", "description")
-      if user.profile.introduction.blank?
-        user.profile.update!(introduction: description)
+      if user.profile.description.blank?
+        user.profile.update!(description: description)
       end
     end
   end

@@ -108,7 +108,7 @@ class User < ApplicationRecord
     included do
       has_one :profile, dependent: :destroy
       accepts_nested_attributes_for :profile
-      delegate :introduction, to: :profile
+      delegate :description, to: :profile
 
       after_create do
         profile || create_profile

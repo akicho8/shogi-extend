@@ -10,7 +10,7 @@
 # | user_id      | User         | integer(8)  | NOT NULL    | => User#id | A!    |
 # | created_at   | 作成日時     | datetime    | NOT NULL    |            |       |
 # | updated_at   | 更新日時     | datetime    | NOT NULL    |            |       |
-# | introduction | Introduction | string(255) | NOT NULL    |            |       |
+# | description | Introduction | string(255) | NOT NULL    |            |       |
 # |--------------+--------------+-------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -21,6 +21,6 @@ class Profile < ApplicationRecord
   belongs_to :user
 
   before_validation do
-    self.introduction ||= ""
+    self.description ||= ""
   end
 end

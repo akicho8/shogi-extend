@@ -36,8 +36,8 @@
           p.heading 切断回数
           p.title {{app.ov_user_info.actb_current_xrecord.disconnect_count}}
 
-    .box.introduction.has-background-white-ter.is-shadowless(v-if="app.ov_user_info.introduction")
-      | {{app.ov_user_info.introduction}}
+    .box.description.has-background-white-ter.is-shadowless(v-if="app.ov_user_info.description")
+      | {{app.ov_user_info.description}}
 </template>
 
 <script>
@@ -84,7 +84,7 @@ export default {
       margin-top: 1rem
       .heading
         width: 5rem
-    .introduction
+    .description
       white-space: pre-line
       margin: 0 1rem
 

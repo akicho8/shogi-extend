@@ -224,7 +224,7 @@ module FrontendScript
     # 詳細
     def user_single_fetch
       user = User.find(params[:user_id])
-      { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :introduction], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
+      { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :description], include: {actb_current_xrecord: { only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate] } }) }
     end
 
     # http://localhost:3000/script/actb-app.json?remote_action=resource_fetch
@@ -311,8 +311,8 @@ module FrontendScript
         current_user.update!(name: v)
       end
 
-      if v = params[:user_introduction]
-        current_user.profile.update!(introduction: v)
+      if v = params[:user_description]
+        current_user.profile.update!(description: v)
       end
 
       { current_user: current_user_json }
@@ -375,7 +375,7 @@ module FrontendScript
     end
 
     def current_user_json
-      current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating, :introduction])
+      current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating, :description])
     end
 
     def users

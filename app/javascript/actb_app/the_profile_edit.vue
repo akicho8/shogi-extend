@@ -30,7 +30,7 @@ export default {
       upload_file_info: null,   // inputタグでアップロードしたそのもの
       croped_image:     null,   // 切り取った画像
       new_name:         null,   // 変更した名前
-      new_introduction:  null,   // プロフィール
+      new_description:  null,   // プロフィール
     }
   },
 
@@ -56,12 +56,12 @@ export default {
       this.changed_p    = false
       this.croped_image = null
       this.new_name         = this.app.current_user.name
-      this.new_introduction = this.app.current_user.introduction
+      this.new_description = this.app.current_user.description
 
       this.unwatch_func = this.$watch(() => [
         this.croped_image,
         this.new_name,
-        this.new_introduction,
+        this.new_description,
       ], () => this.changed_p = true, {deep: false})
     },
   },

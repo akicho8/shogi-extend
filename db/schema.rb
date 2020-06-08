@@ -559,7 +559,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "introduction", null: false
+    t.string "description", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
