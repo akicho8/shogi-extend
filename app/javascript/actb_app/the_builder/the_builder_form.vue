@@ -31,9 +31,8 @@
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="$parent.start_level_max" :show-score="false")
 
   b-field(label="種類" custom-class="is-small" v-if="LineageInfo")
-    b-field.is-marginless
-      template(v-for="row in LineageInfo.values")
-        b-radio-button(v-model="$parent.question.lineage.key" :native-value="row.key" :type="row.type") {{row.name}}
+    b-select(v-model="$parent.question.lineage.key" expanded)
+      option(v-for="row in LineageInfo.values" :value="row.key") {{row.name}}
 
   b-field(label="フォルダ" custom-class="is-small" v-if="FolderInfo")
     b-field.is-marginless
