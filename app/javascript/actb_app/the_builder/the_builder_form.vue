@@ -100,7 +100,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .the_builder_form
-  margin: 2.4rem 1.0rem
+  margin: 2.4rem 1.0rem $margin_bottom
   .field:not(:first-child)
     margin-top: 2rem
   .help

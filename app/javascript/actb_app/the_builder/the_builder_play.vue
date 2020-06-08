@@ -60,6 +60,7 @@ export default {
 @import "../support.sass"
 .the_builder_play
   margin-top: 1.5rem
+  margin-bottom: $margin_bottom
 
   // この手順を正解にする
   .konotejunsiikai
