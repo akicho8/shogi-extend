@@ -40,4 +40,13 @@ class AuthInfo < ApplicationRecord
   with_options allow_blank: true do
     validates :uid, uniqueness: { scope: :provider, case_sensitive: true, message: "が重複しています。すでに他のアカウントと連携しているようです。いったんログアウトしてそのアカウントを使うか、そのアカウントとの連携を解除してからこちらと連携してみてください" }
   end
+
+  # 初めてTwitter経由ログインしたとき自己紹介が空だったらコピーする
+  after_create do
+    if meta_info && description = meta_info.dig("info", "description")
+      if user.profile.introduction.blank?
+        user.profile.update!(introduction: description)
+      end
+    end
+  end
 end
