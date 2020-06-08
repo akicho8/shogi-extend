@@ -4,7 +4,7 @@
     .header_center_title ランキング {{current_title}}
 
     b-dropdown(position="is-bottom-left")
-      b-icon.header_item.rjust(slot="trigger" icon="dots-vertical" @click.native="dots_vertical_click_handle")
+      b-icon.header_item.with_icon.rjust(slot="trigger" icon="dots-vertical" @click.native="dots_vertical_click_handle")
       template(v-for="season in seasons")
         b-dropdown-item(@click="switch_to(season)") {{season.name}}
 

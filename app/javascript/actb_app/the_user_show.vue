@@ -2,7 +2,7 @@
 .the_user_show
   .primary_header
     .header_center_title
-    b-icon.header_item.ljust(icon="arrow-left" @click.native="app.ov_user_info_close")
+    b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="app.ov_user_info_close")
 
   .user_container.is-flex
     figure.image.is-64x64.avatar_image

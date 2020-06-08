@@ -4,9 +4,9 @@
 
   .the_builder_new_and_edit(v-if="question")
     .primary_header
-      b-icon.header_item.ljust(icon="arrow-left" @click.native="builder_index_handle")
+      b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
       .header_center_title {{question_new_record_p ? '新規' : '編集'}}
-      .header_item.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}")
+      .header_item.with_text.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}")
         | {{create_or_upate_name}}
 
     .secondary_header

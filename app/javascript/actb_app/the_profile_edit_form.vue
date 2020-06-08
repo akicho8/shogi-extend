@@ -1,8 +1,8 @@
 <template lang="pug">
 .the_profile_edit_form
   .primary_header
-    .header_item.ljust(@click="cancel_handle") キャンセル
-    .header_item.rjust.has-text-weight-bold(@click="profile_update_handle" :class="{disabled: !$parent.changed_p}") 保存
+    .header_item.with_text.ljust(@click="cancel_handle") キャンセル
+    .header_item.with_text.rjust.has-text-weight-bold(@click="profile_update_handle" :class="{disabled: !$parent.changed_p}") 保存
     .header_center_title プロフィール編集
 
   .image_container.is-flex

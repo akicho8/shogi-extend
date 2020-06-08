@@ -2,7 +2,7 @@
 .the_builder_index
   .primary_header
     .header_center_title 問題一覧
-    b-icon.header_item.rjust(icon="plus" @click.native="$parent.builder_new_handle")
+    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
 
   b-field.visible_toggle_checkboxes(grouped group-multiline)
     .control(v-for="e in QuestionColumnInfo.values")

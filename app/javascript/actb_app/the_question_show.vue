@@ -3,7 +3,7 @@
   .primary_header
     .header_center_title
       | {{app.ov_question_info.question.title}}
-    b-icon.header_item.ljust(icon="arrow-left" @click.native="app.ov_question_info_close")
+    b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="app.ov_question_info_close")
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
       b-tab-item(label="初期配置")
