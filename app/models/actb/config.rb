@@ -1,8 +1,9 @@
 module Actb
   Config = {
     # -------------------------------------------------------------------------------- マッチング
-    :math_pow_ruijou_base            => 50, # gap < 2**(○+カウンター) ならマッチングする
-    :matching_interval_second        => 3,  # カウンターをインクリメントする間隔(秒)
+    :matching_gap_base               => 1.5, # ○**カウンター
+    :matching_pow_base               => 50,  # gap < 2**(○+カウンター) ならマッチングする
+    :matching_interval_second        => 3,   # カウンターをインクリメントする間隔(秒)
 
     # -------------------------------------------------------------------------------- バトル中の設定
     # 共通
@@ -27,4 +28,12 @@ module Actb
     # -------------------------------------------------------------------------------- プロフィール編集画面
     :profile_save_and_return         => true, # プロフィール編集画面で「保存」と同時に戻るか？
   }
+
+  if Rails.env.staging? || Rails.env.production?
+    Config.update({
+        :matching_pow_base            => 6,   # gap < 2**(○+カウンター) ならマッチングする
+        :matching_interval_second     => 4,   # カウンターをインクリメントする間隔(秒)
+        :thinking_time_sec            => nil, # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
+      })
+  end
 end
