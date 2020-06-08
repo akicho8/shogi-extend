@@ -23,7 +23,8 @@
       template(v-for="row in app.RuleInfo.values")
         b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row.key)" :type="{'is-primary': app.matching_list_hash[row.key].length >= 1}")
           | {{row.name}}
-          | ({{app.matching_list_hash[row.key].length}})
+          template(v-if="app.debug_mode_p")
+            | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="cancel_handle")
   the_lobby_debug
