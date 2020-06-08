@@ -5,7 +5,7 @@
 
   .switching_pages(v-show="!ov_question_info && !ov_user_info")
     the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
-    the_system_header(v-if="mode === 'lobby' || mode === 'matching' || mode === 'result' || mode === 'battle'")
+    the_system_header(v-if="mode === 'lobby' && sub_mode === 'opening'")
     the_lobby(v-if="mode === 'lobby'")
     the_lobby_message(v-if="mode === 'lobby'")
     the_profile_edit(v-if="mode === 'profile_edit'")
