@@ -40,7 +40,7 @@
           :volume="0.5"
           )
         .delete_button.is_clickable(@click="$parent.moves_answer_delete_handle(i)")
-          b-icon(type="is-danger" icon="trash-can-outline")
+          b-icon(type="is-danger" icon="trash-can-outline" size="is-small")
 </template>
 
 <script>
@@ -70,10 +70,11 @@ export default {
   .answer_tabs
     margin-top: 0.8rem
     .tab-content
-      padding: 0.8rem 0
+      padding-top: 1.3rem
       position: relative
       .delete_button
         position: absolute
         top: 0.5rem
         right: 0.5rem
+        z-index: 1
 </style>
