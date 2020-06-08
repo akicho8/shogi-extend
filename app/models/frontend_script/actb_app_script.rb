@@ -344,7 +344,7 @@ module FrontendScript
 
     # リアクティブになるように空でもカラムは作っておくこと
     def question_default
-      {
+      default = {
         # // init_sfen: "4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
         # // init_sfen: "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
         init_sfen: "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
@@ -364,6 +364,15 @@ module FrontendScript
         source_media_url: nil,
         source_published_on: nil,
       }
+
+      if Rails.env.staging? || Rails.env.production?
+        default[:title] = nil
+        default[:time_limit_sec] = 60
+        default[:moves_answers] = []
+        default[:init_sfen] = "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      end
+
+      default
     end
 
     def data_base64_body_to_binary(data_base64_body)
