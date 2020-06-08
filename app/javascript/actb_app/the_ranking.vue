@@ -175,6 +175,7 @@ export default {
 @import "support.sass"
 .the_ranking
   @extend %padding_top_for_secondary_header
+  margin-bottom: $margin_bottom
 
   .current_user_rank_record
     margin-top: 0               // ランキング外のrowの上の隙間
