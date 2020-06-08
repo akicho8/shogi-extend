@@ -39,6 +39,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     # else
     # end
     origins "*"                 # クッキーが欲しいときはそのサーバーを明示的に指定する必要があり)
-    resource "*", headers: :any, methods: [:head, :get, :options]
+    resource "*", headers: :any, methods: [:head, :get, :post, :put, :options]
   end
 end
