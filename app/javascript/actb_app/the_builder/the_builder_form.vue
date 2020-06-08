@@ -18,7 +18,7 @@
   b-field(label="タイトル" label-position="on-border")
     b-input(v-model="$parent.question.title")
 
-  b-field(label="解説" label-position="on-border")
+  b-field(label="解説・作意" label-position="on-border")
     b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
 
   b-field(label="ヒント" label-position="on-border")
@@ -82,7 +82,7 @@ export default {
     "$parent.question.difficulty_level": {
       handler(v) {
         this.sound_play("click")
-        if (v >= this.$parent.start_level_max) {
+        if (v >= this.$parent.start_level_max && false) {
           v = "MAX"
         }
         this.talk(v, {rate: 1.5})
