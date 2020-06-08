@@ -33,7 +33,6 @@ export const application_matching = {
     },
 
     matching_search() {
-      this.lobby_speak("*matching_search")
       this.$ac_lobby.perform("matching_search", {matching_rate_threshold: this.matching_rate_threshold})
     },
     // マッチング不成立だったりでしょっちゅう呼ばれる

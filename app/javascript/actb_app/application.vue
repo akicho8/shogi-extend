@@ -247,10 +247,7 @@ export default {
 
     rule_key_set_handle(rule_key) {
       this.sound_play("click")
-
-      this.lobby_speak(`*rule_key_set_handle("${rule_key}")`)
       this.remote_get(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
-        this.lobby_speak(`*rule_key_set_handle -> ${e}`)
         this.matching_setup()
       })
     },
