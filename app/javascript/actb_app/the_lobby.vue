@@ -18,8 +18,8 @@
       b-button.has-text-weight-bold(@click="app.rule_key_select_handle" type="is-primary") START
 
   .rule_key_select(v-if="app.sub_mode === 'rule_key_select'")
-    .title.is-3.has-text-centered モード
-    .buttons.is-centered.mode_buttons
+    .title.is-3.has-text-centered ルール
+    .buttons.is-centered.rule_buttons
       template(v-for="row in app.RuleInfo.values")
         b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row.key)" :type="{'is-primary': app.matching_list_hash[row.key].length >= 1}")
           | {{row.name}}
@@ -84,7 +84,7 @@ export default {
   .rule_key_select
     .title
       margin-top: 4rem
-    .mode_buttons
+    .rule_buttons
       margin-top: 2rem
       flex-direction: column
       .button
