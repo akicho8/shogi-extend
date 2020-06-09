@@ -8,15 +8,18 @@
           .content
             - if v = session[:provider_remember]
               - s = SocialMediaInfo[v["provider"]]
-              p.has-text-grey.is-size-7.has-text-centered.has-text-weight-bold
+              p.has-text-grey.is-size-7.has-text-centered
                 = v["user_name"]
                 = "さんは以前"
-                = s.name
+                span.has-text-weight-bold
+                  | &nbsp;
+                  = s.name
+                  | &nbsp;
                 = "でログインしました"
 
             - SocialMediaInfo.each do |e|
               p
-                = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-primary", "is-fullwidth", "is-rounded", "brand_button", e.key, "has-text-weight-bold"]) do
+                = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-large", "is-primary", "is-fullwidth", "is-rounded", "brand_button", e.key, "has-text-weight-bold"]) do
                   span.icon.is-medium
                     i(class="fab fa-#{e.key}")
                   span
@@ -26,7 +29,7 @@
 
             hr
             p
-              = link_to("名無しの匿名アカウントを作成してログイン", [:session], method: :post, class: "button has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button")
+              = link_to("匿名アカウントを作成してログイン", [:session], method: :post, class: "button is-large has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button")
 .columns
   .column
     .card
