@@ -3,10 +3,7 @@
   .column
     .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_display_lines}rem`}")
       template(v-for="message in app.room_messages")
-        div
-          span(v-text="message.user.name")
-          | :
-          span(v-html="message.body")
+        message_row(:message="message")
     b-field.input_field
       b-input(v-model="app.room_message_body" expanded @keypress.native.enter="app.room_speak_handle")
       p.control
@@ -16,12 +13,16 @@
 
 <script>
 import { support } from "./support.js"
+import message_row from "./components/message_row.vue"
 
 export default {
   name: "the_room_message",
   mixins: [
     support,
   ],
+  components: {
+    message_row,
+  },
   watch: {
     "app.room_messages": {
       handler() { this.scroll_to_bottom(this.$refs.messages_box) },

@@ -2,13 +2,14 @@
 .the_question_show_message
   .articles_container(ref="articles_container")
     article.media(v-for="message in question.messages")
-      figure.media-left
+      figure.media-left.is_clickable(@click="app.ov_user_info_set(message.user.id)")
         p.image.is-64x64
           img.is-rounded(:src="message.user.avatar_path")
       .media-content
         .content
           p
-            strong {{message.user.name}}
+            strong.is_clickable(@click="app.ov_user_info_set(message.user.id)")
+              | {{message.user.name}}
             br
             span(v-html="simple_format(message.body)")
             br
@@ -30,7 +31,7 @@
               span.icon.is-small
                 i.fas.fa-heart
     article.media
-      figure.media-left
+      figure.media-left.is_clickable(@click="app.ov_user_info_set(app.current_user.id)")
         p.image.is-64x64
           img.is-rounded(:src="app.current_user.avatar_path")
       .media-content
