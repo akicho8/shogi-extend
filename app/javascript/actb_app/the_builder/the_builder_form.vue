@@ -10,7 +10,7 @@
         b-input(v-model="$parent.question.source_media_name" placeholder="詰パラ")
 
       b-field(label="出典年月日" label-position="on-border")
-        b-datepicker(v-model="$parent.question.source_published_on")
+        b-datepicker(v-model="$parent.question.source_published_on" :mobile-native="false")
 
       b-field(label="出典URL" label-position="on-border")
         b-input(v-model="$parent.question.source_media_url" type="url")
