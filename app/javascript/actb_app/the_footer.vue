@@ -3,7 +3,7 @@
   b-button(icon-left="home-outline"   @click="app.lobby_handle"   :type="{'is-primary': app.mode === 'lobby'}")
   b-button(icon-left="crown-outline"  @click="app.ranking_handle" :type="{'is-primary': app.mode === 'ranking'}")
   b-button(icon-left="note-outline"   @click="app.history_handle" :type="{'is-primary': app.mode === 'history'}" :disabled="!app.current_user")
-  b-button(icon-left="wrench-outline" @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}" :disabled="!app.current_user")
+  b-button(icon-left="database-plus"  @click="app.builder_handle" :type="{'is-primary': app.mode === 'builder'}" :disabled="!app.current_user")
   b-button(icon-left="menu"           @click="app.menu_handle"    :type="{'is-primary': app.mode === 'menu'}")
 
   b-dropdown(position="is-top-left" v-if="false")
