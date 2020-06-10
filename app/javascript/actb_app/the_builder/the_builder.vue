@@ -100,7 +100,6 @@ export default {
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
       question:         null,
-      fixed_init_sfen:  null,   // 配置モードでの棋譜
       time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
       answer_tab_index: null,   // 表示している正解タブの位置
 
@@ -283,10 +282,6 @@ export default {
     question_edit_of(row) {
       this.sound_play("click")
       this.question = row
-
-      // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
-      this.fixed_init_sfen = this.question.init_sfen
-      // this.$set(this.question, "fixed_init_sfen", this.question.init_sfen)
 
       this.time_limit_clock_set()
 

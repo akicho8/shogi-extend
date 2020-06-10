@@ -2,7 +2,7 @@
 .the_builder_haiti
   shogi_player(
     :run_mode="'edit_mode'"
-    :kifu_body="$parent.fixed_init_sfen"
+    :kifu_body="new_kifu_body"
     :start_turn="-1"
     :slider_show="true"
     :controller_show="true"
@@ -32,12 +32,13 @@ export default {
   data() {
     return {
       yomikonda_sfen: null,
+      new_kifu_body: null,
     }
   },
 
-  beforeDestroy() {
-    // 配置→正解→配置で元に戻ってしまう対策
-    this.$parent.fixed_init_sfen = this.$parent.question.init_sfen
+  created() {
+    // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
+    this.new_kifu_body = this.$parent.question.init_sfen
   },
 
   methods: {
@@ -56,10 +57,9 @@ export default {
               modal_instance.close()
 
               const sfen_parser = SfenParser.parse(e.body)
-              if (sfen_parser.moves.length === 0) { // BOD
-                // moves がないということは BOD とみなして即反映
+              if (sfen_parser.moves.length === 0) { // 元BODのSFEN
                 this.general_ok_notice("反映しました")
-                this.$parent.fixed_init_sfen = e.body
+                this.kyokumen_set(e.body)
               } else {
                 // moves があるので局面を確定してもらう
                 this.yomikonda_sfen = e.body
@@ -84,12 +84,16 @@ export default {
           "update:kyokumen_kimeta_sfen": kyokumen_kimeta_sfen => {
             this.sound_play("click")
             this.general_ok_notice("反映しました")
-            this.$parent.fixed_init_sfen = kyokumen_kimeta_sfen
-            this.$parent.edit_mode_snapshot_sfen(this.$parent.fixed_init_sfen) // 正解を削除するトリガーを明示的に実行
+            this.kyokumen_set(kyokumen_kimeta_sfen)
             modal_instance.close()
           },
         },
       })
+    },
+
+    kyokumen_set(str) {
+      this.new_kifu_body = str
+      this.$parent.edit_mode_snapshot_sfen(str) // 正解を削除するトリガーを明示的に実行
     },
 
     // 棋譜コピー
