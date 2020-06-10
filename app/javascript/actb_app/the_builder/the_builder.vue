@@ -411,16 +411,6 @@ export default {
     // 問題の初期値
     question_default() {
       return this.app.info.question_default
-      // const question = {
-      //   // init_sfen: "4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
-      //   // init_sfen: "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
-      //   init_sfen: "7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
-      //   moves_answers: [],
-      //   time_limit_sec: 3 * 60,
-      //   difficulty_level: 1,
-      //   title: "",
-      // }
-      // return question
     },
   },
 }
