@@ -35,6 +35,11 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    // 配置→正解→配置で元に戻ってしまう対策
+    this.$parent.fixed_init_sfen = this.$parent.question.init_sfen
+  },
+
   methods: {
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
