@@ -4,7 +4,7 @@
   the_user_show(v-if="ov_user_info")
 
   .switching_pages(v-show="!ov_question_info && !ov_user_info")
-    the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder'")
+    the_footer(v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder' || mode === 'menu'")
     the_system_header(v-if="mode === 'lobby' && sub_mode === 'opening'")
     the_lobby(v-if="mode === 'lobby'")
     the_lobby_message(v-if="mode === 'lobby' && app.sub_mode === 'opening'")
@@ -17,6 +17,7 @@
     the_builder(v-if="mode === 'builder'")
     the_ranking(v-if="mode === 'ranking'")
     the_history(v-if="mode === 'history'")
+    the_menu(v-if="mode === 'menu'")
 
   debug_print(v-if="app.debug_mode_p" :grep="/./")
 </template>
@@ -42,6 +43,7 @@ import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder/the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history/the_history.vue"
+import the_menu          from "./the_menu.vue"
 
 import { application_room     } from "./application_room.js"
 import { application_battle     } from "./application_battle.js"
@@ -79,6 +81,7 @@ export default {
     the_builder,
     the_ranking,
     the_history,
+    the_menu,
   },
   props: {
     info: { required: true },
@@ -304,6 +307,13 @@ export default {
       if (this.mode === "history") {
       } else {
         this.mode = "history"
+      }
+    },
+
+    menu_handle() {
+      if (this.mode === "menu") {
+      } else {
+        this.mode = "menu"
       }
     },
 
