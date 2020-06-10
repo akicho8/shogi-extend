@@ -33,7 +33,7 @@ export default {
   methods: {
     scroll_handle(e) {
       const y = window.scrollY
-      if (y >= 256) {
+      if (y >= 128) {
         const diff = y - (this._before_scroll_y || 0)
         this.hidden_p = (diff >= 1)
       }

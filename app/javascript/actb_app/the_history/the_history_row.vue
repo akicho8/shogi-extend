@@ -1,24 +1,25 @@
 <template lang="pug">
 .the_history_row.is-flex(@click="app.ov_question_info_set(row.question.id)")
   .left_block.is-flex
-    .ox_mark(v-if="row.ox_mark")
-      template(v-if="row.ox_mark.key === 'correct'")
-        b-icon(icon="checkbox-blank-circle-outline" type="is-danger")
-      template(v-if="row.ox_mark.key === 'mistake'")
-        b-icon(icon="close" type="is-success")
-      template(v-if="row.ox_mark.key === 'timeout'")
-        b-icon(icon="timer-sand-empty")
+
+    .ox_mark
+      template(v-if="row.ox_mark")
+        b-icon(v-if="row.ox_mark.key === 'correct'" icon="checkbox-blank-circle-outline" type="is-danger")
+        b-icon(v-if="row.ox_mark.key === 'mistake'" icon="close"                         type="is-success")
+        b-icon(v-if="row.ox_mark.key === 'timeout'" icon="timer-sand-empty" class="has-text-grey-light")
+
     img.board(:src="board_image_url")
+
     figure.image.is-32x32(@click="app.ov_user_info_set(row.question.user.id)")
       img.is-rounded(:src="row.question.user.avatar_path")
     .question_block.is-flex
       .uegawa
-        .question_user.is-size-6.has-text-grey
+        .question_user.is-size-7.has-text-grey
           | {{row.question.display_author}}
           span.question_user_unit.has-text-grey 作
         .question_title.has-text-weight-bold(v-if="row.question.title")
           | {{row.question.title}}
-        .question_description(v-if="row.question.description")
+        .question_description.is-size-7(v-if="row.question.description")
           | {{row.question.description}}
       .bottom_block.is-flex
         the_history_row_vote(:row="row")
@@ -74,11 +75,12 @@ export default {
   align-items: flex-start
 
   .ox_mark
+    min-width: 0.7rem           // ←この調整がむずい。保存リストのときに左側にマージンを作る
     margin-top: 0.5rem
-    margin-left: 1.0rem
+    margin-left: 0.5rem
   .board
     height: 128px
-    width: 172px
+    width: 168px
     object-fit: cover
     object-position: 50% 50%
   .image
@@ -93,5 +95,5 @@ export default {
 
     .question_user_unit
       margin-left: 0.1rem
-      font-size: 0.75rem
+      font-size: 0.6rem
 </style>

@@ -36,7 +36,7 @@ export default {
     &.good
       margin-left: 0.0rem
     &.bad
-      margin-left: 1.2rem
+      margin-left: 0.8rem
     &.clip
-      margin-left: 2.4rem
+      margin-left: 1.2rem
 </style>

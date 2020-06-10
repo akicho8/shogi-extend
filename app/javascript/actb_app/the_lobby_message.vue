@@ -3,7 +3,7 @@
   .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.lobby_messages_display_lines}rem`}")
     .message_line(v-for="message in app.lobby_messages")
       message_row(:message="message")
-  b-field.input_field(v-if="app.current_user")
+  b-field.input_field
     b-input(v-model="app.lobby_message_body" expanded @keypress.native.enter="app.lobby_speak_handle" :disabled="!app.current_user")
     p.control
       button.button.is-primary(@click="app.lobby_speak_handle" :disabled="!app.current_user")
