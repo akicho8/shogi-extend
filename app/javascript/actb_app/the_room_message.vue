@@ -1,14 +1,13 @@
 <template lang="pug">
-.the_room_message.columns
-  .column
-    .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_display_lines}rem`}")
-      template(v-for="message in app.room_messages")
-        message_row(:message="message")
-    b-field.input_field
-      b-input(v-model="app.room_message_body" expanded @keypress.native.enter="app.room_speak_handle")
-      p.control
-        button.button.is-primary(@click="app.room_speak_handle")
-          b-icon.play_icon(icon="play")
+.the_room_message
+  .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_display_lines}rem`}")
+    template(v-for="message in app.room_messages")
+      message_row(:message="message")
+  b-field.input_field
+    b-input(v-model="app.room_message_body" expanded @keypress.native.enter="app.room_speak_handle")
+    p.control
+      button.button.is-primary(@click="app.room_speak_handle")
+        b-icon.play_icon(icon="play")
 </template>
 
 <script>
@@ -35,8 +34,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_room_message
+  margin: 0.5rem $lr_sukima
   .messages_box
-    padding: 0.5rem
     overflow-y: scroll
   .input_field
     margin-top: 0.5rem
