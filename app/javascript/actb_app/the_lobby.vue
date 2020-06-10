@@ -10,7 +10,7 @@
         .rating.has-text-weight-bold.is-size-7
           | {{app.current_user.rating}}
 
-  debug_print(v-if="app.debug_mode_p" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
+  debug_print(v-if="app.debug_mode_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
 
   .opening(v-if="app.sub_mode === 'opening'")
     .title.is-4.has-text-centered 将棋トレーニングバトル
@@ -27,7 +27,7 @@
             | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="cancel_handle")
-  the_lobby_debug
+  the_lobby_debug(v-if="true")
 </template>
 
 <script>
@@ -79,7 +79,7 @@ export default {
     .title
       margin-top: 4rem
     .buttons
-      margin-top: 2rem
+      margin-top: 1.5rem
 
   .rule_key_select
     .title
