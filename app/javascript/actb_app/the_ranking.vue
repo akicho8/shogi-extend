@@ -133,8 +133,8 @@ export default {
     },
 
     switch_to(season) {
+      this.sound_play("click")
       this.season_id = season.id
-      debugger
       this.fetch_handle()
     },
   },
