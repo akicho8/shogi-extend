@@ -2,7 +2,10 @@
 .the_question_show
   .primary_header
     .header_center_title
-      | {{app.ov_question_info.question.title}}
+      span.question_user
+        | {{app.ov_question_info.question.display_author}}作
+      span.question_title(v-if="app.ov_question_info.question.title")
+        | {{app.ov_question_info.question.title}}
     b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="app.ov_question_info_close")
   .secondary_header
     b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
@@ -51,6 +54,8 @@ export default {
       tab_index: 0,
     }
   },
+  created() {
+  },
   methods: {
     tab_change_handle() {
       // this.sound_play("click")
@@ -88,6 +93,8 @@ export default {
   @extend %padding_top_for_secondary_header
   .primary_header
     justify-content: space-between
+    .question_title
+      margin-left: 0.3rem
 
   .sp_container
     margin-top: 1.5rem

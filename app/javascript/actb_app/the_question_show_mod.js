@@ -1,3 +1,5 @@
+import { Question } from "./models/question.js"
+
 export const the_question_show_mod = {
   data() {
     return {
@@ -11,6 +13,7 @@ export const the_question_show_mod = {
       this.remote_get(this.app.info.put_path, { remote_action: "question_single_fetch", question_id: question_id }, e => {
         if (e.ov_question_info) {
           this.ov_question_info = e.ov_question_info
+          this.ov_question_info.question = new Question(this.ov_question_info.question)
         }
       })
     },
