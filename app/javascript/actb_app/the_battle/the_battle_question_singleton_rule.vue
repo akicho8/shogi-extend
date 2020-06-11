@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_battle_question_hybrid_rule
+.the_battle_question_singleton_rule
   .has-text-centered
     //- .status2
     //-   | {{app.q_turn_offset}}手目
@@ -76,7 +76,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_battle_question_hybrid_rule",
+  name: "the_battle_question_singleton_rule",
   mixins: [
     support,
   ],
@@ -92,7 +92,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_battle_question_hybrid_rule
+.the_battle_question_singleton_rule
   .tags_container
     margin-top: 0.7rem
   .kaitousuru_button
