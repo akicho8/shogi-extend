@@ -14,10 +14,10 @@ namespace :front_app do
 
     on roles(:web) do |host|
       # いったん消さないと2度目で static/dist ディレクトリに転送してしまう
-      execute :rm, "-rf", "#{release_path}/public/tb2"
+      execute :rm, "-rf", "#{release_path}/public/s"
 
       # アップロードして
-      upload! "front_app/dist", "#{release_path}/public/tb2", recursive: true
+      upload! "front_app/dist", "#{release_path}/public/s", recursive: true
 
       # 確認
       execute :ls, "-al #{release_path}/public"

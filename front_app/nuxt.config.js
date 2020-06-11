@@ -3,7 +3,7 @@ export default {
   // mode: 'universal',
 
   router: {
-    base: process.env.NODE_ENV === 'production' ? "/tb2" : "/",
+    base: process.env.NODE_ENV === 'production' ? "/s" : "/",
   },
 
   generate: {
