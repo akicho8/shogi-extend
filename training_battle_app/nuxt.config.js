@@ -1,6 +1,15 @@
-
 export default {
-  mode: 'universal',
+  mode: 'spa',
+  // mode: 'universal',
+
+  router: {
+    base: process.env.NODE_ENV === 'production' ? "/tb2" : "/",
+  },
+
+  generate: {
+    subFolders: false,
+  },
+
   /*
   ** Headers of the page
   */

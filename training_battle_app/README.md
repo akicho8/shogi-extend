@@ -1,4 +1,4 @@
-# nuxt_hello
+# training_battle_app
 
 > My super-duper Nuxt.js project
 
