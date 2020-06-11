@@ -65,7 +65,8 @@
 
 <script>
 import { support } from "../support.js"
-import ls_support from "ls_support.js"
+import ls_support from "../../../../app/javascript/ls_support.js"
+
 import { QuestionColumnInfo } from "../models/question_column_info.js"
 
 export default {

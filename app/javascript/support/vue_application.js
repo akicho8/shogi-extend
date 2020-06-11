@@ -1,4 +1,20 @@
-window.talk_sound = null
+if (process.client) {
+  window.talk_sound = null
+
+  window.tab_is_active_p = () => {
+    console.log("document.hidden", document.hidden)
+    console.log("document.visibilityState", document.visibilityState)
+    return !(document.hidden || document.visibilityState === "hidden")
+  }
+
+  window.url_cast = (url) => {
+    if (process.env.NODE_ENV === "development") {
+      return "http://localhost:3000" + url
+    } else {
+      return url
+    }
+  }
+}
 
 import user_info_show from "../user_info_show.vue"
 import tactic_show from "../tactic_show.vue"
@@ -22,7 +38,7 @@ export default {
 
       options = {talk_method: "howler", ...options}
 
-      this.silent_remote_get(js_global.talk_path, {source_text: source_text}, data => {
+      this.silent_remote_get("/talk", {source_text: source_text}, data => {
         // すぐに発声する場合
         if (options.talk_method === "direct_audio") {
           const audio = new Audio()
@@ -46,7 +62,7 @@ export default {
 
         // Howler
         if (options.talk_method === "howler") {
-          window.talk_sound = new Howl({src: data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
+          window.talk_sound = new Howl({src: url_cast(data.service_path), autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
           if (options.onend) {
             window.talk_sound.on("end", () => options.onend())
           }

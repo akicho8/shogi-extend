@@ -1,0 +1,19 @@
+import vue_application from "./vue_application.js"
+import vue_support     from "./vue_support.js"
+import vue_storage     from "./vue_storage.js"
+import vue_fetch       from "./vue_fetch.js"
+import vue_clipboard   from "./vue_clipboard.js"
+import vue_sound       from "./vue_sound.js"
+import vue_actioncable from "./vue_actioncable.js"
+
+export default {
+  mixins: [
+    vue_application,
+    vue_support,
+    vue_storage,
+    vue_fetch,
+    vue_clipboard,
+    vue_sound,
+    vue_actioncable,
+  ],
+}

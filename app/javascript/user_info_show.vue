@@ -215,7 +215,7 @@
 </template>
 
 <script>
-import ls_support from "ls_support.js"
+import ls_support from "./ls_support.js"
 
 export default {
   name: "user_info_show",

@@ -86,6 +86,7 @@ export default {
   props: {
     info: { required: true },
   },
+
   data() {
     return {
       current_user: this.info.current_user,

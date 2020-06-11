@@ -88,21 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //////////////////////////////////////////////////////////////////////////////// タブがアクティブか？(見えているか？)
 
-window.tab_is_active_p = () => {
-  console.log("document.hidden", document.hidden)
-  console.log("document.visibilityState", document.visibilityState)
-  return !(document.hidden || document.visibilityState === "hidden")
-}
-
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_application from "support/vue_application.js"
-import vue_support from "support/vue_support.js"
-import vue_storage from "support/vue_storage.js"
-import vue_fetch from "support/vue_fetch.js"
-import vue_clipboard from "support/vue_clipboard.js"
-import vue_sound from "support/vue_sound.js"
-import vue_actioncable from "support/vue_actioncable.js"
+import vue_all from "support/vue_all.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import swars_user_link_to from "swars_user_link_to.vue"
@@ -142,13 +130,7 @@ Vue.mixin({
   router: new VueRouter({mode: "history"}),
 
   mixins: [
-    vue_application,
-    vue_support,
-    vue_storage,
-    vue_fetch,
-    vue_clipboard,
-    vue_sound,
-    vue_actioncable,
+    vue_all,
   ],
 
   // よくない命名規則だけどこっちの方が開発しやすい
