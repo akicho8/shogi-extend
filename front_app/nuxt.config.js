@@ -36,6 +36,7 @@ export default {
     // '../app/javascript/stylesheets/bulma_init.scss',
     // '~/assets/css/buefy.scss',
     // '~/assets/sass/application.sass',
+    '../app/javascript/stylesheets/application.sass',
     '~/assets/sass/application.sass',
   ],
   /*

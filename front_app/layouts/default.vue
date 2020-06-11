@@ -31,15 +31,9 @@
           General
         </p>
         <ul class="menu-list">
-          <li
-            v-for="(item, key) of items"
-            :key="key"
-          >
-            <nuxt-link
-              :to="item.to"
-              exact-active-class="is-active"
-            >
-              <b-icon :icon="item.icon" /> {{ item.title }}
+          <li v-for="(item, key) of items" :key="key">
+            <nuxt-link :to="item.to" exact-active-class="is-active">
+              {{ item.title }}
             </nuxt-link>
           </li>
         </ul>
@@ -66,7 +60,16 @@ export default {
           title: 'Inspire',
           icon: 'lightbulb',
           to: { name: 'inspire' }
-        }
+        },
+        {
+          title: 'Inspire',
+          icon: 'lightbulb',
+          to: { name: 'foo_dir-foo_page1' },
+        },
+        {
+          title: 'Inspire',
+          to: { name: 'about-privacy_policy' },
+        },
       ]
     }
   }
