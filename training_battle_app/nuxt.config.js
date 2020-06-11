@@ -32,6 +32,11 @@ export default {
   ** Global CSS
   */
   css: [
+    // 'application.sass'
+    // '../app/javascript/stylesheets/bulma_init.scss',
+    // '~/assets/css/buefy.scss',
+    // '~/assets/sass/application.sass',
+    '~/assets/sass/application.sass',
   ],
   /*
   ** Plugins to load before mounting the App
