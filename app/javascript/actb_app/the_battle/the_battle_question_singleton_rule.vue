@@ -40,7 +40,7 @@
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
     .akirameru_button.has-text-centered(v-if="app.debug_mode_p")
-      b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle(false)" size="is-large") 諦める
+      b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle(false)") 諦める
 
   template(v-if="app.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold

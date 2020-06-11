@@ -4,21 +4,22 @@
   .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'mistake'")
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
-    .rensho_count {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
-  template(v-else-if="membership.user.actb_current_xrecord.renpai_count >= 1")
-    .renpai_count {{membership.user.actb_current_xrecord.renpai_count}}連敗中！
-  template(v-else)
-      | &nbsp;
+  .rensho_renpai.is-size-8.has-text-weight-bold
+    template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
+      .rensho_count {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
+    template(v-else-if="membership.user.actb_current_xrecord.renpai_count >= 1")
+      .renpai_count {{membership.user.actb_current_xrecord.renpai_count}}連敗中！
+    template(v-else)
+        | &nbsp;
 
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
   figure.image
     img.is-rounded(:src="membership.user.avatar_path")
-  .user_name.has-text-weight-bold
+  .user_name.has-text-weight-bold.is-size-7
     | {{membership.user.name}}
 
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
-  .question_progress
+  .question_progress.is-size-7.has-text-weight-bold
     | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
   .question_progress_detail
     template(v-if="droped_ox_list.length === 0")
@@ -65,10 +66,11 @@ export default {
   // 左右大きさがぶれないように大きさを共通にする
   min-width: 12rem
 
-  .rensho_count
-    color: $danger
-  .renpai_count
-    color: $success
+  .rensho_renpai
+    .rensho_count
+      color: $danger
+    .renpai_count
+      color: $success
 
   // avatar
   img

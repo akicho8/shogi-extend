@@ -49,7 +49,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_result
-  margin-top: 4.5rem
+  margin-top: 3.5rem
 
   .win_lose_container
 

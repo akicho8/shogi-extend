@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_battle_author.has-text-centered
-  .question_title.has-text-weight-bold.is-size-5
+  .question_title.has-text-weight-bold.is-size-6
     | {{app.c_quest.title}}
   .question_user.is-size-7.has-text-weight-bold
     | {{app.c_quest.display_author}}
