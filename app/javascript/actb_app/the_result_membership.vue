@@ -1,12 +1,13 @@
 <template lang="pug">
 .the_result_membership.is-flex
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
-    .rensho_count {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
-  template(v-else-if="membership.user.actb_current_xrecord.renpai_count >= 1")
-    .renpai_count {{membership.user.actb_current_xrecord.renpai_count}}連敗中！
-  template(v-else)
-      | &nbsp;
+  .rensho_renpai.is-size-8.has-text-weight-bold
+    template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
+      .rensho_count {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
+    template(v-else-if="membership.user.actb_current_xrecord.renpai_count >= 1")
+      .renpai_count {{membership.user.actb_current_xrecord.renpai_count}}連敗中！
+    template(v-else)
+        | &nbsp;
 
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
   figure.image
