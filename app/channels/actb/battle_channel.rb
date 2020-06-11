@@ -41,37 +41,26 @@ module Actb
 
     def wakatta_handle(data)
       data = data.to_options
-      # membership_id: this.current_membership.id,
-      # question_id: this.current_question_id,
-
-      # this.silent_remote_fetch("PUT", this.app.info.put_path, { wakatta_handle: true, battle_id: this.app.battle.id, membership_id: this.app.current_membership.id, question_id: this.app.current_best_question.id }, e => {
-      # { wakatta_handle: true, battle_id: membership_id: this.current_membership.id, question_id: this.current_best_question.id }
-
-      key = [:early_press, current_battle, data[:question_id]].join("/")
-      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, key])
+      key = early_press_key(data)
       early_press_counter = redis.incr(key)
       redis.expire(key, 60)
       if early_press_counter === 1
-        wakatta_handle_broadcasted = {
-          membership_id: data[:membership_id],
-          question_id: data[:question_id],
-          early_press_counter: early_press_counter,
+        bc_params = {
+          :membership_id => data[:membership_id],
+          :question_id   => data[:question_id],
         }
-        broadcast(:wakatta_handle_broadcasted, wakatta_handle_broadcasted)
+        broadcast(:wakatta_handle_broadcasted, bc_params)
       end
     end
 
     def x2_play_timeout_handle(data)
       data = data.to_options
-
-      key = [:early_press, current_battle, data[:question_id]].join("/")
-      redis.del(key)
-
-      x2_play_timeout_handle_broadcasted = {
-        membership_id: data[:membership_id],
-        question_id: data[:question_id],
+      redis.del(early_press_key(data))
+      bc_params = {
+        :membership_id => data[:membership_id],
+        :question_id   => data[:question_id],
       }
-      broadcast(:x2_play_timeout_handle_broadcasted, x2_play_timeout_handle_broadcasted)
+      broadcast(:x2_play_timeout_handle_broadcasted, bc_params)
     end
 
     def kotae_sentaku(data)
@@ -269,6 +258,10 @@ module Actb
     def broadcast(bc_action, bc_params)
       raise ArgumentError, bc_params.inspect unless bc_params.values.all?
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", {bc_action: bc_action, bc_params: bc_params})
+    end
+
+    def early_press_key(data)
+      [:early_press, current_battle.id, data[:question_id]].join("/")
     end
   end
 end

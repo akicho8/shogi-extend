@@ -41,6 +41,11 @@ export const application_battle = {
   methods: {
     ac_battle_perform(action, params = {}) {
       let membership = null
+
+      if (params.ms_flip) {
+        this.__assert__(typeof params.ms_flip === "boolean")
+      }
+
       if (params.ms_flip) {
         membership = this.opponent_membership
       } else {
@@ -289,12 +294,7 @@ export const application_battle = {
     // 早押しボタンを押した(解答権はまだない)
     wakatta_handle(ms_flip = false) {
       this.sound_play("click")
-
-      this.ac_battle_perform("wakatta_handle", {
-        ms_flip: ms_flip,
-        question_id: this.c_quest.id,
-        // question_index: this.question_index,
-      }) // --> app/channels/actb/battle_channel.rb
+      this.ac_battle_perform("wakatta_handle", {ms_flip: ms_flip, question_id: this.c_quest.id}) // --> app/channels/actb/battle_channel.rb
     },
     wakatta_handle_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {

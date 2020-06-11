@@ -4,8 +4,7 @@
     img.is-rounded(:src="message.user.avatar_path" @click="app.ov_user_info_set(message.user.id)")
   .user_name.has-text-grey.is-size-7.is_clickable(@click="app.ov_user_info_set(message.user.id)")
     | {{message.user.name}}
-  .message_body
-    | {{message.body}}
+  .message_body(v-html="message.body")
 </template>
 
 <script>
@@ -24,14 +23,15 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
+$message_row_image_size: 16px
 .message_row
-  margin-top: 0.5rem
+  margin-top: 0.1rem
   justify-content: flex-start
   align-items: center
   .image
     img
-      height: 24px
-      width: 24px
+      height: $message_row_image_size
+      width: $message_row_image_size
   .user_name
     white-space: nowrap
     margin-left: 0.5rem

@@ -17,7 +17,7 @@
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
-      b-button.has-text-weight-bold(@click="app.wakatta_handle" type="is-primary" :disabled="app.config.otetsuki_enabled && app.answer_button_disable_p") わかった
+      b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" :disabled="app.config.otetsuki_enabled && app.answer_button_disable_p") わかった
 
   template(v-if="app.x_mode === 'x2_play'")
     .status_line2.has-text-centered.has-text-weight-bold
@@ -40,7 +40,7 @@
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
     .akirameru_button.has-text-centered(v-if="app.debug_mode_p")
-      b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle" size="is-large") 諦める
+      b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle(false)" size="is-large") 諦める
 
   template(v-if="app.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
