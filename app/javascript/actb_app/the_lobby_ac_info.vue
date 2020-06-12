@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_system_header.is-flex
+.the_lobby_ac_info.is-flex
   p(v-if="development_p")
     | 購読:{{app.ac_subscription_names}}
   p(v-if="app.online_user_ids != null")
@@ -18,7 +18,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "the_system_header",
+  name: "the_lobby_ac_info",
   mixins: [
     support,
   ],
@@ -27,7 +27,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_system_header
+.the_lobby_ac_info
   position: fixed
   top: $actb_primary_header_height
   left: 0

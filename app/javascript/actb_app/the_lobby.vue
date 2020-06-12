@@ -18,6 +18,7 @@
   //- router-view
 
   .opening(v-if="app.sub_mode === 'opening'")
+    the_lobby_ac_info
     .title.is-4.has-text-centered 将棋トレーニングバトル
     .buttons.is-centered
       b-button.has-text-weight-bold(@click="app.rule_key_select_handle" type="is-primary") START
@@ -38,6 +39,7 @@
 <script>
 import { support } from "./support.js"
 import the_lobby_debug from "./the_lobby_debug.vue"
+import the_lobby_ac_info from "./the_lobby_ac_info.vue"
 
 export default {
   name: "the_builder",
@@ -46,6 +48,7 @@ export default {
   ],
   components: {
     the_lobby_debug,
+    the_lobby_ac_info,
   },
   methods: {
     cancel_handle() {

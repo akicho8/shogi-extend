@@ -4,10 +4,8 @@
   the_question_show(v-if="ov_question_info")
   the_user_show(v-if="ov_user_info")
 
-  //- ↓ここを整理する
   .switching_pages(v-show="!ov_question_info && !ov_user_info")
     the_footer(        v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder' || mode === 'menu'")
-    the_system_header( v-if="mode === 'lobby' && sub_mode === 'opening'")
     the_lobby(         v-if="mode === 'lobby'")
     the_lobby_message( v-if="mode === 'lobby' && app.sub_mode === 'opening'")
     the_profile_edit(  v-if="mode === 'profile_edit'")
@@ -37,7 +35,6 @@ import { the_user_show_mod } from "./the_user_show_mod.js"
 
 import the_question_show from "./the_question_show.vue"
 import the_user_show     from "./the_user_show.vue"
-import the_system_header from "./the_system_header.vue"
 import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_lobby_message from "./the_lobby_message.vue"
@@ -84,7 +81,6 @@ export default {
   components: {
     the_question_show,
     the_user_show,
-    the_system_header,
     the_footer,
     the_lobby,
     the_lobby_message,
