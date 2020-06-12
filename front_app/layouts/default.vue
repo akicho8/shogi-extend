@@ -1,9 +1,9 @@
 <template lang="pug">
 div
   nuxt
-  template(v-if="development_p")
-    div(v-for="(item, key) of items" :key="key")
-      nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
+  hr
+  div(v-for="(item, key) of items" :key="key")
+    nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
 </template>
 
 <script>

@@ -43,8 +43,8 @@ Vue.use(VueGtag, {
   },
 })
 
-import Repository from "Repository.js"
-Vue.prototype.$http = Repository
+import axios_support from "axios_support.js"
+Vue.prototype.$http = axios_support
 
 import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
 
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_all from "support/vue_all.js"
+import vue_mixins from "vue_mixins.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import swars_user_link_to from "swars_user_link_to.vue"
@@ -130,7 +130,7 @@ Vue.mixin({
   router: new VueRouter({mode: "history"}),
 
   mixins: [
-    vue_all,
+    vue_mixins,
   ],
 
   // よくない命名規則だけどこっちの方が開発しやすい

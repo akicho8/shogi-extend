@@ -1,18 +1,18 @@
-import mp3_o      from "../oto_logic/Quiz-Correct_Answer02-1.mp3"
-import mp3_x      from "../oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
-import mp3_start  from "../oto_logic/Quiz-Question03-1.mp3"
-import mp3_lose   from "../oto_logic/Onmtp-Ding05-1.mp3"
-import mp3_click  from "../oto_logic/Onmtp-Click02-1.mp3"
-import mp3_shine  from "../air_labo/eye-shine1.mp3"
-import mp3_stupid from "../air_labo/stupid4.mp3"
+import mp3_o        from "../sound_effect/oto_logic/Quiz-Correct_Answer02-1.mp3"
+import mp3_x        from "../sound_effect/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
+import mp3_start    from "../sound_effect/oto_logic/Quiz-Question03-1.mp3"
+import mp3_lose     from "../sound_effect/oto_logic/Onmtp-Ding05-1.mp3"
+import mp3_click    from "../sound_effect/oto_logic/Onmtp-Click02-1.mp3"
+import mp3_shine    from "../sound_effect/air_labo/eye-shine1.mp3"
+import mp3_stupid   from "../sound_effect/air_labo/stupid4.mp3"
 
-import mp3_poon     from "../niconicommons/nc141655.mp3"
-import mp3_deden    from "../soundeffect_lab/deden.mp3"
-import mp3_pipopipo from "../soundeffect_lab/pipopipo.mp3"
-import mp3_win      from "../soundeffect_lab/kansei.mp3"
-import mp3_bubuu    from "../soundeffect_lab/bubuu.mp3"
+import mp3_poon     from "../sound_effect/niconicommons/nc141655.mp3"
+import mp3_deden    from "../sound_effect/soundeffect_lab/deden.mp3"
+import mp3_pipopipo from "../sound_effect/soundeffect_lab/pipopipo.mp3"
+import mp3_win      from "../sound_effect/soundeffect_lab/kansei.mp3"
+import mp3_bubuu    from "../sound_effect/soundeffect_lab/bubuu.mp3"
 
-import wav_pishi from "../../../node_modules/shogi-player/src/assets/piece_sound.wav"
+import wav_pishi    from "../../../node_modules/shogi-player/src/assets/piece_sound.wav"
 
 import { Howl, Howler } from 'howler'
 
