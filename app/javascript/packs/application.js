@@ -90,33 +90,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_mixins from "vue_mixins.js"
+import vue_mixins from "vue_mixins/vue_mixins.js"
 
-import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-import swars_user_link_to from "swars_user_link_to.vue"
-import pulldown_menu from "pulldown_menu.vue"
-import buefy_table_wrapper from "buefy_table_wrapper.vue"
+// Components
+import shogi_player                    from "shogi-player/src/components/ShogiPlayer.vue"
+import swars_user_link_to              from "swars_user_link_to.vue"
+import pulldown_menu                   from "pulldown_menu.vue"
+import buefy_table_wrapper             from "buefy_table_wrapper.vue"
 import three_stage_league_player_chart from "three_stage_league_player_chart.vue"
-import custom_chart from "custom_chart.vue"
-import acns1_sample from "acns1_sample.vue"
-import actb_app from "actb_app/application.vue"
-import stopwatch from "stopwatch.vue"
-import simple_board from "simple_board.vue"
-import share_board from "share_board.vue"
-import xy_master from "xy_master.vue"
-import cpu_battle from "cpu_battle.vue"
-import sp_show from "sp_show.vue"
-import ox_modal from "ox_modal.vue"
-import tactic_show from "tactic_show.vue"
-import piyo_shogi_button from "components/piyo_shogi_button.vue"
-import kento_button from "components/kento_button.vue"
-import kif_copy_button from "components/kif_copy_button.vue"
-import sp_show_button from "components/sp_show_button.vue"
-import png_dl_button from "components/png_dl_button.vue"
-import tweet_button from "components/tweet_button.vue"
-import membership_medal from "components/membership_medal.vue"
-import debug_print from "components/debug_print.vue"
-import win_lose_circle from "win_lose_circle.vue"
+import custom_chart                    from "custom_chart.vue"
+import acns1_sample                    from "acns1_sample.vue"
+import actb_app                        from "actb_app/application.vue"
+import stopwatch                       from "stopwatch.vue"
+import simple_board                    from "simple_board.vue"
+import share_board                     from "share_board.vue"
+import xy_master                       from "xy_master.vue"
+import cpu_battle                      from "cpu_battle.vue"
+import sp_show                         from "sp_show.vue"
+import ox_modal                        from "ox_modal.vue"
+import tactic_show                     from "tactic_show.vue"
+import piyo_shogi_button               from "components/piyo_shogi_button.vue"
+import kento_button                    from "components/kento_button.vue"
+import kif_copy_button                 from "components/kif_copy_button.vue"
+import sp_show_button                  from "components/sp_show_button.vue"
+import png_dl_button                   from "components/png_dl_button.vue"
+import tweet_button                    from "components/tweet_button.vue"
+import membership_medal                from "components/membership_medal.vue"
+import debug_print                     from "components/debug_print.vue"
+import win_lose_circle                 from "win_lose_circle.vue"
+import vr_page1                        from "vr_page1.vue"
+import vr_page2                        from "vr_page2.vue"
 
 // const router = new VueRouter({
 //   mode: 'history',
@@ -126,8 +129,17 @@ import win_lose_circle from "win_lose_circle.vue"
 //   ],
 // })
 
+import actb_app_routes from "../actb_app/routes.js"
+
 Vue.mixin({
-  router: new VueRouter({mode: "history"}),
+  router: new VueRouter({
+    mode: "history",
+    routes: [
+      { path: '/vr_page1', component: vr_page1 },
+      { path: '/vr_page2', component: vr_page2 },
+      ...actb_app_routes,
+    ]
+  }),
 
   mixins: [
     vue_mixins,

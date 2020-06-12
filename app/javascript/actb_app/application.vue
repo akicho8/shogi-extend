@@ -1,5 +1,6 @@
 <template lang="pug">
 .actb_app(:class="mode")
+
   the_question_show(v-if="ov_question_info")
   the_user_show(v-if="ov_user_info")
 
@@ -20,6 +21,10 @@
     the_menu(v-if="mode === 'menu'")
 
   debug_print(v-if="app.debug_mode_p" :grep="/./")
+
+  template(v-if="development_p")
+    router-link(to="/tb/menu") menu
+    router-view
 </template>
 
 <script>
@@ -30,14 +35,14 @@ import { the_question_show_mod } from "./the_question_show_mod.js"
 import { the_user_show_mod } from "./the_user_show_mod.js"
 
 import the_question_show from "./the_question_show.vue"
-import the_user_show from "./the_user_show.vue"
+import the_user_show     from "./the_user_show.vue"
 import the_system_header from "./the_system_header.vue"
 import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_lobby_message from "./the_lobby_message.vue"
-import the_profile_edit         from "./the_profile_edit.vue"
+import the_profile_edit  from "./the_profile_edit.vue"
 import the_matching      from "./the_matching.vue"
-import the_battle          from "./the_battle/the_battle.vue"
+import the_battle        from "./the_battle/the_battle.vue"
 import the_room_message  from "./the_room_message.vue"
 import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder/the_builder.vue"
@@ -52,7 +57,16 @@ import { config               } from "./config.js"
 import { RuleInfo             } from "./models/rule_info.js"
 import { OxMarkInfo        } from "./models/ox_mark_info.js"
 
+// import VueRouter from "vue-router"
+
 export default {
+  // router: new VueRouter({
+  //   mode: "history",
+  //   routes: [
+  //     { path: '/tb/menu', component: the_menu },
+  //   ]
+  // }),
+
   store: store,
   name: "actb_app",
   mixins: [

@@ -12,6 +12,11 @@
 
   debug_print(v-if="app.debug_mode_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
 
+  //- router-link(to="/vr_page1") vr_page1
+  //- router-link(to="/vr_page2") vr_page2
+  //- hr
+  //- router-view
+
   .opening(v-if="app.sub_mode === 'opening'")
     .title.is-4.has-text-centered 将棋トレーニングバトル
     .buttons.is-centered
