@@ -1,9 +1,13 @@
 <template lang="pug">
-div
-  nuxt
-  hr
-  div(v-for="(item, key) of items" :key="key")
-    nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
+.section
+  .columns
+    .column
+      div(v-for="(item, key) of items" :key="key")
+        nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
+      b-button(type="is-primary") BUTTON
+  .columns
+    .column
+      nuxt
 </template>
 
 <script>

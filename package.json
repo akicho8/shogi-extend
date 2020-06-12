@@ -45,7 +45,7 @@
     "postcss-smart-import": "^0.7.5",
     "precss": "^2.0.0",
     "prop-types": "^15.5.10",
-    "pug": "^2.0.4",
+    "pug": "^3.0.0",
     "qs": "^6.9.1",
     "rails-erb-loader": "^5.5.2",
     "resolve-url-loader": "^2.1.0",
