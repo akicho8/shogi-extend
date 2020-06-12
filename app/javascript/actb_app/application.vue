@@ -5,16 +5,18 @@
   the_user_show(v-if="ov_user_info")
 
   .switching_pages(v-show="!ov_question_info && !ov_user_info")
-    the_footer(        v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder' || mode === 'menu'")
-    the_lobby(         v-if="mode === 'lobby'")
     the_profile_edit(  v-if="mode === 'profile_edit'")
+    the_lobby(         v-if="mode === 'lobby'")
     the_matching(      v-if="mode === 'matching'")
     the_battle(        v-if="mode === 'battle'")
     the_result(        v-if="mode === 'result'")
-    the_builder(       v-if="mode === 'builder'")
+
     the_ranking(       v-if="mode === 'ranking'")
     the_history(       v-if="mode === 'history'")
+    the_builder(       v-if="mode === 'builder'")
     the_menu(          v-if="mode === 'menu'")
+
+    the_footer(        v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder' || mode === 'menu'")
 
   debug_print(v-if="app.debug_mode_p" :grep="/./")
 
