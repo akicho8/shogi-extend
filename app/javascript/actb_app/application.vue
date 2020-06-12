@@ -7,7 +7,6 @@
   .switching_pages(v-show="!ov_question_info && !ov_user_info")
     the_footer(        v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder' || mode === 'menu'")
     the_lobby(         v-if="mode === 'lobby'")
-    the_lobby_message( v-if="mode === 'lobby' && app.sub_mode === 'opening'")
     the_profile_edit(  v-if="mode === 'profile_edit'")
     the_matching(      v-if="mode === 'matching'")
     the_battle(        v-if="mode === 'battle'")
@@ -37,7 +36,6 @@ import the_question_show from "./the_question_show.vue"
 import the_user_show     from "./the_user_show.vue"
 import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
-import the_lobby_message from "./the_lobby_message.vue"
 import the_profile_edit  from "./the_profile_edit.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle        from "./the_battle/the_battle.vue"
@@ -83,7 +81,6 @@ export default {
     the_user_show,
     the_footer,
     the_lobby,
-    the_lobby_message,
     the_profile_edit,
     the_matching,
     the_battle,

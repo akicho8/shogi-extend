@@ -22,6 +22,7 @@
     .title.is-4.has-text-centered 将棋トレーニングバトル
     .buttons.is-centered
       b-button.has-text-weight-bold(@click="app.rule_key_select_handle" type="is-primary") START
+    the_lobby_message
 
   .rule_key_select(v-if="app.sub_mode === 'rule_key_select'")
     .title.is-3.has-text-centered ルール
@@ -38,8 +39,9 @@
 
 <script>
 import { support } from "./support.js"
-import the_lobby_debug from "./the_lobby_debug.vue"
+import the_lobby_debug   from "./the_lobby_debug.vue"
 import the_lobby_ac_info from "./the_lobby_ac_info.vue"
+import the_lobby_message from "./the_lobby_message.vue"
 
 export default {
   name: "the_builder",
@@ -49,6 +51,7 @@ export default {
   components: {
     the_lobby_debug,
     the_lobby_ac_info,
+    the_lobby_message,
   },
   methods: {
     cancel_handle() {
