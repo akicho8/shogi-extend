@@ -29,19 +29,25 @@
       .buttons.is-centered.are-small
         b-button(@click="app.battle_continue_force_handle") 強制的に続行
 
+  the_room_message
+
   debug_print(v-if="app.debug_mode_p" :vars="['app.member_infos_hash']")
   debug_print(v-if="app.debug_mode_p" :vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index', 'app.score_debug_info']")
+
 </template>
 
 <script>
 import { support } from "./support.js"
+
 import the_result_membership from "./the_result_membership.vue"
+import the_room_message      from "./the_room_message.vue"
 
 export default {
   mixins: [
     support,
   ],
   components: {
+    the_room_message,
     the_result_membership,
   },
 }

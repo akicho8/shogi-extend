@@ -10,9 +10,7 @@
     the_profile_edit(  v-if="mode === 'profile_edit'")
     the_matching(      v-if="mode === 'matching'")
     the_battle(        v-if="mode === 'battle'")
-    the_room_message(  v-if="mode === 'battle'")
     the_result(        v-if="mode === 'result'")
-    the_room_message(  v-if="mode === 'result'")
     the_builder(       v-if="mode === 'builder'")
     the_ranking(       v-if="mode === 'ranking'")
     the_history(       v-if="mode === 'history'")
@@ -39,7 +37,6 @@ import the_lobby         from "./the_lobby.vue"
 import the_profile_edit  from "./the_profile_edit.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle        from "./the_battle/the_battle.vue"
-import the_room_message  from "./the_room_message.vue"
 import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder/the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
@@ -84,7 +81,6 @@ export default {
     the_profile_edit,
     the_matching,
     the_battle,
-    the_room_message,
     the_result,
     the_builder,
     the_ranking,
