@@ -16,7 +16,7 @@
           .rate_human_with_p
             span.rate_human.has-text-weight-bold
               | {{rate_human}}
-        .total.has-text-weight-bold(v-if="total_show_p")
+        .total.has-text-weight-bold(v-if="total_show_p && total >= 1")
           | {{total}}
     .level-item.has-text-centered.lose.win_lose_counts
       div
