@@ -2,9 +2,8 @@
 .actb_app(:class="mode")
 
   the_question_show(v-if="ov_question_info")
-  the_user_show(v-if="ov_user_info")
 
-  .switching_pages(v-show="!ov_question_info && !ov_user_info")
+  .switching_pages(v-show="!ov_question_info")
     the_profile_edit( v-if="mode === 'profile_edit'")
     the_lobby(        v-if="mode === 'lobby'")
     the_matching(     v-if="mode === 'matching'")
