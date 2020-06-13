@@ -35,7 +35,9 @@ export default {
       const y = window.scrollY
       if (y >= 128) {
         const diff = y - (this._before_scroll_y || 0)
-        this.hidden_p = (diff >= 1)
+        if (this.app.config.footer_hidden_function) {
+          this.hidden_p = (diff >= 1)
+        }
       }
       this._before_scroll_y = y
     },
