@@ -17,7 +17,10 @@ module Actb
         else
           enabled = params[:enabled]
         end
-        clip_set(question, enabled)
+        {
+          question_id: question.id,
+          clip: clip_set(question, enabled),
+        }
       end
 
       private
@@ -44,7 +47,7 @@ module Actb
         {
           enabled: enabled,                        # 現在の状態
           diff: diff,                              # 前回との差分
-          count: question.reload.clip_marks_count, # ビューでは未使用
+          count: question.reload.clip_marks_count, # ビューでは未使用→使用
         }
       end
     end

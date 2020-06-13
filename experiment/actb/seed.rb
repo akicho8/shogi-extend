@@ -54,7 +54,7 @@ question.lineage.key               # => "詰将棋"
 question = Actb::Question.first!
 # question.update!(folder: question.user.actb_trash_box) の方法はださい
 question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 27, user_id: 9, type: "Actb::TrashBox", created_at: "2020-06-13 02:23:33", updated_at: "2020-06-13 02:23:33">
+question.folder # => #<Actb::TrashBox id: 54, user_id: 18, type: "Actb::TrashBox", created_at: "2020-06-13 07:53:31", updated_at: "2020-06-13 07:53:31">
 
 # 2番目の問題は下書きへ
 question = Actb::Question.second!
@@ -78,20 +78,26 @@ battle = room.battles.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
-battle                          # => #<Actb::Battle id: 1, room_id: 1, parent_id: nil, rule_id: 1, final_id: 5, begin_at: "2020-06-13 02:23:35", end_at: nil, rensen_index: 0, created_at: "2020-06-13 02:23:35", updated_at: "2020-06-13 02:23:35">
+battle                          # => #<Actb::Battle id: 3, room_id: 2, parent_id: nil, rule_id: 1, final_id: 5, begin_at: "2020-06-13 07:53:33", end_at: nil, rensen_index: 0, created_at: "2020-06-13 07:53:33", updated_at: "2020-06-13 07:53:33">
 
 battle.users.count                # => 2
 battle.rensen_index               # => 0
 
-battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 2, room_id: 1, parent_id: 1, rule_id: 1, final_id: 5, begin_at: "2020-06-13 02:23:35", end_at: nil, rensen_index: 1, created_at: "2020-06-13 02:23:35", updated_at: "2020-06-13 02:23:35">
+battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 4, room_id: 2, parent_id: 3, rule_id: 1, final_id: 5, begin_at: "2020-06-13 07:53:33", end_at: nil, rensen_index: 1, created_at: "2020-06-13 07:53:33", updated_at: "2020-06-13 07:53:33">
 battle2.rensen_index                            # => 1
 
 membership = battle.memberships.first
 
 # 出題
-battle.best_questions             # => [{"id"=>3, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>4, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>5, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>6, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>7, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>8, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>9, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>10, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>9, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0005_fallback_avatar_icon-acde5a972cba71490139455574a35d908e0b3fe25535de9a39e2d98beae4b0aa.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
+battle.best_questions             # => [{"id"=>13, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>14, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>15, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>16, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>17, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>18, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>19, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>20, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
 
-# すべての問題に解答する
+# 最初の問題に2度解答する
+# 2.times do
+#   question = Actb::Question.first
+#   user1.actb_histories.create!(membership: membership, question: question, ox_mark: Actb::OxMark.fetch(:correct))
+# end
+
+# # すべての問題に解答する
 Actb::Question.all.each.with_index do |question, i|
   ox_mark_key = Actb::OxMarkInfo[i.modulo(Actb::OxMarkInfo.count)].key
   user1.actb_histories.create!(membership: membership, question: question, ox_mark: Actb::OxMark.fetch(ox_mark_key))
@@ -113,7 +119,7 @@ user1.actb_clip_marks.create!(question: Actb::Question.third!)
 # 問題に対してコメント
 5.times do
   question = Actb::Question.first!
-  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 1, user_id: 9, question_id: 1, body: "message", created_at: "2020-06-13 02:23:36", updated_at: "2020-06-13 02:23:36">, #<Actb::QuestionMessage id: 2, user_id: 9, question_id: 1, body: "message", created_at: "2020-06-13 02:23:36", updated_at: "2020-06-13 02:23:36">, #<Actb::QuestionMessage id: 3, user_id: 9, question_id: 1, body: "message", created_at: "2020-06-13 02:23:36", updated_at: "2020-06-13 02:23:36">, #<Actb::QuestionMessage id: 4, user_id: 9, question_id: 1, body: "message", created_at: "2020-06-13 02:23:36", updated_at: "2020-06-13 02:23:36">, #<Actb::QuestionMessage id: 5, user_id: 9, question_id: 1, body: "message", created_at: "2020-06-13 02:23:36", updated_at: "2020-06-13 02:23:36">
+  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 13, user_id: 18, question_id: 11, body: "message", created_at: "2020-06-13 07:53:33", updated_at: "2020-06-13 07:53:33">, #<Actb::QuestionMessage id: 14, user_id: 18, question_id: 11, body: "message", created_at: "2020-06-13 07:53:33", updated_at: "2020-06-13 07:53:33">, #<Actb::QuestionMessage id: 15, user_id: 18, question_id: 11, body: "message", created_at: "2020-06-13 07:53:33", updated_at: "2020-06-13 07:53:33">, #<Actb::QuestionMessage id: 16, user_id: 18, question_id: 11, body: "message", created_at: "2020-06-13 07:53:33", updated_at: "2020-06-13 07:53:33">, #<Actb::QuestionMessage id: 17, user_id: 18, question_id: 11, body: "message", created_at: "2020-06-13 07:53:33", updated_at: "2020-06-13 07:53:33">
   question.messages_count                    # => 1, 2, 3, 4, 5
 end
 
@@ -121,10 +127,10 @@ tp Actb::Question
 
 tp Actb.info
 # >> |------------------+---------------------------|
-# >> |               id | 9                         |
-# >> |          user_id | 9                         |
-# >> |        season_id | 12                        |
-# >> |         judge_id | 5                         |
+# >> |               id | 18                        |
+# >> |          user_id | 18                        |
+# >> |        season_id | 23                        |
+# >> |         judge_id | 9                         |
 # >> |         final_id | 2                         |
 # >> |     battle_count | 1                         |
 # >> |        win_count | 1                         |
@@ -139,15 +145,15 @@ tp Actb.info
 # >> |       renpai_max | 0                         |
 # >> |     create_count | 1                         |
 # >> |       generation | 11                        |
-# >> |       created_at | 2020-06-13 11:23:32 +0900 |
-# >> |       updated_at | 2020-06-13 11:23:35 +0900 |
+# >> |       created_at | 2020-06-13 16:53:31 +0900 |
+# >> |       updated_at | 2020-06-13 16:53:33 +0900 |
 # >> | disconnect_count | 0                         |
 # >> |  disconnected_at |                           |
 # >> |------------------+---------------------------|
 # >> |------------------+---------------------------|
-# >> |               id | 9                         |
-# >> |          user_id | 9                         |
-# >> |         judge_id | 8                         |
+# >> |               id | 18                        |
+# >> |          user_id | 18                        |
+# >> |         judge_id | 12                        |
 # >> |         final_id | 5                         |
 # >> |     battle_count | 0                         |
 # >> |        win_count | 0                         |
@@ -160,44 +166,44 @@ tp Actb.info
 # >> |     renpai_count | 0                         |
 # >> |       rensho_max | 0                         |
 # >> |       renpai_max | 0                         |
-# >> |       created_at | 2020-06-13 11:23:32 +0900 |
-# >> |       updated_at | 2020-06-13 11:23:32 +0900 |
+# >> |       created_at | 2020-06-13 16:53:31 +0900 |
+# >> |       updated_at | 2020-06-13 16:53:31 +0900 |
 # >> | disconnect_count | 0                         |
 # >> |  disconnected_at |                           |
 # >> |------------------+---------------------------|
 # >> |----+----------------------------------+---------+-----------+------------+--------------------------------------------+----------------+------------------+---------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
 # >> | id | key                              | user_id | folder_id | lineage_id | init_sfen                                  | time_limit_sec | difficulty_level | title   | description   | hint_desc   | other_author   | source_media_name | source_media_url | source_published_on | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | good_marks_count | bad_marks_count | clip_marks_count | messages_count |
 # >> |----+----------------------------------+---------+-----------+------------+--------------------------------------------+----------------+------------------+---------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
-# >> |  1 | c6c8b3e933c8d9bfa807801408dbb987 |       9 |        27 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 11:23:34 +0900 | 2020-06-13 11:23:35 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                1 |               0 |                0 |              5 |
-# >> |  2 | a0bef925229a04b728836b25321a0d34 |       9 |        26 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 11:23:34 +0900 | 2020-06-13 11:23:35 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               1 |                0 |              0 |
-# >> |  3 | 69d62ea94c1b5169c6344813cca54d36 |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 11:23:34 +0900 | 2020-06-12 13:23:34 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                1 |              0 |
-# >> |  4 | a7f5ecfd59fbd26561c9a8c478fde685 |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 11:23:34 +0900 | 2020-06-12 14:23:34 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> |  5 | 490da1a6170a51b9481fcceba4dde8d8 |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 11:23:34 +0900 | 2020-06-12 15:23:34 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> |  6 | 77869e763c929e05cf2723c70e04909d |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 11:23:34 +0900 | 2020-06-12 16:23:34 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> |  7 | 41f85df834fd611948b27a25b3d1050e |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 11:23:34 +0900 | 2020-06-12 17:23:34 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> |  8 | f22e62f1232504de0e3327cbeb12700c |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 11:23:35 +0900 | 2020-06-12 18:23:35 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> |  9 | 06f4bdc5f678afbae479537cc146d381 |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 11:23:35 +0900 | 2020-06-12 19:23:35 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 10 | 795053e467ed00f67062a2caa35ec5d2 |       9 |        25 |          8 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1 |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 11:23:35 +0900 | 2020-06-12 20:23:35 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
+# >> | 11 | c7250f61d6219f74b4d2480a2b1b34ec |      18 |        54 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 16:53:32 +0900 | 2020-06-13 16:53:33 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               2 |               0 |                1 |               0 |                0 |              5 |
+# >> | 12 | 2e68440404513b5811ee6ef848024816 |      18 |        53 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 16:53:32 +0900 | 2020-06-13 16:53:33 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               1 |                0 |              0 |
+# >> | 13 | 1362906346240d2fa53763a73a547402 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 16:53:32 +0900 | 2020-06-12 18:53:32 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                1 |              0 |
+# >> | 14 | f384c3a388cc6530add121a16002c342 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 16:53:32 +0900 | 2020-06-12 19:53:32 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                0 |              0 |
+# >> | 15 | 96098b88eed5a2cff6ac6cebabc95169 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 16:53:32 +0900 | 2020-06-12 20:53:32 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                0 |              0 |
+# >> | 16 | 34d6b9aa3e403c58cb64ffcc2d305d3e |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 16:53:32 +0900 | 2020-06-12 21:53:32 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                0 |              0 |
+# >> | 17 | 2ce590f038e0ab92958f680adcf8886f |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 16:53:32 +0900 | 2020-06-12 22:53:32 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                0 |              0 |
+# >> | 18 | 587a81443a8cc94ae891b3a11b5708e9 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1  |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 16:53:33 +0900 | 2020-06-12 23:53:33 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                0 |              0 |
+# >> | 19 | 02cc817ec86fd27e969ea3cc6aabd4f7 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1  |            180 |                5 | (title) | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-13 16:53:33 +0900 | 2020-06-13 00:53:33 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                0 |              0 |
+# >> | 20 | 89244b7b04b0f6071992c97114ab3e4d |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1 |            180 |                5 | (title) | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-13 16:53:33 +0900 | 2020-06-13 01:53:33 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               0 |               0 |                0 |               0 |                0 |              0 |
 # >> |----+----------------------------------+---------+-----------+------------+--------------------------------------------+----------------+------------------+---------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
 # >> |------------------------+-------+--------|
 # >> | model                  | count | 最終ID |
 # >> |------------------------+-------+--------|
-# >> | User                   |     9 |     17 |
-# >> | Actb::Question         |    10 |     10 |
-# >> | Actb::QuestionMessage  |     5 |      5 |
-# >> | Actb::Room             |     1 |      1 |
-# >> | Actb::RoomMembership   |     2 |      2 |
+# >> | User                   |     9 |     26 |
+# >> | Actb::Question         |    10 |     20 |
+# >> | Actb::QuestionMessage  |     5 |     17 |
+# >> | Actb::Room             |     1 |      2 |
+# >> | Actb::RoomMembership   |     2 |      4 |
 # >> | Actb::RoomMessage      |     0 |        |
-# >> | Actb::Battle           |     2 |      2 |
-# >> | Actb::BattleMembership |     4 |      4 |
-# >> | Actb::Season           |    11 |     12 |
-# >> | Actb::SeasonXrecord    |     9 |     17 |
-# >> | Actb::Setting          |     9 |     17 |
-# >> | Actb::GoodMark         |     1 |      1 |
-# >> | Actb::BadMark          |     1 |      1 |
-# >> | Actb::ClipMark         |     1 |      1 |
-# >> | Actb::Folder           |    27 |     51 |
-# >> | Actb::Lineage          |     7 |     14 |
-# >> | Actb::Judge            |     4 |      8 |
+# >> | Actb::Battle           |     2 |      4 |
+# >> | Actb::BattleMembership |     4 |      8 |
+# >> | Actb::Season           |    11 |     23 |
+# >> | Actb::SeasonXrecord    |     9 |     26 |
+# >> | Actb::Setting          |     9 |     26 |
+# >> | Actb::GoodMark         |     1 |      4 |
+# >> | Actb::BadMark          |     1 |      3 |
+# >> | Actb::ClipMark         |     1 |      3 |
+# >> | Actb::Folder           |    27 |     78 |
+# >> | Actb::Lineage          |     7 |     21 |
+# >> | Actb::Judge            |     4 |     12 |
 # >> | Actb::LobbyMessage     |     0 |        |
 # >> |------------------------+-------+--------|

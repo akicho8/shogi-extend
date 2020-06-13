@@ -42,9 +42,12 @@ import the_menu          from "./the_menu.vue"
 import { application_room     } from "./application_room.js"
 import { application_battle   } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
+import { application_vote     } from "./application_vote.js"
 import { config               } from "./config.js"
 import { RuleInfo             } from "./models/rule_info.js"
 import { OxMarkInfo           } from "./models/ox_mark_info.js"
+import { the_history_basic }    from "./the_history/the_history_basic.js"
+import { the_history_clip }     from "./the_history/the_history_clip.js"
 
 export default {
   store,
@@ -59,6 +62,10 @@ export default {
     application_room,
     application_battle,
     application_matching,
+    application_vote,
+
+    the_history_basic,
+    the_history_clip,
   ],
   components: {
     the_question_show,
@@ -308,35 +315,6 @@ export default {
       }
     },
 
-    vote_handle(history, vote_key, enabled) {
-      this.sound_play("click")
-      // enabled: enabled → その値に設定
-      // enabled: null       → トグルする
-      this.silent_remote_fetch("PUT", this.app.info.put_path, { remote_action: "vote_handle", question_id: history.question.id, vote_key: vote_key, enabled: null, }, e => {
-        if (e.good.diff >= 1) {
-          this.talk("よき", {rate: 1.5})
-        }
-        this.$set(history, "good_p", e.good.enabled)
-        this.$set(history.question, "good_marks_count", history.question.good_marks_count + e.good.diff)
-
-        if (e.bad.diff >= 1) {
-          this.talk("だめ", {rate: 1.5})
-        }
-        this.$set(history, "bad_p", e.bad.enabled)
-        this.$set(history.question, "bad_marks_count", history.question.bad_marks_count + e.bad.diff)
-      })
-    },
-
-    clip_handle(history, enabled) {
-      this.sound_play("click")
-      this.silent_remote_fetch("PUT", this.app.info.put_path, { remote_action: "clip_handle", question_id: history.question.id, enabled: null, }, e => {
-        if (e.diff >= 1) {
-          this.talk("保存リストに追加しました", {rate: 1.5})
-        }
-        this.$set(history, "clip_p", e.enabled)
-        this.$set(history.question, "clip_marks_count", history.question.clip_marks_count + e.diff)
-      })
-    },
   },
 
   computed: {

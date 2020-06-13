@@ -23,7 +23,7 @@ export default {
     support,
   ],
   props: {
-    row: { required: true },
+    row:  { required: true  },
   },
 }
 </script>

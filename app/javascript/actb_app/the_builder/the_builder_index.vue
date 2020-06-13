@@ -31,10 +31,6 @@
     @sort="$parent.sort_handle"
   )
     template(slot-scope="props")
-      //- b-table-column(label="")
-      //-   a(@click="app.ov_question_info_set(props.row.id)")
-      //-     b-icon(icon="eye-outline" size="is-small")
-
       b-table-column(field="id"               :label="QuestionColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
       b-table-column(field="title"            :label="QuestionColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
         a {{props.row.title || '？'}}

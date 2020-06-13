@@ -33,7 +33,9 @@ module Actb
         end
 
         ActiveRecord::Base.transaction do
-          {}.tap do |e|
+          {
+            question_id: question.id,
+          }.tap do |e|
             e.update(vote_set(question, vote_info, enabled))
             e.update(vote_set(question, vote_info.flip, false))
           end

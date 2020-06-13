@@ -41,7 +41,7 @@ export default {
     the_history_row_vote,
   },
   props: {
-    row: { required: true },
+    row:  { required: true },
   },
   computed: {
     board_image_url() {
@@ -65,8 +65,8 @@ export default {
   padding-top: 0.5rem
   padding-bottom: 0.5rem
 
-  &.active
-    background-color: change_color($warning, $lightness: 97%)
+  // &.active
+  //   background-color: change_color($warning, $lightness: 97%)
 
   &:not(:first-child)
     border-top: 1px solid $grey-lighter

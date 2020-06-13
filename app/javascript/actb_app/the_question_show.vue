@@ -4,12 +4,12 @@
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
-    the_question_author(:question="ov_question_info.question")
+    the_question_author(:question="new_ov_question_info.question")
 
     .secondary_header
       b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
         b-tab-item(label="初期配置")
-        template(v-for="(e, i) in ov_question_info.question.moves_answers")
+        template(v-for="(e, i) in new_ov_question_info.question.moves_answers")
           b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
 
     .sp_container
@@ -29,9 +29,9 @@
         )
 
     .vote_container.is-flex
-      the_history_row_vote(:row="ov_question_info")
+      the_history_row_vote(:row="new_ov_question_info")
 
-    the_question_show_message(:question="ov_question_info.question")
+    the_question_show_message(:question="new_ov_question_info.question")
 </template>
 
 <script>
@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       tab_index: 0,
+      new_ov_question_info: this.ov_question_info,
     }
   },
   created() {
@@ -71,19 +72,19 @@ export default {
     },
 
     play_mode_advanced_moves_set(moves) {
-      if (this.ov_question_info.question.moves_answers.some(e => e.moves_str === moves.join(" "))) { // FIXME
+      if (this.new_ov_question_info.question.moves_answers.some(e => e.moves_str === moves.join(" "))) { // FIXME
         this.sound_play("o")
         this.ok_notice("正解")
       }
     },
 
     answer_sfen_for(index) {
-      return [this.init_sfen, "moves", this.ov_question_info.question.moves_answers[index].moves_str].join(" ") // FIXME
+      return [this.init_sfen, "moves", this.new_ov_question_info.question.moves_answers[index].moves_str].join(" ") // FIXME
     },
   },
   computed: {
     init_sfen() {
-      return [this.ov_question_info.question.init_sfen].join(" ") // FIXME
+      return [this.new_ov_question_info.question.init_sfen].join(" ") // FIXME
     },
     selected_sfen() {
       if (this.tab_index === 0) {
