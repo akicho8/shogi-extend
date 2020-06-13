@@ -73,8 +73,6 @@ export default {
       padding-top: 1.3rem
       position: relative
       .delete_button
-        position: absolute
-        top: 0.5rem
-        right: 0.5rem
-        z-index: 1
+        margin-top: 0.5rem
+        margin-left: 0.5rem
 </style>
