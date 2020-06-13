@@ -1,12 +1,6 @@
 import the_user_show from "./the_user_show.vue"
 
 export const the_user_show_mod = {
-  data() {
-    return {
-      ov_user_info: null,
-    }
-  },
-
   methods: {
     ov_user_info_set(user_id) {
       this.sound_play("click")
@@ -19,7 +13,6 @@ export const the_user_show_mod = {
 
     ov_user_info_close() {
       this.sound_play("click")
-      this.ov_user_info = null
     },
 
     ov_user_show_modal(ov_user_info) {
@@ -28,6 +21,7 @@ export const the_user_show_mod = {
         hasModalCard: true,
         props: { ov_user_info },
         animation: "",
+        onCancel: () => this.sound_play("click"),
         component: the_user_show,
       })
     },

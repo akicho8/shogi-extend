@@ -69,20 +69,20 @@ export default {
 @import "support.sass"
 .the_user_show
   .modal-card-body
-    margin: 0 1rem
+    margin: 0rem 1rem
+    padding: 2rem 1rem
 
     .user_container
       flex-direction: column
       align-items: center
 
       .avatar_image
-        margin-top: 1.8rem
       .user_name
-        margin-top: 0.8rem
+        margin-top: 0.6rem
       .rate_container
         margin-top: 0rem
       .win_lose_circle
-        margin-top: 0rem
+        margin-top: 0.6rem
       .level_nav
         margin-top: 1rem
         .heading
