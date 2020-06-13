@@ -22,7 +22,7 @@ export const the_question_show_mod = {
         props: { ov_question_info },
         animation: "",
         onCancel: () => this.sound_play("click"),
-        fullScreen: false,
+        fullScreen: true,
         canCancel: ["escape", "outside"],
         component: the_question_show,
       })

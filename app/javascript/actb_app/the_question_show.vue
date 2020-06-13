@@ -1,13 +1,13 @@
 <template lang="pug">
 .the_question_show.modal-card
-  .modal-card-body
-    // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
+  .modal-card-body.box
+    //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
     the_question_author(:question="new_ov_question_info.question")
 
     .secondary_header
-      b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
+      b-tabs(v-model="tab_index" @change="tab_change_handle" expanded)
         b-tab-item(label="初期配置")
         template(v-for="(e, i) in new_ov_question_info.question.moves_answers")
           b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
@@ -101,20 +101,8 @@ export default {
 @import "support.sass"
 .the_question_show
   &.modal-card
-    border-radius: 8px
-
-    // mobile のときだけフルスクリーン化
-    +mobile
-      max-height: 100vh
-      border-radius: 0px
-
     .modal-card-body
       padding: 1rem 0
-
-    .delete
-      position: absolute
-      top: 0.5rem
-      left: 0.5rem
 
     .question_title
       margin-left: 0.3rem
@@ -132,7 +120,7 @@ export default {
       .the_history_row_vote
         .icon_with_counter
           &.bad
-            margin-left: 2rem
+            margin-left: 1.5rem
           &.clip
-            margin-left: 5rem
+            margin-left: 2rem
 </style>
