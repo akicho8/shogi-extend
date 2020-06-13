@@ -4,8 +4,13 @@ export class Question {
   }
 
   // sfenは正解か？
-  answer_p(sfen) {
+  sfen_valid_p(sfen) {
     return this.answer_sfen_list.includes(sfen)
+  }
+
+  // movesは正解か？
+  moves_valid_p(moves) {
+    return this.moves_answers.some(e => e.moves_str === moves.join(" "))
   }
 
   // すべての解答の中から最大手数を得る

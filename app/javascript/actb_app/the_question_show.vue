@@ -72,23 +72,21 @@ export default {
     },
 
     play_mode_advanced_moves_set(moves) {
-      if (this.new_ov_question_info.question.moves_answers.some(e => e.moves_str === moves.join(" "))) { // FIXME
+      if (this.new_ov_question_info.question.moves_valid_p(moves)) {
         this.sound_play("o")
         this.ok_notice("正解")
       }
     },
 
+    // 指定インデックスの解のSFENを返す
     answer_sfen_for(index) {
-      return [this.init_sfen, "moves", this.new_ov_question_info.question.moves_answers[index].moves_str].join(" ") // FIXME
+      return this.new_ov_question_info.question.answer_sfen_list[index]
     },
   },
   computed: {
-    init_sfen() {
-      return [this.new_ov_question_info.question.init_sfen].join(" ") // FIXME
-    },
     selected_sfen() {
       if (this.tab_index === 0) {
-        return this.init_sfen
+        return this.new_ov_question_info.question.init_sfen
       } else {
         return this.answer_sfen_for(this.tab_index - 1)
       }

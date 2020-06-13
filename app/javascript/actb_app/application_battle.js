@@ -163,7 +163,7 @@ export const application_battle = {
           this.kyouyuu(long_sfen)
         }
 
-        if (this.c_quest.answer_p(long_sfen)) {
+        if (this.c_quest.sfen_valid_p(long_sfen)) {
           this.kotae_sentaku("correct")
         }
       }
