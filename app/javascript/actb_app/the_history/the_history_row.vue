@@ -4,13 +4,13 @@
 
     .ox_mark
       template(v-if="row.ox_mark")
-        b-icon(v-if="row.ox_mark.key === 'correct'" icon="checkbox-blank-circle-outline" type="is-danger")
-        b-icon(v-if="row.ox_mark.key === 'mistake'" icon="close"                         type="is-success")
-        b-icon(v-if="row.ox_mark.key === 'timeout'" icon="timer-sand-empty" class="has-text-grey-light")
+        b-icon(v-if="row.ox_mark.key === 'correct'" size="is-small" icon="checkbox-blank-circle-outline" type="is-danger")
+        b-icon(v-if="row.ox_mark.key === 'mistake'" size="is-small" icon="close"                         type="is-success")
+        b-icon(v-if="row.ox_mark.key === 'timeout'" size="is-small" icon="timer-sand-empty" class="has-text-grey-light")
 
     img.board(:src="board_image_url")
 
-    figure.image.is-32x32(@click="app.ov_user_info_set(row.question.user.id)")
+    figure.image.is-16x16(@click="app.ov_user_info_set(row.question.user.id)")
       img.is-rounded(:src="row.question.user.avatar_path")
     .question_block.is-flex
       .uegawa
@@ -75,21 +75,26 @@ export default {
   align-items: flex-start
 
   .ox_mark
-    min-width: 0.7rem           // ←この調整がむずい。保存リストのときに左側にマージンを作る
-    margin-top: 0.5rem
+    min-width: 1rem           // ←この調整がむずい。保存リストのときに左側にマージンを作る
+    margin-top: 0rem
     margin-left: 0.5rem
+
   .board
-    height: 128px
-    width: 168px
+    height: 96px
+    width: 168px - 32px - 8px
     object-fit: cover
     object-position: 50% 50%
+
   .image
-    margin-top: 0.25rem
+    margin-top: 0.08rem
+
   .question_block
-    margin-left: 0.5rem
+    margin-left: 0.25rem
+
     flex-direction: column
     justify-content: space-between
     align-items: flex-start
+
     .question_title
     .bottom_block
 
