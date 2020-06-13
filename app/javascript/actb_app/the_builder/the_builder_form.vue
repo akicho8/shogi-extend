@@ -21,18 +21,18 @@
   b-field(label="解説・作意" label-position="on-border")
     b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
 
-  b-field(label="ヒント" label-position="on-border")
+  b-field(label="ヒント" label-position="on-border" v-if="app.config.hint_enable")
     b-input(v-model="$parent.question.hint_desc")
+
+  b-field(label="種類" custom-class="is-small" v-if="LineageInfo")
+    b-select(v-model="$parent.question.lineage.key" expanded)
+      option(v-for="row in LineageInfo.values" :value="row.key") {{row.name}}
 
   b-field(label="制限時間" label-position="on-border")
     b-timepicker(v-model="$parent.time_limit_clock" icon="clock" :enable-seconds="true")
 
   b-field(label="難易度" custom-class="is-small")
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="$parent.start_level_max" :show-score="false")
-
-  b-field(label="種類" custom-class="is-small" v-if="LineageInfo")
-    b-select(v-model="$parent.question.lineage.key" expanded)
-      option(v-for="row in LineageInfo.values" :value="row.key") {{row.name}}
 
   b-field(label="フォルダ" custom-class="is-small" v-if="FolderInfo")
     b-field.is-marginless
