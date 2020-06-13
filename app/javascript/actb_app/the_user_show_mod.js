@@ -11,10 +11,6 @@ export const the_user_show_mod = {
       })
     },
 
-    ov_user_info_close() {
-      this.sound_play("click")
-    },
-
     ov_user_show_modal(ov_user_info) {
       const modal_instance = this.$buefy.modal.open({
         parent: this,

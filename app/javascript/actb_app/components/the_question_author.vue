@@ -1,9 +1,9 @@
 <template lang="pug">
-.the_battle_author.has-text-centered
+.the_question_author.has-text-centered
   .question_title.has-text-weight-bold.is-size-6
-    | {{app.c_quest.title}}
+    | {{question.title}}
   .question_user.is-size-7.has-text-weight-bold
-    | {{app.c_quest.display_author}}
+    | {{question.display_author}}
     span.question_user_unit.has-text-grey 作
 </template>
 
@@ -11,16 +11,19 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_battle_author",
+  name: "the_question_author",
   mixins: [
     support,
   ],
+  props: {
+    question: { type: Object, required: true },
+  },
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
-.the_battle_author
+.the_question_author
   .question_title
   .question_user
     position: relative

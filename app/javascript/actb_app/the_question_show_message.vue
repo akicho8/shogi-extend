@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_question_show_message
   .articles_container(ref="articles_container")
-    article.media(v-for="message in question.messages")
+    article.media(v-for="message in new_question.messages")
       figure.media-left.is_clickable(@click="app.ov_user_info_set(message.user.id)")
         p.image.is-64x64
           img.is-rounded(:src="message.user.avatar_path")
@@ -65,9 +65,13 @@ export default {
   mixins: [
     support,
   ],
+  props: {
+    question: { type: Object, required: true },
+  },
   data() {
     return {
       message_body: null,
+      new_question: this.question,
     }
   },
 
@@ -85,7 +89,7 @@ export default {
   },
 
   watch: {
-    "app.ov_question_info.question.messages": {
+    "new_question.messages": {
       handler() { this.scroll_to_bottom(this.$refs.messages_box) },
       immediate: true,
     },
@@ -98,7 +102,7 @@ export default {
 
     question_subscribe() {
       this.__assert__(this.$ac_question == null)
-      this.$ac_question = this.ac_subscription_create({channel: "Actb::QuestionChannel", question_id: this.question.id})
+      this.$ac_question = this.ac_subscription_create({channel: "Actb::QuestionChannel", question_id: this.new_question.id})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -118,13 +122,7 @@ export default {
 
     speak_broadcasted(params) {
       this.app.lobby_speak_broadcasted_shared_process(params)
-      this.app.ov_question_info.question.messages.push(params.message)
-    },
-  },
-
-  computed: {
-    question() {
-      return this.app.ov_question_info.question
+      this.new_question.messages.push(params.message)
     },
   },
 }

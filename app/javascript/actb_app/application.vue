@@ -1,19 +1,15 @@
 <template lang="pug">
 .actb_app(:class="mode")
+  the_profile_edit( v-if="mode === 'profile_edit'")
+  the_lobby(        v-if="mode === 'lobby'")
+  the_matching(     v-if="mode === 'matching'")
+  the_battle(       v-if="mode === 'battle'")
+  the_result(       v-if="mode === 'result'")
 
-  the_question_show(v-if="ov_question_info")
-
-  .switching_pages(v-show="!ov_question_info")
-    the_profile_edit( v-if="mode === 'profile_edit'")
-    the_lobby(        v-if="mode === 'lobby'")
-    the_matching(     v-if="mode === 'matching'")
-    the_battle(       v-if="mode === 'battle'")
-    the_result(       v-if="mode === 'result'")
-
-    the_ranking(      v-if="mode === 'ranking'")
-    the_history(      v-if="mode === 'history'")
-    the_builder(      v-if="mode === 'builder'")
-    the_menu(         v-if="mode === 'menu'")
+  the_ranking(      v-if="mode === 'ranking'")
+  the_history(      v-if="mode === 'history'")
+  the_builder(      v-if="mode === 'builder'")
+  the_menu(         v-if="mode === 'menu'")
 
   debug_print(v-if="app.debug_mode_p" :grep="/./")
 

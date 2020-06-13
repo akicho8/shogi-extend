@@ -12,7 +12,7 @@
       | {{app.question_index + 1}}問目
 
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    the_battle_author
+    the_question_author(:question="app.c_quest")
     the_battle_question_marathon_rule(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
     the_battle_question_singleton_rule(v-if="app.battle.rule.key === 'singleton_rule'")
 
@@ -51,7 +51,7 @@ import the_room_message                   from "../the_room_message.vue"
 import the_battle_membership              from "./the_battle_membership.vue"
 import the_battle_question_marathon_rule  from "./the_battle_question_marathon_rule.vue"
 import the_battle_question_singleton_rule from "./the_battle_question_singleton_rule.vue"
-import the_battle_author                  from "./the_battle_author.vue"
+import the_question_author                from "../components/the_question_author.vue"
 
 export default {
   name: "the_battle",
@@ -63,7 +63,7 @@ export default {
     the_battle_membership,
     the_battle_question_marathon_rule,
     the_battle_question_singleton_rule,
-    the_battle_author,
+    the_question_author,
   },
   created() {
     this.app.lobby_unsubscribe()
