@@ -1,5 +1,6 @@
 <template lang="pug">
 .the_history
+  the_footer
   .primary_header
     .header_center_title {{current_tab_info.top_nav_name}}
   .secondary_header
@@ -34,6 +35,7 @@ import { support } from "../support.js"
 import the_history_row from "./the_history_row.vue"
 import { the_history_basic } from "./the_history_basic.js"
 import { the_history_clip } from "./the_history_clip.js"
+import the_footer from "../the_footer.vue"
 
 export default {
   name: "the_history",
@@ -44,6 +46,7 @@ export default {
   ],
   components: {
     the_history_row,
+    the_footer,
   },
   data() {
     return {

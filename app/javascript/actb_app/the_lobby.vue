@@ -1,5 +1,6 @@
 <template lang="pug">
 .the_lobby
+  the_footer
   .primary_header
     .user_info_block.is-flex(v-if="app.current_user")
       .image.is_clickable(@click="app.profile_edit_handle")
@@ -42,15 +43,17 @@ import { support } from "./support.js"
 import the_lobby_debug   from "./the_lobby_debug.vue"
 import the_lobby_ac_info from "./the_lobby_ac_info.vue"
 import the_lobby_message from "./the_lobby_message.vue"
+import the_footer from "./the_footer.vue"
 
 export default {
   name: "the_builder",
   mixins: [
-    support,
+  support,
   ],
   components: {
     the_lobby_debug,
     the_lobby_ac_info,
+    the_footer,
     the_lobby_message,
   },
   methods: {

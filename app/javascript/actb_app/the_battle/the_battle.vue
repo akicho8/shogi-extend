@@ -47,7 +47,7 @@
 import { support } from "../support.js"
 import dayjs from "dayjs"
 
-import the_room_message                   from "./the_room_message.vue"
+import the_room_message                   from "../the_room_message.vue"
 import the_battle_membership              from "./the_battle_membership.vue"
 import the_battle_question_marathon_rule  from "./the_battle_question_marathon_rule.vue"
 import the_battle_question_singleton_rule from "./the_battle_question_singleton_rule.vue"

@@ -1,6 +1,6 @@
 * 構造
 
-index (+ store)
+application (+ store)
   + room_message
   + header
   + lobby

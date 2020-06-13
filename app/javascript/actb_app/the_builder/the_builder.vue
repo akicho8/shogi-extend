@@ -1,5 +1,6 @@
 <template lang="pug">
 .the_builder
+  the_footer
   the_builder_index(v-if="!question")
 
   .the_builder_new_and_edit(v-if="question")
@@ -67,11 +68,12 @@ class TabInfo extends MemoryRecord {
 }
 
 import { support } from "../support.js"
-import the_builder_index from "./the_builder_index.vue"
-import the_builder_haiti from "./the_builder_haiti.vue"
-import the_builder_play from "./the_builder_play.vue"
-import the_builder_form from "./the_builder_form.vue"
+import the_builder_index  from "./the_builder_index.vue"
+import the_builder_haiti  from "./the_builder_haiti.vue"
+import the_builder_play   from "./the_builder_play.vue"
+import the_builder_form   from "./the_builder_form.vue"
 import the_builder_kensho from "./the_builder_kensho.vue"
+import the_footer from "../the_footer.vue"
 
 export default {
   name: "the_builder",
@@ -84,6 +86,7 @@ export default {
     the_builder_play,
     the_builder_form,
     the_builder_kensho,
+    the_footer,
   },
   data() {
     return {

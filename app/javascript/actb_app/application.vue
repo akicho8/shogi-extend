@@ -5,18 +5,16 @@
   the_user_show(v-if="ov_user_info")
 
   .switching_pages(v-show="!ov_question_info && !ov_user_info")
-    the_profile_edit(  v-if="mode === 'profile_edit'")
-    the_lobby(         v-if="mode === 'lobby'")
-    the_matching(      v-if="mode === 'matching'")
-    the_battle(        v-if="mode === 'battle'")
-    the_result(        v-if="mode === 'result'")
+    the_profile_edit( v-if="mode === 'profile_edit'")
+    the_lobby(        v-if="mode === 'lobby'")
+    the_matching(     v-if="mode === 'matching'")
+    the_battle(       v-if="mode === 'battle'")
+    the_result(       v-if="mode === 'result'")
 
-    the_ranking(       v-if="mode === 'ranking'")
-    the_history(       v-if="mode === 'history'")
-    the_builder(       v-if="mode === 'builder'")
-    the_menu(          v-if="mode === 'menu'")
-
-    the_footer(        v-if="mode === 'lobby' || mode === 'ranking' || mode === 'history' || mode === 'builder' || mode === 'menu'")
+    the_ranking(      v-if="mode === 'ranking'")
+    the_history(      v-if="mode === 'history'")
+    the_builder(      v-if="mode === 'builder'")
+    the_menu(         v-if="mode === 'menu'")
 
   debug_print(v-if="app.debug_mode_p" :grep="/./")
 
@@ -30,11 +28,11 @@ import { support } from "./support.js"
 import { store   } from "./store.js"
 
 import { the_question_show_mod } from "./the_question_show_mod.js"
-import { the_user_show_mod } from "./the_user_show_mod.js"
+import { the_user_show_mod }     from "./the_user_show_mod.js"
 
+// Page Components
 import the_question_show from "./the_question_show.vue"
 import the_user_show     from "./the_user_show.vue"
-import the_footer        from "./the_footer.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_profile_edit  from "./the_profile_edit.vue"
 import the_matching      from "./the_matching.vue"
@@ -45,24 +43,16 @@ import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history/the_history.vue"
 import the_menu          from "./the_menu.vue"
 
+// Mixins
 import { application_room     } from "./application_room.js"
-import { application_battle     } from "./application_battle.js"
+import { application_battle   } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
 import { config               } from "./config.js"
 import { RuleInfo             } from "./models/rule_info.js"
-import { OxMarkInfo        } from "./models/ox_mark_info.js"
-
-// import VueRouter from "vue-router"
+import { OxMarkInfo           } from "./models/ox_mark_info.js"
 
 export default {
-  // router: new VueRouter({
-  //   mode: "history",
-  //   routes: [
-  //     { path: '/tb/menu', component: the_menu },
-  //   ]
-  // }),
-
-  store: store,
+  store,
   name: "actb_app",
   mixins: [
     support,
@@ -78,7 +68,6 @@ export default {
   components: {
     the_question_show,
     the_user_show,
-    the_footer,
     the_lobby,
     the_profile_edit,
     the_matching,

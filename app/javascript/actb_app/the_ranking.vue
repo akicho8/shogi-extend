@@ -1,5 +1,6 @@
 <template lang="pug">
 .the_ranking
+  the_footer
   .primary_header
     .header_center_title ランキング {{current_title}}
 
@@ -39,6 +40,7 @@ class TabInfo extends MemoryRecord {
 
 import { support } from "./support.js"
 import the_ranking_row from "./the_ranking_row.vue"
+import the_footer from "./the_footer.vue"
 
 export default {
   name: "the_ranking",
@@ -47,6 +49,7 @@ export default {
   ],
   components: {
     the_ranking_row,
+    the_footer,
   },
   props: {
   },

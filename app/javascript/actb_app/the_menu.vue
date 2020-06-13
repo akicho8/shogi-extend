@@ -1,5 +1,6 @@
 <template lang="pug">
 .the_menu
+  the_footer
   .primary_header
     .header_center_title メニュー
 
@@ -9,14 +10,17 @@
 </template>
 
 <script>
-
 import { support } from "./support.js"
+import the_footer from "./the_footer.vue"
 
 export default {
   name: "the_menu",
   mixins: [
     support,
   ],
+  components: {
+    the_footer,
+  },
   created() {
     this.app.lobby_unsubscribe()
     this.sound_play("click")
@@ -30,9 +34,10 @@ export default {
   @extend %padding_top_for_primary_header
   margin: 1rem 0.7rem $margin_bottom
 
-  .button
-    justify-content: flex-start
-    height: 3.75rem
-    &:not(:first-child)
-      margin-top: 0.3rem // ボタンとボタンの隙間
+  .menu_buttons
+    .button
+      justify-content: flex-start
+      height: 3.75rem
+      &:not(:first-child)
+        margin-top: 0.3rem // ボタンとボタンの隙間
 </style>
