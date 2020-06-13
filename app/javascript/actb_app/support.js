@@ -1,5 +1,7 @@
 import Vuex from 'vuex'
 
+import Autolinker from 'autolinker'
+
 // const POSITION_SFEN_PREFIX = "position sfen "
 
 export const support = {
@@ -68,6 +70,11 @@ export const support = {
     as_visible_hash(v) {
       return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
     },
+
+    // ../../../node_modules/autolinker/README.md
+    auto_link(str) {
+      return Autolinker.link(str, {newWindow: false, truncate: 30, mention: "twitter"})
+    },
   },
   computed: {
     ...Vuex.mapState([
@@ -81,4 +88,3 @@ export const support = {
     // ]),
   },
 }
-

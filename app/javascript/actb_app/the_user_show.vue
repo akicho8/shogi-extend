@@ -33,8 +33,7 @@
             p.heading 切断回数
             p.title {{ov_user_info.actb_current_xrecord.disconnect_count}}
 
-      .box.description.has-background-white-ter.is-shadowless.is-size-7(v-if="ov_user_info.description")
-        | {{ov_user_info.description}}
+      .box.description.has-background-white-ter.is-shadowless.is-size-7(v-if="ov_user_info.description" v-html="auto_link(ov_user_info.description)")
 </template>
 
 <script>
