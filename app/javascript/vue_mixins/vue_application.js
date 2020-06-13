@@ -1,4 +1,4 @@
-if (process.client) {
+if (true) {
   window.talk_sound = null
 
   window.tab_is_active_p = () => {
@@ -62,7 +62,7 @@ export default {
 
         // Howler
         if (options.talk_method === "howler") {
-          window.talk_sound = new Howl({src: url_cast(data.service_path), autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
+          window.talk_sound = new Howl({src: data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
           if (options.onend) {
             window.talk_sound.on("end", () => options.onend())
           }
