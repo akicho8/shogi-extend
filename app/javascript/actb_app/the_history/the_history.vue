@@ -2,16 +2,16 @@
 .the_history
   the_footer
   .primary_header
-    .header_center_title {{app.current_tab_info2.top_nav_name}}
+    .header_center_title {{app.history_current_tab_info.top_nav_name}}
   .secondary_header
-    b-tabs.main_tabs(v-model="app.tab_index2" expanded @change="app.tab_change_handle2")
-      template(v-for="tab_info in app.TabInfo2.values")
+    b-tabs.main_tabs(v-model="app.history_tab_index" expanded @change="app.tab_change_handle2")
+      template(v-for="tab_info in app.HistoryTabInfo.values")
         b-tab-item(:label="tab_info.tab_name")
 
-  template(v-if="app.current_tab_info2.key === 'history_index'")
+  template(v-if="app.history_current_tab_info.key === 'history_index'")
     the_history_row(v-for="row in app.history_records" :row="row")
 
-  template(v-if="app.current_tab_info2.key === 'clip_index'")
+  template(v-if="app.history_current_tab_info.key === 'clip_index'")
     the_history_row(v-for="row in app.clip_records" :row="row")
 </template>
 
@@ -33,7 +33,7 @@ export default {
     this.sound_play("click")
 
     this.app.lobby_unsubscribe()
-    this.app.mode_select2("history_index")
+    this.app.history_mode_select("history_index")
     this.app.tab_change_handle2()
   },
 }

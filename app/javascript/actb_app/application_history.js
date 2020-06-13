@@ -1,8 +1,8 @@
-import { Question} from "../models/question.js"
+import { Question} from "./models/question.js"
 
 import MemoryRecord from 'js-memory-record'
 
-class TabInfo2 extends MemoryRecord {
+class HistoryTabInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "history_index", tab_name: "履歴",       top_nav_name: "問題履歴"    },
@@ -15,17 +15,18 @@ class TabInfo2 extends MemoryRecord {
   }
 }
 
-export const the_history_basic = {
+export const application_history = {
   data() {
     return {
-      tab_index2: null,
-      history_records: [],
-      clip_records: [],
+      history_tab_index: null,
+
+      history_records: [],      // 履歴の一覧
+      clip_records: [],         // 保存の一覧
     }
   },
   methods: {
     history_index_handle() {
-      this.mode_select2("history_index")
+      this.history_mode_select("history_index")
 
       if (this.history_records && false) {
       } else {
@@ -38,7 +39,7 @@ export const the_history_basic = {
     },
 
     clip_index_handle() {
-      this.mode_select2("clip_index")
+      this.history_mode_select("clip_index")
 
       if (this.clip_records && false) {
       } else {
@@ -50,21 +51,21 @@ export const the_history_basic = {
       }
     },
 
-    mode_select2(tab_key) {
-      this.tab_index2 = TabInfo2.fetch(tab_key).code
+    history_mode_select(tab_key) {
+      this.history_tab_index = HistoryTabInfo.fetch(tab_key).code
     },
 
     tab_change_handle2() {
       this.sound_play("click")
-      this.app[this.current_tab_info2.handle_method_name]()
+      this.app[this.history_current_tab_info.handle_method_name]()
     },
   },
 
   computed: {
-    TabInfo2() { return TabInfo2 },
+    HistoryTabInfo() { return HistoryTabInfo },
 
-    current_tab_info2() {
-      return TabInfo2.fetch(this.tab_index2)
+    history_current_tab_info() {
+      return HistoryTabInfo.fetch(this.history_tab_index)
     },
   },
 }

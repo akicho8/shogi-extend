@@ -39,15 +39,14 @@ import the_history       from "./the_history/the_history.vue"
 import the_menu          from "./the_menu.vue"
 
 // Mixins
-import { application_room     } from "./application_room.js"
-import { application_battle   } from "./application_battle.js"
-import { application_matching } from "./application_matching.js"
-import { application_vote     } from "./application_vote.js"
-import { config               } from "./config.js"
-import { RuleInfo             } from "./models/rule_info.js"
-import { OxMarkInfo           } from "./models/ox_mark_info.js"
-import { the_history_basic }    from "./the_history/the_history_basic.js"
-import { the_history_clip }     from "./the_history/the_history_clip.js"
+import { application_room         } from "./application_room.js"
+import { application_battle       } from "./application_battle.js"
+import { application_matching     } from "./application_matching.js"
+import { application_history      } from "./application_history.js"
+import { application_history_vote } from "./application_history_vote.js"
+import { config                   } from "./config.js"
+import { RuleInfo                 } from "./models/rule_info.js"
+import { OxMarkInfo               } from "./models/ox_mark_info.js"
 
 export default {
   store,
@@ -62,10 +61,9 @@ export default {
     application_room,
     application_battle,
     application_matching,
-    application_vote,
+    application_history_vote,
 
-    the_history_basic,
-    the_history_clip,
+    application_history,
   ],
   components: {
     the_question_show,
