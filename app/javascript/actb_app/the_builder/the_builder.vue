@@ -191,25 +191,25 @@ export default {
       }
     },
 
-    current_moves_str() {
-      return this.$refs.the_builder_play.$refs.play_sp.moves_take_turn_offset.join(" ")
+    current_moves() {
+      return this.$refs.the_builder_play.$refs.play_sp.moves_take_turn_offset
     },
 
     // 「この手順を正解とする」
     edit_stock_handle() {
-      const moves_str = this.current_moves_str()
+      const moves = this.current_moves()
 
-      if (moves_str === "") {
+      if (moves === []) {
         this.warning_notice("1手以上動かしてください")
         return
       }
 
-      if (this.question.moves_answers.some(e => e.moves_str === moves_str)) {
+      if (this.question.moves_valid_p(moves)) {
         this.warning_notice("すでに同じ正解があります")
         return
       }
 
-      this.question.moves_answers.push({moves_str: moves_str, end_sfen: this.mediator_snapshot_sfen})
+      this.question.moves_answers.push({moves_str: moves.join(" "), end_sfen: this.mediator_snapshot_sfen})
       this.$nextTick(() => this.answer_tab_index = this.question.moves_answers.length - 1)
 
       this.sound_play("click")
@@ -269,7 +269,7 @@ export default {
           this.warning_notice(e.form_error_message)
         }
         if (e.question) {
-          this.question = e.question
+          this.question = new Question(e.question)
 
           this.time_limit_clock_set()
           this.ok_notice(`${before_create_or_upate_name}しました`)
@@ -284,6 +284,8 @@ export default {
 
     question_edit_of(row) {
       this.sound_play("click")
+
+      this.__assert__(row.constructor.name === "Question")
       this.question = row
 
       this.time_limit_clock_set()
@@ -349,7 +351,7 @@ export default {
           this.warning_notice("正解を作ってからやってください")
         }
       }
-      if (this.question.moves_answers.some(e => e.moves_str === moves.join(" "))) {
+      if (this.question.moves_valid_p(moves)) {
         this.sound_play("o")
         this.ok_notice("正解")
         this.valid_count += 1
@@ -408,7 +410,7 @@ export default {
 
     // 問題の初期値
     question_default() {
-      return this.app.info.question_default
+      return new Question(this.app.info.question_default)
     },
   },
 }
