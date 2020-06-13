@@ -382,7 +382,7 @@ export const application_battle = {
     },
 
     yameru_handle() {
-      this.room_speak("bye")
+      this.room_speak("*退出しました")
       this.lobby_handle()
     },
 
