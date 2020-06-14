@@ -13,9 +13,13 @@ module Actb
         reject
       end
 
-      battle = current_room.battle_create_with_members! # FIXME: 部屋を subscribed したときに2つのバトルが作られている？
-      current_user.room_speak(current_room, "**最初のバトル作成(id:#{battle.id})")
-      # --> app/jobs/actb/battle_broadcast_job.rb --> battle_broadcasted --> app/javascript/actb_app/application_room.js
+      # リーダーだけが部屋を作成する
+      raise "must not happen" unless current_user
+      if current_room.memberships[Config[:leader_index]].user == current_user
+        battle = current_room.battle_create_with_members! # FIXME: 部屋を subscribed したときに2つのバトルが作られている？
+        current_user.room_speak(current_room, "**最初のバトル作成(id:#{battle.id})")
+        # --> app/jobs/actb/battle_broadcast_job.rb --> battle_broadcasted --> app/javascript/actb_app/application_room.js
+      end
     end
 
     def unsubscribed
