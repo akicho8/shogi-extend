@@ -1,0 +1,79 @@
+module FrontendScript
+  class ActbAppScript
+    concern :PutApi do
+      # curl -d _method=put -d remote_action=rule_key_set_handle -d rule_key=marathon_rule http://localhost:3000/script/actb-app.json
+      def rule_key_set_handle
+        current_user.actb_setting.update!(rule: Actb::Rule.fetch(params[:rule_key]))
+        true
+      end
+
+      # 自分以外の誰かを指定ルールに参加させる
+      def debug_matching_add_handle
+        if user = User.where.not(id: params[:exclude_user_id]).first
+          Actb::LobbyChannel.matching_list_rem(user)
+          if rule_key = params[:rule_key]
+            rule = Actb::Rule.fetch(rule_key)
+          else
+            rule = current_user.actb_setting.rule
+          end
+          user.actb_setting.update!(rule: rule)
+          Actb::LobbyChannel.matching_list_add(user)
+        end
+        true
+      end
+
+      # 解散
+      def matching_delete_all_handle
+        Actb::Rule.matching_delete_all
+        true
+      end
+
+      def vote_handle
+        current_user.vote_handle(params)
+      end
+
+      def clip_handle
+        current_user.clip_handle(params)
+      end
+
+      def save_handle
+        question = current_user.actb_questions.find_or_initialize_by(id: params[:question][:id])
+        begin
+          question.together_with_params_came_from_js_update(params)
+        rescue ActiveRecord::RecordInvalid => error
+          c.render json: { form_error_message: error.message }
+          return
+        end
+        { question: question.as_json(question_as_json_params) }
+      end
+
+      # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app
+      def profile_update
+        if v = params[:croped_image]
+          bin = data_base64_body_to_binary(v)
+          io = StringIO.new(bin)
+          current_user.avatar.attach(io: io, filename: "user_icon.png")
+        end
+
+        if v = params[:user_name]
+          current_user.update!(name: v)
+        end
+
+        if v = params[:user_description]
+          current_user.profile.update!(description: v)
+        end
+
+        { current_user: current_user_json }
+      end
+
+      private
+
+      # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle
+      def data_base64_body_to_binary(data_base64_body)
+        md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
+        md or raise ArgumentError, "Data URL scheme 形式になっていません : #{data_base64_body.inspect.truncate(80)}"
+        Base64.decode64(md["base64_bin"])
+      end
+    end
+  end
+end

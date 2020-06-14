@@ -246,7 +246,7 @@ export default {
 
     rule_key_set_handle(rule_key) {
       this.sound_play("click")
-      this.remote_get(this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
+      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
         this.matching_setup()
       })
     },

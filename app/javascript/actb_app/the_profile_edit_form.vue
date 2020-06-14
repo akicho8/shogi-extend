@@ -58,9 +58,9 @@ export default {
       this.sound_play("click")
 
       const params = {
-        user_name:         this.$parent.new_name,
+        user_name:        this.$parent.new_name,
         user_description: this.$parent.new_description,
-        croped_image:      this.$parent.croped_image,
+        croped_image:     this.$parent.croped_image,
       }
 
       this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", ...params }, e => {

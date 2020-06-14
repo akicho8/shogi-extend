@@ -61,5 +61,19 @@ module Actb
         end
       end
     end
+
+    def as_json_type4
+      as_json({
+          only: [:id],
+          include: {
+            memberships: {
+              only: [:id],
+              include: {
+                user: { only: [:id, :name], methods: [:avatar_path] },
+              },
+            },
+          },
+        })
+    end
   end
 end
