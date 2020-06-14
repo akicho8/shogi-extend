@@ -18,7 +18,7 @@
           template(slot="header")
             span
               | 正解
-              b-tag(rounded) {{question.moves_answers.length}}
+              b-tag(rounded v-if="question.moves_answers.length >= 1") {{question.moves_answers.length}}
 
         b-tab-item(label="情報")
 
@@ -26,7 +26,7 @@
           template(slot="header")
             span
               | 検証
-              b-tag(rounded) {{valid_count}}
+              b-tag(rounded v-if="valid_count >= 1" type="is-primary") OK
 
     template(v-if="current_tab_info.key === 'haiti_mode'")
       the_builder_haiti
