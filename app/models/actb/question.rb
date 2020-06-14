@@ -248,6 +248,14 @@ module Actb
       end
 
       class_methods do
+        def setup(options = {})
+          if Rails.env.staging? || Rails.env.production?
+            unless exists?
+              import_all
+            end
+          end
+        end
+
         def export_all
           json = all.as_json({
               only: [
@@ -283,7 +291,7 @@ module Actb
           puts "write: #{file}"
         end
 
-        def import_all(user)
+        def import_all(user = User.sysop)
           persistent_records.each do |e|
             record = user.actb_questions.find_or_initialize_by(key: e[:key])
             record.update!(e.slice(*[

@@ -272,10 +272,12 @@ export default {
 
     // 「新規作成」ボタン
     builder_new_handle() {
-      this.question_edit_of(this.question_default)
+      const attributes = _.cloneDeep(this.question_default)
+      const question = new Question(attributes)
+      this.question_edit_for(question)
     },
 
-    question_edit_of(row) {
+    question_edit_for(row) {
       this.sound_play("click")
 
       this.__assert__(row.constructor.name === "Question")
@@ -403,7 +405,7 @@ export default {
 
     // 問題の初期値
     question_default() {
-      return new Question(this.app.info.question_default)
+      return this.app.info.question_default
     },
   },
 }

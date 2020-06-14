@@ -111,7 +111,7 @@ module FrontendScript
         :title               => nil,
         :description         => nil,
         :hint_desc           => nil,
-        :time_limit_sec      => 1.minutes,
+        :time_limit_sec      => 10.seconds,
         :moves_answers       => [],
         :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
 
@@ -129,7 +129,7 @@ module FrontendScript
       if Rails.env.development?
         default.update({
             :title            => "(title)",
-            :time_limit_sec   => 3.minutes,
+            :time_limit_sec   => 30.seconds,
             :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
             :moves_answers => [
               :moves_str => "1c1b",
