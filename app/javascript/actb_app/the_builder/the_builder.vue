@@ -199,7 +199,7 @@ export default {
     edit_stock_handle() {
       const moves = this.current_moves()
 
-      if (moves === []) {
+      if (moves.length === 0) {
         this.warning_notice("1手以上動かしてください")
         return
       }
