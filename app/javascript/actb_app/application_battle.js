@@ -389,7 +389,7 @@ export const application_battle = {
     },
     battle_leave_handle_broadcasted(params) {
       const membership = this.battle.memberships.find(e => e.id === params.membership_id)
-      this.room_speak(`*${membership.user.name}さんが退出したことを知った`)
+      this.room_speak(`**${membership.user.name}さんが退出したことを知った`)
 
       // membership が退出したことを記録
       this.member_infos_hash[membership.id].member_active_p = false
