@@ -5,6 +5,8 @@ export class MemberInfo {
     this.b_score = 0
     this.latest_ox = null
     this.delay_id = null
+
+    this.member_active_p = true        // true:部屋から外に出た
   }
 
   // get ox_list() {

@@ -33,7 +33,7 @@ module Actb
 
     private
 
-    # def room_out_handle2(membership)
+    # def battle_leave_handle2(membership)
     #   membership.user.room_speak(current_room, "*room_unsubscribed")
     #   broadcast(:room_member_disconnect_broadcasted, membership_id: membership.id)
     # end

@@ -56,9 +56,7 @@ export const application_battle = {
         membership_id: membership.id,
       }, params)
 
-      if (this.debug_mode_p) {
-        this.room_speak(`*[${membership.user.name}][${action}] ` + JSON.stringify(params))
-      }
+      this.room_speak(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
 
       this.$ac_battle.perform(action, params) // --> app/channels/actb/battle_channel.rb
     },
@@ -87,9 +85,7 @@ export const application_battle = {
           this.start_hook()
         },
         received: (data) => {
-          if (this.debug_mode_p) {
-            this.room_speak(`* --> [${data.bc_action}] ` + JSON.stringify(data.bc_params))
-          }
+          this.room_speak(`**← [${data.bc_action}] ` + JSON.stringify(data.bc_params))
         },
       })
     },
@@ -382,18 +378,21 @@ export const application_battle = {
 
     // 部屋から退出する
     yameru_handle() {
-      this.room_out_handle()    // 「退出しました」発言が中で行われる
+      this.battle_leave_handle()    // 「退出しました」発言が中で行われる
       // this.room_speak("*退出しました")
       this.lobby_handle()
     },
 
     // 退出通知
-    room_out_handle(ms_flip = false) {
-      this.ac_battle_perform("room_out_handle", {ms_flip: ms_flip})
+    battle_leave_handle(ms_flip = false) {
+      this.ac_battle_perform("battle_leave_handle", {ms_flip: ms_flip})
     },
-    room_out_handle_broadcasted(params) {
+    battle_leave_handle_broadcasted(params) {
       const membership = this.battle.memberships.find(e => e.id === params.membership_id)
       this.room_speak(`*${membership.user.name}さんが退出したことを知った`)
+
+      // membership が退出したことを記録
+      this.member_infos_hash[membership.id].member_active_p = false
     },
 
     ////////////////////////////////////////////////////////////////////////////////

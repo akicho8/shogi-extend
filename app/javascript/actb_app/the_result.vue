@@ -22,13 +22,13 @@
 
   .footer_container
     .buttons.is-centered
-      b-button.has-text-weight-bold(@click="app.battle_continue_handle" :type="app.battle_continue_tap_counts[app.current_membership.id] ? 'is-primary' : ''") 同じ相手と再戦する
+      b-button.has-text-weight-bold(:disabled="!all_alive_p" @click="app.battle_continue_handle" :type="app.battle_continue_tap_counts[app.current_membership.id] ? 'is-primary' : ''") 同じ相手と再戦する
 
   .box.is-shadowless(v-if="app.debug_mode_p")
     .buttons.is-centered.are-small
       b-button(@click="app.battle_continue_force_handle") 強制的に続行
-      b-button(@click="app.room_out_handle(false)") 退出通知(自分)
-      b-button(@click="app.room_out_handle(true)") 退出通知(相手)
+      b-button(@click="app.battle_leave_handle(false)") 退出通知(自分)
+      b-button(@click="app.battle_leave_handle(true)") 退出通知(相手)
       b-button(@click="app.battle_unsubscribe") バトル切断(自分)
       b-button(@click="app.member_disconnect_handle(true)") バトル切断風にする(相手)
 
@@ -52,6 +52,12 @@ export default {
   components: {
     the_room_message,
     the_result_membership,
+  },
+  computed: {
+    // 参加者が全員いる？
+    all_alive_p() {
+      return Object.values(this.app.member_infos_hash).every(e => e.member_active_p) // v.values.all?(&:member_active_p)
+    },
   },
 }
 </script>

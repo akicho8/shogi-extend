@@ -244,7 +244,7 @@ module Actb
 
     # 退出通知
     # data[:membership_id] が退出する
-    def room_out_handle(data)
+    def battle_leave_handle(data)
       data = data.to_options
 
       # 単に発言させるためだけ
@@ -253,7 +253,7 @@ module Actb
         membership.room_speak("*退出します")
       end
 
-      broadcast(:room_out_handle_broadcasted, membership_id: data[:membership_id])
+      broadcast(:battle_leave_handle_broadcasted, membership_id: data[:membership_id])
     end
 
     def battle_id
