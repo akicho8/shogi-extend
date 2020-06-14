@@ -1,0 +1,36 @@
+.tops_show
+  .title.is-6 主なサービス紹介
+
+  .columns
+    .column.is-4
+      = link_to([:swars, :battles], :class => "box") do
+        .content
+          .image
+            = image_tag("swars_battles_index.png")
+          .title.is-5.mt-5
+            i.mdi.mdi-magnify.mr-2
+            | 将棋ウォーズ棋譜検索
+          ul
+            li 「ぴよ将棋」や「KENTO」と連携して開けます
+            li クリップボード経由で「激指」などの外部の将棋アプリに渡すような使い方ができます
+            li 消費時間の可視化ができます
+            li 棋譜を印刷できます
+
+    .column.is-4
+      = link_to([:adapter], :class => "box") do
+        .content
+          .image
+            = image_tag("adapter.png")
+          .title.is-5.mt-5
+            i.mdi.mdi-tools.mr-2
+            | なんでも棋譜変換
+          ul
+            li 「将棋倶楽部24」の棋譜は変則的でそのままでは激指等で読み込めないことがあります。ここで正規化することで読めるようになります。
+            li 「将棋クエスト」のCSA形式の棋譜をKIF形式に変換して「ぴよ将棋」や「KENTO」に橋渡しできます
+            li その他には棋譜の各種相互変換や印刷などができます
+
+          / = link_to(icon_tag(:shuriken) + "トレーニングバトル", :tb, class: ["navbar-item", ("is-active" if params[:controller] == "scripts" && params[:id] == "actb_app")]) if Actb::Config[:main_navbar_enable]
+          / = link_to(icon_tag(:tools) + "棋譜変換", :adapter, class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] == "adapter")])
+          / = link_to(icon_tag(:robot) + "CPU対戦", :cpu_battles, class: ["navbar-item", ("is-active" if params[:controller] == "cpu_battles")])
+          / = link_to(icon_tag(:apps) + "符号の鬼", :xy_records, class: ["navbar-item", ("is-active" if params[:controller] == "xy_records")])
+          / = link_to(icon_tag(:apps) + "リレー将棋", :share_board, class: ["navbar-item", ("is-active" if params[:controller] == "share_boards")])
