@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_builder_play
+.the_builder_seikai
   shogi_player(
     :run_mode="'play_mode'"
     :kifu_body="$parent.question.init_sfen"
@@ -47,7 +47,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_builder_play",
+  name: "the_builder_seikai",
   mixins: [
     support,
   ],
@@ -58,7 +58,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_builder_play
+.the_builder_seikai
   margin-top: 1.5rem
   margin-bottom: $margin_bottom
 

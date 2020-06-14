@@ -4,9 +4,9 @@ import { MemberInfo } from "./models/member_info.js"
 
 import dayjs from "dayjs"
 
-import { application_battle_marathon_rule     } from "./application_battle_marathon_rule.js"
-import { application_battle_singleton_rule     } from "./application_battle_singleton_rule.js"
-import { application_battle_hybrid_rule     } from "./application_battle_hybrid_rule.js"
+import { application_battle_marathon_rule  } from "./application_battle_marathon_rule.js"
+import { application_battle_singleton_rule } from "./application_battle_singleton_rule.js"
+import { application_battle_hybrid_rule    } from "./application_battle_hybrid_rule.js"
 
 export const application_battle = {
   mixins: [
@@ -73,10 +73,9 @@ export const application_battle = {
       this.battle = new Battle(battle)
 
       this.mode = "battle"
+      this.sub_mode = "standby"
 
       this.battle_continue_tap_counts = {}
-
-      this.sub_mode = "standby"
 
       this.member_infos_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo(e.id)}), {})
 
@@ -369,8 +368,8 @@ export const application_battle = {
       this.ac_battle_perform("battle_continue_force_handle")
     },
 
-    disconnect_count_handle(ms_flip = false) {
-      this.ac_battle_perform("disconnect_count_handle", {ms_flip: ms_flip})
+    member_disconnect_handle(ms_flip = false) {
+      this.ac_battle_perform("member_disconnect_handle", {ms_flip: ms_flip})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -381,8 +380,10 @@ export const application_battle = {
       this.sound_play(this.app.current_membership.judge.key)
     },
 
+    // 部屋から退出する
     yameru_handle() {
-      this.room_speak("*退出しました")
+      this.room_out_handle()    // 「退出しました」発言が中で行われる
+      // this.room_speak("*退出しました")
       this.lobby_handle()
     },
 

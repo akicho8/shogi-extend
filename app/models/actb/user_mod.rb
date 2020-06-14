@@ -44,11 +44,11 @@ module Actb
       end
 
       def room_speak(room, message_body, options = {})
-        actb_room_messages.create!({body: message_body}.merge(options))
+        actb_room_messages.create!({room: room, body: message_body}.merge(options))
       end
 
       def question_speak(question, message_body, options = {})
-        actb_question_messages.create!({body: message_body}.merge(options))
+        actb_question_messages.create!({question: question, body: message_body}.merge(options))
       end
     end
 

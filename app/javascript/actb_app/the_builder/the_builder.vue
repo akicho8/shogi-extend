@@ -28,17 +28,10 @@
               | 検証
               b-tag(rounded v-if="valid_count >= 1" type="is-primary") OK
 
-    template(v-if="current_tab_info.key === 'haiti_mode'")
-      the_builder_haiti
-
-    template(v-if="current_tab_info.key === 'seikai_mode'")
-      the_builder_play(ref="the_builder_play")
-
-    template(v-if="current_tab_info.key === 'form_mode'")
-      the_builder_form
-
-    template(v-if="current_tab_info.key === 'exam_mode'")
-      the_builder_kensho
+    the_builder_haiti(  v-if="current_tab_info.key === 'haiti_mode'")
+    the_builder_seikai( v-if="current_tab_info.key === 'seikai_mode'" ref="the_builder_seikai")
+    the_builder_form(   v-if="current_tab_info.key === 'form_mode'")
+    the_builder_kensho( v-if="current_tab_info.key === 'kensho_mode'")
 
     //- .save_container
     //-   .buttons.is-centered
@@ -58,7 +51,7 @@ class TabInfo extends MemoryRecord {
       { key: "haiti_mode",  name: "配置", },
       { key: "seikai_mode", name: "正解", },
       { key: "form_mode",   name: "情報", },
-      { key: "exam_mode",   name: "検証", },
+      { key: "kensho_mode",   name: "検証", },
     ]
   }
 
@@ -70,7 +63,7 @@ class TabInfo extends MemoryRecord {
 import { support } from "../support.js"
 import the_builder_index  from "./the_builder_index.vue"
 import the_builder_haiti  from "./the_builder_haiti.vue"
-import the_builder_play   from "./the_builder_play.vue"
+import the_builder_seikai   from "./the_builder_seikai.vue"
 import the_builder_form   from "./the_builder_form.vue"
 import the_builder_kensho from "./the_builder_kensho.vue"
 import the_footer from "../the_footer.vue"
@@ -83,7 +76,7 @@ export default {
   components: {
     the_builder_index,
     the_builder_haiti,
-    the_builder_play,
+    the_builder_seikai,
     the_builder_form,
     the_builder_kensho,
     the_footer,
@@ -137,7 +130,7 @@ export default {
     }
 
     this.builder_index_handle()
-    // this.exam_mode_handle()
+    // this.kensho_mode_handle()
 
   },
 
@@ -165,8 +158,8 @@ export default {
       this.mode_select("form_mode")
     },
 
-    exam_mode_handle() {
-      this.mode_select("exam_mode")
+    kensho_mode_handle() {
+      this.mode_select("kensho_mode")
       this.exam_run_count = 0
     },
 
@@ -192,7 +185,7 @@ export default {
     },
 
     current_moves() {
-      return this.$refs.the_builder_play.$refs.play_sp.moves_take_turn_offset
+      return this.$refs.the_builder_seikai.$refs.play_sp.moves_take_turn_offset
     },
 
     // 「この手順を正解とする」
@@ -306,7 +299,7 @@ export default {
       if (this.question_new_record_p) {
         this.haiti_mode_handle()
       } else {
-        this.exam_mode_handle()
+        this.kensho_mode_handle()
       }
     },
 

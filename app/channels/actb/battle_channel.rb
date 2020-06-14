@@ -233,9 +233,12 @@ module Actb
       katimashita(membership.user, :win, :f_success)
     end
 
-    def disconnect_count_handle(data)
+    # membership_id が切断した風にする(デバッグ用)
+    # 切断すると即負けになる
+    def member_disconnect_handle(data)
       data = data.to_options
       membership = current_battle.memberships.find(data[:membership_id])
+      raise "もう終わっている" if current_battle.end_at?
       katimashita(membership.user, :lose, :f_disconnect)
     end
 

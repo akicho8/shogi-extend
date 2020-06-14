@@ -17,9 +17,11 @@ module FrontendScript
                 "対戦(シングルトン)"           => :battle_singleton_rule,
                 "対戦(ハイブリッド)"           => :battle_hybrid_rule,
                 "結果"                         => :result,
+
                 "問題作成(一覧)"               => :builder,
                 "問題作成(配置)"               => :builder_haiti,
                 "問題作成(情報)"               => :builder_form,
+
                 "ランキング"                   => :ranking,
                 "履歴"                         => :history,
                 "問題詳細"                     => :ov_question_info,
