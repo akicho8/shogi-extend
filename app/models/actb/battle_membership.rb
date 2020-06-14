@@ -92,5 +92,9 @@ module Actb
     #   s = s.order(:created_at)
     #   s.last
     # end
+
+    def room_speak(message_body, options = {})
+      user.room_speak(battle.room, message_body, options)
+    end
   end
 end

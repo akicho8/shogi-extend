@@ -22,26 +22,8 @@ module Actb
         redis.srem(:room_user_ids, current_user.id)
         room_user_ids_broadcast
 
-        current_user.room_speak(current_room, "*接続が切れました")
-
-        # if true
-        #   membership = current_room.memberships.find { |e| e.user == current_user }
-        #   room_out_handle2(membership)
-        # end
+        current_user.room_speak(current_room, "*退出しました")
       end
-    end
-
-    # data[:membership_id] が退出する
-    def room_out_handle(data)
-      data = data.to_options
-
-      # 単に発言させるためだけ
-      if true
-        membership = Actb::BattleMembership.find(data[:membership_id])
-        membership.user.room_speak(membership.battle.room, "*退出しました")
-      end
-
-      broadcast(:room_out_handle_broadcasted, membership_id: data[:membership_id])
     end
 
     # for test

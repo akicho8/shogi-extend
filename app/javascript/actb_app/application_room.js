@@ -29,24 +29,6 @@ export const application_room = {
       this.$ac_room = this.ac_subscription_create({channel: "Actb::RoomChannel", room_id: this.room.id})
     },
 
-    // メンバーの誰かが RoomChannel を unsubscribe したとき全員に配信される
-    // room_member_disconnect_broadcasted(params) {
-    //   console.log(params)
-    //   debugger
-    // },
-
-    // 自分が退出する
-    room_out_handle() {
-      this.$ac_room.perform("room_out_handle", {membership_id: this.current_membership.id})
-    },
-    // 相手を退出させる
-    room_out_handle2() {
-      this.$ac_room.perform("room_out_handle", {membership_id: this.opponent_membership.id})
-    },
-    room_out_handle_broadcasted(params) {
-      this.room_speak(`*${params.membership_id} が退出したことを知った`)
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     // room_setup connected

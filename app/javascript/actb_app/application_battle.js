@@ -387,6 +387,15 @@ export const application_battle = {
       this.lobby_handle()
     },
 
+    // 退出通知
+    room_out_handle(ms_flip = false) {
+      this.ac_battle_perform("room_out_handle", {ms_flip: ms_flip})
+    },
+    room_out_handle_broadcasted(params) {
+      const membership = this.battle.memberships.find(e => e.id === params.membership_id)
+      this.room_speak(`*${membership.user.name}さんが退出したことを知った`)
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
     main_interval_start() {
       this.main_interval_clear()

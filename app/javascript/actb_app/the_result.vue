@@ -27,7 +27,8 @@
   .box.is-shadowless(v-if="app.debug_mode_p")
     .buttons.is-centered.are-small
       b-button(@click="app.battle_continue_force_handle") 強制的に続行
-      b-button(@click="app.room_out_handle2") 相手が部屋から退出する(模擬)
+      b-button(@click="app.room_out_handle(false)") 退出通知(自分)
+      b-button(@click="app.room_out_handle(true)") 退出通知(相手)
       b-button(@click="app.battle_unsubscribe") バトル切断(自分)
       b-button(@click="app.member_disconnect_handle(true)") バトル切断風にする(相手)
 
