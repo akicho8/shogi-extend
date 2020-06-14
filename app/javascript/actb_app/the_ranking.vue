@@ -2,7 +2,7 @@
 .the_ranking
   the_footer
   .primary_header
-    .header_center_title ランキング {{current_title}}
+    .header_center_title {{current_title}}
 
     b-dropdown(position="is-bottom-left")
       b-icon.header_item.with_icon.rjust(slot="trigger" icon="dots-vertical" @click.native="dots_vertical_click_handle")
