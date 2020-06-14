@@ -13,7 +13,8 @@ module Actb
         reject
       end
 
-      current_room.battle_create_with_members! # FIXME: 部屋を subscribed したときに2つのバトルが作られている？
+      battle = current_room.battle_create_with_members! # FIXME: 部屋を subscribed したときに2つのバトルが作られている？
+      current_user.room_speak(current_room, "**最初のバトル作成(id:#{battle.id})")
       # --> app/jobs/actb/battle_broadcast_job.rb --> battle_broadcasted --> app/javascript/actb_app/application_room.js
     end
 
@@ -22,7 +23,7 @@ module Actb
         redis.srem(:room_user_ids, current_user.id)
         room_user_ids_broadcast
 
-        current_user.room_speak(current_room, "*退出しました")
+        current_user.room_speak(current_room, "*退室しました")
       end
     end
 

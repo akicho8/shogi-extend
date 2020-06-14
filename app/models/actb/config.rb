@@ -24,7 +24,7 @@ module Actb
 
     # -------------------------------------------------------------------------------- チャット
     :lobby_messages_display_lines    => 12,   # ロビーでの表示行数
-    :room_messages_display_lines     => 5,    # 部屋での表示行数
+    :room_messages_display_lines     => 10,   # 部屋での表示行数
     :question_messages_display_lines => 5,    # 問題での表示行数(未使用)
 
     # -------------------------------------------------------------------------------- プロフィール編集画面
@@ -42,6 +42,7 @@ module Actb
         :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)
         :thinking_time_sec            => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
+        :room_messages_display_lines  => 5,    # 部屋での表示行数
       })
   end
 

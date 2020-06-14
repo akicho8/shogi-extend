@@ -250,7 +250,7 @@ module Actb
       # 単に発言させるためだけ
       if true
         membership = Actb::BattleMembership.find(data[:membership_id])
-        membership.room_speak("*退出します")
+        membership.room_speak("*退室します")
       end
 
       broadcast(:battle_leave_handle_broadcasted, membership_id: data[:membership_id])
