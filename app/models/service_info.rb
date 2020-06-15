@@ -94,6 +94,5 @@ class ServiceInfo
       feature_items: [
       ],
     },
-    # / = link_path(icon_tag(:shuriken) + "トレーニングバトル", :tb, class: ["navbar-item", ("is-active" if params[:controller] == "scripts" && params[:id] == "actb_app")]) if Actb::Config[:main_navbar_enable]
   ]
 end
